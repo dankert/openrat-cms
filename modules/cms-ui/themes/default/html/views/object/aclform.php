@@ -9,7 +9,7 @@
 						<input  class="radio" type="radio" id="<?php echo REQUEST_ID ?>_type_all" name="type" value="all"<?php if('all'==@$type)echo ' checked="checked"' ?> />
 						
 						<label for="<?php echo REQUEST_ID ?>_type_all" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_ALL')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_ALL')))); ?></span>
 							
 						</label>
 					</div>
@@ -21,7 +21,7 @@
 						<input  class="radio" type="radio" id="<?php echo REQUEST_ID ?>_type_user" name="type" value="user"<?php if('user'==@$type)echo ' checked="checked"' ?> />
 						
 						<label for="<?php echo REQUEST_ID ?>_type_user" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_USER')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_USER')))); ?></span>
 							
 						</label>
 					</div>
@@ -36,7 +36,7 @@
 							<input  class="radio" type="radio" id="<?php echo REQUEST_ID ?>_type_group" name="type" value="group"<?php if('group'==@$type)echo ' checked="checked"' ?> />
 							
 							<label for="<?php echo REQUEST_ID ?>_type_group" class="label">
-								<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_GROUP')))); ?></span>
+								<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_GROUP')))); ?></span>
 								
 							</label>
 						</div>
@@ -51,7 +51,7 @@
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_languageid" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_LANGUAGE')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_LANGUAGE')))); ?></span>
 							
 						</label>
 					</div>
@@ -105,7 +105,7 @@
 									
 								<?php } ?>
 								<label for="<?php echo REQUEST_ID ?>_<?php echo $t ?>_" class="label">
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('acl_'.$t.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang('acl_'.$t.'')))); ?></span>
 									
 								</label>
 							</div>

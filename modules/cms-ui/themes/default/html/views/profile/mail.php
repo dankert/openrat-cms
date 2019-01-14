@@ -21,19 +21,19 @@
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_mail" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('user_new_mail')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang('user_new_mail')))); ?></span>
 							
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_mail" name="mail<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$mail) ?>" /><?php if ('') { ?><input type="hidden" name="mail" value="<?php $mail ?>"/><?php } ?></div>
+						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_mail" name="<?php if ('') echo ''.'_' ?>mail<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="" value="<?php echo Text::encodeHtml(@$mail) ?>" /><?php if ('') { ?><input type="hidden" name="mail" value="<?php $mail ?>"/><?php } ?></div>
 						
 					</div>
 				</div>
 			</div></fieldset>
 			<div class="clickable">
 				<a target="_self" data-type="dialog" data-action="profile" data-method="confirmmail" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':'profile','dialogMethod':'confirmmail'}" href="<?php echo Html::url('profile','confirmmail','',array('dialogAction'=>'profile','dialogMethod'=>'confirmmail')) ?>">
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'mail_code'.'')))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'mail_code'.'')))); ?></span>
 					
 				</a>
 

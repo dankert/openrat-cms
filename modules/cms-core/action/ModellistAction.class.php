@@ -64,14 +64,11 @@ class ModellistAction extends Action
 			$m = new Model( $id );
 			$m->load();
 
-			$list[$id]['name'] = $m->name;
-			
-			if	( $this->userIsAdmin() )
-				$list[$id]['id' ] = $id;
+            $list[$id]['id'  ] = $id;
+            $list[$id]['name'] = $m->name;
 
-			$list[$id]['is_default'] = $m->isDefault;
-
-			$list[$id]['select_url' ] = Html::url('index','model',$id);
+            $list[$id]['is_default'] = $m->isDefault;
+			$list[$id]['select_url'] = Html::url('index','model',$id);
 		}
 		$this->setTemplateVar( 'el',$list );
 		$this->setTemplateVar( 'add',$this->userIsAdmin() );

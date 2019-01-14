@@ -1,6 +1,6 @@
 
 	
-		<form name="" target="_self" data-target="view" action="./" data-method="pw" data-action="profile" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="profile" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="profile" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="pw" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="view" action="./" data-method="pw" data-action="profile" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form profile" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="profile" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="pw" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<?php $if3=($pwchange_enabled); if($if3){?>
 				<div class="line logo">
 	<div class="label">
@@ -22,7 +22,7 @@
 					<div class="line">
 						<div class="label">
 							<label for="<?php echo REQUEST_ID ?>_act_password" class="label">
-								<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('user_password')))); ?></span>
+								<span><?php echo nl2br(encodeHtml(htmlentities(lang('user_password')))); ?></span>
 								
 							</label>
 						</div>
@@ -36,7 +36,7 @@
 					<div class="line">
 						<div class="label">
 							<label for="<?php echo REQUEST_ID ?>_password1" class="label">
-								<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('user_new_password')))); ?></span>
+								<span><?php echo nl2br(encodeHtml(htmlentities(lang('user_new_password')))); ?></span>
 								
 							</label>
 						</div>
@@ -48,7 +48,7 @@
 					<div class="line">
 						<div class="label">
 							<label for="<?php echo REQUEST_ID ?>_password2" class="label">
-								<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('user_new_password_repeat')))); ?></span>
+								<span><?php echo nl2br(encodeHtml(htmlentities(lang('user_new_password_repeat')))); ?></span>
 								
 							</label>
 						</div>
@@ -61,9 +61,9 @@
 			<?php } ?>
 			<?php if(!$if3){?>
 				<div class="message warn">
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'pwchange_not_allowed'.'')))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'pwchange_not_allowed'.'')))); ?></span>
 					
 				</div>
 			<?php } ?>
-		<div class="bottom"><div class="command "><input type="submit" class="submit ok" value="OK" /></div></div></form>
+		<div class="or-form-actionbar"><input type="submit" class="or-form-btn or-form-btn--primary" value="OK" /></div></form>
 	

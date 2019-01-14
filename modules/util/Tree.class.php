@@ -151,8 +151,7 @@ class Tree
 
         // Ermitteln, ob der Benutzer Projektadministrator ist
         // Projektadministratoren haben das Recht, im Root-Ordner die Eigenschaften zu aendern.
-        if ($folder->hasRight(ACL_PROP))
-            $userIsProjectAdmin = true;
+        $userIsProjectAdmin = $folder->hasRight(ACL_PROP);
 
         if ($folder->hasRight(ACL_READ)) {
             $treeElement = new TreeElement();
@@ -172,7 +171,8 @@ class Tree
 
 
         // Templates
-        if ($userIsProjectAdmin) {
+        if ($userIsProjectAdmin)
+        {
             $treeElement = new TreeElement();
             $treeElement->id = $projectid;
             $treeElement->extraId[REQ_PARAM_PROJECT_ID] = $projectid;
@@ -190,54 +190,45 @@ class Tree
 
 
         // Sprachen
-        $treeElement = new TreeElement();
-        $treeElement->description = '';
-        $treeElement->id = $projectid;
-        $treeElement->extraId[REQ_PARAM_PROJECT_ID] = $projectid;
-        $treeElement->internalId = $projectid;
-        $treeElement->action = 'languagelist';
-        $treeElement->text = lang('GLOBAL_LANGUAGES');
+        if ($userIsProjectAdmin) {
+            $treeElement = new TreeElement();
+            $treeElement->description = '';
+            $treeElement->id = $projectid;
+            $treeElement->extraId[REQ_PARAM_PROJECT_ID] = $projectid;
+            $treeElement->internalId = $projectid;
+            $treeElement->action = 'languagelist';
+            $treeElement->text = lang('GLOBAL_LANGUAGES');
 //		$treeElement->url        = Html::url('language','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
-        $treeElement->icon = 'languagelist';
-        $treeElement->description = lang('GLOBAL_LANGUAGES_DESC');
+            $treeElement->icon = 'languagelist';
+            $treeElement->description = lang('GLOBAL_LANGUAGES_DESC');
 
-        // Nur fuer Projekt-Administratoren aufklappbar
-        if ($userIsProjectAdmin)
-            $treeElement->type = 'languages';
+            // Nur fuer Projekt-Administratoren aufklappbar
+            if ($userIsProjectAdmin)
+                $treeElement->type = 'languages';
 
-        $this->addTreeElement($treeElement);
+            $this->addTreeElement($treeElement);
+        }
 
+        if ($userIsProjectAdmin) {
 
-        // Projektmodelle
-        $treeElement = new TreeElement();
-        $treeElement->description = '';
+            // Projektmodelle
+            $treeElement = new TreeElement();
+            $treeElement->description = '';
 
-        // Nur fuer Projekt-Administratoren aufklappbar
-        if ($userIsProjectAdmin)
-            $treeElement->type = 'models';
+            // Nur fuer Projekt-Administratoren aufklappbar
+            if ($userIsProjectAdmin)
+                $treeElement->type = 'models';
 
-        $treeElement->id = $projectid;
-        $treeElement->internalId = $projectid;
-        $treeElement->extraId[REQ_PARAM_PROJECT_ID] = $projectid;
-        $treeElement->description = lang('GLOBAL_MODELS_DESC');
-        $treeElement->text = lang('GLOBAL_MODELS');
+            $treeElement->id = $projectid;
+            $treeElement->internalId = $projectid;
+            $treeElement->extraId[REQ_PARAM_PROJECT_ID] = $projectid;
+            $treeElement->description = lang('GLOBAL_MODELS_DESC');
+            $treeElement->text = lang('GLOBAL_MODELS');
 //		$treeElement->url        = Html::url('model','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
-        $treeElement->action = 'modellist';
-        $treeElement->icon = 'modellist';
-        $this->addTreeElement($treeElement);
-
-
-/*        // Suche
-        $treeElement = new TreeElement();
-        $treeElement->id = $projectid;
-        $treeElement->internalId = $projectid;
-        $treeElement->extraId[REQ_PARAM_PROJECT_ID] = $projectid;
-        $treeElement->text = lang('GLOBAL_SEARCH');
-//		$treeElement->url         = Html::url('search','',0,array(REQ_PARAM_TARGET=>'content'));
-        $treeElement->action = 'search';
-        $treeElement->icon = 'search';
-        $treeElement->description = lang('GLOBAL_SEARCH_DESC');
-        $this->addTreeElement($treeElement);*/
+            $treeElement->action = 'modellist';
+            $treeElement->icon = 'modellist';
+            $this->addTreeElement($treeElement);
+        }
 
     }
 

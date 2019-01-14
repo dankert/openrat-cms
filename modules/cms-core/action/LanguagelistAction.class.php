@@ -69,7 +69,9 @@ class LanguagelistAction extends Action
 		$list = array();
 
 		$this->setTemplateVar('act_languageid',0 );
-	
+
+
+
 		foreach( $this->project->getLanguageIds() as $id )
 		{
 			$l = new Language( $id );
@@ -80,9 +82,7 @@ class LanguagelistAction extends Action
 			$list[$id] = array();
 			$list[$id]['name'   ] = $l->name;
 			$list[$id]['isocode'] = $l->isoCode;
-			
-			if	( $this->userIsAdmin() )
-				$list[$id]['id' ] = $id;
+			$list[$id]['id'     ] = $id;
 
             $list[$id]['is_default'] = $l->isDefault;
 
