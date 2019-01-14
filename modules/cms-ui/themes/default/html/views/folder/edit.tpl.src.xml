@@ -1,6 +1,5 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
-	<header views="order"></header>
 	<form action="folder" subaction="edit">
 		<table>
 			<row class="headline">
@@ -50,47 +49,13 @@
 					<text raw="_" />
 				</column>
 				<column colspan="2" class="clickable">
-					<link type="dialog" action="folder" subaction="createfolder">
+					<link type="dialog" action="folder" subaction="create">
 						<image method="add"></image>
-						<text key="menu_folder_createfolder"></text>
+						<text key="menu_folder_create"></text>
 					</link>
 				</column>
 			</row>
-			<row class="data">
-				<column>
-					<text raw="_" />
-				</column>
-				<column colspan="2" class="clickable">
-					<link type="dialog" action="folder" subaction="createpage">
-						<image method="add"></image>
-						<text key="menu_folder_createpage"></text>
-					</link>
-				</column>
-			</row>
-			<row class="data">
-				<column>
-					<text raw="_" />
-				</column>
-				<column colspan="2" class="clickable">
-					<link type="dialog" action="folder" subaction="createfile">
-						<image method="add"></image>
-						<text key="menu_folder_createfile"></text>
-					</link>
-				</column>
-			</row>
-			<row class="data">
-				<column>
-					<text raw="_" />
-				</column>
-				<column colspan="2" class="clickable">
-					<link type="dialog" action="folder" subaction="createlink">
-						<image method="add"></image>
-						<text key="menu_folder_createlink"></text>
-					</link>
-				</column>
-			</row>
-			<row>
-				<column colspan="2">
+		</table>
 					<group title="message:options">
 						<set var="type" value="var:defaulttype"></set>
 						<list list="actionlist" value="actiontype">
@@ -128,9 +93,6 @@
 							</part>
 						</part>
 					</group>
-				</column>
-			</row>
-		</table>
 	</form>
 	<insert script="mark" inline="true"></insert>
 </output>
