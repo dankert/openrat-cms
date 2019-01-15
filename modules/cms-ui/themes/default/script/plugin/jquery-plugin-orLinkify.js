@@ -1,6 +1,9 @@
 /**
  * Enable clicking on '.clickable'-Areas.
  */
+
+var popupWindow;
+
 jQuery.fn.orLinkify = function()
 {
 
@@ -57,7 +60,7 @@ jQuery.fn.orLinkify = function()
 			
 			else if	( type == 'popup' )
 			{
-				window.open( $(this).attr('data-url'), 'Popup', 'location=no,menubar=no,scrollbars=yes,toolbar=no,resizable=yes');
+				popupWindow = window.open( $(this).attr('data-url'), 'Popup', 'location=no,menubar=no,scrollbars=yes,toolbar=no,resizable=yes');
 			}
 			
 			else if	( type == 'help' )
@@ -81,3 +84,20 @@ jQuery.fn.orLinkify = function()
 		} );
 	});
 };
+
+
+$(document).on('orViewLoaded',function(event, data) {
+
+	// Refresh already opened popup windows.
+    if   ( typeof popupWindow != "undefined" )
+    	$(event.target).find("a[data-type='popup']").each( function() {
+            popupWindow.location.href = $(this).attr('data-url');
+		});
+
+});
+
+$(document).on('orDataChanged',function(event, data) {
+    if   ( typeof popupWindow != "undefined" )
+       popupWindow.location.reload();
+} );
+

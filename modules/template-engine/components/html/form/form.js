@@ -159,7 +159,9 @@ function doResponse(data,status,element)
 				// Da gespeichert wurde, jetzt das 'dirty'-flag zurücksetzen.
 				$(element).closest('div.panel').find('div.header ul.views li.action.active').removeClass('dirty');
 			}
-		}
+
+            $(document).trigger('orDataChanged');
+        }
 		else
 		// Server liefert Fehler zurück.
 		{

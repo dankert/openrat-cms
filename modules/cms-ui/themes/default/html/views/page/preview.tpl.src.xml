@@ -5,7 +5,7 @@
         <image menu="refresh" />
     </part>
 
-    <part class="clickable">
+    <part class="toolbar-icon clickable">
         <link type="popup" class="action" url="var:preview_url">
             <image menu="open_in_new"></image>
 

@@ -4,7 +4,7 @@
 			<i class="image-icon image-icon--menu-refresh"></i>
 			
 		</div>
-		<div class="clickable">
+		<div class="toolbar-icon clickable">
 			<a class="action" target="_self" data-url="<?php echo $preview_url ?>" data-type="popup" data-action="" data-method="preview" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
 				<i class="image-icon image-icon--menu-open_in_new"></i>
 				
