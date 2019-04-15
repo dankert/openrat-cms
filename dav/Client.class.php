@@ -160,7 +160,6 @@ class Client
 			if 	( $result === false )
 			{
 				error_log('Not unserializable: '.$body);
-				httpStatus('500 Server Error, not unserializable: '.$body);
 				throw new RuntimeException('The server response cannot be unserialized into a PHP array');
 			}
 			else

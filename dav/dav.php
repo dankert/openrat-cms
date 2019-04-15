@@ -29,9 +29,9 @@
 if (!defined('E_STRICT'))
 	define('E_STRICT', 2048);
 
-define('TIME_20000101',946681200);
+define('TIME_20000101',946681200); // default time for objects without time information.
 
-
+// Default-Configuration.
 $config = array('dav.enable'               => false,
                    'dav.create'               => true,
                    'dav.readonly'             => false,
@@ -50,6 +50,7 @@ $config = array('dav.enable'               => false,
 		           'log.file'                 => null
                    );
 
+// Configuration-Loader
 foreach( array( 'dav-'.$_SERVER['HTTP_HOST'].'.ini',
                 'dav-custom.ini',
                 'dav.ini') as $iniFile )
@@ -73,13 +74,23 @@ else
     set_error_handler('webdavErrorHandler');
 
 
-$dav = new WebDAV();
+try {
 
-$httpMethod = strtoupper($_SERVER['REQUEST_METHOD']);
-$davMethodName  = 'dav'.$httpMethod;
+    $dav = new WebDAV();
 
-$dav->$davMethodName();
+    $httpMethod = strtoupper($_SERVER['REQUEST_METHOD']);
+    $davMethodName = 'dav' . $httpMethod;
 
+    $dav->$davMethodName();
+}
+catch( Exception $e )
+{
+    error_log('WEBDAV ERROR: '.$e->getMessage()."\n".$e->getTraceAsString() );
+
+    // Wir teilen dem Client mit, dass auf dem Server was schief gelaufen ist.
+    header('HTTP/1.1 503 Internal WebDAV Server Error');
+    echo 'WebDAV-Request failed'."\n".$e->getTraceAsString();
+}
 
 /**
  * Fehler-Handler fuer WEBDAV.<br>
@@ -99,7 +110,3 @@ function webdavErrorHandler($errno, $errstr, $errfile, $errline)
 	echo 'WebDAV-Request failed with "'.$errstr.'"';
 	exit;
 }
-
-
-
-?>

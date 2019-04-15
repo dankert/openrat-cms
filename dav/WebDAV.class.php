@@ -29,6 +29,8 @@ class WebDAV
 	var $maxFileSize;
 	var $webdav_conf;
 	var $overwrite = false;
+
+	private $httpMethod;
 	
 	
 	/**
@@ -37,7 +39,9 @@ class WebDAV
 	 */
 	function __construct()
 	{
-		global $config;		
+		global $config;
+
+        $this->httpMethod = strtoupper($_SERVER['REQUEST_METHOD']);
 
 		Logger::trace( 'WEBDAV request' );
 		
@@ -95,8 +99,7 @@ class WebDAV
 		else
 		{
 			// Login
-			global $httpMethod;
-			if	( $httpMethod != 'OPTIONS' ) // Bei OPTIONS kein Login anfordern
+			if	( $this->httpMethod != 'OPTIONS' ) // Bei OPTIONS kein Login anfordern
 			{
 				if	( isset($_SERVER['PHP_AUTH_USER']) )
 				{
@@ -180,7 +183,7 @@ class WebDAV
 			  $_GET['subaction'] == 'get' &&
 			  substr($_SERVER['REQUEST_URI'],strlen($_SERVER['REQUEST_URI'])-1 ) != '/' )
 		{
-			Logger::debug( 'WebDAV: Redirecting lame client to slashyfied URL' );
+			Logger::debug( 'Redirecting lame client to slashyfied URL' );
 			
 			header('HTTP/1.1 302 Moved Temporarily');
 			header('Location: '.$_SERVER['REQUEST_URI'].'/');
@@ -1037,7 +1040,9 @@ class WebDAV
 		
 		if	( $projectid === FALSE )
 		{
-			httpStatus("404 Not found");
+			$this->httpStatus("404 Project not found");
+			echo 'project not found';
+			exit;
 		}
 
 		$project = $this->client->project($projectid);
