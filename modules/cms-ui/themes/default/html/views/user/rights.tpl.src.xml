@@ -1,17 +1,14 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
-	<table>
 		<list list="projects" extract="true">
 
-			<row>
-				<column colspan="2">
 					<group title="var:projectname">
-						<if empty="acls">
+						<if empty="rights">
 							<part>
 								<text text="GLOBAL_NOT_FOUND"></text>
 							</part>
 						</if>
-						<if not="true" empty="acls">
+						<if not="true" empty="rights">
 							<table>
 								<row class="headline">
 									<column class="help">
@@ -51,7 +48,7 @@
 										</column>
 										<column>
 											<image type="var:objecttype"></image>
-											<link action="var:objecttype" subaction="" id="var:objectid">
+											<link type="open" action="var:objecttype" id="var:objectid">
 												<text var="objectname" maxlength="20" title="message:select"></text>
 											</link>
 										</column>
@@ -69,8 +66,5 @@
 							</table>
 						</if>
 					</group>
-				</column>
-			</row>
 		</list>
-	</table>
 </output>

@@ -44,9 +44,11 @@ use \Mail;
 class UserAction extends Action
 {
 	public $security = SECURITY_ADMIN;
-	
-	var $user;
-	var $defaultSubAction = 'edit';
+
+    /**
+     * @var User
+     */
+	private $user;
 
 
     /**
