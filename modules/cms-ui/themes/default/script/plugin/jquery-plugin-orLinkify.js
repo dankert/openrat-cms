@@ -23,64 +23,45 @@ jQuery.fn.orLinkify = function()
 			// Inaktive Menüpunkte sind natürlich nicht anklickbar.
 			if	( $(this).parent().hasClass('inactive') )
 				return;
-			
-			if	( type == 'post' )
-			{
-				submitLink(this,$(this).attr('data-data') );
-			}
-			
-			else if	( type == 'view' )
-			{
-				//startView(this, $(this).attr('data-method') );
-				// gibt es so nicht mehr, kann wohl raus.
-				alert('Error: Link type = view not supported.');
-			}
 
-			else if	( type == 'modal' )
+			switch( type )
 			{
-                alert('Error: Link type = modal not supported.');
+				case 'post':
+					submitLink(this,$(this).attr('data-data') );
+					break;
 
-                startDialog($(this).attr('data-name'),null,$(this).attr('data-method') );
-			}
 
-			else if	( type == 'dialog' )
-			{
-				startDialog($(this).attr('data-name'),$(this).attr('data-action'),$(this).attr('data-method'),$(this).attr('data-id'),$(this).attr('data-extra') );
-			}
+				case 'dialog':
+					startDialog($(this).attr('data-name'),$(this).attr('data-action'),$(this).attr('data-method'),$(this).attr('data-id'),$(this).attr('data-extra') );
+					break;
 
-			else if	( type == 'url' )
-			{
-				submitUrl(this,$(this).attr('data-url') );
-			}
-			
-			else if	( type == 'external' )
-			{
-				window.open( $(this).attr('data-url'),' _blank' );
-			}
-			
-			else if	( type == 'popup' )
-			{
-				popupWindow = window.open( $(this).attr('data-url'), 'Popup', 'location=no,menubar=no,scrollbars=yes,toolbar=no,resizable=yes');
-			}
-			
-			else if	( type == 'help' )
-			{
-				help(this,$(this).attr('data-url'),$(this).attr('data-suffix') );
-			}
-			
-			else if	( type == 'fullscreen' )
-			{
-				fullscreen(this);
-			}
-			
-			else if	( type == 'open' )
-			{
-				openNewAction( $(this).attr('data-name'),$(this).attr('data-action'),$(this).attr('data-id'),jQuery.parseJSON($(this).attr('data-extra').replace(/'/g,'"')));
-			}
-			else
-			{
-				alert('Fatal: Cannot open link: '+$(this).html() );
-			}
+				case 'url':
+					submitUrl(this,$(this).attr('data-url') );
+					break;
+
+				case 'external':
+					window.open( $(this).attr('data-url'),' _blank' );
+					break;
+
+				case 'popup':
+					popupWindow = window.open( $(this).attr('data-url'), 'Popup', 'location=no,menubar=no,scrollbars=yes,toolbar=no,resizable=yes');
+					break;
+
+				case 'help':
+					help(this,$(this).attr('data-url'),$(this).attr('data-suffix') );
+					break;
+
+				case 'fullscreen':
+					fullscreen(this);
+					break;
+
+				case 'open':
+					openNewAction( $(this).attr('data-name'),$(this).attr('data-action'),$(this).attr('data-id'),jQuery.parseJSON($(this).attr('data-extra').replace(/'/g,'"')));
+					break;
+
+				default:
+					alert('Fatal: Cannot open link: '+$(this).html() );
+            }
 		} );
 	});
 };
