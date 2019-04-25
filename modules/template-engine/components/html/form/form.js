@@ -21,8 +21,8 @@ $(document).on('orViewLoaded',function(event, data) {
 	});
 	*/
 
-    $(event.target).find('input.submit.cancel').click( function() {
-        // TODO: cancel dialog screen (if clicked in dialog)
+    $(event.target).find('.or-form-btn--cancel').click( function() {
+        $(event.target).html('').parent().removeClass('is-open');
     });
 
     // Submithandler for the whole form.

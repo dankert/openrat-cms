@@ -1,4 +1,4 @@
-<?php
+    <?php
         extract($output);
  if (!defined('OR_VERSION')) die('Forbidden');
  if (!headers_sent()) header('Content-Type: text/html; charset=UTF-8')
@@ -51,6 +51,9 @@
             <header>
                 <span class="title"></span>
             </header>
+            <section id="edit" class="">
+                <div class="view"></div>
+            </section>
 
             <?php foreach( $methodList as $method ) { ?>
             <?php if (DEVELOPMENT) echo "<!-- Section for : $action / ".$method['name']." / $id  -->";  ?>

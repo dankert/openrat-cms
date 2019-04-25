@@ -572,6 +572,31 @@ function startDialog( name,action,method,id,params )
 
 
 /**
+ * Starts a non-modal editing dialog.
+ * @param name
+ * @param action
+ * @param method
+ * @param id
+ * @param params
+ */
+function startEdit( name,action,method,id,params )
+{
+	// Attribute aus dem aktuellen Editor holen, falls die Daten beim Aufrufer nicht angegeben sind.
+	if (!action)
+		action = $('#editor').attr('data-action');
+
+	if  (!id)
+        id = $('#editor').attr('data-id');
+
+	$edit = $('#edit');
+
+	$edit.addClass('is-open');
+
+	Workbench.loadViewIntoElement( $('#edit > .view'), action, method, id, params );
+}
+
+
+/**
  * Setzt neue modale View und aktualisiert alle Fenster.
  * @param element
  * @param action Action

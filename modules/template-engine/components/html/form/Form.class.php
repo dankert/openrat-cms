@@ -20,7 +20,7 @@ class FormComponent extends Component
 
 	public $label;
 
-	public $cancel = false;
+	public $cancel = true;
 
 	public $readonly = false;
 
@@ -94,7 +94,7 @@ class FormComponent extends Component
         // Cancel-Button nicht anzeigen, wenn cancel==false.
         if ($this->cancel)
         {
-            echo '<input type="button" class="or-form-btn or-form-btn" value="<?php echo lang("CANCEL") ?>" />';
+            echo '<input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" />';
         }
 
         if ( !$this->readonly )

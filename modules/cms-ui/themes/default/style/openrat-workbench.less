@@ -334,6 +334,23 @@ div#workbench {
     }
 }
 
+#edit
+{
+    display: none;
+
+    &.is-open {
+        display: block;
+    }
+
+    z-index: 2;
+    height: 100%;
+    width: 100%;
+
+    .view {
+        overflow-y: auto;
+    }
+}
+
 /* Fortschrittsbalken, fuer alle Elemente verfuegbar. */
 .loader
 {
