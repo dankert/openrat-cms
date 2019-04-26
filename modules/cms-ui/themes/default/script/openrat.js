@@ -230,33 +230,11 @@ var Workbench = new function()
 
         var method = targetDOMElement.data('method');
 
-        Workbench.loadViewIntoElement(targetDOMElement,action,method,id,params)
+        //Workbench.loadViewIntoElement(targetDOMElement,action,method,id,params)
+        let view = new View( action,method,id,params );
+        view.start( targetDOMElement );
     }
 
-
-    this.loadViewIntoElement = function(targetDOMElement,action,method,id,params) {
-
-		var url = createUrl(action,method,id,params,true); // URL für das Laden erzeugen.
-
-		targetDOMElement.empty().fadeTo(1,0.7).addClass('loader').html('').load(url,function(response, status, xhr) {
-			targetDOMElement.fadeTo(350,1);
-
-            $(targetDOMElement).removeClass("loader");
-
-            if	( status == "error" )
-			{
-				// Seite nicht gefunden.
-				$(targetDOMElement).html("");
-
-				notify('','','error','Server Error',['Server Error while requesting '+action+' -> '+method,response]);
-				return;
-			}
-
-			afterViewLoaded( targetDOMElement );
-
-		});
-
-	}
 
 }
 
@@ -546,6 +524,52 @@ function postUrl(url,element)
 }
 
 
+function View( action,method,id,params ) {
+
+    this.action = action;
+    this.method = method;
+    this.id = id;
+    this.params = params;
+
+    this.before = function() {};
+
+    this.start = function( element ) {
+        this.before();
+        this.element = element;
+        this.loadView();
+    }
+
+    this.afterLoad = function() {
+
+    }
+
+
+    this.loadView = function() {
+
+        let url = createUrl( this.action,this.method,this.id,this.params,true); // URL für das Laden erzeugen.
+        let element = this.element;
+
+        $(this.element).empty().fadeTo(1,0.7).addClass('loader').html('').load(url,function(response, status, xhr) {
+            $(element).fadeTo(350,1);
+
+            $(element).removeClass("loader");
+
+            if	( status == "error" )
+            {
+                // Seite nicht gefunden.
+                $(element).html("");
+
+                notify('','','error','Server Error',['Server Error while requesting url '+url, response]);
+                return;
+            }
+
+            afterViewLoaded( element );
+        });
+
+    }
+
+}
+
 
 /**
  * Setzt neuen modalen Dialog und aktualisiert alle Fenster.
@@ -561,13 +585,18 @@ function startDialog( name,action,method,id,params )
 	if (!action)
 		action = $('#editor').attr('data-action');
 
-    id = $('#editor').attr('data-id');
+    if  (!id)
+        id = $('#editor').attr('data-id');
 
-	$('div#dialog > .view').html('<div class="header"><img class="icon" title="" src="./themes/default/images/icon/'+method+'.png" />'+name+'</div>');
-	$('div#dialog > .view').data('id',id);
-	$('div#dialog').removeClass('is-closed').addClass('is-open');
+	let view = new View( action,method,id,params );
 
-	Workbench.loadViewIntoElement( $('div#dialog > .view'), action, method, id, params );
+    view.before = function() {
+        $('div#dialog > .view').html('<div class="header"><img class="icon" title="" src="./themes/default/images/icon/'+method+'.png" />'+name+'</div>');
+        $('div#dialog > .view').data('id',id);
+        $('div#dialog').removeClass('is-closed').addClass('is-open');
+    }
+
+	view.start( $('div#dialog > .view') );
 }
 
 
@@ -588,35 +617,13 @@ function startEdit( name,action,method,id,params )
 	if  (!id)
         id = $('#editor').attr('data-id');
 
-	$edit = $('#edit');
+    let view = new View( action,method,id,params );
 
+    $edit = $('#edit');
 	$edit.addClass('is-open');
 
-	Workbench.loadViewIntoElement( $('#edit > .view'), action, method, id, params );
+	view.start( $('#edit > .view') );
 }
-
-
-/**
- * Setzt neue modale View und aktualisiert alle Fenster.
- * @param element
- * @param action Action
- * @param id Id
- */
-function modalView( element,view )
-{
-	alert('modalView() called');
-	return;
-	/*
-	var action = $(element).closest('div.panel').find('li.active').attr('data-action');
-	var method = $(element).closest('div.panel').find('li.active').attr('data-method');
-	var id     = $(element).closest('div.panel').find('li.active').attr('data-id'    );
-	$(element).closest('div.content').modal( { "overlayClose":"true","xxxonClose":function(){alert("close)");} } );
-	loadView( $(element).closest('div.content'), action, method,id );
-	*/
-	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
-	// refreshAllRefreshables();
-}
-
 
 
 /**
