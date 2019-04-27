@@ -501,7 +501,9 @@ function loadTree()
  * @param element
  * @param action Action
  * @param id Id
+ * @deprecated
  */
+
 function submitUrl( element,url )
 {
 	postUrl( url,element );
@@ -511,7 +513,12 @@ function submitUrl( element,url )
 }
 
 
+/**
+ * @deprecated
 
+ * @param url
+ * @param element
+ */
 function postUrl(url,element)
 {
 	url += '&output=json';
@@ -520,10 +527,155 @@ function postUrl(url,element)
 			$('div.panel div.status div.loader').html('&nbsp;');
 			doResponse(data,textStatus,element);
 		} } );
-	
+
 }
 
 
+/**
+ * Form.
+ *
+ * @constructor
+ */
+function Form() {
+
+    this.setLoadStatus = function( isLoading ) {
+        $(this.element).closest('div.content').toggleClass('loader',isLoading);
+    }
+
+    this.initOnElement = function( element ) {
+        this.element = element;
+
+        // Autosave in Formularen. Bei Veränderungen wird das Formular sofort abgeschickt.
+        $(element).find('form[data-autosave="true"] input[type="checkbox"]').click( function() {
+            $(this).closest('form').submit();
+        });
+
+        // After click to "OK" the form is submitted.
+        // Why this?? input type=submit will submit!
+        /*
+        $(event.target).find('input.submit.ok').click( function() {
+            $(this).closest('form').submit();
+        });
+        */
+
+        let form = this;
+
+        $(element).find('.or-form-btn--cancel').click( function() {
+            form.cancel();
+
+        });
+
+        // Submithandler for the whole form.
+        $(element).submit( function( event ) {
+
+            //
+            if   ($(this).data('target')=='view')
+            {
+                form.submit();
+                event.preventDefault();
+            }
+            // target=top will load the native way without javascript.
+        });
+    }
+
+    this.cancel = function() {
+        $(this.element).html('').parent().removeClass('is-open');
+    }
+
+    this.close = function() {
+
+    }
+
+    this.submit = function() {
+
+
+        // Show progress
+        var status = $('<div class="notice info"><div class="text loader"></div></div>');
+        $('#noticebar').prepend(status); // Notice anhängen.
+        $(status).show();
+
+        // Alle vorhandenen Error-Marker entfernen.
+        // Falls wieder ein Fehler auftritt, werden diese erneut gesetzt.
+        $(this.element).find('.error').removeClass('error');
+
+        var params = $(this.element).serializeArray();
+        var data = {};
+        $(params).each(function(index, obj){
+            data[obj.name] = obj.value;
+        });
+
+        var formMethod = $(this.element).attr('method').toUpperCase();
+
+        if	( formMethod == 'GET' )
+        {
+            // Mehrseitiges Formular
+            // Die eingegebenen Formulardaten werden zur nächsten Action geschickt.
+            //Workbench.loadViewIntoElement( $(form).parent('.view'),data.action, data.subaction,data.id,data );
+            this.forwardTo( data.action, data.subaction,data.id,data );
+        }
+        else
+        {
+            let url    = './api/'; // Alle Parameter befinden sich im Formular
+
+            // POST-Request
+            this.setLoadStatus(true);
+            url += '?output=json';
+            params['output'] = 'json';// Irgendwie geht das nicht.
+
+            if	( $(this.element).data('async') || $(this.element).data('async')=='true')
+            {
+                // Verarbeitung erfolgt asynchron, das heißt, dass der evtl. geöffnete Dialog
+                // beendet wird.
+                this.close();
+                // Async: Window is closed, but the action will be startet now.
+            }
+
+            let form = this;
+            $.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
+                {
+                    form.setLoadStatus(false);
+                    $(status).remove();
+
+                    doResponse(data,textStatus,form);
+                },
+                error:function(jqXHR, textStatus, errorThrown) {
+                    form.setLoadStatus(false);
+                    $(status).remove();
+
+                    try
+                    {
+                        let error = jQuery.parseJSON( jqXHR.responseText );
+                        notify('','','error',error.error,[error.description]);
+                    }
+                    catch( e )
+                    {
+                        let msg = jqXHR.responseText;
+                        notify('','','error','Server Error',[msg]);
+                    }
+
+
+                }
+
+            } );
+            $(form.element).fadeIn();
+        }
+
+    }
+}
+
+
+
+/**
+ * View.
+ * Eine View ist ein HTML-Fragment, in das eine Action geladen wird.
+ * Das Erzeugen der View, das Laden vom Server sowie das Schließen sind hier gekapselt.
+ *
+ * @param action
+ * @param method
+ * @param id
+ * @param params
+ * @constructor
+ */
 function View( action,method,id,params ) {
 
     this.action = action;
@@ -543,17 +695,31 @@ function View( action,method,id,params ) {
 
     }
 
+    this.close = function() {
+        $(this.element).empty();
+    }
+
 
     this.loadView = function() {
 
         let url = createUrl( this.action,this.method,this.id,this.params,true); // URL für das Laden erzeugen.
         let element = this.element;
+        let view = this;
 
         $(this.element).empty().fadeTo(1,0.7).addClass('loader').html('').load(url,function(response, status, xhr) {
+
             $(element).fadeTo(350,1);
 
             $(element).removeClass("loader");
 
+            $(element).find('form').each( function() {
+                let form = new Form();
+                form.close = function() {
+                    view.close();
+                }
+                form.initOnElement(this);
+
+            });
             if	( status == "error" )
             {
                 // Seite nicht gefunden.

@@ -39,6 +39,7 @@ jQuery.fn.orLinkify = function()
 					break;
 
 				case 'url':
+					throw "probably unused, isn't it?";
 					submitUrl(this,$(this).attr('data-url') );
 					break;
 
