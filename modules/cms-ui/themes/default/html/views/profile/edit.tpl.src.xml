@@ -60,7 +60,7 @@
 				</part>
 				<part class="input">
 					<selectbox name="style" list="allstyles"
-						default="config:interface/style/default" class="or-theme-chooser"></selectbox>
+						class="or-theme-chooser"></selectbox>
 				</part>
 			</part>
 			<part class="line">
