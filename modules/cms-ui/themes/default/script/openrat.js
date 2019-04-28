@@ -29,13 +29,6 @@ $( function() {
     loadTree(); // Initial Loading of the navigationtree
 
 
-    $(document).keyup(function (e) {
-        if (e.keyCode == 27) { // ESC keycode
-            $('#dialog .view').fadeOut('fast').html('');
-            $('#dialog').removeClass('is-open').addClass('is-closed'); // Dialog schließen
-        }
-    });
-
     // Binding aller Sondertasten.
     $('.keystroke').each( function() {
     	let keystrokeElement = $(this);
@@ -194,6 +187,7 @@ var Workbench = new function()
 
     this.loadNewActionState = function(state) {
 
+	    Workbench.state = state;
 		Workbench.loadNewAction(state.action,state.id,state.data);
 	}
 
@@ -262,22 +256,6 @@ function registerWorkbenchEvents()
 	{
 		fullscreen( this );
 	} );
-
-    // Nicht-Modale Dialoge durch Klick auf freie Fläche schließen.
-    $('div#filler').click( function()
-    {
-        if	( $('div#dialog').hasClass('modal') )
-        {
-
-        }
-        else
-        {
-            $('div#dialog').removeClass('is-open').addClass('is-closed');
-            $('div#dialog > .view').html('');  // Dialog beenden
-
-        }
-    });
-
 }
 
 
@@ -564,6 +542,10 @@ function Form() {
             form.cancel();
 
         });
+        $(element).find('.or-form-btn--reset').click( function() {
+            form.rollback();
+
+        });
 
         // Submithandler for the whole form.
         $(element).submit( function( event ) {
@@ -579,7 +561,13 @@ function Form() {
     }
 
     this.cancel = function() {
-        $(this.element).html('').parent().removeClass('is-open');
+        //$(this.element).html('').parent().removeClass('is-open');
+        this.close();
+    }
+
+
+    this.rollback = function() {
+        this.element.trigger('reset');
     }
 
     this.close = function() {
@@ -696,7 +684,6 @@ function View( action,method,id,params ) {
     }
 
     this.close = function() {
-        $(this.element).empty();
     }
 
 
@@ -760,6 +747,38 @@ function startDialog( name,action,method,id,params )
         $('div#dialog > .view').html('<div class="header"><img class="icon" title="" src="./themes/default/images/icon/'+method+'.png" />'+name+'</div>');
         $('div#dialog > .view').data('id',id);
         $('div#dialog').removeClass('is-closed').addClass('is-open');
+
+        let view = this;
+
+        this.escapeKeyClosingHandler = function (e) {
+            if (e.keyCode == 27) { // ESC keycode
+                view.close();
+
+                $(document).off('keyup'); // de-register.
+            }
+        };
+
+        $(document).keyup(this.escapeKeyClosingHandler);
+
+        // Nicht-Modale Dialoge durch Klick auf freie Fläche schließen.
+        $('div#filler').click( function()
+        {
+             view.close();
+        });
+
+    }
+
+    view.close = function() {
+
+        // Strong modal dialogs are unable to close.
+        // Really?
+        if	( $('div#dialog').hasClass('modal') )
+            return;
+
+        $('#dialog .view').fadeOut('fast').html('');
+        $('#dialog').removeClass('is-open').addClass('is-closed'); // Dialog schließen
+
+        $(document).unbind('keyup',this.escapeKeyClosingHandler); // Cleanup ESC-Key-Listener
     }
 
 	view.start( $('div#dialog > .view') );
@@ -778,15 +797,25 @@ function startEdit( name,action,method,id,params )
 {
 	// Attribute aus dem aktuellen Editor holen, falls die Daten beim Aufrufer nicht angegeben sind.
 	if (!action)
-		action = $('#editor').attr('data-action');
+		action = Workbench.state.action;
 
 	if  (!id)
-        id = $('#editor').attr('data-id');
+        id = Workbench.state.id;
 
     let view = new View( action,method,id,params );
 
-    $edit = $('#edit');
-	$edit.addClass('is-open');
+    view.before = function() {
+
+        $edit = $('#edit');
+        $edit.addClass('is-open');
+
+        $('#editor').addClass('is-closed');
+    };
+
+    view.close = function() {
+        $edit.removeClass('is-open');
+        $('#editor').removeClass('is-closed');
+    }
 
 	view.start( $('#edit > .view') );
 }
@@ -995,12 +1024,17 @@ function createUrl(action,subaction,id,extraid,embed)
 {
 	var url = './';
 
-    url += '?action=' + action;
+	url += '?_=' + action;
+
+	if  (id)
+	    url += '-' + id;
+
+    //url += '&action=' + action;
 
     if	(subaction != null)
     	url += '&subaction='+subaction;
 
-	url += '&id='+id;
+	//url += '&id='+id;
 
     if(embed)
     	url += '&embed=1';

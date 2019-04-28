@@ -813,10 +813,11 @@ class IndexAction extends Action
 
 
         // Die Action im originalen Request hat Priorität.
-        if   ( isset($_GET[ REQ_PARAM_ACTION ] ) )
+        $params = new RequestParams();
+        if   ( !empty( $params->action ) )
         {
-            $action = $_GET[ REQ_PARAM_ACTION ];
-            $id     = $_GET[ REQ_PARAM_ID     ];
+            $action = $params->action;
+            $id     = $params->id;
             return;
         }
 

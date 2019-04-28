@@ -51,9 +51,6 @@
             <header>
                 <span class="title"></span>
             </header>
-            <section id="edit" class="">
-                <div class="view"></div>
-            </section>
 
             <?php foreach( $methodList as $method ) { ?>
             <?php if (DEVELOPMENT) echo "<!-- Section for : $action / ".$method['name']." / $id  -->";  ?>
@@ -82,6 +79,10 @@
             <?php } ?>
 
         </main>
+
+        <section id="edit" class="">
+            <div class="view"></div>
+        </section>
 
     </div>
 

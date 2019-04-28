@@ -8,6 +8,7 @@ namespace {
     define('REQ_PARAM_ACTION'         ,'action'         );
     define('REQ_PARAM_SUBACTION'      ,'subaction'      );
     define('REQ_PARAM_ID'             ,'id'             );
+    define('REQ_PARAM_SHORT'          ,'_'              );
     define('REQ_PARAM_OBJECT_ID'      ,'objectid'       );
     define('REQ_PARAM_LANGUAGE_ID'    ,'languageid'     );
     define('REQ_PARAM_MODEL_ID'       ,'modelid'        );
@@ -51,6 +52,12 @@ namespace cms\action {
             $this->action     = @$_REQUEST[REQ_PARAM_ACTION   ];
             $this->method     = @$_REQUEST[REQ_PARAM_SUBACTION];
             $this->isEmbedded = @$_REQUEST[REQ_PARAM_EMBED]=='1';
+
+            if   ( isset($_REQUEST[REQ_PARAM_SHORT])) {
+                list( $type, $id ) = array_pad( explode( '-', $_REQUEST[REQ_PARAM_SHORT] ), 2, '' );
+                $this->action     = Text::clean( strtolower($type),'abcdefghijklmnopqrstuvwxyz');
+                $this->id         = intval($id);
+            }
 
             // Is this a POST request?
             $this->isAction = @$_SERVER['REQUEST_METHOD'] == 'POST';

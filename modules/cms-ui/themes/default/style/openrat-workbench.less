@@ -212,11 +212,11 @@ div#workbench {
         min-width: 0;
         min-height: 0;
 
-        > main {
+        > main,section#edit {
             flex: 1;
         }
 
-        > nav, > main {
+        > nav, > main, > section#edit {
             min-width: 0;
             min-height: 0;
             overflow-y: auto;
@@ -264,42 +264,81 @@ div#workbench {
         }
 
 
-        > main > section {
+        > main {
+
+            transition: width ease;
+
+            &.is-closed {
+                display: none;
+            }
+
+            & > section {
+                margin: 1.5em;
+                @media @smartphones {
+                    margin:0.5em;
+                }
+
+                //&.open, &:hover {
+                    border: 1px solid;
+                //}
+
+                .border-radius(5px);
+
+                header {
+                    * {
+                        display: inline;
+                    }
+                }
+                .view-toolbar {
+                    display: inline;
+                }
+
+                // Wenn Sektion geschlossen, keine Toolbar anzeigen.
+                &.closed {
+                    .view-toolbar {
+                        display: none;
+                    }
+                }
+
+                // Diabled Sections are not displayed.
+                &.disabled {
+                    //display: none;
+                }
+                &.is-empty {
+                    display: none;
+                }
+            }
+        }
+
+        #edit
+        {
+            display: none;
+            width: 0;
+            transition: width ease;
+
+
             margin: 1.5em;
             @media @smartphones {
                 margin:0.5em;
             }
 
-            //&.open, &:hover {
-                border: 1px solid;
-            //}
-
+            border: 1px solid;
             .border-radius(5px);
 
-            header {
-                * {
-                    display: inline;
-                }
-            }
-            .view-toolbar {
-                display: inline;
+
+
+            &.is-open {
+                width: auto;
+                display: block;
+                z-index: 2;
             }
 
-            // Wenn Sektion geschlossen, keine Toolbar anzeigen.
-            &.closed {
-                .view-toolbar {
-                    display: none;
-                }
-            }
 
-            // Diabled Sections are not displayed.
-            &.disabled {
-                //display: none;
-            }
-            &.is-empty {
-                display: none;
+            .view {
+                //overflow-y: auto;
             }
         }
+
     }
 
 }
@@ -334,22 +373,6 @@ div#workbench {
     }
 }
 
-#edit
-{
-    display: none;
-
-    &.is-open {
-        display: block;
-    }
-
-    z-index: 2;
-    height: 100%;
-    width: 100%;
-
-    .view {
-        overflow-y: auto;
-    }
-}
 
 /* Fortschrittsbalken, fuer alle Elemente verfuegbar. */
 .loader
