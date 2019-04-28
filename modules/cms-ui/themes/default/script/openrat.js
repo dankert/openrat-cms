@@ -592,7 +592,13 @@ function Form() {
             data[obj.name] = obj.value;
         });
 
-        var formMethod = $(this.element).attr('method').toUpperCase();
+        // If form does not contain action/id, get it from the workbench.
+        if   (!data.id)
+            data.id = Workbench.state.id;
+        if   (!data.action)
+            data.action = Workbench.state.action;
+
+        let formMethod = $(this.element).attr('method').toUpperCase();
 
         if	( formMethod == 'GET' )
         {
@@ -607,8 +613,10 @@ function Form() {
 
             // POST-Request
             this.setLoadStatus(true);
-            url += '?output=json';
-            params['output'] = 'json';// Irgendwie geht das nicht.
+            //url += '?output=json';
+            url += '';
+            //params['output'] = 'json';// Irgendwie geht das nicht.
+            data.output = 'json';
 
             if	( $(this.element).data('async') || $(this.element).data('async')=='true')
             {
@@ -619,7 +627,7 @@ function Form() {
             }
 
             let form = this;
-            $.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
+            $.ajax( { 'type':'POST',url:url, data:data, success:function(data, textStatus, jqXHR)
                 {
                     form.setLoadStatus(false);
                     $(status).remove();
