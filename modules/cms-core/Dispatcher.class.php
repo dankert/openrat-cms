@@ -298,10 +298,10 @@ class Dispatcher
         $do->init();
 
         if(!defined('OR_ID'))
-        if (isset($REQ[REQ_PARAM_ID]))
-            define('OR_ID', $REQ[REQ_PARAM_ID]);
-        else
-            define('OR_ID', '');
+        //if (isset($REQ[REQ_PARAM_ID]))
+            define('OR_ID', $this->request->id);
+        //else
+          //  define('OR_ID', '');
 
         $this->checkAccess($do);
 

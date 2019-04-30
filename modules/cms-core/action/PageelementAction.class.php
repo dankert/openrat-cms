@@ -85,7 +85,7 @@ class PageelementAction extends Action
         $this->value = new Value();
         $this->value->publisher = new PublishPreview();
 
-		$id = $this->getRequestVar('id');
+		$id = $this->request->id;
 		$ids = explode('_',$id);
 		if	( count($ids) > 1 )
 		{
@@ -102,7 +102,7 @@ class PageelementAction extends Action
 			$this->page = new Page( $pageid );
 
             if  ( $this->hasRequestVar('languageid'))
-                $this->page->languageid = $this->getRequestVar('languageid',OR_FILTER_NUMBER);
+                $this->page->languageid = $this->getRequestId('languageid');
 
             $this->page->load();
 		}

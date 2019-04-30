@@ -56,7 +56,7 @@ namespace cms\action {
             if   ( isset($_REQUEST[REQ_PARAM_SHORT])) {
                 list( $type, $id ) = array_pad( explode( '-', $_REQUEST[REQ_PARAM_SHORT] ), 2, '' );
                 $this->action     = Text::clean( strtolower($type),'abcdefghijklmnopqrstuvwxyz');
-                $this->id         = intval($id);
+                $this->id         = $id;
             }
 
             // Is this a POST request?

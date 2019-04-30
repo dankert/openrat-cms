@@ -433,7 +433,9 @@ class PageAction extends ObjectAction
 
 		$list = array();
 
-		// Schleife ueber alle Inhalte der Seite
+        $languages = $this->page->getProject()->getLanguages();
+
+            // Schleife ueber alle Inhalte der Seite
 		foreach( $this->page->values as $id=>$value )
 		{
 			// Element wird nur angezeigt, wenn es editierbar ist
@@ -459,6 +461,7 @@ class PageAction extends ObjectAction
 		$this->setTemplateVar('preview_url',Html::url('page','show',$this->page->objectid,array('withIcons'=>'1',REQ_PARAM_LANGUAGE_ID=>$this->page->languageid,REQ_PARAM_MODEL_ID=>$this->page->modelid,REQ_PARAM_EMBED=>'1') ) );
 		$this->setTemplateVar('properties',$this->page->getProperties() );
 		$this->setTemplateVar('el',$list);
+		$this->setTemplateVar('languages',$languages);
 	}
 
 

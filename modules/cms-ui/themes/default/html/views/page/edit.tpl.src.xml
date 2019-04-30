@@ -9,6 +9,9 @@
 				<column class="help">
 					<text text="PAGE_ELEMENT_VALUE"></text>
 				</column>
+				<column class="help">
+					<text text="EDIT"></text>
+				</column>
 			</row>
 		</if>
 		<if empty="el">
@@ -29,6 +32,16 @@
 				<column>
 					<text var="value" maxlength="50"></text>
 					<text raw="_"></text>
+				</column>
+				<column>
+					<list list="languages" key="languageid" value="languagename">
+						<part class="clickable">
+							<link type="edit" action="pageelement" subaction="edit" id="var:pageelementid" var1="languageid" value1="var:languageid">
+								<image method="edit"></image>
+								<text var="languagename"></text>
+							</link>
+						</part>
+					</list>
 				</column>
 			</row>
 		</list>

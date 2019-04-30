@@ -11,6 +11,10 @@
 						<span><?php echo nl2br(encodeHtml(htmlentities(lang('PAGE_ELEMENT_VALUE')))); ?></span>
 						
 					</td>
+					<td class="help">
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('EDIT')))); ?></span>
+						
+					</td>
 				</tr>
 			<?php } ?>
 			<?php $if3=(($el)==FALSE); if($if3){?>
@@ -37,6 +41,19 @@
 						
 						<span><?php echo nl2br('&nbsp;'); ?></span>
 						
+					</td>
+					<td>
+						<?php foreach($languages as $languageid=>$languagename){ ?>
+							<div class="clickable">
+								<a target="_self" data-type="edit" data-action="pageelement" data-method="edit" data-id="<?php echo $pageelementid ?>" data-extra="{'languageid':'<?php echo $languageid ?>'}" href="<?php echo Html::url('pageelement','edit',$pageelementid,array('languageid'=>$languageid)) ?>">
+									<i class="image-icon image-icon--method-edit"></i>
+									
+									<span><?php echo nl2br(encodeHtml(htmlentities($languagename))); ?></span>
+									
+								</a>
+
+							</div>
+						<?php } ?>
 					</td>
 				</tr>
 			<?php } ?>
