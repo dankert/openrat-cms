@@ -27,7 +27,7 @@ $( function() {
     Workbench.initialize();
 
     loadTree(); // Initial Loading of the navigationtree
-
+    registerNavigation();
 
     // Binding aller Sondertasten.
     $('.keystroke').each( function() {
@@ -105,6 +105,34 @@ function initActualHistoryState() {
 }
 
 
+function registerNavigation() {
+    $(document).on('orNewAction',function(event, data) {
+
+        let url = './api/?action=tree&subaction=path&id=' + Workbench.state.id + '&type=' + Workbench.state.action + '&output=json';
+
+        // Die Inhalte des Zweiges laden.
+        $.getJSON(url, function (json) {
+
+            $('nav .or-navtree-node').removeClass('or-navtree-node--selected');
+
+            let output = json['output'];
+            $.each(output.path, function (idx, path) {
+
+                $nav = $('nav .or-navtree-node[data-type='+path.type+'][data-id='+path.id+'].or-navtree-node--is-closed .or-navtree-node-control');
+                $nav.click();
+            });
+            if   ( output.actual )
+                $('nav .or-navtree-node[data-type='+output.actual.type+'][data-id='+output.actual.id+']').addClass('or-navtree-node--selected');
+
+        }).fail(function (e) {
+            // Ups... aber was können wir hier schon tun, außer hässliche Meldungen anzeigen.
+            console.warn(e);
+            console.warn('failed to load path from '+url);
+        }).always(function () {
+
+        });
+    });
+}
 
 
 /**
@@ -189,6 +217,8 @@ var Workbench = new function()
 
 	    Workbench.state = state;
 		Workbench.loadNewAction(state.action,state.id,state.data);
+
+        $(document).trigger('orNewAction');
 	}
 
     /**

@@ -77,6 +77,7 @@ class Tree
             $treeElement->text = lang('PREFERENCES');
             $treeElement->description = lang('PREFERENCES');
             $treeElement->icon = 'configuration';
+            //$treeElement->type = 'configuration';
             $treeElement->action = 'configuration';
 
             $this->addTreeElement($treeElement);
@@ -245,6 +246,7 @@ class Tree
             $treeElement->internalId = $user->userid;
             $treeElement->text = $user->name;
             $treeElement->action = 'user';
+            $treeElement->type = 'user';
             $treeElement->icon = 'user';
 
             $desc = $user->fullname;

@@ -88,7 +88,7 @@ class Sql
 	 */
 	private function parseSourceQuery( $query )
 	{
-		Logger::debug( "SQL-query:\n$query" );
+		Logger::trace( "SQL-query:\n$query" );
 		
 		while( true )  // Schleife wird solange durchlaufen, solange Parameter gefunden werden.
 		{
