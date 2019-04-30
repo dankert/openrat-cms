@@ -41,20 +41,20 @@
 		</row>
 	</table>
 
-	<group title="message:src">
-	<table>
-	<row class="data">
-	<column>
-		<part class="clickable">
-			<link type="view" subaction="src">
-				<image icon="template" />
-				<text key="edit"></text>
-			</link>
-		</part>
-	</column>
-	</row>
-	</table>
+	<list list="models" extract="true">
 
-		<text var="text" escape="false" type="code"></text>
-	</group>
+		<group title="var:name">
+
+			<part class="clickable">
+				<text var="source" escape="true" type="code"></text>
+				<newline/>
+
+				<link type="edit" subaction="src" var1="modelid" value1="var:modelid" class="or-form-button">
+					<image icon="template"/>
+					<text key="edit"></text>
+				</link>
+			</part>
+		</group>
+	</list>
+
 </output>

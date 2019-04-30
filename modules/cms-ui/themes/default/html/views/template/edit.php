@@ -50,23 +50,21 @@
 				</td>
 			</tr>
 		</table>
-		<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('src') ?></legend><div>
-			<div class="table-wrapper"><div class="table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><table width="100%"></div>
-				<tr class="data">
-					<td>
-						<div class="clickable">
-							<a target="_self" data-type="view" data-action="" data-method="src" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','src','',array()) ?>">
-								<img src="./modules/cms-ui/themes/default/images/icon/template.png" />
-								
-								<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'edit'.'')))); ?></span>
-								
-							</a>
+		<?php foreach($models as $list_key=>$list_value){ ?><?php extract($list_value) ?>
+			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo $name ?></legend><div>
+				<div class="clickable">
+					<code><?php echo nl2br(encodeHtml(htmlentities($source))); ?></code>
+					
+					<br/>
+					
+					<a class="or-form-button" target="_self" data-type="edit" data-action="" data-method="src" data-id="<?php echo OR_ID ?>" data-extra="{'modelid':'<?php echo $modelid ?>'}" href="<?php echo Html::url('','src','',array('modelid'=>$modelid)) ?>">
+						<img src="./modules/cms-ui/themes/default/images/icon/template.png" />
+						
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'edit'.'')))); ?></span>
+						
+					</a>
 
-						</div>
-					</td>
-				</tr>
-			</table>
-			<code><?php echo nl2br($text); ?></code>
-			
-		</div></fieldset>
+				</div>
+			</div></fieldset>
+		<?php } ?>
 	
