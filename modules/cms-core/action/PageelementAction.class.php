@@ -10,7 +10,9 @@ use cms\model\Template;
 use cms\model\Page;
 use cms\model\Folder;
 use cms\model\BaseObject;
+use cms\publish\PublishEdit;
 use cms\publish\PublishPreview;
+use cms\publish\PublishShow;
 use Html;
 use Http;
 use LogicException;
@@ -224,6 +226,40 @@ class PageelementAction extends Action
 	 */
 	public function editView()
 	{
+		$this->value->objectid   = $this->page->objectid;
+		$this->value->pageid     = $this->page->pageid;
+		$this->value->page       = $this->page;
+		$this->value->element = &$this->element;
+		$this->value->element->load();
+		$this->value->publisher = new PublishEdit();
+
+		$this->setTemplateVar('name'       ,$this->value->element->name     );
+		$this->setTemplateVar('description',$this->value->element->desc     );
+		$this->setTemplateVar('elementid'  ,$this->value->element->elementid);
+		$this->setTemplateVar('type'       ,$this->value->element->getTypeName() );
+
+		$languages = array();
+
+		foreach ( $this->page->getProject()->getLanguages() as $languageId=>$languageName )
+        {
+            $this->value->languageid = $languageId;
+            $this->value->load();
+            $this->value->generate();
+
+            $languages[$languageId] = array(
+                'languageid'   => $languageId,
+                'languagename' => $languageName,
+                'value'        => $this->value->value
+            );
+        }
+
+        $this->setTemplateVar('languages',$languages);
+	}
+
+
+
+	public function valueView()
+	{
 		$this->value->languageid = $this->page->languageid;
 		$this->value->objectid   = $this->page->objectid;
 		$this->value->pageid     = $this->page->pageid;
@@ -259,7 +295,7 @@ class PageelementAction extends Action
 
 		if	( ! method_exists($this,$funktionName) )
 		throw new \LogicException('Method does not exist: PageElementAction#'.$funktionName );
-			
+
 		$this->$funktionName(); // Aufruf der Funktion "edit<Elementtyp>()".
 	}
 
@@ -924,7 +960,7 @@ class PageelementAction extends Action
 		/**
 		 * Ein Element der Seite speichern.
 		 */
-		public function editPost()
+		public function valuePost()
 		{
 			$this->element->load();
 			$type = $this->element->type;
@@ -933,6 +969,9 @@ class PageelementAction extends Action
 			    throw new \InvalidArgumentException('No element type available');
 
 			$funktionName = 'save'.$type;
+
+			if  ( !method_exists($this,$funktionName))
+			    throw new \InvalidArgumentException('Function not available: '.$funktionName);
 
 			$this->$funktionName(); // Aufruf Methode "save<ElementTyp>()"
 		}

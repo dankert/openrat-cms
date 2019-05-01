@@ -45,7 +45,7 @@
 					<td>
 						<?php foreach($languages as $languageid=>$languagename){ ?>
 							<div class="clickable">
-								<a target="_self" data-type="edit" data-action="pageelement" data-method="edit" data-id="<?php echo $pageelementid ?>" data-extra="{'languageid':'<?php echo $languageid ?>'}" href="<?php echo Html::url('pageelement','edit',$pageelementid,array('languageid'=>$languageid)) ?>">
+								<a class="or-link-btn" target="_self" data-type="value" data-action="pageelement" data-method="edit" data-id="<?php echo $pageelementid ?>" data-extra="{'languageid':'<?php echo $languageid ?>'}" href="<?php echo Html::url('pageelement','edit',$pageelementid,array('languageid'=>$languageid)) ?>">
 									<i class="image-icon image-icon--method-edit"></i>
 									
 									<span><?php echo nl2br(encodeHtml(htmlentities($languagename))); ?></span>
