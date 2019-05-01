@@ -36,7 +36,7 @@
 				<column>
 					<list list="languages" key="languageid" value="languagename">
 						<part class="clickable">
-							<link class="or-link-btn" type="value" action="pageelement" subaction="edit" id="var:pageelementid" var1="languageid" value1="var:languageid">
+							<link class="or-link-btn" type="edit" action="pageelement" subaction="value" id="var:pageelementid" var1="languageid" value1="var:languageid">
 								<image method="edit"></image>
 								<text var="languagename"></text>
 							</link>

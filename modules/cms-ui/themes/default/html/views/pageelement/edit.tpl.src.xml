@@ -21,8 +21,6 @@
 						<text var="value" maxlength="140" escape="true" />
 					</link>
 				</column>
-				<column>
-				</column>
 			</row>
 		</list>
 	</table>

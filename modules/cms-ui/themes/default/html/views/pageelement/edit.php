@@ -24,8 +24,6 @@
 						</a>
 
 					</td>
-					<td>
-					</td>
 				</tr>
 			<?php } ?>
 		</table>
