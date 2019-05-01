@@ -43,7 +43,7 @@ html.theme-@{cms-theme-id} {
       .box-shadow(0px, 0px, 40px, @cms-text-color);
     }
 
-    div#filler {
+    .filler {
       background-color: @cms-background-color;
 
       span.icon {
@@ -121,7 +121,7 @@ html.theme-@{cms-theme-id} {
     }
   }
 
-  ul#history > li, div.content a.action, div.content a.help, div.filler div.headermenu > a.entry, div.filler div.header a.back.button {
+  ul#history > li, div.content a.action, div.content a.help {
     border-color: @cms-title-background-color;
     .border-radius(5px);
     background-color: @cms-title-text-color;
@@ -544,11 +544,9 @@ dan
   }
 
   div#workbench {
-    div {
-      nav,main {
-        background-color: @cms-background-color;
-        background-image: linear-gradient( to bottom, @cms-background-color 0%, lighten(@cms-background-color,20%) 100% );
-      }
+    & > div {
+      background-color: @cms-background-color;
+      background-image: linear-gradient( to bottom, @cms-background-color 0%, lighten(@cms-background-color,20%) 100% );
 
       main section {
         //.box-shadow(5px,5px,5px,@cms-text-color);

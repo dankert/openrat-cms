@@ -56,10 +56,11 @@ div#dialog {
 
     &.is-closed {
         display: none;
+        width: 0;
     }
 
     /* Modale Dialoge */
-    div#filler {
+    .filler {
         position: absolute;
         z-index: 100;
         top: 0;
@@ -212,11 +213,12 @@ div#workbench {
         min-width: 0;
         min-height: 0;
 
-        > main,section#edit {
+        > main,#edit {
+            transition: flex 0.3s ease-in-out;
             flex: 1;
         }
 
-        > nav, > main, > section#edit {
+        > nav, > main, > #edit {
             min-width: 0;
             min-height: 0;
             overflow-y: auto;
@@ -224,8 +226,8 @@ div#workbench {
         }
 
         > nav {
-
-            width: 33%;
+            flex: 0.5;
+            //width: 33%;
             //overflow-y: hidden;
 
             @media @smartphones {
@@ -266,10 +268,20 @@ div#workbench {
 
         > main {
 
-            transition: width ease;
+            transition: opacity 0.5s ease;
 
             &.is-closed {
-                display: none;
+                //display: none;
+                flex: 0.5;
+                //opacity: 0.5;
+                cursor: not-allowed;
+                pointer-events: none;
+
+                @media @smartphones {
+                    flex: 0;
+                }
+
+                //overflow: hidden;
             }
 
             & > section {
@@ -312,31 +324,44 @@ div#workbench {
 
         #edit
         {
-            display: none;
-            width: 0;
-            transition: width ease;
+            //display: none;
+            flex: 0;
+            //transition: width ease;
+            //z-index: 91;
 
 
-            margin: 1.5em;
             @media @smartphones {
                 margin:0.5em;
             }
 
-            border: 1px solid;
-            .border-radius(5px);
-
 
 
             &.is-open {
-                width: auto;
-                display: block;
-                z-index: 2;
+                //display: block;
+                flex: 2;
+                border: 1px solid;
+                .border-radius(5px);
+                margin: 1.5em;
+
             }
 
 
             .view {
+                //margin-left:15%;
                 //overflow-y: auto;
             }
+
+
+
+
+            .filler {
+                z-index: 90;
+                height: 100%;
+                width: 100%;
+                opacity: 0.5;
+                display: none;
+            }
+
         }
 
     }

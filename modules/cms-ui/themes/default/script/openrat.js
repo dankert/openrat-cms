@@ -782,9 +782,9 @@ function startDialog( name,action,method,id,params )
 	let view = new View( action,method,id,params );
 
     view.before = function() {
-        $('div#dialog > .view').html('<div class="header"><img class="icon" title="" src="./themes/default/images/icon/'+method+'.png" />'+name+'</div>');
-        $('div#dialog > .view').data('id',id);
-        $('div#dialog').removeClass('is-closed').addClass('is-open');
+        $('#dialog > .view').html('<div class="header"><img class="icon" title="" src="./themes/default/images/icon/'+method+'.png" />'+name+'</div>');
+        $('#dialog > .view').data('id',id);
+        $('#dialog').removeClass('is-closed').addClass('is-open');
 
         let view = this;
 
@@ -799,7 +799,7 @@ function startDialog( name,action,method,id,params )
         $(document).keyup(this.escapeKeyClosingHandler);
 
         // Nicht-Modale Dialoge durch Klick auf freie Fläche schließen.
-        $('div#filler').click( function()
+        $('#dialog .filler').click( function()
         {
              view.close();
         });
@@ -844,10 +844,19 @@ function startEdit( name,action,method,id,params )
 
     view.before = function() {
 
+        let view = this;
+
         $edit = $('#edit');
         $edit.addClass('is-open');
 
         $('#editor').addClass('is-closed');
+
+        // Dialog durch Klick auf freie Fläche schließen.
+        $('#edit .filler').click( function()
+        {
+            view.close();
+        });
+
     };
 
     view.close = function() {
