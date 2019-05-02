@@ -227,20 +227,21 @@ div#workbench {
 
         > nav {
             flex: 0.5;
+            transition: flex 0.3s ease-in-out;
             //width: 33%;
             //overflow-y: hidden;
 
             @media @smartphones {
-                width: 0;
+                flex: 0;
             }
 
             &.small {
-                width: 5em;
+                flex: 0.05;
                 opacity: 0.5;
                 overflow-y: hidden;
 
                 &:hover {
-                    width: 50%;
+                    flex: 0.5;
                     overflow-y: auto;
                     opacity: 1;
                 }
@@ -250,7 +251,7 @@ div#workbench {
 
                 overflow-y: auto;
                 @media @smartphones {
-                    width: 90%;
+                    flex: 9;
                 }
             }
 
@@ -385,9 +386,9 @@ div#workbench {
     }
 
     .toolbar-icon.search {
-        width: 8em;
+        //width: 8em;
         @media @smartphones {
-            width: 8em;
+            //width: 8em;
         }
 
         input {

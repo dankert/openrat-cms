@@ -7,7 +7,7 @@
 					
 				</div>
 				<div class="toolbar-icon toggle-nav-small">
-					<i class="image-icon image-icon--menu-menu"></i>
+					<i class="image-icon image-icon--menu-minimize"></i>
 					
 				</div>
 				<?php $if4=(isset($$dbname)); if($if4){?>
@@ -278,7 +278,7 @@
 						</div>
 						<div class="dropdown">
 							<div class="entry clickable filtered on-action-user">
-								<a title="<?php echo lang('menu_password_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="pw" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'pw'}" href="<?php echo Html::url('','pw','',array('dialogAction'=>'','dialogMethod'=>'pw')) ?>">
+								<a title="<?php echo lang('menu_password_desc') ?>" target="_self" data-type="edit" data-action="" data-method="pw" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','pw','',array()) ?>">
 									<i class="image-icon image-icon--method-password"></i>
 									
 									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_password'.'')))); ?></span>
@@ -287,7 +287,7 @@
 
 							</div>
 							<div class="entry clickable filtered on-action-user on-action-group">
-								<a title="<?php echo lang('menu_memberships_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="memberships" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'memberships'}" href="<?php echo Html::url('','memberships','',array('dialogAction'=>'','dialogMethod'=>'memberships')) ?>">
+								<a title="<?php echo lang('menu_memberships_desc') ?>" target="_self" data-type="edit" data-action="" data-method="memberships" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','memberships','',array()) ?>">
 									<i class="image-icon image-icon--method-membership"></i>
 									
 									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_memberships'.'')))); ?></span>
@@ -307,7 +307,7 @@
 							<div class="divide">
 							</div>
 							<div class="entry clickable filtered on-action-page">
-								<a title="<?php echo lang('menu_changetemplate_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="changetemplate" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'changetemplate'}" href="<?php echo Html::url('','changetemplate','',array('dialogAction'=>'','dialogMethod'=>'changetemplate')) ?>">
+								<a title="<?php echo lang('menu_changetemplate_desc') ?>" target="_self" data-type="edit" data-action="" data-method="changetemplate" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','changetemplate','',array()) ?>">
 									<i class="image-icon image-icon--method-changetemplate"></i>
 									
 									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_changetemplate'.'')))); ?></span>
@@ -316,7 +316,7 @@
 
 							</div>
 							<div class="entry clickable filtered on-action-template on-action-configuration on-action-page">
-								<a title="<?php echo lang('menu_src_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="src" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'src'}" href="<?php echo Html::url('','src','',array('dialogAction'=>'','dialogMethod'=>'src')) ?>">
+								<a title="<?php echo lang('menu_src_desc') ?>" target="_self" data-type="edit" data-action="" data-method="src" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','src','',array()) ?>">
 									<i class="image-icon image-icon--method-code"></i>
 									
 									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_src'.'')))); ?></span>
@@ -325,7 +325,7 @@
 
 							</div>
 							<div class="entry clickable filtered on-action-template">
-								<a title="<?php echo lang('menu_extension_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="extension" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'extension'}" href="<?php echo Html::url('','extension','',array('dialogAction'=>'','dialogMethod'=>'extension')) ?>">
+								<a title="<?php echo lang('menu_extension_desc') ?>" target="_self" data-type="edit" data-action="" data-method="extension" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','extension','',array()) ?>">
 									<i class="image-icon image-icon--method-extension"></i>
 									
 									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_extension'.'')))); ?></span>
@@ -336,7 +336,7 @@
 							<div class="divide">
 							</div>
 							<div class="entry clickable filtered on-action-text">
-								<a title="<?php echo lang('menu_value_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="value" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'value'}" href="<?php echo Html::url('','value','',array('dialogAction'=>'','dialogMethod'=>'value')) ?>">
+								<a title="<?php echo lang('menu_value_desc') ?>" target="_self" data-type="edit" data-action="" data-method="value" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','value','',array()) ?>">
 									<i class="image-icon image-icon--method-value"></i>
 									
 									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_value'.'')))); ?></span>
@@ -356,7 +356,7 @@
 							<div class="divide">
 							</div>
 							<div class="entry clickable filtered on-action-image">
-								<a title="<?php echo lang('menu_size_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="size" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'size'}" href="<?php echo Html::url('','size','',array('dialogAction'=>'','dialogMethod'=>'size')) ?>">
+								<a title="<?php echo lang('menu_size_desc') ?>" target="_self" data-type="edit" data-action="" data-method="size" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','size','',array()) ?>">
 									<i class="image-icon image-icon--method-size"></i>
 									
 									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_size'.'')))); ?></span>

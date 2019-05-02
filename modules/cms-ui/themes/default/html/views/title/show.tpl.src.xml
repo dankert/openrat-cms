@@ -11,7 +11,7 @@
             </part>
 
             <part class="toolbar-icon toggle-nav-small">
-                <image menu="menu"/>
+                <image menu="minimize"/>
                 <!--<text class="label" key="menu"></text>-->
             </part>
 
@@ -302,14 +302,14 @@
                     <part class="dropdown">
 
                         <part class="entry clickable filtered on-action-user">
-                            <link type="dialog" title="message:menu_password_desc"
+                            <link type="edit" title="message:menu_password_desc"
                                   subaction="pw">
                                 <image method="password"></image>
                                 <text key="menu_password"></text>
                             </link>
                         </part>
                         <part class="entry clickable filtered on-action-user on-action-group">
-                            <link type="dialog" title="message:menu_memberships_desc"
+                            <link type="edit" title="message:menu_memberships_desc"
                                   subaction="memberships">
                                 <image method="membership"></image>
                                 <text key="menu_memberships"></text>
@@ -327,7 +327,7 @@
                         <part class="divide"/>
 
                         <part class="entry clickable filtered on-action-page">
-                            <link type="dialog" title="message:menu_changetemplate_desc"
+                            <link type="edit" title="message:menu_changetemplate_desc"
                                   subaction="changetemplate">
                                 <image method="changetemplate"></image>
                                 <text key="menu_changetemplate"></text>
@@ -335,7 +335,7 @@
                         </part>
 
                         <part class="entry clickable filtered on-action-template on-action-configuration on-action-page">
-                            <link type="dialog" title="message:menu_src_desc"
+                            <link type="edit" title="message:menu_src_desc"
                                   subaction="src">
                                 <image method="code"></image>
                                 <text key="menu_src"></text>
@@ -343,7 +343,7 @@
                         </part>
 
                         <part class="entry clickable filtered on-action-template">
-                            <link type="dialog" title="message:menu_extension_desc"
+                            <link type="edit" title="message:menu_extension_desc"
                                   subaction="extension">
                                 <image method="extension"></image>
                                 <text key="menu_extension"></text>
@@ -353,7 +353,7 @@
                         <part class="divide"/>
 
                         <part class="entry clickable filtered on-action-text">
-                            <link type="dialog" title="message:menu_value_desc"
+                            <link type="edit" title="message:menu_value_desc"
                                   subaction="value">
                                 <image method="value"></image>
                                 <text key="menu_value"></text>
@@ -371,7 +371,7 @@
                         <part class="divide"/>
 
                         <part class="entry clickable filtered on-action-image">
-                            <link type="dialog" title="message:menu_size_desc"
+                            <link type="edit" title="message:menu_size_desc"
                                   subaction="size">
                                 <image method="size"></image>
                                 <text key="menu_size"></text>
