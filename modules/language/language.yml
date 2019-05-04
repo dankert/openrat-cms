@@ -6125,3 +6125,9 @@ SEARCH_FILTER:
 QRCODE_SHOW:
   de: QR-Code anzeigen
   en: Show QR-Code
+LABEL:
+  de: Anzeigename
+  en: Label
+NAME:
+  de: Name
+  en: Name

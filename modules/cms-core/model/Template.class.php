@@ -277,6 +277,7 @@ SQL
 	{
 		$element = new Element();
 		$element->name       = $name;
+		$element->label      = $name;
 		$element->desc       = $description;
 		$element->typeid     = $typeid;
 		$element->templateid = $this->templateid;

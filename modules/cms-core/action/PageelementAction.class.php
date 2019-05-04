@@ -233,7 +233,7 @@ class PageelementAction extends Action
 		$this->value->element->load();
 		$this->value->publisher = new PublishEdit();
 
-		$this->setTemplateVar('name'       ,$this->value->element->name     );
+		$this->setTemplateVar('name'       ,$this->value->element->label    );
 		$this->setTemplateVar('description',$this->value->element->desc     );
 		$this->setTemplateVar('elementid'  ,$this->value->element->elementid);
 		$this->setTemplateVar('type'       ,$this->value->element->getTypeName() );

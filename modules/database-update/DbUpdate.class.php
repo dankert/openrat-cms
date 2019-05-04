@@ -2,7 +2,7 @@
 
 use database\Database;
 
-define('OR_DB_SUPPORTED_VERSION'     ,17);
+define('OR_DB_SUPPORTED_VERSION'     ,18);
 
 define('OR_DB_STATUS_UPDATE_PROGRESS', 0);
 define('OR_DB_STATUS_UPDATE_SUCCESS' , 1);
@@ -22,10 +22,10 @@ class DbUpdate
 		
 		if	( $version > OR_DB_SUPPORTED_VERSION )
 			// Oh oh, in der Datenbank ist eine neue Version, als wir unterstüzten.
-			throw new \LogicException('Actual DB version is not supported.',"DB-Version is $version, but this is OpenRat ".OR_VERSION." which only supports version ".OR_DB_SUPPORTED_VERSION );
+			throw new \LogicException('Actual DB version is not supported. '."DB-Version is $version, but this is OpenRat ".OR_VERSION." which only supports version ".OR_DB_SUPPORTED_VERSION );
 
 		if	( ! $db->conf['auto_update'])
-			throw new \LogicException('DB Update necessary.',"DB-Version is $version. Auto-Update is disabled, but this is OpenRat ".OR_VERSION." needs the version ".OR_DB_SUPPORTED_VERSION );
+			throw new \LogicException('DB Update necessary. '."DB-Version is $version. Auto-Update is disabled, but this is OpenRat ".OR_VERSION." needs the version ".OR_DB_SUPPORTED_VERSION );
 		
 		for( $installVersion = $version + 1; $installVersion <= OR_DB_SUPPORTED_VERSION; $installVersion++ )
 		{

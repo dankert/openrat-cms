@@ -1303,4 +1303,6 @@ MENU_INDEX_ADMINISTRATION_DESC =",
 'CMS'=>"Content Management System",
 'SEARCH_FILTER'=>"Filter",
 'QRCODE_SHOW'=>"Show QR-Code",
+'LABEL'=>"Label",
+'NAME'=>"Name",
 );}

@@ -442,7 +442,7 @@ class PageAction extends ObjectAction
 			if   ( $value->element->isWritable() )
 			{
 				$list[$id] = array();
-				$list[$id]['name']           = $value->element->name;
+				$list[$id]['name']           = $value->element->label;
 				$list[$id]['pageelementid' ] = $this->page->objectid.'_'.$id;
 				$list[$id]['desc']           = $value->element->desc;
 				$list[$id]['languageid']     = $this->page->languageid;
@@ -581,6 +581,7 @@ class PageAction extends ObjectAction
         // The output is only shown in an iframe, so there is no security impact to the CMS.
         // But if the template is using inline JS or CSS, we would break this with a CSP-header.
         header('Content-Security-Policy:');
+        // TODO: Read CSP from root folder settings.
 
         // Seite definieren
 		if	( $this->hasRequestVar('withIcons') )

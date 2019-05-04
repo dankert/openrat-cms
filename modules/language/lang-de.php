@@ -1279,4 +1279,6 @@ function language() { return array(
 'CMS'=>"Redaktionssystem",
 'SEARCH_FILTER'=>"Filter",
 'QRCODE_SHOW'=>"QR-Code anzeigen",
+'LABEL'=>"Anzeigename",
+'NAME'=>"Name",
 );}

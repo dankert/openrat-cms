@@ -88,6 +88,12 @@ class Element
 	var $name;
 
 	/**
+	 * Eingabefeld-Bezeichnung für dieses Element.
+	 * @type String
+	 */
+	var $label;
+
+	/**
 	 * Beschreibung zu diesem Element
 	 * Zu jedem Element kann eine Beschreibung hinterlegt werden, die dem Redakteur bei der Bearbeitung
 	 * der Inhalte als Bearbeitungshilfe dienen kann.
@@ -186,6 +192,7 @@ class Element
 
         $sql->setInt    ( 'elementid'  ,$this->elementid  );
 		$sql->setString ( 'name'       ,$this->name       );
+		$sql->setString ( 'label'      ,$this->label      );
 		$sql->setInt    ( 'typeid'     ,$this->typeid     );
 		$sql->setInt    ( 'templateid' ,$this->templateid );
 		$sql->setBoolean( 'flags'      ,$flags            );
@@ -228,6 +235,7 @@ SQL
 		$this->elementid      = $prop['id'        ];
 		$this->templateid     = $prop['templateid'];
 		$this->name           = $prop['name'      ];
+		$this->label          = $prop['label'     ];
 		$this->desc           = $prop['descr'     ];
         $this->typeid         = $prop['typeid'    ];
         $this->type           = Element::getAvailableTypes()[ $this->typeid ]; // name of type
@@ -266,6 +274,7 @@ SQL
 		$sql = $db->sql( 'UPDATE {{element}}'.
 		                ' SET templateid      = {templateid},'.
 		                '     name            = {name},'.
+		                '     label           = {label},'.
 		                '     descr           = {desc},'.
 		                '     typeid          = {typeid},'.
 		                '     subtype         = {subtype},'.
@@ -291,6 +300,7 @@ SQL
         $sql->setInt    ( 'elementid'       ,$this->elementid        );
 		$sql->setInt    ( 'templateid'      ,$this->templateid       );
 		$sql->setString ( 'name'            ,$this->name             );
+		$sql->setString ( 'label'           ,$this->label            );
 		$sql->setString ( 'desc'            ,$this->desc             );
 		$sql->setInt    ( 'typeid'          ,$this->typeid           );
 		$sql->setString ( 'subtype'         ,$this->subtype          );
@@ -357,14 +367,15 @@ SQL
 	/**
 	 * Loeschen des Elementes und aller Inhalte
 	 */
-	function delete()
+	public function delete()
 	{
 		$db = db_connection();
 
-		// Inhalte l?schen
+		// Inhalte loeschen.
+        // notwendig, damit die Fremdschlüsselbeziehungen auf diesen Element aufgehoben werden.
 		$this->deleteValues();
 
-		// Element l?schen
+		// Element loeschen
 		$sql = $db->sql('DELETE FROM {{element}} '.
 		               '  WHERE id={elementid}'   );
 		$sql->setInt( 'elementid',$this->elementid );
@@ -377,7 +388,7 @@ SQL
 	 * L?schen aller Seiteninhalte mit diesem Element
 	 * Das Element wird nicht gel?scht.
 	 */
-	function deleteValues()
+	public function deleteValues()
 	{
 		$db = db_connection();
 

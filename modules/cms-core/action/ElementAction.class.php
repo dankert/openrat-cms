@@ -36,8 +36,11 @@ use Text;
 class ElementAction extends Action
 {
 	public $security = SECURITY_USER;
-	
-	var $element;
+
+    /**
+     * @var Element
+     */
+	private $element;
 
     private $template;
 
@@ -70,6 +73,7 @@ class ElementAction extends Action
 	function editPost()
 	{
 		$this->element->name = $this->getRequestVar('name'       ,OR_FILTER_ALPHANUM);
+		$this->element->label= $this->getRequestVar('label'      ,OR_FILTER_ALPHANUM);
 		$this->element->desc = $this->getRequestVar('description','all'     );
 
 		$this->element->save();
@@ -142,6 +146,7 @@ class ElementAction extends Action
 
 		// Name und Beschreibung
 		$this->setTemplateVar('name'       ,$this->element->name);
+		$this->setTemplateVar('label'      ,$this->element->label);
 
 		$this->setTemplateVar('description',$this->element->desc);
 	}
