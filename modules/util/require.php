@@ -33,4 +33,5 @@ require_once( __DIR__.'/'.'Upload.class.php' );
 require_once( __DIR__.'/'.'ArchiveTar.class.php'     );
 require_once( __DIR__.'/'.'ArchiveUnzip.class.php'   );
 require_once( __DIR__.'/'.'ArchiveZip.class.php'     );
+require_once( __DIR__.'/'.'Mustache.class.php'     );
 
