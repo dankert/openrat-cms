@@ -591,6 +591,11 @@ class PageAction extends ObjectAction
 
 		$this->page->publisher = $publisher;
 
+		if ( empty($this->page->languageid) )
+            $this->page->languageid = $this->page->getProject()->getDefaultLanguageId();
+		if ( empty($this->page->modelid) )
+            $this->page->modelid = $this->page->getProject()->getDefaultModelId();
+
 		$this->page->load();
 		$this->page->generate();
 
