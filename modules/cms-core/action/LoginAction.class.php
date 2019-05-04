@@ -1738,12 +1738,6 @@ class LoginAction extends Action
         try {
             $adminDbConfig = Conf()->subset('database')->subset($dbid);
 
-            if ( !$adminDbConfig->is('auto_update')) {
-
-                Logger::warn("Auto-Update is disabled");
-                return;
-            }
-
             $adminDb = new Database( config('database',$dbid), true);
             $adminDb->id = $dbid;
         } catch (Exception $e) {
