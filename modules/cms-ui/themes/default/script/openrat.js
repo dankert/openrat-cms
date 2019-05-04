@@ -553,9 +553,12 @@ function Form() {
     this.initOnElement = function( element ) {
         this.element = element;
 
-        // Autosave in Formularen. Bei Veränderungen wird das Formular sofort abgeschickt.
+        let form = this;
+
+        // Autosave in Formularen.
+        // Bei Veränderungen von Checkboxen wird das Formular sofort abgeschickt.
         $(element).find('form[data-autosave="true"] input[type="checkbox"]').click( function() {
-            $(this).closest('form').submit();
+            form.submit();
         });
 
         // After click to "OK" the form is submitted.
@@ -565,8 +568,6 @@ function Form() {
             $(this).closest('form').submit();
         });
         */
-
-        let form = this;
 
         $(element).find('.or-form-btn--cancel').click( function() {
             form.cancel();
