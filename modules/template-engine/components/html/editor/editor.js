@@ -35,26 +35,26 @@ $(document).on('orViewLoaded',function(event, data) {
 	// Codemirror-Editor anzeigen
 	$(event.target).find("textarea.editor.code-editor").each( function() {
 
-		var mode = $(this).data('mode');
+		let mode = $(this).data('mode');
 
-        var mimetype = $(this).data('mimetype');
+        let mimetype = $(this).data('mimetype');
 		if(mimetype.length>0)
 			mode = mimetype;
 
+        let textareaEl = this;
 
-        var editor = CodeMirror.fromTextArea( this, {
+        let editor = CodeMirror.fromTextArea( textareaEl, {
             lineNumbers: true,
             viewportMargin: Infinity,
 			mode: mode
             /** settings **/ })
 
-        var textareaEl = this;
-
-        // copy back to textarea on form submit...
-        $(textareaEl).closest('form').submit(function() {
-            var newValue = editor.getValue();
+        editor.on('change',function() {
+            // copy back to textarea on form submit...
+            let newValue = editor.getValue();
             $(textareaEl).val( newValue );
-        })
+        } );
+
     } );
 
 	// Markdown-Editor anzeigen
