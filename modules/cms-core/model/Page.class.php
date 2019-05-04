@@ -16,7 +16,9 @@ namespace cms\model;
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+use cms\mustache\Mustache;
 use cms\publish\PublishPreview;use cms\publish\PublishPublic;
+use Logger;
 
 
 /**
@@ -573,40 +575,55 @@ SQL
 		$this->ext = $this->template->extension;
 
 		$this->generate_elements();
+
+		// Get a List with ElementId->ElementName
+		$elements = array_map(function($element) {
+			return $element->name;
+		},$this->getElements() );
 		 
 		$src = $this->template->src;
+		$data = array();
 
-		// Ersetzen der Platzhalter durch die Element-Inhalte
-		
-		foreach( $this->values as $id=>$value )
+		// No we are collecting the data and are fixing some old stuff.
+
+		foreach( $elements as $elementId=>$elementName )
 		{
-			$inh = $value->value;
-			$src = str_replace( '{{'.$id.'}}',$inh,$src );
-			
-			// Dynamische Bereiche ein- oder ausblenden
-			if	( $inh == '' )
-			{
-				// Wenn Feld leer
-				$src = str_replace( '{{IFEMPTY:'.$id.':BEGIN}}','',$src );
-				$src = str_replace( '{{IFEMPTY:'.$id.':END}}'  ,'',$src );
+			$data[ $elementName ] = $this->values[$elementId]->value;
 
-				$src = \Text::entferneVonBis( $src,'{{IFNOTEMPTY:'.$id.':BEGIN}}','{{IFNOTEMPTY:'.$id.':END}}' );
-			}
-			else
-			{
-				// Wenn Feld gefuellt
-				$src = str_replace( '{{IFNOTEMPTY:'.$id.':BEGIN}}','',$src );
-				$src = str_replace( '{{IFNOTEMPTY:'.$id.':END}}'  ,'',$src );
-				
-				$src = \Text::entferneVonBis( $src,'{{IFEMPTY:'.$id.':BEGIN}}','{{IFEMPTY:'.$id.':END}}' );
-			}
-			
+			// The following code is for old template values:
+
+			// convert {{<id>}} to {{<name>}}
+			$src = str_replace( '{{'.$elementId.'}}','{{'.$elementName.'}}',$src );
+
+            $src = str_replace( '{{IFNOTEMPTY:'.$elementId.':BEGIN}}','{{#'.$elementName.'}}',$src );
+            $src = str_replace( '{{IFNOTEMPTY:'.$elementId.':END}}'  ,'{{/'.$elementName.'}}',$src );
+            $src = str_replace( '{{IFEMPTY:'   .$elementId.':BEGIN}}','{{^'.$elementName.'}}',$src );
+            $src = str_replace( '{{IFEMPTY:'   .$elementId.':END}}'  ,'{{/'.$elementName.'}}',$src );
+
 			if   ( $this->icons )
-				$src = str_replace( '{{->'.$id.'}}','<a href="javascript:parent.openNewAction(\''.$value->element->name.'\',\'pageelement\',\''.$this->objectid.'_'.$value->element->elementid.'\');" title="'.$value->element->desc.'"><img src="'.OR_THEMES_DIR.$conf['interface']['theme'].'/images/icon_el_'.$value->element->type.IMG_ICON_EXT.'" border="0" align="left"></a>',$src );
+				$src = str_replace( '{{->'.$elementId.'}}','<a href="javascript:parent.openNewAction(\''.$elementName.'\',\'pageelement\',\''.$this->objectid.'_'.$value->element->elementid.'\');" title="'.$value->element->desc.'"><img src="'.OR_THEMES_DIR.$conf['interface']['theme'].'/images/icon_el_'.$value->element->type.IMG_ICON_EXT.'" border="0" align="left"></a>',$src );
 			else
-				$src = str_replace( '{{->'.$id.'}}','',$src );
+				$src = str_replace( '{{->'.$elementId.'}}','',$src );
 		}
-		
+
+		// Now we have collected all data, lets call the template engine:
+
+        $template = new Mustache();
+		$template->escape = null; // No HTML escaping, this is the job of this CMS ;)
+        try {
+        	$template->parse($src);
+        } catch (\Exception $e) {
+			// Should we throw it to the caller?
+			// No, because it is not a technical error. So let's only log it.
+			Logger::warn("Template rendering failed: ".$e->getMessage() );
+			return $e->getMessage();
+        }
+        $src = $template->render( $data );
+
+        // now we have the fully generated source.
+
+		// should we do a UTF-8-escaping here?
+		// Default should be off, because if you are fully using utf-8 (you should do), this is unnecessary.
 		if	( config('publish','escape_8bit_characters') )
 			if	( substr($this->mimeType(),-4) == 'html' )
 			{
@@ -620,7 +637,7 @@ SQL
 				$src = translateutf8tohtml($src);
 			}
 		
-		$this->value = &$src;
+		$this->value = $src;
 
 		// Store in cache.
 		$f = fopen( $this->tmpfile(),'w' );
