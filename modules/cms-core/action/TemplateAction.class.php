@@ -90,6 +90,8 @@ class TemplateAction extends Action
 
         $newSource = $this->request->getRequestVar('source',OR_FILTER_RAW);
 
+        /*
+        // Not useful any more. Technical name of a element should not be changed.
         foreach ($this->template->getElementNames() as $elid => $elname) {
             $newSource = str_replace('{{' . $elname . '}}', '{{' . $elid . '}}', $newSource);
             $newSource = str_replace('{{->' . $elname . '}}', '{{->' . $elid . '}}', $newSource);
@@ -98,6 +100,7 @@ class TemplateAction extends Action
             $newSource = str_replace('{{' . lang('TEMPLATE_SRC_IFNOTEMPTY') . ':' . $elname . ':' . lang('TEMPLATE_SRC_BEGIN') . '}}', '{{IFNOTEMPTY:' . $elid . ':BEGIN}}', $newSource);
             $newSource = str_replace('{{' . lang('TEMPLATE_SRC_IFNOTEMPTY') . ':' . $elname . ':' . lang('TEMPLATE_SRC_END') . '}}', '{{IFNOTEMPTY:' . $elid . ':END}}', $newSource);
         }
+        */
 
         $templatemodel->src = $newSource;
 
@@ -443,23 +446,24 @@ class TemplateAction extends Action
                 $element = new Element( $elid );
                 $element->load();
 
+                // Fix old stuff:
                 $text = str_replace('{{'.$elid.'}}',
                     '{{'.$element->name.'}}',
                     $text );
                 $text = str_replace('{{->'.$elid.'}}',
-                    '{{->'.$element->name.'}}',
+                    '{{goto.'.$element->name.'}}',
                     $text );
                 $text = str_replace('{{IFEMPTY:'.$elid.':BEGIN}}',
-                    '{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}',
+                    '{{^'.$element->name.'}}',
                     $text );
                 $text = str_replace('{{IFEMPTY:'.$elid.':END}}',
-                    '{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_END').'}}',
+                    '{{/'.$element->name.'}}',
                     $text );
                 $text = str_replace('{{IFNOTEMPTY:'.$elid.':BEGIN}}',
-                    '{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}',
+                    '{{#'.$element->name.'}}',
                     $text );
                 $text = str_replace('{{IFNOTEMPTY:'.$elid.':END}}',
-                    '{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_END').'}}',
+                    '{{/'.$element->name.'}}',
                     $text );
             }
 
@@ -518,23 +522,24 @@ class TemplateAction extends Action
             $element = new Element( $elid );
             $element->load();
 
+            // Fix old stuff:
             $text = str_replace('{{'.$elid.'}}',
                 '{{'.$element->name.'}}',
                 $text );
             $text = str_replace('{{->'.$elid.'}}',
-                '{{->'.$element->name.'}}',
+                '{{goto.'.$element->name.'}}',
                 $text );
             $text = str_replace('{{IFEMPTY:'.$elid.':BEGIN}}',
-                '{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}',
+                '{{^'.$element->name.'}}',
                 $text );
             $text = str_replace('{{IFEMPTY:'.$elid.':END}}',
-                '{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_END').'}}',
+                '{{/'.$element->name.'}}',
                 $text );
             $text = str_replace('{{IFNOTEMPTY:'.$elid.':BEGIN}}',
-                '{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}',
+                '{{#'.$element->name.'}}',
                 $text );
             $text = str_replace('{{IFNOTEMPTY:'.$elid.':END}}',
-                '{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_END').'}}',
+                '{{/'.$element->name.'}}',
                 $text );
         }
 
