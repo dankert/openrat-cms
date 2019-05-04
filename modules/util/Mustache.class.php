@@ -390,7 +390,7 @@ class MustacheBlock extends MustacheNode {
     /**
      * @var MustacheNode
      */
-    public $nodes;
+    public $nodes = array();
 
     /**
      * Should this block be rendered?
