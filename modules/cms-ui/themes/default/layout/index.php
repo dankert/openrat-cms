@@ -98,7 +98,7 @@
         ?>
     </div>
 
-    <div id="filler"><?php /* empty element, this is only for styling the background. */ ?>
+    <div class="filler"><?php /* empty element, this is only for styling the background. */ ?>
         <span class="icon">X</span>
     </div>
 </div>
