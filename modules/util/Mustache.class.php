@@ -296,7 +296,8 @@ class MustacheTag
     const BLOCK_VAR = '$';
 
     const VARIABLE = '';
-    const VALID_TYPES = array(
+
+    private $VALID_TYPES = array(
         self::CLOSING, self::NEGATION, self::SECTION, self::COMMENT, self::PARTIAL, self::PARENT, self::DELIM_CHANGE, self::UNESCAPED_2, self::UNESCAPED, self::PRAGMA, self::BLOCK_VAR
     );
 
@@ -322,7 +323,7 @@ class MustacheTag
     private function parseTag($tagText)
     {
         $t = substr($tagText, 0, 1);
-        if (in_array($t, self::VALID_TYPES)) {
+        if (in_array($t, $this->VALID_TYPES)) {
             $this->type = $t;
             $property = substr($tagText, 1);
             $this->propertyName = trim($property);
