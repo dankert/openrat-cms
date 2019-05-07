@@ -22,7 +22,7 @@ define('PHP_EXT'         ,'php'    );
 define('IMG_EXT'         ,'.gif'   );
 define('IMG_ICON_EXT'    ,'.png'   );
 
-define('OR_VERSION'      ,'1.1-snapshot'  );
+require(__DIR__.'/version.php');
 define('OR_TITLE'        ,'OpenRat CMS');
 
 define('OR_TYPE_FOLDER','folder');

@@ -226,8 +226,6 @@ class Dispatcher
             $customConfig = $configLoader->load();
             $conf = array_replace_recursive($conf, $customConfig);
 
-            $conf['build']   = parse_ini_file( __DIR__.'/../../build.ini');
-            $conf['version'] = parse_ini_file( __DIR__.'/../../version.ini');
             // Sprache lesen
 
             if ($conf['i18n']['use_http'])
