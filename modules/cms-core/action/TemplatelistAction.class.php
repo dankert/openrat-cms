@@ -33,7 +33,7 @@ use Session;
 
 class TemplatelistAction extends Action
 {
-	public $security = SECURITY_USER;
+	public $security = Action::SECURITY_USER;
 
     /**
      * @var Project

@@ -37,7 +37,7 @@ namespace cms\action
      */
     class TextAction extends FileAction
     {
-        public $security = SECURITY_USER;
+        public $security = Action::SECURITY_USER;
 
         var $text;
 

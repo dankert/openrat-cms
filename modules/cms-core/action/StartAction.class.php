@@ -50,7 +50,7 @@ if	( !defined('PROJECTID_ADMIN') )
 
 class StartAction extends Action
 {
-	public $security = SECURITY_USER;
+	public $security = Action::SECURITY_USER;
 	
 	var $mustChangePassword = false;
 	

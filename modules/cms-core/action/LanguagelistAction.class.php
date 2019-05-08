@@ -35,7 +35,7 @@ use \Html;
  */
 class LanguagelistAction extends Action
 {
-	public $security = SECURITY_USER;
+	public $security = Action::SECURITY_USER;
 
     /**
      * @var Project

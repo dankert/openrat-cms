@@ -49,10 +49,6 @@ define('REQUEST_ID'           ,'req0' ); // Nicht mehr notwendig, kann entfallen
 define('OR_HTML_MODULES_DIR'  ,'./modules/'      );
 define('OR_THEMES_DIR'        ,OR_HTML_MODULES_DIR.'cms-ui/themes/');
 
-define('SECURITY_GUEST',1); // Jeder (auch nicht angemeldete) dürfen diese Aktion ausführen
-define('SECURITY_USER' ,2); // Angemeldete Benutzer dürfen diese Aktion ausführen
-define('SECURITY_ADMIN',3); // Nur Administratoren dürfen diese Aktion ausführen
-
 
 
 /**

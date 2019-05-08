@@ -41,7 +41,7 @@ use \Text;
 
 class TemplateAction extends Action
 {
-	public $security = SECURITY_USER;
+	public $security = Action::SECURITY_USER;
 	
 	var $defaultSubAction = 'show';
 

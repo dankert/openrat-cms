@@ -31,7 +31,7 @@ use cms\model\Project;
  */
 class ProjectlistAction extends Action
 {
-	public $security = SECURITY_USER;
+	public $security = Action::SECURITY_USER;
 	
 	function __construct()
 	{

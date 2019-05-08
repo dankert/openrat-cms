@@ -20,7 +20,7 @@ use Upload;
  */
 class ImageAction extends FileAction
 {
-	public $security = SECURITY_USER;
+	public $security = Action::SECURITY_USER;
 
 	var $image;
 

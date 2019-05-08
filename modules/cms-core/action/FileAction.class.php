@@ -38,7 +38,7 @@ use Upload;
  */
 class FileAction extends ObjectAction
 {
-	public $security = SECURITY_USER;
+	public $security = Action::SECURITY_USER;
 
     /**
      * @var File

@@ -137,14 +137,14 @@ class Dispatcher
     private function checkAccess($do)
     {
         switch (@$do->security) {
-            case SECURITY_GUEST:
+            case Action::SECURITY_GUEST:
                 // Ok.
                 break;
-            case SECURITY_USER:
+            case Action::SECURITY_USER:
                 if (!is_object($do->currentUser))
                     throw new SecurityException('No user logged in, but this action requires a valid user');
                 break;
-            case SECURITY_ADMIN:
+            case Action::SECURITY_ADMIN:
                 if (!is_object($do->currentUser) || !$do->currentUser->isAdmin)
                     throw new SecurityException('This action requires administration privileges, but user ' . $do->currentUser->name . ' is not an admin');
                 break;

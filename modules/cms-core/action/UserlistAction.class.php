@@ -30,7 +30,7 @@ use cms\model\User;
  */
 class UserlistAction extends Action
 {
-	public $security = SECURITY_ADMIN;
+	public $security = Action::SECURITY_ADMIN;
 	
 	function __construct()
 	{

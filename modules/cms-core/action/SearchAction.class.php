@@ -50,7 +50,7 @@ define('SEARCH_FLAG_VALUE'      ,16);
  */
 class SearchAction extends Action
 {
-	public $security = SECURITY_USER;
+	public $security = Action::SECURITY_USER;
 
 	
 	/**

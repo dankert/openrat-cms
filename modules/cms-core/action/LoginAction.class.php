@@ -58,7 +58,7 @@ define('PROJECTID_ADMIN',-1);
 
 class LoginAction extends Action
 {
-	public $security = SECURITY_GUEST;
+	public $security = Action::SECURITY_GUEST;
 
 
 	public function __construct()

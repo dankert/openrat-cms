@@ -35,7 +35,7 @@ use \Html;
  */
 class ModelAction extends Action
 {
-	public $security = SECURITY_USER;
+	public $security = Action::SECURITY_USER;
 	
 	var $defaultSubAction = 'listing';
 	var $model;

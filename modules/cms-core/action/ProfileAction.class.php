@@ -36,7 +36,7 @@ use \Session;
  */
 class ProfileAction extends Action
 {
-	public $security = SECURITY_USER;
+	public $security = Action::SECURITY_USER;
 	
 	private $user;
 	var $defaultSubAction = 'edit';

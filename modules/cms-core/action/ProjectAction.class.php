@@ -31,7 +31,7 @@ use cms\model\Folder;
  */
 class ProjectAction extends Action
 {
-	public $security = SECURITY_ADMIN;
+	public $security = Action::SECURITY_ADMIN;
 
     /**
      * @var Project

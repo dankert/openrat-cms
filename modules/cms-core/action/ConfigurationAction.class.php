@@ -27,7 +27,7 @@ use Session;
  */
 class ConfigurationAction extends Action
 {
-	public $security = SECURITY_ADMIN;
+	public $security = Action::SECURITY_ADMIN;
 	
 	/**
 	 * Konstruktor

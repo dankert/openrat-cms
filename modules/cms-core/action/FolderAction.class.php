@@ -30,7 +30,7 @@ use Upload;
 
 class FolderAction extends ObjectAction
 {
-	public $security = SECURITY_USER;
+	public $security = Action::SECURITY_USER;
 
     /**
      * @var Folder

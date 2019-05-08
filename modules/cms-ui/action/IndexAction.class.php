@@ -25,7 +25,7 @@ use template_engine\TemplateEngineInfo;
  */
 class IndexAction extends Action
 {
-	public $security = SECURITY_GUEST;
+	public $security = Action::SECURITY_GUEST;
 
 	
 	/**

@@ -35,7 +35,7 @@ use \Html;
  */
 class TitleAction extends Action
 {
-	public $security = SECURITY_GUEST;
+	public $security = Action::SECURITY_GUEST;
 		
 	/**
 	 * Fuellen der Variablen und Anzeigen der Titelleiste

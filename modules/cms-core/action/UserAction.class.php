@@ -43,7 +43,7 @@ use \Mail;
  */
 class UserAction extends Action
 {
-	public $security = SECURITY_ADMIN;
+	public $security = Action::SECURITY_ADMIN;
 
     /**
      * @var User

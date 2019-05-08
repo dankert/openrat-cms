@@ -35,7 +35,7 @@ use \Html;
  */
 class FilebrowserAction extends ObjectAction
 {
-	public $security = SECURITY_USER;
+	public $security = Action::SECURITY_USER;
 	
 	var $command;
 	var $resourceType;

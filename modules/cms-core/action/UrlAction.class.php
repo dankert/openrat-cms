@@ -37,7 +37,7 @@ use Session;
  */
 class UrlAction extends ObjectAction
 {
-	public $security = SECURITY_USER;
+	public $security = Action::SECURITY_USER;
 	
 	var $url;
 	var $defaultSubAction = 'prop';

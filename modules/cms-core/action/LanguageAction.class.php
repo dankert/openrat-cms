@@ -32,7 +32,7 @@ use \Html;
  */
 class LanguageAction extends Action
 {
-	public $security = SECURITY_USER;
+	public $security = Action::SECURITY_USER;
 	
 	/**
 	 * Zu bearbeitende Sprache, wird im Kontruktor instanziiert

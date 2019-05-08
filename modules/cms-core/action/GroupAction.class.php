@@ -38,7 +38,7 @@ use \Html;
 
 class GroupAction extends Action
 {
-	public $security = SECURITY_ADMIN;
+	public $security = Action::SECURITY_ADMIN;
 	
 	private $group;
 

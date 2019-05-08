@@ -39,7 +39,11 @@ namespace cms\action {
      */
     class Action
     {
-        public $security = SECURITY_USER; // Default.
+        const SECURITY_GUEST = 1; // Jeder (auch nicht angemeldete) dürfen diese Aktion ausführen
+        const SECURITY_USER  = 2; // Angemeldete Benutzer dürfen diese Aktion ausführen
+        const SECURITY_ADMIN = 3; // Nur Administratoren dürfen diese Aktion ausführen
+
+        public $security = self::SECURITY_USER; // Default.
 
         protected $templateVars = Array();
 

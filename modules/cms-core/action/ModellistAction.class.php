@@ -38,7 +38,7 @@ class ModellistAction extends Action
      */
     public $project;
 
-	public $security = SECURITY_USER;
+	public $security = Action::SECURITY_USER;
 
 
     function __construct()

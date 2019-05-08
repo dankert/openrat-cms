@@ -37,7 +37,7 @@ use Session;
  */
 class LinkAction extends ObjectAction
 {
-	public $security = SECURITY_USER;
+	public $security = Action::SECURITY_USER;
 	
 	private $link;
 
