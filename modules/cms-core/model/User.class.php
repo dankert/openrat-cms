@@ -1,5 +1,7 @@
 <?php
+
 namespace cms\model;
+
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -22,9 +24,7 @@ use security\Password;
 /**
  * Darstellen eines Benutzers
  *
- * @version $Revision$
- * @author $Author$
- * @package openrat.objects
+ * @author Jan Dankert
  */
 class User extends ModelBase
 {
@@ -239,13 +239,10 @@ SQL
 	 */ 
 	public function load()
 	{
-		global $conf;
-		$db = db_connection();
-
-		$sql = $db->sql( 'SELECT * FROM {{user}}'.
+		$stmt = db()->sql( 'SELECT * FROM {{user}}'.
 		                ' WHERE id={userid}' );
-		$sql->setInt( 'userid',$this->userid );
-		$row = $sql->getRow();
+		$stmt->setInt( 'userid',$this->userid );
+		$row = $stmt->getRow();
 
 		if	( count($row) == 0 )
 			throw new \ObjectNotFoundException();
@@ -326,7 +323,7 @@ SQL
 		if	( $this->fullname == '' )
 			$this->fullname = $this->name;
 			
-		if	( $this->style == '' )
+		if	( empty($this->style) )
 				$this->style = $conf['interface']['style']['default'];
 	}
 
@@ -695,11 +692,9 @@ SQL
 
 		$this->delRights();
 
-		$db = db_connection();
-
 		$group_clause = $this->getGroupClause();
 
-		$sql = $db->sql( 'SELECT {{acl}}.*,{{object}}.projectid,{{language}}.name AS languagename FROM {{acl}}'.
+		$sql = db()->sql( 'SELECT {{acl}}.*,{{object}}.projectid,{{language}}.name AS languagename FROM {{acl}}'.
 		                '  LEFT JOIN {{object}} '.
 		                '         ON {{object}}.id={{acl}}.objectid '.
 		                '  LEFT JOIN {{language}} '.
@@ -1013,4 +1008,3 @@ SQL
 	
 }
 
-?>
