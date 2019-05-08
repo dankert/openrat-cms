@@ -41,7 +41,7 @@ class DBVersion000009 extends DbVersion
 
         // Updating the typeid for URL entrys in table 'object'
         $updateStmt = $db->sql('UPDATE '.$this->getTableName('object').
-            ' SET typeid='.OR_TYPEID_URL.' WHERE id IN (SELECT objectid FROM '.$this->getTableName('url').')'
+            ' SET typeid='.BaseObject::TYPEID_URL.' WHERE id IN (SELECT objectid FROM '.$this->getTableName('url').')'
         );
         $updateStmt->query();
 

@@ -552,12 +552,12 @@ class ElementAction extends Action
 						switch( $this->element->typeid )
 						{
 							case ELEMENT_TYPE_LINK:
-								if	( ! in_array( $o->typeid, array(OR_TYPEID_PAGE,OR_TYPEID_IMAGE,OR_TYPEID_FILE,OR_TYPEID_LINK,OR_TYPEID_URL,OR_TYPEID_TEXT ) ) )
+								if	( ! in_array( $o->typeid, array(BaseObject::TYPEID_PAGE,BaseObject::TYPEID_IMAGE,BaseObject::TYPEID_FILE,BaseObject::TYPEID_LINK,BaseObject::TYPEID_URL,BaseObject::TYPEID_TEXT ) ) )
 									continue 2;
 								break;
 						        //Change tobias 
 							case ELEMENT_TYPE_INSERT:
-                                if	( ! in_array( $o->typeid, array(OR_TYPEID_FOLDER,OR_TYPEID_PAGE,OR_TYPEID_IMAGE,OR_TYPEID_FILE,OR_TYPEID_LINK,OR_TYPEID_URL,OR_TYPEID_TEXT ) ) )
+                                if	( ! in_array( $o->typeid, array(BaseObject::TYPEID_FOLDER,BaseObject::TYPEID_PAGE,BaseObject::TYPEID_IMAGE,BaseObject::TYPEID_FILE,BaseObject::TYPEID_LINK,BaseObject::TYPEID_URL,BaseObject::TYPEID_TEXT ) ) )
 									continue 2;
 								break;
 							//Change tobias end

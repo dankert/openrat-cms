@@ -35,16 +35,16 @@ class PublishPreview extends Publish
         // Interne Verlinkungen in der Seitenvorschau
         switch( $to->typeid )
         {
-            case OR_TYPEID_FILE:
-            case OR_TYPEID_IMAGE:
-            case OR_TYPEID_TEXT:
+            case BaseObject::TYPEID_FILE:
+            case BaseObject::TYPEID_IMAGE:
+            case BaseObject::TYPEID_TEXT:
                 $inhalt = \Html::url('file','show',$to->objectid,$param);
                 break;
-            case OR_TYPEID_PAGE:
+            case BaseObject::TYPEID_PAGE:
                 $inhalt = \Html::url('page','show',$to->objectid,$param);
                 break;
 
-            case OR_TYPEID_LINK:
+            case BaseObject::TYPEID_LINK:
                 $link = new Link( $to->objectid );
                 $link->load();
 
@@ -53,20 +53,20 @@ class PublishPreview extends Publish
 
                 switch( $linkedObject->typeid )
                 {
-                    case OR_TYPEID_FILE:
+                    case BaseObject::TYPEID_FILE:
                         $inhalt = \Html::url('file','show',$link->linkedObjectId,$param);
                         break;
 
-                    case OR_TYPEID_PAGE:
+                    case BaseObject::TYPEID_PAGE:
                         $inhalt = \Html::url('page','show',$link->linkedObjectId,$param);
                         break;
-                    case OR_TYPEID_URL:
+                    case BaseObject::TYPEID_URL:
                         $inhalt = \Html::url('url','show',$link->linkedObjectId,$param);
                         break;
                 }
                 break;
 
-            case OR_TYPEID_URL:
+            case BaseObject::TYPEID_URL:
                 $url = new Url( $to->objectid );
                 $url->load();
                 $inhalt = $url->url;

@@ -284,7 +284,7 @@ class Folder extends BaseObject
 		$db = db_connection();
 
 		$sql = $db->sql('SELECT id FROM {{object}} '.
-		               '  WHERE parentid={objectid} AND typeid='.OR_TYPEID_PAGE.
+		               '  WHERE parentid={objectid} AND typeid='.BaseObject::TYPEID_PAGE.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
@@ -303,7 +303,7 @@ class Folder extends BaseObject
 
 		$sql = $db->sql('SELECT id FROM {{object}} '.
 		               '  WHERE parentid={objectid}'.
-		               '    AND (typeid='.OR_TYPEID_PAGE.')'.
+		               '    AND (typeid='.BaseObject::TYPEID_PAGE.')'.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
@@ -329,7 +329,7 @@ class Folder extends BaseObject
 
 		$sql = $db->sql('SELECT id FROM {{object}} '.
 		               '  WHERE parentid={objectid}'.
-		               '    AND (typeid='.OR_TYPEID_PAGE.' OR typeid='.OR_TYPEID_LINK.')'.
+		               '    AND (typeid='.BaseObject::TYPEID_PAGE.' OR typeid='.BaseObject::TYPEID_LINK.')'.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
@@ -350,7 +350,7 @@ class Folder extends BaseObject
 
 		$sql = $db->sql('SELECT id FROM {{object}} '.
 		               '  WHERE parentid={objectid}'.
-		               '    AND (typeid='.OR_TYPEID_PAGE.' OR typeid='.OR_TYPEID_LINK.')'.
+		               '    AND (typeid='.BaseObject::TYPEID_PAGE.' OR typeid='.BaseObject::TYPEID_LINK.')'.
 		               '  ORDER BY orderid DESC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
@@ -370,7 +370,7 @@ class Folder extends BaseObject
 		$db = db_connection();
 
 		$sql = $db->sql('SELECT id FROM {{object}} '.
-		               '  WHERE parentid={objectid} AND typeid='.OR_TYPEID_FILE.
+		               '  WHERE parentid={objectid} AND typeid='.BaseObject::TYPEID_FILE.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
@@ -389,7 +389,7 @@ class Folder extends BaseObject
 		$db = db_connection();
 
 		$sql = $db->sql('SELECT id,filename FROM {{object}} '.
-		               '  WHERE parentid={objectid} AND typeid='.OR_TYPEID_FILE.
+		               '  WHERE parentid={objectid} AND typeid='.BaseObject::TYPEID_FILE.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
@@ -402,7 +402,7 @@ class Folder extends BaseObject
 		$db = db_connection();
 
 		$sql = $db->sql('SELECT id FROM {{object}} '.
-		               '  WHERE parentid={objectid} AND typeid='.OR_TYPEID_LINK.
+		               '  WHERE parentid={objectid} AND typeid='.BaseObject::TYPEID_LINK.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
@@ -538,7 +538,7 @@ SQL
         );
 
 		$stmt->setInt( 'objectid' ,$this->objectid        );
-		$stmt->setInt( 'typeid'   ,OR_TYPEID_FOLDER );
+		$stmt->setInt( 'typeid'   ,BaseObject::TYPEID_FOLDER );
 
 		$this->subfolders = $stmt->getCol();
 
@@ -557,7 +557,7 @@ SQL
         );
 
 		$stmt->setInt( 'objectid' ,$this->objectid        );
-        $stmt->setInt( 'typeid'   ,OR_TYPEID_FOLDER );
+        $stmt->setInt( 'typeid'   ,BaseObject::TYPEID_FOLDER );
 
 		return $stmt->getAssoc();
 	}

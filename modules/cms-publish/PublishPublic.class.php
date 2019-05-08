@@ -39,9 +39,9 @@ class PublishPublic extends Publish
 
         switch( $to->typeid )
         {
-            case OR_TYPEID_FILE:
-            case OR_TYPEID_IMAGE:
-            case OR_TYPEID_TEXT:
+            case BaseObject::TYPEID_FILE:
+            case BaseObject::TYPEID_IMAGE:
+            case BaseObject::TYPEID_TEXT:
 
                 $f = new File( $to->objectid );
 
@@ -54,7 +54,7 @@ class PublishPublic extends Publish
                     $filename .= '.'.$f->extension;
                 break;
 
-            case OR_TYPEID_PAGE:
+            case BaseObject::TYPEID_PAGE:
 
                 $p = new Page( $to->objectid );
                 $p->languageid          = $from->languageid;
@@ -67,7 +67,7 @@ class PublishPublic extends Publish
                 $filename = $p->getFilename();
                 break;
 
-            case OR_TYPEID_LINK:
+            case BaseObject::TYPEID_LINK:
                 $link = new Link( $to->objectid );
                 $link->load();
 
@@ -76,7 +76,7 @@ class PublishPublic extends Publish
 
                 switch( $linkedObject->typeid )
                 {
-                    case OR_TYPEID_FILE:
+                    case BaseObject::TYPEID_FILE:
                         $f = new File( $link->linkedObjectId );
                         $f->load();
                         $f->content_negotiation = $from->content_negotiation;
@@ -84,7 +84,7 @@ class PublishPublic extends Publish
                         $to = $f;
                         break;
 
-                    case OR_TYPEID_PAGE:
+                    case BaseObject::TYPEID_PAGE:
                         $p = new Page( $link->linkedObjectId );
                         $p->languageid          = $from->languageid;
                         $p->modelid             = $from->modelid;
@@ -101,7 +101,7 @@ class PublishPublic extends Publish
                 }
                 break;
 
-            case OR_TYPEID_URL:
+            case BaseObject::TYPEID_URL:
                 $url = new Url( $to->objectid );
                 $url->load();
                 return $url->url;

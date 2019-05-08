@@ -167,11 +167,11 @@ class File extends BaseObject
 
 			$ext = explode(',',$extension);
 			$sqlquery .= implode( "' OR extension='",$ext );
-			$sqlquery .= "' AND typeid=".OR_TYPEID_FILE." AND projectid={projectid}";
+			$sqlquery .= "' AND typeid=".BaseObject::TYPEID_FILE." AND projectid={projectid}";
 		}
 		else
 		{
-			$sqlquery .= " WHERE typeid=".OR_TYPEID_FILE." AND projectid={projectid}";
+			$sqlquery .= " WHERE typeid=".BaseObject::TYPEID_FILE." AND projectid={projectid}";
 		}
 
 		$sql = $db->sql( $sqlquery );

@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+use cms\model\BaseObject;
 use cms\model\Folder;
 use cms\model\Link;
 use cms\model\Page;
@@ -79,16 +80,16 @@ class LastChanges extends Macro
 			if ($o['objectid'] == $this->getObjectId() )
 				continue;
 			
-			if	( ($o['typeid']==OR_TYPEID_PAGE && istrue($this->showPages)) ||
-				  ($o['typeid']==OR_TYPEID_LINK && istrue($this->showLinks))  ) // Nur wenn gewünschter Typ
+			if	( ($o['typeid']==BaseObject::TYPEID_PAGE && istrue($this->showPages)) ||
+				  ($o['typeid']==BaseObject::TYPEID_LINK && istrue($this->showLinks))  ) // Nur wenn gewünschter Typ
 			{
-				if	( $o['typeid']==OR_TYPEID_LINK ) {
+				if	( $o['typeid']==BaseObject::TYPEID_LINK ) {
 					$l = new Link( $o['objectid'] );
 					$l->load();
 
 					$p = new Page( $l->linkedObjectId );
 				}
-				elseif ( $o['typeid']==OR_TYPEID_PAGE )
+				elseif ( $o['typeid']==BaseObject::TYPEID_PAGE )
 				{
 					$p = new Page( $o['objectid'] );
 				}

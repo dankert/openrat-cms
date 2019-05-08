@@ -993,13 +993,13 @@ SQL
         );
 
         $stmt->setInt('projectid',$this->projectid );
-        $stmt->setInt('is_folder',in_array('folder',$types)?OR_TYPEID_FOLDER:0);
-        $stmt->setInt('is_file'  ,in_array('file'  ,$types)?OR_TYPEID_FILE  :0);
-        $stmt->setInt('is_image' ,in_array('image' ,$types)?OR_TYPEID_IMAGE :0);
-        $stmt->setInt('is_text'  ,in_array('text'  ,$types)?OR_TYPEID_TEXT  :0);
-        $stmt->setInt('is_page'  ,in_array('page'  ,$types)?OR_TYPEID_PAGE  :0);
-        $stmt->setInt('is_link'  ,in_array('link'  ,$types)?OR_TYPEID_LINK  :0);
-        $stmt->setInt('is_url'   ,in_array('url'   ,$types)?OR_TYPEID_URL   :0);
+        $stmt->setInt('is_folder',in_array('folder',$types)?BaseObject::TYPEID_FOLDER:0);
+        $stmt->setInt('is_file'  ,in_array('file'  ,$types)?BaseObject::TYPEID_FILE  :0);
+        $stmt->setInt('is_image' ,in_array('image' ,$types)?BaseObject::TYPEID_IMAGE :0);
+        $stmt->setInt('is_text'  ,in_array('text'  ,$types)?BaseObject::TYPEID_TEXT  :0);
+        $stmt->setInt('is_page'  ,in_array('page'  ,$types)?BaseObject::TYPEID_PAGE  :0);
+        $stmt->setInt('is_link'  ,in_array('link'  ,$types)?BaseObject::TYPEID_LINK  :0);
+        $stmt->setInt('is_url'   ,in_array('url'   ,$types)?BaseObject::TYPEID_URL   :0);
 
         return( $stmt->getCol() );
     }
@@ -1015,7 +1015,7 @@ SQL
         $db = db_connection();
 
         $stmt = $db->sql('SELECT id FROM {{object}}'.
-            '  WHERE typeid='.OR_TYPEID_FOLDER.
+            '  WHERE typeid='.BaseObject::TYPEID_FOLDER.
             '    AND projectid={projectid}' );
 
         $stmt->setInt( 'projectid',$this->projectid   );
