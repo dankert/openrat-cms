@@ -63,19 +63,11 @@ $(document).on('orViewLoaded',function(event, data) {
         var editor = new SimpleMDE({ element: $(this)[0] });
     } );
 
-	// Markdown-Editor anzeigen
+	// HTML-Editor anzeigen
 	$(event.target).find("textarea.editor.html-editor").each( function() {
 
-
+        $.trumbowyg.svgPath = './modules/editor/trumbowyg/ui/icons.svg';
         $(this).trumbowyg();
-
-        // copy back to textarea on form submit...
-		/*
-        $(textareaEl).closest('form').submit(function() {
-            var newValue = editor.getValue();
-            $(textareaEl).val( newValue );
-        })
-        */
     } );
 
 
