@@ -1,6 +1,6 @@
 # OpenRat Content Management System
 
-![Screenshot](screenshot-overall.png)
+![Screenshot](doc/images/screenshot-overall.png)
 
 
 ## About
