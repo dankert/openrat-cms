@@ -47,6 +47,12 @@
 
         </nav>
 
+        <section id="edit" class="">
+            <div class="filler"></div>
+            <div class="view"></div>
+        </section>
+
+
         <main id="editor">
             <header>
                 <span class="title"></span>
@@ -80,9 +86,6 @@
 
         </main>
 
-        <section id="edit" class="">
-            <div class="view"></div>
-        </section>
 
     </div>
 
