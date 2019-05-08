@@ -1,7 +1,0 @@
-
-syntax: glob
-config/config-localhost.yml
-config/config-duese.yml
-.idea
-log/cms-*.log
-config/config-*.yml
