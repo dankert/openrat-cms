@@ -1,11 +1,6 @@
 <?php
 namespace security;
 
-define('OR_PASSWORD_ALGO_PLAIN',0);
-define('OR_PASSWORD_ALGO_CRYPT',1);
-define('OR_PASSWORD_ALGO_MD5'  ,2);
-define('OR_PASSWORD_ALGO_PHP_PASSWORD_HASH',3);
-define('OR_PASSWORD_ALGO_SHA1'  ,4);
 
 
 /**
@@ -16,30 +11,36 @@ define('OR_PASSWORD_ALGO_SHA1'  ,4);
  */
 class Password
 {
-	/**
+    const ALGO_PLAIN             = 0;
+    const ALGO_CRYPT             = 1;
+    const ALGO_MD5               = 2;
+    const ALGO_PHP_PASSWORD_HASH = 3;
+    const ALGO_SHA1              = 4;
+
+    /**
 	 * Ermittelt den bestverfügbarsten hash-Algorhytmus.
 	 */
 	static public function bestAlgoAvailable()
 	{
 		if	( function_exists('password_hash') )
 		{
-			return OR_PASSWORD_ALGO_PHP_PASSWORD_HASH;
+			return self::ALGO_PHP_PASSWORD_HASH;
 		}
 		elseif	( function_exists('crypt') && defined('CRYPT_BLOWFISH') && CRYPT_BLOWFISH == 1 )
 		{
-			return OR_PASSWORD_ALGO_CRYPT;
+			return self::ALGO_CRYPT;
 		}
 		elseif	( function_exists('sha1') )
 		{
-			return OR_PASSWORD_ALGO_SHA1;
+			return self::ALGO_SHA1;
 		}
 		elseif	( function_exists('md5') )
 		{
-			return OR_PASSWORD_ALGO_MD5;
+			return self::ALGO_MD5;
 		}
 		else
 		{
-			return OR_PASSWORD_ALGO_PLAIN;
+			return self::ALGO_PLAIN;
 		}
 	}
 
@@ -55,11 +56,11 @@ class Password
 	{
 		switch( $algo )
 		{
-			case OR_PASSWORD_ALGO_PHP_PASSWORD_HASH:
+			case self::ALGO_PHP_PASSWORD_HASH:
 
 			    return password_hash( $password, PASSWORD_BCRYPT,array('cost'=>$cost) );
 				
-			case OR_PASSWORD_ALGO_CRYPT:
+			case self::ALGO_CRYPT:
 
 				$salt  = Password::randomHexString(10); // this should be cryptographically safe.
 				
@@ -74,13 +75,13 @@ class Password
 				
 				return crypt($password,'$'.$algo.'$'.$cost.'$'.$salt.'$');
 				
-			case OR_PASSWORD_ALGO_MD5:
+			case self::ALGO_MD5:
 				return md5($password); // ooold.
 				
-			case OR_PASSWORD_ALGO_SHA1:
+			case self::ALGO_SHA1:
 				return sha1($password); //
 				
-			case OR_PASSWORD_ALGO_PLAIN:
+			case self::ALGO_PLAIN:
 				return $password; // you want it, you get it.
 		}
 	}
@@ -96,11 +97,11 @@ class Password
 	{
 		switch( $algo )
 		{
-			case OR_PASSWORD_ALGO_PHP_PASSWORD_HASH:
+			case self::ALGO_PHP_PASSWORD_HASH:
 			    // This is 'timing attack safe' as the documentation says.
 				return password_verify($password,$hash);
 				
-			case OR_PASSWORD_ALGO_CRYPT:
+			case self::ALGO_CRYPT:
 		
 				if	( function_exists('crypt') )
 				{
@@ -114,13 +115,13 @@ class Password
 					throw new LogicException("Modular crypt format is not supported by this PHP version (no function 'crypt()')");
 				}
 
-			case OR_PASSWORD_ALGO_SHA1:
+			case self::ALGO_SHA1:
 			    return Password::equals( $hash, sha1($password) );
 				
-			case OR_PASSWORD_ALGO_MD5:
+			case self::ALGO_MD5:
 			    return Password::equals( $hash, md5($password) );
 				
-			case OR_PASSWORD_ALGO_PLAIN:
+			case self::ALGO_PLAIN:
 			    return Password::equals( $hash, $password );
 		}
 	}

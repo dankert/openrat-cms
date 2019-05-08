@@ -555,7 +555,7 @@ SQL
 		else
 		{
 			// Klartext-Kennwort, der Benutzer muss das Kennwort beim nä. Login ändern.
-			$algo   = OR_PASSWORD_ALGO_PLAIN;
+			$algo   = Password::ALGO_PLAIN;
 			$expire = time();
 		}
 

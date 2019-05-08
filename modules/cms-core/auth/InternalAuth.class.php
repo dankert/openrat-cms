@@ -44,7 +44,7 @@ SQL
 		}
 		
 		// Behandeln von Klartext-Kennwoertern (Igittigitt).
-		if    ( $row_user['password_algo'] == OR_PASSWORD_ALGO_PLAIN )
+		if    ( $row_user['password_algo'] == Password::ALGO_PLAIN )
 		{
 		    if    ( config('security','password','force_change_if_cleartext') )
     			// Kennwort steht in der Datenbank im Klartext.
