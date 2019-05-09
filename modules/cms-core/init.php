@@ -89,6 +89,8 @@ function fatal_handler() {
         }
 
         // It is not possibile to throw an exception out of a shutdown function!
+        // PHP will exit the request directly after executing this method, so a
+        // Exception would never reach a caller.
         //throw new ErrorException($errstr, $errno, 1, $errfile, $errline);
     }
 

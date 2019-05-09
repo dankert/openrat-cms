@@ -7,6 +7,9 @@ $(document).on('orViewLoaded',function(event, data) {
 	
 	// ACE-Editor anzeigen
 	$(event.target).find("textarea.editor.ace-editor").each( function() {
+	    alert('ACE is not supported')
+        throw new Error('No ACE available');
+
 		var textareaEl = $(this);
 		var aceEl = $("<div class=\"editor__code-editor\" />").insertAfter(textareaEl);
 		var editor = ace.edit( aceEl.get(0) );
@@ -55,19 +58,105 @@ $(document).on('orViewLoaded',function(event, data) {
             $(textareaEl).val( newValue );
         } );
 
+
+        $(editor.getWrapperElement()).droppable({
+            accept: '.or-draggable',
+            hoverClass: 'or-droppable--hover',
+            activeClass: 'or-droppable--active',
+
+            drop: function (event, ui) {
+
+                let dropped = ui.draggable;
+
+                // Insert id of dragged element into cursor position
+                let pos = editor.getCursor();
+                editor.setSelection(pos, pos);
+                let insertText = dropped.data('id')
+                let toInsert = ''+insertText;
+                editor.replaceSelection(toInsert);
+                //editor.setCursor(pos+toInsert.length); geht nicht.
+            }
+
+        });
+
+
     } );
 
 	// Markdown-Editor anzeigen
 	$(event.target).find("textarea.editor.markdown-editor").each( function() {
 
-        var editor = new SimpleMDE({ element: $(this)[0] });
+	    let textarea = this;
+        let mde = new SimpleMDE({ element: $(this)[0] });
+
+        let codemirror = mde.codemirror;
+
+        $(codemirror.getWrapperElement()).droppable({
+            accept: '.or-draggable',
+            hoverClass: 'or-droppable--hover',
+            activeClass: 'or-droppable--active',
+
+            drop: function (event, ui) {
+
+                let dropped = ui.draggable;
+
+                let insertText = '';
+                let id = dropped.data('id');
+                let url = 'object:'+id;
+                if   ( dropped.data('type') == 'image')
+                    insertText = '![]('+url+')';
+                else
+                    insertText = '['+id+']('+url+')';
+
+                // Insert id of dragged element into cursor position
+                let pos = codemirror.getCursor();
+                codemirror.setSelection(pos, pos);
+                codemirror.replaceSelection( insertText);
+            }
+        });
+
+        codemirror.on('change',function() {
+            // copy back to textarea on form submit...
+            let newValue = codemirror.getValue();
+            $(textarea).val( newValue );
+        } );
     } );
 
 	// HTML-Editor anzeigen
 	$(event.target).find("textarea.editor.html-editor").each( function() {
 
+	    let textarea = this;
+
         $.trumbowyg.svgPath = './modules/editor/trumbowyg/ui/icons.svg';
-        $(this).trumbowyg();
+        $(textarea).trumbowyg();
+
+        $(textarea).closest('form').find('.trumbowyg-editor').droppable({
+            accept: '.or-draggable',
+            hoverClass: 'or-droppable--hover',
+            activeClass: 'or-droppable--active',
+
+            drop: function (event, ui) {
+
+                let dropped = ui.draggable;
+                let id = dropped.data('id');
+                let url = './?_='+dropped.data('type')+'-'+id+'&subaction=show&embed=1&oid='+dropped.data('id');
+                let insertText = '';
+                if   ( dropped.data('type') == 'image')
+                    insertText = '<img src="'+url+'" alt="" />';
+                else
+                    insertText = '<a href="'+url+'" />'+id+'</a>';
+
+                $(textarea).trumbowyg('execCmd', {
+                    cmd: 'insertHTML',
+                    param: insertText,
+                    forceCss: false,
+                });
+            }
+        });
+
+
+
+
+
     } );
 
 
