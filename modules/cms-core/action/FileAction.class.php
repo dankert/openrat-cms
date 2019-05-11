@@ -171,21 +171,21 @@ class FileAction extends ObjectAction
 		
 		// Groesse des Bildes in Bytes
 		// Der Browser hat so die Moeglichkeit, einen Fortschrittsbalken zu zeigen
-		header('Content-Length: '.filesize($this->file->tmpfile()) );
+		header('Content-Length: '.filesize($this->file->getCache()->getFilename()) );
 		
 		if	( in_array( getenv('HTTP_ACCEPT'),array('application/php-array','application/php-serialized','application/json','application/xml')))
 		{
 			$this->setTemplateVar('encoding', 'base64');
-			$this->setTemplateVar('value'   , base64_encode($this->file->tmpfile()) );
+			$this->setTemplateVar('value'   , base64_encode($this->file->getCache()->getFilename()) );
 		}
 		// Unterscheidung, ob PHP-Code in der Datei ausgefuehrt werden soll.
 		elseif	( ( config('publish','enable_php_in_file_content')=='auto' && $this->file->getRealExtension()=='php') ||
 		        config('publish','enable_php_in_file_content')===true )
 		    // PHP-Code ausfuehren
-			require( $this->file->tmpfile() );
+			require( $this->file->getCache()->getFilename() );
 		else
 		    // PHP-Code nicht ausfuehren, Datei direkt auf die Standardausgabe schreiben
-			readfile( $this->file->tmpfile() );
+			readfile( $this->file->getCache()->getFilename() );
 
 		// Maybe we want some gzip-encoding?
 
@@ -216,11 +216,8 @@ class FileAction extends ObjectAction
 		$this->setTemplateVar('size',number_format($this->file->size/1000,0,',','.').' kB' );
 		$this->setTemplateVar('full_filename',$this->file->full_filename());
 		
-		if	( is_file($this->file->tmpfile()))
-		{
-			$this->setTemplateVar('cache_filename' ,$this->file->tmpfile());
-			$this->setTemplateVar('cache_filemtime',@filemtime($this->file->tmpfile()));
-		}
+        $this->setTemplateVar('cache_filename' ,$this->file->getCache()->getFilename());
+        $this->setTemplateVar('cache_filemtime',@filemtime($this->file->getCache()->getFilename()));
 
 		// Alle Seiten mit dieser Datei ermitteln
 		$pages = $this->file->getDependentObjectIds();

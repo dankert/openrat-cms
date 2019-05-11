@@ -26,6 +26,7 @@ use cms\publish\PublishShow;
 use JSqueeze;
 use Less_Parser;
 use Logger;
+use util\LoaderCache;
 
 define('OR_FILE_DEFAULT_MIMETYPE','application/octet-stream');
 
@@ -70,7 +71,6 @@ class File extends BaseObject
 
     public $public = false ;
 
-
     /**
 	 * Konstruktor
 	 *
@@ -78,16 +78,23 @@ class File extends BaseObject
 	 */
 	function __construct( $objectid='' )
 	{
-		global $conf;
-
-		$db = \Session::getDatabase();
-		$this->storeValueAsBase64 = $db->conf['base64'];
+		$this->storeValueAsBase64 = db()->conf['base64'];
 
 		parent::__construct( $objectid );
 		$this->isFile = true;
-	}
+    }
 
 
+    /**
+     * @return LoaderCache
+     */
+    public function getCache() {
+        $cacheKey = array('db'=>db()->id,'file'=>$this->objectid,'publish'=>\ClassUtils::getSimpleClassName($this->publisher));
+
+        return new LoaderCache( $cacheKey,function() {
+            return $this->loadValueFromDatabase();
+        } );
+    }
 
 	/**
 	  * Ermitteln des Dateinamens dieser Datei
@@ -363,16 +370,23 @@ EOF
 	}
 
 
-	/**
+    public function loadValue()
+    {
+        if	( filemtime($this->getCache()->getFilename() < $this->lastchangeDate))
+            $this->getCache()->invalidate();
+
+        return $this->getCache()-get();
+    }
+
+
+        /**
 	 * Lesen des Inhaltes der Datei aus der Datenbank.
 	 *
 	 * @return String Inhalt der Datei
 	 */
-	public function loadValue()
+	private function loadValueFromDatabase()
 	{
 	    // Read from cache, if cache exist and is not too old.
-		if	( is_file($this->tmpfile()) && filemtime($this->tmpfile()>=$this->lastchangeDate))
-			return implode('',file($this->tmpfile())); // From cache
 
 		$sql = db()->sql( 'SELECT size,value'.
 		                ' FROM {{file}}'.
@@ -391,27 +405,16 @@ EOF
 
         $this->filterValue();
 
-		// Store in cache.
-		$f = fopen( $this->tmpfile(),'w' );
-		fwrite( $f,$this->value );
-		fclose( $f );
-
 		return $this->value;
 	}
 
-
-	public function deleteTmpFile() {
-
-        if	( is_file($this->tmpfile()) )
-            @unlink( $this->tmpfile() );
-    }
 
 	/**
 	 * Speichert den Inhalt in der Datenbank.
 	 */
 	function saveValue( $value = '' )
 	{
-		$this->deleteTmpFile();
+		$this->getCache()->invalidate();
 
 		$db = db_connection();
 
@@ -436,8 +439,7 @@ EOF
 	 */
 	function write()
 	{
-		if	( !is_file($this->tmpfile()) )
-			$this->loadValue();
+	    $this->getCache()->load();
 	}
 
 
@@ -466,26 +468,10 @@ EOF
 
 	public function publish()
 	{
-        $this->deleteTmpFile();
-
 		$this->write();
-		$this->publisher->copy( $this->tmpfile(),$this->full_filename(),$this->lastchangeDate );
+		$this->publisher->copy( $this->getCache()->getFilename(),$this->full_filename(),$this->lastchangeDate );
 
 		$this->publisher->publishedObjects[] = $this->getProperties();
-	}
-
-
-	/**
-	 * Ermittelt einen tempor�ren Dateinamen f�r diese Datei.
-	 */
-	public function tmpfile()
-	{
-		if	( $this->tmpfile == '' )
-		{
-			$db = db_connection();
-			$this->tmpfile = \FileUtils::getTempFileName( array('db'=>$db->id,'o'=>$this->objectid,'p'=>intval($this->public)) );
-		}
-		return $this->tmpfile;
 	}
 
 
@@ -497,7 +483,7 @@ EOF
 
 	function setTimestamp()
 	{
-		@unlink( $this->tmpfile() );
+        $this->getCache()->invalidate();
 
 		parent::setTimestamp();
 	}
@@ -578,9 +564,7 @@ EOF
         }
 
         // Store in cache.
-        $f = fopen( $this->tmpfile(),'w' );
-        fwrite( $f,$this->value );
-        fclose( $f );
+        $this->getCache()->invalidate();
     }
 }
 

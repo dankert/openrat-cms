@@ -332,8 +332,8 @@ class PageAction extends ObjectAction
 
 		$template = new Template( $this->page->templateid );
 		$template->load();
-		$this->setTemplateVar('template_name',$template->name);
-		$this->setTemplateVar('tmp_filename',$this->page->tmpfile() );
+		$this->setTemplateVar('template_name',$template->name );
+		$this->setTemplateVar('tmp_filename' ,$this->page->getCache()->getFilename() );
 
 	}
 
@@ -343,7 +343,7 @@ class PageAction extends ObjectAction
 	/**
 	 * Austauschen der Vorlage vorbereiten
 	 *
-	 * Es wird ein Formualr erzeugt, in dem der Benutzer auswaehlen kann, welche Elemente
+	 * Es wird ein Formualar erzeugt, in dem der Benutzer auswaehlen kann, welche Elemente
 	 * in welches Element uebernommen werden sollen
 	 */
 	public function changetemplateselectelementsView()
@@ -611,9 +611,9 @@ class PageAction extends ObjectAction
 		// Wenn
 		if	( ( config('publish','enable_php_in_page_content')=='auto' && $this->page->template->extension == 'php') ||
 		        config('publish','enable_php_in_page_content')===true )
-			require( $this->page->tmpfile() );
+			require( $this->page->getCache()->getFilename() );
 		else
-			readfile( $this->page->tmpfile() );
+			readfile( $this->page->getCache()->getFilename() );
 
 		exit();
 	}

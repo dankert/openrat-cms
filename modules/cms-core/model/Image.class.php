@@ -67,7 +67,7 @@ class Image extends File
 			$this->write(); // Datei schreiben
 			
 			// Bildinformationen ermitteln
-			$size = getimagesize( $this->tmpfile() );
+			$size = getimagesize( $this->getCache()->getFilename() );
 	
 			// Breite und Hoehe des aktuellen Bildes	 
 			$this->width  = $size[0]; 
@@ -96,7 +96,7 @@ class Image extends File
 		$this->write(); // Datei schreiben
 		
 		// Bildinformationen ermitteln
-		$size = getimagesize( $this->tmpfile() );
+		$size = getimagesize( $this->getCache()->getFilename() );
 
 		// Breite und Hoehe des aktuellen Bildes	 
 		$oldWidth  = $size[0]; 
@@ -173,7 +173,7 @@ class Image extends File
 					$newImage = &$oldImage;
 				} 
 
-				ImageGIF($newImage, $this->tmpfile() );
+				ImageGIF($newImage, $this->getCache()->getFilename() );
 				$this->extension = 'gif';
 
 				break;
@@ -228,7 +228,7 @@ class Image extends File
 					$newHeight,$oldWidth,$oldHeight); 
 				}
 		
-				imagepng( $newImage,$this->tmpfile() );
+				imagepng( $newImage,$this->getCache()->getFilename() );
 				$this->extension = 'png';
 				
 				break;
@@ -237,9 +237,7 @@ class Image extends File
 				throw new \LogicException('unsupported image format "'.$newformat.'", cannot resize');
 		} 
 
-		$f = fopen( $this->tmpfile(), "r" );
-		$this->value = fread( $f,filesize($this->tmpfile()) );
-		fclose( $f );
+		$this->getCache()->invalidate();
 
 		imagedestroy( $oldImage );
 		//imagedestroy( $newImage );

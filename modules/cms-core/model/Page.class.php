@@ -19,6 +19,7 @@ namespace cms\model;
 use cms\mustache\Mustache;
 use cms\publish\PublishPreview;use cms\publish\PublishPublic;
 use Logger;
+use util\LoaderCache;
 
 
 /**
@@ -82,15 +83,31 @@ class Page extends BaseObject
      */
     public $value;
 
-
     function __construct( $objectid='' )
 	{
 		parent::__construct( $objectid );
 		$this->isPage = true;
 
 		$this->publisher = new PublishPreview();
+
     }
 
+
+    /**
+     * @return LoaderCache
+     */
+    public function getCache() {
+        $cacheKey =  array('db'=>db()->id,
+            'page' =>$this->objectid,
+            'language' =>$this->languageid,
+            'model' =>$this->modelid,
+            'publish' =>\ClassUtils::getSimpleClassName($this->publisher) );
+
+        return new LoaderCache( $cacheKey,function() {
+            return $this->generateValue();
+        } );
+
+    }
 
 	/**
 	 * Ermitteln der Objekt-ID (Tabelle object) anhand der Seiten-ID (Tablle page)
@@ -528,18 +545,24 @@ SQL
 			$val->modelid    = $this->modelid;
 			$val->page       = $this;
 			$val->generate();
-			$val->page       = null;			
+			//$val->page       = null;
 			$this->values[$elementid] = $val;
 		}
 	}
 
+
+
+	public function generate() {
+
+		return $this->getCache()->get();
+	}
 
 	/**
 	  * Erzeugen des Inhaltes der gesamten Seite.
 	  * 
 	  * @return String Inhalt
 	  */
-	public function generate()
+	private function generateValue()
 	{
 		global $conf;
 		
@@ -563,12 +586,6 @@ SQL
 			setlocale(LC_ALL,'');
 		}
 		
-		if	( $conf['cache']['enable_cache'] && is_file($this->tmpfile() ))
-		{
-			$this->value = implode('',file($this->tmpfile()));
-			return $this->value;
-		}
-	
 		$this->template = new Template( $this->templateid );
 		$this->template->modelid = $this->modelid;
 		$this->template->load();
@@ -588,7 +605,7 @@ SQL
 
 		foreach( $elements as $elementId=>$elementName )
 		{
-			$data[ $elementName ] = $this->values[$elementId]->value;
+			$data[ $elementName ] = $this->values[$elementId]->generate();
 
 			// The following code is for old template values:
 
@@ -637,14 +654,7 @@ SQL
 				$src = translateutf8tohtml($src);
 			}
 		
-		$this->value = $src;
-
-		// Store in cache.
-		$f = fopen( $this->tmpfile(),'w' );
-		fwrite( $f,$this->value );
-		fclose( $f );
-		
-		return $this->value;
+		return $src;
 	}
 
 
@@ -653,8 +663,7 @@ SQL
 	  */
 	public function write()
 	{
-		if	( !is_file($this->tmpfile()))
-			$this->generate();
+			$this->getCache()->load();
 	}
 
 
@@ -681,8 +690,7 @@ SQL
 				$this->modelid = $projectmodelid;
 			
 				$this->load();
-				$this->generate();
-				$this->write();
+				$this->getCache()->load();
 
 				// Vorlage ermitteln.
 				$t = new Template( $this->templateid );
@@ -692,8 +700,7 @@ SQL
 				// Nur wenn eine Datei-Endung vorliegt wird die Seite veroeffentlicht
 				if	( !empty($t->extension) )
 				{ 	
-					$this->publisher->copy( $this->tmpfile(),$this->full_filename() );
-					unlink( $this->tmpfile() );
+					$this->publisher->copy( $this->getCache()->getFilename(),$this->full_filename() );
 					$this->publisher->publishedObjects[] = $this->getProperties();
 				}
 			}
@@ -725,29 +732,10 @@ SQL
 
 	
 	
-	/**
-	 * Ermittelt einen tempor�ren Dateinamen f�r diese Seite. 
-	 */
-	function tmpfile()
-	{
-		$db = db_connection();
-		$filename = \FileUtils::getTempFileName( array('db'=>$db->id,
-		                                          'o' =>$this->objectid,
-		                                          'l' =>$this->languageid,
-		                                          'm' =>$this->modelid,
-		                                          'p' =>\ClassUtils::getSimpleClassName($this->publisher) ) );
-		return $filename;
-	}
-	
-	
-	
 	function setTimestamp()
 	{
-		$tmpFilename = $this->tmpfile();
-		
-		if	( is_file($tmpFilename) )
-			unlink( $tmpFilename);
-		
+		$this->getCache()->invalidate();
+
 		parent::setTimestamp();
 	}
 	

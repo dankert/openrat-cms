@@ -105,7 +105,7 @@ class PdfRenderer
 							// $image->width;
 							// $image->height;
 							
-							$this->pdf->Image($image->tmpfile(),$this->pdf->GetX(),$this->pdf->GetY(),0,0,$image->extension());
+							$this->pdf->Image($image->getCache()->getFilename(),$this->pdf->GetX(),$this->pdf->GetY(),0,0,$image->extension());
 							$this->pdf->ln($image->height/2.5);
 							$this->pdf->ln(5);
 							

@@ -8,6 +8,7 @@ use \Html;
 use \Http;
 use \Transformer;
 use \Code;
+use util\LoaderCache;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -160,6 +161,7 @@ class Value
 	{
 		$this->lastchangeUserId    = 0;
 		$this->lastchangeTimeStamp = 0;
+
 	}
 
 	
@@ -180,24 +182,22 @@ class Value
 	 */
 	function load()
 	{
-		$db = db_connection();
-
 		if	( $this->publisher->isPublic() )
-			$sql = $db->sql( 'SELECT * FROM {{value}}'.
+			$stmt = db()->sql( 'SELECT * FROM {{value}}'.
 			                '  WHERE elementid ={elementid}'.
 			                '    AND pageid    ={pageid}'.
 			                '    AND languageid={languageid}'.
 			                '    AND publish=1' );
 		else
-			$sql = $db->sql( 'SELECT * FROM {{value}}'.
+			$stmt = db()->sql( 'SELECT * FROM {{value}}'.
 			                '  WHERE elementid ={elementid}'.
 			                '    AND pageid    ={pageid}'.
 			                '    AND languageid={languageid}'.
 			                '    AND active=1' );
-		$sql->setInt( 'elementid' ,$this->element->elementid );
-		$sql->setInt( 'pageid'    ,$this->pageid    );
-		$sql->setInt( 'languageid',$this->languageid);
-		$row = $sql->getRow();
+		$stmt->setInt( 'elementid' ,$this->element->elementid );
+		$stmt->setInt( 'pageid'    ,$this->pageid    );
+		$stmt->setInt( 'languageid',$this->languageid);
+		$row = $stmt->getRow();
 		
 		if	( count($row) > 0 ) // Wenn Inhalt gefunden
 		{
@@ -533,13 +533,37 @@ SQL
 	}
 
 
+	public function generate() {
+
+	    return $this->getCache()->get();
+    }
+
+
+    /**
+     *
+     * @return LoaderCache
+     */
+    public function getCache() {
+
+        $cacheKey = array('db'=>db()->id,
+            'value'=>$this->valueid,
+            'page' =>is_object($this->page)?$this->page->objectid:0,
+            'el'=>is_object($this->element)?$this->element->elementid:0,
+            'language'=>$this->languageid,
+            'model' =>is_object($this->page)?$this->page->modelid:0,
+            'publish'=>\ClassUtils::getSimpleClassName($this->publisher) );
+        return new LoaderCache( $cacheKey,function() {
+            return $this->generateValue();
+        } );
+    }
+
 	/**
 	 * Hier findet die eigentliche Bereitstellung des Inhaltes statt, zu
 	 * jedem Elementtyp wird ein Inhalt ermittelt.
 	 * 
 	 * @return void (aber Eigenschaft 'value' wird gesetzt).
 	 */
-	function generate()
+	private function generateValue()
 	{
 		global $conf;
 
@@ -550,12 +574,6 @@ SQL
 		$raw    = false;
 		
 		global $conf;
-
-		if	( $conf['cache']['enable_cache'] && is_file( $this->tmpfile() ))
-		{
-			$this->value = implode('',file($this->tmpfile() )); // from cache.
-			return;
-		}
 
 		// Inhalt ist mit anderer Seite verkn�pft.
 		if	( in_array($this->element->type,array('text','longtext','date','number')) && intval($this->linkToObjectId) != 0 && !$this->isLink )
@@ -1537,11 +1555,7 @@ SQL
 		
 		$this->value = $inhalt;
 
-		
-		// Store in cache.
-		$f = fopen( $this->tmpfile(),'w' );
-		fwrite( $f,$this->value );
-		fclose( $f );
+		return $this->value;
 	}
 
 
@@ -1653,12 +1667,7 @@ SQL
 	function tmpfile()
 	{
 		$db = db_connection();
-		$filename = \FileUtils::getTempFileName( array('db'=>$db->id,
-		                                           'va'=>$this->valueid,
-		                                           'el'=>$this->element->elementid,
-		                                           'la'=>$this->languageid,
-		                                           'm' =>$this->page->modelid,
-		                                           'pu'=>\ClassUtils::getSimpleClassName($this->publisher)  ) );
+		$filename = \FileUtils::getTempFileName(  );
 		return $filename;
 	}
 	

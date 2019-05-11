@@ -61,7 +61,11 @@ class FileUtils
 	}
 
 
-
+    /**
+     * @param array $attr
+     * @return string
+     * @deprecated use \Cache
+     */
     public static function getTempFileName( $attr = array() )
     {
         $filename = FileUtils::getTempDir() . '/openrat';
