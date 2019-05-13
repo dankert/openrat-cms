@@ -8,7 +8,7 @@ use \Html;
 use \Http;
 use \Transformer;
 use \Code;
-use util\LoaderCache;
+use util\FileCache;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -541,7 +541,7 @@ SQL
 
     /**
      *
-     * @return LoaderCache
+     * @return FileCache
      */
     public function getCache() {
 
@@ -552,7 +552,7 @@ SQL
             'language'=>$this->languageid,
             'model' =>is_object($this->page)?$this->page->modelid:0,
             'publish'=>\ClassUtils::getSimpleClassName($this->publisher) );
-        return new LoaderCache( $cacheKey,function() {
+        return new FileCache( $cacheKey,function() {
             return $this->generateValue();
         } );
     }

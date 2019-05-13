@@ -26,7 +26,7 @@ use cms\publish\PublishShow;
 use JSqueeze;
 use Less_Parser;
 use Logger;
-use util\LoaderCache;
+use util\FileCache;
 
 define('OR_FILE_DEFAULT_MIMETYPE','application/octet-stream');
 
@@ -86,12 +86,12 @@ class File extends BaseObject
 
 
     /**
-     * @return LoaderCache
+     * @return FileCache
      */
     public function getCache() {
         $cacheKey = array('db'=>db()->id,'file'=>$this->objectid,'publish'=>\ClassUtils::getSimpleClassName($this->publisher));
 
-        return new LoaderCache( $cacheKey,function() {
+        return new FileCache( $cacheKey,function() {
             return $this->loadValueFromDatabase();
         } );
     }

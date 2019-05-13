@@ -19,7 +19,7 @@ namespace cms\model;
 use cms\mustache\Mustache;
 use cms\publish\PublishPreview;use cms\publish\PublishPublic;
 use Logger;
-use util\LoaderCache;
+use util\FileCache;
 
 
 /**
@@ -94,7 +94,7 @@ class Page extends BaseObject
 
 
     /**
-     * @return LoaderCache
+     * @return FileCache
      */
     public function getCache() {
         $cacheKey =  array('db'=>db()->id,
@@ -103,7 +103,7 @@ class Page extends BaseObject
             'model' =>$this->modelid,
             'publish' =>\ClassUtils::getSimpleClassName($this->publisher) );
 
-        return new LoaderCache( $cacheKey,function() {
+        return new FileCache( $cacheKey,function() {
             return $this->generateValue();
         } );
 

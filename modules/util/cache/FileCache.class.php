@@ -10,7 +10,7 @@ use FileUtils;
  *
  * @package util
  */
-class LoaderCache
+class FileCache
 {
     /**
      * @var Callable

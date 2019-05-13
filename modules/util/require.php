@@ -4,7 +4,7 @@ require_once( __DIR__.'/'.'exception/ValidationException.class.php' );
 require_once( __DIR__.'/'.'exception/OpenRatException.class.php' );
 require_once( __DIR__.'/'.'exception/SecurityException.class.php' );
 
-require_once( __DIR__.'/'.'cache/LoaderCache.class.php' );
+require_once( __DIR__.'/'.'cache/FileCache.class.php' );
 
 require_once( __DIR__.'/'.'ArrayUtils.class.php' );
 require_once( __DIR__.'/'.'ClassUtils.class.php' );
