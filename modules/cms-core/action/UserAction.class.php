@@ -70,36 +70,31 @@ class UserAction extends Action
 	}
 
 
-	function editPost()
+	public function propPost()
 	{
-		if	( $this->getRequestVar('name') != '' )
-		{
-			// Benutzer speichern
-			$this->user->name     = $this->getRequestVar('name'    );
-			$this->user->fullname = $this->getRequestVar('fullname');
-			$this->user->isAdmin  = $this->hasRequestVar('is_admin');
-			$this->user->ldap_dn  = $this->getRequestVar('ldap_dn' );
-			$this->user->tel      = $this->getRequestVar('tel'     );
-			$this->user->desc     = $this->getRequestVar('desc'    );
-			$this->user->language = $this->getRequestVar('language');
-			$this->user->timezone = $this->getRequestVar('timezone');
-			$this->user->hotp     = $this->hasRequestVar('hotp'    );
-			$this->user->totp     = $this->hasRequestVar('totp'    );
-			
-			global $conf;
-			if	( @$conf['security']['user']['show_admin_mail'] )
-				$this->user->mail = $this->getRequestVar('mail'    );
-				
-			$this->user->style    = $this->getRequestVar('style'   );
-	
-			$this->user->save();
-			$this->addNotice('user',$this->user->name,'SAVED','ok');
-		}
-		else
-		{
-			$this->addValidationError('name');
-			$this->callSubAction('edit');
-		}
+		if	( empty( $this->getRequestVar('name') ) )
+            throw new \ValidationException( 'name');
+
+        // Benutzer speichern
+        $this->user->name     = $this->getRequestVar('name'    );
+        $this->user->fullname = $this->getRequestVar('fullname');
+        $this->user->isAdmin  = $this->hasRequestVar('is_admin');
+        $this->user->ldap_dn  = $this->getRequestVar('ldap_dn' );
+        $this->user->tel      = $this->getRequestVar('tel'     );
+        $this->user->desc     = $this->getRequestVar('desc'    );
+        $this->user->language = $this->getRequestVar('language');
+        $this->user->timezone = $this->getRequestVar('timezone');
+        $this->user->hotp     = $this->hasRequestVar('hotp'    );
+        $this->user->totp     = $this->hasRequestVar('totp'    );
+
+        global $conf;
+        if	( @$conf['security']['user']['show_admin_mail'] )
+            $this->user->mail = $this->getRequestVar('mail'    );
+
+        $this->user->style    = $this->getRequestVar('style'   );
+
+        $this->user->save();
+        $this->addNotice('user',$this->user->name,'SAVED','ok');
 	}
 
 
@@ -239,7 +234,7 @@ class UserAction extends Action
 	/**
 	 * Eigenschaften des Benutzers ermitteln.
 	 */
-	function editView()
+	public function propView()
 	{
 	    global $conf;
 	    
@@ -303,6 +298,37 @@ class UserAction extends Action
 				$this->setTemplateVar( 'image', $url );
 			}
 		}
+
+
+
+
+        $issuer  = urlencode(config('application','operator'));
+        $account = $this->user->name.'@'.$_SERVER['SERVER_NAME'];
+
+        $base32 = new Base2n(5, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567', FALSE, TRUE, TRUE);
+        $secret = $base32->encode(@hex2bin($this->user->otpSecret));
+
+        $counter = $this->user->hotpCount;
+
+        $this->setTemplateVars(
+            $this->user->getProperties() +
+            array('totpSecretUrl' => "otpauth://totp/{$issuer}:{$account}?secret={$secret}&issuer={$issuer}",
+                'hotpSecretUrl' => "otpauth://hotp/{$issuer}:{$account}?secret={$secret}&issuer={$issuer}&counter={$counter}"
+            )
+            + array('totpToken'=>Password::getTOTPCode($this->user->otpSecret))
+        );
+
+        $this->setTemplateVar( 'allstyles',$this->user->getAvailableStyles() );
+
+        $this->setTemplateVar('timezone_list',timezone_identifiers_list() );
+
+        $languages = explode(',',Config()->subset('i18n')->is('available'));
+        foreach($languages as $id=>$name)
+        {
+            unset($languages[$id]);
+            $languages[$name] = $name;
+        }
+        $this->setTemplateVar('language_list',$languages);
 	}
 
 

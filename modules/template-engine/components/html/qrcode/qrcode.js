@@ -1,25 +1,27 @@
 
 $(document).on('orViewLoaded',function(event, data) {
 	
-    // QR-Code anzeigen.
-	$(event.target).find('.qrcode').click( function() {
+    // Show QR-Code
+	$(event.target).find('.or-qrcode').mouseover( function() {
 
-		let wrapper = $('<div class="qrcode-wrapper"></div>');
+	    let element = this;
+	    if   ( $(element).children().length > 0 )
+	        return;
 
-        $('div#dialog > .view').append(wrapper);
+		let wrapper = $('<div class="or-info-popup"></div>');
 
-        $('div#dialog').removeClass('is-closed').addClass('is-open');
+        $(element).append(wrapper);
 
-        var qrcodetext = $(this).attr('data-qrcode');
+        var qrcodetext = $(element).attr('data-qrcode');
 
         $(wrapper).qrcode( { render : 'div',
 			text   : qrcodetext,
 			fill   : 'currentColor' } );
 
 
-        wrapper.attr('title',qrcodetext);
-        //$(wrapper).append( $('<p>'+qrcodetext+'</p>') );
-        $('div#dialog > .view').fadeIn();
+        // Title is disturbing the qr-code. Do not inherit it.
+        wrapper.attr('title','');
+
     } );
 
 } );

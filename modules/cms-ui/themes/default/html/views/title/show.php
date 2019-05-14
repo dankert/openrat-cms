@@ -181,7 +181,7 @@
 						<div class="arrow arrow-down">
 						</div>
 						<div class="dropdown">
-							<div class="entry clickable filtered on-action-project on-action-link on-action-folder on-action-page on-action-template on-action-element on-action-file on-action-url on-action-image on-action-text on-action-language on-action-model">
+							<div class="entry clickable filtered on-action-user on-action-project on-action-link on-action-folder on-action-page on-action-template on-action-element on-action-file on-action-url on-action-image on-action-text on-action-language on-action-model">
 								<a title="<?php echo lang('menu_prop_desc') ?>" target="_self" data-type="edit" data-action="" data-method="prop" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','prop','',array()) ?>">
 									<i class="image-icon image-icon--method-prop"></i>
 									

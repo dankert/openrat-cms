@@ -688,6 +688,10 @@ div.content > form {
     width: 80%;
   }
 
+  .headline {
+    font-size: 1.8em;
+  }
+
   label div.description {
     //font-size: 0.75em;
   }
@@ -770,7 +774,7 @@ div.content > form {
     }
   }
 
-  padding-bottom: 4em;
+  //padding-bottom: 4em;
   //position: relative;
 
   .or-form-actionbar {
@@ -907,16 +911,32 @@ img.image-icon {
 }
 
 
+.or-info {
 
-.qrcode-wrapper {
-    width:100%;
-    border: 0;
+  position: relative;
+
+  &:hover {
+    .or-info-popup {
+      display: block;
+    }
+  }
+
+  .or-info-popup {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    overflow: visible;
+    //width: 100%;
+    border: 0.5em;
     font-size: 2em;
-    .border-radius(1em);
-    padding:2em;
-    text-align: center;
+    .border-radius(0.3em);
+    padding: 1.0em;
+    //text-align: center;
+    z-index: 105;
 
     > div {
-        display: inline-block;
+      display: inline-block;
     }
+  }
 }

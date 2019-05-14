@@ -3,14 +3,16 @@
 		
 		
 		<form name="" target="_self" data-target="view" action="./" data-method="info" data-action="page" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form page" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="page" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="info" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+			<span class="headline"><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
+			
 			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><div>
 				<div class="line">
 					<div class="label">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_name')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'type'.'')))); ?></span>
 						
 					</div>
 					<div class="input">
-						<span class="name"><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.$type.'')))); ?></span>
 						
 					</div>
 				</div>
@@ -34,8 +36,19 @@
 						
 					</div>
 				</div>
+				<div class="line">
+					<div class="label">
+					</div>
+					<div class="input clickable">
+						<a class="or-link-btn" target="_self" data-type="dialog" data-action="" data-method="prop" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'prop'}" href="<?php echo Html::url('','prop','',array('dialogAction'=>'','dialogMethod'=>'prop')) ?>">
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'edit'.'')))); ?></span>
+							
+						</a>
+
+					</div>
+				</div>
 			</div></fieldset>
-			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('additional_info') ?></legend><div>
+			<fieldset class="toggle-open-close<?php echo ''?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('additional_info') ?></legend><div>
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_full_filename" class="label">
@@ -113,7 +126,7 @@
 				</div>
 			</div></fieldset>
 			
-				<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('prop_userinfo') ?></legend><div>
+				<fieldset class="toggle-open-close<?php echo ''?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('prop_userinfo') ?></legend><div>
 					<div class="line">
 						<div class="label">
 							<label for="<?php echo REQUEST_ID ?>_create_date" class="label">
@@ -176,5 +189,5 @@
 					</div>
 				</div></fieldset>
 			
-		<div class="or-form-actionbar"><input type="submit" class="or-form-btn or-form-btn--primary" value="OK" /></div></form>
+		<div class="or-form-actionbar"></div></form>
 	

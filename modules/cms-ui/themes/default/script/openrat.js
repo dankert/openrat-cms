@@ -609,7 +609,7 @@ function Form() {
 
 
         // Show progress
-        var status = $('<div class="notice info"><div class="text loader"></div></div>');
+        let status = $('<div class="notice info"><div class="text loader"></div></div>');
         $('#noticebar').prepend(status); // Notice anhängen.
         $(status).show();
 

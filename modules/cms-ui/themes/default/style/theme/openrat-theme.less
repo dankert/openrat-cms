@@ -36,7 +36,7 @@ html.theme-@{cms-theme-id} {
   }
 
   div#dialog {
-    > .view{
+    > .view {
       background-color: @cms-background-color;
       color: @cms-text-color;
       border-color: @cms-text-color ! important;
@@ -58,11 +58,12 @@ html.theme-@{cms-theme-id} {
   }
 
   .arrow-down {
-      border-top-color: @cms-title-background-color;
-    }
+    border-top-color: @cms-title-background-color;
+  }
+
   .arrow-right {
-      border-left-color: @cms-title-background-color;
-    }
+    border-left-color: @cms-title-background-color;
+  }
 
   iframe {
     border: 1px solid @cms-title-background-color;
@@ -85,37 +86,46 @@ html.theme-@{cms-theme-id} {
 
       &.ok {
         background-color: @notice-ok-color;
-        border-color: darken(@notice-ok-color,10%);
+        border-color: darken(@notice-ok-color, 10%);
+
         &:after {
-          border-left-color: darken(@notice-ok-color,10%);
+          border-left-color: darken(@notice-ok-color, 10%);
         }
-        .box-shadow(3px, 3px, 10px, mix(@cms-background-color,@notice-ok-color,20%));
+
+        .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @notice-ok-color, 20%));
       }
 
       &.warning {
         background-color: @notice-warning-color;
-        border-color: darken(@notice-warning-color,10%);
+        border-color: darken(@notice-warning-color, 10%);
+
         &:after {
-          border-left-color: darken(@notice-warning-color,10%);
+          border-left-color: darken(@notice-warning-color, 10%);
         }
-        .box-shadow(3px, 3px, 10px, mix(@cms-background-color,@notice-warning-color,20%));
+
+        .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @notice-warning-color, 20%));
       }
+
       &.info {
         background-color: @notice-info-color;
-        border-color: darken(@notice-info-color,10%);
+        border-color: darken(@notice-info-color, 10%);
+
         &:after {
-          border-left-color: darken(@notice-info-color,10%);
+          border-left-color: darken(@notice-info-color, 10%);
         }
-        .box-shadow(3px, 3px, 10px, mix(@cms-background-color,@notice-info-color,20%));
+
+        .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @notice-info-color, 20%));
       }
 
       &.error {
         background-color: @notice-error-color;
-        border-color: darken(@notice-error-color,10%);
+        border-color: darken(@notice-error-color, 10%);
+
         &:after {
-          border-left-color: darken(@notice-error-color,10%);
+          border-left-color: darken(@notice-error-color, 10%);
         }
-        .box-shadow(3px, 3px, 10px, mix(@cms-background-color,@notice-error-color,20%));
+
+        .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @notice-error-color, 20%));
 
       }
     }
@@ -286,7 +296,7 @@ html.theme-@{cms-theme-id} {
   header {
 
     background-color: @cms-title-background-color;
-    background-image: linear-gradient(to bottom, lighten(@cms-title-background-color, 10%),@cms-title-background-color  80%, @cms-background-color);
+    background-image: linear-gradient(to bottom, lighten(@cms-title-background-color, 10%), @cms-title-background-color 80%, @cms-background-color);
     color: @cms-title-text-color;
 
     div.toolbar-icon > a {
@@ -296,14 +306,17 @@ html.theme-@{cms-theme-id} {
     .search {
       .inputholder {
         background-color: transparent;
-        .box-shadow(0,0,0,transparent);
+        .box-shadow(0, 0, 0, transparent);
+
         input {
           background-color: transparent;
           color: @cms-title-text-color;
+
           &::placeholder {
             opacity: 1;
             color: @cms-title-text-color;
           }
+
           &:focus {
             &::placeholder {
               color: fadeout(@cms-title-text-color, 50%);
@@ -323,23 +336,19 @@ html.theme-@{cms-theme-id} {
       color: @cms-title-background-color;
 
 
-
       > div.entry,
-      > div.entry > a
-      {
+      > div.entry > a {
         background-color: @cms-title-text-color;
         color: @cms-title-background-color;
       }
 
       > div.entry.inactive,
-      > div.entry.inactive > a
-      {
-        color: mix(@cms-title-background-color,@cms-title-text-color,40%);
+      > div.entry.inactive > a {
+        color: mix(@cms-title-background-color, @cms-title-text-color, 40%);
       }
 
       > div.entry.active:hover,
-      > div.entry.active:hover > a
-      {
+      > div.entry.active:hover > a {
         background-color: @cms-title-background-color;
         color: @cms-title-text-color;
       }
@@ -373,25 +382,26 @@ html.theme-@{cms-theme-id} {
       background-color: @cms-text-color;
       color: @cms-background-color;
       border: 1px solid mix(@cms-text-color, @cms-background-color);
-      .box-shadow( 0px, 0px, 3px, @cms-text-color );
+      .box-shadow(0px, 0px, 3px, @cms-text-color);
     }
   }
 
-  .table-filter
-  {
-    width:100%;
+  .table-filter {
+    width: 100%;
     text-align: right;
+
     input {
       background-color: inherit;
       color: inherit;
 
       border: 1px solid mix(@cms-text-color, @cms-background-color);
-      .border-radius( 3px );
-      padding:0.5em;
-      margin:1em;
+      .border-radius(3px);
+      padding: 0.5em;
+      margin: 1em;
     }
   }
-dan
+
+  dan
   input[type='checkbox'],
   input[type='radio'] {
     background-color: @cms-title-background-color;
@@ -421,7 +431,7 @@ dan
   }
 
   fieldset {
-    border-color: mix(@cms-text-color,@cms-background-color);
+    border-color: mix(@cms-text-color, @cms-background-color);
 
     > div input.name, > div span.name {
       font-weight: bold;
@@ -458,6 +468,7 @@ dan
   dl.notice {
     border-left: 10px @cms-inactive-background-color solid;
     border-right: 1px @cms-inactive-background-color solid;
+
     & > dt {
       border-top: 1px @cms-inactive-background-color solid;
     }
@@ -494,6 +505,7 @@ dan
   }
 
   /* SVG-Icons */
+
   body {
     svg.image-icon > path {
       fill: @cms-text-color;
@@ -505,27 +517,32 @@ dan
         width: 18px;
         height: 18px;
       }
+
       svg.image-icon > path {
         fill: @cms-title-text-color;
       }
+
       .dropdown {
         svg.image-icon > path {
           fill: @cms-text-color;
 
         }
       }
+
       div.entry {
         svg.image-icon > path {
           fill: @cms-inactive-background-color;
         }
 
       }
+
       div.entry.active {
         svg.image-icon > path {
           fill: @cms-text-color;
         }
 
       }
+
       div.entry.active:hover {
         svg.image-icon > path {
           fill: @cms-title-text-color;
@@ -539,6 +556,7 @@ dan
   div.clickable.filtered > a {
     color: @cms-inactive-background-color;
   }
+
   div.clickable.filtered.active > a {
     color: @cms-background-color;
   }
@@ -546,26 +564,30 @@ dan
   div#workbench {
     & > div {
       background-color: @cms-background-color;
-      background-image: linear-gradient( to bottom, @cms-background-color 0%, lighten(@cms-background-color,20%) 100% );
+      background-image: linear-gradient(to bottom, @cms-background-color 0%, lighten(@cms-background-color, 20%) 100%);
 
       main section {
         //.box-shadow(5px,5px,5px,@cms-text-color);
         border-color: @cms-text-color;
 
         &.open {
-          background-color: lighten(@cms-background-color,10%);
+          background-color: lighten(@cms-background-color, 10%);
         }
       }
     }
   }
 
   .or-round-corners {
-    .border-radius( 1em );
+    .border-radius(1em);
   }
 
   .or-hover-effect:hover {
-    background-color: darken(@cms-background-color,10%);;
+    background-color: darken(@cms-background-color, 10%);;
+  }
+
+  .or-info-popup {
+    background-color: @cms-title-background-color;
+    color: @cms-title-text-color;
   }
 }
-
 /* Theme Ende */

@@ -1,14 +1,17 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
 	<header views="changetemplate"></header>
-	<form>
+	<form readonly="true" cancel="false">
+
+		<text var="name" class="headline"  />
+
 		<group>
 			<part class="line">
 				<part class="label">
-					<text text="global_name"></text>
+					<text key="type" />
 				</part>
 				<part class="input">
-					<text var="name" class="name" />
+					<text key="var:type" />
 				</part>
 			</part>
 			<part class="line">
@@ -27,8 +30,17 @@
 					<text var="description" class="description" />
 				</part>
 			</part>
+			<part class="line">
+				<part class="label">
+				</part>
+				<part class="input clickable">
+					<link subaction="prop" class="or-link-btn" type="dialog">
+						<text key="edit" />
+					</link>
+				</part>
+			</part>
 		</group>
-		<group title="message:additional_info">
+		<group title="message:additional_info" open="false">
 			<part class="line">
 				<part class="label">
 					<label for="full_filename">

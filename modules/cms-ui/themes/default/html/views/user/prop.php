@@ -1,8 +1,6 @@
 
 	
-		
-		
-		<form name="" target="_self" data-target="view" action="./" data-method="edit" data-action="user" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form user" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="user" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="edit" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="view" action="./" data-method="prop" data-action="user" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form user" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="user" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="prop" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<div class="line">
 				<div class="label">
 					<label for="<?php echo REQUEST_ID ?>_name" class="label"><?php echo lang('user_username') ?>
@@ -33,7 +31,7 @@
 						<div class="input">
 							<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_mail" name="<?php if ('') echo ''.'_' ?>mail<?php if ('') echo '_disabled' ?>" type="text" maxlength="255" class="" value="<?php echo Text::encodeHtml(@$mail) ?>" /><?php if ('') { ?><input type="hidden" name="mail" value="<?php $mail ?>"/><?php } ?></div>
 							
-							<i class="image-icon image-icon--menu-qrcode qrcode" data-qrcode="<?php echo 'mailto:'.$mail.'' ?>" title="QR-Code anzeigen"></i>
+							<i class="image-icon image-icon--menu-qrcode or-qrcode or-info" data-qrcode="<?php echo 'mailto:'.$mail.'' ?>" title="QR-Code anzeigen"></i>
 							
 						</div>
 					</div>
@@ -56,7 +54,7 @@
 					<div class="input">
 						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_tel" name="<?php if ('') echo ''.'_' ?>tel<?php if ('') echo '_disabled' ?>" type="text" maxlength="128" class="" value="<?php echo Text::encodeHtml(@$tel) ?>" /><?php if ('') { ?><input type="hidden" name="tel" value="<?php $tel ?>"/><?php } ?></div>
 						
-						<i class="image-icon image-icon--menu-qrcode qrcode" data-qrcode="<?php echo 'tel:'.$tel.'' ?>" title="QR-Code anzeigen"></i>
+						<i class="image-icon image-icon--menu-qrcode or-qrcode or-info" data-qrcode="<?php echo 'tel:'.$tel.'' ?>" title="QR-Code anzeigen"></i>
 						
 					</div>
 				</div>
@@ -132,38 +130,6 @@
 			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('security') ?></legend><div>
 				<div class="line">
 					<div class="label">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang('user_password_expires')))); ?></span>
-						
-					</div>
-					<div class="input">
-						<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($passwordExpires) ?>
-						
-					</div>
-				</div>
-				<div class="line">
-					<div class="label">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang('user_last_login')))); ?></span>
-						
-					</div>
-					<div class="input">
-						<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($lastLogin) ?>
-						
-					</div>
-				</div>
-				<div class="line">
-					<div class="label">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang('token')))); ?></span>
-						
-					</div>
-					<div class="input">
-						<span><?php echo nl2br(encodeHtml(htmlentities($totpToken))); ?></span>
-						
-					</div>
-				</div>
-				<div class="line">
-					<div class="label">
-						<label for="<?php echo REQUEST_ID ?>_otpsecret" class="label"><?php echo lang('user_totp') ?>
-						</label>
 					</div>
 					<div class="input">
 						<?php { $tmpname     = 'totp';$default  = '';$readonly = '';$required = '';		
@@ -182,16 +148,12 @@
 						
 						<label for="<?php echo REQUEST_ID ?>_totp" class="label"><?php echo lang('user_totp') ?>
 						</label>
-						<span><?php echo nl2br(encodeHtml(htmlentities($otpSecret))); ?></span>
-						
-						<i class="image-icon image-icon--menu-qrcode qrcode" data-qrcode="<?php echo $totpSecretUrl ?>" title="QR-Code anzeigen"></i>
+						<i class="image-icon image-icon--menu-qrcode or-qrcode or-info" data-qrcode="<?php echo $totpSecretUrl ?>" title="QR-Code anzeigen"></i>
 						
 					</div>
 				</div>
 				<div class="line">
 					<div class="label">
-						<label for="<?php echo REQUEST_ID ?>_otpsecret" class="label"><?php echo lang('user_hotp') ?>
-						</label>
 					</div>
 					<div class="input">
 						<?php { $tmpname     = 'hotp';$default  = '';$readonly = '';$required = '';		
@@ -210,7 +172,7 @@
 						
 						<label for="<?php echo REQUEST_ID ?>_hotp" class="label"><?php echo lang('user_hotp') ?>
 						</label>
-						<i class="image-icon image-icon--menu-qrcode qrcode" data-qrcode="<?php echo $hotpSecretUrl ?>" title="QR-Code anzeigen"></i>
+						<i class="image-icon image-icon--menu-qrcode or-qrcode or-info" data-qrcode="<?php echo $hotpSecretUrl ?>" title="QR-Code anzeigen"></i>
 						
 					</div>
 				</div>

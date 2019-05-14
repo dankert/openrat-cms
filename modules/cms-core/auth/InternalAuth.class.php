@@ -79,7 +79,7 @@ SQL
 		
 		if   ( $row_user['hotp'] == 1 )
 		{
-			// HOTP not yet implemented.
+			throw new LogicException('HOTP not yet implemented.');
 		}
 		
 		// Benutzer wurde erfolgreich authentifiziert.

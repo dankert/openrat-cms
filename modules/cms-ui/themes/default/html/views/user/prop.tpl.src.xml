@@ -1,6 +1,5 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
-	<header views="pw,remove"></header>
 	<form>
 		<part class="line">
 			<part class="label">
@@ -98,42 +97,16 @@
 		<group title="message:security">
 			<part class="line">
 				<part class="label">
-					<text text="user_password_expires" />
-				</part>
-				<part class="input">
-					<date date="var:passwordExpires" />
-				</part>  
-			</part>
-			<part class="line">
-				<part class="label">
-					<text text="user_last_login" />
-				</part>
-				<part class="input">
-					<date date="var:lastLogin" />
-				</part>  
-			</part>
-			<part class="line">
-				<part class="label">
-					<text text="token" />
-				</part>
-				<part class="input">
-					<text value="var:totpToken" />
-				</part>  
-			</part>
-			<part class="line">
-				<part class="label">
-					<label for="otpsecret" key="user_totp"></label>
 				</part>
 				<part class="input">
 					<checkbox name="totp"/><label for="totp" key="user_totp"></label>
 				
-					<text var="otpSecret"></text>
+					<!--<text var="otpSecret"></text>-->
 					<qrcode value="var:totpSecretUrl" /> 
 				</part>  
 			</part>
 			<part class="line">
 				<part class="label">
-					<label for="otpsecret" key="user_hotp"></label>
 				</part>
 				<part class="input">
 					<checkbox name="hotp"/><label for="hotp" key="user_hotp"></label>
