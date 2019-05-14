@@ -183,7 +183,10 @@ class Group
 	}
 
 
-	// Benutzer ermitteln, die Mitglied dieser Gruppe sind
+    /**
+     * Get all users of this group.
+     * @return array id->name
+     */
 	function getUsers()
 	{
 		$db = db_connection();
