@@ -122,37 +122,44 @@ html.nojs .noscript {
 
 .toggle-open-close {
 
+    display: flex;
+    flex-direction: column;
+
     .on-click-open-close {
         cursor: pointer;
         font-weight: normal;
+        //flex: 1;
     }
 
-    > div {
-        transition: height ease 0.5s;
+    > .closable {
+        transition: flex 0.5s ease-in-out;
+        flex: 1;
+        overflow: hidden;
     }
 
-    /* Geschlossene Fieldsets */
+    /* Geschlossen */
     &.closed {
-        .on-click-open-close .on-closed {
+        > .on-click-open-close > .on-closed {
             display: inline;
         }
-        .on-click-open-close .on-open {
+        > .on-click-open-close > .on-open {
             display: none;
         }
-        > div {
-            height: 0;
+        > .closable {
+            flex: 0.0001;
+            display: none;
         }
     }
 
-    /* Offene Fieldsets */
+    /* Offen */
     &.open {
-        > div {
-            display: block;
+        > .closable {
+            height: auto;
         }
-        .on-click-open-close .on-closed {
+        > .on-click-open-close > .on-closed {
             display: none;
         }
-        .on-click-open-close .on-open {
+        > .on-click-open-close > .on-open {
             display: inline;
         }
     }
@@ -269,15 +276,16 @@ div#workbench {
         > main {
 
             transition: opacity 0.5s ease;
+            display: flex;
+            flex-direction: column;
 
             &.is-closed {
-                //display: none;
                 flex: 0.5;
-                //opacity: 0.5;
                 cursor: not-allowed;
                 pointer-events: none;
 
                 @media @smartphones {
+                    // do not display the views in mobile mode.
                     flex: 0;
                 }
 
@@ -290,9 +298,7 @@ div#workbench {
                     margin:0.5em;
                 }
 
-                //&.open, &:hover {
-                    border: 1px solid;
-                //}
+                border: 1px solid;
 
                 .border-radius(5px);
 
@@ -305,10 +311,17 @@ div#workbench {
                     display: inline;
                 }
 
+                .view {
+                    transition: flex 0.5s ease-in-out;
+                }
+
                 // Wenn Sektion geschlossen, keine Toolbar anzeigen.
                 &.closed {
                     .view-toolbar {
                         display: none;
+                    }
+                    .view {
+                        flex: 0;
                     }
                 }
 

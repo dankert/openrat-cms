@@ -28,7 +28,7 @@ class GroupComponent extends Component
 			echo $this->htmlvalue($this->title);
 			echo '</legend>';
 		}
-		echo '<div>';
+		echo '<div class="closable">';
 	}
 
 
