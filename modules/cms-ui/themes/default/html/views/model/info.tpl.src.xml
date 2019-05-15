@@ -1,0 +1,20 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
+    <form readonly="true" cancel="false">
+
+        <text class="headline" var="name"/>
+
+        <part class="line">
+            <part class="label">
+                <text text="GLOBAL_NAME"></text>
+            </part>
+            <part class="input clickable">
+                <text var="name"/>
+                <link class="or-link-btn" action="model" subaction="prop" type="edit">
+                    <text key="edit"/>
+                </link>
+            </part>
+        </part>
+
+    </form>
+</output>

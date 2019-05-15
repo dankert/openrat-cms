@@ -36,9 +36,11 @@ use \Html;
 class ModelAction extends Action
 {
 	public $security = Action::SECURITY_USER;
-	
-	var $defaultSubAction = 'listing';
-	var $model;
+
+    /**
+     * @var Model
+     */
+	private $model;
 
 
 	function __construct()
@@ -111,25 +113,6 @@ class ModelAction extends Action
 	
 	
 	
-	// Speichern eines Modells
-	function editPost()
-	{
-		if   ( $this->getRequestVar('name') != '' )
-		{
-			$this->model->name = $this->getRequestVar('name');
-			$this->model->save();
-			$this->addNotice('model',$this->model->name,'SAVED','ok');
-		}
-		else
-		{
-			$this->addNotice('model',$this->model->name,'NOT_SAVED','error');
-		}
-	
-		// Baum aktualisieren
-//		$this->setTemplateVar('tree_refresh',true);
-	}
-
-
 	function setdefaultPost()
 	{
 		if	( !$this->userIsAdmin() ) exit();
@@ -144,43 +127,10 @@ class ModelAction extends Action
 	 * Bearbeiten der Variante.
 	 * Ermitteln aller Eigenschaften der Variante.
 	 */
-	function editView()
+	public function infoView()
 	{
 		$this->model->load();
 	
 		$this->setTemplateVars( $this->model->getProperties() );
-	}
-
-
-
-	/**
-	 * Liefert die Struktur zu diesem Ordner:
-	 * - Mit den übergeordneten Ordnern und
-	 * - den in diesem Ordner enthaltenen Objekten
-	 * 
-	 * Beispiel:
-	 * <pre>
-	 * - A
-	 *   - B
-	 *     - C (dieser Ordner)
-	 *       - Unterordner
-	 *       - Seite
-	 *       - Seite
-	 *       - Datei
-	 * </pre> 
-	 */
-	public function structureView()
-	{
-		$structure = array();
-		$modellistChildren = array();
-		
-		$structure[0] = array('id'=>'0','name'=>lang('MODELS'),'type'=>'modellist','level'=>1,'children'=>&$modellistChildren);
-			
-		$modellistChildren[ $this->model->modelid ] = array('id'=>$this->model->modelid,'name'=>$this->model->name,'type'=>'model','self'=>true);
-		
-		
-		//Html::debug($structure);
-		
-		$this->setTemplateVar('outline',$structure);
 	}
 }
