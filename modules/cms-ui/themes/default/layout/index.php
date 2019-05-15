@@ -47,8 +47,13 @@
 
         </nav>
 
-        <section id="edit" class="">
-            <div class="filler"></div>
+        <section id="edit" class="open">
+
+            <header class="or-view-header">
+                <span class="or-view-icon image-icon--method-src image-icon"></span>
+                <h1 class="or-view-headline"><?php echo lang('METHOD_EDIT' ) ?></h1>
+            </header>
+
             <div class="view"></div>
         </section>
 
@@ -62,12 +67,12 @@
             <?php if (DEVELOPMENT) echo "<!-- Section for : $action / ".$method['name']." / $id  -->";  ?>
             <section class="toggle-open-close <?php echo $method ['open']?'open':'closed' ?>">
 
-                <header class="on-click-open-close">
+                <header class="or-view-header on-click-open-close">
                     <!--
                     <div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div>
                     -->
-                    <img src="<?php echo OR_THEMES_DIR ?>/default/images/icon/method/<?php echo $method['name'] ?>.svg" class="image-icon" />
-                    <h1><?php echo lang('METHOD_'.$method['name'] ) ?></h1>
+                    <span class="or-view-icon image-icon image-icon--method-<?php echo $method['name'] ?>" ></span>
+                    <h1 class="or-view-headline"><?php echo lang('METHOD_'.$method['name'] ) ?></h1>
                 </header>
 
                 <!--
