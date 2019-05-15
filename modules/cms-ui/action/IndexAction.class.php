@@ -184,7 +184,6 @@ class IndexAction extends Action
             'edit'     => true,
             'preview'  => true,
             'info'     => true,
-            'prop'     => false,
         );
 
         $methodList = array();

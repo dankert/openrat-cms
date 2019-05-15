@@ -79,7 +79,7 @@
                     -->
 
 
-                <div class="view view-loader" data-method="<?php echo $method['name'] ?>"><?php if($method ['open']) {embedView($action,$method['name'],$id);}else{echo '';} ?></div>
+                <div class="view view-loader closable" data-method="<?php echo $method['name'] ?>"><?php if($method ['open']) {embedView($action,$method['name'],$id);}else{echo '';} ?></div>
 
             </section>
             <?php } ?>

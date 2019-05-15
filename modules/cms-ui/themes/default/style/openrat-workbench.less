@@ -132,9 +132,12 @@ html.nojs .noscript {
     }
 
     > .closable {
-        transition: flex 0.5s ease-in-out;
+        //transition: transform 0.5s ease-in-out;
+        transition: opacity 0.3s ease-out;
+        //transition: max-height 1s linear;
         flex: 1;
-        overflow: hidden;
+        display: block;
+        //overflow: hidden;
     }
 
     /* Geschlossen */
@@ -146,8 +149,11 @@ html.nojs .noscript {
             display: none;
         }
         > .closable {
-            flex: 0.0001;
-            display: none;
+            //flex: 0.0001;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            //display: none;
         }
     }
 
@@ -312,7 +318,7 @@ div#workbench {
                 }
 
                 .view {
-                    transition: flex 0.5s ease-in-out;
+                    //transition: flex 0.5s ease-in-out;
                 }
 
                 // Wenn Sektion geschlossen, keine Toolbar anzeigen.
@@ -320,9 +326,7 @@ div#workbench {
                     .view-toolbar {
                         display: none;
                     }
-                    .view {
-                        flex: 0;
-                    }
+                    //.view {                        flex: 0;                    }
                 }
 
                 // Diabled Sections are not displayed.
