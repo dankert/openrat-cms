@@ -2,13 +2,12 @@
 
 namespace cms\action;
 
+use cms\model\BaseObject;
 use cms\model\Folder;
 use cms\model\Link;
 
 
-
-
-
+use Html;
 use Session;
 
 // OpenRat Content Management System
@@ -38,7 +37,10 @@ use Session;
 class LinkAction extends ObjectAction
 {
 	public $security = Action::SECURITY_USER;
-	
+
+    /**
+     * @var Link
+     */
 	private $link;
 
 	/**
@@ -165,4 +167,32 @@ class LinkAction extends ObjectAction
             $this->addNotice('link', $this->link->filename, 'CANCELED', OR_NOTICE_WARN);
         }
     }
+
+
+    public function showView()
+    {
+        header('Content-Type: text/html' );
+
+        header('X-Link-Id: ' .$this->link->linkid );
+        header('X-Id: '      .$this->link->id     );
+        header('Content-Description: '.$this->link->filename() );
+
+        echo '<html><body>';
+        echo '<h1>'.$this->link->filename.'</h1>';
+        echo '<hr />';
+
+        try {
+            $o = new BaseObject( $this->link->linkedObjectId );
+            $o->load();
+            echo '<a href="'.Html::url($o->getType(),'show',$o->objectid).'">'.$o->filename.'</a>';
+        }
+        catch( \ObjectNotFoundException $e ) {
+            echo '-';
+        }
+
+        echo '</body></html>';
+
+        exit;
+    }
+
 }

@@ -1392,8 +1392,42 @@ class FolderAction extends ObjectAction
 		}
 	}
 
+
+    /**
+     * Shows the folder content as html.
+     */
 	public function showView() {
-	    $this->nextSubAction('edit');
+
+        // Angabe Content-Type
+        header('Content-Type: text/html' );
+
+        header('X-Folder-Id: '   .$this->folder->folderid );
+        header('X-Id: '         .$this->folder->id       );
+        header('Content-Description: '.$this->folder->filename() );
+
+        echo '<html><body>';
+        echo '<h1>'.$this->folder->filename.'</h1>';
+        echo '<ul>';
+
+        // Schleife ueber alle Objekte in diesem Ordner
+        foreach( $this->folder->getObjects() as $o )
+        {
+            /* @var $o BaseObject */
+            $id = $o->objectid;
+
+            if   ( $o->hasRight(ACL_READ) )
+            {
+                echo '<li><a href="'. Html::url($o->getType(),'',$id).'">'.$o->filename.'</a></li>';
+
+                //echo date( lang('DATE_FORMAT'),$o->lastchangeDate );
+                //echo $o->lastchangeUser;
+            }
+        }
+
+        echo '</ul>';
+        echo '</body></html>';
+
+        exit;
     }
 
 

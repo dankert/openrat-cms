@@ -2,13 +2,12 @@
 
 namespace cms\action;
 
+use cms\model\BaseObject;
 use cms\model\Folder;
 use cms\model\Url;
 
 
-
-
-
+use Html;
 use Session;
 
 // OpenRat Content Management System
@@ -38,9 +37,11 @@ use Session;
 class UrlAction extends ObjectAction
 {
 	public $security = Action::SECURITY_USER;
-	
-	var $url;
-	var $defaultSubAction = 'prop';
+
+    /**
+     * @var Url
+     */
+	private $url;
 
 	/**
 	 * Konstruktor
@@ -189,4 +190,24 @@ class UrlAction extends ObjectAction
 		
 		$this->setTemplateVar('outline',$structure);
 	}
+
+
+	public function showView()
+    {
+        // Angabe Content-Type
+        header('Content-Type: text/html' );
+
+        header('X-Url-Id: '   .$this->url->urlid );
+        header('X-Id: '       .$this->url->id    );
+        header('Content-Description: '.$this->url->filename() );
+
+        echo '<html><body>';
+        echo '<h1>'.$this->url->filename.'</h1>';
+        echo '<hr />';
+        echo '<a href="'.$this->url->url.'">'.$this->url->url.'</a>';
+        echo '</body></html>';
+
+        exit;
+
+    }
 }
