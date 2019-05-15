@@ -38,7 +38,7 @@ class LanguageAction extends Action
 	 * Zu bearbeitende Sprache, wird im Kontruktor instanziiert
 	 * @type Language
 	 */
-	var $language;
+	private $language;
 
 
 	/**
@@ -119,59 +119,10 @@ class LanguageAction extends Action
 
 
 
-	/**
-	 * Speichern der Sprache
-	 */
-	public function editPost()
+	public function infoView()
 	{
-		global $conf;
-
-		if	( $this->hasRequestVar('name') )
-		{
-			$this->language->name    = $this->getRequestVar('name'   );
-			$this->language->isoCode = $this->getRequestVar('isocode');
-		}
-		else
-		{
-			$countryList = $conf['countries'];
-			$iso = $this->getRequestVar('isocode');
-			$this->language->name    = $countryList[$iso];
-			$this->language->isoCode = strtolower( $iso );
-		}
-		
-		$this->language->save();
+		$this->setTemplateVars( $this->language->getProperties() );
 	}
-
-
-
-	public function editView()
-	{
-		global $conf;
-		$countryList = $conf['countries'];
-
-		$project = new Project( $this->language->projectid );
-
-		foreach( $project->getLanguageIds() as $id )
-		{
-			if	( $id == $this->language->languageid )
-				continue;		
-
-			$l = new Language( $id );
-			$l->load();
-
-			unset( $countryList[$l->isoCode] );
-		}
-
-		asort( $countryList );		
-		$this->setTemplateVar('isocodes'  ,$countryList               );
-		$this->setTemplateVar('isocode'   ,strtoupper($this->language->isoCode) );
-	}
-
-
-
-	function showView() {
-	    $this->nextSubAction('edit');
-    }
 
 
 	function propView()
