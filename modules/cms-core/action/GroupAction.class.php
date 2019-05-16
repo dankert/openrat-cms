@@ -31,15 +31,16 @@ use \Html;
 /**
  * Action-Klasse zum Bearbeiten einer Benutzergruppe.
  * 
- * @author $Author$
- * @version $Revision$
- * @package openrat.actions
+ * @author Jan Dankert
  */
 
 class GroupAction extends Action
 {
 	public $security = Action::SECURITY_ADMIN;
-	
+
+    /**
+     * @var Group
+     */
 	private $group;
 
 
@@ -82,21 +83,15 @@ class GroupAction extends Action
 	
 	
 	
-	function editPost()
+	public function propPost()
 	{
-		if	( $this->getRequestVar('name') != '' )
-		{
-			$this->group->name = $this->getRequestVar('name');
-			
-			$this->group->save();
-	
-			$this->addNotice('group',$this->group->name,'SAVED','ok');
-		}
-		else
-		{
-			$this->addValidationError('name');
-			$this->callSubAction('edit');
-		}
+		if	( empty($this->getRequestVar('name') ) )
+		    throw new \ValidationException('name');
+
+        $this->group->name = $this->getRequestVar('name');
+        $this->group->save();
+
+        $this->addNotice('group',$this->group->name,'SAVED','ok');
 	}
 
 
@@ -167,14 +162,22 @@ class GroupAction extends Action
 	}
 
 
-	function editView()
+	function infoView()
+	{
+		$this->setTemplateVars( $this->group->getProperties() );
+		$this->setTemplateVar( 'users',$this->group->getUsers() );
+	}
+
+
+	
+	function propView()
 	{
 		$this->setTemplateVars( $this->group->getProperties() );
 	}
 
 
-	
-	
+
+
 	
 	
 	/**
