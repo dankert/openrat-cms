@@ -2,7 +2,7 @@
 
 use database\Database;
 
-define('OR_DB_SUPPORTED_VERSION'     ,18);
+define('OR_DB_SUPPORTED_VERSION'     ,19);
 
 define('OR_DB_STATUS_UPDATE_PROGRESS', 0);
 define('OR_DB_STATUS_UPDATE_SUCCESS' , 1);
