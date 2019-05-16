@@ -271,13 +271,13 @@ class TemplateAction extends Action
 
 		// Code-Element nur fuer Administratoren (da voller Systemzugriff!)		
 		if	( !$this->userIsAdmin() )
-			unset( $types[ELEMENT_TYPE_CODE] );
+			unset( $types[Element::ELEMENT_TYPE_CODE] );
 
 		// Auswahlmoeglichkeiten:
 		$this->setTemplateVar('types',$types);
 
 		// Vorbelegung:
-		$this->setTemplateVar('typeid',ELEMENT_TYPE_TEXT);
+		$this->setTemplateVar('typeid',Element::ELEMENT_TYPE_TEXT);
 	}
 	
 	

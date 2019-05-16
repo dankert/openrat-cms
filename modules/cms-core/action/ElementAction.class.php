@@ -11,27 +11,11 @@ use cms\model\BaseObject;
 use Text;
 
 
-// OpenRat Content Management System
-// Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; version 2.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * Action-Klasse fuer die Bearbeitung eines Template-Elementes.
  * 
  * @author Jan Dankert
- * @package openrat.actions
  */
 class ElementAction extends Action
 {
@@ -225,7 +209,7 @@ class ElementAction extends Action
 					$convertToLang = false;
 					switch( $this->element->typeid )
 					{
-						case ELEMENT_TYPE_INFO:
+						case Element::ELEMENT_TYPE_INFO:
 							$subtypes = Array('db_id',
 							                 'db_name',
 							                 'project_id',
@@ -259,15 +243,15 @@ class ElementAction extends Action
 							$convertToLang = true;
 							break;
 
-						case ELEMENT_TYPE_INFODATE:
-						case ELEMENT_TYPE_LINKDATE:
+						case Element::ELEMENT_TYPE_INFODATE:
+						case Element::ELEMENT_TYPE_LINKDATE:
 							$subtypes = Array('date_published',
 							                 'date_saved',
 							                 'date_created' );
 							$convertToLang = true;
 							break;
 
-						case ELEMENT_TYPE_LINK:
+						case Element::ELEMENT_TYPE_LINK:
 							$subtypes = Array(
 							                  'file',
 							                  'image',
@@ -278,7 +262,7 @@ class ElementAction extends Action
 							$convertToLang = true;
 							break;
 
-						case ELEMENT_TYPE_LINKINFO:
+						case Element::ELEMENT_TYPE_LINKINFO:
 							$subtypes = Array('width',
 							                  'height',
 							                  'id',
@@ -300,13 +284,13 @@ class ElementAction extends Action
 							$convertToLang = true;
 							break;
 
-                        case ELEMENT_TYPE_INSERT:
+                        case Element::ELEMENT_TYPE_INSERT:
 							$subtypes = Array('inline',
 							                  'ssi'     );
 							$convertToLang = true;
 							break;
 
-						case ELEMENT_TYPE_DYNAMIC:
+						case Element::ELEMENT_TYPE_DYNAMIC:
 									
 							$files = Array();
 							$macroFiles = \FileUtils::readDir(__DIR__.'/../../cms-macros/macro');
@@ -373,12 +357,12 @@ class ElementAction extends Action
 				
 					switch( $this->element->typeid )
 					{
-						case ELEMENT_TYPE_LONGTEXT:
+						case Element::ELEMENT_TYPE_LONGTEXT:
 							$this->setTemplateVar('default_longtext',$this->element->defaultText );
 							break;
 
-						case ELEMENT_TYPE_SELECT:
-						case ELEMENT_TYPE_TEXT:
+						case Element::ELEMENT_TYPE_SELECT:
+						case Element::ELEMENT_TYPE_TEXT:
 							$this->setTemplateVar('default_text'    ,$this->element->defaultText );
 							break;
 					}
@@ -391,8 +375,8 @@ class ElementAction extends Action
                     $formats = Element::getAvailableFormats();
 
                     // Für einfache Textelemente gibt es keinen HTML-Editor
-                    if	( $this->element->typeid != ELEMENT_TYPE_LONGTEXT )
-                        unset( $formats[ ELEMENT_FORMAT_HTML ] );
+                    if	( $this->element->typeid != Element::ELEMENT_TYPE_LONGTEXT )
+                        unset( $formats[ Element::ELEMENT_FORMAT_HTML ] );
 
                     foreach( $formats as $t=>$v )
                         $formats[$t] = array('lang'=>'EL_PROP_FORMAT_'.$v);
@@ -457,11 +441,11 @@ class ElementAction extends Action
 					switch( $this->element->typeid )
 					{
 
-						case ELEMENT_TYPE_SELECT:
+						case Element::ELEMENT_TYPE_SELECT:
 							$this->setTemplateVar('select_items',$this->element->code );
 							break;
 
-						case ELEMENT_TYPE_DYNAMIC:
+						case Element::ELEMENT_TYPE_DYNAMIC:
 
 							$className = $this->element->subtype;
 							$fileName  = OR_DYNAMICCLASSES_DIR.'/'.$className.'.class.'.PHP_EXT;
@@ -511,7 +495,7 @@ class ElementAction extends Action
 							
 							break;
 
-						case ELEMENT_TYPE_CODE:
+						case Element::ELEMENT_TYPE_CODE:
 							if	( $conf['security']['disable_dynamic_code'] )
 								$this->addNotice('element',$this->element->name,'CODE_DISABLED',OR_NOTICE_WARN);
 								
@@ -551,12 +535,12 @@ class ElementAction extends Action
 						
 						switch( $this->element->typeid )
 						{
-							case ELEMENT_TYPE_LINK:
+							case Element::ELEMENT_TYPE_LINK:
 								if	( ! in_array( $o->typeid, array(BaseObject::TYPEID_PAGE,BaseObject::TYPEID_IMAGE,BaseObject::TYPEID_FILE,BaseObject::TYPEID_LINK,BaseObject::TYPEID_URL,BaseObject::TYPEID_TEXT ) ) )
 									continue 2;
 								break;
 						        //Change tobias 
-							case ELEMENT_TYPE_INSERT:
+							case Element::ELEMENT_TYPE_INSERT:
                                 if	( ! in_array( $o->typeid, array(BaseObject::TYPEID_FOLDER,BaseObject::TYPEID_PAGE,BaseObject::TYPEID_IMAGE,BaseObject::TYPEID_FILE,BaseObject::TYPEID_LINK,BaseObject::TYPEID_URL,BaseObject::TYPEID_TEXT ) ) )
 									continue 2;
 								break;
@@ -689,4 +673,3 @@ class ElementAction extends Action
 	}
 }
 
-?>

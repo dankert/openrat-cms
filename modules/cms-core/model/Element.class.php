@@ -1,32 +1,6 @@
 <?php
 namespace cms\model;
 
-define('ELEMENT_TYPE_DATE'    , 1);
-define('ELEMENT_TYPE_NUMBER'  , 2);
-define('ELEMENT_TYPE_TEXT'    , 3);
-define('ELEMENT_TYPE_INFO'    , 4);
-define('ELEMENT_TYPE_INFODATE', 5);
-define('ELEMENT_TYPE_LINK'    , 6);
-define('ELEMENT_TYPE_LONGTEXT', 7);
-define('ELEMENT_TYPE_CODE'    , 8);
-define('ELEMENT_TYPE_DYNAMIC' , 9);
-define('ELEMENT_TYPE_SELECT'  ,10);
-define('ELEMENT_TYPE_COPY'    ,11);
-define('ELEMENT_TYPE_LINKINFO',12);
-define('ELEMENT_TYPE_LINKDATE',13);
-define('ELEMENT_TYPE_INSERT'  ,14);
-
-define('ELEMENT_FORMAT_TEXT'    ,0);
-define('ELEMENT_FORMAT_HTML'    ,1);
-define('ELEMENT_FORMAT_WIKI'    ,2);
-define('ELEMENT_FORMAT_MARKDOWN',3);
-
-define('ELEMENT_FLAG_HTML_ALLOWED' , 1);
-define('ELEMENT_FLAG_ALL_LANGUAGES', 2);
-define('ELEMENT_FLAG_WRITABLE'     , 4);
-define('ELEMENT_FLAG_WITH_ICON'    , 8);
-define('ELEMENT_FLAG_INHERIT'      ,16);
-
 
 /**
  * Diese Objektklasse stellt ein Element das.
@@ -39,7 +13,33 @@ define('ELEMENT_FLAG_INHERIT'      ,16);
  */
 class Element
 {
-	/**
+    const ELEMENT_TYPE_DATE     =  1;
+    const ELEMENT_TYPE_NUMBER   =  2;
+    const ELEMENT_TYPE_TEXT     =  3;
+    const ELEMENT_TYPE_INFO     =  4;
+    const ELEMENT_TYPE_INFODATE =  5;
+    const ELEMENT_TYPE_LINK     =  6;
+    const ELEMENT_TYPE_LONGTEXT =  7;
+    const ELEMENT_TYPE_CODE     =  8;
+    const ELEMENT_TYPE_DYNAMIC  =  9;
+    const ELEMENT_TYPE_SELECT   = 10;
+    const ELEMENT_TYPE_COPY     = 11;
+    const ELEMENT_TYPE_LINKINFO = 12;
+    const ELEMENT_TYPE_LINKDATE = 13;
+    const ELEMENT_TYPE_INSERT   = 14;
+
+    const ELEMENT_FORMAT_TEXT     = 0;
+    const ELEMENT_FORMAT_HTML     = 1;
+    const ELEMENT_FORMAT_WIKI     = 2;
+    const ELEMENT_FORMAT_MARKDOWN = 3;
+
+    const ELEMENT_FLAG_HTML_ALLOWED  =  1;
+    const ELEMENT_FLAG_ALL_LANGUAGES =  2;
+    const ELEMENT_FLAG_WRITABLE      =  4;
+    const ELEMENT_FLAG_WITH_ICON     =  8;
+    const ELEMENT_FLAG_INHERIT       = 16;
+
+    /**
 	 * Eindeutige ID dieses Elementes
 	 * @type Integer
 	 */
@@ -133,7 +133,7 @@ class Element
 	var $allLanguages;
 
 	public static $readonlyElementTypeIds = array(
-	    ELEMENT_TYPE_COPY,ELEMENT_TYPE_LINKINFO,ELEMENT_TYPE_LINKDATE,ELEMENT_TYPE_INFO,ELEMENT_TYPE_INFODATE,ELEMENT_TYPE_CODE,ELEMENT_TYPE_DYNAMIC
+	    self::ELEMENT_TYPE_COPY,self::ELEMENT_TYPE_LINKINFO,self::ELEMENT_TYPE_LINKDATE,self::ELEMENT_TYPE_INFO,self::ELEMENT_TYPE_INFODATE,self::ELEMENT_TYPE_CODE,self::ELEMENT_TYPE_DYNAMIC
     );
 
 
@@ -151,7 +151,7 @@ class Element
 	 */
 	var $wiki   = false;
 
-	public $format = ELEMENT_FORMAT_TEXT;
+	public $format = self::ELEMENT_FORMAT_TEXT;
 
 	var $html = false;
 	var $decimals = 0;
@@ -188,7 +188,7 @@ class Element
 		                " VALUES ( {elementid},{templateid},{name},{description},{typeid},{flags} ) " );
 
 		$flags = 0;
-        $flags += ELEMENT_FLAG_WRITABLE * intval($this->writable);
+        $flags += self::ELEMENT_FLAG_WRITABLE * intval($this->writable);
 
         $sql->setInt    ( 'elementid'  ,$this->elementid  );
 		$sql->setString ( 'name'       ,$this->name       );
@@ -242,13 +242,13 @@ SQL
         $this->subtype        = $prop['subtype'   ];
 
 		$this->dateformat     = $prop['dateformat'];
-		$this->wiki           = $prop['format'] == ELEMENT_FORMAT_WIKI;
+		$this->wiki           = $prop['format'] == self::ELEMENT_FORMAT_WIKI;
 		$this->format         = $prop['format'];
-		$this->withIcon       = $prop['flags'] & ELEMENT_FLAG_WITH_ICON;
-		$this->html           = $prop['flags'] & ELEMENT_FLAG_HTML_ALLOWED;
-		$this->allLanguages   = $prop['flags'] & ELEMENT_FLAG_ALL_LANGUAGES;
-		$this->writable       = $prop['flags'] & ELEMENT_FLAG_WRITABLE;
-		$this->inherit        = $prop['flags'] & ELEMENT_FLAG_INHERIT;
+		$this->withIcon       = $prop['flags'] & self::ELEMENT_FLAG_WITH_ICON;
+		$this->html           = $prop['flags'] & self::ELEMENT_FLAG_HTML_ALLOWED;
+		$this->allLanguages   = $prop['flags'] & self::ELEMENT_FLAG_ALL_LANGUAGES;
+		$this->writable       = $prop['flags'] & self::ELEMENT_FLAG_WRITABLE;
+		$this->inherit        = $prop['flags'] & self::ELEMENT_FLAG_INHERIT;
 
 		if	( !$this->writable)
 			$this->withIcon = false;
@@ -291,11 +291,11 @@ SQL
 		                ' WHERE id={elementid}'      );
 
         $flags = 0;
-        $flags += ELEMENT_FLAG_WITH_ICON     * intval($this->withIcon    );
-        $flags += ELEMENT_FLAG_HTML_ALLOWED  * intval($this->html        );
-        $flags += ELEMENT_FLAG_ALL_LANGUAGES * intval($this->allLanguages);
-        $flags += ELEMENT_FLAG_WRITABLE      * intval($this->writable    );
-        $flags += ELEMENT_FLAG_INHERIT       * intval($this->inherit     );
+        $flags += self::ELEMENT_FLAG_WITH_ICON     * intval($this->withIcon    );
+        $flags += self::ELEMENT_FLAG_HTML_ALLOWED  * intval($this->html        );
+        $flags += self::ELEMENT_FLAG_ALL_LANGUAGES * intval($this->allLanguages);
+        $flags += self::ELEMENT_FLAG_WRITABLE      * intval($this->writable    );
+        $flags += self::ELEMENT_FLAG_INHERIT       * intval($this->inherit     );
 
         $sql->setInt    ( 'elementid'       ,$this->elementid        );
 		$sql->setInt    ( 'templateid'      ,$this->templateid       );
@@ -452,20 +452,20 @@ SQL
     public static function getAvailableTypes()
     {
         return array(
-            ELEMENT_TYPE_TEXT => 'text',
-            ELEMENT_TYPE_LONGTEXT => 'longtext',
-            ELEMENT_TYPE_SELECT => 'select',
-            ELEMENT_TYPE_NUMBER => 'number',
-            ELEMENT_TYPE_LINK => 'link',
-            ELEMENT_TYPE_DATE => 'date',
-            ELEMENT_TYPE_INSERT => 'insert',
-            ELEMENT_TYPE_COPY => 'copy',
-            ELEMENT_TYPE_LINKINFO => 'linkinfo',
-            ELEMENT_TYPE_LINKDATE => 'linkdate',
-            ELEMENT_TYPE_CODE => 'code',
-            ELEMENT_TYPE_DYNAMIC => 'dynamic',
-            ELEMENT_TYPE_INFO => 'info',
-            ELEMENT_TYPE_INFODATE => 'infodate'
+            self::ELEMENT_TYPE_TEXT => 'text',
+            self::ELEMENT_TYPE_LONGTEXT => 'longtext',
+            self::ELEMENT_TYPE_SELECT => 'select',
+            self::ELEMENT_TYPE_NUMBER => 'number',
+            self::ELEMENT_TYPE_LINK => 'link',
+            self::ELEMENT_TYPE_DATE => 'date',
+            self::ELEMENT_TYPE_INSERT => 'insert',
+            self::ELEMENT_TYPE_COPY => 'copy',
+            self::ELEMENT_TYPE_LINKINFO => 'linkinfo',
+            self::ELEMENT_TYPE_LINKDATE => 'linkdate',
+            self::ELEMENT_TYPE_CODE => 'code',
+            self::ELEMENT_TYPE_DYNAMIC => 'dynamic',
+            self::ELEMENT_TYPE_INFO => 'info',
+            self::ELEMENT_TYPE_INFODATE => 'infodate'
         );
     }
 
@@ -478,10 +478,10 @@ SQL
     public static function getAvailableFormats()
     {
         return array(
-            ELEMENT_FORMAT_TEXT => 'text',
-            ELEMENT_FORMAT_WIKI => 'wiki',
-            ELEMENT_FORMAT_HTML => 'html',
-            ELEMENT_FORMAT_MARKDOWN => 'markdown'
+            self::ELEMENT_FORMAT_TEXT => 'text',
+            self::ELEMENT_FORMAT_WIKI => 'wiki',
+            self::ELEMENT_FORMAT_HTML => 'html',
+            self::ELEMENT_FORMAT_MARKDOWN => 'markdown'
         );
     }
 
