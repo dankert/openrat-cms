@@ -295,7 +295,7 @@
 								</a>
 
 							</div>
-							<div class="entry clickable filtered on-action-element on-action-file on-action-image on-action-text">
+							<div class="entry clickable filtered on-action-element on-action-file on-action-image on-action-text on-action-pageelement">
 								<a title="<?php echo lang('menu_advanced_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="advanced" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'advanced'}" href="<?php echo Html::url('','advanced','',array('dialogAction'=>'','dialogMethod'=>'advanced')) ?>">
 									<i class="image-icon image-icon--method-advanced"></i>
 									

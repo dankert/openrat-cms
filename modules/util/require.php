@@ -21,6 +21,7 @@ require_once( __DIR__.'/'.'FileUtils.class.php' );
 require_once( __DIR__.'/'.'JSON.class.php' );
 require_once( __DIR__.'/'.'Less.php' );
 require_once( __DIR__.'/'.'JSqueeze.class.php' );
+require_once( __DIR__.'/'.'Parsedown.class.php' );
 require_once( __DIR__.'/'.'Spyc.class.php' );
 require_once( __DIR__.'/'.'TreeElement.class.php' );
 require_once( __DIR__.'/'.'Tree.class.php');

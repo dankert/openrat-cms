@@ -103,7 +103,9 @@
 					</column>
 				</row>
 			</if>
+
 			<if value="var:type" equals="longtext">
+				<hidden name="format" />
 				<if present="preview">
 					<part class="preview">
 						<group title="message:page_preview">
@@ -127,7 +129,7 @@
 						<newline></newline>
 					</if>
 					<editor type="wiki" name="text"></editor>
-					<group title="message:help">
+					<group title="message:help" open="false">
 						<table>
 							<column>
 								<text value="config:editor/text-markup/strong-begin"></text>

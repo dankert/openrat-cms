@@ -316,7 +316,7 @@
                             </link>
                         </part>
 
-                        <part class="entry clickable filtered on-action-element on-action-file on-action-image on-action-text">
+                        <part class="entry clickable filtered on-action-element on-action-file on-action-image on-action-text on-action-pageelement">
                             <link type="dialog" title="message:menu_advanced_desc"
                                   subaction="advanced">
                                 <image method="advanced"></image>

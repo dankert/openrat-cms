@@ -168,10 +168,14 @@ class PageelementAction extends Action
 		$this->value->element->load();
 		$this->value->load();
 
-		$this->setTemplateVar('name'        ,$this->value->element->name     );
-		$this->setTemplateVar('description' ,$this->value->element->desc     );
-		$this->setTemplateVar('elementid'   ,$this->value->element->elementid);
-		$this->setTemplateVar('element_type',$this->value->element->type     );
+		$this->setTemplateVar('name'          ,$this->value->element->name     );
+		$this->setTemplateVar('description'   ,$this->value->element->desc     );
+		$this->setTemplateVar('elementid'     ,$this->value->element->elementid);
+        $this->setTemplateVar('element_id'    ,$this->value->element->elementid );
+        $this->setTemplateVar('element_name'  ,$this->value->element->name );
+		$this->setTemplateVar('element_type'  ,$this->value->element->getTypeName() );
+		$this->setTemplateVar('element_format',Element::getAvailableFormats()[ $this->value->element->format] );
+		$this->setTemplateVar('format'        ,Element::getAvailableFormats()[ $this->value->format         ] );
 
 		$user = new User( $this->value->lastchangeUserId );
 
@@ -189,8 +193,6 @@ class PageelementAction extends Action
 		$this->setTemplateVar('template_name',$t->name );
 		$this->setTemplateVar('template_id'  ,$t->templateid );
 
-		$this->setTemplateVar('element_name' ,$this->value->element->name );
-		$this->setTemplateVar('element_id'   ,$this->value->element->elementid );
 
 	}
 
@@ -244,12 +246,51 @@ class PageelementAction extends Action
         {
             $this->value->languageid = $languageId;
             $this->value->load();
-            $this->value->generate();
 
             $languages[$languageId] = array(
                 'languageid'   => $languageId,
                 'languagename' => $languageName,
-                'value'        => $this->value->value
+                'value'        => $this->value->generate()
+            );
+        }
+
+        $this->setTemplateVar('languages',$languages);
+	}
+
+
+
+
+
+
+	/**
+	 * Erweiterter Modus.
+	 */
+	public function advancedView()
+	{
+		$this->value->objectid   = $this->page->objectid;
+		$this->value->pageid     = $this->page->pageid;
+		$this->value->page       = $this->page;
+		$this->value->element = &$this->element;
+		$this->value->element->load();
+		$this->value->publisher = new PublishEdit();
+
+		$this->setTemplateVar('name'       ,$this->value->element->label    );
+		$this->setTemplateVar('description',$this->value->element->desc     );
+		$this->setTemplateVar('elementid'  ,$this->value->element->elementid);
+		$this->setTemplateVar('type'       ,$this->value->element->getTypeName() );
+
+		$languages = array();
+
+		foreach ( $this->page->getProject()->getLanguages() as $languageId=>$languageName )
+        {
+            $this->value->languageid = $languageId;
+            $this->value->load();
+
+            $languages[$languageId] = array(
+                'languageid'   => $languageId,
+                'languagename' => $languageName,
+                'value'        => $this->value->generate(),
+                'editors'      => Element::getAvailableFormats()
             );
         }
 
@@ -713,8 +754,18 @@ class PageelementAction extends Action
 		 */
 		private function editlongtext()
 		{
-		    $formats = Element::getAvailableFormats();
-			$this->setTemplateVar( 'editor',$formats[ $this->value->element->format ] );
+
+            if   ( $this->hasRequestVar('format') )
+                // Individual format from request.
+                $format = $this->getRequestId('format');
+            elseif   ( $this->value->format != null )
+                $format = $this->value->format;
+            else
+                // There is no saved value. Get the format from the template element.
+                $format = $this->element->format;
+
+            $this->setTemplateVar('format'   ,$format );
+            $this->setTemplateVar( 'editor',Element::getAvailableFormats()[ $format ] );
 
 			if ( !isset($this->templateVars['text']))
                 // Möglicherweise ist die Ausgabevariable bereits gesetzt, wenn man bereits
@@ -1015,7 +1066,9 @@ class PageelementAction extends Action
 		 * - Hinweis ueber erfolgtes Speichern ausgeben<br>
 		 * <br>
 		 * Nicht zu verwechseln mit <i>Aftershave</i> :)
-		 */
+         * @param $value Value
+         * @throws \ObjectNotFoundException
+         */
 		private function afterSave( $value )
 		{
 			$value->page = new Page( $value->objectid );
@@ -1080,17 +1133,23 @@ class PageelementAction extends Action
 			$value->languageid = $this->page->languageid;
 			$value->objectid   = $this->page->objectid;
             $value->publisher  = $this->page->publisher;
+
             $value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
 
             if	( !$this->hasRequestVar('elementid') )
-            throw new ValidationException('elementid');
+                throw new ValidationException('elementid');
             $value->element = new Element( $this->getRequestVar('elementid') );
 
             $value->element->load();
 			$value->load();
 
+            if   ( $this->hasRequestVar('format') )
+                $value->format     = $this->getRequestId('format');
+            else
+                // Fallback: Format of the element.
+                $value->format     = $this->element->format;
 
-			if   ( $this->hasRequestVar('linkobjectid') )
+            if   ( $this->hasRequestVar('linkobjectid') )
 			$value->linkToObjectId = $this->getRequestVar('linkobjectid');
 			else
 			$value->text           = $this->compactOIDs( $this->getRequestVar('text','raw') );

@@ -46,6 +46,23 @@
 		</row>
 		<row class="data">
 			<column>
+				<text key="format" />
+				<text key="element" />
+			</column>
+			<column>
+				<text var="element_format" />
+			</column>
+		</row>
+		<row class="data">
+			<column>
+				<text key="format" />
+			</column>
+			<column>
+				<text var="format" />
+			</column>
+		</row>
+		<row class="data">
+			<column>
 				<text text="lastchange"></text>
 			</column>
 			<column>

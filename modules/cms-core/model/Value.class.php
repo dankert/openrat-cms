@@ -155,6 +155,13 @@ class Value
     public $languageid;
 
     /**
+     * Format
+     *
+     * @var int
+     */
+    public $format = null;
+
+    /**
 	 * Konstruktor
 	 */
 	function __construct()
@@ -201,7 +208,8 @@ class Value
 		
 		if	( count($row) > 0 ) // Wenn Inhalt gefunden
 		{
-			$this->text           = $row['text'];
+			$this->text           = $row['text'  ];
+			$this->format         = $row['format'];
 			$this->valueid        = intval($row['id']          );
 			$this->linkToObjectId = intval($row['linkobjectid']);
 			$this->number         = intval($row['number'      ]);
@@ -234,6 +242,7 @@ class Value
 		$row = $sql->getRow();
 		
 		$this->text           =        $row['text'        ];
+        $this->format         =        $row['format'      ];
 		$this->pageid         = intval($row['pageid'      ]);
 		$this->elementid      = intval($row['elementid'   ]);
 		$this->languageid     = intval($row['languageid'  ]);
@@ -277,6 +286,7 @@ class Value
 			$val->valueid = $row['id'];
 			
 			$val->text           = $row['text'];
+            $val->format         = $row['format'];
 			$val->valueid        = intval($row['id']          );
 			$val->linkToObjectId = intval($row['linkobjectid']);
 			$val->number         = intval($row['number'      ]);
@@ -407,11 +417,12 @@ SQL
 
 		$sql = $db->sql( <<<SQL
 INSERT INTO {{value}}
-            (id       ,linkobjectid  ,text  ,number  ,date  ,elementid  ,pageid  ,languageid  ,active,publish  ,lastchange_date  ,lastchange_userid  )
-     VALUES ({valueid},{linkobjectid},{text},{number},{date},{elementid},{pageid},{languageid},1     ,{publish},{lastchange_date},{lastchange_userid})
+            (id       ,linkobjectid  ,text  ,number  ,date  ,elementid  ,format  ,pageid  ,languageid  ,active,publish  ,lastchange_date  ,lastchange_userid  )
+     VALUES ({valueid},{linkobjectid},{text},{number},{date},{elementid},{format},{pageid},{languageid},1     ,{publish},{lastchange_date},{lastchange_userid})
 SQL
 		);
 		$sql->setInt( 'valueid'   ,$this->valueid            );
+		$sql->setInt( 'format'    ,$this->format             );
 		$sql->setInt( 'elementid' ,$this->element->elementid );
 		$sql->setInt( 'pageid'    ,$this->pageid             );
 		$sql->setInt( 'languageid',$this->languageid         );
@@ -594,10 +605,9 @@ SQL
 			return;
 		}
 		
-		switch( $this->element->type )
+		switch( $this->element->typeid )
 		{
-			case 'list'  : // nur wg. R�ckw�rtskompabilit�t. Nicht mehr in Verwendung!
-			case 'insert':
+            case Element::ELEMENT_TYPE_INSERT:
 
 				$objectid = $this->linkToObjectId;
 
@@ -738,7 +748,7 @@ SQL
 				break;
 
 
-			case 'link':
+			case Element::ELEMENT_TYPE_LINK:
 
 				$objectid = $this->linkToObjectId;
 				if   ( intval($objectid) == 0 )
@@ -773,7 +783,7 @@ SQL
 				break;
 
 
-			case 'copy':
+			case Element::ELEMENT_TYPE_COPY:
 
 				list($linkElementName,$targetElementName) = explode('%',$this->element->name.'%');
 
@@ -820,7 +830,7 @@ SQL
 				break;
 
 
-			case 'linkinfo':
+			case Element::ELEMENT_TYPE_LINKINFO:
 
 				@list( $linkElementName, $name ) = explode('%',$this->element->name);
 				if	( is_null($name) )
@@ -1035,7 +1045,7 @@ SQL
 				
 				break;
 
-			case 'linkdate':
+			case Element::ELEMENT_TYPE_LINKDATE:
 
 				@list( $linkElementName, $name ) = explode('%',$this->element->name);
 				if	( is_null($name) )
@@ -1095,9 +1105,9 @@ SQL
 					$inhalt = date    ( $this->element->dateformat,$date );				
 				break;
 				
-			case 'longtext':
-			case 'text':
-			case 'select':
+			case Element::ELEMENT_TYPE_LONGTEXT:
+			case Element::ELEMENT_TYPE_TEXT:
+			case Element::ELEMENT_TYPE_SELECT:
 
 				$inhalt = $this->text;
 
@@ -1115,35 +1125,58 @@ SQL
 					$inhalt = $this->element->defaultText;
 
 				// Wenn HTML nicht erlaubt und Wiki-Formatierung aktiv, dann einfache HTML-Tags in Wiki umwandeln
-				if   ( !$this->element->html && $this->element->wiki && $conf['editor']['wiki']['convert_html'] && $this->page->mimeType()=='text/html' )
-					$inhalt = Text::html2Wiki( $inhalt );
+                $pageIsHtml = $this->page->mimeType() == 'text/html';
 
-				// Wenn Wiki-Formatierung aktiv, dann BB-Code umwandeln
-				if   ( $this->element->wiki && $conf['editor']['wiki']['convert_bbcode'] )
-					$inhalt = Text::bbCode2Wiki( $inhalt );
-
-				// Wenn HTML nicht erlaubt ist, dann die HTML-Tags ersetzen
-				if   ( !$this->element->html && !$this->element->wiki && $this->page->mimeType()=='text/html')
-					$inhalt = Text::encodeHtml( $inhalt );
-
-				// Wenn HTML nicht erlaubt ist, dann Sonderzeichen in HTML �bersetzen
-				if   ( !$this->element->wiki && !$this->element->wiki && $this->page->mimeType()=='text/html' )
-					$inhalt = Text::encodeHtmlSpecialChars( $inhalt );
-
-				// Schnellformatierung ('Wiki') durchfuehren
-				if   ( $this->element->wiki )
+                //
+				switch( $this->format )
 				{
-					$transformer = new Transformer();
-					$transformer->text    = $inhalt;
-					$transformer->page    = $this->page;
-					$transformer->element = $this->element;
+                    case Element::ELEMENT_FORMAT_TEXT:
+                    case Element::ELEMENT_FORMAT_HTML:
 
-					$transformer->transform();
-					$inhalt = $transformer->text;
-				}
-	
+                        if   ( !$this->element->html )
+                        {
+                            // HTML not allowed.
+                            $inhalt = Text::encodeHtml( $inhalt );
+                            $inhalt = Text::encodeHtmlSpecialChars( $inhalt );
+                        }
+
+                        break;
+
+                    case Element::ELEMENT_FORMAT_WIKI:
+
+                        if   ( $conf['editor']['wiki']['convert_bbcode'] )
+                            $inhalt = Text::bbCode2Wiki( $inhalt );
+
+                        if   ( !$this->element->html && $conf['editor']['wiki']['convert_html'] && $pageIsHtml)
+                            $inhalt = Text::html2Wiki( $inhalt );
+
+                        $transformer = new Transformer();
+                        $transformer->text    = $inhalt;
+                        $transformer->page    = $this->page;
+                        $transformer->element = $this->element;
+
+                        $transformer->transform();
+                        $inhalt = $transformer->text;
+                        break;
+
+                    case Element::ELEMENT_FORMAT_MARKDOWN:
+
+                        $mdConfig = Config()->subset('editor')->subset('markdown');
+
+                        $parser = new \Parsedown();
+                        $parser->setUrlsLinked( $mdConfig->is('urls-linked',true));
+                        $parser->setMarkupEscaped( !$this->element->html );
+
+                        $inhalt = $parser->parse( $inhalt );
+                        break;
+
+                    default:
+                        throw new \LogicException('Unknown format: '.$this->format );
+                }
+
 				if   ( $this->publisher->isSimplePreview() )
 				{
+				    // Simple Preview with bare text.
 					$inhalt = strip_tags( $inhalt );
 					$inhalt = str_replace( "\n",'',$inhalt );
 					$inhalt = str_replace( "\r",'',$inhalt );
@@ -1162,7 +1195,7 @@ SQL
 			// Zahl
 			//
 			// wird im entsprechenden Format angezeigt.
-			case 'number':
+			case Element::ELEMENT_TYPE_NUMBER:
 
 				if   ( $this->number == 0 )
 				{
@@ -1178,7 +1211,7 @@ SQL
 	
 	
 			// Datum
-			case 'date':
+            case Element::ELEMENT_TYPE_DATE:
 
 				$date = $this->date;
 
@@ -1198,7 +1231,7 @@ SQL
 
 
 			// Programmcode (PHP)
-			case 'code':
+			case Element::ELEMENT_TYPE_CODE:
 
 				if   ( $this->publisher->isSimplePreview() )
 					break;
@@ -1229,7 +1262,7 @@ SQL
 
 
 			// Makros (dynamische Klassen)
-			case 'dynamic':
+			case Element::ELEMENT_TYPE_DYNAMIC:
 
 				if   ( $this->publisher->isSimplePreview() )
 					break;
@@ -1330,7 +1363,7 @@ SQL
 
 
 			// Info-Feld als Datum
-			case 'infodate':
+			case Element::ELEMENT_TYPE_INFODATE:
 
 				if   ( $this->publisher->isSimplePreview() )
 					break;
@@ -1368,7 +1401,7 @@ SQL
 
 
 			// Info-Feld
-			case 'info':
+			case Element::ELEMENT_TYPE_INFO:
 
 				if   ( $this->publisher->isSimplePreview() )
 					break;
@@ -1521,10 +1554,13 @@ SQL
 				break;
 				
 			default:
-				// Unbekannte Elementtypen darf es nicht geben.
-				if	( !$this->publisher->isPublic() )
-					throw new \LogicException( lang('ERROR_IN_ELEMENT').' ('.$this->element->name.':'.
-				              'unknown type:'.$this->element->type.')');
+				// this should never happen in production.
+				if	( ! $this->publisher->isPublic() )
+				    // inform the user.
+					throw new \LogicException( 'Error in element '.$this->element->name.': '.
+				              'unknown type: '.$this->element->typeid.'');
+				else
+				    ; // do not crash the public publishing process.
 				
 		}
 

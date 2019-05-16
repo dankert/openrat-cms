@@ -59,6 +59,28 @@
 			</tr>
 			<tr class="data">
 				<td>
+					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'format'.'')))); ?></span>
+					
+					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'element'.'')))); ?></span>
+					
+				</td>
+				<td>
+					<span><?php echo nl2br(encodeHtml(htmlentities($element_format))); ?></span>
+					
+				</td>
+			</tr>
+			<tr class="data">
+				<td>
+					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'format'.'')))); ?></span>
+					
+				</td>
+				<td>
+					<span><?php echo nl2br(encodeHtml(htmlentities($format))); ?></span>
+					
+				</td>
+			</tr>
+			<tr class="data">
+				<td>
 					<span><?php echo nl2br(encodeHtml(htmlentities(lang('lastchange')))); ?></span>
 					
 				</td>
