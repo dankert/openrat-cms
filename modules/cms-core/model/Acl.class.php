@@ -303,7 +303,7 @@ class Acl
 	 * 
 	 * @return 0..n-Array
 	 */
-	function getAvailableRights()
+	public static function getAvailableRights()
 	{
 		return array( 'read',
 		              'write',
