@@ -186,11 +186,14 @@ class UI
             'script-src \'self\'',
             // No <object>, <embed> or <applet>.
             'object-src \'none\'',
+            // no external CSS
             'style-src \'self\'',
+            // no external images.
             'img-src \'self\'',
             // No <audio>, <video> elements
             'media-src \'none\'',
-            'frame-src \'self\'',
+            // For preview of urls we need to show every url in an iframe.
+            'frame-src *',
             'worker-src \'self\'',
             'form-action \'self\'',
             'font-src \'self\'',

@@ -210,4 +210,16 @@ class UrlAction extends ObjectAction
         exit;
 
     }
+
+
+
+    /**
+     * Vorschau anzeigen
+     */
+    function previewView()
+    {
+        $this->setTemplateVar('preview_url',$this->url->url );
+    }
+
+
 }
