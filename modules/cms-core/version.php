@@ -1,1 +1,1 @@
-<?php DEFINE('OR_VERSION','dev-snapshot'); DEFINE('OR_DATE',date('r') );
+<?php DEFINE('OR_VERSION','2.0.1'); DEFINE('OR_DATE','Sat, 18 May 2019 01:54:33 +0200');
