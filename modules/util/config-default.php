@@ -764,7 +764,7 @@ function createDefaultConfig()
     $conf['security']['password']['min_length']=6;
     $conf['security']['password']['pepper']= '';
     $conf['security']['password']['deny_after_expiration_duration'] = 72;
-    $conf['security']['password']['force_change_if_cleartext']= true;
+    $conf['security']['password']['force_change_if_cleartext']= false;
     $conf['security']['http'] = array();
     $conf['security']['http']['url']= "http://example.net/restricted-area";
     $conf['security']['authdb'] = array();
