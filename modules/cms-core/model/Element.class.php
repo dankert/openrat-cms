@@ -327,29 +327,6 @@ SQL
 
 
 	/**
-	 * Aktualisiert den Typ des Elementes und schreibt diesen sofort in die Datenbank.
-	 *
-	 * @param String Der neue Typ, siehe getAvailableTypes() fuer moegliche Typen
-	 * @see #typeid
-	 */
-	public function updateTypeId($typeid )
-	{
-		$this->typeid = $typeid;
-
-		$db = db_connection();
-
-		$stmt = $db->sql( 'UPDATE {{element}}'.
-		                ' SET typeid            = {typeid}'.
-		                ' WHERE id={elementid}'         );
-
-		$stmt->setInt    ( 'elementid',$this->elementid );
-		$stmt->setString ( 'typeid'   ,$this->typeid    );
-
-		$stmt->execute();
-	}
-
-
-	/**
 	 * Setzt ein Prefix vor den Elementnamen.
 	 * @param String Prefix
 	 */
