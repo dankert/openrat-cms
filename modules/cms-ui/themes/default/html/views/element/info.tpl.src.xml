@@ -3,18 +3,29 @@
 	<table>
 		<row class="data">
 			<column colspan="1">
-				<text key="id" />
+				<text key="type" />
 			</column>
 			<column>
-				<text var="id" />
+				<image elementtype="var:type" />
+				<text key="var:type" prefix="el_" />
 			</column>
 		</row>
 		<row class="data">
 			<column colspan="1">
 				<text key="name" />
 			</column>
+			<column class="clickable">
+				<link class="" type="edit" action="element" subaction="prop" id="var:id">
+					<text var="name" />
+				</link>
+			</column>
+		</row>
+		<row class="data">
+			<column colspan="1">
+				<text key="id" />
+			</column>
 			<column>
-				<text var="name" />
+				<text var="id" />
 			</column>
 		</row>
 	</table>
