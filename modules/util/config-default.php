@@ -866,11 +866,11 @@ function createDefaultConfig()
 
     $conf['style']['moorweide']=array();
     $conf['style']['moorweide']['name']='Moorweide';
-    $conf['style']['moorweide']['title_background_color']='#006633';
+    $conf['style']['moorweide']['title_background_color']='#2aaae7';
     $conf['style']['moorweide']['title_text_color']='white';
-    $conf['style']['moorweide']['text_color'] ='black';
-    $conf['style']['moorweide']['background_color'] = '#F5FFFA';
-    $conf['style']['moorweide']['inactive_background_color'] = '#CEE6DA';
+    $conf['style']['moorweide']['text_color'] ='#005e51';
+    $conf['style']['moorweide']['background_color'] = '#edf6f3';
+    $conf['style']['moorweide']['inactive_background_color'] = '#ececed';
 
     $conf['style']['dark']=array();
     $conf['style']['dark']['name']='Dark';
