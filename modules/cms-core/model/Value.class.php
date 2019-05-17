@@ -1186,7 +1186,9 @@ SQL
 				foreach( Text::parseOID($inhalt) as $oid=>$t )
 				{
 					$url    = $this->page->path_to_object($oid);
-					$inhalt = str_replace($t,'"'.$url.'"',$inhalt);
+
+					foreach( $t as $match )
+					    $inhalt = str_replace($match,$url,$inhalt);
 				}
 
 				break;

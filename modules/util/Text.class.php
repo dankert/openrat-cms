@@ -340,25 +340,6 @@ class Text
 	
 	
 	/**
-	 * Entfernt einen Text-Bereich aus einer Zeichenkette.<br>
-	 * Es wird angegeben, von wo bis wo entfernt werden soll.
-	 * 
-	 * @param $text Text, aus dem entfernt wird
-	 * @param $von der Text, AB dem entfernt wird
-	 * @param $bis der Text, BIS ZU DEM entfernt wird
-	 * @return String Text
-	 */
-    public static function entferneVonBis($text,$von,$bis)
-	{
-		$beg = strpos($text,$von);
-		$end = strpos($text,$bis);
-		if	( $beg!==false && $end !==false )
-			$text = substr($text,0,$beg).substr($text,$end+strlen($bis));
-		return $text;
-	}
-	
-	
-	/**
 	 * Saeubert eine Zeichenkette.
 	 * 
 	 *  Es werden ungueltige Zeichen aus einer Zeichenkette entfernt. Es wird mit einer Whitelist
@@ -376,16 +357,31 @@ class Text
 	}
 
 
-
+    /**
+     * Searches for Object-Ids in a text.
+     * Searches in the provided text for URLs with "__OID__nnn__", where nnn is an object id.
+     * @param $text
+     * @return array
+     */
     public static function parseOID( $text )
 	{
 		$oids    = array();
 		$treffer = array();
+
+        $urlChars = '[A-Za-z0-9_.:,\/=+&?-]';
 		
-		preg_match_all('/\"([^\"]*)__OID__([0-9]+)__([^\"]*)\"/', $text, $treffer,PREG_SET_ORDER);
+		preg_match_all('/('.$urlChars.'*)__OID__([0-9]+)__('.$urlChars.'*)/', $text, $treffer,PREG_SET_ORDER);
 		
-		foreach( $treffer as $t )
-			$oids[$t[2]] = $t[0];
+		foreach( $treffer as $t ) {
+
+		    $id    = $t[2];
+		    $match = $t[0];
+
+		    if   ( !isset( $oids[$id]))
+                $oids[$id] = array();
+
+		    $oids[$id][] = $match;
+        }
 
 		return $oids;
 	}

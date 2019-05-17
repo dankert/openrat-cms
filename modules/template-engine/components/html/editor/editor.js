@@ -5,36 +5,6 @@ $(document).on('orViewLoaded',function(event, data) {
 	$(event.target).find('textarea').orAutoheight();
 
 	
-	// ACE-Editor anzeigen
-	$(event.target).find("textarea.editor.ace-editor").each( function() {
-	    alert('ACE is not supported')
-        throw new Error('No ACE available');
-
-		var textareaEl = $(this);
-		var aceEl = $("<div class=\"editor__code-editor\" />").insertAfter(textareaEl);
-		var editor = ace.edit( aceEl.get(0) );
-		var mode = textareaEl.data('mode');
-		
-		editor.renderer.setShowGutter(true);
-		editor.setTheme("ace/theme/github");
-		
-//		editor.setReadOnly(true);
-		editor.getSession().setTabSize(4);
-		editor.getSession().setUseWrapMode(true);
-		editor.setHighlightActiveLine(true);
-		editor.getSession().setValue( textareaEl.val() );
-		editor.getSession().setMode("ace/mode/" + mode);
-		editor.getSession().on('change', function(e) {
-			textareaEl.val(editor.getSession().getValue());
-		} );
-		
-		// copy back to textarea on form submit...
-		textareaEl.closest('form').submit(function() {
-			textareaEl.val( editor.getSession().getValue() );
-		})		
-	} );
-
-
 	// Codemirror-Editor anzeigen
 	$(event.target).find("textarea.editor.code-editor").each( function() {
 
@@ -221,7 +191,7 @@ $(document).on('orViewLoaded',function(event, data) {
 
                 let insertText = '';
                 let id = dropped.data('id');
-                let url = 'object:'+id;
+                let url = '__OID__'+id+'__';
                 if   ( dropped.data('type') == 'image')
                     insertText = '![]('+url+')';
                 else
@@ -258,7 +228,7 @@ $(document).on('orViewLoaded',function(event, data) {
 
                 let dropped = ui.draggable;
                 let id = dropped.data('id');
-                let url = './?_='+dropped.data('type')+'-'+id+'&subaction=show&embed=1&oid='+dropped.data('id');
+                let url = './?_='+dropped.data('type')+'-'+id+'&subaction=show&embed=1&__OID__'+id+'__='+id;
                 let insertText = '';
                 if   ( dropped.data('type') == 'image')
                     insertText = '<img src="'+url+'" alt="" />';
