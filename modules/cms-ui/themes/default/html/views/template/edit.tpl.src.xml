@@ -46,11 +46,11 @@
 		<group title="var:name">
 
 			<part class="clickable">
-				<text var="source" escape="true" type="code"></text>
+				<text var="source" escape="true" type="code" maxlength="200"></text>
 				<newline/>
 
 				<link type="edit" subaction="src" var1="modelid" value1="var:modelid" class="or-form-button">
-					<image icon="template"/>
+					<image action="template"/>
 					<text key="edit"></text>
 				</link>
 			</part>
