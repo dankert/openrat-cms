@@ -419,9 +419,6 @@ class IndexAction extends Action
             $js[] = OR_THEMES_DIR . 'default/script/jquery-qrcode';
             $js[] = OR_THEMES_DIR . 'default/script/jquery.hotkeys';
 
-            // Inlining of SVG
-            $js[] = OR_THEMES_DIR . 'default/script/svg-injector';
-
 			// Codemirror Source Editor
 
 			$js[] = OR_HTML_MODULES_DIR . 'editor/codemirror/lib/codemirror';
