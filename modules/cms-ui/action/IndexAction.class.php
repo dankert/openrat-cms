@@ -548,11 +548,7 @@ class IndexAction extends Action
             $js[] = OR_HTML_MODULES_DIR . 'editor/simplemde/simplemde';
             $js[] = OR_HTML_MODULES_DIR . 'editor/trumbowyg/trumbowyg';
 
-			//$js[] = OR_THEMES_DIR . '../editor/markitup/markitup/jquery.markitup';
-			//$js[] = OR_THEMES_DIR . '../editor/editor/ckeditor';
-			//$js[] = OR_THEMES_DIR . '../editor/ace/src-min-noconflict/ace';
-			//$js[] = OR_THEMES_DIR . '../editor/editor/adapters/jquery';
-			
+
 			// Komponentenbasiertes Javascript
 			foreach ( TemplateEngineInfo::getComponentList() as $c)
 			{
