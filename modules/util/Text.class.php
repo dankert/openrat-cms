@@ -41,18 +41,6 @@ class Text
 			return $text;
 	}
 
-    /**
-     * Alias fuer Methode maxLength()
-     *
-     * @param $text
-     * @param $laenge
-     * @return string
-     * @deprecated use maxlength() !
-     */
-    public static function maxLaenge($text, $laenge)
-	{
-		return Text::maxLength($text,$laenge);
-	}
 
 
 	/**
