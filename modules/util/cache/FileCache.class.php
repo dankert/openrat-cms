@@ -28,7 +28,7 @@ class FileCache
      * @param $key array Cache-Key
      * @param $loader Callable
      */
-    public function __construct( $key, $loader )
+    public function __construct( $key, $loader, $lastModified = 0 )
     {
         $filename = FileUtils::getTempDir() . '/'. 'openrat-cache';
 
@@ -42,6 +42,15 @@ class FileCache
 
         $this->filename = $filename;
         $this->loader   = $loader;
+
+        $this->invalidateIfOlderThan( $lastModified );
+    }
+
+
+    public function invalidateIfOlderThan($lastModified) {
+
+        if   ( is_file($this->filename) && filemtime($this->filename) < $lastModified )
+            $this->invalidate();
     }
 
 
@@ -51,7 +60,8 @@ class FileCache
     public function invalidate() {
 
         if   ( is_file($this->filename))
-            unlink( $this->filename);
+            // Should use '@' here to deny race conditions, where another request is calling this method.
+            @unlink( $this->filename);
     }
 
 

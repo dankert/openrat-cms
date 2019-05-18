@@ -565,7 +565,7 @@ SQL
             'publish'=>\ClassUtils::getSimpleClassName($this->publisher) );
         return new FileCache( $cacheKey,function() {
             return $this->generateValue();
-        } );
+        },$this->lastchangeTimeStamp );
     }
 
 	/**

@@ -105,7 +105,7 @@ class Page extends BaseObject
 
         return new FileCache( $cacheKey,function() {
             return $this->generateValue();
-        } );
+        }, $this->lastchangeDate );
 
     }
 

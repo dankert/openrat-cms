@@ -93,7 +93,7 @@ class File extends BaseObject
 
         return new FileCache( $cacheKey,function() {
             return $this->loadValueFromDatabase();
-        } );
+        }, $this->lastchangeDate );
     }
 
 	/**
