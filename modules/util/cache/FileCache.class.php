@@ -43,7 +43,10 @@ class FileCache
         $this->filename = $filename;
         $this->loader   = $loader;
 
-        $this->invalidateIfOlderThan( $lastModified );
+        if   ( config()->subset('publishing')->is('cache_enabled',false) )
+            $this->invalidateIfOlderThan( $lastModified );
+        else
+            $this->invalidateIfOlderThan( START_TIME ); // Invalidate all before this request.
     }
 
 
