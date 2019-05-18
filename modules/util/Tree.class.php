@@ -421,7 +421,7 @@ class Tree
 
                 $treeElement->description = lang('GLOBAL_' . $object->getType());
                 if ($object->desc != '')
-                    $treeElement->description .= ' - ' . Text::maxLaenge(25, $object->desc);
+                    $treeElement->description .= ' - ' . Text::maxLength($object->desc, 25);
                 else
                     $treeElement->description .= ' - ' . lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
 
@@ -525,7 +525,7 @@ class Tree
             $treeElement->internalId = $id;
             $treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $_REQUEST[REQ_PARAM_LANGUAGE_ID], REQ_PARAM_MODEL_ID => $_REQUEST[REQ_PARAM_MODEL_ID]);
             $treeElement->type = 'template';
-            $treeElement->description = $t->name . ' (' . lang('GLOBAL_TEMPLATE') . ' ' . $id . '): ' . htmlentities(Text::maxLaenge(40, $t->src));
+            $treeElement->description = $t->name . ' (' . lang('GLOBAL_TEMPLATE') . ' ' . $id . '): ' . htmlentities(Text::maxLength($t->src, 40));
             $this->addTreeElement($treeElement);
         }
     }
@@ -559,7 +559,7 @@ class Tree
                 $desc = lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
             else
                 $desc = $e->desc;
-            $treeElement->description = $e->name . ' (' . lang('EL_' . $e->type) . '): ' . Text::maxLaenge(40, $desc);
+            $treeElement->description = $e->name . ' (' . lang('EL_' . $e->type) . '): ' . Text::maxLength($desc, 40);
             $this->addTreeElement($treeElement);
         }
     }

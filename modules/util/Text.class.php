@@ -40,13 +40,16 @@ class Text
 		else
 			return $text;
 	}
-	
-	/**
-	 * Alias fuer Methode maxLength()
-	 *
-	 * @deprecated use maxlength() !
-	 */
-    public static function maxLaenge( $laenge,$text )
+
+    /**
+     * Alias fuer Methode maxLength()
+     *
+     * @param $text
+     * @param $laenge
+     * @return string
+     * @deprecated use maxlength() !
+     */
+    public static function maxLaenge($text, $laenge)
 	{
 		return Text::maxLength($text,$laenge);
 	}
@@ -368,6 +371,8 @@ class Text
 		$oids    = array();
 		$treffer = array();
 
+		// This are all chars which are used in our URLs.
+        // Sure, there are more, but not used by this system.
         $urlChars = '[A-Za-z0-9_.:,\/=+&?-]';
 		
 		preg_match_all('/('.$urlChars.'*)__OID__([0-9]+)__('.$urlChars.'*)/', $text, $treffer,PREG_SET_ORDER);

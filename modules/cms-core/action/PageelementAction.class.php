@@ -910,7 +910,7 @@ class PageelementAction extends Action
             //			if	( in_array(	$this->element->type,array('text','longtext') ) )
             //				$version_list[ $value->valueid ] = '('.$lfd_nr.') '.$date;
 
-            $zeile = array(  'value'     => Text::maxLaenge( 50,$value->value),
+            $zeile = array(  'value'     => Text::maxLength($value->value, 50),
                          'objectid'  => $this->page->objectid,
                          'date'      => $value->lastchangeTimeStamp,
                          'lfd_nr'    => $lfd_nr,

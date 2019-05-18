@@ -987,9 +987,9 @@ class FolderAction extends ObjectAction
 
 			if   ( $o->hasRight(ACL_READ) )
 			{
-				$list[$id]['name']     = \Text::maxLaenge( 30,$o->name     );
-				$list[$id]['filename'] = \Text::maxLaenge( 20,$o->filename );
-				$list[$id]['desc']     = \Text::maxLaenge( 30,$o->desc     );
+				$list[$id]['name']     = \Text::maxLength($o->name, 30);
+				$list[$id]['filename'] = \Text::maxLength($o->filename, 20);
+				$list[$id]['desc']     = \Text::maxLength($o->desc, 30);
 				if	( $list[$id]['desc'] == '' )
 					$list[$id]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
 				$list[$id]['desc'] = $list[$id]['desc'].' - '.lang('IMAGE').' '.$id;
@@ -1048,9 +1048,9 @@ class FolderAction extends ObjectAction
 
 			if   ( $o->hasRight(ACL_READ) )
 			{
-				$list[$id]['name']     = \Text::maxLaenge( 30,$o->name     );
-				$list[$id]['filename'] = \Text::maxLaenge( 20,$o->filename );
-				$list[$id]['desc']     = \Text::maxLaenge( 30,$o->desc     );
+				$list[$id]['name']     = \Text::maxLength($o->name, 30);
+				$list[$id]['filename'] = \Text::maxLength($o->filename, 20);
+				$list[$id]['desc']     = \Text::maxLength($o->desc, 30);
 				if	( $list[$id]['desc'] == '' )
 					$list[$id]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
 				$list[$id]['desc'] = $list[$id]['desc'].' - '.lang('IMAGE').' '.$id;
