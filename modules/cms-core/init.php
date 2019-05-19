@@ -15,6 +15,10 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
+define('MIN_VERSION','5');
+
+if	( version_compare(phpversion(),MIN_VERSION,"<") )
+    throw new ValidationException('This version of PHP is not supported any more. Minimum required: '.MIN_VERSION);
 
 
 define('PHP_EXT'         ,'php'    );
