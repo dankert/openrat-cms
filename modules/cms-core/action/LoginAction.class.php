@@ -658,13 +658,6 @@ class LoginAction extends Action
 	{
 		global $conf;
 
-		$db = db(); // throws Exception, if database is not available.
-		{
-			$dbid = $db->id;
-
-            $this->updateDatabase($dbid); // Updating...
-		}
-		
 		Session::setUser(''); // Altes Login entfernen.
 		
 		if	( $conf['login']['nologin'] )
@@ -1454,41 +1447,6 @@ class LoginAction extends Action
         }
 
     }
-	
-	
-
-    /**
-     * Updating the database.
-     *
-     * @param $dbid integer
-     * @throws OpenRatException
-     */
-    private function updateDatabase($dbid)
-    {
-        try {
-            $dbConfig = Conf()->subset('database')->subset($dbid);
-
-            if   ( ! $dbConfig->is('check_version',false))
-                return; // Check for DB version is disabled.
-
-            $adminDb = new Database( $dbConfig->subset('admin')->getConfig() + $dbConfig->getConfig() );
-            $adminDb->id = $dbid;
-        } catch (Exception $e) {
-
-            throw new OpenRatException('DATABASE_ERROR_CONNECTION', $e->getMessage());
-        }
-
-        $updater = new DbUpdate();
-        $updater->update($adminDb);
-
-        // Try to close the PDO connection. PDO doc:
-        // To close the connection, you need to destroy the object by ensuring that all
-        // remaining references to it are deleted—you do this by assigning NULL to the variable that holds the object.
-        // If you don't do this explicitly, PHP will automatically close the connection when your script ends.
-        $adminDb = null;
-        unset($adminDb);
-    }
-
 
 }
 
