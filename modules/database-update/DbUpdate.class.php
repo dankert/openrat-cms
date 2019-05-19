@@ -2,32 +2,42 @@
 
 use database\Database;
 
-define('OR_DB_SUPPORTED_VERSION'     ,19);
-
-define('OR_DB_STATUS_UPDATE_PROGRESS', 0);
-define('OR_DB_STATUS_UPDATE_SUCCESS' , 1);
 
 class DbUpdate 
 {
+    // This is the required DB version:
+    const SUPPORTED_VERSION      = 19;
+    // ----------------------------^^-----------------------------
+
+    const STATUS_UPDATE_PROGRESS = 0;
+    const STATUS_UPDATE_SUCCESS  = 1;
+
+    public function isUpdateRequired( Database $db )
+    {
+        $version = $this->getDbVersion($db);
+
+        Logger::debug("Need DB-Version: ".self::SUPPORTED_VERSION."; Actual DB-Version: ".$version);
+
+        if	( $version == self::SUPPORTED_VERSION )
+            // Cool, der aktuelle DB-Stand passt zu dieser Version. Das ist auch der Normalfall. Weiter so.
+            return false;
+
+        if	( $version > self::SUPPORTED_VERSION )
+            // Oh oh, in der Datenbank ist eine neuere Version, als wir unterstützen.
+            throw new \LogicException('Actual DB version is not supported. '."DB-Version is $version, but ".OR_TITLE." ".OR_VERSION." only supports version ".self::SUPPORTED_VERSION );
+    }
+
+
+
     /**
      * @param Database $db
      */
-    function update(Database $db )
+    public function update(Database $db )
 	{
 		$version = $this->getDbVersion($db);
 		
-		if	( $version == OR_DB_SUPPORTED_VERSION )
-			// Cool, der aktuelle DB-Stand passt zu dieser Version. Das ist auch der Normalfall. Weiter so.
-			return;
-		
-		if	( $version > OR_DB_SUPPORTED_VERSION )
-			// Oh oh, in der Datenbank ist eine neue Version, als wir unterstüzten.
-			throw new \LogicException('Actual DB version is not supported. '."DB-Version is $version, but this is OpenRat ".OR_VERSION." which only supports version ".OR_DB_SUPPORTED_VERSION );
 
-		if	( ! $db->conf['auto_update'])
-			throw new \LogicException('DB Update necessary. '."DB-Version is $version. Auto-Update is disabled, but this is OpenRat ".OR_VERSION." needs the version ".OR_DB_SUPPORTED_VERSION );
-		
-		for( $installVersion = $version + 1; $installVersion <= OR_DB_SUPPORTED_VERSION; $installVersion++ )
+		for( $installVersion = $version + 1; $installVersion <= self::SUPPORTED_VERSION; $installVersion++ )
 		{
 			if	( $installVersion > 2 ) // Up to version 2 there was no table 'version'.
 			{
@@ -35,7 +45,7 @@ class DbUpdate
 				$sql = $db->sql('INSERT INTO {{version}} (id,version,status,installed) VALUES( {id},{version},{status},{time} )',$db->id);
 				$sql->setInt('id'     , $installVersion);
 				$sql->setInt('version', $installVersion);
-				$sql->setInt('status' , OR_DB_STATUS_UPDATE_PROGRESS);
+				$sql->setInt('status' , self::STATUS_UPDATE_PROGRESS);
 				$sql->setInt('time'   , time()         );
 				$sql->query();
 				$db->commit();
@@ -55,7 +65,7 @@ class DbUpdate
 			{
                 $db->start();
 				$sql = $db->sql('UPDATE {{version}} SET status={status},installed={time} WHERE version={version}',$db->id);
-				$sql->setInt('status' , OR_DB_STATUS_UPDATE_SUCCESS);
+				$sql->setInt('status' , self::STATUS_UPDATE_SUCCESS);
 				$sql->setInt('version', $installVersion);
 				$sql->setInt('time'   , time()         );
 				$sql->query();

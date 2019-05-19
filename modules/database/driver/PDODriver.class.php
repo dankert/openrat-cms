@@ -31,8 +31,6 @@ use \RuntimeException;
  * Datenbank-abhaengige Methoden fuer PDO.
  * 
  * @author Jan Dankert
- * @version $Revision: 1.5 $
- * @package openrat.database
  */
 class PDODriver
 {
@@ -55,9 +53,6 @@ class PDODriver
 		$url    = $conf['dsn'     ];
 		$user   = $conf['user'    ];
 		$pw     = $conf['password'];
-		
-		if	( !empty($conf['convert_to_lowercase']) )
-			$this->lowercase = true;
 		
 		$options = array();
 		foreach( $conf as $c )

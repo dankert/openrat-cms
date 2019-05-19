@@ -400,12 +400,22 @@ class Dispatcher
      */
     private function updateDatabase($dbid)
     {
+        $dbConfig = Conf()->subset('database')->subset($dbid);
+
+        if   ( ! $dbConfig->is('check_version',true))
+            return; // Check for DB version is disabled.
+
+        $updater = new DbUpdate();
+
+        if   ( ! $updater->isUpdateRequired( db() ) )
+            return;
+
+
+        if   ( ! $dbConfig->is('auto_update',true))
+            throw new \LogicException('DB Update required, but auto-update is disabled. '.OR_TITLE." ".OR_VERSION." needs DB-version ".DbUpdate::SUPPORTED_VERSION );
+
+
         try {
-            $dbConfig = Conf()->subset('database')->subset($dbid);
-
-            if   ( ! $dbConfig->is('check_version',true))
-                return; // Check for DB version is disabled.
-
             $adminDb = new Database( $dbConfig->subset('admin')->getConfig() + $dbConfig->getConfig() );
             $adminDb->id = $dbid;
         } catch (\Exception $e) {
@@ -413,7 +423,6 @@ class Dispatcher
             throw new OpenRatException('DATABASE_ERROR_CONNECTION', $e->getMessage());
         }
 
-        $updater = new DbUpdate();
         $updater->update($adminDb);
 
         // Try to close the PDO connection. PDO doc:
