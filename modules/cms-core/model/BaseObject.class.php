@@ -1194,14 +1194,12 @@ SQL
      */
     public function parentObjectFileNames(  $with_root = false, $with_self = false  )
     {
-        $db = \Session::getDatabase();
-
         $foid = $this->id;
         $idCache = array();
 
         while( intval($foid)!=0 )
         {
-            $sql = $db->sql( <<<SQL
+            $sql = db()->sql( <<<SQL
             
 SELECT parentid,id,filename
   FROM {{object}}
@@ -1230,14 +1228,12 @@ SQL
 
     public function parentObjectNames( $with_root = false, $with_self = false )
     {
-        $db = \Session::getDatabase();
-
         $foid = $this->id;
         $idCache = array();
 
         while( intval($foid)!=0 )
         {
-            $sql = $db->sql( <<<SQL
+            $sql = db()->sql( <<<SQL
             
 SELECT {{object}}.parentid,{{object}}.id,{{object}}.filename,{{name}}.name FROM {{object}}
   LEFT JOIN {{name}}

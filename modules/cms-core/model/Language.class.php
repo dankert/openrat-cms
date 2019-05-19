@@ -66,13 +66,11 @@ class Language
      */
 	public function load()
 	{
-		$db = \Session::getDatabase();
-
-		$sql = $db->sql( 'SELECT * FROM {{language}}'.
+		$stmt = db()->sql( 'SELECT * FROM {{language}}'.
 		                ' WHERE id={languageid}' );
-		$sql->setInt( 'languageid',$this->languageid );
+		$stmt->setInt( 'languageid',$this->languageid );
 
-		$row = $sql->getRow();
+		$row = $stmt->getRow();
 		
 		if	( count($row) > 0 )
 		{

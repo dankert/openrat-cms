@@ -9,6 +9,7 @@ use BadMethodCallException;
 use cms\action\Action;
 use cms\action\RequestParams;
 use ConfigurationLoader;
+use database\Database;
 use DomainException;
 use Http;
 use http\Exception;
@@ -20,6 +21,7 @@ use OpenRatException;
 use SecurityException;
 use Session;
 use Spyc;
+use template_engine\components\ElseComponent;
 
 
 /**
@@ -346,17 +348,41 @@ class Dispatcher
      */
     private function connectToDatabase()
     {
-        // Connect to database
-        //
-        $db = Session::getDatabase();
-
-        if (is_object($db)) {
-
-            $db->connect(); // throws exception if error.
-
-            Session::setDatabase($db);
+        if   ( $this->request->hasRequestVar('dbid') )
+            $dbid = $this->request->getRequestVar('dbid',OR_FILTER_ALPHANUM);
+        elseif   ( !empty( Session::getDatabaseId()))
+            $dbid = Session::getDatabaseId();
+        elseif   ( isset($_COOKIE['or_dbid']) )
+                    $dbid = $_COOKIE['or_dbid'];
+        else {
+            //throw new LogicException('No DBID available');
+            // some actions do not need a database
+            // f.e. the login dialog.
+            // so this is NOT an error.
+            return;
         }
 
+
+        $dbConfig = config()->subset('database');
+
+        if	( ! $dbConfig->has( $dbid ) )
+            throw new \LogicException( 'unknown DB-Id: '.$dbid );
+
+        $dbConfig = $dbConfig->subset($dbid );
+
+        try
+        {
+            $key = $this->request->isAction?'write':'read';
+
+            $db = new Database( $dbConfig->subset($key)->getConfig() + $dbConfig->getConfig() );
+            $db->id = $dbid;
+
+            Session::setDatabaseId( $dbid );
+            Session::setDatabase( $db );
+        }catch(\Exception $e)
+        {
+            throw new OpenRatException('DATABASE_ERROR_CONNECTION',$e->getMessage() );
+        }
     }
 
 
@@ -373,7 +399,13 @@ class Dispatcher
             // Transactions are only needed for POST-Request
             // GET-Request do only read from the database and have no need for transactions.
             if  ( $this->request->isAction )
+            {
                 $db->start();
+
+                //register_shutdown_function( function() {
+                //        $this->rollbackDatabaseTransaction();
+                //});
+            }
         }
 
     }
@@ -381,7 +413,7 @@ class Dispatcher
 
     private function commitDatabaseTransaction()
     {
-        $db = db_connection();
+        $db = Session::getDatabase();
 
         if (is_object($db))
             // Transactions were only started for POST-Request
@@ -393,7 +425,7 @@ class Dispatcher
 
     private function rollbackDatabaseTransaction()
     {
-        $db = db_connection();
+        $db = Session::getDatabase();
 
         if (is_object($db))
             // Transactions were only started for POST-Request

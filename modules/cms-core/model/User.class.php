@@ -39,7 +39,6 @@ class User extends ModelBase
 	var $desc;
 	var $style;
 	var $isAdmin;
-	var $projects  = array();
 	var $rights;
 	var $loginDate = 0;
 
@@ -112,24 +111,21 @@ class User extends ModelBase
 	  */
 	public function setCurrent()
 	{
-		$this->loadProjects();
 		$this->loginDate = time();
 
 		\Session::setUser( $this );
 		
-	    $db = db_connection();
-	    
-	    $sql = $db->sql( <<<SQL
+	    $stmt = db()->sql( <<<SQL
                      UPDATE {{user}}
 	                 SET last_login={time}
 	                 WHERE id={userid}
 SQL
 	        );
-	    $sql->setInt( 'time'  ,time() );
-	    $sql->setInt( 'userid',$this->userid  );
+	    $stmt->setInt( 'time'  ,time() );
+	    $stmt->setInt( 'userid',$this->userid  );
 	    
 	    // Datenbankabfrage ausfuehren
-	    $sql->query();
+	    $stmt->query();
 	
 	}
 
@@ -202,16 +198,6 @@ SQL
 	}
 
 
-	/**
-	 * Lädt die Liste alle Projekte, fuer die der Benutzer berechtigt ist und
-	 * speichert diese in diesem Benutzerobjekt.
-	 */
-	function loadProjects()
-	{
-		$this->projects = $this->getReadableProjects();
-	}
-
-
 
 	/**
 	 * Ermittelt zu diesem Benutzer den Login-Token.
@@ -260,11 +246,8 @@ SQL
 	 */
 	public static function loadWithName( $name )
 	{
-		global $conf;
-		$db = db_connection();
-
 		// Benutzer �ber Namen suchen
-		$sql = $db->sql( 'SELECT id FROM {{user}}'.
+		$sql = db()->sql( 'SELECT id FROM {{user}}'.
 		                ' WHERE name={name}' );
 		//Html::debug($sql);
 		$sql->setString( 'name',$name );

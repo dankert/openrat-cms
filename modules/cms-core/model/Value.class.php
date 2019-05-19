@@ -1466,7 +1466,7 @@ SQL
 						if   ( substr($inhalt,-4) == 'api/' )
 						    $inhalt = substr($inhalt,0,-4);
 
-						$db = \Session::getDatabase();
+						$db = db();
 						$params = array('dbid'      =>$db->id,
 						                'objectid'  =>$this->page->objectid,
 						                'modelid'   =>$this->page->modelid,

@@ -448,11 +448,9 @@ SQL
      */
 	public function getDefaultLanguageId()
 	{
-		$db = Session::getDatabase();
-
 		// ORDER BY deswegen, damit immer mind. eine Sprache
 		// gelesen wird
-		$sql = $db->sql( 'SELECT id FROM {{language}} '.
+		$sql = db()->sql( 'SELECT id FROM {{language}} '.
 		                '  WHERE projectid={projectid}'.
 		                '   ORDER BY is_default DESC, name ASC' );
 
@@ -464,11 +462,9 @@ SQL
 
 	public function getDefaultModelId()
 	{
-		$db = Session::getDatabase();
-
 		// ORDER BY deswegen, damit immer mind. eine Sprache
 		// gelesen wird
-		$sql = $db->sql( 'SELECT id FROM {{projectmodel}} '.
+		$sql = db()->sql( 'SELECT id FROM {{projectmodel}} '.
 		                '  WHERE projectid={projectid}'.
 		                '   ORDER BY is_default DESC' );
 		$sql->setInt('projectid',$this->projectid );
@@ -518,19 +514,17 @@ SQL
 	{
 		$this->log = array();
 		
-		$db = Session::getDatabase();
-
 		// Ordnerstruktur prüfen.
-		$sql = $db->sql( <<<EOF
+		$stmt = db()->sql( <<<EOF
 SELECT thistab.id FROM {{object}} AS thistab
  LEFT JOIN {{object}} AS parenttab
         ON parenttab.id = thistab.parentid
   WHERE thistab.projectid={projectid} AND thistab.parentid IS NOT NULL AND parenttab.id IS NULL
 EOF
 );
-		$sql->setInt('projectid',$this->projectid);
+		$stmt->setInt('projectid',$this->projectid);
 
-		$idList = $sql->getCol();
+		$idList = $stmt->getCol();
 		
 		if	( count( $idList ) > 0 )
 		{
@@ -552,13 +546,13 @@ EOF
 
 		
 		// Prüfe, ob die Verbindung Projekt->Template->Templatemodell->Projectmodell->Projekt konsistent ist. 
-		$sql = $db->sql( <<<EOF
+		$stmt = db()->sql( <<<EOF
 SELECT DISTINCT projectid FROM {{projectmodel}} WHERE id IN (SELECT projectmodelid from {{templatemodel}} WHERE templateid in (SELECT id from {{template}} WHERE projectid={projectid}))
 EOF
 );
-		$sql->setInt('projectid',$this->projectid);
+		$stmt->setInt('projectid',$this->projectid);
 
-		$idList = $sql->getCol();
+		$idList = $stmt->getCol();
 		
 		if	( count( $idList ) > 1 )
 		{

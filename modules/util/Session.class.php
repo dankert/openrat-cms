@@ -21,12 +21,18 @@ use cms\model\User;
 
 class Session
 {
+    const KEY_DBID = 'dbid';
+    const KEY_DB = 'database';
+    const KEY_USER = 'userObject';
+    const KEY_CONFIG = 'config';
+    const PRAEFIX = 'ors_';
+
 	public static function get( $var )
 	{
         $SESS = &$_SESSION;
 
-        if	( isset($SESS['ors_'.$var]) )
-			return $SESS['ors_'.$var];
+        if	( isset($SESS[self::PRAEFIX.$var]) )
+			return $SESS[self::PRAEFIX.$var];
 		else
 			return '';
 	}
@@ -34,7 +40,7 @@ class Session
     public static function set( $var,$value )
 	{
         $SESS = &$_SESSION;
-        $SESS[ 'ors_'.$var ] = $value;
+        $SESS[ self::PRAEFIX.$var ] = $value;
 	}
 
 
@@ -43,12 +49,12 @@ class Session
      */
     public static function getConfig()
 	{
-		return Session::get('config');
+		return Session::get(self::KEY_CONFIG);
 	}
 
     public static function setConfig( $var )
 	{
-		Session::set('config',$var);
+		Session::set(self::KEY_CONFIG,$var);
 	}
 
 
@@ -59,12 +65,12 @@ class Session
      */
     public static function getUser()
 	{
-		return Session::get('userObject');
+		return Session::get(self::KEY_USER);
 	}
 
     public static function setUser( $var )
 	{
-		Session::set('userObject',$var);
+		Session::set(self::KEY_USER,$var);
 	}
 
 
@@ -73,12 +79,26 @@ class Session
      */
     public static function getDatabase()
 	{
-		return Session::get('database');
+		return Session::get(self::KEY_DB);
 	}
 
     public static function setDatabase( $var )
 	{
-		Session::set('database',$var);
+		Session::set(self::KEY_DB,$var);
+	}
+
+
+    /**
+     * @return String DB-Id
+     */
+    public static function getDatabaseId()
+	{
+		return Session::get(self::KEY_DBID);
+	}
+
+    public static function setDatabaseId( $var )
+	{
+		Session::set(self::KEY_DBID,$var);
 	}
 
 
@@ -86,7 +106,7 @@ class Session
 	 * Schliesst die aktuelle Session
 	 * 
 	 * Diese Funktion sollte so schnell wie moeglich aufgerufen werden, da vorher
-	 * keine andere Seite (im Frameset!) geladen werden kann
+	 * keine andere Seite (im Frameset oder parallele AJAX-Requests) geladen werden kann
 	 * Nach Aufruf dieser Methode sind keine Session-Zugriffe ueber diese Klasse mehr
 	 * moeglich.
 	 */

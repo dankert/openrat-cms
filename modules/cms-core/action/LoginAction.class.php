@@ -66,80 +66,6 @@ class LoginAction extends Action
         parent::__construct();
     }
 
-    /**
-     * Eine Datenbankverbindugn wird aufgebaut und initalisiert.
-     *
-     * @param $dbid Datenbank-Id
-     * @throws OpenRatException
-     */
-	private function setDb( $dbid )
-	{
-		global $conf;
-
-		if	( !isset($conf['database'][$dbid] ))
-			throw new \LogicException( 'unknown DB-Id: '.$dbid );
-
-        try{
-
-            $db = db();
-
-                $db->rollback();
-                $db->disconnect(); // Bäm. This seems to be necessary. WTF?
-                //$db = null;
-                //Session::setDatabase( null );
-        }
-        catch( Exception $e) {
-            // happens if we have no db connection.
-        }
-
-        try
-        {
-            $db = new Database( $conf['database'][$dbid] );
-            $db->id = $dbid;
-            $db->start(); // Transaktion starten.
-            Session::setDatabase( $db );
-        }catch(\Exception $e)
-        {
-            throw new OpenRatException('DATABASE_ERROR_CONNECTION',$e->getMessage() );
-        }
-	}
-
-
-    /**
-     * Prueft, ob der Parameter 'dbid' übergeben wurde.
-     * @throws OpenRatException
-     */
-	function checkForDb()
-	{
-		global $conf;
-		$dbid = $this->getRequestVar('dbid'); 
-
-		if	( $dbid != '' )
-			$this->setDb( $dbid );
-	}
-
-
-    /**
-     * @throws OpenRatException
-     */
-    function setDefaultDb()
-	{
-		if	( $this->hasRequestVar(REQ_PARAM_DATABASE_ID) )
-		{
-			$dbid = $this->getRequestVar(REQ_PARAM_DATABASE_ID);
-		}
-		else
-		{
-			global $conf;
-	
-			if	( !isset($conf['database']['default']) )
-				throw new \LogicException('default-database not set');
-	
-			$dbid = $conf['database']['default'];
-		}
-
-		$this->setDb( $dbid );
-	}
 
 
     /**
@@ -303,7 +229,6 @@ class LoginAction extends Action
                     $header[] = $cookie;
                 }
 
-//				Html::debug($header);
                 fputs ($fp, implode("\r\n",$header)."\r\n\r\n");
 
                 $inhalt=array();
@@ -313,7 +238,6 @@ class LoginAction extends Action
                 fclose($fp);
 
                 $html = implode('',$inhalt);
-//				Html::debug($html);
                 if	( !preg_match($sso['expect_regexp'],$html) )
                     throw new \SecurityException('auth failed');
                 $treffer=0;
@@ -323,9 +247,6 @@ class LoginAction extends Action
                     throw new \SecurityException('authorization failed');
 
                 $username = $treffer[1];
-
-//				Html::debug( $treffer );
-                $this->setDefaultDb();
 
                 $user = User::loadWithName( $username );
 
@@ -347,8 +268,6 @@ class LoginAction extends Action
 
             if	( empty($username) )
                 throw new \SecurityException( 'no username in client certificate ('.$ssl_user_var.') (or there is no client certificate...?)' );
-
-            $this->setDefaultDb();
 
             $user = User::loadWithName( $username );
 
@@ -506,7 +425,7 @@ class LoginAction extends Action
 
 		$this->setTemplateVar( 'dbids',$dbids );
 
-		$db = Session::getDatabase();
+		$db = db();
 		if	( is_object($db) )
 			$this->setTemplateVar('actdbid',$db->id);
 		else
@@ -521,63 +440,9 @@ class LoginAction extends Action
 
 
 
-    /**
-	 * Erzeugt ein Projekt-Auswahlmenue.
-	 */
-	function projectmenu()
-	{
-		$user = Session::getUser();
-		
-		if	( $user->mustChangePassword ) 
-		{
-			$this->addNotice( 'user',$user->name,'PASSWORD_TIMEOUT','warn' );
-			$this->callSubAction( 'changepassword' ); // Zwang, das Kennwort zu ?ndern.
-		}
-		
-
-		// Diese Seite gilt pro Sitzung. 
-		$this->lastModified( $user->loginDate );
-
-		// Projekte ermitteln
-		$projects = $user->projects;
-
-		$list     = array();
-		
-		foreach( $projects as $id=>$name )
-		{
-			$p = array();
-			$p['url' ] = Html::url('index','project',$id);
-			$p['name'] = $name;
-			$p['id'  ] = $id;
-
-			$tmpProject = new Project( $id );
-			$p['defaultmodelid'   ] = $tmpProject->getDefaultModelId();
-			$p['defaultlanguageid'] = $tmpProject->getDefaultLanguageId();
-			$p['models'           ] = $tmpProject->getModels();
-			$p['languages'        ] = $tmpProject->getLanguages();
-			
-			$list[] = $p;
-		}
-
-		$this->setTemplateVar('projects',$list);
-		
-		if	( empty($list) )
-		{
-			// Kein Projekt vorhanden. Eine Hinweismeldung ausgeben.
-			if	( $this->userIsAdmin() )
-				// Administratoren bekommen bescheid, dass sie ein Projekt anlegen sollen
-				$this->addNotice('','','ADMIN_NO_PROJECTS_AVAILABLE',OR_NOTICE_WARN);
-			else
-				// Normale Benutzer erhalten eine Meldung, dass kein Projekt zur Verf?gung steht
-				$this->addNotice('','','NO_PROJECTS_AVAILABLE',OR_NOTICE_WARN);
-		}
-		
-	}
-
-
-
 	/**
 	 * Erzeugt eine Anwendungsliste.
+     * TODO: unused at the moment
 	 */
 	function applications()
 	{
@@ -705,7 +570,6 @@ class LoginAction extends Action
 	{
 		global $conf;
 
-		$this->checkForDb();
 		Session::setUser('');
 		
 		if	( $conf['login']['nologin'] )
@@ -794,18 +658,12 @@ class LoginAction extends Action
 	{
 		global $conf;
 
-        Logger::info("DBID: ".$this->getRequestVar('dbid'));
-		if	( $this->hasRequestVar('dbid'))
+		$db = db(); // throws Exception, if database is not available.
 		{
-			$dbid = $this->getRequestVar('dbid');
-			
-			if   ( !is_array($conf['database'][$dbid]) )
-			    $this->addValidationError('dbid');
+			$dbid = $db->id;
 
             $this->updateDatabase($dbid); // Updating...
 		}
-		
-		$this->checkForDb();
 		
 		Session::setUser(''); // Altes Login entfernen.
 		
@@ -918,7 +776,6 @@ class LoginAction extends Action
 				// Benutzer über den Benutzernamen laden.
 				$user = User::loadWithName($loginName);
 				$user->loginModuleName = $lastModule;
-// 				Session::setUser($user);
                 $user->setCurrent();
                 
                 if ($user->passwordAlgo != Password::bestAlgoAvailable() )
@@ -979,8 +836,6 @@ class LoginAction extends Action
 				$this->addValidationError('login_password','');
 			}
 
-			
-			//$this->callSubAction('login');
 			return;
 		}
 		else
@@ -998,7 +853,7 @@ class LoginAction extends Action
 			}
 				
 			// Anmeldung erfolgreich.
-			if	( config('security','renew_session_login') )
+            if	( config()->subset('security')->is('renew_session_login',false) )
 				$this->recreateSession();
 			
 			$this->addNotice('user',$user->name,'LOGIN_OK',OR_NOTICE_OK,array('name'=>$user->fullname));
@@ -1010,12 +865,6 @@ class LoginAction extends Action
             $config['language'] = $language->getLanguage($user->language);
             $config['language']['language_code'] = $user->language;
             Session::setConfig( $config );
-
-			
-			
-			// Entscheiden, welche Perspektive als erstes angezeigt werden soll.
-			
-			$allProjects = Project::getAllProjects();
 		}
 		
 	}
@@ -1032,7 +881,7 @@ class LoginAction extends Action
 		if	( is_object($user) )
 			$this->setTemplateVar('login_username',$user->name);
 		
-		if	( config('security','renew_session_logout') )
+		if	( config()->subset('security')->is('renew_session_logout',false) )
 			$this->recreateSession();
 
 		session_unset();
@@ -1239,7 +1088,6 @@ class LoginAction extends Action
 		{
 			if	( $conf['security']['guest']['enable'] )
 			{
-				$this->setDefaultDb();
 				$username = $conf['security']['guest']['user'];
 				$user = User::loadWithName($username);
 				if	( $user->userid > 0 )
@@ -1265,7 +1113,6 @@ class LoginAction extends Action
 		
 				    if	( isset($_SERVER['PHP_AUTH_USER']) )
 				    {
-				    	$this->setDefaultDb();
 						$ok = $this->checkLogin( $_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW'] );
 				    }
 				    
@@ -1302,46 +1149,6 @@ class LoginAction extends Action
 
 
 
-	function checkMenu( $name )
-	{
-		global $conf;
-		
-		switch( $name )
-		{
-			case 'applications':
-				// Men?punkt "Anwendungen" wird nur angezeigt, wenn weitere Anwendungen
-				// konfiguriert sind.
-				return count(@$conf['applications']) > 0;
-
-			case 'register': // Registrierung
-				// Nur, wenn aktiviert und gegen eigene Datenbank authentisiert wird.
-				return @$conf['login']['register'] && @$conf['security']['auth']['type'] == 'database';
-
-			case 'password': // Kennwort vergessen
-				// Nur, wenn aktiviert und gegen eigene Datenbank authentisiert wird.
-				// Deaktiviert, falls LDAP-Lookup aktiviert ist.
-				return @$conf['login']['send_password'] && @$conf['security']['auth']['type'] == 'database'
-				                                        && !@$conf['security']['auth']['userdn'];
-				
-			case 'administration':
-				// "Administration" nat?rlich nur f?r Administratoren.
-				return $this->userIsAdmin();
-
-			case 'login':
-				return !@$conf['login']['nologin'];
-				
-			case 'logout':
-				return true;
-				
-			case 'projectmenu':
-				return true;
-				
-			default:
-				return false;
-		}	
-	}
-	
-	
 	/**
 	 * Maske anzeigen, um Benutzer zu registrieren.
 	 */
@@ -1366,11 +1173,11 @@ class LoginAction extends Action
 
 		$this->setTemplateVar( 'dbids',$dbids );
 		
-		$db = Session::getDatabase();
+		$db = db();
 		if	( is_object($db) )
 			$this->setTemplateVar('actdbid',$db->id);
 		else
-			$this->setTemplateVar('actdbid',$conf['database']['default']);
+			$this->setTemplateVar('actdbid',$conf['database-defaults']['default-id']);
 		
 		
 		
@@ -1421,7 +1228,6 @@ class LoginAction extends Action
 	function registercodePost()
 	{
 		global $conf;
-		$this->checkForDb();
 
 		$origRegisterCode  = Session::get('registerCode');
 		$inputRegisterCode = $this->getRequestVar('code');
@@ -1485,7 +1291,7 @@ class LoginAction extends Action
 		$this->setTemplateVar( 'dbids',$dbids );
 		
 		
-		$db = Session::getDatabase();
+		$db = db();
 		
 		if	( is_object($db) )
 			$this->setTemplateVar('actdbid',$db->id);
@@ -1494,50 +1300,7 @@ class LoginAction extends Action
 	}	
 	
 	
-	/*
-	function changepassword()
-	{
-	}
-	*/
-	
-	
-	/*
-	function setnewpassword()
-	{
-		$oldPw  = $this->getRequestVar('password_old'  );
-		$newPw1 = $this->getRequestVar('password_new_1');
-		$newPw2 = $this->getRequestVar('password_new_2');
-		
-		if	( $newPw1 == $newPw2 )
-		{
-			// Aktuellen Benutzer aus der Sitzung ermitteln
-			$user = $this->getUserFromSession();
-			
-			// Altes Kennwort pr?fen.
-			$ok = $user->checkPassword( $oldPw );
-			
-			if	( $ok )  // Altes Kennwort ist ok.
-			{
-				$user->setPassword( $newPw1 ); // Setze neues Kennwort
-				$user->mustChangePassword = false;
-				Session::setUser($user);
-				$this->addNotice('user',$user->name,'password_set','ok');
-			}
-			else
-			{
-				// Altes Kennwort falsch.
-				$this->addNotice('user',$user->name,'password_error','error');
-			}
-		}
-		else
-		{
-			// Beide neuen Kennw?rter stimmen nicht ?berein
-			$this->addNotice('user',$user->name,'passwords_not_match','error');
-		}
-	}
-	*/
-	
-	
+
 	/**
 	 * Einen Kennwort-Anforderungscode an den Benutzer senden.
 	 */
@@ -1549,8 +1312,6 @@ class LoginAction extends Action
 			return;
 		}
 		
-		$this->checkForDb();
-
 		$user = User::loadWithName( $this->getRequestVar("username") );
 		//		Html::debug($user);
 		Password::delay();
@@ -1643,34 +1404,7 @@ class LoginAction extends Action
 	function recreateSession()
 	{
 		
-		// PHP < 4.3.2 kennt die Funktion session_regenerate_id() nicht.
-		if	( version_compare(phpversion(),"4.3.2","<") )
-		{
-			$randlen = 32;
-			$randval = "0123456789abcdefghijklmnopqrstuvwxyz";
-			$newid   = "";
-			for ($i = 1; $i <= $randlen; $i++)
-			{
-				$newid .= substr($randval, rand(0,(strlen($randval) - 1)), 1);
-			}
-			session_id( $newid );
-		}
-		elseif( version_compare(phpversion(),"4.3.2","==") )
-		{
-			session_regenerate_id();
-			
-			// Bug in PHP 4.3.2: Session-Cookie wird nicht neu gesetzt.
-			if ( ini_get("session.use_cookies") )
-                $this->setCookie( session_name(),session_id() );
-		}
-		elseif	( version_compare(phpversion(),"5.1.0",">") )
-		{
-			session_regenerate_id(true);
-		}
-		else
-		{
-			// 5.1.0 > PHP >= 4.3.3
-		}
+        session_regenerate_id(true);
 	}
 	
 	
@@ -1722,10 +1456,6 @@ class LoginAction extends Action
     }
 	
 	
-	function pingView()
-	{
-		echo "1";
-	}
 
     /**
      * Updating the database.
@@ -1736,9 +1466,12 @@ class LoginAction extends Action
     private function updateDatabase($dbid)
     {
         try {
-            $adminDbConfig = Conf()->subset('database')->subset($dbid);
+            $dbConfig = Conf()->subset('database')->subset($dbid);
 
-            $adminDb = new Database( config('database',$dbid), true);
+            if   ( ! $dbConfig->is('check_version',false))
+                return; // Check for DB version is disabled.
+
+            $adminDb = new Database( $dbConfig->subset('admin')->getConfig() + $dbConfig->getConfig() );
             $adminDb->id = $dbid;
         } catch (Exception $e) {
 
@@ -1757,10 +1490,6 @@ class LoginAction extends Action
     }
 
 
-    public function showView() {
-        $this->nextSubAction('login');
-    }
 }
 
 
-?>

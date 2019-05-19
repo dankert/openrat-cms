@@ -55,7 +55,7 @@ class TitleAction extends Action
 
         $this->setTemplateVar('isLoggedIn',true );
 
-        $db = Session::getDatabase();
+        $db = db();
         $this->setTemplateVar('dbname',$db->conf['name'].(readonly()?' ('.lang('readonly').')':''));
         $this->setTemplateVar('dbid'  ,$db->id);
 

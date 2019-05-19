@@ -83,18 +83,11 @@ class Database
 	 * @param array Konfiguration der Verbindung
 	 * @param boolean admin Wenn es eine Admin-DB-Verbindung werden soll, die auch DDL ausfuehren darf
 	 */
-	public function __construct( $dbconf,$admin=false )
+	public function __construct( $dbconf )
 	{
 		global $conf;
 		
 		$this->conf = $dbconf + $conf['database-default']['defaults']; // linksstehender Operator hat Priorität!
-		
-		if	( $admin )
-		{
-			// Bevorzugung der Unter-Konfiguration 'update'
-			if	( isset($this->conf['update']) )
-				$this->conf = $this->conf['update'] + $this->conf; // linksstehender Operator hat Priorität!
-		}
 		
 		$this->connect();
 	}

@@ -426,7 +426,7 @@ class Http
 	{
 		if	( class_exists('Session'))
 		{
-			$db = Session::getDatabase();
+			$db = db();
 			if	( is_object( $db ) )
 				$db->rollback();
 		}

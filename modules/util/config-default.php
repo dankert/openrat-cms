@@ -733,8 +733,6 @@ function createDefaultConfig()
     $conf['security']['disable_dynamic_code']=true;
     $conf['security']['show_system_info']=true;
     $conf['security']['use_post_token']=true;
-    $conf['security']['renew_session_login']=false;
-    $conf['security']['renew_session_logout']=false;
     $conf['security']['default'] = array();
     $conf['security']['default']['username']='';
     $conf['security']['default']['password']='';

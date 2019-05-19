@@ -86,7 +86,7 @@ class ConfigurationLoader
             // Load include files.
             foreach ($customConfig['include'] as $key => $file) {
 
-                if   ( $file[0] == '/')
+                if   ( $file[0] == '/') // File begins with '?'
                     ; // File has an absolute path - do not change.
                 else
                     // Prepend file path with our config directory.

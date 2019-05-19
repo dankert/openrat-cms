@@ -78,6 +78,11 @@ class Config
     }
 
 
+    /**
+     * @param $name
+     * @param null $default
+     * @return mixed|null
+     */
     public function get( $name, $default = null )
     {
         if   ( isset( $this->config[ $name ] ) )
@@ -96,12 +101,36 @@ class Config
     }
 
 
+    /**
+     * @param $name
+     * @return bool
+     */
+    public function has( $name )
+    {
+        return isset( $this->config[ $name ] );
+    }
+
+
+    /**
+     * @param $name
+     * @param bool $default
+     * @return bool
+     */
     public function is( $name, $default = false )
     {
         if   ( isset( $this->config[ $name ] ) )
             return (bool) $this->config[$name];
         else
             return $default;
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getConfig() {
+
+        return $this->config;
     }
 
 

@@ -53,14 +53,12 @@ function vorzeichen( $nr )
  */
 function readonly()
 {
-	global $conf;
-	
 	// Gesamtes CMS ist readonly.
 	if	( config('security','readonly') )
 		return true;
 		
 	// Aktuelle Datenbankverbindung ist readonly.
-	$db = Session::getDatabase();
+	$db = db();
 	if	( isset($db->conf['readonly']) && $db->conf['readonly'] )
 		return true;
 		
