@@ -110,6 +110,7 @@ class Dispatcher
             throw $e;
         }
 
+        $this->writeAuditLog();
         $this->commitDatabaseTransaction();
 
         if  ( DEVELOPMENT )
@@ -490,5 +491,65 @@ class Dispatcher
     private function setContentLanguageHeader()
     {
         header('Content-Language: ' . Conf()->subset('language')->get('language_code') );
+    }
+
+
+
+    private function writeAuditLog()
+    {
+        // Only write Audit Log for POST requests.
+        if   ( ! $this->request->isAction )
+            return;
+
+        $auditConfig = config()->subset('audit-log');
+
+        if   ( $auditConfig->is('enabled',false))
+        {
+            $dir = $auditConfig->get('directory','./audit-log' );
+
+            if   ( $dir[0] != '/' )
+                $dir = __DIR__.'/../../'.$dir;
+
+            $micro_date = microtime();
+            $date = explode(" ",$micro_date);
+            $filename = $dir.'/'.$auditConfig->get('prefix','audit' ).'-'.date('c',$date[1]).'-'.$date[0].'.json';
+
+            $json = new \JSON();
+            $user = Session::getUser();
+
+            $data = array(
+                'database'    => array(
+                    'id'      => db()->id ),
+                'user'        => array(
+                    'id'      => $user->userid,
+                    'name'    => $user->name ),
+                'timestamp'   => date('c'),
+                'action'      => $this->request->action,
+                'method'      => $this->request->method,
+                'remote-ip'   => $_SERVER['REMOTE_ADDR'],
+                'request-time'=> $_SERVER['REQUEST_TIME'],
+                'data'        => $this->filterCredentials( $_REQUEST )
+            );
+
+            // Write the file.
+            if   ( file_put_contents( $filename, $json->encode($data) ) === FALSE )
+                Logger::warn('Could not write audit log to file: '.$filename);
+            else
+                Logger::debug('Audit logfile: '.$filename);
+        }
+
+    }
+
+
+    /*
+     * Filter credentials from an array.
+     */
+    private function filterCredentials( $input )
+    {
+        foreach( array( 'login_password','password1','password2' ) as $cr )
+            if  ( isset($input[$cr]))
+                $input[$cr] = '***';
+
+        return $input;
     }
 }
