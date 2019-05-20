@@ -15,7 +15,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-define('MIN_VERSION','5');
+define('MIN_VERSION','5.4');
 
 if	( version_compare(phpversion(),MIN_VERSION,"<") )
     throw new ValidationException('This version of PHP is not supported any more. Minimum required: '.MIN_VERSION);
@@ -28,15 +28,6 @@ define('IMG_ICON_EXT'    ,'.png'   );
 
 require(__DIR__.'/version.php');
 define('OR_TITLE'        ,'OpenRat CMS');
-
-define('OR_TYPE_FOLDER','folder');
-define('OR_TYPE_PAGE'  ,'page'  );
-define('OR_TYPE_FILE'  ,'file'  );
-define('OR_TYPE_IMAGE' ,'image'  );
-define('OR_TYPE_TEXT'  ,'text'  );
-define('OR_TYPE_LINK'  ,'link'  );
-define('OR_TYPE_URL'   ,'url'   );
-
 
 define( 'CMS_ROOT_DIR',__DIR__.'/../../');
 

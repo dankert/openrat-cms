@@ -25,6 +25,14 @@ class BaseObject
     const TYPEID_IMAGE  = 6;
     const TYPEID_TEXT   = 7;
 
+    const TYPE_FOLDER = 'folder';
+    const TYPE_FILE   = 'file'  ;
+    const TYPE_PAGE   = 'page'  ;
+    const TYPE_LINK   = 'link'  ;
+    const TYPE_URL    = 'url'   ;
+    const TYPE_IMAGE  = 'image' ;
+    const TYPE_TEXT   = 'text'  ;
+
     /** eindeutige ID dieses Objektes
      * @see #$objectid
      * @type Integer
@@ -308,19 +316,19 @@ SQL
     function getType()
     {
         if ($this->isFolder)
-            return OR_TYPE_FOLDER;
+            return self::TYPE_FOLDER;
         if ($this->isFile)
-            return OR_TYPE_FILE;
+            return self::TYPE_FILE;
         if ($this->isImage)
-            return OR_TYPE_IMAGE;
+            return self::TYPE_IMAGE;
         if ($this->isText)
-            return OR_TYPE_TEXT;
+            return self::TYPE_TEXT;
         if ($this->isPage)
-            return OR_TYPE_PAGE;
+            return self::TYPE_PAGE;
         if ($this->isLink)
-            return OR_TYPE_LINK;
+            return self::TYPE_LINK;
         if ($this->isUrl)
-            return OR_TYPE_URL;
+            return self::TYPE_URL;
 
         return 'unknown';
     }
@@ -407,7 +415,7 @@ SQL
             return $this->filename;
         }
 
-        if	( $this->type == OR_TYPE_FOLDER )
+        if	( $this->isFolder )
         {
             $this->filename = $this->objectid;
         }

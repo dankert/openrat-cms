@@ -644,9 +644,9 @@ SQL
 										case 'inline':
 											$o = new BaseObject( $oid );
 											$o->load();
-											switch( $o->getType() )
+											switch( $o->typeid )
 											{
-												case OR_TYPE_PAGE:
+												case BaseObject::TYPEID_PAGE:
 													$p = new Page( $oid );
 													$p->enclosingObjectId = $this->page->id;
 													$p->public         = $this->page->publisher->isPublic();
@@ -658,7 +658,7 @@ SQL
 													$inhalt .= $p->value;
 													unset( $p );
 													break;
-												case OR_TYPE_LINK:
+												case BaseObject::TYPEID_LINK:
 													$l = new Link( $oid );
 													$l->load();
 													if	( $l->isLinkToObject )
