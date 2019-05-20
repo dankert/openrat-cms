@@ -85,7 +85,7 @@ class GroupAction extends Action
 	
 	public function propPost()
 	{
-		if	( empty($this->getRequestVar('name') ) )
+		if	( ! $this->getRequestVar('name') )
 		    throw new \ValidationException('name');
 
         $this->group->name = $this->getRequestVar('name');

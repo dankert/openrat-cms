@@ -351,7 +351,7 @@ class Dispatcher
     {
         if   ( $this->request->hasRequestVar('dbid') )
             $dbid = $this->request->getRequestVar('dbid',OR_FILTER_ALPHANUM);
-        elseif   ( !empty( Session::getDatabaseId()))
+        elseif   ( Session::getDatabaseId() )
             $dbid = Session::getDatabaseId();
         elseif   ( isset($_COOKIE['or_dbid']) )
                     $dbid = $_COOKIE['or_dbid'];
