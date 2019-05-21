@@ -1,6 +1,6 @@
 
 	
-		<div class="table-wrapper"><div class="table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><table width="100%"></div>
+		<div class="table-wrapper"><table width="100%">
 			<tr class="data">
 				<td colspan="1">
 					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'id'.'')))); ?></span>
@@ -19,10 +19,10 @@
 			</tr>
 			<?php foreach($pages as $pageid=>$name){ ?>
 				<tr class="data">
-					<td colspan="2">
-						<img src="./modules/cms-ui/themes/default/images/icon/page.png" />
-						
-						<a target="_self" data-action="main" data-method="page" data-id="<?php echo $pageid ?>" data-extra="[]" href="<?php echo Html::url('main','page',$pageid,array()) ?>">
+					<td colspan="2" class="clickable">
+						<a target="_self" data-type="open" data-action="page" data-method="info" data-id="<?php echo $pageid ?>" data-extra="[]" href="<?php echo Html::url('page','',$pageid,array()) ?>">
+							<i class="image-icon image-icon--action-page"></i>
+							
 							<span><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
 							
 						</a>
@@ -30,5 +30,5 @@
 					</td>
 				</tr>
 			<?php } ?>
-		</table>
+		</table></div>
 	

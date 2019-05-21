@@ -1,6 +1,6 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
-	<table>
+	<table filter="false">
 		<row class="data">
 			<column colspan="1">
 				<text key="id" />
@@ -16,9 +16,9 @@
 		</row>
 		<list list="pages" value="name" key="pageid">
 			<row class="data">
-				<column colspan="2">
-					<image icon="page"></image>
-					<link action="main" subaction="page" id="var:pageid" target="cms_main">
+				<column colspan="2" class="clickable">
+					<link type="open" action="page" id="var:pageid">
+						<image action="page"></image>
 						<text var="name"></text>
 					</link>
 				</column>
