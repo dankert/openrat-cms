@@ -427,41 +427,24 @@ class PageAction extends ObjectAction
 	 */
 	function editView()
 	{
-		$this->page->public = true;
-		$this->page->simple = true;
-		$this->page->generate_elements();
+        $template = new Template( $this->page->templateid );
+        $template->load();
 
-		$list = array();
+        /** @var Element[] $elements */
+        $elements = $template->getElements();
 
-        $languages = $this->page->getProject()->getLanguages();
+        $elements = array_filter(/**
+         * @param $element Element
+         * @return Element
+         */ $elements, function($element ) {
+            return $element->isWritable();
+        } );
 
-            // Schleife ueber alle Inhalte der Seite
-		foreach( $this->page->values as $id=>$value )
-		{
-			// Element wird nur angezeigt, wenn es editierbar ist
-			if   ( $value->element->isWritable() )
-			{
-				$list[$id] = array();
-				$list[$id]['name']           = $value->element->label;
-				$list[$id]['pageelementid' ] = $this->page->objectid.'_'.$id;
-				$list[$id]['desc']           = $value->element->desc;
-				$list[$id]['languageid']     = $this->page->languageid;
-				$list[$id]['modelid'   ]     = $this->page->modelid;
-				$list[$id]['type']           = $value->element->type;
+        $elements = array_map( function( $element ) {
+            return get_object_vars( $element ) + array('pageelementid'=>$this->page->id.'_'.$element->elementid,'typename'=>$element->getTypeName() );
+        }, $elements);
 
-				$list[$id]['archive_count'] = intval($value->getCountVersions());
-				if	( $list[$id]['archive_count'] > 0 )
-					$list[$id]['archive_url'] = Html::url( 'pageelement','archive',$this->page->id,array(REQ_PARAM_ELEMENT_ID=>$id,REQ_PARAM_LANGUAGE_ID=>$this->page->languageid,REQ_PARAM_MODEL_ID=>$this->page->modelid) );
-
-				// Inhalt anzeigen
-				$list[$id]['value'] = $value->value;
-			}
-		}
-
-		$this->setTemplateVar('preview_url',Html::url('page','show',$this->page->objectid,array('withIcons'=>'1',REQ_PARAM_LANGUAGE_ID=>$this->page->languageid,REQ_PARAM_MODEL_ID=>$this->page->modelid,REQ_PARAM_EMBED=>'1') ) );
-		$this->setTemplateVar('properties',$this->page->getProperties() );
-		$this->setTemplateVar('el',$list);
-		$this->setTemplateVar('languages',$languages);
+		$this->setTemplateVar('elements',$elements);
 	}
 
 

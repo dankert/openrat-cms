@@ -12,11 +12,11 @@
 		</row>
 
 		<list list="languages" extract="true">
-			<row class="data">
+			<row class="data clickable">
 				<column>
 					<text var="languagename" />
 				</column>
-				<column class="clickable">
+				<column>
 					<link subaction="value" var1="languageid" value1="var:languageid" type="edit" action="pageelement">
 						<text var="value" maxlength="120" escape="true" />
 					</link>

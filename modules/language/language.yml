@@ -2113,9 +2113,6 @@ GLOBAL_LANGUAGES_DESC:
   fr: Tout le contenu peut être créé dans plusieurs langues
   it: Todo el contenido se puede crear en varias idiomas
   ru: Языки Все содержание могут быть созданы на нескольких языках
-GLOBAL_LANGUAGE:
-  de: Sprache
-  en: Sprache
 GLOBAL_LANGUAGES:
   de: Sprachen
   en: Languages
@@ -2723,10 +2720,10 @@ JAVASCRIPT_REQUIRED:
   de: Bitte Javascript aktivieren
   en: Please enable Javascript
 LANGUAGE_ISOCODE:
-  de: ISO Code
+  de: ISO-Code
   en: ISO Code
-  es: "L'OIN codent"
-  fr: "L'OIN codent"
+  es: "ISO codent"
+  fr: "ISO codent"
   it: La ISO cifra
 LASTCHANGE_USER:
   de: Letzter Änderungsautor
@@ -5857,6 +5854,7 @@ FILE_IMAGE_NEW_WIDTH:
   it: Nueva anchura
   ru: Новая ширина климата
 GLOBAL_LANGUAGE:
+  de: Sprache
   en: Language
   es: Langue
   fr: Langue
@@ -6131,3 +6129,21 @@ LABEL:
 NAME:
   de: Name
   en: Name
+GLOBAL_PUBLISHED:
+  de: Veröffentlicht
+  en: Published
+SECURITY:
+  de: Sicherheit
+  en: Security
+  fr: Securité
+USER_LAST_LOGIN:
+  de: Letzte Anmeldung
+  en: Last Logon
+TOKEN:
+  en: Token
+EDIT_PASSWORD:
+  de: Kennwort ändern
+  en: Change password
+SOURCE:
+  de: Quelltext
+  en: Source

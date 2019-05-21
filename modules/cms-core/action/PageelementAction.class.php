@@ -175,7 +175,7 @@ class PageelementAction extends Action
         $this->setTemplateVar('element_name'  ,$this->value->element->name );
 		$this->setTemplateVar('element_type'  ,$this->value->element->getTypeName() );
 		$this->setTemplateVar('element_format',Element::getAvailableFormats()[ $this->value->element->format] );
-		$this->setTemplateVar('format'        ,Element::getAvailableFormats()[ $this->value->format         ] );
+		$this->setTemplateVar('format'        ,@Element::getAvailableFormats()[ $this->value->format         ] );
 
 		$user = new User( $this->value->lastchangeUserId );
 

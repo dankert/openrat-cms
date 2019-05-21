@@ -1281,4 +1281,10 @@ function language() { return array(
 'QRCODE_SHOW'=>"Show QR-Code",
 'LABEL'=>"Label",
 'NAME'=>"Name",
+'SOURCE'=>"Source",
+'GLOBAL_PUBLISHED'=>"Published",
+'SECURITY'=>"Security",
+'USER_LAST_LOGIN'=>"Last Logon",
+'TOKEN'=>"Token",
+'EDIT_PASSWORD'=>"Change password",
 );}

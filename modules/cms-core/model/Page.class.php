@@ -35,6 +35,10 @@ class Page extends BaseObject
 						     //Wichtig für include-Values
 	var $pageid;
 	var $templateid;
+
+	/**
+	 * @var Template
+	 */
 	var $template;
 
     /**
@@ -598,7 +602,10 @@ SQL
 			return $element->name;
 		},$this->getElements() );
 		 
-		$src = $this->template->src;
+		$templatemodel = new TemplateModel( $this->template->templateid, $this->modelid );
+		$templatemodel->load();
+		$src = $templatemodel->src;
+
 		$data = array();
 
 		// No we are collecting the data and are fixing some old stuff.

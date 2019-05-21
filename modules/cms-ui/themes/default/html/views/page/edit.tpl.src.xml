@@ -1,67 +1,41 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
-	<table>
-		<if not="" empty="el">
-			<row class="headline">
-				<column header="true">
-					<text text="PAGE_ELEMENT_NAME"></text>
-				</column>
-				<column header="true">
-					<text text="PAGE_ELEMENT_VALUE"></text>
-				</column>
-				<column header="true">
-					<text text="EDIT"></text>
-				</column>
-			</row>
-		</if>
-		<if empty="el">
-			<row>
-				<column>
-					<text text="GLOBAL_NOT_FOUND"></text>
-				</column>
-			</row>
-		</if>
-		<list list="el" extract="true">
-			<row class="data">
-				<column class="clickable" >
-					<link type="open" title="var:desc" name="var:name" action="pageelement" id="var:pageelementid" var1="languageid" value1="var:languageid" var2="modelid" value2="var:modelid">
-						<image action="pageelement" />
-						<text var="name"></text>
-					</link>
-				</column>
-				<column>
-					<text var="value" maxlength="50"></text>
-					<text raw="_"></text>
-				</column>
-				<column>
-					<list list="languages" key="languageid" value="languagename">
-						<part class="clickable">
-							<link class="" type="edit" action="pageelement" subaction="value" id="var:pageelementid" var1="languageid" value1="var:languageid">
-								<image method="edit"></image>
-								<text var="languagename"></text>
-							</link>
-						</part>
-					</list>
-				</column>
-			</row>
-		</list>
-		<!--
-			<row> <column class="help" colspan="3"> <text
-			text="PAGE_ELEMENTS_DESC"></text> </column> </row>
-		-->
-	</table>
+        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
+    <table>
+        <row class="headline">
+            <column header="true">
+                <text key="NAME"></text>
+            </column>
+            <column header="true">
+                <text text="DESCRIPTION"></text>
+            </column>
+            <column header="true">
+                <text key="TYPE"></text>
+            </column>
+        </row>
+        <if empty="elements">
+            <row>
+                <column>
+                    <text key="NOT_FOUND"></text>
+                </column>
+            </row>
+        </if>
+        <list list="elements" extract="true">
+            <row class="data clickable">
+                <column>
+                    <link type="open" title="var:desc" name="var:name" action="pageelement" id="var:pageelementid">
+                        <image action="pageelement"/>
+                        <text var="label"></text>
+                    </link>
+                </column>
+                <column>
+                    <text var="desc" maxlength="50"></text>
+                </column>
+                <column>
+                    <image elementtype="var:typename"/>
+                    <text prefix="el_" key="var:typename"></text>
+                </column>
+            </row>
+        </list>
+    </table>
 
-	<!--
-		<link action="page" subaction="form"
-		title="message:menu_page_form_desc" class="action"> <text
-		key="menu_page_form"></text> </link>
-	-->
-
-<!--
-	<group title="message:menu_page_show">
-		<part>
-			<insert url="var:preview_url" name="preview"></insert>
-		</part>
-	</group>
--->
 </output>
