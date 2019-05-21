@@ -83,7 +83,7 @@
 
         <group title="message:LICENSE">
 
-            <table>
+            <table filter="false">
                 <row class="headline">
                     <column>
                         <text key="name"/>
