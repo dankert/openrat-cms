@@ -138,9 +138,4 @@ class ProjectlistAction extends Action
 	}
 
 
-	public function infoView()
-    {
-
-    }
-	
 }
