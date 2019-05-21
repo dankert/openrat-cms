@@ -19,7 +19,7 @@ class ColumnComponent extends Component
 	protected function begin()
 	{
 	    $styleClasses = array();
-		echo '<td';
+		echo '<'.($this->header?'th':'td');
 		if	( ! empty($this->width))
 			echo ' width="'.$this->htmlvalue($this->width).'"';
 		if	( ! empty($this->style))
@@ -53,7 +53,7 @@ class ColumnComponent extends Component
 	
 	protected function end()
 	{
-		echo '</td>';
+		echo '</'.($this->header?'th':'td').'>';
 	}
 	
 }

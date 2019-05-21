@@ -36,7 +36,7 @@ $(document).on('orViewLoaded',function(event, data) {
         table.addClass('loader');
 
         setTimeout( () => {
-            table.find('tr').filter(function () {
+            table.find('tr:not(.headline)').filter(function () {
                 $(this).toggle($(this).text().toLowerCase().indexOf(filterExpression) > -1)
             })
             table.removeClass('loader');
