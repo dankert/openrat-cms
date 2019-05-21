@@ -48,14 +48,14 @@ $(document).on('orViewLoaded',function(event, data) {
     /**
 	 * Table-Sortierung.
      */
-	$(event.target).find('table > tbody > tr.headline > td').click( function() {
+	$(event.target).find('table > tbody > tr.headline > td, table > tbody > tr > th').click( function() {
 
 		let column = $(this);
         let table = column.parents('table');
         table.addClass('loader');
 
         let isAscending = !column.hasClass('sort-asc');
-        table.find('tr.headline > td').removeClass('sort-asc sort-desc');
+        table.find('tr.headline > td, tr > th').removeClass('sort-asc sort-desc');
         if ( isAscending ) column.addClass('sort-asc'); else column.addClass('sort-desc');
 
         setTimeout(function () {  // Sorting should be asynchronous, because we do not want to block the UI.

@@ -1,98 +1,50 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
-	<form action="folder" subaction="edit">
-		<table>
-			<row class="headline">
-				<column class="help">
-					<!-- 
-					<text key="SELECT"></text>
-				 -->
-					<checkbox name="checkall" />
-				</column>
-				<column class="help">
-					<text key="GLOBAL_TYPE"></text>
-					<text raw="_/_"></text>
-					<text key="GLOBAL_NAME"></text>
-				</column>
-			</row>
-			<list list="object" extract="true">
-				<row class="data">
-					<column width="1%">
-						<if true="var:writable">
-							<checkbox name="var:id"></checkbox>
-						</if>
-						<if false="writable">
-							<text raw="_"></text>
-						</if>
-					</column>
-					<column class="clickable">
-						<label for="var:id">
-							<link type="open" name="var:name" action="var:type" id="var:objectid">
-								<image action="var:icon"></image>
-								<text var="name" maxlength="40"></text>
-								<text raw="_"></text>
-							</link>
-						</label>
-					</column>
-				</row>
-			</list>
-			<if empty="object">
-				<row>
-					<column colspan="2">
-						<text text="GLOBAL_NOT_FOUND"></text>
-					</column>
-				</row>
-			</if>
-
-			<row class="data">
+	<table>
+		<row class="headline">
+			<column header="true">
+				<text key="GLOBAL_TYPE"></text>
+				<text raw="_/_"></text>
+				<text key="GLOBAL_NAME"></text>
+			</column>
+			<column header="true">
+				<text key="GLOBAL_LASTCHANGE"></text>
+			</column>
+		</row>
+		<if present="parentid">
+			<row class="data clickable">
 				<column>
-					<text raw="_" />
-				</column>
-				<column colspan="2" class="clickable">
-					<link type="dialog" action="folder" subaction="create">
-						<image method="add"></image>
-						<text key="menu_folder_create"></text>
+					<link type="open" id="var:parentid" name="" action="folder">
+						<image action="folder"></image>
+						<text value=".." />
 					</link>
 				</column>
+				<column>
+					<text raw=""></text>
+				</column>
 			</row>
-		</table>
-					<group title="message:options">
-						<set var="type" value="var:defaulttype"></set>
-						<list list="actionlist" value="actiontype">
-							<part class="line">
-								<part class="label">
-								</part>
-								<part class="input">
-									<radio name="type" value="var:actiontype"></radio>
-									<label for="type" value="var:actiontype">
-										<text raw="_"></text>
-										<text key="var:actiontype" prefix="FOLDER_SELECT_"></text>
-									</label>
-								</part>
-							</part>
-						</list>
-							<part class="line">
-								<part class="label">
-								</part>
-								<part class="input">
-									<text raw="____" />
-									<checkbox name="confirm" required="true" />
-									<label for="confirm">
-										<text key="CONFIRM_DELETE"></text>
-									</label>
-								</part>
-							</part>
-						
-						<part class="line">
-							<part class="label">
-								<text key="FOLDER_SELECT_TARGET_FOLDER" />
-							</part>
-							<part class="input">
-								<selector types="folder" param="targetobjectid" name="var:rootfoldername"
-									id="var:rootfolderid" folderid="var:rootfolderid" />
-							</part>
-						</part>
-					</group>
-	</form>
-	<insert script="mark" inline="true"></insert>
+		</if>
+		<list list="object" extract="true">
+			<row class="data clickable">
+				<column class="">
+					<link type="open" id="var:id" name="var:name" action="var:type" title="var:desc">
+						<image action="var:icon"></image>
+						<text var="name"></text>
+						<text raw="_"></text>
+					</link>
+				</column>
+				<column>
+					<date date="var:date"></date>
+				</column>
+			</row>
+		</list>
+		<if empty="object">
+			<row>
+				<column colspan="2">
+					<text text="GLOBAL_NOT_FOUND"></text>
+				</column>
+			</row>
+		</if>
+
+	</table>
 </output>

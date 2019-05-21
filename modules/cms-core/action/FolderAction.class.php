@@ -505,7 +505,7 @@ class FolderAction extends ObjectAction
 	/**
 	 * Verschieben/Kopieren/Loeschen/Verknuepfen von mehreren Dateien in diesem Ordner
 	 */
-	public function editPost()
+	public function advancedPost()
 	{
 		$type           = $this->getRequestVar('type');
 		$ids            = explode(',',$this->getRequestVar('ids'));
@@ -969,12 +969,12 @@ class FolderAction extends ObjectAction
 	/**
 	 * Anzeige aller Objekte in diesem Ordner.
 	 */
-	public function previewView()
+	public function editView()
 	{
 		global $conf_php;
 
 		if   ( ! $this->folder->isRoot )
-			$this->setTemplateVar('up_url',Html::url('folder','show',$this->folder->parentid));
+			$this->setTemplateVar('parentid',$this->folder->parentid);
 
 		$list = array();
 
@@ -1087,7 +1087,7 @@ class FolderAction extends ObjectAction
 	}
 
 
-	public function editView()
+	public function advancedView()
 	{
 		$this->setTemplateVar('writable',$this->folder->hasRight(ACL_WRITE) );
 
