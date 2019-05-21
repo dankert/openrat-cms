@@ -22,9 +22,12 @@ class DbUpdate
             // Cool, der aktuelle DB-Stand passt zu dieser Version. Das ist auch der Normalfall. Weiter so.
             return false;
 
-        if	( $version > self::SUPPORTED_VERSION )
+        elseif	( $version > self::SUPPORTED_VERSION )
             // Oh oh, in der Datenbank ist eine neuere Version, als wir unterstützen.
             throw new \LogicException('Actual DB version is not supported. '."DB-Version is $version, but ".OR_TITLE." ".OR_VERSION." only supports version ".self::SUPPORTED_VERSION );
+
+        else
+            return true; // Update required.
     }
 
 
