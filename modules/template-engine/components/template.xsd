@@ -99,7 +99,6 @@
         <xsd:attribute name="suffix" type="xsd:string"/>
         <xsd:attribute name="title" type="xsd:string"/>
         <xsd:attribute name="type" type="xsd:string"/>
-        <xsd:attribute name="class" type="xsd:string"/>
         <xsd:attribute name="escape" type="xsd:boolean"/>
         <xsd:attribute name="var" type="xsd:string"/>
         <xsd:attribute name="text" type="xsd:string"/>
@@ -109,6 +108,8 @@
         <xsd:attribute name="maxlength" type="xsd:string"/>
         <xsd:attribute name="accesskey" type="xsd:string"/>
         <xsd:attribute name="cut" type="xsd:string"/>
+        <xsd:attribute name="label" type="xsd:string"/>
+        <xsd:attribute name="class" type="xsd:string"/>
         <xsd:attribute name="request" type="xsd:string"/>
     </xsd:complexType>
     <xsd:element name="dummy" type="dummyType"/>
@@ -390,6 +391,9 @@
         <xsd:attribute name="mode" type="xsd:string"/>
         <xsd:attribute name="extension" type="xsd:string"/>
         <xsd:attribute name="mimetype" type="xsd:string"/>
+        <xsd:attribute name="prefix" type="xsd:string"/>
+        <xsd:attribute name="readonly" type="xsd:boolean"/>
+        <xsd:attribute name="class" type="xsd:string"/>
         <xsd:attribute name="request" type="xsd:string"/>
     </xsd:complexType>
     <xsd:element name="newline" type="newlineType"/>
@@ -655,6 +659,7 @@
         <xsd:attribute name="name" type="xsd:string"/>
         <xsd:attribute name="readonly" type="xsd:boolean"/>
         <xsd:attribute name="required" type="xsd:boolean"/>
+        <xsd:attribute name="label" type="xsd:string"/>
         <xsd:attribute name="request" type="xsd:string"/>
     </xsd:complexType>
     <xsd:element name="input" type="inputType"/>
@@ -700,7 +705,6 @@
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="tree" maxOccurs="unbounded" minOccurs="0"/>
         </xsd:choice>
-        <xsd:attribute name="class" type="xsd:string"/>
         <xsd:attribute name="default" type="xsd:string"/>
         <xsd:attribute name="type" type="xsd:string"/>
         <xsd:attribute name="index" type="xsd:string"/>
@@ -710,12 +714,13 @@
         <xsd:attribute name="size" type="xsd:string"/>
         <xsd:attribute name="maxlength" type="xsd:int"/>
         <xsd:attribute name="onchange" type="xsd:string"/>
-        <xsd:attribute name="readonly" type="xsd:boolean"/>
         <xsd:attribute name="hint" type="xsd:string"/>
         <xsd:attribute name="icon" type="xsd:string"/>
         <xsd:attribute name="required" type="xsd:boolean"/>
         <xsd:attribute name="focus" type="xsd:boolean"/>
         <xsd:attribute name="label" type="xsd:string"/>
+        <xsd:attribute name="readonly" type="xsd:boolean"/>
+        <xsd:attribute name="class" type="xsd:string"/>
         <xsd:attribute name="request" type="xsd:string"/>
     </xsd:complexType>
     <xsd:element name="insert" type="insertType"/>
@@ -1051,8 +1056,9 @@
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="tree" maxOccurs="unbounded" minOccurs="0"/>
         </xsd:choice>
-        <xsd:attribute name="class" type="xsd:string"/>
+        <xsd:attribute name="filter" type="xsd:boolean"/>
         <xsd:attribute name="width" type="xsd:string"/>
+        <xsd:attribute name="class" type="xsd:string"/>
         <xsd:attribute name="request" type="xsd:string"/>
     </xsd:complexType>
     <xsd:element name="inputarea" type="inputareaType"/>
@@ -1098,7 +1104,6 @@
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="tree" maxOccurs="unbounded" minOccurs="0"/>
         </xsd:choice>
-        <xsd:attribute name="name" type="xsd:string"/>
         <xsd:attribute name="rows" type="xsd:int"/>
         <xsd:attribute name="cols" type="xsd:int"/>
         <xsd:attribute name="value" type="xsd:string"/>
@@ -1109,6 +1114,8 @@
         <xsd:attribute name="default" type="xsd:string"/>
         <xsd:attribute name="maxlength" type="xsd:int"/>
         <xsd:attribute name="label" type="xsd:string"/>
+        <xsd:attribute name="name" type="xsd:string"/>
+        <xsd:attribute name="readonly" type="xsd:boolean"/>
         <xsd:attribute name="request" type="xsd:string"/>
     </xsd:complexType>
     <xsd:element name="window" type="windowType"/>

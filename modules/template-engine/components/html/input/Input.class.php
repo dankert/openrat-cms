@@ -36,7 +36,7 @@ class InputComponent extends FieldComponent
 	{
 	    if   ( $this->label )
         {
-            echo '<label class="or-form-row"><span class="or-form-label">'.lang($this->label).'</span><span class="or-form-input">';
+            echo '<label class="or-form-row"><span class="or-form-label">'.'<?php echo lang('.$this->value($this->label).') ?>'.'</span><span class="or-form-input">';
         }
 
 		if(!$this->type == 'hidden')

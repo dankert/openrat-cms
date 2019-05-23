@@ -9,6 +9,8 @@ require('../../util/FileUtils.class.php');
 
 // Baseclass of all components.
 require('html/Component.class.php');
+require('html/HtmlComponent.class.php');
+require('html/FieldComponent.class.php');
 header('Content-Type: text/plain');
 
 $folder = FileUtils::readDir(__DIR__ . '/html');

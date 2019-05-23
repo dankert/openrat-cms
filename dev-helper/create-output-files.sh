@@ -89,5 +89,15 @@ function createfile
 	fi
 }
 
+function xsdfile
+{
+
+    xsd="../modules/template-engine/components/template.xsd"
+    if  [ -f $xsd ]; then
+        chmod 666 -v $xsd
+    fi
+}
+
 language
 check
+xsdfile
