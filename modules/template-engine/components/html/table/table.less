@@ -1,0 +1,213 @@
+@color-overridden-by-theme: black;
+
+.border-radius (@radius) {
+    border-radius: @radius;
+    -moz-border-radius: @radius;
+    -webkit-border-radius: @radius;
+    -khtml-border-radius: @radius;
+}
+
+.or-table-wrapper {
+
+    .or-table-area {
+
+        /* Responsive Tables */
+        @media screen and (max-width: 40em) {
+
+            overflow-x: auto;
+        }
+
+        /* T a b l e s */
+        table {
+            overflow: auto;
+            border: 2px;
+
+            tr.headline > td,
+            tr > th {
+
+                padding: 3px;
+                font-weight: bold;
+
+                &.sort-asc > span:last-child:after {
+                    content: " \2193";
+                }
+                &.sort-desc > span:last-child:after {
+                    content: " \2191";
+                }
+            }
+
+            tr.data > td {
+                padding: 3px;
+            }
+
+            td.readonly {
+                font-style: italic;
+                font-weight: normal;
+            }
+            td.default {
+                font-style: normal;
+                font-weight: normal;
+            }
+            td.changed {
+                font-style: normal;
+                font-weight: bold;
+            }
+            /* Notizen */
+            td.notice {
+                margin: 0px;
+                padding: 5%;
+                text-align: center;
+            }
+
+            &.notice {
+                width: 100%;
+                border: 1px solid;
+                border-spacing: 0px;
+                th {
+                    padding: 2px;
+                    white-space: nowrap;
+                    border-bottom: 1px solid @color-overridden-by-theme;
+                    font-weight: normal;
+                    text-align: left;
+                }
+
+                tr.error {
+                }
+
+                tr.warning {
+                    margin: 0px;
+                    padding: 0px;
+                }
+            }
+
+            /* Kalender */
+            &.calendar {
+                table-layout: fixed;
+                border-collapse: collapse;
+                text-align: center;
+
+                td {
+                    border: 1px dotted;
+                }
+            }
+
+            /* Notizen */
+            td.notice {
+                margin: 0px;
+                padding: 5%;
+                text-align: center;
+            }
+
+            &.notice {
+                width: 100%;
+                border: 1px solid;
+                border-spacing: 0px;
+            }
+
+            &.notice th {
+                padding: 2px;
+                white-space: nowrap;
+                border-bottom: 1px solid @color-overridden-by-theme;
+                font-weight: normal;
+                text-align: left;
+            }
+
+            &.notice tr.error {
+            }
+
+            &.notice tr.warning {
+                margin: 0px;
+                padding: 0px;
+            }
+
+            /* Kalender */
+            &.calendar {
+                table-layout: fixed;
+                border-collapse: collapse;
+                text-align: center;
+            }
+
+            &.calendar td {
+                border: 1px dotted;
+            }
+            /* Message of the day */
+            td.motd {
+                border-left: 3px solid red;
+                border-right: 3px solid red;
+                font-weight: bold;
+                padding: 10px;
+                margin: 10px;
+            }
+            td:hover > div.onrowvisible {
+                visibility: visible;
+            }
+
+            /* D i f f  */
+            tr.diff {
+                > td.line {
+                    background-color: @color-overridden-by-theme;
+                    padding-right: 2px;
+                    border-right: 3px solid @color-overridden-by-theme;
+                    text-align: right;
+                    margin-right: 2px;
+                }
+
+                /* Unveränderter Text */
+                > td.equal {
+                }
+
+                /* Entfernter Text */
+                > td.old {
+                    background-color: red;
+                }
+
+                /* Hinzugefuegter Text */
+                td.new {
+                    background-color: green;
+                }
+
+                /* Geaenderter Text */
+                td.notequal {
+                    background-color: yellow;
+                }
+            }
+
+            /* Hilfe-Texte */
+            tr td.help {
+                font-style: italic;
+            }
+
+            tr.headline td.help {
+                /*
+                border-bottom:1px solid @color-overridden-by-theme;
+                */
+                font-style: normal;
+
+            }
+
+            /* Logo */
+            td.logo {
+                padding: 10px;
+                margin: 0px;
+            }
+
+
+
+        }
+
+    }
+
+    .or-table-filter {
+        width: 100%;
+        text-align: right;
+
+        input {
+            .border-radius(3px);
+            padding: 0.5em;
+            margin: 1em;
+            background-color: @color-overridden-by-theme;
+            color: @color-overridden-by-theme;
+            border: 1px solid @color-overridden-by-theme;
+        }
+    }
+}

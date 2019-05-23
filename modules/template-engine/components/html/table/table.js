@@ -28,11 +28,11 @@ $(document).on('orViewLoaded',function(event, data) {
     /**
 	 * Table-Filter.
      */
-	$(event.target).find('.table-filter > input').keyup( function() {
+	$(event.target).find('.or-table-filter > input').keyup( function() {
 
 		let filterExpression = $(this).val().toLowerCase();
 
-        let table = $(this).parents('.table-wrapper').find('table');
+        let table = $(this).parents('.or-table-wrapper').find('table');
         table.addClass('loader');
 
         setTimeout( () => {

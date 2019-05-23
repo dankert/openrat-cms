@@ -10,11 +10,12 @@ class TableComponent extends HtmlComponent
 	
 	public function begin()
 	{
-	    echo '<div class="table-wrapper">';
+	    echo '<div class="or-table-wrapper">';
 
 	    if   ( $this->filter)
-            echo '<div class="table-filter"><input type="search" name="filter" placeholder="'.$this->htmlvalue('message:SEARCH_FILTER').'" /></div>';
+            echo '<div class="or-table-filter"><input type="search" name="filter" placeholder="'.$this->htmlvalue('message:SEARCH_FILTER').'" /></div>';
 
+        echo '<div class="or-table-area">';
         echo '<table';
 
         if	( !empty($this->class))
@@ -29,6 +30,7 @@ class TableComponent extends HtmlComponent
 	public function end()
 	{
 		echo '</table>';
+        echo '</div>';
         echo '</div>';
 	}
 }
