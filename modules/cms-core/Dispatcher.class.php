@@ -521,8 +521,8 @@ class Dispatcher
                 'database'    => array(
                     'id'      => db()->id ),
                 'user'        => array(
-                    'id'      => $user->userid,
-                    'name'    => $user->name ),
+                    'id'      => @$user->userid,
+                    'name'    => @$user->name ),
                 'timestamp'   => date('c'),
                 'action'      => $this->request->action,
                 'method'      => $this->request->method,
