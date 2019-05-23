@@ -118,11 +118,6 @@ html.theme-@{cms-theme-id} {
     }
   }
 
-  body, a {
-    color: @cms-text-color;
-  }
-
-
   .preview {
     a:link, a:visited, a:active, a:hover {
     }
@@ -161,7 +156,7 @@ html.theme-@{cms-theme-id} {
       background-color: @cms-inactive-background-color;
     }
 
-    tr.data:hover, div.content li div.entry:hover {
+    > tr.data:hover {
       background-color: @cms-inactive-background-color;
     }
   }
@@ -184,20 +179,6 @@ html.theme-@{cms-theme-id} {
           background-color: lighten(@cms-background-color, 10%);
         }
       }
-    }
-
-    div.panel.fullscreen {
-      background-color: @cms-background-color;
-    }
-
-    div.panel {
-      border: 1px solid @cms-title-background-color;
-    }
-
-
-    div.panel.modal {
-      border-color: @cms-text-color ! important;
-      .box-shadow(0px, 0px, 40px, @cms-text-color);
     }
 
   }
@@ -382,18 +363,11 @@ html.theme-@{cms-theme-id} {
     background-color: @cms-inactive-background-color;
     background-image: linear-gradient(@cms-inactive-background-color, lighten(@cms-inactive-background-color, 10%));
   }
-
-  div.panel ul.views > li.active,
-  div.panel ul.views > li.active:hover {
-    background-color: @cms-title-background-color;
-    background-image: linear-gradient(@cms-inactive-background-color 0%, @cms-title-background-color 15%);
-    color: @cms-title-text-color;
-  }
-
-  div.content pre {
-    background-color: @cms-title-text-color;
+  body, a {
     color: @cms-text-color;
   }
+
+
 
   div.or-dropzone-upload > div.input {
     background-color: @cms-title-text-color;
