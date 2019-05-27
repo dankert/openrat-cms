@@ -40,7 +40,7 @@
 			<?php $if3=($mayCreateText); if($if3){?>
 				<div class="clickable or-linklist-line or-round-corners or-hover-effect">
 					<a target="_self" data-type="dialog" data-action="" data-method="createtext" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'createtext'}" href="<?php echo Html::url('','createtext','',array('dialogAction'=>'','dialogMethod'=>'createtext')) ?>">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_createltext'.'')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_createtext'.'')))); ?></span>
 						
 					</a>
 

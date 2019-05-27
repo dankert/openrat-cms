@@ -38,7 +38,7 @@
         <if true="var:mayCreateText">
             <part class="clickable or-linklist-line or-round-corners or-hover-effect">
                 <link type="dialog" subaction="createtext">
-                    <text key="menu_createltext"></text>
+                    <text key="menu_createtext"></text>
                 </link>
             </part>
         </if>
