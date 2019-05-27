@@ -15,7 +15,7 @@
 					</column>
 					<column>
 						<label for="var:var">
-							<image file="icon_user"></image>
+							<image action="user"></image>
 							<text var="name"></text>
 						</label>
 					</column>

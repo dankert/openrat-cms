@@ -1,7 +1,7 @@
 
 	
 		<form name="" target="_self" data-target="view" action="./" data-method="memberships" data-action="group" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form group" data-async="" data-autosave="1"><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="group" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="memberships" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
-			<div class="table-wrapper"><div class="table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><table width="100%"></div>
+			<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
 				<tr class="headline">
 					<td width="10%">
 					</td>
@@ -30,7 +30,7 @@
 						</td>
 						<td>
 							<label for="<?php echo REQUEST_ID ?>_<?php echo $var ?>" class="label">
-								<img src="./modules/cms-ui/themes/default/images/icon/icon_user.png" />
+								<i class="image-icon image-icon--action-user"></i>
 								
 								<span><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
 								
@@ -38,7 +38,7 @@
 						</td>
 					</tr>
 				<?php } ?>
-			</table>
+			</table></div></div>
 			<tr>
 				<td colspan="2" class="act">
 							<div class="invisible"><input type="submit" 	name="ok" class="%class%"
