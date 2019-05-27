@@ -1037,6 +1037,7 @@ class PageelementAction extends Action
     private function savetext()
     {
         $value = new Value();
+        $value->publisher  = $this->page->publisher;
         $value->languageid = $this->page->languageid;
         $value->objectid   = $this->page->objectid;
         $value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
