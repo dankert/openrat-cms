@@ -27,19 +27,19 @@
 									</list>
 								</row>
 								<list list="rights" key="aclid" value="acl" extract="true">
-									<row class="data">
+									<row class="data clickable">
 										<column>
 											<if present="username">
-												<image type="user"></image>
+												<image action="user"></image>
 												<text var="username" maxlength="20"></text>
 											</if>
 											<if present="groupname">
-												<image type="group"></image>
+												<image action="group"></image>
 												<text var="groupname" maxlength="20"></text>
 											</if>
 											<if not="true" present="username">
 												<if not="true" present="groupname">
-													<image type="group"></image>
+													<image action="group"></image>
 													<text key="global_all"></text>
 												</if>
 											</if>
@@ -47,12 +47,13 @@
 											<set var="groupname"></set>
 										</column>
 										<column>
-											<image type="var:objecttype"></image>
+											<image action="var:objecttype"></image>
 											<link type="open" action="var:objecttype" id="var:objectid">
-												<text var="objectname" maxlength="20" title="message:select"></text>
+												<text var="objectname" title="message:select"></text>
 											</link>
 										</column>
 										<column>
+											<image action="language"></image>
 											<text var="languagename" maxlength="20"></text>
 										</column>
 										<list list="show">

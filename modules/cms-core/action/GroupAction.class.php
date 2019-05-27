@@ -303,28 +303,4 @@ class GroupAction extends Action
 	
 	
 	
-	/**
-	 * Men�.
-	 *
-	 * @param String $menu Men�eintrag.
-	 * @return boolean TRUE, wenn Men�eintrag aktiv ist.
-	 */
-	function checkMenu( $menu )
-	{
-		switch( $menu )
-		{
-			case 'remove':
-			case 'add':
-				return !readonly();
-					
-			case 'users':
-				return true;
-			case 'adduser':
-				// Benutzer k�nnen nur hinzugef�gt werden, wenn noch nicht alle
-				// in der Gruppe sind.
-				return !readonly() && count($this->group->getOtherUsers()) > 0;
-			default:
-				return true;
-		}
-	}
 }

@@ -1,73 +1,74 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
-	<table>
-		<list list="projects" extract="true">
-			<row>
-				<column>
-					<group title="var:projectname">
-						<if empty="acls">
-							<row>
-								<column>
-									<text text="GLOBAL_NOT_FOUND"></text>
-								</column>
-							</row>
-						</if>
-						<if not="true" empty="acls">
-							<table>
-								<row class="headline">
-									<column class="help">
-										<text text="GLOBAL_USER"></text>
-									</column>
-									<column class="help">
-										<text text="GLOBAL_NAME"></text>
-									</column>
-									<column class="help">
-										<text text="GLOBAL_LANGUAGE"></text>
-									</column>
-									<list list="show" value="t">
-										<column class="help">
-											<text key="var:t" prefix="acl_" suffix="_abbrev" title="message:acl_{t}"></text>
-										</column>
-									</list>
-								</row>
-								<list list="rights" key="aclid" value="acl" extract="true">
-									<row class="data">
-										<column>
-											<if present="groupname">
-												<image type="group"></image>
-												<text var="groupname" maxlength="20"></text>
-											</if>
-											<if not="true" present="username">
-												<if not="true" present="groupname">
-													<image type="group"></image>
-													<text key="global_all"></text>
-												</if>
-											</if>
-											<set var="username"></set>
-											<set var="groupname"></set>
-										</column>
-										<column>
-											<image type="var:objecttype"></image>
-											<link action="var:objecttype" subaction="" id="var:objectid">
-												<text var="objectname" maxlength="20" title="message:select"></text>
-											</link>
-										</column>
-										<column>
-											<text var="languagename" maxlength="20"></text>
-										</column>
-										<list list="show">
-											<column>
-												<set var="var:list_value" value="var:bits" key="var:list_value"></set>
-												<checkbox name="var:list_value" readonly="true"></checkbox>
-											</column>
-										</list>
-									</row>
-								</list>
-							</table>
-						</if>
-					</group>
-				</column>
-			</row>
-		</list>
-	</table>
+        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
+    <table filter="false">
+        <list list="projects" extract="true">
+            <row>
+                <column>
+                    <group title="var:projectname">
+                        <if empty="rights">
+                            <row>
+                                <column>
+                                    <text text="GLOBAL_NOT_FOUND"></text>
+                                </column>
+                            </row>
+                        </if>
+                        <if not="true" empty="rights">
+                            <table>
+                                <row class="headline">
+                                    <column class="help">
+                                        <text text="GLOBAL_USER"></text>
+                                    </column>
+                                    <column class="help">
+                                        <text text="GLOBAL_NAME"></text>
+                                    </column>
+                                    <column class="help">
+                                        <text text="GLOBAL_LANGUAGE"></text>
+                                    </column>
+                                    <list list="show" value="t">
+                                        <column class="help">
+                                            <text key="var:t" prefix="acl_" suffix="_abbrev"
+                                                  title="message:acl_{t}"></text>
+                                        </column>
+                                    </list>
+                                </row>
+                                <list list="rights" key="aclid" value="acl" extract="true">
+                                    <row class="data clickable">
+                                        <column>
+                                            <if present="groupname">
+                                                <image action="group"></image>
+                                                <text var="groupname" maxlength="20"></text>
+                                            </if>
+                                            <if not="true" present="username">
+                                                <if not="true" present="groupname">
+                                                    <image action="group"></image>
+                                                    <text key="global_all"></text>
+                                                </if>
+                                            </if>
+                                            <set var="username"></set>
+                                            <set var="groupname"></set>
+                                        </column>
+                                        <column title="var:objectname">
+                                            <image action="var:objecttype"></image>
+                                            <link type="open" action="var:objecttype" subaction="" id="var:objectid">
+                                                <text var="objectname"></text>
+                                            </link>
+                                        </column>
+                                        <column>
+                                            <text var="languagename" maxlength="20"></text>
+                                        </column>
+                                        <list list="show">
+                                            <column>
+                                                <set var="var:list_value" value="var:bits" key="var:list_value"></set>
+                                                <checkbox name="var:list_value" readonly="true"></checkbox>
+                                            </column>
+                                        </list>
+                                    </row>
+                                </list>
+                            </table>
+                        </if>
+                    </group>
+                </column>
+            </row>
+        </list>
+    </table>
 </output>

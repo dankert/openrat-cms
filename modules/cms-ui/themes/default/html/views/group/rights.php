@@ -1,54 +1,54 @@
 
 	
-		<table width="100%">
+		<div class="or-table-wrapper"><div class="or-table-area"><table width="100%">
 			<?php foreach($projects as $list_key=>$list_value){ ?><?php extract($list_value) ?>
 				<tr>
 					<td>
-						<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo $projectname ?></legend><div>
-							<?php $if7=(($acls)==FALSE); if($if7){?>
+						<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo $projectname ?></legend><div class="closable">
+							<?php $if7=(($rights)==FALSE); if($if7){?>
 								<tr>
 									<td>
-										<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_NOT_FOUND')))); ?></span>
+										<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_NOT_FOUND')))); ?></span>
 										
 									</td>
 								</tr>
 							<?php } ?>
-							<?php $if7=!(($acls)==FALSE); if($if7){?>
-								<table width="100%">
+							<?php $if7=!(($rights)==FALSE); if($if7){?>
+								<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
 									<tr class="headline">
 										<td class="help">
-											<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_USER')))); ?></span>
+											<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_USER')))); ?></span>
 											
 										</td>
 										<td class="help">
-											<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_NAME')))); ?></span>
+											<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_NAME')))); ?></span>
 											
 										</td>
 										<td class="help">
-											<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_LANGUAGE')))); ?></span>
+											<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_LANGUAGE')))); ?></span>
 											
 										</td>
 										<?php foreach($show as $list_key=>$t){ ?>
 											<td class="help">
-												<span class="text" title="<?php echo lang('acl_'.$t.'') ?>"><?php echo nl2br(encodeHtml(htmlentities(lang('acl_'.$t.'_abbrev')))); ?></span>
+												<span title="<?php echo lang('acl_'.$t.'') ?>"><?php echo nl2br(encodeHtml(htmlentities(lang('acl_'.$t.'_abbrev')))); ?></span>
 												
 											</td>
 										<?php } ?>
 									</tr>
 									<?php foreach($rights as $aclid=>$acl){ ?><?php extract($acl) ?>
-										<tr class="data">
+										<tr class="data clickable">
 											<td>
 												<?php $if12=(isset($groupname)); if($if12){?>
-													<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_group.png" />
+													<i class="image-icon image-icon--action-group"></i>
 													
-													<span class="text"><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $groupname,20,'..',constant('STR_PAD_BOTH') )))); ?></span>
+													<span><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $groupname,20,'..',constant('STR_PAD_BOTH') )))); ?></span>
 													
 												<?php } ?>
 												<?php $if12=!(isset($username)); if($if12){?>
 													<?php $if13=!(isset($groupname)); if($if13){?>
-														<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_group.png" />
+														<i class="image-icon image-icon--action-group"></i>
 														
-														<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'global_all'.'')))); ?></span>
+														<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'global_all'.'')))); ?></span>
 														
 													<?php } ?>
 												<?php } ?>
@@ -57,17 +57,17 @@
 												<?php unset($groupname) ?>
 												
 											</td>
-											<td>
-												<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_<?php echo $objecttype ?>.png" />
+											<td title="<?php echo $objectname ?>">
+												<i class="image-icon image-icon--action-<?php echo $objecttype ?>"></i>
 												
-												<a target="_self" data-action="<?php echo $objecttype ?>" data-method="" data-id="<?php echo $objectid ?>" data-extra="[]" href="<?php echo Html::url($objecttype,'',$objectid,array()) ?>">
-													<span class="text" title="<?php echo lang('select') ?>"><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $objectname,20,'..',constant('STR_PAD_BOTH') )))); ?></span>
+												<a target="_self" data-type="open" data-action="<?php echo $objecttype ?>" data-method="" data-id="<?php echo $objectid ?>" data-extra="[]" href="<?php echo Html::url($objecttype,'',$objectid,array()) ?>">
+													<span><?php echo nl2br(encodeHtml(htmlentities($objectname))); ?></span>
 													
 												</a>
 
 											</td>
 											<td>
-												<span class="text"><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $languagename,20,'..',constant('STR_PAD_BOTH') )))); ?></span>
+												<span><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $languagename,20,'..',constant('STR_PAD_BOTH') )))); ?></span>
 												
 											</td>
 											<?php foreach($show as $list_key=>$list_value){ ?>
@@ -92,11 +92,11 @@
 											<?php } ?>
 										</tr>
 									<?php } ?>
-								</table>
+								</table></div></div>
 							<?php } ?>
 						</div></fieldset>
 					</td>
 				</tr>
 			<?php } ?>
-		</table>
+		</table></div></div>
 	
