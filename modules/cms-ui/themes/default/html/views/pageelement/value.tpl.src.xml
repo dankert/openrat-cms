@@ -1,99 +1,17 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
-	<header views="link,import,export"></header>
-	<form method="post" label="message:save" visible="yes">
+	<form method="post" label="message:save">
 		<hidden name="languageid" />
 		<hidden name="elementid" />
 		<hidden name="value_time" />
-		<window name="element">
 			<text var="desc" class="help"></text>
 			<if value="var:type" equals="date">
-				<group title="message:calendar">
-					<part>
-						<table width="85%" class="calendar">
-							<row>
-								<column colspan="8" class="help">
-									<link url="var:lastmonthurl">
-										<image file="left" align="middle"></image>
-									</link>
-									<text raw="_"></text>
-									<text var="monthname" type="strong"></text>
-									<text raw="_"></text>
-									<link url="var:nextmonthurl">
-										<image file="right" align="middle"></image>
-									</link>
-									<text raw="_____"></text>
-									<link url="var:lastyearurl">
-										<image file="left" align="middle"></image>
-									</link>
-									<text raw="_"></text>
-									<text var="yearname" type="strong"></text>
-									<text raw="_"></text>
-									<link url="var:nextyearurl">
-										<image file="right" align="middle"></image>
-									</link>
-								</column>
-							</row>
-							<row>
-								<column>
-									<text key="week"></text>
-								</column>
-								<list list="weekdays" value="weekday">
-									<column>
-										<text var="weekday"></text>
-									</column>
-								</list>
-							</row>
-							<list list="weeklist" key="weeknr" value="week">
-								<row>
-									<column width="12%">
-										<text var="weeknr"></text>
-									</column>
-									<list list="week" extract="true">
-										<column width="12%">
-											<if empty="url">
-												<text raw="__"></text>
-												<text var="nr" type="strong"></text>
-												<text raw="__"></text>
-											</if>
-											<if not="true" empty="url">
-												<link url="var:url">
-													<text raw="__"></text>
-													<text var="nr"></text>
-													<text raw="__"></text>
-												</link>
-											</if>
-											<if true="var:today">
-												<text raw="*"></text>
-											</if>
-										</column>
-									</list>
-								</row>
-							</list>
-						</table>
-					</part>
-				</group>
 				<group title="message:date">
-					<part>
-						<label for="year">
-							<text key="date"></text>
-						</label>
-						<selectbox name="year" list="all_years"></selectbox>
-						<text raw="_-_"></text>
-						<selectbox name="month" list="all_months"></selectbox>
-						<text raw="_-_"></text>
-						<selectbox name="day" list="all_days"></selectbox>
+					<part class="line">
+							<input type="date" name="date" label="date" />
+							<input type="time" name="time" label="time" />
 					</part>
-					<part>
-						<label for="hour">
-							<text key="date_time"></text>
-						</label>
-						<selectbox name="hour" list="all_hours"></selectbox>
-						<text raw="_-_"></text>
-						<selectbox name="minute" list="all_minutes"></selectbox>
-						<text raw="_-_"></text>
-						<selectbox name="second" list="all_seconds"></selectbox>
-					</part>
+
 				</group>
 			</if>
 			<if value="var:type" equals="text">
@@ -286,6 +204,5 @@
 					</part>
 				</if>
 			</group>
-		</window>
 	</form>
 </output>

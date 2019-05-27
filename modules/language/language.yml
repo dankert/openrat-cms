@@ -4346,10 +4346,6 @@ MENU_TEMPLATE_EXTENSION:
   de: Erweiterung
   en: Extension
   fr: Prolongation
-TEMPLATE_EXTENSION:
-  de: Erweiterung
-  en: Extension
-  fr: Prolongation
 MENU_TEMPLATE_LISTING:
   de: Anzeigen
   en: All templates
@@ -5226,10 +5222,10 @@ PROJECT_FTP_URL:
   fr: URL de ftp server
   it: FTP-Url
   ru: '- FTP Server'
-PROJECT_INFO_COUNT_OBJECTS:
+COUNT_OBJECTS:
   de: Anzahl Objekte
   en: Objects count
-PROJECT_INFO_SUM_FILESIZE:
+SUM_FILESIZE:
   de: Gesamtgröße aller Dateien
   en: Size of all files
 PROJECT_LOCAL_FOLDER_DESC:

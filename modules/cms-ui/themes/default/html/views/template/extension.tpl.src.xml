@@ -6,7 +6,7 @@
             <group title="var:name">
 
                 <set var="var:name" value="var:extension"/>
-                <input name="var:name" label="extension" required="true" maxlength="10" />
+                <input name="var:name" label="template_extension" required="true" maxlength="10"/>
             </group>
         </list>
 

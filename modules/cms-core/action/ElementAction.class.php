@@ -302,7 +302,7 @@ class ElementAction extends Action
 
                     //$ini_date_format = config('date','format');
                     //$ini_date_format = Conf()->subset('date')->get('format');
-                    $ini_date_format = config()['date']['format'];
+                    $ini_date_format = config()->subset('date')->get('format');
                     $dateformat = array();
 
                     $this->setTemplateVar('dateformat','');

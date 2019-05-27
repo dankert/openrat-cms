@@ -375,187 +375,9 @@ class PageelementAction extends Action
 	 */
 	private function editdate()
 	{
-		global $conf;
-		$date =  $this->value->date;
-
-		// Wenn Datum nicht vorhanden...
-		if	( $date == 0 )
-		// ... dann aktuelles Datum (gerundet auf 1 Minute) verwenden
-		$date = intval(time()/60)*60;
-
-		$this->setTemplateVar('ansidate',date( 'Y-m-d H:i:s',$date ) );
-		$this->setTemplateVar('date'    ,$date);
-
-		if	( $this->getSessionVar('pageaction') != '' )
-		$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
-		else	$this->setTemplateVar('old_pageaction','show'                            );
-
-
-		// Wenn Datum nicht vorhanden, dann aktuelles Datum verwenden
-		if   ( $this->hasRequestVar('year') )
-		{
-			$date = mktime( $this->getRequestVar('hour'),
-			$this->getRequestVar('minute'),
-			$this->getRequestVar('second'),
-			$this->getRequestVar('month'),
-			$this->getRequestVar('day'),
-			$this->getRequestVar('year')    );
-		}
-		$year   = intval(date('Y',$date));
-		$month  = intval(date('n',$date));
-		$day    = intval(date('j',$date));
-		$hour   = intval(date('G',$date));
-		$minute = intval(date('i',$date));
-		$second = intval(date('s',$date));
-		$this->setTemplateVar('year'  ,$year   );
-		$this->setTemplateVar('month' ,$month  );
-		$this->setTemplateVar('day'   ,$day    );
-		$this->setTemplateVar('hour'  ,$hour   );
-		$this->setTemplateVar('minute',$minute );
-		$this->setTemplateVar('second',$second );
-
-		$this->setTemplateVar('monthname',lang('DATE_MONTH'.date('n',$date)) );
-		$this->setTemplateVar('yearname' ,date('Y',$date) );
-
-
-		// Zwischenberechnungen
-		$heuteTag         = intval(date('j'));
-		$monatLetzterTag  = intval(date('t',$date));
-		$monatErsterDatum = $date-(($day-1)*86400);
-		$wocheNr          = date( 'W',$monatErsterDatum );
-		$wochentagErster  = date( 'w',$monatErsterDatum );
-
-
-		$weekdayOffset = intval($conf['editor']['calendar']['weekday_offset']);
-
-		// Alle Wochentage
-		$weekdays = array();
-		for  ( $i=0; $i<=6; $i++ )
-		{
-			$wday = ($i+$weekdayOffset)%7;
-			$weekdays[$wday] = lang('DATE_WEEKDAY'.$wday);
-		}
-			
-		$this->setTemplateVar('weekdays',$weekdays);
-
-
-		$monat = array();
-		$d = 0;
-		$begin = false;
-		do
-		{
-			$woche = array(); // Neue Woche
-
-			for  ( $i=0; $i<=6; $i++ ) // Alle Wochentage der Woche
-			{
-				$wday = ($i+$weekdayOffset)%7;
-				$tag = array(); // Neuer Tag
-
-				if   (!$begin && $wday == $wochentagErster)
-				$begin = true;
-
-				if   ( $begin && $d < $monatLetzterTag )
-				{
-					$d++;
-					$tag['nr']    = $d;
-					$tag['today'] = ($year==date('Y') && $month==date('n') && $d==$heuteTag);
-					if   ($d != $day)
-					$tag['url'] = Html::url( 'pageelement','edit','',
-					array('elementid'=>$this->element->elementid,'mode'=>'edit',
-						                               'year'  =>$year  ,
-						                               'month' =>$month ,
-						                               'day'   =>$d     ,
-						                               'hour'  =>$hour  ,
-						                               'minute'=>$minute,
-						                               'second'=>$second  ) );
-					else
-					$tag['url'] = '';
-				}
-				else
-				{
-					$tag['nr'    ]='';
-					$tag['today' ]=false;
-					$tag['url'   ]='';
-				}
-				$woche[] = $tag;
-
-			}
-			$monat[$wocheNr] = $woche;
-			$wocheNr++;
-		}
-		while( $d < $monatLetzterTag-1 );
-		//		Html::debug($monat);
-		$this->setTemplateVar('weeklist',$monat);
-
-		$this->setTemplateVar('actdate' ,date( lang('DATE_FORMAT'),$date ) );
-		$this->setTemplateVar('todayurl',Html::url( 'pageelement','edit','',
-		array('elementid'=>$this->element->elementid,'mode'=>'edit',
-						                               'year'  =>date('Y'),
-						                               'month' =>date('n'),
-						                               'day'   =>date('j'),
-						                               'hour'  =>date('G'),
-						                               'minute'=>date('i'),
-						                               'second'=>date('s') ) ) );
-		$this->setTemplateVar('lastyearurl',Html::url( 'pageelement','edit','',
-		array('elementid'=>$this->element->elementid,'mode'=>'edit',
-						                               'year'  =>$year-1,
-						                               'month' =>$month ,
-						                               'day'   =>$day   ,
-						                               'hour'  =>$hour  ,
-						                               'minute'=>$minute,
-						                               'second'=>$second  ) ) );
-		$this->setTemplateVar('nextyearurl',Html::url( 'pageelement','edit','',
-		array('elementid'=>$this->element->elementid,'mode'=>'edit',
-						                               'year'  =>$year+1 ,
-						                               'month' =>$month ,
-						                               'day'   =>$day   ,
-						                               'hour'  =>$hour  ,
-						                               'minute'=>$minute,
-						                               'second'=>$second  ) ) );
-		$this->setTemplateVar('lastmonthurl',Html::url( 'pageelement','edit','',
-		array('elementid'=>$this->element->elementid,'mode'=>'edit',
-						                               'year'  =>$year  ,
-						                               'month' =>$month-1,
-						                               'day'   =>$day   ,
-						                               'hour'  =>$hour  ,
-						                               'minute'=>$minute,
-						                               'second'=>$second  ) ) );
-		$this->setTemplateVar('nextmonthurl',Html::url( 'pageelement','edit','',
-		array('elementid'=>$this->element->elementid,'mode'=>'edit',
-						                               'year'  =>$year  ,
-						                               'month' =>$month+1,
-						                               'day'   =>$day   ,
-						                               'hour'  =>$hour  ,
-						                               'minute'=>$minute,
-						                               'second'=>$second  ) ) );
-			
-		//		$this->setTemplateVar('date'    ,$date);
-
-
-
-		if	( $this->getSessionVar('pageaction') != '' )
-		$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
-		else	$this->setTemplateVar('old_pageaction','show'                            );
-
-
-		$all_years   = array();
-		$all_months  = array();
-		$all_days    = array();
-		$all_hours   = array();
-		$all_minutes = array();
-		for( $i=$year-100; $i<=$year+100;$i++ ) $all_years  [$i] = $i;
-		for( $i=1;    $i<=12;  $i++ ) $all_months [$i] = lang('DATE_MONTH'.$i);
-		for( $i=1;    $i<=31;  $i++ ) $all_days   [$i] = str_pad($i,2,'0',STR_PAD_LEFT);
-		for( $i=0;    $i<=23;  $i++ ) $all_hours  [$i] = str_pad($i,2,'0',STR_PAD_LEFT);
-		for( $i=0;    $i<=59;  $i++ ) $all_minutes[$i] = str_pad($i,2,'0',STR_PAD_LEFT);
-
-		$this->setTemplateVar('all_years'  ,$all_years  );
-		$this->setTemplateVar('all_months' ,$all_months );
-		$this->setTemplateVar('all_days'   ,$all_days   );
-		$this->setTemplateVar('all_hours'  ,$all_hours  );
-		$this->setTemplateVar('all_minutes',$all_minutes);
-		$this->setTemplateVar('all_seconds',$all_minutes);
-	}
+        $this->setTemplateVar( 'date' ,$this->value->date==null?'':date('Y-m-d',$this->value->date) );
+        $this->setTemplateVar( 'time' ,$this->value->date==null?'':date('H:i'  ,$this->value->date) );
+    }
 
 
 
@@ -1129,7 +951,6 @@ class PageelementAction extends Action
      */
     private function savelongtext()
     {
-        global $conf;
         $value = new Value();
         $value->languageid = $this->page->languageid;
         $value->objectid   = $this->page->objectid;
@@ -1199,6 +1020,7 @@ class PageelementAction extends Action
         $value->languageid = $this->page->languageid;
         $value->objectid   = $this->page->objectid;
         $value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
+        $value->publisher  = $this->page->publisher;
 
         if	( !$this->hasRequestVar('elementid') )
             throw new ValidationException('elementid');
@@ -1209,20 +1031,10 @@ class PageelementAction extends Action
 
         if   ( $this->hasRequestVar('linkobjectid') )
             $value->linkToObjectId = $this->getRequestVar('linkobjectid');
-        elseif   ( $this->hasRequestVar('date') )
-            // Wenn ein Timestamp übergeben wurde, dann dieses verwenden
-            $value->date = $this->getRequestVar('date');
-        elseif   ( $this->getRequestVar('ansidate') != $this->getRequestVar('ansidate_orig') )
-            // Wenn ein ANSI-Datum eingegeben wurde, dann dieses verwenden
-            $value->date = strtotime($this->getRequestVar('ansidate') );
-        else
-            // Sonst die Zeitwerte einzeln zu einem Datum zusammensetzen
-            $value->date = mktime( $this->getRequestVar('hour'  ),
-        $this->getRequestVar('minute'),
-        $this->getRequestVar('second'),
-        $this->getRequestVar('month' ),
-        $this->getRequestVar('day'   ),
-        $this->getRequestVar('year'  ) );
+        else {
+            $value->date = strtotime( $this->getRequestVar( 'date' ).' '.$this->getRequestVar( 'time' ) );
+
+        }
 
         $this->afterSave($value);
     }
@@ -1240,6 +1052,7 @@ class PageelementAction extends Action
         $value->languageid = $this->page->languageid;
         $value->objectid   = $this->page->objectid;
         $value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
+        $value->publisher  = $this->page->publisher;
 
         if	( !$this->hasRequestVar('elementid') )
             throw new ValidationException('elementid');
@@ -1332,6 +1145,7 @@ class PageelementAction extends Action
     private function savenumber()
     {
         $value = new Value();
+        $value->publisher  = $this->page->publisher;
         $value->languageid = $this->page->languageid;
         $value->objectid   = $this->page->objectid;
         $value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
