@@ -116,9 +116,9 @@ class Element
 
 	/**
 	 * Schalter ob dieses Element von Redakteuren bearbeiten werden kann
-	 * @type Boolean
+	 * @type bool
 	 */
-	var $writable;
+	public $writable;
 
     /**
      * values are inherited from parent nodes.
@@ -128,9 +128,9 @@ class Element
 
 	/**
 	 * Schalter, ob dieses Element in allen Sprachen den gleichen Inhalt haben soll
-	 * @type Boolean
+	 * @type bool
 	 */
-	var $allLanguages;
+	public $allLanguages;
 
 	public static $readonlyElementTypeIds = array(
 	    self::ELEMENT_TYPE_COPY,self::ELEMENT_TYPE_LINKINFO,self::ELEMENT_TYPE_LINKDATE,self::ELEMENT_TYPE_INFO,self::ELEMENT_TYPE_INFODATE,self::ELEMENT_TYPE_CODE,self::ELEMENT_TYPE_DYNAMIC
@@ -143,17 +143,25 @@ class Element
 	 * @var String
 	 */
 	var $subtype = '';
+
+    /**
+     * @var bool
+     */
 	var $withIcon = false;
 	var $dateformat = 'r';
 
 	/*
 	 * @deprecated use format.
 	 */
-	var $wiki   = false;
+	public $wiki   = false;
 
 	public $format = self::ELEMENT_FORMAT_TEXT;
 
-	var $html = false;
+    /**
+     * @var bool
+     */
+	public $html = false;
+
 	var $decimals = 0;
 	var $decPoint = '.';
 	var $thousandSep = '';
@@ -244,11 +252,11 @@ SQL
 		$this->dateformat     = $prop['dateformat'];
 		$this->wiki           = $prop['format'] == self::ELEMENT_FORMAT_WIKI;
 		$this->format         = $prop['format'];
-		$this->withIcon       = $prop['flags'] & self::ELEMENT_FLAG_WITH_ICON;
-		$this->html           = $prop['flags'] & self::ELEMENT_FLAG_HTML_ALLOWED;
-		$this->allLanguages   = $prop['flags'] & self::ELEMENT_FLAG_ALL_LANGUAGES;
-		$this->writable       = $prop['flags'] & self::ELEMENT_FLAG_WRITABLE;
-		$this->inherit        = $prop['flags'] & self::ELEMENT_FLAG_INHERIT;
+		$this->withIcon       = boolval($prop['flags'] & self::ELEMENT_FLAG_WITH_ICON    );
+		$this->html           = boolval($prop['flags'] & self::ELEMENT_FLAG_HTML_ALLOWED );
+		$this->allLanguages   = boolval($prop['flags'] & self::ELEMENT_FLAG_ALL_LANGUAGES);
+		$this->writable       = boolval($prop['flags'] & self::ELEMENT_FLAG_WRITABLE     );
+		$this->inherit        = boolval($prop['flags'] & self::ELEMENT_FLAG_INHERIT      );
 
 		if	( !$this->writable)
 			$this->withIcon = false;
