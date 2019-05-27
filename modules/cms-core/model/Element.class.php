@@ -186,14 +186,12 @@ class Element
 	 */
 	function add()
 	{
-		$db = db_connection();
-
-		$sql = $db->sql('SELECT MAX(id) FROM {{element}}');
+		$sql = db()->sql('SELECT MAX(id) FROM {{element}}');
 		$this->elementid = intval($sql->getOne())+1;
 
-		$sql = $db->sql( 'INSERT INTO {{element}}'.
-		                ' (id,templateid,name,descr,typeid,flags) '.
-		                " VALUES ( {elementid},{templateid},{name},{description},{typeid},{flags} ) " );
+		$sql = db()->sql( 'INSERT INTO {{element}}'.
+		                ' (id,templateid,name,label,descr,typeid,flags) '.
+		                " VALUES ( {elementid},{templateid},{name},{label},{description},{typeid},{flags} ) " );
 
 		$flags = 0;
         $flags += self::ELEMENT_FLAG_WRITABLE * intval($this->writable);
@@ -203,7 +201,7 @@ class Element
 		$sql->setString ( 'label'      ,$this->label      );
 		$sql->setInt    ( 'typeid'     ,$this->typeid     );
 		$sql->setInt    ( 'templateid' ,$this->templateid );
-		$sql->setBoolean( 'flags'      ,$flags            );
+		$sql->setInt    ( 'flags'      ,$flags            );
 		$sql->setString ( 'description',$this->desc       );
 
 		$sql->query();
