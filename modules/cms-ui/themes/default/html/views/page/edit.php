@@ -1,6 +1,6 @@
 
 	
-		<div class="table-wrapper"><div class="table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><table width="100%">
+		<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
 			<tr class="headline">
 				<th>
 					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'NAME'.'')))); ?></span>
@@ -34,8 +34,8 @@
 						</a>
 
 					</td>
-					<td>
-						<span><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $desc,50,'..',constant('STR_PAD_BOTH') )))); ?></span>
+					<td title="<?php echo $desc ?>">
+						<span><?php echo nl2br(encodeHtml(htmlentities($desc))); ?></span>
 						
 					</td>
 					<td>
@@ -46,5 +46,5 @@
 					</td>
 				</tr>
 			<?php } ?>
-		</table></div>
+		</table></div></div>
 	

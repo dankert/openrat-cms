@@ -148,16 +148,17 @@ html.theme-@{cms-theme-id} {
       border-bottom: 1px solid @cms-title-background-color;
     }
 
-    tr.data > td {
+    tr > td {
       border-bottom: 1px solid @cms-title-background-color;
     }
 
-    > tr.data:nth-child(2n) {
-      background-color: @cms-inactive-background-color;
+    tr:nth-child(2n) {
+      //background-color: @cms-inactive-background-color;
     }
 
-    > tr.data:hover {
-      background-color: @cms-inactive-background-color;
+    tr.data:hover {
+      background-color: @cms-title-background-color;
+      color: @cms-title-text-color;
     }
   }
 

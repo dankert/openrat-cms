@@ -27,8 +27,8 @@
                         <text var="label"></text>
                     </link>
                 </column>
-                <column>
-                    <text var="desc" maxlength="50"></text>
+                <column title="var:desc">
+                    <text var="desc"></text>
                 </column>
                 <column>
                     <image elementtype="var:typename"/>

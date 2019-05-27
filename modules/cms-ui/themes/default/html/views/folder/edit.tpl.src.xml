@@ -1,17 +1,18 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
 	<table>
 		<row class="headline">
 			<column header="true">
-				<text key="GLOBAL_TYPE"></text>
-				<text raw="_/_"></text>
-				<text key="GLOBAL_NAME"></text>
+				<text key="TYPE"></text>
 			</column>
 			<column header="true">
-				<text key="GLOBAL_LASTCHANGE"></text>
+				<text key="NAME"></text>
+			</column>
+			<column header="true">
+				<text key="LASTCHANGE"></text>
 			</column>
 		</row>
-		<if present="parentid">
+		<if present="up_url">
 			<row class="data clickable">
 				<column>
 					<link type="open" id="var:parentid" name="" action="folder">
@@ -27,8 +28,10 @@
 		<list list="object" extract="true">
 			<row class="data clickable">
 				<column class="">
+					<image action="var:icon"></image>
+				</column>
+				<column class="">
 					<link type="open" id="var:id" name="var:name" action="var:type" title="var:desc">
-						<image action="var:icon"></image>
 						<text var="name"></text>
 						<text raw="_"></text>
 					</link>
@@ -45,6 +48,13 @@
 				</column>
 			</row>
 		</if>
-
 	</table>
+
+	<part class="clickable">
+
+		<link type="dialog" action="folder" subaction="create" class="or-link-btn">
+			<image action="new" />
+			<text key="new"></text>
+		</link>
+	</part>
 </output>

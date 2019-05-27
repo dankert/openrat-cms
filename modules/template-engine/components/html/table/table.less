@@ -21,6 +21,7 @@
         table {
             overflow: auto;
             border: 2px;
+            width: 100%;
 
             tr.headline > td,
             tr > th {
@@ -38,6 +39,13 @@
 
             tr.data > td {
                 padding: 3px;
+            }
+
+            tr > td {
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                max-width: 0;
             }
 
             td.readonly {

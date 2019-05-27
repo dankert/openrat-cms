@@ -1,21 +1,21 @@
 
 	
-		<div class="table-wrapper"><div class="table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><table width="100%">
+		<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
 			<tr class="headline">
 				<th>
-					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_TYPE'.'')))); ?></span>
-					
-					<span><?php echo nl2br('&nbsp;/&nbsp;'); ?></span>
-					
-					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_NAME'.'')))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'TYPE'.'')))); ?></span>
 					
 				</th>
 				<th>
-					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_LASTCHANGE'.'')))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'NAME'.'')))); ?></span>
+					
+				</th>
+				<th>
+					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'LASTCHANGE'.'')))); ?></span>
 					
 				</th>
 			</tr>
-			<?php $if3=(isset($parentid)); if($if3){?>
+			<?php $if3=(isset($up_url)); if($if3){?>
 				<tr class="data clickable">
 					<td>
 						<a target="_self" date-name="" name="" data-type="open" data-action="folder" data-method="edit" data-id="<?php echo $parentid ?>" data-extra="[]" href="<?php echo Html::url('folder','',$parentid,array()) ?>">
@@ -35,9 +35,11 @@
 			<?php foreach($object as $list_key=>$list_value){ ?><?php extract($list_value) ?>
 				<tr class="data clickable">
 					<td>
+						<i class="image-icon image-icon--action-<?php echo $icon ?>"></i>
+						
+					</td>
+					<td>
 						<a title="<?php echo $desc ?>" target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="<?php echo $type ?>" data-method="edit" data-id="<?php echo $id ?>" data-extra="[]" href="<?php echo Html::url($type,'',$id,array()) ?>">
-							<i class="image-icon image-icon--action-<?php echo $icon ?>"></i>
-							
 							<span><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
 							
 							<span><?php echo nl2br('&nbsp;'); ?></span>
@@ -59,5 +61,14 @@
 					</td>
 				</tr>
 			<?php } ?>
-		</table></div>
+		</table></div></div>
+		<div class="clickable">
+			<a class="or-link-btn" target="_self" data-type="dialog" data-action="folder" data-method="create" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':'folder','dialogMethod':'create'}" href="<?php echo Html::url('folder','create','',array('dialogAction'=>'folder','dialogMethod'=>'create')) ?>">
+				<i class="image-icon image-icon--action-new"></i>
+				
+				<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'new'.'')))); ?></span>
+				
+			</a>
+
+		</div>
 	

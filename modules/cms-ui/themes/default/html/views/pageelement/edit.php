@@ -1,6 +1,6 @@
 
 	
-		<div class="table-wrapper"><div class="table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><table width="100%">
+		<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
 			<tr class="headline">
 				<th>
 					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'language'.'')))); ?></span>
@@ -17,7 +17,7 @@
 						<span><?php echo nl2br(encodeHtml(htmlentities($languagename))); ?></span>
 						
 					</td>
-					<td>
+					<td title="<?php echo $value ?>">
 						<a target="_self" data-type="edit" data-action="pageelement" data-method="value" data-id="<?php echo OR_ID ?>" data-extra="{'languageid':'<?php echo $languageid ?>'}" href="<?php echo Html::url('pageelement','value','',array('languageid'=>$languageid)) ?>">
 							<span><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $value,120,'..',constant('STR_PAD_BOTH') )))); ?></span>
 							
@@ -26,5 +26,5 @@
 					</td>
 				</tr>
 			<?php } ?>
-		</table></div>
+		</table></div></div>
 	
