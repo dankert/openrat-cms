@@ -24,6 +24,7 @@ class BaseObject
     const TYPEID_URL    = 5;
     const TYPEID_IMAGE  = 6;
     const TYPEID_TEXT   = 7;
+    const TYPEID_ALIAS  = 8;
 
     const TYPE_FOLDER = 'folder';
     const TYPE_FILE   = 'file'  ;
@@ -32,6 +33,7 @@ class BaseObject
     const TYPE_URL    = 'url'   ;
     const TYPE_IMAGE  = 'image' ;
     const TYPE_TEXT   = 'text'  ;
+    const TYPE_ALIAS  = 'alias' ;
 
     /** eindeutige ID dieses Objektes
      * @see #$objectid
@@ -153,6 +155,12 @@ class BaseObject
      * @type Boolean
      */
     var $isUrl = false;
+
+    /**
+     * Kennzeichen, ob Objekt ein Alias ist
+     * @type Boolean
+     */
+    var $isAlias = false;
 
     /**
      * Kennzeichnet den Typ dieses Objektes.
@@ -329,6 +337,8 @@ SQL
             return self::TYPE_LINK;
         if ($this->isUrl)
             return self::TYPE_URL;
+        if ($this->isAlias)
+            return self::TYPE_ALIAS;
 
         return 'unknown';
     }
@@ -576,12 +586,13 @@ SQL
         $this->lastchange_userid = $row['lastchange_userid'];
 
         $this->isFolder = ( $row['typeid'] == self::TYPEID_FOLDER );
-        $this->isFile   = ( $row['typeid'] == self::TYPEID_FILE );
-        $this->isImage  = ( $row['typeid'] == self::TYPEID_IMAGE );
-        $this->isText   = ( $row['typeid'] == self::TYPEID_TEXT );
-        $this->isPage   = ( $row['typeid'] == self::TYPEID_PAGE );
-        $this->isLink   = ( $row['typeid'] == self::TYPEID_LINK );
-        $this->isUrl    = ( $row['typeid'] == self::TYPEID_URL );
+        $this->isFile   = ( $row['typeid'] == self::TYPEID_FILE   );
+        $this->isImage  = ( $row['typeid'] == self::TYPEID_IMAGE  );
+        $this->isText   = ( $row['typeid'] == self::TYPEID_TEXT   );
+        $this->isPage   = ( $row['typeid'] == self::TYPEID_PAGE   );
+        $this->isLink   = ( $row['typeid'] == self::TYPEID_LINK   );
+        $this->isUrl    = ( $row['typeid'] == self::TYPEID_URL    );
+        $this->isAlias  = ( $row['typeid'] == self::TYPEID_ALIAS  );
 
     }
 
@@ -645,12 +656,13 @@ SQL
         $this->typeid = $row['typeid'];
 
         $this->isFolder = ( $row['typeid'] == self::TYPEID_FOLDER );
-        $this->isFile   = ( $row['typeid'] == self::TYPEID_FILE );
-        $this->isImage  = ( $row['typeid'] == self::TYPEID_IMAGE );
-        $this->isText   = ( $row['typeid'] == self::TYPEID_TEXT );
-        $this->isPage   = ( $row['typeid'] == self::TYPEID_PAGE );
-        $this->isLink   = ( $row['typeid'] == self::TYPEID_LINK );
-        $this->isUrl    = ( $row['typeid'] == self::TYPEID_URL );
+        $this->isFile   = ( $row['typeid'] == self::TYPEID_FILE   );
+        $this->isImage  = ( $row['typeid'] == self::TYPEID_IMAGE  );
+        $this->isText   = ( $row['typeid'] == self::TYPEID_TEXT   );
+        $this->isPage   = ( $row['typeid'] == self::TYPEID_PAGE   );
+        $this->isLink   = ( $row['typeid'] == self::TYPEID_LINK   );
+        $this->isUrl    = ( $row['typeid'] == self::TYPEID_URL    );
+        $this->isAlias  = ( $row['typeid'] == self::TYPEID_ALIAS  );
 
         if	( $this->isRoot )
         {
@@ -876,6 +888,11 @@ SQL
 
         // Objekt-Namen l?schen
         $sql = $db->sql('DELETE FROM {{name}} WHERE objectid={objectid}');
+        $sql->setInt('objectid', $this->objectid);
+        $sql->query();
+
+        // Aliases löschen.
+        $sql = db()->sql('DELETE FROM {{alias}} WHERE objectid={objectid}');
         $sql->setInt('objectid', $this->objectid);
         $sql->query();
 
@@ -1153,6 +1170,7 @@ SQL
         if ($this->isPage  ) return self::TYPEID_PAGE;
         if ($this->isLink  ) return self::TYPEID_LINK;
         if ($this->isUrl   ) return self::TYPEID_URL;
+        if ($this->isAlias ) return self::TYPEID_URL;
     }
 
 
