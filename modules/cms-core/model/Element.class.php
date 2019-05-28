@@ -250,11 +250,11 @@ SQL
 		$this->dateformat     = $prop['dateformat'];
 		$this->wiki           = $prop['format'] == self::ELEMENT_FORMAT_WIKI;
 		$this->format         = $prop['format'];
-		$this->withIcon       = boolval($prop['flags'] & self::ELEMENT_FLAG_WITH_ICON    );
-		$this->html           = boolval($prop['flags'] & self::ELEMENT_FLAG_HTML_ALLOWED );
-		$this->allLanguages   = boolval($prop['flags'] & self::ELEMENT_FLAG_ALL_LANGUAGES);
-		$this->writable       = boolval($prop['flags'] & self::ELEMENT_FLAG_WRITABLE     );
-		$this->inherit        = boolval($prop['flags'] & self::ELEMENT_FLAG_INHERIT      );
+		$this->withIcon       = (boolean) $prop['flags'] & self::ELEMENT_FLAG_WITH_ICON    ;
+		$this->html           = (boolean) $prop['flags'] & self::ELEMENT_FLAG_HTML_ALLOWED ;
+		$this->allLanguages   = (boolean) $prop['flags'] & self::ELEMENT_FLAG_ALL_LANGUAGES;
+		$this->writable       = (boolean) $prop['flags'] & self::ELEMENT_FLAG_WRITABLE     ;
+		$this->inherit        = (boolean) $prop['flags'] & self::ELEMENT_FLAG_INHERIT      ;
 
 		if	( !$this->writable)
 			$this->withIcon = false;
