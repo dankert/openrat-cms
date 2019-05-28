@@ -780,7 +780,7 @@ SQL
 	 * Ueberpruft, ob der Benutzer ein bestimmtes Recht hat
 	 *
 	 * @param $objectid Objekt-Id zu dem Objekt, dessen Rechte untersucht werden sollen
-	 * @param $type Typ des Rechts (Lesen,Schreiben,...) als Konstante ACL_*
+	 * @param $type Typ des Rechts (Lesen,Schreiben,...) als Konstante Acl::ACL_*
 	 */ 
 	function hasRight( $objectid,$type )
 	{
@@ -788,7 +788,7 @@ SQL
 		if	( $this->isAdmin && !$conf['security']['readonly'] )
 			return true;
 
-		if	( $this->isAdmin && $type & ACL_READ )
+		if	( $this->isAdmin && $type & Acl::ACL_READ )
 			return true;
 			
 		if	( !isset($this->rights[$objectid]) )
@@ -809,13 +809,13 @@ SQL
 		global $conf;
 		
 		if	( $conf['security']['readonly'] )
-			if	( $type & ACL_READ )
-				$type = ACL_READ;
+			if	( $type & Acl::ACL_READ )
+				$type = Acl::ACL_READ;
 			else
 				$type = 0;
 
-		if	( $type & ACL_PUBLISH && $conf['security']['nopublish'] )
-			$type -= ACL_PUBLISH;
+		if	( $type & Acl::ACL_PUBLISH && $conf['security']['nopublish'] )
+			$type -= Acl::ACL_PUBLISH;
 
 
 		if	( !isset($this->rights[$objectid]) )

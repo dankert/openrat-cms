@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use cms\model\Acl;
 use cms\model\Project;
 use cms\model\User;
 use cms\model\Value;
@@ -327,9 +328,9 @@ class PageelementAction extends Action
 
 		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
 
-		if	( $this->value->page->hasRight(ACL_RELEASE) )
+		if	( $this->value->page->hasRight(Acl::ACL_RELEASE) )
 		$this->setTemplateVar( 'release',true  );
-		if	( $this->value->page->hasRight(ACL_PUBLISH) )
+		if	( $this->value->page->hasRight(Acl::ACL_PUBLISH) )
 		$this->setTemplateVar( 'publish',false );
 
 		$funktionName = 'edit'.$this->value->element->type;
@@ -471,8 +472,8 @@ class PageelementAction extends Action
         $this->value->page->languageid = $this->value->languageid;
         $this->value->page->load();
 
-        $this->setTemplateVar( 'release',$this->value->page->hasRight(ACL_RELEASE) );
-        $this->setTemplateVar( 'publish',$this->value->page->hasRight(ACL_PUBLISH) );
+        $this->setTemplateVar( 'release',$this->value->page->hasRight(Acl::ACL_RELEASE) );
+        $this->setTemplateVar( 'publish',$this->value->page->hasRight(Acl::ACL_PUBLISH) );
 
         $this->setTemplateVar( 'objectid',$this->value->page->objectid );
     }
@@ -666,7 +667,7 @@ class PageelementAction extends Action
             throw new \LogicException( 'Cannot find value','page-id does not match' );
 
         // Pruefen, ob Berechtigung zum Freigeben besteht
-        //$this->value->release = $this->page->hasRight(ACL_RELEASE);
+        //$this->value->release = $this->page->hasRight(Acl::ACL_RELEASE);
         $this->value->release = false;
 
         // Inhalt wieder herstellen, in dem er neu gespeichert wird.
@@ -689,7 +690,7 @@ class PageelementAction extends Action
             throw new LogicException( 'cannot release, bad page' );
 
         // Pruefen, ob Berechtigung zum Freigeben besteht
-        if	( !$this->page->hasRight(ACL_RELEASE) )
+        if	( !$this->page->hasRight(Acl::ACL_RELEASE) )
             throw new \SecurityException( 'Cannot release','no right' );
 
         // Inhalt freigeben
@@ -901,7 +902,7 @@ class PageelementAction extends Action
         // Inhalt sofort freigegeben, wenn
         // - Recht vorhanden
         // - Freigabe gewuenscht
-        if	( $value->page->hasRight( ACL_RELEASE ) && $this->hasRequestVar('release') )
+        if	( $value->page->hasRight( Acl::ACL_RELEASE ) && $this->hasRequestVar('release') )
         $value->publish = true;
         else
         $value->publish = false;
@@ -936,7 +937,7 @@ class PageelementAction extends Action
         $this->page->setTimestamp(); // "Letzte Aenderung" setzen
 
         // Falls ausgewaehlt die Seite sofort veroeffentlichen
-        if	( $value->page->hasRight( ACL_PUBLISH ) && $this->hasRequestVar('publish') )
+        if	( $value->page->hasRight( Acl::ACL_PUBLISH ) && $this->hasRequestVar('publish') )
         {
             $this->page->publish();
             $this->addNotice('pageelement',$value->element->name,'PUBLISHED',OR_NOTICE_OK);
@@ -990,8 +991,8 @@ class PageelementAction extends Action
             }
 
 
-            $this->setTemplateVar( 'release' ,$this->page->hasRight(ACL_RELEASE) );
-            $this->setTemplateVar( 'publish' ,$this->page->hasRight(ACL_PUBLISH) );
+            $this->setTemplateVar( 'release' ,$this->page->hasRight(Acl::ACL_RELEASE) );
+            $this->setTemplateVar( 'publish' ,$this->page->hasRight(Acl::ACL_PUBLISH) );
             $this->setTemplateVar( 'html'    ,$value->element->html );
             $this->setTemplateVar( 'wiki'    ,$value->element->wiki );
             $this->setTemplateVar( 'text'    ,$inputText );
@@ -1297,7 +1298,7 @@ class PageelementAction extends Action
 	 */
 	function pubPost()
 	{
-		if	( !$this->page->hasRight( ACL_PUBLISH ) )
+		if	( !$this->page->hasRight( Acl::ACL_PUBLISH ) )
             throw new \SecurityException( 'no right for publish' );
 
 		$this->page->public = true;

@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use cms\model\Acl;
 use cms\model\Folder;
 use cms\model\Project;
 
@@ -59,7 +60,7 @@ class ProjectlistAction extends Action
                 $rootFolder->load();
 
                 // Berechtigt für das Projekt?
-                if ($rootFolder->hasRight(ACL_READ)) {
+                if ($rootFolder->hasRight(Acl::ACL_READ)) {
                     $list[$id]             = array();
                     $list[$id]['id'      ] = $id;
                     $list[$id]['name'    ] = $name;

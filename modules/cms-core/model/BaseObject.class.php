@@ -255,18 +255,18 @@ class BaseObject
             if	( $user->isAdmin )
             {
                 // Administratoren erhalten eine Maske mit allen Rechten
-                $this->aclMask = ACL_READ +
-                    ACL_WRITE +
-                    ACL_PROP +
-                    ACL_DELETE +
-                    ACL_RELEASE +
-                    ACL_PUBLISH +
-                    ACL_CREATE_FOLDER +
-                    ACL_CREATE_FILE +
-                    ACL_CREATE_LINK +
-                    ACL_CREATE_PAGE +
-                    ACL_GRANT +
-                    ACL_TRANSMIT;
+                $this->aclMask = Acl::ACL_READ +
+                    Acl::ACL_WRITE +
+                    Acl::ACL_PROP +
+                    Acl::ACL_DELETE +
+                    Acl::ACL_RELEASE +
+                    Acl::ACL_PUBLISH +
+                    Acl::ACL_CREATE_FOLDER +
+                    Acl::ACL_CREATE_FILE +
+                    Acl::ACL_CREATE_LINK +
+                    Acl::ACL_CREATE_PAGE +
+                    Acl::ACL_GRANT +
+                    Acl::ACL_TRANSMIT;
             }
             else
             {
@@ -301,7 +301,7 @@ SQL
 
         if	( readonly() )
             // System ist im Nur-Lese-Zustand
-            return $type == ACL_READ && $this->aclMask & $type;
+            return $type == Acl::ACL_READ && $this->aclMask & $type;
         else
             // Ermittelte Maske auswerten
             return $this->aclMask & $type;

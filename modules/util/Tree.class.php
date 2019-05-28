@@ -1,5 +1,6 @@
 <?php
 
+use cms\model\Acl;
 use cms\model\Element;
 use cms\model\File;
 use cms\model\Link;
@@ -121,7 +122,7 @@ class Tree
             $rootFolder->load();
 
             // Berechtigt für das Projekt?
-            if  ( $rootFolder->hasRight( ACL_READ ) )
+            if  ( $rootFolder->hasRight( Acl::ACL_READ ) )
             {
                 $treeElement = new TreeElement();
 
@@ -152,9 +153,9 @@ class Tree
 
         // Ermitteln, ob der Benutzer Projektadministrator ist
         // Projektadministratoren haben das Recht, im Root-Ordner die Eigenschaften zu aendern.
-        $userIsProjectAdmin = $folder->hasRight(ACL_PROP);
+        $userIsProjectAdmin = $folder->hasRight(Acl::ACL_PROP);
 
-        if ($folder->hasRight(ACL_READ)) {
+        if ($folder->hasRight(Acl::ACL_READ)) {
             $treeElement = new TreeElement();
             $treeElement->id = $folder->objectid;
             //			$treeElement->text        = $folder->name;
@@ -459,7 +460,7 @@ class Tree
         if ($o->isPage) {
             // Nur wenn die Seite beschreibbar ist, werden die
             // Elemente im Baum angezeigt
-            if ($o->hasRight(ACL_WRITE))
+            if ($o->hasRight(Acl::ACL_WRITE))
                 $treeElement->type = 'pageelements';
         }
         $this->addTreeElement($treeElement);
@@ -485,7 +486,7 @@ class Tree
 
         foreach ($f->getObjects() as /*@var BaseObject */$o) {
             // Wenn keine Leseberechtigung
-            if (!$o->hasRight(ACL_READ))
+            if (!$o->hasRight(Acl::ACL_READ))
                 continue;
 
             $treeElement = new TreeElement();

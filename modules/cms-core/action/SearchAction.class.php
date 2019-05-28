@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use cms\model\Acl;
 use cms\model\Project;
 use cms\model\User;
 use cms\model\Value;
@@ -219,7 +220,7 @@ class SearchAction extends Action
 		{
 			$o = new BaseObject( $objectid );
 			$o->load();
-            if ($o->hasRight( ACL_READ ))
+            if ($o->hasRight( Acl::ACL_READ ))
                 $resultList[] = array(
                     'id'              => $objectid,
                     'type'            => $o->getType(),
@@ -235,7 +236,7 @@ class SearchAction extends Action
 			$t->load();
 			$p = new Project( $t->projectid );
 			$o = new BaseObject( $p->getRootObjectId() );
-			if ($o->hasRight( ACL_READ ))
+			if ($o->hasRight( Acl::ACL_READ ))
                 $resultList[] = array(
                     'id'  => $templateid,
                     'type'=> 'template',

@@ -60,7 +60,7 @@ class ObjectAction extends Action
 		$this->setTemplateVar('targetId',$targetFolder->objectid        );
 		$this->setTemplateVar('types'   ,array('move'=>'move','moveandlink'=>'moveandlink','copy'=>'copy','link'=>'link') );
 		
-		if   ( ! $targetFolder->hasRight(ACL_WRITE) )
+		if   ( ! $targetFolder->hasRight(Acl::ACL_WRITE) )
 		{
 			$this->addNotice('folder', $targetFolder->name, 'NOT_WRITABLE',OR_NOTICE_ERROR);
 		}
@@ -83,7 +83,7 @@ class ObjectAction extends Action
 		$targetFolder->load();
 		
 		// Prüfen, ob Schreibrechte im Zielordner bestehen.
-		if   ( ! $targetFolder->hasRight(ACL_WRITE) )
+		if   ( ! $targetFolder->hasRight(Acl::ACL_WRITE) )
 		{
 			$this->addNotice('folder', $targetFolder->name, 'NOT_WRITABLE',OR_NOTICE_ERROR);
 			return;
@@ -188,7 +188,7 @@ class ObjectAction extends Action
 
 				// Beim Verkn�pfen muss im Zielordner die Berechtigung zum Erstellen
 				// von Verkn�pfungen vorhanden sein.
-				if   ( ! $targetFolder->hasRight(ACL_CREATE_LINK) )
+				if   ( ! $targetFolder->hasRight(Acl::ACL_CREATE_LINK) )
 				{
 					$this->addNotice('folder', $targetFolder->name, 'NOT_WRITABLE',OR_NOTICE_ERROR);
 					return;
@@ -229,7 +229,7 @@ class ObjectAction extends Action
 		// diesem Objekt die ACLs zu aendern.
 		$o = new BaseObject( $acl->objectid );
 
-		if	( !$o->hasRight( ACL_GRANT ) )
+		if	( !$o->hasRight( Acl::ACL_GRANT ) )
 			throw new \SecurityException('Not allowed to insert permissions.'); // Scheiss Hacker ;)
 		
 		// Handelt es sich um eine Benutzer- oder Gruppen ACL?
@@ -459,7 +459,7 @@ class ObjectAction extends Action
 		// diesem Objekt die ACLs zu aendern.
 		$o = new BaseObject( $acl->objectid );
 
-		if	( !$o->hasRight( ACL_GRANT ) )
+		if	( !$o->hasRight( Acl::ACL_GRANT ) )
 			Http::notAuthorized('no grant rights'); // Da wollte uns wohl einer vereimern.
 
 		$acl->delete(); // Weg mit der ACL
@@ -580,6 +580,6 @@ class ObjectAction extends Action
 	    $project = new Project( $this->baseObject->projectid );
 	    $rootFolder = new Folder( $project->getRootObjectId() );
 
-	    return $rootFolder->hasRight(ACL_PROP);
+	    return $rootFolder->hasRight(Acl::ACL_PROP);
     }
 }

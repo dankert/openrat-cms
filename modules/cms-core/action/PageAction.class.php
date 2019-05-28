@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use cms\model\Acl;
 use cms\model\Project;
 use cms\model\Value;
 use cms\model\Element;
@@ -114,7 +115,7 @@ class PageAction extends ObjectAction
 				$value->page = &$this->page;
 
 				// Ermitteln, ob Inhalt sofort freigegeben werden kann und soll
-				if	( $this->page->hasRight( ACL_RELEASE ) && $this->hasRequestVar('release') )
+				if	( $this->page->hasRight( Acl::ACL_RELEASE ) && $this->hasRequestVar('release') )
 					$value->publish = true;
 				else
 					$value->publish = false;
@@ -238,8 +239,8 @@ class PageAction extends ObjectAction
 			asort($objects);
 			$this->setTemplateVar( 'objects' ,$objects );
 
-			$this->setTemplateVar( 'release' ,$this->page->hasRight(ACL_RELEASE) );
-			$this->setTemplateVar( 'publish' ,$this->page->hasRight(ACL_PUBLISH) );
+			$this->setTemplateVar( 'release' ,$this->page->hasRight(Acl::ACL_RELEASE) );
+			$this->setTemplateVar( 'publish' ,$this->page->hasRight(Acl::ACL_PUBLISH) );
 			$this->setTemplateVar( 'html'    ,$value->element->html );
 			$this->setTemplateVar( 'wiki'    ,$value->element->wiki );
 			$this->setTemplateVar( 'text'    ,$value->text          );
@@ -273,7 +274,7 @@ class PageAction extends ObjectAction
 		// Inhalt sofort freigegeben, wenn
 		// - Recht vorhanden
 		// - Freigabe gewuenscht
-		if	( $value->page->hasRight( ACL_RELEASE ) && $this->getRequestVar('release')!='' )
+		if	( $value->page->hasRight( Acl::ACL_RELEASE ) && $this->getRequestVar('release')!='' )
 			$value->publish = true;
 		else
 			$value->publish = false;
@@ -538,8 +539,8 @@ class PageAction extends ObjectAction
 			}
 		}
 
-		$this->setTemplateVar( 'release',$this->page->hasRight(ACL_RELEASE) );
-		$this->setTemplateVar( 'publish',$this->page->hasRight(ACL_PUBLISH) );
+		$this->setTemplateVar( 'release',$this->page->hasRight(Acl::ACL_RELEASE) );
+		$this->setTemplateVar( 'publish',$this->page->hasRight(Acl::ACL_PUBLISH) );
 
 		$this->setWindowMenu( 'elements' );
 		$this->setTemplateVar('el',$list);
@@ -685,7 +686,7 @@ class PageAction extends ObjectAction
 	 */
 	function pubPost()
 	{
-		if	( !$this->page->hasRight( ACL_PUBLISH ) )
+		if	( !$this->page->hasRight( Acl::ACL_PUBLISH ) )
             throw new \SecurityException( 'no right for publish' );
 
 		Session::close();

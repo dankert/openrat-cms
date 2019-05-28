@@ -3,6 +3,7 @@
 namespace cms\action;
 
 use ArchiveTar;
+use cms\model\Acl;
 use cms\model\Image;
 use cms\model\Language;
 use cms\model\Project;
@@ -443,9 +444,9 @@ class FolderAction extends ObjectAction
 					//
 					// Beim Verschieben und Kopieren muss im Zielordner die Berechtigung
 					// zum Erstellen von Ordner, Dateien oder Seiten vorhanden sein.
-					if	( ( $type=='link' && $f->hasRight( ACL_CREATE_LINK ) ) ||
+					if	( ( $type=='link' && $f->hasRight( Acl::ACL_CREATE_LINK ) ) ||
 						  ( ( $type=='move' || $type == 'copy' ) &&
-						    ( $f->hasRight(ACL_CREATE_FOLDER) || $f->hasRight(ACL_CREATE_FILE) || $f->hasRight(ACL_CREATE_PAGE) ) ) )
+						    ( $f->hasRight(Acl::ACL_CREATE_FOLDER) || $f->hasRight(Acl::ACL_CREATE_FILE) || $f->hasRight(Acl::ACL_CREATE_PAGE) ) ) )
 						// Zielordner hinzuf�gen
 						$otherfolder[$id] = FILE_SEP.implode( FILE_SEP,$f->parentObjectNames(false,true) );
 				}
@@ -485,11 +486,11 @@ class FolderAction extends ObjectAction
 
 			// F�r die gew�nschte Aktion m�ssen pro Objekt die entsprechenden Rechte
 			// vorhanden sein.
-			if	( $type == 'copy'    && $o->hasRight( ACL_READ   ) ||
-				  $type == 'move'    && $o->hasRight( ACL_DELETE ) ||
-				  $type == 'link'    && $o->hasRight( ACL_READ   ) ||
-				  $type == 'archive' && $o->hasRight( ACL_READ   ) ||
-				  $type == 'delete'  && $o->hasRight( ACL_DELETE )    )
+			if	( $type == 'copy'    && $o->hasRight( Acl::ACL_READ   ) ||
+				  $type == 'move'    && $o->hasRight( Acl::ACL_DELETE ) ||
+				  $type == 'link'    && $o->hasRight( Acl::ACL_READ   ) ||
+				  $type == 'archive' && $o->hasRight( Acl::ACL_READ   ) ||
+				  $type == 'delete'  && $o->hasRight( Acl::ACL_DELETE )    )
 				$objectList[ $id ] = $o->getProperties();
 		}
 
@@ -524,9 +525,9 @@ class FolderAction extends ObjectAction
 				//
 				// Beim Verschieben und Kopieren muss im Zielordner die Berechtigung
 				// zum Erstellen von Ordner, Dateien oder Seiten vorhanden sein.
-				if	( ( $type=='link' && $f->hasRight( ACL_CREATE_LINK ) ) ||
+				if	( ( $type=='link' && $f->hasRight( Acl::ACL_CREATE_LINK ) ) ||
 					  ( ( $type=='move' || $type == 'copy' ) &&
-					    ( $f->hasRight(ACL_CREATE_FOLDER) || $f->hasRight(ACL_CREATE_FILE) || $f->hasRight(ACL_CREATE_PAGE) ) ) )
+					    ( $f->hasRight(Acl::ACL_CREATE_FOLDER) || $f->hasRight(Acl::ACL_CREATE_FILE) || $f->hasRight(Acl::ACL_CREATE_PAGE) ) ) )
 				{
 					// OK
 				}
@@ -555,11 +556,11 @@ class FolderAction extends ObjectAction
 
 			// Fuer die gewuenschte Aktion muessen pro Objekt die entsprechenden Rechte
 			// vorhanden sein.
-			if	( $type == 'copy'    && $o->hasRight( ACL_READ   ) ||
-				  $type == 'move'    && $o->hasRight( ACL_WRITE  ) ||
-				  $type == 'link'    && $o->hasRight( ACL_READ   ) ||
-				  $type == 'archive' && $o->hasRight( ACL_READ   ) ||
-				  $type == 'delete'  && $o->hasRight( ACL_DELETE )    )
+			if	( $type == 'copy'    && $o->hasRight( Acl::ACL_READ   ) ||
+				  $type == 'move'    && $o->hasRight( Acl::ACL_WRITE  ) ||
+				  $type == 'link'    && $o->hasRight( Acl::ACL_READ   ) ||
+				  $type == 'archive' && $o->hasRight( Acl::ACL_READ   ) ||
+				  $type == 'delete'  && $o->hasRight( Acl::ACL_DELETE )    )
 				$objectList[ $id ] = $o->getProperties();
 			else
 				$this->addNotice($o->getType(),$o->name,'no_rights',OR_NOTICE_WARN);
@@ -803,13 +804,13 @@ class FolderAction extends ObjectAction
 
     public function createView()
 	{
-	    $this->setTemplateVar('mayCreateFolder',$this->folder->hasRight( ACL_CREATE_FOLDER ) );
-	    $this->setTemplateVar('mayCreateFile'  ,$this->folder->hasRight( ACL_CREATE_FILE   ) );
-	    $this->setTemplateVar('mayCreateText'  ,$this->folder->hasRight( ACL_CREATE_FILE   ) );
-	    $this->setTemplateVar('mayCreateImage' ,$this->folder->hasRight( ACL_CREATE_FILE   ) );
-	    $this->setTemplateVar('mayCreatePage'  ,$this->folder->hasRight( ACL_CREATE_PAGE   ) );
-	    $this->setTemplateVar('mayCreateUrl'   ,$this->folder->hasRight( ACL_CREATE_LINK   ) );
-	    $this->setTemplateVar('mayCreateLink'  ,$this->folder->hasRight( ACL_CREATE_LINK   ) );
+	    $this->setTemplateVar('mayCreateFolder',$this->folder->hasRight( Acl::ACL_CREATE_FOLDER ) );
+	    $this->setTemplateVar('mayCreateFile'  ,$this->folder->hasRight( Acl::ACL_CREATE_FILE   ) );
+	    $this->setTemplateVar('mayCreateText'  ,$this->folder->hasRight( Acl::ACL_CREATE_FILE   ) );
+	    $this->setTemplateVar('mayCreateImage' ,$this->folder->hasRight( Acl::ACL_CREATE_FILE   ) );
+	    $this->setTemplateVar('mayCreatePage'  ,$this->folder->hasRight( Acl::ACL_CREATE_PAGE   ) );
+	    $this->setTemplateVar('mayCreateUrl'   ,$this->folder->hasRight( Acl::ACL_CREATE_LINK   ) );
+	    $this->setTemplateVar('mayCreateLink'  ,$this->folder->hasRight( Acl::ACL_CREATE_LINK   ) );
 
 	}
 
@@ -985,7 +986,7 @@ class FolderAction extends ObjectAction
 
             $id = $o->objectid;
 
-			if   ( $o->hasRight(ACL_READ) )
+			if   ( $o->hasRight(Acl::ACL_READ) )
 			{
 				$list[$id]['name']     = \Text::maxLength($o->name, 30);
 				$list[$id]['filename'] = \Text::maxLength($o->filename, 20);
@@ -1036,7 +1037,7 @@ class FolderAction extends ObjectAction
 		if   ( ! $this->folder->isRoot )
 			$this->setTemplateVar('up_url',Html::url('folder','show',$this->folder->parentid));
 
-		$this->setTemplateVar('writable',$this->folder->hasRight(ACL_WRITE) );
+		$this->setTemplateVar('writable',$this->folder->hasRight(Acl::ACL_WRITE) );
 
 		$list = array();
 
@@ -1046,7 +1047,7 @@ class FolderAction extends ObjectAction
             /* @var $o BaseObject */
             $id = $o->objectid;
 
-			if   ( $o->hasRight(ACL_READ) )
+			if   ( $o->hasRight(Acl::ACL_READ) )
 			{
 				$list[$id]['name']     = \Text::maxLength($o->name, 30);
 				$list[$id]['filename'] = \Text::maxLength($o->filename, 20);
@@ -1089,7 +1090,7 @@ class FolderAction extends ObjectAction
 
 	public function advancedView()
 	{
-		$this->setTemplateVar('writable',$this->folder->hasRight(ACL_WRITE) );
+		$this->setTemplateVar('writable',$this->folder->hasRight(Acl::ACL_WRITE) );
 
 		$list = array();
 
@@ -1099,7 +1100,7 @@ class FolderAction extends ObjectAction
 		    /* @var $o BaseObject */
 			$id = $o->objectid;
 
-			if   ( $o->hasRight(ACL_READ) )
+			if   ( $o->hasRight(Acl::ACL_READ) )
 			{
 				$list[$id]['objectid'] = $id;
 				$list[$id]['id'      ] = 'obj'.$id;
@@ -1123,7 +1124,7 @@ class FolderAction extends ObjectAction
 			}
 		}
 
-		if   ( $this->folder->hasRight(ACL_WRITE) )
+		if   ( $this->folder->hasRight(Acl::ACL_WRITE) )
 		{
 			// Alle anderen Ordner ermitteln
 			$otherfolder = array();
@@ -1131,7 +1132,7 @@ class FolderAction extends ObjectAction
 			foreach( $project->getAllFolders() as $id )
 			{
 				$f = new Folder( $id );
-				if	( $f->hasRight( ACL_WRITE ) )
+				if	( $f->hasRight( Acl::ACL_WRITE ) )
 					$otherfolder[$id] = FILE_SEP.implode( FILE_SEP,$f->parentObjectNames(false,true) );
 			}
 			asort( $otherfolder );
@@ -1147,7 +1148,7 @@ class FolderAction extends ObjectAction
 		$actionList[] = 'link';
 		$actionList[] = 'archive';
 
-		if	( $this->folder->hasRight(ACL_WRITE) )
+		if	( $this->folder->hasRight(Acl::ACL_WRITE) )
 		{
 			$actionList[] = 'move';
 			$actionList[] = 'delete';
@@ -1199,7 +1200,7 @@ class FolderAction extends ObjectAction
             /* @var $o BaseObject */
 			$id = $o->objectid;
 
-			if   ( $o->hasRight(ACL_READ) )
+			if   ( $o->hasRight(Acl::ACL_READ) )
 			{
 				$list[$id]['id'  ]     = $id;
 				$list[$id]['name']     = \Text::maxLength( $o->name     ,30);
@@ -1330,7 +1331,7 @@ class FolderAction extends ObjectAction
 
 	public function pubPost()
 	{
-		if	( !$this->folder->hasRight( ACL_PUBLISH ) )
+		if	( !$this->folder->hasRight( Acl::ACL_PUBLISH ) )
 			throw new \SecurityException('no rights for publish');
 
 		$subdirs = ( $this->hasRequestVar('subdirs') );
@@ -1368,16 +1369,16 @@ class FolderAction extends ObjectAction
 		switch( $name)
 		{
 			case 'createfolder':
-				return !readonly() && $this->folder->hasRight(ACL_CREATE_FOLDER);
+				return !readonly() && $this->folder->hasRight(Acl::ACL_CREATE_FOLDER);
 
 			case 'createfile':
-				return !readonly() && $this->folder->hasRight(ACL_CREATE_FILE);
+				return !readonly() && $this->folder->hasRight(Acl::ACL_CREATE_FILE);
 
 			case 'createlink':
-				return !readonly() && $this->folder->hasRight(ACL_CREATE_LINK);
+				return !readonly() && $this->folder->hasRight(Acl::ACL_CREATE_LINK);
 
 			case 'createpage':
-				return !readonly() && $this->folder->hasRight(ACL_CREATE_PAGE);
+				return !readonly() && $this->folder->hasRight(Acl::ACL_CREATE_PAGE);
 
 			case 'remove':
 				return !readonly() && count($this->folder->getObjectIds()) == 0;
@@ -1415,7 +1416,7 @@ class FolderAction extends ObjectAction
             /* @var $o BaseObject */
             $id = $o->objectid;
 
-            if   ( $o->hasRight(ACL_READ) )
+            if   ( $o->hasRight(Acl::ACL_READ) )
             {
                 echo '<li><a href="'. Html::url($o->getType(),'',$id).'">'.$o->filename.'</a></li>';
 

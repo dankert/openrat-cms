@@ -1,37 +1,34 @@
 <?php
+
 namespace cms\model;
-// OpenRat Content Management System
-// Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+/**
+ * <editor-fold defaultstate="collapsed" desc="license">
+ *
+ *  OpenRat Content Management System
+ *  Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
+
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU General Public License
+ *  as published by the Free Software Foundation; either version 2
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *
+ * </editor-fold>
+ */
 
 
 
-// Definition der Berechtigungs-Bits
-define('ACL_READ'         ,1   );
-define('ACL_WRITE'        ,2   );
-define('ACL_PROP'         ,4   );
-define('ACL_DELETE'       ,8   );
-define('ACL_RELEASE'      ,16  );
-define('ACL_PUBLISH'      ,32  );
-define('ACL_CREATE_FOLDER',64  );
-define('ACL_CREATE_FILE'  ,128 );
-define('ACL_CREATE_LINK'  ,256 );
-define('ACL_CREATE_PAGE'  ,512 );
-define('ACL_GRANT'        ,1024);
-define('ACL_TRANSMIT'     ,2048);
+
+
 
 
 /**
@@ -41,138 +38,151 @@ define('ACL_TRANSMIT'     ,2048);
  * Falls es mehrere ACLs zu einem Objekt gibt, werden die Berechtigung-Flags addiert.
  *
  * @author Jan Dankert
- * @package openrat.objects
  */
 class Acl
 {
+    // Definition der Berechtigungs-Flags
+    const ACL_READ          =    1;
+    const ACL_WRITE         =    2;
+    const ACL_PROP          =    4;
+    const ACL_DELETE        =    8;
+    const ACL_RELEASE       =   16;
+    const ACL_PUBLISH       =   32;
+    const ACL_CREATE_FOLDER =   64;
+    const ACL_CREATE_FILE   =  128;
+    const ACL_CREATE_LINK   =  256;
+    const ACL_CREATE_PAGE   =  512;
+    const ACL_GRANT         = 1024;
+    const ACL_TRANSMIT      = 2048;
+
 	/**
 	  * eindeutige ID dieser ACL
 	  * @type Integer
 	  */
-	var $aclid;
+	public $aclid;
 
 	/**
 	  * ID des Objektes, f?r das diese Berechtigung gilt
 	  * @type Integer
 	  */
-	var $objectid   = 0;
+	public $objectid   = 0;
 
 	/**
 	  * ID des Benutzers
 	  * ( = 0 falls die Berechtigung f?r eine Gruppe gilt)
 	  * @type Integer
 	  */
-	var $userid     = 0;
+	public $userid     = 0;
 
 	/**
 	  * ID der Gruppe
 	  * ( = 0 falls die Berechtigung f?r einen Benutzer gilt)
 	  * @type Integer
 	  */
-	var $groupid    = 0;
+	public $groupid    = 0;
 
 	/**
 	  * ID der Sprache
 	  * @type Integer
 	  */
-	var $languageid = 0;
+	public $languageid = 0;
 
 	/**
 	  * Name der Sprache
 	  * @type String
 	  */
-	var $languagename = '';
+	public $languagename = '';
 
 	/**
 	  * Es handelt sich um eine Standard-Berechtigung
 	  * (Falls false, dann Zugriffs-Berechtigung)
 	  * @type Boolean
 	  */
-	var $isDefault  = false;
+	public $isDefault  = false;
 
 	/**
 	  * Name des Benutzers, f?r den diese Berechtigung gilt
 	  * @type String
 	  */
-	var $username   = '';
+	public $username   = '';
 
 	/**
 	  * Name der Gruppe, f?r die diese Berechtigung gilt
 	  * @type String
 	  */
-	var $groupname  = '';
+	public $groupname  = '';
 
 	/**
 	  * Inhalt lesen (ist immer wahr)
 	  * @type Boolean
 	  */
-	var $read          = true;
+	public $read          = true;
 
 	/**
 	  * Inhalt bearbeiten
 	  * @type Boolean
 	  */
-	var $write         = false;
+	public $write         = false;
 
 	/**
 	  * Eigenschaften bearbeiten
 	  * @type Boolean
 	  */
-	var $prop          = false;
+	public $prop          = false;
 
 	/**
 	  * Objekt l?schen
 	  * @type Boolean
 	  */
-	var $delete        = false;
+	public $delete        = false;
 
 	/**
 	  * Objektinhalt freigeben
 	  * @type Boolean
 	  */
-	var $release       = false;
+	public $release       = false;
 
 	/**
 	  * Objekt ver?ffentlichen
 	  * @type Boolean
 	  */
-	var $publish       = false;
+	public $publish       = false;
 
 	/**
 	  * Unterordner anlegen
 	  * @type Boolean
 	  */
-	var $create_folder = false;
+	public $create_folder = false;
 
 	/**
 	  * Datei anlegen (bzw. hochladen)
 	  * @type Boolean
 	  */
-	var $create_file   = false;
+	public $create_file   = false;
 
 	/**
 	  * Verknuepfung anlegen
 	  * @type Boolean
 	  */
-	var $create_link   = false;
+	public $create_link   = false;
 
 	/**
 	  * Seite anlegen
 	  * @type Boolean
 	  */
-	var $create_page   = false;
+	public $create_page   = false;
 
 	/**
 	  * Berechtigungen vergeben
 	  * @type Boolean
 	  */
-	var $grant = false;
+	public $grant = false;
 
 	/**
 	  * Berechtigungen an Unterobjekte vererben
 	  * @type Boolean
 	  */
-	var $transmit = false;
+	public $transmit = false;
 
 
     public $projectid;
@@ -183,7 +193,7 @@ class Acl
 	 * 
 	 * @param Integer Acl-ID
 	 */
-	function __construct( $aclid = 0 )
+	public function __construct( $aclid = 0 )
 	{
 		if	( $aclid != 0 )
 			$this->aclid = $aclid;
@@ -194,11 +204,9 @@ class Acl
 	 * Laden einer ACL inklusive Benutzer-, Gruppen- und Sprachbezeichnungen.
 	 * Zum einfachen Laden sollte #loadRaw() benutzt werden.
 	 */
-	function load()
+	public function load()
 	{
-		$db = db_connection();
-		
-		$sql = $db->sql( 'SELECT {{acl}}.*,{{user}}.name as username,{{group}}.name as groupname,{{language}}.name as languagename'.
+		$sql = db()->sql( 'SELECT {{acl}}.*,{{user}}.name as username,{{group}}.name as groupname,{{language}}.name as languagename'.
 		                '  FROM {{acl}} '.
 		                '    LEFT JOIN {{user}}     ON {{user}}.id     = {{acl}}.userid     '.
 		                '    LEFT JOIN {{group}}    ON {{group}}.id    = {{acl}}.groupid    '.
@@ -223,11 +231,9 @@ class Acl
 	 * Laden einer ACL (ohne verknuepfte Namen).
 	 * Diese Methode ist schneller als #load().
 	 */
-	function loadRaw()
+	public function loadRaw()
 	{
-		$db = db_connection();
-		
-		$sql = $db->sql( 'SELECT * '.
+		$sql = db()->sql( 'SELECT * '.
 		                '  FROM {{acl}} '.
 		                '  WHERE {{acl}}.id={aclid}' );
 
@@ -244,7 +250,7 @@ class Acl
 	 *
 	 * @param row Ergebniszeile aus ACL-Datenbanktabelle
 	 */
-	function setDatabaseRow( $row )
+	public function setDatabaseRow( $row )
 	{
 		$this->aclid         =   $row['id'];
 
@@ -272,7 +278,7 @@ class Acl
 	 * 
 	 * @return Array (Schluessel=Berechtigungstyp, Wert=boolean)
 	 */
-	function getProperties()
+	public function getProperties()
 	{
 		return Array( 'read'         => true,
 		              'write'        => $this->write,
@@ -326,21 +332,21 @@ class Acl
 	 * 
 	 * @return Integer Bitmaske
 	 */
-	function getMask()
+	public function getMask()
 	{
 		// intval(boolean) erzeugt numerisch 0 oder 1 :)
-		$this->mask =  ACL_READ;   // immer lesen
-		$this->mask += ACL_WRITE         *intval($this->write        );
-		$this->mask += ACL_PROP          *intval($this->prop         );
-		$this->mask += ACL_DELETE        *intval($this->delete       );
-		$this->mask += ACL_RELEASE       *intval($this->release      );
-		$this->mask += ACL_PUBLISH       *intval($this->publish      );
-		$this->mask += ACL_CREATE_FOLDER *intval($this->create_folder);
-		$this->mask += ACL_CREATE_FILE   *intval($this->create_file  );
-		$this->mask += ACL_CREATE_LINK   *intval($this->create_link  );
-		$this->mask += ACL_CREATE_PAGE   *intval($this->create_page  );
-		$this->mask += ACL_GRANT         *intval($this->grant        );
-		$this->mask += ACL_TRANSMIT      *intval($this->transmit     );
+		$this->mask =  self::ACL_READ;   // immer lesen
+		$this->mask += self::ACL_WRITE         *intval($this->write        );
+		$this->mask += self::ACL_PROP          *intval($this->prop         );
+		$this->mask += self::ACL_DELETE        *intval($this->delete       );
+		$this->mask += self::ACL_RELEASE       *intval($this->release      );
+		$this->mask += self::ACL_PUBLISH       *intval($this->publish      );
+		$this->mask += self::ACL_CREATE_FOLDER *intval($this->create_folder);
+		$this->mask += self::ACL_CREATE_FILE   *intval($this->create_file  );
+		$this->mask += self::ACL_CREATE_LINK   *intval($this->create_link  );
+		$this->mask += self::ACL_CREATE_PAGE   *intval($this->create_page  );
+		$this->mask += self::ACL_GRANT         *intval($this->grant        );
+		$this->mask += self::ACL_TRANSMIT      *intval($this->transmit     );
 		
 		\Logger::trace('mask of acl '.$this->aclid.': '.$this->mask );
 		return $this->mask;
@@ -353,7 +359,7 @@ class Acl
 	 * 
 	 * @return 0..n-Array
 	 */
-	function getTrueProperties()
+	public function getTrueProperties()
 	{
 		$erg = array('read');
 		if	( $this->write         ) $erg[] = 'write';
@@ -376,11 +382,9 @@ class Acl
 	/**
 	 * ACL unwiderruflich loeschen.
 	 */
-	function delete()
+	public function delete()
 	{
-		$db = db_connection();
-		
-		$sql = $db->sql( 'DELETE FROM {{acl}} '.
+		$sql = db()->sql( 'DELETE FROM {{acl}} '.
 		                ' WHERE id      = {aclid}   '.
 		                '   AND objectid= {objectid}' );
 
@@ -396,10 +400,8 @@ class Acl
 	/**
 	 * ACL der Datenbank hinzufügen.
 	 */
-	function add()
+	public function add()
 	{
-		$db = db_connection();
-		
 		if	( $this->delete )
 			$this->prop = true;
 			
@@ -408,7 +410,7 @@ class Acl
 		$group_comp    = intval($this->groupid   )>0?'={groupid}':'IS NULL';
 		$language_comp = intval($this->languageid)>0?'={languageid}':'IS NULL';
 		
-		$stmt = $db->sql( <<<SQL
+		$stmt = db()->sql( <<<SQL
 		SELECT id FROM {{acl}}
 		 WHERE userid      $user_comp      AND
 		       groupid     $group_comp     AND
@@ -462,10 +464,10 @@ SQL
 			
 
 
-		$stmt = $db->sql('SELECT MAX(id) FROM {{acl}}');
+		$stmt = db()->sql('SELECT MAX(id) FROM {{acl}}');
 		$this->aclid = intval($stmt->getOne())+1;
 		
-		$stmt = $db->sql( <<<SQL
+		$stmt = db()->sql( <<<SQL
 		INSERT INTO {{acl}} 
 		                 (id,userid,groupid,objectid,is_write,is_prop,is_create_folder,is_create_file,is_create_link,is_create_page,is_delete,is_release,is_publish,is_grant,is_transmit,languageid)
 		                 VALUES( {aclid},{userid},{groupid},{objectid},{write},{prop},{create_folder},{create_file},{create_link},{create_page},{delete},{release},{publish},{grant},{transmit},{languageid} )

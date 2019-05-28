@@ -3,6 +3,7 @@
 namespace cms\action;
 
 namespace cms\action;
+use cms\model\Acl;
 use cms\model\Element;
 use cms\model\Project;
 use cms\model\Template;
@@ -598,7 +599,7 @@ class TemplateAction extends Action
 			$page = new Page( $objectid );
 			$page->load();
 			
-			if	( !$page->hasRight( ACL_PUBLISH ) )
+			if	( !$page->hasRight( Acl::ACL_PUBLISH ) )
 				continue;
 			
 			$page->publisher = $publisher;
