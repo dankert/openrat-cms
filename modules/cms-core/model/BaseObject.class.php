@@ -6,6 +6,7 @@ namespace cms\model;
 use cms\publish\Publish;
 use phpseclib\Math\BigInteger;
 use Spyc;
+use template_engine\components\ElseComponent;
 
 /**
  * Superklasse fuer Objekte im Projektbaum.
@@ -417,6 +418,16 @@ SQL
         return $slug;
     }
 
+
+
+    public function getParentFolderId()
+    {
+        $alias = $this->getAlias();
+        if ( $alias->filename )
+            return $alias->parentid;
+        else
+            return $this->parentid;
+    }
 
 
     /**

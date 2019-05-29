@@ -99,7 +99,7 @@ class PublishPublic extends Publish
                         $to = $p;
                         break;
                     default:
-                        throw new \LogicException("Unknown Type ".$linkedObject->getType());
+                        throw new \LogicException("Unknown Type ".$linkedObject->typeid.':'.$linkedObject->getType());
                 }
                 break;
 
@@ -108,7 +108,7 @@ class PublishPublic extends Publish
                 $url->load();
                 return $url->url;
             default:
-                throw new \LogicException("Unknown Type ".$to->typeid);
+                throw new \LogicException("Unknown Type ".$to->typeid.':'.$to->getType() );
         }
 
 
@@ -136,12 +136,12 @@ class PublishPublic extends Publish
 
         if  ( $schema == OR_LINK_SCHEMA_RELATIVE )
         {
-            $folder = new Folder( $from->parentid );
+            $folder = new Folder( $from->getParentFolderId() );
             $folder->load();
             $fromPathFolders = $folder->parentObjectFileNames(false,true);
 
 
-            $folder = new Folder($to->parentid);
+            $folder = new Folder($to->getParentFolderId() );
 
             $toPathFolders = $folder->parentObjectFileNames(false, true);
 
@@ -150,7 +150,7 @@ class PublishPublic extends Publish
             // and the target page is /path/folder2/page2
             // we shorten the link from ../../path/folder2/page2
             //                     to   ../folder2/page2
-            foreach( $fromPathFolders as $folderId ) {
+            foreach( $fromPathFolders as $folderId => $folderFileName ) {
                 if   ( count($toPathFolders) >= 1 && array_keys($toPathFolders)[0] == $folderId ) {
                     unset( $fromPathFolders[$folderId] );
                     unset( $toPathFolders  [$folderId] );
@@ -160,17 +160,23 @@ class PublishPublic extends Publish
 
             }
 
-            $path = str_repeat( '../',count($fromPathFolders) );
-            $path .= implode('/',$toPathFolders);
-            $path .= '/';
+            if   ( $fromPathFolders )
+                $path = str_repeat( '../',count($fromPathFolders) );
+            else
+                $path = './'; // Just to clarify- this could be blank too.
+
+            if   ( $toPathFolders )
+                $path .= implode('/',$toPathFolders).'/';
         }
         else {
             // Absolute Pfadangaben
-            $folder = new Folder($to->parentid);
+            $folder = new Folder( $to->getParentFolderId() );
             $toPathFolders = $folder->parentObjectFileNames(false, true);
 
-            $path = implode('/',$toPathFolders);
-            $path = '/'.$path.'/';
+            $path = '/';
+
+            if   ( $toPathFolders )
+                $path .= implode('/',$toPathFolders).'/';
         }
 
 

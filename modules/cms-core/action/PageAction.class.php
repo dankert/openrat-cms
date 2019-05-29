@@ -695,7 +695,7 @@ class PageAction extends ObjectAction
 
 		$this->page->publisher = $publisher;
 		$this->page->publish();
-		$this->page->publisher->close();
+		$publisher->close();
 
 		$this->addNotice( 'page',
 		                  $this->page->fullFilename,
@@ -706,8 +706,6 @@ class PageAction extends ObjectAction
 		                      return $obj['full_filename'];
                           },$publisher->publishedObjects)
          );
-
-		$publisher->close();
 	}
 
 

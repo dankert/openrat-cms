@@ -516,9 +516,9 @@ class FileAction extends ObjectAction
 	{
 	    $this->file->publisher = new PublishPublic( $this->file->projectid );
 		$this->file->publish();
-		$this->file->publish->close();
+		$this->file->publisher->close();
 		
-		$this->addNotice('file',$this->file->fullFilename,'PUBLISHED',OR_NOTICE_OK,array(),$this->file->publish->log);
+		$this->addNotice('file',$this->file->fullFilename,'PUBLISHED',OR_NOTICE_OK,array(),$this->file->publisher->log);
 	}
 
 
