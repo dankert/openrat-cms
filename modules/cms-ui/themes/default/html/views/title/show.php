@@ -174,7 +174,7 @@
 				<?php } ?>
 				<?php $if4=($isLoggedIn); if($if4){?>
 					<div class="toolbar-icon menu">
-						<i class="image-icon image-icon--method-edit"></i>
+						<i class="image-icon image-icon--menu-edit"></i>
 						
 						<span class="label"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'edit'.'')))); ?></span>
 						
@@ -270,7 +270,7 @@
 				<?php } ?>
 				<?php $if4=($isLoggedIn); if($if4){?>
 					<div class="toolbar-icon menu">
-						<i class="image-icon image-icon--method-advanced"></i>
+						<i class="image-icon image-icon--menu-extra"></i>
 						
 						<span class="label"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'extras'.'')))); ?></span>
 						

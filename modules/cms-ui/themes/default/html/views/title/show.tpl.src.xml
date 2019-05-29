@@ -213,7 +213,7 @@
             <if true="var:isLoggedIn">
 
                 <part class="toolbar-icon menu">
-                    <image method="edit"></image>
+                    <image menu="edit"></image>
                     <text class="label" key="edit"></text>
                     <part class="arrow arrow-down"/>
                     <part class="dropdown">
@@ -296,7 +296,7 @@
             <if true="var:isLoggedIn">
 
                 <part class="toolbar-icon menu">
-                    <image method="advanced"></image>
+                    <image menu="extra"></image>
                     <text class="label" key="extras"></text>
                     <part class="arrow arrow-down"/>
                     <part class="dropdown">
