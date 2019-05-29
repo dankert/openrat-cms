@@ -244,23 +244,14 @@ class BaseObject
      */
     public function full_filename()
     {
-        // Do we have an alias for this object?
-        $alias = $this->getAlias();
-        if   ( $alias->filename )
-        {
-            return $alias->full_filename();
-        }
-        else
-        {
-            $path = $this->path();
+        $path = $this->path();
 
-            if ($path != '')
-                $path.= '/';
+        if ($path != '')
+            $path.= '/';
 
-            $path.= $this->filename();
+        $path.= $this->filename();
 
-            return $path;
-        }
+        return $path;
     }
 
     /**
@@ -395,9 +386,14 @@ SQL
      * Ermitteln des physikalischen Dateipfades, in dem sich das Objekt befindet
      * @return String Pfadangabe, z.B. 'pfad/zu/objekt'
      */
-    function path()
+    public function path()
     {
-        $folder = new Folder($this->parentid);
+        $alias = $this->getAlias();
+
+        if  ( $alias->filename )
+            $folder = new Folder($alias->parentid);
+        else
+            $folder = new Folder($this->parentid);
 
         return implode('/', $folder->parentObjectFileNames(false, true));
     }
@@ -431,21 +427,29 @@ SQL
     {
         global $conf;
 
-        if	( $conf['filename']['edit'] && $this->filename != '' && $this->filename != $this->objectid )
+        $filename = $this->filename;
+
+        $alias = $this->getAlias();
+        if ( $alias->filename )
+            $filename = $alias->filename;
+
+        if	( $conf['filename']['edit'] && $filename != '' && $filename != $this->objectid )
         {
-            $this->filename = self::urlify($this->filename);
-            return $this->filename;
+            // do not change the filename here - otherwise there is a danger of filename collisions.
+            //$filename = self::urlify($filename);
+
+            return $filename;
         }
 
         if	( $this->isFolder )
         {
-            $this->filename = $this->objectid;
+            $filename = $this->objectid;
         }
         elseif	( $this->orderid == 1              &&
             !empty($conf['filename']['default']) &&
             !$conf['filename']['edit']              )
         {
-            $this->filename = $conf['filename']['default'];
+            $filename = $conf['filename']['default'];
         }
         else
         {
@@ -454,7 +458,7 @@ SQL
             {
                 case 'longid':
                     // Eine etwas laengere ID als Dateinamen benutzen
-                    $this->filename = base_convert(str_pad($this->objectid,6,'a'),11,10);
+                    $filename = base_convert(str_pad($this->objectid,6,'a'),11,10);
                     break;
 
                 case 'short':
@@ -462,18 +466,18 @@ SQL
                     // Beispiele:
                     // 1  -> 1
                     // 10 -> a
-                    $this->filename = base_convert($this->objectid,10,36);
+                    $filename = base_convert($this->objectid,10,36);
                     break;
 
                 case 'md5':
                     // MD5-Summe als Dateinamen verwenden
                     // Achtung: Kollisionen sind unwahrscheinlich, aber theoretisch möglich.
-                    $this->filename = md5(md5($this->objectid));
+                    $filename = md5(md5($this->objectid));
                     break;
 
                 case  'ss':
                     // Imitieren von "StoryServer" URLs. Wers braucht.
-                    $this->filename = '0,'.
+                    $filename = '0,'.
                         base_convert(str_pad($this->parentid,3,'a'),11,10).
                         ','.
                         base_convert(str_pad($this->objectid,7,'a'),11,10).
@@ -483,19 +487,19 @@ SQL
                 case  'title':
                     // Achtung: Kollisionen sind möglich.
                     // COLLISION ALARM! THIS IS NOT A GOOD IDEA!
-                    $this->filename = self::urlify($this->name);
+                    $filename = self::urlify($this->name);
                     break;
 
                 case 'id':
                 default:
                     // Einfach die Objekt-Id als Dateinamen verwenden.
-                    $this->filename = $this->objectid;
+                    $filename = $this->objectid;
                     break;
 
             }
         }
 
-        return $this->filename;
+        return $filename;
     }
 
 

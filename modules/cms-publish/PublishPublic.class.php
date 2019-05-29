@@ -37,9 +37,9 @@ class PublishPublic extends Publish
             $schema = OR_LINK_SCHEMA_ABSOLUTE;
 
         // If the target has an alias, use this alias as the target.
-        $alias = $to->getAlias();
-        if   ( $alias->filename )
-            $to = $alias;
+        //$alias = $to->getAlias();
+        //if   ( $alias->filename )
+            //$to = $alias;
 
         switch( $to->typeid )
         {
@@ -53,9 +53,7 @@ class PublishPublic extends Publish
                 $f->content_negotiation = $p->content_negotiation;
 
                 $f->load();
-                $filename = $f->filename;
-                if  ( !empty($f->extension))
-                    $filename .= '.'.$f->extension;
+                $filename = $f->filename();
                 break;
 
             case BaseObject::TYPEID_PAGE:
