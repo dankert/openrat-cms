@@ -191,7 +191,7 @@ class PDODriver
 		elseif( is_null($value))
 			$type = PDO::PARAM_NULL;
 		else
-			throw new RuntimeException( 'Unknown type' );
+			throw new RuntimeException( 'Unknown type for parameter '.$name.': '.gettype($value) );
 		
 		$stmt->bindValue($name,$value,$type);
 	}

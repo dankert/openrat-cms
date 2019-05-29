@@ -479,6 +479,17 @@ class ObjectAction extends Action
         $this->baseObject->filename = BaseObject::urlify( $this->getRequestVar('filename') );
         $this->baseObject->save();
 
+        $alias = $this->baseObject->getAlias();
+        $alias->filename = BaseObject::urlify( $this->getRequestVar( 'alias_filename') );
+        $alias->parentid = $this->getRequestId('alias_folderid');
+
+        // If no alias, remove the alias
+        if   ( ! $alias->filename )
+                $alias->delete();
+        else
+                $alias->save();
+
+
         // Name/Beschreibung für alle Sprachen speichern.
         foreach( $this->baseObject->getNames() as $name )
         {
@@ -506,7 +517,13 @@ class ObjectAction extends Action
      */
     public function propView()
     {
-        $this->setTemplateVar( 'filename', $this->baseObject->filename );
+        $this->setTemplateVar( 'filename', $this->baseObject->filename   );
+        $alias = $this->baseObject->getAlias();
+        $this->setTemplateVar( 'alias'         , $alias->filename );
+        $this->setTemplateVar( 'alias_folderid', $alias->parentid );
+
+        $project = Project::create( $this->baseObject->projectid );
+        $this->setTemplateVar( 'folders' , $project->getAllFlatFolders() );
 
         $nameProps = array();
         foreach( $this->baseObject->getNames() as $name )

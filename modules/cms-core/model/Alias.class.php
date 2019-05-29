@@ -15,6 +15,7 @@ class Alias extends BaseObject
 
 	public function __construct( $objectid='' )
 	{
+	    $this->isAlias = true;
 		parent::__construct( $objectid );
 	}
 
@@ -26,20 +27,43 @@ class Alias extends BaseObject
      */
     public function load()
 	{
-		$sql = db()->sql( 'SELECT *'.
-		                ' FROM {{alias}}'.
-		                ' WHERE objectid={objectid}' );
-		$sql->setInt( 'objectid',$this->objectid );
-		$row = $sql->getRow();
+	    if  ( $this->objectid != null )
+        {
+            $sql = db()->sql( 'SELECT *'.
+                ' FROM {{alias}}'.
+                ' WHERE objectid={objectid}' );
+            $sql->setInt( 'objectid',$this->objectid );
+        }
+        elseif  ( $this->linkedObjectId != null && intval($this->languageid) != 0 )
+        {
+            $sql = db()->sql( 'SELECT *'.
+                ' FROM {{alias}}'.
+                ' WHERE link_objectid={objectid}'.
+                '   AND languageid={languageid}' );
+            $sql->setInt( 'objectid'  ,$this->linkedObjectId );
+            $sql->setInt( 'languageid',$this->languageid     );
+        }
+        elseif  ( $this->linkedObjectId != null )
+        {
+            $sql = db()->sql( 'SELECT *'.
+                ' FROM {{alias}}'.
+                ' WHERE link_objectid={objectid}');
+            $sql->setInt( 'objectid'  ,$this->linkedObjectId );
+        }
+
+
+        $row = $sql->getRow();
 
 		if	( count($row ) != 0 )
 		{
+			$this->aliasid        = $row['id'           ];
+			$this->objectid       = $row['objectid'     ];
 			$this->linkedObjectId = $row['link_objectid'];
-			$this->languageid     = $row['languageid   '];
-		}
+			$this->languageid     = $row['languageid'   ];
 
-		$this->objectLoad();
-	}
+            $this->objectLoad();
+        }
+    }
 
 
     /**
@@ -47,9 +71,12 @@ class Alias extends BaseObject
      */
     public function delete()
 	{
+	    if   ( ! $this->isPersistent() )
+	        return;
+
 		$sql = db()->sql( 'DELETE FROM {{alias}} '.
-		                ' WHERE objectid={objectid}' );
-		$sql->setInt( 'objectid',$this->objectid );
+		                ' WHERE id={aliasid}' );
+		$sql->setInt( 'aliasid',$this->aliasid );
 
 		$sql->query();
 
@@ -62,13 +89,16 @@ class Alias extends BaseObject
      */
     public function save()
 	{
+	    if   ( ! $this->isPersistent() )
+	        $this->add();
+
 		$sql = db()->sql('UPDATE {{alias}} SET '.
-		               '  link_objectid = {linkobjectid}'.
+		               '  link_objectid = {linkobjectid},'.
 		               '  languageid    = {languageid}'.
 		                ' WHERE objectid={objectid}' );
 		$sql->setInt ('objectid'    ,$this->objectid       );
 		$sql->setInt ('linkobjectid',$this->linkedObjectId );
-		$sql->setInt ('languageid'  ,$this->languageid     );
+		$sql->setIntOrNull('languageid'  ,$this->languageid     );
 
 		$sql->query();
 
@@ -99,11 +129,11 @@ class Alias extends BaseObject
 		                VALUES( {linkid},{objectid},{linkobjectid},{languageid} )
 SQL
         );
-		$stmt->setInt ('id'          ,$this->aliasid        );
+		$stmt->setInt ('linkid'      ,$this->aliasid        );
 		$stmt->setInt ('objectid'    ,$this->objectid       );
 
         $stmt->setInt ('linkobjectid',$this->linkedObjectId );
-        $stmt->setInt ('languageid'  ,$this->languageid     );
+        $stmt->setIntOrNull('languageid'  ,$this->languageid     );
 
 		$stmt->query();
 	}	

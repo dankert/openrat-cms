@@ -545,34 +545,13 @@ class ElementAction extends Action
 
                 case 'folderObjectId':
 
-                    $folders = array();
 
                     // Ermitteln aller verf?gbaren Objekt-IDs
                     $template = new Template( $this->element->templateid );
                     $template->load();
                     $project = new Project( $template->projectid );
 
-                    foreach( $project->getAllFolders() as $id )
-                    {
-                        $o = new BaseObject( $id );
-                        $o->load();
-
-                        $folders[ $id ] = '';
-                        if	( !$o->isRoot )
-                        {
-                            $f = new Folder( $o->parentid );
-                            $f->load();
-                            $names = $f->parentObjectNames(true,true);
-                            foreach( $names as $fid=>$name )
-                                $names[$fid] = Text::maxLength($name,15,'..',STR_PAD_BOTH);
-                            $folders[ $id ] = implode( ' &raquo; ',$names );
-                            $folders[ $id ] .= ' &raquo; ';
-                        }
-                        $folders[ $id ] .= $o->name;
-                    }
-
-                    asort( $folders ); // Sortieren
-
+                    $folders = $project->getAllFlatFolders();
                     $this->setTemplateVar('folders',$folders);
 
                     $this->setTemplateVar('folderobjectid'  ,$this->element->folderObjectId  );

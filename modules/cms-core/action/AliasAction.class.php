@@ -67,7 +67,7 @@ class AliasAction extends ObjectAction
 
 	function infoView()
 	{
-		$this->setTemplateVars( $this->link->getProperties() );
+		$this->setTemplateVars( $this->alias->getProperties() );
 	}
 	
 	

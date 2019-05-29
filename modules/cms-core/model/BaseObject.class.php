@@ -238,17 +238,29 @@ class BaseObject
     }
 
 
-    // Kompletten Dateinamen des Objektes erzeugen
-    function full_filename()
+    /**
+     * Kompletten Dateinamen des Objektes erzeugen
+     * @return String
+     */
+    public function full_filename()
     {
-        $path = $this->path();
+        // Do we have an alias for this object?
+        $alias = $this->getAlias();
+        if   ( $alias->filename )
+        {
+            return $alias->full_filename();
+        }
+        else
+        {
+            $path = $this->path();
 
-        if ($path != '')
-            $path.= '/';
+            if ($path != '')
+                $path.= '/';
 
-        $path.= $this->filename();
+            $path.= $this->filename();
 
-        return $path;
+            return $path;
+        }
     }
 
     /**
@@ -903,6 +915,8 @@ SQL
         $sql = $db->sql('DELETE FROM {{object}} WHERE id={objectid}');
         $sql->setInt('objectid', $this->objectid);
         $sql->query();
+
+        $this->objectid = null;
     }
 
 
@@ -1170,7 +1184,7 @@ SQL
         if ($this->isPage  ) return self::TYPEID_PAGE;
         if ($this->isLink  ) return self::TYPEID_LINK;
         if ($this->isUrl   ) return self::TYPEID_URL;
-        if ($this->isAlias ) return self::TYPEID_URL;
+        if ($this->isAlias ) return self::TYPEID_ALIAS;
     }
 
 
@@ -1539,6 +1553,23 @@ SQL
             $name->save();
         }
 
+    }
+
+    public function getAlias()
+    {
+        $alias = new Alias();
+        $alias->projectid      = $this->projectid;
+        $alias->linkedObjectId = $this->objectid;
+        $alias->load();
+
+        return $alias;
+    }
+
+
+
+    public function isPersistent()
+    {
+        return intval( $this->objectid ) > 0;
     }
 
 }

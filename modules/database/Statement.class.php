@@ -247,6 +247,18 @@ class Statement
 	
 	
 	
+    /**
+     * Setzt eine Ganzzahl als Parameter.<br>
+     * @param $name string
+     * @param $value integer
+     */
+	function setIntOrNull( $name,$value )
+	{
+		$this->client->bind( $this->stmt, $name, $value );
+	}
+
+
+
 	/**
 	 * Setzt eine Zeichenkette als Parameter.<br>
 	 *

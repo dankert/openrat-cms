@@ -9,6 +9,7 @@ define('PROJECT_FLAG_PUBLISH_PAGE_EXTENSION',8);
 
 use database\Database;
 use Session;
+use Text;
 
 
 /**
@@ -1017,6 +1018,37 @@ SQL
         return( $stmt->getCol() );
     }
 
+
+    /**
+     * @return array
+     */
+    public function getAllFlatFolders() {
+
+        $folders = array();
+
+        foreach( $this->getAllFolders() as $id )
+        {
+            $o = new BaseObject( $id );
+            $o->load();
+
+            $folders[ $id ] = '';
+            if	( !$o->isRoot )
+            {
+                $f = new Folder( $o->parentid );
+                $f->load();
+                $names = $f->parentObjectNames(true,true);
+                foreach( $names as $fid=>$name )
+                    $names[$fid] = Text::maxLength($name,15,'..',STR_PAD_BOTH);
+                $folders[ $id ] = implode( ' &raquo; ',$names );
+                $folders[ $id ] .= ' &raquo; ';
+            }
+            $folders[ $id ] .= $o->name;
+        }
+
+        asort( $folders ); // Sortieren
+
+        return $folders;
+    }
 
 }
 

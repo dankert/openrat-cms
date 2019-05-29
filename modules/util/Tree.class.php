@@ -15,10 +15,9 @@ use cms\model\Value;
 
 
 /**
- * Darstellen einer Baumstruktur mit Administrationfunktionen
- * @author $Author$
- * @version $Revision$
- * @package openrat.services
+ * Navigation tree.
+ *
+ * @author Jan Dankert
  */
 class Tree
 {
@@ -27,27 +26,22 @@ class Tree
     private $userIsAdmin  = false;
 
     /**
-     * Alle Elemente des Baumes
+     * Konstruktor.
      */
-    var $elements;
-    var $confCache = array();
-
-    // Konstruktor
-
-    function __construct()
+    public function __construct()
     {
         // Feststellen, ob der angemeldete Benutzer ein Administrator ist
         $user = Session::getUser();
         $this->userIsAdmin = $user->isAdmin;
     }
 
-    function root()
+    public function root()
     {
         $this->overview();
     }
 
 
-    function overview()
+    public function overview()
     {
         $treeElement = new TreeElement();
         $treeElement->id = 0;
@@ -87,7 +81,7 @@ class Tree
     }
 
 
-    function userandgroups()
+    public function userandgroups()
     {
         if ( !$this->userIsAdmin )
             throw new SecurityException();
@@ -112,7 +106,7 @@ class Tree
     }
 
 
-    function projects()
+    public function projects()
     {
         // Schleife ueber alle Projekte
         foreach (Project::getAllProjects() as $id => $name) {
@@ -140,7 +134,7 @@ class Tree
     }
 
 
-    function project($projectid)
+    public function project($projectid)
     {
         $project = new Project($projectid);
 
@@ -235,7 +229,7 @@ class Tree
     }
 
 
-    function users()
+    public function users()
     {
         if ( !$this->userIsAdmin )
             throw new SecurityException();
@@ -266,7 +260,7 @@ class Tree
     }
 
 
-    function groups()
+    public function groups()
     {
         if ( !$this->userIsAdmin )
             throw new SecurityException();
@@ -291,7 +285,7 @@ class Tree
     }
 
 
-    function userofgroup($id)
+    public function userofgroup($id)
     {
         if ( !$this->userIsAdmin )
             throw new SecurityException();
@@ -316,7 +310,7 @@ class Tree
     }
 
 
-    function page($id)
+    public function page($id)
     {
         $page = new Page($id);
         $page->languageid = $_REQUEST[REQ_PARAM_LANGUAGE_ID];
@@ -353,7 +347,7 @@ class Tree
     }
 
 
-    function pageelement($id)
+    public function pageelement($id)
     {
         $ids = explode('_',$id);
         if	( count($ids) > 1 )
@@ -396,7 +390,7 @@ class Tree
     }
 
 
-    function value($id)
+    public function value($id)
     {
         //echo "id: $id";
         if ($id != 0) {
@@ -432,7 +426,7 @@ class Tree
     }
 
 
-    function link($id)
+    public function link($id)
     {
         $link = new Link($id);
         $link->load();
@@ -467,6 +461,41 @@ class Tree
     }
 
 
+    public function alias($id)
+    {
+        $alias = new \cms\model\Alias($id);
+        $alias->load();
+
+        $o = new BaseObject($alias->linkedObjectId);
+        $o->load();
+
+        $treeElement = new TreeElement();
+        $treeElement->id = $o->objectid;
+        $treeElement->internalId = $o->objectid;
+        $treeElement->text = $o->name;
+        $treeElement->description = lang('GLOBAL_' . $o->getType()) . ' ' . $id;
+
+        if ($o->desc != '')
+            $treeElement->description .= ': ' . $o->desc;
+        else
+            $treeElement->description .= ' - ' . lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
+
+        $treeElement->action = $o->getType();
+        $treeElement->icon = $o->getType();
+        $treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $_REQUEST[REQ_PARAM_LANGUAGE_ID], REQ_PARAM_MODEL_ID => $_REQUEST[REQ_PARAM_MODEL_ID]);
+
+        // Besonderheiten fuer bestimmte Objekttypen
+        if ($o->isPage) {
+            // Nur wenn die Seite beschreibbar ist, werden die
+            // Elemente im Baum angezeigt
+            if ($o->hasRight(Acl::ACL_WRITE))
+                $treeElement->type = 'pageelements';
+        }
+
+        $this->addTreeElement($treeElement);
+    }
+
+
     public function url($id)
     {
         // URLs have no sub-nodes.
@@ -477,14 +506,15 @@ class Tree
     /**
      * Laedt Elemente zu einem Ordner
      */
-    function folder($id)
+    public function folder($id)
     {
         $f = new Folder($id);
         $t = time();
         $f->languageid = $_REQUEST[REQ_PARAM_LANGUAGE_ID];
         $f->modelid = $_REQUEST[REQ_PARAM_MODEL_ID];
 
-        foreach ($f->getObjects() as /*@var BaseObject */$o) {
+        /** @var BaseObject $o */
+        foreach ($f->getObjects() as $o) {
             // Wenn keine Leseberechtigung
             if (!$o->hasRight(Acl::ACL_READ))
                 continue;
@@ -510,7 +540,7 @@ class Tree
     }
 
 
-    function templates($projectid)
+    public function templates($projectid)
     {
         $project = new Project($projectid);
 
@@ -532,7 +562,7 @@ class Tree
     }
 
 
-    function template($id)
+    public function template($id)
     {
 
         $t = new Template($id);
@@ -569,7 +599,7 @@ class Tree
     /**
      * Sprachen
      */
-    function languages($projectid)
+    public function languages($projectid)
     {
         // Sprachvarianten
         //
@@ -590,7 +620,7 @@ class Tree
 
     // Projektvarianten
     //
-    function models($projectid)
+    public function models($projectid)
     {
 
         $project = new Project($projectid);

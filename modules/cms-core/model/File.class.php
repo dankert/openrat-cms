@@ -132,7 +132,7 @@ class File extends BaseObject
      */
 	public function filename()
     {
-        if	( !empty( $this->extension ) )
+        if	( $this->extension )
             return parent::filename().'.'.$this->extension;
         else
             return parent::filename();

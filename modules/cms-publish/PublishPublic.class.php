@@ -36,6 +36,10 @@ class PublishPublic extends Publish
         else
             $schema = OR_LINK_SCHEMA_ABSOLUTE;
 
+        // If the target has an alias, use this alias as the target.
+        $alias = $to->getAlias();
+        if   ( $alias->filename )
+            $to = $alias;
 
         switch( $to->typeid )
         {
