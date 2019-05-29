@@ -519,7 +519,7 @@ class ObjectAction extends Action
     {
         $this->setTemplateVar( 'filename', $this->baseObject->filename   );
         $alias = $this->baseObject->getAlias();
-        $this->setTemplateVar( 'alias'         , $alias->filename );
+        $this->setTemplateVar( 'alias_filename', $alias->filename );
         $this->setTemplateVar( 'alias_folderid', $alias->parentid );
 
         $project = Project::create( $this->baseObject->projectid );
