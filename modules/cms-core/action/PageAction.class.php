@@ -616,7 +616,7 @@ class PageAction extends ObjectAction
 		$this->page->withLanguage = config('publish','filename_language') == 'always' || count($project->getLanguageIds()) > 1;
 		$this->page->withModel    = config('publish','filename_type'    ) == 'always' || count($project->getModelIds()   ) > 1;
 
-		$this->page->public     = true; //
+		$this->page->publisher = new PublishPublic( $this->page->projectid );
 		$this->page->load();
 
 		$src = $this->page->generate();
@@ -625,7 +625,7 @@ class PageAction extends ObjectAction
 
 		//$src = preg_replace( '|<(.+)( .+)?'.'>|Us'       , '<strong>&lt;$1</strong>$2<strong>&gt;</strong>', $src);
 		//$src = preg_replace( '|([a-zA-Z]+)="(.+)"|Us' , '<em>$1</em>=<var>"$2"</var>'                   , $src);
-		$src = htmlentities($src);
+		//$src = htmlentities($src);
 
 		$this->setTemplateVar('src',$src);
 	}
