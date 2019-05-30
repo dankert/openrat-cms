@@ -9,7 +9,6 @@ define('PROJECT_FLAG_PUBLISH_PAGE_EXTENSION',8);
 
 use database\Database;
 use Session;
-use Text;
 
 
 /**
@@ -1038,7 +1037,7 @@ SQL
                 $f->load();
                 $names = $f->parentObjectNames(true,true);
                 foreach( $names as $fid=>$name )
-                    $names[$fid] = Text::maxLength($name,15,'..',STR_PAD_BOTH);
+                    $names[$fid] = \Text::maxLength($name,15,'..',STR_PAD_BOTH);
                 $folders[ $id ] = implode( ' &raquo; ',$names );
                 $folders[ $id ] .= ' &raquo; ';
             }
