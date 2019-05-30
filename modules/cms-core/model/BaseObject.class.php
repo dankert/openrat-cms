@@ -410,8 +410,80 @@ SQL
     public static function urlify( $filename )
     {
         $slug = $filename;
+
+        // The hard method to replace UTF-8-chars with their alphanumeric replacement.
+        $replacements = array(
+            // German umlauts
+            "\xc3\x84" => 'ae',
+            "\xc3\xa4" => 'ae',
+            "\xc3\x9c" => 'ue',
+            "\xc3\xbc" => 'ue',
+            "\xc3\x96" => 'oe',
+            "\xc3\xb6" => 'oe',
+            "\xc3\x9f" => 'ss',
+            "\xe2\x82\xac" => 'eur',
+            // Francais
+            "\xc3\xa0" => 'a',
+            "\xc3\xa1" => 'a',
+            "\xc3\xa2" => 'a',
+            "\xc3\xa3" => 'a',
+            "\xc3\xa5" => 'a',
+            "\xc3\xa6" => 'ae',
+            "\xc3\xa7" => 'c',
+            "\xc3\xa8" => 'e',
+            "\xc3\xa9" => 'e',
+            "\xc3\xaa" => 'e',
+            "\xc3\xab" => 'e',
+            "\xc3\xac" => 'i',
+            "\xc3\xad" => 'i',
+            "\xc3\xae" => 'i',
+            "\xc3\xaf" => 'i',
+            "\xc3\xb2" => 'o',
+            "\xc3\xb3" => 'o',
+            "\xc3\xb4" => 'o',
+            "\xc3\xb5" => 'o',
+            "\xc3\xb8" => 'o',
+            "\xc3\xb9" => 'u',
+            "\xc3\xba" => 'u',
+            "\xc3\xbb" => 'u',
+            "\xc3\xbd" => 'y',
+            "\xc3\xbf" => 'y',
+            "\xc3\x80" => 'a',
+            "\xc3\x81" => 'a',
+            "\xc3\x82" => 'a',
+            "\xc3\x83" => 'a',
+            "\xc3\x85" => 'a',
+            "\xc3\x86" => 'ae',
+            "\xc3\x87" => 'c',
+            "\xc3\x88" => 'e',
+            "\xc3\x89" => 'e',
+            "\xc3\x8a" => 'e',
+            "\xc3\x8b" => 'e',
+            "\xc3\x8c" => 'i',
+            "\xc3\x8d" => 'i',
+            "\xc3\x8e" => 'i',
+            "\xc3\x8f" => 'i',
+            "\xc3\x92" => 'o',
+            "\xc3\x93" => 'o',
+            "\xc3\x94" => 'o',
+            "\xc3\x95" => 'o',
+            "\xc3\x98" => 'o',
+            "\xc3\x99" => 'u',
+            "\xc3\x9a" => 'u',
+            "\xc3\x9b" => 'u',
+            "\xc3\x9d" => 'y',
+        );
+
+        $slug = str_replace(array_keys($replacements), array_values($replacements), $slug);
+
+        // 2nd try is to use iconv with the current locale.
+        Language::setLocale( config('language','language_code' ) );
         $slug = iconv('utf-8', 'ascii//TRANSLIT', $slug);
+
+        // now replace every unpleasant char with a hyphen.
         $slug = preg_replace('/[^A-Za-z0-9-]+/', '-', $slug);
+
+        // trim and lowercase.
         $slug = trim($slug, '-');
         $slug = strtolower($slug);
 

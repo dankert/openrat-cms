@@ -574,22 +574,10 @@ SQL
 		// Ausgabe von strftime()) in der korrekten Sprache dargestellt werden.
 		$language = new Language($this->languageid);
 		$language->load();
+
+		$language->setCurrentLocale();
 		
-		$locale_conf = $conf['i18n']['locale']; 
-		if	( isset($locale_conf[strtolower($language->isoCode)]) )
-		{
-			$locale = $locale_conf[strtolower($language->isoCode)];
-			$locale_ok = setlocale(LC_ALL,$locale);
-			if	( !$locale_ok )
-				// Hat nicht geklappt. Entweder ist das Mapping falsch oder die locale ist
-				// nicht korrekt installiert.
-				\Logger::warn("Could not set locale '$locale', please check with 'locale -a' if it is installaled correctly");
-		}
-		else
-		{
-			setlocale(LC_ALL,'');
-		}
-		
+
 		$this->template = new Template( $this->templateid );
 		$this->template->modelid = $this->modelid;
 		$this->template->load();

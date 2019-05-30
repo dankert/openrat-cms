@@ -42,9 +42,27 @@ class Language
 			$this->languageid = $languageid;
 	}
 
-	
-	
-	/**
+    public static function setLocale( $isoCode )
+    {
+        $localeConf = config()->subset('i18n')->subset('locale');
+
+        if	( $localeConf->has(strtolower($isoCode)) )
+        {
+            $locale = $localeConf->get(strtolower($isoCode));
+            $locale_ok = setlocale(LC_ALL,$locale);
+            if	( !$locale_ok )
+                // Hat nicht geklappt. Entweder ist das Mapping falsch oder die locale ist
+                // nicht korrekt installiert.
+                \Logger::warn("Could not set locale '$locale', please check with 'locale -a' if it is installaled correctly");
+        }
+        else
+        {
+            setlocale(LC_ALL,'');
+        }
+    }
+
+
+    /**
 	 * Stellt fest, ob die angegebene Id existiert.
 	 */
 	function available( $id )
@@ -211,6 +229,11 @@ class Language
 			$sql->query();
 //		}
 	}
+
+    public function setCurrentLocale()
+    {
+        self::setLocale( $this->isoCode );
+    }
 }
 
 ?>
