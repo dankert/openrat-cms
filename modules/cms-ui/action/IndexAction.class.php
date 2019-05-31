@@ -180,6 +180,9 @@ class IndexAction extends Action
         if ( !empty($messageOfTheDay) )
             $this->addNotice('user','','MOTD',OR_NOTICE_INFO,array('motd'=>$messageOfTheDay) );
 
+        if ( DEVELOPMENT )
+            $this->addNotice('user','','DEVELOPMENT_MODE',OR_NOTICE_INFO );
+
         $methods = array(
             'edit'     => true,
             'preview'  => true,

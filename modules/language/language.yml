@@ -6069,6 +6069,9 @@ MENU_START_DESC:
 NOTICE_MOTD:
   en: "Message: {motd}"
   de: "Systemnachricht: {motd}"
+NOTICE_DEVELOPMENT_MODE:
+  en: The development mode is enabled
+  de: Der Entwicklungsmodus ist aktiviert
 METHOD_EDIT:
   en: Content
   de: Inhalt
