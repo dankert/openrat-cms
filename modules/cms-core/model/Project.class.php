@@ -2,11 +2,6 @@
 
 namespace cms\model;
 
-define('PROJECT_FLAG_CUT_INDEX',1);
-define('PROJECT_FLAG_CONTENT_NEGOTIATION',2);
-define('PROJECT_FLAG_PUBLISH_FILE_EXTENSION',4);
-define('PROJECT_FLAG_PUBLISH_PAGE_EXTENSION',8);
-
 use database\Database;
 use Session;
 
@@ -19,7 +14,14 @@ use Session;
  */
 class Project extends ModelBase
 {
-	// Eigenschaften
+
+    const FLAG_CUT_INDEX               = 1;
+    const FLAG_CONTENT_NEGOTIATION     = 2;
+    const FLAG_PUBLISH_FILE_EXTENSION  = 4;
+    const FLAG_PUBLISH_PAGE_EXTENSION  = 8;
+
+    
+    // Eigenschaften
 	public $projectid;
 	public $name;
 	public $target_dir;
@@ -246,10 +248,10 @@ class Project extends ModelBase
 		$this->ftp_url             = $row['ftp_url'            ];
 		$this->ftp_passive         = $row['ftp_passive'        ];
 		$this->cmd_after_publish   = $row['cmd_after_publish'  ];
-        $this->cut_index           = $row['flags']&PROJECT_FLAG_CUT_INDEX;
-        $this->content_negotiation = $row['flags']&PROJECT_FLAG_CONTENT_NEGOTIATION;
-        $this->publishFileExtension = $row['flags']&PROJECT_FLAG_PUBLISH_FILE_EXTENSION;
-        $this->publishPageExtension = $row['flags']&PROJECT_FLAG_PUBLISH_PAGE_EXTENSION;
+        $this->cut_index           = $row['flags']&self::FLAG_CUT_INDEX;
+        $this->content_negotiation = $row['flags']&self::FLAG_CONTENT_NEGOTIATION;
+        $this->publishFileExtension = $row['flags']&self::FLAG_PUBLISH_FILE_EXTENSION;
+        $this->publishPageExtension = $row['flags']&self::FLAG_PUBLISH_PAGE_EXTENSION;
 
         return $this;
 	}
@@ -272,10 +274,10 @@ class Project extends ModelBase
 		$this->url                 = $row['url'                ];
 		$this->ftp_passive         = $row['ftp_passive'        ];
 		$this->cmd_after_publish   = $row['cmd_after_publish'  ];
-        $this->cut_index           = $row['flags']&PROJECT_FLAG_CUT_INDEX;
-        $this->content_negotiation = $row['flags']&PROJECT_FLAG_CONTENT_NEGOTIATION;
-        $this->publishFileExtension = $row['flags']&PROJECT_FLAG_PUBLISH_FILE_EXTENSION;
-        $this->publishPageExtension = $row['flags']&PROJECT_FLAG_PUBLISH_PAGE_EXTENSION;
+        $this->cut_index           = $row['flags']&self::FLAG_CUT_INDEX;
+        $this->content_negotiation = $row['flags']&self::FLAG_CONTENT_NEGOTIATION;
+        $this->publishFileExtension = $row['flags']&self::FLAG_PUBLISH_FILE_EXTENSION;
+        $this->publishPageExtension = $row['flags']&self::FLAG_PUBLISH_PAGE_EXTENSION;
     }
 
 
@@ -305,10 +307,10 @@ SQL
 		$sql->setString('cmd_after_publish'  ,$this->cmd_after_publish );
 
         $flags = 0;
-        if( $this->cut_index) $flags |= PROJECT_FLAG_CUT_INDEX;
-        if( $this->content_negotiation) $flags |= PROJECT_FLAG_CONTENT_NEGOTIATION;
-        if( $this->publishFileExtension) $flags |= PROJECT_FLAG_PUBLISH_FILE_EXTENSION;
-        if( $this->publishPageExtension) $flags |= PROJECT_FLAG_PUBLISH_PAGE_EXTENSION;
+        if( $this->cut_index) $flags |= self::FLAG_CUT_INDEX;
+        if( $this->content_negotiation) $flags |= self::FLAG_CONTENT_NEGOTIATION;
+        if( $this->publishFileExtension) $flags |= self::FLAG_PUBLISH_FILE_EXTENSION;
+        if( $this->publishPageExtension) $flags |= self::FLAG_PUBLISH_PAGE_EXTENSION;
 
         $sql->setInt   ('flags'              ,$flags );
 		$sql->setInt   ('projectid'          ,$this->projectid );
