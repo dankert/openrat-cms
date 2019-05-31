@@ -4,13 +4,17 @@ namespace security;
 
 
 /**
- * Sicherheitsfunktionen für Passwörter.
+ * Security functions for passwords.
  * 
- * @author dankert
+ * @author Jan dankert
  *
  */
 class Password
 {
+    /**
+     * yes, we are supporting PLAIN passwords. Why?
+     * Normally, there are not used, but in developing situations this is useful.
+     */
     const ALGO_PLAIN             = 0;
     const ALGO_CRYPT             = 1;
     const ALGO_MD5               = 2;
@@ -18,39 +22,48 @@ class Password
     const ALGO_SHA1              = 4;
 
     /**
-	 * Ermittelt den bestverfügbarsten hash-Algorhytmus.
+	 * Detects the best available algorhythm for password hashing.
 	 */
 	static public function bestAlgoAvailable()
 	{
 		if	( function_exists('password_hash') )
 		{
+		    // Use BCRYPT, this is available since PHP 5.5 and is safe for now.
 			return self::ALGO_PHP_PASSWORD_HASH;
 		}
 		elseif	( function_exists('crypt') && defined('CRYPT_BLOWFISH') && CRYPT_BLOWFISH == 1 )
 		{
+		    // see https://en.wikipedia.org/wiki/Blowfish_(cipher)
+            // BLOWFISH
 			return self::ALGO_CRYPT;
 		}
 		elseif	( function_exists('sha1') )
 		{
+            // see https://en.wikipedia.org/wiki/SHA-1
+            // should not be used because of some security issues.
 			return self::ALGO_SHA1;
 		}
 		elseif	( function_exists('md5') )
 		{
+            // see https://en.wikipedia.org/wiki/MD5
+            // should not be used because of some security issues.
 			return self::ALGO_MD5;
 		}
 		else
 		{
+		    // This should never happen ;)
 			return self::ALGO_PLAIN;
 		}
 	}
 
-	
+
 	
 	/**
-	 * Hashen eines Kennwortes mit Bcrypt (bzw. MD5).
-	 * @param $password
-	 * @param $algo int Algo
-	 * @param $cost Kostenfaktor: Eine Ganzzahl von 4 bis 31.
+	 * Hash the password.
+     *
+	 * @param $password string The password to hash
+	 * @param $algo int Hashing algorhythm
+	 * @param $cost cost factor: An integer between 4 and 31.
 	 */
 	static public function hash( $password,$algo,$cost=10 )
 	{
@@ -63,13 +76,14 @@ class Password
 			case self::ALGO_CRYPT:
 
 				$salt  = Password::randomHexString(10); // this should be cryptographically safe.
-				
+
+                // see https://www.php.net/security/crypt_blowfish.php
 				if	( version_compare(PHP_VERSION, '5.3.7') >= 0 )
-					$algo = '2y';
+					$algo = '2y'; // BLOWFISH
 				else
-					$algo = '2a';
+					$algo = '2a'; // "old" BLOWFISH, but no problem if using PHP >= 5.3.7
 				
-				// Kostenfaktor muss zwischen '04' und '31' (jeweils einschließlich) liegen.
+				// cost factor should be between '04' and '31'.
 				$cost = max(min($cost,31),4); 
 				$cost = str_pad($cost, 2, '0', STR_PAD_LEFT);
 				
@@ -112,7 +126,7 @@ class Password
 				}
 				else
 				{
-					throw new LogicException("Modular crypt format is not supported by this PHP version (no function 'crypt()')");
+					throw new LogicException("Modular crypt format is not supported by this PHP ".PHP_VERSION."  (no function 'crypt()')");
 				}
 
 			case self::ALGO_SHA1:
