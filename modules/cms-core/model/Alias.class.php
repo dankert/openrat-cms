@@ -47,7 +47,8 @@ class Alias extends BaseObject
         {
             $sql = db()->sql( 'SELECT *'.
                 ' FROM {{alias}}'.
-                ' WHERE link_objectid={objectid}');
+                ' WHERE link_objectid={objectid}'.
+                '   AND languageid IS NULL' );
             $sql->setInt( 'objectid'  ,$this->linkedObjectId );
         }
         else{
