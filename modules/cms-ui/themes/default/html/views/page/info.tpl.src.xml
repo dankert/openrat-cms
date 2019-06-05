@@ -40,7 +40,28 @@
 				</part>
 			</part>
 		</group>
+
+		<list list="languages" extract="true">
+
+
+			<group title="var:languagename">
+
+				<text label="name" var="name" />
+				<text label="description" var="description" />
+
+				<text label="alias" var="alias" />
+
+				<part class="clickable">
+					<link class="or-link-btn" type="edit" action="page" subaction="name" var1="languageid" value1="var:languageid">
+						<text key="edit" />
+					</link>
+				</part>
+			</group>
+
+		</list>
+
 		<group title="message:additional_info" open="false">
+
 			<part class="line">
 				<part class="label">
 					<label for="full_filename">

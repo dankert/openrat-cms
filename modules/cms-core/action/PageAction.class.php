@@ -316,7 +316,7 @@ class PageAction extends ObjectAction
 	{
 		$this->setTemplateVar('id',$this->page->objectid);
 
-		$this->page->public = true;
+		$this->page->publisher = new PublishPublic( $this->page->projectid );
 		$this->page->load();
 		$this->page->full_filename();
 
@@ -325,7 +325,30 @@ class PageAction extends ObjectAction
 
 		$this->setTemplateVars( $this->page->getProperties() );
 
-		if   ( $this->userIsProjectAdmin() )
+        $alias = $this->page->getAliasForLanguage(null);
+        $this->setTemplateVar( 'alias', $alias->full_filename() );
+
+        $languages = $this->page->getProject()->getLanguages();
+        $languagesVars = array();
+
+        foreach( $languages as $id => $name )
+        {
+            $this->page->languageid = $id;
+            $this->page->load();
+
+            $languagesVar = $this->page->getProperties();
+            $languagesVar['languagename'] = $name;
+            $languagesVar['languageid'  ] = $id;
+            $alias = $this->page->getAliasForLanguage( $id );
+            $languagesVar['alias'       ] = $alias->full_filename();
+
+            $languagesVars[] = $languagesVar;
+
+        }
+
+        $this->setTemplateVar('languages',$languagesVars );
+
+        if   ( $this->userIsProjectAdmin() )
 		{
 			$this->setTemplateVar('templateid',$this->page->templateid);
 			$this->setTemplateVar('modelid',$this->page->modelid);
@@ -339,6 +362,52 @@ class PageAction extends ObjectAction
 	}
 
 
+
+
+	/**
+	 * Die Eigenschaften der Seite anzeigen
+	 */
+	function nameView()
+	{
+        $this->page->load();
+
+        $this->setTemplateVars( $this->page->getProperties() );
+        $this->setTemplateVar( 'languageid', $this->page->languageid );
+
+        $alias = $this->page->getAliasForLanguage( $this->page->languageid );
+
+        $this->setTemplateVar( 'alias_filename', $alias->filename );
+        $this->setTemplateVar( 'alias_folderid', $alias->parentid );
+
+        $project = Project::create( $this->baseObject->projectid );
+        $this->setTemplateVar( 'folders' , $project->getAllFlatFolders() );
+    }
+
+
+
+
+    function namePost() {
+
+	    parent::namePost(); // Save name and description
+
+        $alias = $this->page->getAliasForLanguage( $this->getRequestId('languageid'));
+
+        $alias->filename = BaseObject::urlify( $this->getRequestVar( 'alias_filename') );
+        $alias->parentid = $this->getRequestId('alias_folderid');
+
+        // If no alias, remove the alias
+        if   ( ! $alias->filename ) {
+
+            $alias->delete();
+            $this->addNotice($alias->getType(),'','DELETED','ok');
+        }
+        else
+        {
+            $alias->save();
+            $this->addNotice($alias->getType(),$alias->filename,'SAVED','ok');
+        }
+
+    }
 
 
 	/**

@@ -50,7 +50,9 @@ class Alias extends BaseObject
                 ' WHERE link_objectid={objectid}');
             $sql->setInt( 'objectid'  ,$this->linkedObjectId );
         }
-
+        else{
+            return;
+        }
 
         $row = $sql->getRow();
 

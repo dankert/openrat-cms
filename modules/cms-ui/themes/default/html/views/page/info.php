@@ -5,7 +5,7 @@
 		<form name="" target="_self" data-target="view" action="./" data-method="info" data-action="page" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form page" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="page" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="info" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<span class="headline"><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
 			
-			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><div>
+			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><div class="closable">
 				<div class="line">
 					<div class="label">
 						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'type'.'')))); ?></span>
@@ -48,7 +48,24 @@
 					</div>
 				</div>
 			</div></fieldset>
-			<fieldset class="toggle-open-close<?php echo ''?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('additional_info') ?></legend><div>
+			<?php foreach($languages as $list_key=>$list_value){ ?><?php extract($list_value) ?>
+				<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo $languagename ?></legend><div class="closable">
+					<label class="or-form-row"><span class="or-form-label"><?php echo lang('name') ?></span><span class="or-form-input"><span><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span></span></label>
+					
+					<label class="or-form-row"><span class="or-form-label"><?php echo lang('description') ?></span><span class="or-form-input"><span><?php echo nl2br(encodeHtml(htmlentities($description))); ?></span></span></label>
+					
+					<label class="or-form-row"><span class="or-form-label"><?php echo lang('alias') ?></span><span class="or-form-input"><span><?php echo nl2br(encodeHtml(htmlentities($alias))); ?></span></span></label>
+					
+					<div class="clickable">
+						<a class="or-link-btn" target="_self" data-type="edit" data-action="page" data-method="name" data-id="<?php echo OR_ID ?>" data-extra="{'languageid':'<?php echo $languageid ?>'}" href="<?php echo Html::url('page','name','',array('languageid'=>$languageid)) ?>">
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'edit'.'')))); ?></span>
+							
+						</a>
+
+					</div>
+				</div></fieldset>
+			<?php } ?>
+			<fieldset class="toggle-open-close<?php echo ''?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('additional_info') ?></legend><div class="closable">
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_full_filename" class="label">
@@ -126,7 +143,7 @@
 				</div>
 			</div></fieldset>
 			
-				<fieldset class="toggle-open-close<?php echo ''?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('prop_userinfo') ?></legend><div>
+				<fieldset class="toggle-open-close<?php echo ''?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('prop_userinfo') ?></legend><div class="closable">
 					<div class="line">
 						<div class="label">
 							<label for="<?php echo REQUEST_ID ?>_create_date" class="label">

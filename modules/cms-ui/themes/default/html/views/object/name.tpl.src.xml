@@ -1,0 +1,15 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
+    <form label="message:global_save">
+
+        <hidden name="languageid" />
+        <group title="message:alias" open="true">
+
+            <input label="name" name="name" maxlength="255" required="true" />
+
+            <inputarea label="description" name="description" class="description" maxlength="255" />
+
+        </group>
+        
+    </form>
+</output>

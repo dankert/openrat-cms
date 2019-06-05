@@ -2,15 +2,24 @@
         xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
     <form label="message:global_save">
 
-        <group title="message:global_prop">
+        <hidden name="languageid" />
 
-            <input name="filename" label="global_filename" class="filename" maxlength="150" focus="true" />
+        <group title="message:name" open="true">
+
+            <input label="name" name="name" maxlength="255" required="true" />
+
+            <inputarea label="description" name="description" class="description" maxlength="255" />
+
+        </group>
+
+        <group title="message:alias" open="true">
 
             <input name="alias_filename" label="alias" class="filename" maxlength="150" />
 
             <selectbox name="alias_folderid" label="folder" list="folders"/>
-        </group>
 
+            <checkbox label="leave_link" name="leave_link" default="0" />
+        </group>
 
     </form>
 </output>

@@ -479,7 +479,7 @@ class ObjectAction extends Action
         $this->baseObject->filename = BaseObject::urlify( $this->getRequestVar('filename') );
         $this->baseObject->save();
 
-        $alias = $this->baseObject->getAlias();
+        $alias = $this->baseObject->getAliasForLanguage(null);
         $alias->filename = BaseObject::urlify( $this->getRequestVar( 'alias_filename') );
         $alias->parentid = $this->getRequestId('alias_folderid');
 
@@ -490,21 +490,35 @@ class ObjectAction extends Action
                 $alias->save();
 
 
-        // Name/Beschreibung für alle Sprachen speichern.
-        foreach( $this->baseObject->getNames() as $name )
-        {
-            $language = new Language( $name->languageid );
-            $language->load();
+        // Should we do this?
+        if	( $this->hasRequestVar('creationTimestamp') && $this->userIsAdmin() )
+            $this->baseObject->createDate = $this->getRequestVar('creationTimestamp',OR_FILTER_NUMBER);
+        $this->baseObject->setCreationTimestamp();
 
-            if   ( $this->hasRequestVar( 'name_'.$language->name ) )
-                $name->name = $this->getRequestVar( 'name_'.$language->name );
-            if   ( $this->hasRequestVar( 'description_'.$language->name ) )
-                $name->description = $this->getRequestVar( 'description_'.$language->name );
-
-            $name->save();
-        }
 
         $this->addNotice($this->baseObject->getType(),$this->baseObject->filename,'PROP_SAVED','ok');
+    }
+
+
+    /**
+     * Abspeichern der Ordner-Eigenschaften.
+     */
+    public function namePost()
+    {
+        if   ( ! $this->hasRequestVar('name' ) )
+            throw new \ValidationException('name');
+
+        $name = $this->baseObject->getNameForLanguage( $this->getRequestId('languageid'));
+
+        $language = new Language( $name->languageid );
+        $language->load();
+
+        $name->name = $this->getRequestVar( 'name' );
+        $name->description = $this->getRequestVar( 'description' );
+
+        $name->save();
+
+        $this->addNotice($this->baseObject->getType(),$this->baseObject->filename,'SAVED','ok');
     }
 
 
@@ -518,30 +532,29 @@ class ObjectAction extends Action
     public function propView()
     {
         $this->setTemplateVar( 'filename', $this->baseObject->filename   );
-        $alias = $this->baseObject->getAlias();
+        $alias = $this->baseObject->getAliasForLanguage(null );
         $this->setTemplateVar( 'alias_filename', $alias->filename );
         $this->setTemplateVar( 'alias_folderid', $alias->parentid );
 
         $project = Project::create( $this->baseObject->projectid );
         $this->setTemplateVar( 'folders' , $project->getAllFlatFolders() );
-
-        $nameProps = array();
-        foreach( $this->baseObject->getNames() as $name )
-        {
-            $nameProps[ $name->languageid ] = get_object_vars( $name );
-            $language = new Language( $name->languageid );
-            $language->load();
-            $nameProps[ $name->languageid ]['languageName'     ] = $language->name;
-            $nameProps[ $name->languageid ]['languageIsDefault'] = $language->isDefault;
-            $nameProps[ $name->languageid ]['languageIsoCode'  ] = $language->isoCode;
-        }
-        $this->setTemplateVar('names',$nameProps);
+    }
 
 
-        // Should we do this?
-        if	( $this->hasRequestVar('creationTimestamp') && $this->userIsAdmin() )
-            $this->baseObject->createDate = $this->getRequestVar('creationTimestamp',OR_FILTER_NUMBER);
-        $this->baseObject->setCreationTimestamp();
+    /**
+     * Eigenschaften anzeigen.
+     */
+    public function nameView()
+    {
+        $name = $this->baseObject->getNameForLanguage( $this->getRequestId('languageid') );
+
+        $nameProps = get_object_vars( $name );
+
+        $language = new Language( $name->languageid );
+        $language->load();
+        $nameProps[ 'languageName'     ] = $language->name;
+        $this->setTemplateVars($nameProps);
+
 
     }
 

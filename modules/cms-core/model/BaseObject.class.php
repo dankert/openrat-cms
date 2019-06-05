@@ -391,7 +391,7 @@ SQL
     {
         $alias = $this->getAlias();
 
-        if  ( $alias->filename )
+        if  ( $alias )
             $folder = new Folder($alias->parentid);
         else
             $folder = new Folder($this->parentid);
@@ -495,7 +495,7 @@ SQL
     public function getParentFolderId()
     {
         $alias = $this->getAlias();
-        if ( $alias->filename )
+        if ( $alias )
             return $alias->parentid;
         else
             return $this->parentid;
@@ -513,7 +513,8 @@ SQL
         $filename = $this->filename;
 
         $alias = $this->getAlias();
-        if ( $alias->filename )
+
+        if ( $alias )
             $filename = $alias->filename;
 
         if	( $conf['filename']['edit'] && $filename != '' && $filename != $this->objectid )
@@ -528,7 +529,7 @@ SQL
         {
             $filename = $this->objectid;
         }
-        elseif	( $this->orderid == 1              &&
+        elseif	( isset($this->orderId) && intval($this->orderId ) == 1   &&
             !empty($conf['filename']['default']) &&
             !$conf['filename']['edit']              )
         {
@@ -1580,6 +1581,22 @@ SQL
 
 
     /**
+     * Liefert alle Name-Objekte.
+     * @return Name
+     * @throws \ObjectNotFoundException
+     */
+    public function getNameForLanguage( $languageId )
+    {
+        $name = new Name();
+        $name->objectid   = $this->objectid;
+        $name->languageid = $languageId;
+        $name->load();
+
+        return $name;
+    }
+
+
+    /**
      * @return Name
      */
     public function getDefaultName()
@@ -1587,20 +1604,6 @@ SQL
         $languageId = $this->getProject()->getDefaultLanguageId();
 
         return $this->getNameForLanguage( $languageId );
-    }
-
-
-    /**
-     * @return Name
-     */
-    public function getNameForLanguage( $languageid )
-    {
-        $name = new Name();
-        $name->objectid   = $this->objectid;
-        $name->languageid = $languageid;
-        $name->load();
-
-        return $name;
     }
 
 
@@ -1642,11 +1645,38 @@ SQL
 
     }
 
+
+    /**
+     * The Alias for this Object or <code>null</code>.
+     *
+     * @return Alias|null
+     */
     public function getAlias()
+    {
+        $alias = $this->getAliasForLanguage( $this->languageid );
+
+        if   ( !$alias->isPersistent() )
+            $alias = $this->getAliasForLanguage( null );
+
+        if   ( !$alias->isPersistent() )
+            return null; // no alias found
+
+        return $alias;
+    }
+
+
+    /**
+     * Creates an Alias for a specific language.
+     * @param $languageid could be null for the default alias.
+     * @return Alias
+     * @throws \ObjectNotFoundException
+     */
+    public function getAliasForLanguage( $languageid )
     {
         $alias = new Alias();
         $alias->projectid      = $this->projectid;
         $alias->linkedObjectId = $this->objectid;
+        $alias->languageid     = $languageid;
         $alias->load();
 
         return $alias;
