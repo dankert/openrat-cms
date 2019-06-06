@@ -14,8 +14,6 @@ use Logger;
 use OpenRatException;
 use Session;
 
-define('OR_LINK_SCHEMA_ABSOLUTE',1);
-define('OR_LINK_SCHEMA_RELATIVE',2);
 
 
 /**
@@ -26,21 +24,150 @@ define('OR_LINK_SCHEMA_RELATIVE',2);
 
 class PublishPublic extends Publish
 {
+    const SCHEMA_ABSOLUTE = 1;
+    const SCHEMA_RELATIVE = 2;
+
+
+    /**
+     * Enthaelt bei Bedarf das FTP-Objekt. N�mlich dann, wenn
+     * zu einem FTP-Server veroeffentlicht werden soll.
+     * @var Object
+     */
+    private $ftp;
+
+    private $localDestinationDirectory = '';
+
+    /**
+     * Enthaelt die gleichnamige Einstellung aus dem Projekt.
+     * @var boolean
+     */
+    private $contentNegotiation = false;
+
+    /**
+     * Enthaelt die gleichnamige Einstellung aus dem Projekt.
+     * @var boolean
+     */
+    private $cutIndex           = false;
+
+    /**
+     * Enthaelt die gleichnamige Einstellung aus dem Projekt.
+     * @var String
+     */
+    private $commandAfterPublish = '';
+
+    /**
+     * Enthaelt am Ende der Ver�ffentlichung ein Array mit den ver�ffentlichten Objekten.
+     * @var Array
+     */
+    public $publishedObjects    = array();
+
+    /**
+     * Enthaelt im Fehlerfall (wenn 'ok' auf 'false' steht) eine
+     * Fehlermeldung.
+     *
+     * @var String
+     */
+    public $log                 = array();
+
+    /**
+     * Konstruktor.<br>
+     * <br>
+     * Oeffnet ggf. Verbindungen.
+     *
+     * @return Publish
+     */
+    public function __construct( $projectid )
+    {
+        $confPublish = config('publish');
+
+        $project = Project::create( $projectid );
+        $project->load();
+
+        $this->linkSchema = ($project->linkAbsolute ? self::SCHEMA_ABSOLUTE : self::SCHEMA_RELATIVE);
+
+        // Feststellen, ob FTP benutzt wird.
+        // Dazu muss FTP aktiviert sein (enable=true) und eine URL vorhanden sein.
+        $ftpUrl = '';
+        if   ( $confPublish['ftp']['enable'] )
+        {
+            if	( $confPublish['ftp']['per_project'] && !empty($project->ftp_url) )
+                $ftpUrl = $project->ftp_url;
+            elseif ( !empty($confPublish['ftp']['host']) )
+                $ftpUrl = $project->ftp_url;
+        }
+
+        if	( $ftpUrl && $ftpUrl[0]!='#' )
+        {
+            $this->ftp = new \Ftp($project->ftp_url); // Aufbauen einer FTP-Verbindung
+
+            $this->ftp->passive = ( $project->ftp_passive == '1' );
+        }
+
+        $localDir = rtrim( $project->target_dir,'/' );
+
+        if	( $confPublish['filesystem']['per_project'] && (!empty($localDir)) )
+        {
+            $this->localDestinationDirectory = $localDir; // Projekteinstellung verwenden.
+        }
+        else
+        {
+            if	( ! $localDir )
+                $localDir = $project->name;
+
+            // Konfiguriertes Verzeichnis verwenden.
+            $this->localDestinationDirectory = $confPublish['filesystem']['directory'].$localDir;
+        }
+
+
+        // Sofort pruefen, ob das Zielverzeichnis ueberhaupt beschreibbar ist.
+        if   ( $this->localDestinationDirectory && $this->localDestinationDirectory[0] == '#')
+            $this->localDestinationDirectory = '';
+
+        if   ( $this->localDestinationDirectory )
+        {
+            if   ( !is_writeable( $this->localDestinationDirectory ) )
+                throw new OpenRatException('ERROR_PUBLISH','directory not writable: '.$this->localDestinationDirectory );
+        }
+
+        $this->contentNegotiation = ( $project->content_negotiation == '1' );
+        $this->cutIndex           = ( $project->cut_index           == '1' );
+
+        if	( $confPublish['command']['enable'] )
+        {
+            if	( $confPublish['command']['per_project'] && !empty($project->cmd_after_publish) )
+                $this->commandAfterPublish   = $project->cmd_after_publish;
+            else
+                $this->commandAfterPublish   = @$confPublish['command']['command'];
+        }
+
+        // Im Systemkommando Variablen ersetzen
+        $this->commandAfterPublish = str_replace('{name}'   ,$project->name                ,$this->commandAfterPublish);
+        $this->commandAfterPublish = str_replace('{dir}'    ,$this->localDestinationDirectory          ,$this->commandAfterPublish);
+        $this->commandAfterPublish = str_replace('{dirbase}',basename($this->localDestinationDirectory),$this->commandAfterPublish);
+
+        if	( config('security','nopublish') )
+        {
+            Logger::warn('publishing is disabled.');
+            $this->commandAfterPublish = '';
+            $this->localDestinationDirectory = '';
+            $this->ftp = null;
+        }
+    }
+
+
+
+    /**
+     * @var int
+     */
+    private $linkSchema;
+
     /**
      * @param $from \cms\model\Page
      * @param $to \cms\model\BaseObject
      */
     public function linkToObject( $from, $to ) {
 
-        if  ( config('publish','url') == 'relative')
-            $schema = OR_LINK_SCHEMA_RELATIVE;
-        else
-            $schema = OR_LINK_SCHEMA_ABSOLUTE;
-
-        // If the target has an alias, use this alias as the target.
-        //$alias = $to->getAlias();
-        //if   ( $alias->filename )
-            //$to = $alias;
+        $schema = $this->linkSchema;
 
         switch( $to->typeid )
         {
@@ -117,25 +244,25 @@ class PublishPublic extends Publish
         {
             // Target object is in another project.
             // we have to use absolute URLs.
-            $schema = OR_LINK_SCHEMA_ABSOLUTE;
+            $schema = self::SCHEMA_ABSOLUTE;
 
             // Target is in another Project. So we have to create an absolute URL.
             $targetProject = Project::create( $to->projectid )->load();
-            $prefix = $targetProject->url;
+            $host = $targetProject->url;
 
-            if   ( ! strpos($prefix,'//' ) === FALSE ) {
+            if   ( ! strpos($host,'//' ) === FALSE ) {
                 // No protocol in hostname. So we have to prepend the URL with '//'.
-                $prefix = '//'.$prefix;
+                $host = '//'.$host;
             }
         }
         else {
-            $prefix = '';
+            $host = '';
         }
 
 
 
 
-        if  ( $schema == OR_LINK_SCHEMA_RELATIVE )
+        if  ( $schema == self::OR_LINK_SCHEMA_RELATIVE )
         {
             $folder = new Folder( $from->getParentFolderId() );
             $folder->load();
@@ -181,150 +308,15 @@ class PublishPublic extends Publish
         }
 
 
-        $uri = $prefix . $path . $filename;
+        $uri = $host . $path . $filename;
 
-        if( empty($uri)) $uri = '.';
+        if( !$uri )
+            $uri = '.';
 
         return $uri;
     }
 
 
-
-
-
-    /**
-     * Enthaelt bei Bedarf das FTP-Objekt. N�mlich dann, wenn
-     * zu einem FTP-Server veroeffentlicht werden soll.
-     * @var Object
-     */
-    public $ftp;
-
-    /**
-     * Flag, ob in das lokale Dateisystem veroeffentlicht werden soll.
-     * @var boolean
-     */
-    public $with_local          = false;
-
-    /**
-     * Flag, ob zu einem FTP-Server ver�ffentlicht werden soll.
-     * @var boolean
-     */
-    public $with_ftp            = false;
-
-    public $local_destdir       = '';
-
-    /**
-     * Enthaelt die gleichnamige Einstellung aus dem Projekt.
-     * @var boolean
-     */
-    public $content_negotiation = false;
-
-    /**
-     * Enthaelt die gleichnamige Einstellung aus dem Projekt.
-     * @var boolean
-     */
-    public $cut_index           = false;
-
-    /**
-     * Enthaelt die gleichnamige Einstellung aus dem Projekt.
-     * @var String
-     */
-    public $cmd_after_publish   = '';
-
-    /**
-     * Enthaelt am Ende der Ver�ffentlichung ein Array mit den ver�ffentlichten Objekten.
-     * @var Array
-     */
-    public $publishedObjects    = array();
-
-    /**
-     * Enthaelt im Fehlerfall (wenn 'ok' auf 'false' steht) eine
-     * Fehlermeldung.
-     *
-     * @var String
-     */
-    public $log                 = array();
-
-    /**
-     * Konstruktor.<br>
-     * <br>
-     * Oeffnet ggf. Verbindungen.
-     *
-     * @return Publish
-     */
-    public function __construct( $projectid )
-    {
-        $confPublish = config('publish');
-
-        if	( config('security','nopublish') )
-        {
-            Logger::warn('publishing is disabled.');
-            return; // this is no error.
-        }
-
-        $project = new Project( $projectid );
-        $project->load();
-
-        // Feststellen, ob FTP benutzt wird.
-        // Dazu muss FTP aktiviert sein (enable=true) und eine URL vorhanden sein.
-        $ftpUrl = '';
-        if   ( $confPublish['ftp']['enable'] )
-        {
-            if	( $confPublish['ftp']['per_project'] && !empty($project->ftp_url) )
-                $ftpUrl = $project->ftp_url;
-            elseif ( !empty($confPublish['ftp']['host']) )
-                $ftpUrl = $project->ftp_url;
-        }
-
-        if	( $ftpUrl && $ftpUrl[0]!='#' )
-        {
-            $this->with_ftp = true;
-            $this->ftp = new \Ftp($project->ftp_url); // Aufbauen einer FTP-Verbindung
-
-            $this->ftp->passive = ( $project->ftp_passive == '1' );
-        }
-
-        $localDir = rtrim( $project->target_dir,'/' );
-
-        if	( $confPublish['filesystem']['per_project'] && (!empty($localDir)) )
-        {
-            $this->local_destdir = $localDir; // Projekteinstellung verwenden.
-        }
-        else
-        {
-            if	( empty( $localDir))
-                $localDir = $project->name;
-
-            // Konfiguriertes Verzeichnis verwenden.
-            $this->local_destdir = $confPublish['filesystem']['directory'].$localDir;
-        }
-
-
-        // Sofort pruefen, ob das Zielverzeichnis ueberhaupt beschreibbar ist.
-        if   ( $this->local_destdir && $this->local_destdir[0] != '#')
-        {
-            if   ( !is_writeable( $this->local_destdir ) )
-                throw new OpenRatException('ERROR_PUBLISH','directory not writable: '.$this->local_destdir );
-
-            $this->with_local = true;
-        }
-
-        $this->content_negotiation = ( $project->content_negotiation == '1' );
-        $this->cut_index           = ( $project->cut_index           == '1' );
-
-        if	( $confPublish['command']['enable'] )
-        {
-            if	( $confPublish['command']['per_project'] && !empty($project->cmd_after_publish) )
-                $this->cmd_after_publish   = $project->cmd_after_publish;
-            else
-                $this->cmd_after_publish   = @$confPublish['command']['command'];
-        }
-
-        // Im Systemkommando Variablen ersetzen
-        $this->cmd_after_publish = str_replace('{name}'   ,$project->name                ,$this->cmd_after_publish);
-        $this->cmd_after_publish = str_replace('{dir}'    ,$this->local_destdir          ,$this->cmd_after_publish);
-        $this->cmd_after_publish = str_replace('{dirbase}',basename($this->local_destdir),$this->cmd_after_publish);
-    }
 
 
 
@@ -340,9 +332,9 @@ class PublishPublic extends Publish
         global $conf;
         $source = $tmp_filename;
 
-        if   ( $this->with_local )
+        if   ( $this->localDestinationDirectory )
         {
-            $dest   = $this->local_destdir.'/'.$dest_filename;
+            $dest   = $this->localDestinationDirectory.'/'.$dest_filename;
 
             if   (!@copy( $source,$dest ));
             {
@@ -370,7 +362,7 @@ class PublishPublic extends Publish
             }
         }
 
-        if   ( $this->with_ftp ) // Falls FTP aktiviert
+        if   ( $this->ftp ) // Falls FTP aktiviert
         {
             $dest = $dest_filename;
             $this->ftp->put( $source,$dest );
@@ -423,23 +415,23 @@ class PublishPublic extends Publish
      */
     public function close()
     {
-        if   ( $this->with_ftp )
+        if   ( $this->ftp )
         {
             Logger::debug('Closing FTP connection' );
             $this->ftp->close();
         }
 
         // Ausfuehren des Systemkommandos.
-        if	( !empty($this->cmd_after_publish) )
+        if	( !empty($this->commandAfterPublish) )
         {
             $ausgabe = array();
             $rc      = false;
-            Logger::debug('Executing system command: '.$this->cmd_after_publish );
+            Logger::debug('Executing system command: '.$this->commandAfterPublish );
             $user = Session::getUser();
             putenv("CMS_USER_NAME=".$user->name  );
             putenv("CMS_USER_ID="  .$user->userid);
             putenv("CMS_USER_MAIL=".$user->mail  );
-            exec( $this->cmd_after_publish,$ausgabe,$rc );
+            exec( $this->commandAfterPublish,$ausgabe,$rc );
 
             if	( $rc != 0 ) // Wenn Returncode ungleich 0, dann Fehler melden.
                 throw new OpenRatException('ERROR_PUBLISH','System command failed - returncode is '.$rc."\n".
@@ -460,8 +452,8 @@ class PublishPublic extends Publish
      */
     public function clean()
     {
-        if	( !empty($this->local_destdir) )
-            $this->cleanFolder($this->local_destdir);
+        if	( !empty($this->localDestinationDirectory) )
+            $this->cleanFolder($this->localDestinationDirectory);
     }
 
 

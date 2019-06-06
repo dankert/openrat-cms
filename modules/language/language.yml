@@ -6149,3 +6149,9 @@ SOURCE:
 LEAVE_LINK:
   de: Link hinterlassen
   en: Leave a link
+LINKS_RELATIVE:
+  de: Relative Links
+  en: Relative links
+LINKS_ABSOLUTE:
+  de: Absolute Links
+  en: Absolute links

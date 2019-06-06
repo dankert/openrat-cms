@@ -53,6 +53,10 @@
 					<label for="publishPageExtension" key="PROJECT_publish_page_Extension"></label>
 				</part>
 			</part>
+
+			<radio name="linksAbsolute" value="0" label="LINKS_RELATIVE" />
+			<radio name="linksAbsolute" value="1" label="LINKS_ABSOLUTE" />
+
 		</group>
 		<group title="message:project_FTP">
 			<part class="line">

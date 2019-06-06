@@ -67,6 +67,7 @@ class ProjectAction extends Action
 			$this->project->cut_index            = $this->getRequestVar('cut_index'          ,OR_FILTER_NUMBER  );
 			$this->project->publishFileExtension = $this->getRequestVar('publishFileExtension',OR_FILTER_NUMBER  );
 			$this->project->publishPageExtension = $this->getRequestVar('publishPageExtension',OR_FILTER_NUMBER  );
+			$this->project->linkAbsolute         = $this->getRequestVar('linksAbsolute'       ,OR_FILTER_NUMBER  ) == '1';
 
 			$this->addNotice('project',$this->project->name,'SAVED','ok');
 			$this->project->save(); // speichern
@@ -163,7 +164,10 @@ class ProjectAction extends Action
 	 */
 	function propView()
 	{
-		$extraProperties = array('rootobjectid'=>$this->project->getRootObjectId());
+		$extraProperties = array(
+		    'rootobjectid'  => $this->project->getRootObjectId(),
+            'linksAbsolute' => $this->project->linkAbsolute?'1':'0'
+        );
 		
 		$this->setTemplateVars( $this->project->getProperties() + $extraProperties );
 

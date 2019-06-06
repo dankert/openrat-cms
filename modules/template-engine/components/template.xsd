@@ -554,7 +554,6 @@
             <xsd:element ref="tree" maxOccurs="unbounded" minOccurs="0"/>
         </xsd:choice>
         <xsd:attribute name="readonly" type="xsd:boolean"/>
-        <xsd:attribute name="name" type="xsd:string"/>
         <xsd:attribute name="value" type="xsd:string"/>
         <xsd:attribute name="prefix" type="xsd:string"/>
         <xsd:attribute name="suffix" type="xsd:string"/>
@@ -562,6 +561,8 @@
         <xsd:attribute name="onchange" type="xsd:string"/>
         <xsd:attribute name="children" type="xsd:string"/>
         <xsd:attribute name="checked" type="xsd:string"/>
+        <xsd:attribute name="label" type="xsd:string"/>
+        <xsd:attribute name="name" type="xsd:string"/>
         <xsd:attribute name="request" type="xsd:string"/>
     </xsd:complexType>
     <xsd:element name="set" type="setType"/>

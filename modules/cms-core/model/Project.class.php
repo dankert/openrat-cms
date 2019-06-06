@@ -19,6 +19,7 @@ class Project extends ModelBase
     const FLAG_CONTENT_NEGOTIATION     = 2;
     const FLAG_PUBLISH_FILE_EXTENSION  = 4;
     const FLAG_PUBLISH_PAGE_EXTENSION  = 8;
+    const FLAG_LINK_ABSOLUTE           = 16;
 
     
     // Eigenschaften
@@ -58,6 +59,8 @@ class Project extends ModelBase
     public $publishPageExtension = true;
 
 	public $log = array();
+
+	public $linkAbsolute;
 
 
 	
@@ -252,6 +255,7 @@ class Project extends ModelBase
         $this->content_negotiation = $row['flags']&self::FLAG_CONTENT_NEGOTIATION;
         $this->publishFileExtension = $row['flags']&self::FLAG_PUBLISH_FILE_EXTENSION;
         $this->publishPageExtension = $row['flags']&self::FLAG_PUBLISH_PAGE_EXTENSION;
+        $this->linkAbsolute         = $row['flags']&self::FLAG_LINK_ABSOLUTE;
 
         return $this;
 	}
@@ -278,6 +282,7 @@ class Project extends ModelBase
         $this->content_negotiation = $row['flags']&self::FLAG_CONTENT_NEGOTIATION;
         $this->publishFileExtension = $row['flags']&self::FLAG_PUBLISH_FILE_EXTENSION;
         $this->publishPageExtension = $row['flags']&self::FLAG_PUBLISH_PAGE_EXTENSION;
+        $this->linkAbsolute         = $row['flags']&self::FLAG_LINK_ABSOLUTE;
     }
 
 
@@ -308,9 +313,10 @@ SQL
 
         $flags = 0;
         if( $this->cut_index) $flags |= self::FLAG_CUT_INDEX;
-        if( $this->content_negotiation) $flags |= self::FLAG_CONTENT_NEGOTIATION;
+        if( $this->content_negotiation ) $flags |= self::FLAG_CONTENT_NEGOTIATION;
         if( $this->publishFileExtension) $flags |= self::FLAG_PUBLISH_FILE_EXTENSION;
         if( $this->publishPageExtension) $flags |= self::FLAG_PUBLISH_PAGE_EXTENSION;
+        if( $this->linkAbsolute        ) $flags |= self::FLAG_LINK_ABSOLUTE;
 
         $sql->setInt   ('flags'              ,$flags );
 		$sql->setInt   ('projectid'          ,$this->projectid );
