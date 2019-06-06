@@ -262,7 +262,7 @@ class PublishPublic extends Publish
 
 
 
-        if  ( $schema == self::OR_LINK_SCHEMA_RELATIVE )
+        if  ( $schema == self::SCHEMA_RELATIVE )
         {
             $folder = new Folder( $from->getParentFolderId() );
             $folder->load();
