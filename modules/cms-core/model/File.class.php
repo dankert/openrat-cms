@@ -372,10 +372,10 @@ EOF
 
     public function loadValue()
     {
-        if	( filemtime($this->getCache()->getFilename() < $this->lastchangeDate))
+        if	( is_file( $this->getCache()->getFilename() ) && filemtime($this->getCache()->getFilename() < $this->lastchangeDate))
             $this->getCache()->invalidate();
 
-        return $this->getCache()-get();
+        return $this->getCache()->get();
     }
 
 
