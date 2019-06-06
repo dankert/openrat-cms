@@ -9,6 +9,7 @@ use cms\model\Link;
 use cms\model\Page;
 use cms\model\Project;
 use cms\model\Url;
+use Ftp;
 use Logger;
 use OpenRatException;
 use Session;
@@ -275,10 +276,10 @@ class PublishPublic extends Publish
                 $ftpUrl = $project->ftp_url;
         }
 
-        if	( ! empty($ftpUrl) )
+        if	( $ftpUrl && $ftpUrl[0]!='#' )
         {
             $this->with_ftp = true;
-            $this->ftp = new Ftp($project->ftp_url); // Aufbauen einer FTP-Verbindung
+            $this->ftp = new \Ftp($project->ftp_url); // Aufbauen einer FTP-Verbindung
 
             $this->ftp->passive = ( $project->ftp_passive == '1' );
         }
@@ -300,7 +301,7 @@ class PublishPublic extends Publish
 
 
         // Sofort pruefen, ob das Zielverzeichnis ueberhaupt beschreibbar ist.
-        if   ( $this->local_destdir != '' )
+        if   ( $this->local_destdir && $this->local_destdir[0] != '#')
         {
             if   ( !is_writeable( $this->local_destdir ) )
                 throw new OpenRatException('ERROR_PUBLISH','directory not writable: '.$this->local_destdir );
