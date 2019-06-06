@@ -489,7 +489,7 @@ class Tree
             // Nur wenn die Seite beschreibbar ist, werden die
             // Elemente im Baum angezeigt
             if ($o->hasRight(Acl::ACL_WRITE))
-                $treeElement->type = 'pageelements';
+                $treeElement->type = 'page';
         }
 
         $this->addTreeElement($treeElement);
