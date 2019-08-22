@@ -842,7 +842,7 @@ class LoginAction extends Action
 			{
 				// Cookie setzen
 				$this->setCookie('or_username',$user->name         );
-                $this->setCookie('or_token'   ,$user->loginToken() );
+                $this->setCookie('or_token'   ,$user->createNewLoginToken() );
 			}
 				
 			// Anmeldung erfolgreich.

@@ -17,6 +17,7 @@ require_once( __DIR__.'/'.'Mail.class.php' );
 if (extension_loaded('ldap') )
     require_once( __DIR__.'/'.'Ldap.class.php' );
 
+require_once( __DIR__.'/'.'Browser.class.php' );
 require_once( __DIR__.'/'.'FileUtils.class.php' );
 require_once( __DIR__.'/'.'JSON.class.php' );
 require_once( __DIR__.'/'.'Less.php' );

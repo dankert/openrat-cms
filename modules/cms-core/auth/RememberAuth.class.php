@@ -16,29 +16,36 @@ class RememberAuth implements Auth
     public function username()
 	{
 		// Ermittelt den Benutzernamen aus den Login-Cookies.
-		if	( isset($_COOKIE['or_username']) &&
-			  isset($_COOKIE['or_token'   ]) &&
+		if	( isset($_COOKIE['or_token'   ]) &&
 			  isset($_COOKIE['or_dbid'    ])    )
 		{
-			$name = $_COOKIE['or_username'];
 			try
 			{
+			    list( $selector,$token) = array_pad( explode('.',$_COOKIE['or_token']),2,'');
 				$dbid = $_COOKIE['or_dbid'];
 				
 				global $conf;
 				$db = new Database( $conf['database'][$dbid] );
 				$db->id = $dbid;
 				$db->start();
-				Session::setDatabase($db);
-				
-				// Jetzt den Benutzer laden und nachschauen, ob der Token stimmt.
-				$user = User::loadWithName($name);
-				$token = $user->loginToken();
-				
-				// Stimmt der Token?
-				if	( $_COOKIE['or_token'] == $token )
-					// Token stimmt, Benutzer ist damit angemeldet.
-					return $name;
+
+				$stmt = $db->sql( <<<SQL
+                    SELECT userid,{{user}}.name as username,token,token_algo FROM {{auth}}
+                       LEFT JOIN {{user}} ON {{auth}}.userid = {{user}}.id
+                    WHERE selector = {selector} AND expires > {now}
+SQL
+                );
+				$stmt->setString('selector',$selector);
+				$stmt->setInt   ('now'     ,time()   );
+
+				$auth = $stmt->getRow();
+
+				if  ( $auth )
+                {
+                    if   ( \security\Password::check($token, $auth['token'],$auth['token_algo']) )
+                        return $auth['username'];
+                }
+
 			}
 			catch( ObjectNotFoundException $e )
 			{

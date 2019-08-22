@@ -6,7 +6,7 @@ use database\Database;
 class DbUpdate 
 {
     // This is the required DB version:
-    const SUPPORTED_VERSION      = 20;
+    const SUPPORTED_VERSION      = 21;
     // ----------------------------^^-----------------------------
 
     const STATUS_UPDATE_PROGRESS = 0;

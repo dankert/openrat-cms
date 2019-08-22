@@ -202,21 +202,40 @@ SQL
 	/**
 	 * Ermittelt zu diesem Benutzer den Login-Token.
 	 */ 
-	function loginToken()
+	function createNewLoginToken()
 	{
-		global $conf;
-		$db = db_connection();
+	    $selector = Password::randomHexString(48);
+	    $token    = Password::randomHexString(48);
 
-		$sql = $db->sql( 'SELECT id,mail,name,password_hash FROM {{user}}'.
-		                ' WHERE id={userid}' );
-		$sql->setInt( 'userid',$this->userid );
-		$row = $sql->getRow();
+	    $tokenHash = Password::hash($token,Password::ALGO_SHA1);
 
-		if	( count($row) == 0 )
-			throw new \ObjectNotFoundException();
+		$stmt = db()->sql( 'SELECT max(id) FROM {{auth}}');
+		$count = $stmt->getOne();
+
+		$stmt = db()->sql( <<<SQL
+              INSERT INTO {{auth}} (id,userid,selector,token,token_algo,expires,create_date,platform,name)
+                 VALUES( {id},{userid},{selector},{token},{token_algo},{expires},{create_date},{platform},{name} )
+SQL
+        );
+		$expirationPeriod = Conf()->subset('user')->subset('security')->get('token_expires_after_days',730);
+
+		$stmt->setInt( 'id'         ,++$count      );
+		$stmt->setInt( 'userid'     ,$this->userid );
+
+		$stmt->setString( 'selector'   ,$selector     );
+		$stmt->setString( 'token'      ,$tokenHash    );
+		$stmt->setInt   ( 'token_algo' ,Password::ALGO_SHA1        );
+
+		$stmt->setInt( 'expires'    ,time() + $expirationPeriod );
+		$stmt->setInt( 'create_date',time()                           );
+
+		$browser = new \Browser();
+		$stmt->setString( 'platform',$browser->platform );
+		$stmt->setString( 'name'    ,$browser->name     );
+		$row = $stmt->getRow();
 
 		// Zusammensetzen des Tokens
-		return sha1( $row['password_hash'].$row['name'].$row['id'].$row['mail'] );
+		return $selector.'.'.$token;
 	}
 
 
