@@ -204,8 +204,8 @@ SQL
 	 */ 
 	function createNewLoginToken()
 	{
-	    $selector = Password::randomHexString(48);
-	    $token    = Password::randomHexString(48);
+	    $selector = Password::randomHexString(24);
+	    $token    = Password::randomHexString(24);
 
 	    $tokenHash = Password::hash($token,Password::ALGO_SHA1);
 
@@ -217,7 +217,7 @@ SQL
                  VALUES( {id},{userid},{selector},{token},{token_algo},{expires},{create_date},{platform},{name} )
 SQL
         );
-		$expirationPeriod = Conf()->subset('user')->subset('security')->get('token_expires_after_days',730);
+		$expirationPeriodDays = Conf()->subset('user')->subset('security')->get('token_expires_after_days',730);
 
 		$stmt->setInt( 'id'         ,++$count      );
 		$stmt->setInt( 'userid'     ,$this->userid );
@@ -226,7 +226,7 @@ SQL
 		$stmt->setString( 'token'      ,$tokenHash    );
 		$stmt->setInt   ( 'token_algo' ,Password::ALGO_SHA1        );
 
-		$stmt->setInt( 'expires'    ,time() + $expirationPeriod );
+		$stmt->setInt( 'expires'    ,time() + ($expirationPeriodDays*24*60*60) );
 		$stmt->setInt( 'create_date',time()                           );
 
 		$browser = new \Browser();
@@ -239,7 +239,22 @@ SQL
 	}
 
 
-	/**
+    /**
+     * Ermittelt zu diesem Benutzer den Login-Token.
+     */
+    function deleteLoginToken( $selector )
+    {
+        $stmt = db()->sql( <<<SQL
+              DELETE FROM {{auth}}
+               WHERE selector = {selector}
+SQL
+        );
+        $stmt->setString('selector',$selector );
+        $stmt->execute();
+    }
+
+
+    /**
 	 * Lesen Benutzer aus der Datenbank.
 	 */ 
 	public function load()
@@ -516,7 +531,15 @@ SQL
 		$sql->setInt   ('userid',$this->userid );
 		$sql->query();
 
-		// Benutzer loeschen
+        $stmt = db()->sql( <<<SQL
+              DELETE FROM {{auth}}
+               WHERE userid={userid}
+SQL
+        );
+        $stmt->setInt   ('userid',$this->userid );
+        $stmt->execute();
+
+        // Benutzer loeschen
 		$sql = $db->sql( 'DELETE FROM {{user}} '.
 		                'WHERE id={userid}' );
 		$sql->setInt   ('userid',$this->userid );

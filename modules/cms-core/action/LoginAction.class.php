@@ -866,7 +866,7 @@ class LoginAction extends Action
 	/**
 	 * Benutzer meldet sich ab.
 	 */
-	function logoutPost()
+	public function logoutPost()
 	{
 		global $conf;
 		
@@ -877,8 +877,6 @@ class LoginAction extends Action
 		if	( config()->subset('security')->is('renew_session_logout',false) )
 			$this->recreateSession();
 
-		session_unset();
-		
 		if	( @$conf['theme']['compiler']['compile_at_logout'] )
 		{
 			foreach( $conf['action'] as $actionName => $actionConfig )
@@ -903,9 +901,19 @@ class LoginAction extends Action
 		// Login-Token löschen:
 		// Wenn der Benutzer sich abmelden will, dann soll auch die automatische
 		// Anmeldung deaktiviert werden.
+
+        // Bestehendes Login-Token aus dem Cookie lesen und aus der Datenbank löschen.
+        list( $selector,$token ) = array_pad( explode('.',$_COOKIE['or_token']),2,'');
+
+		if   ( $selector )
+		    $this->currentUser->deleteLoginToken( $selector );
+
+		// Cookie mit Logintoken löschen.
         $this->setCookie('or_token'   ,null );
-		
-		// Umleiten auf eine definierte URL.s
+
+        session_unset();
+
+        // Umleiten auf eine definierte URL.s
 		$redirect_url = @$conf['security']['logout']['redirect_url'];
 
 		if	( !empty($redirect_url) )
