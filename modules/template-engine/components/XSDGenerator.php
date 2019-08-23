@@ -13,6 +13,8 @@ require('html/HtmlComponent.class.php');
 require('html/FieldComponent.class.php');
 header('Content-Type: text/plain');
 
+echo "XSD Generator\n\n";
+
 $folder = FileUtils::readDir(__DIR__ . '/html');
 
 $componentsFile = @fopen(__DIR__ . '/components.ini', 'w');
@@ -31,7 +33,7 @@ foreach ($folder as $f) {
     if (!is_file($filename))
         continue;
 
-    echo 'Working on: ' . $f . "\n";
+    echo 'Working on component: ' . $f . "\n";
     fwrite($componentsFile, $f . " = \n");
 
     fwrite($xsdFile, '<xsd:element name="' . $f . '" type="' . $f . 'Type" /><xsd:complexType name="' . $f . 'Type">');
@@ -70,3 +72,5 @@ fwrite($xsdFile, '</xsd:schema>');
 
 fclose($xsdFile);
 fclose($componentsFile);
+
+echo "Finished.\n";

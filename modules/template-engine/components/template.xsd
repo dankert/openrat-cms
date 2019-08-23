@@ -508,6 +508,7 @@
         <xsd:attribute name="anchor" type="xsd:string"/>
         <xsd:attribute name="frame" type="xsd:string"/>
         <xsd:attribute name="modal" type="xsd:boolean"/>
+        <xsd:attribute name="afterSuccess" type="xsd:string"/>
         <xsd:attribute name="request" type="xsd:string"/>
     </xsd:complexType>
     <xsd:element name="radio" type="radioType"/>
@@ -1826,6 +1827,7 @@
         <xsd:attribute name="async" type="xsd:boolean"/>
         <xsd:attribute name="autosave" type="xsd:boolean"/>
         <xsd:attribute name="type" type="xsd:string"/>
+        <xsd:attribute name="afterSuccess" type="xsd:string"/>
         <xsd:attribute name="request" type="xsd:string"/>
     </xsd:complexType>
     <xsd:element name="upload" type="uploadType"/>

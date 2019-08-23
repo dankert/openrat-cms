@@ -45,7 +45,16 @@ function doResponse(data,status,element)
 				$(element).closest('div.panel').find('div.header ul.views li.action.active').removeClass('dirty');
 			}
 
-            $(document).trigger('orDataChanged');
+			let afterSuccess = $(element).data('afterSuccess');
+			if	( afterSuccess )
+			{
+				if   ( afterSuccess == 'reloadAll' )
+				{
+					Workbench.reloadAll();
+				}
+			}
+
+			$(document).trigger('orDataChanged');
         }
 		else
 		// Server liefert Fehler zurück.

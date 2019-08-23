@@ -37,7 +37,7 @@ use Session;
 
 class TreeAction extends Action
 {
-	public $security = Action::SECURITY_USER;
+	public $security = Action::SECURITY_GUEST;
 	
 	public function __construct()
     {

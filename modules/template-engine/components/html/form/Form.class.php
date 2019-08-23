@@ -21,7 +21,6 @@ class FormComponent extends Component
 	public $label;
 
 	public $cancel = true;
-
 	public $readonly = false;
 
     /**
@@ -38,6 +37,8 @@ class FormComponent extends Component
 	public $autosave = false;
 
 	public $type = '';
+
+	public $afterSuccess;
 
 	protected function begin()
 	{
@@ -67,7 +68,11 @@ class FormComponent extends Component
 		echo ' class="or-form ' . $this->htmlvalue($this->action) . '"';
 		echo ' data-async="' . $this->htmlvalue($this->async) . '"';
 		echo ' data-autosave="' . $this->htmlvalue($this->autosave) . '"';
-		echo '>';
+
+        if ( $this->afterSuccess )
+            echo ' data-after-success="' . $this->htmlvalue($this->afterSuccess) . '"';
+
+        echo '>';
 
         // Enable Submit on Enter - no need for...we have a submit button at the end.
 		// echo '<input type="submit" class="invisible" />';

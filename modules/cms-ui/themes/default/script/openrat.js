@@ -234,29 +234,54 @@ var Workbench = new function()
     	// View in geschlossenen Sektionen löschen, damit diese nicht stehen bleiben.
         $('#workbench section.closed .view-loader').empty();
 
-        $('#workbench section.open .view-loader').each( function(idx) {
-
-            var targetDOMElement = $(this);
-
-            Workbench.loadNewActionIntoElement(targetDOMElement)
-        });
+        Workbench.loadViews( $('#workbench section.open .view-loader') );
 
         filterMenus(action, id, params);
 
     }
 
 
-    this.loadNewActionIntoElement = function(targetDOMElement) {
+    this.reloadAll = function() {
 
-        var action = $('#editor').attr('data-action');
-        var id     = $('#editor').attr('data-id'    );
-        var params = $('#editor').attr('data-extra' );
+    	// View in geschlossenen Sektionen löschen, damit diese nicht stehen bleiben.
+        $('#workbench .view').empty();
 
-        var method = targetDOMElement.data('method');
+        Workbench.loadViews( $('#workbench .view') );
 
-        //Workbench.loadViewIntoElement(targetDOMElement,action,method,id,params)
+        registerHeaderEvents();
+    }
+
+
+
+    this.loadViews = function( $views )
+    {
+
+        $views.each(function (idx) {
+
+            let $targetDOMElement = $(this);
+
+            Workbench.loadNewActionIntoElement( $targetDOMElement )
+        });
+    }
+
+
+
+    this.loadNewActionIntoElement = function( $viewElement )
+    {
+        let action;
+        if   ( $viewElement.is('.view-static') )
+            // Static views have always the same action.
+            action = $viewElement.attr('data-action');
+        else
+            action = $('#editor').attr('data-action');
+
+        let id     = $('#editor').attr('data-id'    );
+        let params = $('#editor').attr('data-extra' );
+
+        let method = $viewElement.data('method');
+
         let view = new View( action,method,id,params );
-        view.start( targetDOMElement );
+        view.start( $viewElement );
     }
 
 
@@ -1170,8 +1195,9 @@ function notify( type,name,status,msg,log=[] )
 	$(toolbar).append('<i class="or-action-close image-icon image-icon--menu-close"></i>');
 	$(notice).append(toolbar);
 
+	id = 0; // TODO
 	if	(name)
-		$(notice).append('<div class="name"><i class="or-action-full image-icon image-icon--action-'+type+'"></i> '+name+'</div>');
+		$(notice).append('<div class="name clickable"><a href="" data-type="open" data-action="'+type+'" data-id="'+id+'"><i class="or-action-full image-icon image-icon--action-'+type+'"></i> '+name+'</a></div>');
 
 	$(notice).append( '<div class="text">'+htmlEntities(msg)+'</div>');
 
@@ -1185,6 +1211,7 @@ function notify( type,name,status,msg,log=[] )
     }
 
 	$('#noticebar').prepend(notice); // Notice anhängen.
+    $(notice).orLinkify(); // Enable links
 
 
 	// Toogle Fullscreen for notice

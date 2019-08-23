@@ -903,7 +903,7 @@ class LoginAction extends Action
 		// Anmeldung deaktiviert werden.
 
         // Bestehendes Login-Token aus dem Cookie lesen und aus der Datenbank löschen.
-        list( $selector,$token ) = array_pad( explode('.',$_COOKIE['or_token']),2,'');
+        list( $selector,$token ) = array_pad( explode('.',@$_COOKIE['or_token']),2,'');
 
 		if   ( $selector )
 		    $this->currentUser->deleteLoginToken( $selector );
@@ -911,7 +911,8 @@ class LoginAction extends Action
 		// Cookie mit Logintoken löschen.
         $this->setCookie('or_token'   ,null );
 
-        session_unset();
+        //session_unset();
+        Session::setUser(null);
 
         // Umleiten auf eine definierte URL.s
 		$redirect_url = @$conf['security']['logout']['redirect_url'];
@@ -924,7 +925,10 @@ class LoginAction extends Action
 		// Style zurücksetzen.
 		// Der Style des Benutzers koennte auch stehen bleiben. Aber dann gäbe es Rückschlüsse darauf, wer zuletzt angemeldet war (Sicherheit!).
 		$this->setStyle( config('interface','style','default') );
-	}
+
+        $this->addNotice('user',$user->name,'LOGOUT_OK',OR_NOTICE_OK);
+
+    }
 
 	
 	

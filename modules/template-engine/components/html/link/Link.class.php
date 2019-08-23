@@ -62,6 +62,8 @@ class LinkComponent extends Component
 
 	public $modal = false;
 
+	public $afterSuccess;
+
 	/**
 	 * Link-Beginn
 	 * {@inheritDoc}
@@ -71,9 +73,12 @@ class LinkComponent extends Component
 	{
 		echo '<a';
 		
+		if ( $this->afterSuccess )
+			echo ' data-after-success="' . $this->htmlvalue($this->afterSuccess) . '"';
+		
 		if (isset($this->class))
 			echo ' class="' . $this->htmlvalue($this->class) . '"';
-		
+
 		if (isset($this->title))
 			echo ' title="' . $this->htmlvalue($this->title) . '"';
 		

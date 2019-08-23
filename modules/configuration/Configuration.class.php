@@ -79,6 +79,8 @@ class Config
 
 
     /**
+     * Gets the configuration value for this key.
+     *
      * @param $name
      * @param null $default
      * @return mixed|null
@@ -102,6 +104,8 @@ class Config
 
 
     /**
+     * Is the Config key present?
+     *
      * @param $name
      * @return bool
      */
@@ -112,8 +116,10 @@ class Config
 
 
     /**
+     * Is the boolean Value true?
+     *
      * @param $name
-     * @param bool $default
+     * @param bool $default false
      * @return bool
      */
     public function is( $name, $default = false )
@@ -126,6 +132,8 @@ class Config
 
 
     /**
+     * The configuration entries as an array.
+     *
      * @return array
      */
     public function getConfig() {
