@@ -114,7 +114,15 @@ class User extends ModelBase
 		$this->loginDate = time();
 
 		\Session::setUser( $this );
-		
+	}
+
+
+
+	/**
+	  * Benutzer als aktiven Benutzer in die Session schreiben.
+	  */
+	public function updateLoginTimestamp()
+	{
 	    $stmt = db()->sql( <<<SQL
                      UPDATE {{user}}
 	                 SET last_login={time}
@@ -123,10 +131,9 @@ SQL
 	        );
 	    $stmt->setInt( 'time'  ,time() );
 	    $stmt->setInt( 'userid',$this->userid  );
-	    
+
 	    // Datenbankabfrage ausfuehren
 	    $stmt->query();
-	
 	}
 
 

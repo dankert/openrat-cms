@@ -770,7 +770,8 @@ class LoginAction extends Action
 				$user = User::loadWithName($loginName);
 				$user->loginModuleName = $lastModule;
                 $user->setCurrent();
-                
+                $user->updateLoginTimestamp();
+
                 if ($user->passwordAlgo != Password::bestAlgoAvailable() )
                     // Re-Hash the password with a better hash algo.
                     $user->setPassword($loginPassword);

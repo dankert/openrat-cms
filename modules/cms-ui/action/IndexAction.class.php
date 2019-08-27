@@ -125,8 +125,9 @@ class IndexAction extends Action
 				try
 				{
 					$user = User::loadWithName( $username );
-					$user->setCurrent();
-					Logger::info('auto-login for user '.$username);
+                    $user->setCurrent();
+                    // Do not update the login timestamp, because this is a readonly request.
+                    Logger::info('auto-login for user '.$username);
 				}
 				catch( ObjectNotFoundException $e )
 				{
