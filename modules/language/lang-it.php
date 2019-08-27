@@ -995,6 +995,7 @@ function language() { return array(
 'NOTICE_LOGIN_FAILED'=>"</em> {nome} non assente o la parola d'accesso è errata.",
 'NOTICE_LOGIN_FAILED_MUSTCHANGEPASSWORD'=>"l'inizio attività è stato negato, perché la vostra parola d'accesso ha cronometrato fuori. Ancora, ma ora provare prego all'inizio attività insieme ad una nuova parola d'accesso.",
 'NOTICE_LOGIN_OK'=>"Hello {name}, you are signed in.",
+'NOTICE_LOGOUT_OK'=>"You are signed out.",
 'NOTICE_LOGIN_OPENID_FAILED'=>"The login for {name} at Open-ID-Server failed.",
 'NOTICE_MAIL_NOT_SENT'=>"The mail could not be sent.",
 'NOTICE_MAIL_SENT'=>"Il email è stato trasmesso.",
@@ -1154,6 +1155,7 @@ function language() { return array(
 'USER_ISADMIN_DESC'=>"hanno tutti i diritti a tutti i progetti.",
 'USER_LDAPDN_DESC'=>"<em>distinguished name</em> di questo utente nel LDAP-diretory.<br/><br/>Example: Il <tt>cn=Eddi Murphy, ou=Finance, organizzazione o=My, c=DE</tt><br/><br/>If incerto, lascia questo spazio in bianco.",
 'USER_LDAPDN'=>"LDAP giù",
+'USER_LOGIN'=>"Sign in",
 'USER_LOGINAS'=>"Entrato come",
 'USER_LOGOUT'=>"Termine attività di termine attività",
 'USER_LOGOUT_DESC'=>"da questa applicazione. La vostra sessione è chiusa.",
@@ -1288,4 +1290,7 @@ function language() { return array(
 'TOKEN'=>"Token",
 'EDIT_PASSWORD'=>"Change password",
 'SOURCE'=>"Source",
+'LEAVE_LINK'=>"Leave a link",
+'LINKS_RELATIVE'=>"Relative links",
+'LINKS_ABSOLUTE'=>"Absolute links",
 );}

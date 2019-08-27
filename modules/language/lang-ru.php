@@ -995,6 +995,7 @@ function language() { return array(
 'NOTICE_LOGIN_FAILED'=>"связаны Войти провалилась. <br> <br> В''имя пользователя название <em> () </em>''агрессивным отсутствует или неверный пароль.",
 'NOTICE_LOGIN_FAILED_MUSTCHANGEPASSWORD'=>"В Логин было отказано, б Ввиду пароль по таймауту. Попробуйте авторизоваться еще раз, б Хизб Теперь вместе с новым паролем.",
 'NOTICE_LOGIN_OK'=>"Hello {name}, you are signed in.",
+'NOTICE_LOGOUT_OK'=>"You are signed out.",
 'NOTICE_LOGIN_OPENID_FAILED'=>"The login for {name} at Open-ID-Server failed.",
 'NOTICE_MAIL_NOT_SENT'=>"The mail could not be sent.",
 'NOTICE_MAIL_SENT'=>"Это сообщение было отправлено.",
@@ -1154,6 +1155,7 @@ function language() { return array(
 'USER_ISADMIN_DESC'=>"Администраторы имеют все права во всех проектах.",
 'USER_LDAPDN_DESC'=>"В уважаемым именем этого пользователя в LDAP - diretory. <br> <br> Пример : = cn Едди Мерфи, = или финансов, о = Моя организация, с = DE <br> <br> Если вы не знаете, что л давалось это пустое.",
 'USER_LDAPDN'=>"LDAP dn",
+'USER_LOGIN'=>"Sign in",
 'USER_LOGINAS'=>"Вы вошли как",
 'USER_LOGOUT'=>"Logout",
 'USER_LOGOUT_DESC'=>"Выход Выход из данной заявке. Ваша сессия закрыта.",
@@ -1288,4 +1290,7 @@ function language() { return array(
 'TOKEN'=>"Token",
 'EDIT_PASSWORD'=>"Change password",
 'SOURCE'=>"Source",
+'LEAVE_LINK'=>"Leave a link",
+'LINKS_RELATIVE'=>"Relative links",
+'LINKS_ABSOLUTE'=>"Absolute links",
 );}

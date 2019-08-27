@@ -995,6 +995,7 @@ function language() { return array(
 'NOTICE_LOGIN_FAILED'=>"Login failed. The username ''{name}'' does not exist or the password is wrong.",
 'NOTICE_LOGIN_FAILED_MUSTCHANGEPASSWORD'=>"The Login was denied, because your password has timed out. Please try to login again, but now together with an new password.",
 'NOTICE_LOGIN_OK'=>"Hello {name}, you are signed in.",
+'NOTICE_LOGOUT_OK'=>"You are signed out.",
 'NOTICE_LOGIN_OPENID_FAILED'=>"The login for {name} at Open-ID-Server failed.",
 'NOTICE_MAIL_NOT_SENT'=>"The mail could not be sent.",
 'NOTICE_MAIL_SENT'=>"The email was sent.",
@@ -1154,6 +1155,7 @@ function language() { return array(
 'USER_ISADMIN_DESC'=>"Administrators have all rights to all projects.",
 'USER_LDAPDN_DESC'=>"The distinguished name of this user in the LDAP-directory. Example: cn =Eddi Murphy,ou =Finance,o =My organization,c =DE. If unsure, leave this blank.",
 'USER_LDAPDN'=>"LDAP dn",
+'USER_LOGIN'=>"Sign in",
 'USER_LOGINAS'=>"Logged in as",
 'USER_LOGOUT'=>"Logout",
 'USER_LOGOUT_DESC'=>"Logout from this application. Your session is closed.",
@@ -1288,4 +1290,7 @@ function language() { return array(
 'TOKEN'=>"Token",
 'EDIT_PASSWORD'=>"Change password",
 'SOURCE'=>"Source",
+'LEAVE_LINK'=>"Leave a link",
+'LINKS_RELATIVE'=>"Relative links",
+'LINKS_ABSOLUTE'=>"Absolute links",
 );}

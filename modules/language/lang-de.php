@@ -995,6 +995,7 @@ function language() { return array(
 'NOTICE_LOGIN_FAILED'=>"Anmeldung nicht möglich. Der Benutzername ''{name}'' ist nicht vorhanden oder das eingegebene Kennwort ist falsch.",
 'NOTICE_LOGIN_FAILED_MUSTCHANGEPASSWORD'=>"Die Anmeldung ist nicht möglich, da Ihr Kennwort abgelaufen ist. Bitte geben Sie nochmals Ihre Anmeldedaten zusammen mit einem neuen Kennwort ein.",
 'NOTICE_LOGIN_OK'=>"Hallo {name}, Sie sind jetzt angemeldet.",
+'NOTICE_LOGOUT_OK'=>"Sie sind jetzt abgemeldet.",
 'NOTICE_LOGIN_OPENID_FAILED'=>"Die Anmeldung für {name} am Open-ID-Server ist fehlgeschlagen.",
 'NOTICE_MAIL_NOT_SENT'=>"Die E-Mail konnte nicht gesendet werden.",
 'NOTICE_MAIL_SENT'=>"Die E-Mail wurde gesendet.",
@@ -1154,6 +1155,7 @@ function language() { return array(
 'USER_ISADMIN_DESC'=>"Administratoren haben gegenüber normalen Benutzern folgende erweiterte Rechte: Administration incl. Benutzer- und Projektverwaltung, Bearbeiten der Vorlagen, Bearbeiten von Sprachen und Projektvarianten. Darüber hinaus haben Administratoren volle Rechte auf alle Objekte in allen Projekten.",
 'USER_LDAPDN_DESC'=>"Der eindeutige Name ('distinguished name') dieses Benutzers im LDAP-Verzeichnisdienst. Sofern dieses Feld nicht leer ist, wird bei der Anmeldung das Kennwort gegen den in der Konfiguration festgelegten LDAP-Server geprüft. Der LDAP-Dienst ermöglicht Ihren Benutzern eine zentrales Kennwort für mehrere Anwendungen.<br/><br/>Ein Beispiel für einen solchen 'distinguished name' könnte sein<br><tt>cn =Hans Mustermann,ou =Buchhaltung,o =Meine Firma,c =DE</tt> Wenn sich nicht wissen, was LDAP ist oder was Sie hier eintragen sollen lassen Sie das Feld einfach leer.",
 'USER_LDAPDN'=>"LDAP dn",
+'USER_LOGIN'=>"Anmelden",
 'USER_LOGINAS'=>"Angemeldet als",
 'USER_LOGOUT'=>"Abmelden",
 'USER_LOGOUT_DESC'=>"Von dieser Anwendung abmelden, Ihre Sitzung wird geschlossen.",
@@ -1288,4 +1290,7 @@ function language() { return array(
 'TOKEN'=>"Token",
 'EDIT_PASSWORD'=>"Kennwort ändern",
 'SOURCE'=>"Quelltext",
+'LEAVE_LINK'=>"Link hinterlassen",
+'LINKS_RELATIVE'=>"Relative Links",
+'LINKS_ABSOLUTE'=>"Absolute Links",
 );}

@@ -4843,6 +4843,10 @@ NOTICE_LOGIN_FAILED_MUSTCHANGEPASSWORD:
 NOTICE_LOGIN_OK:
   de: 'Hallo {name}, Sie sind jetzt angemeldet.'
   en: 'Hello {name}, you are signed in.'
+NOTICE_LOGOUT_OK:
+  de: 'Sie sind jetzt abgemeldet.'
+
+  en: 'You are signed out.'
 NOTICE_LOGIN_OPENID_FAILED:
   de: 'Die Anmeldung für {name} am Open-ID-Server ist fehlgeschlagen.'
   en: 'The login for {name} at Open-ID-Server failed.'
@@ -5612,6 +5616,9 @@ USER_LDAPDN:
   es: LDAP abajo
   fr: LDAP vers le bas
   it: LDAP giù
+USER_LOGIN:
+  de: Anmelden
+  en: Sign in
 USER_LOGINAS:
   de: Angemeldet als
   en: Logged in as
