@@ -98,7 +98,7 @@
 
 
 <?php /* Modal dialog */ ?>
-<div id="dialog" class="is-<?php echo empty($dialogAction)?'closed':'open' ?>">
+<div id="dialog" class="is-<?php echo empty($dialogAction)?'closed':'open' ?>" data-action="<?php echo (!empty($dialogAction)?$dialogAction:'') ?>" data-method="<?php echo (!empty($dialogMethod)?$dialogMethod:'') ?>">
     <div class="view or-round-corners">
         <?php // Shows directly a modal dialog (if present)
               if(!empty($dialogAction))
@@ -130,6 +130,6 @@
 </html>
 <?php
 function embedView( $action, $method,$id ) {
-        cms_ui\UI::executeEmbedded($action,$method,$id);
+        //cms_ui\UI::executeEmbedded($action,$method,$id);
 }
 ?>

@@ -52,6 +52,8 @@ function doResponse(data,status,element)
 				{
 					Workbench.reloadAll();
 				}
+			} else {
+				Workbench.reloadViews();
 			}
 
 			$(document).trigger('orDataChanged');

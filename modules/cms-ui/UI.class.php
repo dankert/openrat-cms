@@ -42,7 +42,7 @@ class UI
             // Sending the Content-Security-Policy.
             self::setContentSecurityPolicy();
 
-            if(empty($_REQUEST[CMS_UI_REQ_PARAM_EMBED])) {
+            /*if(empty($_REQUEST[CMS_UI_REQ_PARAM_EMBED])) {
 
                 $isPost = $_SERVER['REQUEST_METHOD'] == 'POST';
 
@@ -73,7 +73,7 @@ class UI
 
             }
             else
-            {
+            {*/
                 if (empty($request->action))
                     $request->action = 'index';
 
@@ -81,7 +81,7 @@ class UI
                     $request->method = 'show';
 
                 UI::executeAction($request);
-            }
+            /*}*/
 
         } catch (BadMethodCallException $e) {
             // Action-Method does not exist.
@@ -93,7 +93,10 @@ class UI
             throw new LogicException(lang($e->key),0, $e);
         } catch (SecurityException $e) {
             Logger::info($e->getMessage());
-            Http::notAuthorized("You are not allowed to execute this action.");
+            Http::noContent();
+
+            // this is not good at all, because the user may have signed off.
+            //Http::notAuthorized("You are not allowed to execute this action.");
         } catch (Exception $e) {
             throw new LogicException("Internal CMS error: ".$e->__toString(),0, $e);
         }

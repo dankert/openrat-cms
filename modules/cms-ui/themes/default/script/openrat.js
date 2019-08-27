@@ -9,13 +9,8 @@ $( function() {
     /* Fade in all elements. */
     $('.initial-hidden').removeClass('initial-hidden');
 
-    registerHeaderEvents();
     registerWorkbenchEvents();
 
-
-    $('.view').each(function (index) {
-        afterViewLoaded(this);
-    });
 
     // Listening to the "popstate" event:
     window.onpopstate = function (ev) {
@@ -25,8 +20,8 @@ $( function() {
     initActualHistoryState();
 
     Workbench.initialize();
+    Workbench.reloadAll();
 
-    loadTree(); // Initial Loading of the navigationtree
     registerNavigation();
 
     // Binding aller Sondertasten.
@@ -100,7 +95,6 @@ function initActualHistoryState() {
 
         Navigator.toActualHistory( state );
 
-        filterMenus(state.action,state.id,state.data);
     }
 }
 
@@ -156,11 +150,11 @@ var Navigator = new function () {
 	this.navigateToNew = function(obj) {
 
 		Workbench.loadNewActionState(obj);
-		window.history.pushState(obj,obj.name,createUrl(obj.action,null,obj.id,obj.data,false) );
+		window.history.pushState(obj,obj.name,'./#/'+obj.action+(obj.id?'/'+obj.id:'') );
     }
 
     this.navigateToNewAction = function(action, method, id, params ) {
-        var state = {action:action,method:method,id:id,data:params};
+        var state = {action:action,method:method,id:Number(id),data:params};
         this.navigateToNew(state);
 	}
 
@@ -186,8 +180,53 @@ var Workbench = new function()
 
 		// Initialze Ping timer.
 		this.initializePingTimer();
-	}
+        this.initializeState();
+        this.initializeMenues();
+        this.openModalDialog();
+    }
 
+
+    /**
+     * Starts a dialog, if necessary.
+     */
+    this.openModalDialog = function () {
+
+        if   ( $('#dialog').data('action') ) {
+            startDialog('',$('#dialog').data('action'),$('#dialog').data('action'),0,{})
+        }
+    }
+
+
+    this.initializeMenues = function () {
+
+        filterMenus();
+    }
+
+
+    /**
+     * Sets the workbench state with action/id.
+     *
+     * Example: #/name/1 is translated to the state {action:name,id:1}
+     */
+    this.initializeState = function () {
+
+        let parts = window.location.hash.split('/');
+        let state = { action:'index',id:0 };
+
+        if   ( parts.length >= 2 )
+            state.action = parts[1].toLowerCase();
+
+        if   ( parts.length >= 3 )
+            state.id = Number(parts[2]);
+
+        Workbench.state = state;
+
+        // TODO: Remove this sometimes.... only state.
+        $('#editor').attr('data-action',state.action);
+        $('#editor').attr('data-id'    ,state.id    );
+        $('#editor').attr('data-extra' ,'{}'  );
+
+    }
 
     /**
 	 *  Registriert den Ping-Timer für den Sitzungserhalt.
@@ -218,6 +257,9 @@ var Workbench = new function()
 	    Workbench.state = state;
 		Workbench.loadNewAction(state.action,state.id,state.data);
 
+
+        filterMenus();
+
         $(document).trigger('orNewAction');
 	}
 
@@ -231,13 +273,20 @@ var Workbench = new function()
     	$('#editor').attr('data-id'    ,id    );
     	$('#editor').attr('data-extra' ,JSON.stringify(params));
 
-    	// View in geschlossenen Sektionen löschen, damit diese nicht stehen bleiben.
+        this.reloadViews();
+    }
+
+
+    /**
+     *
+     */
+
+    this.reloadViews = function() {
+
+        // View in geschlossenen Sektionen löschen, damit diese nicht stehen bleiben.
         $('#workbench section.closed .view-loader').empty();
 
         Workbench.loadViews( $('#workbench section.open .view-loader') );
-
-        filterMenus(action, id, params);
-
     }
 
 
@@ -247,8 +296,6 @@ var Workbench = new function()
         $('#workbench .view').empty();
 
         Workbench.loadViews( $('#workbench .view') );
-
-        registerHeaderEvents();
     }
 
 
@@ -337,6 +384,7 @@ function loadView(contentEl,action,method,id,params  )
  */
 function afterViewLoaded(viewEl )
 {
+
 	// Die Section deaktivieren, wenn die View keinen Inhalt hat.
     var section = $(viewEl).closest('section');
 
@@ -484,28 +532,47 @@ function registerDroppable(viewEl) {
 
 
 
-function registerHeaderEvents()
+function registerMenuEvents($element )
 {
+    //$e = $($element);
+
     // Mit der Maus irgendwo hin geklickt, das Menü muss schließen.
     $('body').click( function() {
         $('.toolbar-icon.menu').parents('.or-menu').removeClass('open');
     });
     // Mit der Maus geklicktes Menü aktivieren.
-    $('#title .toolbar-icon.menu').click( function(event) {
+    $($element).find('.toolbar-icon.menu').click( function(event) {
         event.stopPropagation();
         $(this).parents('.or-menu').toggleClass('open');
     });
 
     // Mit der Maus überstrichenes Menü aktivieren.
-    $('#title .toolbar-icon.menu').mouseover( function() {
+    $($element).find('.toolbar-icon.menu').mouseover( function() {
+
+        // close other menus.
         $(this).parents('.or-menu').find('.toolbar-icon.menu').removeClass('open');
+        // open the mouse-overed menu.
         $(this).addClass('open');
     });
 
+}
 
-	$('#title div.search input').orSearch( { dropdown:'#title div.search div.dropdown' } );
+function registerSearch($element )
+{
+    //$e = $($element);
+	$($element).find('.search input').orSearch( { dropdown:'#title div.search div.dropdown' } );
 
 }
+
+
+
+function registerTree(element) {
+
+    // Klick-Funktionen zum Öffnen/Schließen des Zweiges.
+    $(element).find('.or-navtree-node').orTree();
+
+}
+
 
 
 /**
@@ -520,12 +587,6 @@ function fullscreen( element ) {
 	} );
 }
 
-
-function loadTree()
-{
-		// Klick-Funktionen zum Öffnen/Schließen des Zweiges.
-    	$('.or-navtree .or-navtree-node').orTree();
-}
 
 
 
@@ -688,7 +749,7 @@ function Form() {
                     form.setLoadStatus(false);
                     $(status).remove();
 
-                    doResponse(data,textStatus,form);
+                    doResponse(data,textStatus,form.element);
                 },
                 error:function(jqXHR, textStatus, errorThrown) {
                     form.setLoadStatus(false);
@@ -751,6 +812,16 @@ function View( action,method,id,params ) {
     }
 
 
+    function registerViewEvents(element) {
+
+        registerMenuEvents( element );
+        registerSearch    ( element );
+        registerTree      ( element );
+        afterViewLoaded   ( element );
+
+    }
+
+
     this.loadView = function() {
 
         let url = createUrl( this.action,this.method,this.id,this.params,true); // URL für das Laden erzeugen.
@@ -780,7 +851,8 @@ function View( action,method,id,params ) {
                 return;
             }
 
-            afterViewLoaded( element );
+            registerViewEvents( element );
+
         });
 
     }
@@ -922,16 +994,20 @@ function openNewAction( name,action,id,extraId )
 }
 
 
-function filterMenus(action,id,params)
+function filterMenus()
 {
-	$('div.clickable').addClass('active');
-	$('div.clickable.filtered').removeClass('active').addClass('inactive');
+    let action = Workbench.state.action;
+    let id     = Workbench.state.id;
+    $('div.clickable').addClass('active');
+    $('div.clickable.filtered').removeClass('active').addClass('inactive');
+
 	$('div.clickable.filtered.on-action-'+action).addClass('active').removeClass('inactive');
 
-	// Jeder Menüeintrag bekommt die Id und Parameter.
-    $('div.clickable.filtered a').attr('data-action',action);
+    // Jeder Menüeintrag bekommt die Id und Parameter.
     $('div.clickable.filtered a').attr('data-id'    ,id    );
-    $('div.clickable.filtered a').attr('data-extra' ,JSON.stringify(params) );
+    /*
+        $('div.clickable.filtered a').attr('data-action',action);
+    */
 
 }
 
@@ -1097,36 +1173,26 @@ function createUrl(action,subaction,id,extraid,embed)
 {
 	var url = './';
 
-	url += '?_=' + action;
+	url += '?';
 
-	if  (id)
-	    url += '-' + id;
-
-    //url += '&action=' + action;
-
-    if	(subaction != null)
+    if(action)
+    	url += '&action='+action;
+    if(subaction)
     	url += '&subaction='+subaction;
-
-	//url += '&id='+id;
-
-    if(embed)
-    	url += '&embed=1';
+    if(id)
+    	url += '&id='+id;
 
 	if	( typeof extraid === 'string')
 	{
 		extraid = extraid.replace(/'/g,'"'); // Replace ' with ".
 		var extraObject = jQuery.parseJSON(extraid);
 		jQuery.each(extraObject, function(name, value) {
-			if(name=='action'||name=='subaction'||name=='id')
-				return;
 			url = url + '&' + name + '=' + value;
 		});
 	}
 	else if	( typeof extraid === 'object')
 	{
 		jQuery.each(extraid, function(name, field) {
-            if(name=='action'||name=='subaction'||name=='id')
-                return;
 			url = url + '&' + name + '=' + field;
 		});
 	}
