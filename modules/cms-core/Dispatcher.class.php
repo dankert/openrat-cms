@@ -54,7 +54,7 @@ class Dispatcher
         global $conf;
         $conf = Session::getConfig();
 
-        define('PRODUCTION', Conf()->is('production'));
+        define('PRODUCTION', Conf()->is('production',true));
         define('DEVELOPMENT', !PRODUCTION);
 
         if( DEVELOPMENT)
