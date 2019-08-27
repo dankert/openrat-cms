@@ -24,9 +24,21 @@ class RememberAuth implements Auth
 			    list( $selector,$token) = array_pad( explode('.',$_COOKIE['or_token']),2,'');
 				$dbid = $_COOKIE['or_dbid'];
 				
-				global $conf;
-				$db = new Database( $conf['database'][$dbid] );
-				$db->id = $dbid;
+                $dbConfig = config()->subset('database');
+
+                if	( ! $dbConfig->has( $dbid ) ) {
+
+                    Logger::info( 'unknown DB-Id for token-login: '.$dbid );
+                    return null;
+                }
+
+                $dbConfig = $dbConfig->subset($dbid );
+
+
+                $key = 'read'; // Only reading in database.
+
+                $db = new Database( $dbConfig->subset($key)->getConfig() + $dbConfig->getConfig() );
+                $db->id = $dbid;
 				$db->start();
 
 				$stmt = $db->sql( <<<SQL
