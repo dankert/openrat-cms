@@ -106,6 +106,8 @@ class TreeAction extends Action
 
         //$this->setTemplateVar( 'branch',$branch );
 
+        exit; // no template available.
+
     }
 
 
@@ -264,7 +266,7 @@ class TreeAction extends Action
         {
             $hasChildren = isset($b['children']) && !empty($b['children']);
 
-            echo '<li class="or-navtree-node or-navtree-node--'.($hasChildren?'is-open':'is-closed').' or-draggable" data-id="'.$b['internalId'].'" data-type="'.$b['type'].'" data-extra="'.str_replace('"',"'",$json->encode($b['extraId'])).'"><div class="or-navtree-node-control"><i class="tree-icon image-icon image-icon--node-'.($hasChildren?'open':'closed').'"></i></div><div class="clickable"><a href="./?action='.$b['type'].'&id='.$b['internalId'].'" class="entry" data-extra="'.str_replace('"',"'",$json->encode($b['extraId'])).'" data-id="'.$b['internalId'].'" data-action="'.$b['action'].'" data-type="open" title="'.$b['description'].'"><i class="image-icon image-icon--action-'.$b['icon'].'" ></i> '.$b['text'].'</a></div>';
+            echo '<li class="or-navtree-node or-navtree-node--'.($hasChildren?'is-open':'is-closed').' or-draggable" data-id="'.$b['internalId'].'" data-type="'.$b['type'].'" data-extra="'.str_replace('"',"'",$json->encode($b['extraId'])).'"><div class="or-navtree-node-control"><i class="tree-icon image-icon image-icon--node-'.($hasChildren?'open':'closed').'"></i></div><div class="clickable"><a href="./#/'.$b['type'].($b['internalId']?'/'.$b['internalId']:'').'" class="entry" data-extra="'.str_replace('"',"'",$json->encode($b['extraId'])).'" data-id="'.$b['internalId'].'" data-action="'.$b['action'].'" data-type="open" title="'.$b['description'].'"><i class="image-icon image-icon--action-'.$b['icon'].'" ></i> '.$b['text'].'</a></div>';
 
             if   ($hasChildren)
             {
