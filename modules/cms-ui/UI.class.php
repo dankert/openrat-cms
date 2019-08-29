@@ -17,10 +17,6 @@ use SecurityException;
 use template_engine\TemplateEngine;
 use template_engine\TemplateEngineInfo;
 
-define('CMS_UI_REQ_PARAM_SUBACTION', 'subaction');
-define('CMS_UI_REQ_PARAM_ACTION', 'action');
-define('CMS_UI_REQ_PARAM_EMBED', 'embed');
-
 
 class UI
 {
@@ -30,7 +26,6 @@ class UI
     public static function execute()
     {
         $request = new RequestParams();
-        $request->isEmbedded = false;
 
         try
         {
@@ -42,46 +37,13 @@ class UI
             // Sending the Content-Security-Policy.
             self::setContentSecurityPolicy();
 
-            /*if(empty($_REQUEST[CMS_UI_REQ_PARAM_EMBED])) {
+            if (empty($request->action))
+                $request->action = 'index';
 
-                $isPost = $_SERVER['REQUEST_METHOD'] == 'POST';
+            if (empty($request->method))
+                $request->method = 'show';
 
-                if($isPost)
-                {
-                    $dispatcher = new Dispatcher();
-
-                    $request->isAction = true;
-                    $dispatcher->request = $request;
-
-                    $data = $dispatcher->doAction();
-
-                    //$data['notices'];
-
-                    // POST-Action has ended, now we want to show the UI.
-                    $request->action = 'index';
-                    $request->method = 'show';
-                    $request->isAction = false;
-                    $request->isEmbedded = true;
-                    UI::executeAction($request);
-                }
-                else
-                {
-                    $request->action = 'index';
-                    $request->method = 'show';
-                    UI::executeAction($request);
-                }
-
-            }
-            else
-            {*/
-                if (empty($request->action))
-                    $request->action = 'index';
-
-                if (empty($request->method))
-                    $request->method = 'show';
-
-                UI::executeAction($request);
-            /*}*/
+            UI::executeAction($request);
 
         } catch (BadMethodCallException $e) {
             // Action-Method does not exist.
@@ -102,54 +64,13 @@ class UI
         }
     }
 
-    /**
-     * Shows a UI fragment.
-     * This can only be executed after a UI::execute()-call.
-     */
-    public static function executeEmbedded($action, $subaction, $id)
-    {
-        $request = new RequestParams();
-
-        $request->isEmbedded = true;
-        $request->action = $action;
-        $request->id     = $id;
-        $request->method = $subaction;
-
-        // Embedded Actions are ALWAYS Queries (means: GET).
-        $request->isAction = false;
-
-        try {
-            UI::executeAction($request);
-
-        } catch (BadMethodCallException $e) {
-            // Action-Method does not exist.
-            return "";
-        } catch (ObjectNotFoundException $e) {
-            Logger::warn("Embedded Action $action/$subaction: Object not found: " . $e->__toString()); // Nicht so schlimm, da dies bei gelöschten Objekten vorkommen kann.
-            return DEVELOPMENT ? $e->getMessage() : "";
-        } catch (OpenRatException $e) {
-            Logger::warn(  "Embedded Action $action/$subaction: ".$e->__toString() );
-            return DEVELOPMENT ? $e->getMessage() : lang($e->key);
-        } catch (SecurityException $e) {
-            Logger::info( "Embedded Action $action/$subaction: ".$e->getMessage() );
-            return DEVELOPMENT ? $e->getMessage() : "";
-        } catch (Exception $e) {
-            Logger::warn( "Embedded Action $action/$subaction: ".$e->__toString() );
-            return DEVELOPMENT ? $e->getMessage() : "";
-        }
-    }
-
-
 
     private static function executeAction($request)
     {
         $dispatcher = new Dispatcher();
         $dispatcher->request = $request;
 
-        if ( $request->isEmbedded )
-            $data = $dispatcher->callActionMethod();
-        else
-            $data = $dispatcher->doAction();
+        $data = $dispatcher->doAction();
 
 
         // The action is able to change its method and action name.

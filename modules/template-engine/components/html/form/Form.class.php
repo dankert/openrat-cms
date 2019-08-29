@@ -77,8 +77,6 @@ class FormComponent extends Component
         // Enable Submit on Enter - no need for...we have a submit button at the end.
 		// echo '<input type="submit" class="invisible" />';
 
-		if ( $this->target!='top')
-            echo '<input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" />';
         if ( !empty($this->languageid))
             echo '<input type="hidden" name="'.REQ_PARAM_LANGUAGE_ID.'" value="' . $this->htmlvalue($this->languageid) . '" />';
         if ( !empty($this->modelid))

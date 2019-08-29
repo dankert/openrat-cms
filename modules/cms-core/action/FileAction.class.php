@@ -115,7 +115,7 @@ class FileAction extends ObjectAction
 	function previewView()
 	{
 	    $this->file->publisher = new PublishPreview();
-		$url = Html::url($this->file->getType(),'show',$this->file->objectid,array('target'=>'none',REQ_PARAM_EMBED=>'1') );
+		$url = Html::url($this->file->getType(),'show',$this->file->objectid,array('target'=>'none') );
 		$this->setTemplateVar('preview_url',$url );
 	}
 	

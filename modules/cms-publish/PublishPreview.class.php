@@ -25,8 +25,7 @@ class PublishPreview extends Publish
         $param = array(
             'oid'                 => '__OID__'.$to->objectid.'__',
             REQ_PARAM_MODEL_ID    => $from->modelid          ,
-            REQ_PARAM_LANGUAGE_ID => $from->languageid       ,
-            REQ_PARAM_EMBED       => '1'                       );
+            REQ_PARAM_LANGUAGE_ID => $from->languageid         );
 
         if	( $from->icons )
             $param['withIcons'] = '1';

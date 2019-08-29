@@ -335,9 +335,6 @@ namespace cms\action {
             if   ( DEVELOPMENT )
                 return;
             
-            if   ( $this->request->isEmbedded )
-                return; // Embedded-Views können keine HTTP-Header setzen, daher ist alles weitere überflüssig.
-
             // Conditional-Get eingeschaltet?
             if (!config('cache', 'conditional_get'))
                 return;
