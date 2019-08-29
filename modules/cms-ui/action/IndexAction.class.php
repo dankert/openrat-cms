@@ -814,25 +814,32 @@ class IndexAction extends Action
 
     private function tryAutoLogin()
     {
-        $modules = explode(',',config('security','modules','autologin'));
+        $modules  = explode(',',config('security','modules','autologin'));
+        $username = null;
 
-        $username = '';
         foreach( $modules as $module)
         {
-            Logger::debug('Auto-Login module: '.$module);
+            Logger::debug( 'Auto-Login module: '.$module );
             $moduleClass = $module.'Auth';
             $auth = new $moduleClass;
             /* @type $auth Auth */
-            $username = $auth->username();
+            try {
 
-            if	( !empty($username) )
+                $username = $auth->username();
+            }
+            catch( Exception $e ) {
+                Logger::warn( 'Error in auth-module '.$module.":\n".$e->__toString() );
+                // Ignore this and continue with next module.
+            }
+
+            if	( $username )
             {
-                Logger::debug('Auto-Login for User '.$username);
+                Logger::debug('Auto-Login for User '.$username.' with auth-module '.$module);
                 break; // Benutzername gefunden.
             }
         }
 
-        if	( !empty( $username ) )
+        if	( $username )
         {
             try
             {
