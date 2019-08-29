@@ -47,11 +47,13 @@ class UI
 
         } catch (BadMethodCallException $e) {
             // Action-Method does not exist.
+            Logger::warn( $e->__toString() );
             Http::noContent();
         } catch (ObjectNotFoundException $e) {
-            Logger::warn("Object not found: " . $e->__toString()); // Nur Debug, da dies bei gelöschten Objekten vorkommen kann.
+            Logger::debug("Object not found: " . $e->__toString()); // Nur Debug, da dies bei gelöschten Objekten vorkommen kann.
             Http::noContent();
         } catch (OpenRatException $e) {
+            Logger::warn( $e->__toString() );
             throw new LogicException(lang($e->key),0, $e);
         } catch (SecurityException $e) {
             Logger::info($e->getMessage());
@@ -60,6 +62,7 @@ class UI
             // this is not good at all, because the user may have signed off.
             //Http::notAuthorized("You are not allowed to execute this action.");
         } catch (Exception $e) {
+            Logger::warn( $e->__toString() );
             throw new LogicException("Internal CMS error: ".$e->__toString(),0, $e);
         }
     }

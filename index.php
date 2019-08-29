@@ -64,7 +64,8 @@ if (!headers_sent())
 
     <p>Something went terribly wrong.</p>
 
-    <?php if (defined('DEVELOPMENT') && DEVELOPMENT ) { ?>
+    <?php // Display exceptions only in development mode, because the may contain sensitive internal information like passwords.
+      if (defined('DEVELOPMENT') && DEVELOPMENT ) { ?>
     <pre><?php echo $e->__toString(); ?></pre>
     <?php } ?>
 </main>
