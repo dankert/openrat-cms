@@ -34,14 +34,17 @@ class IndexAction extends Action
 	function __construct()
 	{
         parent::__construct();
-
-		//	$this->lastModified( config('config','last_modification_time') );
 	}
 
 
 	public function manifestView()
     {
         $user = Session::getUser();
+
+        if   ( is_object($user) )
+            $this->lastModified( config('config','last_modification_time') );
+        else
+            $this->lastModified( time() );
 
         // Theme für den angemeldeten Benuter ermitteln
         if	( is_object($user) && isset(config('style')[$user->style]) )
@@ -92,57 +95,17 @@ class IndexAction extends Action
 
         $user = Session::getUser();
 
-        // Gewünschten Dialog direkt öffnen.
-        if($this->hasRequestVar('dialogMethod') )
-            $this->setTemplateVar(array('dialogAction'=>$this->request->action,'dialogMethod'=>$this->getRequestVar('dialogMethod')));
-
         // Is a user logged in?
         if	( !is_object($user) )
 		{
 		    // Lets try an auto login.
+            $this->tryAutoLogin();
 
-			// Versuchen, einen Benutzernamen zu ermitteln, der im Eingabeformular vorausgewählt wird.
-			$modules = explode(',',$conf['security']['modules']['autologin']);
-			
-			$username = '';
-			foreach( $modules as $module)
-			{
-				Logger::debug('Auto-Login module: '.$module);
-				$moduleClass = $module.'Auth';
-				$auth = new $moduleClass;
-				/* @type $auth Auth */
-				$username = $auth->username();
-			
-				if	( !empty($username) )
-				{
-					Logger::debug('Auto-Login for User '.$username);
-					break; // Benutzername gefunden.
-				}
-			}
-			
-			if	( !empty( $username ) )
-			{
-				try
-				{
-					$user = User::loadWithName( $username );
-                    $user->setCurrent();
-                    // Do not update the login timestamp, because this is a readonly request.
-                    Logger::info('auto-login for user '.$username);
-				}
-				catch( ObjectNotFoundException $e )
-				{
-					Logger::warn('Username for autologin does not exist: '.$username);
+            $user = Session::getUser();
+        }
 
-                    // Kein Auto-Login moeglich, die Anmeldemaske anzeigen.
-                    $this->setTemplateVars( array('dialogAction'=>'login','dialogMethod'=>'login'));
-				}
-			}
-			else
-			{
-				// Kein Auto-Login moeglich, die Anmeldemaske anzeigen.
-                $this->setTemplateVars( array('dialogAction'=>'login','dialogMethod'=>'login'));
-			}
-		}
+        if	( !is_object($user) )
+            $this->lastModified( config('config','last_modification_time') );
 
         // Theme für den angemeldeten Benuter ermitteln
 		if	( is_object($user) && isset(config('style')[$user->style]) )
@@ -196,7 +159,7 @@ class IndexAction extends Action
             $methodList[] = array('name'=>$method,'open'=>$openByDefault);
         }
         $this->setTemplateVar('methodList', $methodList);
-        $this->setTemplateVar('favicon_url', Conf()->subset('theme')->get('favicon') );
+        $this->setTemplateVar('favicon_url', Conf()->subset('theme')->get('favicon','modules/cms-ui/themes/default/images/openrat-logo.ico') );
 
         // HTML-Datei direkt einbinden.
         $vars = $this->getOutputData();
@@ -847,6 +810,50 @@ class IndexAction extends Action
 
         $action = 'projectlist';
         $id     = 0;
+    }
+
+    private function tryAutoLogin()
+    {
+        $modules = explode(',',config('security','modules','autologin'));
+
+        $username = '';
+        foreach( $modules as $module)
+        {
+            Logger::debug('Auto-Login module: '.$module);
+            $moduleClass = $module.'Auth';
+            $auth = new $moduleClass;
+            /* @type $auth Auth */
+            $username = $auth->username();
+
+            if	( !empty($username) )
+            {
+                Logger::debug('Auto-Login for User '.$username);
+                break; // Benutzername gefunden.
+            }
+        }
+
+        if	( !empty( $username ) )
+        {
+            try
+            {
+                $user = User::loadWithName( $username );
+                $user->setCurrent();
+                // Do not update the login timestamp, because this is a readonly request.
+                Logger::info('auto-login for user '.$username);
+            }
+            catch( ObjectNotFoundException $e )
+            {
+                Logger::warn('Username for autologin does not exist: '.$username);
+
+                // Kein Auto-Login moeglich, die Anmeldemaske anzeigen.
+                $this->setTemplateVars( array('dialogAction'=>'login','dialogMethod'=>'login'));
+            }
+        }
+        else
+        {
+            // Kein Auto-Login moeglich, die Anmeldemaske anzeigen.
+            $this->setTemplateVars( array('dialogAction'=>'login','dialogMethod'=>'login'));
+        }
     }
 
 }
