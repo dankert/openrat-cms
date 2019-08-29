@@ -273,11 +273,10 @@ class Dispatcher
 
     /**
      * Aufruf der Action-Methode.
-     * Diese Methode muss public sein, da sie für Embedded-Actions aus dem UI direkt aufgerufen wird.
      *
      * @return array Vollständige Rückgabe aller Daten als assoziatives Array
      */
-    public function callActionMethod()
+    private function callActionMethod()
     {
         global $REQ;
         $actionClassName = ucfirst($this->request->action) . 'Action';
@@ -317,7 +316,7 @@ class Dispatcher
         if   ( ! $this->request->isAction && $this->request->action != 'index' )
             Session::close();
 
-        Logger::debug("Dispatcher executing {$this->request->action}/{$this->request->method}/" . @$REQ[REQ_PARAM_ID].' -> '.$actionClassName.'#'.$subactionMethodName.'() embed='.$this->request->isEmbedded);
+        Logger::debug("Dispatcher executing {$this->request->action}/{$this->request->method}/" . @$REQ[REQ_PARAM_ID].' -> '.$actionClassName.'#'.$subactionMethodName.'()');
 
 
         try {

@@ -31,7 +31,6 @@
 <div id="workbench" class="initial-hidden">
 
     <header id="title" class="view view-static" data-action="title" data-method="show">
-        <?php echo embedView('title','show', 0); ?>
     </header>
 
 
@@ -42,7 +41,6 @@
                 <a href=""></a>
             </header>
             <div id="navigation" class="or-navtree view view-static" data-action="tree" data-method="tree">
-                <?php embedView('tree','tree',0); ?>
             </div>
 
         </nav>
@@ -84,7 +82,7 @@
                     -->
 
 
-                <div class="view view-loader closable" data-method="<?php echo $method['name'] ?>"><?php if($method ['open']) {embedView($action,$method['name'],$id);}else{echo '';} ?></div>
+                <div class="view view-loader closable" data-method="<?php echo $method['name'] ?>"></div>
 
             </section>
             <?php } ?>
@@ -100,10 +98,6 @@
 <?php /* Modal dialog */ ?>
 <div id="dialog" class="is-<?php echo empty($dialogAction)?'closed':'open' ?>" data-action="<?php echo (!empty($dialogAction)?$dialogAction:'') ?>" data-method="<?php echo (!empty($dialogMethod)?$dialogMethod:'') ?>">
     <div class="view or-round-corners">
-        <?php // Shows directly a modal dialog (if present)
-              if(!empty($dialogAction))
-                  embedView($dialogAction,$dialogMethod, 0);
-        ?>
     </div>
 
     <div class="filler"><?php /* empty element, this is only for styling the background. */ ?>
@@ -128,8 +122,3 @@
 
 </body>
 </html>
-<?php
-function embedView( $action, $method,$id ) {
-        //cms_ui\UI::executeEmbedded($action,$method,$id);
-}
-?>
