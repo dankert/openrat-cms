@@ -264,7 +264,13 @@ class BaseObject
         {
             $user     = \Session::getUser();
 
-            if	( $user->isAdmin )
+
+            if  ( ! is_object($user)) {
+                // TODO: read "all" permissions here. maybe.
+                return false;
+            }
+
+            elseif	( $user->isAdmin )
             {
                 // Administratoren erhalten eine Maske mit allen Rechten
                 $this->aclMask = Acl::ACL_READ +

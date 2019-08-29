@@ -150,7 +150,7 @@ class Dispatcher
                 break;
             case Action::SECURITY_ADMIN:
                 if (!is_object($do->currentUser) || !$do->currentUser->isAdmin)
-                    throw new SecurityException('This action requires administration privileges, but user ' . $do->currentUser->name . ' is not an admin');
+                    throw new SecurityException('This action requires administration privileges, but user ' . @$do->currentUser->name . ' is not an admin');
                 break;
             default:
         }

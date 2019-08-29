@@ -814,7 +814,7 @@ class IndexAction extends Action
 
     private function tryAutoLogin()
     {
-        $modules  = explode(',',config('security','modules','autologin'));
+        $modules  = config('security','autologin','modules');
         $username = null;
 
         foreach( $modules as $module)

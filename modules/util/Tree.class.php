@@ -32,7 +32,7 @@ class Tree
     {
         // Feststellen, ob der angemeldete Benutzer ein Administrator ist
         $user = Session::getUser();
-        $this->userIsAdmin = isset($user) && $user->isAdmin;
+        $this->userIsAdmin = is_object($user) && $user->isAdmin;
     }
 
     public function root()

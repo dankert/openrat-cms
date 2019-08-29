@@ -748,10 +748,12 @@ function createDefaultConfig()
     $conf['security']['authorize']['type']='database';
     $conf['security']['authorize']['type']='ldap';
 
-    $conf['security']['modules'] = array();
-    $conf['security']['modules']['autologin']='Remember,Guest,SingleSignon';
-    $conf['security']['modules']['preselect']='Ident,SSL,Cookie';
-    $conf['security']['modules']['authenticate']='LdapUserDN,Database,Internal';
+    $conf['security']['autologin'] = array();
+    $conf['security']['autologin']['modules']=array('Remember','Guest','SingleSignon');
+    $conf['security']['preselect'] = array();
+    $conf['security']['preselect']['modules']=array('Ident','SSL','Cookie');
+    $conf['security']['authenticate'] = array();
+    $conf['security']['authenticate']['modules']=array('LdapUserDN','Database','Internal');
 
     $conf['security']['newuser'] = array();
     $conf['security']['newuser']['autoadd'] = true;

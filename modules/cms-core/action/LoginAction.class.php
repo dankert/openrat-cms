@@ -365,7 +365,7 @@ class LoginAction extends Action
         $this->setTemplateVar('send_password',$conf['login'   ]['send_password']);
 
         // Versuchen, einen Benutzernamen zu ermitteln, der im Eingabeformular vorausgewählt wird.
-        $modules = explode(',',$conf['security']['modules']['preselect']);
+        $modules = $conf['security']['preselect']['modules'];
 
         $username = '';
         foreach( $modules as $module)
@@ -718,8 +718,8 @@ class LoginAction extends Action
 		$this->setCookie('or_username',$loginName );
 		$this->setCookie('or_dbid'    ,$this->getRequestVar('dbid'));
 
-		// Authentifzierungs-Module.
-		$modules = explode(',',$conf['security']['modules']['authenticate']);
+		// Authentifizierungs-Module.
+		$modules = $conf['security']['authenticate']['modules'];
 		
 		$loginOk            = false;
 		$mustChangePassword = false;
