@@ -1,4 +1,4 @@
-
+<?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
 	
 		<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
 			<tr>

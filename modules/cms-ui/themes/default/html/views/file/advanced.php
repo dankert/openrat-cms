@@ -1,4 +1,4 @@
-
+<?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
 	
 		<form name="" target="_self" data-target="view" action="./" data-method="advanced" data-action="file" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form file" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="file" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="advanced" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<label class="or-form-row"><span class="or-form-label"><?php echo lang('file_extension') ?></span><span class="or-form-input"><div class="inputholder"><input id="<?php echo REQUEST_ID ?>_extension" name="<?php if ('') echo ''.'_' ?>extension<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="extension" value="<?php echo Text::encodeHtml(@$extension) ?>" /><?php if ('') { ?><input type="hidden" name="extension" value="<?php $extension ?>"/><?php } ?></div></span></label>

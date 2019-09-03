@@ -1,4 +1,4 @@
-
+<?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
 	
 		<div class="clickable">
 			<a class="action" target="_self" data-url="<?php echo $preview_url ?>" data-type="popup" data-action="" data-method="preview" data-id="<?php echo OR_ID ?>" data-extra="[]" href="./#//">

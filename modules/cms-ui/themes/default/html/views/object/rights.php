@@ -1,4 +1,4 @@
-
+<?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
 	
 		<?php $if2=($type=='folder'); if($if2){?>
 			

@@ -66,7 +66,8 @@ class TemplateEngine
 			$document = $this->loadDocument($srcFilename);
 			
 			$outFile = @fopen($filename, 'w');
-			
+            fwrite($outFile, '<?php if (!defined(\'OR_TITLE\')) die(\'Forbidden\'); ?> ');
+
 			if (! is_resource($outFile))
 				throw new \LogicException("Template '$srcXmlFilename': Unable to open file for writing: '$filename'");
 			

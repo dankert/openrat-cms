@@ -1,4 +1,4 @@
-
+<?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
 	
 		<form name="" target="_self" data-target="view" action="./" data-method="result" data-action="search" data-id="<?php echo OR_ID ?>" method="GET" enctype="application/x-www-form-urlencoded" class="or-form search" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="search" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="result" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<div class="line">

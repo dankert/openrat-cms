@@ -1,4 +1,4 @@
-
+<?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
 	
 		<div class="toolbar-icon">
 			<i class="image-icon image-icon--menu-refresh"></i>

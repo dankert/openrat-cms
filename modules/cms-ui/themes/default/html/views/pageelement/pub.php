@@ -1,4 +1,4 @@
-
+<?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
 	
 		<?php $if2=(config('security','nopublish')); if($if2){?>
 			<div class="message warn">
