@@ -167,15 +167,17 @@ class LinkComponent extends Component
 				break;
 
 			default:
-				echo ' href="<?php echo Html::url('.$this->value($this->action).','.$this->value($this->subaction).','.$this->value($this->id);
+				//echo ' href="<?php echo Html::url('.$this->value($this->action).','.$this->value($this->subaction).','.$this->value($this->id);
+				echo ' href="./#/'.$this->htmlvalue($this->action).'/'.$this->htmlvalue($this->id).'"';
 
-				$arrayvalues = array();
-				foreach( $this->getExtraParamArray() as $varname => $varvalue )
-                    $arrayvalues[] = $this->value($varname) . '=>'.$this->value($varvalue);
-
-                echo ',array('.implode(',',$arrayvalues).')';
-
-				echo ') ?>"';
+// Verlinkungen von draußen brauchen nichts weiter.
+//				$arrayvalues = array();
+//				foreach( $this->getExtraParamArray() as $varname => $varvalue )
+//                    $arrayvalues[] = $this->value($varname) . '=>'.$this->value($varvalue);
+//
+//                echo ',array('.implode(',',$arrayvalues).')';
+//
+/*				echo ') ?>"';*/
 		}
 		
 		echo '>';
@@ -183,8 +185,7 @@ class LinkComponent extends Component
 
 	public function end()
 	{
-		echo '</a>
-';
+		echo '</a>';
 	}
 
 
