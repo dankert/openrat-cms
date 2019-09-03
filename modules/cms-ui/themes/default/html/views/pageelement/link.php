@@ -1,11 +1,11 @@
 
 	
 		
-			<form name="" target="_self" action="<?php echo OR_ACTION ?>" data-method="<?php echo OR_METHOD ?>" data-action="<?php echo OR_ACTION ?>" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="<?php echo OR_ACTION ?>" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="<?php echo OR_ACTION ?>" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="<?php echo OR_METHOD ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+			<form name="" target="_self" data-target="view" action="./" data-method="link" data-action="pageelement" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form pageelement" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="pageelement" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="link" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 				
 					<tr>
 						<td colspan="2" class="help">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities($desc))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities($desc))); ?></span>
 							
 						</td>
 					</tr>
@@ -15,26 +15,26 @@
 							</select></div>
 						</td>
 					</tr>
-					<?php $if5=(!empty($release)); if($if5){?>
-						<?php $if6=(!empty($publish)); if($if6){?>
+					<?php $if5=(isset($release)); if($if5){?>
+						<?php $if6=(isset($publish)); if($if6){?>
 							<tr>
 								<td colspan="2">
-									<fieldset class="<?php echo '1'?" open":"" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow-right closed" /><div class="arrow-down open" /><?php echo lang('options') ?></legend><div>
+									<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div class="closable">
 									</div></fieldset>
 								</td>
 							</tr>
 						<?php } ?>
 					<?php } ?>
-					<?php $if5=(!empty($release)); if($if5){?>
+					<?php $if5=(isset($release)); if($if5){?>
 						<tr>
 							<td colspan="2">
-								<?php { $tmpname     = 'release';$default  = '';$readonly = '';		
+								<?php { $tmpname     = 'release';$default  = '';$readonly = '';$required = '';		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
 			$checked = $default;
 
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
 
 		if ( $readonly && $checked )
 		{ 
@@ -43,24 +43,24 @@
 		} ?>
 								
 								<label for="<?php echo REQUEST_ID ?>_release" class="label">
-									<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
+									<span><?php echo nl2br('&nbsp;'); ?></span>
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_RELEASE')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_RELEASE')))); ?></span>
 									
 								</label>
 							</td>
 						</tr>
 					<?php } ?>
-					<?php $if5=(!empty($publish)); if($if5){?>
+					<?php $if5=(isset($publish)); if($if5){?>
 						<tr>
 							<td colspan="2">
-								<?php { $tmpname     = 'publish';$default  = '';$readonly = '';		
+								<?php { $tmpname     = 'publish';$default  = '';$readonly = '';$required = '';		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
 			$checked = $default;
 
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
 
 		if ( $readonly && $checked )
 		{ 
@@ -69,9 +69,9 @@
 		} ?>
 								
 								<label for="<?php echo REQUEST_ID ?>_publish" class="label">
-									<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
+									<span><?php echo nl2br('&nbsp;'); ?></span>
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('PAGE_PUBLISH_AFTER_SAVE')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang('PAGE_PUBLISH_AFTER_SAVE')))); ?></span>
 									
 								</label>
 							</td>
@@ -80,13 +80,13 @@
 					<tr>
 						<td colspan="2" class="act">
 									<div class="invisible"><input type="submit" 	name="ok" class="%class%"
-	title="Bestätigen"
-	value="&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;" />	
+	title="?button_ok_DESC?"
+	value="&nbsp;&nbsp;&nbsp;&nbsp;?button_ok?&nbsp;&nbsp;&nbsp;&nbsp;" />	
 							</div>
 						</td>
 					</tr>
 				
-			<div class="bottom"><div class="command "><input type="button" class="submit ok" value="OK" /></div></div></form>
+			<div class="or-form-actionbar"><input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" /><input type="submit" class="or-form-btn or-form-btn--primary" value="?BUTTON_OK?" /></div></form>
 			
 			
 		

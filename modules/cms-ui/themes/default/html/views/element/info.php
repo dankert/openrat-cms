@@ -1,6 +1,6 @@
 
 	
-		<div class="table-wrapper"><div class="table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><table width="100%"></div>
+		<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
 			<tr class="data">
 				<td colspan="1">
 					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'type'.'')))); ?></span>
@@ -36,5 +36,5 @@
 					
 				</td>
 			</tr>
-		</table>
+		</table></div></div>
 	

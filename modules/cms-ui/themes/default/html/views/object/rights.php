@@ -8,7 +8,7 @@
 			
 			
 		<?php } ?>
-		<div class="table-wrapper"><div class="table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><table width="100%"></div>
+		<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
 			<tr class="headline">
 				<td class="help">
 					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_NAME'.'')))); ?></span>
@@ -80,20 +80,18 @@
 							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_DELETE'.'')))); ?></span>
 							
 						</a>
-
 					</td>
 				</tr>
 			<?php } ?>
 			<tr class="data">
 				<td colspan="99" class="clickable">
-					<a target="_self" date-name="<?php echo lang('menu_aclform') ?>" name="<?php echo lang('menu_aclform') ?>" data-type="dialog" data-action="" data-method="aclform" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'aclform'}" href="<?php echo Html::url('','aclform','',array('dialogAction'=>'','dialogMethod'=>'aclform')) ?>">
+					<a target="_self" date-name="<?php echo lang('menu_aclform') ?>" name="<?php echo lang('menu_aclform') ?>" data-type="dialog" data-action="" data-method="aclform" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'aclform'}" href="./#//">
 						<i class="image-icon image-icon--method-add"></i>
 						
 						<span><?php echo nl2br(encodeHtml(htmlentities(lang('new')))); ?></span>
 						
 					</a>
-
 				</td>
 			</tr>
-		</table>
+		</table></div></div>
 	

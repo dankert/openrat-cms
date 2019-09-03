@@ -189,7 +189,7 @@ class TemplateEngine
         $templateFile = dirname( $srcFile ).'/'.substr( basename($srcFile),0,strpos( basename($srcFile),'.')).'.php';
 
         // In development mode, we are compiling every template on the fly.
-        if (DEVELOPMENT) {
+        if (DEVELOPMENT && false /*use dedicated template compiler in update.html */) {
 
             // Compile the template.
             // From a XML source file we are generating a PHP file.

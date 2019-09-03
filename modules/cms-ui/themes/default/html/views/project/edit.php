@@ -1,6 +1,6 @@
 
 	
-		<div class="table-wrapper"><div class="table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><table width="100%"></div>
+		<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
 			<tr class="headline">
 				<td>
 					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_TYPE'.'')))); ?></span>
@@ -24,7 +24,7 @@
 			<?php foreach($content as $list_key=>$list_value){ ?><?php extract($list_value) ?>
 				<tr class="data">
 					<td class="clickable">
-						<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="<?php echo $type ?>" data-method="edit" data-id="<?php echo $id ?>" data-extra="[]" href="<?php echo Html::url($type,'',$id,array()) ?>">
+						<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="<?php echo $type ?>" data-method="edit" data-id="<?php echo $id ?>" data-extra="[]" href="./#/<?php echo $type ?>/<?php echo $id ?>">
 							<i class="image-icon image-icon--action-<?php echo $type ?>"></i>
 							
 							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.$name.'')))); ?></span>
@@ -32,9 +32,8 @@
 							<span><?php echo nl2br('&nbsp;'); ?></span>
 							
 						</a>
-
 					</td>
 				</tr>
 			<?php } ?>
-		</table>
+		</table></div></div>
 	

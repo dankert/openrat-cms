@@ -61,11 +61,10 @@
 								<td>
 									<i class="image-icon image-icon--action-<?php echo $objecttype ?>"></i>
 									
-									<a target="_self" data-type="open" data-action="<?php echo $objecttype ?>" data-method="rights" data-id="<?php echo $objectid ?>" data-extra="[]" href="<?php echo Html::url($objecttype,'',$objectid,array()) ?>">
-										<span title="<?php echo lang('select') ?>"><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $objectname,20,'..',constant('STR_PAD_BOTH') )))); ?></span>
+									<a target="_self" data-type="open" data-action="<?php echo $objecttype ?>" data-method="rights" data-id="<?php echo $objectid ?>" data-extra="[]" href="./#/<?php echo $objecttype ?>/<?php echo $objectid ?>">
+										<span title="<?php echo lang('select') ?>"><?php echo nl2br(encodeHtml(htmlentities($objectname))); ?></span>
 										
 									</a>
-
 								</td>
 								<td>
 									<i class="image-icon image-icon--action-language"></i>

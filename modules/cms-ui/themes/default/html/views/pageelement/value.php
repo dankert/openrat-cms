@@ -1,6 +1,6 @@
 
 	
-		<form name="" target="_self" data-target="view" action="./" data-method="value" data-action="pageelement" data-id="<?php echo OR_ID ?>" method="post" enctype="application/x-www-form-urlencoded" class="or-form pageelement" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="pageelement" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="value" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="view" action="./" data-method="value" data-action="pageelement" data-id="<?php echo OR_ID ?>" method="post" enctype="application/x-www-form-urlencoded" class="or-form pageelement" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="pageelement" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="value" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<input type="hidden" name="languageid" value="<?php echo $languageid ?>"/>
 			
 			<input type="hidden" name="elementid" value="<?php echo $elementid ?>"/>
@@ -226,7 +226,7 @@
 						<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('editor_show_language') ?></legend><div class="closable">
 							<div>
 								<?php foreach($languages as $languageid=>$languagename){ ?>
-									<input  class="radio" type="radio" id="<?php echo REQUEST_ID ?>_otherlanguageid_<?php echo $languageid ?>" name="otherlanguageid" value="<?php echo $languageid ?>"<?php if($languageid==@$otherlanguageid)echo ' checked="checked"' ?> />
+									<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_otherlanguageid_<?php echo $languageid ?>" name="<?php if ('') echo ''.'_' ?>otherlanguageid<?php if ('') echo '_disabled' ?>" value="<?php echo $languageid ?>"<?php if($languageid==@$otherlanguageid)echo ' checked="checked"' ?> />
 									
 									<label for="<?php echo REQUEST_ID ?>_<?php echo 'otherlanguageid_'.$languageid.'' ?>" class="label">
 										<span><?php echo nl2br(encodeHtml(htmlentities($languagename))); ?></span>

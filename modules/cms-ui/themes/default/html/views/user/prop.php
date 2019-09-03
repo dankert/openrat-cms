@@ -1,6 +1,6 @@
 
 	
-		<form name="" target="_self" data-target="view" action="./" data-method="prop" data-action="user" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form user" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="user" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="prop" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="view" action="./" data-method="prop" data-action="user" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form user" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="user" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="prop" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<div class="line">
 				<div class="label">
 					<label for="<?php echo REQUEST_ID ?>_name" class="label"><?php echo lang('user_username') ?>
@@ -11,7 +11,7 @@
 					
 				</div>
 			</div>
-			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('ADDITIONAL_INFO') ?></legend><div>
+			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('ADDITIONAL_INFO') ?></legend><div class="closable">
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_fullname" class="label"><?php echo lang('user_fullname') ?>
@@ -31,7 +31,7 @@
 						<div class="input">
 							<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_mail" name="<?php if ('') echo ''.'_' ?>mail<?php if ('') echo '_disabled' ?>" type="text" maxlength="255" class="" value="<?php echo Text::encodeHtml(@$mail) ?>" /><?php if ('') { ?><input type="hidden" name="mail" value="<?php $mail ?>"/><?php } ?></div>
 							
-							<i class="image-icon image-icon--menu-qrcode or-qrcode or-info" data-qrcode="<?php echo 'mailto:'.$mail.'' ?>" title="QR-Code anzeigen"></i>
+							<i class="image-icon image-icon--menu-qrcode or-qrcode or-info" data-qrcode="<?php echo 'mailto:'.$mail.'' ?>" title="?QRCODE_SHOW?"></i>
 							
 						</div>
 					</div>
@@ -54,7 +54,7 @@
 					<div class="input">
 						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_tel" name="<?php if ('') echo ''.'_' ?>tel<?php if ('') echo '_disabled' ?>" type="text" maxlength="128" class="" value="<?php echo Text::encodeHtml(@$tel) ?>" /><?php if ('') { ?><input type="hidden" name="tel" value="<?php $tel ?>"/><?php } ?></div>
 						
-						<i class="image-icon image-icon--menu-qrcode or-qrcode or-info" data-qrcode="<?php echo 'tel:'.$tel.'' ?>" title="QR-Code anzeigen"></i>
+						<i class="image-icon image-icon--menu-qrcode or-qrcode or-info" data-qrcode="<?php echo 'tel:'.$tel.'' ?>" title="?QRCODE_SHOW?"></i>
 						
 					</div>
 				</div>
@@ -83,7 +83,7 @@
 					</div>
 				</div>
 			</div></fieldset>
-			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div>
+			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div class="closable">
 				<div class="line">
 					<div class="label">
 					</div>
@@ -127,7 +127,7 @@
 					</div>
 				</div>
 			</div></fieldset>
-			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('security') ?></legend><div>
+			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('security') ?></legend><div class="closable">
 				<div class="line">
 					<div class="label">
 					</div>
@@ -148,7 +148,7 @@
 						
 						<label for="<?php echo REQUEST_ID ?>_totp" class="label"><?php echo lang('user_totp') ?>
 						</label>
-						<i class="image-icon image-icon--menu-qrcode or-qrcode or-info" data-qrcode="<?php echo $totpSecretUrl ?>" title="QR-Code anzeigen"></i>
+						<i class="image-icon image-icon--menu-qrcode or-qrcode or-info" data-qrcode="<?php echo $totpSecretUrl ?>" title="?QRCODE_SHOW?"></i>
 						
 					</div>
 				</div>
@@ -172,10 +172,10 @@
 						
 						<label for="<?php echo REQUEST_ID ?>_hotp" class="label"><?php echo lang('user_hotp') ?>
 						</label>
-						<i class="image-icon image-icon--menu-qrcode or-qrcode or-info" data-qrcode="<?php echo $hotpSecretUrl ?>" title="QR-Code anzeigen"></i>
+						<i class="image-icon image-icon--menu-qrcode or-qrcode or-info" data-qrcode="<?php echo $hotpSecretUrl ?>" title="?QRCODE_SHOW?"></i>
 						
 					</div>
 				</div>
 			</div></fieldset>
-		<div class="or-form-actionbar"><input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" /><input type="submit" class="or-form-btn or-form-btn--primary" value="OK" /></div></form>
+		<div class="or-form-actionbar"><input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" /><input type="submit" class="or-form-btn or-form-btn--primary" value="?BUTTON_OK?" /></div></form>
 	

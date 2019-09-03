@@ -1,12 +1,12 @@
 
 	
-		<form name="" target="_self" data-target="view" action="./" data-method="changetemplateselectelements" data-action="page" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="page" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="page" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="changetemplateselectelements" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="view" action="./" data-method="changetemplateselectelements" data-action="page" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form page" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="page" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="changetemplateselectelements" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<input type="hidden" name="newtemplateid" value="<?php echo $newtemplateid ?>"/>
 			
 			<?php foreach($elements as $list_key=>$list_value){ ?><?php extract($list_value) ?>
 				<div class="line">
 					<div class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
 						
 					</div>
 					<div class="input">
@@ -15,5 +15,5 @@
 					</div>
 				</div>
 			<?php } ?>
-		<div class="bottom"><div class="command 1"><input type="submit" class="submit ok" value="<?php echo lang('MENU_CHANGETEMPLATE') ?>" /><input type="button" class="submit cancel" value="<?php echo lang("CANCEL") ?>" /></div></div></form>
+		<div class="or-form-actionbar"><input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" /><input type="submit" class="or-form-btn or-form-btn--primary" value="<?php echo lang('MENU_CHANGETEMPLATE') ?>" /></div></form>
 	

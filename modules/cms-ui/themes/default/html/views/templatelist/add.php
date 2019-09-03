@@ -1,6 +1,6 @@
 
 	
-		<form name="" target="_self" data-target="view" action="./" data-method="add" data-action="templatelist" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form templatelist" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="templatelist" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="add" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="view" action="./" data-method="add" data-action="templatelist" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form templatelist" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="templatelist" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="add" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<div class="line">
 				<div class="label">
 					<span><?php echo nl2br(encodeHtml(htmlentities(lang('name')))); ?></span>
@@ -11,10 +11,10 @@
 					
 				</div>
 			</div>
-			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div>
+			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div class="closable">
 				<div class="line">
 					<div class="label">
-						<input  class="radio" type="radio" id="<?php echo REQUEST_ID ?>_type_empty" name="type" value="empty"<?php if('empty'==@$type)echo ' checked="checked"' ?> />
+						<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_empty" name="<?php if ('') echo ''.'_' ?>type<?php if ('') echo '_disabled' ?>" value="empty"<?php if('empty'==@$type)echo ' checked="checked"' ?> />
 						
 					</div>
 					<div class="input">
@@ -30,7 +30,7 @@
 							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'copy'.'')))); ?></span>
 							
 						</label>
-						<input  class="radio" type="radio" id="<?php echo REQUEST_ID ?>_type_copy" name="type" value="copy"<?php if('copy'==@$type)echo ' checked="checked"' ?> />
+						<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_copy" name="<?php if ('') echo ''.'_' ?>type<?php if ('') echo '_disabled' ?>" value="copy"<?php if('copy'==@$type)echo ' checked="checked"' ?> />
 						
 					</div>
 					<div class="input">
@@ -44,7 +44,7 @@
 							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'example'.'')))); ?></span>
 							
 						</label>
-						<input  class="radio" type="radio" id="<?php echo REQUEST_ID ?>_type_example" name="type" value="example"<?php if('example'==@$type)echo ' checked="checked"' ?> />
+						<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_example" name="<?php if ('') echo ''.'_' ?>type<?php if ('') echo '_disabled' ?>" value="example"<?php if('example'==@$type)echo ' checked="checked"' ?> />
 						
 					</div>
 					<div class="input">
@@ -53,5 +53,5 @@
 					</div>
 				</div>
 			</div></fieldset>
-		<div class="or-form-actionbar"><input type="submit" class="or-form-btn or-form-btn--primary" value="OK" /></div></form>
+		<div class="or-form-actionbar"><input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" /><input type="submit" class="or-form-btn or-form-btn--primary" value="?BUTTON_OK?" /></div></form>
 	

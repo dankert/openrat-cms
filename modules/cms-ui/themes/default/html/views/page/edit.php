@@ -26,13 +26,12 @@
 			<?php foreach($elements as $list_key=>$list_value){ ?><?php extract($list_value) ?>
 				<tr class="data clickable">
 					<td>
-						<a title="<?php echo $desc ?>" target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="pageelement" data-method="edit" data-id="<?php echo $pageelementid ?>" data-extra="[]" href="<?php echo Html::url('pageelement','',$pageelementid,array()) ?>">
+						<a title="<?php echo $desc ?>" target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="pageelement" data-method="edit" data-id="<?php echo $pageelementid ?>" data-extra="[]" href="./#/pageelement/<?php echo $pageelementid ?>">
 							<i class="image-icon image-icon--action-pageelement"></i>
 							
 							<span><?php echo nl2br(encodeHtml(htmlentities($label))); ?></span>
 							
 						</a>
-
 					</td>
 					<td title="<?php echo $desc ?>">
 						<span><?php echo nl2br(encodeHtml(htmlentities($desc))); ?></span>

@@ -1,121 +1,119 @@
 
 	
-		<form name="" target="_self" data-target="view" action="./" data-method="prop" data-action="pageelement" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="pageelement" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="pageelement" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="prop" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
-			<table width="100%">
+		<form name="" target="_self" data-target="view" action="./" data-method="prop" data-action="pageelement" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form pageelement" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="pageelement" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="prop" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+			<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
 				<tr>
 					<td>
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('name')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('name')))); ?></span>
 						
 					</td>
 					<td class="name">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
 						
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('description')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('description')))); ?></span>
 						
 					</td>
 					<td>
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities($description))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities($description))); ?></span>
 						
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('type')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('type')))); ?></span>
 						
 					</td>
 					<td class="filename">
-						<img class="image-icon image-icon--element" title="" src="./modules/cms-ui/themes/default/images/icon/element/<?php echo $element_type ?>.svg" />
+						<i class="image-icon image-icon--element-<?php echo $element_type ?>"></i>
 						
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'el_'.$element_type.''.'')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'el_'.$element_type.''.'')))); ?></span>
 						
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2">
-						<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('additional_info') ?></legend><div>
+						<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('additional_info') ?></legend><div class="closable">
 						</div></fieldset>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'template'.'')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'template'.'')))); ?></span>
 						
 					</td>
 					<td>
 						<?php $if6=(isset($template_url)); if($if6){?>
-							<a target="_self" data-url="<?php echo $template_url ?>" data-action="" data-method="prop" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
-								<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/icon_template.png" />
+							<a target="_self" data-url="<?php echo $template_url ?>" data-action="" data-method="prop" data-id="<?php echo OR_ID ?>" data-extra="[]" href="./#//">
+								<img src="./modules/cms-ui/themes/default/images/icon/icon_template.png" />
 								
-								<span class="text"><?php echo nl2br(encodeHtml(htmlentities($template_name))); ?></span>
+								<span><?php echo nl2br(encodeHtml(htmlentities($template_name))); ?></span>
 								
 							</a>
-
 						<?php } ?>
-						<?php $if6=(empty($template_url)); if($if6){?>
-							<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/icon_template.png" />
+						<?php $if6=(($template_url)==FALSE); if($if6){?>
+							<img src="./modules/cms-ui/themes/default/images/icon/icon_template.png" />
 							
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities($template_name))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities($template_name))); ?></span>
 							
 						<?php } ?>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'element'.'')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'element'.'')))); ?></span>
 						
 					</td>
 					<td>
 						<?php $if6=(isset($element_url)); if($if6){?>
-							<a target="_self" data-url="<?php echo $element_url ?>" data-action="" data-method="prop" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
-								<img class="image-icon image-icon--element" title="" src="./modules/cms-ui/themes/default/images/icon/element/<?php echo $element_type ?>.svg" />
+							<a target="_self" data-url="<?php echo $element_url ?>" data-action="" data-method="prop" data-id="<?php echo OR_ID ?>" data-extra="[]" href="./#//">
+								<i class="image-icon image-icon--element-<?php echo $element_type ?>"></i>
 								
-								<span class="text"><?php echo nl2br(encodeHtml(htmlentities($element_name))); ?></span>
+								<span><?php echo nl2br(encodeHtml(htmlentities($element_name))); ?></span>
 								
 							</a>
-
 						<?php } ?>
-						<?php $if6=(empty($element_url)); if($if6){?>
-							<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/element.png" />
+						<?php $if6=(($element_url)==FALSE); if($if6){?>
+							<img src="./modules/cms-ui/themes/default/images/icon/element.png" />
 							
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities($element_name))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities($element_name))); ?></span>
 							
 						<?php } ?>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2">
-						<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('prop_userinfo') ?></legend><div>
+						<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('prop_userinfo') ?></legend><div class="closable">
 						</div></fieldset>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('lastchange')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('lastchange')))); ?></span>
 						
 					</td>
 					<td>
-						<table width="100%">
+						<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
 							<tr>
 								<td>
-									<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/el_date.png" />
+									<img src="./modules/cms-ui/themes/default/images/icon/el_date.png" />
 									
 									<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($lastchange_date) ?>
 									
 								</td>
 								<td>
-									<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/user.png" />
+									<img src="./modules/cms-ui/themes/default/images/icon/user.png" />
 									
 									<?php include_once( 'modules/template-engine/components/html/user/component-user.php') ?><?php component_user($lastchange_user) ?>
 									
 								</td>
 							</tr>
-						</table>
+						</table></div></div>
 					</td>
 				</tr>
-			</table>
-		<div class="bottom"><div class="command "><input type="submit" class="submit ok" value="OK" /></div></div></form>
+			</table></div></div>
+		<div class="or-form-actionbar"><input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" /><input type="submit" class="or-form-btn or-form-btn--primary" value="?BUTTON_OK?" /></div></form>
 	

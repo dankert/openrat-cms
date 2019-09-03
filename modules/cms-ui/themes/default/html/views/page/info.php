@@ -2,7 +2,7 @@
 	
 		
 		
-		<form name="" target="_self" data-target="view" action="./" data-method="info" data-action="page" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form page" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="page" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="info" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="view" action="./" data-method="info" data-action="page" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form page" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="page" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="info" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<span class="headline"><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
 			
 			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><div class="closable">
@@ -40,11 +40,10 @@
 					<div class="label">
 					</div>
 					<div class="input clickable">
-						<a class="or-link-btn" target="_self" data-type="dialog" data-action="" data-method="prop" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'prop'}" href="<?php echo Html::url('','prop','',array('dialogAction'=>'','dialogMethod'=>'prop')) ?>">
+						<a class="or-link-btn" target="_self" data-type="dialog" data-action="" data-method="prop" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'prop'}" href="./#//">
 							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'edit'.'')))); ?></span>
 							
 						</a>
-
 					</div>
 				</div>
 			</div></fieldset>
@@ -57,11 +56,10 @@
 					<label class="or-form-row"><span class="or-form-label"><?php echo lang('alias') ?></span><span class="or-form-input"><span><?php echo nl2br(encodeHtml(htmlentities($alias))); ?></span></span></label>
 					
 					<div class="clickable">
-						<a class="or-link-btn" target="_self" data-type="edit" data-action="page" data-method="name" data-id="<?php echo OR_ID ?>" data-extra="{'languageid':'<?php echo $languageid ?>'}" href="<?php echo Html::url('page','name','',array('languageid'=>$languageid)) ?>">
+						<a class="or-link-btn" target="_self" data-type="edit" data-action="page" data-method="name" data-id="<?php echo OR_ID ?>" data-extra="{'languageid':'<?php echo $languageid ?>'}" href="./#/page/">
 							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'edit'.'')))); ?></span>
 							
 						</a>
-
 					</div>
 				</div></fieldset>
 			<?php } ?>
@@ -100,13 +98,12 @@
 					<div class="input">
 						<?php $if6=(isset($templateid)); if($if6){?>
 							<div class="clickable">
-								<a target="_self" data-type="open" data-action="template" data-method="info" data-id="<?php echo $templateid ?>" data-extra="[]" href="<?php echo Html::url('template','',$templateid,array()) ?>">
+								<a target="_self" data-type="open" data-action="template" data-method="info" data-id="<?php echo $templateid ?>" data-extra="[]" href="./#/template/<?php echo $templateid ?>">
 									<i class="image-icon image-icon--action-template"></i>
 									
 									<span><?php echo nl2br(encodeHtml(htmlentities($template_name))); ?></span>
 									
 								</a>
-
 							</div>
 						<?php } ?>
 						<?php if(!$if6){?>

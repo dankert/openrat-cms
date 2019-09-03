@@ -1,6 +1,6 @@
 
 	
-		<div class="table-wrapper"><table width="100%">
+		<div class="or-table-wrapper"><div class="or-table-area"><table width="100%">
 			<tr class="data">
 				<td colspan="1">
 					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'id'.'')))); ?></span>
@@ -30,5 +30,5 @@
 					</td>
 				</tr>
 			<?php } ?>
-		</table></div>
+		</table></div></div>
 	

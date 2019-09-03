@@ -1,7 +1,7 @@
 
 	
-		<form name="" target="_self" data-target="view" action="./" data-method="remove" data-action="link" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form link" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="link" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="remove" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
-			<label class="or-form-row"><span class="or-form-label">Name</span><span class="or-form-input"><span><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span></span></label>
+		<form name="" target="_self" data-target="view" action="./" data-method="remove" data-action="link" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form link" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="link" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="remove" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+			<label class="or-form-row"><span class="or-form-label"><?php echo lang('GLOBAL_NAME') ?></span><span class="or-form-input"><span><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span></span></label>
 			
 			<label class="or-form-row"><span class="or-form-label"></span><span class="or-form-input"><?php { $tmpname     = 'delete';$default  = '';$readonly = '';$required = '';		
 		if	( isset($$tmpname) )
@@ -15,7 +15,7 @@
 		{ 
 		?><input type="hidden" name="<?php echo $tmpname ?>" value="1" /><?php
 		}
-		} ?>&nbsp;Löschen </span></label>
+		} ?>&nbsp;?GLOBAL_DELETE? </span></label>
 			
-		<div class="or-form-actionbar"><input type="submit" class="or-form-btn or-form-btn--primary" value="OK" /></div></form>
+		<div class="or-form-actionbar"><input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" /><input type="submit" class="or-form-btn or-form-btn--primary" value="?BUTTON_OK?" /></div></form>
 	

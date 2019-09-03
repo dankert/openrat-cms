@@ -90,9 +90,9 @@
 						</label>
 					</div>
 				</div>
-				<label class="or-form-row"><span class="or-form-label"></span><span class="or-form-input"><input  class="" type="radio" id="<?php echo REQUEST_ID ?>_linksAbsolute_0" name="<?php if ('') echo ''.'_' ?>linksAbsolute<?php if ('') echo '_disabled' ?>" value="0"<?php if('0'==@$linksAbsolute)echo ' checked="checked"' ?> />&nbsp;?LINKS_RELATIVE? </span></label>
+				<label class="or-form-row"><span class="or-form-label"></span><span class="or-form-input"><input  class="" type="radio" id="<?php echo REQUEST_ID ?>_linksAbsolute_0" name="<?php if ('') echo ''.'_' ?>linksAbsolute<?php if ('') echo '_disabled' ?>" value="0"<?php if('0'==@$linksAbsolute)echo ' checked="checked"' ?> />&nbsp;Relative Links </span></label>
 				
-				<label class="or-form-row"><span class="or-form-label"></span><span class="or-form-input"><input  class="" type="radio" id="<?php echo REQUEST_ID ?>_linksAbsolute_1" name="<?php if ('') echo ''.'_' ?>linksAbsolute<?php if ('') echo '_disabled' ?>" value="1"<?php if('1'==@$linksAbsolute)echo ' checked="checked"' ?> />&nbsp;?LINKS_ABSOLUTE? </span></label>
+				<label class="or-form-row"><span class="or-form-label"></span><span class="or-form-input"><input  class="" type="radio" id="<?php echo REQUEST_ID ?>_linksAbsolute_1" name="<?php if ('') echo ''.'_' ?>linksAbsolute<?php if ('') echo '_disabled' ?>" value="1"<?php if('1'==@$linksAbsolute)echo ' checked="checked"' ?> />&nbsp;Absolute Links </span></label>
 				
 			</div></fieldset>
 			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('project_FTP') ?></legend><div class="closable">

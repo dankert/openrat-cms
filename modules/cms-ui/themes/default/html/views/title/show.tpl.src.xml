@@ -554,7 +554,7 @@
 
                         <part class="entry clickable">
                             <link type="post" class="entry" title="message:USER_LOGOUT_DESC"
-                                  action="login" subaction="logout">
+                                  action="login" subaction="logout" afterSuccess="reloadAll" >
                                 <image method="logout"></image>
                                 <text key="USER_LOGOUT"></text>
                             </link>

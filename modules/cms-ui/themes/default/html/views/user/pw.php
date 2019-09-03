@@ -1,11 +1,11 @@
 
 	
-		<form name="" target="_self" data-target="view" action="./" data-method="pw" data-action="user" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form user" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="user" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="pw" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="view" action="./" data-method="pw" data-action="user" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form user" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="user" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="pw" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<div class="line">
 				<div class="label">
 				</div>
 				<div class="input">
-					<input  class="radio" type="radio" id="<?php echo REQUEST_ID ?>_type_proposal" name="type" value="proposal"<?php if('proposal'==@$type)echo ' checked="checked"' ?> />
+					<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_proposal" name="<?php if ('') echo ''.'_' ?>type<?php if ('') echo '_disabled' ?>" value="proposal"<?php if('proposal'==@$type)echo ' checked="checked"' ?> />
 					
 					<label for="<?php echo REQUEST_ID ?>_type_proposal" class="label"><?php echo $password_proposal ?>
 						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'USER_new_password'.'')))); ?></span>
@@ -24,7 +24,7 @@
 					<div class="label">
 					</div>
 					<div class="input">
-						<input  class="radio" type="radio" id="<?php echo REQUEST_ID ?>_type_random" name="type" value="random"<?php if('random'==@$type)echo ' checked="checked"' ?> />
+						<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_random" name="<?php if ('') echo ''.'_' ?>type<?php if ('') echo '_disabled' ?>" value="random"<?php if('random'==@$type)echo ' checked="checked"' ?> />
 						
 						<label for="<?php echo REQUEST_ID ?>_type_random" class="label"><?php echo lang('user_random_password') ?>
 						</label>
@@ -35,7 +35,7 @@
 				<div class="label">
 				</div>
 				<div class="input">
-					<input  class="radio" type="radio" id="<?php echo REQUEST_ID ?>_type_input" name="type" value="input"<?php if('input'==@$type||'1')echo ' checked="checked"' ?> />
+					<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_input" name="<?php if ('') echo ''.'_' ?>type<?php if ('') echo '_disabled' ?>" value="input"<?php if('input'==@$type||'1')echo ' checked="checked"' ?> />
 					
 					<label for="<?php echo REQUEST_ID ?>_type_input" class="label"><?php echo lang('USER_NEW_PASSWORD_INPUT') ?>
 					</label>
@@ -61,7 +61,7 @@
 					
 				</div>
 			</div>
-			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div>
+			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div class="closable">
 			</div></fieldset>
 			<?php $if3=(config('mail','enabled')); if($if3){?>
 				<?php $if4=(isset($mail)); if($if4){?>
@@ -113,5 +113,5 @@
 			<?php } ?>
 			
 			
-		<div class="or-form-actionbar"><input type="submit" class="or-form-btn or-form-btn--primary" value="OK" /></div></form>
+		<div class="or-form-actionbar"><input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" /><input type="submit" class="or-form-btn or-form-btn--primary" value="?BUTTON_OK?" /></div></form>
 	

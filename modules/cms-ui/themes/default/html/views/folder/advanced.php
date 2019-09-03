@@ -1,7 +1,7 @@
 
 	
 		<form name="" target="_self" data-target="view" action="./" data-method="edit" data-action="folder" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form folder" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="folder" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="edit" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
-			<div class="table-wrapper"><div class="table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><table width="100%">
+			<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
 				<tr class="headline">
 					<td class="help">
 						<?php { $tmpname     = 'checkall';$default  = '';$readonly = '';$required = '';		
@@ -54,7 +54,7 @@
 						</td>
 						<td class="clickable">
 							<label for="<?php echo REQUEST_ID ?>_<?php echo $id ?>" class="label">
-								<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="<?php echo $type ?>" data-method="edit" data-id="<?php echo $objectid ?>" data-extra="[]" href="<?php echo Html::url($type,'',$objectid,array()) ?>">
+								<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="<?php echo $type ?>" data-method="advanced" data-id="<?php echo $objectid ?>" data-extra="[]" href="<?php echo Html::url($type,'',$objectid,array()) ?>">
 									<i class="image-icon image-icon--action-<?php echo $icon ?>"></i>
 									
 									<span><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $name,40,'..',constant('STR_PAD_BOTH') )))); ?></span>
@@ -90,7 +90,7 @@
 
 					</td>
 				</tr>
-			</table></div>
+			</table></div></div>
 			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div class="closable">
 				<?php $type= $defaulttype; ?>
 				

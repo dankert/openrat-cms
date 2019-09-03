@@ -1,7 +1,7 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
-	<header views="password,register,license"></header>
-	<form cancel="false" label="message:menu_login" visible="true" action="login" subaction="login" target="top">
+
+	<form cancel="false" label="message:menu_login" visible="true" action="login" subaction="login" afterSuccess="reloadAll">
 		<if true="config:login/logo/enabled">
 				<if not="not" empty="config:login/logo/url">
 					<link url="config:login/logo/url" target="_top">

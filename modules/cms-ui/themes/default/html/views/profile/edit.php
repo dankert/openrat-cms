@@ -2,8 +2,8 @@
 	
 		
 		
-		<form name="" target="_self" data-target="view" action="./" data-method="edit" data-action="profile" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form profile" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="profile" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="edit" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
-			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('name') ?></legend><div>
+		<form name="" target="_self" data-target="view" action="./" data-method="edit" data-action="profile" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form profile" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="profile" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="edit" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('name') ?></legend><div class="closable">
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_name" class="label"><?php echo lang('user_username') ?>
@@ -15,7 +15,7 @@
 					</div>
 				</div>
 			</div></fieldset>
-			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('MENU_PROFILE_MAIL') ?></legend><div>
+			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('MENU_PROFILE_MAIL') ?></legend><div class="closable">
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_mail" class="label"><?php echo lang('user_mail') ?>
@@ -29,16 +29,15 @@
 						<br/>
 						
 						<div class="clickable">
-							<a class="action" target="_self" date-name="<?php echo lang('mail') ?>" name="<?php echo lang('mail') ?>" data-type="dialog" data-action="profile" data-method="mail" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':'profile','dialogMethod':'mail'}" href="<?php echo Html::url('profile','mail','',array('dialogAction'=>'profile','dialogMethod'=>'mail')) ?>">
+							<a class="action" target="_self" date-name="<?php echo lang('mail') ?>" name="<?php echo lang('mail') ?>" data-type="dialog" data-action="profile" data-method="mail" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':'profile','dialogMethod':'mail'}" href="./#/profile/">
 								<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'edit'.'')))); ?></span>
 								
 							</a>
-
 						</div>
 					</div>
 				</div>
 			</div></fieldset>
-			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('GLOBAL_PROP') ?></legend><div>
+			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('GLOBAL_PROP') ?></legend><div class="closable">
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_fullname" class="label"><?php echo lang('user_fullname') ?>
@@ -104,7 +103,7 @@
 					</div>
 				</div>
 			</div></fieldset>
-			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('security') ?></legend><div>
+			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('security') ?></legend><div class="closable">
 				<div class="line">
 					<div class="label">
 						<span><?php echo nl2br(encodeHtml(htmlentities(lang('user_password_expires')))); ?></span>
@@ -135,7 +134,7 @@
 						
 						<label for="<?php echo REQUEST_ID ?>_totp" class="label"><?php echo lang('user_totp') ?>
 						</label>
-						<i class="image-icon image-icon--menu-qrcode qrcode" data-qrcode="<?php echo $totpSecretUrl ?>" title="QR-Code anzeigen"></i>
+						<i class="image-icon image-icon--menu-qrcode or-qrcode or-info" data-qrcode="<?php echo $totpSecretUrl ?>" title="?QRCODE_SHOW?"></i>
 						
 					</div>
 				</div>
@@ -159,7 +158,7 @@
 						
 						<label for="<?php echo REQUEST_ID ?>_hotp" class="label"><?php echo lang('user_hotp') ?>
 						</label>
-						<i class="image-icon image-icon--menu-qrcode qrcode" data-qrcode="<?php echo $hotpSecretUrl ?>" title="QR-Code anzeigen"></i>
+						<i class="image-icon image-icon--menu-qrcode or-qrcode or-info" data-qrcode="<?php echo $hotpSecretUrl ?>" title="?QRCODE_SHOW?"></i>
 						
 					</div>
 				</div>

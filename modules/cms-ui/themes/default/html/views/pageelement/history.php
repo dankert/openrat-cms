@@ -1,7 +1,7 @@
 
 	
-		<form name="" target="_self" data-target="view" action="./" data-method="diff" data-action="pageelement" data-id="<?php echo OR_ID ?>" method="get" enctype="application/x-www-form-urlencoded" class="or-form pageelement" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="pageelement" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="diff" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
-			<div class="table-wrapper"><div class="table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><table width="100%"></div>
+		<form name="" target="_self" data-target="view" action="./" data-method="diff" data-action="pageelement" data-id="<?php echo OR_ID ?>" method="get" enctype="application/x-www-form-urlencoded" class="or-form pageelement" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="pageelement" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="diff" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+			<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
 				<tr class="headline">
 					<td class="help">
 						<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_NR')))); ?></span>
@@ -54,7 +54,7 @@
 						</td>
 						<td>
 							<?php $if7=(isset($compareid)); if($if7){?>
-								<input  class="radio" type="radio" id="<?php echo REQUEST_ID ?>_compareid_<?php echo $id ?>" name="compareid" value="<?php echo $id ?>"<?php if($id==@$compareid)echo ' checked="checked"' ?> />
+								<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_compareid_<?php echo $id ?>" name="<?php if ('') echo ''.'_' ?>compareid<?php if ('') echo '_disabled' ?>" value="<?php echo $id ?>"<?php if($id==@$compareid)echo ' checked="checked"' ?> />
 								
 							<?php } ?>
 							<?php if(!$if7){?>
@@ -64,7 +64,7 @@
 						</td>
 						<td>
 							<?php $if7=(isset($compareid)); if($if7){?>
-								<input  class="radio" type="radio" id="<?php echo REQUEST_ID ?>_withid_<?php echo $id ?>" name="withid" value="<?php echo $id ?>"<?php if($id==@$withid)echo ' checked="checked"' ?> />
+								<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_withid_<?php echo $id ?>" name="<?php if ('') echo ''.'_' ?>withid<?php if ('') echo '_disabled' ?>" value="<?php echo $id ?>"<?php if($id==@$withid)echo ' checked="checked"' ?> />
 								
 							<?php } ?>
 							<?php if(!$if7){?>
@@ -97,7 +97,6 @@
 										<strong><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_RELEASE'.'')))); ?></strong>
 										
 									</a>
-
 								</td>
 							<?php } ?>
 							<?php if(!$if7){?>
@@ -120,7 +119,6 @@
 										<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_USE'.'')))); ?></span>
 										
 									</a>
-
 								</td>
 							<?php } ?>
 							<?php if(!$if7){?>
@@ -130,6 +128,6 @@
 						<?php } ?>
 					</tr>
 				<?php } ?>
-			</table>
+			</table></div></div>
 		<div class="or-form-actionbar"><input type="submit" class="or-form-btn or-form-btn--primary" value="<?php echo lang('compare') ?>" /></div></form>
 	

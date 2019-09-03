@@ -18,11 +18,10 @@
 						
 					</td>
 					<td title="<?php echo $value ?>">
-						<a target="_self" data-type="edit" data-action="pageelement" data-method="value" data-id="<?php echo OR_ID ?>" data-extra="{'languageid':'<?php echo $languageid ?>'}" href="<?php echo Html::url('pageelement','value','',array('languageid'=>$languageid)) ?>">
+						<a target="_self" data-type="edit" data-action="pageelement" data-method="value" data-id="<?php echo OR_ID ?>" data-extra="{'languageid':'<?php echo $languageid ?>'}" href="./#/pageelement/">
 							<span><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $value,120,'..',constant('STR_PAD_BOTH') )))); ?></span>
 							
 						</a>
-
 					</td>
 				</tr>
 			<?php } ?>

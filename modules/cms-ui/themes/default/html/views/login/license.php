@@ -94,7 +94,7 @@
 				</div>
 			</div></fieldset>
 			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('LICENSE') ?></legend><div class="closable">
-				<div class="table-wrapper"><table width="100%">
+				<div class="or-table-wrapper"><div class="or-table-area"><table width="100%">
 					<tr class="headline">
 						<td>
 							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'name'.'')))); ?></span>
@@ -112,7 +112,6 @@
 									<span><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
 									
 								</a>
-
 							</td>
 							<td>
 								<span><?php echo nl2br(encodeHtml(htmlentities($license))); ?></span>
@@ -120,7 +119,7 @@
 							</td>
 						</tr>
 					<?php } ?>
-				</table></div>
+				</table></div></div>
 			</div></fieldset>
 		</div>
 	

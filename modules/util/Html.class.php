@@ -35,6 +35,7 @@ class Html
 	 * @param string Unteraktion, die innerhalb der Aktion aufgerufen werden soll
 	 * @param int Id fuer diesen Aufruf
 	 * @param array Weitere beliebige Parameter
+     * @deprecated Das ist Dialog-Logik. Besser im Frontend erzeugen.
 	 */
     public static function url( $action,$subaction='',$id='',$params=array() )
 	{

@@ -1,6 +1,6 @@
 
 	
-		<form name="" target="_self" data-target="view" action="./" data-method="info" data-action="user" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form user" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="user" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="info" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="view" action="./" data-method="info" data-action="user" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form user" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="user" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="info" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<span class="headline"><?php echo nl2br(encodeHtml(htmlentities($fullname))); ?></span>
 			
 			<?php $if3=!(($image)==FALSE); if($if3){?>
@@ -21,7 +21,7 @@
 					
 				</div>
 			</div>
-			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('ADDITIONAL_INFO') ?></legend><div>
+			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('ADDITIONAL_INFO') ?></legend><div class="closable">
 				<div class="line">
 					<div class="label">
 						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'user_fullname'.'')))); ?></span>
@@ -43,8 +43,7 @@
 								<span><?php echo nl2br(encodeHtml(htmlentities($mail))); ?></span>
 								
 							</a>
-
-							<i class="image-icon image-icon--menu-qrcode or-qrcode or-info" data-qrcode="<?php echo 'mailto:'.$mail.'' ?>" title="QR-Code anzeigen"></i>
+							<i class="image-icon image-icon--menu-qrcode or-qrcode or-info" data-qrcode="<?php echo 'mailto:'.$mail.'' ?>" title="?QRCODE_SHOW?"></i>
 							
 						</div>
 					</div>
@@ -67,7 +66,7 @@
 					<div class="input">
 						<span><?php echo nl2br(encodeHtml(htmlentities($tel))); ?></span>
 						
-						<i class="image-icon image-icon--menu-qrcode or-qrcode or-info" data-qrcode="<?php echo 'tel:'.$tel.'' ?>" title="QR-Code anzeigen"></i>
+						<i class="image-icon image-icon--menu-qrcode or-qrcode or-info" data-qrcode="<?php echo 'tel:'.$tel.'' ?>" title="?QRCODE_SHOW?"></i>
 						
 					</div>
 				</div>
@@ -97,15 +96,14 @@
 					<div class="label">
 					</div>
 					<div class="input clickable">
-						<a class="or-link-btn" target="_self" data-type="dialog" data-action="" data-method="prop" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'prop'}" href="<?php echo Html::url('','prop','',array('dialogAction'=>'','dialogMethod'=>'prop')) ?>">
+						<a class="or-link-btn" target="_self" data-type="dialog" data-action="" data-method="prop" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'prop'}" href="./#//">
 							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'edit'.'')))); ?></span>
 							
 						</a>
-
 					</div>
 				</div>
 			</div></fieldset>
-			<fieldset class="toggle-open-close<?php echo ''?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div>
+			<fieldset class="toggle-open-close<?php echo ''?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div class="closable">
 				<div class="line">
 					<div class="label">
 					</div>
@@ -149,7 +147,7 @@
 					</div>
 				</div>
 			</div></fieldset>
-			<fieldset class="toggle-open-close<?php echo ''?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('security') ?></legend><div>
+			<fieldset class="toggle-open-close<?php echo ''?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('security') ?></legend><div class="closable">
 				<div class="line">
 					<div class="label">
 						<span><?php echo nl2br(encodeHtml(htmlentities(lang('user_password_expires')))); ?></span>
@@ -164,11 +162,10 @@
 					<div class="label">
 					</div>
 					<div class="input clickable">
-						<a class="or-link-btn" target="_self" data-type="dialog" data-action="user" data-method="pw" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':'user','dialogMethod':'pw'}" href="<?php echo Html::url('user','pw','',array('dialogAction'=>'user','dialogMethod'=>'pw')) ?>">
+						<a class="or-link-btn" target="_self" data-type="dialog" data-action="user" data-method="pw" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':'user','dialogMethod':'pw'}" href="./#/user/">
 							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'edit_password'.'')))); ?></span>
 							
 						</a>
-
 					</div>
 				</div>
 				<div class="line">
@@ -213,7 +210,7 @@
 						
 						<label for="<?php echo REQUEST_ID ?>_totp" class="label"><?php echo lang('user_totp') ?>
 						</label>
-						<i class="image-icon image-icon--menu-qrcode or-qrcode or-info" data-qrcode="<?php echo $totpSecretUrl ?>" title="QR-Code anzeigen"></i>
+						<i class="image-icon image-icon--menu-qrcode or-qrcode or-info" data-qrcode="<?php echo $totpSecretUrl ?>" title="?QRCODE_SHOW?"></i>
 						
 					</div>
 				</div>

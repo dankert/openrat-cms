@@ -1,15 +1,12 @@
 
 	
-		
-		
-		<form name="" target="_self" data-target="top" action="./" data-method="login" data-action="login" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form login" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="login" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="login" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="view" action="./" data-method="login" data-action="login" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form login" data-async="" data-autosave="" data-after-success="reloadAll"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="login" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="login" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<?php $if3=(config('login','logo','enabled')); if($if3){?>
 				<?php $if4=!((config('login','logo','url'))==FALSE); if($if4){?>
-					<a target="_self" data-url="<?php echo config('login','logo','url') ?>" data-action="" data-method="login" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
+					<a target="_self" data-url="<?php echo config('login','logo','url') ?>" data-action="" data-method="login" data-id="<?php echo OR_ID ?>" data-extra="[]" href="./#//">
 						<img src="<?php echo config('login','logo','image') ?>" />
 						
 					</a>
-
 				<?php } ?>
 				<?php if(!$if4){?>
 					<img src="<?php echo config('login','logo','image') ?>" />
@@ -92,7 +89,7 @@
 					</div>
 				</div>
 			<?php } ?>
-			<fieldset class="toggle-open-close<?php echo ''?" open":" closed" ?><?php echo ''?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('USER_NEW_PASSWORD') ?></legend><div>
+			<fieldset class="toggle-open-close<?php echo ''?" open":" closed" ?><?php echo ''?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('USER_NEW_PASSWORD') ?></legend><div class="closable">
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_password1" class="label">
@@ -118,7 +115,7 @@
 					</div>
 				</div>
 			</div></fieldset>
-			<fieldset class="toggle-open-close<?php echo ''?" open":" closed" ?><?php echo ''?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('USER_TOKEN') ?></legend><div>
+			<fieldset class="toggle-open-close<?php echo ''?" open":" closed" ?><?php echo ''?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('USER_TOKEN') ?></legend><div class="closable">
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_user_token" class="label">
@@ -133,7 +130,7 @@
 				</div>
 			</div></fieldset>
 			<?php $if3=(intval('1')<intval(@count($dbids))); if($if3){?>
-				<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><img src="/themes/default/images/icon/method/database.svg" /><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('DATABASE') ?></legend><div>
+				<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><img src="/themes/default/images/icon/method/database.svg" /><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('DATABASE') ?></legend><div class="closable">
 					<div class="line">
 						<div class="label">
 							<label for="<?php echo REQUEST_ID ?>_dbid" class="label">

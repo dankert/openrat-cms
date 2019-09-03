@@ -1,6 +1,6 @@
 
 	
-		<div class="table-wrapper"><div class="table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><table width="100%"></div>
+		<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
 			<tr>
 				<td>
 				</td>
@@ -67,9 +67,9 @@
 				<?php unset($right) ?>
 				
 			<?php } ?>
-		</table>
+		</table></div></div>
 				<div class="invisible"><input type="submit" 	name="ok" class="%class%"
-	title="Zurück"
-	value="&nbsp;&nbsp;&nbsp;&nbsp;Zur&#xfc;ck&nbsp;&nbsp;&nbsp;&nbsp;" />	
+	title="?BUTTON_BACK_DESC?"
+	value="&nbsp;&nbsp;&nbsp;&nbsp;?BUTTON_BACK?&nbsp;&nbsp;&nbsp;&nbsp;" />	
 		</div>
 	
