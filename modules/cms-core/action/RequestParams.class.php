@@ -125,14 +125,10 @@ namespace cms\action {
 
                 default:
                     throw new \LogicException('Unknown request filter', 'not found: ' . $transcode);
-                    return '?';
             }
 
             $value = $REQ[$varName];
             $newValue = Text::clean($value, $white);
-
-//            if (strlen($newValue) != strlen($value))
-//                $this->addNotice('', '', 'UNEXPECTED_CHARS', OR_NOTICE_WARN);
 
             return $newValue;
         }
