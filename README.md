@@ -37,7 +37,7 @@ Download the complete archive and install it on your server
 
 #### Docker
 
-OpenRat contains a Dockerfile. At the moment, you have to bake your own Docker Image.
+OpenRat-CMS is available [at Dockerhub](https://hub.docker.com/r/openrat/openrat-cms).
 
 ## Configuration
 

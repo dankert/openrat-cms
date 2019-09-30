@@ -1,29 +1,45 @@
-#FROM php:7.0-apache
-FROM debian:stretch-slim
+FROM alpine:3.10
 
-# File Author / Maintainer
-MAINTAINER dankert
+LABEL maintainer="Jan Dankert"
 
-RUN apt-get update \
-  && apt-get install -y \
-  apache2 \
-  libapache2-mod-php7.0 \
-  php-xml \
-  php-mysql \
-  && apt-get clean
+ENV DOCROOT=/var/www/localhost/htdocs
 
-# logs should go to stdout / stderr
-RUN  \
-	   ln -sfT /dev/stderr "/var/log/apache2/error.log"  \
-	&& ln -sfT /dev/stdout "/var/log/apache2/access.log"
+RUN apk --update --no-cache add \
+    apache2 apache2-http2 \
+    php7 php7-apache2 php7-session php7-pdo php7-pdo_mysql php7-pdo_pgsql php7-json php7-ftp php7-iconv php7-openssl && \
+    sed -i '/LoadModule log_module/s/^/#/g' /etc/apache2/httpd.conf && \
+    sed -i 's/^Listen 80/Listen 8080/g' /etc/apache2/httpd.conf && \
+    chown apache /var/log/apache2 && \
+    chown apache /run/apache2 && \
+    rm -r $DOCROOT/* && \
+    mkdir -p /var/www/preview && chown apache /var/www/preview && \
+    echo "Alias /preview /var/www/preview" >> /etc/apache2/httpd.conf
 
-# Remove default index.html
-RUN rm -r /var/www/html/*
 
-COPY . /var/www/html/
+COPY . $DOCROOT
+COPY ./config/config-docker.yml /etc/openrat/config.yml
+COPY ./config/config-etc.yml    $DOCROOT/config/config.yml
 
-EXPOSE 80
+# Cleanup
+RUN rm -r $DOCROOT/doc/* && \
+    find $DOCROOT/modules/cms-ui -type f -name "*.src.xml"|xargs rm
 
-WORKDIR /var/www/html
+EXPOSE 8080
 
-CMD apachectl -D FOREGROUND
+
+ENV DB_TYPE="mysql"
+ENV DB_TYPE="mysql"
+ENV DB_HOST="localhost"
+ENV DB_NAME="cms"
+ENV DB_USER=""
+ENV DB_PASS=""
+
+ENV CMS_MOTD="Welcome to dockerized CMS"
+ENV CMS_NAME="OpenRat CMS (Docker)"
+ENV CMS_OPERATOR="Docker-Host"
+
+WORKDIR $DOCROOT
+
+USER apache
+
+CMD /usr/sbin/httpd -D FOREGROUND
