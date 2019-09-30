@@ -18,9 +18,13 @@ RUN apk --update --no-cache add \
     echo "Protocols h2 h2c http/1.1" >> /etc/apache2/httpd.conf
 
 
+
+# Copy the application to document root
 COPY . $DOCROOT
-COPY ./config/config-docker.yml /etc/openrat/config.yml
-COPY ./config/config-etc.yml    $DOCROOT/config/config.yml
+
+# Place configuration in /etc, outside the docroot.
+RUN echo "include: /etc/openrat.yml" >  $DOCROOT/config/config.yml
+COPY doc/examples/config/docker.yml /etc/openrat.yml
 
 # Cleanup
 RUN rm -r $DOCROOT/doc/* && \

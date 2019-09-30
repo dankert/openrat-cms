@@ -1,15 +1,30 @@
 
-# OpenRat CMS configuration - Minimal settings
-# Change this file or create 'config-<hostname>.yml' for a per-host-configuration
+# OpenRat CMS configuration
+# -------------------------
+
+# This file is YAML formatted.
+
+# Security attention:
+# Place your sensitive configuration outside of your document root!
+
 
 database:
   db:
     enabled : false          # remove this line or set the value to 'true' to enable this database
     dsn     : "mysql:host=localhost; dbname=name_of_db; charset=utf8"
     user    : "dbuser"       # user
-    password: "dbpass"       # password
+    password: "dbpass"       # password (attention: please to NOT place any passwords in the document root)
 
+# It is recommended to place a configation outside the document root
+#
+# Simple example:
+# include: /etc/openrat/config.yml
+#
+# You may use environment variables like
+# include: ${env:YOUR_ENV_VAR}.yml
+#
+# or http header like
+# include: /etc/openrat/config-${http:host}.yml
+#
 include:
   - ./config-${http:host}.yml
-
-# There are a lot of more configuration settings available, see file 'config-all-example.yml' ...
