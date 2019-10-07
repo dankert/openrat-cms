@@ -1,4 +1,6 @@
 <?php
+
+use cms\model\BaseObject;
 use database\DbVersion;
 use security\Password;
 
