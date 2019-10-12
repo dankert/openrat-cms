@@ -154,7 +154,7 @@ var Navigator = new function () {
     }
 
     this.navigateToNewAction = function(action, method, id, params ) {
-        var state = {action:action,method:method,id:Number(id),data:params};
+        var state = {action:action,method:method,id:id.replace(/[^0-9_]/gim,""),data:params};
         this.navigateToNew(state);
 	}
 
@@ -217,7 +217,8 @@ var Workbench = new function()
             state.action = parts[1].toLowerCase();
 
         if   ( parts.length >= 3 )
-            state.id = Number(parts[2]);
+            // Only numbers and '_' allowed in the id.
+            state.id = parts[2].replace(/[^0-9_]/gim,"");
 
         Workbench.state = state;
 
