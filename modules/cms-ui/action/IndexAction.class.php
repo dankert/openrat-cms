@@ -525,7 +525,12 @@ class IndexAction extends Action
 			}
 
             // OpenRat internal JS - als letztes, damit die vorigen bereits geladen sind.
-            $js[] = OR_THEMES_DIR . 'default/script/openrat';
+            $js[] = OR_THEMES_DIR . 'default/script/openrat/init';
+            $js[] = OR_THEMES_DIR . 'default/script/openrat/view';
+            $js[] = OR_THEMES_DIR . 'default/script/openrat/form';
+            $js[] = OR_THEMES_DIR . 'default/script/openrat/workbench';
+            $js[] = OR_THEMES_DIR . 'default/script/openrat/navigator';
+            $js[] = OR_THEMES_DIR . 'default/script/openrat/common';
 
 
             $outDevJsFiles = array();
