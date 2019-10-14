@@ -20,7 +20,7 @@ Openrat.Navigator = new function () {
 
 		this.navigateTo(obj);
 
-		window.history.pushState(obj,obj.name,'./#/'+obj.action+(obj.id?'/'+obj.id:'') );
+		window.history.pushState(obj,obj.name,createShortUrl(obj.action,obj.id) );
     }
 
     /**
@@ -28,6 +28,14 @@ Openrat.Navigator = new function () {
      * @param obj
      */
     this.toActualHistory = function(obj) {
-        window.history.replaceState(obj,obj.name,createUrl(obj.action,null,obj.id,obj.data,false) );
+        window.history.replaceState(obj,obj.name,createShortUrl(obj.action,obj.id) );
     }
+
+
+
+    let createShortUrl = function(action,id) {
+		return './#/'+action+(id?'/'+id:'');
+	}
+
+
 }

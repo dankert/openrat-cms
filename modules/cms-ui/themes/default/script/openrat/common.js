@@ -563,49 +563,6 @@ else
 
 
 
-/**
- * Erzeugt eine URL, um die gewünschte Action vom Server zu laden.
- * 
- * @param action
- * @param subaction
- * @param id
- * @param extraid
- * @returns URL
- */
-function createUrl(action,subaction,id,extraid,embed)
-{
-	var url = './';
-
-	url += '?';
-
-    if(action)
-    	url += '&action='+action;
-    if(subaction)
-    	url += '&subaction='+subaction;
-    if(id)
-    	url += '&id='+id;
-
-	if	( typeof extraid === 'string')
-	{
-		extraid = extraid.replace(/'/g,'"'); // Replace ' with ".
-		var extraObject = jQuery.parseJSON(extraid);
-		jQuery.each(extraObject, function(name, value) {
-			url = url + '&' + name + '=' + value;
-		});
-	}
-	else if	( typeof extraid === 'object')
-	{
-		jQuery.each(extraid, function(name, field) {
-			url = url + '&' + name + '=' + field;
-		});
-	}
-	else
-	{
-	}
-	return url;
-}
-
-
 
 function help(el,url,suffix)
 {

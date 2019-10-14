@@ -78,7 +78,7 @@ Openrat.Workbench = new function()
          */
         var ping = function()
         {
-            $.ajax( createUrl('title','ping',0) );
+            $.ajax( Openrat.View.createUrl('title','ping',0) );
             //window.console && console.log("session-ping");
         }
 

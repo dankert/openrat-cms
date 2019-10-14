@@ -41,7 +41,7 @@ Openrat.View = function( action,method,id,params ) {
 
     this.loadView = function() {
 
-        let url = createUrl( this.action,this.method,this.id,this.params,true); // URL für das Laden erzeugen.
+        let url = Openrat.View.createUrl( this.action,this.method,this.id,this.params); // URL für das Laden erzeugen.
         let element = this.element;
         let view = this;
 
@@ -73,5 +73,51 @@ Openrat.View = function( action,method,id,params ) {
         });
 
     }
+
+
+
+
+    /**
+     * Erzeugt eine URL, um die gewünschte Action vom Server zu laden.
+     *
+     * @param action
+     * @param subaction
+     * @param id
+     * @param extraid
+     * @returns URL
+     */
+    Openrat.View.createUrl = function(action,subaction,id,extraid={} )
+    {
+        var url = './';
+
+        url += '?';
+
+        if(action)
+            url += '&action='+action;
+        if(subaction)
+            url += '&subaction='+subaction;
+        if(id)
+            url += '&id='+id;
+
+        if	( typeof extraid === 'string')
+        {
+            extraid = extraid.replace(/'/g,'"'); // Replace ' with ".
+            var extraObject = jQuery.parseJSON(extraid);
+            jQuery.each(extraObject, function(name, value) {
+                url = url + '&' + name + '=' + value;
+            });
+        }
+        else if	( typeof extraid === 'object')
+        {
+            jQuery.each(extraid, function(name, field) {
+                url = url + '&' + name + '=' + field;
+            });
+        }
+        else
+        {
+        }
+        return url;
+    }
+
 
 }
