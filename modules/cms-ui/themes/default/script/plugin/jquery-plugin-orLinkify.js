@@ -38,11 +38,6 @@ jQuery.fn.orLinkify = function()
 					startEdit($(this).attr('data-name'),$(this).attr('data-action'),$(this).attr('data-method'),$(this).attr('data-id'),$(this).attr('data-extra') );
 					break;
 
-				case 'url':
-					throw "probably unused, isn't it?";
-					submitUrl(this,$(this).attr('data-url') );
-					break;
-
 				case 'external':
 					window.open( $(this).attr('data-url'),' _blank' );
 					break;
@@ -60,11 +55,11 @@ jQuery.fn.orLinkify = function()
 					break;
 
 				case 'open':
-					openNewAction( $(this).attr('data-name'),$(this).attr('data-action'),$(this).attr('data-id'),jQuery.parseJSON($(this).attr('data-extra').replace(/'/g,'"')));
+					openNewAction( $(this).attr('data-name'),$(this).attr('data-action'),$(this).attr('data-id') );
 					break;
 
 				default:
-					alert('Fatal: Cannot open link: '+$(this).html() );
+					throw "UI error: Unknown link type: "+type+" in link "+$(this).html();
             }
 		} );
 	});

@@ -4,7 +4,7 @@
  *
  * @constructor
  */
-function Form() {
+Openrat.Form = function() {
 
     this.setLoadStatus = function( isLoading ) {
         $(this.element).closest('div.content').toggleClass('loader',isLoading);
@@ -85,9 +85,9 @@ function Form() {
 
         // If form does not contain action/id, get it from the workbench.
         if   (!data.id)
-            data.id = Workbench.state.id;
+            data.id = Openrat.Workbench.state.id;
         if   (!data.action)
-            data.action = Workbench.state.action;
+            data.action = Openrat.Workbench.state.action;
 
         let formMethod = $(this.element).attr('method').toUpperCase();
 
@@ -132,12 +132,12 @@ function Form() {
                     try
                     {
                         let error = jQuery.parseJSON( jqXHR.responseText );
-                        notify('','','error',error.error,[error.description]);
+                        Openrat.Workbench.notify('','','error',error.error,[error.description]);
                     }
                     catch( e )
                     {
                         let msg = jqXHR.responseText;
-                        notify('','','error','Server Error',[msg]);
+                        Openrat.Workbench.notify('','','error','Server Error',[msg]);
                     }
 
 

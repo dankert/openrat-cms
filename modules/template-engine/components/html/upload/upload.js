@@ -77,7 +77,7 @@ function handleFileUpload(form,files)
 					msg = jqXHR.responseText;
 				}
 				
-				notify('error',msg);
+				Openrat.Workbench.notify('Upload error',msg);
 			}
 			
 		} );

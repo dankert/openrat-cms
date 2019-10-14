@@ -1,14 +1,14 @@
 /**
  * Navigation.
  */
-var Navigator = new function () {
+Openrat.Navigator = new function () {
 	'use strict';
 
 	/**
-	 * Navigiert zu einer Action, aber ohne ein neues History-Element einzufügen.
+	 * Navigiert zu einer Action.
 	 */
 	this.navigateTo = function(state) {
-		Workbench.loadNewActionState(state);
+		Openrat.Workbench.loadNewActionState(state);
 	}
 
 
@@ -18,14 +18,10 @@ var Navigator = new function () {
      */
 	this.navigateToNew = function(obj) {
 
-		Workbench.loadNewActionState(obj);
+		this.navigateTo(obj);
+
 		window.history.pushState(obj,obj.name,'./#/'+obj.action+(obj.id?'/'+obj.id:'') );
     }
-
-    this.navigateToNewAction = function(action, method, id, params ) {
-        var state = {action:action,method:method,id:id.replace(/[^0-9_]/gim,""),data:params};
-        this.navigateToNew(state);
-	}
 
     /**
 	 * Setzt den State für den aktuellen History-Eintrag.
@@ -35,5 +31,3 @@ var Navigator = new function () {
         window.history.replaceState(obj,obj.name,createUrl(obj.action,null,obj.id,obj.data,false) );
     }
 }
-
-openrat.navigator = Navigator;

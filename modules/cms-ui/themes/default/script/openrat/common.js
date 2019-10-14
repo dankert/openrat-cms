@@ -11,164 +11,141 @@ $( function() {
     /* Fade in all elements. */
     $('.initial-hidden').removeClass('initial-hidden');
 
+
+    /**
+     * Registriert alle Events, die in der Workbench laufen sollen.
+     */
+    function registerWorkbenchEvents()
+    {
+        // Modalen Dialog erzeugen.
+
+        /*
+        if	( $('#workbench div.panel.modal').length > 0 )
+        {
+            $('#workbench div.panel.modal').parent().addClass('modal');
+            $('div#filler').fadeTo(500,0.5);
+            $('#workbench').addClass('modal');
+        }
+        */
+
+        /**
+         * Schaltet die Vollbildfunktion an oder aus.
+         *
+         * @param element Das Element, auf dem die Vollbildfunktion ausgeführt wurde
+         */
+        function fullscreen( element ) {
+            $(element).closest('div.panel').fadeOut('fast', function()
+            {
+                $(this).toggleClass('fullscreen').fadeIn('fast');
+            } );
+        }
+
+
+        $('div.header').dblclick( function()
+        {
+            fullscreen( this );
+        } );
+    }
+
+
     registerWorkbenchEvents();
 
 
     // Listening to the "popstate" event:
     window.onpopstate = function (ev) {
-        Navigator.navigateTo(ev.state);
+        Openrat.Navigator.navigateTo(ev.state);
     };
 
-    initActualHistoryState();
-
-    Workbench.initialize();
-    Workbench.reloadAll();
-
-    registerNavigation();
-
-    // Binding aller Sondertasten.
-    $('.keystroke').each( function() {
-    	let keystrokeElement = $(this);
-        let keystroke = keystrokeElement.text();
-        if (keystroke.length == 0)
-        	return; // No Keybinding.
-    	let keyaction = function() {
-    		keystrokeElement.click();
-		};
-    	// Keybinding ausfuehren.
-        $(document).bind('keydown', keystroke, keyaction );
-	} );
+    Openrat.Workbench.initialize();
+    Openrat.Workbench.reloadAll();
 
 
+    let registerWorkbenchGlobalEvents = function() {
 
-    // Per Klick wird die Notice entfernt.
-    $('#noticebar .notice .image-icon--menu-close').click(function () {
-        $(this).closest('.notice').fadeOut('fast', function () {
-            $(this).remove();
+        function registerNavigation() {
+            $(document).on('orNewAction',function(event, data) {
+
+                let url = './api/?action=tree&subaction=path&id=' + Openrat.Workbench.state.id + '&type=' + Openrat.Workbench.state.action + '&output=json';
+
+                // Die Inhalte des Zweiges laden.
+                $.getJSON(url, function (json) {
+
+                    $('nav .or-navtree-node').removeClass('or-navtree-node--selected');
+
+                    let output = json['output'];
+                    $.each(output.path, function (idx, path) {
+
+                        $nav = $('nav .or-navtree-node[data-type='+path.type+'][data-id='+path.id+'].or-navtree-node--is-closed .or-navtree-node-control');
+                        $nav.click();
+                    });
+                    if   ( output.actual )
+                        $('nav .or-navtree-node[data-type='+output.actual.type+'][data-id='+output.actual.id+']').addClass('or-navtree-node--selected');
+
+                }).fail(function (e) {
+                    // Ups... aber was können wir hier schon tun, außer hässliche Meldungen anzeigen.
+                    console.warn(e);
+                    console.warn('failed to load path from '+url);
+                }).always(function () {
+
+                });
+            });
+        }
+
+        registerNavigation();
+
+        // Binding aller Sondertasten.
+        $('.keystroke').each( function() {
+            let keystrokeElement = $(this);
+            let keystroke = keystrokeElement.text();
+            if (keystroke.length == 0)
+                return; // No Keybinding.
+            let keyaction = function() {
+                keystrokeElement.click();
+            };
+            // Keybinding ausfuehren.
+            $(document).bind('keydown', keystroke, keyaction );
+        } );
+
+
+
+        // Per Klick wird die Notice entfernt.
+        $('#noticebar .notice .image-icon--menu-close').click(function () {
+            $(this).closest('.notice').fadeOut('fast', function () {
+                $(this).remove();
+            });
         });
-    });
-    // Die Notices verschwinden automatisch.
-    $('#noticebar .notice').each(function () {
-    	let noticeToClose = this;
-		setTimeout( function() {
-			$(noticeToClose).fadeOut('slow', function() { $(this).remove(); } );
-		},30/*seconds*/ *1000 );
+        // Die Notices verschwinden automatisch.
+        $('#noticebar .notice').each(function () {
+            let noticeToClose = this;
+            setTimeout( function() {
+                $(noticeToClose).fadeOut('slow', function() { $(this).remove(); } );
+            },30/*seconds*/ *1000 );
 
-    });
+        });
 
 
-    registerOpenClose($('section.toggle-open-close'));
 
-    $('section.toggle-open-close .on-click-open-close').click(function () {
-        var section = $(this).closest('section');
+        $('section.toggle-open-close .on-click-open-close').click(function () {
+            var section = $(this).closest('section');
 
-        // disabled sections are ignored.
-        if (section.hasClass('disabled'))
-            return;
+            // disabled sections are ignored.
+            if (section.hasClass('disabled'))
+                return;
 
-        // if view is empty, lets load the content.
-        var view = section.find('div.view-loader');
-        if (view.children().length == 0)
-            Workbench.loadNewActionIntoElement(view);
-    });
+            // if view is empty, lets load the content.
+            var view = section.find('div.view-loader');
+            if (view.children().length == 0)
+                Openrat.Workbench.loadNewActionIntoElement(view);
+        });
+
+    }
+
+    registerWorkbenchGlobalEvents();
+
 });
 
 
-function initActualHistoryState() {
-	var state = {};
-	state.name   = window.document.title;
 
-	var params = new URLSearchParams( window.location.search );
-
-    if (params.has('action')){
-
-        state.action = params.get('action');
-        state.id     = params.get('id'    );
-        state.name   = window.document.title;
-
-        state.data   = {};
-
-        //Iterate the search parameters.
-
-        var params = Array.from( params.entries() );
-		for( var entry in params ) {
-            state.data[params[entry][0]] = params[entry][1];
-        };
-
-        Navigator.toActualHistory( state );
-
-    }
-}
-
-
-function registerNavigation() {
-    $(document).on('orNewAction',function(event, data) {
-
-        let url = './api/?action=tree&subaction=path&id=' + Workbench.state.id + '&type=' + Workbench.state.action + '&output=json';
-
-        // Die Inhalte des Zweiges laden.
-        $.getJSON(url, function (json) {
-
-            $('nav .or-navtree-node').removeClass('or-navtree-node--selected');
-
-            let output = json['output'];
-            $.each(output.path, function (idx, path) {
-
-                $nav = $('nav .or-navtree-node[data-type='+path.type+'][data-id='+path.id+'].or-navtree-node--is-closed .or-navtree-node-control');
-                $nav.click();
-            });
-            if   ( output.actual )
-                $('nav .or-navtree-node[data-type='+output.actual.type+'][data-id='+output.actual.id+']').addClass('or-navtree-node--selected');
-
-        }).fail(function (e) {
-            // Ups... aber was können wir hier schon tun, außer hässliche Meldungen anzeigen.
-            console.warn(e);
-            console.warn('failed to load path from '+url);
-        }).always(function () {
-
-        });
-    });
-}
-
-
-
-/**
- * Registriert alle Events, die in der Workbench laufen sollen.
- */
-function registerWorkbenchEvents()
-{
-	// Modalen Dialog erzeugen.
-
-	/*
-	if	( $('#workbench div.panel.modal').length > 0 )
-	{
-		$('#workbench div.panel.modal').parent().addClass('modal');
-		$('div#filler').fadeTo(500,0.5);
-		$('#workbench').addClass('modal');
-	}
-	*/
-	
-	
-	$('div.header').dblclick( function()
-	{
-		fullscreen( this );
-	} );
-}
-
-
-/**
- * Laden einer View.
- *
- * @param contentEl
- * @param action
- * @param method
- * @param id
- * @param params
- */
-function loadView(contentEl,action,method,id,params  )
-{
-	Navigator.navigateToNewAction( action,method,id,params );
-}
 
 
 
@@ -245,20 +222,69 @@ function afterViewLoaded(viewEl )
 
 	// Theme-Auswahl mit Preview
     $(viewEl).find('.or-theme-chooser').change( function() {
-        setUserStyle( this.value );
+        Openrat.Workbench.setUserStyle( this.value );
     });
 
+
+
+
+    function registerMenuEvents($element )
+    {
+        //$e = $($element);
+
+        // Mit der Maus irgendwo hin geklickt, das Menü muss schließen.
+        $('body').click( function() {
+            $('.toolbar-icon.menu').parents('.or-menu').removeClass('open');
+        });
+        // Mit der Maus geklicktes Menü aktivieren.
+        $($element).find('.toolbar-icon.menu').click( function(event) {
+            event.stopPropagation();
+            $(this).parents('.or-menu').toggleClass('open');
+        });
+
+        // Mit der Maus überstrichenes Menü aktivieren.
+        $($element).find('.toolbar-icon.menu').mouseover( function() {
+
+            // close other menus.
+            $(this).parents('.or-menu').find('.toolbar-icon.menu').removeClass('open');
+            // open the mouse-overed menu.
+            $(this).addClass('open');
+        });
+
+    }
+
+    function registerSearch($element )
+    {
+        //$e = $($element);
+        $($element).find('.search input').orSearch( { dropdown:'#title div.search div.dropdown' } );
+
+    }
+
+
+
+    function registerTree(element) {
+
+        // Klick-Funktionen zum Öffnen/Schließen des Zweiges.
+        $(element).find('.or-navtree-node').orTree();
+
+    }
+
+
+    registerMenuEvents( viewEl );
+    registerSearch    ( viewEl );
+    registerTree      ( viewEl );
+
+    function registerDragAndDrop(viewEl)
+    {
+
+        registerDraggable(viewEl);
+        registerDroppable(viewEl);
+    }
+
+    registerDragAndDrop(viewEl);
+
+
 }
-
-
-
-function registerDragAndDrop(viewEl)
-{
-
-    registerDraggable(viewEl);
-    registerDroppable(viewEl);
-}
-
 
 
 
@@ -287,26 +313,6 @@ function registerTreeBranchEvents(viewEl)
 
 function registerDroppable(viewEl) {
 
-    /*
-    $(viewEl).find('div.header > a.back').each( function(idx,el) {
-        $('div.content li.object > .entry[data-type=\'folder\']').droppable({
-            accept: 'li.object', hoverClass: 'drophover', activeClass: 'dropactive', drop: function (event, ui) {
-                let dropped = ui.draggable;
-                let droppedOn = $(this).parent();
-
-                //alert('Moving '+$(dropped).attr('data-id')+' to folder '+$(droppedOn).attr('data-id') );
-                startDialog($(this).text(), $(dropped).attr('data-type'), 'copy', $(droppedOn).attr('data-id'), {
-                    'action': $(dropped).attr('data-type'),
-                    'subaction': 'copy',
-                    'id': $(dropped).attr('data-id'),
-                    'targetFolderId': $(droppedOn).attr('data-id')
-                });
-                //$(dropped).css({top: 0,left: 0}); // Nicht auf das eigene Fenster fallen lassen.
-                $(dropped).detach().css({top: 0, left: 0}).appendTo(droppedOn).click();
-            }
-        });
-    }
-*/
 
     $(viewEl).find('.or-droppable').droppable({
         accept: '.or-draggable',
@@ -323,100 +329,6 @@ function registerDroppable(viewEl) {
             //$(this).value(dropped.data('id'));
         }
     });
-}
-
-
-
-function registerMenuEvents($element )
-{
-    //$e = $($element);
-
-    // Mit der Maus irgendwo hin geklickt, das Menü muss schließen.
-    $('body').click( function() {
-        $('.toolbar-icon.menu').parents('.or-menu').removeClass('open');
-    });
-    // Mit der Maus geklicktes Menü aktivieren.
-    $($element).find('.toolbar-icon.menu').click( function(event) {
-        event.stopPropagation();
-        $(this).parents('.or-menu').toggleClass('open');
-    });
-
-    // Mit der Maus überstrichenes Menü aktivieren.
-    $($element).find('.toolbar-icon.menu').mouseover( function() {
-
-        // close other menus.
-        $(this).parents('.or-menu').find('.toolbar-icon.menu').removeClass('open');
-        // open the mouse-overed menu.
-        $(this).addClass('open');
-    });
-
-}
-
-function registerSearch($element )
-{
-    //$e = $($element);
-	$($element).find('.search input').orSearch( { dropdown:'#title div.search div.dropdown' } );
-
-}
-
-
-
-function registerTree(element) {
-
-    // Klick-Funktionen zum Öffnen/Schließen des Zweiges.
-    $(element).find('.or-navtree-node').orTree();
-
-}
-
-
-
-/**
- * Schaltet die Vollbildfunktion an oder aus.
- * 
- * @param element Das Element, auf dem die Vollbildfunktion ausgeführt wurde
- */
-function fullscreen( element ) {
-	$(element).closest('div.panel').fadeOut('fast', function()
-	{
-		$(this).toggleClass('fullscreen').fadeIn('fast');
-	} );
-}
-
-
-
-
-/**
- * Setzt neue View und aktualisiert alle Fenster.
- * @param element
- * @param action Action
- * @param id Id
- * @deprecated
- */
-
-function submitUrl( element,url )
-{
-	postUrl( url,element );
-	
-	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
-	//refreshAllRefreshables();
-}
-
-
-/**
- * @deprecated
-
- * @param url
- * @param element
- */
-function postUrl(url,element)
-{
-	url += '&output=json';
-	$.ajax( { 'type':'POST',url:url, data:{}, success:function(data, textStatus, jqXHR)
-		{
-			$('div.panel div.status div.loader').html('&nbsp;');
-			doResponse(data,textStatus,element);
-		} } );
-
 }
 
 
@@ -441,7 +353,7 @@ function startDialog( name,action,method,id,params )
     if  (!id)
         id = $('#editor').attr('data-id');
 
-	let view = new View( action,method,id,params );
+	let view = new Openrat.View( action,method,id,params );
 
     view.before = function() {
         $('#dialog > .view').html('<div class="header"><img class="icon" title="" src="./themes/default/images/icon/'+method+'.png" />'+name+'</div>');
@@ -497,12 +409,12 @@ function startEdit( name,action,method,id,params )
 {
 	// Attribute aus dem aktuellen Editor holen, falls die Daten beim Aufrufer nicht angegeben sind.
 	if (!action)
-		action = Workbench.state.action;
+		action = Openrat.Workbench.state.action;
 
 	if  (!id)
-        id = Workbench.state.id;
+        id = Openrat.Workbench.state.id;
 
-    let view = new View( action,method,id,params );
+    let view = new Openrat.View( action,method,id,params );
 
     view.before = function() {
 
@@ -541,27 +453,29 @@ function setTitle( title )
 		$('head > title').text( $('head > title').data('default') );
 }
 
+
+
 /**
  * Setzt neue Action und aktualisiert alle Fenster.
  * 
  * @param action Action
  * @param id Id
  */
-function openNewAction( name,action,id,extraId )
+function openNewAction( name,action,id )
 {
 	// Im Mobilmodus soll das Menü verschwinden, wenn eine neue Action geoeffnet wird.
     $('nav').removeClass('open');
 
     setTitle( name ); // Title setzen.
-	
-	setNewAction( action,id,extraId );
+
+    Openrat.Navigator.navigateToNew( {'action':action, 'id':id } );
 }
 
 
 function filterMenus()
 {
-    let action = Workbench.state.action;
-    let id     = Workbench.state.id;
+    let action = Openrat.Workbench.state.action;
+    let id     = Openrat.Workbench.state.id;
     $('div.clickable').addClass('active');
     $('div.clickable.filtered').removeClass('active').addClass('inactive');
 
@@ -577,82 +491,7 @@ function filterMenus()
 
 
 
-/**
- * Setzt neue Action und aktualisiert alle Fenster.
- * 
- * @param action Action
- * @param id Id
- */
-function setNewAction( action,id,extraId )
-{
-	Navigator.navigateToNewAction(action,'edit',id,extraId);
-	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
-	//refreshAllRefreshables();
-}
 
-
-/**
- * Setzt neue Id und aktualisiert alle Fenster.
- * @param id Id
- */
-function setNewId( id ) {
-}
-
-
-
-
-
-/**
- * Notification im Browser anzeigen.
- * Quelle: https://developer.mozilla.org/en-US/docs/Web/API/notification
- * @param text Text der Nachricht.
- */
-function notifyBrowser(text)
-{
-	  // Let's check if the browser supports notifications
-	  if (!("Notification" in window)) {
-		return;
-	    //alert("This browser does not support desktop notification");
-	  }
-
-	  // Let's check if the user is okay to get some notification
-	  else if (Notification.permission === "granted") {
-	    // If it's okay let's create a notification
-	    let notification = new Notification(text);
-	  }
-
-	  // Otherwise, we need to ask the user for permission
-	  else if (Notification.permission !== 'denied') {
-	    Notification.requestPermission(function (permission) {
-	      // If the user is okay, let's create a notification
-	      if (permission === "granted") {
-	        let notification = new Notification(text);
-	      }
-	    });
-	  }
-
-	  // At last, if the user already denied any notification, and you 
-	  // want to be respectful there is no need to bother them any more.
-}
-
-
-
-/**
- * Setzt einen neuen Theme.
- * @param styleName
- * @returns
- */
-function setUserStyle( styleName )
-{
-	var html = $('html');
-	var classList = html.attr('class').split(/\s+/);
-	$.each(classList, function(index, item) {
-	    if (item.startsWith('theme-')) {
-	        html.removeClass(item);
-	    }
-	});
-	html.addClass( 'theme-' + styleName.toLowerCase() );
-}
 
 
 
@@ -767,34 +606,6 @@ function createUrl(action,subaction,id,extraid,embed)
 }
 
 
-/**
- * Setzt Breite/Höhe für einen Container in der Workbench.
- * 
- * Sind weitere Container enthalten, werden diese rekursiv angepasst.
- * 
- * @param container
- */
-function resizeWorkbenchContainer( container )
-{
-}
-
-
-
-/**
- * Fenstergröße wurde verändert, nun die Größe der DIVs neu berechnen.
- */
-function resizeWorkbench()
-{
-}
-
-
-/**
- * Größe der TABs pro Frame neu berechnen.
- */
-function resizeTabs( panel ) 
-{
-}
-
 
 function help(el,url,suffix)
 {
@@ -802,69 +613,6 @@ function help(el,url,suffix)
 	var method = $(el).closest('div.panel').find('li.action.active').attr('data-method');
 	
 	window.open(url + action + '/'+ method + suffix, 'OpenRat_Help', 'location=no,menubar=no,scrollbars=yes,toolbar=no,resizable=yes');
-}
-
-
-/**
- * Show a notice bubble in the UI.
- * @param type
- * @param name
- * @param status
- * @param msg
- * @param log
- */
-function notify( type,name,status,msg,log=[] )
-{
-	// Notice-Bar mit dieser Meldung erweitern.
-
-	let notice = $('<div class="notice '+status+'"></div>');
-
-	let toolbar = $('<div class="or-notice-toolbar"></div>');
-	if   ( log.length )
-        $(toolbar).append('<i class="or-action-full image-icon image-icon--menu-fullscreen"></i>');
-	$(toolbar).append('<i class="or-action-close image-icon image-icon--menu-close"></i>');
-	$(notice).append(toolbar);
-
-	id = 0; // TODO
-	if	(name)
-		$(notice).append('<div class="name clickable"><a href="" data-type="open" data-action="'+type+'" data-id="'+id+'"><i class="or-action-full image-icon image-icon--action-'+type+'"></i> '+name+'</a></div>');
-
-	$(notice).append( '<div class="text">'+htmlEntities(msg)+'</div>');
-
-	if (log.length) {
-
-        let logLi = log.reduce((result, item) => {
-            result += '<li><pre>'+htmlEntities(item)+'</pre></li>';
-            return result;
-        }, '');
-        $(notice).append('<div class="log"><ul>'+logLi+'</ul></div>');
-    }
-
-	$('#noticebar').prepend(notice); // Notice anhängen.
-    $(notice).orLinkify(); // Enable links
-
-
-	// Toogle Fullscreen for notice
-    $(notice).find('.or-action-full').click( function() {
-        $(notice).toggleClass('full');
-    });
-
-    // Close the notice on click
-    $(notice).find('.or-action-close').click( function() {
-		$(notice).fadeOut('fast',function() { $(notice).remove(); } );
-	});
-
-	// Fadeout the notice after a while.
-	let timeout = 1;
-	if ( status == 'ok'     ) timeout = 20;
-	if ( status == 'info'   ) timeout = 60;
-	if ( status == 'warning') timeout = 120;
-	if ( status == 'error'  ) timeout = 120;
-
-	if (timeout > 0)
-    	setTimeout( function() {
-    		$(notice).fadeOut('slow', function() { $(this).remove(); } );
-    	},timeout*1000 );
 }
 
 

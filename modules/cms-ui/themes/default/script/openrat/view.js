@@ -9,7 +9,7 @@
  * @param params
  * @constructor
  */
-function View( action,method,id,params ) {
+Openrat.View = function( action,method,id,params ) {
 
     this.action = action;
     this.method = method;
@@ -34,9 +34,6 @@ function View( action,method,id,params ) {
 
     function registerViewEvents(element) {
 
-        registerMenuEvents( element );
-        registerSearch    ( element );
-        registerTree      ( element );
         afterViewLoaded   ( element );
 
     }
@@ -55,7 +52,7 @@ function View( action,method,id,params ) {
             $(element).removeClass("loader");
 
             $(element).find('form').each( function() {
-                let form = new Form();
+                let form = new Openrat.Form();
                 form.close = function() {
                     view.close();
                 }
@@ -67,7 +64,7 @@ function View( action,method,id,params ) {
                 // Seite nicht gefunden.
                 $(element).html("");
 
-                notify('','','error','Server Error',['Server Error while requesting url '+url, response]);
+                Openrat.Workbench.notify('','','error','Server Error',['Server Error while requesting url '+url, response]);
                 return;
             }
 

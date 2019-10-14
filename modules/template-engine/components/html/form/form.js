@@ -24,10 +24,9 @@ function doResponse(data,status,element)
 		// Bei asynchronen Requests wird zusätzlich eine Browser-Notice erzeugt, da der
 		// Benutzer bei länger laufenden Aktionen vielleicht das Tab oder Fenster
 		// gewechselt hat.
-        if   ($(element).data('async') == 'true')
-			notifyBrowser(value.text);
+		let notifyBrowser = $(element).data('async') == 'true';
 
-		notify(value.type, value.name, value.status, value.text, value.log ); // Notice anhängen.
+		Openrat.Workbench.notify(value.type, value.name, value.status, value.text, value.log, notifyBrowser ); // Notice anhängen.
 		
 		if	( value.status == 'ok' ) // Kein Fehler?
 		{
@@ -50,10 +49,10 @@ function doResponse(data,status,element)
 			{
 				if   ( afterSuccess == 'reloadAll' )
 				{
-					Workbench.reloadAll();
+					Openrat.Workbench.reloadAll();
 				}
 			} else {
-				Workbench.reloadViews();
+				Openrat.Workbench.reloadViews();
 			}
 
 			$(document).trigger('orDataChanged');

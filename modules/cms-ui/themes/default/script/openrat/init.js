@@ -1,4 +1,4 @@
 
 // Create own namespace.
 
-window.openrat  = {};
+window.Openrat = {};
