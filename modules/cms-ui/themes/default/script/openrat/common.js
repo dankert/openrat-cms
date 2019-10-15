@@ -253,13 +253,24 @@ function afterViewLoaded(viewEl )
 
     }
 
-    function registerSearch($element )
+    function registerGlobalSearch($element )
     {
-        //$e = $($element);
         $($element).find('.search input').orSearch( {
             dropdown:'#title div.search div.dropdown',
             select: function(obj) {
                 openNewAction( obj.name, obj.action, obj.id );
+            }
+        } );
+
+    }
+
+    function registerSelectorSearch( $element )
+    {
+        $($element).find('.selector input').orSearch( {
+            dropdown: '.dropdown',
+            select: function(obj) {
+                $($element).find('.or-selector-link-value').val(obj.id  );
+                $($element).find('.or-selector-link-name' ).val(obj.name).attr('placeholder',obj.name);
             }
         } );
 
@@ -275,9 +286,10 @@ function afterViewLoaded(viewEl )
     }
 
 
-    registerMenuEvents( viewEl );
-    registerSearch    ( viewEl );
-    registerTree      ( viewEl );
+    registerMenuEvents    ( viewEl );
+    registerGlobalSearch  ( viewEl );
+    registerSelectorSearch( viewEl );
+    registerTree          ( viewEl );
 
     function registerDragAndDrop(viewEl)
     {
@@ -328,10 +340,13 @@ function registerDroppable(viewEl) {
 
             let dropped = ui.draggable;
 
-            $(this).find('.or-selector-link-value').val( dropped.data('id') );
-            $(this).find('.or-selector-link-name' ).val( dropped.data('id') );
-            // Id übertragen
-            //$(this).value(dropped.data('id'));
+            let id   = dropped.data('id'  );
+            let name = dropped.data('name');
+            if   (!name)
+                name = id;
+
+            $(this).find('.or-selector-link-value').val( id );
+            $(this).find('.or-selector-link-name' ).val( name ).attr('placeholder',name );
         }
     });
 }
