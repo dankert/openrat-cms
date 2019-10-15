@@ -27,7 +27,7 @@ class SelectorComponent extends Component
 <div class="selector">
 <div class="inputholder or-droppable">
 <input type="hidden" class="or-selector-link-value" name="{$param}" value="{$id}" />
-<input type="text" class="or-selector-link-name" value="{$name}" />
+<input type="text" class="or-selector-link-name" value="{$name}" placeholder="{$name}" />
 </div>
 <div class="dropdown"></div>
 <div class="tree selector" data-types="{types}" data-init-id="{$id}" data-init-folderid="{$folderid}">

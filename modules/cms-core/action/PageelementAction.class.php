@@ -402,9 +402,19 @@ class PageelementAction extends Action
 		else
 			$types = array($type); // gewünschten Typ verwenden
 
+        $oid  = $this->value->linkToObjectId;
+        $name = '';
+
+        if   ( $oid ) {
+            $o = new BaseObject($oid);
+            $o->load();
+            $name = $o->filename;
+        }
+
 		$this->setTemplateVar('objects'         ,array() );
-		$this->setTemplateVar('linkobjectid',$this->value->linkToObjectId);
-		
+		$this->setTemplateVar('linkobjectid',$oid );
+		$this->setTemplateVar('linkname'    ,$name);
+
 		$this->setTemplateVar('types',implode(',',$types));
 
 		if	( $this->getSessionVar('pageaction') != '' )
