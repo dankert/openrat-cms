@@ -1,15 +1,13 @@
-
+<?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
 	
-		<form name="" target="_self" data-target="view" action="./" data-method="edit" data-action="image" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="image" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="image" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="edit" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
-			
-			
-			<div class="label">
-			</div>
+		<form name="" target="_self" data-target="view" action="./" data-method="edit" data-action="image" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form image" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="image" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="edit" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<div class="line">
+				<div class="label">
+				</div>
 				<div class="input">
 					<br/>
 					
-					<input size="40" id="req1537990354653077994_file" type="file" name="file" class="upload"  />
+					<input size="40" id="req0_file" type="file" name="file" class="upload"  />
 					
 					<br/>
 					
@@ -17,5 +15,11 @@
 					
 				</div>
 			</div>
-		<div class="bottom"><div class="command "><input type="submit" class="submit ok" value="OK" /></div></div></form>
+			<div class="line or-dropzone-upload">
+				<div class="label">
+				</div>
+				<div class="input">
+				</div>
+			</div>
+		<div class="or-form-actionbar"><input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" /><input type="submit" class="or-form-btn or-form-btn--primary" value="?BUTTON_OK?" /></div></form>
 	

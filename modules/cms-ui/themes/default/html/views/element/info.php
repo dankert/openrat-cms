@@ -1,4 +1,4 @@
-
+<?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
 	
 		<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
 			<tr class="data">
@@ -19,11 +19,10 @@
 					
 				</td>
 				<td class="clickable">
-					<a class="" target="_self" data-type="edit" data-action="element" data-method="prop" data-id="<?php echo $id ?>" data-extra="[]" href="<?php echo Html::url('element','prop',$id,array()) ?>">
+					<a class="" target="_self" data-type="edit" data-action="element" data-method="prop" data-id="<?php echo $id ?>" data-extra="[]" href="./#/element/<?php echo $id ?>">
 						<span><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
 						
 					</a>
-
 				</td>
 			</tr>
 			<tr class="data">

@@ -1,4 +1,4 @@
-
+<?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
 	
 		<div class="or-table-wrapper"><div class="or-table-area"><table width="100%">
 			<?php foreach($projects as $list_key=>$list_value){ ?><?php extract($list_value) ?>
@@ -60,11 +60,10 @@
 											<td title="<?php echo $objectname ?>">
 												<i class="image-icon image-icon--action-<?php echo $objecttype ?>"></i>
 												
-												<a target="_self" data-type="open" data-action="<?php echo $objecttype ?>" data-method="" data-id="<?php echo $objectid ?>" data-extra="[]" href="<?php echo Html::url($objecttype,'',$objectid,array()) ?>">
+												<a target="_self" data-type="open" data-action="<?php echo $objecttype ?>" data-method="" data-id="<?php echo $objectid ?>" data-extra="[]" href="./#/<?php echo $objecttype ?>/<?php echo $objectid ?>">
 													<span><?php echo nl2br(encodeHtml(htmlentities($objectname))); ?></span>
 													
 												</a>
-
 											</td>
 											<td>
 												<span><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $languagename,20,'..',constant('STR_PAD_BOTH') )))); ?></span>

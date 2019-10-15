@@ -11,9 +11,12 @@
 						<div class="selector">
 <div class="inputholder or-droppable">
 <input type="hidden" class="or-selector-link-value" name="targetobjectid" value="<?php echo $targetobjectid ?>" />
-<input type="text" class="or-selector-link-name" disabled="disabled" value="<?php echo $targetobjectname ?>" />
+<input type="text" class="or-selector-link-name" value="<?php echo $targetobjectname ?>" placeholder="<?php echo $targetobjectname ?>" />
 </div>
+<div class="dropdown"></div>
 <div class="tree selector" data-types="{types}" data-init-id="<?php echo $targetobjectid ?>" data-init-folderid="parentid">
+</div>
+</div>
 						
 					</div>
 				</div>

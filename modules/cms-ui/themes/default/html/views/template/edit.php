@@ -1,4 +1,4 @@
-
+<?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
 	
 		
 		
@@ -16,13 +16,12 @@
 			<?php foreach($elements as $list_key=>$list_value){ ?><?php extract($list_value) ?>
 				<tr class="data">
 					<td class="clickable">
-						<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="element" data-method="edit" data-id="<?php echo $id ?>" data-extra="[]" href="<?php echo Html::url('element','',$id,array()) ?>">
+						<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="element" data-method="edit" data-id="<?php echo $id ?>" data-extra="[]" href="./#/element/<?php echo $id ?>">
 							<i class="image-icon image-icon--element-<?php echo $type ?>"></i>
 							
 							<span title="<?php echo $description ?>"><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
 							
 						</a>
-
 					</td>
 					<td>
 						<span><?php echo nl2br(encodeHtml(htmlentities(lang('EL_'.$type.'')))); ?></span>
@@ -40,13 +39,12 @@
 			<?php } ?>
 			<tr class="data">
 				<td colspan="2" class="clickable">
-					<a target="_self" data-type="dialog" data-action="template" data-method="addel" data-id="<?php echo $templateid ?>" data-extra="{'dialogAction':'template','dialogMethod':'addel'}" href="<?php echo Html::url('template','addel',$templateid,array('dialogAction'=>'template','dialogMethod'=>'addel')) ?>">
+					<a target="_self" data-type="dialog" data-action="template" data-method="addel" data-id="<?php echo $templateid ?>" data-extra="{'dialogAction':'template','dialogMethod':'addel'}" href="./#/template/<?php echo $templateid ?>">
 						<img src="./modules/cms-ui/themes/default/images/icon/add.png" />
 						
 						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_template_addel'.'')))); ?></span>
 						
 					</a>
-
 				</td>
 			</tr>
 		</table></div></div>
@@ -57,13 +55,12 @@
 					
 					<br/>
 					
-					<a class="or-form-button" target="_self" data-type="edit" data-action="" data-method="src" data-id="<?php echo OR_ID ?>" data-extra="{'modelid':'<?php echo $modelid ?>'}" href="<?php echo Html::url('','src','',array('modelid'=>$modelid)) ?>">
+					<a class="or-form-button" target="_self" data-type="edit" data-action="" data-method="src" data-id="<?php echo OR_ID ?>" data-extra="{'modelid':'<?php echo $modelid ?>'}" href="./#//">
 						<i class="image-icon image-icon--action-template"></i>
 						
 						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'edit'.'')))); ?></span>
 						
 					</a>
-
 				</div>
 			</div></fieldset>
 		<?php } ?>

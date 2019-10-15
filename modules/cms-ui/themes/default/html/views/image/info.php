@@ -1,10 +1,10 @@
-
+<?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
 	
-		<form name="" target="_self" data-target="view" action="./" data-method="info" data-action="image" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="image" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="image" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="info" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
-			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><div>
+		<form name="" target="_self" data-target="view" action="./" data-method="info" data-action="image" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form image" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="image" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="info" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><div class="closable">
 				<div class="line">
 					<div class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_name')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_name')))); ?></span>
 						
 					</div>
 					<div class="input">
@@ -14,7 +14,7 @@
 				</div>
 				<div class="line">
 					<div class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_filename')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_filename')))); ?></span>
 						
 					</div>
 					<div class="input">
@@ -24,7 +24,7 @@
 				</div>
 				<div class="line">
 					<div class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('file_extension')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('file_extension')))); ?></span>
 						
 					</div>
 					<div class="input">
@@ -34,66 +34,65 @@
 				</div>
 				<div class="line">
 					<div class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_description')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_description')))); ?></span>
 						
 					</div>
 					<div class="input">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities($description))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities($description))); ?></span>
 						
 					</div>
 				</div>
 			</div></fieldset>
-			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('additional_info') ?></legend><div>
+			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('additional_info') ?></legend><div class="closable">
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_full_filename" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_full_filename')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_full_filename')))); ?></span>
 							
 						</label>
 					</div>
 					<div class="input">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities($full_filename))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities($full_filename))); ?></span>
 						
 					</div>
 				</div>
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_size" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('FILE_SIZE')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang('FILE_SIZE')))); ?></span>
 							
 						</label>
 					</div>
 					<div class="input">
 					</div>
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities($size))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities($size))); ?></span>
 					
 				</div>
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_mimetype" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('FILE_mimetype')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang('FILE_mimetype')))); ?></span>
 							
 						</label>
 					</div>
 					<div class="input">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities($mimetype))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities($mimetype))); ?></span>
 						
 						<br/>
 						
-						<a class="action" target="_self" data-action="file" data-method="size" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('file','size','',array()) ?>">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_file_size'.'')))); ?></span>
+						<a class="action" target="_self" data-action="file" data-method="size" data-id="<?php echo OR_ID ?>" data-extra="[]" href="./#/file/">
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_file_size'.'')))); ?></span>
 							
 						</a>
-
 					</div>
 				</div>
 				<div class="line">
 					<div class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(lang('id'))))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang(lang('id'))))); ?></span>
 						
 					</div>
 					<div class="input">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities($objectid))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities($objectid))); ?></span>
 						
 					</div>
 				</div>
@@ -101,16 +100,16 @@
 					<div class="line">
 						<div class="label">
 							<label for="<?php echo REQUEST_ID ?>_cache_filename" class="label">
-								<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('CACHE_FILENAME')))); ?></span>
+								<span><?php echo nl2br(encodeHtml(htmlentities(lang('CACHE_FILENAME')))); ?></span>
 								
 							</label>
 						</div>
 						<div class="input">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities($cache_filename))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities($cache_filename))); ?></span>
 							
 							<br/>
 							
-							<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/el_date.png" />
+							<img src="./modules/cms-ui/themes/default/images/icon/el_date.png" />
 							
 							<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($cache_filemtime) ?>
 							
@@ -120,47 +119,46 @@
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_pages" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('FILE_PAGES')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang('FILE_PAGES')))); ?></span>
 							
 						</label>
 					</div>
 					<div class="input">
-						<table width="100%">
+						<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
 							<?php foreach($pages as $list_key=>$list_value){ ?><?php extract($list_value) ?>
 								<tr>
 									<td>
-										<a target="_self" data-url="<?php echo $url ?>" data-action="" data-method="info" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
-											<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_page.png" />
+										<a target="_self" data-url="<?php echo $url ?>" data-action="" data-method="info" data-id="<?php echo OR_ID ?>" data-extra="[]" href="./#//">
+											<img src="./modules/cms-ui/themes/default/images/icon_page.png" />
 											
-											<span class="text"><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
+											<span><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
 											
 										</a>
-
 									</td>
 								</tr>
 							<?php } ?>
-						</table>
+						</table></div></div>
 						<?php $if6=(($pages)==FALSE); if($if6){?>
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_NOT_FOUND')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_NOT_FOUND')))); ?></span>
 							
 						<?php } ?>
 					</div>
 				</div>
 			</div></fieldset>
-			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('prop_userinfo') ?></legend><div>
+			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('prop_userinfo') ?></legend><div class="closable">
 				<div class="line">
 					<div class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_created')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_created')))); ?></span>
 						
 					</div>
 					<div class="input">
-						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/el_date.png" />
+						<img src="./modules/cms-ui/themes/default/images/icon/el_date.png" />
 						
 						<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($create_date) ?>
 						
 						<br/>
 						
-						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/user.png" />
+						<img src="./modules/cms-ui/themes/default/images/icon/user.png" />
 						
 						<?php include_once( 'modules/template-engine/components/html/user/component-user.php') ?><?php component_user($create_user) ?>
 						
@@ -168,22 +166,22 @@
 				</div>
 				<div class="line">
 					<div class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_lastchange')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_lastchange')))); ?></span>
 						
 					</div>
 					<div class="input">
-						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/el_date.png" />
+						<img src="./modules/cms-ui/themes/default/images/icon/el_date.png" />
 						
 						<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($lastchange_date) ?>
 						
 						<br/>
 						
-						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/user.png" />
+						<img src="./modules/cms-ui/themes/default/images/icon/user.png" />
 						
 						<?php include_once( 'modules/template-engine/components/html/user/component-user.php') ?><?php component_user($lastchange_user) ?>
 						
 					</div>
 				</div>
 			</div></fieldset>
-		<div class="bottom"><div class="command "><input type="submit" class="submit ok" value="OK" /></div></div></form>
+		<div class="or-form-actionbar"><input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" /><input type="submit" class="or-form-btn or-form-btn--primary" value="?BUTTON_OK?" /></div></form>
 	

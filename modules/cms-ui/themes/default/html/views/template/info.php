@@ -1,4 +1,4 @@
-
+<?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
 	
 		<div class="or-table-wrapper"><div class="or-table-area"><table width="100%">
 			<tr class="data">
@@ -20,13 +20,12 @@
 			<?php foreach($pages as $pageid=>$name){ ?>
 				<tr class="data">
 					<td colspan="2" class="clickable">
-						<a target="_self" data-type="open" data-action="page" data-method="info" data-id="<?php echo $pageid ?>" data-extra="[]" href="<?php echo Html::url('page','',$pageid,array()) ?>">
+						<a target="_self" data-type="open" data-action="page" data-method="info" data-id="<?php echo $pageid ?>" data-extra="[]" href="./#/page/<?php echo $pageid ?>">
 							<i class="image-icon image-icon--action-page"></i>
 							
 							<span><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
 							
 						</a>
-
 					</td>
 				</tr>
 			<?php } ?>

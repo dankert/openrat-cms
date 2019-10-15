@@ -1,6 +1,6 @@
-
+<?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
 	
-		<table width="100%">
+		<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
 			<tr>
 				<td colspan="2" class="logo">
 					<div class="line logo">
@@ -23,28 +23,27 @@
 			</tr>
 			<tr class="headline">
 				<td>
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'project'.'')))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'project'.'')))); ?></span>
 					
 				</td>
 			</tr>
 			<?php foreach($projects as $list_key=>$list_value){ ?><?php extract($list_value) ?>
 				<tr class="data">
 					<td class="clickable">
-						<a title="<?php echo lang('TREE_CHOOSE_PROJECT') ?>" target="_self" data-type="post" data-action="" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo $id ?>" data-data="{&quot;action&quot;:&quot;<?php echo OR_ACTION ?>&quot;,&quot;subaction&quot;:&quot;<?php echo OR_METHOD ?>&quot;,&quot;id&quot;:&quot;<?php echo $id ?>&quot;,&quot;token&quot;:&quot;<?php echo token() ?>&quot;,&quot;none&quot;:&quot;0&quot;}">
+						<a title="<?php echo lang('TREE_CHOOSE_PROJECT') ?>" target="_self" data-type="post" data-action="" data-method="projectmenu" data-id="<?php echo $id ?>" data-extra="[]" data-data="{&quot;action&quot;:&quot;start&quot;,&quot;subaction&quot;:&quot;projectmenu&quot;,&quot;id&quot;:&quot;<?php echo $id ?>&quot;,&quot;token&quot;:&quot;<?php echo token() ?>&quot;,&quot;none&quot;:&quot;0&quot;}">
 							<?php $project= 'project'; ?>
 							
-							<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_project.png" />
+							<img src="./modules/cms-ui/themes/default/images/icon_project.png" />
 							
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $name,30,'..',constant('STR_PAD_BOTH') )))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $name,30,'..',constant('STR_PAD_BOTH') )))); ?></span>
 							
 						</a>
-
 						<div class="onrowvisible">
 							<div class="arrow-down">
 							</div>
 							<div class="dropdown">
-								<form name="" target="_self" action="index" data-method="project" data-action="index" data-id="<?php echo $id ?>" method="POST" enctype="application/x-www-form-urlencoded" class="index" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="index" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="project" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo $id ?>" />
-									<table width="100%">
+								<form name="" target="_self" data-target="view" action="./" data-method="project" data-action="index" data-id="<?php echo $id ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form index" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="index" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="project" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo $id ?>" />
+									<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
 										<tr>
 											<td>
 												<?php include_once( 'modules/template-engine/components/html/radiobox/component-radio-box.php') ?><?php component_radio_box('modelid',$models,$defaultmodelid) ?>
@@ -61,12 +60,12 @@
 												</div>
 											</td>
 										</tr>
-									</table>
-								<div class="bottom"><div class="command "><input type="button" class="submit ok" value="OK" /></div></div></form>
+									</table></div></div>
+								<div class="or-form-actionbar"><input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" /><input type="submit" class="or-form-btn or-form-btn--primary" value="?BUTTON_OK?" /></div></form>
 							</div>
 						</div>
 					</td>
 				</tr>
 			<?php } ?>
-		</table>
+		</table></div></div>
 	
