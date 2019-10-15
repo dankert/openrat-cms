@@ -256,7 +256,12 @@ function afterViewLoaded(viewEl )
     function registerSearch($element )
     {
         //$e = $($element);
-        $($element).find('.search input').orSearch( { dropdown:'#title div.search div.dropdown' } );
+        $($element).find('.search input').orSearch( {
+            dropdown:'#title div.search div.dropdown',
+            select: function(obj) {
+                openNewAction( obj.name, obj.action, obj.id );
+            }
+        } );
 
     }
 

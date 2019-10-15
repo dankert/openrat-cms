@@ -5,16 +5,19 @@ jQuery.fn.orSearch = function( options )
 {
     // Create some defaults, extending them with any options that were provided
     var settings = $.extend( {
-      'dropdown': 'unknown'
+      'dropdown': $(), // empty element
+      'select'  : function( obj ) {}
     }, options);
 	
 	
-	return $(this).keyup( function()
+	return $(this).on('input', function()
 	{
 		let searchArgument = $(this).val();
+		let dropdownEl     = $( settings.dropdown );
+
 		if	( searchArgument.length > 3 )
 		{
-			$(settings.dropdown).empty(); // Leeren.
+			$(dropdownEl).empty(); // Leeren.
 
 			$.ajax( { 'type':'GET',url:'./api/?action=search&subaction=quicksearch&output=json&search='+searchArgument, data:null, success:function(data, textStatus, jqXHR)
 				{
@@ -24,21 +27,30 @@ jQuery.fn.orSearch = function( options )
 						
 						// Suchergebnis-Zeile in das Ergebnis schreiben.
 
-						let div = $('<div class="entry clickable" title="'+result.desc+'"></div>');
-						let link = $('<a href="./?action='+result.type+'&id='+result.id+'"></a>');
-						$(link).attr('data-type','open').attr('data-name',result.name).attr('data-action',result.type).attr('data-id',result.id).attr('data-extra','[]');
+						let div = $('<div class="entry or-search-result" title="'+result.desc+'"></div>');
+						div.data('object',{
+							'name':result.name,
+						    'action':result.type,
+							'id':result.id
+						} );
+						let link = $('<a />').attr('href',Openrat.Navigator.createShortUrl(result.type, result.id));
+						link.click( function(e) {
+							e.preventDefault();
+						});
 						$(link).append('<i class="image-icon image-icon--action-'+result.type+'" />');
 						$(link).append('<span>'+result.name+'</span>');
 
 						$(div).append(link);
-						$(settings.dropdown).append(div);
+						$(dropdownEl).append(div);
 					}
 
 					// Open the menu
-                    $(settings.dropdown).closest('.or-menu').addClass('open');
+                    $(dropdownEl).closest('.or-menu').addClass('open');
 
 					// Register clickhandler for search results.
-					$(settings.dropdown).find('.clickable').orLinkify();
+					$(dropdownEl).find('.or-search-result').click( function(e) {
+						settings.select( $(this).data('object') );
+					} );
 
 				} } );
 
@@ -47,7 +59,7 @@ jQuery.fn.orSearch = function( options )
 		else
 		{
 			// No search argument.
-            $(settings.dropdown).empty(); // Leeren.
+            $(dropdownEl).empty(); // Leeren.
 		}
 	});
 };
