@@ -134,6 +134,22 @@ Openrat.Workbench = new function()
         $('#workbench .view').empty();
 
         Openrat.Workbench.loadViews( $('#workbench .view') );
+
+        this.loadUserStyle();
+    }
+
+
+    this.loadUserStyle = function() {
+
+        let url = Openrat.View.createUrl('index','userinfo',0 );
+
+        // Die Inhalte des Zweiges laden.
+        $.getJSON(url, function (json) {
+
+            // Den neuen Unter-Zweig erzeugen.
+            let style = json['style'];
+            Openrat.Workbench.setUserStyle(style);
+        });
     }
 
 

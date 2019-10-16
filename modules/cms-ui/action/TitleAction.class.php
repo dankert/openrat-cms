@@ -59,8 +59,6 @@ class TitleAction extends Action
         $this->setTemplateVar('dbname',$db->conf['name'].(readonly()?' ('.lang('readonly').')':''));
         $this->setTemplateVar('dbid'  ,$db->id);
 
-        $databases = array();
-
         $this->setTemplateVar('username'    ,$user->name    );
         $this->setTemplateVar('userfullname',$user->fullname);
 
@@ -79,8 +77,8 @@ class TitleAction extends Action
 	
 	public function pingView()
 	{
-		$this->setTemplateVar('ping',true      );
-		$this->setTemplateVar('time',date('r') );
+        // do nothing here.
+        // The template is outputting a constant value.
 	}
 	
 	

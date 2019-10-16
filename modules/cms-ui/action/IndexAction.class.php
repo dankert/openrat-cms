@@ -41,16 +41,12 @@ class IndexAction extends Action
     {
         $user = Session::getUser();
 
-        if   ( is_object($user) )
+        if   ( $user )
             $this->lastModified( config('config','last_modification_time') );
         else
             $this->lastModified( time() );
 
-        // Theme für den angemeldeten Benuter ermitteln
-        if	( is_object($user) && isset(config('style')[$user->style]) )
-            $style = $user->style;
-        else
-            $style = config('interface','style','default');
+        $style = $this->getUserStyle( $user );
 
         $styleConfig     = config('style-default'); // default style config
         $userStyleConfig = config('style', $style); // user style config
@@ -66,8 +62,6 @@ class IndexAction extends Action
 
 
 
-        $json = new JSON();
-
         $appName = config('application','name');
 
         $value = array(
@@ -81,10 +75,19 @@ class IndexAction extends Action
 
         header("Content-Type: application/manifest+json");
 
-        echo $json->encode($value);
-        exit;
+        $this->outputAsJSON( $value );
     }
 
+
+
+    public function userinfoView() {
+
+	    $user = Session::getUser();
+
+        $output = array( 'style' => $this->getUserStyle($user) );
+
+        $this->outputAsJSON( $output );
+    }
 
     /**
      * Show the UI.
@@ -104,14 +107,13 @@ class IndexAction extends Action
             $user = Session::getUser();
         }
 
-        if	( !is_object($user) )
+        if	( $user )
+            $this->lastModified( max( $user->loginDate,config('config','last_modification_time')) );
+        else
             $this->lastModified( config('config','last_modification_time') );
 
         // Theme für den angemeldeten Benuter ermitteln
-		if	( is_object($user) && isset(config('style')[$user->style]) )
-			$style = $user->style;
-		else
-			$style = config('interface','style','default');
+        $style = $this->getUserStyle($user);
 
         $this->setTemplateVar('style',$style );
 
@@ -866,6 +868,31 @@ class IndexAction extends Action
             // Kein Auto-Login moeglich, die Anmeldemaske anzeigen.
             $this->setTemplateVars( array('dialogAction'=>'login','dialogMethod'=>'login'));
         }
+    }
+
+    /**
+     * @param User $user
+     * @return \Config|string
+     */
+    private function getUserStyle( $user )
+    {
+        // Theme für den angemeldeten Benuter ermitteln
+        if  ( $user && isset(config('style')[$user->style]))
+            $style = $user->style;
+        else
+            $style = config('interface', 'style', 'default');
+        return $style;
+    }
+
+    /**
+     * @param array $output
+     */
+    protected function outputAsJSON( $output )
+    {
+        $json = new JSON();
+        header('Content-Type: application/json');
+        echo $json->encode($output);
+        exit;
     }
 
 }
