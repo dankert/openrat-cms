@@ -60,7 +60,8 @@ function handleFileUpload(form,files)
 		$.ajax( { 'type':'POST',url:'./api/', cache:false,contentType: false, processData: false, data:form_data, success:function(data, textStatus, jqXHR)
 			{
 				$(status).remove();
-				doResponse(data,textStatus,form);
+				let oform = new Openrat.Form();
+				oform.doResponse(data,textStatus,form);
 			},
 			error:function(jqXHR, textStatus, errorThrown) {
 				$(form).closest('div.content').removeClass('loader');

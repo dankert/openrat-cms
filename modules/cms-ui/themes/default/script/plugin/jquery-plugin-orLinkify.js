@@ -27,7 +27,23 @@ jQuery.fn.orLinkify = function()
 			switch( type )
 			{
 				case 'post':
-					submitLink(this,$(this).attr('data-data') );
+
+					// Create a temporary form element.
+					$form = $('<form />').attr('method','POST').addClass('invisible');
+					let params = jQuery.parseJSON( $(this).attr('data-data')  );
+					params.output = 'json';
+
+					// Add input elements...
+					$.each( params, function(key,value) {
+						let $input = $('<input />').attr('type','hidden').attr('name',key).attr('value',value);
+						$form.append( $input );
+					} );
+
+					// Submit the form.
+					let form = new Openrat.Form();
+					form.initOnElement( $form );
+					form.submit();
+
 					break;
 
 				case 'dialog':
