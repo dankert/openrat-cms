@@ -108,23 +108,6 @@ $( function() {
 
 
 
-        // Per Klick wird die Notice entfernt.
-        $('#noticebar .notice .image-icon--menu-close').click(function () {
-            $(this).closest('.notice').fadeOut('fast', function () {
-                $(this).remove();
-            });
-        });
-        // Die Notices verschwinden automatisch.
-        $('#noticebar .notice').each(function () {
-            let noticeToClose = this;
-            setTimeout( function() {
-                $(noticeToClose).fadeOut('slow', function() { $(this).remove(); } );
-            },30/*seconds*/ *1000 );
-
-        });
-
-
-
         $('section.toggle-open-close .on-click-open-close').click(function () {
             var section = $(this).closest('section');
 
@@ -139,6 +122,12 @@ $( function() {
         });
 
     }
+
+    // Initial Notices
+    $('.or-initial-notice').each( function() {
+       Openrat.Workbench.notify('','','info',$(this).text());
+       $(this).remove();
+    });
 
     registerWorkbenchGlobalEvents();
 
