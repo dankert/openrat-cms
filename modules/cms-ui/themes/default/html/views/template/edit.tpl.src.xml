@@ -34,7 +34,7 @@
 		<row class="data">
 			<column colspan="2" class="clickable">
 				<link type="dialog" subaction="addel" action="template" id="var:templateid">
-					<image icon="add" />
+					<image method="add" />
 					<text key="menu_template_addel"></text>
 				</link>
 			</column>

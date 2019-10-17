@@ -40,7 +40,7 @@
 			<tr class="data">
 				<td colspan="2" class="clickable">
 					<a target="_self" data-type="dialog" data-action="template" data-method="addel" data-id="<?php echo $templateid ?>" data-extra="{'dialogAction':'template','dialogMethod':'addel'}" href="./#/template/<?php echo $templateid ?>">
-						<img src="./modules/cms-ui/themes/default/images/icon/add.png" />
+						<i class="image-icon image-icon--method-add"></i>
 						
 						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_template_addel'.'')))); ?></span>
 						
