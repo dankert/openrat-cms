@@ -38,7 +38,7 @@
 						
 					</td>
 					<td>
-						<i class="image-icon image-icon--element-<?php echo $typename ?>"></i>
+						<i class="image-icon image-icon--action-el_<?php echo $typename ?>"></i>
 						
 						<span><?php echo nl2br(encodeHtml(htmlentities(lang('el_'.$typename.'')))); ?></span>
 						

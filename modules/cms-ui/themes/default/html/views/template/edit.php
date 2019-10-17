@@ -17,7 +17,7 @@
 				<tr class="data">
 					<td class="clickable">
 						<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="element" data-method="edit" data-id="<?php echo $id ?>" data-extra="[]" href="./#/element/<?php echo $id ?>">
-							<i class="image-icon image-icon--element-<?php echo $type ?>"></i>
+							<i class="image-icon image-icon--action-el_<?php echo $type ?>"></i>
 							
 							<span title="<?php echo $description ?>"><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
 							

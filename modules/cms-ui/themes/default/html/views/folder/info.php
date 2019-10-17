@@ -62,7 +62,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<i class="image-icon image-icon--element-date"></i>
+						<i class="image-icon image-icon--action-el_date"></i>
 						
 						<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($create_date) ?>
 						
@@ -80,7 +80,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<i class="image-icon image-icon--element-date"></i>
+						<i class="image-icon image-icon--action-el_date"></i>
 						
 						<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($lastchange_date) ?>
 						

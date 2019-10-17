@@ -36,7 +36,7 @@ class ImageComponent extends Component
 		elseif	( !empty($this->elementtype) )
 		{
             $tagName = 'i';
-			$styleClass = 'image-icon image-icon--element-'.$this->htmlvalue($this->elementtype);
+			$styleClass = 'image-icon image-icon--action-el_'.$this->htmlvalue($this->elementtype);
             $selfClosing = false;
 		}
 		elseif	( !empty($this->action) )

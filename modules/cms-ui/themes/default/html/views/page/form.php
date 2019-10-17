@@ -31,7 +31,7 @@
 								<tr class="data">
 									<td>
 										<label for="<?php echo REQUEST_ID ?>_<?php echo $saveid ?>" class="label">
-											<i class="image-icon image-icon--element-<?php echo $type ?>"></i>
+											<i class="image-icon image-icon--action-el_<?php echo $type ?>"></i>
 											
 											<span><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
 											

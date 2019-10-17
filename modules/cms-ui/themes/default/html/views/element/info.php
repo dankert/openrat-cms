@@ -7,7 +7,7 @@
 					
 				</td>
 				<td>
-					<i class="image-icon image-icon--element-<?php echo $type ?>"></i>
+					<i class="image-icon image-icon--action-el_<?php echo $type ?>"></i>
 					
 					<span><?php echo nl2br(encodeHtml(htmlentities(lang('el_'.$type.'')))); ?></span>
 					

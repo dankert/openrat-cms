@@ -28,7 +28,7 @@
 						
 					</td>
 					<td class="filename">
-						<i class="image-icon image-icon--element-<?php echo $element_type ?>"></i>
+						<i class="image-icon image-icon--action-el_<?php echo $element_type ?>"></i>
 						
 						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'el_'.$element_type.''.'')))); ?></span>
 						
@@ -70,7 +70,7 @@
 					<td>
 						<?php $if6=(isset($element_url)); if($if6){?>
 							<a target="_self" data-url="<?php echo $element_url ?>" data-action="" data-method="prop" data-id="<?php echo OR_ID ?>" data-extra="[]" href="./#//">
-								<i class="image-icon image-icon--element-<?php echo $element_type ?>"></i>
+								<i class="image-icon image-icon--action-el_<?php echo $element_type ?>"></i>
 								
 								<span><?php echo nl2br(encodeHtml(htmlentities($element_name))); ?></span>
 								
