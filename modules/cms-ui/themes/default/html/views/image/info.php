@@ -152,13 +152,13 @@
 						
 					</div>
 					<div class="input">
-						<img src="./modules/cms-ui/themes/default/images/icon/el_date.png" />
+						<i class="image-icon image-icon--action-el_date"></i>
 						
 						<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($create_date) ?>
 						
 						<br/>
 						
-						<img src="./modules/cms-ui/themes/default/images/icon/user.png" />
+						<i class="image-icon image-icon--action-user"></i>
 						
 						<?php include_once( 'modules/template-engine/components/html/user/component-user.php') ?><?php component_user($create_user) ?>
 						
@@ -170,13 +170,13 @@
 						
 					</div>
 					<div class="input">
-						<img src="./modules/cms-ui/themes/default/images/icon/el_date.png" />
+						<i class="image-icon image-icon--action-el_date"></i>
 						
 						<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($lastchange_date) ?>
 						
 						<br/>
 						
-						<img src="./modules/cms-ui/themes/default/images/icon/user.png" />
+						<i class="image-icon image-icon--action-user"></i>
 						
 						<?php include_once( 'modules/template-engine/components/html/user/component-user.php') ?><?php component_user($lastchange_user) ?>
 						

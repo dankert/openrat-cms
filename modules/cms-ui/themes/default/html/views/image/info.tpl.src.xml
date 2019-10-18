@@ -125,10 +125,10 @@
 					<text text="global_created"></text>
 				</part>
 				<part class="input">
-					<image icon="el_date"></image>
+					<image elementtype="date"></image>
 					<date date="var:create_date"></date>
 					<newline></newline>
-					<image icon="user"></image>
+					<image action="user"></image>
 					<user user="var:create_user"></user>
 				</part>
 			</part>
@@ -137,10 +137,10 @@
 					<text text="global_lastchange"></text>
 				</part>
 				<part class="input">
-					<image icon="el_date"></image>
+					<image elementtype="date"></image>
 					<date date="var:lastchange_date"></date>
 					<newline></newline>
-					<image icon="user"></image>
+					<image action="user"></image>
 					<user user="var:lastchange_user"></user>
 				</part>
 			</part>
