@@ -132,12 +132,15 @@ div#workbench {
 	height: 100%;
 	display: flex;
 	flex-direction: column;
+	/*
+
+    div.panel.modal {
+    position: relative;
+    z-index: 101;
+    border: 1px solid !important;
+    }
+     */
 	/* vertikale Flex-Box zwischen Header und Hauptbereich */
-}
-div#workbench div.panel.modal {
-	position: relative;
-	z-index: 101;
-	border: 1px solid !important;
 }
 div#workbench > header {
 	height: 3.0rem;
@@ -151,90 +154,99 @@ div#workbench > header .toolbar-icon .arrow-down {
 		display: none;
 	}
 }
-div#workbench > div {
+div#workbench > .or-main-area {
 	flex: 1;
 	/* Horizontale Flexbox */
-	display: flex;
-	flex-direction: row;
 	/*
         https://stackoverflow.com/questions/28636832/firefox-overflow-y-not-working-with-nested-flexbox
         Whenever you've got an element with overflow: [hidden|scroll|auto] inside of a flex item, you need to give its ancestor flex item min-width:0 (in a horizontal flex container) or min-height:0 (in a vertical flex container), to disable this min-sizing behavior, or else the flex item will refuse to shrink smaller than the child's min-content size.
          */
-	min-width: 0;
 	min-height: 0;
 }
-div#workbench > div > main,
-div#workbench > div #edit {
-	transition: flex 0.3s ease-in-out;
-	flex: 1;
-}
-div#workbench > div > nav,
-div#workbench > div > main,
-div#workbench > div > #edit {
+div#workbench > .or-main-area > * {
 	min-width: 0;
 	min-height: 0;
 	overflow-y: auto;
 	overflow-x: hidden;
+	height: 100%;
 }
-div#workbench > div > nav {
-	flex: 0.5;
-	transition: flex 0.3s ease-in-out;
+div#workbench > .or-main-area > nav {
+	width: 33%;
+	transition: width 0.15s ease-in-out;
+	z-index: 2;
+	position: fixed;
 }
 @media only screen and (max-width: 55rem) {
-	div#workbench > div > nav {
-		flex: 0;
+	div#workbench > .or-main-area > nav {
+		width: 0;
 	}
 }
-div#workbench > div > nav.small {
-	flex: 0.05;
+div#workbench > .or-main-area > nav.small {
+	width: 5%;
 	opacity: 0.5;
 	overflow-y: hidden;
 }
-div#workbench > div > nav.small:hover {
-	flex: 0.5;
+div#workbench > .or-main-area > nav.small:hover {
+	width: 33%;
 	overflow-y: auto;
 	opacity: 1;
+	background-color: inherit;
+	border-right: 1px solid inherit;
 }
-div#workbench > div > nav.open {
+div#workbench > .or-main-area > nav.small ~ .or-workplace {
+	margin-left: 5%;
+}
+div#workbench > .or-main-area > nav.open {
 	overflow-y: auto;
 }
 @media only screen and (max-width: 55rem) {
-	div#workbench > div > nav.open {
-		flex: 9;
+	div#workbench > .or-main-area > nav.open {
+		width: 95%;
+		border-right: 1px solid;
+		opacity: 0.95;
 	}
 }
 @media only screen and (min-width: 75rem) {
-	div#workbench > div > nav {
+	div#workbench > .or-main-area > nav {
 		width: 33%;
 		overflow-y: auto;
 	}
 }
-div#workbench > div > nav div.view {
+div#workbench > .or-main-area > nav div.view {
 	height: 100%;
 }
-div#workbench > div header .or-view-icon,
-div#workbench > div header .or-view-headline {
+div#workbench > .or-main-area header .or-view-icon,
+div#workbench > .or-main-area header .or-view-headline {
 	margin: 0.3em;
 	display: inline;
 	font-size: 1.2em;
 	line-height: 1.5em;
 }
-div#workbench > div > main {
+div#workbench > .or-main-area > .or-workplace {
+	margin-left: 33%;
+	transition: margin-left 0.15s ease-in-out;
+}
+@media only screen and (max-width: 55rem) {
+	div#workbench > .or-main-area > .or-workplace {
+		margin-left: 0;
+	}
+}
+div#workbench > .or-main-area > .or-workplace > #editor {
 	transition: opacity 0.5s ease;
 	display: flex;
 	flex-direction: column;
 }
-div#workbench > div > main.is-closed {
+div#workbench > .or-main-area > .or-workplace > #editor.is-closed {
 	flex: 0.5;
 	cursor: not-allowed;
 	pointer-events: none;
 }
 @media only screen and (max-width: 55rem) {
-	div#workbench > div > main.is-closed {
+	div#workbench > .or-main-area > .or-workplace > #editor.is-closed {
 		flex: 0;
 	}
 }
-div#workbench > div > main > section {
+div#workbench > .or-main-area > .or-workplace > #editor > section {
 	margin: 1.5em;
 	border: 1px solid;
 	border-radius: 5px;
@@ -243,37 +255,40 @@ div#workbench > div > main > section {
 	-khtml-border-radius: 5px;
 }
 @media only screen and (max-width: 55rem) {
-	div#workbench > div > main > section {
+	div#workbench > .or-main-area > .or-workplace > #editor > section {
 		margin: 0.5em;
 	}
 }
-div#workbench > div > main > section .view-toolbar {
+div#workbench > .or-main-area > .or-workplace > #editor > section .view-toolbar {
 	display: inline;
 }
-div#workbench > div > main > section.closed .view-toolbar {
+div#workbench > .or-main-area > .or-workplace > #editor > section.closed .view-toolbar {
 	display: none;
 }
-div#workbench > div > main > section.is-empty {
+div#workbench > .or-main-area > .or-workplace > #editor > section.is-empty {
 	display: none;
 }
-div#workbench > div #edit {
-	flex: 0;
+div#workbench > .or-main-area > .or-workplace #edit {
+	display: none;
+	width: 0;
+	transition: width ease;
+	padding: 1em;
 }
 @media only screen and (max-width: 55rem) {
-	div#workbench > div #edit {
+	div#workbench > .or-main-area > .or-workplace #edit {
 		margin: 0.5em;
 	}
 }
-div#workbench > div #edit.is-open {
-	flex: 2;
-	border: 1px solid;
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-khtml-border-radius: 5px;
-	margin: 1.5em;
+div#workbench > .or-main-area > .or-workplace #edit.is-open {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	display: block;
 }
-div#workbench > div #edit .filler {
+div#workbench > .or-main-area > .or-workplace #edit.is-open ~ #editor {
+	display: none;
+}
+div#workbench > .or-main-area > .or-workplace #edit .filler {
 	z-index: 90;
 	height: 100%;
 	width: 100%;
@@ -311,7 +326,7 @@ div#workbench > div #edit .filler {
 }
 @media only screen and (max-width: 55rem) {
 	html {
-		font-size: 1.0em;
+		font-size: 1em;
 	}
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22openrat-workbench.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAuCA%2CGAAG%3B%3B%3BAAAH%2CGAAG%2COAEG%3BCACE%3B%3BCAGA%3BCACA%3BCACA%3BCACA%3BCACA%3BCAEA%3BCAEA%2C4BAAA%3B%3BAAGJ%2CGAjBD%2COAiBE%3BCACG%3BCACA%3B%3BAAnBR%2CGAAG%2COAuBC%3BCACI%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAA9BR%2CGAAG%2COAuBC%2CQASI%2CKAAI%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCAEA%3BCACA%3BCACA%3B%3BAAMZ%3BCACI%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAEA%2CMAAC%3BCACG%2CmCAAA%3BCACA%2CqBAAA%3BCACA%2CkCAAA%3BCACA%2CoCAAA%3BCACA%3B%3BAAEJ%2CMAAC%3BCACG%2CiCAAA%3BCACA%2CsBAAA%3BCACA%2CoCAAA%3BCACA%2CmCAAA%3BCACA%3B%3BAAIR%2COAAQ%3BCACJ%3B%3BAAGJ%3BCACI%3B%3BAAGJ%2CIAAI%2CKAAM%3BCACN%3B%3BAAGJ%3BCAEI%3BCACA%3B%3B%3B%3BAAHJ%2CkBAKI%3BCACI%3BCACA%3B%3BAAPR%2CkBAWM%3BCAEE%2CiCAAA%3BCAEA%3BCACA%3B%3BAAKJ%2CkBAAC%2COACK%2CuBAAuB%3BCACrB%3B%3BAAFR%2CkBAAC%2COAIK%2CuBAAuB%3BCACrB%3B%3BAALR%2CkBAAC%2COAOK%3BCAEE%3BCACA%3BCACA%3B%3BAAMR%2CkBAAC%2CKACK%3BCACE%3B%3BAAFR%2CkBAAC%2CKAIK%2CuBAAuB%3BCACrB%3B%3BAALR%2CkBAAC%2CKAOK%2CuBAAuB%3BCACrB%3B%3BAASZ%3BAAAM%3BCAAO%3BCAAY%3B%3BAAEzB%2CGAAG%3BCAEC%3BCACA%3BCACA%3BCACA%3B%3B%3BAALJ%2CGAAG%2CUAOC%2CIAAG%2CMAAM%3BCACL%3BCACA%3BCACA%2C4BAAA%3B%3BAAVR%2CGAAG%2CUAiBG%3BCACE%3B%3BAAlBR%2CGAAG%2CUAiBG%2CSAGE%2CcAEI%3BCACI%3B%3BAAOJ%3BCAAA%2CGA9BT%2CUAiBG%2CSAGE%2CcAMI%2CKAAI%3BCAIJ%2CGA9BT%2CUAiBG%2CSAGE%2CcAMgB%3BEAEJ%3B%3B%3BAA5BpB%2CGAAG%2CUAkCG%3BCACE%3B%3BCAGA%3BCACA%3B%3B%3B%3B%3BCAMA%3BCACA%3B%3BAA9CR%2CGAAG%2CUAkCG%2CMAcI%3BAAhDV%2CGAAG%2CUAkCG%2CMArNN%2CCAmOe%3BCACH%2CiCAAA%3BCACA%3B%3BAAlDZ%2CGAAG%2CUAkCG%2CMAmBI%3BAArDV%2CGAAG%2CUAkCG%2CMAmBW%3BAArDjB%2CGAAG%2CUAkCG%2CMAmBmB%3BCACb%3BCACA%3BCACA%3BCACA%3B%3BAAzDZ%2CGAAG%2CUAkCG%2CMA0BI%3BCACE%3BCACA%2CiCAAA%3B%3BAAQA%3BCAAA%2CGAtET%2CUAkCG%2CMA0BI%3BEAOM%3B%3B%3BAAGJ%2CGAtET%2CUAkCG%2CMA0BI%2CMAUG%3BCACG%3BCACA%3BCACA%3B%3BAAEA%2CGA3Eb%2CUAkCG%2CMA0BI%2CMAUG%2CMAKI%3BCACG%3BCACA%3BCACA%3B%3BAAIR%2CGAlFT%2CUAkCG%2CMA0BI%2CMAsBG%3BCAEG%3B%3BAAIJ%3BCAAA%2CGAxFT%2CUAkCG%2CMA0BI%2CMAsBG%3BEAIO%3B%3B%3BAAUR%3BCAAA%2CGAhGT%2CUAkCG%2CMA0BI%3BEA%2BBM%3BEACA%3B%3B%3BAA5FhB%2CGAAG%2CUAkCG%2CMA0BI%2CMAoCE%2CIAAG%3BCACC%3B%3BAAjGhB%2CGAAG%2CUAkCG%2CMAmEE%2COAEI%3BAAvGZ%2CGAAG%2CUAkCG%2CMAmEE%2COAEmB%3BCACX%3BCACA%3BCACA%3BCACA%3B%3BAA3GhB%2CGAAG%2CUAkCG%2CMA8EI%3BCAEE%2C6BAAA%3BCACA%3BCACA%3B%3BAAEA%2CGAtHT%2CUAkCG%2CMA8EI%2COAMG%3BCACG%3BCACA%3BCACA%3B%3BAAOA%3BCAAA%2CGAhIb%2CUAkCG%2CMA8EI%2COAMG%3BEAOO%3B%3B%3BAAMR%2CGAnIT%2CUAkCG%2CMA8EI%2COAmBM%3BCACA%3BCAKA%2CiBAAA%3BCA%5C%2FRZ%2CkBAAA%3BCACA%2CuBAAA%3BCACA%2C0BAAA%3BCACA%2CyBAAA%3B%3BAA4RY%3BCAAA%2CGAzIb%2CUAkCG%2CMA8EI%2COAmBM%3BEAGI%3B%3B%3BAAHR%2CGAnIT%2CUAkCG%2CMA8EI%2COAmBM%2CUAWA%3BCACI%3B%3BAAQJ%2CGAvJb%2CUAkCG%2CMA8EI%2COAmBM%2CUAoBC%2COACG%3BCACI%3B%3BAASR%2CGAlKb%2CUAkCG%2CMA8EI%2COAmBM%2CUA%2BBC%3BCACG%3B%3BAAnKpB%2CGAAG%2CUAkCG%2CMAsIE%3BCAGI%3B%3BAAWA%3BCAAA%2CGAtLT%2CUAkCG%2CMAsIE%3BEASQ%3B%3B%3BAAKJ%2CGAtLT%2CUAkCG%2CMAsIE%2CMAcK%3BCAEG%3BCACA%2CiBAAA%3BCA%5C%2FUZ%2CkBAAA%3BCACA%2CuBAAA%3BCACA%2C0BAAA%3BCACA%2CyBAAA%3BCA8UY%3B%3BAA3LhB%2CGAAG%2CUAkCG%2CMAsIE%2CMAgCI%3BCACI%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAShB%2CMAEI%3BCACI%3B%3BAAIJ%3BCAAA%2CMALA%3BEAGQ%3B%3B%3BAALZ%2CMASI%3BCACI%3B%3BAAIJ%3BCAAA%2CMALA%3BEAGQ%3B%3B%3BAAcJ%3BCAAA%2CMAVJ%2CcAAa%2COAMT%3BEAEQ%3B%3B%3B%3BAAQhB%3BCAEI%2C%2BCAAA%3BCACA%2CgCAAA%3BCACA%3BCACA%3BCACA%3B%3BAAUJ%3BCAJI%3BEACI%22%7D */
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22openrat-workbench.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAuCA%2CGAAG%3B%3B%3BAAAH%2CGAAG%2COAEG%3BCACE%3B%3BCAGA%3BCACA%3BCACA%3BCACA%3BCACA%3BCAEA%3BCAEA%2C4BAAA%3B%3BAAGJ%2CGAjBD%2COAiBE%3BCACG%3BCACA%3B%3BAAnBR%2CGAAG%2COAuBC%3BCACI%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAA9BR%2CGAAG%2COAuBC%2CQASI%2CKAAI%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCAEA%3BCACA%3BCACA%3B%3BAAMZ%3BCACI%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAEA%2CMAAC%3BCACG%2CmCAAA%3BCACA%2CqBAAA%3BCACA%2CkCAAA%3BCACA%2CoCAAA%3BCACA%3B%3BAAEJ%2CMAAC%3BCACG%2CiCAAA%3BCACA%2CsBAAA%3BCACA%2CoCAAA%3BCACA%2CmCAAA%3BCACA%3B%3BAAIR%2COAAQ%3BCACJ%3B%3BAAGJ%3BCACI%3B%3BAAGJ%2CIAAI%2CKAAM%3BCACN%3B%3BAAGJ%3BCAEI%3BCACA%3B%3B%3B%3BAAHJ%2CkBAKI%3BCACI%3BCACA%3B%3BAAPR%2CkBAWM%3BCAEE%2CiCAAA%3BCAEA%3BCACA%3B%3BAAKJ%2CkBAAC%2COACK%2CuBAAuB%3BCACrB%3B%3BAAFR%2CkBAAC%2COAIK%2CuBAAuB%3BCACrB%3B%3BAALR%2CkBAAC%2COAOK%3BCAEE%3BCACA%3BCACA%3B%3BAAMR%2CkBAAC%2CKACK%3BCACE%3B%3BAAFR%2CkBAAC%2CKAIK%2CuBAAuB%3BCACrB%3B%3BAALR%2CkBAAC%2CKAOK%2CuBAAuB%3BCACrB%3B%3BAASZ%3BAAAM%3BCAAO%3BCAAY%3B%3BAAEzB%2CGAAG%3BCAEC%3BCACA%3BCACA%3BCACA%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAALJ%2CGAAG%2CUAqBG%3BCACE%3B%3BAAtBR%2CGAAG%2CUAqBG%2CSAGE%2CcAEI%3BCACI%3B%3BAAOJ%3BCAAA%2CGAlCT%2CUAqBG%2CSAGE%2CcAMI%2CKAAI%3BCAIJ%2CGAlCT%2CUAqBG%2CSAGE%2CcAMgB%3BEAEJ%3B%3B%3BAAhCpB%2CGAAG%2CUAsCG%3BCACE%3B%3B%3B%3B%3B%3BCAWA%3B%3BAAlDR%2CGAAG%2CUAsCG%2CgBAeI%3BCACE%3BCACA%3BCACA%3BCACA%3BCAEA%3B%3BAA3DZ%2CGAAG%2CUAsCG%2CgBAwBI%3BCACE%3BCACA%2CmCAAA%3BCACA%3BCACA%3B%3BAAOA%3BCAAA%2CGAzET%2CUAsCG%2CgBAwBI%3BEAOM%3B%3B%3BAAIJ%2CGAzET%2CUAsCG%2CgBAwBI%2CMAWG%3BCACG%3BCACA%3BCACA%3B%3BAAEA%2CGA9Eb%2CUAsCG%2CgBAwBI%2CMAWG%2CMAKI%3BCACG%3BCACA%3BCACA%3BCACA%3BCACA%2C%2BBAAA%3B%3BAAGJ%2CGAtFb%2CUAsCG%2CgBAwBI%2CMAWG%2CMAaO%3BCACA%3B%3BAAIR%2CGA3FT%2CUAsCG%2CgBAwBI%2CMA6BG%3BCAEG%3B%3BAAMJ%3BCAAA%2CGAnGT%2CUAsCG%2CgBAwBI%2CMA6BG%3BEAIO%3BEACA%2CuBAAA%3BEACA%3B%3B%3BAAUR%3BCAAA%2CGA3GT%2CUAsCG%2CgBAwBI%3BEAwCM%3BEACA%3B%3B%3BAAvGhB%2CGAAG%2CUAsCG%2CgBAwBI%2CMA6CE%2CIAAG%3BCACC%3B%3BAA5GhB%2CGAAG%2CUAsCG%2CgBA0EE%2COAEI%3BAAlHZ%2CGAAG%2CUAsCG%2CgBA0EE%2COAEmB%3BCACX%3BCACA%3BCACA%3BCACA%3B%3BAAtHhB%2CGAAG%2CUAsCG%2CgBAqFI%3BCAEE%3BCACA%2CyCAAA%3B%3BAAMA%3BCAAA%2CGApIT%2CUAsCG%2CgBAqFI%3BEAMM%3B%3B%3BAAjIhB%2CGAAG%2CUAsCG%2CgBAqFI%2CgBASI%3BCAEE%2C6BAAA%3BCACA%3BCACA%3B%3BAAEA%2CGA1Ib%2CUAsCG%2CgBAqFI%2CgBASI%2CUAMG%3BCACG%3BCACA%3BCACA%3B%3BAAOA%3BCAAA%2CGApJjB%2CUAsCG%2CgBAqFI%2CgBASI%2CUAMG%3BEAOO%3B%3B%3BAAjJxB%2CGAAG%2CUAsCG%2CgBAqFI%2CgBASI%2CUAmBI%3BCACE%3BCAKA%2CiBAAA%3BCAnThB%2CkBAAA%3BCACA%2CuBAAA%3BCACA%2C0BAAA%3BCACA%2CyBAAA%3B%3BAAgTgB%3BCAAA%2CGA7JjB%2CUAsCG%2CgBAqFI%2CgBASI%2CUAmBI%3BEAGM%3B%3B%3BAA1JxB%2CGAAG%2CUAsCG%2CgBAqFI%2CgBASI%2CUAmBI%2CUAWE%3BCACI%3B%3BAAQJ%2CGA3KjB%2CUAsCG%2CgBAqFI%2CgBASI%2CUAmBI%2CUAoBG%2COACG%3BCACI%3B%3BAASR%2CGAtLjB%2CUAsCG%2CgBAqFI%2CgBASI%2CUAmBI%2CUA%2BBG%3BCACG%3B%3BAAvLxB%2CGAAG%2CUAsCG%2CgBAqFI%2CgBAiEE%3BCAGI%3BCACA%3BCACA%2CsBAAA%3BCACA%3B%3BAAUA%3BCAAA%2CGA5Mb%2CUAsCG%2CgBAqFI%2CgBAiEE%3BEAWQ%3B%3B%3BAAKJ%2CGA5Mb%2CUAsCG%2CgBAqFI%2CgBAiEE%2CMAgBK%3BCAEG%3BCACA%3BCACA%3BCACA%3B%3BAAKA%2CGAtNjB%2CUAsCG%2CgBAqFI%2CgBAiEE%2CMAgBK%2CQAUO%3BCACA%3B%3BAAvNxB%2CGAAG%2CUAsCG%2CgBAqFI%2CgBAiEE%2CMAwCI%3BCACI%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAUpB%2CMAEI%3BCACI%3B%3BAAIJ%3BCAAA%2CMALA%3BEAGQ%3B%3B%3BAALZ%2CMASI%3BCACI%3B%3BAAIJ%3BCAAA%2CMALA%3BEAGQ%3B%3B%3BAAcJ%3BCAAA%2CMAVJ%2CcAAa%2COAMT%3BEAEQ%3B%3B%3B%3BAAQhB%3BCAEI%2C%2BCAAA%3BCACA%2CgCAAA%3BCACA%3BCACA%3BCACA%3B%3BAAUJ%3BCAJI%3BEACI%22%7D */

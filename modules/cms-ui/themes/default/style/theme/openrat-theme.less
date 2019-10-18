@@ -360,10 +360,11 @@ html.theme-@{cms-theme-id} {
     .box-shadow(3px, 2px, 5px, @cms-title-background-color);
   }
 
-  body {
+  .or-main-area {
     background-color: @cms-inactive-background-color;
     background-image: linear-gradient(@cms-inactive-background-color, lighten(@cms-inactive-background-color, 10%));
   }
+
   body, a {
     color: @cms-text-color;
   }
@@ -394,6 +395,13 @@ html.theme-@{cms-theme-id} {
   .or-info-popup {
     background-color: @cms-title-background-color;
     color: @cms-title-text-color;
+  }
+
+  .or-navigation {
+    background-color: inherit;
+    background-image: inherit;
+    border-right-color: @cms-text-color;
+    .box-shadow(10px, 0px, 25px, @cms-background-color);
   }
 }
 /* Theme Ende */

@@ -34,9 +34,9 @@
     </header>
 
 
-    <div>
+    <div class="or-main-area">
 
-        <nav>
+        <nav class="or-navigation">
             <header>
                 <a href=""></a>
             </header>
@@ -45,50 +45,52 @@
 
         </nav>
 
-        <section id="edit" class="open">
-
-            <header class="or-view-header">
-                <span class="or-view-icon image-icon--method-src image-icon"></span>
-                <h1 class="or-view-headline"><?php echo lang('METHOD_EDIT' ) ?></h1>
-            </header>
-
-            <div class="view"></div>
-        </section>
-
-
-        <main id="editor">
-            <header>
-                <span class="title"></span>
-            </header>
-
-            <?php foreach( $methodList as $method ) { ?>
-            <?php if (DEVELOPMENT) echo "<!-- Section for : $action / ".$method['name']." / $id  -->";  ?>
-            <section class="toggle-open-close <?php echo $method ['open']?'open':'closed' ?>">
-
-                <header class="or-view-header on-click-open-close">
-                    <!--
-                    <div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div>
-                    -->
-                    <span class="or-view-icon image-icon image-icon--method-<?php echo $method['name'] ?>" ></span>
-                    <h1 class="or-view-headline"><?php echo lang('METHOD_'.$method['name'] ) ?></h1>
-                </header>
+        <div class="or-workplace">
+            <section id="edit" class="or-edit">
 
                 <!--
-                <div class="view-toolbar">
-                    <img src="<?php echo OR_THEMES_DIR ?>/default/images/icon/menu/fullscreen.svg" class="image-icon on-normalscreen toolbar-action-fullscreen" />
-                    <img src="<?php echo OR_THEMES_DIR ?>/default/images/icon/menu/fullscreen_exit.svg" class="image-icon on-fullscreen toolbar-action-exit-fullscreen"  />
-                    <img src="<?php echo OR_THEMES_DIR ?>/default/images/icon/menu/refresh.svg" class="image-icon toolbar-action-refresh" />
-                </div>
-                    -->
+                <header class="or-view-header">
+                    <span class="or-view-icon image-icon--method-src image-icon"></span>
+                    <h1 class="or-view-headline"><?php echo lang('METHOD_EDIT' ) ?></h1>
+                </header>-->
 
-
-                <div class="view view-loader closable" data-method="<?php echo $method['name'] ?>"></div>
-
+                <div class="view edit-view"></div>
             </section>
-            <?php } ?>
 
-        </main>
 
+            <main id="editor">
+                <header>
+                    <span class="title"></span>
+                </header>
+
+                <?php foreach( $methodList as $method ) { ?>
+                <?php if (DEVELOPMENT) echo "<!-- Section for: ".$method['name']." -->";  ?>
+                <section class="toggle-open-close <?php echo $method ['open']?'open':'closed' ?>">
+
+                    <header class="or-view-header on-click-open-close">
+                        <!--
+                        <div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div>
+                        -->
+                        <span class="or-view-icon image-icon image-icon--method-<?php echo $method['name'] ?>" ></span>
+                        <h1 class="or-view-headline"><?php echo lang('METHOD_'.$method['name'] ) ?></h1>
+                    </header>
+
+                    <!--
+                    <div class="view-toolbar">
+                        <img src="<?php echo OR_THEMES_DIR ?>/default/images/icon/menu/fullscreen.svg" class="image-icon on-normalscreen toolbar-action-fullscreen" />
+                        <img src="<?php echo OR_THEMES_DIR ?>/default/images/icon/menu/fullscreen_exit.svg" class="image-icon on-fullscreen toolbar-action-exit-fullscreen"  />
+                        <img src="<?php echo OR_THEMES_DIR ?>/default/images/icon/menu/refresh.svg" class="image-icon toolbar-action-refresh" />
+                    </div>
+                        -->
+
+
+                    <div class="view view-loader closable" data-method="<?php echo $method['name'] ?>"></div>
+
+                </section>
+                <?php } ?>
+
+            </main>
+        </div>
 
     </div>
 

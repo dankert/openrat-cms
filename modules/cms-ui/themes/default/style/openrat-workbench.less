@@ -184,11 +184,15 @@ div#workbench {
     display: flex;
     flex-direction: column;
 
+
+    /*
+
     div.panel.modal {
-        position: relative;
-        z-index: 101;
-        border: 1px solid !important;
+    position: relative;
+    z-index: 101;
+    border: 1px solid !important;
     }
+     */
 
     /* vertikale Flex-Box zwischen Header und Hauptbereich */
     > * {
@@ -211,51 +215,56 @@ div#workbench {
         }
     }
 
-    > div {
+    > .or-main-area {
         flex: 1;
 
         /* Horizontale Flexbox */
-        display: flex;
-        flex-direction: row;
+        //display: flex;
+        //flex-direction: row;
 
         /*
         https://stackoverflow.com/questions/28636832/firefox-overflow-y-not-working-with-nested-flexbox
         Whenever you've got an element with overflow: [hidden|scroll|auto] inside of a flex item, you need to give its ancestor flex item min-width:0 (in a horizontal flex container) or min-height:0 (in a vertical flex container), to disable this min-sizing behavior, or else the flex item will refuse to shrink smaller than the child's min-content size.
          */
-        min-width: 0;
+        //min-width: 0;
         min-height: 0;
 
-        > main,#edit {
-            transition: flex 0.3s ease-in-out;
-            flex: 1;
-        }
 
-        > nav, > main, > #edit {
+        > * {
             min-width: 0;
             min-height: 0;
             overflow-y: auto;
             overflow-x: hidden;
+
+            height:100%;
         }
 
         > nav {
-            flex: 0.5;
-            transition: flex 0.3s ease-in-out;
-            //width: 33%;
-            //overflow-y: hidden;
+            width:33%;
+            transition: width 0.15s ease-in-out;
+            z-index: 2;
+            position: fixed;
 
             @media @smartphones {
-                flex: 0;
+                width: 0;
             }
 
+
             &.small {
-                flex: 0.05;
+                width: 5%;
                 opacity: 0.5;
                 overflow-y: hidden;
 
                 &:hover {
-                    flex: 0.5;
+                    width: 33%;
                     overflow-y: auto;
                     opacity: 1;
+                    background-color: inherit;
+                    border-right: 1px solid inherit;
+                }
+
+                & ~ .or-workplace {
+                    margin-left:5%;
                 }
             }
 
@@ -263,7 +272,9 @@ div#workbench {
 
                 overflow-y: auto;
                 @media @smartphones {
-                    flex: 9;
+                    width: 95%;
+                    border-right: 1px solid;
+                    opacity: 0.95;
                 }
             }
 
@@ -289,102 +300,120 @@ div#workbench {
 
         }
 
-        > main {
+        > .or-workplace {
 
-            transition: opacity 0.5s ease;
-            display: flex;
-            flex-direction: column;
+            margin-left: 33%;
+            transition: margin-left 0.15s ease-in-out;
 
-            &.is-closed {
-                flex: 0.5;
-                cursor: not-allowed;
-                pointer-events: none;
-
-                @media @smartphones {
-                    // do not display the views in mobile mode.
-                    flex: 0;
-                }
-
-                //overflow: hidden;
+            @media @smartphones {
+                margin-left: 0;
             }
 
-            & > section {
-                margin: 1.5em;
+            > #editor {
+
+                transition: opacity 0.5s ease;
+                display: flex;
+                flex-direction: column;
+
+                &.is-closed {
+                    flex: 0.5;
+                    cursor: not-allowed;
+                    pointer-events: none;
+
+                    @media @smartphones {
+                        // do not display the views in mobile mode.
+                        flex: 0;
+                    }
+
+                    //overflow: hidden;
+                }
+
+                > section {
+                    margin: 1.5em;
+                    @media @smartphones {
+                        margin:0.5em;
+                    }
+
+                    border: 1px solid;
+
+                    .border-radius(5px);
+
+
+                    .view-toolbar {
+                        display: inline;
+                    }
+
+                    .view {
+                        //transition: flex 0.5s ease-in-out;
+                    }
+
+                    // Wenn Sektion geschlossen, keine Toolbar anzeigen.
+                    &.closed {
+                        .view-toolbar {
+                            display: none;
+                        }
+                        //.view {                        flex: 0;                    }
+                    }
+
+                    // Diabled Sections are not displayed.
+                    &.disabled {
+                        //display: none;
+                    }
+                    &.is-empty {
+                        display: none;
+                    }
+                }
+            }
+
+            #edit
+            {
+                //display: none;
+                display: none;
+                width: 0;
+                transition: width ease;
+                padding: 1em;
+                //z-index: 91;
+
+
                 @media @smartphones {
                     margin:0.5em;
                 }
 
-                border: 1px solid;
-
-                .border-radius(5px);
 
 
-                .view-toolbar {
-                    display: inline;
-                }
+                &.is-open {
+                    //display: block;
+                    position: relative;
+                    height:100%;
+                    width:100%;
+                    display: block;
 
-                .view {
-                    //transition: flex 0.5s ease-in-out;
-                }
+                    //border: 1px solid;
+                    //.border-radius(5px);
 
-                // Wenn Sektion geschlossen, keine Toolbar anzeigen.
-                &.closed {
-                    .view-toolbar {
+                    & ~ #editor {
                         display: none;
                     }
-                    //.view {                        flex: 0;                    }
                 }
 
-                // Diabled Sections are not displayed.
-                &.disabled {
-                    //display: none;
+
+                .view {
+                    //margin-left:15%;
+                    //overflow-y: auto;
                 }
-                &.is-empty {
+
+
+
+
+                .filler {
+                    z-index: 90;
+                    height: 100%;
+                    width: 100%;
+                    opacity: 0.5;
                     display: none;
                 }
-            }
-        }
-
-        #edit
-        {
-            //display: none;
-            flex: 0;
-            //transition: width ease;
-            //z-index: 91;
-
-
-            @media @smartphones {
-                margin:0.5em;
-            }
-
-
-
-            &.is-open {
-                //display: block;
-                flex: 2;
-                border: 1px solid;
-                .border-radius(5px);
-                margin: 1.5em;
 
             }
-
-
-            .view {
-                //margin-left:15%;
-                //overflow-y: auto;
-            }
-
-
-
-
-            .filler {
-                z-index: 90;
-                height: 100%;
-                width: 100%;
-                opacity: 0.5;
-                display: none;
-            }
-
         }
 
     }
@@ -436,6 +465,6 @@ div#workbench {
 
 @media @smartphones {
     html {
-        font-size: 1.0em;
+        font-size: 1em;
     }
 }
