@@ -7,5 +7,5 @@
 				<textarea  name="<?php if ('') echo ''.'_' ?>source<?php if ('') echo '_disabled' ?>" data-extension="" data-mimetype="" data-mode="htmlmixed" class="editor code-editor"><?php echo htmlentities(${'source'}) ?></textarea>
 				
 			</div></fieldset>
-		<div class="or-form-actionbar"><input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" /><input type="submit" class="or-form-btn or-form-btn--primary" value="?BUTTON_OK?" /></div></form>
+		<div class="or-form-actionbar"><input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" /><input type="submit" class="or-form-btn or-form-btn--primary" value="<?php echo lang('BUTTON_OK') ?>" /></div></form>
 	

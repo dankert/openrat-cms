@@ -42,8 +42,8 @@ class FormComponent extends Component
 
 	protected function begin()
 	{
-		if (empty($this->label))
-			$this->label = lang('BUTTON_OK');
+		if ( ! $this->label )
+			$this->label = 'message:BUTTON_OK';
 		
 		if ($this->type == 'upload')
 			$this->submitFunction = '';
