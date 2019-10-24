@@ -265,9 +265,43 @@ class BaseObject
             $user     = \Session::getUser();
 
 
-            if  ( ! is_object($user)) {
-                // TODO: read "all" permissions here. maybe.
-                return false;
+            if  ( ! $user ) {
+                // Anonymous
+                $this->aclMask = 0;
+
+                $sql = db()->sql( <<<SQL
+    SELECT {{acl}}.* FROM {{acl}}
+                 WHERE objectid={objectid}
+                   AND {{acl}}.userid IS NULL
+                   AND {{acl}}.groupid IS NULL
+SQL
+                );
+
+                $sql->setInt  ( 'objectid'    ,$this->objectid         );
+
+                foreach($sql->getAll() as $row )
+                {
+                    $acl = new Acl();
+                    $acl->setDatabaseRow( $row );
+
+                    $this->aclMask |= $acl->getMask();
+                }
+
+                $guestMask = 0;
+                switch( Conf()->subset('security')->get('guest-access','read') )
+                {
+                    case 'read':
+                    case 'readonly':
+                        $guestMask = Acl::ACL_READ;
+                        break;
+                    case 'write':
+                        $guestMask = Acl::ACL_READ + Acl::ACL_WRITE;
+                        break;
+                    default:
+                        // nothing allowed for guests.
+                }
+
+                $this->aclMask = $guestMask && $this->aclMask;
             }
 
             elseif	( $user->isAdmin )
@@ -290,12 +324,9 @@ class BaseObject
             {
                 $this->aclMask = 0;
 
-                $db = db_connection();
                 $sqlGroupClause = $user->getGroupClause();
-                $sql = $db->sql( <<<SQL
+                $sql = db()->sql( <<<SQL
 SELECT {{acl}}.* FROM {{acl}}
-                 LEFT JOIN {{object}}
-                        ON {{object}}.id={{acl}}.objectid
                  WHERE objectid={objectid}
                    AND ( languageid={languageid} OR languageid IS NULL )
                    AND ( {{acl}}.userid={userid} OR $sqlGroupClause
@@ -319,10 +350,10 @@ SQL
 
         if	( readonly() )
             // System ist im Nur-Lese-Zustand
-            return $type == Acl::ACL_READ && $this->aclMask & $type;
-        else
-            // Ermittelte Maske auswerten
-            return $this->aclMask & $type;
+            $this->aclMask = Acl::ACL_READ && $this->aclMask;
+
+        // Ermittelte Maske auswerten
+        return $this->aclMask & $type;
     }
 
 
