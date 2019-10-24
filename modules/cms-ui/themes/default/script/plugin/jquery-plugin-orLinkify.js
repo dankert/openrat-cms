@@ -30,6 +30,7 @@ jQuery.fn.orLinkify = function()
 
 					// Create a temporary form element.
 					$form = $('<form />').attr('method','POST').addClass('invisible');
+					$form.data('afterSuccess', $(this).data('afterSuccess'));
 					let params = jQuery.parseJSON( $(this).attr('data-data')  );
 					params.output = 'json';
 
