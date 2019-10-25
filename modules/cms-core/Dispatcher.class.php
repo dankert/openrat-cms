@@ -23,6 +23,7 @@ use SecurityException;
 use Session;
 use Spyc;
 use template_engine\components\ElseComponent;
+use Text;
 
 
 /**
@@ -349,18 +350,43 @@ class Dispatcher
      */
     private function connectToDatabase()
     {
+        $firstDbContact = ! Session::getDatabaseId() || $this->request->hasRequestVar('dbid');
+
         if   ( $this->request->hasRequestVar('dbid') )
             $dbid = $this->request->getRequestVar('dbid',OR_FILTER_ALPHANUM);
         elseif   ( Session::getDatabaseId() )
             $dbid = Session::getDatabaseId();
         elseif   ( isset($_COOKIE['or_dbid']) )
-                    $dbid = $_COOKIE['or_dbid'];
+            $dbid = $_COOKIE['or_dbid'];
         else {
-            //throw new LogicException('No DBID available');
-            // some actions do not need a database
-            // f.e. the login dialog.
-            // so this is NOT an error.
-            return;
+            $dbids = array();
+
+            $databases = Conf()->get('database');
+
+            if   ( !is_array($databases))
+                throw new Exception\RuntimeException('Corrupt configuration: Database configuration must be a list');
+
+            foreach( $databases as $key => $dbconf )
+            {
+                if   ( !is_array($dbconf))
+                    throw new \LogicException("Corrupt configuration: Database configuration '".$key."' must be an array.'");
+
+                $dbconf += config('database-default','defaults'); // Add Default-Values
+
+                if	( is_array($dbconf) && $dbconf['enabled'] ) // Database-Connection is enabled
+                    $dbids[] = $key;
+            }
+
+            $defaultDbId = config('database-default','default-id');
+            if  ( $defaultDbId && in_array($defaultDbId,$dbids) )
+                // Default-Datenbankverbindung ist konfiguriert und vorhanden.
+                $dbid = $defaultDbId;
+            elseif  ( count($dbids) > 0)
+                // Datenbankverbindungen sind vorhanden, wir nehmen die erste.
+                $dbid = $dbids[0];
+            else
+                // Keine Datenbankverbindung vorhanden. Fallback:
+                throw new Exception\RuntimeException('No database configured');
         }
 
 
@@ -370,6 +396,9 @@ class Dispatcher
             throw new \LogicException( 'unknown DB-Id: '.$dbid );
 
         $dbConfig = $dbConfig->subset($dbid );
+
+        if   ( ! $dbConfig->is('enabled' ) )
+            throw new Exception\RuntimeException('Database connection \''.$dbid.'\' is not enabled');
 
         try
         {
@@ -386,7 +415,8 @@ class Dispatcher
         }
 
 
-        if   ( $this->request->hasRequestVar('dbid') )
+        if   ( $firstDbContact )
+            // Test, if we should update the database schema.
             $this->updateDatabase( $dbid );
     }
 

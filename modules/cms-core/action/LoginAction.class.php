@@ -297,7 +297,7 @@ class LoginAction extends Action
             if	( is_array($dbconf) && $dbconf['enabled'] ) // Database-Connection is enabled
                 $dbids[$dbid] = array(
                     'key'   => $dbid,
-                    'value' => empty($dbconf['name']) ? $dbid : Text::maxLength($dbconf['name']),
+                    'value' => !$dbconf['name'] ? $dbid : Text::maxLength($dbconf['name']),
                     'title' => $dbconf['description']
                 );
         }
@@ -317,23 +317,9 @@ class LoginAction extends Action
 
         $this->setTemplateVar( 'dbids',$dbids );
 
-        // Vorausgewählte Datenbank-Id ermiteln
+        // Database was already connected in the Dispatcher. So we MUST have a db connection here.
         $db = Session::getDatabase();
-        if	( is_object($db) )
-            // Datenbankverbindung ist noch in Sitzung, diese verwenden.
-            $this->setTemplateVar('dbid',$db->id);
-        elseif  ( isset($_COOKIE['or_dbid']) && isset($dbids[$_COOKIE['or_dbid']]) )
-            // DB-Id aus dem Cookie lesen.
-            $this->setTemplateVar('dbid',$_COOKIE['or_dbid'] );
-        elseif  ( ! empty($conf['database-default']['default-id'])  && isset($dbids[$conf['database-default']['default-id']]))
-            // Default-Datenbankverbindung ist konfiguriert und vorhanden.
-            $this->setTemplateVar('dbid',$conf['database-default']['default-id']);
-        elseif  ( count($dbids) > 0)
-            // Datenbankverbindungen sind vorhanden, wir nehmen die erste.
-            $this->setTemplateVar('dbid',array_keys($dbids)[0]);
-        else
-            // Keine Datenbankverbindung vorhanden. Fallback:
-            $this->setTemplateVar('dbid','');
+        $this->setTemplateVar('dbid',$db->id);
 
 
         // Den Benutzernamen aus dem Client-Zertifikat lesen und in die Loginmaske eintragen.
