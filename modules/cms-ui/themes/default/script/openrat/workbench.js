@@ -133,7 +133,7 @@ Openrat.Workbench = new function()
     	// View in geschlossenen Sektionen löschen, damit diese nicht stehen bleiben.
         $('#workbench .view').empty();
 
-        Openrat.Workbench.loadViews( $('#workbench .view') );
+        Openrat.Workbench.loadViews( $('#workbench .view.view-loader, #workbench .view.view-static') );
 
         this.loadUserStyle();
     }
