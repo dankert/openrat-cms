@@ -390,7 +390,7 @@ class Dispatcher
 
         $dbConfig = $dbConfig->subset($dbid );
 
-        if   ( ! $dbConfig->is('enabled' ) )
+        if   ( ! $dbConfig->is('enabled',true ) )
             throw new \RuntimeException('Database connection \''.$dbid.'\' is not enabled');
 
         try
