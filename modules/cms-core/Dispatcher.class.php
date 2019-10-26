@@ -11,19 +11,12 @@ use cms\action\RequestParams;
 use ConfigurationLoader;
 use database\Database;
 use DbUpdate;
-use DomainException;
 use Http;
-use http\Exception;
-use language\Language;
 use Logger;
 use LogicException;
-use ObjectNotFoundException;
 use OpenRatException;
 use SecurityException;
 use Session;
-use Spyc;
-use template_engine\components\ElseComponent;
-use Text;
 
 
 /**
@@ -364,7 +357,7 @@ class Dispatcher
             $databases = Conf()->get('database');
 
             if   ( !is_array($databases))
-                throw new Exception\RuntimeException('Corrupt configuration: Database configuration must be a list');
+                throw new \RuntimeException('Corrupt configuration: Database configuration must be a list');
 
             foreach( $databases as $key => $dbconf )
             {
@@ -386,7 +379,7 @@ class Dispatcher
                 $dbid = $dbids[0];
             else
                 // Keine Datenbankverbindung vorhanden. Fallback:
-                throw new Exception\RuntimeException('No database configured');
+                throw new \RuntimeException('No database configured');
         }
 
 
@@ -398,7 +391,7 @@ class Dispatcher
         $dbConfig = $dbConfig->subset($dbid );
 
         if   ( ! $dbConfig->is('enabled' ) )
-            throw new Exception\RuntimeException('Database connection \''.$dbid.'\' is not enabled');
+            throw new \RuntimeException('Database connection \''.$dbid.'\' is not enabled');
 
         try
         {
