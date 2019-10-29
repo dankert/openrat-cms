@@ -10,7 +10,7 @@
 					<div class="input">
 						<?php $gz= 'gz'; ?>
 						
-						<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_format" name="format" title="" class=""<?php if (count($formats)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($formats,'gz',0,0) ?><?php if (count($formats)==0) { ?><input type="hidden" name="format" value="" /><?php } ?><?php if (count($formats)==1) { ?><input type="hidden" name="format" value="<?php echo array_keys($formats)[0] ?>" /><?php } ?>
+						<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_format" name="format" title="" class=""<?php if (count($formats)<=1) echo ' disabled="disabled"'; ?> size="1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($formats,'gz',0,0) ?><?php if (count($formats)==0) { ?><input type="hidden" name="format" value="" /><?php } ?><?php if (count($formats)==1) { ?><input type="hidden" name="format" value="<?php echo array_keys($formats)[0] ?>" /><?php } ?>
 						</select></div>
 						<?php $replace= '1'; ?>
 						

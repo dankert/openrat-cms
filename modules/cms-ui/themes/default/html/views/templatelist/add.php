@@ -34,7 +34,7 @@
 						
 					</div>
 					<div class="input">
-						<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_templateid" name="templateid" title="" class=""<?php if (count($templates)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($templates,$templateid,0,0) ?><?php if (count($templates)==0) { ?><input type="hidden" name="templateid" value="" /><?php } ?><?php if (count($templates)==1) { ?><input type="hidden" name="templateid" value="<?php echo array_keys($templates)[0] ?>" /><?php } ?>
+						<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_templateid" name="templateid" title="" class=""<?php if (count($templates)<=1) echo ' disabled="disabled"'; ?> size="1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($templates,$templateid,0,0) ?><?php if (count($templates)==0) { ?><input type="hidden" name="templateid" value="" /><?php } ?><?php if (count($templates)==1) { ?><input type="hidden" name="templateid" value="<?php echo array_keys($templates)[0] ?>" /><?php } ?>
 						</select></div>
 					</div>
 				</div>
@@ -48,7 +48,7 @@
 						
 					</div>
 					<div class="input">
-						<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_example" name="example" title="" class=""<?php if (count($examples)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($examples,$example,0,0) ?><?php if (count($examples)==0) { ?><input type="hidden" name="example" value="" /><?php } ?><?php if (count($examples)==1) { ?><input type="hidden" name="example" value="<?php echo array_keys($examples)[0] ?>" /><?php } ?>
+						<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_example" name="example" title="" class=""<?php if (count($examples)<=1) echo ' disabled="disabled"'; ?> size="1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($examples,$example,0,0) ?><?php if (count($examples)==0) { ?><input type="hidden" name="example" value="" /><?php } ?><?php if (count($examples)==1) { ?><input type="hidden" name="example" value="<?php echo array_keys($examples)[0] ?>" /><?php } ?>
 						</select></div>
 					</div>
 				</div>

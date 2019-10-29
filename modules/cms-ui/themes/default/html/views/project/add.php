@@ -31,7 +31,7 @@
 										<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'copy'.'')))); ?></span>
 										
 									</label>
-									<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_projectid" name="projectid" title="" class=""<?php if (count($projects)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($projects,$projectid,0,0) ?><?php if (count($projects)==0) { ?><input type="hidden" name="projectid" value="" /><?php } ?><?php if (count($projects)==1) { ?><input type="hidden" name="projectid" value="<?php echo array_keys($projects)[0] ?>" /><?php } ?>
+									<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_projectid" name="projectid" title="" class=""<?php if (count($projects)<=1) echo ' disabled="disabled"'; ?> size="1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($projects,$projectid,0,0) ?><?php if (count($projects)==0) { ?><input type="hidden" name="projectid" value="" /><?php } ?><?php if (count($projects)==1) { ?><input type="hidden" name="projectid" value="<?php echo array_keys($projects)[0] ?>" /><?php } ?>
 									</select></div>
 								</div>
 							</div></fieldset>

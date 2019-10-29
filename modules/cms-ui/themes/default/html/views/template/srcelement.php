@@ -14,7 +14,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_elementid" name="elementid" title="" class=""<?php if (count($elements)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($elements,$elementid,0,0) ?><?php if (count($elements)==0) { ?><input type="hidden" name="elementid" value="" /><?php } ?><?php if (count($elements)==1) { ?><input type="hidden" name="elementid" value="<?php echo array_keys($elements)[0] ?>" /><?php } ?>
+						<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_elementid" name="elementid" title="" class=""<?php if (count($elements)<=1) echo ' disabled="disabled"'; ?> size="1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($elements,$elementid,0,0) ?><?php if (count($elements)==0) { ?><input type="hidden" name="elementid" value="" /><?php } ?><?php if (count($elements)==1) { ?><input type="hidden" name="elementid" value="<?php echo array_keys($elements)[0] ?>" /><?php } ?>
 						</select></div>
 					</div>
 				</div>
@@ -32,7 +32,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_writable_elementid" name="writable_elementid" title="" class=""<?php if (count($writable_elements)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($writable_elements,$writable_elementid,0,0) ?><?php if (count($writable_elements)==0) { ?><input type="hidden" name="writable_elementid" value="" /><?php } ?><?php if (count($writable_elements)==1) { ?><input type="hidden" name="writable_elementid" value="<?php echo array_keys($writable_elements)[0] ?>" /><?php } ?>
+						<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_writable_elementid" name="writable_elementid" title="" class=""<?php if (count($writable_elements)<=1) echo ' disabled="disabled"'; ?> size="1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($writable_elements,$writable_elementid,0,0) ?><?php if (count($writable_elements)==0) { ?><input type="hidden" name="writable_elementid" value="" /><?php } ?><?php if (count($writable_elements)==1) { ?><input type="hidden" name="writable_elementid" value="<?php echo array_keys($writable_elements)[0] ?>" /><?php } ?>
 						</select></div>
 					</div>
 				</div>

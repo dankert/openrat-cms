@@ -26,7 +26,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_userid" name="userid" title="" class="" size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($users,'',1,0) ?><?php if (count($users)==0) { ?><input type="hidden" name="userid" value="" /><?php } ?><?php if (count($users)==1) { ?><input type="hidden" name="userid" value="<?php echo array_keys($users)[0] ?>" /><?php } ?>
+						<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_userid" name="userid" title="" class="" size="1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($users,'',1,0) ?><?php if (count($users)==0) { ?><input type="hidden" name="userid" value="" /><?php } ?><?php if (count($users)==1) { ?><input type="hidden" name="userid" value="<?php echo array_keys($users)[0] ?>" /><?php } ?>
 						</select></div>
 					</div>
 				</div>
@@ -41,7 +41,7 @@
 							</label>
 						</div>
 						<div class="input">
-							<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_groupid" name="groupid" title="" class="" size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($groups,'',1,0) ?><?php if (count($groups)==0) { ?><input type="hidden" name="groupid" value="" /><?php } ?><?php if (count($groups)==1) { ?><input type="hidden" name="groupid" value="<?php echo array_keys($groups)[0] ?>" /><?php } ?>
+							<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_groupid" name="groupid" title="" class="" size="1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($groups,'',1,0) ?><?php if (count($groups)==0) { ?><input type="hidden" name="groupid" value="" /><?php } ?><?php if (count($groups)==1) { ?><input type="hidden" name="groupid" value="<?php echo array_keys($groups)[0] ?>" /><?php } ?>
 							</select></div>
 						</div>
 					</div>
@@ -56,7 +56,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_languageid" name="languageid" title="" class=""<?php if (count($languages)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($languages,'',0,0) ?><?php if (count($languages)==0) { ?><input type="hidden" name="languageid" value="" /><?php } ?><?php if (count($languages)==1) { ?><input type="hidden" name="languageid" value="<?php echo array_keys($languages)[0] ?>" /><?php } ?>
+						<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_languageid" name="languageid" title="" class=""<?php if (count($languages)<=1) echo ' disabled="disabled"'; ?> size="1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($languages,'',0,0) ?><?php if (count($languages)==0) { ?><input type="hidden" name="languageid" value="" /><?php } ?><?php if (count($languages)==1) { ?><input type="hidden" name="languageid" value="<?php echo array_keys($languages)[0] ?>" /><?php } ?>
 						</select></div>
 					</div>
 				</div>

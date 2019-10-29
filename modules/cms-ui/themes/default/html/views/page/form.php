@@ -63,7 +63,7 @@
 											
 										<?php } ?>
 										<?php $if10=(in_array($type,explode(",",'select,link,list')); if($if10){?>
-											<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_<?php echo $id ?>" name="<?php echo $id ?>" title="" class=""<?php if (count($list)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($list,$value,0,0) ?><?php if (count($list)==0) { ?><input type="hidden" name="<?php echo $id ?>" value="" /><?php } ?><?php if (count($list)==1) { ?><input type="hidden" name="<?php echo $id ?>" value="<?php echo array_keys($list)[0] ?>" /><?php } ?>
+											<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_<?php echo $id ?>" name="<?php echo $id ?>" title="" class=""<?php if (count($list)<=1) echo ' disabled="disabled"'; ?> size="1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($list,$value,0,0) ?><?php if (count($list)==0) { ?><input type="hidden" name="<?php echo $id ?>" value="" /><?php } ?><?php if (count($list)==1) { ?><input type="hidden" name="<?php echo $id ?>" value="<?php echo array_keys($list)[0] ?>" /><?php } ?>
 											</select></div>
 										<?php } ?>
 									</td>

@@ -10,7 +10,7 @@
 						
 					</div>
 					<div class="input">
-						<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_<?php echo $newElementsName ?>" name="<?php echo $newElementsName ?>" title="" class=""<?php if (count($newElementsList)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($newElementsList,'',0,0) ?><?php if (count($newElementsList)==0) { ?><input type="hidden" name="<?php echo $newElementsName ?>" value="" /><?php } ?><?php if (count($newElementsList)==1) { ?><input type="hidden" name="<?php echo $newElementsName ?>" value="<?php echo array_keys($newElementsList)[0] ?>" /><?php } ?>
+						<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_<?php echo $newElementsName ?>" name="<?php echo $newElementsName ?>" title="" class=""<?php if (count($newElementsList)<=1) echo ' disabled="disabled"'; ?> size="1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($newElementsList,'',0,0) ?><?php if (count($newElementsList)==0) { ?><input type="hidden" name="<?php echo $newElementsName ?>" value="" /><?php } ?><?php if (count($newElementsList)==1) { ?><input type="hidden" name="<?php echo $newElementsName ?>" value="<?php echo array_keys($newElementsList)[0] ?>" /><?php } ?>
 						</select></div>
 					</div>
 				</div>

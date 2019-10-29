@@ -70,7 +70,7 @@ class SelectboxComponent extends Component
 		if($this->multiple)
 		echo ' multiple="multiple"';
 		
-		echo ' size='.$this->htmlvalue($this->size).'"';
+		echo ' size="'.$this->htmlvalue($this->size).'"';
 		echo '>';
 		
 		if	( isset($this->default))

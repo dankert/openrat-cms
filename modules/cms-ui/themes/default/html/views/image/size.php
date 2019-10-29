@@ -27,7 +27,7 @@
 								<span><?php echo nl2br(encodeHtml(htmlentities(lang('FILE_IMAGE_SIZE_FACTOR')))); ?></span>
 								
 							</label>
-							<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_factor" name="factor" title="" class=""<?php if (count($factors)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($factors,$factor,0,0) ?><?php if (count($factors)==0) { ?><input type="hidden" name="factor" value="" /><?php } ?><?php if (count($factors)==1) { ?><input type="hidden" name="factor" value="<?php echo array_keys($factors)[0] ?>" /><?php } ?>
+							<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_factor" name="factor" title="" class=""<?php if (count($factors)<=1) echo ' disabled="disabled"'; ?> size="1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($factors,$factor,0,0) ?><?php if (count($factors)==0) { ?><input type="hidden" name="factor" value="" /><?php } ?><?php if (count($factors)==1) { ?><input type="hidden" name="factor" value="<?php echo array_keys($factors)[0] ?>" /><?php } ?>
 							</select></div>
 							<?php $factor= '1'; ?>
 							
@@ -65,7 +65,7 @@
 							</label>
 						</div>
 						<div class="input">
-							<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_format" name="format" title="" class=""<?php if (count($formats)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($formats,$format,0,0) ?><?php if (count($formats)==0) { ?><input type="hidden" name="format" value="" /><?php } ?><?php if (count($formats)==1) { ?><input type="hidden" name="format" value="<?php echo array_keys($formats)[0] ?>" /><?php } ?>
+							<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_format" name="format" title="" class=""<?php if (count($formats)<=1) echo ' disabled="disabled"'; ?> size="1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($formats,$format,0,0) ?><?php if (count($formats)==0) { ?><input type="hidden" name="format" value="" /><?php } ?><?php if (count($formats)==1) { ?><input type="hidden" name="format" value="<?php echo array_keys($formats)[0] ?>" /><?php } ?>
 							</select></div>
 						</div>
 					</div>
@@ -79,7 +79,7 @@
 						<div class="input">
 							<?php $jpeg_compression= '70'; ?>
 							
-							<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_jpeg_compression" name="jpeg_compression" title="" class=""<?php if (count($jpeglist)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($jpeglist,$jpeg_compression,0,0) ?><?php if (count($jpeglist)==0) { ?><input type="hidden" name="jpeg_compression" value="" /><?php } ?><?php if (count($jpeglist)==1) { ?><input type="hidden" name="jpeg_compression" value="<?php echo array_keys($jpeglist)[0] ?>" /><?php } ?>
+							<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_jpeg_compression" name="jpeg_compression" title="" class=""<?php if (count($jpeglist)<=1) echo ' disabled="disabled"'; ?> size="1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($jpeglist,$jpeg_compression,0,0) ?><?php if (count($jpeglist)==0) { ?><input type="hidden" name="jpeg_compression" value="" /><?php } ?><?php if (count($jpeglist)==1) { ?><input type="hidden" name="jpeg_compression" value="<?php echo array_keys($jpeglist)[0] ?>" /><?php } ?>
 							</select></div>
 						</div>
 					</div>
