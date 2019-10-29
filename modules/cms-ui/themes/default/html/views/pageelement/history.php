@@ -1,6 +1,6 @@
 <?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
 	
-		<form name="" target="_self" data-target="view" action="./" data-method="diff" data-action="pageelement" data-id="<?php echo OR_ID ?>" method="get" enctype="application/x-www-form-urlencoded" class="or-form pageelement" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="pageelement" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="diff" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="view" action="./" data-method="diff" data-action="pageelement" data-id="<?php echo OR_ID ?>" method="get" enctype="application/x-www-form-urlencoded" class="or-form pageelement" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="pageelement" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="diff" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
 				<tr class="headline">
 					<td class="help">
@@ -54,7 +54,7 @@
 						</td>
 						<td>
 							<?php $if7=(isset($compareid)); if($if7){?>
-								<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_compareid_<?php echo $id ?>" name="<?php if ('') echo ''.'_' ?>compareid<?php if ('') echo '_disabled' ?>" value="<?php echo $id ?>"<?php if($id==@$compareid)echo ' checked="checked"' ?> />
+								<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_compareid_<?php echo $id ?>" name="<?php if ('') echo ''.'_' ?>compareid<?php if (false) echo '_disabled' ?>" value="<?php echo $id ?>"<?php if($id==@$compareid)echo ' checked="checked"' ?> />
 								
 							<?php } ?>
 							<?php if(!$if7){?>
@@ -64,7 +64,7 @@
 						</td>
 						<td>
 							<?php $if7=(isset($compareid)); if($if7){?>
-								<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_withid_<?php echo $id ?>" name="<?php if ('') echo ''.'_' ?>withid<?php if ('') echo '_disabled' ?>" value="<?php echo $id ?>"<?php if($id==@$withid)echo ' checked="checked"' ?> />
+								<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_withid_<?php echo $id ?>" name="<?php if ('') echo ''.'_' ?>withid<?php if (false) echo '_disabled' ?>" value="<?php echo $id ?>"<?php if($id==@$withid)echo ' checked="checked"' ?> />
 								
 							<?php } ?>
 							<?php if(!$if7){?>

@@ -50,10 +50,17 @@ class PageAction extends ObjectAction
 
 		if  ( $this->request->hasLanguageId())
 		    $this->page->languageid = $this->request->getLanguageId();
+
 		if  ( $this->request->hasModelId())
 		    $this->page->modelid = $this->request->getModelId();
 
 		$this->page->load();
+
+        if  ( !$this->page->languageid )
+            $this->page->languageid = $this->page->getProject()->getDefaultLanguageId();
+
+        if  ( !$this->page->modelid )
+            $this->page->modelid = $this->page->getProject()->getDefaultModelId();
 		//$this->baseObject = & $this->page;
 
 		// Hier kann leider nicht das Datum der letzten Änderung verwendet werden,
@@ -622,6 +629,8 @@ class PageAction extends ObjectAction
 	 */
 	public function previewView()
 	{
+	    $this->setModelAndLanguage();
+
 		$this->setTemplateVar('preview_url',Html::url('page','show',$this->page->objectid,array(REQ_PARAM_LANGUAGE_ID=>$this->page->languageid,REQ_PARAM_MODEL_ID=>$this->page->modelid) ) );
 	}
 
@@ -645,11 +654,6 @@ class PageAction extends ObjectAction
 		$publisher = new PublishPreview();
 
 		$this->page->publisher = $publisher;
-
-		if ( empty($this->page->languageid) )
-            $this->page->languageid = $this->page->getProject()->getDefaultLanguageId();
-		if ( empty($this->page->modelid) )
-            $this->page->modelid = $this->page->getProject()->getDefaultModelId();
 
 		$this->page->load();
 		$this->page->generate();
@@ -690,13 +694,9 @@ class PageAction extends ObjectAction
 		$this->page->publisher = new PublishPublic( $this->page->projectid );
 		$this->page->load();
 
+		$this->setModelAndLanguage();
+
 		$src = $this->page->generate();
-
-		// HTML Highlighting
-
-		//$src = preg_replace( '|<(.+)( .+)?'.'>|Us'       , '<strong>&lt;$1</strong>$2<strong>&gt;</strong>', $src);
-		//$src = preg_replace( '|([a-zA-Z]+)="(.+)"|Us' , '<em>$1</em>=<var>"$2"</var>'                   , $src);
-		//$src = htmlentities($src);
 
 		$this->setTemplateVar('src',$src);
 	}
@@ -883,6 +883,14 @@ class PageAction extends ObjectAction
         }
     }
 
+    protected function setModelAndLanguage()
+    {
+        $this->setTemplateVar('languages' ,$this->page->getProject()->getLanguages());
+        $this->setTemplateVar('languageid',$this->page->languageid );
+
+        $this->setTemplateVar('models'    ,$this->page->getProject()->getModels()   );
+        $this->setTemplateVar('modelid'   ,$this->page->modelid    );
+    }
 
 
 }

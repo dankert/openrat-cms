@@ -1,6 +1,6 @@
 <?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
 	
-		<form name="" target="_self" data-target="view" action="./" data-method="value" data-action="image" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form image" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="image" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="value" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="view" action="./" data-method="value" data-action="image" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form image" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="image" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="value" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			
 				<tr>
 					<td>
@@ -8,7 +8,7 @@
 						
 					</td>
 					<td>
-						<textarea  name="<?php if ('') echo ''.'_' ?>value<?php if ('') echo '_disabled' ?>" data-extension="" data-mimetype="" data-mode="htmlmixed" class="editor code-editor"><?php echo htmlentities(${'value'}) ?></textarea>
+						<textarea  name="<?php if ('') echo ''.'_' ?>value<?php if (false) echo '_disabled' ?>" data-extension="" data-mimetype="" data-mode="htmlmixed" class="editor code-editor"><?php echo htmlentities(${'value'}) ?></textarea>
 						
 					</td>
 				</tr>

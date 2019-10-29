@@ -1,7 +1,7 @@
 <?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
 	
 		
-			<form name="" target="_self" data-target="view" action="./" data-method="form" data-action="page" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form page" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="page" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="form" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+			<form name="" target="_self" data-target="view" action="./" data-method="form" data-action="page" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form page" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="page" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="form" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 				
 					<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
 						<?php $if6=(($el)==FALSE); if($if6){?>
@@ -38,7 +38,7 @@
 										</label>
 									</td>
 									<td>
-										<?php { $tmpname     = $saveid;$default  = '';$readonly = '';$required = '';		
+										<?php { $tmpname     = $saveid;$default  = false;$readonly = false;$required = false;		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
@@ -55,11 +55,11 @@
 									</td>
 									<td>
 										<?php $if10=(in_array($type,explode(",",'text,date,number')); if($if10){?>
-											<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_<?php echo $id ?>" name="<?php if ('') echo ''.'_' ?><?php echo $id ?><?php if ('') echo '_disabled' ?>" type="text" maxlength="255" class="" value="<?php echo Text::encodeHtml($value) ?>" /><?php if ('') { ?><input type="hidden" name="<?php echo $id ?>" value="<?php $value ?>"/><?php } ?></div>
+											<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_<?php echo $id ?>" name="<?php if ('') echo ''.'_' ?><?php echo $id ?><?php if (false) echo '_disabled' ?>" type="text" maxlength="255" class="" value="<?php echo Text::encodeHtml($value) ?>" /><?php if (false) { ?><input type="hidden" name="<?php echo $id ?>" value="<?php $value ?>"/><?php } ?></div>
 											
 										<?php } ?>
 										<?php $if10=($type=='longtext'); if($if10){?>
-											<div class="inputholder"><textarea class="inputarea" name="<?php if ('') echo ''.'_' ?><?php echo $id ?><?php if ('') echo '_disabled' ?>"><?php echo Text::encodeHtml($value) ?></textarea></div>
+											<div class="inputholder"><textarea class="inputarea" name="<?php if ('') echo ''.'_' ?><?php echo $id ?><?php if (false) echo '_disabled' ?>"><?php echo Text::encodeHtml($value) ?></textarea></div>
 											
 										<?php } ?>
 										<?php $if10=(in_array($type,explode(",",'select,link,list')); if($if10){?>
@@ -71,10 +71,10 @@
 							<?php } ?>
 						<?php } ?>
 					</table></div></div>
-					<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div class="closable">
+					<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div class="closable">
 						<?php $if6=(isset($release)); if($if6){?>
 							<div>
-								<?php { $tmpname     = 'release';$default  = '';$readonly = '';$required = '';		
+								<?php { $tmpname     = 'release';$default  = false;$readonly = false;$required = false;		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
@@ -98,7 +98,7 @@
 						<?php } ?>
 						<?php $if6=(isset($publish)); if($if6){?>
 							<div>
-								<?php { $tmpname     = 'publish';$default  = '';$readonly = '';$required = '';		
+								<?php { $tmpname     = 'publish';$default  = false;$readonly = false;$required = false;		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else

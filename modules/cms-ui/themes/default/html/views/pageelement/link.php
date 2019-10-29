@@ -1,7 +1,7 @@
 <?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
 	
 		
-			<form name="" target="_self" data-target="view" action="./" data-method="link" data-action="pageelement" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form pageelement" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="pageelement" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="link" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+			<form name="" target="_self" data-target="view" action="./" data-method="link" data-action="pageelement" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form pageelement" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="pageelement" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="link" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 				
 					<tr>
 						<td colspan="2" class="help">
@@ -19,7 +19,7 @@
 						<?php $if6=(isset($publish)); if($if6){?>
 							<tr>
 								<td colspan="2">
-									<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div class="closable">
+									<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div class="closable">
 									</div></fieldset>
 								</td>
 							</tr>
@@ -28,7 +28,7 @@
 					<?php $if5=(isset($release)); if($if5){?>
 						<tr>
 							<td colspan="2">
-								<?php { $tmpname     = 'release';$default  = '';$readonly = '';$required = '';		
+								<?php { $tmpname     = 'release';$default  = false;$readonly = false;$required = false;		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
@@ -54,7 +54,7 @@
 					<?php $if5=(isset($publish)); if($if5){?>
 						<tr>
 							<td colspan="2">
-								<?php { $tmpname     = 'publish';$default  = '';$readonly = '';$required = '';		
+								<?php { $tmpname     = 'publish';$default  = false;$readonly = false;$required = false;		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else

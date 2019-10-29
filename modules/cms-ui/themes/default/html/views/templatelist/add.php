@@ -1,20 +1,20 @@
 <?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
 	
-		<form name="" target="_self" data-target="view" action="./" data-method="add" data-action="templatelist" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form templatelist" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="templatelist" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="add" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="view" action="./" data-method="add" data-action="templatelist" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form templatelist" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="templatelist" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="add" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<div class="line">
 				<div class="label">
 					<span><?php echo nl2br(encodeHtml(htmlentities(lang('name')))); ?></span>
 					
 				</div>
 				<div class="input">
-					<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_name" name="<?php if ('') echo ''.'_' ?>name<?php if ('') echo '_disabled' ?>" type="text" maxlength="50" class="" value="<?php echo Text::encodeHtml(@$name) ?>" /><?php if ('') { ?><input type="hidden" name="name" value="<?php $name ?>"/><?php } ?></div>
+					<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_name" name="<?php if ('') echo ''.'_' ?>name<?php if (false) echo '_disabled' ?>" type="text" maxlength="50" class="" value="<?php echo Text::encodeHtml(@$name) ?>" /><?php if (false) { ?><input type="hidden" name="name" value="<?php $name ?>"/><?php } ?></div>
 					
 				</div>
 			</div>
-			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div class="closable">
+			<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div class="closable">
 				<div class="line">
 					<div class="label">
-						<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_empty" name="<?php if ('') echo ''.'_' ?>type<?php if ('') echo '_disabled' ?>" value="empty"<?php if('empty'==@$type)echo ' checked="checked"' ?> />
+						<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_empty" name="<?php if ('') echo ''.'_' ?>type<?php if (false) echo '_disabled' ?>" value="empty"<?php if('empty'==@$type)echo ' checked="checked"' ?> />
 						
 					</div>
 					<div class="input">
@@ -30,7 +30,7 @@
 							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'copy'.'')))); ?></span>
 							
 						</label>
-						<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_copy" name="<?php if ('') echo ''.'_' ?>type<?php if ('') echo '_disabled' ?>" value="copy"<?php if('copy'==@$type)echo ' checked="checked"' ?> />
+						<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_copy" name="<?php if ('') echo ''.'_' ?>type<?php if (false) echo '_disabled' ?>" value="copy"<?php if('copy'==@$type)echo ' checked="checked"' ?> />
 						
 					</div>
 					<div class="input">
@@ -44,7 +44,7 @@
 							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'example'.'')))); ?></span>
 							
 						</label>
-						<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_example" name="<?php if ('') echo ''.'_' ?>type<?php if ('') echo '_disabled' ?>" value="example"<?php if('example'==@$type)echo ' checked="checked"' ?> />
+						<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_example" name="<?php if ('') echo ''.'_' ?>type<?php if (false) echo '_disabled' ?>" value="example"<?php if('example'==@$type)echo ' checked="checked"' ?> />
 						
 					</div>
 					<div class="input">

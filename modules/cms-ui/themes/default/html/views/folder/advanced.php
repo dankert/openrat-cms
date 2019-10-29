@@ -1,10 +1,10 @@
 <?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
 	
-		<form name="" target="_self" data-target="view" action="./" data-method="edit" data-action="folder" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form folder" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="folder" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="edit" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="view" action="./" data-method="edit" data-action="folder" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form folder" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="folder" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="edit" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
 				<tr class="headline">
 					<td class="help">
-						<?php { $tmpname     = 'checkall';$default  = '';$readonly = '';$required = '';		
+						<?php { $tmpname     = 'checkall';$default  = false;$readonly = false;$required = false;		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
@@ -32,7 +32,7 @@
 					<tr class="data">
 						<td width="1%">
 							<?php $if7=($writable); if($if7){?>
-								<?php { $tmpname     = $id;$default  = '';$readonly = '';$required = '';		
+								<?php { $tmpname     = $id;$default  = false;$readonly = false;$required = false;		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
@@ -89,7 +89,7 @@
 					</td>
 				</tr>
 			</table></div></div>
-			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div class="closable">
+			<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div class="closable">
 				<?php $type= $defaulttype; ?>
 				
 				<?php foreach($actionlist as $list_key=>$actiontype){ ?>
@@ -97,7 +97,7 @@
 						<div class="label">
 						</div>
 						<div class="input">
-							<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_<?php echo $actiontype ?>" name="<?php if ('') echo ''.'_' ?>type<?php if ('') echo '_disabled' ?>" value="<?php echo $actiontype ?>"<?php if($actiontype==@$type)echo ' checked="checked"' ?> />
+							<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_<?php echo $actiontype ?>" name="<?php if ('') echo ''.'_' ?>type<?php if (false) echo '_disabled' ?>" value="<?php echo $actiontype ?>"<?php if($actiontype==@$type)echo ' checked="checked"' ?> />
 							
 							<label for="<?php echo REQUEST_ID ?>_type_<?php echo $actiontype ?>" class="label">
 								<span><?php echo nl2br('&nbsp;'); ?></span>
@@ -114,7 +114,7 @@
 					<div class="input">
 						<span><?php echo nl2br('&nbsp;&nbsp;&nbsp;&nbsp;'); ?></span>
 						
-						<?php { $tmpname     = 'confirm';$default  = '';$readonly = '';$required = '1';		
+						<?php { $tmpname     = 'confirm';$default  = false;$readonly = false;$required = true;		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else

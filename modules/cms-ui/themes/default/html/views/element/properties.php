@@ -1,7 +1,7 @@
 <?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
 	
 		
-			<form name="" target="_self" data-target="view" action="./" data-method="properties" data-action="element" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form element" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="element" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="properties" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+			<form name="" target="_self" data-target="view" action="./" data-method="properties" data-action="element" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form element" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="element" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="properties" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 				
 					<?php $if5=(isset($subtype)); if($if5){?>
 						<tr>
@@ -15,7 +15,7 @@
 									</select></div>
 								<?php } ?>
 								<?php $if8=!(isset($subtypes)); if($if8){?>
-									<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_subtype" name="<?php if ('') echo ''.'_' ?>subtype<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="" value="<?php echo Text::encodeHtml(@$subtype) ?>" /><?php if ('') { ?><input type="hidden" name="subtype" value="<?php $subtype ?>"/><?php } ?></div>
+									<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_subtype" name="<?php if ('') echo ''.'_' ?>subtype<?php if (false) echo '_disabled' ?>" type="text" maxlength="256" class="" value="<?php echo Text::encodeHtml(@$subtype) ?>" /><?php if (false) { ?><input type="hidden" name="subtype" value="<?php $subtype ?>"/><?php } ?></div>
 									
 								<?php } ?>
 							</td>
@@ -28,7 +28,7 @@
 								
 							</td>
 							<td>
-								<?php { $tmpname     = 'with_icon';$default  = '';$readonly = '';$required = '';		
+								<?php { $tmpname     = 'with_icon';$default  = false;$readonly = false;$required = false;		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
@@ -52,7 +52,7 @@
 								
 							</td>
 							<td>
-								<?php { $tmpname     = 'all_languages';$default  = '';$readonly = '';$required = '';		
+								<?php { $tmpname     = 'all_languages';$default  = false;$readonly = false;$required = false;		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
@@ -76,7 +76,7 @@
 								
 							</td>
 							<td>
-								<?php { $tmpname     = 'writable';$default  = '';$readonly = '';$required = '';		
+								<?php { $tmpname     = 'writable';$default  = false;$readonly = false;$required = false;		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
@@ -100,7 +100,7 @@
 								
 							</td>
 							<td>
-								<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_width" name="<?php if ('') echo ''.'_' ?>width<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="" value="<?php echo Text::encodeHtml(@$width) ?>" /><?php if ('') { ?><input type="hidden" name="width" value="<?php $width ?>"/><?php } ?></div>
+								<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_width" name="<?php if ('') echo ''.'_' ?>width<?php if (false) echo '_disabled' ?>" type="text" maxlength="256" class="" value="<?php echo Text::encodeHtml(@$width) ?>" /><?php if (false) { ?><input type="hidden" name="width" value="<?php $width ?>"/><?php } ?></div>
 								
 							</td>
 						</tr>
@@ -112,7 +112,7 @@
 								
 							</td>
 							<td>
-								<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_height" name="<?php if ('') echo ''.'_' ?>height<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="" value="<?php echo Text::encodeHtml(@$height) ?>" /><?php if ('') { ?><input type="hidden" name="height" value="<?php $height ?>"/><?php } ?></div>
+								<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_height" name="<?php if ('') echo ''.'_' ?>height<?php if (false) echo '_disabled' ?>" type="text" maxlength="256" class="" value="<?php echo Text::encodeHtml(@$height) ?>" /><?php if (false) { ?><input type="hidden" name="height" value="<?php $height ?>"/><?php } ?></div>
 								
 							</td>
 						</tr>
@@ -148,7 +148,7 @@
 								
 							</td>
 							<td>
-								<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_decimals" name="<?php if ('') echo ''.'_' ?>decimals<?php if ('') echo '_disabled' ?>" type="text" maxlength="2" class="" value="<?php echo Text::encodeHtml(@$decimals) ?>" /><?php if ('') { ?><input type="hidden" name="decimals" value="<?php $decimals ?>"/><?php } ?></div>
+								<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_decimals" name="<?php if ('') echo ''.'_' ?>decimals<?php if (false) echo '_disabled' ?>" type="text" maxlength="2" class="" value="<?php echo Text::encodeHtml(@$decimals) ?>" /><?php if (false) { ?><input type="hidden" name="decimals" value="<?php $decimals ?>"/><?php } ?></div>
 								
 							</td>
 						</tr>
@@ -160,7 +160,7 @@
 								
 							</td>
 							<td>
-								<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_dec_point" name="<?php if ('') echo ''.'_' ?>dec_point<?php if ('') echo '_disabled' ?>" type="text" maxlength="5" class="" value="<?php echo Text::encodeHtml(@$dec_point) ?>" /><?php if ('') { ?><input type="hidden" name="dec_point" value="<?php $dec_point ?>"/><?php } ?></div>
+								<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_dec_point" name="<?php if ('') echo ''.'_' ?>dec_point<?php if (false) echo '_disabled' ?>" type="text" maxlength="5" class="" value="<?php echo Text::encodeHtml(@$dec_point) ?>" /><?php if (false) { ?><input type="hidden" name="dec_point" value="<?php $dec_point ?>"/><?php } ?></div>
 								
 							</td>
 						</tr>
@@ -172,7 +172,7 @@
 								
 							</td>
 							<td>
-								<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_thousand_sep" name="<?php if ('') echo ''.'_' ?>thousand_sep<?php if ('') echo '_disabled' ?>" type="text" maxlength="1" class="" value="<?php echo Text::encodeHtml(@$thousand_sep) ?>" /><?php if ('') { ?><input type="hidden" name="thousand_sep" value="<?php $thousand_sep ?>"/><?php } ?></div>
+								<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_thousand_sep" name="<?php if ('') echo ''.'_' ?>thousand_sep<?php if (false) echo '_disabled' ?>" type="text" maxlength="1" class="" value="<?php echo Text::encodeHtml(@$thousand_sep) ?>" /><?php if (false) { ?><input type="hidden" name="thousand_sep" value="<?php $thousand_sep ?>"/><?php } ?></div>
 								
 							</td>
 						</tr>
@@ -184,7 +184,7 @@
 								
 							</td>
 							<td>
-								<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_default_text" name="<?php if ('') echo ''.'_' ?>default_text<?php if ('') echo '_disabled' ?>" type="text" maxlength="255" class="" value="<?php echo Text::encodeHtml(@$default_text) ?>" /><?php if ('') { ?><input type="hidden" name="default_text" value="<?php $default_text ?>"/><?php } ?></div>
+								<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_default_text" name="<?php if ('') echo ''.'_' ?>default_text<?php if (false) echo '_disabled' ?>" type="text" maxlength="255" class="" value="<?php echo Text::encodeHtml(@$default_text) ?>" /><?php if (false) { ?><input type="hidden" name="default_text" value="<?php $default_text ?>"/><?php } ?></div>
 								
 							</td>
 						</tr>
@@ -196,7 +196,7 @@
 								
 							</td>
 							<td>
-								<div class="inputholder"><textarea class="inputarea" name="<?php if ('') echo ''.'_' ?>default_longtext<?php if ('') echo '_disabled' ?>"><?php echo Text::encodeHtml($default_longtext) ?></textarea></div>
+								<div class="inputholder"><textarea class="inputarea" name="<?php if ('') echo ''.'_' ?>default_longtext<?php if (false) echo '_disabled' ?>"><?php echo Text::encodeHtml($default_longtext) ?></textarea></div>
 								
 							</td>
 						</tr>
@@ -208,7 +208,7 @@
 								
 							</td>
 							<td>
-								<div class="inputholder"><textarea class="inputarea" name="<?php if ('') echo ''.'_' ?>parameters<?php if ('') echo '_disabled' ?>"><?php echo Text::encodeHtml($parameters) ?></textarea></div>
+								<div class="inputholder"><textarea class="inputarea" name="<?php if ('') echo ''.'_' ?>parameters<?php if (false) echo '_disabled' ?>"><?php echo Text::encodeHtml($parameters) ?></textarea></div>
 								
 							</td>
 						</tr>
@@ -240,7 +240,7 @@
 								
 							</td>
 							<td>
-								<div class="inputholder"><textarea class="inputarea" name="<?php if ('') echo ''.'_' ?>select_items<?php if ('') echo '_disabled' ?>"><?php echo Text::encodeHtml($select_items) ?></textarea></div>
+								<div class="inputholder"><textarea class="inputarea" name="<?php if ('') echo ''.'_' ?>select_items<?php if (false) echo '_disabled' ?>"><?php echo Text::encodeHtml($select_items) ?></textarea></div>
 								
 							</td>
 						</tr>
@@ -300,7 +300,7 @@
 								
 							</td>
 							<td>
-								<div class="inputholder"><textarea class="inputarea" name="<?php if ('') echo ''.'_' ?>code<?php if ('') echo '_disabled' ?>"><?php echo Text::encodeHtml($code) ?></textarea></div>
+								<div class="inputholder"><textarea class="inputarea" name="<?php if ('') echo ''.'_' ?>code<?php if (false) echo '_disabled' ?>"><?php echo Text::encodeHtml($code) ?></textarea></div>
 								
 							</td>
 						</tr>

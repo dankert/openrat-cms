@@ -2,9 +2,9 @@
 	
 		
 		
-		<form name="" target="_self" data-target="_top" action="./" data-method="login" data-action="login" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form login" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="login" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="login" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="_top" action="./" data-method="login" data-action="login" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form login" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="login" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="login" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<?php $if3=(config('security','openid','enable')); if($if3){?>
-				<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('OPENID') ?></legend><div class="closable">
+				<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('OPENID') ?></legend><div class="closable">
 					<div class="line">
 						<div class="label">
 							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'openid_user'.'')))); ?></span>
@@ -18,16 +18,16 @@
 							<?php include_once( 'modules/template-engine/components/html/radiobox/component-radio-box.php') ?><?php component_radio_box('openid_provider',$openid_providers,$openid_provider) ?>
 							
 							<?php $if7=($openid_user_identity); if($if7){?>
-								<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_openid_provider_identity" name="<?php if ('') echo ''.'_' ?>openid_provider<?php if ('') echo '_disabled' ?>" value="identity"<?php if('identity'==@$openid_provider)echo ' checked="checked"' ?> />
+								<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_openid_provider_identity" name="<?php if ('') echo ''.'_' ?>openid_provider<?php if (false) echo '_disabled' ?>" value="identity"<?php if('identity'==@$openid_provider)echo ' checked="checked"' ?> />
 								
-								<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_openid_url" name="<?php if ('') echo ''.'_' ?>openid_url<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="name" value="<?php echo Text::encodeHtml(@$openid_url) ?>" /><?php if ('') { ?><input type="hidden" name="openid_url" value="<?php $openid_url ?>"/><?php } ?></div>
+								<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_openid_url" name="<?php if ('') echo ''.'_' ?>openid_url<?php if (false) echo '_disabled' ?>" type="text" maxlength="256" class="name" value="<?php echo Text::encodeHtml(@$openid_url) ?>" /><?php if (false) { ?><input type="hidden" name="openid_url" value="<?php $openid_url ?>"/><?php } ?></div>
 								
 							<?php } ?>
 						</div>
 					</div>
 				</div></fieldset>
 				<?php $if4=(intval('1')<intval(@count($dbids))); if($if4){?>
-					<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><img src="/themes/default/images/icon/method/database.svg" /><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('DATABASE') ?></legend><div class="closable">
+					<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><legend class="on-click-open-close"><img src="/themes/default/images/icon/method/database.svg" /><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('DATABASE') ?></legend><div class="closable">
 						<div class="line">
 							<div class="label">
 								<label for="<?php echo REQUEST_ID ?>_dbid" class="label">

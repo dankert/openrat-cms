@@ -2,11 +2,11 @@
 	
 		
 		
-		<form name="" target="_self" data-target="view" action="./" data-method="srcelement" data-action="template" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form template" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="template" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="srcelement" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="view" action="./" data-method="srcelement" data-action="template" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form template" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="template" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="srcelement" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<?php $if3=(isset($elements)); if($if3){?>
 				<div class="line">
 					<div class="label">
-						<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_addelement" name="<?php if ('') echo ''.'_' ?>type<?php if ('') echo '_disabled' ?>" value="addelement"<?php if('addelement'==@$type)echo ' checked="checked"' ?> />
+						<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_addelement" name="<?php if ('') echo ''.'_' ?>type<?php if (false) echo '_disabled' ?>" value="addelement"<?php if('addelement'==@$type)echo ' checked="checked"' ?> />
 						
 						<label for="<?php echo REQUEST_ID ?>_type_addelement" class="label">
 							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'value'.'')))); ?></span>
@@ -20,11 +20,11 @@
 				</div>
 			<?php } ?>
 			<?php $if3=(isset($writable_elements)); if($if3){?>
-				<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><div class="closable">
+				<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><div class="closable">
 				</div></fieldset>
 				<div class="line">
 					<div class="label">
-						<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_addicon" name="<?php if ('') echo ''.'_' ?>type<?php if ('') echo '_disabled' ?>" value="addicon"<?php if('addicon'==@$type)echo ' checked="checked"' ?> />
+						<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_addicon" name="<?php if ('') echo ''.'_' ?>type<?php if (false) echo '_disabled' ?>" value="addicon"<?php if('addicon'==@$type)echo ' checked="checked"' ?> />
 						
 						<label for="<?php echo REQUEST_ID ?>_type_addicon" class="label">
 							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_ICON'.'')))); ?></span>
@@ -38,7 +38,7 @@
 				</div>
 				<div class="line">
 					<div class="label">
-						<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_addifempty" name="<?php if ('') echo ''.'_' ?>type<?php if ('') echo '_disabled' ?>" value="addifempty"<?php if('addifempty'==@$type)echo ' checked="checked"' ?> />
+						<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_addifempty" name="<?php if ('') echo ''.'_' ?>type<?php if (false) echo '_disabled' ?>" value="addifempty"<?php if('addifempty'==@$type)echo ' checked="checked"' ?> />
 						
 						<label for="<?php echo REQUEST_ID ?>_type_addifempty" class="label">
 							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'TEMPLATE_SRC_IFEMPTY'.'')))); ?></span>
@@ -50,7 +50,7 @@
 				</div>
 				<div class="line">
 					<div class="label">
-						<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_addifnotempty" name="<?php if ('') echo ''.'_' ?>type<?php if ('') echo '_disabled' ?>" value="addifnotempty"<?php if('addifnotempty'==@$type)echo ' checked="checked"' ?> />
+						<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_addifnotempty" name="<?php if ('') echo ''.'_' ?>type<?php if (false) echo '_disabled' ?>" value="addifnotempty"<?php if('addifnotempty'==@$type)echo ' checked="checked"' ?> />
 						
 						<label for="<?php echo REQUEST_ID ?>_type_addifnotempty" class="label">
 							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'TEMPLATE_SRC_IFNOTEMPTY'.'')))); ?></span>

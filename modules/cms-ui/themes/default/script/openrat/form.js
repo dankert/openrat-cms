@@ -17,9 +17,15 @@ Openrat.Form = function() {
 
         // Autosave in Formularen.
         // Bei Veränderungen von Checkboxen wird das Formular sofort abgeschickt.
-        $(element).find('form[data-autosave="true"] input[type="checkbox"]').click( function() {
-            form.submit();
-        });
+        if   ( $(this.element).data('autosave') ) {
+
+            $(this.element).find('input[type="checkbox"]').click( function() {
+                form.submit();
+            });
+            $(this.element).find('select').change( function() {
+                form.submit();
+            });
+        }
 
         // After click to "OK" the form is submitted.
         // Why this?? input type=submit will submit!
@@ -65,6 +71,12 @@ Openrat.Form = function() {
 
     }
 
+    this.forwardTo = function (action, subaction, id, data) {
+
+        let view = new Openrat.View( action, subaction, id, data );
+        view.start( $(this.element).closest('.view') );
+    }
+
     this.submit = function() {
 
 
@@ -95,8 +107,8 @@ Openrat.Form = function() {
         {
             // Mehrseitiges Formular
             // Die eingegebenen Formulardaten werden zur nächsten Action geschickt.
-            //Workbench.loadViewIntoElement( $(form).parent('.view'),data.action, data.subaction,data.id,data );
             this.forwardTo( data.action, data.subaction,data.id,data );
+            $(status).remove();
         }
         else
         {
@@ -109,7 +121,7 @@ Openrat.Form = function() {
             //params['output'] = 'json';// Irgendwie geht das nicht.
             data.output = 'json';
 
-            if	( $(this.element).data('async') || $(this.element).data('async')=='true')
+            if	( $(this.element).data('async') )
             {
                 // Verarbeitung erfolgt asynchron, das heißt, dass der evtl. geöffnete Dialog
                 // beendet wird.
@@ -173,7 +185,7 @@ Openrat.Form = function() {
             // Bei asynchronen Requests wird zusätzlich eine Browser-Notice erzeugt, da der
             // Benutzer bei länger laufenden Aktionen vielleicht das Tab oder Fenster
             // gewechselt hat.
-            let notifyBrowser = $(element).data('async') == 'true';
+            let notifyBrowser = $(element).data('async');
 
             Openrat.Workbench.notify(value.type, value.name, value.status, value.text, value.log, notifyBrowser ); // Notice anhängen.
 
@@ -182,7 +194,7 @@ Openrat.Form = function() {
                 // Kein Fehler
                 // Nur bei synchronen Prozessen soll nach Verarbeitung der Dialog
                 // geschlossen werden.
-                if	( $(element).data('async') != 'true' )
+                if	( ! $(element).data('async') )
                 {
                     // Verarbeitung erfolgt synchron, das heißt, dass jetzt der evtl. geöffnete Dialog
                     // beendet wird.

@@ -1,14 +1,14 @@
 <?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
 	
-		<form name="" target="_self" data-target="view" action="./" data-method="prop" data-action="element" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form element" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="element" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="prop" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
-			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><div class="closable">
+		<form name="" target="_self" data-target="view" action="./" data-method="prop" data-action="element" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form element" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="element" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="prop" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+			<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><div class="closable">
 				<div class="line">
 					<div class="label">
 						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'LABEL'.'')))); ?></span>
 						
 					</div>
 					<div class="input">
-						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_label" name="<?php if ('') echo ''.'_' ?>label<?php if ('') echo '_disabled' ?>" required="required" autofocus="autofocus" type="text" maxlength="100" class="" value="<?php echo Text::encodeHtml(@$label) ?>" /><?php if ('') { ?><input type="hidden" name="label" value="<?php $label ?>"/><?php } ?></div>
+						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_label" name="<?php if ('') echo ''.'_' ?>label<?php if (false) echo '_disabled' ?>" required="required" autofocus="autofocus" type="text" maxlength="100" class="" value="<?php echo Text::encodeHtml(@$label) ?>" /><?php if (false) { ?><input type="hidden" name="label" value="<?php $label ?>"/><?php } ?></div>
 						
 					</div>
 				</div>
@@ -18,7 +18,7 @@
 						
 					</div>
 					<div class="input">
-						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_name" name="<?php if ('') echo ''.'_' ?>name<?php if ('') echo '_disabled' ?>" required="required" type="text" maxlength="50" class="" value="<?php echo Text::encodeHtml(@$name) ?>" /><?php if ('') { ?><input type="hidden" name="name" value="<?php $name ?>"/><?php } ?></div>
+						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_name" name="<?php if ('') echo ''.'_' ?>name<?php if (false) echo '_disabled' ?>" required="required" type="text" maxlength="50" class="" value="<?php echo Text::encodeHtml(@$name) ?>" /><?php if (false) { ?><input type="hidden" name="name" value="<?php $name ?>"/><?php } ?></div>
 						
 					</div>
 				</div>
@@ -28,12 +28,12 @@
 						
 					</div>
 					<div class="input">
-						<div class="inputholder"><textarea class="inputarea" name="<?php if ('') echo ''.'_' ?>description<?php if ('') echo '_disabled' ?>" maxlength="255"><?php echo Text::encodeHtml($description) ?></textarea></div>
+						<div class="inputholder"><textarea class="inputarea" name="<?php if ('') echo ''.'_' ?>description<?php if (false) echo '_disabled' ?>" maxlength="255"><?php echo Text::encodeHtml($description) ?></textarea></div>
 						
 					</div>
 				</div>
 			</div></fieldset>
-			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><div class="closable">
+			<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><div class="closable">
 				<div class="line">
 					<div class="label">
 						<span><?php echo nl2br(encodeHtml(htmlentities(lang('ELEMENT_TYPE')))); ?></span>

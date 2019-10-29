@@ -106,7 +106,7 @@ class Expression
 	{
 		// Falls der Wert 'true' oder 'false' ist.
 		if	( is_bool($value))
-			$value = strval($value);
+			$value = $value?'true':'false';
 		
 		// Negierung berücksichtigen.
 		if	( substr($value,0,4)=='not:' )

@@ -1,6 +1,6 @@
 <?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
 	
-		<form name="" target="_self" data-target="view" action="./" data-method="result" data-action="search" data-id="<?php echo OR_ID ?>" method="GET" enctype="application/x-www-form-urlencoded" class="or-form search" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="search" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="result" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="view" action="./" data-method="result" data-action="search" data-id="<?php echo OR_ID ?>" method="GET" enctype="application/x-www-form-urlencoded" class="or-form search" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="search" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="result" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<div class="line">
 				<div class="label">
 					<label for="<?php echo REQUEST_ID ?>_value" class="label">
@@ -11,7 +11,7 @@
 					
 				</div>
 				<div class="input">
-					<div class="inputholder"><input placeholder="<?php echo lang('search') ?>" id="<?php echo REQUEST_ID ?>_text" name="<?php if ('') echo ''.'_' ?>text<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="" value="<?php echo Text::encodeHtml(@$text) ?>" /><?php if ('') { ?><input type="hidden" name="text" value="<?php $text ?>"/><?php } ?></div>
+					<div class="inputholder"><input placeholder="<?php echo lang('search') ?>" id="<?php echo REQUEST_ID ?>_text" name="<?php if ('') echo ''.'_' ?>text<?php if (false) echo '_disabled' ?>" type="text" maxlength="256" class="" value="<?php echo Text::encodeHtml(@$text) ?>" /><?php if (false) { ?><input type="hidden" name="text" value="<?php $text ?>"/><?php } ?></div>
 					
 				</div>
 			</div>
@@ -25,7 +25,7 @@
 					
 				</div>
 				<div class="input">
-					<?php { $tmpname     = 'id';$default  = config('search','quicksearch','flag','id');$readonly = '';$required = '';		
+					<?php { $tmpname     = 'id';$default  = config('search','quicksearch','flag','id');$readonly = false;$required = false;		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
@@ -45,7 +45,7 @@
 					</label>
 					<br/>
 					
-					<?php { $tmpname     = 'name';$default  = config('search','quicksearch','flag','name');$readonly = '';$required = '';		
+					<?php { $tmpname     = 'name';$default  = config('search','quicksearch','flag','name');$readonly = false;$required = false;		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
@@ -65,7 +65,7 @@
 					</label>
 					<br/>
 					
-					<?php { $tmpname     = 'filename';$default  = config('search','quicksearch','flag','filename');$readonly = '';$required = '';		
+					<?php { $tmpname     = 'filename';$default  = config('search','quicksearch','flag','filename');$readonly = false;$required = false;		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
@@ -85,7 +85,7 @@
 					</label>
 					<br/>
 					
-					<?php { $tmpname     = 'description';$default  = config('search','quicksearch','flag','description');$readonly = '';$required = '';		
+					<?php { $tmpname     = 'description';$default  = config('search','quicksearch','flag','description');$readonly = false;$required = false;		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
@@ -105,7 +105,7 @@
 					</label>
 					<br/>
 					
-					<?php { $tmpname     = 'content';$default  = config('search','quicksearch','flag','content');$readonly = '';$required = '';		
+					<?php { $tmpname     = 'content';$default  = config('search','quicksearch','flag','content');$readonly = false;$required = false;		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else

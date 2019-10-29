@@ -428,7 +428,7 @@
 					<div class="toolbar-icon menu search">
 						<i class="image-icon image-icon--method-search"></i>
 						
-						<div class="inputholder"><input placeholder="<?php echo lang('search') ?>" id="<?php echo REQUEST_ID ?>_text" name="<?php if ('') echo ''.'_' ?>text<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="" value="<?php echo Text::encodeHtml(@$text) ?>" /><?php if ('') { ?><input type="hidden" name="text" value="<?php $text ?>"/><?php } ?></div>
+						<div class="inputholder"><input placeholder="<?php echo lang('search') ?>" id="<?php echo REQUEST_ID ?>_text" name="<?php if ('') echo ''.'_' ?>text<?php if (false) echo '_disabled' ?>" type="text" maxlength="256" class="" value="<?php echo Text::encodeHtml(@$text) ?>" /><?php if (false) { ?><input type="hidden" name="text" value="<?php $text ?>"/><?php } ?></div>
 						
 						<div class="arrow arrow-down">
 						</div>

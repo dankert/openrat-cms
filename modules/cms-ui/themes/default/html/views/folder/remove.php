@@ -1,9 +1,9 @@
 <?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
 	
-		<form name="" target="_self" data-target="view" action="./" data-method="remove" data-action="folder" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form folder" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="folder" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="remove" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="view" action="./" data-method="remove" data-action="folder" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form folder" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="folder" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="remove" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<label class="or-form-row"><span class="or-form-label"><?php echo lang('GLOBAL_NAME') ?></span><span class="or-form-input"><span><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span></span></label>
 			
-			<label class="or-form-row"><span class="or-form-label"></span><span class="or-form-input"><?php { $tmpname     = 'delete';$default  = '';$readonly = '';$required = '';		
+			<label class="or-form-row"><span class="or-form-label"></span><span class="or-form-input"><?php { $tmpname     = 'delete';$default  = false;$readonly = false;$required = false;		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
@@ -17,7 +17,7 @@
 		}
 		} ?>&nbsp;?GLOBAL_DELETE? </span></label>
 			
-			<label class="or-form-row"><span class="or-form-label"></span><span class="or-form-input"><?php { $tmpname     = 'withChildren';$default  = '';$readonly = !$hasChildren;$required = '';		
+			<label class="or-form-row"><span class="or-form-label"></span><span class="or-form-input"><?php { $tmpname     = 'withChildren';$default  = false;$readonly = !$hasChildren;$required = false;		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else

@@ -1,7 +1,7 @@
 <?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
 	
 		
-			<form name="" target="_self" data-target="_top" action="./" data-method="passwordcode" data-action="login" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form login" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="login" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="passwordcode" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+			<form name="" target="_self" data-target="_top" action="./" data-method="passwordcode" data-action="login" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form login" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="login" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="passwordcode" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 				
 					<tr>
 						<td colspan="2" class="logo">
@@ -28,7 +28,7 @@
 								
 							</td>
 							<td>
-								<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_code" name="<?php if ('') echo ''.'_' ?>code<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="" value="<?php echo Text::encodeHtml(@$code) ?>" /><?php if ('') { ?><input type="hidden" name="code" value="<?php $code ?>"/><?php } ?></div>
+								<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_code" name="<?php if ('') echo ''.'_' ?>code<?php if (false) echo '_disabled' ?>" type="text" maxlength="256" class="" value="<?php echo Text::encodeHtml(@$code) ?>" /><?php if (false) { ?><input type="hidden" name="code" value="<?php $code ?>"/><?php } ?></div>
 								
 							</td>
 						</tr>

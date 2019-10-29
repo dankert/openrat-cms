@@ -1,12 +1,25 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
-	<insert url="var:preview_url"></insert>
-	<link class="action" action="file" subaction="edit">
-		<image file="icon/edit"></image>
-		<text key="menu_file_edit"></text>
-	</link>
-	<link class="action" action="file" subaction="editvalue">
-		<image file="icon/editvalue"></image>
-		<text key="menu_file_editvalue"></text>
-	</link>
+        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
+
+
+    <form action="template" method="GET" target="self" subaction="preview" autosave="true" cancel="false">
+        <selectbox name="modelid" list="models" default="var:modelid">
+
+        </selectbox>
+
+    </form>
+
+    <group title="message:preview">
+
+        <insert url="var:preview_url"></insert>
+
+        <link class="action" action="file" subaction="edit">
+            <image file="icon/edit"></image>
+            <text key="menu_file_edit"></text>
+        </link>
+        <link class="action" action="file" subaction="editvalue">
+            <image file="icon/editvalue"></image>
+            <text key="menu_file_editvalue"></text>
+        </link>
+    </group>
 </output>

@@ -6,13 +6,13 @@
 				
 			</div>
 		<?php } ?>
-		<form name="" target="_self" data-target="view" action="./" data-method="pub" data-action="folder" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form folder" data-async="1" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="folder" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="pub" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="view" action="./" data-method="pub" data-action="folder" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form folder" data-async="true" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="folder" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="pub" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<?php $if3=($pages); if($if3){?>
 				<div class="line">
 					<div class="label">
 					</div>
 					<div class="input">
-						<?php { $tmpname     = 'pages';$default  = '';$readonly = '';$required = '';		
+						<?php { $tmpname     = 'pages';$default  = false;$readonly = false;$required = false;		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
@@ -40,7 +40,7 @@
 					<div class="label">
 					</div>
 					<div class="input">
-						<?php { $tmpname     = 'files';$default  = '';$readonly = '';$required = '';		
+						<?php { $tmpname     = 'files';$default  = false;$readonly = false;$required = false;		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
@@ -63,13 +63,13 @@
 					</div>
 				</div>
 			<?php } ?>
-			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div class="closable">
+			<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div class="closable">
 				<?php $if4=(isset($subdirs)); if($if4){?>
 					<div class="line">
 						<div class="label">
 						</div>
 						<div class="input">
-							<?php { $tmpname     = 'subdirs';$default  = '';$readonly = $subdirs;$required = '';		
+							<?php { $tmpname     = 'subdirs';$default  = false;$readonly = $subdirs;$required = false;		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
@@ -97,7 +97,7 @@
 						<div class="label">
 						</div>
 						<div class="input">
-							<?php { $tmpname     = 'clean';$default  = '';$readonly = '';$required = '';		
+							<?php { $tmpname     = 'clean';$default  = false;$readonly = false;$required = false;		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else

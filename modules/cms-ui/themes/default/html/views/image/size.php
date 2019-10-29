@@ -1,6 +1,6 @@
 <?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
 	
-		<form name="" target="_self" data-target="view" action="./" data-method="size" data-action="image" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form image" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="image" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="size" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="view" action="./" data-method="size" data-action="image" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form image" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="image" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="size" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<div class="line">
 				<div class="label">
 					<span><?php echo nl2br(encodeHtml(htmlentities(lang('IMAGE_OLD_SIZE')))); ?></span>
@@ -16,12 +16,12 @@
 				</div>
 			</div>
 			<?php $if3=!(($formats)==FALSE); if($if3){?>
-				<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('IMAGE_NEW_SIZE') ?></legend><div class="closable">
+				<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('IMAGE_NEW_SIZE') ?></legend><div class="closable">
 					<div class="line">
 						<div class="label">
 						</div>
 						<div class="input">
-							<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_factor" name="<?php if ('') echo ''.'_' ?>type<?php if ('') echo '_disabled' ?>" value="factor"<?php if('factor'==@$type)echo ' checked="checked"' ?> />
+							<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_factor" name="<?php if ('') echo ''.'_' ?>type<?php if (false) echo '_disabled' ?>" value="factor"<?php if('factor'==@$type)echo ' checked="checked"' ?> />
 							
 							<label for="<?php echo REQUEST_ID ?>_type_factor" class="label">
 								<span><?php echo nl2br(encodeHtml(htmlentities(lang('FILE_IMAGE_SIZE_FACTOR')))); ?></span>
@@ -37,7 +37,7 @@
 						<div class="label">
 						</div>
 						<div class="input">
-							<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_input" name="<?php if ('') echo ''.'_' ?>type<?php if ('') echo '_disabled' ?>" value="input"<?php if('input'==@$type)echo ' checked="checked"' ?> />
+							<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_input" name="<?php if ('') echo ''.'_' ?>type<?php if (false) echo '_disabled' ?>" value="input"<?php if('input'==@$type)echo ' checked="checked"' ?> />
 							
 							<label for="<?php echo REQUEST_ID ?>_type_input" class="label">
 								<span><?php echo nl2br(encodeHtml(htmlentities(lang('FILE_IMAGE_NEW_WIDTH_HEIGHT')))); ?></span>
@@ -47,16 +47,16 @@
 						<div class="label">
 						</div>
 						<div class="input">
-							<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_width" name="<?php if ('') echo ''.'_' ?>width<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="" value="<?php echo Text::encodeHtml(@$width) ?>" /><?php if ('') { ?><input type="hidden" name="width" value="<?php $width ?>"/><?php } ?></div>
+							<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_width" name="<?php if ('') echo ''.'_' ?>width<?php if (false) echo '_disabled' ?>" type="text" maxlength="256" class="" value="<?php echo Text::encodeHtml(@$width) ?>" /><?php if (false) { ?><input type="hidden" name="width" value="<?php $width ?>"/><?php } ?></div>
 							
 							<span><?php echo nl2br('&nbsp;*&nbsp;'); ?></span>
 							
-							<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_height" name="<?php if ('') echo ''.'_' ?>height<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="" value="<?php echo Text::encodeHtml(@$height) ?>" /><?php if ('') { ?><input type="hidden" name="height" value="<?php $height ?>"/><?php } ?></div>
+							<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_height" name="<?php if ('') echo ''.'_' ?>height<?php if (false) echo '_disabled' ?>" type="text" maxlength="256" class="" value="<?php echo Text::encodeHtml(@$height) ?>" /><?php if (false) { ?><input type="hidden" name="height" value="<?php $height ?>"/><?php } ?></div>
 							
 						</div>
 					</div>
 				</div></fieldset>
-				<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div class="closable">
+				<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div class="closable">
 					<div class="line">
 						<div class="label">
 							<label for="<?php echo REQUEST_ID ?>_format" class="label">
@@ -87,7 +87,7 @@
 						<div class="label">
 						</div>
 						<div class="input">
-							<?php { $tmpname     = 'copy';$default  = '';$readonly = '';$required = '';		
+							<?php { $tmpname     = 'copy';$default  = false;$readonly = false;$required = false;		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else

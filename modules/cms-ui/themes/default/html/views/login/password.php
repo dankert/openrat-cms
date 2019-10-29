@@ -3,7 +3,7 @@
 		
 		
 		<?php $if2=(config('login','send_password')); if($if2){?>
-			<form name="" target="_self" data-target="view" action="./" data-method="password" data-action="login" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form login" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="login" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="password" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+			<form name="" target="_self" data-target="view" action="./" data-method="password" data-action="login" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form login" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="login" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="password" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 				<div class="line logo">
 	<div class="label">
 	<img src="themes/default/images/logo_password.png ?>"
@@ -26,7 +26,7 @@
 						
 					</div>
 					<div class="input">
-						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_username" name="<?php if ('') echo ''.'_' ?>username<?php if ('') echo '_disabled' ?>" autofocus="autofocus" type="text" maxlength="128" class="" value="<?php echo Text::encodeHtml(@$username) ?>" /><?php if ('') { ?><input type="hidden" name="username" value="<?php $username ?>"/><?php } ?></div>
+						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_username" name="<?php if ('') echo ''.'_' ?>username<?php if (false) echo '_disabled' ?>" autofocus="autofocus" type="text" maxlength="128" class="" value="<?php echo Text::encodeHtml(@$username) ?>" /><?php if (false) { ?><input type="hidden" name="username" value="<?php $username ?>"/><?php } ?></div>
 						
 					</div>
 				</div>

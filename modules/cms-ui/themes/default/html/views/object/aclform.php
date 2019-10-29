@@ -2,11 +2,11 @@
 	
 		
 		
-		<form name="" target="_self" data-target="view" action="./" data-method="aclform" data-action="object" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form object" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="object" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="aclform" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
-			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('users') ?></legend><div class="closable">
+		<form name="" target="_self" data-target="view" action="./" data-method="aclform" data-action="object" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form object" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="object" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="aclform" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+			<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('users') ?></legend><div class="closable">
 				<div class="line">
 					<div class="label">
-						<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_all" name="<?php if ('') echo ''.'_' ?>type<?php if ('') echo '_disabled' ?>" value="all"<?php if('all'==@$type)echo ' checked="checked"' ?> />
+						<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_all" name="<?php if ('') echo ''.'_' ?>type<?php if (false) echo '_disabled' ?>" value="all"<?php if('all'==@$type)echo ' checked="checked"' ?> />
 						
 						<label for="<?php echo REQUEST_ID ?>_type_all" class="label">
 							<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_ALL')))); ?></span>
@@ -18,7 +18,7 @@
 				</div>
 				<div class="line">
 					<div class="label">
-						<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_user" name="<?php if ('') echo ''.'_' ?>type<?php if ('') echo '_disabled' ?>" value="user"<?php if('user'==@$type)echo ' checked="checked"' ?> />
+						<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_user" name="<?php if ('') echo ''.'_' ?>type<?php if (false) echo '_disabled' ?>" value="user"<?php if('user'==@$type)echo ' checked="checked"' ?> />
 						
 						<label for="<?php echo REQUEST_ID ?>_type_user" class="label">
 							<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_USER')))); ?></span>
@@ -33,7 +33,7 @@
 				<?php $if4=(isset($groups)); if($if4){?>
 					<div class="line">
 						<div class="label">
-							<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_group" name="<?php if ('') echo ''.'_' ?>type<?php if ('') echo '_disabled' ?>" value="group"<?php if('group'==@$type)echo ' checked="checked"' ?> />
+							<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_group" name="<?php if ('') echo ''.'_' ?>type<?php if (false) echo '_disabled' ?>" value="group"<?php if('group'==@$type)echo ' checked="checked"' ?> />
 							
 							<label for="<?php echo REQUEST_ID ?>_type_group" class="label">
 								<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_GROUP')))); ?></span>
@@ -47,7 +47,7 @@
 					</div>
 				<?php } ?>
 			</div></fieldset>
-			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('language') ?></legend><div class="closable">
+			<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('language') ?></legend><div class="closable">
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_languageid" class="label">
@@ -61,7 +61,7 @@
 					</div>
 				</div>
 			</div></fieldset>
-			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('acl') ?></legend><div class="closable">
+			<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('acl') ?></legend><div class="closable">
 				<div class="line">
 					<div class="label">
 					</div>
@@ -69,9 +69,9 @@
 						<?php foreach($show as $k=>$t){ ?>
 							<div>
 								<?php $if8=($t=='read'); if($if8){?>
-									<?php $$t= '1'; ?>
+									<?php $$t= true; ?>
 									
-									<?php { $tmpname     = $t;$default  = '';$readonly = '1';$required = '';		
+									<?php { $tmpname     = $t;$default  = false;$readonly = true;$required = false;		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
@@ -89,7 +89,7 @@
 								<?php if(!$if8){?>
 									<?php unset($$t) ?>
 									
-									<?php { $tmpname     = $t;$default  = '';$readonly = '';$required = '';		
+									<?php { $tmpname     = $t;$default  = false;$readonly = false;$required = false;		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else

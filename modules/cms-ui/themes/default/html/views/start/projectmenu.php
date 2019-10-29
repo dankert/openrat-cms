@@ -42,7 +42,7 @@
 							<div class="arrow-down">
 							</div>
 							<div class="dropdown">
-								<form name="" target="_self" data-target="view" action="./" data-method="project" data-action="index" data-id="<?php echo $id ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form index" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="index" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="project" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo $id ?>" />
+								<form name="" target="_self" data-target="view" action="./" data-method="project" data-action="index" data-id="<?php echo $id ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form index" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="index" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="project" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo $id ?>" />
 									<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
 										<tr>
 											<td>

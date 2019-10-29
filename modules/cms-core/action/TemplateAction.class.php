@@ -361,7 +361,16 @@ class TemplateAction extends Action
 	 */
 	function previewView()
 	{
-		$this->setTemplateVar('preview_url',Html::url('template','show',$this->template->templateid,array('target'=>'none') ) );
+	    $project = new Project( $this->template->projectid);
+
+        $this->setTemplateVar('models',$project->getModels() );
+
+        if   ( ! $this->template->modelid )
+            $this->template->modelid = $project->getDefaultModelId();
+
+        $this->setTemplateVar('modelid'   ,$this->template->modelid );
+
+		$this->setTemplateVar('preview_url',Html::url('template','show',$this->template->templateid,array('target'=>'none','modelid'=>$this->template->modelid ) ) );
 	}
 	
 	

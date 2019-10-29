@@ -16,14 +16,14 @@
 	</div>
 </div>
 		</div>
-		<form name="" target="_self" data-target="view" action="./" data-method="confirmmail" data-action="profile" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form profile" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="profile" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="confirmmail" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="view" action="./" data-method="confirmmail" data-action="profile" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form profile" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="profile" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="confirmmail" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<div class="line">
 				<div class="label">
 					<label for="<?php echo REQUEST_ID ?>_code" class="label"><?php echo lang('mail_code') ?>
 					</label>
 				</div>
 				<div class="input">
-					<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_code" name="<?php if ('') echo ''.'_' ?>code<?php if ('') echo '_disabled' ?>" required="required" autofocus="autofocus" type="text" maxlength="256" class="" value="<?php echo Text::encodeHtml(@$code) ?>" /><?php if ('') { ?><input type="hidden" name="code" value="<?php $code ?>"/><?php } ?></div>
+					<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_code" name="<?php if ('') echo ''.'_' ?>code<?php if (false) echo '_disabled' ?>" required="required" autofocus="autofocus" type="text" maxlength="256" class="" value="<?php echo Text::encodeHtml(@$code) ?>" /><?php if (false) { ?><input type="hidden" name="code" value="<?php $code ?>"/><?php } ?></div>
 					
 				</div>
 			</div>
