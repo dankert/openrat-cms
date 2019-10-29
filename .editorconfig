@@ -1,0 +1,27 @@
+; This file is for unifying the coding style for different editors and IDEs.
+; More information at http://editorconfig.org
+
+root = true
+
+[*]
+end_of_line = lf
+insert_final_newline = false
+charset = utf-8
+tab_width = 4
+
+[*.php]
+indent_style = tab
+indent_size = 1
+
+[*.xml]
+indent_style = tab
+indent_size = 1
+
+[*.js]
+indent_style = tab
+indent_size = 1
+
+; YAML must be indented by 2 spaces
+[*.yml]
+indent_style = space
+indent_size = 2
