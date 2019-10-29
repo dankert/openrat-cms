@@ -1317,4 +1317,5 @@ MENU_INDEX_ADMINISTRATION_DESC =",
 'LEAVE_LINK'=>"Leave a link",
 'LINKS_RELATIVE'=>"Relative links",
 'LINKS_ABSOLUTE'=>"Absolute links",
+'PREVIEW'=>"Preview",
 );}

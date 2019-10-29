@@ -1293,4 +1293,5 @@ function language() { return array(
 'LEAVE_LINK'=>"Link hinterlassen",
 'LINKS_RELATIVE'=>"Relative Links",
 'LINKS_ABSOLUTE'=>"Absolute Links",
+'PREVIEW'=>"Vorschau",
 );}
