@@ -250,11 +250,11 @@ Openrat.Workbench = new function()
      * @param msg
      * @param log
      */
-    this.notify = function( type,name,status,msg,log=[],notifyBrowser=false )
+    this.notify = function( type,name,status,msg,log=[],notifyTheBrowser=false )
     {
         // Notice-Bar mit dieser Meldung erweitern.
 
-        if   ( notifyBrowser )
+        if   ( notifyTheBrowser )
             notifyBrowser( msg );  // Notify browser if wanted.
 
         let notice = $('<div class="notice '+status+'"></div>');

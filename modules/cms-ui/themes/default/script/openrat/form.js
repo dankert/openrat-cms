@@ -205,6 +205,7 @@ Openrat.Form = function() {
                 }
 
                 let afterSuccess = $(element).data('afterSuccess');
+                let async        = $(element).data('async'       );
                 if	( afterSuccess )
                 {
                     if   ( afterSuccess == 'reloadAll' )
@@ -212,7 +213,10 @@ Openrat.Form = function() {
                         Openrat.Workbench.reloadAll();
                     }
                 } else {
-                    Openrat.Workbench.reloadViews();
+                    if   ( async )
+                        ; // do not reload
+                    else
+                        Openrat.Workbench.reloadViews();
                 }
 
                 $(document).trigger('orDataChanged');
