@@ -84,7 +84,22 @@ class IndexAction extends Action
 
 	    $user = Session::getUser();
 
-        $output = array( 'style' => $this->getUserStyle($user) );
+        $output = array();
+
+        $currentStyle = $this->getUserStyle($user);
+        $output['style'] = $currentStyle;
+
+
+        $styleConfig     = config('style-default'); // default style config
+        $userStyleConfig = config('style', $currentStyle); // user style config
+
+        if (is_array($userStyleConfig))
+            $styleConfig = array_merge($styleConfig, $userStyleConfig ); // Merging user style into default style
+        else
+            ; // Unknown style name, we are ignoring this.
+
+        // Theme base color for smartphones colorizing their status bar.
+        $output['theme-color'] = $this->getColorHexCode($styleConfig['title_background_color']);
 
         $this->outputAsJSON( $output );
     }

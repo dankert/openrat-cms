@@ -144,11 +144,13 @@ Openrat.Workbench = new function()
         let url = Openrat.View.createUrl('index','userinfo',0 );
 
         // Die Inhalte des Zweiges laden.
-        $.getJSON(url, function (json) {
+        $.getJSON(url, function (themeData) {
 
-            // Den neuen Unter-Zweig erzeugen.
-            let style = json['style'];
+            let style = themeData['style'];
             Openrat.Workbench.setUserStyle(style);
+
+            let color = themeData['theme-color'];
+            Openrat.Workbench.setThemeColor(color);
         });
     }
 
@@ -189,9 +191,8 @@ Openrat.Workbench = new function()
 
 
     /**
-     * Setzt einen neuen Theme.
+     * Sets a new theme.
      * @param styleName
-     * @returns
      */
     this.setUserStyle = function( styleName )
     {
@@ -203,6 +204,16 @@ Openrat.Workbench = new function()
             }
         });
         html.addClass( 'theme-' + styleName.toLowerCase() );
+    }
+
+
+    /**
+     * Sets a new theme color.
+     * @param color Theme-color
+     */
+    this.setThemeColor = function( color )
+    {
+        $('#theme-color').attr('content',color);
     }
 
 
