@@ -96,6 +96,9 @@ class UI
     {
         $templateFile = __DIR__.'/themes/default/html/views/' . $templateName . '.tpl.src.xml';
 
+        if   ( DEVELOPMENT )
+            header('X-OR-Template: '.$templateFile);
+
         $engine = new TemplateEngine();
         $engine->request = $request;
         $engine->executeTemplate( $templateFile, $outputData );
