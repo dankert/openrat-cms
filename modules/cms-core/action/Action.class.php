@@ -267,6 +267,7 @@ namespace cms\action {
          * Ruft eine weitere Subaction auf.
          *
          * @param String $subActionName Name der n�chsten Subaction. Es muss eine Methode mit diesem Namen geben.
+         * @deprecated
          */
         protected function callSubAction($subActionName)
         {
