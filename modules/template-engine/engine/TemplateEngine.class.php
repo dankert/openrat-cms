@@ -66,7 +66,7 @@ class TemplateEngine
 			$document = $this->loadDocument($srcFilename);
 			
 			$outFile = @fopen($filename, 'w');
-            fwrite($outFile, '<?php if (!defined(\'OR_TITLE\')) die(\'Forbidden\'); ?> ');
+            fwrite($outFile, '<?php if (!defined(\'OR_TITLE\')) die(\'Forbidden\'); ?>');
 
 			if (! is_resource($outFile))
 				throw new \LogicException("Template '$srcXmlFilename': Unable to open file for writing: '$filename'");
@@ -74,6 +74,7 @@ class TemplateEngine
 			$openCmd = array();
 			$depth = 0;
 			$components = array();
+			$counter = 0;
 
 			$document = $this->parseIncludes( $document, dirname($srcXmlFilename) );
 			
@@ -84,11 +85,12 @@ class TemplateEngine
 				$attributes = array();
 				$value = '';
 				$tag = '';
+				$counter++;
 
 				// Setzt: $tag, $attributes, $value, $type
 				extract($element);
 				
-				if ($type == 'open' || $type == 'complete')
+				if  ( in_array($type, array('open','complete') ) )
 				{
 					$depth ++;
 					
@@ -118,15 +120,23 @@ class TemplateEngine
 					// $component->depth = $depth;
 					
 					$components[$depth] = $component;
-					fwrite($outFile, "\n".str_repeat("\t",$depth));
-					fwrite($outFile, $component->getBegin());
+
+                    $output = $component->getBegin();
+                    if ($output) {
+                        $prepend = ($counter>1?"\n":'').str_repeat("\t",$depth-1);
+                        fwrite($outFile, $prepend.$output);
+                    }
 				}
 				
-				if ($type == 'close' || $type == 'complete')
+				if  ( in_array($type, array('close','complete') ) )
 				{
 					$component = $components[$depth];
-					fwrite($outFile, "\n".str_repeat("\t",$depth));
-					fwrite($outFile, $component->getEnd());
+
+					$output = $component->getEnd();
+					if   ( $output ) {
+                        $prepend = "\n".str_repeat("\t",$depth-1);
+                        fwrite($outFile, $prepend.$component->getEnd());
+                    }
 					unset($components[$depth]); // Cleanup
 					
 					$depth --;

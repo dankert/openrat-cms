@@ -1,17 +1,13 @@
-<?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
-	
-		<form name="" target="_self" data-target="view" action="./" data-method="edit" data-action="url" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form url" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="url" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="edit" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
-			<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><div class="closable">
-				<div class="line">
-					<div class="label">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang('link_url')))); ?></span>
-						
-					</div>
-					<div class="input">
-						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_url" name="<?php if ('') echo ''.'_' ?>url<?php if (false) echo '_disabled' ?>" type="text" maxlength="255" class="" value="<?php echo Text::encodeHtml(@$url) ?>" /><?php if (false) { ?><input type="hidden" name="url" value="<?php $url ?>"/><?php } ?></div>
-						
-					</div>
+<?php if (!defined('OR_TITLE')) die('Forbidden'); ?>
+	<form name="" target="_self" data-target="view" action="./" data-method="edit" data-action="url" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form url" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="url" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="edit" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><div class="closable">
+			<div class="line">
+				<div class="label">
+					<span><?php echo nl2br(encodeHtml(htmlentities(lang('link_url')))); ?></span>
 				</div>
-			</div></fieldset>
-		<div class="or-form-actionbar"><input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" /><input type="submit" class="or-form-btn or-form-btn--primary" value="<?php echo lang('BUTTON_OK') ?>" /></div></form>
-	
+				<div class="input">
+					<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_url" name="<?php if ('') echo ''.'_' ?>url<?php if (false) echo '_disabled' ?>" type="text" maxlength="255" class="" value="<?php echo Text::encodeHtml(@$url) ?>" /><?php if (false) { ?><input type="hidden" name="url" value="<?php $url ?>"/><?php } ?></div>
+				</div>
+			</div>
+		</div></fieldset>
+	<div class="or-form-actionbar"><input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" /><input type="submit" class="or-form-btn or-form-btn--primary" value="<?php echo lang('BUTTON_OK') ?>" /></div></form>

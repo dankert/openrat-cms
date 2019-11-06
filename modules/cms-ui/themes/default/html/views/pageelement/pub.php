@@ -1,18 +1,16 @@
-<?php if (!defined('OR_TITLE')) die('Forbidden'); ?> 
-	
-		<?php $if2=(config('security','nopublish')); if($if2){?>
-			<div class="message warn">
-				<span class="help"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_NOPUBLISH_DESC'.'')))); ?></span>
-				
-			</div>
-		<?php } ?>
-		<form name="" target="_self" data-target="view" action="./" data-method="pub" data-action="pageelement" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form pageelement" data-async="true" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="pageelement" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="pub" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
-			<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div class="closable">
-				<div class="line">
-					<div class="label">
-					</div>
-					<div class="input">
-						<?php { $tmpname     = 'files';$default  = false;$readonly = false;$required = false;		
+<?php if (!defined('OR_TITLE')) die('Forbidden'); ?>
+	<?php $if2=(config('security','nopublish')); if($if2){?>
+		<div class="message warn">
+			<span class="help"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_NOPUBLISH_DESC'.'')))); ?></span>
+		</div>
+	<?php } ?>
+	<form name="" target="_self" data-target="view" action="./" data-method="pub" data-action="pageelement" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form pageelement" data-async="true" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="pageelement" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="pub" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div class="closable">
+			<div class="line">
+				<div class="label">
+				</div>
+				<div class="input">
+					<?php { $tmpname     = 'files';$default  = false;$readonly = false;$required = false;		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
@@ -25,13 +23,10 @@
 		?><input type="hidden" name="<?php echo $tmpname ?>" value="1" /><?php
 		}
 		} ?>
-						
-						<label for="<?php echo REQUEST_ID ?>_files" class="label">
-							<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_files')))); ?></span>
-							
-						</label>
-					</div>
+					<label for="<?php echo REQUEST_ID ?>_files" class="label">
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_files')))); ?></span>
+					</label>
 				</div>
-			</div></fieldset>
-		<div class="or-form-actionbar"><input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" /><input type="submit" class="or-form-btn or-form-btn--primary" value="<?php echo lang('BUTTON_OK') ?>" /></div></form>
-	
+			</div>
+		</div></fieldset>
+	<div class="or-form-actionbar"><input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" /><input type="submit" class="or-form-btn or-form-btn--primary" value="<?php echo lang('BUTTON_OK') ?>" /></div></form>
