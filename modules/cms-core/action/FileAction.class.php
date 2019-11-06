@@ -118,7 +118,7 @@ class FileAction extends ObjectAction
 		$url = Html::url($this->file->getType(),'show',$this->file->objectid,array('target'=>'none') );
 		$this->setTemplateVar('preview_url',$url );
 	}
-	
+
 
 	/**
 	 * Anzeigen des Inhaltes, der Inhalt wird samt Header direkt
@@ -128,26 +128,26 @@ class FileAction extends ObjectAction
 	{
 	    $this->file->publisher = new PublishPreview();
 		$this->lastModified( $this->file->lastchangeDate );
-		
+
 		if	( $this->file->extension == 'gz' )
 		{
 			global $conf;
 			$mime_types = $conf['mime-types'];
-			
+
 			$pos = strrpos($this->file->filename,'.');
 			if	( $pos === false )
 				$ext = '';
 			else
 				$ext = substr($this->file->filename,$pos+1);
-			
+
 			$ext = strtolower($ext);
-			
+
 			if	( !empty($mime_types[$ext]) )
 				$mime_type = $mime_types[$ext];
 			else
 				// Wenn kein Mime-Type gefunden, dann Standardwert setzen
 				$mime_type = OR_FILE_DEFAULT_MIMETYPE;
-				
+
 			header('Content-Type: '.$mime_type );
 			header('Content-Encoding: gzip' );
 		}
@@ -156,40 +156,54 @@ class FileAction extends ObjectAction
 			// Angabe Content-Type
 			header('Content-Type: '.$this->file->mimeType() );
 		}
-		
+
 		header('X-File-Id: '   .$this->file->fileid     );
 		header('X-Id: '        .$this->file->id         );
-		
+
 		// Angabe Content-Disposition
 		// - Bild soll "inline" gezeigt werden
 		// - Dateiname wird benutzt, wenn der Browser das Bild speichern moechte
 		header('Content-Disposition: inline; filename='.$this->file->filename() );
 		header('Content-Transfer-Encoding: binary' );
 		header('Content-Description: '.$this->file->filename() );
-		
+
 		$this->file->write(); // Bild aus Datenbank laden
-		
+
 		// Groesse des Bildes in Bytes
 		// Der Browser hat so die Moeglichkeit, einen Fortschrittsbalken zu zeigen
 		header('Content-Length: '.filesize($this->file->getCache()->getFilename()) );
-		
-		if	( in_array( getenv('HTTP_ACCEPT'),array('application/php-array','application/php-serialized','application/json','application/xml')))
+
+
+		if	( $this->request->getRequestVar('encoding') == 'base64')
 		{
+		    $encodingFunction = function($value) {
+		        return base64_encode($value);
+            };
 			$this->setTemplateVar('encoding', 'base64');
-			$this->setTemplateVar('value'   , base64_encode($this->file->getCache()->getFilename()) );
 		}
+		else {
+            $encodingFunction = function($value) {
+                return $value;
+            };
+            $this->setTemplateVar('encoding', 'none');
+        }
+
+
 		// Unterscheidung, ob PHP-Code in der Datei ausgefuehrt werden soll.
-		elseif	( ( config('publish','enable_php_in_file_content')=='auto' && $this->file->getRealExtension()=='php') ||
-		        config('publish','enable_php_in_file_content')===true )
-		    // PHP-Code ausfuehren
-			require( $this->file->getCache()->getFilename() );
-		else
-		    // PHP-Code nicht ausfuehren, Datei direkt auf die Standardausgabe schreiben
-			readfile( $this->file->getCache()->getFilename() );
+        $phpActive = ( config('publish','enable_php_in_file_content')=='auto' && $this->file->getRealExtension()=='php') ||
+            config('publish','enable_php_in_file_content')===true;
 
-		// Maybe we want some gzip-encoding?
+        if	(  $phpActive ) {
 
-		exit;
+            // PHP-Code ausfuehren
+            ob_start();
+            require( $this->file->getCache()->getFilename() );
+            $this->setTemplateVar('value',$encodingFunction(ob_get_contents()) );
+            ob_end_clean();
+        }
+        else
+            $this->setTemplateVar('value',$encodingFunction(file_get_contents( $this->file->getCache()->getFilename()) ) );
+        // Maybe we want some gzip-encoding?
 	}
 
 

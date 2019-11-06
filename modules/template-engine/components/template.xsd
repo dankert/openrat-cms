@@ -109,6 +109,7 @@
         <xsd:attribute name="accesskey" type="xsd:string"/>
         <xsd:attribute name="cut" type="xsd:string"/>
         <xsd:attribute name="label" type="xsd:string"/>
+        <xsd:attribute name="newline" type="xsd:boolean"/>
         <xsd:attribute name="class" type="xsd:string"/>
         <xsd:attribute name="request" type="xsd:string"/>
     </xsd:complexType>

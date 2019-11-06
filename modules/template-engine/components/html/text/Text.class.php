@@ -18,6 +18,7 @@ class TextComponent extends HtmlComponent
 	public $accesskey;
 	public $cut = 'both';
 	public $label;
+	public $newline = true;
 
 	public function begin()
 	{
@@ -29,6 +30,9 @@ class TextComponent extends HtmlComponent
 		
 		switch( $this->type )
 		{
+			case 'none':
+				$tag = '';
+				break;
 			case 'emphatic':
 				$tag = 'em';
 				break;
@@ -56,21 +60,27 @@ class TextComponent extends HtmlComponent
 			default:
 				$tag = 'span';
 		}
-		
-		echo '<'.$tag;
-		
-		if	( !empty($this->class))
-			echo ' class="'.$this->htmlvalue($this->class).'"';
-			
-		if	( !empty($this->title))
-			echo ' title="'.$this->htmlvalue($this->title).'"';
-		
-		echo '><?php ';
-		
+
+		if   ( $tag )
+        {
+
+            echo '<'.$tag;
+
+            if	( !empty($this->class))
+                echo ' class="'.$this->htmlvalue($this->class).'"';
+
+            if	( !empty($this->title))
+                echo ' title="'.$this->htmlvalue($this->title).'"';
+
+            echo '>';
+        }
+		echo '<?php ';
+
 		
 		$functions = array(); // Funktionen, durch die der Text gefiltert wird.
-		
-		$functions[] = 'nl2br(@)';
+
+        if   ( $this->newline)
+		    $functions[] = 'nl2br(@)';
 
 		
 		if	( $this->escape )
@@ -119,7 +129,10 @@ class TextComponent extends HtmlComponent
 		}
 		echo "echo $value;";
 			
-		echo ' ?></'.$tag.'>';  // Tag schliessen.
+		echo ' ?>';
+
+        if   ( $tag )
+            echo '</'.$tag.'>';  // Tag schliessen.
 
         if   ( $this->label )
             echo '</span></label>';

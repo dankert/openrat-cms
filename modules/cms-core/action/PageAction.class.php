@@ -667,14 +667,17 @@ class PageAction extends ObjectAction
 
 		Logger::debug("Preview page: ".$this->page->__toString() );
 
-		// Wenn
+		// Executing PHP in Pages.
 		if	( ( config('publish','enable_php_in_page_content')=='auto' && $this->page->template->extension == 'php') ||
 		        config('publish','enable_php_in_page_content')===true )
-			require( $this->page->getCache()->getFilename() );
+        {
+            ob_start();
+            require( $this->page->getCache()->getFilename() );
+            $this->setTemplateVar('output',ob_get_contents() );
+            ob_end_clean();
+        }
 		else
-			readfile( $this->page->getCache()->getFilename() );
-
-		exit();
+            $this->setTemplateVar('output',file_get_contents( $this->page->getCache()->getFilename() ) );
 	}
 
 
