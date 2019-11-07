@@ -127,7 +127,7 @@ class FolderAction extends ObjectAction
         elseif	( $this->hasRequestVar('value') )
         {
             // New file is inserted.
-            $file->filename  = BaseObject::urlify( $name );
+            $file->filename  = BaseObject::urlify( $filename );
             $file->value     = $this->getRequestVar('value');
             $file->size      = strlen($file->value);
             $file->parentid  = $this->folder->objectid;
