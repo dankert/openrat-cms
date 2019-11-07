@@ -65,32 +65,52 @@ class FileAction extends ObjectAction
 
 
 	/**
-	 * Ersetzt den Inhalt mit einer anderen Datei
+	 * Ersetzt den Inhalt der Datei.
 	 */
 	public function editPost()
 	{
 		$upload = new Upload();
 
-        try
+		if   ( $upload->isAvailable() )
         {
-            $upload->processUpload();
+            // File received as attachement.
+            try
+            {
+                $upload->processUpload();
+            }
+            catch( \Exception $e )
+            {
+                throw $e;
+            }
+
+            $this->file->filename  = $upload->filename;
+            $this->file->extension = $upload->extension;
+            $this->file->size      = $upload->size;
+            $this->file->save();
+
+            $this->file->value = $upload->value;
+            $this->file->saveValue();
         }
-        catch( \Exception $e )
+		elseif( $this->hasRequestVar('value') )
         {
-            throw $e;
+            // File value received
+            $this->file->value = $this->getRequestVar('value');
+
+            if   ( strtolower($this->getRequestVar('encoding')) == 'base64')
+                // file value is base64-encoded
+                $this->file->value = base64_decode($this->file->value);
+
+            $this->file->saveValue();
+        }
+        else
+        {
+            // No file received.
+            throw new \ValidationException('value');
         }
 
-		$this->file->filename  = $upload->filename;
-		$this->file->extension = $upload->extension;		
-		$this->file->size      = $upload->size;
+        $this->file->setTimestamp();
 
-		$this->file->save();
-		
-		$this->file->value = $upload->value;
-		$this->file->saveValue();
-		$this->file->setTimestamp();
-
-		$this->addNotice($this->file->getType(),$this->file->name,'VALUE_SAVED','ok');
+		$this->addNotice($this->file->getType(),$this->file->filename,'VALUE_SAVED','ok');
 	}
 
 

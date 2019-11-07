@@ -53,7 +53,7 @@ class Upload
     {
         $name = $this->parameterName;
 
-        if	( !isset($_FILES[$name]) || !is_array($_FILES[$name]) )
+        if	( ! $this->isAvailable() )
             throw new InvalidArgumentException('No file received under the key "'.$name.'"' );
 
         $uFile = $_FILES[$name];
@@ -98,6 +98,18 @@ class Upload
             $this->extension = substr( $this->filename,$p+1 );
             $this->filename  = substr( $this->filename,0,$p );
         }
+    }
+
+    /**
+     * Is this upload available?
+     * @param $name Request variable name
+     * @return bool <code>true</code> if upload is available
+     */
+    public function isAvailable()
+    {
+        $name = $this->parameterName;
+
+        return isset($_FILES[$name]) && is_array($_FILES[$name]);
     }
 }
 

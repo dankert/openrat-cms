@@ -122,9 +122,20 @@ class FolderAction extends ObjectAction
 			$file->size      = strlen($http->body);
 			$file->value     = $http->body;
 			$file->parentid  = $this->folder->objectid;
+            $file->projectid = $this->folder->projectid;
 		}
+        elseif	( $this->hasRequestVar('value') )
+        {
+            // New file is inserted.
+            $file->filename  = BaseObject::urlify( $name );
+            $file->value     = $this->getRequestVar('value');
+            $file->size      = strlen($file->value);
+            $file->parentid  = $this->folder->objectid;
+            $file->projectid = $this->folder->projectid;
+        }
 		else
 		{
+		    // File was uploaded.
             $upload = new Upload('file');
 
 		    try
@@ -153,7 +164,7 @@ class FolderAction extends ObjectAction
 		$file->add(); // Datei hinzufuegen
         $file->setNameForAllLanguages( $name,$description );
 
-		$this->addNotice('file',$file->name,'ADDED','ok');
+		$this->addNotice('file',$file->filename,'ADDED','ok');
 		$this->setTemplateVar('objectid',$file->objectid);
 
 		$this->folder->setTimestamp();
