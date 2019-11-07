@@ -92,40 +92,29 @@ class ProjectlistAction extends Action
 	    if( !$this->userIsAdmin())
 	        throw new \SecurityException("user is not allowed to add a project");
 
-		if	( !$this->hasRequestVar('type') )
-		{
-			$this->addValidationError('type');
-			$this->callSubAction('add');
-			return;
-		}
-		else
-		{
-			switch( $this->getRequestVar('type') )
-			{
-				case 'empty':
-					if	( !$this->hasRequestVar('name') )
-					{
-						$this->addValidationError('name');
-						$this->callSubAction('add');
-						return;
-					}
-					$project = new Project();
-					$project->name = $this->getRequestVar('name');
-					$project->add();
-					$this->addNotice('project',$project->name,'ADDED');
-					break;
-				case 'copy':
-					$db = db_connection();
-					$project = new Project($this->getRequestVar('projectid'));
-					$project->load();
-					$project->export($db->id);
-					$this->addNotice('project',$project->name,'DONE'); 
-					break;
-				default:
-					throw new \LogicException('Unknown type while adding project '.$this->getRequestVar('type') );
-			}
-			
-		}
+        switch( $this->getRequestVar('type') )
+        {
+            case 'empty':
+            case '':
+                if	( !$this->hasRequestVar('name') )
+                    throw new \ValidationException('name');
+
+                $project = new Project();
+                $project->name = $this->getRequestVar('name');
+                $project->add();
+                $this->addNotice('project',$project->name,'ADDED');
+                break;
+            case 'copy':
+                $db = db_connection();
+                $project = new Project($this->getRequestVar('projectid'));
+                $project->load();
+                $project->export($db->id);
+                $this->addNotice('project',$project->name,'DONE');
+                break;
+            default:
+                throw new \LogicException('Unknown type while adding project '.$this->getRequestVar('type') );
+        }
+
 	}
 	
 	
