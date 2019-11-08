@@ -46,21 +46,10 @@
         </nav>
 
         <div class="or-workplace">
-            <section id="edit" class="or-edit">
-
-                <!--
-                <header class="or-view-header">
-                    <span class="or-view-icon image-icon--method-src image-icon"></span>
-                    <h1 class="or-view-headline"><?php echo lang('METHOD_EDIT' ) ?></h1>
-                </header>-->
-
-                <div class="view edit-view"></div>
-            </section>
-
 
             <main id="editor">
                 <header>
-                    <span class="title"></span>
+                    <div class="or-breadcrumb"></div>
                 </header>
 
                 <?php foreach( $methodList as $method ) { ?>

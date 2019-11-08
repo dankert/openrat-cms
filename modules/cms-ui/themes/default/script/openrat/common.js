@@ -81,6 +81,14 @@ $( function() {
                     if   ( output.actual )
                         $('nav .or-navtree-node[data-type='+output.actual.type+'][data-id='+output.actual.id+']').addClass('or-navtree-node--selected');
 
+                    let $breadcrumb = $('.or-breadcrumb').empty();
+                    let items = [];
+                    $.each(output.path.concat(output.actual), function (idx, path) {
+                        items.push( '<li class="or-breadcrumb-item clickable" tabindex="0"><a href="'+Openrat.Navigator.createShortUrl(path.action,path.id)+'" data-type="open" data-action="'+path.action+'" data-id="'+path.id+'"><i class="image-icon image-icon--action-'+path.action+'" /></a></li>');
+                    });
+                    $breadcrumb.append( items.join('<li><i class="tree-icon image-icon image-icon--node-closed"></i></li>') );
+                    $('.or-breadcrumb .clickable').orLinkify();
+
                 }).fail(function (e) {
                     // Ups... aber was können wir hier schon tun, außer hässliche Meldungen anzeigen.
                     console.warn(e);

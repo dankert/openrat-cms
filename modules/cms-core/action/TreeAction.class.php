@@ -124,8 +124,9 @@ class TreeAction extends Action
         $this->setTemplateVar('path'  ,$result );
 
         $this->setTemplateVar('actual',array(
-            'type'=>$this->typeToInternal($type),
-            'id'=>$id)
+            'type'  =>$this->typeToInternal($type),
+            'action'=>$type,
+            'id'    =>$id)
         );
     }
 
@@ -142,7 +143,7 @@ class TreeAction extends Action
 
             case 'project':
                 return array(
-                    array('type'=>'projects','id'=>0)
+                    $this->pathItem('projectlist',0)
                 );
             case 'folder':
             case 'link'  :
@@ -154,13 +155,13 @@ class TreeAction extends Action
                 $o->load();
 
                 $result= array(
-                    array('type'=>'projects'  ,'id'=>0 ),
-                    array('type'=>'project'   ,'id'=>$o->projectid),
+                    $this->pathItem('projectlist' ),
+                    $this->pathItem('project'   , $o->projectid),
                 );
 
                 $parents = array_keys( $o->parentObjectFileNames(true) );
                 foreach( $parents as $pid )
-                    $result[] = array('type'=>'folder'  ,'id'=>$pid );
+                    $result[] = $this->pathItem('folder'  ,$pid );
                 return $result;
 
             case 'pageelement' :
@@ -170,41 +171,41 @@ class TreeAction extends Action
                 $p->load();
 
                 $result= array(
-                    array('type'=>'projects'  ,'id'=>0  ),
-                    array('type'=>'project'      ,'id'=>$p->projectid),
+                    $this->pathItem('projectlist' ),
+                    $this->pathItem('project'   , $p->projectid),
                 );
 
                 $parents = array_keys( $p->parentObjectFileNames(true ) );
                 foreach( $parents as $pid )
-                    $result[] = array('type'=>'folder'  ,'id'=>$pid );
-                $result[] = array('type'=>'page'  ,'id'=>$id );
+                    $result[] = $this->pathItem('folder'  ,$pid );
+                $result[] = $this->pathItem('page'  ,$id );
                 return $result;
 
             case 'userlist':
                 return array(
-                    array('type'=>'userandgroups','id'=>0)
+                    //$this->pathItem('userandgroups' ,0)
                 );
             case 'user':
                 return array(
-                    array('type'=>'userandgroups','id'=>0),
-                    array('type'=>'users'        ,'id'=>0)
+                    //$this->pathItem('userandgroups',0),
+                    $this->pathItem('userlist',0)
                 );
             case 'grouplist':
                 return array(
-                    array('type'=>'userandgroups','id'=>0)
+                    //array('type'=>'userandgroups','action'=>'userandgroups','id'=>0)
                 );
             case 'group':
                 return array(
-                    array('type'=>'userandgroups','id'=>0),
-                    array('type'=>'groups'       ,'id'=>0)
+                    //$this->pathItem('userandgroups',0),
+                    $this->pathItem('grouplist'    ,0)
                 );
 
             case 'templatelist':
             case 'languagelist':
             case 'modellist':
                 return array(
-                    array('type'=>'projects','id'=>0  ),
-                    array('type'=>'project'    ,'id'=>$id)
+                    $this->pathItem('projectlist' ,0  ),
+                    $this->pathItem('project'     ,$id)
                 );
 
             case 'template':
@@ -212,9 +213,9 @@ class TreeAction extends Action
                 $t->load();
 
                 return array(
-                    array('type'=>'projects'  ,'id'=>0  ),
-                    array('type'=>'project'   ,'id'=>$t->projectid),
-                    array('type'=>'templates' ,'id'=>$t->projectid)
+                    $this->pathItem('projectlist' ,0        ),
+                    $this->pathItem('project'     ,$t->projectid),
+                    $this->pathItem('templatelist',$t->projectid)
                 );
 
             case 'element':
@@ -224,10 +225,10 @@ class TreeAction extends Action
                 $t->load();
 
                 return array(
-                    array('type'=>'projects'  ,'id'=>0  ),
-                    array('type'=>'project'   ,'id'=>$t->projectid),
-                    array('type'=>'templates' ,'id'=>$t->projectid),
-                    array('type'=>'template'  ,'id'=>$t->templateid)
+                    $this->pathItem('projectlist' ,0         ),
+                    $this->pathItem('project'     ,$t->projectid ),
+                    $this->pathItem('templatelist',$t->projectid ),
+                    $this->pathItem('template'    ,$t->templateid)
                 );
 
             case 'language':
@@ -235,9 +236,9 @@ class TreeAction extends Action
                 $l->load();
 
                 return array(
-                    array('type'=>'projects' ,'id'=>0  ),
-                    array('type'=>'project'  ,'id'=>$l->projectid),
-                    array('type'=>'languages','id'=>$l->projectid)
+                    $this->pathItem('projectlist' ,0  ),
+                    $this->pathItem('project'     ,$l->projectid),
+                    $this->pathItem('languagelist',$l->projectid)
                 );
 
             case 'model':
@@ -245,9 +246,9 @@ class TreeAction extends Action
                 $m->load();
 
                 return array(
-                    array('type'=>'projects'  ,'id'=>0  ),
-                    array('type'=>'project'   ,'id'=>$m->projectid),
-                    array('type'=>'models'    ,'id'=>$m->projectid)
+                    $this->pathItem('projectlist' ,0        ),
+                    $this->pathItem('project'     ,$m->projectid),
+                    $this->pathItem('modellist'   ,$m->projectid)
                 );
 
             default:
@@ -279,9 +280,18 @@ class TreeAction extends Action
         echo '</ul>';
     }
 
+
+    private function pathItem( $action, $id = 0 ) {
+        return array('type'=>$this->typeToInternal($action),'action'=>$action ,'id'=>$id  );
+    }
+
+
     private function typeToInternal($type)
     {
         switch( $type) {
+
+            case 'projectlist':
+                return 'projects';
 
             case 'userlist':
                 return 'users';
