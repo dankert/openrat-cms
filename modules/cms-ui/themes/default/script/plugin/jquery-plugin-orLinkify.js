@@ -47,12 +47,9 @@ jQuery.fn.orLinkify = function()
 
 					break;
 
+				case 'edit':
 				case 'dialog':
 					startDialog($(this).attr('data-name'),$(this).attr('data-action'),$(this).attr('data-method'),$(this).attr('data-id'),$(this).attr('data-extra') );
-					break;
-
-				case 'edit':
-					startEdit($(this).attr('data-name'),$(this).attr('data-action'),$(this).attr('data-method'),$(this).attr('data-id'),$(this).attr('data-extra') );
 					break;
 
 				case 'external':

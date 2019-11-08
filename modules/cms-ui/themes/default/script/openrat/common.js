@@ -406,49 +406,6 @@ function startDialog( name,action,method,id,params )
 }
 
 
-/**
- * Starts a non-modal editing dialog.
- * @param name
- * @param action
- * @param method
- * @param id
- * @param params
- */
-function startEdit( name,action,method,id,params )
-{
-	// Attribute aus dem aktuellen Editor holen, falls die Daten beim Aufrufer nicht angegeben sind.
-	if (!action)
-		action = Openrat.Workbench.state.action;
-
-	if  (!id)
-        id = Openrat.Workbench.state.id;
-
-    let view = new Openrat.View( action,method,id,params );
-
-    view.before = function() {
-
-        let view = this;
-
-        $edit = $('#edit');
-        $edit.addClass('is-open');
-
-        $('#editor').addClass('is-closed');
-
-        // Dialog durch Klick auf freie Fläche schließen.
-        $('#edit .filler').click( function()
-        {
-            view.close();
-        });
-
-    };
-
-    view.close = function() {
-        $edit.removeClass('is-open');
-        $('#editor').removeClass('is-closed');
-    }
-
-	view.start( $('#edit > .view') );
-}
 
 
 /**

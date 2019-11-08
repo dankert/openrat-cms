@@ -49,7 +49,15 @@ div#dialog {
         width: 80%;
         height: 80%;
 
-        z-index: 101;
+        @media @smartphones {
+            top: 2.5%;
+            left: 2.5%;
+            width: 95%;
+            height: 95%;
+        }
+
+
+        z-index: 110;
 
         border: 1px solid !important;
     }
@@ -242,7 +250,6 @@ div#workbench {
         > nav {
             width:33%;
             transition: width 0.15s ease-in-out;
-            z-index: 2;
             position: fixed;
 
             @media @smartphones {
@@ -365,55 +372,6 @@ div#workbench {
                 }
             }
 
-            #edit
-            {
-                //display: none;
-                display: none;
-                width: 0;
-                transition: width ease;
-                padding: 1em;
-                //z-index: 91;
-
-
-                @media @smartphones {
-                    margin:0.5em;
-                }
-
-
-
-                &.is-open {
-                    //display: block;
-                    position: relative;
-                    height:100%;
-                    width:100%;
-                    display: block;
-
-                    //border: 1px solid;
-                    //.border-radius(5px);
-
-                    & ~ #editor {
-                        display: none;
-                    }
-                }
-
-
-                .view {
-                    //margin-left:15%;
-                    //overflow-y: auto;
-                }
-
-
-
-
-                .filler {
-                    z-index: 90;
-                    height: 100%;
-                    width: 100%;
-                    opacity: 0.5;
-                    display: none;
-                }
-
-            }
         }
 
     }
@@ -466,5 +424,17 @@ div#workbench {
 @media @smartphones {
     html {
         font-size: 1em;
+    }
+}
+
+
+/* Navigation over the filler */
+.toggle-nav-small,
+.or-navigation
+{
+    z-index: 102;
+
+    &:hover {
+        z-index: 112;
     }
 }
