@@ -16,7 +16,6 @@ Openrat.Workbench = new function()
 		// Initialze Ping timer.
 		this.initializePingTimer();
         this.initializeState();
-        this.initializeMenues();
         this.openModalDialog();
     }
 
@@ -29,12 +28,6 @@ Openrat.Workbench = new function()
         if   ( $('#dialog').data('action') ) {
             startDialog('',$('#dialog').data('action'),$('#dialog').data('action'),0,{})
         }
-    }
-
-
-    this.initializeMenues = function () {
-
-        filterMenus();
     }
 
 
@@ -95,10 +88,7 @@ Openrat.Workbench = new function()
         Openrat.Workbench.state = state;
         Openrat.Workbench.loadNewAction(state.action,state.id,state.data);
 
-
-        filterMenus();
-
-        $(document).trigger('orNewAction');
+        this.afterViewsLoaded();
 	}
 
     /**
@@ -114,6 +104,10 @@ Openrat.Workbench = new function()
         this.reloadViews();
     }
 
+
+    this.afterViewsLoaded = function() {
+        $(document).trigger('orNewAction');
+    }
 
     /**
      *

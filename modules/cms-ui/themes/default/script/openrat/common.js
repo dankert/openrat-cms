@@ -59,7 +59,6 @@ $( function() {
     Openrat.Workbench.initialize();
     Openrat.Workbench.reloadAll();
 
-
     let registerWorkbenchGlobalEvents = function() {
 
         function registerNavigation() {
@@ -139,6 +138,8 @@ $( function() {
 
     registerWorkbenchGlobalEvents();
 
+    Openrat.Workbench.afterViewsLoaded();
+
 });
 
 
@@ -153,8 +154,9 @@ $( function() {
  */
 function afterViewLoaded(viewEl )
 {
+    filterMenus();
 
-	// Die Section deaktivieren, wenn die View keinen Inhalt hat.
+    // Die Section deaktivieren, wenn die View keinen Inhalt hat.
     var section = $(viewEl).closest('section');
 
     //var viewHasContent = $(viewEl).children().length > 0;
