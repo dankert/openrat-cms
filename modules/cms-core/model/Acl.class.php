@@ -39,7 +39,7 @@ namespace cms\model;
  *
  * @author Jan Dankert
  */
-class Acl
+class Acl extends ModelBase
 {
     // Definition der Berechtigungs-Flags
     const ACL_READ          =    1;

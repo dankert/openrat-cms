@@ -16,7 +16,7 @@ use template_engine\components\ElseComponent;
  *
  * @author Jan Dankert
  */
-class BaseObject
+class BaseObject extends ModelBase
 {
     const TYPEID_FOLDER = 1;
     const TYPEID_FILE   = 2;

@@ -9,7 +9,7 @@ namespace cms\model {
      * @author Jan Dankert
      * @package openrat.objects
      */
-    class Name
+    class Name extends ModelBase
     {
         /** eindeutige ID dieses Objektes
          * @type Integer

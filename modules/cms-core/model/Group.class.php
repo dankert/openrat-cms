@@ -26,7 +26,7 @@ namespace cms\model;
  * @author $Author$
  * @package openrat.objects
  */
-class Group
+class Group extends ModelBase
 {
 	var $groupid   = 0;
 	var $error    = '';

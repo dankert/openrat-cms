@@ -3,10 +3,12 @@ namespace cms\model;
 
 class ModelBase
 {
+    /*
     protected function setDatabaseRow( $row )
     {
         
     }
+    */
 
 
     /**

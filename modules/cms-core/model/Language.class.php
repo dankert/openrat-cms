@@ -25,7 +25,7 @@ namespace cms\model;
  * @author $Author$
  * @package openrat.objects
  */
-class Language
+class Language extends ModelBase
 {
 	public $languageid;
     public $projectid;

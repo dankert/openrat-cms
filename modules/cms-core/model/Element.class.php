@@ -11,7 +11,7 @@ namespace cms\model;
  * @author Jan Dankert
  * @package openrat.objects
  */
-class Element
+class Element extends ModelBase
 {
     const ELEMENT_TYPE_DATE     =  1;
     const ELEMENT_TYPE_NUMBER   =  2;

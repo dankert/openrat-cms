@@ -25,7 +25,7 @@ namespace cms\model;
  * @version: $Revision$
  * @package openrat.objects
  */ 
-class Template
+class Template extends ModelBase
 {
 	/**
 	 * ID dieses Templates

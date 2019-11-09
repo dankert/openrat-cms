@@ -29,7 +29,7 @@ namespace cms\model;
  * @author $Author$
  * @version $Rev: $
  */
-class Model
+class Model extends ModelBase
 {
 	var $modelid = 0;
 	var $error      = '';

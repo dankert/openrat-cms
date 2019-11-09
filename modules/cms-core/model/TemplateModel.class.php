@@ -7,7 +7,7 @@ namespace cms\model;
  *
  * @author: Jan Dankert
  */
-class TemplateModel
+class TemplateModel extends ModelBase
 {
     /**
      * Primary Key.

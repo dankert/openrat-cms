@@ -37,7 +37,7 @@ use util\FileCache;
  * @package openrat.objects
  */
 
-class Value
+class Value extends ModelBase
 {
 	/**
 	 * ID dieser Inhaltes
