@@ -237,6 +237,7 @@ div#workbench {
         //min-width: 0;
         min-height: 0;
 
+        padding-top: 0.5em;
 
         > * {
             min-width: 0;
@@ -251,6 +252,7 @@ div#workbench {
             width:33%;
             transition: width 0.15s ease-in-out;
             position: fixed;
+            height: ~"calc(100% - 3.0rem - 0.5em)";
 
             @media @smartphones {
                 width: 0;
@@ -449,5 +451,10 @@ div#workbench {
 
     li {
         display: inline;
+        margin-right: 0.3em;
+    }
+
+    .or-breadcrumb-item .image-icon {
+        margin-right:0.2em;
     }
 }
