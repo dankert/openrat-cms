@@ -1,7 +1,7 @@
-$(document).on('orViewLoaded',function(event, data) {
-	
+Openrat.Workbench.registerAfterViewLoaded(  function( element ) {
+
 	// Links aktivieren...
-	$(event.target).find('.clickable').orLinkify();
+	$(element).find('.clickable').orLinkify();
 
 });
 

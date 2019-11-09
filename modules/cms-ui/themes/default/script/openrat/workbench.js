@@ -314,6 +314,19 @@ Openrat.Workbench = new function()
 
 
 
+    let afterViewFunctions = [];
+
+    this.registerAfterViewLoaded = function( f ) {
+        afterViewFunctions.push( f );
+    }
+
+    this.afterViewLoaded = function( element ) {
+
+        afterViewFunctions.forEach( function( f ) {
+           f(element);
+        });
+    }
+
 }
 
 

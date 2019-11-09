@@ -1,9 +1,10 @@
-$(document).on('orViewLoaded',function(event, data) {
-	
-	var form = $(event.target).find('form');
+Openrat.Workbench.registerAfterViewLoaded(  function( element ) {
+
+
+	var form = $(element).find('form');
 
 	// Dateiupload über Drag and Drop
-	var dropzone = $(event.target).find('div.or-dropzone-upload > div.input');
+	var dropzone = $(element).find('div.or-dropzone-upload > div.input');
 	dropzone.on('dragenter', function (e) 
 	{
 		e.stopPropagation();
@@ -27,7 +28,7 @@ $(document).on('orViewLoaded',function(event, data) {
 	
 	
 	// Dateiupload über File-Input-Button
-	$(event.target).find('input[type=file]').change( function() {
+	$(element).find('input[type=file]').change( function() {
 		
 		var files = $(this).prop('files');   
 

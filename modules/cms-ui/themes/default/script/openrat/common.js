@@ -145,6 +145,15 @@ $( function() {
 
 
 
+Openrat.Workbench.registerAfterViewLoaded( function(element) {
+
+    // Refresh already opened popup windows.
+    if   ( typeof popupWindow != "undefined" )
+        $(element).find("a[data-type='popup']").each( function() {
+            popupWindow.location.href = $(this).attr('data-url');
+        });
+
+});
 
 
 /**
@@ -152,8 +161,7 @@ $( function() {
  *
  * @param viewEl DOM-Element der View
  */
-function afterViewLoaded(viewEl )
-{
+Openrat.Workbench.registerAfterViewLoaded( function(viewEl ) {
     filterMenus();
 
     // Die Section deaktivieren, wenn die View keinen Inhalt hat.
@@ -162,8 +170,6 @@ function afterViewLoaded(viewEl )
     //var viewHasContent = $(viewEl).children().length > 0;
 	//section.toggleClass('disabled',!viewHasContent);
 	section.toggleClass('is-empty',$(viewEl).is(':empty'));
-
-    $(viewEl).trigger('orViewLoaded');
 
 	// Untermenüpunkte aus der View in das Fenstermenü kopieren...
 	$(viewEl).closest('div.panel').find('div.header div.dropdown div.entry.perview').remove(); // Alte Einträge löschen
@@ -300,7 +306,7 @@ function afterViewLoaded(viewEl )
     registerDragAndDrop(viewEl);
 
 
-}
+} );
 
 
 

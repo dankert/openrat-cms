@@ -1,10 +1,11 @@
-$(document).on('orViewLoaded',function(event, data) {
-
-	// Manuelles Sortieren von Tabellen per Drag and drop.
-	$(event.target).find('table.or-table--sortable > tbody').sortable();
+Openrat.Workbench.registerAfterViewLoaded(  function( element ) {
 
 
-    $(event.target).find('table.or-table--sortable > tbody').closest('form').submit( function() {
+    // Manuelles Sortieren von Tabellen per Drag and drop.
+	$(element).find('table.or-table--sortable > tbody').sortable();
+
+
+    $(element).find('table.or-table--sortable > tbody').closest('form').submit( function() {
 
             // Analyse the order of the objects in this folder.
             var order = new Array();
@@ -21,14 +22,14 @@ $(document).on('orViewLoaded',function(event, data) {
 
 
 	// Alle Checkboxen setzen oder nicht setzen.
-	$(event.target).find('tr.headline > td > input.checkbox').click( function() {
+	$(element).find('tr.headline > td > input.checkbox').click( function() {
 		$(this).closest('table').find('tr.data > td > input.checkbox').attr('checked',Boolean( $(this).attr('checked') ) );
 	});
 
     /**
 	 * Table-Filter.
      */
-	$(event.target).find('.or-table-filter > input').keyup( function() {
+	$(element).find('.or-table-filter > input').keyup( function() {
 
 		let filterExpression = $(this).val().toLowerCase();
 
@@ -48,7 +49,7 @@ $(document).on('orViewLoaded',function(event, data) {
     /**
 	 * Table-Sortierung.
      */
-	$(event.target).find('table > tbody > tr.headline > td, table > tbody > tr > th').click( function() {
+	$(element).find('table > tbody > tr.headline > td, table > tbody > tr > th').click( function() {
 
 		let column = $(this);
         let table = column.parents('table');

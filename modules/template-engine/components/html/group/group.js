@@ -1,4 +1,5 @@
-$(document).on('orViewLoaded',function(event, data) {
+Openrat.Workbench.registerAfterViewLoaded(  function( element ) {
 
-    registerOpenClose( $(event.target).find('fieldset.toggle-open-close') );
+    registerOpenClose( $(element).find('fieldset.toggle-open-close') );
+
 });

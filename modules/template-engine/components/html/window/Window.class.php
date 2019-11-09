@@ -7,4 +7,3 @@ class WindowComponent extends Component
 }
 
 
-?>

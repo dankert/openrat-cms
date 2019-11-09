@@ -1,8 +1,9 @@
 
-$(document).on('orViewLoaded',function(event, data) {
+Openrat.Workbench.registerAfterViewLoaded( function( element ) {
+
 	
     // Show QR-Code
-	$(event.target).find('.or-qrcode').mouseover( function() {
+	$(element).find('.or-qrcode').mouseover( function() {
 
 	    let element = this;
 	    if   ( $(element).children().length > 0 )

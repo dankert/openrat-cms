@@ -1,12 +1,10 @@
-$(document).on('orViewLoaded',function(event, data) {
-	
+Openrat.Workbench.registerAfterViewLoaded( function( element ) {
 
-
-	$(event.target).find('textarea').orAutoheight();
+    $(element).find('textarea').orAutoheight();
 
 	
 	// Codemirror-Editor anzeigen
-	$(event.target).find("textarea.editor.code-editor").each( function() {
+	$(element).find("textarea.editor.code-editor").each( function() {
 
 		let mode = $(this).data('mode');
 
@@ -53,7 +51,7 @@ $(document).on('orViewLoaded',function(event, data) {
     } );
 
 	// Markdown-Editor anzeigen
-	$(event.target).find("textarea.editor.markdown-editor").each( function() {
+	$(element).find("textarea.editor.markdown-editor").each( function() {
 
 	    let textarea = this;
 	    let toolbar = [{
@@ -212,7 +210,7 @@ $(document).on('orViewLoaded',function(event, data) {
     } );
 
 	// HTML-Editor anzeigen
-	$(event.target).find("textarea.editor.html-editor").each( function() {
+	$(element).find("textarea.editor.html-editor").each( function() {
 
 	    let textarea = this;
 

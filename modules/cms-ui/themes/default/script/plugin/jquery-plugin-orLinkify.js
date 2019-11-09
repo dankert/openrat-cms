@@ -80,16 +80,6 @@ jQuery.fn.orLinkify = function()
 };
 
 
-$(document).on('orViewLoaded',function(event, data) {
-
-	// Refresh already opened popup windows.
-    if   ( typeof popupWindow != "undefined" )
-    	$(event.target).find("a[data-type='popup']").each( function() {
-            popupWindow.location.href = $(this).attr('data-url');
-		});
-
-});
-
 $(document).on('orDataChanged',function(event, data) {
     if   ( typeof popupWindow != "undefined" )
        popupWindow.location.reload();

@@ -34,8 +34,7 @@ Openrat.View = function( action,method,id,params ) {
 
     function registerViewEvents(element) {
 
-        afterViewLoaded   ( element );
-
+        Openrat.Workbench.afterViewLoaded(element);
     }
 
 

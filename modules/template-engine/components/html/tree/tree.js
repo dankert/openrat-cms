@@ -1,5 +1,6 @@
 // View loaded...
-$(document).on('orViewLoaded',function(event, data) {
+Openrat.Workbench.registerAfterViewLoaded(  function( element ) {
+
 
     // Clickable.
     // done by link.js

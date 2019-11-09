@@ -533,14 +533,6 @@ class IndexAction extends Action
             $js[] = OR_HTML_MODULES_DIR . 'editor/trumbowyg/trumbowyg';
 
 
-			// Komponentenbasiertes Javascript
-			foreach ( TemplateEngineInfo::getComponentList() as $c)
-			{
-				$componentJsFile = OR_HTML_MODULES_DIR .  '/template-engine/components/html/' . $c . '/' . $c;
-				if (is_file($componentJsFile . '.js'))
-					$js[] = $componentJsFile;
-			}
-
             // OpenRat internal JS - als letztes, damit die vorigen bereits geladen sind.
             $js[] = OR_THEMES_DIR . 'default/script/openrat/init';
             $js[] = OR_THEMES_DIR . 'default/script/openrat/view';
@@ -548,6 +540,14 @@ class IndexAction extends Action
             $js[] = OR_THEMES_DIR . 'default/script/openrat/workbench';
             $js[] = OR_THEMES_DIR . 'default/script/openrat/navigator';
             $js[] = OR_THEMES_DIR . 'default/script/openrat/common';
+
+            // Komponentenbasiertes Javascript
+            foreach ( TemplateEngineInfo::getComponentList() as $c)
+            {
+                $componentJsFile = OR_HTML_MODULES_DIR .  '/template-engine/components/html/' . $c . '/' . $c;
+                if (is_file($componentJsFile . '.js'))
+                    $js[] = $componentJsFile;
+            }
 
 
             $outDevJsFiles = array();
