@@ -110,7 +110,7 @@ $( function() {
 
 
 
-    Openrat.Workbench.registerAfterNewAction( function() {
+    Openrat.Workbench.afterNewActionHandler.registerCallback( function() {
 
         let url = './api/?action=tree&subaction=path&id=' + Openrat.Workbench.state.id + '&type=' + Openrat.Workbench.state.action + '&output=json';
 
@@ -172,7 +172,7 @@ $('#title.view').data('afterViewLoaded', function() {
     filterMenus();
 } );
 
-Openrat.Workbench.registerAfterNewAction( function() {
+Openrat.Workbench.afterNewActionHandler.registerCallback( function() {
     filterMenus();
 } );
 
@@ -181,7 +181,7 @@ Openrat.Workbench.registerAfterNewAction( function() {
 
 
 
-Openrat.Workbench.registerAfterViewLoaded( function(element) {
+Openrat.Workbench.afterViewLoadedHandler.registerCallback( function(element) {
 
     // Refresh already opened popup windows.
     if   ( typeof popupWindow != "undefined" )
@@ -197,7 +197,7 @@ Openrat.Workbench.registerAfterViewLoaded( function(element) {
  *
  * @param viewEl DOM-Element der View
  */
-Openrat.Workbench.registerAfterViewLoaded( function(viewEl ) {
+Openrat.Workbench.afterViewLoadedHandler.registerCallback( function(viewEl ) {
 
     // Die Section deaktivieren, wenn die View keinen Inhalt hat.
     var section = $(viewEl).closest('section');

@@ -88,19 +88,27 @@ Openrat.Workbench = new function()
         Openrat.Workbench.state = state;
         Openrat.Workbench.loadNewAction(state.action,state.id,state.data);
 
-        this.fireAfterNewActionEvents();
+        this.afterNewActionHandler.fire();
 	}
 
 
-	let afterNewActionFunctions = [];
-    this.registerAfterNewAction = function( f ) {
-	    afterNewActionFunctions.push( f );
+	let CallbackStore = function() {
+	    let callbacks = [];
+
+        this.registerCallback = function( f ) {
+            callbacks.push( f );
+        }
+        this.fire = function() {
+            let a = Array.prototype.slice.call(arguments);
+            callbacks.forEach( function(f) {
+                f.apply(null,a);
+            });
+        };
     }
-    this.fireAfterNewActionEvents = function() {
-        afterNewActionFunctions.forEach( function(f) {
-           f();
-        });
-    };
+
+
+
+    this.afterNewActionHandler = new CallbackStore();
 
 
     /**
@@ -322,6 +330,8 @@ Openrat.Workbench = new function()
     }
 
 
+
+    this.afterViewLoadedHandler = new CallbackStore();
 
     let afterViewFunctions = [];
 

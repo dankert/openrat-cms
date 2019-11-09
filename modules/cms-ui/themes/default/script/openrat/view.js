@@ -34,7 +34,7 @@ Openrat.View = function( action,method,id,params ) {
 
     function registerViewEvents(element) {
 
-        Openrat.Workbench.afterViewLoaded(element);
+        Openrat.Workbench.afterViewLoadedHandler.fire( element );
 
         let f = $(element).data('afterViewLoaded');
         if   ( f instanceof Function)
