@@ -127,17 +127,9 @@ class TreeAction extends BaseAction
         $id   = $this->getRequestVar('id',OR_FILTER_ALPHANUM);
 
         $result = $this->calculatePath( $type, $id );
-
         $this->setTemplateVar('path'  ,$result );
 
-        $name = '';
-        $o = ModelFactory::create($type,$id);
-
-        if   ( $o ) {
-            $o->load();
-            $name = $o->getName();
-        }
-
+        $name = $this->calculateName($type, $id);
         $this->setTemplateVar('actual',$this->pathItem($type,$id,$name) );
     }
 
@@ -338,6 +330,23 @@ class TreeAction extends BaseAction
                 return $type;
         }
 
+    }
+
+    /**
+     * @param $type
+     * @param $id
+     * @return string
+     */
+    protected function calculateName($type, $id)
+    {
+        $name = '';
+        $o = ModelFactory::create($type, $id);
+
+        if ($o) {
+            $o->load();
+            $name = $o->getName();
+        }
+        return $name;
     }
 
 
