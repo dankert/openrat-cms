@@ -29,7 +29,7 @@ use cms\model\Folder;
  * @version $Revision$
  * @package openrat.actions
  */
-class ProjectAction extends Action
+class ProjectAction extends BaseAction
 {
 	public $security = Action::SECURITY_ADMIN;
 

@@ -13,6 +13,7 @@ require_once(__DIR__ . '/../language/require.php');
 
 // Internal baseclasses
 require_once(__DIR__ . '/action/Action.class.php');
+require_once(__DIR__ . '/action/BaseAction.class.php');
 require_once(__DIR__ . '/action/ObjectAction.class.php');
 require_once(__DIR__ . '/action/FileAction.class.php');
 require_once(__DIR__ . '/action/RequestParams.class.php');

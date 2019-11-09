@@ -49,7 +49,7 @@ define('SEARCH_FLAG_VALUE'      ,16);
  * @version $Revision$
  * @package openrat.actions
  */
-class SearchAction extends Action
+class SearchAction extends BaseAction
 {
 	public $security = Action::SECURITY_USER;
 

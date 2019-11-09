@@ -41,7 +41,7 @@ use Session;
  * @package openrat.actions
  */
 
-class TreeAction extends Action
+class TreeAction extends BaseAction
 {
 	public $security = Action::SECURITY_GUEST;
 	

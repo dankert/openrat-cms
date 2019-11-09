@@ -34,7 +34,7 @@ use \Session;
  * @version $Revision$
  * @package openrat.actions
  */
-class ProfileAction extends Action
+class ProfileAction extends BaseAction
 {
 	public $security = Action::SECURITY_USER;
 	

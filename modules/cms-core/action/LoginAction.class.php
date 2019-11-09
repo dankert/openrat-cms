@@ -56,7 +56,7 @@ define('PROJECTID_ADMIN',-1);
  * @package openrat.actions
  */
 
-class LoginAction extends Action
+class LoginAction extends BaseAction
 {
 	public $security = Action::SECURITY_GUEST;
 

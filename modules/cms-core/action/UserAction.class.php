@@ -41,7 +41,7 @@ use \Mail;
  * @version $Revision$
  * @package openrat.actions
  */
-class UserAction extends Action
+class UserAction extends BaseAction
 {
 	public $security = Action::SECURITY_ADMIN;
 

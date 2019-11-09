@@ -33,7 +33,7 @@ use \Html;
  * @author  $Author$
  * @package openrat.actions
  */
-class LanguagelistAction extends Action
+class LanguagelistAction extends BaseAction
 {
 	public $security = Action::SECURITY_USER;
 

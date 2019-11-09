@@ -46,7 +46,7 @@ use ValidationException;
  * @version $Revision$
  * @package openrat.actions
  */
-class PageelementAction extends Action
+class PageelementAction extends BaseAction
 {
 	public $security = Action::SECURITY_USER;
 

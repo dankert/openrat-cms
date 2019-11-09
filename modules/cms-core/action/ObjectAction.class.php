@@ -21,7 +21,7 @@ use Session;
  * @author Jan Dankert
  */
 
-class ObjectAction extends Action
+class ObjectAction extends BaseAction
 {
 
 	public $security = Action::SECURITY_USER;

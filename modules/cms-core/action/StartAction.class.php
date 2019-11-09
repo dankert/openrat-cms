@@ -48,7 +48,7 @@ if	( !defined('PROJECTID_ADMIN') )
  * @deprecated
  */
 
-class StartAction extends Action
+class StartAction extends BaseAction
 {
 	public $security = Action::SECURITY_USER;
 	

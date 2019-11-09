@@ -25,7 +25,7 @@ use Session;
  * @author Jan Dankert
  * @package openrat.actions
  */
-class ConfigurationAction extends Action
+class ConfigurationAction extends BaseAction
 {
 	public $security = Action::SECURITY_ADMIN;
 	

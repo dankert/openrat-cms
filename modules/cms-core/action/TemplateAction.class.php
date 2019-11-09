@@ -40,7 +40,7 @@ use \Text;
  * @package openrat.actions
  */
 
-class TemplateAction extends Action
+class TemplateAction extends BaseAction
 {
 	public $security = Action::SECURITY_USER;
 	

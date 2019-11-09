@@ -31,7 +31,7 @@ use Session;
  * @author Jan Dankert
  * @package openrat.actions
  */
-class ModellistAction extends Action
+class ModellistAction extends BaseAction
 {
     /**
      * @var Project

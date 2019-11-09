@@ -26,6 +26,7 @@ class BaseObject
     const TYPEID_IMAGE  = 6;
     const TYPEID_TEXT   = 7;
     const TYPEID_ALIAS  = 8;
+    const TYPEID_MACRO  = 9;
 
     const TYPE_FOLDER = 'folder';
     const TYPE_FILE   = 'file'  ;
@@ -35,6 +36,7 @@ class BaseObject
     const TYPE_IMAGE  = 'image' ;
     const TYPE_TEXT   = 'text'  ;
     const TYPE_ALIAS  = 'alias' ;
+    const TYPE_MACRO  = 'macro' ;
 
     /** eindeutige ID dieses Objektes
      * @see #$objectid
@@ -162,6 +164,12 @@ class BaseObject
      * @type Boolean
      */
     var $isAlias = false;
+
+    /**
+     * Kennzeichen, ob Objekt ein Alias ist
+     * @type Boolean
+     */
+    var $isMacro = false;
 
     /**
      * Kennzeichnet den Typ dieses Objektes.
@@ -380,6 +388,8 @@ SQL
             return self::TYPE_URL;
         if ($this->isAlias)
             return self::TYPE_ALIAS;
+        if ($this->isMacro)
+            return self::TYPE_MACRO;
 
         return 'unknown';
     }
@@ -730,6 +740,7 @@ SQL
         $this->isLink   = ( $row['typeid'] == self::TYPEID_LINK   );
         $this->isUrl    = ( $row['typeid'] == self::TYPEID_URL    );
         $this->isAlias  = ( $row['typeid'] == self::TYPEID_ALIAS  );
+        $this->isMacro  = ( $row['typeid'] == self::TYPEID_MACRO  );
 
     }
 
@@ -800,6 +811,7 @@ SQL
         $this->isLink   = ( $row['typeid'] == self::TYPEID_LINK   );
         $this->isUrl    = ( $row['typeid'] == self::TYPEID_URL    );
         $this->isAlias  = ( $row['typeid'] == self::TYPEID_ALIAS  );
+        $this->isMacro  = ( $row['typeid'] == self::TYPEID_MACRO  );
 
         if	( $this->isRoot )
         {
@@ -1310,6 +1322,7 @@ SQL
         if ($this->isLink  ) return self::TYPEID_LINK;
         if ($this->isUrl   ) return self::TYPEID_URL;
         if ($this->isAlias ) return self::TYPEID_ALIAS;
+        if ($this->isMacro ) return self::TYPEID_MACRO;
     }
 
 

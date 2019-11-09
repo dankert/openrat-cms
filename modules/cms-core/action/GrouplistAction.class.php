@@ -29,7 +29,7 @@ use cms\model\Group;
  * @package openrat.actions
  */
 
-class GrouplistAction extends Action
+class GrouplistAction extends BaseAction
 {
 	public $security = Action::SECURITY_ADMIN;
 	

@@ -17,7 +17,7 @@ use Text;
  * 
  * @author Jan Dankert
  */
-class ElementAction extends Action
+class ElementAction extends BaseAction
 {
 	public $security = Action::SECURITY_USER;
 

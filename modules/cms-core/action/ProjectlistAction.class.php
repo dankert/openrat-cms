@@ -30,7 +30,7 @@ use cms\model\Project;
  * @version $Revision$
  * @package openrat.actions
  */
-class ProjectlistAction extends Action
+class ProjectlistAction extends BaseAction
 {
 	public $security = Action::SECURITY_USER;
 	

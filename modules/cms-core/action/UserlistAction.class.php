@@ -28,7 +28,7 @@ use cms\model\User;
  * @version $Revision$
  * @package openrat.actions
  */
-class UserlistAction extends Action
+class UserlistAction extends BaseAction
 {
 	public $security = Action::SECURITY_ADMIN;
 	

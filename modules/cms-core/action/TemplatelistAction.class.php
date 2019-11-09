@@ -31,7 +31,7 @@ use Session;
  * @package openrat.actions
  */
 
-class TemplatelistAction extends Action
+class TemplatelistAction extends BaseAction
 {
 	public $security = Action::SECURITY_USER;
 

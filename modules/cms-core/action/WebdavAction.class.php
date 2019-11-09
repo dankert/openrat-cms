@@ -36,7 +36,7 @@ use cms\model\Link;
  * @deprecated
  */
 
-class WebdavAction extends Action
+class WebdavAction extends BaseAction
 {
 	public $security = SECURITY_USER;
 	

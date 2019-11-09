@@ -34,7 +34,7 @@ use \Html;
  * @author Jan Dankert
  */
 
-class GroupAction extends Action
+class GroupAction extends BaseAction
 {
 	public $security = Action::SECURITY_ADMIN;
 
