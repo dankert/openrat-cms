@@ -4,7 +4,13 @@ namespace cms\action;
 
 use cms\model\BaseObject;
 use cms\model\Element;
+use cms\model\Folder;
+use cms\model\Group;
+use cms\model\Page;
+use cms\model\Project;
 use cms\model\Template;
+use cms\model\User;
+use cms\model\Value;
 use Tree;
 use cms\model\Language;
 use cms\model\Model;
@@ -117,17 +123,64 @@ class TreeAction extends Action
     public function pathView() {
 
         $type = $this->getRequestVar('type');
-        $id   = $this->getRequestId();
+        $id   = $this->getRequestVar('id',OR_FILTER_ALPHANUM);
+
+        $name = '';
+        switch( $type) {
+            case 'user':
+                $user = new User($id);
+                $user->load();
+                $name = $user->name;
+                break;
+            case 'group':
+                $group = new Group($id);
+                $group->load();
+                $name = $group->name;
+                break;
+            case 'project':
+                $p = new Project($id);
+                $p->load();
+                $name = $p->name;
+                break;
+            case 'element':
+                $e = new Element($id);
+                $e->load();
+                $name = $e->label;
+                break;
+            case 'template':
+                $t = new Template($id);
+                $t->load();
+                $name = $t->name;
+                break;
+            case 'folder':
+            case 'file':
+            case 'link':
+            case 'url':
+            case 'text':
+            case 'image':
+            case 'page':
+                $o = new BaseObject($id);
+                $o->load();
+                $name = $o->filename;
+                break;
+            case 'pageelement':
+                $ids = explode('_',$this->getRequestVar('id',OR_FILTER_ALPHANUM));
+                if	( count($ids) > 1 )
+                {
+                    list( $pageid, $elementid ) = $ids;
+                }
+                $e = new Element($elementid);
+                $e->load();
+                $name = $e->label;
+
+            default:
+        }
 
         $result = $this->calculatePath( $type, $id );
 
         $this->setTemplateVar('path'  ,$result );
 
-        $this->setTemplateVar('actual',array(
-            'type'  =>$this->typeToInternal($type),
-            'action'=>$type,
-            'id'    =>$id)
-        );
+        $this->setTemplateVar('actual',$this->pathItem($type,$id,$name) );
     }
 
 
@@ -139,6 +192,9 @@ class TreeAction extends Action
         switch( $type ) {
 
             case 'projectlist':
+                return array();
+
+            case 'configuration':
                 return array();
 
             case 'project':
@@ -161,13 +217,22 @@ class TreeAction extends Action
 
                 $parents = array_keys( $o->parentObjectFileNames(true) );
                 foreach( $parents as $pid )
-                    $result[] = $this->pathItem('folder'  ,$pid );
+                {
+                    $f = new Folder($pid);
+                    $f->load();
+                    $result[] = $this->pathItem('folder'  ,$pid,$f->filename );
+                }
                 return $result;
 
             case 'pageelement' :
-                $pe = new PageelementAction( $id );
-                $pe->init();
-                $p = $pe->page;
+
+                $ids = explode('_',$id);
+                if	( count($ids) > 1 )
+                {
+                    list( $pageid, $elementid ) = $ids;
+                }
+
+                $p = new Page($pageid);
                 $p->load();
 
                 $result= array(
@@ -176,9 +241,12 @@ class TreeAction extends Action
                 );
 
                 $parents = array_keys( $p->parentObjectFileNames(true ) );
-                foreach( $parents as $pid )
-                    $result[] = $this->pathItem('folder'  ,$pid );
-                $result[] = $this->pathItem('page'  ,$id );
+                foreach( $parents as $pid ) {
+                    $f = new Folder($pid);
+                    $f->load();
+                    $result[] = $this->pathItem('folder'  ,$pid,$f->filename );
+                }
+                $result[] = $this->pathItem('page'  ,$id,$p->filename );
                 return $result;
 
             case 'userlist':
@@ -228,7 +296,7 @@ class TreeAction extends Action
                     $this->pathItem('projectlist' ,0         ),
                     $this->pathItem('project'     ,$t->projectid ),
                     $this->pathItem('templatelist',$t->projectid ),
-                    $this->pathItem('template'    ,$t->templateid)
+                    $this->pathItem('template'    ,$t->templateid,$t->name)
                 );
 
             case 'language':
@@ -281,8 +349,8 @@ class TreeAction extends Action
     }
 
 
-    private function pathItem( $action, $id = 0 ) {
-        return array('type'=>$this->typeToInternal($action),'action'=>$action ,'id'=>$id  );
+    private function pathItem( $action, $id = 0, $name = '' ) {
+        return array('type'=>$this->typeToInternal($action),'action'=>$action ,'id'=>$id,'name'=>$name  );
     }
 
 
