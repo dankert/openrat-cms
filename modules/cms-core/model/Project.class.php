@@ -1057,6 +1057,10 @@ SQL
         return $folders;
     }
 
+    public function getName()
+    {
+        return $this->name;
+    }
 }
 
 ?>

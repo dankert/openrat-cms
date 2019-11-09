@@ -578,6 +578,12 @@ SQL
         return Element::getAvailableTypes()[ $this->typeid ]; // name of type
 
     }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
 }
 
 ?>

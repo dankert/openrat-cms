@@ -149,6 +149,10 @@ SQL
 
         }
 
+        public function getName()
+        {
+            return $this->name;
+        }
 
     }
 

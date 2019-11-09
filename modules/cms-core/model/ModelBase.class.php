@@ -1,7 +1,7 @@
 <?php
 namespace cms\model;
 
-class ModelBase
+abstract class ModelBase
 {
     /*
     protected function setDatabaseRow( $row )
@@ -10,6 +10,9 @@ class ModelBase
     }
     */
 
+    public function __construct()
+    {
+    }
 
     /**
      * All public properties of this object.
@@ -19,4 +22,6 @@ class ModelBase
     {
         return get_object_vars( $this );
     }
+
+    public abstract function getName();
 }

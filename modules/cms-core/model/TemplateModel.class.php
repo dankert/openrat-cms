@@ -171,6 +171,12 @@ class TemplateModel extends ModelBase
 			
 		return( $this->mime_type );
 	}
-	
+
+
+    public function getName()
+    {
+        return '';
+    }
+
 }
 

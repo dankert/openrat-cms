@@ -6,6 +6,7 @@ use cms\model\BaseObject;
 use cms\model\Element;
 use cms\model\Folder;
 use cms\model\Group;
+use cms\model\ModelFactory;
 use cms\model\Page;
 use cms\model\Project;
 use cms\model\Template;
@@ -125,60 +126,17 @@ class TreeAction extends BaseAction
         $type = $this->getRequestVar('type');
         $id   = $this->getRequestVar('id',OR_FILTER_ALPHANUM);
 
-        $name = '';
-        switch( $type) {
-            case 'user':
-                $user = new User($id);
-                $user->load();
-                $name = $user->name;
-                break;
-            case 'group':
-                $group = new Group($id);
-                $group->load();
-                $name = $group->name;
-                break;
-            case 'project':
-                $p = new Project($id);
-                $p->load();
-                $name = $p->name;
-                break;
-            case 'element':
-                $e = new Element($id);
-                $e->load();
-                $name = $e->label;
-                break;
-            case 'template':
-                $t = new Template($id);
-                $t->load();
-                $name = $t->name;
-                break;
-            case 'folder':
-            case 'file':
-            case 'link':
-            case 'url':
-            case 'text':
-            case 'image':
-            case 'page':
-                $o = new BaseObject($id);
-                $o->load();
-                $name = $o->filename;
-                break;
-            case 'pageelement':
-                $ids = explode('_',$this->getRequestVar('id',OR_FILTER_ALPHANUM));
-                if	( count($ids) > 1 )
-                {
-                    list( $pageid, $elementid ) = $ids;
-                }
-                $e = new Element($elementid);
-                $e->load();
-                $name = $e->label;
-
-            default:
-        }
-
         $result = $this->calculatePath( $type, $id );
 
         $this->setTemplateVar('path'  ,$result );
+
+        $name = '';
+        $o = ModelFactory::create($type,$id);
+
+        if   ( $o ) {
+            $o->load();
+            $name = $o->getName();
+        }
 
         $this->setTemplateVar('actual',$this->pathItem($type,$id,$name) );
     }

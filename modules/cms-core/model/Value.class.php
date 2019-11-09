@@ -1730,4 +1730,11 @@ SQL
 				return $this->text;
 		}
 	}
+
+
+    public function getName()
+    {
+        return '';
+    }
+
 }

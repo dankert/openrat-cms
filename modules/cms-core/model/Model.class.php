@@ -212,6 +212,11 @@ SQL
 			$sql->query();
 		}
 	}
+
+    public function getName()
+    {
+        return $this->name;
+    }
 }
 
 ?>

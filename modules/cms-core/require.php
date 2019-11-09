@@ -34,5 +34,6 @@ require_once(__DIR__ . "/functions/request.inc.php");
 require_once(__DIR__ . '/init.php');
 
 require_once(__DIR__ . "/Dispatcher.class.php");
+require_once(__DIR__ . "/ModelFactory.class.php");
 
 ?>

@@ -385,7 +385,12 @@ SQL
 			
 		return( $this->mime_type );
 	}
-	
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
 }
 
 ?>

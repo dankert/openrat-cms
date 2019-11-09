@@ -520,4 +520,9 @@ SQL
     }
 
 
+    public function getName()
+    {
+        return '';
+    }
+
 }

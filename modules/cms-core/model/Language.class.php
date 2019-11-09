@@ -234,6 +234,12 @@ class Language extends ModelBase
     {
         self::setLocale( $this->isoCode );
     }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
 }
 
 ?>

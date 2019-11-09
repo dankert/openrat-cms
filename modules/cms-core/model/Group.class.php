@@ -379,6 +379,12 @@ class Group extends ModelBase
 		// Datenbankabfrage ausf?hren
 		$sql->query( $sql );
 	}
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
 }
 
 ?>
