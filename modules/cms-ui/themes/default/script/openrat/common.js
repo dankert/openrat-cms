@@ -61,45 +61,6 @@ $( function() {
 
     let registerWorkbenchGlobalEvents = function() {
 
-        function registerNavigation() {
-            $(document).on('orNewAction',function(event, data) {
-
-                let url = './api/?action=tree&subaction=path&id=' + Openrat.Workbench.state.id + '&type=' + Openrat.Workbench.state.action + '&output=json';
-
-                // Die Inhalte des Zweiges laden.
-                $.getJSON(url, function (json) {
-
-                    $('nav .or-navtree-node').removeClass('or-navtree-node--selected');
-
-                    let output = json['output'];
-                    $.each(output.path, function (idx, path) {
-
-                        $nav = $('nav .or-navtree-node[data-type='+path.type+'][data-id='+path.id+'].or-navtree-node--is-closed .or-navtree-node-control');
-                        $nav.click();
-                    });
-                    if   ( output.actual )
-                        $('nav .or-navtree-node[data-type='+output.actual.type+'][data-id='+output.actual.id+']').addClass('or-navtree-node--selected');
-
-                    let $breadcrumb = $('.or-breadcrumb').empty();
-                    let items = [];
-                    $.each(output.path.concat(output.actual), function (idx, path) {
-                        items.push( '<li class="or-breadcrumb-item clickable" tabindex="0"><a href="'+Openrat.Navigator.createShortUrl(path.action,path.id)+'" data-type="open" data-action="'+path.action+'" data-id="'+path.id+'"><i class="image-icon image-icon--action-'+path.action+'" />'+path.name+'</a></li>');
-                    });
-                    $breadcrumb.append( items.join('<li><i class="tree-icon image-icon image-icon--node-closed"></i></li>') );
-                    $('.or-breadcrumb .clickable').orLinkify();
-
-                }).fail(function (e) {
-                    // Ups... aber was können wir hier schon tun, außer hässliche Meldungen anzeigen.
-                    console.warn(e);
-                    console.warn('failed to load path from '+url);
-                }).always(function () {
-
-                });
-            });
-        }
-
-        registerNavigation();
-
         // Binding aller Sondertasten.
         $('.keystroke').each( function() {
             let keystrokeElement = $(this);
@@ -138,9 +99,84 @@ $( function() {
 
     registerWorkbenchGlobalEvents();
 
-    Openrat.Workbench.afterViewsLoaded();
+
+    let closeMenu = function() {
+        // Mit der Maus irgendwo hin geklickt, das Menü muss schließen.
+        $('body').click( function() {
+            $('.toolbar-icon.menu').parents('.or-menu').removeClass('open');
+        });
+    };
+    closeMenu();
+
+
+
+    Openrat.Workbench.registerAfterNewAction( function() {
+
+        let url = './api/?action=tree&subaction=path&id=' + Openrat.Workbench.state.id + '&type=' + Openrat.Workbench.state.action + '&output=json';
+
+        // Die Inhalte des Zweiges laden.
+        $.getJSON(url, function (json) {
+
+            $('nav .or-navtree-node').removeClass('or-navtree-node--selected');
+
+            let output = json['output'];
+            $.each(output.path, function (idx, path) {
+
+                $nav = $('nav .or-navtree-node[data-type='+path.type+'][data-id='+path.id+'].or-navtree-node--is-closed .or-navtree-node-control');
+                $nav.click();
+            });
+            if   ( output.actual )
+                $('nav .or-navtree-node[data-type='+output.actual.type+'][data-id='+output.actual.id+']').addClass('or-navtree-node--selected');
+
+            let $breadcrumb = $('.or-breadcrumb').empty();
+            let items = [];
+            $.each(output.path.concat(output.actual), function (idx, path) {
+                items.push( '<li class="or-breadcrumb-item clickable" tabindex="0"><a href="'+Openrat.Navigator.createShortUrl(path.action,path.id)+'" data-type="open" data-action="'+path.action+'" data-id="'+path.id+'"><i class="image-icon image-icon--action-'+path.action+'" />'+path.name+'</a></li>');
+            });
+            $breadcrumb.append( items.join('<li><i class="tree-icon image-icon image-icon--node-closed"></i></li>') );
+            $('.or-breadcrumb .clickable').orLinkify();
+
+        }).fail(function (e) {
+            // Ups... aber was können wir hier schon tun, außer hässliche Meldungen anzeigen.
+            console.warn(e);
+            console.warn('failed to load path from '+url);
+        }).always(function () {
+
+        });
+    } );
 
 });
+
+
+
+
+let filterMenus = function ()
+{
+    let action = Openrat.Workbench.state.action;
+    let id     = Openrat.Workbench.state.id;
+    $('div.clickable').addClass('active');
+    $('div.clickable.filtered').removeClass('active').addClass('inactive');
+
+    $('div.clickable.filtered.on-action-'+action).addClass('active').removeClass('inactive');
+
+    // Jeder Menüeintrag bekommt die Id und Parameter.
+    $('div.clickable.filtered a').attr('data-id'    ,id    );
+    /*
+        $('div.clickable.filtered a').attr('data-action',action);
+    */
+
+}
+
+
+$('#title.view').data('afterViewLoaded', function() {
+    filterMenus();
+} );
+
+Openrat.Workbench.registerAfterNewAction( function() {
+    filterMenus();
+} );
+
+
 
 
 
@@ -162,7 +198,6 @@ Openrat.Workbench.registerAfterViewLoaded( function(element) {
  * @param viewEl DOM-Element der View
  */
 Openrat.Workbench.registerAfterViewLoaded( function(viewEl ) {
-    filterMenus();
 
     // Die Section deaktivieren, wenn die View keinen Inhalt hat.
     var section = $(viewEl).closest('section');
@@ -237,10 +272,6 @@ Openrat.Workbench.registerAfterViewLoaded( function(viewEl ) {
     {
         //$e = $($element);
 
-        // Mit der Maus irgendwo hin geklickt, das Menü muss schließen.
-        $('body').click( function() {
-            $('.toolbar-icon.menu').parents('.or-menu').removeClass('open');
-        });
         // Mit der Maus geklicktes Menü aktivieren.
         $($element).find('.toolbar-icon.menu').click( function(event) {
             event.stopPropagation();
@@ -452,28 +483,6 @@ function openNewAction( name,action,id )
 
     Openrat.Navigator.navigateToNew( {'action':action, 'id':id } );
 }
-
-
-function filterMenus()
-{
-    let action = Openrat.Workbench.state.action;
-    let id     = Openrat.Workbench.state.id;
-    $('div.clickable').addClass('active');
-    $('div.clickable.filtered').removeClass('active').addClass('inactive');
-
-	$('div.clickable.filtered.on-action-'+action).addClass('active').removeClass('inactive');
-
-    // Jeder Menüeintrag bekommt die Id und Parameter.
-    $('div.clickable.filtered a').attr('data-id'    ,id    );
-    /*
-        $('div.clickable.filtered a').attr('data-action',action);
-    */
-
-}
-
-
-
-
 
 
 

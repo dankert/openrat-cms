@@ -88,8 +88,20 @@ Openrat.Workbench = new function()
         Openrat.Workbench.state = state;
         Openrat.Workbench.loadNewAction(state.action,state.id,state.data);
 
-        this.afterViewsLoaded();
+        this.fireAfterNewActionEvents();
 	}
+
+
+	let afterNewActionFunctions = [];
+    this.registerAfterNewAction = function( f ) {
+	    afterNewActionFunctions.push( f );
+    }
+    this.fireAfterNewActionEvents = function() {
+        afterNewActionFunctions.forEach( function(f) {
+           f();
+        });
+    };
+
 
     /**
 	 *
@@ -105,9 +117,6 @@ Openrat.Workbench = new function()
     }
 
 
-    this.afterViewsLoaded = function() {
-        $(document).trigger('orNewAction');
-    }
 
     /**
      *
