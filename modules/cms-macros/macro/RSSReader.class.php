@@ -138,6 +138,7 @@ class RSSReader extends Macro
 			$arr["generator"] = $sarr[1];
 		// Strip items
 		$parts = explode("<item>", $feed);
+		$items = array();
 		foreach($parts as $part)
 		{
 			$item = substr($part, 0, strpos($part, "</item>"));

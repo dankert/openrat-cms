@@ -2,6 +2,8 @@
 namespace cms\model;
 
 
+use Logger;
+
 /**
  * Diese Objektklasse stellt ein Element das.
  *
@@ -531,25 +533,13 @@ SQL
 
 	function getDynamicParameters()
 	{
-		$parameters = explode( "\n",$this->code );
-		$items      = array();
+	    // Fixing old syntax ("key:value") to valid YAML syntax.
+	    $this->code = preg_replace( '/^(\w+)\:(.+)$/m','${1}: ${2}', $this->code );
 
-		foreach( $parameters as $it )
-		{
-			$paar = explode( ":",$it,2 );
-			if	( count($paar) > 1 )
-			{
-				$param_name  = trim($paar[0]);
-				$param_value = trim($paar[1]);
+	    $items = \Spyc::YAMLLoadString( $this->code );
 
-//				// Wenn Inhalt mit "'" beginnt und mit "'" aufhoert, dann diese Zeichen abschneiden
-//				if	( substr($param_value,0,1) == "'" && substr($param_value,strlen($param_value)-1,1) == "'" ) 
-//					$param_value = substr($param_value,1,strlen($param_value)-2); 
+	    Logger::trace('dynamic-parameters: '.print_r($items,true));
 
-				if	( !empty($param_value) )
-					$items[$param_name] = $param_value;
-			}
-		}
 		return $items;
 	}
 

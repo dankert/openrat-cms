@@ -1333,7 +1333,7 @@ SQL
      */
     public function getSettings()
     {
-        return Spyc::YAMLLoad($this->settings);
+        return Spyc::YAMLLoadString($this->settings);
     }
 
 
