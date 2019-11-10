@@ -55,7 +55,9 @@ class RSSReader extends Macro
 
 	function execute()
 	{
-		// Sessionvariable mit CRC verschluesseln, falls es mehrere RSS-Feeds im Projekt gibt
+	    // TODO: Caching of macro output should be done by the CMS.
+
+        // Sessionvariable mit CRC verschluesseln, falls es mehrere RSS-Feeds im Projekt gibt
 		$sessVar = 'RSSReader_'.crc32($this->url);
 		$cache = $this->getSessionVar( $sessVar );
 		
@@ -67,8 +69,15 @@ class RSSReader extends Macro
 		else
 		{
 			// Wenn Cache leer, dann RSS erzeugen und in Session speichern
-			$this->create();
-			$this->setSessionVar( $sessVar,$this->getOutput() );
+
+            ob_start();
+            $this->create();
+
+            $output = ob_get_contents();
+            ob_end_clean();
+
+            $this->setSessionVar( $sessVar,$output );
+            echo $output;
 		} 
 	}
 

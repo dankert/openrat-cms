@@ -135,7 +135,7 @@ class Macro
 	 */
 	public function output( $text )
 	{
-		$this->output .= $text;
+		echo $text;
 	}
 
 	
@@ -144,12 +144,13 @@ class Macro
 	 */
 	public function outputLn( $text )
 	{
-		$this->output .= $text."\n";
+		echo $text."\n";
 	}
 
 
 	/**
 	 * Ermittelt die bisher erstellte Ausgabe.
+     * @deprecated
 	 * @return string
 	 */
 	public function getOutput()

@@ -1329,8 +1329,13 @@ SQL
 								}
 							}
 
-							$macro->execute();
-							$inhalt .= $macro->getOutput();
+                            ob_start();
+
+                            $macro->execute();
+
+                            $output = ob_get_contents();
+                            ob_end_clean();
+							$inhalt .= $output;
 						}
 						else
 						{
