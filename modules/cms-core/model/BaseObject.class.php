@@ -3,6 +3,7 @@
 
 namespace cms\model;
 
+use ArrayUtils;
 use cms\publish\Publish;
 use phpseclib\Math\BigInteger;
 use Spyc;
@@ -1333,9 +1334,19 @@ SQL
      */
     public function getSettings()
     {
-        return Spyc::YAMLLoadString($this->settings);
-    }
+        $settings = Spyc::YAMLLoadString($this->settings);
 
+        // pass-by-reference
+        array_walk_recursive($settings, function (&$item, $key) {
+            $item = \Text::resolveVariables($item, 'config', function ($var) {
+                global $conf;
+                return ArrayUtils::getSubValue($conf,explode('.',$var) );
+            });
+            return $item;
+        });
+
+        return $settings;
+    }
 
     /**
      * Inherited Settings.

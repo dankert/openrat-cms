@@ -1,5 +1,6 @@
 <?php
 namespace cms\model;
+use ArrayUtils;
 use cms\publish\Publish;
 use \ObjectNotFoundException;
 use \Logger;
@@ -1299,7 +1300,16 @@ SQL
 							$macro->objectid = $this->page->objectid;
 							$macro->page    = &$this->page;
 
-							foreach( $this->element->getDynamicParameters() as $param_name=>$param_value )
+							$parameters = $this->element->getDynamicParameters();
+
+                            array_walk_recursive($parameters, function (&$item, $key) {
+                                $item = \Text::resolveVariables($item, 'setting', function ($var) {
+                                    return ArrayUtils::getSubValue($this->page->getSettings(),explode('.',$var) );
+                                });
+                                return $item;
+                            });
+
+                            foreach( $parameters as $param_name=>$param_value )
 							{
 								if	( $param_value[0]=='{')
 								{

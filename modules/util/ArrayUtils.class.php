@@ -28,6 +28,23 @@ class ArrayUtils
 
 
 
+
+    public static function getSubValue( $array, $keys ) {
+
+        $a = $array;
+        foreach( $keys as $k )
+        {
+            if   ( ! isset($a[$k]) )
+                return null;
+
+            $a = $a[$k];
+        }
+
+        return $a;
+    }
+
+
+
     public static function flattenArray( $prefix, $arr, $split= '.' )
     {
         $new = array();
