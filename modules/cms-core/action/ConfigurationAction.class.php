@@ -59,17 +59,18 @@ class ConfigurationAction extends BaseAction
         // Language are to much entries
         unset($conf_cms['language']);
 
+        $split = "\xC2\xA0"."\xC2\xA0"."\xC2\xBB"."\xC2\xA0"."\xC2\xA0";
+
         $conf_cms['system'] = $this->getSystemConfiguration();
 		
-		$flatDefaultConfig = $this->flattenArray('',$conf_default);
-		$flatCMSConfig     = $this->flattenArray('',Session::getConfig());
-		$flatConfig        = $this->flattenArray('',$conf_cms);
+		$flatDefaultConfig = \ArrayUtils::flattenArray('', $conf_default       , $split );
+		$flatCMSConfig     = \ArrayUtils::flattenArray('', Session::getConfig(), $split );
+		$flatConfig        = \ArrayUtils::flattenArray('', $conf_cms           , $split );
 		
 		$config = array();
 		foreach( $flatConfig as $key=>$val )
-		{
-			$config[] = array( 'key'=>$key,'value'=>$val,'class'=>(empty($flatCMSConfig[$key])?'readonly':(isset($flatDefaultConfig[$key]) && $flatDefaultConfig[$key]==$flatConfig[$key]?'default':'changed')));
-		}
+			$config[] = array( 'key'=>$key,'value'=>substr($key,-8)=='password'?'*******************':$val,'class'=>(empty($flatCMSConfig[$key])?'readonly':(isset($flatDefaultConfig[$key]) && $flatDefaultConfig[$key]==$flatConfig[$key]?'default':'changed')));
+
 		$this->setTemplateVar('config',$config );
 	}
 
@@ -94,24 +95,6 @@ class ConfigurationAction extends BaseAction
     }
 
 
-
-    private function flattenArray( $prefix,$arr )
-    {
-        $new = array();
-        foreach( $arr as $key=>$val)
-        {
-            if	( is_array($val) )
-            {
-                $new[$prefix.$key] = '';
-
-                $splitter = "\xC2\xA0"."\xC2\xA0"."\xC2\xBB"."\xC2\xA0"."\xC2\xA0"; // NBSP+RDQUO+NBSP as UTF-8
-                $new += $this->flattenArray($prefix.$key.$splitter,$val);
-            }
-            else
-                $new[$prefix.$key] = $key=='password'?'*******************':$val;
-        }
-        return $new;
-    }
 
     /**
      * Reads system configuration.

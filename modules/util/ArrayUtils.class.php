@@ -25,4 +25,23 @@ class ArrayUtils
 
         return $a;
     }
+
+
+
+    public static function flattenArray( $prefix, $arr, $split= '.' )
+    {
+        $new = array();
+        foreach( $arr as $key=>$val)
+        {
+            if	( is_array($val) )
+            {
+                $new[$prefix.$key] = '';
+
+                $new += self::flattenArray($prefix.$key.$split, $val, $split );
+            }
+            else
+                $new[$prefix.$key] = $val;
+        }
+        return $new;
+    }
 }

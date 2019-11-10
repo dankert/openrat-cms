@@ -596,6 +596,12 @@ SQL
 
 		$data = array();
 
+		// Template should have access to the page properties.
+		$data += \ArrayUtils::flattenArray('_page.'              ,$this->getProperties()    );
+		// Template should have access to the settings of this node object.
+		$data += \ArrayUtils::flattenArray('_page.localsettings.',$this->getSettings()      );
+		$data += \ArrayUtils::flattenArray('_page.settings.'     ,$this->getTotalSettings() );
+
 		// No we are collecting the data and are fixing some old stuff.
 
 		foreach( $elements as $elementId=>$elementName )
@@ -617,6 +623,8 @@ SQL
 			else
 				$src = str_replace( '{{->'.$elementId.'}}','',$src );
 		}
+
+		Logger::trace( 'pagedata: '.print_r($data,true) );
 
 		// Now we have collected all data, lets call the template engine:
 
