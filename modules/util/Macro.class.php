@@ -124,6 +124,7 @@ class Macro
 
 	/**
 	 * Löscht die bisher erzeugte Ausgabe.
+     * @deprecated useless
 	 */
 	public function delOutput()
 	{

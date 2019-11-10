@@ -1241,8 +1241,11 @@ SQL
 				// Die Ausführung von benutzer-erzeugtem PHP-Code kann in der
 				// Konfiguration aus Sicherheitsgründen deaktiviert sein.
 				if	( $conf['security']['disable_dynamic_code'] )
-					break;
-				
+                {
+                    Logger::warn("Execution of dynamic code elements is disabled by configuration. Set security/disable_dynamic_code to true to allow this");
+                    break;
+                }
+
 				$this->page->load();
 
 				// Das Ausführen geschieht über die Klasse "Code".
@@ -1254,13 +1257,19 @@ SQL
 				$code->delOutput();
 				$code->code = $this->element->code;
 
-				// Jetzt ausfuehren des temporaeren PHP-Codes				
-				$code->execute();
+                ob_start();
 
-				// Ausgabe ermitteln.
-				$inhalt = $code->getOutput();
+                // Jetzt ausfuehren des temporaeren PHP-Codes
+                $code->execute();
 
-				break;
+                $output = ob_get_contents();
+                ob_end_clean();
+
+                // Ausgabe ermitteln.
+                $inhalt = $output;
+
+
+                break;
 
 
 			// Makros (dynamische Klassen)

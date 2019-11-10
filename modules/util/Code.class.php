@@ -23,13 +23,14 @@
  */
 class Code extends Macro
 {
-	var $code = '';
+	public $code;
 	
 	function execute()
 	{
-		if	( substr($this->code,0,5) != '<?php' )
+		if	( substr($this->code,0,2) != '<?' )
 			$this->code = "<?php\n".$this->code."\n?>";
 
+		Logger::trace('code: Executing PHP Code: '."\n".$this->code);
 		$tmp = FileUtils::getTempDir().'/openratMacro';
 		$tmp .= '.code.php.tmp';
 		
