@@ -116,31 +116,13 @@ class ConfigurationLoader
      */
     private function resolveVariables($value)
     {
-        return preg_replace_callback(
-            "|\\$\{([[:alnum:]]+)\:([[:alnum:]_]+)\}|",
+        $value = Text::resolveVariables( $value, 'env'  , function($var) { return getenv(strtoupper($var));              } );
 
-            function ($match)
-            {
-                $type  = $match[1];
-                $value = $match[2];
-                $value = str_replace('-', '_', $value);
+        // http:... is a shortcut for server:http-...
+        $value = Text::resolveVariables( $value,'http'  , function($var) { return @$_SERVER['HTTP_' . strtoupper($var)]; } );
+        $value = Text::resolveVariables( $value,'server', function($var) { return @$_SERVER[strtoupper($var)];           } );
 
-                switch( strtolower( $type ) )
-                {
-                    case 'env':
-                        return getenv(strtoupper($value));
-
-                    case 'http': // http:... is a shortcut for server:http-...
-                        return @$_SERVER['HTTP_' . strtoupper($value)];
-
-                    case 'server':
-                        return @$_SERVER[strtoupper($value)];
-                    default:
-                        return "";
-                }
-            },
-
-            $value);
+        return $value;
     }
 
 }
