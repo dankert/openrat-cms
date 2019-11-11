@@ -632,11 +632,24 @@ SQL
         $template = new Mustache();
 		$template->escape = null; // No HTML escaping, this is the job of this CMS ;)
 		$template->partialLoader = function( $name ) {
-		 	if   ( $name == $this->template->name )
-		 		throw new RuntimeException('Template recursion is not possible.');
+
+		 	if   ( substr($name,0,5) == 'file:') {
+		 	 	$fileid = intval( substr($name,5) );
+		 	 	$file = new File( $fileid );
+		 	 	return $file->loadValue();
+			}
+
 
 		 	$project       = new Project($this->projectid);
 		 	$templateid    = array_search($name,$project->getTemplates() );
+
+			if   ( ! $templateid )
+			 	return $this->publisher->isPublic()?'':"template '$name' not found";
+
+			if   ( $templateid == $this->template->templateid )
+				return $this->publisher->isPublic()?'':'Template recursion is not supported';
+
+
 			$templatemodel = new TemplateModel( $templateid, $this->modelid );
 			$templatemodel->load();
 
