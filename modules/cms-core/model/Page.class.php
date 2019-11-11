@@ -18,6 +18,7 @@ namespace cms\model;
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 use cms\mustache\Mustache;
 use cms\publish\PublishPreview;use cms\publish\PublishPublic;
+use http\Exception\RuntimeException;
 use Logger;
 use util\FileCache;
 
@@ -630,6 +631,18 @@ SQL
 
         $template = new Mustache();
 		$template->escape = null; // No HTML escaping, this is the job of this CMS ;)
+		$template->partialLoader = function( $name ) {
+		 	if   ( $name == $this->template->name )
+		 		throw new RuntimeException('Template recursion is not possible.');
+
+		 	$project       = new Project($this->projectid);
+		 	$templateid    = array_search($name,$project->getTemplates() );
+			$templatemodel = new TemplateModel( $templateid, $this->modelid );
+			$templatemodel->load();
+
+			return $templatemodel->src;
+		};
+
         try {
         	$template->parse($src);
         } catch (\Exception $e) {
