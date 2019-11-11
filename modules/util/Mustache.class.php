@@ -148,6 +148,7 @@ class Mustache
 			 	}
 			 	$source        = substr_replace($source,'',$begin,$end-$begin+strlen($closTag));
 			 	// Delimiter-Tag is not added to the taglist, we don't need it.
+				$pos = $begin;
 			}
             elseif ( $tag->type == MustacheTag::PARTIAL ) {
                 if   ( !is_callable($this->partialLoader) )
@@ -157,13 +158,14 @@ class Mustache
                 $partialSource = $loader( $tag->propertyName );
                 $source        = substr_replace($source,$partialSource,$begin,$end-$begin+strlen($closTag));
                 // Partial-Tag is not added to the taglist, we don't need it.
+			 	$pos = $begin;
             }
             else {
                 // All other tags are added to our list.
                 $tagList[] = $tag;
+				$pos = $end + strlen($closTag);
             }
 
-            $pos = $end + strlen($closTag);
 
             //$source = substr($source,0,$begin-1).substr($source,$end+1);
         }
