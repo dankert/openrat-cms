@@ -2,7 +2,6 @@
 
 
 namespace cms\mustache;
-use Twig\Extension\StringLoaderExtension;
 
 
 /**
@@ -28,11 +27,9 @@ use Twig\Extension\StringLoaderExtension;
  * - Blocks (normal and negating blocks)
  * - Lists with arrays and objects
  * - Wrapper functions
- *
- * This implementation lacks a few features:
- * - no Partials (No Partials ootb, you may define a partial loader)
+ * - Partials (you need to define a partial loader)
+ * - Delimiter change
  * - no dot notation on property names
- * - no Delimiter change (but the delimiters are public class members)
  *
  * Have a look for an example at the end of this file.
  *
@@ -82,7 +79,11 @@ class Mustache
     public function __construct( $source=null ) {
 
         $escape = static function( $text) {
-            return htmlentities($text);
+
+         	if   ( is_scalar($text))
+            	return htmlentities( $text);
+         	else
+         	 	return false;
         };
         $this->escape = $escape;
 
@@ -112,33 +113,49 @@ class Mustache
         $tagList = array();
         $pos = 0;
 
+	 	$nextOpenTag = $this->openTag;
+	 	$nextClosTag = $this->closeTag;
+
         while (true) {
+
+         	$openTag = $nextOpenTag;
+         	$closTag = $nextClosTag;
 
             // searching for:  {{#name}}
             //                 +----->+
-            $begin = strpos($source, $this->openTag, $pos);
+            $begin = strpos($source, $openTag, $pos);
             if   ( $begin === FALSE )
                 break;
 
-            $end = strpos($source, $this->closeTag, $begin + strlen($this->openTag));
+            $end = strpos($source, $closTag, $begin + strlen($openTag));
             if   ( $end === FALSE )
                 break;
 
             // Example     {{#name}}
             // Looking for   +---+
-            $tagText = substr($source, $begin + strlen($this->openTag), $end - $begin - strlen($this->openTag));
+            $tagText = substr($source, $begin + strlen($openTag), $end - $begin - strlen($openTag));
 
             $line = substr_count($source, "\n", 0, $begin) + 1;
             $column = $begin - strrpos(substr($source, 0, $begin), "\n") + ($line==1?1:0);
 
-            $tag = new MustacheTag($tagText, $begin, $end+strlen($this->closeTag) , $line, $column);
+            $tag = new MustacheTag($tagText, $begin, $end+strlen($closTag) , $line, $column);
 
-            if ( $tag->type == MustacheTag::PARTIAL ) {
+            if ( $tag->type == MustacheTag::DELIM_CHANGE ) {
+            	$parts = explode(' ',$tag->propertyName);
+			 	if   ( sizeof($parts ) >= 2 ) {
+			  		$nextOpenTag =        $parts[0];
+			  		$nextClosTag = substr($parts[1],0,-1);
+			 	}
+			 	$source        = substr_replace($source,'',$begin,$end-$begin+strlen($closTag));
+			 	// Delimiter-Tag is not added to the taglist, we don't need it.
+			}
+            elseif ( $tag->type == MustacheTag::PARTIAL ) {
                 if   ( !is_callable($this->partialLoader) )
                     throw new \RuntimeException('No loader is defined, unable to inject a partial at '.$tag->__toString() );
 
-                $partialSource = $this->partialLoader( $tag->propertyName );
-                $source = substr_replace($source,$partialSource,$end+strlen($this->closeTag),0);
+                $loader        = $this->partialLoader;
+                $partialSource = $loader( $tag->propertyName );
+                $source        = substr_replace($source,$partialSource,$begin,$end-$begin+strlen($closTag));
                 // Partial-Tag is not added to the taglist, we don't need it.
             }
             else {
@@ -146,7 +163,7 @@ class Mustache
                 $tagList[] = $tag;
             }
 
-            $pos = $end + strlen($this->closeTag);
+            $pos = $end + strlen($closTag);
 
             //$source = substr($source,0,$begin-1).substr($source,$end+1);
         }
@@ -365,10 +382,20 @@ class MustacheNode {
         if  ( !is_object($this->tag))
             return false; // on root-block, there is no tag.
 
-        if  ( !isset($data[$this->tag->propertyName]) )
-            return false;
-        $value = $data[$this->tag->propertyName];
-        if   ( is_object($value))
+        $value = $data;
+
+		// Evaluate "dot notation"
+		foreach( explode('.',$this->tag->propertyName ) as $key )
+	  	{
+	   		if   ( is_array($value) && isset($value[$key]) ) {
+			 	$value = $value[$key];
+			 	continue;
+			}
+			$value = false; // Key does not exist, so there is no value.
+		}
+
+
+	 	if   ( is_object($value))
         {
             if   ($value instanceof \Closure)
                 ; // anonymous functions
@@ -531,17 +558,37 @@ this is not displayed {{! because the list is empty }}
 Hello again, {{planet}}. {{!displayed in uppercase}}
 {{/}}
 
+<h1>Partials</h1>
+{{> mycoolpartial}}
+
+<h1>Changing Delimiters</h1>
+Default: {{name}}
+{{=$( )=}}
+Bash-Style: $(name)
+Default should not work here: {{name}}
+
+$(={{ }}=)
+Default again: {{name}}
+
+<h1>Dot notation</h1>
+this will not work: {{building}}
+but this is the color of the roof: {{building.roof.color}}
 
 
 SRC;
 
-$m = new Mustache( $source );
+$m = new Mustache();
+$m->partialLoader = function($name) {
+ return "\nThis is a partial named ".$name.". It may include variables, like the name '{{name}}'.\n\n";
+};
+$m->parse( $source );
 
 echo 'Object: <pre><code>'; print_r($m); echo '</code></pre>';
 
 $data = array(
     'planet'  => '<b>world</b>',
     'test'  => 'Test',
+    'name'  => 'Mallory',
     'car'   => array('color'=>'red'),
     'house' => (object) array('size'=>'big' ),
     'names' => array(
@@ -549,7 +596,8 @@ $data = array(
         array('name'=>'Bob')
     ),
     'empty' => array(),
-    'upper' => static function($text) { return strtoupper($text); }
+    'upper' => static function($text) { return strtoupper($text); },
+    'building' => array('roof'=>array('color'=>'gray'))
 
 );
 
