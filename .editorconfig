@@ -11,11 +11,12 @@ tab_width = 4
 
 [*.php]
 indent_style = tab
-indent_size = 1
+indent_size = tab
 
 [*.xml]
 indent_style = tab
 indent_size = 1
+
 
 [*.js]
 indent_style = tab

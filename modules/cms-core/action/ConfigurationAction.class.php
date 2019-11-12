@@ -59,14 +59,20 @@ class ConfigurationAction extends BaseAction
         // Language are to much entries
         unset($conf_cms['language']);
 
-        $split = "\xC2\xA0"."\xC2\xA0"."\xC2\xBB"."\xC2\xA0"."\xC2\xA0";
 
-        $conf_cms['system'] = $this->getSystemConfiguration();
-		
-		$flatDefaultConfig = \ArrayUtils::flattenArray('', $conf_default       , $split );
-		$flatCMSConfig     = \ArrayUtils::flattenArray('', Session::getConfig(), $split );
-		$flatConfig        = \ArrayUtils::flattenArray('', $conf_cms           , $split );
-		
+		$conf_cms['system'] = $this->getSystemConfiguration();
+
+		//$split = "\xC2\xA0"."\xC2\xA0"."\xC2\xBB"."\xC2\xA0"."\xC2\xA0";
+		//$flatDefaultConfig = \ArrayUtils::flattenArray('', $conf_default       , $split );
+		//$flatCMSConfig     = \ArrayUtils::flattenArray('', Session::getConfig(), $split );
+		//$flatConfig        = \ArrayUtils::flattenArray('', $conf_cms           , $split );
+
+		$pad = str_repeat("\xC2\xA0",10); // Hard spaces
+
+		$flatDefaultConfig = \ArrayUtils::dryFlattenArray( $conf_default       , $pad );
+		$flatCMSConfig     = \ArrayUtils::dryFlattenArray( Session::getConfig(), $pad );
+		$flatConfig        = \ArrayUtils::dryFlattenArray( $conf_cms           , $pad );
+
 		$config = array();
 		foreach( $flatConfig as $key=>$val )
 			$config[] = array( 'key'=>$key,'value'=>substr($key,-8)=='password'?'*******************':$val,'class'=>(empty($flatCMSConfig[$key])?'readonly':(isset($flatDefaultConfig[$key]) && $flatDefaultConfig[$key]==$flatConfig[$key]?'default':'changed')));
