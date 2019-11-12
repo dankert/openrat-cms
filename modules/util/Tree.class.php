@@ -328,7 +328,7 @@ class Tree
                 $treeElement = new TreeElement();
                 $treeElement->id = $id . '_' . $elementid;
                 $treeElement->internalId = $id . '_' . $elementid;
-                $treeElement->text = $element->name;
+                $treeElement->text = $element->label;
                 $treeElement->action = 'pageelement';
                 $treeElement->type   = 'pageelement';
                 $treeElement->icon = 'el_' . $element->getTypeName();
@@ -582,7 +582,7 @@ class Tree
             $treeElement->id = $elementid;
             $treeElement->internalId = $elementid;
             $treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $_REQUEST[REQ_PARAM_LANGUAGE_ID], REQ_PARAM_MODEL_ID => $_REQUEST[REQ_PARAM_MODEL_ID]);
-            $treeElement->text = $e->name;
+            $treeElement->text = $e->label;
             $treeElement->icon = 'el_' . $e->type;
             $treeElement->action = 'element';
 
