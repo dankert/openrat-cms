@@ -1,4 +1,4 @@
-Openrat.Workbench.afterViewLoadedHandler.registerCallback(  function( element ) {
+Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
 
     registerOpenClose( $(element).find('fieldset.toggle-open-close') );
 

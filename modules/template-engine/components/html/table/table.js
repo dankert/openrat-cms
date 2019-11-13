@@ -1,4 +1,4 @@
-Openrat.Workbench.afterViewLoadedHandler.registerCallback(  function( element ) {
+Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
 
 
     // Manuelles Sortieren von Tabellen per Drag and drop.

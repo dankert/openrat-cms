@@ -1,4 +1,4 @@
-Openrat.Workbench.afterViewLoadedHandler.registerCallback(  function( element ) {
+Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
 
 
 	var form = $(element).find('form');
