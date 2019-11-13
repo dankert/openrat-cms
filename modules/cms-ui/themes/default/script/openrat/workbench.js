@@ -92,23 +92,7 @@ Openrat.Workbench = new function()
 	}
 
 
-	let CallbackStore = function() {
-	    let callbacks = [];
-
-        this.registerCallback = function( f ) {
-            callbacks.push( f );
-        }
-        this.fire = function() {
-            let a = Array.prototype.slice.call(arguments);
-            callbacks.forEach( function(f) {
-                f.apply(null,a);
-            });
-        };
-    }
-
-
-
-    this.afterNewActionHandler = new CallbackStore();
+    this.afterNewActionHandler = $.Callbacks();
 
 
     /**
@@ -331,7 +315,7 @@ Openrat.Workbench = new function()
 
 
 
-    this.afterViewLoadedHandler = new CallbackStore();
+    this.afterViewLoadedHandler = $.Callbacks();
 
     let afterViewFunctions = [];
 
