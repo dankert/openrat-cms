@@ -499,7 +499,7 @@ EOF
 	 */
 	function getRealExtension()
 	{
-		if	( !empty($this->extension))
+		if	( $this->extension )
 		{
 			return $this->extension;
 		}
@@ -515,52 +515,44 @@ EOF
 
     private function filterValue()
     {
-        $filterType = '';
-        if   ( $this->publisher instanceof PublishEdit    )  $filterType = 'edit';
-        if   ( $this->publisher instanceof PublishPublic  )  $filterType = 'public';
-        if   ( $this->publisher instanceof PublishPreview )  $filterType = 'preview';
-        if   ( $this->publisher instanceof PublishShow    )  $filterType = 'show';
+        $publishType = strtolower(substr(\ClassUtils::getSimpleClassName($this->publisher),7));
 
-        foreach(\ArrayUtils::getSubArray($this->getTotalSettings(), array( 'publish', $filterType, 'filter')) as $filterName )
+        foreach(\ArrayUtils::getSubArray($this->getTotalSettings(), array( 'filter')) as $filterEntry )
         {
-            switch( $filterName)
-            {
-                case 'less':
+        	$filterName = @$filterEntry['name'];
+        	$extension  = @$filterEntry['extension'];
 
-                    $parser = new Less_Parser(array(
-                        'sourceMap' => false,
-                        'indentation' => '	',
-                        'outputSourceFiles' => false,
-                        //'sourceMapBasepath' => $this->filename()
-                        //'sourceMapBasepath' => './'
-                    ));
+			if   ( $extension && strtolower($extension) != strtolower($this->getRealExtension()) )
+        		continue; // File extension does not match
 
-                    $parser->parse( $this->value );
-                    $this->value = $parser->getCss();
+        	$onPublish = (array) @$filterEntry['on'];
+        	if ( ! $onPublish || in_array('all',$onPublish ) )
+        		$onPublish = ['edit','public','preview','show'];
 
-                    break;
+        	if   ( $onPublish && ! in_array($publishType,$onPublish))
+        		continue; // Publish type does not match
 
-                case 'less-minifier':
+        	$parameter = (array) @$filterEntry['parameter'];
 
-                    $parser = new Less_Parser(array(
-                        'compress' => true,
-                        'sourceMap' => false,
-                        'indentation' => ''
-                    ));
+			$filterClassNameWithNS = 'cms\\publish\\filter\\' . $filterName.'Filter';
 
-                    $parser->parse( $this->value );
-                    $this->value = $parser->getCss();
+			if   ( !class_exists( $filterClassNameWithNS ) ) {
+				Logger::warn("Filter '$filterName' does not exist.");
+				continue;
+			}
 
-                    break;
+			$filter = new $filterClassNameWithNS();
 
-                case "js-minifier":
-                    $jz = new JSqueeze();
-                    $this->value = $jz->squeeze( $this->value);
-                    break;
+			// Copy filter configuration to filter instance.
+			foreach( $parameter as $name=>$value) {
+				if   ( property_exists($filter,$name))
+					$filter->$name = $value;
+			}
 
-                default:
-                    throw new \LogicException("Filter not found: ".$filterName);
-            }
+
+			// Execute the filter.
+			Logger::debug("Filtering '$this->filename' with filter '$filterName'.");
+			$this->value = $filter->filter( $this->value );
         }
 
         // Store in cache.
