@@ -15,12 +15,12 @@ indent_size = tab
 
 [*.xml]
 indent_style = tab
-indent_size = 1
+indent_size = tab
 
 
 [*.js]
 indent_style = tab
-indent_size = 1
+indent_size = tab
 
 ; YAML must be indented by 2 spaces
 [*.yml]
