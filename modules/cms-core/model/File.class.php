@@ -19,6 +19,7 @@ namespace cms\model;
 
 
 // Standard Mime-Type 
+use cms\publish\filter\AbstractFilter;
 use cms\publish\PublishEdit;
 use cms\publish\PublishPreview;
 use cms\publish\PublishPublic;
@@ -549,6 +550,7 @@ EOF
 				continue;
 			}
 
+			/** @var AbstractFilter $filter */
 			$filter = new $filterClassNameWithNS();
 
 			// Copy filter configuration to filter instance.
@@ -560,7 +562,18 @@ EOF
 
 			// Execute the filter.
 			Logger::debug("Filtering '$this->filename' with filter '$filterName'.");
-			$this->value = $filter->filter( $this->value );
+
+			try {
+
+				$this->value = $filter->filter( $this->value );
+			} catch( \Exception $e ) {
+				// Filter has some undefined error.
+				Logger::warn( $e->getTraceAsString() );
+				if   ( $this->publisher instanceof PublishPublic )
+					return ''; // Do not show errors on public publishing.
+				else
+					return $e->getMessage()."\n".$e->getTraceAsString();
+			}
         }
 
         // Store in cache.
