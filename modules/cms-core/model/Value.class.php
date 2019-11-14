@@ -1491,12 +1491,7 @@ SQL
 						    $inhalt = substr($inhalt,0,-4);
 
 						$db = db();
-						$params = array('dbid'      =>$db->id,
-						                'objectid'  =>$this->page->objectid,
-						                'modelid'   =>$this->page->modelid,
-						                'languageid'=>$this->page->languageid,
-						                'elementid' =>$this->element->elementid );
-						$inhalt .= '/'.basename(Html::url('page',null,$this->page->objectid,$params));
+						$inhalt .= '/#/page/'.$this->page->objectid;
 						break;
 					case 'lastch_user_username':
 						$user = $this->page->lastchangeUser;
