@@ -433,7 +433,7 @@ class MustacheBlock extends MustacheNode {
         if  ( !is_object($this->tag))
             return true; // on root-block, there is no tag.
 
-        $propIsTrue = boolval( $this->getValue( $data ) );
+        $propIsTrue = (boolean) $this->getValue( $data );
 
         if  ( $this->tag->type == MustacheTag::NEGATION )
             $propIsTrue = ! $propIsTrue;
