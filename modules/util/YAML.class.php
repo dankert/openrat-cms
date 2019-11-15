@@ -42,7 +42,7 @@ class YAML
 	 * @param int $wordwrap Pass in 0 for no wordwrap, false for default (40)
 	 * @param bool $no_opening_dashes Do not start YAML file with "---\n"
 	 */
-	public static function dump($array, $indent = false, $wordwrap = false, $no_opening_dashes = false)
+	public static function dump($array, $indent = false, $wordwrap = false, $no_opening_dashes = true)
 	{
 		return Spyc::YAMLDump( $array,$indent,$wordwrap,$no_opening_dashes );
 	}
