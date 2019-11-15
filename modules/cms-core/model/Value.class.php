@@ -1253,9 +1253,7 @@ SQL
 				// In dieser wird der Code in eine Datei geschrieben und
 				// von dort eingebunden.
 				$code = new Code();
-				$code->page = &$this->page;
-				$code->setObjectId( $this->page->objectid );
-				$code->delOutput();
+				$code->setContextPage($this->page );
 				$code->code = $this->element->code;
 
                 ob_start();
@@ -1292,13 +1290,11 @@ SQL
 					{
                         /** @var \Macro $macro */
                         $macro = new $className;
-						$macro->page = &$this->page;
 
 						if	( method_exists( $macro,'execute' ) )
 						{
 							//$$macro->delOutput();
-							$macro->objectid = $this->page->objectid;
-							$macro->page    = &$this->page;
+							$macro->setContextPage( $this->page );
 
 							$parameters = $this->element->getDynamicParameters();
 
@@ -1311,8 +1307,9 @@ SQL
 
                             foreach( $parameters as $param_name=>$param_value )
 							{
-								if	( $param_value[0]=='{')
+								if	( $param_value &&  $param_value[0]=='{')
 								{
+									// TODO: Why this? Better use the VariableResolver for this.
 									$elName   = substr($param_value,1,strpos($param_value,'}')-1);
 									$template = new Template($this->page->templateid);
 									$elements = $template->getElementNames();
@@ -1330,13 +1327,13 @@ SQL
 								}
 								if	( isset( $macro->$param_name ) )
 								{
-									Logger::debug("Setting parameter for Macro-class $className, ".$param_name.':'.$param_value );
+									Logger::trace("Setting parameter for Macro-class $className, ".$param_name.':'.$param_value );
 									
 									// Die Parameter der Makro-Klasse typisiert setzen.
 									if	( is_int($macro->$param_name) )
 										$macro->$param_name = intval($param_value);
 									elseif	( is_array($macro->$param_name) )
-										$macro->$param_name = explode(',',$param_value);
+										$macro->$param_name = (array)$param_value;
 									else
 										$macro->$param_name = $param_value;
 										
@@ -1344,7 +1341,7 @@ SQL
 								else
 								{
 									if	( !$this->publisher->isPublic() )
-										$inhalt .= "WARNING: Unknown parameter $param_name in macro $className\n";
+										$inhalt .= "*WARNING*: Unknown parameter $param_name in macro $className\n";
 								}
 							}
 

@@ -23,25 +23,19 @@ use cms\model\Project;
  * Service-Klasse fuer allgemeine Interface-Methoden. Insbesondere
  * in Code-Elementen kann und soll auf diese Methoden zurueckgegriffen
  * werden.
- * @author $Author$
- * @version $Revision$
- * @package openrat.services
+ *
+ * @author Jan Dankert
  */
 class Macro
 {
     /**
-     * @var \cms\model\Project Projekt
-     */
-	var $output   = '';
-	var $objectid = 0;
-
-    /**
      * @var Page
      */
-	var $page;
-	var $parameters  = array();
-	var $description = '';
+	protected $page;
 
+	public function setContextPage( &$page ) {
+		$this->page = $page;
+	}
 	
 	/**
 	 * Ausführen des Makros. Diese Methode sollte durch die Unterklasse überschrieben werden.
@@ -55,9 +49,9 @@ class Macro
 	/**
 	 * Holt die aktuellen Datenbankverbindung.
 	 */
-	public function db()
+	protected function db()
 	{
-		return db_connection();
+		return db();
 	}
 
 	
@@ -65,9 +59,9 @@ class Macro
 	 * Holt die aktuelle Objekt-Id.
 	 * @return number
 	 */
-	public function getObjectId()
+	protected function getObjectId()
 	{
-		return $this->objectid;
+		return $this->page->objectid;
 	}
 
 	
@@ -75,9 +69,9 @@ class Macro
 	 * Holt die aktuelle Seite.
 	 * @return \cms\model\Page
 	 */
-	public function getPage()
+	protected function getPage()
 	{
-		return new Page( $this->objectid );
+		return $this->page;
 	}
 	
 	
@@ -85,26 +79,17 @@ class Macro
 	 * Holt das aktuelle Objekt.
 	 * @return Object
 	 */
-	public function &getObject()
+	protected function &getObject()
 	{
 		return $this->page;
 	}
 
 	
-	/**
-	 * Setzt eine Objekt-Id.
-	 * @param int $objectid
-	 */
-	public function setObjectId( $objectid )
-	{
-		$this->objectid = $objectid;
-	}
 
-	
 	/**
 	 * Ermittelt die Id des Wurzelordners im aktuellen Projekt. 
 	 */
-	public function getRootObjectId()
+	protected function getRootObjectId()
 	{
 	    $project = new Project( $this->page->projectid);
 		return $project->getRootObjectId();
@@ -112,27 +97,16 @@ class Macro
 
 	
 	/**
-	 * DO NOT USE.
-     * @deprecated
-	 */
-	public function folderid()
-	{
-		global $SESS;
-		return $SESS['folderid'];
-	}
-
-
-	/**
 	 * Löscht die bisher erzeugte Ausgabe.
      * @deprecated useless
 	 */
 	public function delOutput()
 	{
-		$this->output = '';
 	}
 	
 	/**
-	 * Ergänzt die Standardausgabe um den gewünschten Wert. 
+	 * Ergänzt die Standardausgabe um den gewünschten Wert.
+	 * @deprecated use echo()
 	 */
 	public function output( $text )
 	{
@@ -141,7 +115,8 @@ class Macro
 
 	
 	/**
-	 * Ergänzt die Standardausgabe um den gewünschten Wert. Es wird ein Zeilenendezeichen ergänzt. 
+	 * Ergänzt die Standardausgabe um den gewünschten Wert. Es wird ein Zeilenendezeichen ergänzt.
+	 * @deprecated use echo()
 	 */
 	public function outputLn( $text )
 	{
@@ -149,17 +124,6 @@ class Macro
 	}
 
 
-	/**
-	 * Ermittelt die bisher erstellte Ausgabe.
-     * @deprecated
-	 * @return string
-	 */
-	public function getOutput()
-	{
-		return $this->output;
-	}
-	
-	
 	/**
 	 * Setzt eine Sitzungsvariable.
 	 * 

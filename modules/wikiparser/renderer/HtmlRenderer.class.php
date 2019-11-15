@@ -230,12 +230,11 @@ class HtmlRenderer
 								{
 									$macro = new $className;
 									/* @type $macro Macro */
-									$macro->page = &$this->page;
+									$macro->setContextPage( $this->page );
 			
 									if	( method_exists( $macro,'execute' ) )
 									{
-										$macro->objectid = $this->page->objectid;
-										$macro->page     = &$this->page;
+										$macro->setContextPage( $this->page );
 			
 										foreach( $child->attributes as $param_name=>$param_value )
 										{

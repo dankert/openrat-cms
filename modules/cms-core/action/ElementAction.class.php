@@ -8,6 +8,8 @@ use cms\model\Project;
 use cms\model\Template;
 use cms\model\Folder;
 use cms\model\BaseObject;
+use ReflectionClass;
+use ReflectionProperty;
 use Text;
 
 
@@ -420,7 +422,11 @@ class ElementAction extends BaseAction
                             $className = $this->element->subtype;
                             $fileName  = OR_DYNAMICCLASSES_DIR.'/'.$className.'.class.'.PHP_EXT;
 
-                            if	( is_file( $fileName ) )
+							$description = '';
+							$paramList   = array();
+							$parameters  = array();
+
+							if	( is_file( $fileName ) )
                             {
                                 require( $fileName );
 
@@ -428,40 +434,29 @@ class ElementAction extends BaseAction
                                 {
                                     $dynEl = new $className;
 
-                                    $desc = array();
-
                                     $description = $dynEl->description;
-                                    $paramList   = array();
 
                                     $old = $this->element->getDynamicParameters();
-                                    $parameters = '';
 
-                                    foreach( get_object_vars($dynEl) as $paramName=>$paramDesc )
+									$reflect = new ReflectionClass($dynEl);
+									$props   = $reflect->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED);
+                                    foreach( get_object_vars($dynEl) as $paramName=>$paramValue )
                                     {
-                                        if	( isset( $dynEl->$paramName ) )
-                                        {
-                                            if	( is_object($dynEl->$paramName))
-                                                continue;
-                                            if	( is_array($dynEl->$paramName))
-                                                continue;
-                                            if	( in_array($paramName,array('output')))
-                                                continue;
-                                            $paramList[$paramName] = $dynEl->$paramName;
+										$paramList[$paramName] = print_r( $paramValue, true);
 
-                                            $parameters .= $paramName.':';
-                                            if	( !empty($old[$paramName]) )
-                                                $parameters .= $old[$paramName];
-                                            else
-                                                $parameters .= $dynEl->$paramName;
-                                            $parameters .= "\n";
-                                        }
+										if	( @$old[$paramName] )
+											$parameters[$paramName] = $old[$paramName];
+										else
+											$parameters[$paramName] = $paramValue;
                                     }
 
-                                    $this->setTemplateVar('dynamic_class_description',$dynEl->description );
-                                    $this->setTemplateVar('dynamic_class_parameters' ,$paramList          );
-                                    $this->setTemplateVar('parameters'               ,$parameters         );
                                 }
                             }
+
+							$this->setTemplateVar('dynamic_class_description',$description );
+							$this->setTemplateVar('dynamic_class_parameters' ,$paramList          );
+							$this->setTemplateVar('parameters'               ,\Spyc::YAMLDump($parameters)  );
+
 
                             break;
 

@@ -2,6 +2,7 @@
 namespace cms\model;
 
 
+use ArrayUtils;
 use Logger;
 
 /**
@@ -538,9 +539,9 @@ SQL
 
 	    $items = \Spyc::YAMLLoadString( $this->code );
 
-	    Logger::trace('dynamic-parameters: '.print_r($items,true));
+        Logger::trace('dynamic-parameters: '.print_r($items,true));
 
-		return $items;
+		return (array) $items;
 	}
 
 
