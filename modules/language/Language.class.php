@@ -57,7 +57,7 @@ class Language
 
     private function getLanguageSource()
     {
-        return YAML::parse( $this->srcFile);
+        return YAML::parse( file_get_contents($this->srcFile) );
     }
 
 
