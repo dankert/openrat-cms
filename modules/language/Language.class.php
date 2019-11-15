@@ -3,7 +3,7 @@
 namespace language;
 
 use LogicException;
-use Spyc;
+use YAML;
 
 class Language
 {
@@ -57,7 +57,7 @@ class Language
 
     private function getLanguageSource()
     {
-        return Spyc::YAMLLoad( $this->srcFile);
+        return YAML::parse( $this->srcFile);
     }
 
 

@@ -6,7 +6,7 @@ namespace cms\model;
 use ArrayUtils;
 use cms\publish\Publish;
 use phpseclib\Math\BigInteger;
-use Spyc;
+use YAML;
 use template_engine\components\ElseComponent;
 
 /**
@@ -1334,7 +1334,7 @@ SQL
      */
     public function getSettings()
     {
-        $settings = Spyc::YAMLLoadString($this->settings);
+        $settings = YAML::parse($this->settings);
 
         // pass-by-reference
         array_walk_recursive($settings, function (&$item, $key) {

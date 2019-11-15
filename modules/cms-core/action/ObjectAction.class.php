@@ -575,7 +575,7 @@ class ObjectAction extends BaseAction
 
         // Validate YAML-Settings
         try {
-            \Spyc::YAMLLoad( $this->baseObject->settings);
+            \YAML::parse( $this->baseObject->settings);
         }
         catch( \Exception $e )
         {

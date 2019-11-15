@@ -125,7 +125,7 @@ class API
 
             case CMS_API_OUTPUT_YAML:
                 header('Content-Type: application/yaml; charset=UTF-8');
-                $spyc = new \Spyc();
+                $spyc = new \YAML();
                 $output = $spyc->dump($data);
                 break;
         }

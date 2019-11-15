@@ -97,7 +97,7 @@ class ConfigurationAction extends BaseAction
             }
         });
 
-        $this->setTemplateVar('source',\Spyc::YAMLDump($conf,4,0,true));
+        $this->setTemplateVar('source',\YAML::dump($conf,4,0,true));
     }
 
 

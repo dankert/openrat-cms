@@ -455,7 +455,7 @@ class ElementAction extends BaseAction
 
 							$this->setTemplateVar('dynamic_class_description',$description );
 							$this->setTemplateVar('dynamic_class_parameters' ,$paramList          );
-							$this->setTemplateVar('parameters'               ,\Spyc::YAMLDump($parameters)  );
+							$this->setTemplateVar('parameters'               ,\YAML::dump($parameters)  );
 
 
                             break;

@@ -70,7 +70,7 @@ class Dispatcher
 
         // Sollte nur 1x pro Sitzung ausgeführt werden. Wie ermitteln wir das?
         //if ( DEVELOPMENT )
-        //    Logger::debug( "Effective configuration:\n".Spyc::YAMLDump($conf) );
+        //    Logger::debug( "Effective configuration:\n".YAML::YAMLDump($conf) );
 
         if (!empty($conf['security']['umask']))
             umask(octdec($conf['security']['umask']));

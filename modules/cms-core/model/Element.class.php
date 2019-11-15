@@ -537,7 +537,7 @@ SQL
 	    // Fixing old syntax ("key:value") to valid YAML syntax.
 	    $this->code = preg_replace( '/^(\w+)\:(.+)$/m','${1}: ${2}', $this->code );
 
-	    $items = \Spyc::YAMLLoadString( $this->code );
+	    $items = \YAML::parse( $this->code );
 
         Logger::trace('dynamic-parameters: '.print_r($items,true));
 

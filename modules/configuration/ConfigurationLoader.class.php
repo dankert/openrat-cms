@@ -66,7 +66,7 @@ class ConfigurationLoader
             return array();
         }
 
-        $customConfig = Spyc::YAMLLoad( $configFile );
+        $customConfig = YAML::parse( $configFile );
 
         // Resolve variables in all custom configuration values
         array_walk_recursive( $customConfig, function(&$value,$key)
