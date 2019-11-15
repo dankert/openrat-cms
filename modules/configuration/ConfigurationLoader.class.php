@@ -66,7 +66,7 @@ class ConfigurationLoader
             return array();
         }
 
-        $customConfig = YAML::parse( $configFile );
+        $customConfig = YAML::parse( file_get_contents($configFile) );
 
         // Resolve variables in all custom configuration values
         array_walk_recursive( $customConfig, function(&$value,$key)

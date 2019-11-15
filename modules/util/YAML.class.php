@@ -1,6 +1,5 @@
 <?php
 
-use Spyc;
 
 /**
  * YAML Wrapper for the Spyc implementation of a YAML-Parser.
