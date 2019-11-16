@@ -210,91 +210,20 @@ class HtmlRenderer
 						
 						$tag = '';
 						
-						if	( strtolower($child->name) == 'help' )
-						{
-							$tag = 'tt';
-							$macros = FileUtils::readDir('./macro');
-							$val = 'Available macros: '.implode(',',$macros);
+						$className = ucfirst($child->name);
+
+						$runner = new MacroRunner();
+						try {
+
+							$val .= $runner->executeMacro($className,$child->attributes,$this->page);
 						}
-						else
-						{
-							$className = ucfirst($child->name);
-							$fileName  = OR_DYNAMICCLASSES_DIR.$className.'.class.php';
-							if	( is_file( $fileName ) )
-							{
-								// Fuer den Fall, dass eine Dynamic-Klasse mehrmals pro Vorlage auftritt
-								if	( !class_exists($className) )
-									require( $fileName );
-			
-								if	( class_exists($className) )
-								{
-									$macro = new $className;
-									/* @type $macro Macro */
-									$macro->setContextPage( $this->page );
-			
-									if	( method_exists( $macro,'execute' ) )
-									{
-										$macro->setContextPage( $this->page );
-			
-										foreach( $child->attributes as $param_name=>$param_value )
-										{
-											if	( $param_name == 'help')
-												$val .= 'HELP: Available macro attributes in '.$className.': '.implode(',',array_keys(get_object_vars($macro))."\n");
-											if	( isset( $macro->$param_name ) )
-											{
-												// Die Parameter der Makro-Klasse typisiert setzen.
-												if	( is_int($macro->$param_name) )
-													$macro->$param_name = intval($param_value);
-												elseif	( is_array($macro->$param_name) )
-													$macro->$param_name = explode(',',$param_value);
-												else
-													$macro->$param_name = $param_value;
-											}
-											else
-											{
-												$val .= "WARNING: Unknown parameter '$param_name' in macro '$className'\n";
-											}
-												
-												
-												
-										}
-
-                                        ob_start();
-
-                                        $macro->execute();
-
-                                        $output = ob_get_contents();
-                                        ob_end_clean();
-
-										$val .= $output;
-									}
-									else
-									{
-										Logger::warn('class:'.$className.', no method: execute()');
-										if	( config('editor','macro','show_errors') )
-											$val = 'Internal Macro error: method execute() not found';
-									}
-								}
-								else
-								{
-									Logger::warn('class not found:'.$className);
-									if	( config('editor','macro','show_errors') )
-										$val = 'Internal Macro error: class not found';
-																	}
-							}
-							else
-							{
-								Logger::warn('file not found:'.$fileName);
-								
-								if	( config('editor','macro','show_errors') )
-								{
-									$tag           = 'tt';
-									$attr['style'] = 'color:red';
-									$val = 'Unknown Macro: "'.$child->name.'", use macro "help" for a list of available macros';
-								}
-							}
+						catch( Exception $e ) {
+							if	( config('editor','macro','show_errors') )
+								$tag           = 'tt';
+								$attr['style'] = 'color:red';
+								$val .= 'Macro warning: '.$e->getMessage();
 						}
-		
+
 						break;
 						
 					case 'linebreakelement':
