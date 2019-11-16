@@ -170,7 +170,6 @@ class Folder extends BaseObject
 		$sql = $db->sql('SELECT id FROM {{object}}'.
 		               '  WHERE parentid={objectid}'.
 		               '  ORDER BY typeid,orderid ASC' );
-		$sql->setInt('projectid',$this->projectid );
 		$sql->setInt('objectid' ,$this->objectid  );
 		
 		return( $sql->getCol() );

@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+use cms\model\BaseObject;
 use cms\model\File;
 use cms\model\Folder;
 use cms\model\Image;
@@ -64,10 +65,9 @@ class Album extends Macro
 			$folderid = $this->folderid;
 		else
 			$folderid = $this->page->parentid;
-		
 		$f      = new Folder($folderid);
 		
-		$files = $f->getFiles();
+		$files = $f->getObjectIdsByType(BaseObject::TYPEID_IMAGE);
 		
 		$this->output('<dl class="album">');
 		
