@@ -62,6 +62,8 @@ class PublishPreview extends Publish
                     case BaseObject::TYPEID_URL:
                         $inhalt = \Html::url('url','show',$link->linkedObjectId,$param);
                         break;
+					default:
+						$inhalt = 'Unknown link type: '.$linkedObject->typeid;
                 }
                 break;
 
@@ -71,7 +73,10 @@ class PublishPreview extends Publish
                 $inhalt = $url->url;
 
                 break;
-        }
+			default:
+				$inhalt = 'Unknown type: '.$to->typeid;
+
+		}
 
         return $inhalt;
 

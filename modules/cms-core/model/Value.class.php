@@ -2,6 +2,7 @@
 namespace cms\model;
 use ArrayUtils;
 use cms\publish\Publish;
+use MacroRunner;
 use \ObjectNotFoundException;
 use \Logger;
 use \Text;
@@ -1278,104 +1279,18 @@ SQL
 					break;
 
 				$this->page->load();
-				$className = $this->element->subtype;
-				$fileName  = OR_DYNAMICCLASSES_DIR.$className.'.class.php';
-				if	( is_file( $fileName ) )
-				{
-					// Fuer den Fall, dass ein Makro mehrmals pro Vorlage auftritt
-					if	( !class_exists($className) )
-						require( $fileName );
+				$macroName     = $this->element->subtype;
+				$macroSettings = $this->element->getDynamicParameters();
 
-					if	( class_exists($className) )
-					{
-                        /** @var \Macro $macro */
-                        $macro = new $className;
-
-						if	( method_exists( $macro,'execute' ) )
-						{
-							//$$macro->delOutput();
-							$macro->setContextPage( $this->page );
-
-							$parameters = $this->element->getDynamicParameters();
-
-                            array_walk_recursive($parameters, function (&$item, $key) {
-                                $item = \Text::resolveVariables($item, 'setting', function ($var) {
-                                    return ArrayUtils::getSubValue($this->page->getSettings(),explode('.',$var) );
-                                });
-                                return $item;
-                            });
-
-                            foreach( $parameters as $param_name=>$param_value )
-							{
-								if	( $param_value &&  $param_value[0]=='{')
-								{
-									// TODO: Why this? Better use the VariableResolver for this.
-									$elName   = substr($param_value,1,strpos($param_value,'}')-1);
-									$template = new Template($this->page->templateid);
-									$elements = $template->getElementNames();
-									$elementid = array_search($elName,$elements);
-									
-									$value = new Value();
-									$value->elementid  = $elementid;
-									$value->element    = new Element( $elementid );
-									$value->element->load();
-									$value->pageid     = $this->page->pageid;
-									$value->languageid = $this->page->languageid;
-									$value->load();
-									
-									$param_value = $value->getRawValue();
-								}
-								if	( isset( $macro->$param_name ) )
-								{
-									Logger::trace("Setting parameter for Macro-class $className, ".$param_name.':'.$param_value );
-									
-									// Die Parameter der Makro-Klasse typisiert setzen.
-									if	( is_int($macro->$param_name) )
-										$macro->$param_name = intval($param_value);
-									elseif	( is_array($macro->$param_name) )
-										$macro->$param_name = (array)$param_value;
-									else
-										$macro->$param_name = $param_value;
-										
-								}
-								else
-								{
-									if	( !$this->publisher->isPublic() )
-										$inhalt .= "*WARNING*: Unknown parameter $param_name in macro $className\n";
-								}
-							}
-
-                            ob_start();
-
-                            $macro->execute();
-
-                            $output = ob_get_contents();
-                            ob_end_clean();
-							$inhalt .= $output;
-						}
-						else
-						{
-							Logger::warn('element:'.$this->element->name.', '.
-							             'class:'.$className.', no method: execute()');
-							if	( !$this->publisher->isPublic() )
-								$inhalt = lang('ERROR_IN_ELEMENT').' (missing method: execute())';
-						}
-					}
-					else
-					{
-						Logger::warn('element:'.$this->element->name.', '.
-						             'class not found:'.$className);
-						if	( !$this->publisher->isPublic() )
-							$inhalt = lang('ERROR_IN_ELEMENT').' (class not found:'.$className.')';
-					}
+				$runner = new MacroRunner();
+				try {
+					$inhalt .= $runner->executeMacro($macroName, $macroSettings,$this->page);
 				}
-				else
-				{
-					Logger::warn('element:'.$this->element->name.', '.
-					             'file not found:'.$fileName);
+				catch( \OpenRatException $e ) {
 					if	( !$this->publisher->isPublic() )
-						$inhalt = lang('ERROR_IN_ELEMENT').' (file not found:'.$fileName.')';
-						
+						$inhalt = lang($e->key).' ('.$e->getMessage().')'; // Inform the viewer
+					else
+						; // Keep empty value in public mode.
 				}
 
 				// Wenn HTML-Ausgabe, dann Sonderzeichen in HTML �bersetzen
