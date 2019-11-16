@@ -1407,75 +1407,90 @@ SQL
 						break;
 					case 'lastch_user_username':
 						$user = $this->page->lastchangeUser;
-						$user->load();
+						if   ( $user->userid )
+							$user->load();
 						$inhalt = $user->name;
 						break;
 					case 'lastch_user_fullname':
 						$user = $this->page->lastchangeUser;
-						$user->load();
+						if   ( $user->userid )
+							$user->load();
 						$inhalt = $user->fullname;
 						break;
 					case 'lastch_user_mail':
 						$user = $this->page->lastchangeUser;
-						$user->load();
+						if   ( $user->userid )
+							$user->load();
 						$inhalt = $user->mail;
 						break;
 					case 'lastch_user_desc':
 						$user = $this->page->lastchangeUser;
-						$user->load();
+						if   ( $user->userid )
+							$user->load();
 						$inhalt = $user->desc;
 						break;
 					case 'lastch_user_tel':
 						$user = $this->page->lastchangeUser;
-						$user->load();
+						if   ( $user->userid )
+							$user->load();
 						$inhalt = $user->tel;
 						break;
 
 					case 'create_user_username':
 						$user = $this->page->createUser;
-						$user->load();
+						if   ( $user->userid )
+							$user->load();
 						$inhalt = $user->name;
 						break;
 					case 'create_user_fullname':
 						$user = $this->page->createUser;
-						$user->load();
+						if   ( $user->userid )
+							$user->load();
 						$inhalt = $user->fullname;
 						break;
 					case 'create_user_mail':
 						$user = $this->page->createUser;
-						$user->load();
+						if   ( $user->userid )
+							$user->load();
 						$inhalt = $user->mail;
 						break;
 					case 'create_user_desc':
 						$user = $this->page->createUser;
-						$user->load();
+						if   ( $user->userid )
+							$user->load();
 						$inhalt = $user->desc;
 						break;
 					case 'create_user_tel':
 						$user = $this->page->createUser;
-						$user->load();
+						if   ( $user->userid )
+							$user->load();
 						$inhalt = $user->tel;
 						break;
 
 					case 'act_user_username':
 						$user = \Session::getUser();
-						$inhalt = $user->name;
+						if   ( $user )
+							$inhalt = $user->name;
 						break;
 					case 'act_user_fullname':
 						$user = \Session::getUser();
-						$inhalt = $user->fullname;
+						if   ( $user )
+							$inhalt = $user->fullname;
 						break;
 					case 'act_user_mail':
 						$user = \Session::getUser();
-						$inhalt = $user->mail;
+						if   ( $user )
+							$inhalt = $user->mail;
 						break;
 					case 'act_user_desc':
 						$user = \Session::getUser();
-						$inhalt = $user->desc;
+						if   ( $user )
+							$inhalt = $user->desc;
 						break;
 					case 'act_user_tel':
 						$user = \Session::getUser();
-						$inhalt = $user->tel;
+						if   ( $user )
+							$inhalt = $user->tel;
 						break;
 					default:
 						Logger::warn('element:'.$this->element->name.', '.

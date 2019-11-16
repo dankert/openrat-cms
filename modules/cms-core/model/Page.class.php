@@ -549,8 +549,19 @@ SQL
 			$val->languageid = $this->languageid;
 			$val->modelid    = $this->modelid;
 			$val->page       = $this;
-			$val->generate();
-			//$val->page       = null;
+			try {
+				$val->generate();
+			} catch( \Exception $e ) {
+				// Unrecoverable Error while generating the content.
+
+				Logger::warn('Could not generate Value '.$val->__toString() . ': '.$e->getMessage() );
+
+				if   ( $this->publisher->isPublic() )
+					$val->value = '';
+				else
+					$val->value = '[Warning: '.$e->getMessage().']';
+			}
+
 			$this->values[$elementid] = $val;
 		}
 	}
