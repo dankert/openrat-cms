@@ -1113,6 +1113,7 @@ SQL
 			case Element::ELEMENT_TYPE_SELECT:
 
 				$inhalt = $this->text;
+				$format = $this->format;
 
 				// Wenn Inhalt leer, dann versuchen, den Inhalt der Default-Sprache zu laden.
 				if   ( $inhalt == '' && $conf['content']['language']['use_default_language'] )
@@ -1124,14 +1125,17 @@ SQL
 				}
 				
 				// Wenn Inhalt leer, dann Vorbelegung verwenden
-				if   ( $inhalt == '' )
+				if   ( $inhalt == '' )  {
+
 					$inhalt = $this->element->defaultText;
+					$format = $this->element->format;
+				}
 
 				// Wenn HTML nicht erlaubt und Wiki-Formatierung aktiv, dann einfache HTML-Tags in Wiki umwandeln
-                $pageIsHtml = $this->page->mimeType() == 'text/html';
+                $pageIsHtml = $this->page->isHtml();
 
                 //
-				switch( $this->format )
+				switch( $format )
 				{
                     case Element::ELEMENT_FORMAT_TEXT:
                     case Element::ELEMENT_FORMAT_HTML:
