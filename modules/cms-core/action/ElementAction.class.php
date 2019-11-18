@@ -106,9 +106,9 @@ class ElementAction extends BaseAction
 
 
         if	( $this->hasRequestVar('default_longtext'))
-            $this->element->defaultText     = $this->getRequestVar('default_longtext',OR_FILTER_RAW);
+            $this->element->defaultText     = $this->getRequestVar('default_longtext',OR_FILTER_TEXT);
         else
-            $this->element->defaultText     = $this->getRequestVar('default_text',OR_FILTER_ALPHANUM);
+            $this->element->defaultText     = $this->getRequestVar('default_text',OR_FILTER_TEXT);
 
         $this->element->subtype         = $this->getRequestVar('subtype');
 
@@ -127,7 +127,7 @@ class ElementAction extends BaseAction
         if	( $this->hasRequestVar('select_items'))
             $this->element->code         = $this->getRequestVar('select_items');
         else
-            $this->element->code         = $this->getRequestVar('code'            ,'raw');
+            $this->element->code         = $this->getRequestVar('code'            ,OR_FILTER_RAW);
 
         if	( $this->hasRequestVar('name') )
             $this->element->name = $this->getRequestVar('name');
