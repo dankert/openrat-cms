@@ -589,21 +589,22 @@ SQL
 		global $conf;
 
 		// Inhalt ist mit anderer Seite verkn�pft.
-		if	( in_array($this->element->type,array('text','longtext','date','number')) && intval($this->linkToObjectId) != 0 && !$this->isLink )
+		if	( in_array($this->element->typeid,[Element::ELEMENT_TYPE_TEXT,Element::ELEMENT_TYPE_LONGTEXT,Element::ELEMENT_TYPE_DATE,Element::ELEMENT_TYPE_NUMBER]) && intval($this->linkToObjectId) != 0 && !$this->isLink )
 		{
-			$p = new Page( $this->linkToObjectId );
-			$p->load();
+			$linkedPage = new Page( $this->linkToObjectId );
+			$linkedPage->load();
 			
-			$v = new Value();
-			$v->isLink     = true;
-			$v->pageid     = $p->pageid;
-			$v->page       = $p;
-			$v->element    = $this->element;
-			$v->languageid = $this->languageid;
+			$linkedValue = new Value();
+			$linkedValue->isLink     = true;
+			$linkedValue->pageid     = $linkedPage->pageid;
+			$linkedValue->page       = $linkedPage;
+			$linkedValue->element    = $this->element;
+			$linkedValue->languageid = $this->languageid;
+			$linkedValue->publisher  = $this->publisher;
 			//$v->modelid    = $this->modelid;
-			$v->load();
-			$v->generate();
-			$this->value = $v->value;
+			$linkedValue->load();
+			$linkedValue->generate();
+			$this->value = $linkedValue->value;
 			return;
 		}
 		
