@@ -169,6 +169,19 @@ class PublishPublic extends Publish
 
         $schema = $this->linkSchema;
 
+		$counter = 0;
+        while( $to->typeid == BaseObject::TYPEID_LINK )
+		{
+			if   ( $counter++ > 10 )
+				throw new \LogicException("Too much redirects while following a link. Stopped at #".$to->objectid );
+
+			$link = new Link( $to->objectid );
+			$link->load();
+
+			$to = new BaseObject( $link->linkedObjectId );
+			$to->objectLoad();
+		}
+
         switch( $to->typeid )
         {
             case BaseObject::TYPEID_FILE:
@@ -197,46 +210,12 @@ class PublishPublic extends Publish
                 $filename = $p->getFilename();
                 break;
 
-            case BaseObject::TYPEID_LINK:
-                $link = new Link( $to->objectid );
-                $link->load();
-
-                $linkedObject = new BaseObject( $link->linkedObjectId );
-                $linkedObject->objectLoad();
-
-                switch( $linkedObject->typeid )
-                {
-                    case BaseObject::TYPEID_FILE:
-                        $f = new File( $link->linkedObjectId );
-                        $f->load();
-                        $f->content_negotiation = $from->content_negotiation;
-                        $filename = $f->filename;
-                        $to = $f;
-                        break;
-
-                    case BaseObject::TYPEID_PAGE:
-                        $p = new Page( $link->linkedObjectId );
-                        $p->languageid          = $from->languageid;
-                        $p->modelid             = $from->modelid;
-                        $p->cut_index           = $from->cut_index;
-                        $p->content_negotiation = $from->content_negotiation;
-                        $p->withLanguage        = $from->withLanguage;
-                        $p->withModel           = $from->withModel;
-                        $p->load();
-                        $filename = $p->getFilename();
-                        $to = $p;
-                        break;
-                    default:
-                        throw new \LogicException("Unknown Type ".$linkedObject->typeid.':'.$linkedObject->getType());
-                }
-                break;
-
             case BaseObject::TYPEID_URL:
                 $url = new Url( $to->objectid );
                 $url->load();
                 return $url->url;
             default:
-                throw new \LogicException("Unknown Type ".$to->typeid.':'.$to->getType() );
+                throw new \LogicException("Could not build a link to the unknown Type ".$to->typeid.':'.$to->getType() );
         }
 
 
