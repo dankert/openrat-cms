@@ -25,10 +25,8 @@ namespace {
     define('OR_FILTER_FILENAME', 'file');
     define('OR_FILTER_MAIL', 'mail');
     define('OR_FILTER_TEXT', 'text');
-    define('OR_FILTER_FULL', 'full');
     define('OR_FILTER_NUMBER', '123');
     define('OR_FILTER_RAW', 'raw');
-    define('OR_FILTER_ALL', 'all');
 }
 
 
@@ -64,7 +62,7 @@ namespace cms\action {
          * @param String $varName Schl�ssel
          * @return String Inhalt
          */
-        public function getRequestVar($varName, $transcode = OR_FILTER_FULL)
+        public function getRequestVar($varName, $transcode = OR_FILTER_TEXT)
         {
             if($varName == REQ_PARAM_ID)
                 return $this->id;
@@ -103,18 +101,8 @@ namespace cms\action {
                     break;
 
                 case OR_FILTER_TEXT:
-                case OR_FILTER_FULL:
-                case OR_FILTER_ALL:
-                    // Ausfiltern von Control-Chars ( ASCII < 32 außer CR,LF) und HTML (<,>)
-                    $white = '';
-                    $white .= chr(10) . chr(13); // Line-Feed, Carriage-Return
-                    for ($i = 32; $i <= 59; $i++) $white .= chr($i);  // Zahlen
-                    // 60: '<'
-                    $white .= chr(61);
-                    // 62: '>'
-                    for ($i = 63; $i <= 126; $i++) $white .= chr($i);  // abc
-                    for ($i = 128; $i <= 255; $i++) $white .= chr($i);  // Sonderzeichen incl. UTF-8, UTF-16 (beginnen mit Bit 1)
-                    break;
+                	// Allow all UTF-8 characters.
+                	return mb_convert_encoding($REQ[$varName], 'UTF-8', 'UTF-8');
 
                 case OR_FILTER_NUMBER:
                     $white = '1234567890.';

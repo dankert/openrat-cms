@@ -615,8 +615,8 @@ class ElementAction extends BaseAction
         $this->element->typeid = $this->getRequestId('typeid');
 
         $this->element->name = $this->getRequestVar('name'       ,OR_FILTER_ALPHANUM);
-        $this->element->label= $this->getRequestVar('label'      ,OR_FILTER_ALL);
-        $this->element->desc = $this->getRequestVar('description',OR_FILTER_ALL);
+        $this->element->label= $this->getRequestVar('label'      ,OR_FILTER_TEXT);
+        $this->element->desc = $this->getRequestVar('description',OR_FILTER_TEXT);
 
         $this->element->save();
 

@@ -126,7 +126,7 @@ namespace cms\action {
          * @param String $varName Schl�ssel
          * @return String Inhalt
          */
-        protected function getRequestVar($varName, $transcode = OR_FILTER_FULL)
+        protected function getRequestVar($varName, $transcode = OR_FILTER_TEXT)
         {
             return $this->request->getRequestVar($varName,$transcode);
         }
