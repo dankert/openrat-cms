@@ -20,28 +20,32 @@ Yes, there are a lot of good CMS in the world, and a lot of them are available f
 
 ## Install
 
-### What do I need?
+### Requirements
 
 You need a server with PHP >= 5.5 and a relational database.
 
 MariaDB and MySQL are recommended, while PostgresQL and SQLite are supported too.
  
 
+### Local installation
+ 
 #### Download and untar it
 
 Download the complete archive and install it on your server
 
-#### The GIT way
+#### Clone GIT repository
 
-`git pull`
+Or clone the repository with the command
 
-#### Docker
+`git clone http://git.code.weiherhei.de/openrat-cms.git`
 
-OpenRat-CMS is available [at Dockerhub](https://hub.docker.com/r/openrat/openrat-cms).
+or clone from Github
 
-## Configuration
+`git clone https://github.com/dankert/openrat-cms.git`
 
-Edit the file config/config.yml and enter your database access data, like:
+### Add database configuration
+
+Edit the file `config/config.yml` and enter your database access data, like:
  
     database:
       db:
@@ -50,4 +54,24 @@ Edit the file config/config.yml and enter your database access data, like:
         user    : "user"
         password: "password"
 
-That's it.
+### Docker
+
+OpenRat-CMS is available [at Dockerhub](https://hub.docker.com/r/openrat/openrat-cms).
+
+#### run docker container
+
+`docker run -d -p 8080:8080 dankert/openrat-cms`
+
+#### Environment variables
+
+| Name      | Description |   Default |
+| ----------- | ----------- | ------- |
+|DB_TYPE|database type|mysql
+|DB_HOST|database hostname|localhost
+|DB_NAME|database schema|cms
+|DB_USER|database user|
+|DB_PASS|database password|
+|CMS_MOTD|Message of the day|Welcome to dockerized CMS
+|CMS_NAME|Software name|OpenRat CMS (Docker)
+|CMS_OPERATOR|Name of your company|Docker-Host
+

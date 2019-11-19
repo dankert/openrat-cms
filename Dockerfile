@@ -3,10 +3,9 @@ FROM alpine:3.10
 LABEL maintainer="Jan Dankert"
 
 ENV DB_TYPE="mysql"
-ENV DB_TYPE="mysql"
 ENV DB_HOST="localhost"
 ENV DB_NAME="cms"
-ENV DB_USER=""
+ENV DB_USER="cms"
 ENV DB_PASS=""
 
 ENV CMS_MOTD="Welcome to dockerized CMS"
@@ -26,8 +25,13 @@ RUN apk --update --no-cache add \
     chown apache /var/log/apache2 && \
     chown apache /run/apache2 && \
     rm -r $DOCROOT/* && \
-    mkdir -p /var/www/preview && chown apache /var/www/preview && \
-    echo "Alias /preview /var/www/preview" >> /etc/apache2/httpd.conf && \
+    mkdir -p /var/www/localhost/preview && chown apache /var/www/localhost/preview && \
+    echo "Alias /preview /var/www/localhost/preview" >> /etc/apache2/httpd.conf && \
+    echo "<Directory \"/var/www/localhost/preview\"> " >> /etc/apache2/httpd.conf && \
+    echo "    AllowOverride None" >> /etc/apache2/httpd.conf && \
+    echo "    Options None" >> /etc/apache2/httpd.conf && \
+    echo "    Require all granted" >> /etc/apache2/httpd.conf && \
+    echo "</Directory>" >> /etc/apache2/httpd.conf && \
     echo "Protocols h2 h2c http/1.1" >> /etc/apache2/httpd.conf && \
     echo "H2ModernTLSOnly off"       >> /etc/apache2/httpd.conf
 
@@ -70,6 +74,10 @@ log:\n\
   level :  "info"\n\
 \n\
 production: true\n\
+\n\
+publish:\n\
+  filesystem:\n\
+    directory: /var/www/localhost/preview\n\
 \n\
 application:\n\
 	name: "${env:CMS_NAME}"\n\
