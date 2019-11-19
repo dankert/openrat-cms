@@ -1688,4 +1688,9 @@ SQL
         return '';
     }
 
+
+    public function __toString()
+	{
+		return "Value: ".print_r($this,true);
+	}
 }
