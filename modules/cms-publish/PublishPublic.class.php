@@ -9,6 +9,7 @@ use cms\model\Link;
 use cms\model\Page;
 use cms\model\Project;
 use cms\model\Url;
+use FileUtils;
 use Ftp;
 use Logger;
 use OpenRatException;
@@ -103,19 +104,16 @@ class PublishPublic extends Publish
             $this->ftp->passive = ( $project->ftp_passive == '1' );
         }
 
-        $localDir = rtrim( $project->target_dir,'/' );
+        $targetDir = rtrim( $project->target_dir,'/' );
 
-        if	( $confPublish['filesystem']['per_project'] && (!empty($localDir)) )
+        if	( FileUtils::isAbsolutePath($targetDir) && $confPublish['filesystem']['per_project'] )
         {
-            $this->localDestinationDirectory = $localDir; // Projekteinstellung verwenden.
+            $this->localDestinationDirectory = FileUtils::toAbsolutePath([$targetDir]); // Projekteinstellung verwenden.
         }
         else
         {
-            if	( ! $localDir )
-                $localDir = $project->name;
-
             // Konfiguriertes Verzeichnis verwenden.
-            $this->localDestinationDirectory = $confPublish['filesystem']['directory'].$localDir;
+            $this->localDestinationDirectory = FileUtils::toAbsolutePath([$confPublish['filesystem']['directory'],$targetDir]);
         }
 
 

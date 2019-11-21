@@ -113,6 +113,20 @@ class FileUtils
 	    }
 		
 	}
-}
 
-?>
+
+	public static function isAbsolutePath( $path ) {
+		return @$path[0] == '/';
+	}
+
+
+	public static function toAbsolutePath( $pathElements ) {
+		$pathElements = array_map( function($path) { return trim($path,'/'); },$pathElements );
+		return array_reduce( $pathElements, function($path,$item){return $path.($item?'/'.$item:'');},'' );
+	}
+
+
+	public static function toRelativePath( $pathElements ) {
+		return '.'.self::toAbsolutePath($pathElements);
+	}
+}
