@@ -9783,14 +9783,14 @@ class Less_Exception_Chunk extends Less_Exception_Parser{
 							return $this->fail("missing closing `*/`", $currentChunkStartIndex);
 						}
 					}
-					continue;
+					break;
 
 				// *, check for unmatched */
 				case 42:
 					if (($this->parserCurrentIndex < $this->input_len - 1) && ($this->CharCode($this->parserCurrentIndex+1) == 47)) {
 						return $this->fail("unmatched `/*`");
 					}
-					continue;
+					break;
 			}
 		}
 
