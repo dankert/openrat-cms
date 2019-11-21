@@ -4,6 +4,7 @@
 use cms\model\Element;
 use cms\model\Template;
 use cms\model\Value;
+use util\VariableResolver;
 
 class MacroRunner
 {
@@ -34,15 +35,15 @@ class MacroRunner
 
 		$macro->setContextPage($page);
 
-		$parameters = $parameter;
+		$resolver = new VariableResolver();
 
-		array_walk_recursive($parameters, function (&$item, $key) {
+		$parameters = $resolver->resolveVariablesInArrayWith( $parameter,
 
-			$item = \Text::resolveVariables($item, 'setting', function ($var) {
+			['setting'=> function ($var) {
 				return ArrayUtils::getSubValue($this->page->getSettings(), explode('.', $var));
-			});
+			}],
 
-			$item = \Text::resolveVariables($item, 'element', function ($var) {
+			['element'=>function ($var) {
 				$template = new Template($this->page->templateid);
 				$elements = $template->getElementNames();
 				$elementid = array_search($var, $elements);
@@ -57,11 +58,8 @@ class MacroRunner
 				$value->load();
 
 				return $value->getRawValue();
-
-			});
-
-			return $item;
-		});
+			}]
+		);
 
 		foreach ($parameters as $param_name => $param_value) {
 

@@ -1,5 +1,7 @@
 <?php
 
+use util\VariableResolver;
+
 
 /**
  * Configuration Loader.
@@ -68,13 +70,8 @@ class ConfigurationLoader
 
         $customConfig = YAML::parse( file_get_contents($configFile) );
 
-        // Resolve variables in all custom configuration values
-        array_walk_recursive( $customConfig, function(&$value,$key)
-            {
-                $value = ConfigurationLoader::resolveVariables($value);
-
-            }
-        );
+        // resolve variables
+        $customConfig = ConfigurationLoader::resolveVariables($customConfig);
 
         // Does we have includes?
         if (isset($customConfig['include'])) {
@@ -106,23 +103,25 @@ class ConfigurationLoader
     }
 
     /**
-     * Evaluates variables in a text value.
+     * Evaluates variables in a config array.
      * Examples:
-     * - config-${http:host}.yml => config-yourdomain.yml
+     * - config-${http:host}.yml        => config-yourdomain.yml
      * - config-${server:http-host}.yml => config-yourdomain.yml
-     * - config-${env:myvar}.yml => config-myvalue.yml
-     * @param $value String Configuration value
-     * @return String
+     * - config-${env:myvar}.yml        => config-myvalue.yml
+     * @param $config array Configuration
+     * @return array
      */
-    private function resolveVariables($value)
+    private function resolveVariables($config)
     {
-        $value = Text::resolveVariables( $value, 'env'  , function($var) { return getenv(strtoupper($var));              } );
+		$resolver = new VariableResolver();
 
-        // http:... is a shortcut for server:http-...
-        $value = Text::resolveVariables( $value,'http'  , function($var) { return @$_SERVER['HTTP_' . strtoupper($var)]; } );
-        $value = Text::resolveVariables( $value,'server', function($var) { return @$_SERVER[strtoupper($var)];           } );
+		return $resolver->resolveVariablesInArrayWith($config,[
 
-        return $value;
+			'env'   => function($var) { return getenv(strtoupper($var));              },
+			// http:... is a shortcut for server:http-...
+			'http'  => function($var) { return @$_SERVER['HTTP_' . strtoupper($var)]; },
+			'server'=> function($var) { return @$_SERVER[strtoupper($var)];           }
+		] );
     }
 
 }
