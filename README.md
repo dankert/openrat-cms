@@ -31,19 +31,21 @@ MariaDB and MySQL are recommended, while PostgresQL and SQLite are supported too
  
 #### Download and untar it
 
-Download the complete archive and install it on your server
+Download the last release from Github and install it on your server:
+
+https://github.com/dankert/openrat-cms/releases
 
 #### Clone GIT repository
 
-Or clone the repository with the command
+Or clone the GIT repository with the command
 
 `git clone http://git.code.weiherhei.de/openrat-cms.git`
 
-or clone from Github
+or from Github
 
 `git clone https://github.com/dankert/openrat-cms.git`
 
-### Add database configuration
+#### Add database configuration
 
 Edit the file `config/config.yml` and enter your database access data, like:
  
@@ -58,11 +60,17 @@ Edit the file `config/config.yml` and enter your database access data, like:
 
 OpenRat-CMS is available [at Dockerhub](https://hub.docker.com/r/openrat/openrat-cms).
 
-#### run docker container
+#### Run the docker container
 
-`docker run -d -p 8080:8080 dankert/openrat-cms`
+Download and run the docker image from dockerhub:
 
-#### Environment variables
+`docker run -d -p 8080:8080 -e DB_HOST=$host -e DB_NAME=$name -e DB_USER=$user -e DB_PASS=$pass openrat/openrat-cms`
+
+Be sure to replace the variables.
+
+#### Environment variables for Docker
+
+The following environment variables could be set in the docker container: 
 
 | Name      | Description |   Default |
 | ----------- | ----------- | ------- |
