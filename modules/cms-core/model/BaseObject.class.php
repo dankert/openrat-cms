@@ -6,6 +6,7 @@ namespace cms\model;
 use ArrayUtils;
 use cms\publish\Publish;
 use phpseclib\Math\BigInteger;
+use util\VariableResolver;
 use YAML;
 use template_engine\components\ElseComponent;
 
@@ -1336,14 +1337,13 @@ SQL
     {
         $settings = YAML::parse($this->settings);
 
-        // pass-by-reference
-        array_walk_recursive($settings, function (&$item, $key) {
-            $item = \Text::resolveVariables($item, 'config', function ($var) {
+        $resolver = new VariableResolver();
+
+        // Resolve config variables.
+		$settings = $resolver->resolveVariablesInArray( $settings,'config', function ($var) {
                 global $conf;
                 return ArrayUtils::getSubValue($conf,explode('.',$var) );
             });
-            return $item;
-        });
 
         return $settings;
     }
