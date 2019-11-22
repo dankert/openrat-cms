@@ -499,6 +499,30 @@ EOF
 
 
 
+
+	/**
+	 * Change type.
+	 *
+	 * This is only allowed for files, because it is only allowed to switch between the following types: file,image,text.
+	 */
+	public function updateType()
+	{
+
+		$stmt = db()->sql(<<<SQL
+UPDATE {{object}} SET 
+      typeid = {typeid}
+WHERE id={objectid}
+SQL
+		);
+
+		$stmt->setInt('typeid'  , $this->typeid  );
+		$stmt->setInt('objectid', $this->objectid);
+		$stmt->query();
+	}
+
+
+
+
 	/**
 	 * Ermittelt die wirksame Datei-Endung. Diese kann sich
 	 * in der Extra-Dateiendung, aber auch direkt im Dateiname

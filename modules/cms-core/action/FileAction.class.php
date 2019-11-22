@@ -11,6 +11,7 @@ use cms\publish\PublishPublic;
 use Http;
 use \Html;
 use Upload;
+use ValidationException;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -105,7 +106,7 @@ class FileAction extends ObjectAction
         else
         {
             // No file received.
-            throw new \ValidationException('value');
+            throw new ValidationException('value');
         }
 
         $this->file->setTimestamp();
@@ -121,6 +122,14 @@ class FileAction extends ObjectAction
     function advancedPost()
     {
         $this->file->extension = $this->getRequestVar('extension'  ,OR_FILTER_FILENAME);
+
+		$typeid = $this->getRequestVar('type',OR_FILTER_NUMBER  );
+
+		if   ( ! in_array($typeid,[BaseObject::TYPEID_FILE,BaseObject::TYPEID_IMAGE,BaseObject::TYPEID_TEXT]))
+			throw new ValidationException('type');
+
+        $this->file->typeid = $typeid;
+        $this->file->updateType();
         $this->file->save();
 
         $this->addNotice($this->file->getType(),$this->file->filename,'PROP_SAVED','ok');
@@ -233,6 +242,12 @@ class FileAction extends ObjectAction
 	{
 		// Eigenschaften der Datei uebertragen
 		$this->setTemplateVar( 'extension',$this->file->extension );
+		$this->setTemplateVar( 'type'     ,$this->file->type      );
+		$this->setTemplateVar( 'types'    ,[
+			BaseObject::TYPEID_FILE  => lang('file' ),
+			BaseObject::TYPEID_IMAGE => lang('image'),
+			BaseObject::TYPEID_TEXT  => lang('text' )
+		] );
 	}
 
 
