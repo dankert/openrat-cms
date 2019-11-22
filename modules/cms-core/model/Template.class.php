@@ -254,7 +254,7 @@ SQL
 	/**
  	 * Ermitteln aller Elemente zu diesem Template
  	 * Es wird eine Liste mit den Element-Namen zur?ckgegeben
- 	 * @return Array
+ 	 * @return array
  	 */
 	public function getElementNames()
 	{

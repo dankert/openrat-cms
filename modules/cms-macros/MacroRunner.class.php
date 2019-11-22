@@ -37,13 +37,13 @@ class MacroRunner
 
 		$resolver = new VariableResolver();
 
-		$parameters = $resolver->resolveVariablesInArrayWith( $parameter,
+		$parameters = $resolver->resolveVariablesInArrayWith( $parameter, [
 
-			['setting'=> function ($var) {
+			'setting'=> function ($var) {
 				return ArrayUtils::getSubValue($this->page->getSettings(), explode('.', $var));
-			}],
+			},
 
-			['element'=>function ($var) {
+			'element'=>function ($var) {
 				$template = new Template($this->page->templateid);
 				$elements = $template->getElementNames();
 				$elementid = array_search($var, $elements);
@@ -58,8 +58,8 @@ class MacroRunner
 				$value->load();
 
 				return $value->getRawValue();
-			}]
-		);
+			}
+		] );
 
 		foreach ($parameters as $param_name => $param_value) {
 

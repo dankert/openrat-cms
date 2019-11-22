@@ -1665,16 +1665,16 @@ SQL
 	/**
 	 * Ermittelt den unbearbeiteten, "rohen" Inhalt.
 	 * 
-	 * @return Inhalt
+	 * @return mixed Inhalt
 	 */
 	public function getRawValue()
 	{
-		switch( $this->element->type )
+		switch( $this->element->typeid )
 		{
-			case 'link':
+			case Element::ELEMENT_TYPE_LINK:
 				return $this->linkToObjectId;
 				
-			case 'date';
+			case Element::ELEMENT_TYPE_DATE;
 				return $this->date;
 				
 			default:
