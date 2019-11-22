@@ -2,36 +2,37 @@ FROM alpine:3.10
 
 LABEL maintainer="Jan Dankert"
 
-ENV DB_TYPE="mysql"
-ENV DB_HOST="localhost"
-ENV DB_NAME="cms"
-ENV DB_USER="cms"
-ENV DB_PASS=""
-
-ENV CMS_MOTD="Welcome to dockerized CMS"
-ENV CMS_NAME="OpenRat CMS (Docker)"
-ENV CMS_OPERATOR="Docker-Host"
-
-
-ENV DOCROOT=/var/www/localhost/htdocs
-
+# Install packages
 RUN apk --update --no-cache add \
     apache2 apache2-http2 \
     php7 php7-apache2 php7-session php7-pdo php7-pdo_mysql php7-pdo_pgsql php7-json php7-ftp php7-iconv php7-openssl php7-mbstring \
-    git curl && \
-    sed -i '/LoadModule log_module/s/^/#/g'   /etc/apache2/httpd.conf && \
+    git curl
+
+ENV DB_TYPE="mysql"     \
+    DB_HOST="localhost" \
+    DB_NAME="cms"       \
+    DB_USER="cms"       \
+    DB_PASS=""          \
+    CMS_MOTD="Welcome to dockerized CMS" \
+    CMS_NAME="OpenRat CMS (Docker)"      \
+    CMS_OPERATOR="Docker-Host"           \
+    DOCROOT="/var/www/localhost/htdocs"
+
+# Configuring apache webserver
+RUN sed -i '/CustomLog/s/^/#/g'               /etc/apache2/httpd.conf && \
     sed -i '/LoadModule http2_module/s/^#//g' /etc/apache2/httpd.conf && \
-    sed -i 's/^Listen 80/Listen 8080/g' /etc/apache2/httpd.conf && \
+    sed -i 's/^Listen 80/Listen 8080/g'       /etc/apache2/httpd.conf && \
     chown apache /var/log/apache2 && \
-    chown apache /run/apache2 && \
-    rm -r $DOCROOT/* && \
-    mkdir -p /var/www/localhost/preview && chown apache /var/www/localhost/preview && \
-    echo "Alias /preview /var/www/localhost/preview" >> /etc/apache2/httpd.conf && \
+    chown apache /run/apache2     && \
+    rm -r $DOCROOT/*              && \
+    mkdir -p /var/www/localhost/preview     && \
+    chown apache /var/www/localhost/preview && \
+    echo "Alias /preview /var/www/localhost/preview"   >> /etc/apache2/httpd.conf && \
     echo "<Directory \"/var/www/localhost/preview\"> " >> /etc/apache2/httpd.conf && \
-    echo "    AllowOverride None" >> /etc/apache2/httpd.conf && \
-    echo "    Options None" >> /etc/apache2/httpd.conf && \
-    echo "    Require all granted" >> /etc/apache2/httpd.conf && \
-    echo "</Directory>" >> /etc/apache2/httpd.conf && \
+    echo "    AllowOverride None"    >> /etc/apache2/httpd.conf && \
+    echo "    Options None"          >> /etc/apache2/httpd.conf && \
+    echo "    Require all granted"   >> /etc/apache2/httpd.conf && \
+    echo "</Directory>"              >> /etc/apache2/httpd.conf && \
     echo "Protocols h2 h2c http/1.1" >> /etc/apache2/httpd.conf && \
     echo "H2ModernTLSOnly off"       >> /etc/apache2/httpd.conf
 
@@ -85,15 +86,11 @@ application:\n\
 \n\
 ' >> /etc/openrat.yml
 
-# Logfile must be writable
-RUN chown apache $DOCROOT/log/cms.log
-
-# Cleanup some files for decreasing container size
-RUN rm -r $DOCROOT/doc/* && \
-    find $DOCROOT/modules/cms-ui -type f -name "*.src.xml"|xargs rm
+# Logfiles are redirected to standard out
+RUN ln -sf /dev/stdout $DOCROOT/log/cms.log       && \
+    ln -sf /dev/stderr /var/log/apache2/error.log
 
 EXPOSE 8080
-
 
 WORKDIR $DOCROOT
 

@@ -2,3 +2,5 @@
 .idea
 config/config-*.yml
 log/cms-*.log
+doc/*
+modules/cms-ui/themes/default/html/views/*/*.src.xml
