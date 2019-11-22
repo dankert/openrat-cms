@@ -41,33 +41,35 @@ use cms\model\Image;
  */
 class Album extends Macro
 {
-	/**
-	 * Bitte immer alle Parameter in dieses Array schreiben, dies ist fuer den Web-Developer hilfreich.
-	 * @type String
-	 */
-	var $parameters  = Array(
-	'folderid'
-		);
 
 	/**
 	 * Bitte immer eine Beschreibung benutzen, dies ist fuer den Web-Developer hilfreich.
 	 * @type String
 	 */
-	var $description = 'Creates an album.';
+	public $description = 'Creates an album.';
 
-	var $folderid = 0;
-	
+	public $folderid = 0;
+
+	public $withImages = true;
+	public $withFiles = false;
+
 	/**
 	 */
-	function execute()
+	public function execute()
 	{
 		if	( intval($this->folderid)!=0 )
 			$folderid = $this->folderid;
 		else
 			$folderid = $this->page->parentid;
-		$f      = new Folder($folderid);
-		
-		$files = $f->getObjectIdsByType(BaseObject::TYPEID_IMAGE);
+
+		$f     = new Folder($folderid);
+		$files = [];
+
+		if   ( $this->withImages )
+			$files += $f->getObjectIdsByType(BaseObject::TYPEID_IMAGE);
+
+		if   ( $this->withFiles )
+			$files += $f->getObjectIdsByType(BaseObject::TYPEID_FILE);
 		
 		$this->output('<dl class="album">');
 		
