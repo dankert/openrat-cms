@@ -19,9 +19,9 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
-// $Log$
-// ---------------------------------------------------------------------------
+
 use cms\model\Language;
+use cms\model\Page;
 use cms\model\Project;
 
 /**
@@ -31,23 +31,10 @@ use cms\model\Project;
 class LanguageLinksForPage extends Macro
 {
 	/**
-	 * Bitte immer alle Parameter in dieses Array schreiben, dies ist fuer den Web-Developer hilfreich.
-	 * @type String
-	 */
-	var $parameters  = Array(
-		'arrowChar'=>'String between entries'
-		);
-
-
-	var $arrowChar = ' &middot; ';
-
-	/**
 	 * Bitte immer eine Beschreibung benutzen, dies ist fuer den Web-Developer hilfreich.
 	 * @type String
 	 */
 	var $description = 'Creates language links to the page.';
-	var $version     = '$Id$';
-	var $api;
 
 	// Build the navigation links to other languages
 	function execute()
@@ -57,18 +44,23 @@ class LanguageLinksForPage extends Macro
 
 		$project = new Project( $this->page->projectid );
 		// Schleife ueber alle Inhalte des Root-Ordners
+		echo '<ul>';
 		foreach( $project->getLanguages() as $lid=>$lname)
 		{
 			
 			$l = new Language( $lid );
-                        $l->load();
-                        $this->page->languageid = $l->languageid;
-                        $filename = $this->page->full_filename();
-			$filename = str_replace($this->page->path(),".",$filename);
-			$this->output( '<li><a href="'.$filename.'">'.strtolower($l->isoCode).'</a></li>' );
+            $l->load();
+
+            $p = new Page( $this->page->objectid );
+            $p->publisher = $this->page->publisher;
+            $p->languageid = $lid;
+
+            $link = $p->path_to_object( $p->objectid );
+			echo '<li><a hreflang="'.$l->isoCode.'" href="'.$link.'">'.strtolower($l->isoCode).'</a></li>';
 			
 		}
 		$this->page->languageid = $languageId;
+		echo '</ul>';
 	}
 }
 ?>
