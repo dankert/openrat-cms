@@ -315,6 +315,13 @@ Openrat.Workbench = new function()
 
 
 
+	this.dataChangedHandler = $.Callbacks();
+
+	this.dataChangedHandler.add( function() {
+		if   ( popupWindow !== undefined )
+			popupWindow.location.reload();
+	} );
+
     this.afterViewLoadedHandler = $.Callbacks();
 
     let afterViewFunctions = [];

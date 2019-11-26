@@ -131,4 +131,4 @@
 		<input type="hidden" name="modelid" value="<?php echo $modelid ?>"/>
 		<input type="hidden" name="projectid" value="<?php echo $projectid ?>"/>
 		<input type="hidden" name="languageid" value="<?php echo $languageid ?>"/>
-	<div class="or-form-actionbar"><input type="submit" class="or-form-btn or-form-btn--primary" value="<?php echo lang('menu_login') ?>" /></div></form>
+	<div class="or-form-actionbar"><input type="submit" class="or-form-btn or-form-btn--primary or-form-btn--save" value="<?php echo lang('menu_login') ?>" /></div></form>

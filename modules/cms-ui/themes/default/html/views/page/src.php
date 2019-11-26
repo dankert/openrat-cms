@@ -4,7 +4,7 @@
 		</select></div>
 		<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_modelid" name="modelid" title="" class=""<?php if (count($models)<=1) echo ' disabled="disabled"'; ?> size="1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($models,$modelid,0,0) ?><?php if (count($models)==0) { ?><input type="hidden" name="modelid" value="" /><?php } ?><?php if (count($models)==1) { ?><input type="hidden" name="modelid" value="<?php echo array_keys($models)[0] ?>" /><?php } ?>
 		</select></div>
-	<div class="or-form-actionbar"><input type="submit" class="or-form-btn or-form-btn--primary" value="<?php echo lang('BUTTON_OK') ?>" /></div></form>
+	<div class="or-form-actionbar"><input type="submit" class="or-form-btn or-form-btn--primary or-form-btn--save" value="<?php echo lang('BUTTON_OK') ?>" /></div></form>
 	<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('SOURCE') ?></legend><div class="closable">
 		<textarea  name="<?php if ('') echo ''.'_' ?>src<?php if (true) echo '_disabled' ?>" data-extension="" data-mimetype="" data-mode="html" class="editor code-editor"><?php echo htmlentities(${'src'}) ?></textarea>
 	</div></fieldset>

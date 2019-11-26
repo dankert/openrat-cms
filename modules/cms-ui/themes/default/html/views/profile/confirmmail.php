@@ -25,4 +25,4 @@
 				<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_code" name="<?php if ('') echo ''.'_' ?>code<?php if (false) echo '_disabled' ?>" required="required" autofocus="autofocus" type="text" maxlength="256" class="" value="<?php echo Text::encodeHtml(@$code) ?>" /><?php if (false) { ?><input type="hidden" name="code" value="<?php $code ?>"/><?php } ?></div>
 			</div>
 		</div>
-	<div class="or-form-actionbar"><input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" /><input type="submit" class="or-form-btn or-form-btn--primary" value="<?php echo lang('BUTTON_OK') ?>" /></div></form>
+	<div class="or-form-actionbar"><input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" /><input type="submit" class="or-form-btn or-form-btn--primary or-form-btn--save" value="<?php echo lang('BUTTON_OK') ?>" /></div></form>

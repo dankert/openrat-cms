@@ -6,6 +6,13 @@
  */
 Openrat.Form = function() {
 
+	const modes = {
+		showBrowserNotice  : 1,
+		keepOpen           : 2,
+		closeAfterSubmit   : 4,
+		closeAfterSuccess  : 8,
+	};
+
     this.setLoadStatus = function( isLoading ) {
         $(this.element).closest('div.content').toggleClass('loader',isLoading);
     }
@@ -20,10 +27,10 @@ Openrat.Form = function() {
         if   ( $(this.element).data('autosave') ) {
 
             $(this.element).find('input[type="checkbox"]').click( function() {
-                form.submit();
+                form.submit(modes.keepOpen);
             });
             $(this.element).find('select').change( function() {
-                form.submit();
+                form.submit(modes.keepOpen);
             });
         }
 
@@ -42,6 +49,9 @@ Openrat.Form = function() {
         $(element).find('.or-form-btn--reset').click( function() {
             form.rollback();
 
+        });
+        $(element).find('.or-form-btn--apply').click( function() {
+			form.submit(modes.keepOpen);
         });
 
         // Submithandler for the whole form.
@@ -77,10 +87,16 @@ Openrat.Form = function() {
         view.start( $(this.element).closest('.view') );
     }
 
-    this.submit = function() {
+    this.submit = function( mode ) {
+
+    	if   ( mode === undefined )
+			if   ( $(this.element).data('async') )
+				mode = modes.closeAfterSubmit;
+			else
+				mode = modes.closeAfterSuccess;
 
 
-        // Show progress
+		// Show progress
         let status = $('<div class="notice info"><div class="text loader"></div></div>');
         $('#noticebar').prepend(status); // Notice anhängen.
         $(status).show();
@@ -89,8 +105,8 @@ Openrat.Form = function() {
         // Falls wieder ein Fehler auftritt, werden diese erneut gesetzt.
         $(this.element).find('.error').removeClass('error');
 
-        var params = $(this.element).serializeArray();
-        var data = {};
+        let params = $(this.element).serializeArray();
+        let data = {};
         $(params).each(function(index, obj){
             data[obj.name] = obj.value;
         });
@@ -121,13 +137,9 @@ Openrat.Form = function() {
             //params['output'] = 'json';// Irgendwie geht das nicht.
             data.output = 'json';
 
-            if	( $(this.element).data('async') )
-            {
-                // Verarbeitung erfolgt asynchron, das heißt, dass der evtl. geöffnete Dialog
-                // beendet wird.
+            if	( mode == modes.closeAfterSubmit )
                 this.close();
                 // Async: Window is closed, but the action will be startet now.
-            }
 
             let form = this;
             $.ajax( { 'type':'POST',url:url, data:data, success:function(data, textStatus, jqXHR)
@@ -135,7 +147,34 @@ Openrat.Form = function() {
                     form.setLoadStatus(false);
                     $(status).remove();
 
-                    form.doResponse(data,textStatus,form.element);
+                    form.doResponse(data,textStatus,form.element, function() {
+
+						// The data was successful saved.
+						// Now we can close the form.
+						if	( mode == modes.closeAfterSuccess )
+						{
+							form.close();
+
+							// clear the dirty flag.
+							$(form.element).closest('div.panel').find('div.header ul.views li.action.active').removeClass('dirty');
+						}
+
+						let afterSuccess = $(form.element).data('afterSuccess');
+						let async        = $(form.element).data('async'       );
+						if	( afterSuccess )
+						{
+							if   ( afterSuccess == 'reloadAll' )
+							{
+								Openrat.Workbench.reloadAll();
+							}
+						} else {
+							if   ( async )
+								; // do not reload
+							else
+								Openrat.Workbench.reloadViews();
+						}
+
+					});
                 },
                 error:function(jqXHR, textStatus, errorThrown) {
                     form.setLoadStatus(false);
@@ -170,7 +209,7 @@ Openrat.Form = function() {
      * @param status Status
      * @param element
      */
-    this.doResponse = function(data,status,element)
+    this.doResponse = function(data,status,element, onSuccess = $.noop )
     {
         if	( status != 'success' )
         {
@@ -191,35 +230,8 @@ Openrat.Form = function() {
 
             if	( value.status == 'ok' ) // Kein Fehler?
             {
-                // Kein Fehler
-                // Nur bei synchronen Prozessen soll nach Verarbeitung der Dialog
-                // geschlossen werden.
-                if	( ! $(element).data('async') )
-                {
-                    // Verarbeitung erfolgt synchron, das heißt, dass jetzt der evtl. geöffnete Dialog
-                    // beendet wird.
-                    form.close();
-
-                    // Da gespeichert wurde, jetzt das 'dirty'-flag zurücksetzen.
-                    $(element).closest('div.panel').find('div.header ul.views li.action.active').removeClass('dirty');
-                }
-
-                let afterSuccess = $(element).data('afterSuccess');
-                let async        = $(element).data('async'       );
-                if	( afterSuccess )
-                {
-                    if   ( afterSuccess == 'reloadAll' )
-                    {
-                        Openrat.Workbench.reloadAll();
-                    }
-                } else {
-                    if   ( async )
-                        ; // do not reload
-                    else
-                        Openrat.Workbench.reloadViews();
-                }
-
-                $(document).trigger('orDataChanged');
+                onSuccess();
+                Openrat.Workbench.dataChangedHandler.fire();
             }
             else
             // Server liefert Fehler zurück.

@@ -1294,4 +1294,7 @@ function language() { return array(
 'LINKS_RELATIVE'=>"Relative Links",
 'LINKS_ABSOLUTE'=>"Absolute Links",
 'PREVIEW'=>"Vorschau",
+'ALIAS'=>"Alias",
+'TEXT'=>"Text",
+'APPLY'=>"Übernehmen",
 );}

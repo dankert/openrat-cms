@@ -20,6 +20,7 @@ class FormComponent extends Component
 
 	public $label;
 
+	public $apply  = false;
 	public $cancel = true;
 	public $readonly = false;
 
@@ -100,8 +101,13 @@ class FormComponent extends Component
             echo '<input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" />';
         }
 
+        if ($this->apply && !$this->readonly)
+        {
+            echo '<input type="button" class="or-form-btn or-form-btn--primary or-form-btn--apply" value="<?php echo lang("APPLY") ?>" />';
+        }
+
         if ( !$this->readonly )
-            echo "<input type=\"submit\" class=\"or-form-btn or-form-btn--primary\" value=\"{$label}\" />";
+            echo "<input type=\"submit\" class=\"or-form-btn or-form-btn--primary or-form-btn--save\" value=\"{$label}\" />";
 
         //echo '</div>';
         echo '</div>';

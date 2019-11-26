@@ -6,4 +6,4 @@
 				<label class="or-form-row"><span class="or-form-label"><?php echo lang('template_extension') ?></span><span class="or-form-input"><div class="inputholder"><input id="<?php echo REQUEST_ID ?>_<?php echo $name ?>" name="<?php if ('') echo ''.'_' ?><?php echo $name ?><?php if (false) echo '_disabled' ?>" required="required" type="text" maxlength="10" class="" value="<?php echo Text::encodeHtml(@$$name) ?>" /><?php if (false) { ?><input type="hidden" name="<?php echo $name ?>" value="<?php $$name ?>"/><?php } ?></div></span></label>
 			</div></fieldset>
 		<?php } ?>
-	<div class="or-form-actionbar"><input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" /><input type="submit" class="or-form-btn or-form-btn--primary" value="<?php echo lang('BUTTON_OK') ?>" /></div></form>
+	<div class="or-form-actionbar"><input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" /><input type="submit" class="or-form-btn or-form-btn--primary or-form-btn--save" value="<?php echo lang('BUTTON_OK') ?>" /></div></form>

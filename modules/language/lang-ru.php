@@ -1294,4 +1294,7 @@ function language() { return array(
 'LINKS_RELATIVE'=>"Relative links",
 'LINKS_ABSOLUTE'=>"Absolute links",
 'PREVIEW'=>"элементов предварительного просмотра",
+'ALIAS'=>"Alias",
+'TEXT'=>"Text",
+'APPLY'=>"Apply",
 );}

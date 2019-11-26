@@ -1318,4 +1318,7 @@ MENU_INDEX_ADMINISTRATION_DESC =",
 'LINKS_RELATIVE'=>"Relative links",
 'LINKS_ABSOLUTE'=>"Absolute links",
 'PREVIEW'=>"Preview",
+'ALIAS'=>"Alias",
+'TEXT'=>"Text",
+'APPLY'=>"Apply",
 );}

@@ -80,8 +80,4 @@ jQuery.fn.orLinkify = function()
 };
 
 
-$(document).on('orDataChanged',function(event, data) {
-    if   ( typeof popupWindow != "undefined" )
-       popupWindow.location.reload();
-} );
 
