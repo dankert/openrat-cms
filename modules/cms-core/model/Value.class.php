@@ -175,17 +175,6 @@ class Value extends ModelBase
 
 	
 
-
-	function path_to_page( $pageid )
-	{
-		return $this->page->path_to_object( $pageid );
-	}
-	function path_to_object( $pageid )
-	{
-		return $this->path_to_page( $pageid );
-	}
-
-
 	/**
 	 * Laden des aktuellen Inhaltes aus der Datenbank
 	 */

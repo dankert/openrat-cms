@@ -74,7 +74,7 @@ class LinkList extends Macro
 			// Wenn aktuelle Seite, dann markieren, sonst Link
 			$class = ($this->getObjectId() == $id )?'actual':'';
 
-			echo '<li class="'.$class.'"><a href="'.$this->page->path_to_object($id).'">'.$o->name.'</a></li>';
+			echo '<li class="'.$class.'"><a href="'.$this->pathToObject($id).'">'.$o->name.'</a></li>';
 		}
 
 		echo '</ul>';

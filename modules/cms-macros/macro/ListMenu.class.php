@@ -103,7 +103,7 @@ class ListMenu extends Macro
 						}
 						else
 						{
-							$this->output( '<li class="menu"><a class="menu" href="'.$this->page->path_to_object($xid).'">'.$o->name.'</a></li>' );
+							$this->output( '<li class="menu"><a class="menu" href="'.$this->pathToObject($xid).'">'.$o->name.'</a></li>' );
 						}
 					}
 			

@@ -94,7 +94,7 @@ class CommonMenu extends Macro
 			else
 			{
 				// Link erzeugen
-				$this->output( '<li><a href="'.$this->page->path_to_object($id).'">'.$o->name.'</a></li>' );
+				$this->output( '<li><a href="'.$this->pathToObject($id).'">'.$o->name.'</a></li>' );
 			}
 		}
 	}

@@ -63,13 +63,14 @@ class PagesNavigation extends Macro
 		
 		$nr = 0;
 		// Schleife ueber alle Inhalte des Root-Ordners
-		foreach( $folder->getObjects() as $o )
+		/** @var \cms\model\BaseObject $o */
+		foreach($folder->getObjects() as $o )
 		{
 			$nr++;
 			if ( $o->isPage || $o->isLink )
 			{
 				if ( $o->objectid != $this->page->objectid )
-					$this->output( '<a href="'.$this->page->path_to_object($oid).'" title="'.$o->desc.'" class="pagenav">'.$nr.'</a>' );
+					$this->output( '<a href="'.$this->pathToObject($o->objectid).'" title="'.$o->desc.'" class="pagenav">'.$nr.'</a>' );
 				else
 					$this->output( '<strong>'.$nr.'</strong>' );
 			}

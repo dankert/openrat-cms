@@ -114,7 +114,7 @@ class BlockMenu extends Macro
 						else
 						{
 							$this->output( '            <span class="small">o</span>
-						       <a class="nav" href="'.$this->page->path_to_object($xid).'">'.$o->name.'</a>
+						       <a class="nav" href="'.$this->pathToObject($xid).'">'.$o->name.'</a>
 						       <br />' );
 						}
 					//Api::output( '<br/>' );

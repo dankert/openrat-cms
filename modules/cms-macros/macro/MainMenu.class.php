@@ -74,7 +74,7 @@ class MainMenu extends Macro
 				// Ermitteln eines Objektes mit dem Dateinamen index
 				$oid = $f->getObjectIdByFileName('index');
 				if ( is_numeric($oid) && $oid!=0 )
-					$this->output( $this->arrowChar.'<a href="'.$this->page->path_to_object($oid).'" title="'.$o->desc.'">'.$o->name.'</a>' );
+					$this->output( $this->arrowChar.'<a href="'.$this->pathToObject($oid).'" title="'.$o->desc.'">'.$o->name.'</a>' );
 			}
 		}
 	}

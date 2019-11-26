@@ -48,15 +48,16 @@ class LanguageLinksForPage extends Macro
 		foreach( $project->getLanguages() as $lid=>$lname)
 		{
 			
-			$l = new Language( $lid );
-            $l->load();
+			$language = new Language( $lid );
+            $language->load();
 
-            $p = new Page( $this->page->objectid );
-            $p->publisher = $this->page->publisher;
-            $p->languageid = $lid;
+            $targetPage = new Page( $this->page->objectid );
+            $targetPage->publisher  = $this->page->publisher;
+            $targetPage->languageid = $lid;
+            $targetPage->modelid    = $this->page->modelid;
 
-            $link = $p->path_to_object( $p->objectid );
-			echo '<li><a hreflang="'.$l->isoCode.'" href="'.$link.'">'.strtolower($l->isoCode).'</a></li>';
+            $link = $this->page->publisher->linkToObject( $this->page, $targetPage );
+			echo '<li><a hreflang="'.$language->isoCode.'" href="'.$link.'">'.strtolower($language->isoCode).'</a></li>';
 			
 		}
 		$this->page->languageid = $languageId;

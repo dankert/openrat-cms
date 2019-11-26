@@ -54,7 +54,7 @@ class SearchIndex extends Macro
                     'id'      => $pageid,
                     'title'   => $name->name,
                     'filename'=> $page->filename,
-                    'url'     => $this->page->path_to_object( $pageid ),
+                    'url'     => $this->pathToObject( $pageid ),
                     'content' => $this->truncate(array_reduce(
                         $page->values,
                         function($act, $value)
