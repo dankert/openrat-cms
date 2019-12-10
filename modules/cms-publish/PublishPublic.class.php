@@ -121,12 +121,6 @@ class PublishPublic extends Publish
         if   ( $this->localDestinationDirectory && $this->localDestinationDirectory[0] == '#')
             $this->localDestinationDirectory = '';
 
-        if   ( $this->localDestinationDirectory )
-        {
-            if   ( !is_writeable( $this->localDestinationDirectory ) )
-                throw new OpenRatException('ERROR_PUBLISH','directory not writable: '.$this->localDestinationDirectory );
-        }
-
         $this->contentNegotiation = ( $project->content_negotiation == '1' );
         $this->cutIndex           = ( $project->cut_index           == '1' );
 
@@ -309,14 +303,25 @@ class PublishPublic extends Publish
         global $conf;
         $source = $tmp_filename;
 
-        if   ( $this->localDestinationDirectory )
+
+
+		if   ( $this->localDestinationDirectory )
         {
+        	// Is the output directory writable?
+			if   ( !is_writeable( $this->localDestinationDirectory ) )
+				throw new OpenRatException('ERROR_PUBLISH','directory not writable: '.$this->localDestinationDirectory );
+
             $dest   = $this->localDestinationDirectory.'/'.$dest_filename;
 
-            if   (!@copy( $source,$dest ));
+            // Is the destination writable?
+			if   ( is_file($dest) && !is_writeable( $dest ) )
+				throw new OpenRatException('ERROR_PUBLISH','file not writable: '.$this->dest );
+
+			// Copy file to destination
+			if   (!@copy( $source,$dest ));
             {
-                if	( ! $this->mkdirs( dirname($dest) ) )
-                    return;  // Fehler bei Verzeichniserstellung, also abbrechen.
+            	// Create directories, if necessary.
+                $this->mkdirs( dirname($dest) );
 
                 if   (!@copy( $source,$dest ))
                     throw new OpenRatException('ERROR_PUBLISH','failed copying local file:'."\n".
@@ -357,30 +362,27 @@ class PublishPublic extends Publish
      * @param String Verzeichnis
      * @return boolean
      */
-    private function mkdirs( $strPath )
+    private function mkdirs($path )
     {
         global $conf;
 
-        if	( is_dir($strPath) )
-            return true;
+        if	( is_dir($path) )
+            return;  // Path exists
 
-        $pStrPath = dirname($strPath);
+        $parentPath = dirname($path);
 
-        if	( !$this->mkdirs($pStrPath) )
-            return false;
+        $this->mkdirs($parentPath);
 
-        if	( ! @mkdir($strPath,0777) )
-            throw new OpenRatException('ERROR_PUBLISH','Cannot create directory: '.$strPath);
+        //
+        if	( ! @mkdir($path) )
+            throw new OpenRatException('ERROR_PUBLISH','Cannot create directory: '.$path);
 
         // CHMOD auf dem Verzeichnis ausgef�hren.
         if	(!empty($conf['security']['chmod_dir']))
         {
-            if	( ! @chmod($strPath,octdec($conf['security']['chmod_dir'])) )
-                throw new OpenRatException('ERROR_PUBLISH','Unable to CHMOD directory: '.$strPath);
+            if	( ! @chmod($path,octdec($conf['security']['chmod_dir'])) )
+                throw new OpenRatException('ERROR_PUBLISH','Unable to CHMOD directory: '.$path);
         }
-
-
-        return true;
     }
 
 
