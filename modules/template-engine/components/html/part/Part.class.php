@@ -10,6 +10,8 @@ class PartComponent extends Component
 	public function begin()
 	{
 		echo '<div';
+
+		$this->class = strtr($this->class,[','=>' ']);
 		
 		if	( !empty($this->class))
 			echo ' class="'.$this->htmlvalue($this->class).'"';
@@ -25,6 +27,3 @@ class PartComponent extends Component
 		echo '</div>';
 	}
 }
-
-
-?>

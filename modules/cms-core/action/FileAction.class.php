@@ -57,11 +57,18 @@ class FileAction extends ObjectAction
 
     public function init()
     {
-		$this->file = new File( $this->getRequestId() );
-		$this->file->languageid = $this->getRequestVar(REQ_PARAM_LANGUAGE_ID);
-		$this->file->load();
+		$file = new File( $this->getRequestId() );
+		$file->languageid = $this->getRequestVar(REQ_PARAM_LANGUAGE_ID);
+		$file->load();
 
-        parent::init();
+        $this->setBaseObject( $file );
+	}
+
+
+	protected function setBaseObject( $file ) {
+		$this->file = $file;
+
+		parent::setBaseObject( $file );
 	}
 
 
@@ -251,39 +258,6 @@ class FileAction extends ObjectAction
 	}
 
 
-	public function infoView()
-	{
-		
-		global $conf;
-		
-		if	( $this->file->filename == $this->file->objectid )
-			$this->file->filename = '';
-
-		// Eigenschaften der Datei uebertragen
-		$this->setTemplateVars( $this->file->getProperties() );
-
-		$this->setTemplateVar('size',number_format($this->file->size/1000,0,',','.').' kB' );
-		$this->setTemplateVar('full_filename',$this->file->full_filename());
-		
-        $this->setTemplateVar('cache_filename' ,$this->file->getCache()->getFilename());
-        $this->setTemplateVar('cache_filemtime',@filemtime($this->file->getCache()->getFilename()));
-
-		// Alle Seiten mit dieser Datei ermitteln
-		$pages = $this->file->getDependentObjectIds();
-			
-		$list = array();
-		foreach( $pages as $id )
-		{
-			$o = new BaseObject( $id );
-			$o->load();
-			$list[$id] = array();
-			$list[$id]['url' ] = Html::url('main','page',$id);
-			$list[$id]['name'] = $o->name;
-		}
-		asort( $list );
-		$this->setTemplateVar('pages',$list);
-		$this->setTemplateVar('edit_filename',$conf['filename']['edit']);	
-	}
 
 
 	/**

@@ -46,22 +46,21 @@ class PageAction extends ObjectAction
 
     public function init()
     {
-        $this->page = new Page( $this->getRequestId() );
+        $page = new Page( $this->getRequestId() );
 
 		if  ( $this->request->hasLanguageId())
-		    $this->page->languageid = $this->request->getLanguageId();
+		    $page->languageid = $this->request->getLanguageId();
 
 		if  ( $this->request->hasModelId())
-		    $this->page->modelid = $this->request->getModelId();
+		    $page->modelid = $this->request->getModelId();
 
-		$this->page->load();
+		$page->load();
 
-        if  ( !$this->page->languageid )
-            $this->page->languageid = $this->page->getProject()->getDefaultLanguageId();
+        if  ( !$page->languageid )
+            $page->languageid = $page->getProject()->getDefaultLanguageId();
 
-        if  ( !$this->page->modelid )
-            $this->page->modelid = $this->page->getProject()->getDefaultModelId();
-		//$this->baseObject = & $this->page;
+        if  ( !$page->modelid )
+            $page->modelid = $page->getProject()->getDefaultModelId();
 
 		// Hier kann leider nicht das Datum der letzten Änderung verwendet werden,
 		// da sich die Seite auch danach ändern kann, z.B. durch Includes anderer
@@ -69,8 +68,17 @@ class PageAction extends ObjectAction
 		// verlinkten Datei.
 		$this->lastModified( time() );
 
-        parent::init();
+		$this->setBaseObject($page);
     }
+
+
+
+	protected function setBaseObject($folder ) {
+
+		$this->page = $folder;
+
+		parent::setBaseObject( $folder );
+	}
 
 
 	/**

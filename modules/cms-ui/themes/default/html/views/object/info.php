@@ -1,5 +1,5 @@
 <?php if (!defined('OR_TITLE')) die('Forbidden'); ?>
-	<form name="" target="_self" data-target="view" action="./" data-method="info" data-action="image" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form image" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="image" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="info" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+	<form name="" target="_self" data-target="view" action="./" data-method="info" data-action="object" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form object" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="object" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="info" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 		<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><div class="closable">
 			<div class="line">
 				<div class="label">
@@ -63,8 +63,13 @@
 				</div>
 				<div class="input">
 					<span><?php echo nl2br(encodeHtml(htmlentities($mimetype))); ?></span>
-					<br/>
-					<a class="action" target="_self" data-action="file" data-method="size" data-id="<?php echo OR_ID ?>" data-extra="[]" href="./#/file/">
+				</div>
+			</div>
+			<div class="line">
+				<div class="label">
+				</div>
+				<div class="input clickable">
+					<a class="action" target="_self" data-type="dialog" data-action="" data-method="size" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'size'}" href="./#//">
 						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_file_size'.'')))); ?></span>
 					</a>
 				</div>
@@ -142,5 +147,35 @@
 					<?php include_once( 'modules/template-engine/components/html/user/component-user.php') ?><?php component_user($lastchange_user) ?>
 				</div>
 			</div>
+			<div class="line">
+				<div class="label">
+					<label for="<?php echo REQUEST_ID ?>_published_date" class="label">
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_published')))); ?></span>
+					</label>
+				</div>
+				<div class="input">
+					<i class="image-icon image-icon--action-el_date"></i>
+					<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($published_date) ?>
+					<br/>
+					<i class="image-icon image-icon--action-user"></i>
+					<?php include_once( 'modules/template-engine/components/html/user/component-user.php') ?><?php component_user($published_user) ?>
+				</div>
+			</div>
 		</div></fieldset>
-	<div class="or-form-actionbar"><input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" /><input type="submit" class="or-form-btn or-form-btn--primary or-form-btn--save" value="<?php echo lang('BUTTON_OK') ?>" /></div></form>
+		<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('settings') ?></legend><div class="closable">
+			<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
+				<?php foreach($settings as $name=>$value){ ?>
+					<tr class="data">
+						<td>
+							<span><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
+						</td>
+						<td class="clickable">
+							<a target="_self" data-type="dialog" data-action="" data-method="settings" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'settings'}" href="./#//">
+								<span><?php echo nl2br(encodeHtml(htmlentities($value))); ?></span>
+							</a>
+						</td>
+					</tr>
+				<?php } ?>
+			</table></div></div>
+		</div></fieldset>
+	<div class="or-form-actionbar"><input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" /></div></form>

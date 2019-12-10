@@ -1750,8 +1750,22 @@ SQL
         return intval( $this->objectid ) > 0;
     }
 
-}
 
+	/**
+	 * Gets the file size
+	 * @return int
+	 */
+	public function getSize()
+	{
+		return 0;
+	}
+
+
+	public function mimeType()
+	{
+		return "";
+	}
+}
 
 
 

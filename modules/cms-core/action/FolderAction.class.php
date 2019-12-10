@@ -46,18 +46,25 @@ class FolderAction extends ObjectAction
 
     public function init()
     {
-		$this->folder = new Folder( $this->getRequestId() );
-		$this->folder->languageid = $this->request->getLanguageId();
-		$this->folder->load();
+		$folder = new Folder( $this->getRequestId() );
+		$folder->languageid = $this->request->getLanguageId();
+		$folder->load();
 
-		$this->lastModified( $this->folder->lastchangeDate);
+		$this->lastModified( $folder->lastchangeDate);
 
-		parent::init();
+		$this->setBaseObject($folder);
 	}
 
 
+	protected function setBaseObject($folder ) {
 
-    public function createfolderPost()
+		$this->folder = $folder;
+
+		parent::setBaseObject( $folder );
+	}
+
+
+	public function createfolderPost()
 	{
 		$name        = $this->getRequestVar('name'       );
 		$description = $this->getRequestVar('description');
@@ -1247,16 +1254,6 @@ class FolderAction extends ObjectAction
 		$this->setTemplateVar('act_objectid',$this->folder->id);
 	}
 
-
-
-	/**
-	 * Infos anzeigen.
-	 */
-	public function infoView()
-	{
-		$this->setTemplateVars( $this->folder->getProperties() );
-		$this->setTemplateVar( 'full_filename',$this->folder->full_filename() );
-	}
 
 
 

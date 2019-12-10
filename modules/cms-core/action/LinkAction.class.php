@@ -55,10 +55,18 @@ class LinkAction extends ObjectAction
 
     public function init()
     {
-		$this->link = new Link( $this->getRequestId() );
-		$this->link->load();
+		$link = new Link( $this->getRequestId() );
+		$link->load();
 
-		parent::init();
+		$this->setBaseObject( $link );
+	}
+
+
+	protected function setBaseObject( $link ) {
+
+		$this->link = $link;
+
+		parent::setBaseObject( $link );
 	}
 
 
@@ -88,11 +96,7 @@ class LinkAction extends ObjectAction
 
 
 
-	function infoView()
-	{
-		$this->setTemplateVars( $this->link->getProperties() );
-	}
-	
+
 	
 	/**
 	 * Liefert die Struktur zu diesem Ordner:

@@ -1,6 +1,6 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
-	<form>
+	<form readonly="true">
 		<group>
 			<part class="line">
 				<part class="label">
@@ -55,7 +55,7 @@
 				</part>
 				<part class="input">
 				</part>
-				<text var="size"></text>
+				<text var="size" />
 			</part>
 			<part class="line">
 				<part class="label">
@@ -65,8 +65,13 @@
 				</part>
 				<part class="input">
 					<text var="mimetype"></text>
-					<newline></newline>
-					<link class="action" action="file" subaction="size">
+				</part>
+			</part>
+			<part class="line">
+				<part class="label">
+				</part>
+				<part class="input,clickable">
+					<link class="action" type="dialog" subaction="size">
 						<text key="menu_file_size"></text>
 					</link>
 				</part>
@@ -144,6 +149,38 @@
 					<user user="var:lastchange_user"></user>
 				</part>
 			</part>
+			<part class="line">
+				<part class="label">
+					<label for="published_date">
+						<text text="global_published"></text>
+					</label>
+				</part>
+				<part class="input">
+					<image elementtype="date"></image>
+					<date date="var:published_date"></date>
+					<newline></newline>
+					<image action="user"></image>
+					<user user="var:published_user"></user>
+				</part>
+			</part>
 		</group>
+
+		<group title="message:settings">
+			<table filter="true">
+				<list list="settings" key="name" value="value" >
+					<row class="data">
+						<column>
+							<text var="name" />
+						</column>
+						<column class="clickable">
+							<link subaction="settings" type="dialog">
+								<text var="value" />
+							</link>
+						</column>
+					</row>
+				</list>
+			</table>
+		</group>
+
 	</form>
 </output>

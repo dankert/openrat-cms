@@ -36,15 +36,19 @@ class ImageAction extends FileAction
 
     public function init()
     {
-		$this->image = new Image( $this->getRequestId() );
-		$this->image->load();
+		$image = new Image( $this->getRequestId() );
+		$image->load();
 
-		$this->file = $this->image;
-
-        parent::init();
+        $this->setBaseObject( $image );
 
     }
 
+
+    protected function setBaseObject( $image ) {
+		$this->image = $image;
+
+		parent::setBaseObject($image);
+	}
 
 	
 	/**

@@ -603,6 +603,13 @@ SQL
         // Store in cache.
         $this->getCache()->invalidate();
     }
+
+
+
+    public function getSize()
+	{
+		return $this->size;
+	}
 }
 
 ?>

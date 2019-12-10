@@ -53,16 +53,23 @@ namespace cms\action
         public function init()
         {
 
-            $this->text = new Text($this->getRequestId());
-            $this->text->load();
+            $text = new Text($this->getRequestId());
+            $text->load();
 
-            parent::init();
-
-            $this->file = $this->text;
+            $this->setBaseObject(text);
         }
 
 
-        public function valuePost()
+
+		protected function setBaseObject($text ) {
+
+			$this->text = $text;
+
+			parent::setBaseObject( $text );
+		}
+
+
+		public function valuePost()
         {
             $this->file->value = $this->getRequestVar('value', OR_FILTER_RAW);
             $this->file->saveValue();

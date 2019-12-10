@@ -55,12 +55,18 @@ class UrlAction extends ObjectAction
 
     public function init()
     {
-		$this->url = new Url( $this->getRequestId() );
-		$this->url->load();
+		$url = new Url( $this->getRequestId() );
+		$url->load();
 
-        parent::init();
+		$this->setBaseObject( $url );
     }
 
+	protected function setBaseObject( $url ) {
+
+		$this->url = $url;
+
+		parent::setBaseObject( $url );
+	}
 
 
 	function remove()
@@ -125,12 +131,6 @@ class UrlAction extends ObjectAction
 	}
 
 
-	
-	
-	public function infoView()
-	{
-		$this->setTemplateVars( $this->url->getProperties() );
-	}
 	
 	
 	/**

@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use ArrayUtils;
 use cms\model\Acl;
 use cms\model\Project;
 use cms\model\User;
@@ -12,6 +13,7 @@ use cms\model\BaseObject;
 use cms\model\Language;
 use cms\model\File;
 use cms\model\Link;
+use Html;
 use Http;
 use Session;
 
@@ -42,11 +44,20 @@ class ObjectAction extends BaseAction
 
     public function init()
     {
-        $this->baseObject = new BaseObject( $this->getRequestId() );
-        $this->baseObject->objectLoad();
+		$baseObject = new BaseObject( $this->getRequestId() );
+		$baseObject->objectLoad();
+
+		$this->setBaseObject( $baseObject );
     }
 
-    public function copyView()
+
+	protected function setBaseObject( $baseObject ) {
+
+		$this->baseObject = $baseObject;
+	}
+
+
+	public function copyView()
 	{
 		$sourceObject = new BaseObject( $this->getRequestId());
 		$sourceObject->load();
@@ -612,4 +623,40 @@ class ObjectAction extends BaseAction
 
 	    return $rootFolder->hasRight(Acl::ACL_PROP);
     }
+
+
+	/**
+	 * Show infos.
+	 */
+	public function infoView()
+	{
+		$this->setTemplateVars( $this->baseObject->getProperties() );
+
+		$this->setTemplateVar( 'full_filename',$this->baseObject->full_filename() );
+		$this->setTemplateVar( 'extension'    , '' );
+		$this->setTemplateVar( 'mimetype'     , $this->baseObject->mimeType() );
+
+		// Read all objects linking to us.
+		$pages = $this->baseObject->getDependentObjectIds();
+
+		$list = array();
+		foreach( $pages as $id )
+		{
+			$o = new BaseObject( $id );
+			$o->load();
+			$list[$id] = array();
+			$list[$id]['name'] = $o->filename;
+			$list[$id]['type'] = $o->getType();
+		}
+
+		asort( $list );
+
+		$this->setTemplateVar('pages',$list);
+
+		$this->setTemplateVar('size',number_format($this->baseObject->getSize()/1000,0,',','.').' kB' );
+
+		$pad = str_repeat("\xC2\xA0",5); // Hard spaces
+		$this->setTemplateVar('settings', ArrayUtils::dryFlattenArray( $this->baseObject->getTotalSettings(),$pad ) );
+	}
+
 }
