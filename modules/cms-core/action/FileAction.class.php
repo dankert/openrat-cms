@@ -33,9 +33,8 @@ use ValidationException;
 
 /**
  * Action-Klasse zum Bearbeiten einer Datei
- * @author $Author$
- * @version $Revision$
- * @package openrat.actions
+ *
+ * @author Jan Dankert
  */
 class FileAction extends ObjectAction
 {
@@ -44,7 +43,7 @@ class FileAction extends ObjectAction
     /**
      * @var File
      */
-	protected $file;
+	private $file;
 
 	/**
 	 * Konstruktor

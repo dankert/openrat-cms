@@ -394,7 +394,7 @@ class PageAction extends ObjectAction
         $this->setTemplateVar( 'alias_filename', $alias->filename );
         $this->setTemplateVar( 'alias_folderid', $alias->parentid );
 
-        $project = Project::create( $this->baseObject->projectid );
+        $project = Project::create( $this->page->projectid );
         $this->setTemplateVar( 'folders' , $project->getAllFlatFolders() );
     }
 

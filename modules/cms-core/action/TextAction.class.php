@@ -39,7 +39,7 @@ namespace cms\action
     {
         public $security = Action::SECURITY_USER;
 
-        var $text;
+        private $text;
 
         /**
          * Konstruktor
@@ -56,12 +56,12 @@ namespace cms\action
             $text = new Text($this->getRequestId());
             $text->load();
 
-            $this->setBaseObject(text);
+            $this->setBaseObject( $text );
         }
 
 
 
-		protected function setBaseObject($text ) {
+		protected function setBaseObject( $text ) {
 
 			$this->text = $text;
 
@@ -71,26 +71,34 @@ namespace cms\action
 
 		public function valuePost()
         {
-            $this->file->value = $this->getRequestVar('value', OR_FILTER_RAW);
-            $this->file->saveValue();
+            $this->text->value = $this->getRequestVar('value', OR_FILTER_RAW);
+            $this->text->saveValue();
 
-            $this->addNotice($this->file->getType(), $this->file->name, 'VALUE_SAVED', 'ok');
-            $this->file->setTimestamp();
+            $this->addNotice($this->text->getType(), $this->text->name, 'VALUE_SAVED', 'ok');
+            $this->text->setTimestamp();
         }
 
 
+		/**
+		 * Only needed because there is a special template for text nodes.
+		 */
         public function valueView()
         {
             parent::valueView();
         }
 
 
+		/**
+		 * Only needed because there is a special template for text nodes.
+		 */
         public function showView() {
-            $this->file = $this->text;
 
             parent::showView();
         }
 
+		/**
+		 * Only needed because there is a special template for text nodes.
+		 */
         public function previewView()
         {
             parent::previewView();
