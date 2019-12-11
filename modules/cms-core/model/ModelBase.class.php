@@ -24,4 +24,8 @@ abstract class ModelBase
     }
 
     public abstract function getName();
+
+    public abstract function load();
+
+    public abstract function delete();
 }

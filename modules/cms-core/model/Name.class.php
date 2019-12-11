@@ -131,6 +131,16 @@ SQL
             }
         }
 
+
+
+        public function delete()
+		{
+			// not necessary, because names are deleted by BaseObject::delete()
+
+		}
+
+
+
         /**
          */
         public function objectDelete()

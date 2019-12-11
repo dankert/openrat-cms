@@ -51,7 +51,8 @@ class Image extends File
 
         $this->isImage = true;
         $this->isFile  = false;
-    }
+		$this->typeid = BaseObject::TYPEID_FILE;
+	}
 
 
 

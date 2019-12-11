@@ -92,6 +92,7 @@ class Page extends BaseObject
 	{
 		parent::__construct( $objectid );
 		$this->isPage = true;
+		$this->typeid = BaseObject::TYPEID_PAGE;
 
 		$this->publisher = new PublishPreview();
 

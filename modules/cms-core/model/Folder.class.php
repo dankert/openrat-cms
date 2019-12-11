@@ -23,6 +23,7 @@ class Folder extends BaseObject
 	{
 		parent::__construct( $objectid );
 		$this->isFolder = true;
+		$this->typeid = BaseObject::TYPEID_FOLDER;
 	}
 
 

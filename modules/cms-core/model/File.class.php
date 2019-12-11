@@ -83,6 +83,7 @@ class File extends BaseObject
 
 		parent::__construct( $objectid );
 		$this->isFile = true;
+		$this->typeid = BaseObject::TYPEID_FILE;
     }
 
 

@@ -25,7 +25,8 @@ use cms\model\Page;
 use cms\model\Project;
 
 /**
- * Erstellen einer Liste von Language-Links auf die selbe Seite
+ * Erstellen einer Liste von Language-Links auf die selbe Seite.
+ *
  * @author Tobias Schoene
  */
 class LanguageLinksForPage extends Macro

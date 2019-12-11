@@ -38,6 +38,7 @@ class Text extends File
 
         $this->isText = true;
         $this->isFile = false;
+		$this->typeid = BaseObject::TYPEID_TEXT;
 	}
 
 

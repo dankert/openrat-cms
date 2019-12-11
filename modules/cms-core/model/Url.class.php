@@ -16,6 +16,7 @@ class Url extends BaseObject
 	{
 		parent::__construct( $objectid );
 		$this->isUrl = true;
+		$this->typeid = BaseObject::TYPEID_URL;
 	}
 	
 

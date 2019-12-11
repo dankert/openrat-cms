@@ -20,6 +20,7 @@ class Link extends BaseObject
 	{
 		parent::__construct( $objectid );
 		$this->isLink = true;
+		$this->typeid = BaseObject::TYPEID_LINK;
 	}
 
 

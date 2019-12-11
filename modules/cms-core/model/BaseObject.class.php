@@ -1009,12 +1009,20 @@ SQL
         }
     }
 
+
+
+    public function objectDelete() {
+    	self::delete();
+	}
+
+
+
     /**
      * Objekt loeschen. Es muss sichergestellt sein, dass auch das Unterobjekt geloeschet wird.
      * Diese Methode wird daher normalerweise nur vom Unterobjekt augerufen
      * @access protected
      */
-    public function objectDelete()
+    public function delete()
     {
         $db = db_connection();
 
@@ -1765,6 +1773,9 @@ SQL
 	{
 		return "";
 	}
+
+
+
 }
 
 
