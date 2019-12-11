@@ -122,6 +122,41 @@
 				</div>
 			</div>
 		</div></fieldset>
+		<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('validity') ?></legend><div class="closable">
+			<div class="clickable">
+				<a target="_self" data-type="dialog" data-action="" data-method="settings" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'settings'}" href="./#//">
+					<div class="line">
+						<div class="label">
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'global_state'.'')))); ?></span>
+						</div>
+						<div class="input">
+							<?php $if8=($is_valid); if($if8){?>
+								<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'is_yes'.'')))); ?></span>
+							<?php } ?>
+							<?php if(!$if8){?>
+								<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'is_no'.'')))); ?></span>
+							<?php } ?>
+						</div>
+					</div>
+					<div class="line">
+						<div class="label">
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang('from')))); ?></span>
+						</div>
+						<div class="input">
+							<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($valid_from_date) ?>
+						</div>
+					</div>
+					<div class="line">
+						<div class="label">
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang('until')))); ?></span>
+						</div>
+						<div class="input">
+							<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($valid_to_date) ?>
+						</div>
+					</div>
+				</a>
+			</div>
+		</div></fieldset>
 		<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('prop_userinfo') ?></legend><div class="closable">
 			<div class="line">
 				<div class="label">

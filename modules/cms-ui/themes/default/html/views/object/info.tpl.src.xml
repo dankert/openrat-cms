@@ -124,6 +124,37 @@
 				</part>
 			</part>
 		</group>
+		<group title="message:validity">
+			<part class="clickable">
+				<link subaction="settings" type="dialog">
+					<part class="line">
+						<part class="label">
+							<text key="global_state"></text>
+						</part>
+						<part class="input">
+							<if true="var:is_valid"><text key="is_yes" /></if>
+							<else><text key="is_no" /></else>
+						</part>
+					</part>
+					<part class="line">
+						<part class="label">
+							<text text="from"></text>
+						</part>
+						<part class="input">
+							<date date="var:valid_from_date" />
+						</part>
+					</part>
+					<part class="line">
+						<part class="label">
+							<text text="until"></text>
+						</part>
+						<part class="input">
+							<date date="var:valid_to_date" />
+						</part>
+					</part>
+				</link>
+			</part>
+		</group>
 		<group title="message:prop_userinfo">
 			<part class="line">
 				<part class="label">

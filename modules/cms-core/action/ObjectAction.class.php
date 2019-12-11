@@ -632,6 +632,7 @@ class ObjectAction extends BaseAction
 	{
 		$this->setTemplateVars( $this->baseObject->getProperties() );
 
+		$this->setTemplateVar( 'is_valid'     ,$this->baseObject->isValid() );
 		$this->setTemplateVar( 'full_filename',$this->baseObject->full_filename() );
 		$this->setTemplateVar( 'extension'    , '' );
 		$this->setTemplateVar( 'mimetype'     , $this->baseObject->mimeType() );

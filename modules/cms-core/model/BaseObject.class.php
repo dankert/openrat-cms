@@ -428,6 +428,8 @@ SQL
             'modelid'          =>$this->modelid,
             'projectid'        =>$this->projectid,
             'settings'         =>$this->settings,
+            'valid_from_date'  =>$this->validFromDate,
+            'valid_to_date'    =>$this->validToDate,
             'type'             =>$this->getType()  );
     }
 
