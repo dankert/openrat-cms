@@ -56,6 +56,7 @@ class LanguageLinksForPage extends Macro
             $targetPage->publisher  = $this->page->publisher;
             $targetPage->languageid = $lid;
             $targetPage->modelid    = $this->page->modelid;
+            $targetPage->load();
 
             $link = $this->page->publisher->linkToObject( $this->page, $targetPage );
 			echo '<li><a hreflang="'.$language->isoCode.'" href="'.$link.'">'.strtolower($language->isoCode).'</a></li>';
