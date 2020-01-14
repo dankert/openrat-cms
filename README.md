@@ -5,7 +5,7 @@
 
 ## About
 
-OpenRat is a statifying CMS.
+OpenRat is a satisfying CMS.
 
 OpenRat generates static files, which are served by a dedicated live web server like Apache, Nginx, Boa etc.
 
