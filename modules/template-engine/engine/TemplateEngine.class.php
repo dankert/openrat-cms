@@ -5,6 +5,7 @@ namespace template_engine;
 use DomainException;
 use Exception;
 use LogicException;
+use SimpleXMLElement;
 use \template_engine\components\Component;
 
 /**
@@ -22,6 +23,10 @@ class TemplateEngine
 	public $config = array();
 	public $request;
 
+	private $srcFilename;
+	private $debug = false;
+
+
     /**
 	 * Erzeugt einen Templateparser.
 	 */
@@ -38,6 +43,8 @@ class TemplateEngine
 	 */
 	public function compile($srcXmlFilename, $tplOutName )
 	{
+		$this->srcFilename = $srcXmlFilename;
+
 	    // Imports the base class of all component types.
 		require_once (dirname(__FILE__).'/../components/'.$this->renderType.'/Component.class.' . PHP_EXT);
 		require_once (dirname(__FILE__).'/../components/'.$this->renderType.'/HtmlComponent.class.' . PHP_EXT);
@@ -71,78 +78,8 @@ class TemplateEngine
 			if (! is_resource($outFile))
 				throw new \LogicException("Template '$srcXmlFilename': Unable to open file for writing: '$filename'");
 			
-			$openCmd = array();
-			$depth = 0;
-			$components = array();
-			$counter = 0;
+			$this->processElement( $document, $outFile );
 
-			$document = $this->parseIncludes( $document, dirname($srcXmlFilename) );
-			
-			foreach ($document as $element)
-			{
-				// Initialisieren der m�glichen Element-Inhalte
-				$type = '';
-				$attributes = array();
-				$value = '';
-				$tag = '';
-				$counter++;
-
-				// Setzt: $tag, $attributes, $value, $type
-				extract($element);
-				
-				if  ( in_array($type, array('open','complete') ) )
-				{
-					$depth ++;
-					
-					$className = ucfirst($tag);
-					$classFilename = dirname(__FILE__).'/../components/'.$this->renderType."/$tag/$className.class." . PHP_EXT;
-					
-					if (!is_file($classFilename))
-						throw new \LogicException("Component Class File '$classFilename' does not exist." );
-
-					require_once ($classFilename);
-					
-					$className = 'template_engine\components\\'.$className .'Component';
-					/* @var $component Component */
-					$component = new $className();
-					$component->setDepth($depth);
-					$component->request = $this->request;
-					
-					foreach ($attributes as $prop => $value)
-					{
-					    // Aus String 'true' und 'false' typechtes Boolean machen.
-                        // Sonst wäre 'false'==true!
-                        if ($value == 'false') $value = false;
-                        if ($value == 'true') $value = true;
-
-						$component->$prop = $value;
-					}
-					// $component->depth = $depth;
-					
-					$components[$depth] = $component;
-
-                    $output = $component->getBegin();
-                    if ($output) {
-                        $prepend = ($counter>1?"\n":'').str_repeat("\t",$depth-1);
-                        fwrite($outFile, $prepend.$output);
-                    }
-				}
-				
-				if  ( in_array($type, array('close','complete') ) )
-				{
-					$component = $components[$depth];
-
-					$output = $component->getEnd();
-					if   ( $output ) {
-                        $prepend = "\n".str_repeat("\t",$depth-1);
-                        fwrite($outFile, $prepend.$component->getEnd());
-                    }
-					unset($components[$depth]); // Cleanup
-					
-					$depth --;
-				}
-			}
-			
 			fclose($outFile);
 			
 			// CHMOD ausfuehren.
@@ -152,11 +89,77 @@ class TemplateEngine
 		}
 		catch (\Exception $e)
 		{
+			echo $e->getTraceAsString();
 			throw new \LogicException("Template '$srcXmlFilename' failed to compile", 0, $e);
 		}
 	}
 
-	
+
+	/**
+	 * @param SimpleXMLElement $element
+	 * @param resource $outFile
+	 * @param int $depth
+	 */
+	private function processElement( $element, $outFile, $depth = 0 ) {
+
+		$attributes = iterator_to_array($element->attributes());
+		$tag        = $element->getName();
+
+		if   ( $tag == 'include') {
+
+			$element    = $this->loadDocument(dirname($this->srcFilename ) . '/' . $attributes['file'] . '.inc.xml');
+			$attributes = iterator_to_array( $element->attributes() );
+			$tag        = $element->getName();
+		}
+
+		$className = ucfirst($tag);
+		$classFilename = dirname(__FILE__).'/../components/'.$this->renderType."/$tag/$className.class." . PHP_EXT;
+
+		if (!is_file($classFilename))
+			throw new \LogicException("Component Class File '$classFilename' does not exist." );
+
+		require_once ($classFilename);
+
+		$className = 'template_engine\components\\'.$className .'Component';
+		/* @var $component Component */
+		$component = new $className();
+		$component->setDepth($depth);
+		$component->request = $this->request;
+
+		foreach ($attributes as $attributeName => $attributeValue)
+		{
+			settype($attributeValue,'string');
+			// Aus String 'true' und 'false' typechtes Boolean machen.
+			// Sonst wäre 'false'==true!
+			if ($attributeValue == 'false') $attributeValue = false;
+			if ($attributeValue == 'true') $attributeValue = true;
+
+			$component->$attributeName = $attributeValue;
+		}
+
+		$output = $component->getBegin();
+		if($this->debug) $output = '<!-- Begin '.$tag.' -->'.$output;
+
+		if ($output) {
+			$prepend = ($depth>=0?"\n":'').str_repeat("\t",$depth);
+			fwrite($outFile, $prepend.$output);
+		}
+
+		foreach( $element->children() as $child ) {
+			$this->processElement($child,$outFile,$depth+1);
+		}
+
+		$output = $component->getEnd();
+		if($this->debug) $output = $output.'<!-- End '.$tag.' -->';
+		if   ( $output ) {
+			$prepend = "\n".str_repeat("\t",$depth);
+			fwrite($outFile, $prepend.$output);
+		}
+
+	}
+
+
+
 	/**
 	 * Diese Funktion lädt die Vorlagedatei.
 	 */
@@ -172,17 +175,9 @@ class TemplateEngine
 	private function loadXmlDocument( $filename )
 	{
 	    if (!is_file($filename))
-	        throw new LogicException("File '$filename' was not found.'");
+	        throw new LogicException("XML file '$filename' was not found.'");
 
-		$index = array();
-		$vals  = array();
-		$p = xml_parser_create();
-		xml_parser_set_option ( $p, XML_OPTION_CASE_FOLDING,false );
-		xml_parser_set_option ( $p, XML_OPTION_SKIP_WHITE,false );
-		xml_parse_into_struct($p, implode('',file($filename)), $vals, $index);
-		xml_parser_free($p);
-		
-		return $vals;
+		return new SimpleXMLElement( implode('',file($filename)) );
 	}
 
 
@@ -227,42 +222,5 @@ class TemplateEngine
 
     }
 
-
-    /**
-     * @param $document array
-     * @param $includePath
-     * @return array
-     */
-    private function parseIncludes($document, $includePath )
-    {
-        $newDocument = array();
-
-        foreach ($document as $element) {
-            // Initialisieren der m�glichen Element-Inhalte
-            $type = '';
-            $attributes = array();
-            $value = '';
-            $tag = '';
-
-            // Setzt: $tag, $attributes, $value, $type
-            extract($element);
-
-            if ($tag == 'include') {
-                if ($type == 'complete' || $type == 'open') {
-
-                    $includeDocument = $this->loadDocument($includePath . '/' . $attributes['file'] . '.inc.xml');
-                    $newDocument = array_merge($newDocument,$includeDocument);
-
-                }
-            }
-            else
-            {
-                $newDocument[] = $element;
-            }
-        }
-
-        return $newDocument;
-    }
 }
 
-?>

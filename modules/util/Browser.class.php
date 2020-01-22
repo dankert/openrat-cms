@@ -1,13 +1,18 @@
 <?php
 
+/**
+ * Very simple approach to identify a browsers name and platform.
+ */
 class Browser {
 
     public $name;
     public $platform;
 
 
-
-    public function Browser()
+	/**
+	 * Takes the user agent from the HTTP request and analyzes name and platform.
+	 */
+    public function __construct()
     {
         $agent = @$_SERVER['HTTP_USER_AGENT'];
 

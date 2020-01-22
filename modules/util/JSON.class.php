@@ -798,7 +798,7 @@ class JSON
      */
     class JSON_Error
     {
-        function JSON_Error($message = 'unknown error', $code = null,
+        function __construct($message = 'unknown error', $code = null,
                                      $mode = null, $options = null, $userinfo = null)
         {
 
