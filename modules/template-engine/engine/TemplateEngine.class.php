@@ -3,6 +3,8 @@
 
 namespace template_engine;
 use DomainException;
+use DOMDocument;
+use DOMElement;
 use Exception;
 use LogicException;
 use SimpleXMLElement;
@@ -58,7 +60,7 @@ class TemplateEngine
 				$srcFilename = $srcXmlFilename;
 			else
 				// Wenn Vorlage (noch) nicht existiert
-				throw new \LogicException("Template not found: $srcXmlFilename");
+				throw new LogicException("Template not found: $srcXmlFilename");
 			
 			$filename = $tplOutName;
 			
@@ -67,7 +69,7 @@ class TemplateEngine
 				return;
 			
 			if (is_file($filename) && ! is_writable($filename))
-				throw new \LogicException("Template output file is read-only: $filename");
+				throw new LogicException("Template output file is read-only: $filename");
 			
 			// Vorlage und Zieldatei oeffnen
 			$document = $this->loadDocument($srcFilename);
@@ -76,9 +78,9 @@ class TemplateEngine
             fwrite($outFile, '<?php if (!defined(\'OR_TITLE\')) die(\'Forbidden\'); ?>');
 
 			if (! is_resource($outFile))
-				throw new \LogicException("Template '$srcXmlFilename': Unable to open file for writing: '$filename'");
+				throw new LogicException("Template '$srcXmlFilename': Unable to open file for writing: '$filename'");
 			
-			$this->processElement( $document, $outFile );
+			$this->processElement( $document->documentElement, $outFile );
 
 			fclose($outFile);
 			
@@ -87,48 +89,59 @@ class TemplateEngine
 				if (! @chmod($filename, octdec($confCompiler['chmod'])))
 					throw new \InvalidArgumentException("Template {$srcXmlFilename} failed to compile: CHMOD '{$confCompiler['chmod']}' failed on file {$filename}.");
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			echo $e->getTraceAsString();
-			throw new \LogicException("Template '$srcXmlFilename' failed to compile", 0, $e);
+			throw new LogicException("Template '$srcXmlFilename' failed to compile", 0, $e);
 		}
 	}
 
 
 	/**
-	 * @param SimpleXMLElement $element
+	 * @param DOMElement $element
 	 * @param resource $outFile
 	 * @param int $depth
 	 */
 	private function processElement( $element, $outFile, $depth = 0 ) {
 
-		$attributes = iterator_to_array($element->attributes());
-		$tag        = $element->getName();
+		if   ( $element->nodeType == XML_ELEMENT_NODE )
+			;
+		else
+			return;
+
+		$attributes = $element->attributes;
+		$tag        = $element->localName;
 
 		if   ( $tag == 'include') {
 
-			$element    = $this->loadDocument(dirname($this->srcFilename ) . '/' . $attributes['file'] . '.inc.xml');
-			$attributes = iterator_to_array( $element->attributes() );
-			$tag        = $element->getName();
+			$filename   = dirname($this->srcFilename) . '/' . $attributes['file']->value . '.inc.xml';
+			if   ( ! is_file( $filename ))
+				throw new LogicException('Includefile not found: '.$filename );
+
+			$element    = $this->loadDocument($filename)->documentElement;
+			$attributes = $element->attributes;
+			$tag        = $element->localName;
 		}
 
 		$className = ucfirst($tag);
 		$classFilename = dirname(__FILE__).'/../components/'.$this->renderType."/$tag/$className.class." . PHP_EXT;
 
 		if (!is_file($classFilename))
-			throw new \LogicException("Component Class File '$classFilename' does not exist." );
+			throw new LogicException("Component Class File '$classFilename' does not exist." );
 
 		require_once ($classFilename);
 
 		$className = 'template_engine\components\\'.$className .'Component';
 		/* @var $component Component */
 		$component = new $className();
-		$component->setDepth($depth);
+		$component->setDepth($depth+1);
 		$component->request = $this->request;
 
-		foreach ($attributes as $attributeName => $attributeValue)
+		foreach ($attributes as $attribute)
 		{
-			settype($attributeValue,'string');
+			$attributeValue = $attribute->value;
+			$attributeName  = $attribute->name;
+
 			// Aus String 'true' und 'false' typechtes Boolean machen.
 			// Sonst wäre 'false'==true!
 			if ($attributeValue == 'false') $attributeValue = false;
@@ -145,7 +158,7 @@ class TemplateEngine
 			fwrite($outFile, $prepend.$output);
 		}
 
-		foreach( $element->children() as $child ) {
+		foreach( $element->childNodes as $child ) {
 			$this->processElement($child,$outFile,$depth+1);
 		}
 
@@ -171,13 +184,17 @@ class TemplateEngine
 
 	/**
 	 * Laden und Parsen eines XML-Dokumentes.
+	 *
+	 * @return DOMDocument
 	 */
 	private function loadXmlDocument( $filename )
 	{
 	    if (!is_file($filename))
 	        throw new LogicException("XML file '$filename' was not found.'");
 
-		return new SimpleXMLElement( implode('',file($filename)) );
+		$document = new DOMDocument();
+		$document->load( $filename );
+		return $document;
 	}
 
 
