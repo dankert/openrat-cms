@@ -104,11 +104,25 @@ class TemplateEngine
 	 */
 	private function processElement( $element, $outFile, $depth = 0 ) {
 
+		// Only process DOM Elements (ignoring Text, Comments, ...)
 		if   ( $element->nodeType == XML_ELEMENT_NODE )
 			;
 		else
 			return;
 
+		// The namespace decides what to do with this element:
+		if   ( $element->namespaceURI == 'http://www.openrat.de/template')
+			$this->processCMSElement( $element, $outFile, $depth );
+		elseif   ( $element->namespaceURI == 'http://www.w3.org/1999/xhtml')
+			$this->processHTMLElement( $element, $outFile, $depth );
+		else
+			throw new LogicException("Unknown Element ".$element->tagName.' in NS '.$element->namespaceURI );
+	}
+
+
+
+	private function processCMSElement(DOMElement $element, $outFile, $depth)
+	{
 		$attributes = $element->attributes;
 		$tag        = $element->localName;
 
@@ -172,6 +186,30 @@ class TemplateEngine
 	}
 
 
+
+	private function processHTMLElement(DOMElement $element, $outFile, $depth)
+	{
+		$attributes = $element->attributes;
+		$tag        = $element->localName;
+
+		$out = '<'.$tag;
+		foreach ($attributes as $attribute)
+			$out .= ' '.$attribute->name.'="'.$attribute->value.'"';
+
+		$out .= '>';
+
+		$prepend = ($depth>=0?"\n":'').str_repeat("\t",$depth);
+		fwrite($outFile, $prepend.$out);
+
+		foreach( $element->childNodes as $child ) {
+			$this->processElement($child,$outFile,$depth+1);
+		}
+
+		$out = '</'.$tag.'>';
+		$prepend = "\n".str_repeat("\t",$depth);
+		fwrite($outFile, $prepend.$out);
+
+	}
 
 	/**
 	 * Diese Funktion lädt die Vorlagedatei.
