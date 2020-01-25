@@ -45,7 +45,7 @@ namespace cms\action {
 
         public $security = self::SECURITY_USER; // Default.
 
-        protected $templateVars = Array();
+        protected $templateVars = array( 'output'=>array() );
 
         /**
          * Aktuell angemeldeter Benutzer.<br>

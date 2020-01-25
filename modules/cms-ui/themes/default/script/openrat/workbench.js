@@ -71,7 +71,7 @@ Openrat.Workbench = new function()
          */
         var ping = function()
         {
-            $.ajax( Openrat.View.createUrl('title','ping',0) );
+            $.ajax( Openrat.View.createUrl('title','ping',0, {}, false) );
             //window.console && console.log("session-ping");
         }
 
@@ -136,7 +136,7 @@ Openrat.Workbench = new function()
 
     this.loadUserStyle = function() {
 
-        let url = Openrat.View.createUrl('index','userinfo',0 );
+        let url = Openrat.View.createUrl('index','userinfo',0, {},false );
 
         // Die Inhalte des Zweiges laden.
         $.getJSON(url, function (themeData) {

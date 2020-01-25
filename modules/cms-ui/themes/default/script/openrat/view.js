@@ -1,7 +1,6 @@
 /**
  * View.
- * Eine View ist ein HTML-Fragment, in das eine Action geladen wird.
- * Das Erzeugen der View, das Laden vom Server sowie das Schließen sind hier gekapselt.
+ * A view is a part of the page. An Action is loaded into this view.
  *
  * @param action
  * @param method
@@ -44,38 +43,54 @@ Openrat.View = function( action,method,id,params ) {
 
     this.loadView = function() {
 
-        let url = Openrat.View.createUrl( this.action,this.method,this.id,this.params); // URL für das Laden erzeugen.
+        let url = Openrat.View.createUrl( this.action,this.method,this.id,this.params,false); // URL für das Laden erzeugen.
         let element = this.element;
         let view = this;
 
-        $(this.element).empty().fadeTo(1,0.7).addClass('loader').html('').load(url,function(response, status, xhr) {
+        let loadViewHtmlPromise = $.ajax( url );
 
-            $(element).fadeTo(350,1);
+		$(this.element).empty().fadeTo(1,0.7).addClass('loader');
 
-            $(element).removeClass("loader");
+        loadViewHtmlPromise.done( function(data,status){
 
-            $(element).find('form').each( function() {
-                let form = new Openrat.Form();
-                form.close = function() {
-                    view.close();
-                }
-                form.initOnElement(this);
+        	$(element).html(data);
+			$(element).fadeTo(350,1);
 
-            });
-            if	( status == "error" )
-            {
-                // Seite nicht gefunden.
-                $(element).html("");
+			$(element).removeClass("loader");
 
-                Openrat.Workbench.notify('','','error','Server Error',['Server Error while requesting url '+url, response]);
-                return;
-            }
+			$(element).find('form').each( function() {
+				let form = new Openrat.Form();
+				form.close = function() {
+					view.close();
+				}
+				form.initOnElement(this);
 
-            registerViewEvents( element );
+			});
 
-        });
+			registerViewEvents( element );
+		} );
 
-    }
+		loadViewHtmlPromise.fail( function(jqxhr,status,cause) {
+			$(element).html("");
+
+			Openrat.Workbench.notify('','','error','Server Error',['Server Error while requesting url '+url, status]);
+		});
+
+		// Load the data for this view.
+		let apiUrl = Openrat.View.createUrl( this.action,this.method,this.id,this.params,true);
+		let loadViewApiPromise = $.getJSON( apiUrl );
+
+		loadViewHtmlPromise.done( function() {
+
+			loadViewApiPromise.done( function(data,status){
+				// Data binding.
+			} );
+		} );
+
+		loadViewApiPromise.fail( function(jqxhr,status,cause) {
+			Openrat.Workbench.notify('','','error','Server Error',['Server Error while requesting url '+apiUrl, status]);
+		});
+	}
 
 
 
@@ -89,11 +104,14 @@ Openrat.View = function( action,method,id,params ) {
      * @param extraid
      * @returns URL
      */
-    Openrat.View.createUrl = function(action,subaction,id,extraid={} )
+    Openrat.View.createUrl = function(action,subaction,id,extraid={},api=false )
     {
-        var url = './';
+        let url = './';
 
-        url += '?';
+		if   ( api )
+			url += 'api/';
+
+		url += '?';
 
         if(action)
             url += '&action='+action;
@@ -105,7 +123,7 @@ Openrat.View = function( action,method,id,params ) {
         if	( typeof extraid === 'string')
         {
             extraid = extraid.replace(/'/g,'"'); // Replace ' with ".
-            var extraObject = jQuery.parseJSON(extraid);
+            let extraObject = jQuery.parseJSON(extraid);
             jQuery.each(extraObject, function(name, value) {
                 url = url + '&' + name + '=' + value;
             });

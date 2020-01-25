@@ -318,17 +318,17 @@ class UserAction extends BaseAction
             + array('totpToken'=>Password::getTOTPCode($this->user->otpSecret))
         );
 
-        $this->setTemplateVar( 'allstyles',$this->user->getAvailableStyles() );
+        //$this->setTemplateVar( 'allstyles',$this->user->getAvailableStyles() );
 
-        $this->setTemplateVar('timezone_list',timezone_identifiers_list() );
+        //$this->setTemplateVar('timezone_list',timezone_identifiers_list() );
 
-        $languages = explode(',',Config()->subset('i18n')->is('available'));
-        foreach($languages as $id=>$name)
-        {
-            unset($languages[$id]);
-            $languages[$name] = $name;
-        }
-        $this->setTemplateVar('language_list',$languages);
+        //$languages = explode(',',Config()->subset('i18n')->is('available'));
+        //foreach($languages as $id=>$name)
+        //{
+        //    unset($languages[$id]);
+        //    $languages[$name] = $name;
+        //}
+        //$this->setTemplateVar('language_list',$languages);
 	}
 
 

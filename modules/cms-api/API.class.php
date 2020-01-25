@@ -43,13 +43,13 @@ class API
         } catch (BadMethodCallException $e) {
             Logger::warn($e);
 
-            API::sendHTTPStatus(500, 'Method not found');
-            $data = array('status' => 500) + API::exceptionToArray( $e );
+            API::sendHTTPStatus(204, 'Method not found');
+            $data = array('status' => 204) + API::exceptionToArray( $e );
         } catch (ObjectNotFoundException $e) {
             Logger::warn($e);
 
-            API::sendHTTPStatus(500, 'Object not found');
-            $data = array('status' => 500)+ API::exceptionToArray( $e );
+            API::sendHTTPStatus(204, 'Object not found');
+            $data = array('status' => 204)+ API::exceptionToArray( $e );
         } catch (OpenRatException $e) {
             Logger::warn($e);
 
@@ -151,19 +151,19 @@ class API
 
         $reqOutput = @$_REQUEST['output'];
 
-        if (sizeof($types) == 1 && in_array('application/php-array', $types) || $reqOutput == 'php-array')
+        if (in_array('application/php-array', $types) || $reqOutput == 'php-array')
             return CMS_API_OUTPUT_PHPARRAY;
 
-        if (sizeof($types) == 1 && in_array('application/php-serialized', $types) || $reqOutput == 'php')
+        if (in_array('application/php-serialized', $types) || $reqOutput == 'php')
             return CMS_API_OUTPUT_PHPSERIALIZE;
 
-        if (sizeof($types) == 1 && in_array('application/json', $types) || $reqOutput == 'json')
+        if (in_array('application/json', $types) || $reqOutput == 'json')
             return CMS_API_OUTPUT_JSON;
 
-        if (sizeof($types) == 1 && in_array('application/xml', $types) || $reqOutput == 'xml')
+        if (in_array('application/xml', $types) || $reqOutput == 'xml')
             return CMS_API_OUTPUT_XML;
 
-        if (sizeof($types) == 1 && in_array('application/yaml', $types) || $reqOutput == 'yaml')
+        if (in_array('application/yaml', $types) || $reqOutput == 'yaml')
             return CMS_API_OUTPUT_YAML;
 
         if (in_array('text/html', $types))
