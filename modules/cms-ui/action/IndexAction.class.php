@@ -389,6 +389,7 @@ class IndexAction extends Action
 		else
 		{
 			$js = array();
+			$js[] = OR_THEMES_DIR . 'default/script/vue';
 			$js[] = OR_THEMES_DIR . 'default/script/jquery';
 			$js[] = OR_THEMES_DIR . 'default/script/jquery-ui';
 			//$js[] = OR_THEMES_DIR . 'default/script/jquery.scrollTo';

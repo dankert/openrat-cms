@@ -17,6 +17,11 @@ Openrat.Workbench = new function()
 		this.initializePingTimer();
         this.initializeState();
         this.openModalDialog();
+
+        let headApp = new Vue( {
+			el: "head",
+			data: this.userInfo
+		} );
     }
 
 
@@ -141,11 +146,13 @@ Openrat.Workbench = new function()
         // Die Inhalte des Zweiges laden.
         $.getJSON(url, function (themeData) {
 
-            let style = themeData['style'];
-            Openrat.Workbench.setUserStyle(style);
+        	this.userInfo = themeData;
 
-            let color = themeData['theme-color'];
-            Openrat.Workbench.setThemeColor(color);
+            //let style = themeData['style'];
+            //Openrat.Workbench.setUserStyle(style);
+//
+  //          let color = themeData['theme-color'];
+    //        Openrat.Workbench.setThemeColor(color);
         });
     }
 
@@ -183,6 +190,11 @@ Openrat.Workbench = new function()
     }
 
 
+
+    this.userInfo = {
+		"theme-color": 'black',
+		"style"      : 'default'
+	};
 
 
     /**
