@@ -83,7 +83,15 @@ Openrat.View = function( action,method,id,params ) {
 		loadViewHtmlPromise.done( function() {
 
 			loadViewApiPromise.done( function(data,status){
-				// Data binding.
+				// Data-Binding
+				// our own updater for informing the binding about data changes.
+				let updater = $.Callbacks();
+				$(element).bindify( data, {
+					prefix        : 'b',
+					updateModel   :false, // We only need 1-way-binding here
+					updateDOM     :false,
+					updateCallback: updater // unused?
+				} );
 			} );
 		} );
 
