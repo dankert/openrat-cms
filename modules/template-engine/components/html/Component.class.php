@@ -3,6 +3,7 @@
 namespace template_engine\components;
 
 use cms\action\RequestParams;
+use modules\template_engine\Element;
 
 abstract class Component
 {
@@ -14,7 +15,17 @@ abstract class Component
      */
     public $request;
 
-    public function getDepth()
+	/**
+	 * @var Element
+	 */
+    private $element;
+
+    public function __construct()
+	{
+		$this->element = $this->createElement();
+	}
+
+	public function getDepth()
 	{
 		return $this->depth;
 	}
@@ -24,12 +35,20 @@ abstract class Component
 		$this->depth = $depth;
 	}
 
+	public function createElement() {
+    	return null;
+	}
+
+
 	/**
 	 * Gets the beginning of this component.
 	 * @return string
 	 */
 	public function getBegin()
 	{
+		if   ( $this->element )
+			return $this->element->getBegin();
+
 		ob_start();
 		$this->begin();
 		$src = ob_get_contents();
@@ -39,6 +58,9 @@ abstract class Component
 
 	public function getEnd()
 	{
+		if   ( $this->element )
+			return $this->element->getEnd();
+
 		ob_start();
 		$this->end();
 		$src = ob_get_contents();

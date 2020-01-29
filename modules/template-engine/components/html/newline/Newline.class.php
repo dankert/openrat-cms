@@ -2,13 +2,14 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\Element;
+
 class NewlineComponent extends Component
 {
 
-	public function begin()
+	public function createElement()
 	{
-		echo '<br/>';
+		return (new Element('br'));
 	}
 }
 
-?>
