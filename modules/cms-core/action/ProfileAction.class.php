@@ -20,9 +20,11 @@ namespace cms\action;
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 use cms\model\BaseObject;
+use cms\model\User;
 use language\Language;
 use LogicException;
 use Mail;
+use modules\util\UIUtils;
 use security\Base2n;
 use \Session;
 
@@ -325,6 +327,71 @@ class ProfileAction extends BaseAction
         }
         $this->setTemplateVar('timeline', $timeline);
     }
+
+
+
+    public function userinfoView()
+	{
+
+		$user = Session::getUser();
+
+		$currentStyle = $this->getUserStyle($user);
+		$this->setTemplateVar('style',$currentStyle);
+
+
+		$styleConfig     = config('style-default'); // default style config
+		$userStyleConfig = config('style', $currentStyle); // user style config
+
+		if (is_array($userStyleConfig))
+			$styleConfig = array_merge($styleConfig, $userStyleConfig ); // Merging user style into default style
+		else
+			; // Unknown style name, we are ignoring this.
+
+		// Theme base color for smartphones colorizing their status bar.
+		$this->setTemplateVar('theme-color', UIUtils::getColorHexCode($styleConfig['title_background_color']));
+	}
+
+
+	/**
+	 * All UI settings.
+	 */
+	public function uisettingsView() {
+
+		$this->setTemplateVar('settings',Config()->get('ui') );
+	}
+
+
+	/**
+	 * The user-dependent language codes.
+	 */
+	public function languageView() {
+
+    	$this->setTemplateVar('language',Config()->get('language') );
+	}
+
+
+
+	public function pingView()
+	{
+		$this->setTemplateVar('pong',1);
+	}
+
+
+
+	/**
+	 * @param User $user
+	 * @return string
+	 */
+	private function getUserStyle( $user )
+	{
+		// Theme für den angemeldeten Benuter ermitteln
+		if  ( $user && isset(config('style')[$user->style]))
+			$style = $user->style;
+		else
+			$style = config('interface', 'style', 'default');
+
+		return $style;
+	}
 
 
 }

@@ -12,6 +12,7 @@ use JSON;
 use JSqueeze;
 use Less_Parser;
 use Logger;
+use modules\util\UIUtils;
 use ObjectNotFoundException;
 use Session;
 use template_engine\TemplateEngineInfo;
@@ -57,7 +58,7 @@ class IndexAction extends Action
             ; // Unknown style name, we are ignoring this.
 
         // Theme base color for smartphones colorizing their status bar.
-        $themeColor = $this->getColorHexCode($styleConfig['title_background_color']);
+        $themeColor = UIUtils::getColorHexCode($styleConfig['title_background_color']);
 
 
 
@@ -79,30 +80,6 @@ class IndexAction extends Action
     }
 
 
-
-    public function userinfoView() {
-
-	    $user = Session::getUser();
-
-        $output = array();
-
-        $currentStyle = $this->getUserStyle($user);
-        $output['style'] = $currentStyle;
-
-
-        $styleConfig     = config('style-default'); // default style config
-        $userStyleConfig = config('style', $currentStyle); // user style config
-
-        if (is_array($userStyleConfig))
-            $styleConfig = array_merge($styleConfig, $userStyleConfig ); // Merging user style into default style
-        else
-            ; // Unknown style name, we are ignoring this.
-
-        // Theme base color for smartphones colorizing their status bar.
-        $output['theme-color'] = $this->getColorHexCode($styleConfig['title_background_color']);
-
-        $this->outputAsJSON( $output );
-    }
 
     /**
      * Show the UI.
@@ -154,7 +131,7 @@ class IndexAction extends Action
             ; // Unknown style name, we are ignoring this.
 
         // Theme base color for smartphones colorizing their status bar.
-        $this->setTemplateVar('themeColor', $this->getColorHexCode($styleConfig['title_background_color']));
+        $this->setTemplateVar('themeColor', UIUtils::getColorHexCode($styleConfig['title_background_color']));
 
         $messageOfTheDay = config('login', 'motd');
 
