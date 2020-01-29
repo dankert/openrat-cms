@@ -75,13 +75,6 @@ class TitleAction extends Action
 	}
 	
 	
-	public function pingView()
-	{
-        // do nothing here.
-        // The template is outputting a constant value.
-	}
-	
-	
 	public function historyView()
 	{
 		$resultList = array();

@@ -33,7 +33,7 @@ require_once( __DIR__.'/'.'Api.class.php' );
 require_once( __DIR__.'/'.'Code.class.php'           );
 require_once( __DIR__.'/'.'Transformer.class.php'    );
 require_once( __DIR__.'/'.'Line.class.php'           );
-require_once( __DIR__.'/'.'Upload.class.php' );
+require_once( __DIR__.'/'.'UIUtils.class.php' );
 require_once( __DIR__.'/'.'Upload.class.php' );
 require_once( __DIR__.'/'.'ArchiveTar.class.php'     );
 require_once( __DIR__.'/'.'ArchiveUnzip.class.php'   );

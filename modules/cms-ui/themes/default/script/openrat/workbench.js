@@ -69,14 +69,17 @@ Openrat.Workbench = new function()
          *
          * "Geben Sie mir ein Ping, Vasily. Und bitte nur ein einziges Ping!" (aus: Jagd auf Roter Oktober)
          */
-        var ping = function()
+        let ping = function()
         {
-            $.ajax( Openrat.View.createUrl('title','ping',0, {}, false) );
-            //window.console && console.log("session-ping");
+            let pingPromise = $.json( Openrat.View.createUrl('profile','ping',0, {}, true) );
+
+            pingPromise.fail( function() {
+            	console.warn('The server ping has failed.')
+            } );
         }
 
         // Alle 5 Minuten pingen.
-		var timeoutMinutes = 5;
+		let timeoutMinutes = 5;
 
         window.setInterval( ping, timeoutMinutes*60*1000 );
     }
@@ -131,21 +134,49 @@ Openrat.Workbench = new function()
         Openrat.Workbench.loadViews( $('#workbench .view.view-loader, #workbench .view.view-static') );
 
         this.loadUserStyle();
+        this.loadLanguage();
+        this.loadUISettings();
     }
 
 
     this.loadUserStyle = function() {
 
-        let url = Openrat.View.createUrl('index','userinfo',0, {},false );
+        let url = Openrat.View.createUrl('profile','userinfo',0, {},true );
 
         // Die Inhalte des Zweiges laden.
-        $.getJSON(url, function (themeData) {
+        $.getJSON(url, function (response) {
 
-            let style = themeData['style'];
+            let style = response.output['style'];
             Openrat.Workbench.setUserStyle(style);
 
-            let color = themeData['theme-color'];
+            let color = response.output['theme-color'];
             Openrat.Workbench.setThemeColor(color);
+        });
+    }
+
+
+	this.settings = {};
+    this.language = {};
+
+    this.loadLanguage = function() {
+
+        let url = Openrat.View.createUrl('profile','language',0, {},true );
+
+        // Die Inhalte des Zweiges laden.
+        $.getJSON(url, function (response) {
+
+            Openrat.Workbench.language = response.output.language;
+        });
+    }
+
+    this.loadUISettings = function() {
+
+        let url = Openrat.View.createUrl('profile','uisettings',0, {},true );
+
+        // Die Inhalte des Zweiges laden.
+        $.getJSON(url, function (response) {
+
+            Openrat.Workbench.settings = response.output.settings.settings;
         });
     }
 
