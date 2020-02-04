@@ -43,11 +43,21 @@ Openrat.View = function( action,method,id,params ) {
 
     this.loadView = function() {
 
+		// Load the template
         let url = Openrat.View.createUrl( this.action,this.method,this.id,this.params,false); // URL für das Laden erzeugen.
+		let loadViewHtmlPromise = $.ajax( url );
+
+		// Load the data for this view.
+		let apiUrl = Openrat.View.createUrl( this.action,this.method,this.id,this.params,true);
+		let loadViewApiPromise = $.getJSON( apiUrl );
+
         let element = this.element;
         let view = this;
 
-        let loadViewHtmlPromise = $.ajax( url );
+        let viewData = {};
+        viewData._language = Openrat.Workbench.language;
+        viewData._ui       = Openrat.Workbench.settings;
+		let updater = $.Callbacks();
 
 		$(this.element).empty().fadeTo(1,0.7).addClass('loader');
 
@@ -67,6 +77,13 @@ Openrat.View = function( action,method,id,params ) {
 
 			});
 
+			$(element).bindify( viewData, {
+				prefix        : 'b',
+				updateModel   :false, // We only need 1-way-binding here
+				updateDOM     :false,
+				updateCallback: updater // unused?
+			} );
+
 			registerViewEvents( element );
 		} );
 
@@ -76,22 +93,14 @@ Openrat.View = function( action,method,id,params ) {
 			Openrat.Workbench.notify('','','error','Server Error',['Server Error while requesting url '+url, status]);
 		});
 
-		// Load the data for this view.
-		let apiUrl = Openrat.View.createUrl( this.action,this.method,this.id,this.params,true);
-		let loadViewApiPromise = $.getJSON( apiUrl );
 
 		loadViewHtmlPromise.done( function() {
 
 			loadViewApiPromise.done( function(data,status){
 				// Data-Binding
 				// our own updater for informing the binding about data changes.
-				let updater = $.Callbacks();
-				$(element).bindify( data, {
-					prefix        : 'b',
-					updateModel   :false, // We only need 1-way-binding here
-					updateDOM     :false,
-					updateCallback: updater // unused?
-				} );
+				$.extend(viewData,data);
+				updater.fire();
 			} );
 		} );
 
