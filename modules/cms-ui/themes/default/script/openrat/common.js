@@ -205,6 +205,10 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
     //var viewHasContent = $(viewEl).children().length > 0;
 	//section.toggleClass('disabled',!viewHasContent);
 	section.toggleClass('is-empty',$(viewEl).is(':empty'));
+	if   ( ! $(viewEl).is(':empty') )
+		section.slideDown('fast');
+	else
+		section.slideUp('fast');
 
 	// Untermenüpunkte aus der View in das Fenstermenü kopieren...
 	$(viewEl).closest('div.panel').find('div.header div.dropdown div.entry.perview').remove(); // Alte Einträge löschen
@@ -443,7 +447,7 @@ function startDialog( name,action,method,id,params )
         if	( $('div#dialog').hasClass('modal') )
             return;
 
-        $('#dialog .view').fadeOut('fast').html('');
+        $('#dialog .view').html('');
         $('#dialog').removeClass('is-open').addClass('is-closed'); // Dialog schließen
 
         $(document).unbind('keyup',this.escapeKeyClosingHandler); // Cleanup ESC-Key-Listener
