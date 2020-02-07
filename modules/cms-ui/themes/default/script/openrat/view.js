@@ -49,14 +49,14 @@ Openrat.View = function( action,method,id,params ) {
 
         let loadViewHtmlPromise = $.ajax( url );
 
-		$(this.element).empty().fadeTo(1,0.7).addClass('loader');
+		$(this.element).addClass('loader');
 
         loadViewHtmlPromise.done( function(data,status){
 
-        	$(element).html(data);
-			$(element).fadeTo(350,1);
+        	if   ( ! data )
+        		data = '';
 
-			$(element).removeClass("loader");
+        	$(element).html(data).removeClass("loader");
 
 			$(element).find('form').each( function() {
 				let form = new Openrat.Form();
