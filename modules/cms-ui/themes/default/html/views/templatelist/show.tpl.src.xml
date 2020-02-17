@@ -10,7 +10,7 @@
 			<row class="data">
 				<column class="clickable">
 					<image action="template" />
-					<link type="open" id="var:id" name="var:name" action="template">
+					<link type="open" id="${id}" name="${name}" action="template">
 					<text var="name"></text>
 					</link>
 				</column>

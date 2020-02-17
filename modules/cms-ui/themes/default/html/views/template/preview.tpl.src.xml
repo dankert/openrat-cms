@@ -3,15 +3,15 @@
 
 
     <form action="template" method="GET" target="self" subaction="preview" autosave="true" cancel="false">
-        <selectbox name="modelid" list="models" default="var:modelid">
+        <selectbox name="modelid" list="models" default="${modelid}">
 
         </selectbox>
 
     </form>
 
-    <group title="message:preview">
+    <group title="#{preview}">
 
-        <insert url="var:preview_url"></insert>
+        <insert url="${preview_url}"></insert>
 
         <link class="action" action="file" subaction="edit">
             <image file="icon/edit"></image>

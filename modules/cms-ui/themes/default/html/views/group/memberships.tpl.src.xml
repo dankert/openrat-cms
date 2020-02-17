@@ -11,10 +11,10 @@
 			<list list="memberships" extract="true">
 				<row class="data">
 					<column>
-						<checkbox name="var:var"></checkbox>
+						<checkbox name="${var}"></checkbox>
 					</column>
 					<column>
-						<label for="var:var">
+						<label for="${var}">
 							<image action="user"></image>
 							<text var="name"></text>
 						</label>

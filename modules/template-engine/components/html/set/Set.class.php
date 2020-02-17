@@ -2,27 +2,31 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\PHPBlockElement;
+
 class SetComponent extends Component
 {
 	public $var;
 	public $value;
 	public $key;
-	
-	protected function begin()
+
+
+	public function createElement()
 	{
-		if (!empty($this->value))
+		$set = new PHPBlockElement();
+
+		if ($this->value)
 		{
-			if (!empty($this->key))
-				echo '<?php $'.$this->varname($this->var).'= '.$this->value($this->value).'['.$this->value($this->key).']; ?>';
+			if ($this->key)
+				$set->inBlock = '$'.$set->varname($this->var).'= '.$set->value($this->value).'['.$set->value($this->key).'];';
 			else 
-				echo '<?php $'.$this->varname($this->var).'= '.$this->value($this->value).'; ?>';
+				$set->inBlock = '$'.$set->varname($this->var).'= '.$set->value($this->value).';';
 		}
 		else {
 			// Unset
-			echo '<?php unset($'.$this->varname($this->var).') ?>';
+			$set->inBlock = 'unset($'.$set->varname($this->var).')';
 		}
+
+		return $set;
 	}
 }
-
-
-?>

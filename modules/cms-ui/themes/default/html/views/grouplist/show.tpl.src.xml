@@ -9,8 +9,8 @@
 		</row>
 		<list list="el" extract="true">
 			<row class="data">
-				<column id="var:id" name="var:name" action="group" class="clickable">
-					<link type="open" id="var:id" name="var:name" action="group">
+				<column id="${id}" name="${name}" action="group" class="clickable">
+					<link type="open" id="${id}" name="${name}" action="group">
 						<image action="group"></image>
 						<text var="name" maxlength="30"></text>
 					</link>
@@ -20,7 +20,7 @@
 		</list>
 		<row class="data">
 			<column colspan="2" class="clickable">
-				<link type="dialog" subaction="add" name="message:menu_add">
+				<link type="dialog" subaction="add" name="#{menu_add}">
 					<image method="add"/>
 					<text text="new"/>
 				</link>

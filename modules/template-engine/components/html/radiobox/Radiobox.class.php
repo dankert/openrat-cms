@@ -2,6 +2,10 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\PHPBlockElement;
+use modules\template_engine\Value;
+use modules\template_engine\ValueExpression;
+
 class RadioboxComponent extends Component
 {
 
@@ -16,17 +20,22 @@ class RadioboxComponent extends Component
 	public $title;
 
 	public $class;
-	
-	public function begin()
+
+
+	public function createElement()
 	{
-		$this->includeResource( 'radiobox/component-radio-box.php');
+		$radiobox = new PHPBlockElement();
+
+		$radiobox->beforeBlock = $radiobox->includeResource( 'radiobox/component-radio-box.php');
 		
-		if	( isset($this->default))
-			$value = $this->value($this->default);
+		if	( $this->default )
+			$value = $this->default;
 		else
-			$value = '$'.$this->varname($this->name);
+			$value = Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->name);
 					
-		echo '<?php component_radio_box('.$this->value($this->name).',$'.$this->varname($this->list).','.$value.') ?>';
+		$radiobox->inBlock = '<?php component_radio_box('.$this->name.',$'.$this->list.','.$value.') ?>';
+
+		return $radiobox;
 	}
 }
 

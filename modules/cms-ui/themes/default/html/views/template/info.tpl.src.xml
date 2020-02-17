@@ -17,7 +17,7 @@
 		<list list="pages" value="name" key="pageid">
 			<row class="data">
 				<column colspan="2" class="clickable">
-					<link type="open" action="page" id="var:pageid">
+					<link type="open" action="page" id="${pageid}">
 						<image action="page"></image>
 						<text var="name"></text>
 					</link>

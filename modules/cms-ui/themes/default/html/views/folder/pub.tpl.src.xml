@@ -4,15 +4,15 @@
     <!--
         Falls das Veroeffentlichen deaktiviert ist, eine Warnmeldung anzeigen.
     -->
-    <if true="config:security/nopublish">
+    <if true="%{security/nopublish}">
         <part class="message warn">
             <text key="GLOBAL_NOPUBLISH_DESC" class="help"></text>
         </part>
     </if>
 
 
-    <form cancel="false" visible="true" label="message:publish" async="true">
-        <if true="var:pages">
+    <form cancel="false" visible="true" label="#{publish}" async="true">
+        <if true="${pages}">
 
             <part class="line">
                 <part class="label">
@@ -26,7 +26,7 @@
                 </part>
             </part>
         </if>
-        <if true="var:files">
+        <if true="${files}">
             <part class="line">
                 <part class="label">
                 </part>
@@ -40,13 +40,13 @@
             </part>
 
         </if>
-        <group title="message:options">
+        <group title="#{options}">
             <if present="subdirs">
                 <part class="line">
                     <part class="label">
                     </part>
                     <part class="input">
-                        <checkbox readonly="var:subdirs" name="subdirs"></checkbox>
+                        <checkbox readonly="${subdirs}" name="subdirs"></checkbox>
                         <label for="subdirs">
                             <text raw="_"></text>
                             <text text="GLOBAL_PUBLISH_WITH_SUBDIRS"></text>

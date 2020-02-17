@@ -1,6 +1,6 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
-	<form method="get" subaction="diff" label="message:compare"
+	<form method="get" subaction="diff" label="#{compare}"
 		cancel="false" visible="true">
 		<table widths="5%,5%,5%,15%,15%,35%,10%,10%">
 			<row class="headline">
@@ -45,7 +45,7 @@
 					</column>
 					<column>
 						<if present="compareid">
-							<radio name="compareid" value="var:id"></radio>
+							<radio name="compareid" value="${id}"></radio>
 						</if>
 						<else>
 							<text raw="_" />
@@ -53,14 +53,14 @@
 					</column>
 					<column>
 						<if present="compareid">
-							<radio name="withid" value="var:id"></radio>
+							<radio name="withid" value="${id}"></radio>
 						</if>
 						<else>
 							<text raw="_" />
 						</else>
 					</column>
 					<column>
-						<date date="var:date"></date>
+						<date date="${date}"></date>
 					</column>
 					<column>
 						<text var="user"></text>
@@ -68,7 +68,7 @@
 					<column>
 						<text var="value"></text>
 					</column>
-					<if true="var:public">
+					<if true="${public}">
 						<column>
 							<text key="GLOBAL_PUBLIC" type="strong"></text>
 						</column>
@@ -77,7 +77,7 @@
 						<if present="releaseUrl">
 							<column class="clickable">
 								<link type="post" subaction="release" var1="valueid"
-									value1="var:valueid" id="var:objectid" title="message:GLOBAL_RELEASE_DESC">
+									value1="${valueid}" id="${objectid}" title="#{GLOBAL_RELEASE_DESC}">
 									<text key="GLOBAL_RELEASE" type="strong"></text>
 								</link>
 							</column>
@@ -88,7 +88,7 @@
 							</column>
 						</else>
 					</else>
-					<if true="var:active">
+					<if true="${active}">
 						<column>
 							<text key="GLOBAL_ACTIVE" type="emphatic"></text>
 						</column>
@@ -96,8 +96,8 @@
 					<else>
 						<if present="useUrl">
 							<column class="clickable">
-								<link type="post" subaction="use" var1="valueid" value1="var:valueid"
-									id="var:objectid" title="message:GLOBAL_USE_DESC">
+								<link type="post" subaction="use" var1="valueid" value1="${valueid}"
+									id="${objectid}" title="#{GLOBAL_USE_DESC}">
 									<text key="GLOBAL_USE"></text>
 								</link>
 							</column>

@@ -55,7 +55,7 @@ class Http
 	 * @param String URL
 	 * @return Http
 	 */
-	public function Http( $url = '' )
+	public function __construct( $url = '' )
 	{
 		$this->setURL( $url );
 		$this->header['User-Agent'] = 'Mozilla/5.0 (OpenRat CMS)';

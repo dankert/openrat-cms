@@ -5,7 +5,7 @@
         <window icon="folder">
             <row>
                 <column colspan="2">
-                    <insert url="var:preview_url"></insert>
+                    <insert url="${preview_url}"></insert>
                     <link class="action" action="file" subaction="edit">
                         <image file="icon/edit"></image>
                         <text key="menu_file_edit"></text>

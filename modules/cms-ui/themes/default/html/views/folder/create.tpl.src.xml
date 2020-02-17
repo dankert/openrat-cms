@@ -3,7 +3,7 @@
 
     <part class="or-linklist">
 
-        <if true="var:mayCreateFolder">
+        <if true="${mayCreateFolder}">
             <part class="clickable or-linklist-line or-round-corners or-hover-effect">
                 <link type="dialog" subaction="createfolder">
                     <text key="menu_createfolder"></text>
@@ -11,7 +11,7 @@
             </part>
         </if>
 
-        <if true="var:mayCreatePage">
+        <if true="${mayCreatePage}">
             <part class="clickable or-linklist-line or-round-corners or-hover-effect">
                 <link type="dialog" subaction="createpage">
                     <text key="menu_createpage"></text>
@@ -19,7 +19,7 @@
             </part>
         </if>
 
-        <if true="var:mayCreateFile">
+        <if true="${mayCreateFile}">
             <part class="clickable or-linklist-line or-round-corners or-hover-effect">
                 <link type="dialog" subaction="createfile">
                     <text key="menu_createfile"></text>
@@ -27,7 +27,7 @@
             </part>
         </if>
 
-        <if true="var:mayCreateImage">
+        <if true="${mayCreateImage}">
             <part class="clickable or-linklist-line or-round-corners or-hover-effect">
                 <link type="dialog" subaction="createimage">
                     <text key="menu_createimage"></text>
@@ -35,7 +35,7 @@
             </part>
         </if>
 
-        <if true="var:mayCreateText">
+        <if true="${mayCreateText}">
             <part class="clickable or-linklist-line or-round-corners or-hover-effect">
                 <link type="dialog" subaction="createtext">
                     <text key="menu_createtext"></text>
@@ -43,7 +43,7 @@
             </part>
         </if>
 
-        <if true="var:mayCreateUrl">
+        <if true="${mayCreateUrl}">
             <part class="clickable or-linklist-line or-round-corners or-hover-effect">
                 <link type="dialog" subaction="createurl">
                     <text key="menu_createurl"></text>
@@ -51,7 +51,7 @@
             </part>
         </if>
 
-        <if true="var:mayCreateLink">
+        <if true="${mayCreateLink}">
             <part class="clickable or-linklist-line or-round-corners or-hover-effect">
                 <link type="dialog" subaction="createlink">
                     <text key="menu_createlink"></text>

@@ -2,6 +2,8 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\CMSElement;
+
 class ColumnComponent extends Component
 {
 	public $width;
@@ -16,47 +18,37 @@ class ColumnComponent extends Component
 	public $id;
 	public $name;
 
-	protected function begin()
+	public function createElement()
 	{
-	    $styleClasses = array();
-		echo '<'.($this->header?'th':'td');
-		if	( ! empty($this->width))
-			echo ' width="'.$this->htmlvalue($this->width).'"';
-		if	( ! empty($this->style))
-			echo ' style="'.$this->htmlvalue($this->style).'"';
+		$column = new CMSElement( ($this->header?'th':'td') );
 
-		if	( ! empty($this->colspan))
-			echo ' colspan="'.$this->htmlvalue($this->colspan).'"';
-		if	( ! empty($this->rowspan))
-			echo ' rowspan="'.$this->htmlvalue($this->rowspan).'"';
-		if	( ! empty($this->rowspan))
-			echo ' rowspan="'.$this->htmlvalue($this->rowspan).'"';
-		if	( ! empty($this->title))
-			echo ' title="'.$this->htmlvalue($this->title).'"';
+		if	( $this->width )
+			$column->addAttribute('width',$this->width);
 
-        if	( ! empty($this->id))
+		if	( $this->style )
+			$column->addAttribute('style',$this->style);
+
+		if	( $this->colspan )
+			$column->addAttribute('colspan',$this->colspan);
+
+		if	( $this->rowspan )
+			$column->addAttribute('rowspan',$this->rowspan);
+
+		if	( $this->rowspan )
+			$column->addAttribute('rowspan',$this->rowspan);
+		if	( $this->title )
+			$column->addAttribute('title',$this->title);
+
+        if	( $this->id )
         {
-            echo ' data-name="'.$this->htmlvalue($this->name).'"';
-            echo ' data-action="'.$this->htmlvalue($this->action).'"';
-            echo ' data-id="'.$this->htmlvalue($this->id).'"';
-            $styleClasses[] = 'clickable';
+			$column->addAttribute('data-name'  ,$this->name  );
+			$column->addAttribute('data-action',$this->action);
+			$column->addAttribute('data-id'    ,$this->id    );
+			$column->addStyleClass('clickable');
         }
-        if	( ! empty($this->class))
-            $styleClasses[] = $this->htmlvalue($this->class);
+        if	( $this->class )
+			$column->addStyleClass( $this->class );
 
-        if  ( sizeof($styleClasses) > 0)
-            echo ' class="'.implode(' ',$styleClasses).'"';
-
-        echo '>';
+        return $column;
 	}
-	
-	
-	protected function end()
-	{
-		echo '</'.($this->header?'th':'td').'>';
-	}
-	
 }
-
-
-?>

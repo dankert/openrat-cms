@@ -2,17 +2,17 @@
         xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
 
     <form action="page" method="GET" target="self" subaction="src" autosave="true" cancel="false" >
-        <selectbox name="languageid" list="languages" default="var:languageid">
+        <selectbox name="languageid" list="languages" default="${languageid}">
 
         </selectbox>
 
-        <selectbox name="modelid" list="models" default="var:modelid">
+        <selectbox name="modelid" list="models" default="${modelid}">
 
         </selectbox>
 
     </form>
 
-    <group title="message:SOURCE">
+    <group title="#{SOURCE}">
         <editor type="code" mode="html" name="src" readonly="true" />
     </group>
 

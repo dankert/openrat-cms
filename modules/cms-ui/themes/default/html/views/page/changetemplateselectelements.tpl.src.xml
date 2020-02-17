@@ -1,6 +1,6 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
-	<form visible="true" cancel="true" label="message:MENU_CHANGETEMPLATE">
+	<form visible="true" cancel="true" label="#{MENU_CHANGETEMPLATE}">
 		<hidden name="newtemplateid" />
 		<list list="elements" extract="true">
 			<part class="line">
@@ -8,7 +8,7 @@
 					<text var="name"></text>
 				</part>
 				<part class="input">
-					<selectbox name="var:newElementsName" default="" list="newElementsList"></selectbox>
+					<selectbox name="${newElementsName}" default="" list="newElementsList"></selectbox>
 				</part>
 			</part>
 		</list>

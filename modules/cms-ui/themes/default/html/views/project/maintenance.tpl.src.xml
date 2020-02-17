@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
 	<header back="true" />
 	<form>
-		<group title="message:options">
+		<group title="#{options}">
 			<part>
 				<text value=""></text>
 				<radio name="type" value="check_limit"></radio>

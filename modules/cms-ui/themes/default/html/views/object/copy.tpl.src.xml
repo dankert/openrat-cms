@@ -3,10 +3,10 @@
 	<form>
 		<part class="line">
 			<part class="label">
-				<hidden name="sourceid" default="var:sourceId" />
+				<hidden name="sourceid" default="${sourceId}" />
 			</part>
 			<part class="input">
-				<text value="arrayvar:source:name" />
+				<text value="${source.name}" />
 			</part>
 		</part>
 
@@ -20,10 +20,10 @@
 		
 		<part class="line">
 			<part class="label">
-				<hidden name="targetid" default="var:targetId" />
+				<hidden name="targetid" default="${targetId}" />
 			</part>
 			<part class="input">
-				<text value="arrayvar:target:name" />
+				<text value="${target.name}" />
 			</part>
 		</part>
 

@@ -2,6 +2,8 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\CMSElement;
+
 class ImageComponent extends Component
 {
 	public $class;
@@ -20,92 +22,85 @@ class ImageComponent extends Component
 	public $size;
 	public $title;
 
-	protected function begin()
+	public function createElement()
 	{
-        $styleClass = '';
+        $styleClasses = [];
         $tagName = 'img';
         $file = '';
         $selfClosing = true;
 
-		if	( !empty($this->menu) )
+		if	( $this->menu )
 		{
 		    $tagName = 'i';
-			$styleClass = 'image-icon image-icon--menu-'.$this->htmlvalue($this->menu);
+			$styleClasses = ['image-icon','image-icon--menu-'.$this->menu];
             $selfClosing = false;
 		}
-		elseif	( !empty($this->elementtype) )
+		elseif	( $this->elementtype )
 		{
             $tagName = 'i';
-			$styleClass = 'image-icon image-icon--action-el_'.$this->htmlvalue($this->elementtype);
+			$styleClasses = ['image-icon','image-icon--action-el_'.$this->elementtype];
             $selfClosing = false;
 		}
-		elseif	( !empty($this->action) )
+		elseif	( $this->action )
 		{
             $tagName = 'i';
-			$styleClass = 'image-icon image-icon--action-'.$this->htmlvalue($this->action);
+			$styleClasses = ['image-icon','image-icon--action-'.$this->action];
             $selfClosing = false;
 		}
-		elseif	( !empty($this->method) )
+		elseif	( $this->method )
 		{
             $tagName = 'i';
-			$styleClass = 'image-icon image-icon--method-'.$this->htmlvalue($this->method);
+			$styleClasses = ['image-icon','image-icon--method-'.$this->method];
             $selfClosing = false;
 		}
-		elseif	( !empty($this->type) )
+		elseif	( $this->type )
 		{
-			$file = OR_THEMES_DIR.'default/images/icon_'.$this->htmlvalue($this->type).IMG_ICON_EXT;
+			$file = OR_THEMES_DIR.'default/images/icon_'.$this->type.IMG_ICON_EXT;
 		}
-		elseif	( !empty($this->icon) )
+		elseif	( $this->icon )
 		{
-			$file = OR_THEMES_DIR.'default/images/icon/'.$this->htmlvalue($this->icon).IMG_ICON_EXT;
+			$file = OR_THEMES_DIR.'default/images/icon/'.$this->icon.IMG_ICON_EXT;
 		}
-		elseif	( !empty($this->notice) )
+		elseif	( $this->notice )
 		{
-			$file = OR_THEMES_DIR.'default/images/notice_'.$this->htmlvalue($this->notice).IMG_ICON_EXT;
+			$file = OR_THEMES_DIR.'default/images/notice_'.$this->notice.IMG_ICON_EXT;
 		}
-		elseif	( !empty($this->tree) )
+		elseif	( $this->tree )
 		{
-			$file = OR_THEMES_DIR.'default/images/tree_'.$this->htmlvalue($this->tree).IMG_EXT;
+			$file = OR_THEMES_DIR.'default/images/tree_'.$this->tree.IMG_EXT;
 		}
-		elseif	( !empty($this->url) )
+		elseif	( $this->url )
 		{
-			$file = $this->htmlvalue($this->url);
+			$file = $this->url;
 		}
-		elseif	( !empty($this->fileext) )
+		elseif	( $this->fileext )
 		{
-			$file = OR_THEMES_DIR.'default/images/icon/'.$this->htmlvalue($this->fileext);
+			$file = OR_THEMES_DIR.'default/images/icon/'.$this->fileext;
 		}
-		elseif	( !empty($this->file) )
+		elseif	( $this->file )
 		{
-			$file = OR_THEMES_DIR.'default/images/icon/'.$this->htmlvalue($this->file).IMG_ICON_EXT;
+			$file = OR_THEMES_DIR.'default/images/icon/'.$this->file.IMG_ICON_EXT;
 		}
 
-		if	( !empty($this->class) )
+		if	( $this->class )
         {
-            $styleClass .= ' '.$this->class;
+            $styleClasses .= ' '.$this->class;
         }
 
 
-        echo '<'.$tagName.'';
+		$image = new CMSElement($tagName );
 
-		if( $styleClass )
-		    echo ' class="'.$styleClass.'"';
+		foreach( $styleClasses as $styleClass )
+		    $image->addStyleClass($styleClass);
 
 		if($this->title)
-		    echo ' title="'.$this->htmlvalue($this->title).'"';
+			$image->addAttribute('title',$this->title);
 
 		if   ( $file)
-		    echo ' src="'.$file.'"';
+			$image->addAttribute('src',$file);
 
-		if   ( $selfClosing )
-		    echo ' />';
-		else
-		    echo '></'.$tagName.'>';
-	}
+		$image->selfClosing( $selfClosing );
 
-	protected function end()
-	{
+		return $image;
 	}
 }
-
-?>

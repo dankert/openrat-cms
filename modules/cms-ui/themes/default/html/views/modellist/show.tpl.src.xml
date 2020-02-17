@@ -16,16 +16,16 @@
 			<row class="data">
 				<column class="clickable">
 
-					<link type="open" name="var:name" action="model" id="var:id">
+					<link type="open" name="${name}" action="model" id="${id}">
 						<image action="model"></image>
 						<text var="name" maxlength="25"></text>
 					</link>
 				</column>
 
-				<if false="var:is_default">
+				<if false="${is_default}">
 					<column class="clickable">
 						<if present="id">
-							<link type="post" action="model" subaction="setdefault" id="var:id">
+							<link type="post" action="model" subaction="setdefault" id="${id}">
 								<text text="GLOBAL_make_default"></text>
 							</link>
 						</if>

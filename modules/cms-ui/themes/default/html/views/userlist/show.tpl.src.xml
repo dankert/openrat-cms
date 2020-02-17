@@ -16,23 +16,23 @@
 		</row>
 		<list list="el" extract="true">
 			<row class="data">
-				<column id="var:id" name="var:name" action="user" class="clickable">
-					<link type="open" id="var:id" name="var:name" action="user">
+				<column id="${id}" name="${name}" action="user" class="clickable">
+					<link type="open" id="${id}" name="${name}" action="user">
 						<image action="user"></image>
 						<text var="name"></text>
 					</link>
 
 				</column>
-				<column id="var:id" name="var:name" action="user">
-					<text value="var:fullname"></text>
-					<if true="var:isAdmin">
+				<column id="${id}" name="${name}" action="user">
+					<text value="${fullname}"></text>
+					<if true="${isAdmin}">
 						<text raw="_("></text>
 						<text key="USER_ADMIN"></text>
 						<text raw=")"></text>
 					</if>
 				</column>
 				<column class="clickable">
-					<link type="post" action="user" subaction="switch" id="var:userid">
+					<link type="post" action="user" subaction="switch" id="${userid}">
 						<text key="LOGIN"></text>
 					</link>
 				</column>
@@ -40,7 +40,7 @@
 		</list>
 		<row class="data">
 			<column colspan="3" class="clickable">
-				<link type="dialog" subaction="add" name="message:add">
+				<link type="dialog" subaction="add" name="#{add}">
 					<image method="add"/>
 					<text text="new"/>
 				</link>

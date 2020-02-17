@@ -2,6 +2,8 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\PHPBlockElement;
+
 class IfComponent extends Component
 {
 	public $true;
@@ -15,38 +17,36 @@ class IfComponent extends Component
 	public $present;
 	public $not;
 	
-	
-	public function begin()
-	{
-		echo <<<'HTML'
-HTML;
 
-		echo '<?php $if'.$this->getDepth().'='.(!isset($this->not)?'':'!').'(';
-		if	( !empty($this->true ))
-			echo $this->value($this->true);
-		elseif (! empty($this->false))
-			echo '!' . $this->value($this->false);
-		elseif (! empty($this->contains))
-			echo 'in_array('.$this->value($this->value).',explode(",",'.$this->value($this->contains).')';
-		elseif (! empty($this->equals))
-			echo '' . $this->value($this->value).'=='.$this->value($this->equals);
-		elseif (strlen($this->lessthan)>0)
-			echo 'intval(' . $this->value($this->lessthan).')>intval('.$this->value($this->value).')';
-		elseif (strlen($this->greaterthan)>0)
-			echo 'intval(' . $this->value($this->greaterthan).')<intval('.$this->value($this->value).')';
+	public function createElement()
+	{
+		$if = new PHPBlockElement();
+
+		$expr = '$if'.$this->getDepth().'='.(!isset($this->not)?'':'!').'(';
+		if	( $this->true )
+			$expr .= $if->value($this->true);
+		elseif ($this->false)
+			$expr .= '!' . $if->value($this->false);
+		elseif ($this->contains)
+			$expr .= 'in_array('.$if->value($this->value).',explode(",",'.$if->value($this->contains).')';
+		elseif ($this->equals)
+			$expr .= '' . $if->value($this->value).'=='.$if->value($this->equals);
+		elseif ($this->lessthan)
+			$expr .= 'intval(' . $if->value($this->lessthan).')>intval('.$if->value($this->value).')';
+		elseif ($this->greaterthan)
+			$expr .= 'intval(' . $if->value($this->greaterthan).')<intval('.$if->value($this->value).')';
 		elseif (! empty($this->present))
-			echo 'isset(' . $this->textasvarname($this->present).')'; // 'isset' verwenden! Nicht empty(), da false empty ist.
+			$expr .= 'isset(' . '$'.$this->present.')'; // 'isset' verwenden! Nicht empty(), da false empty ist.
 		elseif (! empty($this->empty))
-			echo '(' . $this->textasvarname($this->empty).')==FALSE';
+			$expr .= '(' . $if->textasvarname($this->empty).')==FALSE';
+		elseif ($this->value)
+			$expr .= $if->value($this->value);
 		else
 			throw new \LogicException("Element 'if' has not enough parameters.");
-		
-		echo '); if($if'.$this->getDepth().'){?>';
-	}
+		$expr .= ');';
 
-	public function end() {
-	    echo '<?php } ?>';
+		$if->beforeBlock = $expr . ' if($if'.$this->getDepth().')';
+
+		return $if;
 	}
 }
-
-?>

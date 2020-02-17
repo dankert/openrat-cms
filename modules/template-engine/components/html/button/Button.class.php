@@ -2,6 +2,9 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\Element;
+
+/* @DEPRECATED */
 class ButtonComponent extends Component
 {
 
@@ -13,7 +16,12 @@ class ButtonComponent extends Component
 	
 	private $tmp_src;
 
-	protected function begin()
+	public function createElement()
+	{
+		return new Element(null);
+	}
+
+	protected function unused_begin()
 	{
 		echo <<<'HTML'
 		<div class="invisible">

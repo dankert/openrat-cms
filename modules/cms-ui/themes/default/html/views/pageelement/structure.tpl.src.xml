@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
 	<if present="text">
 		<part class="structure">
-			<editor type="dom" name="text"></editor>
+			<!--<editor type="dom" name="text"></editor>-->
 		</part>
 	</if>
 </output>

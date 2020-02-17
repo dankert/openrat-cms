@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
 	<form apply="true">
         <hidden name="modelid" />
-        <group title="message:source">
+        <group title="#{source}">
             <editor type="code" name="source" mode="htmlmixed" />
         </group>
 

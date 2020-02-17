@@ -2,22 +2,26 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\CMSElement;
+use modules\template_engine\Value;
+use modules\template_engine\ValueExpression;
+
 class QrcodeComponent extends Component
 {
 
-	public $title;
+	public $value;
 	
-	
-	
-	protected function begin()
+
+	public function createElement()
 	{
-		$value = $this->htmlvalue($this->value);
-		$title = lang('QRCODE_SHOW');
-		echo <<<HTML
-<i class="image-icon image-icon--menu-qrcode or-qrcode or-info" data-qrcode="{$value}" title="{$title}"></i>
-HTML;
+		$qrcode = (new CMSElement('i'))
+			->addStyleClass('image-icon')
+			->addStyleClass('image-icon--menu-qrcode')
+			->addStyleClass('or-qrcode')
+			->addStyleClass('or-info')
+			->addAttribute('data-qrcode', $this->value)
+			->addAttribute('title', Value::createExpression(ValueExpression::TYPE_MESSAGE, 'QRCODE_SHOW'));
+
+		return $qrcode;
 	}
-
 }
-
-?>

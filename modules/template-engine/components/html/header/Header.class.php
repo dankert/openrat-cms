@@ -2,11 +2,18 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\Element;
+
 class HeaderComponent extends Component
 {
     public $views;
 
-    public function begin()
+    public function createElement()
+	{
+		return new Element(null);
+	}
+
+	public function begin()
     {
         if(false) // DEACTIVATED
         if (isset($this->views)) {

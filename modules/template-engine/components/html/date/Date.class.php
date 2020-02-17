@@ -2,18 +2,18 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\PHPBlockElement;
+
 class DateComponent extends Component
 {
 	public $date;
-	
-	protected function begin()
+
+	public function createElement()
 	{
-		$date = $this->date;
-		
-		$this->includeResource( 'date/component-date.php');
-		echo '<?php component_date('.$this->value($this->date).') ?>';
+		$date = new PHPBlockElement();
+		$date->beforeBlock = $date->includeResource( 'date/component-date.php');
+		$date->inBlock = 'component_date('.$date->value($this->date).');';
+
+		return $date;
 	}
 }
-
-
-?>

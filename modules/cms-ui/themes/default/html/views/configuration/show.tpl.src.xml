@@ -14,8 +14,8 @@
 				<column> 
 					<text var="key"></text>
 				</column>
-				<column class="var:class">
-					<text class="var:class" var="value"></text>
+				<column class="${class}">
+					<text class="${class}" var="value"></text>
 				</column>
 			</row>
 		</list>

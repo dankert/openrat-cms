@@ -20,14 +20,14 @@
 					<text var="languagename" />
 				</column>
 				<column class="clickable">
-					<link subaction="value" var1="languageid" value1="var:languageid" type="edit" action="pageelement">
+					<link subaction="value" var1="languageid" value1="${languageid}" type="edit" action="pageelement">
 						<text var="value" maxlength="30" escape="true" />
 					</link>
 				</column>
 				<column>
 					<list list="editors" key="id" value="name">
 						<part class="clickable">
-							<link type="edit" action="pageelement" subaction="value" var1="languageid" value1="var:languageid" var2="format" value2="var:id">
+							<link type="edit" action="pageelement" subaction="value" var1="languageid" value1="${languageid}" var2="format" value2="${id}">
 								<text var="name" />
 							</link>
 						</part>

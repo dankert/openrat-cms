@@ -1,35 +1,41 @@
 <?php if (!defined('OR_TITLE')) die('Forbidden'); ?>
-	<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
+	<div class="or-table-wrapper"><div class="or-table-area"><table width="100%" class="">
 		<tr class="headline">
-			<th>
-				<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'language'.'')))); ?></span>
+			<th class="">
+				<span class=""><?php echo encodeHtml(htmlentities(@lang('language'))) ?>
+				</span>
 			</th>
-			<th>
-				<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'value'.'')))); ?></span>
+			<th class="">
+				<span class=""><?php echo encodeHtml(htmlentities(@lang('value'))) ?>
+				</span>
 			</th>
-			<th>
-				<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'editor'.'')))); ?></span>
+			<th class="">
+				<span class=""><?php echo encodeHtml(htmlentities(@lang('editor'))) ?>
+				</span>
 			</th>
 		</tr>
-		<?php foreach($languages as $list_key=>$list_value){ ?><?php extract($list_value) ?>
+		<?php foreach($languages as $list_key=>$list_value) { extract($list_value); ?>
 			<tr class="data">
-				<td>
-					<span><?php echo nl2br(encodeHtml(htmlentities($languagename))); ?></span>
+				<td class="">
+					<span class=""><?php echo encodeHtml(htmlentities(@$languagename)) ?>
+					</span>
 				</td>
 				<td class="clickable">
-					<a target="_self" data-type="edit" data-action="pageelement" data-method="value" data-id="<?php echo OR_ID ?>" data-extra="{'languageid':'<?php echo $languageid ?>'}" href="./#/pageelement/">
-						<span><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $value,30,'..',constant('STR_PAD_BOTH') )))); ?></span>
+					<a target="_self" data-type="edit" data-action="pageelement" data-method="value" data-id="" data-extra="{'languageid':'<?php echo encodeHtml(htmlentities(@$languageid)) ?>'}" href="/#/pageelement/" class="">
+						<span class=""><?php echo encodeHtml(htmlentities(@$value)) ?>
+						</span>
 					</a>
 				</td>
-				<td>
-					<?php foreach($editors as $id=>$name){ ?>
+				<td class="">
+					<?php foreach($editors as $id=>$name) {  ?>
 						<div class="clickable">
-							<a target="_self" data-type="edit" data-action="pageelement" data-method="value" data-id="<?php echo OR_ID ?>" data-extra="{'languageid':'<?php echo $languageid ?>','format':'<?php echo $id ?>'}" href="./#/pageelement/">
-								<span><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
+							<a target="_self" data-type="edit" data-action="pageelement" data-method="value" data-id="" data-extra="{'languageid':'<?php echo encodeHtml(htmlentities(@$languageid)) ?>','format':'<?php echo encodeHtml(htmlentities(@$id)) ?>'}" href="/#/pageelement/" class="">
+								<span class=""><?php echo encodeHtml(htmlentities(@$name)) ?>
+								</span>
 							</a>
 						</div>
-					<?php } ?>
+					 <?php } ?>
 				</td>
 			</tr>
-		<?php } ?>
+		 <?php } ?>
 	</table></div></div>

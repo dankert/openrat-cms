@@ -28,6 +28,8 @@ class TemplateEngine
 	private $srcFilename;
 	private $debug = false;
 
+	const CSS_PREFIX = 'or-';
+
 
     /**
 	 * Erzeugt einen Templateparser.
@@ -164,6 +166,7 @@ class TemplateEngine
 			$component->$attributeName = $attributeValue;
 		}
 
+		$output = $component->init();
 		$output = $component->getBegin();
 		if($this->debug) $output = '<!-- Begin '.$tag.' -->'.$output;
 
@@ -187,7 +190,7 @@ class TemplateEngine
 
 
 
-	private function processHTMLElement(DOMElement $element, $outFile, $depth)
+	private function processHTMLElement($element, $outFile, $depth)
 	{
 		$attributes = $element->attributes;
 		$tag        = $element->localName;

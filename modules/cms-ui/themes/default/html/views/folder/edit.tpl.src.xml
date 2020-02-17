@@ -15,7 +15,7 @@
 		<if present="up_url">
 			<row class="data clickable">
 				<column>
-					<link type="open" id="var:parentid" name="" action="folder">
+					<link type="open" id="${parentid}" name="" action="folder">
 						<image action="folder"></image>
 						<text value=".." />
 					</link>
@@ -28,16 +28,16 @@
 		<list list="object" extract="true">
 			<row class="data clickable">
 				<column class="">
-					<image action="var:icon"></image>
+					<image action="${icon}"></image>
 				</column>
 				<column class="">
-					<link type="open" id="var:id" name="var:name" action="var:type" title="var:desc">
+					<link type="open" id="${id}" name="${name}" action="${type}" title="${desc}">
 						<text var="name"></text>
 						<text raw="_"></text>
 					</link>
 				</column>
 				<column>
-					<date date="var:date"></date>
+					<date date="${date}"></date>
 				</column>
 			</row>
 		</list>

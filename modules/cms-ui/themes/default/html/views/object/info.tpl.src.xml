@@ -36,7 +36,7 @@
 			</part>
 		</group>
 
-		<group title="message:additional_info">
+		<group title="#{additional_info}">
 			<part class="line">
 				<part class="label">
 					<label for="full_filename">
@@ -78,7 +78,7 @@
 			</part>
 			<part class="line">
 				<part class="label">
-					<text text="message:id"></text>
+					<text text="#{id}"></text>
 				</part>
 				<part class="input">
 					<text var="objectid"></text>
@@ -95,7 +95,7 @@
 						<text var="cache_filename"></text>
 						<newline></newline>
 						<image icon="el_date"></image>
-						<date date="var:cache_filemtime"></date>
+						<date date="${cache_filemtime}"></date>
 					</part>
 				</part>
 			</if>
@@ -110,7 +110,7 @@
 						<list list="pages" extract="true">
 							<row>
 								<column>
-									<link url="var:url" target="cms_main">
+									<link url="${url}" target="cms_main">
 										<image type="page"></image>
 										<text var="name"></text>
 									</link>
@@ -124,7 +124,7 @@
 				</part>
 			</part>
 		</group>
-		<group title="message:validity">
+		<group title="#{validity}">
 			<part class="clickable">
 				<link subaction="settings" type="dialog">
 					<part class="line">
@@ -132,7 +132,7 @@
 							<text key="global_state"></text>
 						</part>
 						<part class="input">
-							<if true="var:is_valid"><text key="is_yes" /></if>
+							<if true="${is_valid}"><text key="is_yes" /></if>
 							<else><text key="is_no" /></else>
 						</part>
 					</part>
@@ -141,7 +141,7 @@
 							<text text="from"></text>
 						</part>
 						<part class="input">
-							<date date="var:valid_from_date" />
+							<date date="${valid_from_date}" />
 						</part>
 					</part>
 					<part class="line">
@@ -149,23 +149,23 @@
 							<text text="until"></text>
 						</part>
 						<part class="input">
-							<date date="var:valid_to_date" />
+							<date date="${valid_to_date}" />
 						</part>
 					</part>
 				</link>
 			</part>
 		</group>
-		<group title="message:prop_userinfo">
+		<group title="#{prop_userinfo}">
 			<part class="line">
 				<part class="label">
 					<text text="global_created"></text>
 				</part>
 				<part class="input">
 					<image elementtype="date"></image>
-					<date date="var:create_date"></date>
+					<date date="${create_date}"></date>
 					<newline></newline>
 					<image action="user"></image>
-					<user user="var:create_user"></user>
+					<user user="${create_user}"></user>
 				</part>
 			</part>
 			<part class="line">
@@ -174,10 +174,10 @@
 				</part>
 				<part class="input">
 					<image elementtype="date"></image>
-					<date date="var:lastchange_date"></date>
+					<date date="${lastchange_date}"></date>
 					<newline></newline>
 					<image action="user"></image>
-					<user user="var:lastchange_user"></user>
+					<user user="${lastchange_user}"></user>
 				</part>
 			</part>
 			<part class="line">
@@ -188,15 +188,15 @@
 				</part>
 				<part class="input">
 					<image elementtype="date"></image>
-					<date date="var:published_date"></date>
+					<date date="${published_date}"></date>
 					<newline></newline>
 					<image action="user"></image>
-					<user user="var:published_user"></user>
+					<user user="${published_user}"></user>
 				</part>
 			</part>
 		</group>
 
-		<group title="message:settings">
+		<group title="#{settings}">
 			<table filter="true">
 				<list list="settings" key="name" value="value" >
 					<row class="data">

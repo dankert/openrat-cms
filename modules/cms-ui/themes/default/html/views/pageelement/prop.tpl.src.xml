@@ -23,13 +23,13 @@
 					<text text="type"></text>
 				</column>
 				<column class="filename">
-					<image elementtype="var:element_type"></image>
-					<text key="tpl:el_{element_type}"></text>
+					<image elementtype="${element_type}"></image>
+					<text key="el_${element_type}"></text>
 				</column>
 			</row>
 			<row>
 				<column colspan="2">
-					<group title="message:additional_info"></group>
+					<group title="#{additional_info}"></group>
 				</column>
 			</row>
 			<row>
@@ -38,7 +38,7 @@
 				</column>
 				<column>
 					<if present="template_url">
-						<link url="var:template_url" target="cms_main_main">
+						<link url="${template_url}" target="cms_main_main">
 							<image file="icon_template"></image>
 							<text var="template_name"></text>
 						</link>
@@ -55,8 +55,8 @@
 				</column>
 				<column>
 					<if present="element_url">
-						<link url="var:element_url" target="cms_main_main">
-							<image elementtype="var:element_type"></image>
+						<link url="${element_url}" target="cms_main_main">
+							<image elementtype="${element_type}"></image>
 							<text var="element_name"></text>
 						</link>
 					</if>
@@ -68,7 +68,7 @@
 			</row>
 			<row>
 				<column colspan="2">
-					<group title="message:prop_userinfo"></group>
+					<group title="#{prop_userinfo}"></group>
 				</column>
 			</row>
 			<row>
@@ -80,11 +80,11 @@
 						<row>
 							<column>
 								<image icon="el_date"></image>
-								<date date="var:lastchange_date"></date>
+								<date date="${lastchange_date}"></date>
 							</column>
 							<column>
 								<image icon="user"></image>
-								<user user="var:lastchange_user"></user>
+								<user user="${lastchange_user}"></user>
 							</column>
 						</row>
 					</table>

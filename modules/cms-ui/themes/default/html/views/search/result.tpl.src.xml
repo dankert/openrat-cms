@@ -12,13 +12,13 @@
 		<list list="result" extract="true">
 			<row class="data">
 				<column class="clickable">
-					<link type="open" action="var:type" name="var:name" id="var:id">
-						<image type="var:type"></image>
-						<text var="name" title="var:desc"></text>
+					<link type="open" action="${type}" name="${name}" id="${id}">
+						<image type="${type}"></image>
+						<text var="name" title="${desc}"></text>
 					</link>
 				</column>
 				<column>
-					<date date="var:lastchange_date"></date>
+					<date date="${lastchange_date}"></date>
 				</column>
 			</row>
 		</list>

@@ -10,10 +10,10 @@
             <list list="memberships" extract="true">
                 <row class="data">
                     <column width="10%">
-                        <checkbox name="var:var"></checkbox>
+                        <checkbox name="group${id}" default="${member}"></checkbox>
                     </column>
                     <column>
-                        <label for="var:var">
+                        <label for="${var}">
                             <image action="group"/>
                             <text var="name"/>
                         </label>

@@ -11,7 +11,7 @@
 		<list list="applications" extract="true">
 			<row class="data">
 				<column>
-					<link url="var:url">
+					<link url="${url}">
 						<text var="name"></text>
 					</link>
 				</column>

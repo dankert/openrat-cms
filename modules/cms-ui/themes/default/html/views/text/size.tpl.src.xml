@@ -12,7 +12,7 @@
 			</part>
 		</part>
 		<if not="" empty="formats">
-			<group title="message:IMAGE_NEW_SIZE">
+			<group title="#{IMAGE_NEW_SIZE}">
 				<part class="line">
 					<part class="label"></part>
 
@@ -44,7 +44,7 @@
 					</part>
 				</part>
 			</group>
-			<group title="message:options">
+			<group title="#{options}">
 				<part class="line">
 					<part class="label">
 						<label for="format">

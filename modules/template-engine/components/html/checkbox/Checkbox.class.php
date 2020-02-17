@@ -2,6 +2,10 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\CMSElement;
+use modules\template_engine\Value;
+use modules\template_engine\ValueExpression;
+
 class CheckboxComponent extends Component
 {
 	
@@ -11,39 +15,34 @@ class CheckboxComponent extends Component
 	public $required = false;
 	public $label;
 
-	protected function begin(){
+	public function createElement()
+	{
+		$checkbox = (new CMSElement('input'))->addAttribute('type','checkbox');
 
-        if   ( $this->label )
-            echo '<label class="or-form-row"><span class="or-form-label"></span><span class="or-form-input">';
-
-
-        echo '<?php { ';
-		echo '$tmpname     = '.$this->value($this->name).';';
-		echo '$default  = '.$this->value($this->default).';';
-		echo '$readonly = '.$this->value($this->readonly).';';
-		echo '$required = '.$this->value($this->required).';';
-
-		echo <<<'HTML'
-		
-		if	( isset($$tmpname) )
-			$checked = $$tmpname;
-		else
-			$checked = $default;
-
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
-
-		if ( $readonly && $checked )
-		{ 
-		?><input type="hidden" name="<?php echo $tmpname ?>" value="1" /><?php
+        if   ( $this->label ) {
+			$label = new CMSElement('label');
+			$label->addStyleClass('or-form-row')->addStyleClass('or-form-checkbox');
+			$label->addChild( (new CMSElement('span'))->addStyleClass('or-form-label')->content($this->label));
+			$checkbox->addWrapper($label);
 		}
-		} ?>
-HTML;
 
-        if   ( $this->label )
-            echo '&nbsp;'.lang($this->label).' </span></label>';
+		$checkbox->addAttribute('name',$this->name);
+		$checkbox->addAttribute('disabled',$this->readonly);
+		$checkbox->addAttribute('value','1');
 
+		if   ( $this->default )
+			$checkbox->addAttribute('checked',$this->default);
+		else
+			$checkbox->addAttribute('checked',Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->name));
+
+		if   ( $this->required )
+			$checkbox->addAttribute( 'required','required');
+
+		if ( $this->readonly && $this->required ) {
+			$hidden = (new CMSElement('input'))->addAttribute('type','hidden')->addAttribute('name',$this->name)->addAttribute('value','1');
+			$checkbox->addChild( $hidden );
+		}
+
+		return $checkbox;
     }
 }
-
-
-?>

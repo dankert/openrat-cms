@@ -10,7 +10,7 @@
 				</label>
 			</part>
 			<part class="input">
-				<upload name="file" maxlength="var:maxlength" multiple="true"></upload>
+				<upload name="file" maxlength="${maxlength}" multiple="true"></upload>
 			</part>
 		</part>
 
@@ -38,7 +38,7 @@
 				<input name="url" size="50"></input>
 			</part>
 		</part>
-		<group title="message:description"></group>
+		<group title="#{description}"></group>
 
 
 		<part class="line">

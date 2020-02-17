@@ -1,7 +1,7 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
 
-	<if value="var:type" equals="folder">
+	<if value="${type}" equals="folder">
 		<header views="inherit,aclform" />
 	</if>
 	<else>
@@ -18,7 +18,7 @@
 			</column>
 			<list list="show" value="t">
 				<column class="help">
-					<text key="var:t" prefix="acl_" suffix="_abbrev"></text>
+					<text key="${t}" prefix="acl_" suffix="_abbrev"></text>
 				</column>
 			</list>
 			<column class="help">
@@ -62,7 +62,7 @@
 					</column>
 				</list>
 				<column class="clickable">
-					<link type="post" subaction="delacl" var1="aclid" value1="var:aclid">
+					<link type="post" subaction="delacl" var1="aclid" value1="${aclid}">
 						<text key="GLOBAL_DELETE"></text>
 					</link>
 				</column>
@@ -70,7 +70,7 @@
 		</list>
 		<row class="data">
 			<column colspan="99" class="clickable">
-				<link type="dialog" name="message:menu_aclform" subaction="aclform">
+				<link type="dialog" name="#{menu_aclform}" subaction="aclform">
 					<image method="add" />
 					<text text="new" />
 				</link>

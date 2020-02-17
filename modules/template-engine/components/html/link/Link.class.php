@@ -4,6 +4,7 @@ namespace template_engine\components;
 
 use Html;
 use JSON;
+use modules\template_engine\CMSElement;
 
 /**
  * Erzeugt einen HTML-Link.
@@ -64,59 +65,56 @@ class LinkComponent extends Component
 
 	public $afterSuccess;
 
-	/**
-	 * Link-Beginn
-	 * {@inheritDoc}
-	 * @see Component::begin()
-	 */
-	public function begin()
-	{
-		echo '<a';
-		
-		if ( $this->afterSuccess )
-			echo ' data-after-success="' . $this->htmlvalue($this->afterSuccess) . '"';
-		
-		if (isset($this->class))
-			echo ' class="' . $this->htmlvalue($this->class) . '"';
 
-		if (isset($this->title))
-			echo ' title="' . $this->htmlvalue($this->title) . '"';
+
+	public function createElement()
+	{
+
+		$link = new CMSElement('a');
+		if ( $this->afterSuccess )
+			$link->addAttribute('data-after-success',$this->afterSuccess);
 		
-		if (isset($this->accesskey))
-			echo ' accesskey="' . $this->htmlvalue($this->accesskey) . '"';
+		if ( $this->class )
+			$link->addStyleClass($this->class);
+
+		if ( $this->title )
+			$link->addAttribute('title',$this->title);
 		
-		if (isset($this->frame))
-			echo ' target="' . $this->htmlvalue($this->frame) . '"';
+		if ( $this->accesskey )
+			$link->addAttribute('accesskey',$this->accesskey);
 		
-		if (isset($this->name))
-			echo ' date-name="' . $this->htmlvalue($this->name) . '" name="' . $this->htmlvalue($this->name) . '"';
+		if ( $this->frame )
+			$link->addAttribute('target',$this->frame);
 		
-		if (isset($this->url))
-			echo ' data-url="' . $this->htmlvalue($this->url) . '"';
+		if ( $this->name )
+			$link->addAttribute('date-name',$this->name)->addAttribute('name',$this->name);
 		
-		if (isset($this->type))
-			echo ' data-type="' . $this->htmlvalue($this->type) . '"';
+		if ( $this->url )
+			$link->addAttribute('data-url',$this->url);
 		
-		if (!empty($this->action))
-			echo ' data-action="' . $this->htmlvalue($this->action) . '"';
+		if ( $this->type )
+			$link->addAttribute('data-type',$this->type);
+		
+		if ( $this->action )
+			$link->addAttribute('data-action',$this->action);
 		else
-			echo ' data-action=""';
+			$link->addAttribute('data-action','');
 		
-		if (isset($this->subaction))
-			echo ' data-method="' . $this->htmlvalue($this->subaction) . '"';
+		if ( $this->subaction )
+			$link->addAttribute('data-method',$this->subaction);
 		else
-			echo ' data-method="'.$this->request->method.'"';
+			$link->addAttribute('data-method','');
 		
-		if (isset($this->id))
-			echo ' data-id="' . $this->htmlvalue($this->id) . '"';
+		if ( $this->id )
+			$link->addAttribute('data-id',$this->id);
 		else
-			echo ' data-id="<?php echo OR_ID ?>"';
+			$link->addAttribute('data-id','');
 
 		$json = new JSON();
         $arrayvalues = array();
         foreach( $this->getExtraParamArray() as $varname => $varvalue )
-            $arrayvalues[ $this->htmlvalue($varname) ] = $this->htmlvalue($varvalue);
-        echo ' data-extra="'.str_replace('"',"'",str_replace(array("\t", "\r", "\n"),'',$json->encode($arrayvalues))).'"';
+            $arrayvalues[ $varname ] = $varvalue;
+		$link->addAttribute('data-extra',str_replace('"',"'",str_replace(array("\t", "\r", "\n"),'',$json->encode($arrayvalues))));
 
 		switch ($this->type)
 		{
@@ -124,70 +122,52 @@ class LinkComponent extends Component
 				
 				// Zusammenbau eines einzeligen JSON-Strings.
 				// Aufpassen: Keine doppelten Hochkommas, keine Zeilenumbrüche.
-				echo ' data-data="{';
+				$data = '{';
 				
-				echo "&quot;action&quot;:&quot;";
+				$data.= "\"action\":\"";
 				if (! empty($this->action))
-					echo $this->htmlvalue($this->action);
+					$data.= $this->action;
 				else
-					echo $this->htmlvalue($this->request->action);
-				echo "&quot;,";
+					$data.= $this->request->action;
+				$data.= "\",";
 				
-				echo "&quot;subaction&quot;:&quot;";
+				$data.= "\"subaction\":\"";
 				if (! empty($this->subaction))
-					echo $this->htmlvalue($this->subaction);
+					$data.= $this->subaction;
 				else
-					echo $this->request->method;
-				echo "&quot;,";
+					$data.= $this->request->method;
+				$data.= "\",";
 				
-				echo "&quot;id&quot;:&quot;";
+				$data.= "\"id\":\"";
 				if (! empty($this->id))
-					echo $this->htmlvalue($this->id);
+					$data.= $this->id;
 				else
-					echo "<?php echo OR_ID ?>";
-				echo "&quot;,";
+					$data.= "";
+				$data.= "\",";
 				
-				echo '&quot;'.REQ_PARAM_TOKEN . "&quot;:&quot;" . '<?php echo token() ?>' . "&quot;,";
+				$data.= '\"'.REQ_PARAM_TOKEN . "\":\"" . '<?php echo token() ?>' . "\",";
 
                 foreach( $this->getExtraParamArray() as $varname => $varvalue )
-					echo "&quot;".$this->htmlvalue($varname)."&quot;:&quot;" . $this->htmlvalue($varvalue) . "&quot;,";
+					$data.= "\"".$varname."\":\"" . $varvalue . "\",";
 
-                echo "&quot;none&quot;:&quot;0&quot;}\"";
-				
+                $data.= "\"none\":\"0\"}\"";
+
+				$link->addAttribute('data-data',$data);
 				break;
-			
+
 			case 'html':
-				
-				echo ' href="' . $this->htmlvalue($this->url) . '"';
-				break;
-			
 			case 'external':
 
-				echo ' href="' . $this->htmlvalue($this->url) . '"';
+				$link->addAttribute('href',$this->url);
 				break;
 
 			default:
-				//echo ' href="<?php echo Html::url('.$this->value($this->action).','.$this->value($this->subaction).','.$this->value($this->id);
-				echo ' href="./#/'.$this->htmlvalue($this->action).'/'.$this->htmlvalue($this->id).'"';
+				$link->addAttribute('href','/#/'.$this->action.'/'.$this->id);
 
-// Verlinkungen von draußen brauchen nichts weiter.
-//				$arrayvalues = array();
-//				foreach( $this->getExtraParamArray() as $varname => $varvalue )
-//                    $arrayvalues[] = $this->value($varname) . '=>'.$this->value($varvalue);
-//
-//                echo ',array('.implode(',',$arrayvalues).')';
-//
-/*				echo ') ?>"';*/
 		}
-		
-		echo '>';
-	}
 
-	public function end()
-	{
-		echo '</a>';
+		return $link;
 	}
-
 
 	private function getExtraParamArray()
 	{
@@ -206,3 +186,4 @@ class LinkComponent extends Component
 	}
 }
 ?>
+

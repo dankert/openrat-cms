@@ -19,7 +19,7 @@
 		<list list="timeline" extract="true">
 			<row class="data">
 				<column class="clickable">
-					<link type="post" action="start" subaction="projectmenu" id="var:projectid">
+					<link type="post" action="start" subaction="projectmenu" id="${projectid}">
 						<text var="projectname"></text>
 					</link>
 				</column>
@@ -30,7 +30,7 @@
 					<text var="username"></text>
 				</column>
 				<column>
-					<date date="var:lastchange_date" />
+					<date date="${lastchange_date}" />
 				</column>
 
 			</row>

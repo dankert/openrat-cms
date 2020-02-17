@@ -7,7 +7,7 @@
 					<text text="link_target"></text>
 				</part>
 				<part class="input">
-					<selector id="var:targetobjectid" name="var:targetobjectname" types="page,file" param="targetobjectid" folderid="parentid"/>
+					<selector id="${targetobjectid}" name="${targetobjectname}" types="page,file" param="targetobjectid" folderid="parentid"/>
 				</part>
 			</part>
 

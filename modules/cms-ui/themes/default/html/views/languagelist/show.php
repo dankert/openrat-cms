@@ -1,52 +1,64 @@
 <?php if (!defined('OR_TITLE')) die('Forbidden'); ?>
-	<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
+	<div class="or-table-wrapper"><div class="or-table-area"><table width="100%" class="">
 		<tr class="headline">
-			<td>
-				<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'NAME'.'')))); ?></span>
+			<td class="">
+				<span class=""><?php echo encodeHtml(htmlentities(@lang('NAME'))) ?>
+				</span>
 			</td>
-			<td>
-				<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'LANGUAGE_ISOCODE'.'')))); ?></span>
+			<td class="">
+				<span class=""><?php echo encodeHtml(htmlentities(@lang('LANGUAGE_ISOCODE'))) ?>
+				</span>
 			</td>
-			<td>
-				<span><?php echo nl2br(encodeHtml(htmlentities(''))); ?></span>
+			<td class="">
+				<span class="">
+				</span>
 			</td>
 		</tr>
-		<?php foreach($el as $list_key=>$list_value){ ?><?php extract($list_value) ?>
+		<?php foreach($el as $list_key=>$list_value) { extract($list_value); ?>
 			<tr class="data">
 				<td class="clickable">
-					<i class="image-icon image-icon--action-language"></i>
-					<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="language" data-method="show" data-id="<?php echo $id ?>" data-extra="[]" href="./#/language/<?php echo $id ?>">
-						<span><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $name,25,'..',constant('STR_PAD_BOTH') )))); ?></span>
+					<i class="image-icon image-icon--action-language">
+					</i>
+					<a target="_self" date-name="<?php echo encodeHtml(htmlentities(@$name)) ?>" name="<?php echo encodeHtml(htmlentities(@$name)) ?>" data-type="open" data-action="language" data-method="" data-id="<?php echo encodeHtml(htmlentities(@$id)) ?>" data-extra="[]" href="/#/language/<?php echo encodeHtml(htmlentities(@$id)) ?>" class="">
+						<span class=""><?php echo encodeHtml(htmlentities(@$name)) ?>
+						</span>
 					</a>
 				</td>
-				<td>
-					<span><?php echo nl2br(encodeHtml(htmlentities($isocode))); ?></span>
+				<td class="">
+					<span class=""><?php echo encodeHtml(htmlentities(@$isocode)) ?>
+					</span>
 				</td>
-				<?php $if5=(!$is_default); if($if5){?>
+				<?php $if5=(!$is_default); if($if5) {  ?>
 					<td class="clickable">
-						<?php $if7=(isset($id)); if($if7){?>
-							<a target="_self" data-type="post" data-action="language" data-method="setdefault" data-id="<?php echo $id ?>" data-extra="[]" data-data="{&quot;action&quot;:&quot;language&quot;,&quot;subaction&quot;:&quot;setdefault&quot;,&quot;id&quot;:&quot;<?php echo $id ?>&quot;,&quot;token&quot;:&quot;<?php echo token() ?>&quot;,&quot;none&quot;:&quot;0&quot;}">
-								<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_make_default')))); ?></span>
+						<?php $if7=(isset($id)); if($if7) {  ?>
+							<a target="_self" data-type="post" data-action="language" data-method="setdefault" data-id="<?php echo encodeHtml(htmlentities(@$id)) ?>" data-extra="[]" data-data="{"action":"language","subaction":"setdefault","id":"<?php echo encodeHtml(htmlentities(@$id)) ?>",\"token":"<?php echo token() ?>","none":"0"}"" class="">
+								<span class=""><?php echo encodeHtml(htmlentities(@lang('GLOBAL_make_default'))) ?>
+								</span>
 							</a>
-						<?php } ?>
-						<?php if(!$if7){?>
-						<?php } ?>
+						 <?php } ?>
+						<?php if(!$if7) {  ?>
+						 <?php } ?>
 					</td>
-				<?php } ?>
-				<?php if(!$if5){?>
-					<td>
-						<em><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_is_default')))); ?></em>
+				 <?php } ?>
+				<?php if(!$if5) {  ?>
+					<td class="">
+						<em class=""><?php echo encodeHtml(htmlentities(@lang('GLOBAL_is_default'))) ?>
+						</em>
 					</td>
-				<?php } ?>
+				 <?php } ?>
 			</tr>
-			<?php unset($select_url) ?>
-			<?php unset($default_url) ?>
-		<?php } ?>
+			<?php  { unset($select_url) ?>
+			 <?php } ?>
+			<?php  { unset($default_url) ?>
+			 <?php } ?>
+		 <?php } ?>
 		<tr class="data">
 			<td colspan="3" class="clickable">
-				<a target="_self" data-type="dialog" data-action="" data-method="add" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'add'}" href="./#//">
-					<i class="image-icon image-icon--method-add"></i>
-					<span><?php echo nl2br(encodeHtml(htmlentities(lang('new')))); ?></span>
+				<a target="_self" data-type="dialog" data-action="" data-method="add" data-id="" data-extra="{'dialogAction':null,'dialogMethod':'add'}" href="/#//" class="">
+					<i class="image-icon image-icon--method-add">
+					</i>
+					<span class=""><?php echo encodeHtml(htmlentities(@lang('new'))) ?>
+					</span>
 				</a>
 			</td>
 		</tr>

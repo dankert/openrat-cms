@@ -3,8 +3,8 @@
 	<header back="true" />
 	<form>
 
-		<if value="var:type" equals="folder">
-			<group title="message:options">
+		<if value="${type}" equals="folder">
+			<group title="#{options}">
 				<part class="line">
 					<part class="label">
 					</part>

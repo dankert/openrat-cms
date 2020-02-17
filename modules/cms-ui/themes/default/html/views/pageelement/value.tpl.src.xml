@@ -1,12 +1,12 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
-	<form method="post" label="message:save" apply="true">
+	<form method="post" label="#{save}" apply="true">
 		<hidden name="languageid" />
 		<hidden name="elementid" />
 		<hidden name="value_time" />
 			<text var="desc" class="help"></text>
-			<if value="var:type" equals="date">
-				<group title="message:date">
+			<if value="${type}" equals="date">
+				<group title="#{date}">
 					<part class="line">
 							<input type="date" name="date" label="date" />
 							<input type="time" name="time" label="time" />
@@ -14,7 +14,7 @@
 
 				</group>
 			</if>
-			<if value="var:type" equals="text">
+			<if value="${type}" equals="text">
 				<row>
 					<column colspan="2">
 						<input size="50" maxlength="255" class="text" name="text"></input>
@@ -22,85 +22,85 @@
 				</row>
 			</if>
 
-			<if value="var:type" equals="longtext">
+			<if value="${type}" equals="longtext">
 				<hidden name="format" />
 				<if present="preview">
 					<part class="preview">
-						<group title="message:page_preview">
+						<group title="#{page_preview}">
 							<text var="preview" escape="false"></text>
 						</group>
 					</part>
 				</if>
 
-				<if value="var:editor" equals="markdown">
+				<if value="${editor}" equals="markdown">
 					<editor type="markdown" name="text"></editor>
 				</if>
-				<if value="var:editor" equals="html">
+				<if value="${editor}" equals="html">
 					<editor type="html" name="text"></editor>
 				</if>
-				<if value="var:editor" equals="wiki">
+				<if value="${editor}" equals="wiki">
 					<if present="languagetext">
-						<group title="var:languagename">
+						<group title="${languagename}">
 							<text var="languagetext"></text>
 						</group>
 						<newline></newline>
 						<newline></newline>
 					</if>
 					<editor type="wiki" name="text"></editor>
-					<group title="message:help" open="false">
+					<group title="#{help}" open="false">
 						<table>
 							<column>
-								<text value="config:editor/text-markup/strong-begin"></text>
+								<text value="%{editor/text-markup/strong-begin}"></text>
 								<text key="text_markup_strong"></text>
-								<text value="config:editor/text-markup/strong-end"></text>
+								<text value="%{editor/text-markup/strong-end}"></text>
 								<newline></newline>
-								<text value="config:editor/text-markup/emphatic-begin"></text>
+								<text value="%{editor/text-markup/emphatic-begin}"></text>
 								<text key="text_markup_emphatic"></text>
-								<text value="config:editor/text-markup/emphatic-end"></text>
+								<text value="%{editor/text-markup/emphatic-end}"></text>
 							</column>
 							<column>
-								<text value="config:editor/text-markup/list-numbered"></text>
+								<text value="%{editor/text-markup/list-numbered}"></text>
 								<text key="text_markup_numbered_list"></text>
 								<newline></newline>
-								<text value="config:editor/text-markup/list-numbered"></text>
+								<text value="%{editor/text-markup/list-numbered}"></text>
 								<text raw="..."></text>
 								<newline></newline>
 							</column>
 							<column>
-								<text value="config:editor/text-markup/list-unnumbered"></text>
+								<text value="%{editor/text-markup/list-unnumbered}"></text>
 								<text key="text_markup_unnumbered_list"></text>
 								<newline></newline>
-								<text value="config:editor/text-markup/list-unnumbered"></text>
+								<text value="%{editor/text-markup/list-unnumbered}"></text>
 								<text raw="..."></text>
 								<newline></newline>
 							</column>
 							<column>
-								<text value="config:editor/text-markup/table-cell-sep"></text>
+								<text value="%{editor/text-markup/table-cell-sep}"></text>
 								<text key="text_markup_table"></text>
-								<text value="config:editor/text-markup/table-cell-sep"></text>
+								<text value="%{editor/text-markup/table-cell-sep}"></text>
 								<text raw="..."></text>
-								<text value="config:editor/text-markup/table-cell-sep"></text>
+								<text value="%{editor/text-markup/table-cell-sep}"></text>
 								<text raw="..."></text>
-								<text value="config:editor/text-markup/table-cell-sep"></text>
+								<text value="%{editor/text-markup/table-cell-sep}"></text>
 								<newline></newline>
-								<text value="config:editor/text-markup/table-cell-sep"></text>
+								<text value="%{editor/text-markup/table-cell-sep}"></text>
 								<text raw="..."></text>
-								<text value="config:editor/text-markup/table-cell-sep"></text>
+								<text value="%{editor/text-markup/table-cell-sep}"></text>
 								<text raw="..."></text>
-								<text value="config:editor/text-markup/table-cell-sep"></text>
+								<text value="%{editor/text-markup/table-cell-sep}"></text>
 								<text raw="..."></text>
-								<text value="config:editor/text-markup/table-cell-sep"></text>
+								<text value="%{editor/text-markup/table-cell-sep}"></text>
 								<newline></newline>
 							</column>
 						</table>
 					</group>
 				</if>
-				<if value="var:editor" equals="text">
+				<if value="${editor}" equals="text">
 					<inputarea class="editor raw-editor" name="text" rows="25" cols="70"></inputarea>
 					<focus field="text"></focus>
 				</if>
 			</if>
-			<if value="var:type" equals="link">
+			<if value="${type}" equals="link">
 				<group>
 					<part class="line">
 						<part class="label">
@@ -112,8 +112,8 @@
 							<!-- 
 							<selectbox list="objects" name="linkobjectid" addempty="true"></selectbox>
 							 -->
-							<selector param="linkobjectid" types="var:types" name="var:linkname"
-								id="var:linkobjectid" folderid="var:rootfolderid" />
+							<selector param="linkobjectid" types="${types}" name="${linkname}"
+								id="${linkobjectid}" folderid="${rootfolderid}" />
 						</part>
 
 					</part>
@@ -130,7 +130,7 @@
 					</part>
 				</group>
 			</if>
-			<if value="var:type" equals="list">
+			<if value="${type}" equals="list">
 				<group>
 					<part>
 						<selectbox list="objects" name="linkobjectid"></selectbox>
@@ -138,7 +138,7 @@
 					</part>
 				</group>
 			</if>
-			<if value="var:type" equals="insert">
+			<if value="${type}" equals="insert">
 				<group>
 					<part>
 						<selectbox list="objects" name="linkobjectid"></selectbox>
@@ -146,7 +146,7 @@
 					</part>
 				</group>
 			</if>
-			<if value="var:type" equals="number">
+			<if value="${type}" equals="number">
 				<group>
 					<part>
 						<hidden name="decimals" default="decimals"></hidden>
@@ -154,21 +154,21 @@
 					</part>
 				</group>
 			</if>
-			<if value="var:type" equals="select">
+			<if value="${type}" equals="select">
 				<group>
 					<part>
 						<selectbox list="items" name="text"></selectbox>
 					</part>
 				</group>
 			</if>
-			<if value="var:type" equals="longtext">
-				<if value="var:editor" equals="wiki">
+			<if value="${type}" equals="longtext">
+				<if value="${editor}" equals="wiki">
 					<if present="languages">
-						<group title="message:editor_show_language">
+						<group title="#{editor_show_language}">
 							<part>
 								<list list="languages" key="languageid" value="languagename">
-									<radio name="otherlanguageid" value="var:languageid"></radio>
-									<label for="tpl:otherlanguageid_{languageid}">
+									<radio name="otherlanguageid" value="${languageid}"></radio>
+									<label for="otherlanguageid_${languageid}">
 										<text var="languagename"></text>
 									</label>
 									<newline></newline>
@@ -176,7 +176,7 @@
 							</part>
 						</group>
 					</if>
-					<group title="message:PAGE_PREVIEW">
+					<group title="#{PAGE_PREVIEW}">
 						<part>
 							<checkbox name="preview"></checkbox>
 							<label for="preview">
@@ -186,7 +186,7 @@
 					</group>
 				</if>
 			</if>
-			<group title="message:options">
+			<group title="#{options}">
 				<if present="release">
 					<part>
 						<checkbox name="release"></checkbox>

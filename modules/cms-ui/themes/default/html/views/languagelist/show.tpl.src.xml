@@ -16,18 +16,18 @@
 			<row class="data">
 				<column class="clickable">
 					<image action="language"></image>
-						<link type="open" name="var:name" action="language" id="var:id">
+						<link type="open" name="${name}" action="language" id="${id}">
 							<text var="name" maxlength="25"></text>
 						</link>
 				</column>
 				<column>
 					<text var="isocode"></text>
 				</column>
-				<if false="var:is_default">
+				<if false="${is_default}">
 
 					<column class="clickable">
 						<if present="id">
-							<link type="post" action="language" subaction="setdefault" id="var:id">
+							<link type="post" action="language" subaction="setdefault" id="${id}">
 								<text text="GLOBAL_make_default"></text>
 							</link>
 						</if>

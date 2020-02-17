@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
 	<header back="true" />
 	<form>
-		<group title="message:users">
+		<group title="#{users}">
 			<part class="line">
 				<part class="label">
 					<radio name="type" value="all"></radio>
@@ -39,7 +39,7 @@
 			</if>
 		</group>
 
-		<group title="message:language">
+		<group title="#{language}">
 			<part class="line">
 				<part class="label">
 					<label for="languageid">
@@ -53,23 +53,23 @@
 			</part>
 		</group>
 
-		<group title="message:acl">
+		<group title="#{acl}">
 			<part class="line">
 				<part class="label">
 				</part>
 				<part class="input">
 					<list list="show" value="t" key="k">
 						<part>
-							<if value="var:t" equals="read">
-								<set var="var:t" value="true" /> 
-								<checkbox name="var:t" readonly="true"></checkbox>
+							<if value="${t}" equals="read">
+								<set var="${t}" value="true" />
+								<checkbox name="${t}" readonly="true"></checkbox>
 							</if>
 							<else>
-								<set var="var:t" value="false" />
-								<checkbox name="var:t" readonly="false"></checkbox>
+								<set var="${t}" value="false" />
+								<checkbox name="${t}" readonly="false"></checkbox>
 							</else>
-							<label for="var:t" value="">
-								<text key="var:t" prefix="acl_"></text>
+							<label for="${t}" value="">
+								<text key="${t}" prefix="acl_"></text>
 							</label>
 						</part>
 					</list>

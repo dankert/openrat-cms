@@ -1,7 +1,7 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
 	<form>
-		<group title="message:OPTIONS">
+		<group title="#{OPTIONS}">
 			<part class="line">
 				<part class="label">
 					<text text="type"></text>

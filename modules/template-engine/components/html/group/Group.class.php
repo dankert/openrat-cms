@@ -2,6 +2,12 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\CMSElement;
+use modules\template_engine\HtmlElement;
+
+/**
+ * A group.
+ */
 class GroupComponent extends Component
 {
 
@@ -10,31 +16,42 @@ class GroupComponent extends Component
 	public $title;
 	public $icon;
 	
-	public function begin()
+	public function createElement()
 	{
-		echo '<fieldset';
-		echo ' class="toggle-open-close';
-		echo '<?php echo '.$this->value($this->open).'?" open":" closed" ?>';
-		echo '<?php echo '.$this->value($this->show).'?" show":"" ?>';
-		echo '">';
-		
-		if	( !empty($this->title))
+		$fieldset = new HtmlElement('fieldset');
+		$fieldset->addStyleClass('or-group');
+		$fieldset->addStyleClass('toggle-open-close');
+
+		if   ( $this->open )
+			$fieldset->addStyleClass('open');
+		else
+			$fieldset->addStyleClass('closed');
+
+		if   ( $this->show )
+			$fieldset->addStyleClass('show' );
+
+		if	( $this->title )
 		{
-			echo '<legend class="on-click-open-close">';
-			if	( !empty($this->icon))
-				echo  '<img src="/themes/default/images/icon/method/'.$this->htmlvalue($this->icon).'.svg" />';
-			
-			echo '<div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div>';
-			echo $this->htmlvalue($this->title);
-			echo '</legend>';
+			$legend = new HtmlElement('legend');
+			$legend->addStyleClass('on-click-open-close');
+			$legend->content( $this->title );
+
+			$image = new CMSElement('img');
+			if	( $this->icon )
+				$image->addAttribute('src','themes/default/images/icon/method/'.$this->icon.'.svg" />');
+			$legend->addChild( $image );
+
+			$arrowRight = (new HtmlElement('div'))->addStyleClass('arrow')->addStyleClass('arrow-right')->addStyleClass('on-closed');
+			$legend->addChild($arrowRight );
+
+			$arrowDown  = (new HtmlElement('div'))->addStyleClass('arrow')->addStyleClass('arrow-down' )->addStyleClass('on-open'  );
+			$legend->addChild($arrowDown  );
 		}
-		echo '<div class="closable">';
+
+		$group = new HtmlElement('div');
+		$group->addStyleClass('closable')->addWrapper($fieldset);
+
+		return $group;
 	}
 
-
-	public function end() {
-		echo '</div></fieldset>';
-	}
 }
-
-?>

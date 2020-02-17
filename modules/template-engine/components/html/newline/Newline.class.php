@@ -4,6 +4,9 @@ namespace template_engine\components;
 
 use modules\template_engine\Element;
 
+/**
+ * Newline-Component
+ */
 class NewlineComponent extends Component
 {
 

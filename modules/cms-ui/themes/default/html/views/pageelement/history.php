@@ -1,109 +1,131 @@
 <?php if (!defined('OR_TITLE')) die('Forbidden'); ?>
-	<form name="" target="_self" data-target="view" action="./" data-method="diff" data-action="pageelement" data-id="<?php echo OR_ID ?>" method="get" enctype="application/x-www-form-urlencoded" class="or-form pageelement" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="pageelement" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="diff" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
-		<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
+	<form name="" target="_self" data-target="view" action="./" data-method="diff" data-action="pageelement" data-id="<?php echo OR_ID ?>" method="get" enctype="application/x-www-form-urlencoded" data-async="" data-autosave="" class="or-form pageelement">
+		<div class="or-table-wrapper"><div class="or-table-area"><table width="100%" class="">
 			<tr class="headline">
 				<td class="help">
-					<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_NR')))); ?></span>
+					<span class=""><?php echo encodeHtml(htmlentities(@lang('GLOBAL_NR'))) ?>
+					</span>
 				</td>
 				<td colspan="2" class="help">
-					<?php $if6=(isset($compareid)); if($if6){?>
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_COMPARE')))); ?></span>
-					<?php } ?>
-					<?php if(!$if6){?>
-						<span><?php echo nl2br('&nbsp;'); ?></span>
-					<?php } ?>
+					<?php $if6=(isset($compareid)); if($if6) {  ?>
+						<span class=""><?php echo encodeHtml(htmlentities(@lang('GLOBAL_COMPARE'))) ?>
+						</span>
+					 <?php } ?>
+					<?php if(!$if6) {  ?>
+						<span class=""> 
+						</span>
+					 <?php } ?>
 				</td>
 				<td class="help">
-					<span><?php echo nl2br(encodeHtml(htmlentities(lang('DATE')))); ?></span>
+					<span class=""><?php echo encodeHtml(htmlentities(@lang('DATE'))) ?>
+					</span>
 				</td>
 				<td class="help">
-					<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_USER')))); ?></span>
+					<span class=""><?php echo encodeHtml(htmlentities(@lang('GLOBAL_USER'))) ?>
+					</span>
 				</td>
 				<td class="help">
-					<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_VALUE')))); ?></span>
+					<span class=""><?php echo encodeHtml(htmlentities(@lang('GLOBAL_VALUE'))) ?>
+					</span>
 				</td>
 				<td class="help">
-					<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_STATE')))); ?></span>
+					<span class=""><?php echo encodeHtml(htmlentities(@lang('GLOBAL_STATE'))) ?>
+					</span>
 				</td>
 				<td class="help">
-					<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_ACTION')))); ?></span>
+					<span class=""><?php echo encodeHtml(htmlentities(@lang('GLOBAL_ACTION'))) ?>
+					</span>
 				</td>
 			</tr>
-			<?php $if4=(($el)==FALSE); if($if4){?>
-				<tr>
-					<td colspan="8">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_NOT_FOUND')))); ?></span>
+			<?php $if4=(($el)==FALSE); if($if4) {  ?>
+				<tr class="">
+					<td colspan="8" class="">
+						<span class=""><?php echo encodeHtml(htmlentities(@lang('GLOBAL_NOT_FOUND'))) ?>
+						</span>
 					</td>
 				</tr>
-			<?php } ?>
-			<?php foreach($el as $list_key=>$list_value){ ?><?php extract($list_value) ?>
+			 <?php } ?>
+			<?php foreach($el as $list_key=>$list_value) { extract($list_value); ?>
 				<tr class="data">
-					<td>
-						<span><?php echo nl2br(encodeHtml(htmlentities($lfd_nr))); ?></span>
+					<td class="">
+						<span class=""><?php echo encodeHtml(htmlentities(@$lfd_nr)) ?>
+						</span>
 					</td>
-					<td>
-						<?php $if7=(isset($compareid)); if($if7){?>
-							<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_compareid_<?php echo $id ?>" name="<?php if ('') echo ''.'_' ?>compareid<?php if (false) echo '_disabled' ?>" value="<?php echo $id ?>"<?php if($id==@$compareid)echo ' checked="checked"' ?> />
-						<?php } ?>
-						<?php if(!$if7){?>
-							<span><?php echo nl2br('&nbsp;'); ?></span>
-						<?php } ?>
+					<td class="">
+						<?php $if7=(isset($compareid)); if($if7) {  ?>
+							<input type="radio" name="compareid" disabled="" value="<?php echo encodeHtml(htmlentities(@$id)) ?>" checked="<?php echo encodeHtml(htmlentities(@$compareid)) ?>" class="">
+							</input>
+						 <?php } ?>
+						<?php if(!$if7) {  ?>
+							<span class=""> 
+							</span>
+						 <?php } ?>
 					</td>
-					<td>
-						<?php $if7=(isset($compareid)); if($if7){?>
-							<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_withid_<?php echo $id ?>" name="<?php if ('') echo ''.'_' ?>withid<?php if (false) echo '_disabled' ?>" value="<?php echo $id ?>"<?php if($id==@$withid)echo ' checked="checked"' ?> />
-						<?php } ?>
-						<?php if(!$if7){?>
-							<span><?php echo nl2br('&nbsp;'); ?></span>
-						<?php } ?>
+					<td class="">
+						<?php $if7=(isset($compareid)); if($if7) {  ?>
+							<input type="radio" name="withid" disabled="" value="<?php echo encodeHtml(htmlentities(@$id)) ?>" checked="<?php echo encodeHtml(htmlentities(@$withid)) ?>" class="">
+							</input>
+						 <?php } ?>
+						<?php if(!$if7) {  ?>
+							<span class=""> 
+							</span>
+						 <?php } ?>
 					</td>
-					<td>
-						<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($date) ?>
+					<td class="">
+						<?php include_once( 'modules/template-engine/components/html/date/component-date.php'); { component_date($date); ?>
+						 <?php } ?>
 					</td>
-					<td>
-						<span><?php echo nl2br(encodeHtml(htmlentities($user))); ?></span>
+					<td class="">
+						<span class=""><?php echo encodeHtml(htmlentities(@$user)) ?>
+						</span>
 					</td>
-					<td>
-						<span><?php echo nl2br(encodeHtml(htmlentities($value))); ?></span>
+					<td class="">
+						<span class=""><?php echo encodeHtml(htmlentities(@$value)) ?>
+						</span>
 					</td>
-					<?php $if6=($public); if($if6){?>
-						<td>
-							<strong><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_PUBLIC'.'')))); ?></strong>
+					<?php $if6=($public); if($if6) {  ?>
+						<td class="">
+							<strong class=""><?php echo encodeHtml(htmlentities(@lang('GLOBAL_PUBLIC'))) ?>
+							</strong>
 						</td>
-					<?php } ?>
-					<?php if(!$if6){?>
-						<?php $if7=(isset($releaseUrl)); if($if7){?>
+					 <?php } ?>
+					<?php if(!$if6) {  ?>
+						<?php $if7=(isset($releaseUrl)); if($if7) {  ?>
 							<td class="clickable">
-								<a title="<?php echo lang('GLOBAL_RELEASE_DESC') ?>" target="_self" data-type="post" data-action="" data-method="release" data-id="<?php echo $objectid ?>" data-extra="{'valueid':'<?php echo $valueid ?>'}" data-data="{&quot;action&quot;:&quot;pageelement&quot;,&quot;subaction&quot;:&quot;release&quot;,&quot;id&quot;:&quot;<?php echo $objectid ?>&quot;,&quot;token&quot;:&quot;<?php echo token() ?>&quot;,&quot;valueid&quot;:&quot;<?php echo $valueid ?>&quot;,&quot;none&quot;:&quot;0&quot;}">
-									<strong><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_RELEASE'.'')))); ?></strong>
+								<a title="<?php echo encodeHtml(htmlentities(@lang('GLOBAL_RELEASE_DESC'))) ?>" target="_self" data-type="post" data-action="" data-method="release" data-id="<?php echo encodeHtml(htmlentities(@$objectid)) ?>" data-extra="{'valueid':'<?php echo encodeHtml(htmlentities(@$valueid)) ?>'}" data-data="{"action":"pageelement","subaction":"release","id":"<?php echo encodeHtml(htmlentities(@$objectid)) ?>",\"token":"<?php echo token() ?>","valueid":"<?php echo encodeHtml(htmlentities(@$valueid)) ?>","none":"0"}"" class="">
+									<strong class=""><?php echo encodeHtml(htmlentities(@lang('GLOBAL_RELEASE'))) ?>
+									</strong>
 								</a>
 							</td>
-						<?php } ?>
-						<?php if(!$if7){?>
-							<td>
-								<em><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_INACTIVE'.'')))); ?></em>
+						 <?php } ?>
+						<?php if(!$if7) {  ?>
+							<td class="">
+								<em class=""><?php echo encodeHtml(htmlentities(@lang('GLOBAL_INACTIVE'))) ?>
+								</em>
 							</td>
-						<?php } ?>
-					<?php } ?>
-					<?php $if6=($active); if($if6){?>
-						<td>
-							<em><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_ACTIVE'.'')))); ?></em>
+						 <?php } ?>
+					 <?php } ?>
+					<?php $if6=($active); if($if6) {  ?>
+						<td class="">
+							<em class=""><?php echo encodeHtml(htmlentities(@lang('GLOBAL_ACTIVE'))) ?>
+							</em>
 						</td>
-					<?php } ?>
-					<?php if(!$if6){?>
-						<?php $if7=(isset($useUrl)); if($if7){?>
+					 <?php } ?>
+					<?php if(!$if6) {  ?>
+						<?php $if7=(isset($useUrl)); if($if7) {  ?>
 							<td class="clickable">
-								<a title="<?php echo lang('GLOBAL_USE_DESC') ?>" target="_self" data-type="post" data-action="" data-method="use" data-id="<?php echo $objectid ?>" data-extra="{'valueid':'<?php echo $valueid ?>'}" data-data="{&quot;action&quot;:&quot;pageelement&quot;,&quot;subaction&quot;:&quot;use&quot;,&quot;id&quot;:&quot;<?php echo $objectid ?>&quot;,&quot;token&quot;:&quot;<?php echo token() ?>&quot;,&quot;valueid&quot;:&quot;<?php echo $valueid ?>&quot;,&quot;none&quot;:&quot;0&quot;}">
-									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_USE'.'')))); ?></span>
+								<a title="<?php echo encodeHtml(htmlentities(@lang('GLOBAL_USE_DESC'))) ?>" target="_self" data-type="post" data-action="" data-method="use" data-id="<?php echo encodeHtml(htmlentities(@$objectid)) ?>" data-extra="{'valueid':'<?php echo encodeHtml(htmlentities(@$valueid)) ?>'}" data-data="{"action":"pageelement","subaction":"use","id":"<?php echo encodeHtml(htmlentities(@$objectid)) ?>",\"token":"<?php echo token() ?>","valueid":"<?php echo encodeHtml(htmlentities(@$valueid)) ?>","none":"0"}"" class="">
+									<span class=""><?php echo encodeHtml(htmlentities(@lang('GLOBAL_USE'))) ?>
+									</span>
 								</a>
 							</td>
-						<?php } ?>
-						<?php if(!$if7){?>
-							<td>
+						 <?php } ?>
+						<?php if(!$if7) {  ?>
+							<td class="">
 							</td>
-						<?php } ?>
-					<?php } ?>
+						 <?php } ?>
+					 <?php } ?>
 				</tr>
-			<?php } ?>
+			 <?php } ?>
 		</table></div></div>
-	<div class="or-form-actionbar"><input type="submit" class="or-form-btn or-form-btn--primary or-form-btn--save" value="<?php echo lang('compare') ?>" /></div></form>
+	</form>

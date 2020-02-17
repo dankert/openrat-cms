@@ -1,45 +1,58 @@
 <?php if (!defined('OR_TITLE')) die('Forbidden'); ?>
-	<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
+	<div class="or-table-wrapper"><div class="or-table-area"><table width="100%" class="">
 		<tr class="headline">
-			<td>
-				<img src="./modules/cms-ui/themes/default/images/icon_user.png" />
-				<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'name'.'')))); ?></span>
+			<td class="">
+				<img src="./modules/cms-ui/themes/default/images/icon_user.png" class="">
+				</img>
+				<span class=""><?php echo encodeHtml(htmlentities(@lang('name'))) ?>
+				</span>
 			</td>
-			<td>
-				<span><?php echo nl2br(encodeHtml(htmlentities(''))); ?></span>
+			<td class="">
+				<span class="">
+				</span>
 			</td>
-			<td>
-				<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'LOGIN'.'')))); ?></span>
+			<td class="">
+				<span class=""><?php echo encodeHtml(htmlentities(@lang('LOGIN'))) ?>
+				</span>
 			</td>
 		</tr>
-		<?php foreach($el as $list_key=>$list_value){ ?><?php extract($list_value) ?>
+		<?php foreach($el as $list_key=>$list_value) { extract($list_value); ?>
 			<tr class="data">
-				<td data-name="<?php echo $name ?>" data-action="user" data-id="<?php echo $id ?>" class="clickable clickable">
-					<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="user" data-method="show" data-id="<?php echo $id ?>" data-extra="[]" href="./#/user/<?php echo $id ?>">
-						<i class="image-icon image-icon--action-user"></i>
-						<span><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
+				<td data-name="<?php echo encodeHtml(htmlentities(@$name)) ?>" data-action="user" data-id="<?php echo encodeHtml(htmlentities(@$id)) ?>" class="clickable clickable">
+					<a target="_self" date-name="<?php echo encodeHtml(htmlentities(@$name)) ?>" name="<?php echo encodeHtml(htmlentities(@$name)) ?>" data-type="open" data-action="user" data-method="" data-id="<?php echo encodeHtml(htmlentities(@$id)) ?>" data-extra="[]" href="/#/user/<?php echo encodeHtml(htmlentities(@$id)) ?>" class="">
+						<i class="image-icon image-icon--action-user">
+						</i>
+						<span class=""><?php echo encodeHtml(htmlentities(@$name)) ?>
+						</span>
 					</a>
 				</td>
-				<td data-name="<?php echo $name ?>" data-action="user" data-id="<?php echo $id ?>" class="clickable">
-					<span><?php echo nl2br(encodeHtml(htmlentities($fullname))); ?></span>
-					<?php $if6=($isAdmin); if($if6){?>
-						<span><?php echo nl2br('&nbsp;('); ?></span>
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'USER_ADMIN'.'')))); ?></span>
-						<span><?php echo nl2br(')'); ?></span>
-					<?php } ?>
+				<td data-name="<?php echo encodeHtml(htmlentities(@$name)) ?>" data-action="user" data-id="<?php echo encodeHtml(htmlentities(@$id)) ?>" class="clickable">
+					<span class=""><?php echo encodeHtml(htmlentities(@$fullname)) ?>
+					</span>
+					<?php $if6=($isAdmin); if($if6) {  ?>
+						<span class=""> (
+						</span>
+						<span class=""><?php echo encodeHtml(htmlentities(@lang('USER_ADMIN'))) ?>
+						</span>
+						<span class="">)
+						</span>
+					 <?php } ?>
 				</td>
 				<td class="clickable">
-					<a target="_self" data-type="post" data-action="user" data-method="switch" data-id="<?php echo $userid ?>" data-extra="[]" data-data="{&quot;action&quot;:&quot;user&quot;,&quot;subaction&quot;:&quot;switch&quot;,&quot;id&quot;:&quot;<?php echo $userid ?>&quot;,&quot;token&quot;:&quot;<?php echo token() ?>&quot;,&quot;none&quot;:&quot;0&quot;}">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'LOGIN'.'')))); ?></span>
+					<a target="_self" data-type="post" data-action="user" data-method="switch" data-id="<?php echo encodeHtml(htmlentities(@$userid)) ?>" data-extra="[]" data-data="{"action":"user","subaction":"switch","id":"<?php echo encodeHtml(htmlentities(@$userid)) ?>",\"token":"<?php echo token() ?>","none":"0"}"" class="">
+						<span class=""><?php echo encodeHtml(htmlentities(@lang('LOGIN'))) ?>
+						</span>
 					</a>
 				</td>
 			</tr>
-		<?php } ?>
+		 <?php } ?>
 		<tr class="data">
 			<td colspan="3" class="clickable">
-				<a target="_self" date-name="<?php echo lang('add') ?>" name="<?php echo lang('add') ?>" data-type="dialog" data-action="" data-method="add" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'add'}" href="./#//">
-					<i class="image-icon image-icon--method-add"></i>
-					<span><?php echo nl2br(encodeHtml(htmlentities(lang('new')))); ?></span>
+				<a target="_self" date-name="<?php echo encodeHtml(htmlentities(@lang('add'))) ?>" name="<?php echo encodeHtml(htmlentities(@lang('add'))) ?>" data-type="dialog" data-action="" data-method="add" data-id="" data-extra="{'dialogAction':null,'dialogMethod':'add'}" href="/#//" class="">
+					<i class="image-icon image-icon--method-add">
+					</i>
+					<span class=""><?php echo encodeHtml(htmlentities(@lang('new'))) ?>
+					</span>
 				</a>
 			</td>
 		</tr>

@@ -2,7 +2,7 @@
         xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
 
     <part class="or-form">
-        <group title="message:USER" open="true" show="true">
+        <group title="#{USER}" open="true" show="true">
             <part class="line">
                 <part class="label">
                     <text key="USER_USERNAME"></text>
@@ -24,13 +24,13 @@
                     <text key="USER_LOGIN_DATE"></text>
                 </part>
                 <part class="input">
-                    <date date="var:user_login"/>
+                    <date date="${user_login}"/>
                 </part>
             </part>
 
         </group>
 
-        <group title="message:CMS">
+        <group title="#{CMS}">
             <part class="line">
                 <part class="label">
                     <text key="NAME"></text>
@@ -51,7 +51,7 @@
 
         </group>
 
-        <group title="message:SYSTEM">
+        <group title="#{SYSTEM}">
             <part class="line">
                 <part class="label">
                     <text key="DATE_TIME"></text>
@@ -81,7 +81,7 @@
 
         </group>
 
-        <group title="message:LICENSE">
+        <group title="#{LICENSE}">
 
             <table filter="false">
                 <row class="headline">
@@ -95,7 +95,7 @@
                 <list list="software" extract="true">
                     <row class="data">
                         <column class="clickable">
-                            <link type="external" url="var:url">
+                            <link type="external" url="${url}">
                                 <text var="name"></text>
                             </link>
                         </column>

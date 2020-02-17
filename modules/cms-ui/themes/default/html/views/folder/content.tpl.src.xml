@@ -13,7 +13,7 @@
 		</row>
 		<if present="up_url">
 			<row class="data">
-				<column url="var:up_url">
+				<column url="${up_url}">
 					<image type="folder"></image>
 					<text raw=".."></text>
 				</column>
@@ -24,13 +24,13 @@
 		</if>
 		<list list="object" extract="true">
 			<row class="data">
-				<column  id="var:id" name="var:name" action="var:type" title="var:desc" class="var:class">
-					<image type="var:icon"></image>
+				<column  id="${id}" name="${name}" action="${type}" title="${desc}" class="${class}">
+					<image type="${icon}"></image>
 					<text var="name"></text>
 					<text raw="_"></text>
 				</column>
 				<column>
-					<date date="var:date"></date>
+					<date date="${date}"></date>
 				</column>
 			</row>
 		</list>

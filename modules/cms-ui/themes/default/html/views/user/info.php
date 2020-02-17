@@ -1,184 +1,193 @@
 <?php if (!defined('OR_TITLE')) die('Forbidden'); ?>
-	<form name="" target="_self" data-target="view" action="./" data-method="info" data-action="user" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form user" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="user" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="info" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
-		<span class="headline"><?php echo nl2br(encodeHtml(htmlentities($fullname))); ?></span>
-		<?php $if3=!(($image)==FALSE); if($if3){?>
+	<form name="" target="_self" data-target="view" action="./" data-method="info" data-action="user" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" data-async="" data-autosave="" class="or-form user">
+		<span class="headline"><?php echo encodeHtml(htmlentities(@$fullname)) ?>
+		</span>
+		<?php $if3=!(($image)==FALSE); if($if3) {  ?>
 			<div class="line">
 				<div class="input">
-					<img src="<?php echo $image ?>" />
+					<img src="<?php echo encodeHtml(htmlentities(@$image)) ?>" class="">
+					</img>
 				</div>
 			</div>
-		<?php } ?>
+		 <?php } ?>
 		<div class="line">
 			<div class="label">
-				<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'user_username'.'')))); ?></span>
+				<span class=""><?php echo encodeHtml(htmlentities(@lang('user_username'))) ?>
+				</span>
 			</div>
 			<div class="input">
-				<span class="name"><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
+				<span class="name"><?php echo encodeHtml(htmlentities(@$name)) ?>
+				</span>
 			</div>
 		</div>
-		<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('ADDITIONAL_INFO') ?></legend><div class="closable">
+		<fieldset class="or-group toggle-open-close open show"><div class="closable">
 			<div class="line">
 				<div class="label">
-					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'user_fullname'.'')))); ?></span>
+					<span class=""><?php echo encodeHtml(htmlentities(@lang('user_fullname'))) ?>
+					</span>
 				</div>
 				<div class="input">
-					<span><?php echo nl2br(encodeHtml(htmlentities($fullname))); ?></span>
+					<span class=""><?php echo encodeHtml(htmlentities(@$fullname)) ?>
+					</span>
 				</div>
 			</div>
-			<?php $if4=(config('security','user','show_admin_mail')); if($if4){?>
+			<?php $if4=(config('security','user','show_admin_mail')); if($if4) {  ?>
 				<div class="line">
 					<div class="label">
-						<label for="<?php echo REQUEST_ID ?>_mail" class="label"><?php echo lang('user_mail') ?>
+						<label class="label"><?php echo encodeHtml(htmlentities(@lang('user_mail'))) ?>
 						</label>
 					</div>
 					<div class="input">
-						<a target="_self" data-url="<?php echo 'mailto:'.$mail.'' ?>" data-type="external" data-action="" data-method="info" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo 'mailto:'.$mail.'' ?>">
-							<span><?php echo nl2br(encodeHtml(htmlentities($mail))); ?></span>
+						<a target="_self" data-url="mailto:<?php echo encodeHtml(htmlentities(@$mail)) ?>" data-type="external" data-action="" data-method="" data-id="" data-extra="[]" href="mailto:<?php echo encodeHtml(htmlentities(@$mail)) ?>" class="">
+							<span class=""><?php echo encodeHtml(htmlentities(@$mail)) ?>
+							</span>
 						</a>
-						<i class="image-icon image-icon--menu-qrcode or-qrcode or-info" data-qrcode="<?php echo 'mailto:'.$mail.'' ?>" title="?QRCODE_SHOW?"></i>
+						<i data-qrcode="mailto:<?php echo encodeHtml(htmlentities(@$mail)) ?>" title="<?php echo encodeHtml(htmlentities(@lang('QRCODE_SHOW'))) ?>" class="image-icon image-icon--menu-qrcode or-qrcode or-info">
+						</i>
 					</div>
 				</div>
-			<?php } ?>
+			 <?php } ?>
 			<div class="line">
 				<div class="label">
-					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'description'.'')))); ?></span>
+					<span class=""><?php echo encodeHtml(htmlentities(@lang('description'))) ?>
+					</span>
 				</div>
 				<div class="input">
-					<span><?php echo nl2br(encodeHtml(htmlentities($desc))); ?></span>
+					<span class=""><?php echo encodeHtml(htmlentities(@$desc)) ?>
+					</span>
 				</div>
 			</div>
 			<div class="line">
 				<div class="label">
-					<label for="<?php echo REQUEST_ID ?>_tel" class="label"><?php echo lang('user_tel') ?>
+					<label class="label"><?php echo encodeHtml(htmlentities(@lang('user_tel'))) ?>
 					</label>
 				</div>
 				<div class="input">
-					<span><?php echo nl2br(encodeHtml(htmlentities($tel))); ?></span>
-					<i class="image-icon image-icon--menu-qrcode or-qrcode or-info" data-qrcode="<?php echo 'tel:'.$tel.'' ?>" title="?QRCODE_SHOW?"></i>
+					<span class=""><?php echo encodeHtml(htmlentities(@$tel)) ?>
+					</span>
+					<i data-qrcode="tel:<?php echo encodeHtml(htmlentities(@$tel)) ?>" title="<?php echo encodeHtml(htmlentities(@lang('QRCODE_SHOW'))) ?>" class="image-icon image-icon--menu-qrcode or-qrcode or-info">
+					</i>
 				</div>
 			</div>
 			<div class="line">
 				<div class="label">
-					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'timezone'.'')))); ?></span>
+					<span class=""><?php echo encodeHtml(htmlentities(@lang('timezone'))) ?>
+					</span>
 				</div>
 				<div class="input">
-					<span><?php echo nl2br(encodeHtml(htmlentities($timezone))); ?></span>
+					<span class=""><?php echo encodeHtml(htmlentities(@$timezone)) ?>
+					</span>
 				</div>
 			</div>
 			<div class="line">
 				<div class="label">
 					<label class="label">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'language'.'')))); ?></span>
+						<span class=""><?php echo encodeHtml(htmlentities(@lang('language'))) ?>
+						</span>
 					</label>
 				</div>
 				<div class="input">
-					<span><?php echo nl2br(encodeHtml(htmlentities($language))); ?></span>
+					<span class=""><?php echo encodeHtml(htmlentities(@$language)) ?>
+					</span>
 				</div>
 			</div>
 			<div class="line">
 				<div class="label">
 				</div>
 				<div class="input clickable">
-					<a class="or-link-btn" target="_self" data-type="dialog" data-action="" data-method="prop" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'prop'}" href="./#//">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'edit'.'')))); ?></span>
+					<a target="_self" data-type="dialog" data-action="" data-method="prop" data-id="" data-extra="{'dialogAction':null,'dialogMethod':'prop'}" href="/#//" class="or-link-btn">
+						<span class=""><?php echo encodeHtml(htmlentities(@lang('edit'))) ?>
+						</span>
 					</a>
 				</div>
 			</div>
 		</div></fieldset>
-		<fieldset class="toggle-open-close<?php echo false?" open":" closed" ?><?php echo true?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div class="closable">
+		<fieldset class="or-group toggle-open-close closed show"><div class="closable">
 			<div class="line">
 				<div class="label">
 				</div>
 				<div class="input">
-					<?php { $tmpname     = 'is_admin';$default  = false;$readonly = true;$required = false;		
-		if	( isset($$tmpname) )
-			$checked = $$tmpname;
-		else
-			$checked = $default;
-
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
-
-		if ( $readonly && $checked )
-		{ 
-		?><input type="hidden" name="<?php echo $tmpname ?>" value="1" /><?php
-		}
-		} ?>
-					<label for="<?php echo REQUEST_ID ?>_is_admin" class="label"><?php echo lang('user_admin') ?>
+					<input type="checkbox" name="is_admin" disabled="1" value="1" checked="<?php echo encodeHtml(htmlentities(@$is_admin)) ?>" class="">
+					</input>
+					<label class="label"><?php echo encodeHtml(htmlentities(@lang('user_admin'))) ?>
 					</label>
 				</div>
 			</div>
 			<div class="line">
 				<div class="label">
-					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'user_ldapdn'.'')))); ?></span>
+					<span class=""><?php echo encodeHtml(htmlentities(@lang(':user_ldapdn'))) ?>
+					</span>
 				</div>
 				<div class="input">
-					<span><?php echo nl2br(encodeHtml(htmlentities($ldap_dn))); ?></span>
+					<span class=""><?php echo encodeHtml(htmlentities(@$ldap_dn)) ?>
+					</span>
 				</div>
 			</div>
 			<div class="line">
 				<div class="label">
-					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'user_style'.'')))); ?></span>
+					<span class=""><?php echo encodeHtml(htmlentities(@lang('user_style'))) ?>
+					</span>
 				</div>
 				<div class="input">
-					<span><?php echo nl2br(encodeHtml(htmlentities($style))); ?></span>
+					<span class=""><?php echo encodeHtml(htmlentities(@$style)) ?>
+					</span>
 				</div>
 			</div>
 		</div></fieldset>
-		<fieldset class="toggle-open-close<?php echo false?" open":" closed" ?><?php echo true?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('security') ?></legend><div class="closable">
+		<fieldset class="or-group toggle-open-close closed show"><div class="closable">
 			<div class="line">
 				<div class="label">
-					<span><?php echo nl2br(encodeHtml(htmlentities(lang('user_password_expires')))); ?></span>
+					<span class=""><?php echo encodeHtml(htmlentities(@lang('user_password_expires'))) ?>
+					</span>
 				</div>
 				<div class="input">
-					<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($passwordExpires) ?>
+					<?php include_once( 'modules/template-engine/components/html/date/component-date.php'); { component_date($passwordExpires); ?>
+					 <?php } ?>
 				</div>
 			</div>
 			<div class="line">
 				<div class="label">
 				</div>
 				<div class="input clickable">
-					<a class="or-link-btn" target="_self" data-type="dialog" data-action="user" data-method="pw" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':'user','dialogMethod':'pw'}" href="./#/user/">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'edit_password'.'')))); ?></span>
+					<a target="_self" data-type="dialog" data-action="user" data-method="pw" data-id="" data-extra="{'dialogAction':'user','dialogMethod':'pw'}" href="/#/user/" class="or-link-btn">
+						<span class=""><?php echo encodeHtml(htmlentities(@lang('edit_password'))) ?>
+						</span>
 					</a>
 				</div>
 			</div>
 			<div class="line">
 				<div class="label">
-					<span><?php echo nl2br(encodeHtml(htmlentities(lang('user_last_login')))); ?></span>
+					<span class=""><?php echo encodeHtml(htmlentities(@lang('user_last_login'))) ?>
+					</span>
 				</div>
 				<div class="input">
-					<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($lastLogin) ?>
+					<?php include_once( 'modules/template-engine/components/html/date/component-date.php'); { component_date($lastLogin); ?>
+					 <?php } ?>
 				</div>
 			</div>
 			<div class="line">
 				<div class="label">
-					<span><?php echo nl2br(encodeHtml(htmlentities(lang('token')))); ?></span>
+					<span class=""><?php echo encodeHtml(htmlentities(@lang('token'))) ?>
+					</span>
 				</div>
 				<div class="input">
-					<span><?php echo nl2br(encodeHtml(htmlentities($totpToken))); ?></span>
+					<span class=""><?php echo encodeHtml(htmlentities(@$totpToken)) ?>
+					</span>
 				</div>
 			</div>
 			<div class="line">
 				<div class="label">
-					<label for="<?php echo REQUEST_ID ?>_totp" class="label"><?php echo lang('user_totp') ?>
+					<label class="label"><?php echo encodeHtml(htmlentities(@lang('user_totp'))) ?>
 					</label>
 				</div>
 				<div class="input">
-					<?php { $tmpname     = 'totp';$default  = false;$readonly = false;$required = false;		
-		if	( isset($$tmpname) )
-			$checked = $$tmpname;
-		else
-			$checked = $default;
-
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
-
-		if ( $readonly && $checked )
-		{ 
-		?><input type="hidden" name="<?php echo $tmpname ?>" value="1" /><?php
-		}
-		} ?>
-					<label for="<?php echo REQUEST_ID ?>_totp" class="label"><?php echo lang('user_totp') ?>
+					<input type="checkbox" name="totp" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$totp)) ?>" class="">
+					</input>
+					<label class="label"><?php echo encodeHtml(htmlentities(@lang('user_totp'))) ?>
 					</label>
-					<i class="image-icon image-icon--menu-qrcode or-qrcode or-info" data-qrcode="<?php echo $totpSecretUrl ?>" title="?QRCODE_SHOW?"></i>
+					<i data-qrcode="<?php echo encodeHtml(htmlentities(@$totpSecretUrl)) ?>" title="<?php echo encodeHtml(htmlentities(@lang('QRCODE_SHOW'))) ?>" class="image-icon image-icon--menu-qrcode or-qrcode or-info">
+					</i>
 				</div>
 			</div>
+		</div></fieldset>
+	</form>

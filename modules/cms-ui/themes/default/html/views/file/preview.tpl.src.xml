@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
 
 	<part class="clickable">
-		<link type="popup" url="var:preview_url" class="action">
+		<link type="popup" url="${preview_url}" class="action">
 			<text key="LINK_OPEN_IN_NEW_WINDOW" />
 		</link>
 	</part>

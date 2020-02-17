@@ -10,7 +10,7 @@
 		</row>
 		<if present="up_url">
 			<row class="data">
-				<column url="var:up_url">
+				<column url="${up_url}">
 					<image type="folder_up"></image>
 					<text raw=".."></text>
 				</column>
@@ -19,9 +19,9 @@
 		<list list="content" extract="true">
 			<row class="data">
 				<column class="clickable">
-					<link type="open" id="var:id" name="var:name" action="var:type">
-						<image action="var:type"></image>
-						<text key="var:name"></text>
+					<link type="open" id="${id}" name="${name}" action="${type}">
+						<image action="${type}"></image>
+						<text key="${name}"></text>
 						<text raw="_"></text>
 					</link>
 				</column>

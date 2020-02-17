@@ -2,6 +2,10 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\CMSElement;
+use modules\template_engine\Value;
+use modules\template_engine\ValueExpression;
+
 class RadioComponent extends FieldComponent
 {
 
@@ -24,33 +28,33 @@ class RadioComponent extends FieldComponent
 
 	public $label = '';
 
-	public function begin()
+
+
+	public function createElement()
 	{
-        if   ( $this->label )
-            echo '<label class="or-form-row"><span class="or-form-label"></span><span class="or-form-input">';
 
+		$radio = (new CMSElement('input'))->addAttribute('type','radio');
 
-		echo '<input ';
-        echo ' class="'.$this->htmlvalue($this->class).'"';
-		echo ' type="radio"';
-		echo ' id="<?php echo REQUEST_ID ?>_'.$this->htmlvalue($this->name).'_'.$this->htmlvalue($this->value).'"';
+		if   ( $this->label ) {
+			$label = new CMSElement('label');
+			$label->addStyleClass('or-form-row')->addStyleClass('or-form-radio');
+			$label->addChild( (new CMSElement('span'))->addStyleClass('or-form-label')->content($this->label));
+			$radio->addWrapper($label);
+		}
 
-		echo parent::outputNameAttribute();
-		//"<? php if ( $attr_readonly ) echo ' disabled="disabled"' ? >
-		echo ' value="'.$this->htmlvalue($this->value).'"';
+		$radio->addAttribute('name',$this->name);
+		$radio->addAttribute('disabled',$this->readonly);
+		$radio->addAttribute('value',$this->value);
+		$radio->addAttribute('checked',Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->name));
 
-        echo '<?php if(';
-		echo ''.''.$this->value($this->value).'==@$'.$this->varname($this->name);
-		if(isset($this->checked))
-			echo '||'.$this->value($this->checked);
-		echo ")echo ' checked=\"checked\"'".' ?>';
+		if ( $this->readonly && $this->required ) {
+			$hidden = (new CMSElement('input'))->addAttribute('type','hidden')->addAttribute('name',$this->name)->addAttribute('value','1');
+			$radio->addChild( $hidden );
+		}
 
-		echo ' />';
+		if   ( $this->class )
+			$radio->addStyleClass($this->class);
 
-        if   ( $this->label )
-            echo '&nbsp;'.lang($this->label).' </span></label>';
-
+		return $radio;
     }
 }
-
-?>

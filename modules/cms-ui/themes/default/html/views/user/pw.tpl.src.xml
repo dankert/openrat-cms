@@ -5,16 +5,16 @@
 			<part class="label"></part>
 			<part class="input">
 				<radio name="type" value="proposal"></radio>
-				<label for="type" value="proposal" text="var:password_proposal">
+				<label for="type" value="proposal" text="${password_proposal}">
 					<text key="USER_new_password" />
-					<text raw="text:: " />
+					<text raw=" " />
 					<text var="password_proposal" />
 				</label>
 				<hidden name="password_proposal" />
 			</part>
 		</part>
 
-		<if true="config:mail/enabled">
+		<if true="%{mail/enabled}">
 			<part class="line">
 				<part class="label"></part>
 				<part class="input">
@@ -47,8 +47,8 @@
 				<password name="password2"></password>
 			</part>
 		</part>
-		<group title="message:options"></group>
-		<if true="config:mail/enabled">
+		<group title="#{options}"></group>
+		<if true="%{mail/enabled}">
 			<if present="mail">
 				<part class="line">
 					<part class="label"></part>

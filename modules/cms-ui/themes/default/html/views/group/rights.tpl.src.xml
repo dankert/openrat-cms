@@ -4,7 +4,7 @@
         <list list="projects" extract="true">
             <row>
                 <column>
-                    <group title="var:projectname">
+                    <group title="${projectname}">
                         <if empty="rights">
                             <row>
                                 <column>
@@ -26,7 +26,7 @@
                                     </column>
                                     <list list="show" value="t">
                                         <column class="help">
-                                            <text key="var:t" prefix="acl_" suffix="_abbrev"
+                                            <text key="${t}" prefix="acl_" suffix="_abbrev"
                                                   title="message:acl_{t}"></text>
                                         </column>
                                     </list>
@@ -47,9 +47,9 @@
                                             <set var="username"></set>
                                             <set var="groupname"></set>
                                         </column>
-                                        <column title="var:objectname">
-                                            <image action="var:objecttype"></image>
-                                            <link type="open" action="var:objecttype" subaction="" id="var:objectid">
+                                        <column title="${objectname}">
+                                            <image action="${objecttype}"></image>
+                                            <link type="open" action="${objecttype}" subaction="" id="${objectid}">
                                                 <text var="objectname"></text>
                                             </link>
                                         </column>
@@ -58,8 +58,8 @@
                                         </column>
                                         <list list="show">
                                             <column>
-                                                <set var="var:list_value" value="var:bits" key="var:list_value"></set>
-                                                <checkbox name="var:list_value" readonly="true"></checkbox>
+                                                <set var="${list_value}" value="${bits}" key="${list_value}"></set>
+                                                <checkbox name="${list_value}" readonly="true"></checkbox>
                                             </column>
                                         </list>
                                     </row>

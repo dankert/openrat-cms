@@ -2,35 +2,38 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\CMSElement;
+
 class InsertComponent extends Component
 {
-	public $name= '';
+	public $name;
 	public $url;
 	public $function;
 	
-	public function begin()
+	public function createElement()
 	{
-		if	( !empty($this->function))
+		if	( $this->function )
 		{
 			// JS-Function einbinden
-			echo '<script type="text/javascript" name="JavaScript">'.$this->htmlvalue($this->function).'();</script>';
+			$script = new CMSElement('script');
+			$script->addAttribute('type','text/javascript')->addAttribute('name','JavaScript');
+			$script->content( $this->function.'();' );
+
+			return $script;
 		}
-		elseif	( !empty($this->url))
+		elseif	( $this->url )
 		{
 			// IFrame
-			echo '<iframe';
-			if	( !empty($this->name))
-				echo ' name="'.$this->htmlvalue($this->name).'"';
-			if	( !empty($this->url))
-				echo ' src="'.$this->htmlvalue($this->url).'"';
-			echo '></iframe>';
+			$iframe = new CMSElement('iframe');
+			$iframe->selfClosing(false);
+			if	( $this->name )
+				$iframe->addAttribute('name', $this->name);
+			if	( $this->url )
+				$iframe->addAttribute('src' ,$this->url);
+
+			return $iframe;
 		}
-	}
-	
-	public function end()
-	{
+		else
+			return null;
 	}
 }
-
-
-?>

@@ -1,303 +1,299 @@
 <?php if (!defined('OR_TITLE')) die('Forbidden'); ?>
-	<?php $if2=(config('security','disable_dynamic_code')); if($if2){?>
-		<?php $if3=(!true); if($if3){?>
+	<?php $if2=(config('security','disable_dynamic_code')); if($if2) {  ?>
+		<?php $if3=(!true); if($if3) {  ?>
 			<div class="message warn">
-				<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'NOTICE_CODE_DISABLED'.'')))); ?></span>
+				<span class=""><?php echo encodeHtml(htmlentities(@lang('NOTICE_CODE_DISABLED'))) ?>
+				</span>
 			</div>
-		<?php } ?>
-	<?php } ?>
-	<form name="" target="_self" data-target="view" action="./" data-method="advanced" data-action="element" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form element" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="element" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="advanced" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
-		<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><div class="closable">
-			<?php $if4=(isset($subtype)); if($if4){?>
+		 <?php } ?>
+	 <?php } ?>
+	<form name="" target="_self" data-target="view" action="./" data-method="advanced" data-action="element" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" data-async="" data-autosave="" class="or-form element">
+		<fieldset class="or-group toggle-open-close open show"><div class="closable">
+			<?php $if4=(isset($subtype)); if($if4) {  ?>
 				<div class="line">
 					<div class="label">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang('ELEMENT_SUBTYPE')))); ?></span>
+						<span class=""><?php echo encodeHtml(htmlentities(@lang('ELEMENT_SUBTYPE'))) ?>
+						</span>
 					</div>
 					<div class="input">
-						<?php $if7=(isset($subtypes)); if($if7){?>
-							<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_subtype" name="subtype" title="" class="" size="1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($subtypes,$subtype,1,0) ?><?php if (count($subtypes)==0) { ?><input type="hidden" name="subtype" value="" /><?php } ?><?php if (count($subtypes)==1) { ?><input type="hidden" name="subtype" value="<?php echo array_keys($subtypes)[0] ?>" /><?php } ?>
-							</select></div>
-						<?php } ?>
-						<?php $if7=!(isset($subtypes)); if($if7){?>
-							<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_subtype" name="<?php if ('') echo ''.'_' ?>subtype<?php if (false) echo '_disabled' ?>" type="text" maxlength="256" class="" value="<?php echo Text::encodeHtml(@$subtype) ?>" /><?php if (false) { ?><input type="hidden" name="subtype" value="<?php $subtype ?>"/><?php } ?></div>
-						<?php } ?>
+						<?php $if7=(isset($subtypes)); if($if7) {  ?>
+							<input name="subtype" value="<?php echo encodeHtml(htmlentities(@$subtype)) ?>" size="1" class="">
+							</input>
+						 <?php } ?>
+						<?php $if7=!(isset($subtypes)); if($if7) {  ?>
+							<input name="subtype" disabled="" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$subtype)) ?>" class="">
+							</input>
+						 <?php } ?>
 					</div>
 				</div>
-			<?php } ?>
-			<?php $if4=(isset($with_icon)); if($if4){?>
+			 <?php } ?>
+			<?php $if4=(isset($with_icon)); if($if4) {  ?>
 				<div class="line">
 					<div class="label">
 					</div>
 					<div class="input">
-						<?php { $tmpname     = 'with_icon';$default  = false;$readonly = false;$required = false;		
-		if	( isset($$tmpname) )
-			$checked = $$tmpname;
-		else
-			$checked = $default;
-
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
-
-		if ( $readonly && $checked )
-		{ 
-		?><input type="hidden" name="<?php echo $tmpname ?>" value="1" /><?php
-		}
-		} ?>
-						<label for="<?php echo REQUEST_ID ?>_with_icon" class="label">
-							<span><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_WITH_ICON')))); ?></span>
+						<input type="checkbox" name="with_icon" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$with_icon)) ?>" class="">
+						</input>
+						<label class="label">
+							<span class=""><?php echo encodeHtml(htmlentities(@lang('EL_PROP_WITH_ICON'))) ?>
+							</span>
 						</label>
 					</div>
 				</div>
-			<?php } ?>
-			<?php $if4=(isset($inherit)); if($if4){?>
+			 <?php } ?>
+			<?php $if4=(isset($inherit)); if($if4) {  ?>
 				<div class="line">
 					<div class="label">
 					</div>
 					<div class="input">
-						<?php { $tmpname     = 'inherit';$default  = false;$readonly = false;$required = false;		
-		if	( isset($$tmpname) )
-			$checked = $$tmpname;
-		else
-			$checked = $default;
-
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
-
-		if ( $readonly && $checked )
-		{ 
-		?><input type="hidden" name="<?php echo $tmpname ?>" value="1" /><?php
-		}
-		} ?>
-						<label for="<?php echo REQUEST_ID ?>_inherit" class="label">
-							<span><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_INHERIT')))); ?></span>
+						<input type="checkbox" name="inherit" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$inherit)) ?>" class="">
+						</input>
+						<label class="label">
+							<span class=""><?php echo encodeHtml(htmlentities(@lang('EL_PROP_INHERIT'))) ?>
+							</span>
 						</label>
 					</div>
 				</div>
-			<?php } ?>
-			<?php $if4=(isset($all_languages)); if($if4){?>
+			 <?php } ?>
+			<?php $if4=(isset($all_languages)); if($if4) {  ?>
 				<div class="line">
 					<div class="label">
 					</div>
 					<div class="input">
-						<?php { $tmpname     = 'all_languages';$default  = false;$readonly = false;$required = false;		
-		if	( isset($$tmpname) )
-			$checked = $$tmpname;
-		else
-			$checked = $default;
-
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
-
-		if ( $readonly && $checked )
-		{ 
-		?><input type="hidden" name="<?php echo $tmpname ?>" value="1" /><?php
-		}
-		} ?>
-						<label for="<?php echo REQUEST_ID ?>_all_languages" class="label">
-							<span><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_ALL_LANGUAGES')))); ?></span>
+						<input type="checkbox" name="all_languages" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$all_languages)) ?>" class="">
+						</input>
+						<label class="label">
+							<span class=""><?php echo encodeHtml(htmlentities(@lang('EL_PROP_ALL_LANGUAGES'))) ?>
+							</span>
 						</label>
 					</div>
 				</div>
-			<?php } ?>
-			<?php $if4=(isset($writable)); if($if4){?>
+			 <?php } ?>
+			<?php $if4=(isset($writable)); if($if4) {  ?>
 				<div class="line">
 					<div class="label">
 					</div>
 					<div class="input">
-						<?php { $tmpname     = 'writable';$default  = false;$readonly = false;$required = false;		
-		if	( isset($$tmpname) )
-			$checked = $$tmpname;
-		else
-			$checked = $default;
-
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
-
-		if ( $readonly && $checked )
-		{ 
-		?><input type="hidden" name="<?php echo $tmpname ?>" value="1" /><?php
-		}
-		} ?>
-						<label for="<?php echo REQUEST_ID ?>_writable" class="label">
-							<span><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_writable')))); ?></span>
+						<input type="checkbox" name="writable" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$writable)) ?>" class="">
+						</input>
+						<label class="label">
+							<span class=""><?php echo encodeHtml(htmlentities(@lang('EL_PROP_writable'))) ?>
+							</span>
 						</label>
 					</div>
 				</div>
-			<?php } ?>
-			<?php $if4=(isset($width)); if($if4){?>
+			 <?php } ?>
+			<?php $if4=(isset($width)); if($if4) {  ?>
 				<div class="line">
 					<div class="label">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang('width')))); ?></span>
+						<span class=""><?php echo encodeHtml(htmlentities(@lang('width'))) ?>
+						</span>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_width" name="<?php if ('') echo ''.'_' ?>width<?php if (false) echo '_disabled' ?>" type="text" maxlength="256" class="" value="<?php echo Text::encodeHtml(@$width) ?>" /><?php if (false) { ?><input type="hidden" name="width" value="<?php $width ?>"/><?php } ?></div>
+						<input name="width" disabled="" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$width)) ?>" class="">
+						</input>
 					</div>
 				</div>
-			<?php } ?>
-			<?php $if4=(isset($height)); if($if4){?>
+			 <?php } ?>
+			<?php $if4=(isset($height)); if($if4) {  ?>
 				<div class="line">
 					<div class="label">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang('height')))); ?></span>
+						<span class=""><?php echo encodeHtml(htmlentities(@lang('height'))) ?>
+						</span>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_height" name="<?php if ('') echo ''.'_' ?>height<?php if (false) echo '_disabled' ?>" type="text" maxlength="256" class="" value="<?php echo Text::encodeHtml(@$height) ?>" /><?php if (false) { ?><input type="hidden" name="height" value="<?php $height ?>"/><?php } ?></div>
+						<input name="height" disabled="" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$height)) ?>" class="">
+						</input>
 					</div>
 				</div>
-			<?php } ?>
-			<?php $if4=(isset($dateformat)); if($if4){?>
+			 <?php } ?>
+			<?php $if4=(isset($dateformat)); if($if4) {  ?>
 				<div class="line">
 					<div class="label">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_DATEFORMAT')))); ?></span>
+						<span class=""><?php echo encodeHtml(htmlentities(@lang('EL_PROP_DATEFORMAT'))) ?>
+						</span>
 					</div>
 					<div class="input">
-						<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_dateformat" name="dateformat" title="" class=""<?php if (count($dateformats)<=1) echo ' disabled="disabled"'; ?> size="1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($dateformats,$dateformat,0,0) ?><?php if (count($dateformats)==0) { ?><input type="hidden" name="dateformat" value="" /><?php } ?><?php if (count($dateformats)==1) { ?><input type="hidden" name="dateformat" value="<?php echo array_keys($dateformats)[0] ?>" /><?php } ?>
-						</select></div>
+						<input name="dateformat" value="<?php echo encodeHtml(htmlentities(@$dateformat)) ?>" size="1" class="">
+						</input>
 					</div>
 				</div>
-			<?php } ?>
-			<?php $if4=(isset($format)); if($if4){?>
+			 <?php } ?>
+			<?php $if4=(isset($format)); if($if4) {  ?>
 				<div class="line">
 					<div class="label">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_FORMAT')))); ?></span>
+						<span class=""><?php echo encodeHtml(htmlentities(@lang('EL_PROP_FORMAT'))) ?>
+						</span>
 					</div>
 					<div class="input">
-						<?php include_once( 'modules/template-engine/components/html/radiobox/component-radio-box.php') ?><?php component_radio_box('format',$formatlist,$format) ?>
+						<?php include_once( 'modules/template-engine/components/html/radiobox/component-radio-box.php'); { <?php component_radio_box(format,$formatlist,${format}) ?> ?>
+						 <?php } ?>
 					</div>
 				</div>
-			<?php } ?>
-			<?php $if4=(isset($decimals)); if($if4){?>
+			 <?php } ?>
+			<?php $if4=(isset($decimals)); if($if4) {  ?>
 				<div class="line">
 					<div class="label">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_DECIMALS')))); ?></span>
+						<span class=""><?php echo encodeHtml(htmlentities(@lang('EL_PROP_DECIMALS'))) ?>
+						</span>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_decimals" name="<?php if ('') echo ''.'_' ?>decimals<?php if (false) echo '_disabled' ?>" type="text" maxlength="2" class="" value="<?php echo Text::encodeHtml(@$decimals) ?>" /><?php if (false) { ?><input type="hidden" name="decimals" value="<?php $decimals ?>"/><?php } ?></div>
+						<input name="decimals" disabled="" type="text" maxlength="2" value="<?php echo encodeHtml(htmlentities(@$decimals)) ?>" class="">
+						</input>
 					</div>
 				</div>
-			<?php } ?>
-			<?php $if4=(isset($dec_point)); if($if4){?>
+			 <?php } ?>
+			<?php $if4=(isset($dec_point)); if($if4) {  ?>
 				<div class="line">
 					<div class="label">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_DEC_POINT')))); ?></span>
+						<span class=""><?php echo encodeHtml(htmlentities(@lang('EL_PROP_DEC_POINT'))) ?>
+						</span>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_dec_point" name="<?php if ('') echo ''.'_' ?>dec_point<?php if (false) echo '_disabled' ?>" type="text" maxlength="5" class="" value="<?php echo Text::encodeHtml(@$dec_point) ?>" /><?php if (false) { ?><input type="hidden" name="dec_point" value="<?php $dec_point ?>"/><?php } ?></div>
+						<input name="dec_point" disabled="" type="text" maxlength="5" value="<?php echo encodeHtml(htmlentities(@$dec_point)) ?>" class="">
+						</input>
 					</div>
 				</div>
-			<?php } ?>
-			<?php $if4=(isset($thousand_sep)); if($if4){?>
+			 <?php } ?>
+			<?php $if4=(isset($thousand_sep)); if($if4) {  ?>
 				<div class="line">
 					<div class="label">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_thousand_sep')))); ?></span>
+						<span class=""><?php echo encodeHtml(htmlentities(@lang('EL_PROP_thousand_sep'))) ?>
+						</span>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_thousand_sep" name="<?php if ('') echo ''.'_' ?>thousand_sep<?php if (false) echo '_disabled' ?>" type="text" maxlength="1" class="" value="<?php echo Text::encodeHtml(@$thousand_sep) ?>" /><?php if (false) { ?><input type="hidden" name="thousand_sep" value="<?php $thousand_sep ?>"/><?php } ?></div>
+						<input name="thousand_sep" disabled="" type="text" maxlength="1" value="<?php echo encodeHtml(htmlentities(@$thousand_sep)) ?>" class="">
+						</input>
 					</div>
 				</div>
-			<?php } ?>
-			<?php $if4=(isset($default_text)); if($if4){?>
+			 <?php } ?>
+			<?php $if4=(isset($default_text)); if($if4) {  ?>
 				<div class="line">
 					<div class="label">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_default_text')))); ?></span>
+						<span class=""><?php echo encodeHtml(htmlentities(@lang('EL_PROP_default_text'))) ?>
+						</span>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_default_text" name="<?php if ('') echo ''.'_' ?>default_text<?php if (false) echo '_disabled' ?>" type="text" maxlength="255" class="" value="<?php echo Text::encodeHtml(@$default_text) ?>" /><?php if (false) { ?><input type="hidden" name="default_text" value="<?php $default_text ?>"/><?php } ?></div>
+						<input name="default_text" disabled="" type="text" maxlength="255" value="<?php echo encodeHtml(htmlentities(@$default_text)) ?>" class="">
+						</input>
 					</div>
 				</div>
-			<?php } ?>
-			<?php $if4=(isset($default_longtext)); if($if4){?>
+			 <?php } ?>
+			<?php $if4=(isset($default_longtext)); if($if4) {  ?>
 				<div class="line">
 					<div class="label">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_default_longtext')))); ?></span>
+						<span class=""><?php echo encodeHtml(htmlentities(@lang('EL_PROP_default_longtext'))) ?>
+						</span>
 					</div>
 					<div class="input">
-						<div class="inputholder"><textarea class="inputarea" name="<?php if ('') echo ''.'_' ?>default_longtext<?php if (false) echo '_disabled' ?>"><?php echo Text::encodeHtml($default_longtext) ?></textarea></div>
+						<textarea name="default_longtext" disabled="" maxlength="0" class="inputarea"><?php echo encodeHtml(htmlentities(@$default_longtext)) ?>
+						</textarea>
 					</div>
 				</div>
-			<?php } ?>
-			<?php $if4=(isset($parameters)); if($if4){?>
+			 <?php } ?>
+			<?php $if4=(isset($parameters)); if($if4) {  ?>
 				<div class="line">
 					<div class="label">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_DYNAMIC_PARAMETERS')))); ?></span>
+						<span class=""><?php echo encodeHtml(htmlentities(@lang('EL_PROP_DYNAMIC_PARAMETERS'))) ?>
+						</span>
 					</div>
 					<div class="input">
-						<div class="inputholder"><textarea class="inputarea" name="<?php if ('') echo ''.'_' ?>parameters<?php if (false) echo '_disabled' ?>"><?php echo Text::encodeHtml($parameters) ?></textarea></div>
+						<textarea name="parameters" disabled="" maxlength="0" class="inputarea"><?php echo encodeHtml(htmlentities(@$parameters)) ?>
+						</textarea>
 					</div>
 				</div>
 				<div class="line">
 					<div class="label">
 					</div>
 					<div class="input">
-						<?php foreach($dynamic_class_parameters as $paramName=>$defaultValue){ ?>
-							<span><?php echo nl2br(encodeHtml(htmlentities($paramName))); ?></span>
-							<span><?php echo nl2br('&nbsp;('); ?></span>
-							<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_DEFAULT')))); ?></span>
-							<span><?php echo nl2br(')&nbsp;=&nbsp;'); ?></span>
-							<span><?php echo nl2br(encodeHtml(htmlentities($defaultValue))); ?></span>
-							<br/>
-						<?php } ?>
+						<?php foreach($dynamic_class_parameters as $paramName=>$defaultValue) {  ?>
+							<span class=""><?php echo encodeHtml(htmlentities(@$paramName)) ?>
+							</span>
+							<span class=""> (
+							</span>
+							<span class=""><?php echo encodeHtml(htmlentities(@lang('GLOBAL_DEFAULT'))) ?>
+							</span>
+							<span class="">) = 
+							</span>
+							<span class=""><?php echo encodeHtml(htmlentities(@$defaultValue)) ?>
+							</span>
+							<br>
+							</br>
+						 <?php } ?>
 					</div>
 				</div>
-			<?php } ?>
-			<?php $if4=(isset($select_items)); if($if4){?>
+			 <?php } ?>
+			<?php $if4=(isset($select_items)); if($if4) {  ?>
 				<div class="line">
 					<div class="label">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_select_items')))); ?></span>
+						<span class=""><?php echo encodeHtml(htmlentities(@lang('EL_PROP_select_items'))) ?>
+						</span>
 					</div>
 					<div class="input">
-						<div class="inputholder"><textarea class="inputarea" name="<?php if ('') echo ''.'_' ?>select_items<?php if (false) echo '_disabled' ?>"><?php echo Text::encodeHtml($select_items) ?></textarea></div>
+						<textarea name="select_items" disabled="" maxlength="0" class="inputarea"><?php echo encodeHtml(htmlentities(@$select_items)) ?>
+						</textarea>
 					</div>
 				</div>
-			<?php } ?>
-			<?php $if4=(isset($linkelement)); if($if4){?>
+			 <?php } ?>
+			<?php $if4=(isset($linkelement)); if($if4) {  ?>
 				<div class="line">
 					<div class="label">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang('EL_LINK')))); ?></span>
+						<span class=""><?php echo encodeHtml(htmlentities(@lang('EL_LINK'))) ?>
+						</span>
 					</div>
 					<div class="input">
-						<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_linkelement" name="linkelement" title="" class=""<?php if (count($linkelements)<=1) echo ' disabled="disabled"'; ?> size="1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($linkelements,$linkelement,0,0) ?><?php if (count($linkelements)==0) { ?><input type="hidden" name="linkelement" value="" /><?php } ?><?php if (count($linkelements)==1) { ?><input type="hidden" name="linkelement" value="<?php echo array_keys($linkelements)[0] ?>" /><?php } ?>
-						</select></div>
+						<input name="linkelement" value="<?php echo encodeHtml(htmlentities(@$linkelement)) ?>" size="1" class="">
+						</input>
 					</div>
 				</div>
-			<?php } ?>
-			<?php $if4=(isset($name)); if($if4){?>
+			 <?php } ?>
+			<?php $if4=(isset($name)); if($if4) {  ?>
 				<div class="line">
 					<div class="label">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang('ELEMENT_NAME')))); ?></span>
+						<span class=""><?php echo encodeHtml(htmlentities(@lang('ELEMENT_NAME'))) ?>
+						</span>
 					</div>
 					<div class="input">
-						<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_name" name="name" title="" class=""<?php if (count($names)<=1) echo ' disabled="disabled"'; ?> size="1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($names,$name,0,0) ?><?php if (count($names)==0) { ?><input type="hidden" name="name" value="" /><?php } ?><?php if (count($names)==1) { ?><input type="hidden" name="name" value="<?php echo array_keys($names)[0] ?>" /><?php } ?>
-						</select></div>
+						<input name="name" value="<?php echo encodeHtml(htmlentities(@$name)) ?>" size="1" class="">
+						</input>
 					</div>
 				</div>
-			<?php } ?>
-			<?php $if4=(isset($folderobjectid)); if($if4){?>
+			 <?php } ?>
+			<?php $if4=(isset($folderobjectid)); if($if4) {  ?>
 				<div class="line">
 					<div class="label">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_DEFAULT_FOLDEROBJECT')))); ?></span>
+						<span class=""><?php echo encodeHtml(htmlentities(@lang('EL_PROP_DEFAULT_FOLDEROBJECT'))) ?>
+						</span>
 					</div>
 					<div class="input">
-						<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_folderobjectid" name="folderobjectid" title="" class=""<?php if (count($folders)<=1) echo ' disabled="disabled"'; ?> size="1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($folders,$folderobjectid,0,0) ?><?php if (count($folders)==0) { ?><input type="hidden" name="folderobjectid" value="" /><?php } ?><?php if (count($folders)==1) { ?><input type="hidden" name="folderobjectid" value="<?php echo array_keys($folders)[0] ?>" /><?php } ?>
-						</select></div>
+						<input name="folderobjectid" value="<?php echo encodeHtml(htmlentities(@$folderobjectid)) ?>" size="1" class="">
+						</input>
 					</div>
 				</div>
-			<?php } ?>
-			<?php $if4=(isset($default_objectid)); if($if4){?>
+			 <?php } ?>
+			<?php $if4=(isset($default_objectid)); if($if4) {  ?>
 				<div class="line">
 					<div class="label">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_DEFAULT_OBJECT')))); ?></span>
+						<span class=""><?php echo encodeHtml(htmlentities(@lang('EL_PROP_DEFAULT_OBJECT'))) ?>
+						</span>
 					</div>
 					<div class="input">
-						<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_default_objectid" name="default_objectid" title="" class="" size="1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($objects,$default_objectid,1,0) ?><?php if (count($objects)==0) { ?><input type="hidden" name="default_objectid" value="" /><?php } ?><?php if (count($objects)==1) { ?><input type="hidden" name="default_objectid" value="<?php echo array_keys($objects)[0] ?>" /><?php } ?>
-						</select></div>
+						<input name="default_objectid" value="<?php echo encodeHtml(htmlentities(@$default_objectid)) ?>" size="1" class="">
+						</input>
 					</div>
 				</div>
-			<?php } ?>
-			<?php $if4=(isset($code)); if($if4){?>
+			 <?php } ?>
+			<?php $if4=(isset($code)); if($if4) {  ?>
 				<div class="line">
 					<div class="label">
-						<span><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_code')))); ?></span>
+						<span class=""><?php echo encodeHtml(htmlentities(@lang('EL_PROP_code'))) ?>
+						</span>
 					</div>
 					<div class="input">
-						<div class="inputholder"><textarea class="inputarea" name="<?php if ('') echo ''.'_' ?>code<?php if (false) echo '_disabled' ?>"><?php echo Text::encodeHtml($code) ?></textarea></div>
+						<textarea name="code" disabled="" maxlength="0" class="inputarea"><?php echo encodeHtml(htmlentities(@$code)) ?>
+						</textarea>
 					</div>
 				</div>
-			<?php } ?>
+			 <?php } ?>
 		</div></fieldset>
-	<div class="or-form-actionbar"><input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" /><input type="submit" class="or-form-btn or-form-btn--primary or-form-btn--save" value="<?php echo lang('BUTTON_OK') ?>" /></div></form>
+	</form>

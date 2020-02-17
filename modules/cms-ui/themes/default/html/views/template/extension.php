@@ -1,9 +1,11 @@
 <?php if (!defined('OR_TITLE')) die('Forbidden'); ?>
-	<form name="" target="_self" data-target="view" action="./" data-method="extension" data-action="template" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form template" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="template" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="extension" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
-		<?php foreach($extension as $list_key=>$list_value){ ?><?php extract($list_value) ?>
-			<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo $name ?></legend><div class="closable">
-				<?php $$name= $extension; ?>
-				<label class="or-form-row"><span class="or-form-label"><?php echo lang('template_extension') ?></span><span class="or-form-input"><div class="inputholder"><input id="<?php echo REQUEST_ID ?>_<?php echo $name ?>" name="<?php if ('') echo ''.'_' ?><?php echo $name ?><?php if (false) echo '_disabled' ?>" required="required" type="text" maxlength="10" class="" value="<?php echo Text::encodeHtml(@$$name) ?>" /><?php if (false) { ?><input type="hidden" name="<?php echo $name ?>" value="<?php $$name ?>"/><?php } ?></div></span></label>
+	<form name="" target="_self" data-target="view" action="./" data-method="extension" data-action="template" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" data-async="" data-autosave="" class="or-form template">
+		<?php foreach($extension as $list_key=>$list_value) { extract($list_value); ?>
+			<fieldset class="or-group toggle-open-close open show"><div class="closable">
+				<?php  { $$name= $extension; ?>
+				 <?php } ?>
+				<label class="or-form-row or-form-input"><input name="<?php echo encodeHtml(htmlentities(@$name)) ?>" disabled="" required="required" type="text" maxlength="10" value="<?php echo encodeHtml(htmlentities(@$${name)) ?>}" class="">
+				</input></label>
 			</div></fieldset>
-		<?php } ?>
-	<div class="or-form-actionbar"><input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" /><input type="submit" class="or-form-btn or-form-btn--primary or-form-btn--save" value="<?php echo lang('BUTTON_OK') ?>" /></div></form>
+		 <?php } ?>
+	</form>

@@ -23,7 +23,11 @@ echo "Searching in $dir\n";
 
 foreach(FileUtils::readDir( $dir ) as $action )
 {
+	if   ( !is_dir($dir.'/'.$action ) )
+		continue;
+
     echo "Action: $action\n";
+
 
     foreach(FileUtils::readDir( $dir.'/'.$action ) as $file )
     {

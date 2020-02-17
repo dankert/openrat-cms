@@ -16,17 +16,17 @@
 		<list list="timeline" extract="true">
 			<row class="data">
 				<column class="clickable">
-					<link type="open" action="project" id="var:projectid">
+					<link type="open" action="project" id="${projectid}">
 						<text var="projectname"></text>
 					</link>
 				</column>
-				<column title="var:filename" class="clickable">
-					<link type="open" action="var:type" id="var:objectid">
+				<column title="${filename}" class="clickable">
+					<link type="open" action="${type}" id="${objectid}">
 						<text var="filename" maxlength="30"></text>
 					</link>
 				</column>
 				<column>
-					<date date="var:lastchange_date" />
+					<date date="${lastchange_date}" />
 				</column>
 
 			</row>

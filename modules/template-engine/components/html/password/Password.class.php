@@ -2,41 +2,40 @@
 
 namespace template_engine\components;
 
-class PasswordComponent extends Component
+use modules\template_engine\CMSElement;
+use modules\template_engine\HtmlElement;
+use modules\template_engine\Value;
+use modules\template_engine\ValueExpression;
+
+class PasswordComponent extends FieldComponent
 {
 
-	public $name;
-
 	public $default;
-
-	public $class;
 
 	public $size = 40;
 
 	public $maxlength = 256;
 
-	public function begin()
+	public function createElement()
 	{
-		echo '<div class="inputholder">';
-		
-		echo '<input type="password"';
-		echo ' name="' . $this->htmlvalue($this->name) . '"';
-		echo ' id="<?php echo REQUEST_ID ?>_' . $this->htmlvalue($this->name) . '"';
-		
-		echo ' size="' . $this->htmlvalue($this->size) . '"';
-		echo ' maxlength="' . $this->htmlvalue($this->maxlength) . '"';
-		echo ' class="' . $this->htmlvalue($this->class) . '"';
-		
-		echo ' value="';
-		if (isset($this->default))
-			echo $this->htmlvalue($this->default);
+		$input = (new CMSElement('input'))->addAttribute('type','password');
+
+		$input->addAttribute('name',$this->name);
+		/*echo ' id="<?php echo REQUEST_ID ?>_' . $this->htmlvalue($this->name) . '"';
+		*/
+
+		$input->addAttribute('size',$this->size);
+		$input->addAttribute('maxlength',$this->maxlength);
+		$input->addStyleClass($this->class);
+
+
+		if ($this->default)
+			$input->addAttribute('value',$this->default);
 		else
-			echo '<?php echo @$' . $this->varname($this->name) . '?>';
-		
-		echo '" />';
-		
-		echo '</div>';
+			$input->addAttribute('value',Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->name));
+
+		$input->addWrapper( (new HtmlElement('div'))->addStyleClass('inputholder'));
+
+		return $input;
 	}
 }
-
-?>

@@ -7,7 +7,7 @@
         <if not="true" empty="image">
             <part class="line">
                 <part class="input">
-                    <image url="var:image" size="80x80"/>
+                    <image url="${image}" size="80x80"/>
                 </part>
             </part>
         </if>
@@ -21,7 +21,7 @@
             </part>
         </part>
 
-        <group title="message:ADDITIONAL_INFO">
+        <group title="#{ADDITIONAL_INFO}">
             <part class="line">
                 <part class="label">
                     <text key="user_fullname" />
@@ -30,17 +30,17 @@
                     <text var="fullname" />
                 </part>
             </part>
-            <if true="config:security/user/show_admin_mail">
+            <if true="%{security/user/show_admin_mail}">
                 <part class="line">
                     <part class="label">
                         <label for="mail" key="user_mail"></label>
                     </part>
                     <part class="input">
-                        <link url="tpl:mailto:{mail}" type="external">
+                        <link url="mailto:${mail}" type="external">
                             <text var="mail"/>
                         </link>
 
-                        <qrcode value="tpl:mailto:{mail}"/>
+                        <qrcode value="mailto:${mail}"/>
                     </part>
                 </part>
             </if>
@@ -58,7 +58,7 @@
                 </part>
                 <part class="input">
                     <text var="tel" />
-                    <qrcode value="tpl:tel:{tel}"/>
+                    <qrcode value="tel:${tel}"/>
 
                 </part>
             </part>
@@ -94,7 +94,7 @@
         </group>
 
 
-        <group title="message:options" open="false">
+        <group title="#{options}" open="false">
             <part class="line">
                 <part class="label">
                 </part>
@@ -120,13 +120,13 @@
                 </part>
             </part>
         </group>
-        <group title="message:security" open="false">
+        <group title="#{security}" open="false">
             <part class="line">
                 <part class="label">
                     <text text="user_password_expires"/>
                 </part>
                 <part class="input">
-                    <date date="var:passwordExpires"/>
+                    <date date="${passwordExpires}"/>
                 </part>
             </part>
             <part class="line">
@@ -144,7 +144,7 @@
                     <text text="user_last_login"/>
                 </part>
                 <part class="input">
-                    <date date="var:lastLogin"/>
+                    <date date="${lastLogin}"/>
                 </part>
             </part>
 
@@ -154,7 +154,7 @@
                     <text text="token"/>
                 </part>
                 <part class="input">
-                    <text value="var:totpToken"/>
+                    <text value="${totpToken}"/>
                 </part>
             </part>
             <part class="line">
@@ -166,11 +166,11 @@
                     <label for="totp" key="user_totp"></label>
 
                     <!--<text var="otpSecret"></text>-->
-                    <qrcode value="var:totpSecretUrl"/>
+                    <qrcode value="${totpSecretUrl}"/>
                 </part>
             </part>
 
-            <!-- HOTP is not implemented --
+            <!-- HOTP is not implemented -
             <part class="line">
                 <part class="label">
                     <label for="otpsecret" key="user_hotp"></label>
@@ -179,7 +179,7 @@
                     <checkbox name="hotp"/>
                     <label for="hotp" key="user_hotp"></label>
 
-                    <qrcode value="var:hotpSecretUrl"/>
+                    <qrcode value="${hotpSecretUrl}"/>
                 </part>
             </part>
             -->

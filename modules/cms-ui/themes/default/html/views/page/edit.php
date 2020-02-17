@@ -1,38 +1,47 @@
 <?php if (!defined('OR_TITLE')) die('Forbidden'); ?>
-	<div class="or-table-wrapper"><div class="or-table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><div class="or-table-area"><table width="100%">
+	<div class="or-table-wrapper"><div class="or-table-area"><table width="100%" class="">
 		<tr class="headline">
-			<th>
-				<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'NAME'.'')))); ?></span>
+			<th class="">
+				<span class=""><?php echo encodeHtml(htmlentities(@lang('NAME'))) ?>
+				</span>
 			</th>
-			<th>
-				<span><?php echo nl2br(encodeHtml(htmlentities(lang('DESCRIPTION')))); ?></span>
+			<th class="">
+				<span class=""><?php echo encodeHtml(htmlentities(@lang('DESCRIPTION'))) ?>
+				</span>
 			</th>
-			<th>
-				<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'TYPE'.'')))); ?></span>
+			<th class="">
+				<span class=""><?php echo encodeHtml(htmlentities(@lang('TYPE'))) ?>
+				</span>
 			</th>
 		</tr>
-		<?php $if3=(($elements)==FALSE); if($if3){?>
-			<tr>
-				<td>
-					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'NOT_FOUND'.'')))); ?></span>
+		<?php $if3=(($elements)==FALSE); if($if3) {  ?>
+			<tr class="">
+				<td class="">
+					<span class=""><?php echo encodeHtml(htmlentities(@lang('NOT_FOUND'))) ?>
+					</span>
 				</td>
 			</tr>
-		<?php } ?>
-		<?php foreach($elements as $list_key=>$list_value){ ?><?php extract($list_value) ?>
+		 <?php } ?>
+		<?php foreach($elements as $list_key=>$list_value) { extract($list_value); ?>
 			<tr class="data clickable">
-				<td>
-					<a title="<?php echo $desc ?>" target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="pageelement" data-method="edit" data-id="<?php echo $pageelementid ?>" data-extra="[]" href="./#/pageelement/<?php echo $pageelementid ?>">
-						<i class="image-icon image-icon--action-pageelement"></i>
-						<span><?php echo nl2br(encodeHtml(htmlentities($label))); ?></span>
+				<td class="">
+					<a title="<?php echo encodeHtml(htmlentities(@$desc)) ?>" target="_self" date-name="<?php echo encodeHtml(htmlentities(@$name)) ?>" name="<?php echo encodeHtml(htmlentities(@$name)) ?>" data-type="open" data-action="pageelement" data-method="" data-id="<?php echo encodeHtml(htmlentities(@$pageelementid)) ?>" data-extra="[]" href="/#/pageelement/<?php echo encodeHtml(htmlentities(@$pageelementid)) ?>" class="">
+						<i class="image-icon image-icon--action-pageelement">
+						</i>
+						<span class=""><?php echo encodeHtml(htmlentities(@$label)) ?>
+						</span>
 					</a>
 				</td>
-				<td title="<?php echo $desc ?>">
-					<span><?php echo nl2br(encodeHtml(htmlentities($desc))); ?></span>
+				<td title="<?php echo encodeHtml(htmlentities(@$desc)) ?>" class="">
+					<span class=""><?php echo encodeHtml(htmlentities(@$desc)) ?>
+					</span>
 				</td>
-				<td>
-					<i class="image-icon image-icon--action-el_<?php echo $typename ?>"></i>
-					<span><?php echo nl2br(encodeHtml(htmlentities(lang('el_'.$typename.'')))); ?></span>
+				<td class="">
+					<i class="image-icon image-icon--action-el_<?php echo encodeHtml(htmlentities(@$typename)) ?>">
+					</i>
+					<span class=""><?php echo encodeHtml(htmlentities(@lang('${typename'))) ?>}
+					</span>
 				</td>
 			</tr>
-		<?php } ?>
+		 <?php } ?>
 	</table></div></div>

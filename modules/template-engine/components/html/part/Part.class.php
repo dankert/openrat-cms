@@ -2,28 +2,25 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\CMSElement;
+use modules\template_engine\HtmlElement;
+
 class PartComponent extends Component
 {
 	public $class = '';
 	public $id;
 	
-	public function begin()
+	public function createElement()
 	{
-		echo '<div';
+		$element = (new CMSElement('div'))->selfClosing(false);
 
-		$this->class = strtr($this->class,[','=>' ']);
+		foreach( explode(',',$this->class ) as $styleClass )
+			$element->addStyleClass( $styleClass );
 		
-		if	( !empty($this->class))
-			echo ' class="'.$this->htmlvalue($this->class).'"';
+		if	( $this->id )
+			$element->addAttribute('id',$this->id);
 			
-		if	( !empty($this->id))
-			echo ' id="'.$this->htmlvalue($this->id).'"';
-			
-		echo '>';
+		return $element;
 	}
 	
-	public function end()
-	{
-		echo '</div>';
-	}
 }

@@ -6,8 +6,8 @@
 				<text key="type" />
 			</column>
 			<column>
-				<image elementtype="var:type" />
-				<text key="var:type" prefix="el_" />
+				<image elementtype="${type}" />
+				<text key="${type}" prefix="el_" />
 			</column>
 		</row>
 		<row class="data">
@@ -15,7 +15,7 @@
 				<text key="name" />
 			</column>
 			<column class="clickable">
-				<link class="" type="edit" action="element" subaction="prop" id="var:id">
+				<link class="" type="edit" action="element" subaction="prop" id="${id}">
 					<text var="name" />
 				</link>
 			</column>

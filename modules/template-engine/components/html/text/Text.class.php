@@ -2,6 +2,10 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\CMSElement;use modules\template_engine\HtmlElement;
+use modules\template_engine\Value;
+use modules\template_engine\ValueExpression;
+
 class TextComponent extends HtmlComponent
 {
 	public $prefix = '';
@@ -14,23 +18,19 @@ class TextComponent extends HtmlComponent
 	public $key;
 	public $raw;
 	public $value;
-	public $maxlength;
+	public $maxlength; // DEPRECATED - use CSS.
 	public $accesskey;
 	public $cut = 'both';
 	public $label;
 	public $newline = true;
 
-	public function begin()
+	public function createElement()
 	{
-        if   ( $this->label )
-            echo '<label class="or-form-row"><span class="or-form-label">'.'<?php echo lang('.$this->value($this->label).') ?>'.'</span><span class="or-form-input">';
 
-        if	( $this->raw )
-			$this->escape = false;
-		
 		switch( $this->type )
 		{
 			case 'none':
+			case 'raw':
 				$tag = '';
 				break;
 			case 'emphatic':
@@ -61,83 +61,47 @@ class TextComponent extends HtmlComponent
 				$tag = 'span';
 		}
 
-		if   ( $tag )
-        {
+		$text = new CMSElement($tag);
 
-            echo '<'.$tag;
+		$text->setEscaping($this->escape);
 
-            if	( !empty($this->class))
-                echo ' class="'.$this->htmlvalue($this->class).'"';
 
-            if	( !empty($this->title))
-                echo ' title="'.$this->htmlvalue($this->title).'"';
+        if	( $this->class)
+			$text->addStyleClass( $this->class);
 
-            echo '>';
-        }
-		echo '<?php ';
+       if	( $this->title )
+            $text->addAttribute('title',$this->title);
 
-		
-		$functions = array(); // Funktionen, durch die der Text gefiltert wird.
-
-        if   ( $this->newline)
-		    $functions[] = 'nl2br(@)';
+        //if   ( $this->newline)
+		//    $functions[] = 'nl2br(@)';
 
 		
-		if	( $this->escape )
-		{
-			// When using UTF-8 as a charset, htmlentities will only convert 1-byte and 2-byte characters.
-			// Use this function if you also want to convert 3-byte and 4-byte characters:
-			// converts a UTF8-string into HTML entities
-			$functions[] = 'encodeHtml(@)';
-			$functions[] = 'htmlentities(@)';
-		}
+		//if	( !empty($this->accesskey) )
+		//	$functions[] = "Text::accessKey('".$this->accesskey."',@)";
 
-		if	( !empty($this->maxlength) )
-			$functions[] = 'Text::maxLength( @,'.intval($this->maxlength).",'..',constant('STR_PAD_".strtoupper($this->cut)."') )";
-	
-		if	( !empty($this->accesskey) )
-			$functions[] = "Text::accessKey('".$this->accesskey."',@)";
-		
+		if	( $this->key )
+			$text->content( Value::createExpression(ValueExpression::TYPE_MESSAGE,$this->key) );
 
-		
-		
-		$value ='';
-		
-		if	( isset($this->key))
-		{
-			$value = "'".$this->prefix."'.".$this->value($this->key).".'".$this->suffix."'";
-			$functions[] = "lang(@)";
-		}
-		elseif	( isset($this->text))
-		{
-			$value = $this->value($this->text);
-			$functions[] = "lang(@)";
-		}
-		elseif	( isset($this->var))
-			$value = '$'.$this->varname($this->var);
-		
-		elseif	( isset($this->raw))
-			$value = "'".str_replace('_','&nbsp;',$this->raw)."'";
+		elseif	( $this->text )
+			$text->content( Value::createExpression(ValueExpression::TYPE_MESSAGE,$this->text) );
+
+		elseif	( $this->var )
+			$text->content( Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->var) );
+
+		elseif	( $this->raw )
+			$text->content( str_replace('_',' ',$this->raw) );
 				
-		elseif	( isset($this->value))
-			$value = $this->value($this->value);
+		elseif	( $this->value )
+			$text->content( $this->value );
 
-		foreach( array_reverse($functions) as $f )
-		{
-			list($before,$after) = explode('@',$f);
-			$value = $before.$value.$after; 
+
+		if   ( $this->label ) {
+			$text->addWrapper( (new HtmlElement('span' ))->addStyleClass('or-form-input') );
+			$text->addWrapper( (new HtmlElement('label'))->addStyleClass('or-form-row')->addChild( (new CMSElement('span'))->addStyleClass('or-form-label')->content('message:'.$this->label)));
 		}
-		echo "echo $value;";
-			
-		echo ' ?>';
 
-        if   ( $tag )
-            echo '</'.$tag.'>';  // Tag schliessen.
-
-        if   ( $this->label )
-            echo '</span></label>';
-    }
+		return $text;
+	}
 }
 
 
-?>

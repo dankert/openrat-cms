@@ -2,36 +2,33 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\CMSElement;
+
 class UploadComponent extends Component
 {
-	public $size = 40;
-	public $name;
-	public $multiple = false;
-	public $class = 'upload';
-	public $maxlength = '';
+	public $size      = 40;
+	public $name      = '';
+	public $multiple  = false;
+	public $class     = 'upload';
+	public $maxlength = 0;
 
-	public function begin()
+	public function createElement()
 	{
-		$class = $this->htmlvalue($this->class);
-		$name = $this->htmlvalue($this->name);
-		$size = $this->htmlvalue($this->size);
-		$request_id = REQUEST_ID;
-		
-		if	( !empty($this->maxlength))
-			$maxlength = ' maxlength="'.$this->htmlvalue($this->maxlength).'"';
-		else
-			$maxlength = '';
-		
+		$input = new CMSElement('input');
+
+		$input->selfClosing(true);
+		$input->addStyleClass( $this->class );
+
 		if	( $this->multiple )
-			$multiple = ' multiple="multiple"';
-		else
-			$multiple = '';
-		
-		echo <<<HTML
-<input size="$size" id="{$request_id}_{$name}" type="file"$maxlength name="$name" class="$class" $multiple />
-HTML;
+			$input->addAttribute( 'multiple','multiple' );
+
+		$input->addAttribute('id',REQUEST_ID.'_'.$this->name);
+		$input->addAttribute('name',$this->name);
+		$input->addAttribute('size',$this->size);
+
+		if	( $this->maxlength )
+			$input->addAttribute( 'maxlength',$this->maxlength );
+
+		return $input;
 	}
 }
-
-
-?>

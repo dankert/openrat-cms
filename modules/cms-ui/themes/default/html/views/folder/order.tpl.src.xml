@@ -21,13 +21,13 @@
                 </column>
             </row>
             <list list="object" extract="true">
-                <row class="data" id="var:id">
+                <row class="data" id="${id}">
                     <column>
                         <text raw="_"></text>
                     </column>
                     <column>
-                        <text class="sort-value" value="var:icon" />
-                        <image action="var:icon"></image>
+                        <text class="sort-value" value="${icon}" />
+                        <image action="${icon}"></image>
                     </column>
                     <column>
                         <text var="name"></text>
@@ -36,7 +36,7 @@
                         <text var="filename"></text>
                     </column>
                     <column>
-                        <date date="var:date"></date>
+                        <date date="${date}"></date>
                     </column>
                 </row>
             </list>

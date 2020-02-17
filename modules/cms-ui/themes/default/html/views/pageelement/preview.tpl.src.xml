@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
 
 	<part class="preview">
-		<group title="message:page_preview">
+		<group title="#{page_preview}">
 			<text var="preview" escape="false"></text>
 		</group>
 	</part>

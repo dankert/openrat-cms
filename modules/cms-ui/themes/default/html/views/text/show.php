@@ -1,1 +1,2 @@
-<?php if (!defined('OR_TITLE')) die('Forbidden'); ?><?php echo $value; ?>
+<?php if (!defined('OR_TITLE')) die('Forbidden'); ?>
+<?php echo @$value ?>

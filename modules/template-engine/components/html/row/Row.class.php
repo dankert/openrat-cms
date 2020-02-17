@@ -2,6 +2,8 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\CMSElement;
+
 class RowComponent extends Component
 {
 
@@ -9,21 +11,16 @@ class RowComponent extends Component
 
 	public $id = '';
 
-	public function begin()
+	public function createElement()
 	{
-		echo '<tr';
+		$row = new CMSElement('tr' );
 		
-		if (! empty($this->class))
-			echo ' class="' . $this->htmlvalue($this->class) . '"';
+		if ($this->class)
+			$row->addStyleClass($this->class);
 		
-		if (! empty($this->id))
-			echo ' data-id="' . $this->htmlvalue($this->id) . '"';
-		echo '>';
-	}
+		if ($this->id)
+			$row->addAttribute('data-id',$this->id);
 
-	public function end()
-	{
-		echo '</tr>';
+		return $row;
 	}
 }
-?>

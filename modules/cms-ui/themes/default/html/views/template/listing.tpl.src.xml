@@ -11,7 +11,7 @@
 				</row>
 				<list list="templates" extract="true">
 					<row class="data">
-						<column url="var:url">
+						<column url="${url}">
 							<text var="name"></text>
 						</column>
 					</row>

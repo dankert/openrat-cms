@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
 	<header views="remove,export,maintenance"></header>
 	<form>
-		<group title="message:NAME">
+		<group title="#{NAME}">
 			<part class="line">
 				<part class="label">
 					<label for="name" key="PROJECT_NAME"></label>
@@ -20,7 +20,7 @@
 				</part>
 			</part>
 		</group>
-		<group title="message:PUBLISH">
+		<group title="#{PUBLISH}">
 			<part class="line">
 				<part class="label">
 					<label for="target_dir" key="PROJECT_TARGET_DIR"></label>
@@ -29,16 +29,19 @@
 					<input name="target_dir" class="filename" maxlength="255"></input>
 				</part>
 			</part>
-			<part class="line">
-				<part class="label">
-					<label for="cmd_after_publish" key="PROJECT_CMD_AFTER_PUBLISH"></label>
+
+			<if true="%{publish/project/override_system_command}">
+				<part class="line">
+					<part class="label">
+						<label for="cmd_after_publish" key="PROJECT_CMD_AFTER_PUBLISH"></label>
+					</part>
+					<part class="input">
+						<input name="cmd_after_publish" class="filename"
+							maxlength="255"></input>
+
+					</part>
 				</part>
-				<part class="input">
-					<input name="cmd_after_publish" class="filename"
-						readonly="not:config:publish/project/override_system_command" maxlength="255"></input>
-				 
-				</part>
-			</part>
+			</if>
 			<part class="line">
 				<part class="label"></part>
 				<part class="input">
@@ -58,20 +61,23 @@
 			<radio name="linksAbsolute" value="1" label="LINKS_ABSOLUTE" />
 
 		</group>
-		<group title="message:project_FTP">
-			<part class="line">
-				<part class="label">
-					<label for="ftp_url" key="PROJECT_FTP_URL"></label>
+		<if value="config:publish/ftp/enable">
+
+			<group title="#{project_FTP}">
+				<part class="line">
+					<part class="label">
+						<label for="ftp_url" key="PROJECT_FTP_URL"/>
+					</part>
+					<part class="input">
+						<input name="ftp_url" class="filename"/>
+						<newline/>
+						<checkbox name="ftp_passive"/>
+						<label for="ftp_passive" key="PROJECT_FTP_PASSIVE"/>
+					</part>
 				</part>
-				<part class="input">
-					<input name="ftp_url" class="filename" readonly="not:config:publish/ftp/enable"></input>
-					<newline></newline>
-					<checkbox name="ftp_passive" readonly="not:config:publish/ftp/enable"></checkbox>
-					<label for="ftp_passive" key="PROJECT_FTP_PASSIVE"></label>
-				</part>
-			</part>
-		</group>
-		<group title="message:options">
+			</group>
+		</if>
+		<group title="#{options}">
 			<part class="line">
 				<part class="label"></part>
 				<part class="input">

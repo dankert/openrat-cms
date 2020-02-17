@@ -2,44 +2,41 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\CMSElement;
+use modules\template_engine\Value;
+use modules\template_engine\ValueExpression;
+
 class LabelComponent extends Component
 {
 
+	/**
+	 * @deprecated
+	 * @var
+	 */
 	public $for;
 
+	/**
+	 * @deprecated
+	 * @var
+	 */
 	public $value;
 
 	public $key;
 
 	public $text;
 
-	public function begin()
+	public function createElement()
 	{
-		echo '<label';
+		$label = new CMSElement('label');
+		$label->addStyleClass('label');
+
+		if ( $this->key )
+			$label->content(Value::createExpression(ValueExpression::TYPE_MESSAGE,$this->key));
 		
-		if (! empty($this->for))
-		{
-			
-			echo ' for="<?php echo REQUEST_ID ?>_' . $this->htmlvalue($this->for);
-			if (isset($this->value))
-				echo '_' . $this->htmlvalue($this->value);
-			echo '"';
-		}
-		
-		echo ' class="label"';
-		echo '>';
-		
-		if ( !empty($this->key))
-			echo '<?php echo lang(' . $this->value($this->key) . ') ?>';
-		
-		if (isset($this->text))
-			echo $this->htmlvalue($this->text);
+		if ($this->text)
+			$label->content($this->text);
+
+		return $label;
 	}
 
-	public function end()
-	{
-		echo '</label>';
-	}
 }
-
-?>

@@ -2,6 +2,8 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\PHPBlockElement;
+
 class ListComponent extends Component
 {
 
@@ -13,18 +15,15 @@ class ListComponent extends Component
 
 	public $value = 'list_value';
 
-	public function begin()
+	public function createElement()
 	{
-		echo '<?php foreach($' . $this->varname($this->list) . ' as $' . $this->varname($this->key) . '=>$' . $this->varname($this->value) . '){ ?>';
-		
+		$list = new PHPBlockElement();
+		$list->beforeBlock = 'foreach($'.$this->list.' as $' . $this->key . '=>$' . $this->value . ')';
+
 		if ($this->extract)
-			echo '<?php extract($' . $this->varname($this->value) . ') ?>';
+			$list->inBlock = 'extract($' . $this->value . ');';
+
+		return $list;
 	}
 
-	public function end()
-	{
-		echo '<?php } ?>';
-	}
 }
-
-?>

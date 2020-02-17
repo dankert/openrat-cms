@@ -2,18 +2,15 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\PHPBlockElement;
+
 class ElseComponent extends Component
 {
 
-	public function begin()
+	public function createElement()
 	{
-		echo '<?php if(!$if'.$this->getDepth().'){?>';
-	}
-
-
-	public function end() {
-		echo '<?php } ?>';
+		$else = new PHPBlockElement();
+		$else->beforeBlock = 'if(!$if' . $this->getDepth() . ')';
+		return $else;
 	}
 }
-
-?>

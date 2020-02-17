@@ -1,78 +1,76 @@
 <?php if (!defined('OR_TITLE')) die('Forbidden'); ?>
-	<form name="" target="_self" data-target="view" action="./" data-method="pw" data-action="user" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form user" data-async="false" data-autosave="false"><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="user" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="pw" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+	<form name="" target="_self" data-target="view" action="./" data-method="pw" data-action="user" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" data-async="" data-autosave="" class="or-form user">
 		<div class="line">
 			<div class="label">
 			</div>
 			<div class="input">
-				<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_proposal" name="<?php if ('') echo ''.'_' ?>type<?php if (false) echo '_disabled' ?>" value="proposal"<?php if('proposal'==@$type)echo ' checked="checked"' ?> />
-				<label for="<?php echo REQUEST_ID ?>_type_proposal" class="label"><?php echo $password_proposal ?>
-					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'USER_new_password'.'')))); ?></span>
-					<span><?php echo nl2br('text:: '); ?></span>
-					<span><?php echo nl2br(encodeHtml(htmlentities($password_proposal))); ?></span>
+				<input type="radio" name="type" disabled="" value="proposal" checked="<?php echo encodeHtml(htmlentities(@$type)) ?>" class="">
+				</input>
+				<label class="label"><?php echo encodeHtml(htmlentities(@$password_proposal)) ?>
+					<span class=""><?php echo encodeHtml(htmlentities(@lang('USER_new_password'))) ?>
+					</span>
+					<span class=""> 
+					</span>
+					<span class=""><?php echo encodeHtml(htmlentities(@$password_proposal)) ?>
+					</span>
 				</label>
-				<input type="hidden" name="password_proposal" value="<?php echo $password_proposal ?>"/>
+				<input type="hidden" name="password_proposal" value="<?php echo encodeHtml(htmlentities(@$password_proposal)) ?>" class="">
+				</input>
 			</div>
 		</div>
-		<?php $if3=(config('mail','enabled')); if($if3){?>
+		<?php $if3=(config('mail','enabled')); if($if3) {  ?>
 			<div class="line">
 				<div class="label">
 				</div>
 				<div class="input">
-					<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_random" name="<?php if ('') echo ''.'_' ?>type<?php if (false) echo '_disabled' ?>" value="random"<?php if('random'==@$type)echo ' checked="checked"' ?> />
-					<label for="<?php echo REQUEST_ID ?>_type_random" class="label"><?php echo lang('user_random_password') ?>
+					<input type="radio" name="type" disabled="" value="random" checked="<?php echo encodeHtml(htmlentities(@$type)) ?>" class="">
+					</input>
+					<label class="label"><?php echo encodeHtml(htmlentities(@lang('user_random_password'))) ?>
 					</label>
 				</div>
 			</div>
-		<?php } ?>
+		 <?php } ?>
 		<div class="line">
 			<div class="label">
 			</div>
 			<div class="input">
-				<input  class="" type="radio" id="<?php echo REQUEST_ID ?>_type_input" name="<?php if ('') echo ''.'_' ?>type<?php if (false) echo '_disabled' ?>" value="input"<?php if('input'==@$type||true)echo ' checked="checked"' ?> />
-				<label for="<?php echo REQUEST_ID ?>_type_input" class="label"><?php echo lang('USER_NEW_PASSWORD_INPUT') ?>
+				<input type="radio" name="type" disabled="" value="input" checked="<?php echo encodeHtml(htmlentities(@$type)) ?>" class="">
+				</input>
+				<label class="label"><?php echo encodeHtml(htmlentities(@lang('USER_NEW_PASSWORD_INPUT'))) ?>
 				</label>
 			</div>
 		</div>
 		<div class="line">
 			<div class="label">
-				<label for="<?php echo REQUEST_ID ?>_password1" class="label"><?php echo lang('USER_new_password') ?>
+				<label class="label"><?php echo encodeHtml(htmlentities(@lang('USER_new_password'))) ?>
 				</label>
 			</div>
 			<div class="input">
-				<div class="inputholder"><input type="password" name="password1" id="<?php echo REQUEST_ID ?>_password1" size="40" maxlength="256" class="" value="<?php echo @$password1?>" /></div>
+				<div class="inputholder"><input type="password" name="password1" size="40" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$password1)) ?>" class="">
+				</input></div>
 			</div>
 		</div>
 		<div class="line">
 			<div class="label">
-				<label for="<?php echo REQUEST_ID ?>_password2" class="label"><?php echo lang('USER_new_password_repeat') ?>
+				<label class="label"><?php echo encodeHtml(htmlentities(@lang('USER_new_password_repeat'))) ?>
 				</label>
 			</div>
 			<div class="input">
-				<div class="inputholder"><input type="password" name="password2" id="<?php echo REQUEST_ID ?>_password2" size="40" maxlength="256" class="" value="<?php echo @$password2?>" /></div>
+				<div class="inputholder"><input type="password" name="password2" size="40" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$password2)) ?>" class="">
+				</input></div>
 			</div>
 		</div>
-		<fieldset class="toggle-open-close<?php echo true?" open":" closed" ?><?php echo true?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div class="closable">
+		<fieldset class="or-group toggle-open-close open show"><div class="closable">
 		</div></fieldset>
-		<?php $if3=(config('mail','enabled')); if($if3){?>
-			<?php $if4=(isset($mail)); if($if4){?>
+		<?php $if3=(config('mail','enabled')); if($if3) {  ?>
+			<?php $if4=(isset($mail)); if($if4) {  ?>
 				<div class="line">
 					<div class="label">
 					</div>
 					<div class="input">
-						<?php { $tmpname     = 'email';$default  = false;$readonly = false;$required = false;		
-		if	( isset($$tmpname) )
-			$checked = $$tmpname;
-		else
-			$checked = $default;
-
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
-
-		if ( $readonly && $checked )
-		{ 
-		?><input type="hidden" name="<?php echo $tmpname ?>" value="1" /><?php
-		}
-		} ?>
-						<label for="<?php echo REQUEST_ID ?>_email" class="label"><?php echo lang('user_mail_new_password') ?>
+						<input type="checkbox" name="email" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$email)) ?>" class="">
+						</input>
+						<label class="label"><?php echo encodeHtml(htmlentities(@lang('user_mail_new_password'))) ?>
 						</label>
 					</div>
 				</div>
@@ -80,23 +78,12 @@
 					<div class="label">
 					</div>
 					<div class="input">
-						<?php { $tmpname     = 'timeout';$default  = false;$readonly = false;$required = false;		
-		if	( isset($$tmpname) )
-			$checked = $$tmpname;
-		else
-			$checked = $default;
-
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
-
-		if ( $readonly && $checked )
-		{ 
-		?><input type="hidden" name="<?php echo $tmpname ?>" value="1" /><?php
-		}
-		} ?>
-						<label for="<?php echo REQUEST_ID ?>_timeout" class="label"><?php echo lang('user_password_timeout') ?>
+						<input type="checkbox" name="timeout" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$timeout)) ?>" class="">
+						</input>
+						<label class="label"><?php echo encodeHtml(htmlentities(@lang('user_password_timeout'))) ?>
 						</label>
 					</div>
 				</div>
-			<?php } ?>
-		<?php } ?>
-	<div class="or-form-actionbar"><input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" /><input type="submit" class="or-form-btn or-form-btn--primary or-form-btn--save" value="<?php echo lang('BUTTON_OK') ?>" /></div></form>
+			 <?php } ?>
+		 <?php } ?>
+	</form>

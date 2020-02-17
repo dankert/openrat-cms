@@ -2,28 +2,26 @@
 
 namespace template_engine\components;
 
-class HiddenComponent extends Component
+use modules\template_engine\CMSElement;
+use modules\template_engine\Value;
+use modules\template_engine\ValueExpression;
+
+class HiddenComponent extends FieldComponent
 {
-
-	public $name;
-
 	public $default;
 
-	public function begin()
+	public function createElement()
 	{
-		echo '<input';
-		echo ' type="hidden"';
-		echo ' name="' . $this->htmlvalue($this->name) . '"';
-		echo ' value="';
-		
-		if (isset($this->default))
-			echo $this->htmlvalue($this->default);
+		$input = (new CMSElement('input'))->addAttribute('type','hidden');
+		$input->addAttribute('name',$this->name);
+
+		if ($this->default)
+			$input->addAttribute('value',$this->default);
 		else
-			echo '<?php echo $' . $this->varname($this->name) . ' ?>';
-		
-		echo '"';
-		echo '/>';
+			$input->addAttribute('value',Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->name));
+
+		//$input->addWrapper( (new HtmlElement('div'))->addStyleClass('inputholder'));
+
+		return $input;
 	}
 }
-
-?>

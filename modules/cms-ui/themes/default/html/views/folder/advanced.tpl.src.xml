@@ -18,17 +18,17 @@
 			<list list="object" extract="true">
 				<row class="data">
 					<column width="1%">
-						<if true="var:writable">
-							<checkbox name="var:id"></checkbox>
+						<if true="${writable}">
+							<checkbox name="${id}"></checkbox>
 						</if>
 						<if false="writable">
 							<text raw="_"></text>
 						</if>
 					</column>
 					<column class="clickable">
-						<label for="var:id">
-							<link type="open" name="var:name" action="var:type" id="var:objectid">
-								<image action="var:icon"></image>
+						<label for="${id}">
+							<link type="open" name="${name}" action="${type}" id="${objectid}">
+								<image action="${icon}"></image>
 								<text var="name" maxlength="40"></text>
 								<text raw="_"></text>
 							</link>
@@ -56,17 +56,17 @@
 				</column>
 			</row>
 		</table>
-					<group title="message:options">
-						<set var="type" value="var:defaulttype"></set>
+					<group title="#{options}">
+						<set var="type" value="${defaulttype}"></set>
 						<list list="actionlist" value="actiontype">
 							<part class="line">
 								<part class="label">
 								</part>
 								<part class="input">
-									<radio name="type" value="var:actiontype"></radio>
-									<label for="type" value="var:actiontype">
+									<radio name="type" value="${actiontype}"></radio>
+									<label for="type" value="${actiontype}">
 										<text raw="_"></text>
-										<text key="var:actiontype" prefix="FOLDER_SELECT_"></text>
+										<text key="${actiontype}" prefix="FOLDER_SELECT_"></text>
 									</label>
 								</part>
 							</part>
@@ -88,11 +88,11 @@
 								<text key="FOLDER_SELECT_TARGET_FOLDER" />
 							</part>
 							<part class="input">
-								<selector types="folder" param="targetobjectid" name="var:rootfoldername"
-									id="var:rootfolderid" folderid="var:rootfolderid" />
+								<selector types="folder" param="targetobjectid" name="${rootfoldername}"
+									id="${rootfolderid}" folderid="${rootfolderid}" />
 							</part>
 						</part>
 					</group>
 	</form>
-	<insert script="mark" inline="true"></insert>
+	<!--	<insert script="mark" inline="true"></insert> -->
 </output>

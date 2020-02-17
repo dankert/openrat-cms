@@ -7,7 +7,7 @@
 				<text text="GLOBAL_VALUE"></text>
 			</column>
 			<column>
-				<editor name="value" type="code" extension="var:extension" mimetype="var:mimetype"></editor>
+				<editor name="value" type="code" extension="${extension}" mimetype="${mimetype}"></editor>
 			</column>
 		</row>
 		<row>

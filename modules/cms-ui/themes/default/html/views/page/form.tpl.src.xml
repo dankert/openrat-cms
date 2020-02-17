@@ -26,32 +26,32 @@
 						<list list="el" extract="true">
 							<row class="data">
 								<column>
-									<label for="var:saveid">
-										<image elementtype="var:type"></image>
+									<label for="${saveid}">
+										<image elementtype="${type}"></image>
 										<text var="name"></text>
 									</label>
 								</column>
 								<column>
-									<checkbox name="var:saveid" default="false" readonly="false"></checkbox>
+									<checkbox name="${saveid}" default="false" readonly="false"></checkbox>
 								</column>
 								<column>
-									<if value="var:type" contains="text,date,number">
-										<input index="true" type="text" name="var:id" default="var:value"
+									<if value="${type}" contains="text,date,number">
+										<input index="true" type="text" name="${id}" default="${value}"
 											size="40" maxlength="255" onchange="onchange"></input>
 									</if>
-									<if value="var:type" equals="longtext">
-										<inputarea index="true" name="var:id" rows="7" cols="50"
-											onchange="onchange" default="var:value"></inputarea>
+									<if value="${type}" equals="longtext">
+										<inputarea index="true" name="${id}" rows="7" cols="50"
+											onchange="onchange" default="${value}"></inputarea>
 									</if>
-									<if value="var:type" contains="select,link,list">
-										<selectbox name="var:id" list="list" default="var:value"></selectbox>
+									<if value="${type}" contains="select,link,list">
+										<selectbox name="${id}" list="list" default="${value}"></selectbox>
 									</if>
 								</column>
 							</row>
 						</list>
 					</if>
 				</table>
-				<group title="message:options">
+				<group title="#{options}">
 					<if present="release">
 						<part>
 							<checkbox name="release"></checkbox>

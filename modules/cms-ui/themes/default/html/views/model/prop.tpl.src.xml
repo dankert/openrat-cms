@@ -15,7 +15,7 @@
 			<part class="label">
 			</part>
 			<part class="input">
-				<checkbox name="is_default" readonly="var:is_default"></checkbox>
+				<checkbox name="is_default" readonly="${is_default}"></checkbox>
 				<label key="GLOBAL_is_default" for="is_default" />
 			</part>
 		</part>

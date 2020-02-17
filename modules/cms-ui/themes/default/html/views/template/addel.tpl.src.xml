@@ -22,7 +22,7 @@
 			</part>
 		</part>
 
-		<group title="message:options"></group>
+		<group title="#{options}"></group>
 		
 		<part class="line">
 			<part class="label">

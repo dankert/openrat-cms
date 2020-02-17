@@ -2,18 +2,19 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\PHPBlockElement;
+
 class UserComponent extends Component
 {
 	public $user;
 	public $id;
-	
-	protected function begin()
+
+	public function createElement()
 	{
-		parent::includeResource('user/component-user.php');
-		
-		echo '<?php component_user('.$this->value($this->user).') ?>';
+		$user = new PHPBlockElement();
+		$user->beforeBlock = $user->includeResource( 'user/component-user.php');
+		$user->inBlock = 'component_user('.$user->value($this->user).');';
+
+		return $user;
 	}
 }
-
-
-?>

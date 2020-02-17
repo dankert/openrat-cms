@@ -2,6 +2,8 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\CMSElement;
+
 class SelectorComponent extends Component
 {
 
@@ -15,9 +17,14 @@ class SelectorComponent extends Component
 
 	public $param;
 
-	public function begin()
+	public function createElement()
 	{
-		$types = $this->htmlvalue($this->types);
+		return new CMSElement(null);
+	}
+
+	public function unused____begin()
+	{
+		$types = mlvalue($this->types);
 		$name = $this->htmlvalue($this->name);
 		$id = $this->htmlvalue($this->id);
 		$folderid = $this->htmlvalue($this->folderid);

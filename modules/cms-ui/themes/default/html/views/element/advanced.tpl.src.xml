@@ -1,7 +1,7 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
-    <if true="config:security/disable_dynamic_code">
-        <if value="var:type" equals="code" false="true">
+    <if true="%{security/disable_dynamic_code}">
+        <if value="${type}" equals="code" false="true">
             <part class="message warn">
                 <text key="NOTICE_CODE_DISABLED"/>
             </part>

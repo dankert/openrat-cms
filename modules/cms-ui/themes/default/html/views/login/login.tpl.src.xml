@@ -1,36 +1,36 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
 
-	<form cancel="false" label="message:menu_login" visible="true" action="login" subaction="login" afterSuccess="reloadAll">
-		<if true="config:login/logo/enabled">
-				<if not="not" empty="config:login/logo/url">
-					<link url="config:login/logo/url" target="_top">
-						<image url="config:login/logo/image"></image>
+	<form cancel="false" label="#{menu_login}" visible="true" action="login" subaction="login" afterSuccess="reloadAll">
+		<if true="%{login/logo/enabled}">
+				<if not="not" empty="%{login/logo/url}">
+					<link url="%{login/logo/url}" target="_top">
+						<image url="%{login/logo/image}"></image>
 					</link>
 				</if>
 				<else>
-					<image url="config:login/logo/image"></image>
+					<image url="%{login/logo/image}"></image>
 				</else>
 		</if>
-		<if not="not" empty="config:login/motd">
+		<if not="not" empty="%{login/motd}">
 			<part class="message info">
-				<text value="config:login/motd"></text>
+				<text value="%{login/motd}"></text>
 			</part>
 		</if>
 
-		<if true="config:login/nologin">
+		<if true="%{login/nologin}">
 			<part class="message error">
 				<text key="LOGIN_NOLOGIN_DESC"></text>
 			</part>
 		</if>
 
-		<if true="config:security/readonly">
+		<if true="%{security/readonly}">
 			<part class="message warn">
 				<text key="GLOBAL_READONLY_DESC"></text>
 			</part>
 		</if>
 
-		<if false="config:login/nologin">
+		<if false="%{login/nologin}">
 
 			<part class="line">
 				<part class="label">
@@ -39,13 +39,13 @@
 					</label>
 				</part>
 				<part class="input">
-					<if not="true" present="var:force_username">
+					<if not="true" present="force_username">
 						<input type="text" name="login_name" class="name" value=""
-							hint="message:USER_USERNAME" size="20" maxlength="128" focus="true" required="true"></input>
+							hint="#{USER_USERNAME}" size="20" maxlength="128" focus="true" required="true"></input>
 					</if>
 					<else>
 						<hidden name="login_name"></hidden>
-							<text value="var:force_username"></text>
+							<text value="${force_username}"></text>
 						</else>
 				</part>
 			</part>
@@ -82,7 +82,7 @@
 
 
 		<!-- <if true="property:mustChangePassword"> -->
-		<group title="message:USER_NEW_PASSWORD" open="false" show="false">
+		<group title="#{USER_NEW_PASSWORD}" open="false" show="false">
 			<part class="line">
 				<part class="label">
 					<label for="password1">
@@ -105,7 +105,7 @@
 			</part>
 		</group>
 		
-		<group title="message:USER_TOKEN" open="false" show="false">
+		<group title="#{USER_TOKEN}" open="false" show="false">
 			<part class="line">
 				<part class="label">
 					<label for="user_token">
@@ -132,7 +132,7 @@
 
 		<if value="size:dbids" greaterthan="1">
 			<!-- Mehr als 1 Datenbank zur Auswahl. Auswahlfeld anzeigen. -->
-			<group title="message:DATABASE" icon="database" open="true">
+			<group title="#{DATABASE}" icon="database" open="true">
 				<part class="line">
 					<part class="label">
 						<label for="dbid">
@@ -157,7 +157,7 @@
 		<hidden name="languageid"></hidden>
 	</form>
 	<!--
-		<newline /> <newline /> <link url="config:login/gpl/url"
+		<newline /> <newline /> <link url="%{login/gpl/url}"
 		type="external" class="copyright"> <text key="GPL"></text> </link>
 	-->
 </output>

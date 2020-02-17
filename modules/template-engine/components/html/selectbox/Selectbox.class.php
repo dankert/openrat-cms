@@ -2,6 +2,11 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\CMSElement;
+use modules\template_engine\PHPBlockElement;
+use modules\template_engine\Value;
+use modules\template_engine\ValueExpression;
+
 class SelectboxComponent extends Component
 {
 
@@ -48,56 +53,59 @@ class SelectboxComponent extends Component
 
 
 	public $label;
-	
-	public function begin()
+
+
+
+	public function createElement()
 	{
-        if   ( $this->label )
-        {
-            echo '<label class="or-form-row"><span class="or-form-label">'.lang($this->label).'</span><span class="or-form-input">';
-        }
+		$selectbox = (new CMSElement('input'));
 
-		echo '<div class="inputholder">';
-		echo '<select ';
-		echo ' id="'.'<?php echo REQUEST_ID ?>_'.$this->htmlvalue($this->name).'"';
-		echo ' name="'.$this->htmlvalue($this->name).($this->multiple?'[]':'').'"';
-		echo ' title="'.$this->htmlvalue($this->title).'"';
-		echo ' class="'.$this->htmlvalue($this->class).'"';
+		if   ( $this->label ) {
+			$label = new CMSElement('label');
+			$label->addStyleClass('or-form-row')->addStyleClass('or-form-input');
+			$label->addChild( (new CMSElement('span'))->addStyleClass('or-form-label')->content($this->label));
+			$selectbox->addWrapper($label);
+		}
 
-		if (! $this->addempty )
-		    echo '<?php if (count($'.$this->varname($this->list).')<=1)'." echo ' disabled=\"disabled\"'; ?>";
-	
-		
-		if($this->multiple)
-		echo ' multiple="multiple"';
-		
-		echo ' size="'.$this->htmlvalue($this->size).'"';
-		echo '>';
-		
-		if	( isset($this->default))
-			$value = $this->value($this->default);
+		$selectbox->addAttribute('name',$this->name);
+		//$selectbox->addAttribute('disabled',$this->readonly);
+
+
+		if   ( $this->class )
+			$selectbox->addStyleClass($this->class);
+
+		if   ( $this->title )
+			$selectbox->addAttribute('title',$this->title);
+
+		if (isset($this->default))
+			$selectbox->addAttribute('value',$this->default);
 		else
-			$value = '$'.$this->varname($this->name);
+			$selectbox->addAttribute('value',Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->name));
+
+		if	( $this->multiple )
+			$selectbox->addAttribute('multiple','multiple');
+
+		$selectbox->addAttribute('size',$this->size);
+
+		$code = new PHPBlockElement();
+		$selectbox->addChild( $code );
+
+		//if ( ! $this->addempty )
+		    //$code->inBlock .= 'if (count($'.$this->varname($this->list).')<=1)'." echo ' disabled=\"disabled\"';";
+
+		if	( isset($this->default))
+			$value = $this->default;
+		else
+			$value = '$'.$this->name;
 		
-		$this->includeResource( 'selectbox/component-select-box.php');
-		echo '<?php component_select_option_list($'.$this->varname($this->list).','.$value.','.intval(boolval($this->addempty)).','.intval(boolval($this->lang)).') ?>';
+		$code->beforeBlock = $code->includeResource( 'selectbox/component-select-box.php');
+		$code->inBlock .= 'component_select_option_list($'.$this->list.','.$value.','.intval(boolval($this->addempty)).','.intval(boolval($this->lang)).')';
 		
 		// Keine Einträge in der Liste, wir benötigen ein verstecktes Feld.
-		echo '<?php if (count($'.$this->varname($this->list).')==0) { ?>'.'<input type="hidden" name="'.$this->htmlvalue($this->name).'" value="" />'.'<?php } ?>';
+		//echo '< ? php if (count($'.$this->varname($this->list).')==0) { ? >'.'<input type="hidden" name="'.$this->htmlvalue($this->name).'" value="" />'.'<?php } ? >';
 		// Nur 1 Eintrag in Liste, da die Selectbox 'disabled' ist, muss ein hidden-Feld her.
-		echo '<?php if (count($'.$this->varname($this->list).')==1) { ?>'.'<input type="hidden" name="'.$this->htmlvalue($this->name).'" value="'.'<?php echo array_keys($'.$this->varname($this->list).')[0] ?>'.'" />'.'<?php } ?>';
-	}
-	
-	public function end()
-	{
-		echo '</select>';
-		echo '</div>';
+		//echo '< ? php if (count($'.$this->varname($this->list).')==1) { ? >'.'<input type="hidden" name="'.$this->htmlvalue($this->name).'" value="'.'< ? php echo array_keys($'.$this->varname($this->list).')[0] ? >'.'" />'.'< ? php } ? >';
 
-
-        if   ( $this->label )
-        {
-            echo '</span></label>';
-        }
+		return $selectbox;
 	}
 }
-
-?>

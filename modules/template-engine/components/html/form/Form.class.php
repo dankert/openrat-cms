@@ -2,6 +2,11 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\CMSElement;
+use modules\template_engine\HtmlElement;
+use modules\template_engine\Value;
+use modules\template_engine\ValueExpression;
+
 class FormComponent extends Component
 {
 
@@ -16,19 +21,19 @@ class FormComponent extends Component
 	public $id = '<?php echo OR_ID ?>';
 
 	public $languageid = null;
-	public $modelid    = null;
+	public $modelid = null;
 
-	public $label;
+	public $label = '#{button_ok}';
 
-	public $apply  = false;
+	public $apply = false;
 	public $cancel = true;
 	public $readonly = false;
 
-    /**
-     * 'view' = Loads Action in the same view
-     * 'top' = Replaces whole workbench.
-     * @var string
-     */
+	/**
+	 * 'view' = Loads Action in the same view
+	 * 'top' = Replaces whole workbench.
+	 * @var string
+	 */
 	public $target = 'view';
 
 	public $enctype = 'application/x-www-form-urlencoded';
@@ -41,79 +46,121 @@ class FormComponent extends Component
 
 	public $afterSuccess;
 
-	protected function begin()
+
+	public function createElement()
 	{
-		if ( ! $this->label )
-			$this->label = 'message:BUTTON_OK';
-		
+		if   ( ! $this->action )
+			$this->action = $this->request->action;
+
+		if   ( ! $this->subaction )
+			$this->subaction = $this->request->method;
+
+		if   ( ! $this->id )
+			$this->id = $this->request->id;
+
+		$form = new CMSElement('form');
+
 		if ($this->type == 'upload')
 			$this->submitFunction = '';
 
-		// Default: Target is the actual action/method-pair.
-		if(empty($this->action))
-		    $this->action = $this->request->action;
-		if(empty($this->subaction))
-		    $this->subaction = $this->request->method;
+		$form->addAttribute('name', $this->name);
+		$form->addAttribute('target', '_self');
+		$form->addAttribute('data-target', $this->target);
+		$form->addAttribute('action', './');
+		$form->addAttribute('data-method', $this->subaction);
+		$form->addAttribute('data-action', $this->action);
+		$form->addAttribute('data-id', $this->id);
+		$form->addAttribute('method', $this->method);
+		$form->addAttribute('enctype', $this->enctype);
+		$form->addStyleClass('or-form')->addStyleClass($this->action);
+		$form->addAttribute('data-async', $this->async);
+		$form->addAttribute('data-autosave', $this->autosave);
 
-		echo '<form';
-		echo ' name="' . $this->htmlvalue($this->name) . '"';
+		if ($this->afterSuccess)
+			$form->addAttribute('data-after-success', $this->afterSuccess);
 
-		echo ' target="_self"';
-		echo ' data-target="' . $this->htmlvalue($this->target) . '"';
-		echo ' action="./"';
-		echo ' data-method="' . $this->htmlvalue($this->subaction) . '"';
-		echo ' data-action="' . $this->htmlvalue($this->action) . '"';
-		echo ' data-id="' . $this->htmlvalue($this->id) . '"';
-		echo ' method="' . $this->htmlvalue($this->method) . '"';
-		echo ' enctype="' . $this->htmlvalue($this->enctype) . '"';
-		echo ' class="or-form ' . $this->htmlvalue($this->action) . '"';
-		echo ' data-async="' . $this->htmlvalue($this->async) . '"';
-		echo ' data-autosave="' . $this->htmlvalue($this->autosave) . '"';
+		if ($this->languageid)
+			$form->addChild(
+				(new CMSElement('input'))
+					->addAttribute('type', 'hidden')
+					->addAttribute('name', REQ_PARAM_LANGUAGE_ID)
+					->addAttribute('value', $this->languageid)
+			);
 
-        if ( $this->afterSuccess )
-            echo ' data-after-success="' . $this->htmlvalue($this->afterSuccess) . '"';
+		if ($this->modelid)
+			$form->addChild(
+				(new CMSElement('input'))
+					->addAttribute('type', 'hidden')
+					->addAttribute('name', REQ_PARAM_MODEL_ID)
+					->addAttribute('value', $this->modelid)
+			);
 
-        echo '>';
+		$form->addChild(
+			(new CMSElement('input'))
+				->addAttribute('type', 'hidden')
+				->addAttribute('name', REQ_PARAM_TOKEN)
+				->addAttribute('value', '<?php token();') // TODO escaping
+		);
 
-        // Enable Submit on Enter - no need for...we have a submit button at the end.
-		// echo '<input type="submit" class="invisible" />';
+		$form->addChild(
+			(new CMSElement('input'))
+				->addAttribute('type', 'hidden')
+				->addAttribute('name', REQ_PARAM_ACTION)
+				->addAttribute('value', $this->action)
+		);
+		$form->addChild(
+			(new CMSElement('input'))
+				->addAttribute('type', 'hidden')
+				->addAttribute('name', REQ_PARAM_SUBACTION)
+				->addAttribute('value', $this->subaction)
+		);
+		$form->addChild(
+			(new CMSElement('input'))
+				->addAttribute('type', 'hidden')
+				->addAttribute('name', REQ_PARAM_ID)
+				->addAttribute('value', $this->id)
+		);
 
-        if ( !empty($this->languageid))
-            echo '<input type="hidden" name="'.REQ_PARAM_LANGUAGE_ID.'" value="' . $this->htmlvalue($this->languageid) . '" />';
-        if ( !empty($this->modelid))
-            echo '<input type="hidden" name="'.REQ_PARAM_MODEL_ID.'" value="' . $this->htmlvalue($this->modelid) . '" />';
-		echo '<input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" />';
-		echo '<input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="' . $this->htmlvalue($this->action) . '" />';
-		echo '<input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="' . $this->htmlvalue($this->subaction) . '" />';
-		echo '<input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="' . $this->htmlvalue($this->id) . '" />';
+		$actionBar = (new HtmlElement('div'))->addStyleClass('or-form-actionbar');
+
+		// Cancel-Button nicht anzeigen, wenn cancel==false.
+		if ($this->cancel) {
+			$actionBar->addChild(
+				(new CMSElement('input'))
+					->addAttribute('type', 'button')
+					->addStyleClass('or-form-btn')
+					->addStyleClass('or-form-btn--secondary')
+					->addStyleClass('or-form-btn--cancel')
+					->addAttribute('value',
+						Value::createExpression(ValueExpression::TYPE_MESSAGE, 'CANCEL')
+					)
+			);
+		}
+
+		if ($this->apply && !$this->readonly) {
+			$actionBar->addChild(
+				(new CMSElement('input'))
+					->addAttribute('type', 'button')
+					->addStyleClass('or-form-btn')
+					->addStyleClass('or-form-btn--primary')
+					->addStyleClass('or-form-btn--apply')
+					->addAttribute('value',
+						Value::createExpression(ValueExpression::TYPE_MESSAGE, 'APPLY')
+					)
+			);
+		}
+
+		if (!$this->readonly) {
+			$actionBar->addChild(
+				(new CMSElement('input'))
+					->addAttribute('type', 'submit')
+					->addStyleClass('or-form-btn')
+					->addStyleClass('or-form-btn--primary')
+					->addStyleClass('or-form-btn--save')
+					->addAttribute('value', $this->label)
+			);
+		}
+
+		return $form;
 	}
-
-	protected function end()
-	{
-		$label = $this->htmlvalue($this->label);
-		
-		echo '<div class="or-form-actionbar">';
-		//echo "<div class=\"command {$this->visible}\">";
-
-        // Cancel-Button nicht anzeigen, wenn cancel==false.
-        if ($this->cancel)
-        {
-            echo '<input type="button" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" value="<?php echo lang("CANCEL") ?>" />';
-        }
-
-        if ($this->apply && !$this->readonly)
-        {
-            echo '<input type="button" class="or-form-btn or-form-btn--primary or-form-btn--apply" value="<?php echo lang("APPLY") ?>" />';
-        }
-
-        if ( !$this->readonly )
-            echo "<input type=\"submit\" class=\"or-form-btn or-form-btn--primary or-form-btn--save\" value=\"{$label}\" />";
-
-        //echo '</div>';
-        echo '</div>';
-        echo '</form>';
-
-    }
 }
-
-?>

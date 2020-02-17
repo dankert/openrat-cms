@@ -13,7 +13,7 @@
 			</part>
 		</group>
 
-		<group title="message:options">
+		<group title="#{options}">
 
 			<part class="line">
 				<part class="label">

@@ -2,7 +2,7 @@
         xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
     <form>
 
-        <group title="message:validity">
+        <group title="#{validity}">
             <part class="line">
                 <part class="label">
                     <label for="validity_from_date">
@@ -27,7 +27,7 @@
             </part>
         </group>
 
-        <group title="message:settings">
+        <group title="#{settings}">
 
             <part class="line">
                 <part class="label">

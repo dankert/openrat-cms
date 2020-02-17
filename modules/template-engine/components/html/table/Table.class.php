@@ -2,37 +2,41 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\CMSElement;
+use modules\template_engine\HtmlElement;
+use modules\template_engine\Value;
+use modules\template_engine\ValueExpression;
+
 class TableComponent extends HtmlComponent
 {
     public $filter = true;
 
 	public $width = '100%';
-	
-	public function begin()
+
+
+	public function createElement()
 	{
-	    echo '<div class="or-table-wrapper">';
+	    $tableWrapper = (new HtmlElement('div'))->addStyleClass('or-table-wrapper');
 
 	    if   ( $this->filter)
-            echo '<div class="or-table-filter"><input type="search" name="filter" placeholder="'.$this->htmlvalue('message:SEARCH_FILTER').'" /></div>';
+		{
+			$filterInput = (new CMSElement('input'))->addAttribute('type','search')->addAttribute('name','filter')->addAttribute('placeholder',Value::createExpression(ValueExpression::TYPE_MESSAGE,'SEARCH_FILTER'));
+			$filter = (new HtmlElement('div'))->addStyleClass('or-table-filter')->addChild( $filterInput );
+			$tableWrapper->addChild($filter);
+		}
 
-        echo '<div class="or-table-area">';
-        echo '<table';
+        $tableContent = (new HtmlElement('div'))->addStyleClass('or-table-area');
 
-        if	( !empty($this->class))
-            echo ' class="'.$this->htmlvalue($this->class).'"';
+        $table = new CMSElement('table');
 
-        if	( !empty($this->width))
-            echo ' width="'.$this->htmlvalue($this->width).'"';
+        if	( $this->class)
+            $table->addStyleClass($this->class);
 
-        echo '>';
+        if	( $this->width)
+            $table->addAttribute('width',$this->width);
+
+        $table->addWrapper($tableContent)->addWrapper($tableWrapper);
+
+        return $table;
     }
-
-	public function end()
-	{
-		echo '</table>';
-        echo '</div>';
-        echo '</div>';
-	}
 }
-
-?>

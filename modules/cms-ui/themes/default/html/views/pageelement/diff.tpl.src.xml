@@ -6,13 +6,13 @@
 			<column>
 				<text type="emphatic" text="GLOBAL_COMPARE"></text>
 				<text raw="_"></text>
-				<date date="var:date_left"></date>
+				<date date="${date_left}"></date>
 			</column>
 			<column></column>
 			<column>
 				<text type="emphatic" text="GLOBAL_WITH"></text>
 				<text raw="_"></text>
-				<date date="var:date_right"></date>
+				<date date="${date_right}"></date>
 			</column>
 		</row>
 		<row>
@@ -22,19 +22,19 @@
 			<row class="diff">
 				<if present="left">
 					<column width="5%" class="line">
-						<text value="arrayvar:left:line" type="tt"></text>
+						<text value="${left.line}" type="tt"></text>
 					</column>
-					<column width="45%" class="arrayvar:left:type">
-						<text value="arrayvar:left:text"></text>
+					<column width="45%" class="${left.type}">
+						<text value="${left.text}"></text>
 					</column>
 				</if>
 				<else><column colspan="2" class="help" width="50%"><text raw="_"></text></column></else>
 				<if present="right">
 					<column width="5%" class="line">
-						<text value="arrayvar:right:line" type="tt"></text>
+						<text value="${right.line}" type="tt"></text>
 					</column>
-					<column width="45%" class="arrayvar:right:type">
-						<text value="arrayvar:right:text"></text>
+					<column width="45%" class="${right.type}">
+						<text value="${right.text}"></text>
 					</column>
 				</if>
 				<else><column colspan="2" class="help" width="50%"><text raw="_"></text></column></else>

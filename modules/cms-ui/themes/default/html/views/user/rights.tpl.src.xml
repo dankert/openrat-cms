@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
 		<list list="projects" extract="true">
 
-					<group title="var:projectname">
+					<group title="${projectname}">
 						<if empty="rights">
 							<part>
 								<text text="GLOBAL_NOT_FOUND"></text>
@@ -22,7 +22,7 @@
 									</column>
 									<list list="show" value="t">
 										<column class="help">
-											<text key="var:t" prefix="acl_" suffix="_abbrev" title="message:acl_{t}"></text>
+											<text key="${t}" prefix="acl_" suffix="_abbrev" title="message:acl_{t}"></text>
 										</column>
 									</list>
 								</row>
@@ -47,9 +47,9 @@
 											<set var="groupname"></set>
 										</column>
 										<column>
-											<image action="var:objecttype"></image>
-											<link type="open" action="var:objecttype" id="var:objectid">
-												<text var="objectname" title="message:select"></text>
+											<image action="${objecttype}"></image>
+											<link type="open" action="${objecttype}" id="${objectid}">
+												<text var="objectname" title="#{select}"></text>
 											</link>
 										</column>
 										<column>
@@ -58,8 +58,8 @@
 										</column>
 										<list list="show">
 											<column>
-												<set var="var:list_value" value="var:bits" key="var:list_value"></set>
-												<checkbox name="var:list_value" readonly="true"></checkbox>
+												<set var="${list_value}" value="${bits}" key="${list_value}"></set>
+												<checkbox name="${list_value}" readonly="true"></checkbox>
 											</column>
 										</list>
 									</row>

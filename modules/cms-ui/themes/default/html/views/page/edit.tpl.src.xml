@@ -22,17 +22,17 @@
         <list list="elements" extract="true">
             <row class="data clickable">
                 <column>
-                    <link type="open" title="var:desc" name="var:name" action="pageelement" id="var:pageelementid">
+                    <link type="open" title="${desc}" name="${name}" action="pageelement" id="${pageelementid}">
                         <image action="pageelement"/>
                         <text var="label"></text>
                     </link>
                 </column>
-                <column title="var:desc">
+                <column title="${desc}">
                     <text var="desc"></text>
                 </column>
                 <column>
-                    <image elementtype="var:typename"/>
-                    <text prefix="el_" key="var:typename"></text>
+                    <image elementtype="${typename}"/>
+                    <text prefix="el_" key="${typename}"></text>
                 </column>
             </row>
         </list>

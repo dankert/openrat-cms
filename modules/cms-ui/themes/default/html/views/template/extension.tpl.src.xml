@@ -3,10 +3,10 @@
     <form>
         <list list="extension" extract="true">
 
-            <group title="var:name">
+            <group title="${name}">
 
-                <set var="var:name" value="var:extension"/>
-                <input name="var:name" label="template_extension" required="true" maxlength="10"/>
+                <set var="${name}" value="${extension}"/>
+                <input name="${name}" label="template_extension" required="true" maxlength="10"/>
             </group>
         </list>
 

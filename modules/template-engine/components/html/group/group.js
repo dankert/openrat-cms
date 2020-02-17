@@ -1,5 +1,5 @@
 Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
 
-    registerOpenClose( $(element).find('fieldset.toggle-open-close') );
+    registerOpenClose( $(element).find('.or-group.toggle-open-close') );
 
 });

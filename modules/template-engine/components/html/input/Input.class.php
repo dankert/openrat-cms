@@ -2,6 +2,10 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\CMSElement;
+use modules\template_engine\Value;
+use modules\template_engine\ValueExpression;
+
 class InputComponent extends FieldComponent
 {
 	public $default;
@@ -32,89 +36,47 @@ class InputComponent extends FieldComponent
 
 	public $label;
 
-	public function begin()
+
+
+	public function createElement()
 	{
-	    if   ( $this->label )
-        {
-            echo '<label class="or-form-row"><span class="or-form-label">'.'<?php echo lang('.$this->value($this->label).') ?>'.'</span><span class="or-form-input">';
-        }
+		$input = (new CMSElement('input'));
 
-		if(!$this->type == 'hidden')
-		{
-			// Verstecktes Feld.
-			$this->outputHiddenField();
-		}
-		else 
-		{
-			echo '<div class="inputholder">';
-			echo '<input';
-			if($this->readonly)
-				echo '<?php if ('.$this->value($this->readonly).') '."echo ' disabled=\"true\"' ?>";
-			if (!empty($this->hint))
-				echo ' placeholder="'.$this->htmlvalue($this->hint).'"';
-			
-			echo ' id="'.'<?php echo REQUEST_ID ?>_'.$this->htmlvalue($this->name).'"';
-			
-			// Output Attribute name="..."
-            echo $this->outputNameAttribute();
-
-            if($this->required)
-                echo ' required="required"';
-            if($this->focus)
-                echo ' autofocus="autofocus"';
-
-
-            echo ' type="'.$this->htmlvalue($this->type).'"';
-			echo ' maxlength="'.$this->htmlvalue($this->maxlength).'"';
-			echo ' class="'.$this->htmlvalue($this->class).'"';
-			
-			echo ' value="<?php echo Text::encodeHtml(';
-			if (isset($this->default))
-				echo $this->value($this->default);
-			else
-				echo '@$'.$this->varname($this->name);
-			echo ') ?>"';
-			
-			echo ' />';
-
-			if(isset($this->readonly))
-			{
-				echo '<?php if ('.$this->value($this->readonly).') { ?>';
-				$this->outputHiddenField();
-				echo '<?php } ?>';
-			}
-				
-				
-			if(isset($this->icon))
-				echo '<img src="'.OR_THEMES_DIR.'default/images/icon_'.$this->htmlvalue($this->icon). IMG_ICON_EXT .'" width="16" height="16" />';
-			
-			echo '</div>';
+		if   ( $this->label ) {
+			$label = new CMSElement('label');
+			$label->addStyleClass('or-form-row')->addStyleClass('or-form-input');
+			$label->addChild( (new CMSElement('span'))->addStyleClass('or-form-label')->content($this->label));
+			$input->addWrapper($label);
 		}
 
+		$input->addAttribute('name',$this->name);
+		$input->addAttribute('disabled',$this->readonly);
 
-        if   ( $this->label )
-        {
-            echo '</span></label>';
-        }
-	}
+		if   ( $this->required )
+			$input->addAttribute( 'required','required');
 
-	private function outputHiddenField()
-	{
-		echo '<input';
-		echo ' type="hidden"';
-		echo ' name="'.$this->htmlvalue($this->name).'"';
+		if ( $this->hint )
+			$input->addAttribute( 'placeholder',$this->hint );
+			
+		if($this->focus)
+			$input->addAttribute( 'autofocus','autofocus');
 
-		echo ' value="<?php ';
 
-		if(isset($this->default))
-			echo $this->value($this->default);
+		$input->addAttribute('type',$this->type);
+		$input->addAttribute('maxlength',$this->maxlength);
+
+		if   ( $this->class )
+			$input->addStyleClass($this->class);
+			
+		if (isset($this->default))
+			$input->addAttribute('value',$this->default);
 		else
-			echo '$'.$this->varname($this->name);
+			$input->addAttribute('value',Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->name));
 
-		echo ' ?>"';
-		echo '/>';
+			// Unused:
+			//if(isset($this->icon))
+			//	echo '<img src="'.OR_THEMES_DIR.'default/images/icon_'.$this->htmlvalue($this->icon). IMG_ICON_EXT .'" width="16" height="16" />';
 
+		return $input;
 	}
 }
-
-?>

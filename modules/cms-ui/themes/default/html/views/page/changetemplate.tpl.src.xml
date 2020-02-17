@@ -1,6 +1,6 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
-	<form method="get" subaction="changetemplateselectelements" visible="true" cancel="true" label="message:BUTTON_NEXT">
+	<form method="get" subaction="changetemplateselectelements" visible="true" cancel="true" label="#{BUTTON_NEXT}">
 		<hidden name="templateid" />
 		<hidden name="modelid" />
 		
@@ -9,7 +9,7 @@
 				<text text="page_template_old"></text>
 			</part>
 			<part class="input">
-				<link url="var:template_url" target="cms_main">
+				<link url="${template_url}" target="cms_main">
 					<image type="template"></image>
 					<text var="template_name"></text>
 				</link>

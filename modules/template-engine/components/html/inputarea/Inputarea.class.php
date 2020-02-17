@@ -2,6 +2,10 @@
 
 namespace template_engine\components;
 
+use modules\template_engine\CMSElement;
+use modules\template_engine\Value;
+use modules\template_engine\ValueExpression;
+
 class InputareaComponent extends FieldComponent
 {
 
@@ -19,43 +23,49 @@ class InputareaComponent extends FieldComponent
 
 	public $class = 'inputarea';
 
+	public $required = false;
+
 	public $default;
 
 	public $maxlength = 0;
 
 	public $label;
-	
-	public function begin()
+
+
+	public function createElement()
 	{
-        if   ( $this->label )
-        {
-            echo '<label class="or-form-row"><span class="or-form-label">'.lang($this->label).'</span><span class="or-form-input">';
-        }
+		$textarea = (new CMSElement('textarea'));
 
-        echo '<div class="inputholder">';
-		echo '<textarea';
-		echo ' class="'.$this->htmlvalue($this->class).'"';
+		if   ( $this->label ) {
+			$label = new CMSElement('label');
+			$label->addStyleClass('or-form-row')->addStyleClass('or-form-checkbox');
+			$label->addChild( (new CMSElement('span'))->addStyleClass('or-form-label')->content($this->label));
 
-		echo $this->outputNameAttribute();
+			$textarea->addWrapper($label);
+		}
 
-		if (!empty($this->maxlength))
-            echo ' maxlength="'.intval($this->maxlength).'"';
+		$textarea->addAttribute('name',$this->name);
+		$textarea->addAttribute('disabled',$this->readonly);
+		$textarea->addAttribute('maxlength',$this->maxlength);
 
-		echo '>';
-		echo '<?php echo Text::encodeHtml(';
-		if	(isset($this->default))
-			echo $this->value($this->default);
+		if   ( $this->required )
+			$textarea->addAttribute( 'required','required');
+
+		if ( $this->readonly && $this->required ) {
+			$hidden = (new CMSElement('input'))->addAttribute('type','hidden')->addAttribute('name',$this->name)->addAttribute('value','1');
+			$textarea->addChild( $hidden );
+		}
+
+		if   ($this->class )
+			$textarea->addStyleClass($this->class);
+
+
+
+		if (isset($this->default))
+			$textarea->content($this->default);
 		else
-			echo '$'.$this->varname($this->name).'';
-		echo ') ?>';
-		echo '</textarea>';
-		echo '</div>';
+			$textarea->content(Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->name));
 
-        if   ( $this->label )
-        {
-            echo '</span></label>';
-        }
+		return $textarea;
 	}
 }
-
-?>

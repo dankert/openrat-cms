@@ -24,7 +24,7 @@
 
                 <list list="users" key="id" value="name">
                     <part class="clickable">
-                        <link type="open" action="user" id="var:id">
+                        <link type="open" action="user" id="${id}">
                             <text var="name"/>
                         </link>
                         <newline/>

@@ -22,8 +22,8 @@
 				<text text="type"></text>
 			</column>
 			<column class="filename">
-				<image elementtype="var:element_type"></image>
-				<text key="tpl:el_{element_type}"></text>
+				<image elementtype="${element_type}"></image>
+				<text key="el_${element_type}"></text>
 			</column>
 		</row>
 		<row class="data">
@@ -31,7 +31,7 @@
 				<text key="template"></text>
 			</column>
 			<column class="clickable">
-				<link type="open" action="template" id="var:template_id">
+				<link type="open" action="template" id="${template_id}">
 					<image action="template"></image>
 					<text var="template_name"></text>
 				</link>
@@ -42,8 +42,8 @@
 				<text key="element"></text>
 			</column>
 			<column class="clickable">
-				<link id="var:element_id" name="var:element_name" action="element">
-					<image elementtype="var:element_type"></image>
+				<link id="${element_id}" name="${element_name}" action="element">
+					<image elementtype="${element_type}"></image>
 					<text var="element_name"></text>
 				</link>
 			</column>
@@ -71,10 +71,10 @@
 			</column>
 			<column>
 				<image elementtype="date"></image>
-				<date date="var:lastchange_date"></date>
+				<date date="${lastchange_date}"></date>
 				<text raw=", "></text>
 				<image action="user"></image>
-				<user user="var:lastchange_user"></user>
+				<user user="${lastchange_user}"></user>
 			</column>
 		</row>
 	</table>

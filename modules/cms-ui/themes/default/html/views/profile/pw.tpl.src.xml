@@ -3,10 +3,10 @@
 	<form>
 
 
-		<if true="var:pwchange_enabled">
+		<if true="${pwchange_enabled}">
 			<logo name="changepassword"></logo>
 
-			<group title="message:user_act_password">
+			<group title="#{user_act_password}">
 				<part class="line">
 					<part class="label">
 						<label for="act_password">
@@ -18,7 +18,7 @@
 					</part>
 				</part>
 			</group>
-			<group title="message:user_new_password">
+			<group title="#{user_new_password}">
 				<part class="line">
 					<part class="label">
 						<label for="password1">
