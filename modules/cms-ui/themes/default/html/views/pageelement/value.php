@@ -11,9 +11,9 @@
 		<?php $if3=($type=='date'); if($if3) {  ?>
 			<fieldset class="or-group toggle-open-close open show"><div class="closable">
 				<div class="line">
-					<label class="or-form-row or-form-input"><input name="date" disabled="" type="date" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$date)) ?>" class="">
+					<label class="or-form-row or-form-input"><input name="date" type="date" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$date)) ?>" class="">
 					</input></label>
-					<label class="or-form-row or-form-input"><input name="time" disabled="" type="time" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$time)) ?>" class="">
+					<label class="or-form-row or-form-input"><input name="time" type="time" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$time)) ?>" class="">
 					</input></label>
 				</div>
 			</div></fieldset>
@@ -21,7 +21,7 @@
 		<?php $if3=($type=='text'); if($if3) {  ?>
 			<tr class="">
 				<td colspan="2" class="">
-					<input name="text" disabled="" type="text" maxlength="255" value="<?php echo encodeHtml(htmlentities(@$text)) ?>" class="text">
+					<input name="text" type="text" maxlength="255" value="<?php echo encodeHtml(htmlentities(@$text)) ?>" class="text">
 					</input>
 				</td>
 			</tr>
@@ -166,7 +166,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<input name="linkurl" disabled="" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$linkurl)) ?>" class="">
+						<input name="linkurl" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$linkurl)) ?>" class="">
 						</input>
 					</div>
 				</div>
@@ -193,7 +193,7 @@
 				<div class="">
 					<input type="hidden" name="decimals" value="decimals" class="">
 					</input>
-					<input name="number" disabled="" type="text" maxlength="20" value="<?php echo encodeHtml(htmlentities(@$number)) ?>" class="">
+					<input name="number" type="text" maxlength="20" value="<?php echo encodeHtml(htmlentities(@$number)) ?>" class="">
 					</input>
 				</div>
 			</div></fieldset>
@@ -226,7 +226,7 @@
 				 <?php } ?>
 				<fieldset class="or-group toggle-open-close open show"><div class="closable">
 					<div class="">
-						<input type="checkbox" name="preview" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$preview)) ?>" class="">
+						<input type="checkbox" name="preview" value="1" <?php if(''.@$preview.''){ ?>checked="1"<?php } ?> class="">
 						</input>
 						<label class="label">
 							<span class=""><?php echo encodeHtml(htmlentities(@lang('PAGE_PREVIEW'))) ?>
@@ -239,7 +239,7 @@
 		<fieldset class="or-group toggle-open-close open show"><div class="closable">
 			<?php $if4=(isset($release)); if($if4) {  ?>
 				<div class="">
-					<input type="checkbox" name="release" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$release)) ?>" class="">
+					<input type="checkbox" name="release" value="1" <?php if(''.@$release.''){ ?>checked="1"<?php } ?> class="">
 					</input>
 					<label class="label">
 						<span class=""><?php echo encodeHtml(htmlentities(@lang('GLOBAL_RELEASE'))) ?>
@@ -249,7 +249,7 @@
 			 <?php } ?>
 			<?php $if4=(isset($publish)); if($if4) {  ?>
 				<div class="">
-					<input type="checkbox" name="publish" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$publish)) ?>" class="">
+					<input type="checkbox" name="publish" value="1" <?php if(''.@$publish.''){ ?>checked="1"<?php } ?> class="">
 					</input>
 					<label class="label">
 						<span class=""><?php echo encodeHtml(htmlentities(@lang('PAGE_PUBLISH_AFTER_SAVE'))) ?>

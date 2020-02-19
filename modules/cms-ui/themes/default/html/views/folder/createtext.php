@@ -34,7 +34,7 @@
 				</span>
 			</div>
 			<div class="input">
-				<input name="url" disabled="" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$url)) ?>" class="">
+				<input name="url" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$url)) ?>" class="">
 				</input>
 			</div>
 		</div>
@@ -46,7 +46,7 @@
 				</span>
 			</div>
 			<div class="input">
-				<input name="name" disabled="" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$name)) ?>" class="">
+				<input name="name" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$name)) ?>" class="">
 				</input>
 			</div>
 		</div>

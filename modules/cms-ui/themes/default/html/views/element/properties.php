@@ -12,7 +12,7 @@
 								</input>
 							 <?php } ?>
 							<?php $if8=!(isset($subtypes)); if($if8) {  ?>
-								<input name="subtype" disabled="" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$subtype)) ?>" class="">
+								<input name="subtype" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$subtype)) ?>" class="">
 								</input>
 							 <?php } ?>
 						</td>
@@ -25,7 +25,7 @@
 							</span>
 						</td>
 						<td class="">
-							<input type="checkbox" name="with_icon" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$with_icon)) ?>" class="">
+							<input type="checkbox" name="with_icon" value="1" <?php if(''.@$with_icon.''){ ?>checked="1"<?php } ?> class="">
 							</input>
 						</td>
 					</tr>
@@ -37,7 +37,7 @@
 							</span>
 						</td>
 						<td class="">
-							<input type="checkbox" name="all_languages" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$all_languages)) ?>" class="">
+							<input type="checkbox" name="all_languages" value="1" <?php if(''.@$all_languages.''){ ?>checked="1"<?php } ?> class="">
 							</input>
 						</td>
 					</tr>
@@ -49,7 +49,7 @@
 							</span>
 						</td>
 						<td class="">
-							<input type="checkbox" name="writable" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$writable)) ?>" class="">
+							<input type="checkbox" name="writable" value="1" <?php if(''.@$writable.''){ ?>checked="1"<?php } ?> class="">
 							</input>
 						</td>
 					</tr>
@@ -61,7 +61,7 @@
 							</span>
 						</td>
 						<td class="">
-							<input name="width" disabled="" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$width)) ?>" class="">
+							<input name="width" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$width)) ?>" class="">
 							</input>
 						</td>
 					</tr>
@@ -73,7 +73,7 @@
 							</span>
 						</td>
 						<td class="">
-							<input name="height" disabled="" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$height)) ?>" class="">
+							<input name="height" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$height)) ?>" class="">
 							</input>
 						</td>
 					</tr>
@@ -109,7 +109,7 @@
 							</span>
 						</td>
 						<td class="">
-							<input name="decimals" disabled="" type="text" maxlength="2" value="<?php echo encodeHtml(htmlentities(@$decimals)) ?>" class="">
+							<input name="decimals" type="text" maxlength="2" value="<?php echo encodeHtml(htmlentities(@$decimals)) ?>" class="">
 							</input>
 						</td>
 					</tr>
@@ -121,7 +121,7 @@
 							</span>
 						</td>
 						<td class="">
-							<input name="dec_point" disabled="" type="text" maxlength="5" value="<?php echo encodeHtml(htmlentities(@$dec_point)) ?>" class="">
+							<input name="dec_point" type="text" maxlength="5" value="<?php echo encodeHtml(htmlentities(@$dec_point)) ?>" class="">
 							</input>
 						</td>
 					</tr>
@@ -133,7 +133,7 @@
 							</span>
 						</td>
 						<td class="">
-							<input name="thousand_sep" disabled="" type="text" maxlength="1" value="<?php echo encodeHtml(htmlentities(@$thousand_sep)) ?>" class="">
+							<input name="thousand_sep" type="text" maxlength="1" value="<?php echo encodeHtml(htmlentities(@$thousand_sep)) ?>" class="">
 							</input>
 						</td>
 					</tr>
@@ -145,7 +145,7 @@
 							</span>
 						</td>
 						<td class="">
-							<input name="default_text" disabled="" type="text" maxlength="255" value="<?php echo encodeHtml(htmlentities(@$default_text)) ?>" class="">
+							<input name="default_text" type="text" maxlength="255" value="<?php echo encodeHtml(htmlentities(@$default_text)) ?>" class="">
 							</input>
 						</td>
 					</tr>

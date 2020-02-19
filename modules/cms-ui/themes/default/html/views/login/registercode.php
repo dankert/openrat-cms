@@ -8,7 +8,7 @@
 				</span>
 			</div>
 			<div class="input">
-				<input name="code" disabled="" type="text" maxlength="256" value="" class="focus">
+				<input name="code" type="text" maxlength="256" value="" class="focus">
 				</input>
 			</div>
 		</div>
@@ -18,7 +18,7 @@
 				</span>
 			</div>
 			<div class="input">
-				<input name="username" disabled="" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$username)) ?>" class="">
+				<input name="username" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$username)) ?>" class="">
 				</input>
 			</div>
 		</div>

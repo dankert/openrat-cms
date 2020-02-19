@@ -21,7 +21,7 @@
 							</input>
 						 <?php } ?>
 						<?php $if7=!(isset($subtypes)); if($if7) {  ?>
-							<input name="subtype" disabled="" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$subtype)) ?>" class="">
+							<input name="subtype" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$subtype)) ?>" class="">
 							</input>
 						 <?php } ?>
 					</div>
@@ -32,7 +32,7 @@
 					<div class="label">
 					</div>
 					<div class="input">
-						<input type="checkbox" name="with_icon" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$with_icon)) ?>" class="">
+						<input type="checkbox" name="with_icon" value="1" <?php if(''.@$with_icon.''){ ?>checked="1"<?php } ?> class="">
 						</input>
 						<label class="label">
 							<span class=""><?php echo encodeHtml(htmlentities(@lang('EL_PROP_WITH_ICON'))) ?>
@@ -46,7 +46,7 @@
 					<div class="label">
 					</div>
 					<div class="input">
-						<input type="checkbox" name="inherit" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$inherit)) ?>" class="">
+						<input type="checkbox" name="inherit" value="1" <?php if(''.@$inherit.''){ ?>checked="1"<?php } ?> class="">
 						</input>
 						<label class="label">
 							<span class=""><?php echo encodeHtml(htmlentities(@lang('EL_PROP_INHERIT'))) ?>
@@ -60,7 +60,7 @@
 					<div class="label">
 					</div>
 					<div class="input">
-						<input type="checkbox" name="all_languages" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$all_languages)) ?>" class="">
+						<input type="checkbox" name="all_languages" value="1" <?php if(''.@$all_languages.''){ ?>checked="1"<?php } ?> class="">
 						</input>
 						<label class="label">
 							<span class=""><?php echo encodeHtml(htmlentities(@lang('EL_PROP_ALL_LANGUAGES'))) ?>
@@ -74,7 +74,7 @@
 					<div class="label">
 					</div>
 					<div class="input">
-						<input type="checkbox" name="writable" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$writable)) ?>" class="">
+						<input type="checkbox" name="writable" value="1" <?php if(''.@$writable.''){ ?>checked="1"<?php } ?> class="">
 						</input>
 						<label class="label">
 							<span class=""><?php echo encodeHtml(htmlentities(@lang('EL_PROP_writable'))) ?>
@@ -90,7 +90,7 @@
 						</span>
 					</div>
 					<div class="input">
-						<input name="width" disabled="" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$width)) ?>" class="">
+						<input name="width" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$width)) ?>" class="">
 						</input>
 					</div>
 				</div>
@@ -102,7 +102,7 @@
 						</span>
 					</div>
 					<div class="input">
-						<input name="height" disabled="" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$height)) ?>" class="">
+						<input name="height" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$height)) ?>" class="">
 						</input>
 					</div>
 				</div>
@@ -138,7 +138,7 @@
 						</span>
 					</div>
 					<div class="input">
-						<input name="decimals" disabled="" type="text" maxlength="2" value="<?php echo encodeHtml(htmlentities(@$decimals)) ?>" class="">
+						<input name="decimals" type="text" maxlength="2" value="<?php echo encodeHtml(htmlentities(@$decimals)) ?>" class="">
 						</input>
 					</div>
 				</div>
@@ -150,7 +150,7 @@
 						</span>
 					</div>
 					<div class="input">
-						<input name="dec_point" disabled="" type="text" maxlength="5" value="<?php echo encodeHtml(htmlentities(@$dec_point)) ?>" class="">
+						<input name="dec_point" type="text" maxlength="5" value="<?php echo encodeHtml(htmlentities(@$dec_point)) ?>" class="">
 						</input>
 					</div>
 				</div>
@@ -162,7 +162,7 @@
 						</span>
 					</div>
 					<div class="input">
-						<input name="thousand_sep" disabled="" type="text" maxlength="1" value="<?php echo encodeHtml(htmlentities(@$thousand_sep)) ?>" class="">
+						<input name="thousand_sep" type="text" maxlength="1" value="<?php echo encodeHtml(htmlentities(@$thousand_sep)) ?>" class="">
 						</input>
 					</div>
 				</div>
@@ -174,7 +174,7 @@
 						</span>
 					</div>
 					<div class="input">
-						<input name="default_text" disabled="" type="text" maxlength="255" value="<?php echo encodeHtml(htmlentities(@$default_text)) ?>" class="">
+						<input name="default_text" type="text" maxlength="255" value="<?php echo encodeHtml(htmlentities(@$default_text)) ?>" class="">
 						</input>
 					</div>
 				</div>

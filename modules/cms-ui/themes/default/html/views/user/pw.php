@@ -68,7 +68,7 @@
 					<div class="label">
 					</div>
 					<div class="input">
-						<input type="checkbox" name="email" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$email)) ?>" class="">
+						<input type="checkbox" name="email" value="1" <?php if(''.@$email.''){ ?>checked="1"<?php } ?> class="">
 						</input>
 						<label class="label"><?php echo encodeHtml(htmlentities(@lang('user_mail_new_password'))) ?>
 						</label>
@@ -78,7 +78,7 @@
 					<div class="label">
 					</div>
 					<div class="input">
-						<input type="checkbox" name="timeout" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$timeout)) ?>" class="">
+						<input type="checkbox" name="timeout" value="1" <?php if(''.@$timeout.''){ ?>checked="1"<?php } ?> class="">
 						</input>
 						<label class="label"><?php echo encodeHtml(htmlentities(@lang('user_password_timeout'))) ?>
 						</label>

@@ -11,7 +11,7 @@
 				<div class="label">
 				</div>
 				<div class="input">
-					<input type="checkbox" name="files" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$files)) ?>" class="">
+					<input type="checkbox" name="files" value="1" <?php if(''.@$files.''){ ?>checked="1"<?php } ?> class="">
 					</input>
 					<label class="label">
 						<span class=""><?php echo encodeHtml(htmlentities(@lang('global_files'))) ?>

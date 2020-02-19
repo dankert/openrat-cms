@@ -8,7 +8,7 @@
 				</label>
 			</div>
 			<div class="input">
-				<input name="code" disabled="" required="required" autofocus="autofocus" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$code)) ?>" class="">
+				<input name="code" required="required" autofocus="autofocus" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$code)) ?>" class="">
 				</input>
 			</div>
 		</div>

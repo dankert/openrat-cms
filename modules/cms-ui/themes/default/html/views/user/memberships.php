@@ -10,7 +10,7 @@
 			<?php foreach($memberships as $list_key=>$list_value) { extract($list_value); ?>
 				<tr class="data">
 					<td width="10%" class="">
-						<input type="checkbox" name="group<?php echo encodeHtml(htmlentities(@$id)) ?>" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$member)) ?>" class="">
+						<input type="checkbox" name="group<?php echo encodeHtml(htmlentities(@$id)) ?>" value="1" checked="<?php echo encodeHtml(htmlentities(@$member)) ?>" class="">
 						</input>
 					</td>
 					<td class="">

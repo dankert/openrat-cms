@@ -11,7 +11,7 @@
 				<div class="label">
 				</div>
 				<div class="input">
-					<input type="checkbox" name="pages" disabled="1" value="1" checked="1" class="">
+					<input type="checkbox" name="pages" disabled="disabled" value="1" checked="1" class="">
 					</input>
 					<label class="label">
 						<span class=""><?php echo encodeHtml(htmlentities(@lang('publish'))) ?>

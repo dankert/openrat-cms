@@ -79,7 +79,7 @@
 			</part>
 			<part class="line">
 				<part class="label">
-					<label for="ldap_dn" key=":user_ldapdn"></label>
+					<label for="ldap_dn" key="user_ldapdn"></label>
 				</part>
 				<part class="input">
 					<input name="ldap_dn"></input>

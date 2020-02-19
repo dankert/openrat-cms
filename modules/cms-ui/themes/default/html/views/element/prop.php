@@ -7,7 +7,7 @@
 					</span>
 				</div>
 				<div class="input">
-					<input name="label" disabled="" required="required" autofocus="autofocus" type="text" maxlength="100" value="<?php echo encodeHtml(htmlentities(@$label)) ?>" class="">
+					<input name="label" required="required" autofocus="autofocus" type="text" maxlength="100" value="<?php echo encodeHtml(htmlentities(@$label)) ?>" class="">
 					</input>
 				</div>
 			</div>
@@ -17,7 +17,7 @@
 					</span>
 				</div>
 				<div class="input">
-					<input name="name" disabled="" required="required" type="text" maxlength="50" value="<?php echo encodeHtml(htmlentities(@$name)) ?>" class="">
+					<input name="name" required="required" type="text" maxlength="50" value="<?php echo encodeHtml(htmlentities(@$name)) ?>" class="">
 					</input>
 				</div>
 			</div>

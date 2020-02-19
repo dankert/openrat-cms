@@ -8,7 +8,7 @@
 					<div class="input">
 						<?php  { $inherit= '1'; ?>
 						 <?php } ?>
-						<input name="inherit" disabled="" type="checkbox" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$inherit)) ?>" class="">
+						<input name="inherit" type="checkbox" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$inherit)) ?>" class="">
 						</input>
 						<label class="label">
 							<span class=""><?php echo encodeHtml(htmlentities(@lang('inherit_rights'))) ?>

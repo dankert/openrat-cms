@@ -11,7 +11,7 @@
 				<div class="label">
 				</div>
 				<div class="input">
-					<input type="checkbox" name="pages" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$pages)) ?>" class="">
+					<input type="checkbox" name="pages" value="1" <?php if(''.@$pages.''){ ?>checked="1"<?php } ?> class="">
 					</input>
 					<label class="label">
 						<span class=""> 
@@ -27,7 +27,7 @@
 				<div class="label">
 				</div>
 				<div class="input">
-					<input type="checkbox" name="files" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$files)) ?>" class="">
+					<input type="checkbox" name="files" value="1" <?php if(''.@$files.''){ ?>checked="1"<?php } ?> class="">
 					</input>
 					<label class="label">
 						<span class=""> 
@@ -44,7 +44,7 @@
 					<div class="label">
 					</div>
 					<div class="input">
-						<input type="checkbox" name="subdirs" disabled="<?php echo encodeHtml(htmlentities(@$subdirs)) ?>" value="1" checked="<?php echo encodeHtml(htmlentities(@$subdirs)) ?>" class="">
+						<input type="checkbox" name="subdirs" disabled="disabled" value="1" <?php if(''.@$subdirs.''){ ?>checked="1"<?php } ?> class="">
 						</input>
 						<label class="label">
 							<span class=""> 
@@ -60,7 +60,7 @@
 					<div class="label">
 					</div>
 					<div class="input">
-						<input type="checkbox" name="clean" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$clean)) ?>" class="">
+						<input type="checkbox" name="clean" value="1" <?php if(''.@$clean.''){ ?>checked="1"<?php } ?> class="">
 						</input>
 						<label class="label">
 							<span class=""> 

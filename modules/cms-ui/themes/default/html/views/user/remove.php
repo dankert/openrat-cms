@@ -17,7 +17,7 @@
 				<div class="label">
 				</div>
 				<div class="input">
-					<input type="checkbox" name="confirm" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$confirm)) ?>" required="required" class="">
+					<input type="checkbox" name="confirm" value="1" <?php if(''.@$confirm.''){ ?>checked="1"<?php } ?> required="required" class="">
 					</input>
 					<label class="label"><?php echo encodeHtml(htmlentities(@lang('delete'))) ?>
 					</label>

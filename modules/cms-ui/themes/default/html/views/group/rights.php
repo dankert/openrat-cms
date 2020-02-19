@@ -72,7 +72,7 @@
 											<td class="">
 												<?php  { $$list_value= $bits[$list_value]; ?>
 												 <?php } ?>
-												<input type="checkbox" name="<?php echo encodeHtml(htmlentities(@$list_value)) ?>" disabled="1" value="1" checked="<?php echo encodeHtml(htmlentities(@$${list_value)) ?>}" class="">
+												<input type="checkbox" name="<?php echo encodeHtml(htmlentities(@$list_value)) ?>" disabled="disabled" value="1" <?php if(''.@$${list_value.'}'){ ?>checked="1"<?php } ?> class="">
 												</input>
 											</td>
 										 <?php } ?>

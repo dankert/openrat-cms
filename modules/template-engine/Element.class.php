@@ -4,12 +4,17 @@
 namespace modules\template_engine;
 
 
+use cms\template_engine\SimpleAttribute;
+
 class Element
 {
 	private $name;
-	private $attributes = [];
-	private $content    = '';
-	private $selfClosing    = true;
+	/**
+	 * @var array
+	 */
+	protected $attributes = [];
+	protected $content    = '';
+	protected $selfClosing    = true;
 
 	/**
 	 * @var array
@@ -39,8 +44,8 @@ class Element
 		$this->name = $name;
 	}
 
-	protected function getAttribute( $name ){
-		return (new Value($this->attributes[$name]))->render(Value::CONTEXT_HTML );
+	protected function getAttributeValue($name ){
+		return $this->attributes[$name]->render();
 	}
 
 	public function content( $content )
@@ -61,7 +66,7 @@ class Element
 
 		if   ( $this->name )
 			$content .= '<'.$this->name.
-				array_reduce( array_keys($this->attributes),function($carry,$key){return $carry.' '.$key.'="'.$this->getAttribute($key).'"';},'').(($this->selfClosing && !$this->content && !$this->children)?' /':'').'>';
+				array_reduce( array_keys($this->attributes),function($carry,$key){return $carry.' '.$this->getAttributeValue($key);},'').(($this->selfClosing && !$this->content && !$this->children)?' /':'').'>';
 
 		$content .= $this->getContent();
 
@@ -86,7 +91,7 @@ class Element
 	}
 
 	public function addAttribute($key, $value) {
-		$this->attributes[$key] = $value;
+		$this->attributes[] = new SimpleAttribute($key,$value);
 		return $this;
 	}
 

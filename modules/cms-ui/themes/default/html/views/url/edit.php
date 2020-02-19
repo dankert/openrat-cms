@@ -7,7 +7,7 @@
 					</span>
 				</div>
 				<div class="input">
-					<input name="url" disabled="" type="text" maxlength="255" value="<?php echo encodeHtml(htmlentities(@$url)) ?>" class="">
+					<input name="url" type="text" maxlength="255" value="<?php echo encodeHtml(htmlentities(@$url)) ?>" class="">
 					</input>
 				</div>
 			</div>

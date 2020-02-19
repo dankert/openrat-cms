@@ -11,7 +11,7 @@
 					</label>
 				</div>
 				<div class="input">
-					<input name="mail" disabled="" type="text" maxlength="256" value="" class="focus">
+					<input name="mail" type="text" maxlength="256" value="" class="focus">
 					</input>
 				</div>
 			</div>

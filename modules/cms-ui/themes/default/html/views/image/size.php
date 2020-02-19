@@ -46,11 +46,11 @@
 					<div class="label">
 					</div>
 					<div class="input">
-						<input name="width" disabled="" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$width)) ?>" class="">
+						<input name="width" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$width)) ?>" class="">
 						</input>
 						<span class=""> * 
 						</span>
-						<input name="height" disabled="" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$height)) ?>" class="">
+						<input name="height" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$height)) ?>" class="">
 						</input>
 					</div>
 				</div>
@@ -86,7 +86,7 @@
 					<div class="label">
 					</div>
 					<div class="input">
-						<input type="checkbox" name="copy" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$copy)) ?>" class="">
+						<input type="checkbox" name="copy" value="1" <?php if(''.@$copy.''){ ?>checked="1"<?php } ?> class="">
 						</input>
 						<label class="label">
 							<span class=""><?php echo encodeHtml(htmlentities(@lang('copy'))) ?>

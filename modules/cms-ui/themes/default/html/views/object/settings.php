@@ -9,9 +9,9 @@
 					</label>
 				</div>
 				<div class="input">
-					<input name="valid_from_date" disabled="" type="date" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$valid_from_date)) ?>" class="">
+					<input name="valid_from_date" type="date" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$valid_from_date)) ?>" class="">
 					</input>
-					<input name="valid_from_time" disabled="" type="time" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$valid_from_time)) ?>" class="">
+					<input name="valid_from_time" type="time" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$valid_from_time)) ?>" class="">
 					</input>
 				</div>
 			</div>
@@ -23,9 +23,9 @@
 					</label>
 				</div>
 				<div class="input">
-					<input name="valid_until_date" disabled="" type="date" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$valid_until_date)) ?>" class="">
+					<input name="valid_until_date" type="date" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$valid_until_date)) ?>" class="">
 					</input>
-					<input name="valid_until_time" disabled="" type="time" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$valid_until_time)) ?>" class="">
+					<input name="valid_until_time" type="time" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$valid_until_time)) ?>" class="">
 					</input>
 				</div>
 			</div>

@@ -6,7 +6,7 @@
 				</span>
 			</div>
 			<div class="input">
-				<input name="name" disabled="" required="required" autofocus="autofocus" type="text" maxlength="50" value="<?php echo encodeHtml(htmlentities(@$name)) ?>" class="">
+				<input name="name" required="required" autofocus="autofocus" type="text" maxlength="50" value="<?php echo encodeHtml(htmlentities(@$name)) ?>" class="">
 				</input>
 			</div>
 		</div>
@@ -29,7 +29,7 @@
 			</div>
 			<div class="input">
 				<label class="label">
-					<input type="checkbox" name="addtotemplate" disabled="" value="1" checked="1" class="">
+					<input type="checkbox" name="addtotemplate" value="1" checked="1" class="">
 					</input>
 					<span class=""><?php echo encodeHtml(htmlentities(@lang('menu_template_srcelement'))) ?>
 					</span>

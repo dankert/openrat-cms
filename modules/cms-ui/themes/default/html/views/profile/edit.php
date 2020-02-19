@@ -41,7 +41,7 @@
 					</label>
 				</div>
 				<div class="input">
-					<input name="fullname" disabled="" type="text" maxlength="128" value="<?php echo encodeHtml(htmlentities(@$fullname)) ?>" class="">
+					<input name="fullname" type="text" maxlength="128" value="<?php echo encodeHtml(htmlentities(@$fullname)) ?>" class="">
 					</input>
 				</div>
 			</div>
@@ -51,7 +51,7 @@
 					</label>
 				</div>
 				<div class="input">
-					<input name="tel" disabled="" type="text" maxlength="128" value="<?php echo encodeHtml(htmlentities(@$tel)) ?>" class="">
+					<input name="tel" type="text" maxlength="128" value="<?php echo encodeHtml(htmlentities(@$tel)) ?>" class="">
 					</input>
 				</div>
 			</div>
@@ -61,7 +61,7 @@
 					</label>
 				</div>
 				<div class="input">
-					<input name="desc" disabled="" type="text" maxlength="128" value="<?php echo encodeHtml(htmlentities(@$desc)) ?>" class="">
+					<input name="desc" type="text" maxlength="128" value="<?php echo encodeHtml(htmlentities(@$desc)) ?>" class="">
 					</input>
 				</div>
 			</div>
@@ -115,7 +115,7 @@
 				<div class="label">
 				</div>
 				<div class="input">
-					<input type="checkbox" name="totp" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$totp)) ?>" class="">
+					<input type="checkbox" name="totp" value="1" <?php if(''.@$totp.''){ ?>checked="1"<?php } ?> class="">
 					</input>
 					<label class="label"><?php echo encodeHtml(htmlentities(@lang('user_totp'))) ?>
 					</label>
@@ -127,7 +127,7 @@
 				<div class="label">
 				</div>
 				<div class="input">
-					<input type="checkbox" name="hotp" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$hotp)) ?>" class="">
+					<input type="checkbox" name="hotp" value="1" <?php if(''.@$hotp.''){ ?>checked="1"<?php } ?> class="">
 					</input>
 					<label class="label"><?php echo encodeHtml(htmlentities(@lang('user_hotp'))) ?>
 					</label>

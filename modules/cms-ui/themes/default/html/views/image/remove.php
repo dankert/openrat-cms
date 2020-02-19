@@ -16,7 +16,7 @@
 						</span>
 					</td>
 					<td class="">
-						<input type="checkbox" name="delete" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$delete)) ?>" class="">
+						<input type="checkbox" name="delete" value="1" <?php if(''.@$delete.''){ ?>checked="1"<?php } ?> class="">
 						</input>
 					</td>
 				</tr>

@@ -68,13 +68,13 @@
 							<?php $if8=($t=='read'); if($if8) {  ?>
 								<?php  { $$t= true; ?>
 								 <?php } ?>
-								<input type="checkbox" name="<?php echo encodeHtml(htmlentities(@$t)) ?>" disabled="1" value="1" checked="<?php echo encodeHtml(htmlentities(@$${t)) ?>}" class="">
+								<input type="checkbox" name="<?php echo encodeHtml(htmlentities(@$t)) ?>" disabled="disabled" value="1" <?php if(''.@$${t.'}'){ ?>checked="1"<?php } ?> class="">
 								</input>
 							 <?php } ?>
 							<?php if(!$if8) {  ?>
 								<?php  { unset($$t) ?>
 								 <?php } ?>
-								<input type="checkbox" name="<?php echo encodeHtml(htmlentities(@$t)) ?>" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$${t)) ?>}" class="">
+								<input type="checkbox" name="<?php echo encodeHtml(htmlentities(@$t)) ?>" value="1" <?php if(''.@$${t.'}'){ ?>checked="1"<?php } ?> class="">
 								</input>
 							 <?php } ?>
 							<label class="label">

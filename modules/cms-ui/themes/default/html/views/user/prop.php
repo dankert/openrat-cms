@@ -6,7 +6,7 @@
 				</label>
 			</div>
 			<div class="input">
-				<input name="name" disabled="" type="text" maxlength="128" value="<?php echo encodeHtml(htmlentities(@$name)) ?>" class="name,focus">
+				<input name="name" type="text" maxlength="128" value="<?php echo encodeHtml(htmlentities(@$name)) ?>" class="name,focus">
 				</input>
 			</div>
 		</div>
@@ -17,7 +17,7 @@
 					</label>
 				</div>
 				<div class="input">
-					<input name="fullname" disabled="" type="text" maxlength="128" value="<?php echo encodeHtml(htmlentities(@$fullname)) ?>" class="">
+					<input name="fullname" type="text" maxlength="128" value="<?php echo encodeHtml(htmlentities(@$fullname)) ?>" class="">
 					</input>
 				</div>
 			</div>
@@ -28,7 +28,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<input name="mail" disabled="" type="text" maxlength="255" value="<?php echo encodeHtml(htmlentities(@$mail)) ?>" class="">
+						<input name="mail" type="text" maxlength="255" value="<?php echo encodeHtml(htmlentities(@$mail)) ?>" class="">
 						</input>
 						<i data-qrcode="mailto:<?php echo encodeHtml(htmlentities(@$mail)) ?>" title="<?php echo encodeHtml(htmlentities(@lang('QRCODE_SHOW'))) ?>" class="image-icon image-icon--menu-qrcode or-qrcode or-info">
 						</i>
@@ -41,7 +41,7 @@
 					</label>
 				</div>
 				<div class="input">
-					<input name="desc" disabled="" type="text" maxlength="255" value="<?php echo encodeHtml(htmlentities(@$desc)) ?>" class="">
+					<input name="desc" type="text" maxlength="255" value="<?php echo encodeHtml(htmlentities(@$desc)) ?>" class="">
 					</input>
 				</div>
 			</div>
@@ -51,7 +51,7 @@
 					</label>
 				</div>
 				<div class="input">
-					<input name="tel" disabled="" type="text" maxlength="128" value="<?php echo encodeHtml(htmlentities(@$tel)) ?>" class="">
+					<input name="tel" type="text" maxlength="128" value="<?php echo encodeHtml(htmlentities(@$tel)) ?>" class="">
 					</input>
 					<i data-qrcode="tel:<?php echo encodeHtml(htmlentities(@$tel)) ?>" title="<?php echo encodeHtml(htmlentities(@lang('QRCODE_SHOW'))) ?>" class="image-icon image-icon--menu-qrcode or-qrcode or-info">
 					</i>
@@ -87,7 +87,7 @@
 				<div class="label">
 				</div>
 				<div class="input">
-					<input type="checkbox" name="is_admin" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$is_admin)) ?>" class="">
+					<input type="checkbox" name="is_admin" value="1" <?php if(''.@$is_admin.''){ ?>checked="1"<?php } ?> class="">
 					</input>
 					<label class="label"><?php echo encodeHtml(htmlentities(@lang('user_admin'))) ?>
 					</label>
@@ -95,11 +95,11 @@
 			</div>
 			<div class="line">
 				<div class="label">
-					<label class="label"><?php echo encodeHtml(htmlentities(@lang(':user_ldapdn'))) ?>
+					<label class="label"><?php echo encodeHtml(htmlentities(@lang('user_ldapdn'))) ?>
 					</label>
 				</div>
 				<div class="input">
-					<input name="ldap_dn" disabled="" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$ldap_dn)) ?>" class="">
+					<input name="ldap_dn" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$ldap_dn)) ?>" class="">
 					</input>
 				</div>
 			</div>
@@ -119,7 +119,7 @@
 				<div class="label">
 				</div>
 				<div class="input">
-					<input type="checkbox" name="totp" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$totp)) ?>" class="">
+					<input type="checkbox" name="totp" value="1" <?php if(''.@$totp.''){ ?>checked="1"<?php } ?> class="">
 					</input>
 					<label class="label"><?php echo encodeHtml(htmlentities(@lang('user_totp'))) ?>
 					</label>
@@ -131,7 +131,7 @@
 				<div class="label">
 				</div>
 				<div class="input">
-					<input type="checkbox" name="hotp" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$hotp)) ?>" class="">
+					<input type="checkbox" name="hotp" value="1" <?php if(''.@$hotp.''){ ?>checked="1"<?php } ?> class="">
 					</input>
 					<label class="label"><?php echo encodeHtml(htmlentities(@lang('user_hotp'))) ?>
 					</label>

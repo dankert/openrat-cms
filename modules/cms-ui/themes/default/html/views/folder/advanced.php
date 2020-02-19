@@ -3,7 +3,7 @@
 		<div class="or-table-wrapper"><div class="or-table-area"><table width="100%" class="">
 			<tr class="headline">
 				<td class="help">
-					<input type="checkbox" name="checkall" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$checkall)) ?>" class="">
+					<input type="checkbox" name="checkall" value="1" <?php if(''.@$checkall.''){ ?>checked="1"<?php } ?> class="">
 					</input>
 				</td>
 				<td class="help">
@@ -19,7 +19,7 @@
 				<tr class="data">
 					<td width="1%" class="">
 						<?php $if7=($writable); if($if7) {  ?>
-							<input type="checkbox" name="<?php echo encodeHtml(htmlentities(@$id)) ?>" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$${id)) ?>}" class="">
+							<input type="checkbox" name="<?php echo encodeHtml(htmlentities(@$id)) ?>" value="1" <?php if(''.@$${id.'}'){ ?>checked="1"<?php } ?> class="">
 							</input>
 						 <?php } ?>
 						<?php $if7=(!'writable'); if($if7) {  ?>
@@ -89,7 +89,7 @@
 				<div class="input">
 					<span class="">    
 					</span>
-					<input type="checkbox" name="confirm" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$confirm)) ?>" required="required" class="">
+					<input type="checkbox" name="confirm" value="1" <?php if(''.@$confirm.''){ ?>checked="1"<?php } ?> required="required" class="">
 					</input>
 					<label class="label">
 						<span class=""><?php echo encodeHtml(htmlentities(@lang('CONFIRM_DELETE'))) ?>

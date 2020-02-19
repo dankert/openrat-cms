@@ -427,7 +427,7 @@
 				<div class="toolbar-icon menu search">
 					<i class="image-icon image-icon--method-search">
 					</i>
-					<input name="text" disabled="" placeholder="<?php echo encodeHtml(htmlentities(@lang('search'))) ?>" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$text)) ?>" class="">
+					<input name="text" placeholder="<?php echo encodeHtml(htmlentities(@lang('search'))) ?>" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$text)) ?>" class="">
 					</input>
 					<div class="arrow arrow-down">
 					</div>

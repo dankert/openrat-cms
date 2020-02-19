@@ -35,12 +35,12 @@
 									</label>
 								</td>
 								<td class="">
-									<input type="checkbox" name="<?php echo encodeHtml(htmlentities(@$saveid)) ?>" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$${saveid)) ?>}" class="">
+									<input type="checkbox" name="<?php echo encodeHtml(htmlentities(@$saveid)) ?>" value="1" <?php if(''.@$${saveid.'}'){ ?>checked="1"<?php } ?> class="">
 									</input>
 								</td>
 								<td class="">
 									<?php $if10=(in_array($type,explode(",",'text,date,number')); if($if10) {  ?>
-										<input name="<?php echo encodeHtml(htmlentities(@$id)) ?>" disabled="" type="text" maxlength="255" value="<?php echo encodeHtml(htmlentities(@$value)) ?>" class="">
+										<input name="<?php echo encodeHtml(htmlentities(@$id)) ?>" type="text" maxlength="255" value="<?php echo encodeHtml(htmlentities(@$value)) ?>" class="">
 										</input>
 									 <?php } ?>
 									<?php $if10=($type=='longtext'); if($if10) {  ?>
@@ -59,7 +59,7 @@
 				<fieldset class="or-group toggle-open-close open show"><div class="closable">
 					<?php $if6=(isset($release)); if($if6) {  ?>
 						<div class="">
-							<input type="checkbox" name="release" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$release)) ?>" class="">
+							<input type="checkbox" name="release" value="1" <?php if(''.@$release.''){ ?>checked="1"<?php } ?> class="">
 							</input>
 							<label class="label">
 								<span class=""> 
@@ -71,7 +71,7 @@
 					 <?php } ?>
 					<?php $if6=(isset($publish)); if($if6) {  ?>
 						<div class="">
-							<input type="checkbox" name="publish" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$publish)) ?>" class="">
+							<input type="checkbox" name="publish" value="1" <?php if(''.@$publish.''){ ?>checked="1"<?php } ?> class="">
 							</input>
 							<label class="label">
 								<span class=""> 

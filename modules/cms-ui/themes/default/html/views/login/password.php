@@ -9,7 +9,7 @@
 					</span>
 				</div>
 				<div class="input">
-					<input name="username" disabled="" autofocus="autofocus" type="text" maxlength="128" value="<?php echo encodeHtml(htmlentities(@$username)) ?>" class="">
+					<input name="username" autofocus="autofocus" type="text" maxlength="128" value="<?php echo encodeHtml(htmlentities(@$username)) ?>" class="">
 					</input>
 				</div>
 			</div>

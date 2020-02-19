@@ -40,7 +40,7 @@
 				</div>
 				<div class="input">
 					<?php $if6=!(isset($force_username)); if($if6) {  ?>
-						<input name="login_name" disabled="" required="required" placeholder="<?php echo encodeHtml(htmlentities(@lang('USER_USERNAME'))) ?>" autofocus="autofocus" type="text" maxlength="128" value="<?php echo encodeHtml(htmlentities(@$login_name)) ?>" class="name">
+						<input name="login_name" required="required" placeholder="<?php echo encodeHtml(htmlentities(@lang('USER_USERNAME'))) ?>" autofocus="autofocus" type="text" maxlength="128" value="<?php echo encodeHtml(htmlentities(@$login_name)) ?>" class="name">
 						</input>
 					 <?php } ?>
 					<?php if(!$if6) {  ?>
@@ -67,7 +67,7 @@
 				<div class="label">
 				</div>
 				<div class="input">
-					<input type="checkbox" name="remember" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$remember)) ?>" class="">
+					<input type="checkbox" name="remember" value="1" <?php if(''.@$remember.''){ ?>checked="1"<?php } ?> class="">
 					</input>
 					<label class="label">
 						<span class=""><?php echo encodeHtml(htmlentities(@lang('REMEMBER_ME'))) ?>
@@ -111,7 +111,7 @@
 					</label>
 				</div>
 				<div class="input">
-					<input name="user_token" disabled="" type="text" maxlength="30" value="" class="">
+					<input name="user_token" type="text" maxlength="30" value="" class="">
 					</input>
 				</div>
 			</div>

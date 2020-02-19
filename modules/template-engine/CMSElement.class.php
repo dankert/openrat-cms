@@ -3,24 +3,16 @@
 
 namespace modules\template_engine;
 
-
-use template_engine\components\Expression;
+use template_engine\components\ConditionalAttribute;
 
 class CMSElement extends HtmlElement
 {
-
-	/*
-	public function getAttribute($name)
-	{
-		$e = new Expression( parent::getAttribute($name) );
-		return $e->getHTMLValue();
-	}*/
-
-
-
 	public function __construct( $name )
 	{
 		parent::__construct( $name );
 	}
 
+	public function addConditionalAttribute($name, $condition, $value ) {
+		$this->attributes[] = new ConditionalAttribute($condition,$name,$value);
+	}
 }

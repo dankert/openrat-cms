@@ -6,7 +6,7 @@
 				</span>
 			</div>
 			<div class="input">
-				<input name="name" disabled="" autofocus="autofocus" type="text" maxlength="50" value="<?php echo encodeHtml(htmlentities(@$name)) ?>" class="">
+				<input name="name" autofocus="autofocus" type="text" maxlength="50" value="<?php echo encodeHtml(htmlentities(@$name)) ?>" class="">
 				</input>
 			</div>
 		</div>
@@ -14,7 +14,7 @@
 			<div class="label">
 			</div>
 			<div class="input">
-				<input type="checkbox" name="is_default" disabled="<?php echo encodeHtml(htmlentities(@$is_default)) ?>" value="1" checked="<?php echo encodeHtml(htmlentities(@$is_default)) ?>" class="">
+				<input type="checkbox" name="is_default" disabled="disabled" value="1" <?php if(''.@$is_default.''){ ?>checked="1"<?php } ?> class="">
 				</input>
 				<label class="label"><?php echo encodeHtml(htmlentities(@lang('GLOBAL_is_default'))) ?>
 				</label>

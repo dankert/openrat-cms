@@ -3,7 +3,7 @@
 		<input type="hidden" name="languageid" value="<?php echo encodeHtml(htmlentities(@$languageid)) ?>" class="">
 		</input>
 		<fieldset class="or-group toggle-open-close open show"><div class="closable">
-			<label class="or-form-row or-form-input"><input name="name" disabled="" required="required" type="text" maxlength="255" value="<?php echo encodeHtml(htmlentities(@$name)) ?>" class="">
+			<label class="or-form-row or-form-input"><input name="name" required="required" type="text" maxlength="255" value="<?php echo encodeHtml(htmlentities(@$name)) ?>" class="">
 			</input></label>
 			<label class="or-form-row or-form-checkbox"><textarea name="description" disabled="" maxlength="255" class="description"><?php echo encodeHtml(htmlentities(@$description)) ?>
 			</textarea></label>

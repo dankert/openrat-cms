@@ -6,7 +6,7 @@
 				</span>
 			</div>
 			<div class="input">
-				<input name="name" disabled="" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$name)) ?>" class="focus">
+				<input name="name" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$name)) ?>" class="focus">
 				</input>
 			</div>
 		</div>

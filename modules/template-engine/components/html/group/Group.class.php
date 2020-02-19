@@ -46,6 +46,8 @@ class GroupComponent extends Component
 
 			$arrowDown  = (new HtmlElement('div'))->addStyleClass('arrow')->addStyleClass('arrow-down' )->addStyleClass('on-open'  );
 			$legend->addChild($arrowDown  );
+
+			$fieldset->addChild( $legend );
 		}
 
 		$group = new HtmlElement('div');

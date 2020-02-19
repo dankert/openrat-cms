@@ -4,7 +4,7 @@
 			<fieldset class="or-group toggle-open-close open show"><div class="closable">
 				<?php  { $$name= $extension; ?>
 				 <?php } ?>
-				<label class="or-form-row or-form-input"><input name="<?php echo encodeHtml(htmlentities(@$name)) ?>" disabled="" required="required" type="text" maxlength="10" value="<?php echo encodeHtml(htmlentities(@$${name)) ?>}" class="">
+				<label class="or-form-row or-form-input"><input name="<?php echo encodeHtml(htmlentities(@$name)) ?>" required="required" type="text" maxlength="10" value="<?php echo encodeHtml(htmlentities(@$${name)) ?>}" class="">
 				</input></label>
 			</div></fieldset>
 		 <?php } ?>

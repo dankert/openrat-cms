@@ -27,13 +27,16 @@ class CheckboxComponent extends Component
 		}
 
 		$checkbox->addAttribute('name',$this->name);
-		$checkbox->addAttribute('disabled',$this->readonly);
+        if	( $this->readonly )
+			$checkbox->addAttribute('disabled','disabled');
 		$checkbox->addAttribute('value','1');
 
 		if   ( $this->default )
 			$checkbox->addAttribute('checked',$this->default);
-		else
-			$checkbox->addAttribute('checked',Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->name));
+		else {
+			$condition = Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->name );
+			$checkbox->addConditionalAttribute('checked', $condition, '1');
+		}
 
 		if   ( $this->required )
 			$checkbox->addAttribute( 'required','required');

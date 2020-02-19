@@ -6,7 +6,7 @@
 						</span>
 					</td>
 					<td class="">
-						<input name="name" disabled="" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$name)) ?>" class="">
+						<input name="name" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$name)) ?>" class="">
 						</input>
 					</td>
 				</tr>

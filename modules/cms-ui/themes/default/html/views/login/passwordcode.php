@@ -11,7 +11,7 @@
 							</span>
 						</td>
 						<td class="">
-							<input name="code" disabled="" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$code)) ?>" class="">
+							<input name="code" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$code)) ?>" class="">
 							</input>
 						</td>
 					</tr>

@@ -17,7 +17,7 @@
 						<?php $if7=($openid_user_identity); if($if7) {  ?>
 							<input type="radio" name="openid_provider" disabled="" value="identity" checked="<?php echo encodeHtml(htmlentities(@$openid_provider)) ?>" class="">
 							</input>
-							<input name="openid_url" disabled="" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$openid_url)) ?>" class="name">
+							<input name="openid_url" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$openid_url)) ?>" class="name">
 							</input>
 						 <?php } ?>
 					</div>

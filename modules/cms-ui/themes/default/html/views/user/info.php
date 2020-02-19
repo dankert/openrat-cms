@@ -107,7 +107,7 @@
 				<div class="label">
 				</div>
 				<div class="input">
-					<input type="checkbox" name="is_admin" disabled="1" value="1" checked="<?php echo encodeHtml(htmlentities(@$is_admin)) ?>" class="">
+					<input type="checkbox" name="is_admin" disabled="disabled" value="1" <?php if(''.@$is_admin.''){ ?>checked="1"<?php } ?> class="">
 					</input>
 					<label class="label"><?php echo encodeHtml(htmlentities(@lang('user_admin'))) ?>
 					</label>
@@ -181,7 +181,7 @@
 					</label>
 				</div>
 				<div class="input">
-					<input type="checkbox" name="totp" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$totp)) ?>" class="">
+					<input type="checkbox" name="totp" value="1" <?php if(''.@$totp.''){ ?>checked="1"<?php } ?> class="">
 					</input>
 					<label class="label"><?php echo encodeHtml(htmlentities(@lang('user_totp'))) ?>
 					</label>

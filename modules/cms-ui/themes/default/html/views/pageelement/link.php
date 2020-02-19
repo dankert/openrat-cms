@@ -25,7 +25,7 @@
 				<?php $if5=(isset($release)); if($if5) {  ?>
 					<tr class="">
 						<td colspan="2" class="">
-							<input type="checkbox" name="release" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$release)) ?>" class="">
+							<input type="checkbox" name="release" value="1" <?php if(''.@$release.''){ ?>checked="1"<?php } ?> class="">
 							</input>
 							<label class="label">
 								<span class=""> 
@@ -39,7 +39,7 @@
 				<?php $if5=(isset($publish)); if($if5) {  ?>
 					<tr class="">
 						<td colspan="2" class="">
-							<input type="checkbox" name="publish" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$publish)) ?>" class="">
+							<input type="checkbox" name="publish" value="1" <?php if(''.@$publish.''){ ?>checked="1"<?php } ?> class="">
 							</input>
 							<label class="label">
 								<span class=""> 

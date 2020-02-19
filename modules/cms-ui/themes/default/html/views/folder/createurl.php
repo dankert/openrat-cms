@@ -6,7 +6,7 @@
 				</span>
 			</div>
 			<div class="input">
-				<input name="url" disabled="" type="text" maxlength="256" value="" class="">
+				<input name="url" type="text" maxlength="256" value="" class="">
 				</input>
 			</div>
 		</div>
@@ -16,7 +16,7 @@
 				</span>
 			</div>
 			<div class="input">
-				<input name="name" disabled="" type="text" maxlength="256" value="" class="">
+				<input name="name" type="text" maxlength="256" value="" class="">
 				</input>
 			</div>
 		</div>

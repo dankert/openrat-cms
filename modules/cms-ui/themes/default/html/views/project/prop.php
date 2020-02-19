@@ -7,7 +7,7 @@
 					</label>
 				</div>
 				<div class="input">
-					<input name="name" disabled="" type="text" maxlength="128" value="<?php echo encodeHtml(htmlentities(@$name)) ?>" class="name">
+					<input name="name" type="text" maxlength="128" value="<?php echo encodeHtml(htmlentities(@$name)) ?>" class="name">
 					</input>
 				</div>
 			</div>
@@ -17,7 +17,7 @@
 					</label>
 				</div>
 				<div class="input">
-					<input name="url" disabled="" type="text" maxlength="255" value="<?php echo encodeHtml(htmlentities(@$url)) ?>" class="">
+					<input name="url" type="text" maxlength="255" value="<?php echo encodeHtml(htmlentities(@$url)) ?>" class="">
 					</input>
 				</div>
 			</div>
@@ -29,7 +29,7 @@
 					</label>
 				</div>
 				<div class="input">
-					<input name="target_dir" disabled="" type="text" maxlength="255" value="<?php echo encodeHtml(htmlentities(@$target_dir)) ?>" class="filename">
+					<input name="target_dir" type="text" maxlength="255" value="<?php echo encodeHtml(htmlentities(@$target_dir)) ?>" class="filename">
 					</input>
 				</div>
 			</div>
@@ -40,7 +40,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<input name="cmd_after_publish" disabled="" type="text" maxlength="255" value="<?php echo encodeHtml(htmlentities(@$cmd_after_publish)) ?>" class="filename">
+						<input name="cmd_after_publish" type="text" maxlength="255" value="<?php echo encodeHtml(htmlentities(@$cmd_after_publish)) ?>" class="filename">
 						</input>
 					</div>
 				</div>
@@ -49,7 +49,7 @@
 				<div class="label">
 				</div>
 				<div class="input">
-					<input type="checkbox" name="publishFileExtension" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$publishFileExtension)) ?>" class="">
+					<input type="checkbox" name="publishFileExtension" value="1" <?php if(''.@$publishFileExtension.''){ ?>checked="1"<?php } ?> class="">
 					</input>
 					<label class="label"><?php echo encodeHtml(htmlentities(@lang('PROJECT_publish_File_Extension'))) ?>
 					</label>
@@ -59,7 +59,7 @@
 				<div class="label">
 				</div>
 				<div class="input">
-					<input type="checkbox" name="publishPageExtension" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$publishPageExtension)) ?>" class="">
+					<input type="checkbox" name="publishPageExtension" value="1" <?php if(''.@$publishPageExtension.''){ ?>checked="1"<?php } ?> class="">
 					</input>
 					<label class="label"><?php echo encodeHtml(htmlentities(@lang('PROJECT_publish_page_Extension'))) ?>
 					</label>
@@ -78,11 +78,11 @@
 						</label>
 					</div>
 					<div class="input">
-						<input name="ftp_url" disabled="" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$ftp_url)) ?>" class="filename">
+						<input name="ftp_url" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$ftp_url)) ?>" class="filename">
 						</input>
 						<br>
 						</br>
-						<input type="checkbox" name="ftp_passive" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$ftp_passive)) ?>" class="">
+						<input type="checkbox" name="ftp_passive" value="1" <?php if(''.@$ftp_passive.''){ ?>checked="1"<?php } ?> class="">
 						</input>
 						<label class="label"><?php echo encodeHtml(htmlentities(@lang('PROJECT_FTP_PASSIVE'))) ?>
 						</label>
@@ -95,7 +95,7 @@
 				<div class="label">
 				</div>
 				<div class="input">
-					<input type="checkbox" name="content_negotiation" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$content_negotiation)) ?>" class="">
+					<input type="checkbox" name="content_negotiation" value="1" <?php if(''.@$content_negotiation.''){ ?>checked="1"<?php } ?> class="">
 					</input>
 					<label class="label"><?php echo encodeHtml(htmlentities(@lang('PROJECT_CONTENT_NEGOTIATION'))) ?>
 					</label>
@@ -105,7 +105,7 @@
 				<div class="label">
 				</div>
 				<div class="input">
-					<input type="checkbox" name="cut_index" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(@$cut_index)) ?>" class="">
+					<input type="checkbox" name="cut_index" value="1" <?php if(''.@$cut_index.''){ ?>checked="1"<?php } ?> class="">
 					</input>
 					<label class="label"><?php echo encodeHtml(htmlentities(@lang('PROJECT_CUT_INDEX'))) ?>
 					</label>

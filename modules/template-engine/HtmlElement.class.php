@@ -28,9 +28,9 @@ class HtmlElement extends Element
 	}
 
 
-	public function getAttribute($name)
+	public function getAttributeValue($name)
 	{
-		return parent::getAttribute(htmlspecialchars($name));
+		return parent::getAttributeValue(htmlspecialchars($name));
 	}
 
 	public function getBegin()

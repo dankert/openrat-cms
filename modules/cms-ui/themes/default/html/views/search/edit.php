@@ -10,7 +10,7 @@
 				</br>
 			</div>
 			<div class="input">
-				<input name="text" disabled="" placeholder="<?php echo encodeHtml(htmlentities(@lang('search'))) ?>" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$text)) ?>" class="">
+				<input name="text" placeholder="<?php echo encodeHtml(htmlentities(@lang('search'))) ?>" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$text)) ?>" class="">
 				</input>
 			</div>
 		</div>
@@ -24,7 +24,7 @@
 				</br>
 			</div>
 			<div class="input">
-				<input type="checkbox" name="id" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(config('search','quicksearch','flag','id'))) ?>" class="">
+				<input type="checkbox" name="id" value="1" checked="<?php echo encodeHtml(htmlentities(config('search','quicksearch','flag','id'))) ?>" class="">
 				</input>
 				<label class="label">
 					<span class=""><?php echo encodeHtml(htmlentities(@lang('id'))) ?>
@@ -32,7 +32,7 @@
 				</label>
 				<br>
 				</br>
-				<input type="checkbox" name="name" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(config('search','quicksearch','flag','name'))) ?>" class="">
+				<input type="checkbox" name="name" value="1" checked="<?php echo encodeHtml(htmlentities(config('search','quicksearch','flag','name'))) ?>" class="">
 				</input>
 				<label class="label">
 					<span class=""><?php echo encodeHtml(htmlentities(@lang('name'))) ?>
@@ -40,7 +40,7 @@
 				</label>
 				<br>
 				</br>
-				<input type="checkbox" name="filename" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(config('search','quicksearch','flag','filename'))) ?>" class="">
+				<input type="checkbox" name="filename" value="1" checked="<?php echo encodeHtml(htmlentities(config('search','quicksearch','flag','filename'))) ?>" class="">
 				</input>
 				<label class="label">
 					<span class=""><?php echo encodeHtml(htmlentities(@lang('filename'))) ?>
@@ -48,7 +48,7 @@
 				</label>
 				<br>
 				</br>
-				<input type="checkbox" name="description" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(config('search','quicksearch','flag','description'))) ?>" class="">
+				<input type="checkbox" name="description" value="1" checked="<?php echo encodeHtml(htmlentities(config('search','quicksearch','flag','description'))) ?>" class="">
 				</input>
 				<label class="label">
 					<span class=""><?php echo encodeHtml(htmlentities(@lang('description'))) ?>
@@ -56,7 +56,7 @@
 				</label>
 				<br>
 				</br>
-				<input type="checkbox" name="content" disabled="" value="1" checked="<?php echo encodeHtml(htmlentities(config('search','quicksearch','flag','content'))) ?>" class="">
+				<input type="checkbox" name="content" value="1" checked="<?php echo encodeHtml(htmlentities(config('search','quicksearch','flag','content'))) ?>" class="">
 				</input>
 				<label class="label">
 					<span class=""><?php echo encodeHtml(htmlentities(@lang('content'))) ?>
