@@ -33,16 +33,15 @@ class HtmlElement extends Element
 		return parent::getAttributeValue(htmlspecialchars($name));
 	}
 
-	public function getBegin()
-	{
-		$this->addAttribute('class', implode(' ',$this->styleClasses) );
-		return parent::getBegin();
-	}
-
 
 	public function __construct( $name )
 	{
 		parent::__construct( $name );
+
+		// Only "void elements" are self-closable, see
+		// https://html.spec.whatwg.org/multipage/syntax.html#void-elements
+		if   ( in_array($name,['area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr']))
+			$this->selfClosing = true;
 	}
 
 
@@ -53,5 +52,12 @@ class HtmlElement extends Element
 		return (new Value(parent::getContent()))->render( $context );
 	}
 
+
+	public function render()
+	{
+		$this->addAttribute('class', implode(' ',$this->styleClasses) );
+
+		return parent::render();
+	}
 
 }

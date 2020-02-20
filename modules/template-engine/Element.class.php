@@ -14,28 +14,30 @@ class Element
 	 */
 	protected $attributes = [];
 	protected $content    = '';
-	protected $selfClosing    = true;
+
+	protected $selfClosing = false;
 
 	/**
 	 * @var array
 	 */
-	private $parents = [];
-
-	private $children = [];
+	protected $children = [];
 
 	/**
 	 * @param $wrapperElement Element
 	 * @return $this
+	 * @deprecated
 	 */
 	public function addWrapper($wrapperElement ) {
-		$wrapperElement->selfClosing(false);
-		$this->parents[] = $wrapperElement;
 		return $this;
 	}
 
 	public function addChild($child ) {
-		$this->selfClosing(false );
-		$this->children[] = $child;
+
+		if   ( is_array( $child ) )
+			$this->children += $child;
+		else
+			$this->children[] = $child;
+
 		return $this;
 	}
 
@@ -54,38 +56,25 @@ class Element
 		return $this;
 	}
 
-	public function getBegin() {
+	public function render() {
 
-		$content = array_reduce( array_reverse($this->parents), function($carry,$item) {
-			//$content = '';
-			//foreach( $item->children as $child) {
-			//	$content .= $child->getBegin().$child->getEnd();
-			//}
-				return $carry.$item->getBegin();
-		}, '' );
+		$this->selfClosing = $this->selfClosing && !$this->content && !$this->children;
+
+		$content = '';
 
 		if   ( $this->name )
 			$content .= '<'.$this->name.
-				array_reduce( array_keys($this->attributes),function($carry,$key){return $carry.' '.$this->getAttributeValue($key);},'').(($this->selfClosing && !$this->content && !$this->children)?' /':'').'>';
+				array_reduce( array_keys($this->attributes),function($carry,$key){return $carry.' '.$this->getAttributeValue($key);},'').(($this->selfClosing ?' /':'').'>');
 
 		$content .= $this->getContent();
 
-		return $content;
-	}
+		$content .= $this->renderChildren();
 
-
-	public function getEnd() {
-
-		$content = '';
-		if   ( $this->selfClosing && !$this->content && !$this->children)
+		if   ( $this->selfClosing )
 			;
 		else
 			if   ( $this->name )
 				$content .= '</'.$this->name.'>';
-
-		$content .= array_reduce( $this->parents, function($carry,$item) {
-			return $carry.$item->getEnd();
-		}, '' );
 
 		return $content;
 	}
@@ -103,6 +92,18 @@ class Element
 	protected function getContent()
 	{
 		return $this->content;
+	}
+
+	protected function renderChildren()
+	{
+		$content = '';
+
+		/** @var Element $child */
+		foreach($this->children as $child ) {
+			$content .= $child->render();
+		}
+
+		return $content;
 	}
 }
 

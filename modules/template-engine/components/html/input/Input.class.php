@@ -22,6 +22,7 @@ class InputComponent extends FieldComponent
 
 	public $size;
 
+	public $minlength = 0;
 	public $maxlength = 256;
 
 	public $onchange;
@@ -50,7 +51,8 @@ class InputComponent extends FieldComponent
 		}
 
 		$input->addAttribute('name',$this->name);
-		$input->addAttribute('disabled',$this->readonly);
+		if   ( $this->readonly )
+			$input->addAttribute('disabled','disabled');
 
 		if   ( $this->required )
 			$input->addAttribute( 'required','required');
@@ -64,6 +66,9 @@ class InputComponent extends FieldComponent
 
 		$input->addAttribute('type',$this->type);
 		$input->addAttribute('maxlength',$this->maxlength);
+
+		if   ( $this->minlength )
+			$input->addAttribute('minlength',$this->minlength);
 
 		if   ( $this->class )
 			$input->addStyleClass($this->class);

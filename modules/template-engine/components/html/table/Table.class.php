@@ -25,18 +25,20 @@ class TableComponent extends HtmlComponent
 			$tableWrapper->addChild($filter);
 		}
 
-        $tableContent = (new HtmlElement('div'))->addStyleClass('or-table-area');
+		$tableContent = (new HtmlElement('div'))->addStyleClass('or-table-area');
 
         $table = new CMSElement('table');
 
-        if	( $this->class)
+		$tableWrapper->addChild( $tableContent->addChild( $table) );
+
+		if	( $this->class)
             $table->addStyleClass($this->class);
 
         if	( $this->width)
             $table->addAttribute('width',$this->width);
 
-        $table->addWrapper($tableContent)->addWrapper($tableWrapper);
+        $this->adoptiveElement = $table;
 
-        return $table;
+        return $tableWrapper;
     }
 }

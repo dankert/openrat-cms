@@ -15,15 +15,17 @@ class PHPBlockElement extends HtmlElement
 	}
 
 
-	public function getBegin()
+	public function render()
 	{
-		return '<?php '.$this->beforeBlock.' { '.$this->inBlock.' ?>';
-	}
+		$content = '';
 
+		$content .= '<?php '.$this->beforeBlock.' { '.$this->inBlock.' ?>';
 
-	public function getEnd()
-	{
-		return ' <?php } ?>';
+		$content .= $this->renderChildren();
+
+		$content .= ' <?php } ?>';
+
+		return $content;
 	}
 
 

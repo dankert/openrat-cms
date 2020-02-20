@@ -40,6 +40,9 @@ foreach(FileUtils::readDir( $dir ) as $action )
             $outFile      = $dir.'/'.$action.'/'.$method.'.php';
 
             $engine = new TemplateEngine();
+
+            // We are creating a fake request, because the template compiler needs to know
+			// the action and subaction in which it will be executed.
             $fakeRequest = new \cms\action\RequestParams();
             $fakeRequest->action = $action;
             $fakeRequest->method = $method;
