@@ -60,12 +60,6 @@ class SelectboxComponent extends Component
 	{
 		$selectbox = (new CMSElement('input'));
 
-		if   ( $this->label ) {
-			$label = new CMSElement('label');
-			$label->addStyleClass('or-form-row')->addStyleClass('or-form-input');
-			$label->addChild( (new CMSElement('span'))->addStyleClass('or-form-label')->content($this->label));
-			$selectbox->addWrapper($label);
-		}
 
 		$selectbox->addAttribute('name',$this->name);
 		//$selectbox->addAttribute('disabled',$this->readonly);
@@ -106,6 +100,15 @@ class SelectboxComponent extends Component
 		// Nur 1 Eintrag in Liste, da die Selectbox 'disabled' ist, muss ein hidden-Feld her.
 		//echo '< ? php if (count($'.$this->varname($this->list).')==1) { ? >'.'<input type="hidden" name="'.$this->htmlvalue($this->name).'" value="'.'< ? php echo array_keys($'.$this->varname($this->list).')[0] ? >'.'" />'.'< ? php } ? >';
 
-		return $selectbox;
+		if   ( $this->label ) {
+			$label = new CMSElement('label');
+			$label->addStyleClass('or-form-row')->addStyleClass('or-form-input');
+			$label->addChild( (new CMSElement('span'))->addStyleClass('or-form-label')->content($this->label));
+			$selectbox->asChildOf($label);
+			return $label;
+		}
+		else {
+			return $selectbox;
+		}
 	}
 }

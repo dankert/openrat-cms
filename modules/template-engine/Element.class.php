@@ -22,12 +22,12 @@ class Element
 	 */
 	protected $children = [];
 
+
 	/**
-	 * @param $wrapperElement Element
-	 * @return $this
-	 * @deprecated
+	 * @param $element Element
 	 */
-	public function addWrapper($wrapperElement ) {
+	public function asChildOf($element ) {
+		$element->addChild($this);
 		return $this;
 	}
 

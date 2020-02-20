@@ -36,14 +36,6 @@ class InputareaComponent extends FieldComponent
 	{
 		$textarea = (new CMSElement('textarea'));
 
-		if   ( $this->label ) {
-			$label = new CMSElement('label');
-			$label->addStyleClass('or-form-row')->addStyleClass('or-form-checkbox');
-			$label->addChild( (new CMSElement('span'))->addStyleClass('or-form-label')->content($this->label));
-
-			$textarea->addWrapper($label);
-		}
-
 		$textarea->addAttribute('name',$this->name);
 		$textarea->addAttribute('disabled',$this->readonly);
 		$textarea->addAttribute('maxlength',$this->maxlength);
@@ -65,6 +57,16 @@ class InputareaComponent extends FieldComponent
 			$textarea->content($this->default);
 		else
 			$textarea->content(Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->name));
+
+
+		if   ( $this->label ) {
+			$label = new CMSElement('label');
+			$label->addStyleClass('or-form-row')->addStyleClass('or-form-checkbox');
+			$label->addChild( (new CMSElement('span'))->addStyleClass('or-form-label')->content($this->label));
+
+			$textarea->asChildOf($label);
+			return $label;
+		}
 
 		return $textarea;
 	}

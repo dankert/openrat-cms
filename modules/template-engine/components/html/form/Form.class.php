@@ -161,6 +161,10 @@ class FormComponent extends Component
 			);
 		}
 
+		$this->adoptiveElement = (new HtmlElement('div'))->asChildOf($form);
+
+		$form->addChild( $actionBar );
+
 		return $form;
 	}
 }

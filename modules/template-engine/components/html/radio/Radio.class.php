@@ -35,12 +35,6 @@ class RadioComponent extends FieldComponent
 
 		$radio = (new CMSElement('input'))->addAttribute('type','radio');
 
-		if   ( $this->label ) {
-			$label = new CMSElement('label');
-			$label->addStyleClass('or-form-row')->addStyleClass('or-form-radio');
-			$label->addChild( (new CMSElement('span'))->addStyleClass('or-form-label')->content($this->label));
-			$radio->addWrapper($label);
-		}
 
 		$radio->addAttribute('name',$this->name);
 		$radio->addAttribute('disabled',$this->readonly);
@@ -54,6 +48,14 @@ class RadioComponent extends FieldComponent
 
 		if   ( $this->class )
 			$radio->addStyleClass($this->class);
+
+		if   ( $this->label ) {
+			$label = new CMSElement('label');
+			$label->addStyleClass('or-form-row')->addStyleClass('or-form-radio');
+			$label->addChild( (new CMSElement('span'))->addStyleClass('or-form-label')->content($this->label));
+			$radio->asChildOf($label);
+			return $label;
+		}
 
 		return $radio;
     }

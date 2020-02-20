@@ -3,6 +3,7 @@
 namespace template_engine\components;
 
 use modules\template_engine\CMSElement;
+use modules\template_engine\HtmlElement;
 use modules\template_engine\Value;
 use modules\template_engine\ValueExpression;
 
@@ -43,13 +44,6 @@ class InputComponent extends FieldComponent
 	{
 		$input = (new CMSElement('input'));
 
-		if   ( $this->label ) {
-			$label = new CMSElement('label');
-			$label->addStyleClass('or-form-row')->addStyleClass('or-form-input');
-			$label->addChild( (new CMSElement('span'))->addStyleClass('or-form-label')->content($this->label));
-			$input->addWrapper($label);
-		}
-
 		$input->addAttribute('name',$this->name);
 		if   ( $this->readonly )
 			$input->addAttribute('disabled','disabled');
@@ -82,6 +76,15 @@ class InputComponent extends FieldComponent
 			//if(isset($this->icon))
 			//	echo '<img src="'.OR_THEMES_DIR.'default/images/icon_'.$this->htmlvalue($this->icon). IMG_ICON_EXT .'" width="16" height="16" />';
 
-		return $input;
+
+		if   ( $this->label ) {
+			$label = new CMSElement('label');
+			$label->addStyleClass('or-form-row')->addStyleClass('or-form-input');
+			$label->addChild( (new CMSElement('span'))->addStyleClass('or-form-label')->content($this->label));
+			$input->asChildOf($label);
+			return $label;
+		}
+
+		return (new HtmlElement('div'))->addStyleClass('inputholder')->addChild($input);
 	}
 }

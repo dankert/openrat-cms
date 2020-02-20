@@ -19,13 +19,6 @@ class CheckboxComponent extends Component
 	{
 		$checkbox = (new CMSElement('input'))->addAttribute('type','checkbox');
 
-        if   ( $this->label ) {
-			$label = new CMSElement('label');
-			$label->addStyleClass('or-form-row')->addStyleClass('or-form-checkbox');
-			$label->addChild( (new CMSElement('span'))->addStyleClass('or-form-label')->content($this->label));
-			$checkbox->addWrapper($label);
-		}
-
 		$checkbox->addAttribute('name',$this->name);
         if	( $this->readonly )
 			$checkbox->addAttribute('disabled','disabled');
@@ -44,6 +37,14 @@ class CheckboxComponent extends Component
 		if ( $this->readonly && $this->required ) {
 			$hidden = (new CMSElement('input'))->addAttribute('type','hidden')->addAttribute('name',$this->name)->addAttribute('value','1');
 			$checkbox->addChild( $hidden );
+		}
+
+		if   ( $this->label ) {
+			$label = new CMSElement('label');
+			$label->addStyleClass('or-form-row')->addStyleClass('or-form-checkbox');
+			$label->addChild( (new CMSElement('span'))->addStyleClass('or-form-label')->content($this->label));
+			$label->addChild($checkbox);
+			return $label;
 		}
 
 		return $checkbox;

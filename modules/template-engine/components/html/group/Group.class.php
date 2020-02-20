@@ -51,9 +51,11 @@ class GroupComponent extends Component
 		}
 
 		$group = new HtmlElement('div');
-		$group->addStyleClass('closable')->addWrapper($fieldset);
+		$group->addStyleClass('closable')->asChildOf($fieldset);
 
-		return $group;
+		$this->adoptiveElement = $group;
+
+		return $fieldset;
 	}
 
 }

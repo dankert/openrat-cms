@@ -34,8 +34,6 @@ class PasswordComponent extends FieldComponent
 		else
 			$input->addAttribute('value',Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->name));
 
-		$input->addWrapper( (new HtmlElement('div'))->addStyleClass('inputholder'));
-
-		return $input;
+		return (new HtmlElement('div'))->addStyleClass('inputholder')->addChild($input);
 	}
 }

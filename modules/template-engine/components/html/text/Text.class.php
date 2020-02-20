@@ -96,11 +96,16 @@ class TextComponent extends HtmlComponent
 
 
 		if   ( $this->label ) {
-			$text->addWrapper( (new HtmlElement('span' ))->addStyleClass('or-form-input') );
-			$text->addWrapper( (new HtmlElement('label'))->addStyleClass('or-form-row')->addChild( (new CMSElement('span'))->addStyleClass('or-form-label')->content('message:'.$this->label)));
+			$span  = (new HtmlElement('span' ))->addStyleClass('or-form-input');
+			$label = (new HtmlElement('label'))->addChild($span)->addStyleClass('or-form-row')->addChild( (new CMSElement('span'))->addStyleClass('or-form-label')->content('message:'.$this->label));
+
+			$this->adoptiveElement = $text;
+			return $label;
+
+		}else {
+			return $text;
 		}
 
-		return $text;
 	}
 }
 
