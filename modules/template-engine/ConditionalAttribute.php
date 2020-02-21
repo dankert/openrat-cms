@@ -26,6 +26,6 @@ class ConditionalAttribute extends SimpleAttribute
 
 	public function render()
 	{
-		return '<?php if('.(new Value($this->condition))->render(Value::CONTEXT_PHP).'){ ?>'.parent::render().'<?php } ?>';
+		return '<?php if('.$this->condition.'){ ?>'.parent::render().'<?php } ?>';
 	}
 }

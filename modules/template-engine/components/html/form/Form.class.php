@@ -99,7 +99,7 @@ class FormComponent extends Component
 			(new CMSElement('input'))
 				->addAttribute('type', 'hidden')
 				->addAttribute('name', REQ_PARAM_TOKEN)
-				->addAttribute('value', '<?php token();?>') // TODO escaping
+				->addAttribute('value', '<?php echo token();?>') // TODO escaping
 		);
 
 		$form->addChild(

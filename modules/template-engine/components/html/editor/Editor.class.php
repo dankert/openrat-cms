@@ -3,6 +3,8 @@
 namespace template_engine\components;
 
 use modules\template_engine\CMSElement;
+use modules\template_engine\Value;
+use modules\template_engine\ValueExpression;
 
 class EditorComponent extends FieldComponent
 {
@@ -52,6 +54,8 @@ class EditorComponent extends FieldComponent
 			default:
 				throw new \LogicException("Unknown editor type: ".$this->type);
 		}
+
+		$textarea->content(Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->name));
 
 		return $textarea;
 	}

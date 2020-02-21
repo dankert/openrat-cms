@@ -55,7 +55,8 @@ class HtmlElement extends Element
 
 	public function render()
 	{
-		$this->addAttribute('class', implode(' ',$this->styleClasses) );
+		if   ( $this->styleClasses )
+			$this->addAttribute('class', implode(' ',$this->styleClasses) );
 
 		return parent::render();
 	}

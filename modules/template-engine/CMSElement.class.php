@@ -14,5 +14,6 @@ class CMSElement extends HtmlElement
 
 	public function addConditionalAttribute($name, $condition, $value ) {
 		$this->attributes[] = new ConditionalAttribute($condition,$name,$value);
+		return $this;
 	}
 }

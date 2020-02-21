@@ -58,7 +58,7 @@ class SelectboxComponent extends Component
 
 	public function createElement()
 	{
-		$selectbox = (new CMSElement('input'));
+		$selectbox = (new CMSElement('select'));
 
 
 		$selectbox->addAttribute('name',$this->name);
@@ -71,40 +71,36 @@ class SelectboxComponent extends Component
 		if   ( $this->title )
 			$selectbox->addAttribute('title',$this->title);
 
-		if (isset($this->default))
-			$selectbox->addAttribute('value',$this->default);
-		else
-			$selectbox->addAttribute('value',Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->name));
-
 		if	( $this->multiple )
 			$selectbox->addAttribute('multiple','multiple');
 
 		$selectbox->addAttribute('size',$this->size);
 
-		$code = new PHPBlockElement();
-		$selectbox->addChild( $code );
+		if ( $this->addempty )
+			$selectbox->addChild( (new CMSElement('option'))->addAttribute('value','')->content( Value::createExpression(ValueExpression::TYPE_MESSAGE,'LIST_ENTRY_EMPTY')));
 
-		//if ( ! $this->addempty )
-		    //$code->inBlock .= 'if (count($'.$this->varname($this->list).')<=1)'." echo ' disabled=\"disabled\"';";
+		$optionLoop = (new PHPBlockElement())->asChildOf($selectbox);
 
-		if	( isset($this->default))
+		if	( $this->default )
 			$value = $this->default;
 		else
 			$value = '$'.$this->name;
-		
-		$code->beforeBlock = $code->includeResource( 'selectbox/component-select-box.php');
-		$code->inBlock .= 'component_select_option_list($'.$this->list.','.$value.','.intval(boolval($this->addempty)).','.intval(boolval($this->lang)).')';
-		
-		// Keine Einträge in der Liste, wir benötigen ein verstecktes Feld.
-		//echo '< ? php if (count($'.$this->varname($this->list).')==0) { ? >'.'<input type="hidden" name="'.$this->htmlvalue($this->name).'" value="" />'.'<?php } ? >';
-		// Nur 1 Eintrag in Liste, da die Selectbox 'disabled' ist, muss ein hidden-Feld her.
-		//echo '< ? php if (count($'.$this->varname($this->list).')==1) { ? >'.'<input type="hidden" name="'.$this->htmlvalue($this->name).'" value="'.'< ? php echo array_keys($'.$this->varname($this->list).')[0] ? >'.'" />'.'< ? php } ? >';
 
+		// Create the option list.
+		$optionLoop->beforeBlock = 'foreach($'.$this->list.' as $_key=>$_value)';
+		$option = (new CMSElement('option'))
+			->addAttribute('value',Value::createExpression( ValueExpression::TYPE_DATA_VAR,'_key'))
+			->content(Value::createExpression( ValueExpression::TYPE_DATA_VAR,'_value'))
+			->addConditionalAttribute('selected','$_key=='.$value,'selected');
+
+		$optionLoop->addChild($option);
+
+		// Wrap into a label, if necessary.
 		if   ( $this->label ) {
 			$label = new CMSElement('label');
 			$label->addStyleClass('or-form-row')->addStyleClass('or-form-input');
 			$label->addChild( (new CMSElement('span'))->addStyleClass('or-form-label')->content($this->label));
-			$selectbox->asChildOf($label);
+			$label->addChild( $selectbox );
 			return $label;
 		}
 		else {
