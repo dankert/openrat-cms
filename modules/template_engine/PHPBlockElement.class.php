@@ -65,7 +65,7 @@ class PHPBlockElement extends HtmlElement
 
 	public function includeResource($file )
 	{
-		return "include_once( 'modules/template-engine/components/html/".$file."');";
+		return "include_once( 'modules/template_engine/components/html/".$file."');";
 	}
 
 }

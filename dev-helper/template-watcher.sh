@@ -10,10 +10,10 @@ CMS_URL=$1
 
 while true; do
 
-  inotifywait --event modify -r ../modules/template-engine/ ../modules/cms-ui/themes/default/html/views/
+  inotifywait --event modify -r ../modules/template_engine/ ../modules/cms-ui/themes/default/html/views/
   echo File was changed.
 
-  curl $1/modules/template-engine/TemplateCompiler.php
+  curl $1/modules/template_engine/TemplateCompiler.php
 done
 
 

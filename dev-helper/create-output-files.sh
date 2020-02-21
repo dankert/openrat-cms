@@ -31,7 +31,7 @@ function check
         jsfile="${jsfile%.*}"
         createfile $jsfile.min.js $jsfile.js
     done
-    for jsfile in `find ../modules/template-engine/components -name "*.js" -not -name "*.min.js"`; do
+    for jsfile in `find ../modules/template_engine/components -name "*.js" -not -name "*.min.js"`; do
         jsfile="${jsfile%.*}"
         createfile $jsfile.min.js $jsfile.js
     done
@@ -58,7 +58,7 @@ function check
     done
 
     # CSS-Files
-    for lessfile in `find ../modules/template-engine/components -name "*.less"`; do
+    for lessfile in `find ../modules/template_engine/components -name "*.less"`; do
         lessfile="${lessfile%.*}"
         createfile $lessfile.css
         createfile $lessfile.min.css;
@@ -92,7 +92,7 @@ function createfile
 function xsdfile
 {
 
-    xsd="../modules/template-engine/components/template.xsd"
+    xsd="../modules/template_engine/components/template.xsd"
     if  [ -f $xsd ]; then
         chmod 666 -v $xsd
     fi

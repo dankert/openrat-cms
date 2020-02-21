@@ -16,7 +16,7 @@ use template_engine\TemplateEngine;
 $dir = __DIR__.'/../../modules/cms-ui/themes/default/html/views';
 
 require('../../modules/util/require.php');
-require('../../modules/template-engine/require.php');
+require('../../modules/template_engine/require.php');
 require('../../modules/cms-core/require.php');
 
 echo "Searching in $dir\n";

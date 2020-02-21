@@ -191,7 +191,7 @@ class IndexAction extends Action
         // Komponentenbasiertes CSS
         foreach (TemplateEngineInfo::getComponentList() as $c)
         {
-            $componentCssFile = OR_HTML_MODULES_DIR . 'template-engine/components/html/' . $c . '/' . $c;
+            $componentCssFile = OR_HTML_MODULES_DIR . 'template_engine/components/html/' . $c . '/' . $c;
             if (is_file($componentCssFile . '.less'))
                 $css[] = $componentCssFile;
         }
@@ -521,7 +521,7 @@ class IndexAction extends Action
             // Komponentenbasiertes Javascript
             foreach ( TemplateEngineInfo::getComponentList() as $c)
             {
-                $componentJsFile = OR_HTML_MODULES_DIR .  '/template-engine/components/html/' . $c . '/' . $c;
+                $componentJsFile = OR_HTML_MODULES_DIR .  '/template_engine/components/html/' . $c . '/' . $c;
                 if (is_file($componentJsFile . '.js'))
                     $js[] = $componentJsFile;
             }
