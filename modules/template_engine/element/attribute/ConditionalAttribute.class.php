@@ -1,10 +1,10 @@
 <?php
 
 
-namespace template_engine\components;
+namespace template_engine\element\attribute;
 
 
-use cms\template_engine\SimpleAttribute;
+use template_engine\element\attribute\SimpleAttribute;
 use template_engine\element\Value;
 
 class ConditionalAttribute extends SimpleAttribute

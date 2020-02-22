@@ -1,6 +1,6 @@
 <?php
 
-namespace template_engine\components;
+namespace template_engine\components\html;
 
 use cms\action\RequestParams;
 use template_engine\element\Element;

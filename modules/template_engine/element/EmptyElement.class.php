@@ -4,7 +4,7 @@
 namespace template_engine\element;
 
 
-use cms\template_engine\SimpleAttribute;
+use template_engine\element\attribute\SimpleAttribute;
 
 
 /**

@@ -3,7 +3,7 @@
 
 namespace template_engine\element;
 
-use template_engine\components\ConditionalAttribute;
+use template_engine\element\attribute\ConditionalAttribute;
 
 class CMSElement extends HtmlElement
 {

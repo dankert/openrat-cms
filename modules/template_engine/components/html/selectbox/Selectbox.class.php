@@ -2,6 +2,7 @@
 
 namespace template_engine\components;
 
+use template_engine\components\html\Component;
 use template_engine\element\CMSElement;
 use template_engine\element\PHPBlockElement;
 use template_engine\element\Value;

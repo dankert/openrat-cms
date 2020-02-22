@@ -1,7 +1,7 @@
 <?php
 
 
-namespace cms\template_engine;
+namespace template_engine\element\attribute;
 
 
 use template_engine\element\Value;

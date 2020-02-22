@@ -1,7 +1,8 @@
 <?php
 
-namespace template_engine\components;
+namespace template_engine\components\html;
 
+use template_engine\components\html\HtmlComponent;
 use template_engine\element\HtmlElement;
 
 class NativeHtmlComponent extends HtmlComponent

@@ -4,6 +4,7 @@ namespace template_engine\components;
 
 use Html;
 use JSON;
+use template_engine\components\html\Component;
 use template_engine\element\CMSElement;
 
 /**

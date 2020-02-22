@@ -11,7 +11,7 @@ ini_set('display_startup_errors', 1);
 
 require('../../modules/autoload.php');
 
-use template_engine\TemplateEngine;
+use template_engine\engine\TemplateEngine;
 
 
 

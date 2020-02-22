@@ -1,18 +1,15 @@
 <?php
 
 
-namespace template_engine;
+namespace template_engine\engine;
 use DomainException;
 use DOMDocument;
 use DOMElement;
 use Exception;
 use LogicException;
-use template_engine\element\EmptyElement;
-use template_engine\element\HtmlElement;
 use template_engine\element\PHPBlockElement;
-use SimpleXMLElement;
-use \template_engine\components\Component;
-use template_engine\components\NativeHtmlComponent;
+use template_engine\components\html\Component;
+use template_engine\components\html\NativeHtmlComponent;
 
 /**
  * Wandelt eine Vorlage in ein PHP-Skript um.
@@ -53,12 +50,6 @@ class TemplateEngine
 	public function compile($srcXmlFilename, $tplOutName )
 	{
 		$this->srcFilename = $srcXmlFilename;
-
-	    // Imports the base class of all component types.
-		require_once (dirname(__FILE__).'/../components/'.$this->renderType.'/Component.class.' . PHP_EXT);
-		require_once (dirname(__FILE__).'/../components/'.$this->renderType.'/HtmlComponent.class.' . PHP_EXT);
-		require_once (dirname(__FILE__).'/../components/'.$this->renderType.'/NativeHtmlComponent.class.' . PHP_EXT);
-		require_once (dirname(__FILE__).'/../components/'.$this->renderType.'/FieldComponent.class.' . PHP_EXT);
 
 		// We are now building a complete DOM tree and this is the root element.
 		$rootElement = new PHPBlockElement();

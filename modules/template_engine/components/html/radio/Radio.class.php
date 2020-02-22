@@ -2,6 +2,7 @@
 
 namespace template_engine\components;
 
+use template_engine\components\html\FieldComponent;
 use template_engine\element\CMSElement;
 use template_engine\element\Value;
 use template_engine\element\ValueExpression;
