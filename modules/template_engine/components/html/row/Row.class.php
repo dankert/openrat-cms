@@ -2,7 +2,7 @@
 
 namespace template_engine\components;
 
-use modules\template_engine\CMSElement;
+use template_engine\element\CMSElement;
 
 class RowComponent extends Component
 {

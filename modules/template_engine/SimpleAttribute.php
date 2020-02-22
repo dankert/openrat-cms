@@ -4,7 +4,7 @@
 namespace cms\template_engine;
 
 
-use modules\template_engine\Value;
+use template_engine\element\Value;
 
 class SimpleAttribute
 {

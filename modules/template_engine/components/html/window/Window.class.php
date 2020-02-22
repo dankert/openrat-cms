@@ -3,7 +3,7 @@
 namespace template_engine\components;
 
 
-use modules\template_engine\Element;
+use template_engine\element\Element;
 
 class WindowComponent extends Component
 {

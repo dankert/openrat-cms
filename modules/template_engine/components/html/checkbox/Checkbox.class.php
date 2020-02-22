@@ -2,9 +2,9 @@
 
 namespace template_engine\components;
 
-use modules\template_engine\CMSElement;
-use modules\template_engine\Value;
-use modules\template_engine\ValueExpression;
+use template_engine\element\CMSElement;
+use template_engine\element\Value;
+use template_engine\element\ValueExpression;
 
 class CheckboxComponent extends Component
 {

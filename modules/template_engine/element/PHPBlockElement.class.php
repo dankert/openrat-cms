@@ -1,7 +1,7 @@
 <?php
 
 
-namespace modules\template_engine;
+namespace template_engine\element;
 
 
 class PHPBlockElement extends HtmlElement

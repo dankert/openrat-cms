@@ -2,7 +2,7 @@
 
 namespace template_engine\components;
 
-use modules\template_engine\PHPBlockElement;
+use template_engine\element\PHPBlockElement;
 
 class ListComponent extends Component
 {

@@ -245,7 +245,7 @@ class UI
 
         foreach (TemplateEngineInfo::getLESSFiles() as $lessFile)
         {
-            $css[] = OR_HTML_MODULES_DIR . 'template-engine/components/html/' . $lessFile . '/' . $lessFile;
+            $css[] = OR_HTML_MODULES_DIR . 'template_engine/components/html/' . $lessFile . '/' . $lessFile;
         }
 
         return $css;

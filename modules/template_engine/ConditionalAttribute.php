@@ -5,7 +5,7 @@ namespace template_engine\components;
 
 
 use cms\template_engine\SimpleAttribute;
-use modules\template_engine\Value;
+use template_engine\element\Value;
 
 class ConditionalAttribute extends SimpleAttribute
 {

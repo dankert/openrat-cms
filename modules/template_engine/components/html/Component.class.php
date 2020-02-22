@@ -3,7 +3,7 @@
 namespace template_engine\components;
 
 use cms\action\RequestParams;
-use modules\template_engine\Element;
+use template_engine\element\Element;
 
 abstract class Component
 {

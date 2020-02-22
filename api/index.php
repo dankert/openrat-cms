@@ -1,6 +1,7 @@
 <?php
 // Excecuting the CMS application programming interface (API)
 
+require('../modules/autoload.php');
 require('../modules/cms-api/require.php');
 
 use cms_api\API;

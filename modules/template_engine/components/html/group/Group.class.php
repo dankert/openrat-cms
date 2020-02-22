@@ -2,8 +2,8 @@
 
 namespace template_engine\components;
 
-use modules\template_engine\CMSElement;
-use modules\template_engine\HtmlElement;
+use template_engine\element\CMSElement;
+use template_engine\element\HtmlElement;
 
 /**
  * A group.

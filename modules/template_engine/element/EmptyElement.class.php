@@ -1,7 +1,7 @@
 <?php
 
 
-namespace modules\template_engine;
+namespace template_engine\element;
 
 
 use cms\template_engine\SimpleAttribute;

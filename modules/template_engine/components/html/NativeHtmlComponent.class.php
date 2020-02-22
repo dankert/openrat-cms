@@ -2,7 +2,7 @@
 
 namespace template_engine\components;
 
-use modules\template_engine\HtmlElement;
+use template_engine\element\HtmlElement;
 
 class NativeHtmlComponent extends HtmlComponent
 {

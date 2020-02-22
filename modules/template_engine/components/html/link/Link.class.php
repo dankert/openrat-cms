@@ -4,7 +4,7 @@ namespace template_engine\components;
 
 use Html;
 use JSON;
-use modules\template_engine\CMSElement;
+use template_engine\element\CMSElement;
 
 /**
  * Erzeugt einen HTML-Link.

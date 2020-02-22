@@ -2,8 +2,8 @@
 
 namespace template_engine\components;
 
-use modules\template_engine\Element;
-use modules\template_engine\HtmlElement;
+use template_engine\element\Element;
+use template_engine\element\HtmlElement;
 
 /**
  * Newline-Component
