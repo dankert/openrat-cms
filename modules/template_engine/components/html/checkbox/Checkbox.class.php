@@ -28,7 +28,7 @@ class CheckboxComponent extends Component
 		if   ( $this->default )
 			$checkbox->addAttribute('checked',$this->default);
 		else {
-			$condition = '$'.$this->name;
+			$condition = '@$'.$this->name;
 			$checkbox->addConditionalAttribute('checked', $condition, '1');
 		}
 
