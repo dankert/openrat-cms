@@ -18,7 +18,7 @@
 
 
 namespace util;
-use Logger;
+use logger\Logger;
 use withPraefixQuestionMark;
 
 /**
@@ -399,7 +399,7 @@ class Http
 				$db->rollback();
 		}
 
-		if (class_exists('Logger'))
+		if (class_exists('logger\Logger'))
 			Logger::warn($message . "\n" . $reason);
 
 		Http::sendStatus(501, 'Internal Server Error', $message, $reason);

@@ -8,7 +8,7 @@ use cms\Dispatcher;
 use Exception;
 use util\Http;
 use JSON;
-use Logger;
+use logger\Logger;
 use ObjectNotFoundException;
 use util\exception\OpenRatException;
 use util\exception\SecurityException;

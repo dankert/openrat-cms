@@ -332,7 +332,7 @@ SQL
 		}
 		catch( \Exception $e )
 		{
-			\Logger::warn('Project '.$this->projectid.' has not a root folder'."\n".$e->getTraceAsString());
+			\logger\Logger::warn('Project '.$this->projectid.' has not a root folder'."\n".$e->getTraceAsString());
 		}
 	}
 
@@ -564,7 +564,7 @@ EOF
 		
 		if	( count( $idList ) > 1 )
 		{
-			\Logger::warn('Inconsistence found: Reference circle project<->template<->templatemodel<->projectmodel<->project is not consistent.');
+			\logger\Logger::warn('Inconsistence found: Reference circle project<->template<->templatemodel<->projectmodel<->project is not consistent.');
 			$this->log[] = 'Inconsistence found: Reference circle project<->template<->templatemodel<->projectmodel<->project is not consistent.';
 		}
 
@@ -599,7 +599,7 @@ EOF
      */
 	public function copy( $dbid_destination,$name='' )
 	{
-		\Logger::debug( 'Copying project '.$this->name.' to database '.$dbid_destination );
+		\logger\Logger::debug( 'Copying project '.$this->name.' to database '.$dbid_destination );
 		
 		global $conf;
 		$zeit = date('Y-m-d\TH:i:sO');
@@ -680,7 +680,7 @@ EOF
 			 
 		foreach( $ids as $tabelle=>$data )
 		{
-			\Logger::debug( 'Copying table '.$tabelle.' ...' );
+			\logger\Logger::debug( 'Copying table '.$tabelle.' ...' );
 			$mapping[$tabelle] = array();
 			$idcolumn = $data['primary_key'];
 
@@ -706,7 +706,7 @@ EOF
 
 			foreach( $stmt->getCol() as $srcid )
 			{
-				\Logger::debug('Id '.$srcid.' of table '.$tabelle);
+				\logger\Logger::debug('Id '.$srcid.' of table '.$tabelle);
 				$mapping[$tabelle][$srcid] = ++$nextid;
 
 				$stmt = $db_src->sql( 'SELECT * FROM {t_'.$tabelle.'} WHERE id={id}');
@@ -719,7 +719,7 @@ EOF
 				// Fremdschl�sselbeziehungen auf neue IDn korrigieren.
 				foreach( $data['foreign_keys'] as $fkey_column=>$target_tabelle)
 				{
-					\Logger::debug($fkey_column.' '.$target_tabelle.' '.$row[$fkey_column]);
+					\logger\Logger::debug($fkey_column.' '.$target_tabelle.' '.$row[$fkey_column]);
 					
 					if	( intval($row[$fkey_column]) != 0 )
 						$row[$fkey_column] = $mapping[$target_tabelle][$row[$fkey_column]];
@@ -793,7 +793,7 @@ EOF
 			}
 		}
 		
-		\Logger::debug( 'Finished copying project' );
+		\logger\Logger::debug( 'Finished copying project' );
 		
 		$db_dest->commit();
 	}

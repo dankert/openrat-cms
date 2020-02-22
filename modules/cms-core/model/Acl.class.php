@@ -348,7 +348,7 @@ class Acl extends ModelBase
 		$this->mask += self::ACL_GRANT         *intval($this->grant        );
 		$this->mask += self::ACL_TRANSMIT      *intval($this->transmit     );
 		
-		\Logger::trace('mask of acl '.$this->aclid.': '.$this->mask );
+		\logger\Logger::trace('mask of acl '.$this->aclid.': '.$this->mask );
 		return $this->mask;
 	}
 

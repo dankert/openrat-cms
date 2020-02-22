@@ -12,7 +12,7 @@ use ConfigurationLoader;
 use database\Database;
 use DbUpdate;
 use util\Http;
-use Logger;
+use logger\Logger;
 use LogicException;
 use util\exception\OpenRatException;
 use util\exception\SecurityException;

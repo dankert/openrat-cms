@@ -53,7 +53,7 @@ class Language extends ModelBase
             if	( !$locale_ok )
                 // Hat nicht geklappt. Entweder ist das Mapping falsch oder die locale ist
                 // nicht korrekt installiert.
-                \Logger::warn("Could not set locale '$locale', please check with 'locale -a' if it is installaled correctly");
+                \logger\Logger::warn("Could not set locale '$locale', please check with 'locale -a' if it is installaled correctly");
         }
         else
         {

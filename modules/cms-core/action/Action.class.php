@@ -20,7 +20,7 @@ namespace cms\action {
     use cms\model\User;
     use util\Html;
     use util\Session;
-    use \Logger;
+    use logger\Logger;
     use util\Http;
     use util\Text;
 

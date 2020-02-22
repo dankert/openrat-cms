@@ -20,7 +20,7 @@ use \DbUpdate;
 use \Exception;
 use util\Http;
 use \InternalAuth;
-use \Logger;
+use logger\Logger;
 use \ObjectNotFoundException;
 use util\exception\OpenRatException;
 use \security\Password;

@@ -18,7 +18,7 @@
 
 namespace util;
 use util\FileUtils;
-use Logger;
+use logger\Logger;
 use util\Macro;
 
 /**

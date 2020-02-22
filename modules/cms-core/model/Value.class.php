@@ -4,7 +4,7 @@ use util\ArrayUtils;
 use cms\publish\Publish;
 use MacroRunner;
 use \ObjectNotFoundException;
-use \Logger;
+use logger\Logger;
 use util\Text;
 use util\Html;
 use util\Http;

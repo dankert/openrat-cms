@@ -3,7 +3,7 @@ namespace cms\model;
 
 
 use util\ArrayUtils;
-use Logger;
+use logger\Logger;
 
 /**
  * Diese Objektklasse stellt ein Element das.

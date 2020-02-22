@@ -19,7 +19,7 @@ namespace cms\model;
 use util\Mustache;
 use cms\publish\PublishPreview;use cms\publish\PublishPublic;
 use http\Exception\RuntimeException;
-use Logger;
+use logger\Logger;
 use util\cache\FileCache;
 
 
@@ -337,7 +337,7 @@ SQL
 			if	( !isset($replaceElementMap[$oldElementId])  ||
 			      intval($replaceElementMap[$oldElementId]) < 1 )
 			{
-				\Logger::debug( 'deleting value of elementid '.$oldElementId );
+				\logger\Logger::debug( 'deleting value of elementid '.$oldElementId );
 				$sql = $db->sql('DELETE FROM {{value}}'.
 				               '  WHERE pageid={pageid}'.
 				               '    AND elementid={elementid}' );
@@ -350,7 +350,7 @@ SQL
 			{
 				$newElementId = intval($replaceElementMap[$oldElementId]);
 
-				\Logger::debug( 'updating elementid '.$oldElementId.' -> '.$newElementId );
+				\logger\Logger::debug( 'updating elementid '.$oldElementId.' -> '.$newElementId );
 				$sql = $db->sql('UPDATE {{value}}'.
 				               '  SET elementid ={newelementid}'.
 				               '  WHERE pageid   ={pageid}'.

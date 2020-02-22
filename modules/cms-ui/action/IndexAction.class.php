@@ -11,7 +11,7 @@ use Exception;
 use JSON;
 use util\JSqueeze;
 use \Less_Parser;
-use Logger;
+use logger\Logger;
 use util\UIUtils;
 use ObjectNotFoundException;
 use util\Session;

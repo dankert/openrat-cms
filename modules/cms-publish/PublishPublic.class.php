@@ -11,7 +11,7 @@ use cms\model\Project;
 use cms\model\Url;
 use util\FileUtils;
 use Ftp;
-use Logger;
+use logger\Logger;
 use util\exception\OpenRatException;
 use util\Session;
 

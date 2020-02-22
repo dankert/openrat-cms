@@ -1,6 +1,8 @@
 <?php
 
 // TODO: We should use $_REQUEST everywhere.
+use logger\Logger;
+
 $REQ = array_merge($_GET,$_POST);
 
 // REGISTER_GLOBALS

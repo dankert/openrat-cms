@@ -18,7 +18,7 @@
 
 namespace database;
 use database\driver\PDODriver;
-use Logger;
+use logger\Logger;
 use RuntimeException;
 
 /**

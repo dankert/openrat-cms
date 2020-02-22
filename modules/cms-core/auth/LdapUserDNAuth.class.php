@@ -1,5 +1,6 @@
 <?php
 
+use logger\Logger;
 use util\Ldap;
 
 /**

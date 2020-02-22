@@ -14,7 +14,7 @@ use cms\model\Model;
 
 use database\Database;
 use util\Http;
-use Logger;
+use logger\Logger;
 use \security\Password;
 use util\Session;
 use util\Html;

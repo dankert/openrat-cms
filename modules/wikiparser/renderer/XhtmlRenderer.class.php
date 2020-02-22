@@ -8,7 +8,7 @@ use File;
 use Geshi;
 use wikiparser\model\LineBreakElement;
 use wikiparser\model\LinkElement;
-use Logger;
+use logger\Logger;
 use wikiparser\model\RawElement;
 use util\Text;
 use wikiparser\model\TextElement;

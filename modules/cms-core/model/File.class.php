@@ -26,7 +26,7 @@ use cms\publish\PublishPublic;
 use cms\publish\PublishShow;
 use util\JSqueeze;
 use \Less_Parser;
-use Logger;
+use logger\Logger;
 use util\cache\FileCache;
 
 define('OR_FILE_DEFAULT_MIMETYPE','application/octet-stream');

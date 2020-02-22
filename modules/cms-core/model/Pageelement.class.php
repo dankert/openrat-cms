@@ -18,7 +18,7 @@ namespace cms\model;
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 use cms\mustache\Mustache;
 use cms\publish\PublishPreview;use cms\publish\PublishPublic;
-use Logger;
+use logger\Logger;
 use util\cache\FileCache;
 
 

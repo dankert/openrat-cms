@@ -1,6 +1,7 @@
 <?php
 
 use database\Database;
+use logger\Logger;
 
 
 class DbUpdate 

@@ -16,7 +16,7 @@ use cms\publish\PublishPreview;
 use cms\publish\PublishPublic;
 use util\Html;
 use util\Http;
-use Logger;
+use logger\Logger;
 use util\Session;
 
 

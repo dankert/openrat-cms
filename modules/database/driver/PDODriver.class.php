@@ -21,7 +21,7 @@
 namespace database\driver;
 
 use database\Sql;
-use \Logger;
+use logger\Logger;
 use \PDO;
 use \PDOException;
 use PDOStatement;

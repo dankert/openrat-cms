@@ -2,6 +2,7 @@
 
 use database\Database;
 use cms\model\User;
+use logger\Logger;
 
 /**
  * Authentifizierung mit einem Login-Token.

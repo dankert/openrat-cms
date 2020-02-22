@@ -4,6 +4,7 @@
 use cms\model\Element;
 use cms\model\Template;
 use cms\model\Value;
+use logger\Logger;
 use util\ArrayUtils;
 use util\exception\OpenRatException;
 use util\VariableResolver;

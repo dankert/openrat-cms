@@ -3,6 +3,9 @@
 /*
  * 
  */
+
+use logger\Logger;
+
 class Pdf extends FPDF
 {
 	/*

@@ -15,6 +15,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
+use logger\Logger;
 use util\exception\ValidationException;
 
 define('MIN_VERSION','5.4');
@@ -78,7 +79,7 @@ function fatal_handler() {
         $errstr  = $error["message"];
 
         $message = 'Error '.$errno .' '. $errstr.' in '. $errfile.':'. $errline;
-        if(class_exists('Logger'))
+        if(class_exists('logger\Logger'))
         	Logger::error( $message);
         else
         {
