@@ -19,8 +19,6 @@ namespace database {
     define('OR_DB_COLUMN_NOT_NULLABLE',false);
 
 
-    use util\Http;
-
     abstract class DbVersion
     {
         private $db;

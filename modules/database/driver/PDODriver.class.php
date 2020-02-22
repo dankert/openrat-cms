@@ -28,8 +28,10 @@ use PDOStatement;
 use \RuntimeException;
 
 /**
- * Datenbank-abhaengige Methoden fuer PDO.
- * 
+ * Implementation of all database operations in PDO.
+ *
+ * PDO is available since PHP 5.1 and OpenRat CMS forces a newer PHP version than this. So there should be no problem to rely on PDO.
+ *
  * @author Jan Dankert
  */
 class PDODriver
@@ -50,6 +52,12 @@ class PDODriver
 
     function connect( $conf )
 	{
+		if ( !defined('PDO::ATTR_DRIVER_NAME') ) {
+			// This should never happen, because PHP is always bundled with PDO.
+			// but maybe... some installation could miss the module.
+			throw new RuntimeException('PDO unavailable');
+		}
+
 		$url    = $conf['dsn'     ];
 		$user   = $conf['user'    ];
 		$pw     = $conf['password'];

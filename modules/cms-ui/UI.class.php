@@ -9,7 +9,7 @@ use DomainException;
 use Exception;
 use util\Http;
 use \Less_Parser;
-use Logger;
+use logger\Logger;
 use LogicException;
 use ObjectNotFoundException;
 use util\exception\OpenRatException;
