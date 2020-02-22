@@ -1,13 +1,17 @@
 <?php
 
+namespace wikiparser\renderer;
+use wikiparser\model\LinkElement;
+use Text;
+
 /**
  * Renderer fuer das DOCBOOK-Format.
- * 
+ *
  * Das Docbook-Format ist von der OASIS spezifiert und ermoeglicht die
  * strukturierte Darstellung von Text-Dokumenten.
- * 
+ *
  * Dieses Klasse erzeugt aus dem internen DOM-Baum ein DocBook-XML-Dokument.
- * 
+ *
  * @author Jan Dankert, $Author$
  * @version $Revision$
  * @package openrat.text
@@ -15,8 +19,8 @@
 class DocBookRenderer
 {
 	var $linkedObjectIds = array();
-	var $encodeHtml      = false;
-		
+	var $encodeHtml = false;
+
 
 	/**
 	 * Rendert ein Dokument-Element.
@@ -24,22 +28,21 @@ class DocBookRenderer
 	 * @param Object $child Element
 	 * @return String
 	 */
-	function renderElement( $child )
+	function renderElement($child)
 	{
 		global $conf;
-		
-		$attr = array();
-		$val  = '';
-		$praefix = '';
-		$suffix  = '';
-		$empty   = false;
 
-		switch( strtolower(get_class($child)) )
-		{
+		$attr = array();
+		$val = '';
+		$praefix = '';
+		$suffix = '';
+		$empty = false;
+
+		switch (strtolower(get_class($child))) {
 			case 'macroelement':
 				$tag = '';
 				break;
-				
+
 			case 'tableofcontentelement':
 				$tag = 'toc';
 				break;
@@ -47,15 +50,15 @@ class DocBookRenderer
 			case 'rawelement':
 				$tag = '';
 				$val = $child->src;
-				
+
 				break;
 
 			case 'textelement':
 				$tag = 'para';
 
 				$val = $child->text;
-				$val = Text::encodeHtml( $val );
-				$val = Text::replaceHtmlChars( $val );
+				$val = Text::encodeHtml($val);
+				$val = Text::replaceHtmlChars($val);
 				break;
 
 			case 'footnoteelement':
@@ -63,7 +66,7 @@ class DocBookRenderer
 				break;
 
 			case 'codeelement':
-				
+
 				$tag = 'emphasis';
 				$attr['role'] = 'code';
 				break;
@@ -82,8 +85,8 @@ class DocBookRenderer
 				break;
 
 			case 'linebreakelement':
-				$tag   = '';
-				$val   = "\n";
+				$tag = '';
+				$val = "\n";
 				break;
 
 			case 'linkelement':
@@ -92,7 +95,7 @@ class DocBookRenderer
 				break;
 
 			case 'imageelement':
-				$empty       = true;
+				$empty = true;
 				$tag = 'graphic';
 				$attr['fileref'] = $child->getUrl();
 				break;
@@ -119,11 +122,11 @@ class DocBookRenderer
 
 			case 'headlineelement':
 				$tag = 'chapter'; // $child->level ?
-				
+
 				$l = new LinkElement();
 				$l->name = $child->getName();
 				$child->children[] = $l;
-				
+
 				break;
 
 			case 'tableelement':
@@ -139,13 +142,10 @@ class DocBookRenderer
 				break;
 
 			case 'definitionitemelement':
-				if	( !empty($child->key) )
-				{
+				if (!empty($child->key)) {
 					$tag = 'listitem';
 					$val = $child->key;
-				}
-				else
-				{
+				} else {
 					$tag = 'term';
 				}
 				break;
@@ -158,38 +158,36 @@ class DocBookRenderer
 			case 'listelement':
 				$tag = 'itemizedlist';
 				break;
-				
+
 			case 'teletypeelement':
 				$tag = 'emphasis';
 				$attr['role'] = 'code';
 				break;
-				
+
 			case 'numberedlistelement':
 				$tag = 'orderedlist';
 				break;
-				
+
 			case 'listentryelement':
 				$tag = 'listitem';
 				break;
 
 			default:
-				
+
 				$tag = 'unknown-element';
 				$attr['class'] = strtolower(get_class($child));
 				break;
-		}				
+		}
 
 		$val .= $praefix;
-		foreach( $child->children as $c )
-		{
-			$val .= $this->renderElement( $c );
+		foreach ($child->children as $c) {
+			$val .= $this->renderElement($c);
 		}
 
 		$val .= $suffix;
-		return $this->renderXmlElement($tag,$val,$empty,$attr);
-		
-	}
+		return $this->renderXmlElement($tag, $val, $empty, $attr);
 
+	}
 
 
 	/**
@@ -201,30 +199,27 @@ class DocBookRenderer
 	 * @param Array $attr Attribute als Array<String,String>
 	 * @return String
 	 */
-	function renderXmlElement( $tag,$value,$empty,$attr=array() )
+	function renderXmlElement($tag, $value, $empty, $attr = array())
 	{
 		global $conf;
-		if	( $tag == '' )
+		if ($tag == '')
 			return $value;
-			
-		$val = '<'.$tag;
-		foreach( $attr as $attrName=>$attrInhalt )
-		{
-			$val .= ' '.$attrName.'="'.$attrInhalt.'"';
+
+		$val = '<' . $tag;
+		foreach ($attr as $attrName => $attrInhalt) {
+			$val .= ' ' . $attrName . '="' . $attrInhalt . '"';
 		}
-		
-		if	( $value == '' && $empty )
-		{
+
+		if ($value == '' && $empty) {
 			$val .= ' />';
 			return $val;
 		}
-		
-		$val .= '>'.$value.'</'.$tag.'>';
+
+		$val .= '>' . $value . '</' . $tag . '>';
 		return $val;
 	}
 
-	
-	
+
 	/**
 	 * Rendering des Dokumentes.<br>
 	 *
@@ -235,9 +230,9 @@ class DocBookRenderer
 		$this->renderedText = '';
 		$this->renderedText .= '<?xml version="1.0" encoding="UTF-8" ?>';
 		$this->renderedText .= '<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN" "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">';
-		
-		foreach( $this->children as $child )
-			$this->renderedText .= $this->renderElement( $child );
+
+		foreach ($this->children as $child)
+			$this->renderedText .= $this->renderElement($child);
 
 		return $this->renderedText;
 	}

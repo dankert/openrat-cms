@@ -1,5 +1,9 @@
 <?php
 
+namespace wikiparser\model;
+
+use wikiparser\model\AbstractElement;
+
 /**
  * @author $Author$
  * @version $Revision$
@@ -10,24 +14,20 @@ class HeadlineElement extends AbstractElement
 	var $level = 1;
 
 
-
 	/**
 	 * Konstruktor.
 	 */
-	function __construct( $level=1 )
+	function __construct($level = 1)
 	{
 		$this->level = $level;
 	}
 
-	
-	
+
 	function getText()
 	{
 		$name = '';
-		foreach( $this->children as $child )
-		{
-			if	( strtolower(get_class($child))=='textelement')
-			{
+		foreach ($this->children as $child) {
+			if (strtolower(get_class($child)) == 'textelement') {
 				$name .= $child->text;
 			}
 		}
@@ -36,15 +36,14 @@ class HeadlineElement extends AbstractElement
 	}
 
 
-
 	function getName()
 	{
-		$name = strtolower( $this->getText() );
-		
+		$name = strtolower($this->getText());
+
 //		return urlencode( $name );
 		$gueltig = 'abcdefghijklmnopqrstuvwxyz0123456789.-_';
 		$tmp = strtr($name, $gueltig, str_repeat('#', strlen($gueltig)));
-		$name = str_replace('.','',strtr($name, $tmp, str_repeat('.', strlen($tmp))));
+		$name = str_replace('.', '', strtr($name, $tmp, str_repeat('.', strlen($tmp))));
 
 		return $name;
 	}

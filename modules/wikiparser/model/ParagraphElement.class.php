@@ -1,5 +1,9 @@
 <?php
 
+namespace wikiparser\model;
+
+use wikiparser\model\AbstractElement;
+
 /**
  * @author $Author$
  * @version $Revision$
@@ -7,7 +11,7 @@
  */
 class ParagraphElement extends AbstractElement
 {
-	
+
 }
 
 ?>

@@ -1,10 +1,13 @@
 <?php
 
+namespace wikiparser\renderer;
+use Text;
+
 /**
  * Renderer fuer das LaTex-Format.
  *
  * Diese Klasse erzeugt aus dem internen DOM-Baum ein LaTex-Dokument.
- * 
+ *
  * @author Jan Dankert, $Author$
  * @version $Revision$
  * @package openrat.text
@@ -12,46 +15,45 @@
 class LatexRenderer
 {
 	var $linkedObjectIds = array();
-	
+
 	/**
 	 * Rendert ein Dokument-Element.
 	 *
 	 * @param Object $child Element
 	 * @return String
 	 */
-	function renderElement( $child )
+	function renderElement($child)
 	{
 		global $conf;
-		
-		$val     = '';
-		$before  = '';
-		$after   = '';
 
-		switch( strtolower(get_class($child)) )
-		{
+		$val = '';
+		$before = '';
+		$after = '';
+
+		switch (strtolower(get_class($child))) {
 			case 'tableofcontentelement':
-				$before = '\tableofcontents'."\n";
+				$before = '\tableofcontents' . "\n";
 				break;
 
 			case 'rawelement':
 				$tag = '';
 				$val = $child->src;
-				
+
 				break;
 
 			case 'textelement':
 				$val = $child->text;
 				//$val = Text::encodeHtml( $val );
-				$val = Text::replaceHtmlChars( $val );
+				$val = Text::replaceHtmlChars($val);
 				break;
 
 			case 'footnoteelement':
 				$before = '\footnote{';
-				$after  = '}';
+				$after = '}';
 				break;
 
 			case 'codeelement':
-				
+
 				break;
 
 			case 'quoteelement':
@@ -59,11 +61,11 @@ class LatexRenderer
 
 
 			case 'paragraphelement':
-				$before  = "\n";
+				$before = "\n";
 				break;
 
 			case 'speechelement':
-				
+
 				break;
 
 			case 'linebreakelement':
@@ -79,28 +81,27 @@ class LatexRenderer
 
 			case 'strongelement':
 				$before = '\textbf{';
-				$after  = '}';
+				$after = '}';
 				break;
 
 			case 'emphaticelement':
 				$before = '\textit{';
-				$after  = '}';
+				$after = '}';
 				break;
 
 			case 'insertedelement':
 				$before = '';
-				$after  = '';
+				$after = '';
 				break;
 
 			case 'removedelement':
 				$before = '';
-				$after  = '';
+				$after = '';
 				break;
 
 			case 'headlineelement':
-				
-				switch( $child->level )
-				{
+
+				switch ($child->level) {
 					case 1:
 						$before = '\section';
 						break;
@@ -113,17 +114,17 @@ class LatexRenderer
 						break;
 				}
 				$before .= '{';
-				$after  = '}';
+				$after = '}';
 				break;
 
 			case 'tableelement':
-				$before = '\begin{tabular}'."\n";
-				$after  = '\end{tabular}'."\n";
+				$before = '\begin{tabular}' . "\n";
+				$after = '\end{tabular}' . "\n";
 				break;
 
 			case 'tablelineelement':
 				$before = '';
-				$after  = '\\';
+				$after = '\\';
 				break;
 
 			case 'definitionlistelement':
@@ -137,39 +138,38 @@ class LatexRenderer
 
 			case 'tablecellelement':
 				$before = '';
-				$after  = ' & ';
+				$after = ' & ';
 				break;
 
 			case 'listelement':
-				$before = '\begin{itemize}'."\n";
-				$after  = '\end{itemize}'."\n";
+				$before = '\begin{itemize}' . "\n";
+				$after = '\end{itemize}' . "\n";
 				break;
-				
+
 			case 'teletypeelement':
 				$before = '\texttt{';
-				$after  = '}';
+				$after = '}';
 				break;
-				
+
 			case 'numberedlistelement':
-				$before = '\begin{itemize}'."\n";
-				$after  = '\end{itemize}'."\n";
+				$before = '\begin{itemize}' . "\n";
+				$after = '\end{itemize}' . "\n";
 				break;
-				
+
 			case 'listentryelement':
 				$before = '\item ';
 				break;
 
 			default:
-				
+
 				$tag = 'unknown-element';
 				$attr['class'] = strtolower(get_class($child));
 				break;
-		}				
+		}
 
 		$val .= $before;
-		foreach( $child->children as $c )
-		{
-			$val .= $this->renderElement( $c );
+		foreach ($child->children as $c) {
+			$val .= $this->renderElement($c);
 		}
 		$val .= $after;
 
@@ -177,7 +177,6 @@ class LatexRenderer
 	}
 
 
-	
 	/**
 	 * Rendering des Dokumentes.<br>
 	 *
@@ -186,14 +185,14 @@ class LatexRenderer
 	function render()
 	{
 		$this->renderedText = '';
-		$this->renderedText .= '\documentclass{article}'."\n";
-		$this->renderedText .= '\begin{document}'."\n";
+		$this->renderedText .= '\documentclass{article}' . "\n";
+		$this->renderedText .= '\begin{document}' . "\n";
 
-		foreach( $this->children as $child )
-			$this->renderedText .= $this->renderElement( $child );
+		foreach ($this->children as $child)
+			$this->renderedText .= $this->renderElement($child);
 
-		$this->renderedText .= '\end{document}'."\n";
-			
+		$this->renderedText .= '\end{document}' . "\n";
+
 		return $this->renderedText;
 	}
 }

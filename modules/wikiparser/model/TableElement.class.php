@@ -1,5 +1,9 @@
 <?php
 
+namespace wikiparser\model;
+
+use wikiparser\model\AbstractElement;
+
 /**
  * @author $Author$
  * @version $Revision$
@@ -7,12 +11,11 @@
  */
 class TableElement extends AbstractElement
 {
-	function render( $type )
+	function render($type)
 	{
-		switch( $type )
-		{
+		switch ($type) {
 			case 'html':
-				return '<p>'.$this->value.'</p>';
+				return '<p>' . $this->value . '</p>';
 			default:
 				return $this->value;
 		}

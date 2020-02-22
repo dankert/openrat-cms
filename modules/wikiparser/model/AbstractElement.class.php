@@ -1,5 +1,6 @@
 <?php
 
+namespace wikiparser\model;
 /**
  * @author $Author$
  * @version $Revision$
@@ -9,9 +10,9 @@ class AbstractElement
 {
 	var $children = array();
 
-	var $style    = '';
-	var $class    = '';
-	var $title    = '';
+	var $style = '';
+	var $class = '';
+	var $title = '';
 }
 
 ?>
