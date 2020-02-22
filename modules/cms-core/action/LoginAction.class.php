@@ -16,7 +16,7 @@ use cms\model\Model;
 
 use \database\Database;
 use \DB;
-use \DbUpdate;
+use cms\update\Update;
 use \Exception;
 use util\Http;
 use \InternalAuth;

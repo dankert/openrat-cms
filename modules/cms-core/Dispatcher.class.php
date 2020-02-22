@@ -10,7 +10,7 @@ use cms\action\Action;
 use cms\action\RequestParams;
 use ConfigurationLoader;
 use database\Database;
-use DbUpdate;
+use cms\update\Update;
 use util\Http;
 use logger\Logger;
 use LogicException;
@@ -428,14 +428,14 @@ class Dispatcher
         if   ( ! $dbConfig->is('check_version',true))
             return; // Check for DB version is disabled.
 
-        $updater = new DbUpdate();
+        $updater = new Update();
 
         if   ( ! $updater->isUpdateRequired( db() ) )
             return;
 
 
         if   ( ! $dbConfig->is('auto_update',true))
-            throw new \LogicException('DB Update required, but auto-update is disabled. '.OR_TITLE." ".OR_VERSION." needs DB-version ".DbUpdate::SUPPORTED_VERSION );
+            throw new \LogicException('DB Update required, but auto-update is disabled. '.OR_TITLE." ".OR_VERSION." needs DB-version ".Update::SUPPORTED_VERSION );
 
 
         try {

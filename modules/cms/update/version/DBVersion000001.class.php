@@ -1,5 +1,7 @@
 <?php
 
+namespace cms\update\version;
+
 use database\Database;
 use database\DbVersion;
 

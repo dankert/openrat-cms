@@ -1,4 +1,7 @@
 <?php
+
+namespace cms\update\version;
+
 use database\DbVersion;
 
 /**

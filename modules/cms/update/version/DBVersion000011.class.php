@@ -1,5 +1,8 @@
 <?php
 
+
+namespace cms\update\version;
+
 use database\DbVersion;
 use security\Password;
 
