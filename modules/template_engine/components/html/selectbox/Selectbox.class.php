@@ -83,7 +83,7 @@ class SelectboxComponent extends Component
 		$optionLoop = (new PHPBlockElement())->asChildOf($selectbox);
 
 		if	( $this->default )
-			$value = $this->default;
+			$value = (new Value($this->default))->render(Value::CONTEXT_PHP);
 		else
 			$value = '$'.$this->name;
 
