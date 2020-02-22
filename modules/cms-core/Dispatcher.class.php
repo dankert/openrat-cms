@@ -8,7 +8,7 @@ namespace cms;
 use BadMethodCallException;
 use cms\action\Action;
 use cms\action\RequestParams;
-use ConfigurationLoader;
+use configuration\ConfigurationLoader;
 use database\Database;
 use cms\update\Update;
 use util\Http;

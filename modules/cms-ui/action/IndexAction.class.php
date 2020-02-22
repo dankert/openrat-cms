@@ -864,7 +864,7 @@ class IndexAction extends Action
 
     /**
      * @param User $user
-     * @return \Config|string
+     * @return \configuration\Config|string
      */
     private function getUserStyle( $user )
     {
