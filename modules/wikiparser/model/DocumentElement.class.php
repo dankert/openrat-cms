@@ -40,7 +40,7 @@ class DocumentElement extends AbstractElement
 	 */
 	function parse($text, $type = 'wiki')
 	{
-		$parserClass = ucfirst(strtolower($type)) . 'Parser';
+		$parserClass = 'wikiparser\parser\\'.ucfirst(strtolower($type)) . 'Parser';
 		$parser = new $parserClass();
 
 		$this->children = $parser->parse($text);
@@ -85,7 +85,7 @@ class DocumentElement extends AbstractElement
 				$this->type = 'html';
 		}
 
-		$rendererClass = ucfirst($this->type) . 'Renderer';
+		$rendererClass = 'wikiparser\renderer\\'.ucfirst($this->type) . 'Renderer';
 
 		$renderer = new $rendererClass();
 		$renderer->children = $this->children;

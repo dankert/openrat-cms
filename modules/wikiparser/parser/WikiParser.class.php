@@ -539,6 +539,7 @@ class WikiParser
 			foreach ($davor as $davorEl)
 				$elements[] = $davorEl;
 
+			$className = 'wikiparser\model\\'.$className;
 			$newEl = new $className();
 			$newEl->children = $this->parseSimple($erg[++$idx]);
 			$elements[] = $newEl;
