@@ -36,6 +36,7 @@
 use cms\model\File;
 use cms\model\Folder;
 use cms\model\Page;
+use util\Macro;
 
 
 /**

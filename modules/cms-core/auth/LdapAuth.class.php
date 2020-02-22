@@ -1,5 +1,7 @@
 <?php
 
+use util\Ldap;
+
 class LdapAuth implements Auth
 {
 

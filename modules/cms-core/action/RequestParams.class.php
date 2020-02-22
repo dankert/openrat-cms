@@ -32,7 +32,7 @@ namespace {
 
 namespace cms\action {
 
-    use Text;
+    use util\Text;
 
     class RequestParams
     {

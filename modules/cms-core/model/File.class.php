@@ -24,10 +24,10 @@ use cms\publish\PublishEdit;
 use cms\publish\PublishPreview;
 use cms\publish\PublishPublic;
 use cms\publish\PublishShow;
-use JSqueeze;
-use Less_Parser;
+use util\JSqueeze;
+use \Less_Parser;
 use Logger;
-use util\FileCache;
+use util\cache\FileCache;
 
 define('OR_FILE_DEFAULT_MIMETYPE','application/octet-stream');
 
@@ -91,7 +91,7 @@ class File extends BaseObject
      * @return FileCache
      */
     public function getCache() {
-        $cacheKey = array('db'=>db()->id,'file'=>$this->objectid,'publish'=>\ClassUtils::getSimpleClassName($this->publisher));
+        $cacheKey = array('db'=>db()->id,'file'=>$this->objectid,'publish'=> \util\ClassUtils::getSimpleClassName($this->publisher));
 
         return new FileCache( $cacheKey,function() {
             return $this->loadValueFromDatabase();
@@ -549,9 +549,9 @@ SQL
 
     private function filterValue()
     {
-        $publishType = strtolower(substr(\ClassUtils::getSimpleClassName($this->publisher),7));
+        $publishType = strtolower(substr(\util\ClassUtils::getSimpleClassName($this->publisher),7));
 
-        foreach(\ArrayUtils::getSubArray($this->getTotalSettings(), array( 'filter')) as $filterEntry )
+        foreach(\util\ArrayUtils::getSubArray($this->getTotalSettings(), array( 'filter')) as $filterEntry )
         {
         	$filterName = @$filterEntry['name'];
         	$extension  = @$filterEntry['extension'];

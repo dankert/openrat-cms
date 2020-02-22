@@ -17,12 +17,15 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
+namespace util;
+use util\Macro;
+
 /**
  * Oberklasse für dynamische Klassen ("Makros").
- * 
+ *
  * Diese Klasse dient nur der Abwärtskompabilität. Neue dynamische Klassen
  * (ab jetzt "Makros") sollten von der Klasse Macro erben.
- * 
+ *
  * @author Jan Dankert
  * @package openrat.services
  */

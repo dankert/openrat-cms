@@ -1,8 +1,8 @@
 <?php
 
-namespace util;
+namespace util\cache;
 
-use FileUtils;
+use util\FileUtils;
 
 
 /**

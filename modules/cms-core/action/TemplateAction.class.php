@@ -12,9 +12,9 @@ use cms\model\Page;
 
 use cms\model\TemplateModel;
 use cms\publish\PublishPublic;
-use Session;
-use \Html;
-use \Text;
+use util\Session;
+use util\Html;
+use util\Text;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2009 Jan Dankert
@@ -236,7 +236,7 @@ class TemplateAction extends BaseAction
             if ( in_array($input, $extensions) )
             {
                 $this->addNotice('template',$this->template->name,'DUPLICATE_INPUT','error');
-                throw new \ValidationException( $modelName );
+                throw new \util\exception\ValidationException( $modelName );
             }
 
             $extensions[ $modelId ] = $input;
@@ -292,7 +292,7 @@ class TemplateAction extends BaseAction
 		$name = $this->getRequestVar('name',OR_FILTER_ALPHANUM);
 
 		if  ( empty($name) )
-		    throw new \ValidationException('name');
+		    throw new \util\exception\ValidationException('name');
 
 		$newElement = $this->template->addElement( $name,$this->getRequestVar('description'),$this->getRequestVar('typeid') );
 

@@ -4,7 +4,7 @@
 namespace cms\publish\filter;
 
 
-use JSqueeze;
+use util\JSqueeze;
 
 class JavascriptMinifierFilter extends AbstractFilter
 {

@@ -5,7 +5,7 @@ namespace cms\action;
 use cms\model\Element;
 use cms\model\Project;
 use cms\model\Template;
-use Session;
+use util\Session;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2009 Jan Dankert
@@ -111,7 +111,7 @@ class TemplatelistAction extends BaseAction
 	{
 		// Hinzufuegen eines Templates
 		if   ( $this->getRequestVar('name') == '' )
-			throw new \ValidationException('name');
+			throw new \util\exception\ValidationException('name');
 
 		// Hinzufuegen eines Templates
 		switch( $this->getRequestVar('type') )

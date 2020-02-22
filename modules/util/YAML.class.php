@@ -1,6 +1,9 @@
 <?php
 
 
+namespace util;
+use Spyc;
+
 /**
  * YAML Wrapper for the Spyc implementation of a YAML-Parser.
  */
@@ -11,7 +14,6 @@ class YAML
 	 *
 	 * The load method, when supplied with a YAML string, will do its best
 	 * to convert YAML in a string into a PHP array.  Pretty simple.
-
 	 * @param $string
 	 * @return array
 	 */
@@ -35,14 +37,14 @@ class YAML
 	 * you can turn off wordwrap by passing in 0.
 	 *
 	 * @access public
-	 * @return string
 	 * @param array|\stdClass $array PHP array
 	 * @param int $indent Pass in false to use the default, which is 2
 	 * @param int $wordwrap Pass in 0 for no wordwrap, false for default (40)
 	 * @param bool $no_opening_dashes Do not start YAML file with "---\n"
+	 * @return string
 	 */
 	public static function dump($array, $indent = false, $wordwrap = false, $no_opening_dashes = true)
 	{
-		return Spyc::YAMLDump( $array,$indent,$wordwrap,$no_opening_dashes );
+		return Spyc::YAMLDump($array, $indent, $wordwrap, $no_opening_dashes);
 	}
 }

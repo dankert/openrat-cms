@@ -12,11 +12,11 @@ use cms\model\Project;
 use cms\model\Template;
 use cms\model\User;
 use cms\model\Value;
-use Tree;
+use util\Tree;
 use cms\model\Language;
 use cms\model\Model;
 
-use Session;
+use util\Session;
 
 // OpenRat Content Management System
 // Copyright (C) 2002 Jan Dankert, jandankert@jandankert.de

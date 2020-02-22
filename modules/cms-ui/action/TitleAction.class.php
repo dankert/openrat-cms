@@ -7,8 +7,8 @@ use cms\model\BaseObject;
 use cms\model\Language;
 use cms\model\Model;
 
-use Session;
-use \Html;
+use util\Session;
+use util\Html;
 // OpenRat Content Management System
 // Copyright (C) 2002-2009 Jan Dankert, jandankert@jandankert.de
 //

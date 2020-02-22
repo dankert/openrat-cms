@@ -1,7 +1,7 @@
 <?php
 
 
-namespace modules\util;
+namespace util;
 
 
 class UIUtils

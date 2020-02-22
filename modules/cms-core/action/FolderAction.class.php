@@ -2,7 +2,7 @@
 
 namespace cms\action;
 
-use ArchiveTar;
+use util\ArchiveTar;
 use cms\model\Acl;
 use cms\model\Image;
 use cms\model\Language;
@@ -17,11 +17,11 @@ use cms\model\Link;
 use cms\model\Text;
 use cms\model\Url;
 use cms\publish\PublishPublic;
-use Http;
+use util\Http;
 use Publish;
-use Session;
-use \Html;
-use Upload;
+use util\Session;
+use util\Html;
+use util\Upload;
 
 /**
  * Action-Klasse zum Bearbeiten eines Ordners.
@@ -1006,9 +1006,9 @@ class FolderAction extends ObjectAction
 
 			if   ( $o->hasRight(Acl::ACL_READ) )
 			{
-				$list[$id]['name']     = \Text::maxLength($o->name, 30);
-				$list[$id]['filename'] = \Text::maxLength($o->filename, 20);
-				$list[$id]['desc']     = \Text::maxLength($o->desc, 30);
+				$list[$id]['name']     = \util\Text::maxLength($o->name, 30);
+				$list[$id]['filename'] = \util\Text::maxLength($o->filename, 20);
+				$list[$id]['desc']     = \util\Text::maxLength($o->desc, 30);
 				if	( $list[$id]['desc'] == '' )
 					$list[$id]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
 				$list[$id]['desc'] = $list[$id]['desc'].' - '.lang('IMAGE').' '.$id;
@@ -1067,9 +1067,9 @@ class FolderAction extends ObjectAction
 
 			if   ( $o->hasRight(Acl::ACL_READ) )
 			{
-				$list[$id]['name']     = \Text::maxLength($o->name, 30);
-				$list[$id]['filename'] = \Text::maxLength($o->filename, 20);
-				$list[$id]['desc']     = \Text::maxLength($o->desc, 30);
+				$list[$id]['name']     = \util\Text::maxLength($o->name, 30);
+				$list[$id]['filename'] = \util\Text::maxLength($o->filename, 20);
+				$list[$id]['desc']     = \util\Text::maxLength($o->desc, 30);
 				if	( $list[$id]['desc'] == '' )
 					$list[$id]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
 				$list[$id]['desc'] = $list[$id]['desc'].' - '.lang('IMAGE').' '.$id;
@@ -1221,9 +1221,9 @@ class FolderAction extends ObjectAction
 			if   ( $o->hasRight(Acl::ACL_READ) )
 			{
 				$list[$id]['id'  ]     = $id;
-				$list[$id]['name']     = \Text::maxLength( $o->name     ,30);
-				$list[$id]['filename'] = \Text::maxLength( $o->filename ,20);
-				$list[$id]['desc']     = \Text::maxLength( $o->desc     ,30);
+				$list[$id]['name']     = \util\Text::maxLength( $o->name     ,30);
+				$list[$id]['filename'] = \util\Text::maxLength( $o->filename ,20);
+				$list[$id]['desc']     = \util\Text::maxLength( $o->desc     ,30);
 				if	( $list[$id]['desc'] == '' )
 					$list[$id]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
 				$list[$id]['desc'] = 'ID '.$id.' - '.$list[$id]['desc'];
@@ -1340,7 +1340,7 @@ class FolderAction extends ObjectAction
 	public function pubPost()
 	{
 		if	( !$this->folder->hasRight( Acl::ACL_PUBLISH ) )
-			throw new \SecurityException('no rights for publish');
+			throw new \util\exception\SecurityException('no rights for publish');
 
 		$subdirs = ( $this->hasRequestVar('subdirs') );
 		$pages   = ( $this->hasRequestVar('pages'  ) );
@@ -1451,13 +1451,13 @@ class FolderAction extends ObjectAction
     public function removePost()
     {
         if   ( !$this->hasRequestVar('delete') )
-            throw new \ValidationException("delete");
+            throw new \util\exception\ValidationException("delete");
 
         if  ( $this->hasRequestVar( 'withChildren'))
             $this->folder->deleteAll();  // Delete with children
         else
             if   ( $this->folder->hasChildren() )
-                throw new \ValidationException("withChildren");
+                throw new \util\exception\ValidationException("withChildren");
             else
                 $this->folder->delete();  // Only delete current folder.
 

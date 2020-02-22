@@ -6,13 +6,13 @@ use BadMethodCallException;
 use cms\action\RequestParams;
 use cms\Dispatcher;
 use Exception;
-use Http;
+use util\Http;
 use JSON;
 use Logger;
 use ObjectNotFoundException;
-use OpenRatException;
-use SecurityException;
-use XML;
+use util\exception\OpenRatException;
+use util\exception\SecurityException;
+use util\XML;
 
 define('CMS_API_REQ_PARAM_SUBACTION', 'subaction');
 define('CMS_API_REQ_PARAM_ACTION', 'action');
@@ -125,7 +125,7 @@ class API
 
             case CMS_API_OUTPUT_YAML:
                 header('Content-Type: application/yaml; charset=UTF-8');
-                $output = \YAML::dump($data);
+                $output = \util\YAML::dump($data);
                 break;
         }
 

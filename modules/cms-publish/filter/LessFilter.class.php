@@ -4,7 +4,7 @@
 namespace cms\publish\filter;
 
 
-use Less_Parser;
+use \Less_Parser;
 
 class LessFilter extends AbstractFilter
 {

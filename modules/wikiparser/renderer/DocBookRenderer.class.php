@@ -2,7 +2,7 @@
 
 namespace wikiparser\renderer;
 use wikiparser\model\LinkElement;
-use Text;
+use util\Text;
 
 /**
  * Renderer fuer das DOCBOOK-Format.

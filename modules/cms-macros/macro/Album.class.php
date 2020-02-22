@@ -19,6 +19,7 @@ use cms\model\BaseObject;
 use cms\model\File;
 use cms\model\Folder;
 use cms\model\Image;
+use util\Macro;
 
 
 /**

@@ -3,7 +3,7 @@
 namespace cms\model;
 
 use database\Database;
-use Session;
+use util\Session;
 
 
 /**
@@ -1045,7 +1045,7 @@ SQL
                 $f->load();
                 $names = $f->parentObjectNames(true,true);
                 foreach( $names as $fid=>$name )
-                    $names[$fid] = \Text::maxLength($name,15,'..',STR_PAD_BOTH);
+                    $names[$fid] = \util\Text::maxLength($name,15,'..',STR_PAD_BOTH);
                 $folders[ $id ] = implode( ' &raquo; ',$names );
                 $folders[ $id ] .= ' &raquo; ';
             }

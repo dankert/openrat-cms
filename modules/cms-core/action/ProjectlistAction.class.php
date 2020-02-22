@@ -77,7 +77,7 @@ class ProjectlistAction extends BaseAction
 	function addView()
 	{
 	    if( ! $this->userIsAdmin() )
-	        throw new \SecurityException('user is not allowed to add a project');
+	        throw new \util\exception\SecurityException('user is not allowed to add a project');
 
 		$this->setTemplateVar( 'projects',Project::getAllProjects() );
 	}
@@ -90,14 +90,14 @@ class ProjectlistAction extends BaseAction
 	function addPost()
 	{
 	    if( !$this->userIsAdmin())
-	        throw new \SecurityException("user is not allowed to add a project");
+	        throw new \util\exception\SecurityException("user is not allowed to add a project");
 
         switch( $this->getRequestVar('type') )
         {
             case 'empty':
             case '':
                 if	( !$this->hasRequestVar('name') )
-                    throw new \ValidationException('name');
+                    throw new \util\exception\ValidationException('name');
 
                 $project = new Project();
                 $project->name = $this->getRequestVar('name');

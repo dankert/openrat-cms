@@ -1,5 +1,5 @@
     <?php
-        extract($output);
+    use util\Html;extract($output);
  if (!defined('OR_VERSION')) die('Forbidden');
  if (!headers_sent()) header('Content-Type: text/html; charset=UTF-8')
 ?><!DOCTYPE html>

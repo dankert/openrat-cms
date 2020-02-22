@@ -14,10 +14,10 @@ use cms\model\Language;
 use cms\model\Model;
 use cms\publish\PublishPreview;
 use cms\publish\PublishPublic;
-use \Html;
-use Http;
+use util\Html;
+use util\Http;
 use Logger;
-use Session;
+use util\Session;
 
 
 /**
@@ -769,7 +769,7 @@ class PageAction extends ObjectAction
 	function pubPost()
 	{
 		if	( !$this->page->hasRight( Acl::ACL_PUBLISH ) )
-            throw new \SecurityException( 'no right for publish' );
+            throw new \util\exception\SecurityException( 'no right for publish' );
 
 		Session::close();
 

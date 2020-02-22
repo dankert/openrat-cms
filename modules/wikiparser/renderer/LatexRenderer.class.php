@@ -1,7 +1,7 @@
 <?php
 
 namespace wikiparser\renderer;
-use Text;
+use util\Text;
 
 /**
  * Renderer fuer das LaTex-Format.

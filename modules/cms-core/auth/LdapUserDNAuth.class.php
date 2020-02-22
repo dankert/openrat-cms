@@ -1,5 +1,7 @@
 <?php
 
+use util\Ldap;
+
 /**
  * Authentifizierung gegen einen LDAP-Server.
  * 

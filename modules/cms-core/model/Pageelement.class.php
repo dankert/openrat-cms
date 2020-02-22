@@ -19,7 +19,7 @@ namespace cms\model;
 use cms\mustache\Mustache;
 use cms\publish\PublishPreview;use cms\publish\PublishPublic;
 use Logger;
-use util\FileCache;
+use util\cache\FileCache;
 
 
 /**

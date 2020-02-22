@@ -9,7 +9,7 @@ use cms\model\Group;
 use cms\model\BaseObject;
 use cms\model\Language;
 
-use \Html;
+use util\Html;
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -86,7 +86,7 @@ class GroupAction extends BaseAction
 	public function propPost()
 	{
 		if	( ! $this->getRequestVar('name') )
-		    throw new \ValidationException('name');
+		    throw new \util\exception\ValidationException('name');
 
         $this->group->name = $this->getRequestVar('name');
         $this->group->save();

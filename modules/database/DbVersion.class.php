@@ -19,7 +19,7 @@ namespace database {
     define('OR_DB_COLUMN_NOT_NULLABLE',false);
 
 
-    use Http;
+    use util\Http;
 
     abstract class DbVersion
     {

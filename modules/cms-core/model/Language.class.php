@@ -149,7 +149,7 @@ class Language extends ModelBase
 			$isocode = str_replace('_','',$isocode);
 			
 			$this->isocode = $isocode;
-			$codes = \GlobalFunctions::getIsoCodes();
+			$codes = \util\GlobalFunctions::getIsoCodes();
 			$this->name    = $codes[ $isocode ];
 		}
 

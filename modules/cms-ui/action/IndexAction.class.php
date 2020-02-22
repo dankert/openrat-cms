@@ -9,12 +9,12 @@ use cms\model\User;
 use cms\model\Value;
 use Exception;
 use JSON;
-use JSqueeze;
-use Less_Parser;
+use util\JSqueeze;
+use \Less_Parser;
 use Logger;
-use modules\util\UIUtils;
+use util\UIUtils;
 use ObjectNotFoundException;
-use Session;
+use util\Session;
 use template_engine\TemplateEngineInfo;
 
 
@@ -180,7 +180,7 @@ class IndexAction extends Action
 
         $css = array();
 
-        $styleFiles = \FileUtils::readDir(OR_THEMES_DIR . 'default/style');
+        $styleFiles = \util\FileUtils::readDir(OR_THEMES_DIR . 'default/style');
         foreach( $styleFiles as $styleFile ) {
             if  (substr($styleFile,-5) == '.less' )
                 $css[] = OR_THEMES_DIR . 'default/style'.'/'.substr($styleFile,0,-5);

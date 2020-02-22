@@ -18,7 +18,7 @@ namespace cms\action;
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-use Session;
+use util\Session;
 /**
  * Action-Klasse fuer die Bearbeitung eines Template-Elementes.
  * 
@@ -69,9 +69,9 @@ class ConfigurationAction extends BaseAction
 
 		$pad = str_repeat("\xC2\xA0",10); // Hard spaces
 
-		$flatDefaultConfig = \ArrayUtils::dryFlattenArray( $conf_default       , $pad );
-		$flatCMSConfig     = \ArrayUtils::dryFlattenArray( Session::getConfig(), $pad );
-		$flatConfig        = \ArrayUtils::dryFlattenArray( $conf_cms           , $pad );
+		$flatDefaultConfig = \util\ArrayUtils::dryFlattenArray( $conf_default       , $pad );
+		$flatCMSConfig     = \util\ArrayUtils::dryFlattenArray( Session::getConfig(), $pad );
+		$flatConfig        = \util\ArrayUtils::dryFlattenArray( $conf_cms           , $pad );
 
 		$config = array();
 		foreach( $flatConfig as $key=>$val )
@@ -97,7 +97,7 @@ class ConfigurationAction extends BaseAction
             }
         });
 
-        $this->setTemplateVar('source',\YAML::dump($conf,4,0,true));
+        $this->setTemplateVar('source', \util\YAML::dump($conf,4,0,true));
     }
 
 

@@ -4,6 +4,8 @@
 use cms\model\Element;
 use cms\model\Template;
 use cms\model\Value;
+use util\ArrayUtils;
+use util\exception\OpenRatException;
 use util\VariableResolver;
 
 class MacroRunner
@@ -27,7 +29,7 @@ class MacroRunner
 			throw new OpenRatException('ERROR_IN_ELEMENT', 'class not found:' . $className);
 
 
-		/** @var \Macro $macro */
+		/** @var \util\Macro $macro */
 		$macro = new $className;
 
 		if (!method_exists($macro, 'execute'))

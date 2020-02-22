@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+namespace util;
+
 use cms\model\Folder;
 use cms\model\Project;
 
@@ -29,10 +31,10 @@ use cms\model\Project;
  */
 class Api
 {
-	var $output   = '';
+	var $output = '';
 	var $objectid = 0;
 	var $page;
-	
+
 	function db()
 	{
 		return db_connection();
@@ -50,14 +52,14 @@ class Api
 		return $this->objectid;
 	}
 
-	function setObjectId( $objectid )
+	function setObjectId($objectid)
 	{
 		$this->objectid = $objectid;
 	}
 
 	function getRootObjectId()
 	{
-	    $project = new Project( $this->page->projectid);
+		$project = new Project($this->page->projectid);
 		return $project::getRootObjectId();
 	}
 
@@ -68,29 +70,29 @@ class Api
 	}
 
 
-	function execute( $code )
+	function execute($code)
 	{
 		global $conf_tmpdir;
-		$code = "<?php\n".$code."\n?>";
+		$code = "<?php\n" . $code . "\n?>";
 
-		$tmp  = $conf_tmpdir.'/'.md5(microtime()).'.tmp';
-		$f = fopen( $tmp,'w' );
-		fwrite( $f,$code );
-		fclose( $f );
-		
-		require( $tmp ); // Ausfuehren des temporaeren PHP-Codes
+		$tmp = $conf_tmpdir . '/' . md5(microtime()) . '.tmp';
+		$f = fopen($tmp, 'w');
+		fwrite($f, $code);
+		fclose($f);
 
-		unlink( $tmp );
+		require($tmp); // Ausfuehren des temporaeren PHP-Codes
+
+		unlink($tmp);
 		$inhalt = Api::getOutput();
-		$this->output( $inhalt );
-	}	
-	
+		$this->output($inhalt);
+	}
+
 	function delOutput()
 	{
 		$this->output = '';
 	}
-	
-	function output( $text )
+
+	function output($text)
 	{
 		$this->output .= $text;
 	}

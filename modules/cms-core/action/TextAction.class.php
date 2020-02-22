@@ -10,7 +10,7 @@ namespace cms\action
     use cms\model\BaseObject;
 
     use cms\model\Text;
-    use \Html;
+    use util\Html;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de

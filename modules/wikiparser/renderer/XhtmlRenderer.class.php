@@ -10,7 +10,7 @@ use wikiparser\model\LineBreakElement;
 use wikiparser\model\LinkElement;
 use Logger;
 use wikiparser\model\RawElement;
-use Text;
+use util\Text;
 use wikiparser\model\TextElement;
 
 /**

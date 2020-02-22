@@ -18,11 +18,11 @@ namespace {
 namespace cms\action {
 
     use cms\model\User;
-    use \Html;
-    use \Session;
+    use util\Html;
+    use util\Session;
     use \Logger;
-    use \Http;
-    use \Text;
+    use util\Http;
+    use util\Text;
 
 
     /**

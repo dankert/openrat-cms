@@ -15,8 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+namespace util;
+
 use cms\model\Page;
 use cms\model\Project;
+use util\Session;
 
 
 /**
@@ -28,15 +31,16 @@ use cms\model\Project;
  */
 class Macro
 {
-    /**
-     * @var Page
-     */
+	/**
+	 * @var Page
+	 */
 	protected $page;
 
-	public function setContextPage( &$page ) {
+	public function setContextPage(&$page)
+	{
 		$this->page = $page;
 	}
-	
+
 	/**
 	 * Ausführen des Makros. Diese Methode sollte durch die Unterklasse überschrieben werden.
 	 */
@@ -44,8 +48,8 @@ class Macro
 	{
 		// overwrite this in subclasses
 	}
-	
-	
+
+
 	/**
 	 * Holt die aktuellen Datenbankverbindung.
 	 */
@@ -54,7 +58,7 @@ class Macro
 		return db();
 	}
 
-	
+
 	/**
 	 * Holt die aktuelle Objekt-Id.
 	 * @return number
@@ -64,7 +68,7 @@ class Macro
 		return $this->page->objectid;
 	}
 
-	
+
 	/**
 	 * Holt die aktuelle Seite.
 	 * @return \cms\model\Page
@@ -73,8 +77,8 @@ class Macro
 	{
 		return $this->page;
 	}
-	
-	
+
+
 	/**
 	 * Holt das aktuelle Objekt.
 	 * @return Object
@@ -84,78 +88,77 @@ class Macro
 		return $this->page;
 	}
 
-	
 
 	/**
-	 * Ermittelt die Id des Wurzelordners im aktuellen Projekt. 
+	 * Ermittelt die Id des Wurzelordners im aktuellen Projekt.
 	 */
 	protected function getRootObjectId()
 	{
-	    $project = new Project( $this->page->projectid);
+		$project = new Project($this->page->projectid);
 		return $project->getRootObjectId();
 	}
 
-	
+
 	/**
 	 * Löscht die bisher erzeugte Ausgabe.
-     * @deprecated useless
+	 * @deprecated useless
 	 */
 	public function delOutput()
 	{
 	}
-	
+
 	/**
 	 * Ergänzt die Standardausgabe um den gewünschten Wert.
 	 * @deprecated use echo()
 	 */
-	public function output( $text )
+	public function output($text)
 	{
 		echo $text;
 	}
 
-	
+
 	/**
 	 * Ergänzt die Standardausgabe um den gewünschten Wert. Es wird ein Zeilenendezeichen ergänzt.
 	 * @deprecated use echo()
 	 */
-	public function outputLn( $text )
+	public function outputLn($text)
 	{
-		echo $text."\n";
+		echo $text . "\n";
 	}
 
 
 	/**
 	 * Setzt eine Sitzungsvariable.
-	 * 
+	 *
 	 * @param String $var
 	 * @param Object $value
 	 */
-	public function setSessionVar( $var,$value )
+	public function setSessionVar($var, $value)
 	{
-		Session::set( $var,$value );
+		Session::set($var, $value);
 	}
 
 
 	/**
 	 * Ermittelt eine Sitzungsvariable.
-	 * 
+	 *
 	 * @param String $var
 	 * @return string
 	 */
-	public function getSessionVar( $var )
+	public function getSessionVar($var)
 	{
-		return Session::get( $var );
+		return Session::get($var);
 	}
 
 
-    /**
-     * Ermittelt den Pfad auf ein Objekt.
-     * @param Object
-     * @return string
-     */
-	public function pathToObject( $obj )
+	/**
+	 * Ermittelt den Pfad auf ein Objekt.
+	 * @param Object
+	 * @return string
+	 */
+	public function pathToObject($obj)
 	{
-		if	( is_object($obj) )
+		if (is_object($obj))
 			return $this->page->path_to_object($obj->objectid);
 		else
 			return $this->page->path_to_object($obj);

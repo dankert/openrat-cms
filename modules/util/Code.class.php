@@ -16,6 +16,11 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
+namespace util;
+use util\FileUtils;
+use Logger;
+use util\Macro;
+
 /**
  * @author $Author$
  * @version $Revision$
@@ -24,22 +29,22 @@
 class Code extends Macro
 {
 	public $code;
-	
+
 	function execute()
 	{
-		if	( substr($this->code,0,2) != '<?' )
-			$this->code = "<?php\n".$this->code."\n?>";
+		if (substr($this->code, 0, 2) != '<?')
+			$this->code = "<?php\n" . $this->code . "\n?>";
 
-		Logger::trace('code: Executing PHP Code: '."\n".$this->code);
-		$tmp = FileUtils::getTempDir().'/openratMacro';
+		Logger::trace('code: Executing PHP Code: ' . "\n" . $this->code);
+		$tmp = FileUtils::getTempDir() . '/openratMacro';
 		$tmp .= '.code.php.tmp';
-		
-		$f = fopen( $tmp,'w' );
-		fwrite( $f,$this->code );
-		fclose( $f );
-		
-		require( $tmp ); // Ausfuehren des temporaeren PHP-Codes
 
-		unlink( $tmp );
-	}	
+		$f = fopen($tmp, 'w');
+		fwrite($f, $this->code);
+		fclose($f);
+
+		require($tmp); // Ausfuehren des temporaeren PHP-Codes
+
+		unlink($tmp);
+	}
 }

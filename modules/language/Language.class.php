@@ -3,7 +3,7 @@
 namespace language;
 
 use LogicException;
-use YAML;
+use util\YAML;
 
 class Language
 {

@@ -1,16 +1,16 @@
 <?php
 namespace cms\model;
-use ArrayUtils;
+use util\ArrayUtils;
 use cms\publish\Publish;
 use MacroRunner;
 use \ObjectNotFoundException;
 use \Logger;
-use \Text;
-use \Html;
-use \Http;
-use \Transformer;
-use \Code;
-use util\FileCache;
+use util\Text;
+use util\Html;
+use util\Http;
+use util\Transformer;
+use util\Code;
+use util\cache\FileCache;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -436,7 +436,7 @@ SQL
 
 		$sql->setBoolean( 'publish'          ,$this->publish );
 		$sql->setInt    ( 'lastchange_date'  ,now()         );
-		$user = \Session::getUser();
+		$user = \util\Session::getUser();
 		$sql->setInt    ( 'lastchange_userid',$user->userid  );
 
 		$sql->query();
@@ -553,7 +553,7 @@ SQL
             'el'=>is_object($this->element)?$this->element->elementid:0,
             'language'=>$this->languageid,
             'model' =>is_object($this->page)?$this->page->modelid:0,
-            'publish'=>\ClassUtils::getSimpleClassName($this->publisher) );
+            'publish'=> \util\ClassUtils::getSimpleClassName($this->publisher) );
         return new FileCache( $cacheKey,function() {
             return $this->generateValue();
         },$this->lastchangeTimeStamp );
@@ -1159,7 +1159,7 @@ SQL
 
                         $mdConfig = Config()->subset('editor')->subset('markdown');
 
-                        $parser = new \Parsedown();
+                        $parser = new \util\Parsedown();
                         $parser->setUrlsLinked( $mdConfig->is('urls-linked',true));
                         $parser->setMarkupEscaped( !$this->element->html );
 
@@ -1280,7 +1280,7 @@ SQL
 				try {
 					$inhalt .= $runner->executeMacro($macroName, $macroSettings,$this->page);
 				}
-				catch( \OpenRatException $e ) {
+				catch( \util\exception\OpenRatException $e ) {
 					if	( !$this->publisher->isPublic() )
 						$inhalt = lang($e->key).' ('.$e->getMessage().')'; // Inform the viewer
 					else
@@ -1385,7 +1385,7 @@ SQL
 						break;
 					case 'edit_url':
 						$raw = true;
-						$db = \Session::getDatabase();
+						$db = \util\Session::getDatabase();
 						$inhalt = Html::url('page',null,$this->page->objectid,array('dbid'=>$db->id));
 						break;
 					case 'edit_fullurl':
@@ -1462,27 +1462,27 @@ SQL
 						break;
 
 					case 'act_user_username':
-						$user = \Session::getUser();
+						$user = \util\Session::getUser();
 						if   ( $user )
 							$inhalt = $user->name;
 						break;
 					case 'act_user_fullname':
-						$user = \Session::getUser();
+						$user = \util\Session::getUser();
 						if   ( $user )
 							$inhalt = $user->fullname;
 						break;
 					case 'act_user_mail':
-						$user = \Session::getUser();
+						$user = \util\Session::getUser();
 						if   ( $user )
 							$inhalt = $user->mail;
 						break;
 					case 'act_user_desc':
-						$user = \Session::getUser();
+						$user = \util\Session::getUser();
 						if   ( $user )
 							$inhalt = $user->desc;
 						break;
 					case 'act_user_tel':
-						$user = \Session::getUser();
+						$user = \util\Session::getUser();
 						if   ( $user )
 							$inhalt = $user->tel;
 						break;
@@ -1645,7 +1645,7 @@ SQL
 	function tmpfile()
 	{
 		$db = db_connection();
-		$filename = \FileUtils::getTempFileName(  );
+		$filename = \util\FileUtils::getTempFileName(  );
 		return $filename;
 	}
 	

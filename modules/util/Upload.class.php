@@ -16,6 +16,10 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
+namespace util;
+use InvalidArgumentException;
+use Request;
+
 /**
  * Methoden fuer den Upload einer Datei
  *
@@ -35,82 +39,81 @@ class Upload
 
 	public static $DEFAULT_PARAM_NAME = 'file';
 
-	
+
 	/**
 	 * Bearbeitet den Upload einer Datei.<br>
 	 *
 	 * @return Upload
 	 */
-	function __construct( $name='file' ) // Konstruktor
+	function __construct($name = 'file') // Konstruktor
 	{
-	    $this->parameterName = $name;
+		$this->parameterName = $name;
 	}
 
-    /**
-     * Provision of an uploaded file.
-     */
+	/**
+	 * Provision of an uploaded file.
+	 */
 	public function processUpload()
-    {
-        $name = $this->parameterName;
+	{
+		$name = $this->parameterName;
 
-        if	( ! $this->isAvailable() )
-            throw new InvalidArgumentException('No file received under the key "'.$name.'"' );
+		if (!$this->isAvailable())
+			throw new InvalidArgumentException('No file received under the key "' . $name . '"');
 
-        $uFile = $_FILES[$name];
+		$uFile = $_FILES[$name];
 
-        if	( !isset($uFile['tmp_name']) )
-            throw new InvalidArgumentException('No temporary filename found for uploaded file key "'.$name.'"' );
+		if (!isset($uFile['tmp_name']))
+			throw new InvalidArgumentException('No temporary filename found for uploaded file key "' . $name . '"');
 
-        if	( !is_file($uFile['tmp_name']) )
-            throw new InvalidArgumentException('Not a file: '.$uFile['tmp_name'] );
+		if (!is_file($uFile['tmp_name']))
+			throw new InvalidArgumentException('Not a file: ' . $uFile['tmp_name']);
 
-        switch( $uFile['error'] )
-        {
-            case UPLOAD_ERR_OK:
-                break;
+		switch ($uFile['error']) {
+			case UPLOAD_ERR_OK:
+				break;
 
-            case UPLOAD_ERR_INI_SIZE:
-                throw new InvalidArgumentException('Uploaded file is bigger than allowed in server configuration');
+			case UPLOAD_ERR_INI_SIZE:
+				throw new InvalidArgumentException('Uploaded file is bigger than allowed in server configuration');
 
-            case UPLOAD_ERR_FORM_SIZE:
-                throw new InvalidArgumentException('Uploaded file is bigger than allowed in form');
+			case UPLOAD_ERR_FORM_SIZE:
+				throw new InvalidArgumentException('Uploaded file is bigger than allowed in form');
 
-            default:
-                throw new InvalidArgumentException('Error code while uploading file: '.$uFile['error'] );
-        }
+			default:
+				throw new InvalidArgumentException('Error code while uploading file: ' . $uFile['error']);
+		}
 
-        $this->mimeType = $uFile['type'];
+		$this->mimeType = $uFile['type'];
 
-        $this->size = filesize($uFile['tmp_name']);
+		$this->size = filesize($uFile['tmp_name']);
 
-        $fh    = fopen( $uFile['tmp_name'],'r' );
+		$fh = fopen($uFile['tmp_name'], 'r');
 
-        $this->value = fread($fh,$this->size);
-        fclose( $fh );
+		$this->value = fread($fh, $this->size);
+		fclose($fh);
 
-        $this->filename = $uFile['name'];
-        $this->extension = '';
+		$this->filename = $uFile['name'];
+		$this->extension = '';
 
-        $p = strrpos( $this->filename,'.' ); // Letzten Punkt suchen
+		$p = strrpos($this->filename, '.'); // Letzten Punkt suchen
 
-        if   ($p!==false) // Wennn letzten Punkt gefunden, dann dort aufteilen
-        {
-            $this->extension = substr( $this->filename,$p+1 );
-            $this->filename  = substr( $this->filename,0,$p );
-        }
-    }
+		if ($p !== false) // Wennn letzten Punkt gefunden, dann dort aufteilen
+		{
+			$this->extension = substr($this->filename, $p + 1);
+			$this->filename = substr($this->filename, 0, $p);
+		}
+	}
 
-    /**
-     * Is this upload available?
-     * @param $name Request variable name
-     * @return bool <code>true</code> if upload is available
-     */
-    public function isAvailable()
-    {
-        $name = $this->parameterName;
+	/**
+	 * Is this upload available?
+	 * @param $name Request variable name
+	 * @return bool <code>true</code> if upload is available
+	 */
+	public function isAvailable()
+	{
+		$name = $this->parameterName;
 
-        return isset($_FILES[$name]) && is_array($_FILES[$name]);
-    }
+		return isset($_FILES[$name]) && is_array($_FILES[$name]);
+	}
 }
 
 ?>

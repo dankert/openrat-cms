@@ -18,16 +18,16 @@ use \database\Database;
 use \DB;
 use \DbUpdate;
 use \Exception;
-use \Http;
+use util\Http;
 use \InternalAuth;
 use \Logger;
 use \ObjectNotFoundException;
-use \OpenRatException;
+use util\exception\OpenRatException;
 use \security\Password;
-use \Session;
-use \Html;
-use \Mail;
-use \Text;
+use util\Session;
+use util\Html;
+use util\Mail;
+use util\Text;
 
 
 // OpenRat Content Management System
@@ -191,7 +191,7 @@ class LoginAction extends BaseAction
             $authid = $this->getRequestVar( $sso['auth_param_name']);
 
             if	( empty( $authid) )
-                throw new \SecurityException( 'no authorization data (no auth-id)');
+                throw new \util\exception\SecurityException( 'no authorization data (no auth-id)');
 
             if	( $sso['auth_param_serialized'] )
                 $authid = unserialize( $authid );
@@ -239,19 +239,19 @@ class LoginAction extends BaseAction
 
                 $html = implode('',$inhalt);
                 if	( !preg_match($sso['expect_regexp'],$html) )
-                    throw new \SecurityException('auth failed');
+                    throw new \util\exception\SecurityException('auth failed');
                 $treffer=0;
                 if	( !preg_match($sso['username_regexp'],$html,$treffer) )
-                    throw new \SecurityException('auth failed');
+                    throw new \util\exception\SecurityException('auth failed');
                 if	( !isset($treffer[1]) )
-                    throw new \SecurityException('authorization failed');
+                    throw new \util\exception\SecurityException('authorization failed');
 
                 $username = $treffer[1];
 
                 $user = User::loadWithName( $username );
 
                 if	( ! $user->isValid( ))
-                    throw new \SecurityException('authorization failed: user not found: '.$username);
+                    throw new \util\exception\SecurityException('authorization failed: user not found: '.$username);
 
                 $user->setCurrent();
 
@@ -267,7 +267,7 @@ class LoginAction extends BaseAction
             $username = getenv( $ssl_user_var );
 
             if	( empty($username) )
-                throw new \SecurityException( 'no username in client certificate ('.$ssl_user_var.') (or there is no client certificate...?)' );
+                throw new \util\exception\SecurityException( 'no username in client certificate ('.$ssl_user_var.') (or there is no client certificate...?)' );
 
             $user = User::loadWithName( $username );
 
@@ -488,7 +488,7 @@ class LoginAction extends BaseAction
 
 		if	( !$openId->checkAuthentication() )
 		{
-			throw new \SecurityException('OpenId-Login failed' );
+			throw new \util\exception\SecurityException('OpenId-Login failed' );
 		}
 		
 		//Html::debug($openId);
@@ -502,7 +502,7 @@ class LoginAction extends BaseAction
 		if	( empty($username) )
 		{
 			// Es konnte kein Benutzername ermittelt werden.
-			throw new \SecurityException('no username supplied by openid provider' );
+			throw new \util\exception\SecurityException('no username supplied by openid provider' );
 		}
 		
 		$user = User::loadWithName( $username );
@@ -523,7 +523,7 @@ class LoginAction extends BaseAction
 			{
 				Logger::debug("OpenId-Login failed for $username");
 				// Benutzer ist nicht in Benutzertabelle vorhanden (und angelegt werden soll er auch nicht).
-				throw new \SecurityException('user',$username,'LOGIN_OPENID_FAILED','error',array('name'=>$username) );
+				throw new \util\exception\SecurityException('user',$username,'LOGIN_OPENID_FAILED','error',array('name'=>$username) );
 			}
 		}
 		else
@@ -559,7 +559,7 @@ class LoginAction extends BaseAction
 		Session::setUser('');
 		
 		if	( $conf['login']['nologin'] )
-			throw new \SecurityException('login disabled');
+			throw new \util\exception\SecurityException('login disabled');
 
 		$openid_user   = $this->getRequestVar('openid_url'    );
 		$loginName     = $this->getRequestVar('login_name'    ,OR_FILTER_ALPHANUM);
@@ -647,7 +647,7 @@ class LoginAction extends BaseAction
 		Session::setUser(''); // Altes Login entfernen.
 		
 		if	( $conf['login']['nologin'] )
-			throw new \SecurityException('login disabled');
+			throw new \util\exception\SecurityException('login disabled');
 
 		$loginName     = $this->getRequestVar('login_name'    ,OR_FILTER_ALPHANUM);
 		$loginPassword = $this->getRequestVar('login_password',OR_FILTER_ALPHANUM);
@@ -1057,7 +1057,7 @@ class LoginAction extends BaseAction
 		$user = Session::getUser();
 		
 		if	( ! $user->isAdmin )
-			throw new \SecurityException("Switching the user is only possible for admins.");
+			throw new \util\exception\SecurityException("Switching the user is only possible for admins.");
 		
 		$this->recreateSession();
 		

@@ -32,6 +32,7 @@
 // ---------------------------------------------------------------------------
 use cms\model\Folder;
 use cms\model\BaseObject;
+use util\Macro;
 
 
 /**

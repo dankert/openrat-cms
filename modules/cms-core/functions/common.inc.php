@@ -1,5 +1,7 @@
 <?php
 
+use util\Session;
+
 
 /**
  * F�gt einen Slash ("/") an das Ende an, sofern nicht bereits vorhanden.

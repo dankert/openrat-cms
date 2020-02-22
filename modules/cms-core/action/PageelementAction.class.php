@@ -14,13 +14,13 @@ use cms\model\BaseObject;
 use cms\publish\PublishEdit;
 use cms\publish\PublishPreview;
 use cms\publish\PublishShow;
-use Html;
-use Http;
+use util\Html;
+use util\Http;
 use LogicException;
-use Session;
-use Transformer;
-use \Text;
-use ValidationException;
+use util\Session;
+use util\Transformer;
+use util\Text;
+use util\exception\ValidationException;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -701,7 +701,7 @@ class PageelementAction extends BaseAction
 
         // Pruefen, ob Berechtigung zum Freigeben besteht
         if	( !$this->page->hasRight(Acl::ACL_RELEASE) )
-            throw new \SecurityException( 'Cannot release','no right' );
+            throw new \util\exception\SecurityException( 'Cannot release','no right' );
 
         // Inhalt freigeben
         $this->value->release();
@@ -1309,7 +1309,7 @@ class PageelementAction extends BaseAction
 	function pubPost()
 	{
 		if	( !$this->page->hasRight( Acl::ACL_PUBLISH ) )
-            throw new \SecurityException( 'no right for publish' );
+            throw new \util\exception\SecurityException( 'no right for publish' );
 
 		$this->page->public = true;
 		$this->page->publish();

@@ -1,5 +1,9 @@
 <?php
 
+namespace util;
+use Pfad;
+use RuntimeException;
+
 /**
  * Werkzeugklasse f�r Datei-Operationen.
  *
@@ -12,15 +16,14 @@ class FileUtils
 	 * @param String $pfad
 	 * @return Pfad mit angeh�ngtem Slash.
 	 */
-    public static function slashify($pfad)
+	public static function slashify($pfad)
 	{
-		if	( substr($pfad,-1,1) == '/')
+		if (substr($pfad, -1, 1) == '/')
 			return $pfad;
 		else
-			return $pfad.'/';
+			return $pfad . '/';
 	}
-	
-	
+
 
 	/**
 	 * Liefert einen Verzeichnisnamen fuer temporaere Dateien.
@@ -29,20 +32,16 @@ class FileUtils
 	{
 		global $conf;
 		$tmpdir = @$conf['cache']['tmp_dir'];
-		$tmpfile = @tempnam( $tmpdir,'openrat_tmp' );
+		$tmpfile = @tempnam($tmpdir, 'openrat_tmp');
 
 		// 2. Versuch: Temp-Dir aus "upload_tmp_dir".
-		if	( $tmpfile === FALSE )
-		{
+		if ($tmpfile === FALSE) {
 			$tmpdir = ini_get('upload_tmp_dir');
-			$tmpfile = @tempnam( $tmpdir,'openrat_tmp' );
+			$tmpfile = @tempnam($tmpdir, 'openrat_tmp');
+		} elseif ($tmpfile === FALSE) {
+			$tmpfile = @tempnam('', 'openrat_tmp');
 		}
-		
-		elseif	( $tmpfile === FALSE )
-		{
-			$tmpfile = @tempnam( '','openrat_tmp' );
-		}
-		
+
 		return $tmpfile;
 	}
 
@@ -52,35 +51,34 @@ class FileUtils
 	 */
 	public static function getTempDir()
 	{
-        $tmpfile = FileUtils::createTempFile();
-	    
-	    $tmpdir = dirname($tmpfile);
-	    @unlink($tmpfile);
-	    
-	    return FileUtils::slashify( $tmpdir );
+		$tmpfile = FileUtils::createTempFile();
+
+		$tmpdir = dirname($tmpfile);
+		@unlink($tmpfile);
+
+		return FileUtils::slashify($tmpdir);
 	}
 
 
-    /**
-     * @param array $attr
-     * @return string
-     * @deprecated use \Cache
-     */
-    public static function getTempFileName( $attr = array() )
-    {
-        $filename = FileUtils::getTempDir() . '/openrat';
-        foreach ($attr as $a => $w)
-            $filename .= '_' . $a . $w;
+	/**
+	 * @param array $attr
+	 * @return string
+	 * @deprecated use \Cache
+	 */
+	public static function getTempFileName($attr = array())
+	{
+		$filename = FileUtils::getTempDir() . '/openrat';
+		foreach ($attr as $a => $w)
+			$filename .= '_' . $a . $w;
 
-        $filename .= '.tmp';
-        return $filename;
-    }
+		$filename .= '.tmp';
+		return $filename;
+	}
 
 
-
-    /**
+	/**
 	 * Liest die Dateien aus dem angegebenen Ordner in ein Array.
-	 * 
+	 *
 	 * @param $dir string Verzeichnis, welches gelesen werden soll
 	 * @return array Liste der Dateien im Ordner
 	 */
@@ -88,45 +86,46 @@ class FileUtils
 	{
 		$dir = FileUtils::slashify($dir);
 		$dateien = array();
-		
-		if	( !is_dir($dir) )
-		{
-            throw new RuntimeException('not a directory: '.$dir);
+
+		if (!is_dir($dir)) {
+			throw new RuntimeException('not a directory: ' . $dir);
 		}
-		
-		if	( $dh = opendir($dir) )
-		{
-			while( ($verzEintrag = readdir($dh)) !== false )
-			{
-				if	( substr($verzEintrag,0,1) != '.' )
-				{
+
+		if ($dh = opendir($dir)) {
+			while (($verzEintrag = readdir($dh)) !== false) {
+				if (substr($verzEintrag, 0, 1) != '.') {
 					$dateien[] = $verzEintrag;
 				}
-	        }
-	        closedir($dh);
-	        
-	        return $dateien;
-	    }
-	    else
-	    {
-			throw new RuntimeException('unable to open directory: '.$dir);
-	    }
-		
+			}
+			closedir($dh);
+
+			return $dateien;
+		} else {
+			throw new RuntimeException('unable to open directory: ' . $dir);
+		}
+
 	}
 
 
-	public static function isAbsolutePath( $path ) {
+	public static function isAbsolutePath($path)
+	{
 		return @$path[0] == '/';
 	}
 
 
-	public static function toAbsolutePath( $pathElements ) {
-		$pathElements = array_map( function($path) { return trim($path,'/'); },$pathElements );
-		return array_reduce( $pathElements, function($path,$item){return $path.($item?'/'.$item:'');},'' );
+	public static function toAbsolutePath($pathElements)
+	{
+		$pathElements = array_map(function ($path) {
+			return trim($path, '/');
+		}, $pathElements);
+		return array_reduce($pathElements, function ($path, $item) {
+			return $path . ($item ? '/' . $item : '');
+		}, '');
 	}
 
 
-	public static function toRelativePath( $pathElements ) {
-		return '.'.self::toAbsolutePath($pathElements);
+	public static function toRelativePath($pathElements)
+	{
+		return '.' . self::toAbsolutePath($pathElements);
 	}
 }

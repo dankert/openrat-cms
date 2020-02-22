@@ -12,7 +12,7 @@ ini_set('display_startup_errors', 1);
 require('../../modules/autoload.php');
 
 use template_engine\engine\TemplateEngine;
-
+use util\FileUtils;
 
 
 $dir = __DIR__.'/../../modules/cms-ui/themes/default/html/views';

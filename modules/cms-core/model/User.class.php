@@ -113,7 +113,7 @@ class User extends ModelBase
 	{
 		$this->loginDate = time();
 
-		\Session::setUser( $this );
+		\util\Session::setUser( $this );
 	}
 
 
@@ -236,7 +236,7 @@ SQL
 		$stmt->setInt( 'expires'    ,time() + ($expirationPeriodDays*24*60*60) );
 		$stmt->setInt( 'create_date',time()                           );
 
-		$browser = new \Browser();
+		$browser = new \util\Browser();
 		$stmt->setString( 'platform',$browser->platform );
 		$stmt->setString( 'name'    ,$browser->name     );
 		$row = $stmt->getRow();

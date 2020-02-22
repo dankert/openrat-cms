@@ -13,12 +13,12 @@ use cms\model\Model;
 
 
 use database\Database;
-use Http;
+use util\Http;
 use Logger;
 use \security\Password;
-use Session;
-use \Html;
-use \Mail;
+use util\Session;
+use util\Html;
+use util\Mail;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2007 Jan Dankert, jandankert@jandankert.de
@@ -206,7 +206,7 @@ class StartAction extends BaseAction
 			$authid = $this->getRequestVar( $sso['auth_param_name']);
 			
 			if	( empty( $authid) )
-				throw new \SecurityException( 'no authorization data (no auth-id)');
+				throw new \util\exception\SecurityException( 'no authorization data (no auth-id)');
 				
 			if	( $sso['auth_param_serialized'] )
 				$authid = unserialize( $authid );
@@ -256,12 +256,12 @@ class StartAction extends BaseAction
 				$html = implode('',$inhalt);
 //				Html::debug($html);
 				if	( !preg_match($sso['expect_regexp'],$html) )
-					throw new \SecurityException('auth failed');
+					throw new \util\exception\SecurityException('auth failed');
 				$treffer=0;
 				if	( !preg_match($sso['username_regexp'],$html,$treffer) )
-					throw new \SecurityException('auth failed');
+					throw new \util\exception\SecurityException('auth failed');
 				if	( !isset($treffer[1]) )
-					throw new \SecurityException('authorization failed');
+					throw new \util\exception\SecurityException('authorization failed');
 					
 				$username = $treffer[1];
 				
@@ -271,7 +271,7 @@ class StartAction extends BaseAction
 				$user = User::loadWithName( $username );
 				
 				if	( ! $user->isValid( ))
-					throw new \SecurityException('authorization failed: user not found: '.$username);
+					throw new \util\exception\SecurityException('authorization failed: user not found: '.$username);
 					
 				$user->setCurrent();
 
@@ -287,7 +287,7 @@ class StartAction extends BaseAction
 			$username = getenv( $ssl_user_var );
 
 			if	( empty($username) )
-				throw new \SecurityException( 'no username in client certificate ('.$ssl_user_var.') (or there is no client certificate...?)' );
+				throw new \util\exception\SecurityException( 'no username in client certificate ('.$ssl_user_var.') (or there is no client certificate...?)' );
 			
 			$this->setDefaultDb();
 
@@ -565,7 +565,7 @@ class StartAction extends BaseAction
 		Session::setUser('');
 		
 		if	( $conf['login']['nologin'] )
-			throw new \SecurityException('login disabled');
+			throw new \util\exception\SecurityException('login disabled');
 
 		$openid_user   = $this->getRequestVar('openid_url'    );
 		$loginName     = $this->getRequestVar('login_name'    ,OR_FILTER_ALPHANUM);
@@ -841,7 +841,7 @@ class StartAction extends BaseAction
 		$user = Session::getUser();
 		
 		if	( ! $user->isAdmin )
-			throw new \SecurityException("");
+			throw new \util\exception\SecurityException("");
 		
 		$this->recreateSession();
 		

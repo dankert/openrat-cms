@@ -37,10 +37,10 @@ class PublishPreview extends Publish
             case BaseObject::TYPEID_FILE:
             case BaseObject::TYPEID_IMAGE:
             case BaseObject::TYPEID_TEXT:
-                $inhalt = \Html::url('file','show',$to->objectid,$param);
+                $inhalt = \util\Html::url('file','show',$to->objectid,$param);
                 break;
             case BaseObject::TYPEID_PAGE:
-                $inhalt = \Html::url('page','show',$to->objectid,$param);
+                $inhalt = \util\Html::url('page','show',$to->objectid,$param);
                 break;
 
             case BaseObject::TYPEID_LINK:
@@ -53,14 +53,14 @@ class PublishPreview extends Publish
                 switch( $linkedObject->typeid )
                 {
                     case BaseObject::TYPEID_FILE:
-                        $inhalt = \Html::url('file','show',$link->linkedObjectId,$param);
+                        $inhalt = \util\Html::url('file','show',$link->linkedObjectId,$param);
                         break;
 
                     case BaseObject::TYPEID_PAGE:
-                        $inhalt = \Html::url('page','show',$link->linkedObjectId,$param);
+                        $inhalt = \util\Html::url('page','show',$link->linkedObjectId,$param);
                         break;
                     case BaseObject::TYPEID_URL:
-                        $inhalt = \Html::url('url','show',$link->linkedObjectId,$param);
+                        $inhalt = \util\Html::url('url','show',$link->linkedObjectId,$param);
                         break;
 					default:
 						$inhalt = 'Unknown link type: '.$linkedObject->typeid;

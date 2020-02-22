@@ -1,4 +1,7 @@
 <?php
+
+use util\Text;
+
 /**
  * Created by PhpStorm.
  * User: dankert

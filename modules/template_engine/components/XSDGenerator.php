@@ -3,6 +3,8 @@
  * Using the Component classes and generating a XSD-File.
  */
 
+use util\FileUtils;
+
 error_reporting(E_ALL);
 
 require('../../util/FileUtils.class.php');

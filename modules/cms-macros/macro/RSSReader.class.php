@@ -27,7 +27,7 @@
 // Lesen eines RSS-Feeds und erzeugen eines HTML-Abschnittes dafuer
 //
 // ---------------------------------------------------------------------------
-
+use util\Macro;
 
 
 /**

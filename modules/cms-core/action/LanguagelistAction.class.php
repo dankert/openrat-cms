@@ -6,8 +6,8 @@ use cms\model\Language;
 
 
 use cms\model\Project;
-use Session;
-use \Html;
+use util\Session;
+use util\Html;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de

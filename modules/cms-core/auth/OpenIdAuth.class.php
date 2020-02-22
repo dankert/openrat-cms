@@ -1,5 +1,7 @@
 <?php
 
+use util\Http;
+
 
 /**
  * Open-Id Authentisierung gem�� OpenId-Spezifikation 1.0.
@@ -374,17 +376,17 @@ class OpenIdAuth implements Auth
 		       
 		if	( $queryVars['openid.invalidate_handle'] != $this->handle )
 		{
-			throw new \SecurityException('Association-Handle mismatch.');
+			throw new \util\exception\SecurityException('Association-Handle mismatch.');
 		}
 
 		if	( $queryVars['openid.mode'] != 'id_res' )
 		{
-			throw new \SecurityException('Open-Id: Unknown mode:'.$queryVars['openid.mode']);
+			throw new \util\exception\SecurityException('Open-Id: Unknown mode:'.$queryVars['openid.mode']);
 		}
 		
 		if	( $this->provider=='identity' && $queryVars['openid.identity'] != $this->identity )
 		{
-			throw new \SecurityException('Open-Id: Identity mismatch. Wrong identity:'.$queryVars['openid.identity']);
+			throw new \util\exception\SecurityException('Open-Id: Identity mismatch. Wrong identity:'.$queryVars['openid.identity']);
 		}
 		
 
@@ -441,7 +443,7 @@ class OpenIdAuth implements Auth
 		if	( !array_key_exists('is_valid',$result) )
 		{
 			// Zeile nicht gefunden.
-			throw new \SecurityException('Undefined Open-Id response: "is_valid" expected, but not found');
+			throw new \util\exception\SecurityException('Undefined Open-Id response: "is_valid" expected, but not found');
 		}
 		elseif	( $result['is_valid'] == 'true' )
 		{
@@ -451,7 +453,7 @@ class OpenIdAuth implements Auth
 		else
 		{
 			// Bestaetigung wurde durch den OpenId-Provider abgelehnt.
-			throw new \SecurityException('Server refused login.');
+			throw new \util\exception\SecurityException('Server refused login.');
 		}
 	}
 	

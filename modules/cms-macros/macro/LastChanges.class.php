@@ -20,6 +20,8 @@ use cms\model\Folder;
 use cms\model\Link;
 use cms\model\Page;
 use cms\model\Project;
+use util\Macro;
+use util\Text;
 
 
 /**

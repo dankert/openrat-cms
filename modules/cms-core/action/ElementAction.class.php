@@ -10,7 +10,7 @@ use cms\model\Folder;
 use cms\model\BaseObject;
 use ReflectionClass;
 use ReflectionProperty;
-use Text;
+use util\Text;
 
 
 
@@ -43,7 +43,7 @@ class ElementAction extends BaseAction
     public function init()
     {
         if	( $this->getRequestId() == 0 )
-			throw new \ValidationException('no element-id available');
+			throw new \util\exception\ValidationException('no element-id available');
 
 		$this->element = new Element( $this->getRequestId() );
 		$this->element->load();
@@ -68,7 +68,7 @@ class ElementAction extends BaseAction
 	public function removePost()
 	{
 		if	( !$this->hasRequestVar('confirm') )
-			throw new \ValidationException('confirm');
+			throw new \util\exception\ValidationException('confirm');
 
 		$type = $this->getRequestVar('type','abc');
 		
@@ -265,7 +265,7 @@ class ElementAction extends BaseAction
                         case Element::ELEMENT_TYPE_DYNAMIC:
 
                             $files = Array();
-                            $macroFiles = \FileUtils::readDir(__DIR__.'/../../cms-macros/macro');
+                            $macroFiles = \util\FileUtils::readDir(__DIR__.'/../../cms-macros/macro');
                             foreach( $macroFiles as $macroFile )
                             {
                                 $file = substr($macroFile,0,strlen($macroFile)-10);
@@ -350,8 +350,8 @@ class ElementAction extends BaseAction
                     if	( $this->element->typeid != Element::ELEMENT_TYPE_LONGTEXT )
                         unset( $formats[ Element::ELEMENT_FORMAT_HTML ] );
 
-                    foreach( $formats as $t=>$v )
-                        $formats[$t] = array('lang'=>'EL_PROP_FORMAT_'.$v);
+                    //foreach( $formats as $t=>$v )
+                    //    $formats[$t] = array('lang'=>'EL_PROP_FORMAT_'.$v);
 
                     $this->setTemplateVar('formatlist', $formats);
                     break;
@@ -455,7 +455,7 @@ class ElementAction extends BaseAction
 
 							$this->setTemplateVar('dynamic_class_description',$description );
 							$this->setTemplateVar('dynamic_class_parameters' ,$paramList          );
-							$this->setTemplateVar('parameters'               ,\YAML::dump($parameters)  );
+							$this->setTemplateVar('parameters'               , \util\YAML::dump($parameters)  );
 
 
                             break;
@@ -610,7 +610,7 @@ class ElementAction extends BaseAction
 	{
         if	( !$this->userIsAdmin() && $this->getRequestVar('type') == 'code' )
             // Code-Elemente fuer Nicht-Administratoren nicht benutzbar
-            throw new \ValidationException('type');
+            throw new \util\exception\ValidationException('type');
 
         $this->element->typeid = $this->getRequestId('typeid');
 

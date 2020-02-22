@@ -7,8 +7,8 @@ use cms\model\Folder;
 use cms\model\Link;
 
 
-use Html;
-use Session;
+use util\Html;
+use util\Session;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de

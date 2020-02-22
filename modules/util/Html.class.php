@@ -17,6 +17,7 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
+namespace util;
 /**
  * Bereitstellen von Methoden fuer die Darstellung von HTML-Elementen
  *
@@ -27,7 +28,7 @@
 class Html
 {
 
-	
+
 	/**
 	 * Erzeugt eine relative Url innerhalb von Openrat
 	 *
@@ -35,98 +36,90 @@ class Html
 	 * @param string Unteraktion, die innerhalb der Aktion aufgerufen werden soll
 	 * @param int Id fuer diesen Aufruf
 	 * @param array Weitere beliebige Parameter
-     * @deprecated Das ist Dialog-Logik. Besser im Frontend erzeugen.
+	 * @deprecated Das ist Dialog-Logik. Besser im Frontend erzeugen.
 	 */
-    public static function url( $action,$subaction='',$id='',$params=array() )
+	public static function url($action, $subaction = '', $id = '', $params = array())
 	{
-		if	( intval($id)==0 )
-			$id='-';
+		if (intval($id) == 0)
+			$id = '-';
 
 		global $conf;
-		
-		if	( is_array($action) )
-		{
+
+		if (is_array($action)) {
 			$params = $action;
 
-			if	( isset($params['callAction']) )
-			{
-				$params['subaction'] = $params['callAction']; 
-				unset( $params['callAction'] );
-				unset( $params['callSubaction'] );
+			if (isset($params['callAction'])) {
+				$params['subaction'] = $params['callAction'];
+				unset($params['callAction']);
+				unset($params['callSubaction']);
 			}
-	
 
-			if	( !isset($params['action'   ])) $params['action'   ] = '';
-			if	( !isset($params['subaction'])) $params['subaction'] = '';
-			if	( !isset($params['id'       ])) $params['id'       ] = '';
-			$action    = $params['action'   ];
+
+			if (!isset($params['action'])) $params['action'] = '';
+			if (!isset($params['subaction'])) $params['subaction'] = '';
+			if (!isset($params['id'])) $params['id'] = '';
+			$action = $params['action'];
 			$subaction = $params['subaction'];
-			$id        = $params['id'       ];
-			unset( $params['action'   ] );
-			unset( $params['subaction'] );
-			unset( $params['id'       ] );
-			$params['old']='true';
+			$id = $params['id'];
+			unset($params['action']);
+			unset($params['subaction']);
+			unset($params['id']);
+			$params['old'] = 'true';
 		}
 
 		// Session-Id ergaenzen
-		if	( $conf['interface']['url']['add_sessionid'] )
-			$params[ session_name() ] = session_id();
-			
-		if	( config('security','use_post_token')  )
-			$params[ 'token'] = token();
+		if ($conf['interface']['url']['add_sessionid'])
+			$params[session_name()] = session_id();
 
-		$fake_urls  = $conf['interface']['url']['fake_url' ];
+		if (config('security', 'use_post_token'))
+			$params['token'] = token();
+
+		$fake_urls = $conf['interface']['url']['fake_url'];
 		$url_format = $conf['interface']['url']['url_format'];
-		
-		if	( isset($params['objectid']) && !isset($params['id']) )
-			$params['id'] = $params['objectid']; 
 
-		if	( $fake_urls )
-		{
+		if (isset($params['objectid']) && !isset($params['id']))
+			$params['id'] = $params['objectid'];
+
+		if ($fake_urls) {
 //			if	( $id != '' )
 //				$id = '.'.$id;
-		}
-		else
-		{
+		} else {
 			global $view;
-			$params[REQ_PARAM_ACTION   ] = $action;
+			$params[REQ_PARAM_ACTION] = $action;
 			$params[REQ_PARAM_SUBACTION] = $subaction;
-			$params[REQ_PARAM_ID       ] = $id;
+			$params[REQ_PARAM_ID] = $id;
 		}
 
-		if	( count($params) > 0 )
-		{		
+		if (count($params) > 0) {
 			$urlParameterList = array();
-			foreach( $params as $var=>$value )
-			{
-				$urlParameterList[] = urlencode($var).'='.urlencode($value);
+			foreach ($params as $var => $value) {
+				$urlParameterList[] = urlencode($var) . '=' . urlencode($value);
 			}
 
-			$urlParameterList['_'] = @$urlParameterList[REQ_PARAM_ACTION].'-'.@$urlParameterList[REQ_PARAM_ID];
-			unset( $urlParameterList[REQ_PARAM_ACTION], $urlParameterList[REQ_PARAM_ID]);
+			$urlParameterList['_'] = @$urlParameterList[REQ_PARAM_ACTION] . '-' . @$urlParameterList[REQ_PARAM_ID];
+			unset($urlParameterList[REQ_PARAM_ACTION], $urlParameterList[REQ_PARAM_ID]);
 
 			// We do not escape '&' as '&amp;' here, as it would brake things like Ajax-Urls.
-            // Maybe the escaping should be controled by a parameter.
-			$urlParameter = '?'.implode('&',$urlParameterList);
-		}
-		else
-		{
+			// Maybe the escaping should be controled by a parameter.
+			$urlParameter = '?' . implode('&', $urlParameterList);
+		} else {
 			$urlParameter = '';
 		}
 
-		if	( @$conf['interface']['url']['index'] )
+		if (@$conf['interface']['url']['index'])
 			$controller_file_name = '';
 		else
 			$controller_file_name = '';
 
 		$prefix = './';
-		
-		if	( $fake_urls )
-			$src = sprintf( $url_format,$action,$subaction,$id,session_id() ).$urlParameter;
+
+		if ($fake_urls)
+			$src = sprintf($url_format, $action, $subaction, $id, session_id()) . $urlParameter;
 		else
-			$src = $prefix.$controller_file_name.$urlParameter;
+			$src = $prefix . $controller_file_name . $urlParameter;
 
 		return $src;
 	}
 }
+
 ?>

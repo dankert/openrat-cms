@@ -14,7 +14,7 @@ use wikiparser\model\LineBreakElement;
 use wikiparser\model\LinkElement;
 use MacroRunner;
 use wikiparser\model\RawElement;
-use Text;
+use util\Text;
 use wikiparser\model\TextElement;
 
 /**

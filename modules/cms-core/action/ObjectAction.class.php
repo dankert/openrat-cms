@@ -2,7 +2,7 @@
 
 namespace cms\action;
 
-use ArrayUtils;
+use util\ArrayUtils;
 use cms\model\Acl;
 use cms\model\Project;
 use cms\model\User;
@@ -13,9 +13,9 @@ use cms\model\BaseObject;
 use cms\model\Language;
 use cms\model\File;
 use cms\model\Link;
-use Html;
-use Http;
-use Session;
+use util\Html;
+use util\Http;
+use util\Session;
 
 
 /**
@@ -241,7 +241,7 @@ class ObjectAction extends BaseAction
 		$o = new BaseObject( $acl->objectid );
 
 		if	( !$o->hasRight( Acl::ACL_GRANT ) )
-			throw new \SecurityException('Not allowed to insert permissions.'); // Scheiss Hacker ;)
+			throw new \util\exception\SecurityException('Not allowed to insert permissions.'); // Scheiss Hacker ;)
 		
 		// Handelt es sich um eine Benutzer- oder Gruppen ACL?
 		switch( $this->getRequestVar('type') )
@@ -485,7 +485,7 @@ class ObjectAction extends BaseAction
     public function propPost()
     {
         if   ( ! $this->hasRequestVar('filename' ) )
-            throw new \ValidationException('filename');
+            throw new \util\exception\ValidationException('filename');
 
         $this->baseObject->filename = BaseObject::urlify( $this->getRequestVar('filename') );
         $this->baseObject->save();
@@ -517,7 +517,7 @@ class ObjectAction extends BaseAction
     public function namePost()
     {
         if   ( ! $this->hasRequestVar('name' ) )
-            throw new \ValidationException('name');
+            throw new \util\exception\ValidationException('name');
 
         $name = $this->baseObject->getNameForLanguage( $this->getRequestId('languageid'));
 
@@ -586,11 +586,11 @@ class ObjectAction extends BaseAction
 
         // Validate YAML-Settings
         try {
-            \YAML::parse( $this->baseObject->settings);
+            \util\YAML::parse( $this->baseObject->settings);
         }
         catch( \Exception $e )
         {
-            throw new \ValidationException( 'settings' );
+            throw new \util\exception\ValidationException( 'settings' );
         }
 
         // Gültigkeitszeiträume speichern.

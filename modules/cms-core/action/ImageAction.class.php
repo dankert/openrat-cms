@@ -7,9 +7,9 @@ use cms\model\Image;
 use cms\model\BaseObject;
 use cms\model\File;
 
-use Http;
-use \Html;
-use Upload;
+use util\Http;
+use util\Html;
+use util\Upload;
 
 
 /**

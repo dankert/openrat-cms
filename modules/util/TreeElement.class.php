@@ -17,6 +17,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
+namespace util;
 /**
  * Darstellen eines Elementes in einer Baumstruktur
  * @author $Author$
@@ -29,9 +30,9 @@ class TreeElement
 	 * @type Integer
 	 */
 	var $id;
-	
+
 	var $extraId = array();
-	
+
 	var $internalId = 0;
 
 	/**
@@ -39,22 +40,22 @@ class TreeElement
 	 * @type String
 	 */
 	var $text = "";
-	
+
 	/**
 	 * Beschreibung
 	 * @type String
 	 */
 	var $description = "";
-	var $icon        = "";
-	var $action      = "";
-	
+	var $icon = "";
+	var $action = "";
+
 	/**
 	 * Unterelemente
 	 * Ein Array von Ids
 	 * @type Array
 	 */
 	var $subElementIds = array();
-	
+
 	/**
 	 * Typ des Elementes
 	 * In der Tree-Klasse muss es eine Methode mit diesem Namen geben, die das
@@ -64,8 +65,8 @@ class TreeElement
 	var $type = "";
 
 	public $children = array();
-	
-	
+
+
 	// Konstruktor
 	function __construct()
 	{

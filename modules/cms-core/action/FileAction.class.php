@@ -8,10 +8,10 @@ use cms\model\File;
 
 use cms\publish\PublishPreview;
 use cms\publish\PublishPublic;
-use Http;
-use \Html;
-use Upload;
-use ValidationException;
+use util\Http;
+use util\Html;
+use util\Upload;
+use util\exception\ValidationException;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -364,7 +364,7 @@ class FileAction extends ObjectAction
 				break;
 
 			default:
-				throw new \OpenRatException( 'cannot uncompress file with extension: '.$this->file->extension );
+				throw new \util\exception\OpenRatException( 'cannot uncompress file with extension: '.$this->file->extension );
 		}
 
 		$this->addNotice('file',$this->file->name,'DONE',OR_NOTICE_OK);
@@ -443,7 +443,7 @@ class FileAction extends ObjectAction
 				break;
 
 			default:
-				throw new \OpenRatException( 'cannot extract file with extension: '.$this->file->extension );
+				throw new \util\exception\OpenRatException( 'cannot extract file with extension: '.$this->file->extension );
 		}
 		$this->callSubAction('edit');
 	}
@@ -515,7 +515,7 @@ class FileAction extends ObjectAction
 				
 				break;
 			default:
-				throw new \OpenRatException( 'unknown compress type: '.$format );
+				throw new \util\exception\OpenRatException( 'unknown compress type: '.$format );
 		}
 
 		$this->addNotice('file',$this->file->name,'DONE',OR_NOTICE_OK);

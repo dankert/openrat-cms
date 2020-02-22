@@ -1,4 +1,6 @@
 <?php
+
+namespace util;
 /**
  * Multidimensional Array-to-XML.
  *
@@ -12,9 +14,9 @@
  *
  * Original from:
  * Clean XML To Array: http://www.phpclasses.org/browse/package/3598.html
- * 
+ *
  * License of this class: BSD-Licence.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
  * Redistributions of source code must retain the above copyright notice, this list
@@ -70,7 +72,7 @@ class XML
 	 * @var String
 	 */
 	var $nl = "\n";
-	
+
 	/**
 	 * Encode a array to XML.
 	 *
@@ -80,11 +82,11 @@ class XML
 	function encode($array)
 	{
 		//star and end the XML document
-		$this->xmlText = '<?xml version="1.0" encoding="utf-8"?>'.$this->nl;
-		$this->xmlText .= '<'.$this->root.'>'.$this->nl;
-		$this->array_transform($array,1);
-		$this->xmlText .='</'.$this->root.'>';
-		
+		$this->xmlText = '<?xml version="1.0" encoding="utf-8"?>' . $this->nl;
+		$this->xmlText .= '<' . $this->root . '>' . $this->nl;
+		$this->array_transform($array, 1);
+		$this->xmlText .= '</' . $this->root . '>';
+
 		return $this->xmlText;
 	}
 
@@ -92,77 +94,67 @@ class XML
 	/**
 	 * @access private
 	 */
-	function array_transform($array,$depth){
+	function array_transform($array, $depth)
+	{
 
-		foreach($array as $key => $value)
-		{
+		foreach ($array as $key => $value) {
 			$attr = array();
-			if	( is_numeric($key) )
-			{
+			if (is_numeric($key)) {
 				// Array-Einträge mit numerischen Index können nicht direkt in ein XML-Element
 				// umgewandelt werden, da nur-numerische Element-Namen nicht erlaubt sind.
 				// Daher verwenden wir dann 'entry' als Elementnamen.
 				$attr['id'] = $key;
 				$key = 'entry';
 			}
-			
-			$indent = str_repeat($this->indentChar,$depth);
-			
-			if	( empty($value) )
-			{
-				$this->xmlText .= $indent.$this->shortTag($key,$attr).$this->nl;
-			}
-			elseif	( is_object($value) )
-			{
+
+			$indent = str_repeat($this->indentChar, $depth);
+
+			if (empty($value)) {
+				$this->xmlText .= $indent . $this->shortTag($key, $attr) . $this->nl;
+			} elseif (is_object($value)) {
 				// Der Inhalt ist ein Array, daher rekursiv verzweigen.
-				$this->xmlText .= $indent.$this->openTag($key,$attr).$this->nl;
+				$this->xmlText .= $indent . $this->openTag($key, $attr) . $this->nl;
 				$prop = get_object_vars($value);
-				$this->array_transform($prop,$depth+1); // Rekursiver Aufruf
-				$this->xmlText .= $indent.$this->closeTag($key).$this->nl;
-			}
-			elseif	( is_array($value) )
-			{
+				$this->array_transform($prop, $depth + 1); // Rekursiver Aufruf
+				$this->xmlText .= $indent . $this->closeTag($key) . $this->nl;
+			} elseif (is_array($value)) {
 				// Der Inhalt ist ein Array, daher rekursiv verzweigen.
-				$this->xmlText .= $indent.$this->openTag($key,$attr).$this->nl;
-				$this->array_transform($value,$depth+1); // Rekursiver Aufruf
-				$this->xmlText .= $indent.$this->closeTag($key).$this->nl;
-			}
-			else
-			{
+				$this->xmlText .= $indent . $this->openTag($key, $attr) . $this->nl;
+				$this->array_transform($value, $depth + 1); // Rekursiver Aufruf
+				$this->xmlText .= $indent . $this->closeTag($key) . $this->nl;
+			} else {
 				// Der Inhalt ist ein einfacher Inhalt (kein Array).
-				$this->xmlText .= $indent.$this->openTag($key,$attr);
+				$this->xmlText .= $indent . $this->openTag($key, $attr);
 				$this->xmlText .= $value;
-				$this->xmlText .= $this->closeTag($key).$this->nl;
+				$this->xmlText .= $this->closeTag($key) . $this->nl;
 			}
 		}
 	}
-	
-	
-	function openTag($key,$attr)
+
+
+	function openTag($key, $attr)
 	{
-		$tag = '<'.$key;
-		foreach( $attr as $attr_name=>$attr_value )
-			$tag .= ' '.$attr_name.'="'.$attr_value.'"';
+		$tag = '<' . $key;
+		foreach ($attr as $attr_name => $attr_value)
+			$tag .= ' ' . $attr_name . '="' . $attr_value . '"';
 		$tag .= '>';
 		return $tag;
 	}
-	
-	
-	
-	function shortTag($key,$attr)
+
+
+	function shortTag($key, $attr)
 	{
-		$tag = '<'.$key;
-		foreach( $attr as $attr_name=>$attr_value )
-			$tag .= ' '.$attr_name.'="'.$attr_value.'"';
+		$tag = '<' . $key;
+		foreach ($attr as $attr_name => $attr_value)
+			$tag .= ' ' . $attr_name . '="' . $attr_value . '"';
 		$tag .= ' />';
 		return $tag;
 	}
-	
-	
-	
+
+
 	function closeTag($key)
 	{
-		return '</'.$key.'>';
+		return '</' . $key . '>';
 	}
 }
 

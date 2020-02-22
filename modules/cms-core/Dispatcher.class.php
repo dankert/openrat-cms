@@ -11,12 +11,12 @@ use cms\action\RequestParams;
 use ConfigurationLoader;
 use database\Database;
 use DbUpdate;
-use Http;
+use util\Http;
 use Logger;
 use LogicException;
-use OpenRatException;
-use SecurityException;
-use Session;
+use util\exception\OpenRatException;
+use util\exception\SecurityException;
+use util\Session;
 
 
 /**
@@ -320,7 +320,7 @@ class Dispatcher
 
             $method->invoke($do); // <== Executing the Action
         }
-        catch (\ValidationException $ve)
+        catch (\util\exception\ValidationException $ve)
         {
             $do->addValidationError( $ve->fieldName );
         }

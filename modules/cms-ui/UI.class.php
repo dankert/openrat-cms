@@ -7,14 +7,14 @@ use cms\action\RequestParams;
 use cms\Dispatcher;
 use DomainException;
 use Exception;
-use Http;
-use Less_Parser;
+use util\Http;
+use \Less_Parser;
 use Logger;
 use LogicException;
 use ObjectNotFoundException;
-use OpenRatException;
-use SecurityException;
-use template_engine\TemplateEngine;
+use util\exception\OpenRatException;
+use util\exception\SecurityException;
+use template_engine\engine\TemplateEngine;
 use template_engine\TemplateEngineInfo;
 
 

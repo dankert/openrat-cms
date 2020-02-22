@@ -1,7 +1,7 @@
 <?php
 
 
-namespace cms\mustache;
+namespace util;
 
 
 /**

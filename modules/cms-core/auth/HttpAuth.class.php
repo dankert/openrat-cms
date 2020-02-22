@@ -1,5 +1,7 @@
 <?php
 
+use util\Http;
+
 /**
  * HTTP-Authentifzierung.
  * 

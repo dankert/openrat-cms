@@ -23,10 +23,10 @@ use cms\model\BaseObject;
 use cms\model\User;
 use language\Language;
 use LogicException;
-use Mail;
-use modules\util\UIUtils;
+use util\Mail;
+use util\UIUtils;
 use security\Base2n;
-use \Session;
+use util\Session;
 
 
 /**

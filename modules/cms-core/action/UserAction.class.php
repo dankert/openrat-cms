@@ -10,12 +10,12 @@ use cms\model\BaseObject;
 use cms\model\Language;
 
 
-use Http;
+use util\Http;
 use security\Base2n;
 use \security\Password;
-use \Session;
-use \Html;
-use \Mail;
+use util\Session;
+use util\Html;
+use util\Mail;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -73,7 +73,7 @@ class UserAction extends BaseAction
 	public function propPost()
 	{
 		if	( ! $this->getRequestVar('name') )
-            throw new \ValidationException( 'name');
+            throw new \util\exception\ValidationException( 'name');
 
         // Benutzer speichern
         $this->user->name     = $this->getRequestVar('name'    );

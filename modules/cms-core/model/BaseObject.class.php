@@ -3,11 +3,11 @@
 
 namespace cms\model;
 
-use ArrayUtils;
+use util\ArrayUtils;
 use cms\publish\Publish;
 use phpseclib\Math\BigInteger;
 use util\VariableResolver;
-use YAML;
+use util\YAML;
 use template_engine\components\ElseComponent;
 
 /**
@@ -272,7 +272,7 @@ class BaseObject extends ModelBase
     {
         if	( is_null($this->aclMask) )
         {
-            $user     = \Session::getUser();
+            $user     = \util\Session::getUser();
 
 
             if  ( ! $user ) {
@@ -882,7 +882,7 @@ SQL
         else	$stmt->setInt ('parentid',$this->parentid );
 
 
-        $user = \Session::getUser();
+        $user = \util\Session::getUser();
         $this->lastchangeUser = $user;
         $this->lastchangeDate = now();
         $stmt->setInt   ('time'     , $this->lastchangeDate          );
@@ -913,7 +913,7 @@ SQL
             '  lastchange_userid = {userid} '.
             ' WHERE id={objectid}');
 
-        $user = \Session::getUser();
+        $user = \util\Session::getUser();
         $this->lastchangeUser = $user;
         $this->lastchangeDate = now();
 
@@ -950,7 +950,7 @@ SQL
             '  published_userid = {userid} '.
             ' WHERE id={objectid}');
 
-        $user = \Session::getUser();
+        $user = \util\Session::getUser();
         $this->publishedUser = $user;
         $this->publishedDate = now();
 
@@ -1104,10 +1104,10 @@ SQL
         $sql->setString('projectid', $this->projectid);
         $sql->setInt   ('orderid'  , 99999           );
         $sql->setInt   ('time'     , now()           );
-        $user = \Session::getUser();
+        $user = \util\Session::getUser();
         $sql->setInt   ('createuserid'   , $user->userid   );
         $sql->setInt   ('createtime'     , now()           );
-        $user = \Session::getUser();
+        $user = \util\Session::getUser();
         $sql->setInt   ('userid'   , $user->userid   );
 
         $sql->setInt(  'typeid',$this->getTypeid());

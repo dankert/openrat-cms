@@ -22,6 +22,7 @@
 use cms\model\Folder;
 use cms\model\BaseObject;
 use cms\model\Page;
+use util\Macro;
 
 
 /**
