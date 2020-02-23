@@ -153,14 +153,14 @@ class IndexAction extends Action
             $methodList[] = array('name'=>$method,'open'=>$openByDefault);
         }
         $this->setTemplateVar('methodList', $methodList);
-        $this->setTemplateVar('favicon_url', Conf()->subset('theme')->get('favicon','modules/cms-ui/themes/default/images/openrat-logo.ico') );
+        $this->setTemplateVar('favicon_url', Conf()->subset('theme')->get('favicon','modules/cms/ui/themes/default/images/openrat-logo.ico') );
 
         // HTML-Datei direkt einbinden.
         $vars = $this->getOutputData();
         $output  = $vars['output']; // will be extracted in the included template file.
         $notices = $vars['notices']; // will be extracted in the included template file.
 
-		require('modules/cms-ui/themes/default/layout/index.php');
+		require( __DIR__.'/../themes/default/layout/index.php');
 		exit;
 	}
 
@@ -180,7 +180,7 @@ class IndexAction extends Action
 
         $css = array();
 
-        $styleFiles = \util\FileUtils::readDir(OR_THEMES_DIR . 'default/style');
+        $styleFiles = \util\FileUtils::readDir( __DIR__.'/../themes/default/style');
         foreach( $styleFiles as $styleFile ) {
             if  (substr($styleFile,-5) == '.less' )
                 $css[] = OR_THEMES_DIR . 'default/style'.'/'.substr($styleFile,0,-5);

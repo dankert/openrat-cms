@@ -32,12 +32,12 @@ define('IMG_ICON_EXT'    ,'.png'   );
 require(__DIR__ . '/version.php');
 define('OR_TITLE'        ,'OpenRat CMS');
 
-define( 'CMS_ROOT_DIR', __DIR__ . '/../cms09/');
+define( 'CMS_ROOT_DIR', __DIR__ . '/../../../');
 
-define('OR_MODULES_DIR'       , __DIR__ . '/modules/');
-define('OR_DYNAMICCLASSES_DIR',OR_MODULES_DIR.'cms-macros/macro/' );
+define('OR_MODULES_DIR'       , __DIR__ . '/../../');
+define('OR_DYNAMICCLASSES_DIR',OR_MODULES_DIR.'cms/macros/macro/' );
 define('OR_SERVICECLASSES_DIR',OR_MODULES_DIR.'util/' );
-define('OR_AUTHCLASSES_DIR'   ,OR_MODULES_DIR.'cms-core/auth/' );
+define('OR_AUTHCLASSES_DIR'   ,OR_MODULES_DIR.'cms/auth/' );
 define('OR_TMP_DIR'           ,CMS_ROOT_DIR.'tmp/'            );
 
 define('START_TIME'           ,time()              );
@@ -45,7 +45,7 @@ define('REQUEST_ID'           ,'req0' ); // Nicht mehr notwendig, kann entfallen
 
 // Must be relative to HTML-Path!
 define('OR_HTML_MODULES_DIR'  ,'./modules/'      );
-define('OR_THEMES_DIR'        ,OR_HTML_MODULES_DIR.'cms-ui/themes/');
+define('OR_THEMES_DIR'        ,OR_HTML_MODULES_DIR.'cms/ui/themes/');
 
 
 

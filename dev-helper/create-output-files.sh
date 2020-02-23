@@ -27,7 +27,7 @@ function language
 
 function check
 {
-    for jsfile in `find ../modules/cms-ui/themes -name "*.js" -not -name "*.min.js"`; do
+    for jsfile in `find ../modules/cms/ui/themes -name "*.js" -not -name "*.min.js"`; do
         jsfile="${jsfile%.*}"
         createfile $jsfile.min.js $jsfile.js
     done
@@ -42,7 +42,7 @@ function check
     done
 
 
-    for tplfile in `find ../modules/cms-ui/themes/ -name "*.tpl.src.xml"`; do
+    for tplfile in `find ../modules/cms/ui/themes/ -name "*.tpl.src.xml"`; do
 
         tplfile="${tplfile%.*}"
         tplfile="${tplfile%.*}"
@@ -51,7 +51,7 @@ function check
     done
 
     # CSS-Files
-    for lessfile in `find ../modules/cms-ui/themes -name "*.less"`; do
+    for lessfile in `find ../modules/cms/ui/themes -name "*.less"`; do
         lessfile="${lessfile%.*}"
         createfile $lessfile.css
         createfile $lessfile.min.css;
@@ -64,8 +64,8 @@ function check
         createfile $lessfile.min.css;
     done
 
-    createfile ../modules/cms-ui/themes/default/production/combined.min.css
-    createfile ../modules/cms-ui/themes/default/production/combined.min.js
+    createfile ../modules/cms/ui/themes/default/production/combined.min.css
+    createfile ../modules/cms/ui/themes/default/production/combined.min.js
 
 }
 
