@@ -1,3 +1,5 @@
-<?php if (!defined('OR_TITLE')) die('Forbidden'); ?>
-	<iframe src="<?php echo encodeHtml(htmlentities(@$preview_url)) ?>" class="">
-	</iframe>
+<?php if (defined('OR_TITLE')) {  ?>
+  
+    <iframe src="<?php echo encodeHtml(htmlentities(@$preview_url)) ?>">
+    </iframe>
+ <?php } ?>

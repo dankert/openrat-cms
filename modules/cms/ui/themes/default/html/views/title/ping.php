@@ -1,3 +1,5 @@
-<?php if (!defined('OR_TITLE')) die('Forbidden'); ?>
-	<span class="">1
-	</span>
+<?php if (defined('OR_TITLE')) {  ?>
+  
+    <span>1
+    </span>
+ <?php } ?>

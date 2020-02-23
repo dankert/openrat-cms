@@ -1,2 +1,3 @@
-<?php if (!defined('OR_TITLE')) die('Forbidden'); ?>
-<?php echo @$output ?>
+<?php if (defined('OR_TITLE')) {  ?>
+  <?php echo @$output ?>
+ <?php } ?>
