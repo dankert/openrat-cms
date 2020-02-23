@@ -172,7 +172,7 @@ class Dispatcher
 
         // Wenn Logfile relativ angegeben wurde, dann muss dies relativ zum Root der Anwendung sein.
         if   ( !empty($logFile) && $logFile[0] != '/' )
-            $logFile = __DIR__.'/../../'.$logFile;
+            $logFile = __DIR__ . '/../modules/' .$logFile;
         //$logFile = __DIR__.'/../../'.$logFile;
 
         Logger::$messageFormat = $logConfig['format'];
@@ -530,7 +530,7 @@ class Dispatcher
             $dir = $auditConfig->get('directory','./audit-log' );
 
             if   ( $dir[0] != '/' )
-                $dir = __DIR__.'/../../'.$dir;
+                $dir = __DIR__ . '/../modules/' .$dir;
 
             $micro_date = microtime();
             $date = explode(" ",$micro_date);
