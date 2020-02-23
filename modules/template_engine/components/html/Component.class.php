@@ -55,9 +55,6 @@ abstract class Component
 	{
 		$this->element = $this->createElement();
 
-		if   ( $this->element)
-			$this->element->selfClosing(false);
-
 		// if there is no special adoptive element, lets use the root element.
 		if   ( ! $this->adoptiveElement )
 			$this->adoptiveElement = $this->element;

@@ -4,6 +4,8 @@
 namespace template_engine\element;
 
 
+use template_engine\element\XMLFormatter;
+
 class PHPBlockElement extends HtmlElement
 {
 	public $beforeBlock;
@@ -15,14 +17,19 @@ class PHPBlockElement extends HtmlElement
 	}
 
 
-	public function render()
+	/**
+	 * @param $format XMLFormatter
+	 * @return string
+	 */
+	public function render($format )
 	{
-		$content = '';
+		$content = $format->getIndentation();
 
 		$content .= '<?php '.$this->beforeBlock.' { '.$this->inBlock.' ?>';
 
-		$content .= $this->renderChildren();
+		$content .= $this->renderChildren( $format );
 
+		$content .= $format->getIndentationOnClose();
 		$content .= ' <?php } ?>';
 
 		return $content;

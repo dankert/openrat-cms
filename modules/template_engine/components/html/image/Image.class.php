@@ -28,31 +28,26 @@ class ImageComponent extends Component
         $styleClasses = [];
         $tagName = 'img';
         $file = '';
-        $selfClosing = true;
 
 		if	( $this->menu )
 		{
 		    $tagName = 'i';
 			$styleClasses = ['image-icon','image-icon--menu-'.$this->menu];
-            $selfClosing = false;
 		}
 		elseif	( $this->elementtype )
 		{
             $tagName = 'i';
 			$styleClasses = ['image-icon','image-icon--action-el_'.$this->elementtype];
-            $selfClosing = false;
 		}
 		elseif	( $this->action )
 		{
             $tagName = 'i';
 			$styleClasses = ['image-icon','image-icon--action-'.$this->action];
-            $selfClosing = false;
 		}
 		elseif	( $this->method )
 		{
             $tagName = 'i';
 			$styleClasses = ['image-icon','image-icon--method-'.$this->method];
-            $selfClosing = false;
 		}
 		elseif	( $this->type )
 		{
@@ -99,8 +94,6 @@ class ImageComponent extends Component
 
 		if   ( $file)
 			$image->addAttribute('src',$file);
-
-		$image->selfClosing( $selfClosing );
 
 		return $image;
 	}

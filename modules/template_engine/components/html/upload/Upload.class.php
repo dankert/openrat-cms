@@ -17,7 +17,6 @@ class UploadComponent extends Component
 	{
 		$input = new CMSElement('input');
 
-		$input->selfClosing(true);
 		$input->addStyleClass( $this->class );
 
 		if	( $this->multiple )

@@ -7,6 +7,7 @@ use DOMDocument;
 use DOMElement;
 use Exception;
 use LogicException;
+use template_engine\element\XMLFormatter;
 use template_engine\element\PHPBlockElement;
 use template_engine\components\html\Component;
 use template_engine\components\html\NativeHtmlComponent;
@@ -55,7 +56,7 @@ class TemplateEngine
 		$rootElement = new PHPBlockElement();
 
 		// The generated template should only be executable in our CMS environment (for security reasons).
-		$rootElement->beforeBlock = 'if (!defined(\'OR_TITLE\')) die(\'Forbidden\');';
+		$rootElement->beforeBlock = 'if (defined(\'OR_TITLE\'))';
 
 		try
 		{
@@ -81,7 +82,7 @@ class TemplateEngine
 			if (is_file($filename) && ! is_writable($filename))
 				throw new LogicException("Template output file is read-only: $filename");
 
-			$writtenBytes = file_put_contents( $filename, $rootElement->render() );
+			$writtenBytes = file_put_contents( $filename, $rootElement->render( new XMLFormatter('  ')) );
 
 			if ( $writtenBytes === FALSE )
 				throw new LogicException("Unable writing to output file: '$filename'");

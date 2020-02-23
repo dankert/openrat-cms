@@ -53,12 +53,12 @@ class HtmlElement extends Element
 	}
 
 
-	public function render()
+	public function render( $format )
 	{
 		if   ( $this->styleClasses )
 			$this->addAttribute('class', implode(' ',$this->styleClasses) );
 
-		return parent::render();
+		return parent::render( $format );
 	}
 
 }

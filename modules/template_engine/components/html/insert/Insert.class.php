@@ -26,7 +26,6 @@ class InsertComponent extends Component
 		{
 			// IFrame
 			$iframe = new CMSElement('iframe');
-			$iframe->selfClosing(false);
 			if	( $this->name )
 				$iframe->addAttribute('name', $this->name);
 			if	( $this->url )

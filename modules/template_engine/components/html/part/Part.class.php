@@ -13,7 +13,7 @@ class PartComponent extends Component
 	
 	public function createElement()
 	{
-		$element = (new CMSElement('div'))->selfClosing(false);
+		$element = (new CMSElement('div'));
 
 		foreach( explode(',',$this->class ) as $styleClass )
 			$element->addStyleClass( $styleClass );

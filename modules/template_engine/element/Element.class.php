@@ -4,6 +4,7 @@
 namespace template_engine\element;
 
 
+use template_engine\element\XMLFormatter;
 use template_engine\element\attribute\SimpleAttribute;
 
 class Element
@@ -56,11 +57,15 @@ class Element
 		return $this;
 	}
 
-	public function render() {
+	/**
+	 * @param $format XMLFormatter
+	 * @return string
+	 */
+	public function render($format ) {
 
 		$this->selfClosing = $this->selfClosing && !$this->content && !$this->children;
 
-		$content = '';
+		$content = $format->getIndentation();
 
 		if   ( $this->name )
 			$content .= '<'.$this->name.
@@ -68,13 +73,15 @@ class Element
 
 		$content .= $this->getContent();
 
-		$content .= $this->renderChildren();
+		$content .= $this->renderChildren( $format );
 
 		if   ( $this->selfClosing )
 			;
 		else
-			if   ( $this->name )
+			if   ( $this->name ) {
+				$content .= $format->getIndentationOnClose();
 				$content .= '</'.$this->name.'>';
+			}
 
 		return $content;
 	}
@@ -94,13 +101,17 @@ class Element
 		return $this->content;
 	}
 
-	protected function renderChildren()
+	/**
+	 * @param $format XMLFormatter
+	 * @return string
+	 */
+	protected function renderChildren($format )
 	{
 		$content = '';
 
 		/** @var Element $child */
 		foreach($this->children as $child ) {
-			$content .= $child->render();
+			$content .= $child->render( $format->deeper() );
 		}
 
 		return $content;
