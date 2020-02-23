@@ -2,9 +2,10 @@
 // Excecuting the CMS application programming interface (API)
 
 require('../modules/autoload.php');
-require('../modules/cms-api/require.php');
+require('../modules/cms/base/require.php');
+require('../modules/cms/ui/require.php');
 
-use cms_api\API;
+use cms\api\API;
 
 try {
     // Cookie-Path: Actual path without '/api'.

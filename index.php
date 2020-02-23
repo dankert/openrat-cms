@@ -1,9 +1,10 @@
 <?php
 // Excecuting the CMS user interface (UI)
 require('modules/autoload.php');
-require('modules/cms-ui/require.php');
+require('modules/cms/base/require.php');
+require('modules/cms/ui/require.php');
 
-use cms_ui\UI;
+use cms\ui\UI;
 
 try {
     UI::execute();

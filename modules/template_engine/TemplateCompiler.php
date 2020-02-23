@@ -15,7 +15,7 @@ use template_engine\engine\TemplateEngine;
 use util\FileUtils;
 
 
-$dir = __DIR__.'/../../modules/cms-ui/themes/default/html/views';
+$dir = __DIR__ . '/../../modules/cms-ui/themes/default/html/views';
 
 require('../../modules/util/require.php');
 require('../../modules/template_engine/require.php');

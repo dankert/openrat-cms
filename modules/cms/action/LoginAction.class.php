@@ -19,7 +19,7 @@ use \DB;
 use cms\update\Update;
 use \Exception;
 use util\Http;
-use \InternalAuth;
+use cms\auth\InternalAuth;
 use logger\Logger;
 use \ObjectNotFoundException;
 use util\exception\OpenRatException;
@@ -358,7 +358,7 @@ class LoginAction extends BaseAction
         {
             Logger::debug('Preselecting module: '.$module);
             $moduleClass = $module.'Auth';
-            /** @var \Auth $auth */
+            /** @var \cms\auth\Auth $auth */
             $auth = new $moduleClass;
             $username = $auth->username();
 

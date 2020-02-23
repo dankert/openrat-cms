@@ -1,6 +1,6 @@
 <?php
 
-namespace cms_ui;
+namespace cms\ui;
 
 use BadMethodCallException;
 use cms\action\RequestParams;
@@ -94,7 +94,7 @@ class UI
      */
     private static function outputTemplate($request, $templateName, $outputData)
     {
-        $templateFile = __DIR__.'/themes/default/html/views/' . $templateName . '.tpl.src.xml';
+        $templateFile = __DIR__ . '/themes/default/html/views/' . $templateName . '.tpl.src.xml';
 
         if   ( DEVELOPMENT )
             header('X-OR-Template: '.$templateFile);

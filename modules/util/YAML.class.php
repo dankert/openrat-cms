@@ -4,6 +4,8 @@
 namespace util;
 use Spyc;
 
+require_once (__DIR__.'/Spyc.class.php');
+
 /**
  * YAML Wrapper for the Spyc implementation of a YAML-Parser.
  */

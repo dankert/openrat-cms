@@ -1,6 +1,8 @@
 <?php
 
 
+namespace cms\macros;
+
 use cms\model\Element;
 use cms\model\Template;
 use cms\model\Value;
@@ -17,36 +19,29 @@ class MacroRunner
 	{
 		$this->page = $page;
 
-		$className = $name;
+		$className = 'cms\macros\macro\\'.$name;
 		$output = '';
-
-		$fileName = OR_DYNAMICCLASSES_DIR . $name . '.class.php';
-		if (!is_file($fileName))
-			throw new OpenRatException('ERROR_IN_ELEMENT','file not found:'.$fileName);
-
-		require_once( $fileName );
 
 		if (!class_exists($className))
 			throw new OpenRatException('ERROR_IN_ELEMENT', 'class not found:' . $className);
-
 
 		/** @var \util\Macro $macro */
 		$macro = new $className;
 
 		if (!method_exists($macro, 'execute'))
-			throw new OpenRatException('ERROR_IN_ELEMENT',' (missing method: execute())');
+			throw new OpenRatException('ERROR_IN_ELEMENT', ' (missing method: execute())');
 
 		$macro->setContextPage($page);
 
 		$resolver = new VariableResolver();
 
-		$parameters = $resolver->resolveVariablesInArrayWith( $parameter, [
+		$parameters = $resolver->resolveVariablesInArrayWith($parameter, [
 
-			'setting'=> function ($var) {
+			'setting' => function ($var) {
 				return ArrayUtils::getSubValue($this->page->getSettings(), explode('.', $var));
 			},
 
-			'element'=>function ($var) {
+			'element' => function ($var) {
 				$template = new Template($this->page->templateid);
 				$elements = $template->getElementNames();
 				$elementid = array_search($var, $elements);
@@ -62,18 +57,18 @@ class MacroRunner
 
 				return $value->getRawValue();
 			}
-		] );
+		]);
 
 		foreach ($parameters as $param_name => $param_value) {
 
-			if (! property_exists($macro, $param_name)) {
+			if (!property_exists($macro, $param_name)) {
 
 				if (!$this->page->publisher->isPublic())
 					$output .= "*WARNING*: Unknown parameter $param_name in macro $className\n";
 				continue;
 			}
 
-			Logger::trace("Setting parameter for Macro-class $className, " . $param_name . ':' . print_r($param_value,true));
+			Logger::trace("Setting parameter for Macro-class $className, " . $param_name . ':' . print_r($param_value, true));
 
 			// Die Parameter der Makro-Klasse typisiert setzen.
 			if (is_int($macro->$param_name))

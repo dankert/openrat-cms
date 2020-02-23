@@ -2,7 +2,7 @@
 
 namespace cms\action;
 
-use \Auth;
+use cms\auth\Auth;
 use cms\model\BaseObject;
 use cms\model\Project;
 use cms\model\User;
@@ -819,7 +819,7 @@ class IndexAction extends Action
         foreach( $modules as $module)
         {
             Logger::debug( 'Auto-Login module: '.$module );
-            $moduleClass = $module.'Auth';
+            $moduleClass = 'cms\auth\\'.$module.'Auth';
             $auth = new $moduleClass;
             /* @type $auth Auth */
             try {

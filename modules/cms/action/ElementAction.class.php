@@ -265,7 +265,7 @@ class ElementAction extends BaseAction
                         case Element::ELEMENT_TYPE_DYNAMIC:
 
                             $files = Array();
-                            $macroFiles = \util\FileUtils::readDir(__DIR__ . '/../../macros/macro');
+                            $macroFiles = \util\FileUtils::readDir(__DIR__ . '/../../cms-macros/macro');
                             foreach( $macroFiles as $macroFile )
                             {
                                 $file = substr($macroFile,0,strlen($macroFile)-10);

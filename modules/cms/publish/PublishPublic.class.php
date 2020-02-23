@@ -10,7 +10,7 @@ use cms\model\Page;
 use cms\model\Project;
 use cms\model\Url;
 use util\FileUtils;
-use Ftp;
+use cms\publish\Ftp;
 use logger\Logger;
 use util\exception\OpenRatException;
 use util\Session;
@@ -99,7 +99,7 @@ class PublishPublic extends Publish
 
         if	( $ftpUrl && $ftpUrl[0]!='#' )
         {
-            $this->ftp = new \Ftp($project->ftp_url); // Aufbauen einer FTP-Verbindung
+            $this->ftp = new \cms\publish\Ftp($project->ftp_url); // Aufbauen einer FTP-Verbindung
 
             $this->ftp->passive = ( $project->ftp_passive == '1' );
         }

@@ -1,4 +1,5 @@
 <?php
+namespace cms\macros\macro;
 
 use cms\model\Folder;
 use cms\model\Name;

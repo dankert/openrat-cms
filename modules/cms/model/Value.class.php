@@ -2,7 +2,7 @@
 namespace cms\model;
 use util\ArrayUtils;
 use cms\publish\Publish;
-use MacroRunner;
+use cms\macros\MacroRunner;
 use \ObjectNotFoundException;
 use logger\Logger;
 use util\Text;

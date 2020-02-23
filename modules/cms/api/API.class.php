@@ -1,6 +1,6 @@
 <?php
 
-namespace cms_api;
+namespace cms\api;
 
 use BadMethodCallException;
 use cms\action\RequestParams;

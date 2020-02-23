@@ -48,7 +48,9 @@ class Dispatcher
         global $conf;
         $conf = Session::getConfig();
 
-        define('PRODUCTION', Conf()->is('production',true));
+		require_once(__DIR__.'/../configuration/configuration.php');
+
+		define('PRODUCTION', Conf()->is('production',true));
         define('DEVELOPMENT', !PRODUCTION);
 
         if( DEVELOPMENT)
@@ -65,7 +67,6 @@ class Dispatcher
         $this->setContentLanguageHeader();
 
         // Nachdem die Konfiguration gelesen wurde, kann nun der Logger benutzt werden.
-        require_once(OR_MODULES_DIR . "logger/require." . PHP_EXT);
         $this->initializeLogger();
 
         // Sollte nur 1x pro Sitzung ausgeführt werden. Wie ermitteln wir das?
@@ -172,7 +173,7 @@ class Dispatcher
 
         // Wenn Logfile relativ angegeben wurde, dann muss dies relativ zum Root der Anwendung sein.
         if   ( !empty($logFile) && $logFile[0] != '/' )
-            $logFile = __DIR__ . '/../modules/' .$logFile;
+            $logFile = __DIR__ . '/../cms09/' .$logFile;
         //$logFile = __DIR__.'/../../'.$logFile;
 
         Logger::$messageFormat = $logConfig['format'];
@@ -209,7 +210,7 @@ class Dispatcher
         // Konfiguration lesen.
         // Wenn Konfiguration noch nicht in Session vorhanden oder die Konfiguration geändert wurde (erkennbar anhand des Datei-Datums)
         // dann die Konfiguration neu einlesen.
-        $configLoader = new ConfigurationLoader( __DIR__.'/../../config/config.yml' );
+        $configLoader = new ConfigurationLoader(__DIR__ . '/../../config/config.yml');
 
         if (!is_array($conf) || $conf['config']['auto_reload'] && $configLoader->lastModificationTime() > $conf['config']['last_modification_time']) {
 
@@ -530,7 +531,7 @@ class Dispatcher
             $dir = $auditConfig->get('directory','./audit-log' );
 
             if   ( $dir[0] != '/' )
-                $dir = __DIR__ . '/../modules/' .$dir;
+                $dir = __DIR__ . '/../../' .$dir;
 
             $micro_date = microtime();
             $date = explode(" ",$micro_date);
