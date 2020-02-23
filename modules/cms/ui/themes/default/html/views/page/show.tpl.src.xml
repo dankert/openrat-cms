@@ -1,4 +1,4 @@
 <text xmlns="http://www.openrat.de/template"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd"
+      xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd"
       var="output" escape="false" type="none" newline="false"></text>

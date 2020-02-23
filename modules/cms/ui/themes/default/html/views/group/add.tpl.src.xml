@@ -1,3 +1,3 @@
 <output xmlns="http://www.openrat.de/template"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd"><header back="true"><form><part class="line"><part class="label"><label for="name" key="name"></label></part><part class="input"><input name="name" class="focus"></input></part></part></form></header></output>
+   xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd"><header back="true"><form><part class="line"><part class="label"><label for="name" key="name"></label></part><part class="input"><input name="name" class="focus"></input></part></part></form></header></output>

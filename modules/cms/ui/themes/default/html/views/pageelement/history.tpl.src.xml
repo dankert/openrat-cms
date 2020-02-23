@@ -1,5 +1,5 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
+	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form method="get" subaction="diff" label="#{compare}"
 		cancel="false" visible="true">
 		<table widths="5%,5%,5%,15%,15%,35%,10%,10%">
