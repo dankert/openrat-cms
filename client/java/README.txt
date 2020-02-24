@@ -1,1 +1,0 @@
-See other project "openrat-java-client".

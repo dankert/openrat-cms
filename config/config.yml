@@ -4,7 +4,7 @@
 
 # This file is YAML formatted.
 
-# Security attention:
+# Security warning:
 # Place your sensitive configuration outside of your document root!
 
 
@@ -15,7 +15,7 @@ database:
     user    : "dbuser"       # user
     password: "dbpass"       # password (attention: please to NOT place any passwords in the document root)
 
-# It is recommended to place a configation outside the document root
+# It is recommended to place the configuration outside of the document root
 #
 # Simple example:
 # include: /etc/openrat/config.yml

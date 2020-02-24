@@ -1,6 +1,7 @@
 OpenRat Module System
 ---------------------
 
-Every directory contains a module with a file `require.php`.
+## Classloading
+Classes in modules are normally loaded by the [autoloader](autoload.php).
 
  

@@ -1,6 +1,6 @@
 # Development Tools
 
-These files are only necessary for developers!
+These files are only necessary **for developers**!
  
 ## Generate output files
 
