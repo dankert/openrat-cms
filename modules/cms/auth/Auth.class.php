@@ -12,6 +12,8 @@ DEFINE('OR_AUTH_STATUS_TOKEN_NEEDED', 4);
 
 interface Auth
 {
+	const NS = __NAMESPACE__;
+
 	/**
 	 * Prüft den eingegebenen Benutzernamen und das Kennwort
 	 * auf Richtigkeit.

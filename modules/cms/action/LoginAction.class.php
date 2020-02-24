@@ -3,6 +3,7 @@
 namespace cms\action;
 
 
+use cms\auth\Auth;
 use cms\model\User;
 use cms\model\Project;
 use cms\model\Group;
@@ -357,7 +358,7 @@ class LoginAction extends BaseAction
         foreach( $modules as $module)
         {
             Logger::debug('Preselecting module: '.$module);
-            $moduleClass = $module.'Auth';
+            $moduleClass = Auth::NS.'\\'.$module.'Auth';
             /** @var \cms\auth\Auth $auth */
             $auth = new $moduleClass;
             $username = $auth->username();
@@ -716,7 +717,7 @@ class LoginAction extends BaseAction
 		// Jedes Authentifizierungsmodul durchlaufen, bis ein Login erfolgreich ist.
 		foreach( $modules as $module)
 		{
-			$moduleClass = $module.'Auth';
+            $moduleClass = Auth::NS.'\\' . $module . 'Auth';
 			$auth        = new $moduleClass;
 			Logger::info('Trying to login with module '.$moduleClass);
 			$loginStatus = $auth->login( $loginName,$loginPassword, $token );
