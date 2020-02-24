@@ -173,7 +173,7 @@ class Dispatcher
 
         // Wenn Logfile relativ angegeben wurde, dann muss dies relativ zum Root der Anwendung sein.
         if   ( !empty($logFile) && $logFile[0] != '/' )
-            $logFile = __DIR__ . '/../cms09/' .$logFile;
+            $logFile = CMS_ROOT_DIR . $logFile;
         //$logFile = __DIR__.'/../../'.$logFile;
 
         Logger::$messageFormat = $logConfig['format'];

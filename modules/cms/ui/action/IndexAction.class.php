@@ -191,13 +191,13 @@ class IndexAction extends Action
         // Komponentenbasiertes CSS
         foreach (TemplateEngineInfo::getComponentList() as $c)
         {
-            $componentCssFile = OR_HTML_MODULES_DIR . 'template_engine/components/html/' . $c . '/' . $c;
+            $componentCssFile = OR_MODULES_DIR . 'template_engine/components/html/' . $c . '/' . $c;
             if (is_file($componentCssFile . '.less'))
                 $css[] = $componentCssFile;
         }
 
-        $css[] = OR_HTML_MODULES_DIR . 'editor/simplemde/simplemde';
-        $css[] = OR_HTML_MODULES_DIR . 'editor/trumbowyg/ui/trumbowyg';
+        $css[] = OR_MODULES_DIR . 'editor/simplemde/simplemde';
+        $css[] = OR_MODULES_DIR . 'editor/trumbowyg/ui/trumbowyg';
 
         $outFiles = array();
         $modified = false;
