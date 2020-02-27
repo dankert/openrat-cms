@@ -81,7 +81,7 @@ class TextComponent extends HtmlComponent
 		//	$functions[] = "Text::accessKey('".$this->accesskey."',@)";
 
 		if	( $this->key )
-			$text->content( Value::createExpression(ValueExpression::TYPE_MESSAGE,$this->key) );
+			$text->content( new ValueExpression( ValueExpression::TYPE_MESSAGE,new Value($this->key),0) );
 
 		elseif	( $this->text )
 			$text->content( Value::createExpression(ValueExpression::TYPE_MESSAGE,$this->text) );

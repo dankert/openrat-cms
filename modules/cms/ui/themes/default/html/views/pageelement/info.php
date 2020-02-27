@@ -34,7 +34,7 @@
             <td class="filename">
               <i class="image-icon image-icon--action-el_<?php echo encodeHtml(htmlentities(@$element_type)) ?>">
               </i>
-              <span><?php echo encodeHtml(htmlentities(@lang('el_${element_type'))) ?>}
+              <span><?php echo encodeHtml(htmlentities(@lang('el_'.@$element_type.''))) ?>
               </span>
             </td>
           </tr>

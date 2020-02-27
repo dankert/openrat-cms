@@ -17,7 +17,7 @@
                 </span>
               </div>
               <div class="input">
-                <span><?php echo encodeHtml(htmlentities(@lang('${type'))) ?>}
+                <span><?php echo encodeHtml(htmlentities(@lang(''.@$type.''))) ?>
                 </span>
               </div>
             </div>

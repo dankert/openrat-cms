@@ -45,7 +45,7 @@
               <td>
                 <i class="image-icon image-icon--action-el_<?php echo encodeHtml(htmlentities(@$typename)) ?>">
                 </i>
-                <span><?php echo encodeHtml(htmlentities(@lang('${typename'))) ?>}
+                <span><?php echo encodeHtml(htmlentities(@lang(''.@$typename.''))) ?>
                 </span>
               </td>
             </tr>

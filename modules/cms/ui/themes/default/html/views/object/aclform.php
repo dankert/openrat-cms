@@ -122,7 +122,7 @@
                       <input type="checkbox" name="<?php echo encodeHtml(htmlentities(@$t)) ?>" value="1" <?php if(@$${t}){ ?>checked="1"<?php } ?> />
                      <?php } ?>
                     <label class="label">
-                      <span><?php echo encodeHtml(htmlentities(@lang('${t'))) ?>}
+                      <span><?php echo encodeHtml(htmlentities(@lang(''.@$t.''))) ?>
                       </span>
                     </label>
                   </div>

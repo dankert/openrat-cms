@@ -95,7 +95,7 @@
                   <label class="label">
                     <span> 
                     </span>
-                    <span><?php echo encodeHtml(htmlentities(@lang('${actiontype'))) ?>}
+                    <span><?php echo encodeHtml(htmlentities(@lang(''.@$actiontype.''))) ?>
                     </span>
                   </label>
                 </div>

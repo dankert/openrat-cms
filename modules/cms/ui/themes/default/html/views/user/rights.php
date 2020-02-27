@@ -38,7 +38,7 @@
                     </td>
                     <?php foreach($show as $list_key=>$t) {  ?>
                       <td class="help">
-                        <span title="message:acl<?php echo encodeHtml(htmlentities()) ?>"><?php echo encodeHtml(htmlentities(@lang('${t'))) ?>}
+                        <span title="message:acl<?php echo encodeHtml(htmlentities()) ?>"><?php echo encodeHtml(htmlentities(@lang(''.@$t.''))) ?>
                         </span>
                       </td>
                      <?php } ?>

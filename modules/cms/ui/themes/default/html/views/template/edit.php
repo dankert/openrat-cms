@@ -28,7 +28,7 @@
                 </a>
               </td>
               <td>
-                <span><?php echo encodeHtml(htmlentities(@lang('${type'))) ?>}
+                <span><?php echo encodeHtml(htmlentities(@lang(''.@$type.''))) ?>
                 </span>
               </td>
             </tr>

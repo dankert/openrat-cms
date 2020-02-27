@@ -31,7 +31,7 @@
                 <a target="_self" date-name="<?php echo encodeHtml(htmlentities(@$name)) ?>" name="<?php echo encodeHtml(htmlentities(@$name)) ?>" data-type="open" data-action="<?php echo encodeHtml(htmlentities(@$type)) ?>" data-method="" data-id="<?php echo encodeHtml(htmlentities(@$id)) ?>" data-extra="[]" href="/#/<?php echo encodeHtml(htmlentities(@$type)) ?>/<?php echo encodeHtml(htmlentities(@$id)) ?>">
                   <i class="image-icon image-icon--action-<?php echo encodeHtml(htmlentities(@$type)) ?>">
                   </i>
-                  <span><?php echo encodeHtml(htmlentities(@lang('${name'))) ?>}
+                  <span><?php echo encodeHtml(htmlentities(@lang(''.@$name.''))) ?>
                   </span>
                   <span> 
                   </span>
