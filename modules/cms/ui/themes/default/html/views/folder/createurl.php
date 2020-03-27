@@ -40,7 +40,7 @@
             </span>
           </div>
           <div class="input">
-            <textarea name="description" disabled="" maxlength="0" class="inputarea">
+            <textarea name="description" maxlength="0" class="inputarea">
             </textarea>
           </div>
         </div>

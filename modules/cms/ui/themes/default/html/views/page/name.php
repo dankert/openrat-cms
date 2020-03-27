@@ -24,7 +24,7 @@
             <label class="or-form-row or-form-checkbox">
               <span class="or-form-label">description
               </span>
-              <textarea name="description" disabled="" maxlength="255" class="description"><?php echo encodeHtml(htmlentities(@$description)) ?>
+              <textarea name="description" maxlength="255" class="description"><?php echo encodeHtml(htmlentities(@$description)) ?>
               </textarea>
             </label>
           </div>

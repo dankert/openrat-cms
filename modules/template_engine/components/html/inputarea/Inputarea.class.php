@@ -38,7 +38,8 @@ class InputareaComponent extends FieldComponent
 		$textarea = (new CMSElement('textarea'));
 
 		$textarea->addAttribute('name',$this->name);
-		$textarea->addAttribute('disabled',$this->readonly);
+		if   ( $this->readonly )
+			$textarea->addAttribute('disabled','disabled');
 		$textarea->addAttribute('maxlength',$this->maxlength);
 
 		if   ( $this->required )

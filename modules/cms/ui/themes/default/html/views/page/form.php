@@ -57,7 +57,7 @@
                             </div>
                            <?php } ?>
                           <?php $if1=($type=='longtext'); if($if1) {  ?>
-                            <textarea name="<?php echo encodeHtml(htmlentities(@$id)) ?>" disabled="" maxlength="0" class="inputarea"><?php echo encodeHtml(htmlentities(@$value)) ?>
+                            <textarea name="<?php echo encodeHtml(htmlentities(@$id)) ?>" maxlength="0" class="inputarea"><?php echo encodeHtml(htmlentities(@$value)) ?>
                             </textarea>
                            <?php } ?>
                           <?php $if1=(in_array($type,explode(",",'select,link,list')); if($if1) {  ?>

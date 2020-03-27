@@ -185,7 +185,7 @@
             </fieldset>
            <?php } ?>
           <?php $if1=($editor=='text'); if($if1) {  ?>
-            <textarea name="text" disabled="" maxlength="0" class="editor raw-editor"><?php echo encodeHtml(htmlentities(@$text)) ?>
+            <textarea name="text" maxlength="0" class="editor raw-editor"><?php echo encodeHtml(htmlentities(@$text)) ?>
             </textarea>
             
            <?php } ?>

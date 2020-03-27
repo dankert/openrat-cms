@@ -36,7 +36,7 @@
                 </span>
               </div>
               <div class="input">
-                <textarea name="description" disabled="" maxlength="255" class="inputarea"><?php echo encodeHtml(htmlentities(@$description)) ?>
+                <textarea name="description" maxlength="255" class="inputarea"><?php echo encodeHtml(htmlentities(@$description)) ?>
                 </textarea>
               </div>
             </div>

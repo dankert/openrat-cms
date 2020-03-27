@@ -212,7 +212,7 @@
                   </span>
                 </div>
                 <div class="input">
-                  <textarea name="default_longtext" disabled="" maxlength="0" class="inputarea"><?php echo encodeHtml(htmlentities(@$default_longtext)) ?>
+                  <textarea name="default_longtext" maxlength="0" class="inputarea"><?php echo encodeHtml(htmlentities(@$default_longtext)) ?>
                   </textarea>
                 </div>
               </div>
@@ -224,7 +224,7 @@
                   </span>
                 </div>
                 <div class="input">
-                  <textarea name="parameters" disabled="" maxlength="0" class="inputarea"><?php echo encodeHtml(htmlentities(@$parameters)) ?>
+                  <textarea name="parameters" maxlength="0" class="inputarea"><?php echo encodeHtml(htmlentities(@$parameters)) ?>
                   </textarea>
                 </div>
               </div>
@@ -255,7 +255,7 @@
                   </span>
                 </div>
                 <div class="input">
-                  <textarea name="select_items" disabled="" maxlength="0" class="inputarea"><?php echo encodeHtml(htmlentities(@$select_items)) ?>
+                  <textarea name="select_items" maxlength="0" class="inputarea"><?php echo encodeHtml(htmlentities(@$select_items)) ?>
                   </textarea>
                 </div>
               </div>
@@ -333,7 +333,7 @@
                   </span>
                 </div>
                 <div class="input">
-                  <textarea name="code" disabled="" maxlength="0" class="inputarea"><?php echo encodeHtml(htmlentities(@$code)) ?>
+                  <textarea name="code" maxlength="0" class="inputarea"><?php echo encodeHtml(htmlentities(@$code)) ?>
                   </textarea>
                 </div>
               </div>
