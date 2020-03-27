@@ -25,7 +25,7 @@
                 </span>
               </td>
               <td>
-                <textarea name="description" maxlength="0" class="inputarea"><?php echo encodeHtml(htmlentities(@$description)) ?>
+                <textarea name="description" class="inputarea"><?php echo encodeHtml(htmlentities(@$description)) ?>
                 </textarea>
               </td>
             </tr>

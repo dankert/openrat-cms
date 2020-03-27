@@ -40,7 +40,9 @@ class InputareaComponent extends FieldComponent
 		$textarea->addAttribute('name',$this->name);
 		if   ( $this->readonly )
 			$textarea->addAttribute('disabled','disabled');
-		$textarea->addAttribute('maxlength',$this->maxlength);
+
+		if   ( $this->maxlength )
+			$textarea->addAttribute('maxlength',$this->maxlength);
 
 		if   ( $this->required )
 			$textarea->addAttribute( 'required','required');

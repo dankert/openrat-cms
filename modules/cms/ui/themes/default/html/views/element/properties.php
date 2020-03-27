@@ -185,7 +185,7 @@
                   </span>
                 </td>
                 <td>
-                  <textarea name="default_longtext" maxlength="0" class="inputarea"><?php echo encodeHtml(htmlentities(@$default_longtext)) ?>
+                  <textarea name="default_longtext" class="inputarea"><?php echo encodeHtml(htmlentities(@$default_longtext)) ?>
                   </textarea>
                 </td>
               </tr>
@@ -197,7 +197,7 @@
                   </span>
                 </td>
                 <td>
-                  <textarea name="parameters" maxlength="0" class="inputarea"><?php echo encodeHtml(htmlentities(@$parameters)) ?>
+                  <textarea name="parameters" class="inputarea"><?php echo encodeHtml(htmlentities(@$parameters)) ?>
                   </textarea>
                 </td>
               </tr>
@@ -228,7 +228,7 @@
                   </span>
                 </td>
                 <td>
-                  <textarea name="select_items" maxlength="0" class="inputarea"><?php echo encodeHtml(htmlentities(@$select_items)) ?>
+                  <textarea name="select_items" class="inputarea"><?php echo encodeHtml(htmlentities(@$select_items)) ?>
                   </textarea>
                 </td>
               </tr>
@@ -306,7 +306,7 @@
                   </span>
                 </td>
                 <td>
-                  <textarea name="code" maxlength="0" class="inputarea"><?php echo encodeHtml(htmlentities(@$code)) ?>
+                  <textarea name="code" class="inputarea"><?php echo encodeHtml(htmlentities(@$code)) ?>
                   </textarea>
                 </td>
               </tr>

@@ -73,7 +73,7 @@
             </span>
           </div>
           <div class="input">
-            <textarea name="description" maxlength="0" class="inputarea">
+            <textarea name="description" class="inputarea">
             </textarea>
           </div>
         </div>
