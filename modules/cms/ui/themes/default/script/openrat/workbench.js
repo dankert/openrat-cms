@@ -71,7 +71,7 @@ Openrat.Workbench = new function()
          */
         let ping = function()
         {
-            let pingPromise = $.json( Openrat.View.createUrl('profile','ping',0, {}, true) );
+            let pingPromise = $.getJSON( Openrat.View.createUrl('profile','ping',0, {}, true) );
 
             pingPromise.fail( function() {
             	console.warn('The server ping has failed.')
