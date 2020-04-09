@@ -153,7 +153,7 @@ class IndexAction extends Action
             $methodList[] = array('name'=>$method,'open'=>$openByDefault);
         }
         $this->setTemplateVar('methodList', $methodList);
-        $this->setTemplateVar('favicon_url', Conf()->subset('theme')->get('favicon','modules/cms/ui/themes/default/images/openrat-logo.ico') );
+		$this->setTemplateVar('favicon_url', Conf()->subset('theme')->get('favicon','modules/cms/ui/themes/default/images/openrat-logo.ico') );
 
         // HTML-Datei direkt einbinden.
         $vars = $this->getOutputData();
@@ -191,13 +191,13 @@ class IndexAction extends Action
         // Komponentenbasiertes CSS
         foreach (TemplateEngineInfo::getComponentList() as $c)
         {
-            $componentCssFile = OR_MODULES_DIR . 'template_engine/components/html/' . $c . '/' . $c;
-            if (is_file($componentCssFile . '.less'))
-                $css[] = $componentCssFile;
+            $componentCssFile = 'template_engine/components/html/' . $c . '/' . $c;
+            if (is_file( OR_MODULES_DIR . $componentCssFile . '.less'))
+                $css[] = OR_HTML_MODULES_DIR . $componentCssFile;
         }
 
-        $css[] = OR_MODULES_DIR . 'editor/simplemde/simplemde';
-        $css[] = OR_MODULES_DIR . 'editor/trumbowyg/ui/trumbowyg';
+        $css[] = OR_HTML_MODULES_DIR . 'editor/simplemde/simplemde';
+        $css[] = OR_HTML_MODULES_DIR . 'editor/trumbowyg/ui/trumbowyg';
 
         $outFiles = array();
         $modified = false;
