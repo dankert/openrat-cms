@@ -66,6 +66,7 @@ class Tree
 			$treeElement->description = lang('USER_AND_GROUPS');
 			$treeElement->icon = 'userlist';
 			$treeElement->type = 'userandgroups';
+			$treeElement->action = 'usergroup';
 
 			$this->addTreeElement($treeElement);
 		}

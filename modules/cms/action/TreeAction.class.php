@@ -200,8 +200,9 @@ class TreeAction extends BaseAction
                 return $result;
 
             case 'userlist':
+            case 'usergroup':
                 return array(
-                    //$this->pathItem('userandgroups' ,0)
+                    //$this->pathItem('usergroup' ,0)
                 );
             case 'user':
                 return array(
