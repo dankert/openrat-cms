@@ -22,7 +22,7 @@
 									</column>
 									<list list="show" value="t">
 										<column class="help">
-											<text key="${t}" prefix="acl_" suffix="_abbrev" title="message:acl_{t}"></text>
+											<text key="acl_${t}" prefix="acl_" suffix="_abbrev" titlekey="acl_${t}"></text>
 										</column>
 									</list>
 								</row>
@@ -57,7 +57,7 @@
 											<text var="languagename" maxlength="20"></text>
 										</column>
 										<list list="show">
-											<column>
+											<column title="">
 												<set var="${list_value}" value="${bits}" key="${list_value}"></set>
 												<checkbox name="${list_value}" readonly="true"></checkbox>
 											</column>

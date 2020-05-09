@@ -12,6 +12,7 @@ class TextComponent extends HtmlComponent
 	public $prefix = '';
 	public $suffix = '';
 	public $title;
+	public $titlekey;
 	public $type;
 	public $escape = true;
 	public $var;
@@ -72,6 +73,10 @@ class TextComponent extends HtmlComponent
 
        if	( $this->title )
             $text->addAttribute('title',$this->title);
+       elseif	( $this->titlekey )
+            //$text->addAttribute('title', Value::createExpression(ValueExpression::TYPE_MESSAGE,$this->titlekey));
+            //$text->addAttribute('title', $this->titlekey);
+            $text->addAttribute('title', new ValueExpression( ValueExpression::TYPE_MESSAGE,new Value($this->titlekey),0) );
 
         //if   ( $this->newline)
 		//    $functions[] = 'nl2br(@)';
