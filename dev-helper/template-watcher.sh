@@ -9,11 +9,14 @@
 CMS_URL=$1
 
 while true; do
+  # Calling compiler first
+  echo "compiling started at $(date)"
+  curl $1/modules/template_engine/TemplateCompiler.php
+  echo "compiling ended at $(date)"
 
-  inotifywait --event modify -r ../modules/template_engine/ ../modules/cms-ui/themes/default/html/views/
+  inotifywait --event modify -r ../modules/template_engine/ ../modules/cms/ui/themes/default/html/views/
   echo File was changed.
 
-  curl $1/modules/template_engine/TemplateCompiler.php
 done
 
 
