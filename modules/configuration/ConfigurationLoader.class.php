@@ -2,7 +2,7 @@
 
 namespace configuration;
 
-use util\VariableResolver;
+use util\text\variables\VariableResolver;
 use util\YAML;
 
 
@@ -116,20 +116,23 @@ class ConfigurationLoader
 	private function resolveVariables($config)
 	{
 		$resolver = new VariableResolver();
+		$resolver->namespaceSeparator = ':';
+		$resolver->defaultSeparator   = '?';
 
-		return $resolver->resolveVariablesInArrayWith($config, [
-
-			'env' => function ($var) {
+		$resolver->addResolver('env',function ($var) {
 				return getenv(strtoupper($var));
-			},
-			// http:... is a shortcut for server:http-...
-			'http' => function ($var) {
+		});
+
+		// http:... is a shortcut for server:http-...
+		$resolver->addResolver('http', function ($var) {
 				return @$_SERVER['HTTP_' . strtoupper($var)];
-			},
-			'server' => function ($var) {
+		});
+
+		$resolver->addResolver('server',function ($var) {
 				return @$_SERVER[strtoupper($var)];
-			}
-		]);
+		});
+
+		return $resolver->resolveVariablesInArray($config);
 	}
 
 }

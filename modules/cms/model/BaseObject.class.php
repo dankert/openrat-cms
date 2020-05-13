@@ -6,7 +6,7 @@ namespace cms\model;
 use util\ArrayUtils;
 use cms\publish\Publish;
 use phpseclib\Math\BigInteger;
-use util\VariableResolver;
+use util\text\variables\VariableResolver;
 use util\YAML;
 use template_engine\components\ElseComponent;
 
@@ -1348,12 +1348,15 @@ SQL
         $settings = YAML::parse($this->settings);
 
         $resolver = new VariableResolver();
+        $resolver->namespaceSeparator = ':';
 
         // Resolve config variables.
-		$settings = $resolver->resolveVariablesInArray( $settings,'config', function ($var) {
+		$resolver->addResolver('config', function ($var) {
                 global $conf;
                 return ArrayUtils::getSubValue($conf,explode('.',$var) );
-            });
+		});
+
+		$settings = $resolver->resolveVariablesInArray( $settings );
 
         return $settings;
     }

@@ -9,7 +9,7 @@ use cms\model\Value;
 use logger\Logger;
 use util\ArrayUtils;
 use util\exception\OpenRatException;
-use util\VariableResolver;
+use util\text\variables\VariableResolver;
 
 class MacroRunner
 {
@@ -35,29 +35,29 @@ class MacroRunner
 
 		$resolver = new VariableResolver();
 
-		$parameters = $resolver->resolveVariablesInArrayWith($parameter, [
+		$resolver->namespaceSeparator = ':';
+		$resolver->defaultSeparator   = '?';
+		$resolver->addResolver('setting',function ($var) {
+			return ArrayUtils::getSubValue($this->page->getSettings(), explode('.', $var));
+		});
+		$resolver->addResolver('element',function ($var) {
+			$template = new Template($this->page->templateid);
+			$elements = $template->getElementNames();
+			$elementid = array_search($var, $elements);
 
-			'setting' => function ($var) {
-				return ArrayUtils::getSubValue($this->page->getSettings(), explode('.', $var));
-			},
+			$value = new Value();
+			$value->publisher = $this->page->publisher;
+			$value->elementid = $elementid;
+			$value->element = new Element($elementid);
+			$value->element->load();
+			$value->pageid = $this->page->pageid;
+			$value->languageid = $this->page->languageid;
+			$value->load();
 
-			'element' => function ($var) {
-				$template = new Template($this->page->templateid);
-				$elements = $template->getElementNames();
-				$elementid = array_search($var, $elements);
+			return $value->getRawValue();
+		});
 
-				$value = new Value();
-				$value->publisher = $this->page->publisher;
-				$value->elementid = $elementid;
-				$value->element = new Element($elementid);
-				$value->element->load();
-				$value->pageid = $this->page->pageid;
-				$value->languageid = $this->page->languageid;
-				$value->load();
-
-				return $value->getRawValue();
-			}
-		]);
+		$parameters = $resolver->resolveVariablesInArray($parameter);
 
 		foreach ($parameters as $param_name => $param_value) {
 
