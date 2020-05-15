@@ -2,19 +2,19 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<header back="true" />
 	<form>
-		<group title="#{options}">
+		<group title="${message:options}">
 			<part>
 				<text value=""></text>
 				<radio name="type" value="check_limit"></radio>
 				<label for="type_check_limit">
-					<text key="project_check_limit"></text>
+					<text value="${message:project_check_limit}"></text>
 				</label>
 			</part>
 			<part>
 				<text value=""></text>
 				<radio name="type" value="check_files"></radio>
 				<label for="type_check_files">
-					<text key="project_check_files"></text>
+					<text value="${message:project_check_files}"></text>
 				</label>
 			</part>
 		</group>

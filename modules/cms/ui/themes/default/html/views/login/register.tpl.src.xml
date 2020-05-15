@@ -1,6 +1,6 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<if true="%{login/register}">
+	<if true="${config:login/register}">
 
 		<form>
 			<logo name="register"></logo>
@@ -9,7 +9,7 @@
 			<part class="line">
 				<part class="label">
 					<label for="mail">
-						<text text="USER_MAIL"></text>
+						<text value="${message:USER_MAIL}"></text>
 					</label>
 				</part>
 				<part class="input">
@@ -27,7 +27,7 @@
 	</if>
 	<else>
 		<part class="message error">
-			<text key="REGISTER_NOT_ENABLED" />
+			<text value="${message:REGISTER_NOT_ENABLED}" />
 		</part>
 	</else>
 </output>

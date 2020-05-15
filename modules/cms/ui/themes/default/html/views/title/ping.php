@@ -1,5 +1,5 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
-    <span>1
+    <span><?php echo escapeHtml('1') ?>
     </span>
  <?php } ?>

@@ -1,22 +1,22 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
-    <form name="" target="_self" data-target="view" action="./" data-method="changetemplateselectelements" data-action="page" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" data-async="" data-autosave="" class="or-form page">
-      <input type="hidden" name="token" value="<?php echo token();?>" />
-      <input type="hidden" name="action" value="page" />
-      <input type="hidden" name="subaction" value="changetemplateselectelements" />
-      <input type="hidden" name="id" value="<?php echo OR_ID ?>" />
-      <div>
-        <input type="hidden" name="newtemplateid" value="<?php echo encodeHtml(htmlentities(@$newtemplateid)) ?>" />
-        <?php foreach($elements as $list_key=>$list_value) { extract($list_value); ?>
-          <div class="line">
-            <div class="label">
-              <span><?php echo encodeHtml(htmlentities(@$name)) ?>
+    <form name="<?php echo escapeHtml('') ?>" target="<?php echo escapeHtml('_self') ?>" data-target="<?php echo escapeHtml('view') ?>" action="<?php echo escapeHtml('./') ?>" data-method="<?php echo escapeHtml('changetemplateselectelements') ?>" data-action="<?php echo escapeHtml('page') ?>" data-id="<?php echo escapeHtml(''.@$_id.'') ?>" method="<?php echo escapeHtml('POST') ?>" enctype="<?php echo escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo escapeHtml('') ?>" data-autosave="<?php echo escapeHtml('') ?>" class="<?php echo escapeHtml('or-form page') ?>"><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('token') ?>" value="<?php echo escapeHtml(''.@$_token.'') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('action') ?>" value="<?php echo escapeHtml('page') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('subaction') ?>" value="<?php echo escapeHtml('changetemplateselectelements') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('id') ?>" value="<?php echo escapeHtml(''.@$_id.'') ?>" /><?php echo escapeHtml('') ?>
+      <div><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('newtemplateid') ?>" value="<?php echo escapeHtml(''.@$newtemplateid.'') ?>" /><?php echo escapeHtml('') ?>
+        <?php foreach((array)$elements as $list_key=>$list_value) { extract($list_value); ?>
+          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@$name.'') ?>
               </span>
             </div>
-            <div class="input">
-              <select name="<?php echo encodeHtml(htmlentities(@$newElementsName)) ?>" size="1">
+            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+              <select name="<?php echo escapeHtml(''.@$newElementsName.'') ?>" size="<?php echo escapeHtml('1') ?>"><?php echo escapeHtml('') ?>
                 <?php foreach($newElementsList as $_key=>$_value) {  ?>
-                  <option value="<?php echo encodeHtml(htmlentities(@$_key)) ?>" <?php if($_key==$${newElementsName}){ ?>selected="selected"<?php } ?>><?php echo encodeHtml(htmlentities(@$_value)) ?>
+                  <option value="<?php echo escapeHtml(''.@$_key.'') ?>" <?php if($_key==''){ ?>selected="<?php echo escapeHtml('selected') ?>"<?php } ?>><?php echo escapeHtml(''.@$_value.'') ?>
                   </option>
                  <?php } ?>
               </select>
@@ -24,9 +24,9 @@
           </div>
          <?php } ?>
       </div>
-      <div class="or-form-actionbar">
-        <input type="button" value="<?php echo encodeHtml(htmlentities(@lang('CANCEL'))) ?>" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" />
-        <input type="submit" value="<?php echo encodeHtml(htmlentities(@lang('MENU_CHANGETEMPLATE'))) ?>" class="or-form-btn or-form-btn--primary or-form-btn--save" />
+      <div class="<?php echo escapeHtml('or-form-actionbar') ?>"><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('button') ?>" value="<?php echo escapeHtml(''.@lang('CANCEL').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('submit') ?>" value="<?php echo escapeHtml(''.@lang('MENU_CHANGETEMPLATE').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo escapeHtml('') ?>
       </div>
     </form>
  <?php } ?>

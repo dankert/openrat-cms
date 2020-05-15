@@ -6,12 +6,12 @@
 
         <part class="line">
             <part class="label">
-                <text text="GLOBAL_NAME"></text>
+                <text value="${message:GLOBAL_NAME}"></text>
             </part>
             <part class="input clickable">
-                <text var="name"/>
+                <text value="${name}"/>
                 <link class="or-link-btn" action="model" subaction="prop" type="edit">
-                    <text key="edit"/>
+                    <text value="${message:edit}"/>
                 </link>
             </part>
         </part>

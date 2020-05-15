@@ -9,17 +9,17 @@
 
     </form>
 
-    <group title="#{preview}">
+    <group title="${message:preview}">
 
         <insert url="${preview_url}"></insert>
 
         <link class="action" action="file" subaction="edit">
             <image file="icon/edit"></image>
-            <text key="menu_file_edit"></text>
+            <text value="${message:menu_file_edit}"></text>
         </link>
         <link class="action" action="file" subaction="editvalue">
             <image file="icon/editvalue"></image>
-            <text key="menu_file_editvalue"></text>
+            <text value="${message:menu_file_editvalue}"></text>
         </link>
     </group>
 </output>

@@ -1,68 +1,68 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
-    <div class="or-table-wrapper">
-      <div class="or-table-filter">
-        <input type="search" name="filter" placeholder="<?php echo encodeHtml(htmlentities(@lang('SEARCH_FILTER'))) ?>" />
+    <div class="<?php echo escapeHtml('or-table-wrapper') ?>"><?php echo escapeHtml('') ?>
+      <div class="<?php echo escapeHtml('or-table-filter') ?>"><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('search') ?>" name="<?php echo escapeHtml('filter') ?>" placeholder="<?php echo escapeHtml(''.@lang('SEARCH_FILTER').'') ?>" /><?php echo escapeHtml('') ?>
       </div>
-      <div class="or-table-area">
-        <table width="100%">
-          <tr>
-            <td>
+      <div class="<?php echo escapeHtml('or-table-area') ?>"><?php echo escapeHtml('') ?>
+        <table width="<?php echo escapeHtml('100%') ?>"><?php echo escapeHtml('') ?>
+          <tr><?php echo escapeHtml('') ?>
+            <td><?php echo escapeHtml('') ?>
             </td>
-            <td>
-              <em><?php echo encodeHtml(htmlentities(@lang('GLOBAL_COMPARE'))) ?>
+            <td><?php echo escapeHtml('') ?>
+              <em><?php echo escapeHtml(''.@lang('GLOBAL_COMPARE').'') ?>
               </em>
-              <span> 
+              <span><?php echo escapeHtml(' ') ?>
               </span>
               <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($date_left); ?>
                <?php } ?>
             </td>
-            <td>
+            <td><?php echo escapeHtml('') ?>
             </td>
-            <td>
-              <em><?php echo encodeHtml(htmlentities(@lang('GLOBAL_WITH'))) ?>
+            <td><?php echo escapeHtml('') ?>
+              <em><?php echo escapeHtml(''.@lang('GLOBAL_WITH').'') ?>
               </em>
-              <span> 
+              <span><?php echo escapeHtml(' ') ?>
               </span>
               <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($date_right); ?>
                <?php } ?>
             </td>
           </tr>
-          <tr>
-            <td colspan="4">
+          <tr><?php echo escapeHtml('') ?>
+            <td colspan="<?php echo escapeHtml('4') ?>"><?php echo escapeHtml('') ?>
             </td>
           </tr>
-          <?php foreach($diff as $list_key=>$list_value) { extract($list_value); ?>
-            <tr class="diff">
+          <?php foreach((array)$diff as $list_key=>$list_value) { extract($list_value); ?>
+            <tr class="<?php echo escapeHtml('diff') ?>"><?php echo escapeHtml('') ?>
               <?php $if1=(isset($left)); if($if1) {  ?>
-                <td width="5%" class="line">
-                  <tt><?php echo encodeHtml(htmlentities(@$left['line'])) ?>
+                <td width="<?php echo escapeHtml('5%') ?>" class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+                  <tt><?php echo escapeHtml(''.'.@$left.'[' . line . '].'') ?>
                   </tt>
                 </td>
-                <td width="45%" class="<?php echo encodeHtml(htmlentities(@$left['type'])) ?>">
-                  <span><?php echo encodeHtml(htmlentities(@$left['text'])) ?>
+                <td width="<?php echo escapeHtml('45%') ?>" class="<?php echo escapeHtml(''.'.@$left.'[' . type . '].'') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.'.@$left.'[' . text . '].'') ?>
                   </span>
                 </td>
                <?php } ?>
               <?php if(!$if1) {  ?>
-                <td width="50%" colspan="2" class="help">
-                  <span> 
+                <td width="<?php echo escapeHtml('50%') ?>" colspan="<?php echo escapeHtml('2') ?>" class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(' ') ?>
                   </span>
                 </td>
                <?php } ?>
               <?php $if1=(isset($right)); if($if1) {  ?>
-                <td width="5%" class="line">
-                  <tt><?php echo encodeHtml(htmlentities(@$right['line'])) ?>
+                <td width="<?php echo escapeHtml('5%') ?>" class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+                  <tt><?php echo escapeHtml(''.'.@$right.'[' . line . '].'') ?>
                   </tt>
                 </td>
-                <td width="45%" class="<?php echo encodeHtml(htmlentities(@$right['type'])) ?>">
-                  <span><?php echo encodeHtml(htmlentities(@$right['text'])) ?>
+                <td width="<?php echo escapeHtml('45%') ?>" class="<?php echo escapeHtml(''.'.@$right.'[' . type . '].'') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.'.@$right.'[' . text . '].'') ?>
                   </span>
                 </td>
                <?php } ?>
               <?php if(!$if1) {  ?>
-                <td width="50%" colspan="2" class="help">
-                  <span> 
+                <td width="<?php echo escapeHtml('50%') ?>" colspan="<?php echo escapeHtml('2') ?>" class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(' ') ?>
                   </span>
                 </td>
                <?php } ?>

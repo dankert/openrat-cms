@@ -19,7 +19,7 @@ class ListComponent extends Component
 	public function createElement()
 	{
 		$list = new PHPBlockElement();
-		$list->beforeBlock = 'foreach($'.$this->list.' as $' . $this->key . '=>$' . $this->value . ')';
+		$list->beforeBlock = 'foreach((array)'.$list->value($this->list).' as $' . $this->key . '=>$' . $this->value . ')';
 
 		if ($this->extract)
 			$list->inBlock = 'extract($' . $this->value . ');';

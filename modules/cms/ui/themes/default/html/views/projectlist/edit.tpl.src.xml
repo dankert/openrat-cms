@@ -4,10 +4,10 @@
 	<table>
 		<row class="headline">
 			<column>
-				<text key="name"></text>
+				<text value="${message:name}"></text>
 			</column>
 		</row>
-		<list list="projects" extract="true">
+		<list list="${projects}" extract="true">
 			<row class="data">
 				<column class="clickable">
 					<link type="open" id="${id}" name="${name}" action="project">
@@ -19,9 +19,9 @@
 		</list>
 		<row class="data">
 			<column class="clickable">
-				<link type="dialog" subaction="add" name="#{new}">
+				<link type="dialog" subaction="add" name="${message:new}">
 					<image method="add" />
-					<text text="new" />
+					<text value="${message:new}" />
 				</link>
 			</column>
 		</row>

@@ -1,3 +1,43 @@
 <output xmlns="http://www.openrat.de/template"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd"><dummy><window icon="user" name="GLOBAL_USERS" width="70%"><table><row class="headline"><column><image type="user"></image><text key="name"></text></column><column><text raw=""></text></column><column><text key="LOGIN"></text></column></row><list list="el" extract="true"><row class="data"><column url="${url}"><image type="user"></image><text var="name"></text></column><column url="${url}"><text value="${fullname}"></text><if true="${isAdmin}"><text raw="_("></text><text key="USER_ADMIN"></text><text raw=")"></text></if></column><column><link target="_top" action="index" subaction="switchuser" id="${userid}"><text key="LOGIN"></text></link></column></row></list></table></window></dummy></output>
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<dummy>
+		<window icon="user" name="GLOBAL_USERS" width="70%">
+			<table>
+				<row class="headline">
+					<column>
+						<image type="user"></image>
+						<text value="${message:name}"></text>
+					</column>
+					<column>
+						<text raw=""></text>
+					</column>
+					<column>
+						<text value="${message:LOGIN}"></text>
+					</column>
+				</row>
+				<list list="${el}" extract="true">
+					<row class="data">
+						<column url="${url}">
+							<image type="user"></image>
+							<text value="${name}"></text>
+						</column>
+						<column url="${url}">
+							<text value="${fullname}"></text>
+							<if true="${isAdmin}">
+								<text value="_("></text>
+								<text value="${message:USER_ADMIN}"></text>
+								<text value=")"></text>
+							</if>
+						</column>
+						<column>
+							<link target="_top" action="index" subaction="switchuser" id="${userid}">
+								<text value="${message:LOGIN}}"></text>
+							</link>
+						</column>
+					</row>
+				</list>
+			</table>
+		</window>
+	</dummy>
+</output>

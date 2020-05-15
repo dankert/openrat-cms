@@ -1,46 +1,47 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-		<list list="projects" extract="true">
+		<list list="${projects}" extract="true">
 
 					<group title="${projectname}">
-						<if empty="rights">
+						<if empty="${rights}">
 							<part>
-								<text text="GLOBAL_NOT_FOUND"></text>
+								<text value="${message:GLOBAL_NOT_FOUND}"></text>
 							</part>
 						</if>
-						<if not="true" empty="rights">
+						<if not="true" empty="${rights}">
 							<table>
 								<row class="headline">
 									<column class="help">
-										<text text="GLOBAL_USER"></text>
+										<text value="${message:GLOBAL_USER}"></text>
 									</column>
 									<column class="help">
-										<text text="GLOBAL_NAME"></text>
+										<text value="${message:GLOBAL_NAME}"></text>
 									</column>
 									<column class="help">
-										<text text="GLOBAL_LANGUAGE"></text>
+										<text value="${message:GLOBAL_LANGUAGE}"></text>
 									</column>
-									<list list="show" value="t">
+									<list list="${show}" value="t">
 										<column class="help">
-											<text key="acl_${t}" prefix="acl_" suffix="_abbrev" titlekey="acl_${t}"></text>
+											<text value="${message:acl_${t}}" prefix="acl_" suffix="_abbrev" title="${message:acl_${t}}"></text>
+											<text value="${message:acl_${data:t}}" prefix="acl_" suffix="_abbrev" title="${message:acl_${data:t}}"></text>
 										</column>
 									</list>
 								</row>
-								<list list="rights" key="aclid" value="acl" extract="true">
+								<list list="${rights}" key="aclid" value="acl" extract="true">
 									<row class="data clickable">
 										<column>
 											<if present="username">
 												<image action="user"></image>
-												<text var="username" maxlength="20"></text>
+												<text value="${username}" maxlength="20"></text>
 											</if>
 											<if present="groupname">
 												<image action="group"></image>
-												<text var="groupname" maxlength="20"></text>
+												<text value="${groupname}" maxlength="20"></text>
 											</if>
 											<if not="true" present="username">
 												<if not="true" present="groupname">
 													<image action="group"></image>
-													<text key="global_all"></text>
+													<text value="${message:global_all}"></text>
 												</if>
 											</if>
 											<set var="username"></set>
@@ -49,14 +50,14 @@
 										<column>
 											<image action="${objecttype}"></image>
 											<link type="open" action="${objecttype}" id="${objectid}">
-												<text var="objectname" title="#{select}"></text>
+												<text value="${objectname}" title="${message:select}"></text>
 											</link>
 										</column>
 										<column>
 											<image action="language"></image>
-											<text var="languagename" maxlength="20"></text>
+											<text value="${languagename}" maxlength="20"></text>
 										</column>
-										<list list="show">
+										<list list="${show}">
 											<column title="">
 												<set var="${list_value}" value="${bits}" key="${list_value}"></set>
 												<checkbox name="${list_value}" readonly="true"></checkbox>

@@ -1,35 +1,35 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<header views="mail"></header>
-	<form label="#{global_save}">
-		<group title="#{name}">
+	<form label="${message:global_save}">
+		<group title="${message:name}">
 			<part class="line">
 				<part class="label">
 					<label for="name" key="user_username"></label>
 				</part>
 				<part class="input">
-					<text var="name" class="name"></text>
+					<text value="${name}" class="name"></text>
 				</part>
 			</part>
 		</group>
-		<group title="#{MENU_PROFILE_MAIL}">
+		<group title="${message:MENU_PROFILE_MAIL}">
 			<part class="line">
 				<part class="label">
 					<label for="mail" key="user_mail"></label>
 				</part>
 				<part class="input">
-					<text var="mail"></text>
+					<text value="${mail}"></text>
 					<newline />
 					<newline />
 					<part class="clickable">
-						<link type="dialog" class="action" action="profile" subaction="mail" name="#{mail}">
-							<text key="edit"></text>
+						<link type="dialog" class="action" action="profile" subaction="mail" name="${message:mail}">
+							<text value="${message:edit}"></text>
 						</link>
 					</part>
 				</part>
 			</part>
 		</group>
-		<group title="#{GLOBAL_PROP}">
+		<group title="${message:GLOBAL_PROP}">
 			<part class="line">
 				<part class="label">
 					<label for="fullname" key="user_fullname"></label>
@@ -66,7 +66,7 @@
 			<part class="line">
 				<part class="label">
 					<label for="timezone_offset">
-						<text key="timezone" />
+						<text value="${message:timezone}" />
 					</label>
 				</part>
 				<part class="input">
@@ -77,7 +77,7 @@
 			<part class="line">
 				<part class="label">
 					<label for="">
-						<text key="language" />
+						<text value="${message:language}" />
 					</label>
 				</part>
 				<part class="input">
@@ -85,10 +85,10 @@
 				</part>
 			</part>
 		</group>
-		<group title="#{security}">
+		<group title="${message:security}">
 			<part class="line">
 				<part class="label">
-					<text text="user_password_expires" />
+					<text value="${message:user_password_expires}" />
 				</part>
 				<part class="input">
 					<date date="${passwordExpires}" />

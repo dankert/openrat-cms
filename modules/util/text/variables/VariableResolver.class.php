@@ -14,6 +14,7 @@ class VariableResolver
 	public $close    = '}';
 	public $namespaceSeparator  = '.';
 	public $defaultSeparator    = ':';
+	public $renderOnlyVariables = false;
 
 	private $resolvers = [];
 
@@ -32,15 +33,13 @@ class VariableResolver
 	/**
 	 * Resolving a variable in a text like 'name is ${env:username:default}.'
 	 *
-	 * @param $value array
-	 * @param $key string
-	 * @param $resolver callable
-	 * @return array
+	 * @param $value string
+	 * @return string
 	 */
 	public function resolveVariables($value) {
 
 		$this->parseString( $value );
-		return $this->toString();
+		return $this->renderToString();
 	}
 
 	/**
@@ -75,14 +74,14 @@ class VariableResolver
 		$this->value = $this->parseToValue($value);
 	}
 
-	private function toString()
+	public function renderToString()
 	{
 		return $this->render( $this->value );
 	}
 
 
 
-	public function render( $value )
+	protected function render( $value )
 	{
 		$text = '';
 
@@ -189,9 +188,9 @@ class VariableResolver
 	}
 
 
-	public static function createExpression($type, $name)
+	public function createExpression($namespace, $name, $default='')
 	{
-		return $type . '{' . $name . '}';
+		return $this->marker.$this->open.($namespace?$namespace.$this->namespaceSeparator:'').$name.($default?$this->defaultSeparator.$default:'').$this->close;
 	}
 }
 

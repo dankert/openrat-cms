@@ -6,7 +6,7 @@
         <if true="${mayCreateFolder}">
             <part class="clickable or-linklist-line or-round-corners or-hover-effect">
                 <link type="dialog" subaction="createfolder">
-                    <text key="menu_createfolder"></text>
+                    <text value="${message:menu_createfolder}"></text>
                 </link>
             </part>
         </if>
@@ -14,7 +14,7 @@
         <if true="${mayCreatePage}">
             <part class="clickable or-linklist-line or-round-corners or-hover-effect">
                 <link type="dialog" subaction="createpage">
-                    <text key="menu_createpage"></text>
+                    <text value="${message:menu_createpage}"></text>
                 </link>
             </part>
         </if>
@@ -22,7 +22,7 @@
         <if true="${mayCreateFile}">
             <part class="clickable or-linklist-line or-round-corners or-hover-effect">
                 <link type="dialog" subaction="createfile">
-                    <text key="menu_createfile"></text>
+                    <text value="${message:menu_createfile}"></text>
                 </link>
             </part>
         </if>
@@ -30,7 +30,7 @@
         <if true="${mayCreateImage}">
             <part class="clickable or-linklist-line or-round-corners or-hover-effect">
                 <link type="dialog" subaction="createimage">
-                    <text key="menu_createimage"></text>
+                    <text value="${message:menu_createimage}"></text>
                 </link>
             </part>
         </if>
@@ -38,7 +38,7 @@
         <if true="${mayCreateText}">
             <part class="clickable or-linklist-line or-round-corners or-hover-effect">
                 <link type="dialog" subaction="createtext">
-                    <text key="menu_createtext"></text>
+                    <text value="${message:menu_createtext}"></text>
                 </link>
             </part>
         </if>
@@ -46,7 +46,7 @@
         <if true="${mayCreateUrl}">
             <part class="clickable or-linklist-line or-round-corners or-hover-effect">
                 <link type="dialog" subaction="createurl">
-                    <text key="menu_createurl"></text>
+                    <text value="${message:menu_createurl}"></text>
                 </link>
             </part>
         </if>
@@ -54,7 +54,7 @@
         <if true="${mayCreateLink}">
             <part class="clickable or-linklist-line or-round-corners or-hover-effect">
                 <link type="dialog" subaction="createlink">
-                    <text key="menu_createlink"></text>
+                    <text value="${message:menu_createlink}"></text>
                 </link>
             </part>
         </if>

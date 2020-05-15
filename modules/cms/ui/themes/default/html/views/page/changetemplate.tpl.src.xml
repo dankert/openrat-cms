@@ -1,24 +1,24 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<form method="get" subaction="changetemplateselectelements" visible="true" cancel="true" label="#{BUTTON_NEXT}">
+	<form method="get" subaction="changetemplateselectelements" visible="true" cancel="true" label="${message:BUTTON_NEXT}">
 		<hidden name="templateid" />
 		<hidden name="modelid" />
 		
 		<part class="line">
 			<part class="label">
-				<text text="page_template_old"></text>
+				<text value="${message:page_template_old}"></text>
 			</part>
 			<part class="input">
 				<link url="${template_url}" target="cms_main">
 					<image type="template"></image>
-					<text var="template_name"></text>
+					<text value="${template_name}"></text>
 				</link>
 			</part>
 		</part>
 
 		<part class="line">
 			<part class="label">
-				<text text="page_template_new"></text>
+				<text value="${message:page_template_new}"></text>
 			</part>
 			<part class="input">
 				<selectbox name="newtemplateid" list="templates" default=""></selectbox>

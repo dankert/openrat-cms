@@ -5,29 +5,29 @@
 	<table>
 		<row class="headline">
 			<column>
-				<text key="name"></text>
+				<text value="${message:name}"></text>
 			</column>
 			<column>
-				<text key="type"></text>
+				<text value="${message:type}"></text>
 			</column>
 		</row>
-		<list list="elements" extract="true">
+		<list list="${elements}" extract="true">
 			<row class="data">
 				<column class="clickable">
 					<link type="open" id="${id}" name="${name}" action="element">
 						<image elementtype="${type}"></image>
-						<text var="name" title="${description}"></text>
+						<text value="${name}" title="${description}"></text>
 					</link>
 				</column>
 				<column>
-					<text key="${type}" prefix="EL_"></text>
+					<text value="${message:${type}}" prefix="EL_"></text>
 				</column>
 			</row>
 		</list>
-		<if empty="elements">
+		<if empty="${elements}">
 			<row>
 				<column colspan="2">
-					<text key="GLOBAL_NOT_FOUND"></text>
+					<text value="${message:GLOBAL_NOT_FOUND}"></text>
 				</column>
 			</row>
 		</if>
@@ -35,23 +35,23 @@
 			<column colspan="2" class="clickable">
 				<link type="dialog" subaction="addel" action="template" id="${templateid}">
 					<image method="add" />
-					<text key="menu_template_addel"></text>
+					<text value="${message:menu_template_addel}"></text>
 				</link>
 			</column>
 		</row>
 	</table>
 
-	<list list="models" extract="true">
+	<list list="${models}" extract="true">
 
 		<group title="${name}">
 
 			<part class="clickable">
-				<text var="source" escape="true" type="code" maxlength="200"></text>
+				<text value="${source}" escape="true" type="code" maxlength="200"></text>
 				<newline/>
 
 				<link type="edit" subaction="src" var1="modelid" value1="${modelid}" class="or-form-button">
 					<image action="template"/>
-					<text key="edit"></text>
+					<text value="${message:edit}"></text>
 				</link>
 			</part>
 		</group>

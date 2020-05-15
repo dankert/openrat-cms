@@ -4,76 +4,76 @@
 		<table>
 			<row>
 				<column>
-					<text text="name"></text>
+					<text value="${message:name}"></text>
 				</column>
 				<column class="name">
-					<text var="name"></text>
+					<text value="${name}"></text>
 				</column>
 			</row>
 			<row>
 				<column>
-					<text text="description"></text>
+					<text value="${message:description}"></text>
 				</column>
 				<column>
-					<text var="description"></text>
+					<text value="${description}"></text>
 				</column>
 			</row>
 			<row>
 				<column>
-					<text text="type"></text>
+					<text value="${message:type}"></text>
 				</column>
 				<column class="filename">
 					<image elementtype="${element_type}"></image>
-					<text key="el_${element_type}"></text>
+					<text value="${message:el_${element_type}}"></text>
 				</column>
 			</row>
 			<row>
 				<column colspan="2">
-					<group title="#{additional_info}"></group>
+					<group title="${message:additional_info}"></group>
 				</column>
 			</row>
 			<row>
 				<column>
-					<text key="template"></text>
+					<text value="${message:template}"></text>
 				</column>
 				<column>
 					<if present="template_url">
 						<link url="${template_url}" target="cms_main_main">
 							<image file="icon_template"></image>
-							<text var="template_name"></text>
+							<text value="${template_name}"></text>
 						</link>
 					</if>
-					<if empty="template_url">
+					<if empty="${template_url}">
 						<image file="icon_template"></image>
-						<text var="template_name"></text>
+						<text value="${template_name}"></text>
 					</if>
 				</column>
 			</row>
 			<row>
 				<column>
-					<text key="element"></text>
+					<text value="${message:element}"></text>
 				</column>
 				<column>
 					<if present="element_url">
 						<link url="${element_url}" target="cms_main_main">
 							<image elementtype="${element_type}"></image>
-							<text var="element_name"></text>
+							<text value="${element_name}"></text>
 						</link>
 					</if>
-					<if empty="element_url">
+					<if empty="${element_url}">
 						<image icon="element"></image>
-						<text var="element_name"></text>
+						<text value="${element_name}"></text>
 					</if>
 				</column>
 			</row>
 			<row>
 				<column colspan="2">
-					<group title="#{prop_userinfo}"></group>
+					<group title="${message:prop_userinfo}"></group>
 				</column>
 			</row>
 			<row>
 				<column>
-					<text text="lastchange"></text>
+					<text value="${message:lastchange}"></text>
 				</column>
 				<column>
 					<table>

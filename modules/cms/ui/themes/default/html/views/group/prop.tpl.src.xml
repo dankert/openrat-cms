@@ -4,7 +4,7 @@
         <part class="line">
             <part class="label">
                 <label for="name">
-                    <text text="GLOBAL_NAME"></text>
+                    <text value="${message:GLOBAL_NAME}"></text>
                 </label>
             </part>
             <part class="input">

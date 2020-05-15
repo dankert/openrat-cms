@@ -4,19 +4,19 @@
 		<row class="data">
 			<column colspan="2">
 				<link action="index" subaction="projectmenu">
-					<text raw="OpenRat"></text>
+					<text value="OpenRat"></text>
 				</link>
 			</column>
 		</row>
-		<list list="applications" extract="true">
+		<list list="${applications}" extract="true">
 			<row class="data">
 				<column>
 					<link url="${url}">
-						<text var="name"></text>
+						<text value="${name}"></text>
 					</link>
 				</column>
 				<column>
-					<text var="description"></text>
+					<text value="${description}"></text>
 				</column>
 			</row>
 		</list>

@@ -4,31 +4,31 @@
 		<form>
 			<window>
 				<table>
-					<if empty="el">
+					<if empty="${el}">
 						<row>
 							<column colspan="4">
-								<text text="GLOBAL_NOT_FOUND"></text>
+								<text value="${message:GLOBAL_NOT_FOUND}"></text>
 							</column>
 						</row>
 					</if>
-					<if not="" empty="el">
+					<if not="" empty="${el}">
 						<row>
 							<column class="help">
-								<text text="PAGE_ELEMENT_NAME"></text>
+								<text value="${message:PAGE_ELEMENT_NAME}"></text>
 							</column>
 							<column class="help">
-								<text text="GLOBAL_CHANGE"></text>
+								<text value="${message:GLOBAL_CHANGE}"></text>
 							</column>
 							<column class="help">
-								<text text="GLOBAL_VALUE"></text>
+								<text value="${message:GLOBAL_VALUE}"></text>
 							</column>
 						</row>
-						<list list="el" extract="true">
+						<list list="${el}" extract="true">
 							<row class="data">
 								<column>
 									<label for="${saveid}">
 										<image elementtype="${type}"></image>
-										<text var="name"></text>
+										<text value="${name}"></text>
 									</label>
 								</column>
 								<column>
@@ -51,13 +51,13 @@
 						</list>
 					</if>
 				</table>
-				<group title="#{options}">
+				<group title="${message:options}">
 					<if present="release">
 						<part>
 							<checkbox name="release"></checkbox>
 							<label for="release">
-								<text raw="_"></text>
-								<text text="GLOBAL_RELEASE"></text>
+								<text value=" "></text>
+								<text value="${message:GLOBAL_RELEASE}"></text>
 							</label>
 						</part>
 					</if>
@@ -65,8 +65,8 @@
 						<part>
 							<checkbox name="publish"></checkbox>
 							<label for="publish">
-								<text raw="_"></text>
-								<text text="PAGE_PUBLISH_AFTER_SAVE"></text>
+								<text value=" "></text>
+								<text value="${message:PAGE_PUBLISH_AFTER_SAVE}"></text>
 							</label>
 						</part>
 					</if>

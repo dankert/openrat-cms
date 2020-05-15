@@ -7,10 +7,10 @@
                 <label key="GLOBAL_NAME"></label>
             </part>
             <part class="input">
-                <text var="name"></text>
+                <text value="${name}"></text>
             </part>
         </part>
-        <group title="#{options}"></group>
+        <group title="${message:options}"></group>
         <part class="line">
             <part class="label"></part>
             <part class="input">

@@ -4,18 +4,18 @@
         <table>
             <row class="headline">
                 <column colspan="2">
-                    <text key="group"></text>
+                    <text value="${message:group}"></text>
                 </column>
             </row>
-            <list list="memberships" extract="true">
+            <list list="${memberships}" extract="true">
                 <row class="data">
                     <column width="10%">
-                        <checkbox name="group${id}" default="${member}"></checkbox>
+                        <checkbox name="${var}"></checkbox>
                     </column>
                     <column>
                         <label for="${var}">
                             <image action="group"/>
-                            <text var="name"/>
+                            <text value="${name}"/>
                         </label>
                     </column>
                 </row>

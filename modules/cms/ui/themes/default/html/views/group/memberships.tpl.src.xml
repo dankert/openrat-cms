@@ -5,10 +5,10 @@
 			<row class="headline">
 				<column width="10%"></column>
 				<column>
-					<text key="name"></text>
+					<text value="${message:name}"></text>
 				</column>
 			</row>
-			<list list="memberships" extract="true">
+			<list list="${memberships}" extract="true">
 				<row class="data">
 					<column>
 						<checkbox name="${var}"></checkbox>
@@ -16,7 +16,7 @@
 					<column>
 						<label for="${var}">
 							<image action="user"></image>
-							<text var="name"></text>
+							<text value="${name}"></text>
 						</label>
 					</column>
 				</row>

@@ -1,69 +1,69 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
-    <form name="" target="_self" data-target="view" action="./" data-method="name" data-action="page" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" data-async="" data-autosave="" class="or-form page">
-      <input type="hidden" name="token" value="<?php echo token();?>" />
-      <input type="hidden" name="action" value="page" />
-      <input type="hidden" name="subaction" value="name" />
-      <input type="hidden" name="id" value="<?php echo OR_ID ?>" />
-      <div>
-        <input type="hidden" name="languageid" value="<?php echo encodeHtml(htmlentities(@$languageid)) ?>" />
-        <fieldset class="or-group toggle-open-close open show">
-          <legend class="on-click-open-close"><?php echo encodeHtml(htmlentities(@lang('name'))) ?>
-            <img />
-            <div class="arrow arrow-right on-closed">
+    <form name="<?php echo escapeHtml('') ?>" target="<?php echo escapeHtml('_self') ?>" data-target="<?php echo escapeHtml('view') ?>" action="<?php echo escapeHtml('./') ?>" data-method="<?php echo escapeHtml('name') ?>" data-action="<?php echo escapeHtml('page') ?>" data-id="<?php echo escapeHtml(''.@$_id.'') ?>" method="<?php echo escapeHtml('POST') ?>" enctype="<?php echo escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo escapeHtml('') ?>" data-autosave="<?php echo escapeHtml('') ?>" class="<?php echo escapeHtml('or-form page') ?>"><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('token') ?>" value="<?php echo escapeHtml(''.@$_token.'') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('action') ?>" value="<?php echo escapeHtml('page') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('subaction') ?>" value="<?php echo escapeHtml('name') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('id') ?>" value="<?php echo escapeHtml(''.@$_id.'') ?>" /><?php echo escapeHtml('') ?>
+      <div><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('languageid') ?>" value="<?php echo escapeHtml(''.@$languageid.'') ?>" /><?php echo escapeHtml('') ?>
+        <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
+          <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('name').'') ?>
+            <img /><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
             </div>
-            <div class="arrow arrow-down on-open">
+            <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
             </div>
           </legend>
-          <div class="closable">
-            <label class="or-form-row or-form-input">
-              <span class="or-form-label">name
+          <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
+            <label class="<?php echo escapeHtml('or-form-row or-form-input') ?>"><?php echo escapeHtml('') ?>
+              <span class="<?php echo escapeHtml('or-form-label') ?>"><?php echo escapeHtml('name') ?>
               </span>
-              <input name="name" required="required" type="text" maxlength="255" value="<?php echo encodeHtml(htmlentities(@$name)) ?>" />
+              <input name="<?php echo escapeHtml('name') ?>" required="<?php echo escapeHtml('required') ?>" type="<?php echo escapeHtml('text') ?>" maxlength="<?php echo escapeHtml('255') ?>" value="<?php echo escapeHtml(''.@$name.'') ?>" /><?php echo escapeHtml('') ?>
             </label>
-            <label class="or-form-row or-form-checkbox">
-              <span class="or-form-label">description
+            <label class="<?php echo escapeHtml('or-form-row or-form-checkbox') ?>"><?php echo escapeHtml('') ?>
+              <span class="<?php echo escapeHtml('or-form-label') ?>"><?php echo escapeHtml('description') ?>
               </span>
-              <textarea name="description" maxlength="255" class="description"><?php echo encodeHtml(htmlentities(@$description)) ?>
+              <textarea name="<?php echo escapeHtml('description') ?>" maxlength="<?php echo escapeHtml('255') ?>" class="<?php echo escapeHtml('description') ?>"><?php echo escapeHtml(''.@$description.'') ?>
               </textarea>
             </label>
           </div>
         </fieldset>
-        <fieldset class="or-group toggle-open-close open show">
-          <legend class="on-click-open-close"><?php echo encodeHtml(htmlentities(@lang('alias'))) ?>
-            <img />
-            <div class="arrow arrow-right on-closed">
+        <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
+          <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('alias').'') ?>
+            <img /><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
             </div>
-            <div class="arrow arrow-down on-open">
+            <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
             </div>
           </legend>
-          <div class="closable">
-            <label class="or-form-row or-form-input">
-              <span class="or-form-label">alias
+          <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
+            <label class="<?php echo escapeHtml('or-form-row or-form-input') ?>"><?php echo escapeHtml('') ?>
+              <span class="<?php echo escapeHtml('or-form-label') ?>"><?php echo escapeHtml('alias') ?>
               </span>
-              <input name="alias_filename" type="text" maxlength="150" value="<?php echo encodeHtml(htmlentities(@$alias_filename)) ?>" class="filename" />
+              <input name="<?php echo escapeHtml('alias_filename') ?>" type="<?php echo escapeHtml('text') ?>" maxlength="<?php echo escapeHtml('150') ?>" value="<?php echo escapeHtml(''.@$alias_filename.'') ?>" class="<?php echo escapeHtml('filename') ?>" /><?php echo escapeHtml('') ?>
             </label>
-            <label class="or-form-row or-form-input">
-              <span class="or-form-label">folder
+            <label class="<?php echo escapeHtml('or-form-row or-form-input') ?>"><?php echo escapeHtml('') ?>
+              <span class="<?php echo escapeHtml('or-form-label') ?>"><?php echo escapeHtml('folder') ?>
               </span>
-              <select name="alias_folderid" size="1">
+              <select name="<?php echo escapeHtml('alias_folderid') ?>" size="<?php echo escapeHtml('1') ?>"><?php echo escapeHtml('') ?>
                 <?php foreach($folders as $_key=>$_value) {  ?>
-                  <option value="<?php echo encodeHtml(htmlentities(@$_key)) ?>" <?php if($_key==$alias_folderid){ ?>selected="selected"<?php } ?>><?php echo encodeHtml(htmlentities(@$_value)) ?>
+                  <option value="<?php echo escapeHtml(''.@$_key.'') ?>" <?php if($_key==$alias_folderid){ ?>selected="<?php echo escapeHtml('selected') ?>"<?php } ?>><?php echo escapeHtml(''.@$_value.'') ?>
                   </option>
                  <?php } ?>
               </select>
             </label>
-            <label class="or-form-row or-form-checkbox">
-              <span class="or-form-label">leave_link
+            <label class="<?php echo escapeHtml('or-form-row or-form-checkbox') ?>"><?php echo escapeHtml('') ?>
+              <span class="<?php echo escapeHtml('or-form-label') ?>"><?php echo escapeHtml(''.@lang('leave_link').'') ?>
               </span>
-              <input type="checkbox" name="leave_link" value="1" <?php if(@$leave_link){ ?>checked="1"<?php } ?> />
+              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('leave_link') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$leave_link){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
             </label>
           </div>
         </fieldset>
       </div>
-      <div class="or-form-actionbar">
-        <input type="button" value="<?php echo encodeHtml(htmlentities(@lang('CANCEL'))) ?>" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" />
-        <input type="submit" value="<?php echo encodeHtml(htmlentities(@lang('global_save'))) ?>" class="or-form-btn or-form-btn--primary or-form-btn--save" />
+      <div class="<?php echo escapeHtml('or-form-actionbar') ?>"><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('button') ?>" value="<?php echo escapeHtml(''.@lang('CANCEL').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('submit') ?>" value="<?php echo escapeHtml(''.@lang('global_save').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo escapeHtml('') ?>
       </div>
     </form>
  <?php } ?>

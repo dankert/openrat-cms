@@ -1,78 +1,71 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 
-	<if value="${type}" equals="folder">
-		<header views="inherit,aclform" />
-	</if>
-	<else>
-		<header views="aclform" />
-	</else>
-
 	<table>
 		<row class="headline">
 			<column class="help">
-				<text key="GLOBAL_NAME"></text>
+				<text value="${message:GLOBAL_NAME}"></text>
 			</column>
 			<column class="help">
-				<text key="GLOBAL_LANGUAGE"></text>
+				<text value="${message:GLOBAL_LANGUAGE}"></text>
 			</column>
-			<list list="show" value="t">
+			<list list="${show}" value="t">
 				<column class="help">
-					<text key="${t}" prefix="acl_" suffix="_abbrev"></text>
+					<text value="${message:acl_${t}_abbrev}"></text>
 				</column>
 			</list>
 			<column class="help">
-				<text key="global_delete"></text>
+				<text value="${message:global_delete}"></text>
 			</column>
 		</row>
-		<if empty="acls">
+		<if empty="${acls}">
 			<row class="data">
 				<column colspan="99">
-					<text text="GLOBAL_NOT_FOUND"></text>
+					<text value="${message:GLOBAL_NOT_FOUND}"></text>
 				</column>
 			</row>
 		</if>
-		<if not="true" empty="acls"></if>
-		<list list="acls" key="aclid" value="acl" extract="true">
+		<if not="true" empty="${acls}"></if>
+		<list list="${acls}" key="aclid" value="acl" extract="true">
 			<row class="data">
 				<column>
 					<if present="username">
 						<image action="user"></image>
-						<text var="username"></text>
+						<text value="${username}"></text>
 					</if>
 					<if present="groupname">
 						<image action="group"></image>
-						<text var="groupname"></text>
+						<text value="${groupname}"></text>
 					</if>
 					<if not="true" present="username">
 						<if not="true" present="groupname">
 							<image action="group"></image>
-							<text key="global_all"></text>
+							<text value="${message:global_all}"></text>
 						</if>
 					</if>
 				</column>
 				<column>
-					<text var="languagename"></text>
+					<text value="${languagename}"></text>
 				</column>
-				<list list="show" value="t">
+				<list list="${show}" value="t">
 					<column>
-						<if true="var:$t">
-							<text raw="&amp;check;" escape="true" />
+						<if true="${t}">
+							<text value="&amp;check;" escape="false" />
 						</if>
 					</column>
 				</list>
 				<column class="clickable">
 					<link type="post" subaction="delacl" var1="aclid" value1="${aclid}">
-						<text key="GLOBAL_DELETE"></text>
+						<text value="${message:GLOBAL_DELETE}"></text>
 					</link>
 				</column>
 			</row>
 		</list>
 		<row class="data">
 			<column colspan="99" class="clickable">
-				<link type="dialog" name="#{menu_aclform}" subaction="aclform">
+				<link type="dialog" name="${message:menu_aclform}" subaction="aclform">
 					<image method="add" />
-					<text text="new" />
+					<text value="${message:new}" />
 				</link>
 
 			</column>

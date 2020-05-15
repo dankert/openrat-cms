@@ -4,15 +4,15 @@
     <form>
         <row>
             <column>
-                <text text="GLOBAL_NAME"></text>
+                <text value="${message:GLOBAL_NAME}"></text>
             </column>
             <column>
-                <text var="name"></text>
+                <text value="${name}"></text>
             </column>
         </row>
         <row>
             <column>
-                <text text="GLOBAL_DELETE"></text>
+                <text value="${message:GLOBAL_DELETE}"></text>
             </column>
             <column>
                 <checkbox name="delete"></checkbox>

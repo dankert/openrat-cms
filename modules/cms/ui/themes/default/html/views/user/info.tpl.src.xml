@@ -2,9 +2,9 @@
         xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 
     <form cancel="false" readonly="true">
-        <text var="fullname" class="headline"/>
+        <text value="${fullname}" class="headline"/>
 
-        <if not="true" empty="image">
+        <if not="true" empty="${image}">
             <part class="line">
                 <part class="input">
                     <image url="${image}" size="80x80"/>
@@ -14,30 +14,30 @@
 
         <part class="line">
             <part class="label">
-                <text key="user_username" />
+                <text value="${message:user_username}" />
             </part>
             <part class="input">
-                <text var="name" class="name" />
+                <text value="${name}" class="name" />
             </part>
         </part>
 
-        <group title="#{ADDITIONAL_INFO}">
+        <group title="${message:ADDITIONAL_INFO}">
             <part class="line">
                 <part class="label">
-                    <text key="user_fullname" />
+                    <text value="${message:user_fullname}" />
                 </part>
                 <part class="input">
-                    <text var="fullname" />
+                    <text value="${fullname}" />
                 </part>
             </part>
-            <if true="%{security/user/show_admin_mail}">
+            <if true="${config:security/user/show_admin_mail}">
                 <part class="line">
                     <part class="label">
                         <label for="mail" key="user_mail"></label>
                     </part>
                     <part class="input">
                         <link url="mailto:${mail}" type="external">
-                            <text var="mail"/>
+                            <text value="${mail}"/>
                         </link>
 
                         <qrcode value="mailto:${mail}"/>
@@ -46,10 +46,10 @@
             </if>
             <part class="line">
                 <part class="label">
-                    <text key="description"></text>
+                    <text value="${message:description}"></text>
                 </part>
                 <part class="input">
-                    <text var="desc" />
+                    <text value="${desc}" />
                 </part>
             </part>
             <part class="line">
@@ -57,27 +57,27 @@
                     <label for="tel" key="user_tel"></label>
                 </part>
                 <part class="input">
-                    <text var="tel" />
+                    <text value="${tel}" />
                     <qrcode value="tel:${tel}"/>
 
                 </part>
             </part>
             <part class="line">
                 <part class="label">
-                        <text key="timezone"/>
+                        <text value="${message:timezone}"/>
                 </part>
                 <part class="input">
-                    <text var="timezone"/>
+                    <text value="${timezone}"/>
                 </part>
             </part>
             <part class="line">
                 <part class="label">
                     <label for="">
-                        <text key="language"/>
+                        <text value="${message:language}"/>
                     </label>
                 </part>
                 <part class="input">
-                    <text var="language" />
+                    <text value="${language}" />
                 </part>
             </part>
             <part class="line">
@@ -85,7 +85,7 @@
                 </part>
                 <part class="input clickable">
                     <link type="dialog" subaction="prop" class="or-link-btn">
-                        <text key="edit"/>
+                        <text value="${message:edit}"/>
                     </link>
                 </part>
             </part>
@@ -94,7 +94,7 @@
         </group>
 
 
-        <group title="#{options}" open="false">
+        <group title="${message:options}" open="false">
             <part class="line">
                 <part class="label">
                 </part>
@@ -105,25 +105,25 @@
             </part>
             <part class="line">
                 <part class="label">
-                    <text key=":user_ldapdn"></text>
+                    <text value="${message::user_ldapdn}"></text>
                 </part>
                 <part class="input">
-                    <text var="ldap_dn"></text>
+                    <text value="${ldap_dn}"></text>
                 </part>
             </part>
             <part class="line">
                 <part class="label">
-                    <text key="user_style"></text>
+                    <text value="${message:user_style}"></text>
                 </part>
                 <part class="input">
-                    <text var="style"></text>
+                    <text value="${style}"></text>
                 </part>
             </part>
         </group>
-        <group title="#{security}" open="false">
+        <group title="${message:security}" open="false">
             <part class="line">
                 <part class="label">
-                    <text text="user_password_expires"/>
+                    <text value="${message:user_password_expires}"/>
                 </part>
                 <part class="input">
                     <date date="${passwordExpires}"/>
@@ -134,14 +134,14 @@
                 </part>
                 <part class="input clickable">
                     <link type="dialog" subaction="pw" action="user" class="or-link-btn">
-                        <text key="edit_password"/>
+                        <text value="${message:edit_password}"/>
                     </link>
                 </part>
             </part>
 
             <part class="line">
                 <part class="label">
-                    <text text="user_last_login"/>
+                    <text value="${message:user_last_login}"/>
                 </part>
                 <part class="input">
                     <date date="${lastLogin}"/>
@@ -151,7 +151,7 @@
             <!-- TOTP Settings -->
             <part class="line">
                 <part class="label">
-                    <text text="token"/>
+                    <text value="${message:token}"/>
                 </part>
                 <part class="input">
                     <text value="${totpToken}"/>
@@ -165,7 +165,7 @@
                     <checkbox name="totp"/>
                     <label for="totp" key="user_totp"></label>
 
-                    <!--<text var="otpSecret"></text>-->
+                    <!--<text value="${otpSecret}"></text>-->
                     <qrcode value="${totpSecretUrl}"/>
                 </part>
             </part>

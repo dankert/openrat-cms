@@ -1,31 +1,31 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
     
-    <form name="" target="_self" data-target="view" action="./" data-method="inherit" data-action="object" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" data-async="" data-autosave="" class="or-form object">
-      <input type="hidden" name="token" value="<?php echo token();?>" />
-      <input type="hidden" name="action" value="object" />
-      <input type="hidden" name="subaction" value="inherit" />
-      <input type="hidden" name="id" value="<?php echo OR_ID ?>" />
-      <div>
-        <?php $if1=($type=='folder'); if($if1) {  ?>
-          <fieldset class="or-group toggle-open-close open show">
-            <legend class="on-click-open-close"><?php echo encodeHtml(htmlentities(@lang('options'))) ?>
-              <img />
-              <div class="arrow arrow-right on-closed">
+    <form name="<?php echo escapeHtml('') ?>" target="<?php echo escapeHtml('_self') ?>" data-target="<?php echo escapeHtml('view') ?>" action="<?php echo escapeHtml('./') ?>" data-method="<?php echo escapeHtml('inherit') ?>" data-action="<?php echo escapeHtml('object') ?>" data-id="<?php echo escapeHtml(''.@$_id.'') ?>" method="<?php echo escapeHtml('POST') ?>" enctype="<?php echo escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo escapeHtml('') ?>" data-autosave="<?php echo escapeHtml('') ?>" class="<?php echo escapeHtml('or-form object') ?>"><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('token') ?>" value="<?php echo escapeHtml(''.@$_token.'') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('action') ?>" value="<?php echo escapeHtml('object') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('subaction') ?>" value="<?php echo escapeHtml('inherit') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('id') ?>" value="<?php echo escapeHtml(''.@$_id.'') ?>" /><?php echo escapeHtml('') ?>
+      <div><?php echo escapeHtml('') ?>
+        <?php $if1=($type==folder); if($if1) {  ?>
+          <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
+            <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('options').'') ?>
+              <img /><?php echo escapeHtml('') ?>
+              <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
               </div>
-              <div class="arrow arrow-down on-open">
+              <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
               </div>
             </legend>
-            <div class="closable">
-              <div class="line">
-                <div class="label">
+            <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
+              <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+                <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 </div>
-                <div class="input">
-                  <?php  { $inherit= '1'; ?>
+                <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+                  <?php  { $inherit= 1; ?>
                    <?php } ?>
-                  <input type="checkbox" name="inherit" value="1" <?php if(@$inherit){ ?>checked="1"<?php } ?> />
-                  <label class="label">
-                    <span><?php echo encodeHtml(htmlentities(@lang('inherit_rights'))) ?>
+                  <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('inherit') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$inherit){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+                  <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                    <span><?php echo escapeHtml(''.@lang('inherit_rights').'') ?>
                     </span>
                   </label>
                 </div>
@@ -34,9 +34,9 @@
           </fieldset>
          <?php } ?>
       </div>
-      <div class="or-form-actionbar">
-        <input type="button" value="<?php echo encodeHtml(htmlentities(@lang('CANCEL'))) ?>" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" />
-        <input type="submit" value="<?php echo encodeHtml(htmlentities(@lang('button_ok'))) ?>" class="or-form-btn or-form-btn--primary or-form-btn--save" />
+      <div class="<?php echo escapeHtml('or-form-actionbar') ?>"><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('button') ?>" value="<?php echo escapeHtml(''.@lang('CANCEL').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('submit') ?>" value="<?php echo escapeHtml(''.@lang('button_ok').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo escapeHtml('') ?>
       </div>
     </form>
  <?php } ?>

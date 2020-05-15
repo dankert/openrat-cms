@@ -3,7 +3,7 @@
 
 	<part class="clickable">
 		<link type="popup" url="${preview_url}" class="action">
-			<text key="LINK_OPEN_IN_NEW_WINDOW" />
+			<text value="${message:LINK_OPEN_IN_NEW_WINDOW}" />
 		</link>
 	</part>
 </output>

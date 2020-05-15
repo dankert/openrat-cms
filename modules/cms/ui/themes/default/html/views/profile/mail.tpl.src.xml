@@ -3,11 +3,11 @@
     <form method="post">
         <logo name="changemail"/>
 
-        <group title="#{user_mail}">
+        <group title="${message:user_mail}">
             <part class="line">
                 <part class="label">
                     <label for="mail">
-                        <text text="user_new_mail"></text>
+                        <text value="${message:user_new_mail}"></text>
                     </label>
                 </part>
                 <part class="input">

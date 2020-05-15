@@ -1,11 +1,11 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<header back="true"></header>
-	<form visible="true" label="#{add}">
+	<form visible="true" label="${message:add}">
 		<hidden name="languageid" />
 		<part class="line">
 			<part class="label">
-				<text text="global_FOLDER"></text>
+				<text value="${message:global_FOLDER}"></text>
 			</part>
 			<part class="input">
 				<input name="name" size="20" default=""></input>
@@ -14,7 +14,7 @@
 
 		<part class="line">
 			<part class="label">
-				<text text="global_DESCRIPTION"></text>
+				<text value="${message:global_DESCRIPTION}"></text>
 			</part>
 			<part class="input">
 				<inputarea rows="5" cols="50" name="description" default=""></inputarea>

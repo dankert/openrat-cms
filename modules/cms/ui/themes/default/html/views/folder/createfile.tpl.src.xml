@@ -6,7 +6,7 @@
 		<part class="line">
 			<part class="label">
 				<label for="name">
-					<text text="global_FILE"></text>
+					<text value="${message:global_FILE}"></text>
 				</label>
 			</part>
 			<part class="input">
@@ -26,24 +26,24 @@
 				<text class="help" key="file_max_size"></text>
 			</part>
 			<part class="input">
-				<text var="max_size"></text>
+				<text value="${max_size}"></text>
 			</part>
 		</part>
 
 		<part class="line">
 			<part class="label">
-				<text key="HTTP_URL"></text>
+				<text value="${message:HTTP_URL}"></text>
 			</part>
 			<part class="input">
 				<input name="url" size="50"></input>
 			</part>
 		</part>
-		<group title="#{description}"></group>
+		<group title="${message:description}"></group>
 
 
 		<part class="line">
 			<part class="label">
-				<text text="global_NAME"></text>
+				<text value="${message:global_NAME}"></text>
 			</part>
 			<part class="input">
 				<input name="name" size="50"></input>
@@ -53,7 +53,7 @@
 
 		<part class="line">
 			<part class="label">
-				<text text="global_DESCRIPTION"></text>
+				<text value="${message:global_DESCRIPTION}"></text>
 			</part>
 			<part class="input">
 				<inputarea rows="5" cols="50" name="description" default=""></inputarea>

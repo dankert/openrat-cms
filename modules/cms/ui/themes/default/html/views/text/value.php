@@ -1,31 +1,31 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
-    <form name="" target="_self" data-target="view" action="./" data-method="value" data-action="text" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" data-async="" data-autosave="" class="or-form text">
-      <input type="hidden" name="token" value="<?php echo token();?>" />
-      <input type="hidden" name="action" value="text" />
-      <input type="hidden" name="subaction" value="value" />
-      <input type="hidden" name="id" value="<?php echo OR_ID ?>" />
-      <div>
-        <tr>
-          <td>
-            <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_VALUE'))) ?>
+    <form name="<?php echo escapeHtml('') ?>" target="<?php echo escapeHtml('_self') ?>" data-target="<?php echo escapeHtml('view') ?>" action="<?php echo escapeHtml('./') ?>" data-method="<?php echo escapeHtml('value') ?>" data-action="<?php echo escapeHtml('text') ?>" data-id="<?php echo escapeHtml(''.@$_id.'') ?>" method="<?php echo escapeHtml('POST') ?>" enctype="<?php echo escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo escapeHtml('') ?>" data-autosave="<?php echo escapeHtml('') ?>" class="<?php echo escapeHtml('or-form text') ?>"><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('token') ?>" value="<?php echo escapeHtml(''.@$_token.'') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('action') ?>" value="<?php echo escapeHtml('text') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('subaction') ?>" value="<?php echo escapeHtml('value') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('id') ?>" value="<?php echo escapeHtml(''.@$_id.'') ?>" /><?php echo escapeHtml('') ?>
+      <div><?php echo escapeHtml('') ?>
+        <tr><?php echo escapeHtml('') ?>
+          <td><?php echo escapeHtml('') ?>
+            <span><?php echo escapeHtml(''.@lang('GLOBAL_VALUE').'') ?>
             </span>
           </td>
-          <td>
-            <textarea name="value" data-extension="<?php echo encodeHtml(htmlentities(@$extension)) ?>" data-mimetype="<?php echo encodeHtml(htmlentities(@$mimetype)) ?>" data-mode="htmlmixed" class="editor code-editor"><?php echo encodeHtml(htmlentities(@$value)) ?>
+          <td><?php echo escapeHtml('') ?>
+            <textarea name="<?php echo escapeHtml('value') ?>" data-extension="<?php echo escapeHtml(''.@$extension.'') ?>" data-mimetype="<?php echo escapeHtml(''.@$mimetype.'') ?>" data-mode="<?php echo escapeHtml('htmlmixed') ?>" class="<?php echo escapeHtml('editor code-editor') ?>"><?php echo escapeHtml(''.@$value.'') ?>
             </textarea>
           </td>
         </tr>
-        <tr>
-          <td colspan="2" class="act">
+        <tr><?php echo escapeHtml('') ?>
+          <td colspan="<?php echo escapeHtml('2') ?>" class="<?php echo escapeHtml('act') ?>"><?php echo escapeHtml('') ?>
             
           </td>
         </tr>
       </div>
-      <div class="or-form-actionbar">
-        <input type="button" value="<?php echo encodeHtml(htmlentities(@lang('CANCEL'))) ?>" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" />
-        <input type="button" value="<?php echo encodeHtml(htmlentities(@lang('APPLY'))) ?>" class="or-form-btn or-form-btn--primary or-form-btn--apply" />
-        <input type="submit" value="<?php echo encodeHtml(htmlentities(@lang('button_ok'))) ?>" class="or-form-btn or-form-btn--primary or-form-btn--save" />
+      <div class="<?php echo escapeHtml('or-form-actionbar') ?>"><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('button') ?>" value="<?php echo escapeHtml(''.@lang('CANCEL').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('button') ?>" value="<?php echo escapeHtml(''.@lang('APPLY').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--primary or-form-btn--apply') ?>" /><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('submit') ?>" value="<?php echo escapeHtml(''.@lang('button_ok').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo escapeHtml('') ?>
       </div>
     </form>
     

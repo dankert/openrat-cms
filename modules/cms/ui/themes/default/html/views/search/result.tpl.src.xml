@@ -3,18 +3,18 @@
 	<table>
 		<row>
 			<column class="header">
-				<text key="GLOBAL_NAME"></text>
+				<text value="${message:GLOBAL_NAME}"></text>
 			</column>
 			<column class="header">
-				<text key="GLOBAL_LASTCHANGE"></text>
+				<text value="${message:GLOBAL_LASTCHANGE}"></text>
 			</column>
 		</row>
-		<list list="result" extract="true">
+		<list list="${result}" extract="true">
 			<row class="data">
 				<column class="clickable">
 					<link type="open" action="${type}" name="${name}" id="${id}">
 						<image type="${type}"></image>
-						<text var="name" title="${desc}"></text>
+						<text value="${name}" title="${desc}"></text>
 					</link>
 				</column>
 				<column>

@@ -1,52 +1,52 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
     <?php $if1=(config('login','register')); if($if1) {  ?>
-      <form name="" target="_self" data-target="view" action="./" data-method="register" data-action="login" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" data-async="" data-autosave="" class="or-form login">
-        <input type="hidden" name="token" value="<?php echo token();?>" />
-        <input type="hidden" name="action" value="login" />
-        <input type="hidden" name="subaction" value="register" />
-        <input type="hidden" name="id" value="<?php echo OR_ID ?>" />
-        <div>
-          <div class="line logo">
-            <div class="label">
-              <img src="themes/default/images/logo_register.png" border="0" />
+      <form name="<?php echo escapeHtml('') ?>" target="<?php echo escapeHtml('_self') ?>" data-target="<?php echo escapeHtml('view') ?>" action="<?php echo escapeHtml('./') ?>" data-method="<?php echo escapeHtml('register') ?>" data-action="<?php echo escapeHtml('login') ?>" data-id="<?php echo escapeHtml(''.@$_id.'') ?>" method="<?php echo escapeHtml('POST') ?>" enctype="<?php echo escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo escapeHtml('') ?>" data-autosave="<?php echo escapeHtml('') ?>" class="<?php echo escapeHtml('or-form login') ?>"><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('token') ?>" value="<?php echo escapeHtml(''.@$_token.'') ?>" /><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('action') ?>" value="<?php echo escapeHtml('login') ?>" /><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('subaction') ?>" value="<?php echo escapeHtml('register') ?>" /><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('id') ?>" value="<?php echo escapeHtml(''.@$_id.'') ?>" /><?php echo escapeHtml('') ?>
+        <div><?php echo escapeHtml('') ?>
+          <div class="<?php echo escapeHtml('line logo') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+              <img src="<?php echo escapeHtml('themes/default/images/logo_register.png') ?>" border="<?php echo escapeHtml('') ?>" /><?php echo escapeHtml('') ?>
             </div>
-            <div class="input">
-              <h2><?php echo encodeHtml(htmlentities(@lang('logo_register'))) ?>
+            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+              <h2><?php echo escapeHtml(''.@lang('logo_register').'') ?>
               </h2>
-              <p><?php echo encodeHtml(htmlentities(@lang('logo_register_text'))) ?>
+              <p><?php echo escapeHtml(''.@lang('logo_register_text').'') ?>
               </p>
             </div>
           </div>
-          <div class="line">
-            <div class="label">
-              <label class="label">
-                <span><?php echo encodeHtml(htmlentities(@lang('USER_MAIL'))) ?>
+          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+              <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                <span><?php echo escapeHtml(''.@lang('USER_MAIL').'') ?>
                 </span>
               </label>
             </div>
-            <div class="input">
-              <div class="inputholder">
-                <input name="mail" type="text" maxlength="256" value="" class="focus" />
+            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+              <div class="<?php echo escapeHtml('inputholder') ?>"><?php echo escapeHtml('') ?>
+                <input name="<?php echo escapeHtml('mail') ?>" type="<?php echo escapeHtml('text') ?>" maxlength="<?php echo escapeHtml('256') ?>" value="<?php echo escapeHtml('') ?>" class="<?php echo escapeHtml('focus') ?>" /><?php echo escapeHtml('') ?>
               </div>
             </div>
           </div>
-          <div class="line">
-            <div class="label">
+          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
             </div>
-            <div class="input">
+            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
             </div>
           </div>
         </div>
-        <div class="or-form-actionbar">
-          <input type="button" value="<?php echo encodeHtml(htmlentities(@lang('CANCEL'))) ?>" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" />
-          <input type="submit" value="<?php echo encodeHtml(htmlentities(@lang('button_ok'))) ?>" class="or-form-btn or-form-btn--primary or-form-btn--save" />
+        <div class="<?php echo escapeHtml('or-form-actionbar') ?>"><?php echo escapeHtml('') ?>
+          <input type="<?php echo escapeHtml('button') ?>" value="<?php echo escapeHtml(''.@lang('CANCEL').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo escapeHtml('') ?>
+          <input type="<?php echo escapeHtml('submit') ?>" value="<?php echo escapeHtml(''.@lang('button_ok').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo escapeHtml('') ?>
         </div>
       </form>
      <?php } ?>
     <?php if(!$if1) {  ?>
-      <div class="message error">
-        <span><?php echo encodeHtml(htmlentities(@lang('REGISTER_NOT_ENABLED'))) ?>
+      <div class="<?php echo escapeHtml('message error') ?>"><?php echo escapeHtml('') ?>
+        <span><?php echo escapeHtml(''.@lang('REGISTER_NOT_ENABLED').'') ?>
         </span>
       </div>
      <?php } ?>

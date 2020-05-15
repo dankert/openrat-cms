@@ -3,29 +3,29 @@
 	<table>
 		<row class="data">
 			<column colspan="1">
-				<text key="type" />
+				<text value="${message:type}" />
 			</column>
 			<column>
 				<image elementtype="${type}" />
-				<text key="${type}" prefix="el_" />
+				<text value="${message:${type}}" prefix="el_" />
 			</column>
 		</row>
 		<row class="data">
 			<column colspan="1">
-				<text key="name" />
+				<text value="${message:name}" />
 			</column>
 			<column class="clickable">
 				<link class="" type="edit" action="element" subaction="prop" id="${id}">
-					<text var="name" />
+					<text value="${name}" />
 				</link>
 			</column>
 		</row>
 		<row class="data">
 			<column colspan="1">
-				<text key="id" />
+				<text value="${message:id}" />
 			</column>
 			<column>
-				<text var="id" />
+				<text value="${id}" />
 			</column>
 		</row>
 	</table>

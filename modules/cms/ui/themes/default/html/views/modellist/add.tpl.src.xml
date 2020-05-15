@@ -4,7 +4,7 @@
 	<form method="post">
 		<part class="line">
 			<part class="label">
-				<text key="global_name"></text>
+				<text value="${message:global_name}"></text>
 			</part>
 			<part class="input">
 				<input name="name" class="focus"></input>

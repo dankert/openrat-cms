@@ -2,7 +2,7 @@
         xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
     <form readonly="true">
 
-        <list list="info">
+        <list list="${info}">
             <text label="${list_key}" var="list_value"/>
         </list>
     </form>

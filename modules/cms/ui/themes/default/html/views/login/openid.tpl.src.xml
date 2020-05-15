@@ -4,13 +4,13 @@
 	<form action="login" subaction="login" target="_top">
 
 		<!-- Open-Id -->
-		<if true="%{security/openid/enable}">
-			<group title="#{OPENID}">
+		<if true="${config:security/openid/enable}">
+			<group title="${message:OPENID}">
 				<part class="line">
 					<part class="label">
-						<text key="openid_user"></text>
-						<if not="true" empty="%{security/openid/logo_url}">
-							<image url="%{security/openid/logo_url}"></image>
+						<text value="${message:openid_user}"></text>
+						<if not="true" empty="${config:security/openid/logo_url}">
+							<image url="${config:security/openid/logo_url}"></image>
 						</if>
 					</part>
 					<part class="input">
@@ -24,11 +24,11 @@
 			</group>
 
 			<if value="size:dbids" greaterthan="1">
-				<group title="#{DATABASE}" icon="database">
+				<group title="${message:DATABASE}" icon="database">
 					<part class="line">
 						<part class="label">
 							<label for="dbid">
-								<text key="DATABASE"></text>
+								<text value="${message:DATABASE}"></text>
 							</label>
 						</part>
 						<part class="input">
@@ -48,11 +48,11 @@
 		</if>
 		<else>
 			<part class="message error">
-				<text key="OPENID_NOT_ENABLED" />
+				<text value="${message:OPENID_NOT_ENABLED}" />
 			</part>
 		</else>
 	</form>
 
-	<!-- <newline></newline> <newline></newline> <link url="%{login/gpl/url}"
-		target="_top" class="copyright"> <text key="GPL"></text> </link> -->
+	<!-- <newline></newline> <newline></newline> <link url="${config:login/gpl/url}"
+		target="_top" class="copyright"> <text value="${message:GPL}"></text> </link> -->
 </output>

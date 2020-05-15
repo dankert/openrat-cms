@@ -1,51 +1,51 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
-    <div class="or-table-wrapper">
-      <div class="or-table-filter">
-        <input type="search" name="filter" placeholder="<?php echo encodeHtml(htmlentities(@lang('SEARCH_FILTER'))) ?>" />
+    <div class="<?php echo escapeHtml('or-table-wrapper') ?>"><?php echo escapeHtml('') ?>
+      <div class="<?php echo escapeHtml('or-table-filter') ?>"><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('search') ?>" name="<?php echo escapeHtml('filter') ?>" placeholder="<?php echo escapeHtml(''.@lang('SEARCH_FILTER').'') ?>" /><?php echo escapeHtml('') ?>
       </div>
-      <div class="or-table-area">
-        <table width="100%">
-          <tr class="headline">
-            <th>
-              <span><?php echo encodeHtml(htmlentities(@lang('NAME'))) ?>
+      <div class="<?php echo escapeHtml('or-table-area') ?>"><?php echo escapeHtml('') ?>
+        <table width="<?php echo escapeHtml('100%') ?>"><?php echo escapeHtml('') ?>
+          <tr class="<?php echo escapeHtml('headline') ?>"><?php echo escapeHtml('') ?>
+            <th><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('NAME').'') ?>
               </span>
             </th>
-            <th>
-              <span><?php echo encodeHtml(htmlentities(@lang('DESCRIPTION'))) ?>
+            <th><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('DESCRIPTION').'') ?>
               </span>
             </th>
-            <th>
-              <span><?php echo encodeHtml(htmlentities(@lang('TYPE'))) ?>
+            <th><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('TYPE').'') ?>
               </span>
             </th>
           </tr>
           <?php $if1=(($elements)==FALSE); if($if1) {  ?>
-            <tr>
-              <td>
-                <span><?php echo encodeHtml(htmlentities(@lang('NOT_FOUND'))) ?>
+            <tr><?php echo escapeHtml('') ?>
+              <td><?php echo escapeHtml('') ?>
+                <span><?php echo escapeHtml(''.@lang('NOT_FOUND').'') ?>
                 </span>
               </td>
             </tr>
            <?php } ?>
-          <?php foreach($elements as $list_key=>$list_value) { extract($list_value); ?>
-            <tr class="data clickable">
-              <td>
-                <a title="<?php echo encodeHtml(htmlentities(@$desc)) ?>" target="_self" date-name="<?php echo encodeHtml(htmlentities(@$name)) ?>" name="<?php echo encodeHtml(htmlentities(@$name)) ?>" data-type="open" data-action="pageelement" data-method="" data-id="<?php echo encodeHtml(htmlentities(@$pageelementid)) ?>" data-extra="[]" href="/#/pageelement/<?php echo encodeHtml(htmlentities(@$pageelementid)) ?>">
-                  <i class="image-icon image-icon--action-pageelement">
+          <?php foreach((array)$elements as $list_key=>$list_value) { extract($list_value); ?>
+            <tr class="<?php echo escapeHtml('data clickable') ?>"><?php echo escapeHtml('') ?>
+              <td><?php echo escapeHtml('') ?>
+                <a title="<?php echo escapeHtml(''.@$desc.'') ?>" target="<?php echo escapeHtml('_self') ?>" date-name="<?php echo escapeHtml(''.@$name.'') ?>" name="<?php echo escapeHtml(''.@$name.'') ?>" data-type="<?php echo escapeHtml('open') ?>" data-action="<?php echo escapeHtml('pageelement') ?>" data-method="<?php echo escapeHtml('') ?>" data-id="<?php echo escapeHtml(''.@$pageelementid.'') ?>" data-extra="<?php echo escapeHtml('[]') ?>" href="<?php echo escapeHtml('/#/pageelement/'.@$pageelementid.'') ?>"><?php echo escapeHtml('') ?>
+                  <i class="<?php echo escapeHtml('image-icon image-icon--action-pageelement') ?>"><?php echo escapeHtml('') ?>
                   </i>
-                  <span><?php echo encodeHtml(htmlentities(@$label)) ?>
+                  <span><?php echo escapeHtml(''.@$label.'') ?>
                   </span>
                 </a>
               </td>
-              <td title="<?php echo encodeHtml(htmlentities(@$desc)) ?>">
-                <span><?php echo encodeHtml(htmlentities(@$desc)) ?>
+              <td title="<?php echo escapeHtml(''.@$desc.'') ?>"><?php echo escapeHtml('') ?>
+                <span><?php echo escapeHtml(''.@$desc.'') ?>
                 </span>
               </td>
-              <td>
-                <i class="image-icon image-icon--action-el_<?php echo encodeHtml(htmlentities(@$typename)) ?>">
+              <td><?php echo escapeHtml('') ?>
+                <i class="<?php echo escapeHtml('image-icon image-icon--action-el_'.@$typename.'') ?>"><?php echo escapeHtml('') ?>
                 </i>
-                <span><?php echo encodeHtml(htmlentities(@lang(''.@$typename.''))) ?>
+                <span><?php echo escapeHtml(''.@lang(''.@$typename.'').'') ?>
                 </span>
               </td>
             </tr>

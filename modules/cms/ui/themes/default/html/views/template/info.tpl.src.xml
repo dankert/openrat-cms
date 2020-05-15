@@ -3,23 +3,23 @@
 	<table filter="false">
 		<row class="data">
 			<column colspan="1">
-				<text key="id" />
+				<text value="${message:id}" />
 			</column>
 			<column>
-				<text var="id" />
+				<text value="${id}" />
 			</column>
 		</row>
 		<row class="headline">
 			<column colspan="2">
-				<text key="pages"></text>
+				<text value="${message:pages}"></text>
 			</column>
 		</row>
-		<list list="pages" value="name" key="pageid">
+		<list list="${pages}" value="name" key="pageid">
 			<row class="data">
 				<column colspan="2" class="clickable">
 					<link type="open" action="page" id="${pageid}">
 						<image action="page"></image>
-						<text var="name"></text>
+						<text value="${name}"></text>
 					</link>
 				</column>
 			</row>

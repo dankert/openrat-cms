@@ -3,26 +3,26 @@
 	<table>
 		<row class="headline">
 			<column>
-				<text key="project"></text>
+				<text value="${message:project}"></text>
 			</column>
 			<column>
-				<text key="filename"></text>
+				<text value="${message:filename}"></text>
 			</column>
 			<column>
-				<text key="lastchange" />
+				<text value="${message:lastchange}" />
 			</column>
 		</row>
 
-		<list list="timeline" extract="true">
+		<list list="${timeline}" extract="true">
 			<row class="data">
 				<column class="clickable">
 					<link type="open" action="project" id="${projectid}">
-						<text var="projectname"></text>
+						<text value="${projectname}"></text>
 					</link>
 				</column>
 				<column title="${filename}" class="clickable">
 					<link type="open" action="${type}" id="${objectid}">
-						<text var="filename" maxlength="30"></text>
+						<text value="${filename}" maxlength="30"></text>
 					</link>
 				</column>
 				<column>

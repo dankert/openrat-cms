@@ -3,26 +3,26 @@
 	<table>
 		<row class="headline">
 			<column>
-				<text key="GLOBAL_TYPE"></text>
-				<text raw="_/_"></text>
-				<text key="GLOBAL_NAME"></text>
+				<text value="${message:GLOBAL_TYPE}"></text>
+				<text value=" / "></text>
+				<text value="${message:GLOBAL_NAME}"></text>
 			</column>
 		</row>
 		<if present="up_url">
 			<row class="data">
 				<column url="${up_url}">
 					<image type="folder_up"></image>
-					<text raw=".."></text>
+					<text value=".."></text>
 				</column>
 			</row>
 		</if>
-		<list list="content" extract="true">
+		<list list="${content}" extract="true">
 			<row class="data">
 				<column class="clickable">
 					<link type="open" id="${id}" name="${name}" action="${type}">
 						<image action="${type}"></image>
-						<text key="${name}"></text>
-						<text raw="_"></text>
+						<text value="${message:${name}}"></text>
+						<text value=" "></text>
 					</link>
 				</column>
 			</row>

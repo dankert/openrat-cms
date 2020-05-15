@@ -2,18 +2,18 @@
   
     
       
-        <tr>
-          <td colspan="2">
-            <iframe src="<?php echo encodeHtml(htmlentities(@$preview_url)) ?>">
+        <tr><?php echo escapeHtml('') ?>
+          <td colspan="<?php echo escapeHtml('2') ?>"><?php echo escapeHtml('') ?>
+            <iframe src="<?php echo escapeHtml(''.@$preview_url.'') ?>"><?php echo escapeHtml('') ?>
             </iframe>
-            <a target="_self" data-action="file" data-method="edit" data-id="" data-extra="[]" href="/#/file/" class="action">
-              <img src="./modules/cms/ui/themes/default/images/icon/icon/edit.png" />
-              <span><?php echo encodeHtml(htmlentities(@lang('menu_file_edit'))) ?>
+            <a target="<?php echo escapeHtml('_self') ?>" data-action="<?php echo escapeHtml('file') ?>" data-method="<?php echo escapeHtml('edit') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('[]') ?>" href="<?php echo escapeHtml('/#/file/') ?>" class="<?php echo escapeHtml('action') ?>"><?php echo escapeHtml('') ?>
+              <img src="<?php echo escapeHtml('./modules/cms/ui/themes/default/images/icon/icon/edit.png') ?>" /><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('menu_file_edit').'') ?>
               </span>
             </a>
-            <a target="_self" data-action="file" data-method="editvalue" data-id="" data-extra="[]" href="/#/file/" class="action">
-              <img src="./modules/cms/ui/themes/default/images/icon/icon/editvalue.png" />
-              <span><?php echo encodeHtml(htmlentities(@lang('menu_file_editvalue'))) ?>
+            <a target="<?php echo escapeHtml('_self') ?>" data-action="<?php echo escapeHtml('file') ?>" data-method="<?php echo escapeHtml('editvalue') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('[]') ?>" href="<?php echo escapeHtml('/#/file/') ?>" class="<?php echo escapeHtml('action') ?>"><?php echo escapeHtml('') ?>
+              <img src="<?php echo escapeHtml('./modules/cms/ui/themes/default/images/icon/icon/editvalue.png') ?>" /><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('menu_file_editvalue').'') ?>
               </span>
             </a>
           </td>

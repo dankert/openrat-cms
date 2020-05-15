@@ -1,47 +1,47 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 
-	<form cancel="false" label="#{menu_login}" visible="true" action="login" subaction="login" afterSuccess="reloadAll">
-		<if true="%{login/logo/enabled}">
-				<if not="not" empty="%{login/logo/url}">
-					<link url="%{login/logo/url}" target="_top">
-						<image url="%{login/logo/image}"></image>
+	<form cancel="false" label="${message:menu_login}" visible="true" action="login" subaction="login" afterSuccess="reloadAll">
+		<if true="${config:login/logo/enabled}">
+				<if not="not" empty="${config:login/logo/url}">
+					<link url="${config:login/logo/url}" target="_top">
+						<image url="${config:login/logo/image}"></image>
 					</link>
 				</if>
 				<else>
-					<image url="%{login/logo/image}"></image>
+					<image url="${config:login/logo/image}"></image>
 				</else>
 		</if>
-		<if not="not" empty="%{login/motd}">
+		<if not="not" empty="${config:login/motd}">
 			<part class="message info">
-				<text value="%{login/motd}"></text>
+				<text value="${config:login/motd}"></text>
 			</part>
 		</if>
 
-		<if true="%{login/nologin}">
+		<if true="${config:login/nologin}">
 			<part class="message error">
-				<text key="LOGIN_NOLOGIN_DESC"></text>
+				<text value="${message:LOGIN_NOLOGIN_DESC}"></text>
 			</part>
 		</if>
 
-		<if true="%{security/readonly}">
+		<if true="${config:security/readonly}">
 			<part class="message warn">
-				<text key="GLOBAL_READONLY_DESC"></text>
+				<text value="${message:GLOBAL_READONLY_DESC}"></text>
 			</part>
 		</if>
 
-		<if false="%{login/nologin}">
+		<if false="${config:login/nologin}">
 
 			<part class="line">
 				<part class="label">
 					<label for="login_name">
-						<text key="USER_USERNAME"></text>
+						<text value="${message:USER_USERNAME}"></text>
 					</label>
 				</part>
 				<part class="input">
 					<if not="true" present="force_username">
 						<input type="text" name="login_name" class="name" value=""
-							hint="#{USER_USERNAME}" size="20" maxlength="128" focus="true" required="true"></input>
+							hint="${message:USER_USERNAME}" size="20" maxlength="128" focus="true" required="true"></input>
 					</if>
 					<else>
 						<hidden name="login_name"></hidden>
@@ -52,7 +52,7 @@
 			<part class="line">
 				<part class="label">
 					<label for="login_password">
-						<text key="USER_PASSWORD"></text>
+						<text value="${message:USER_PASSWORD}"></text>
 					</label>
 				</part>
 				<part class="input">
@@ -73,7 +73,7 @@
  				<part class="input">
 					<checkbox name="remember" default="false"></checkbox>
 					<label for="remember">
-						<text key="REMEMBER_ME"></text>
+						<text value="${message:REMEMBER_ME}"></text>
 					</label>
 				</part>
 			</part>
@@ -82,11 +82,11 @@
 
 
 		<!-- <if true="property:mustChangePassword"> -->
-		<group title="#{USER_NEW_PASSWORD}" open="false" show="false">
+		<group title="${message:USER_NEW_PASSWORD}" open="false" show="false">
 			<part class="line">
 				<part class="label">
 					<label for="password1">
-						<text key="USER_NEW_PASSWORD"></text>
+						<text value="${message:USER_NEW_PASSWORD}"></text>
 					</label>
 				</part>
 				<part class="input">
@@ -96,7 +96,7 @@
 			<part class="line">
 				<part class="label">
 					<label for="password2">
-						<text key="USER_NEW_PASSWORD_REPEAT"></text>
+						<text value="${message:USER_NEW_PASSWORD_REPEAT}"></text>
 					</label>
 				</part>
 				<part class="input">
@@ -105,11 +105,11 @@
 			</part>
 		</group>
 		
-		<group title="#{USER_TOKEN}" open="false" show="false">
+		<group title="${message:USER_TOKEN}" open="false" show="false">
 			<part class="line">
 				<part class="label">
 					<label for="user_token">
-						<text key="USER_TOKEN"></text>
+						<text value="${message:USER_TOKEN}"></text>
 					</label>
 				</part>
 				<part class="input">
@@ -121,22 +121,22 @@
 
 		<!--
 			<link type="view" class="action" action="login" subaction="password">
-			<text key="menu_password"></text> </link>
+			<text value="${message:menu_password}"></text> </link>
 		-->
 
 		<!--
 			<link type="view" class="action" action="login" subaction="register">
-			<text key="menu_register"></text> </link> <newline></newline>
+			<text value="${message:menu_register}"></text> </link> <newline></newline>
 			<newline />
 		-->
 
 		<if value="size:dbids" greaterthan="1">
 			<!-- Mehr als 1 Datenbank zur Auswahl. Auswahlfeld anzeigen. -->
-			<group title="#{DATABASE}" icon="database" open="true">
+			<group title="${message:DATABASE}" icon="database" open="true">
 				<part class="line">
 					<part class="label">
 						<label for="dbid">
-							<text key="DATABASE"></text>
+							<text value="${message:DATABASE}"></text>
 						</label>
 					</part>
 					<part class="input">
@@ -157,7 +157,7 @@
 		<hidden name="languageid"></hidden>
 	</form>
 	<!--
-		<newline /> <newline /> <link url="%{login/gpl/url}"
-		type="external" class="copyright"> <text key="GPL"></text> </link>
+		<newline /> <newline /> <link url="${config:login/gpl/url}"
+		type="external" class="copyright"> <text value="${message:GPL}"></text> </link>
 	-->
 </output>

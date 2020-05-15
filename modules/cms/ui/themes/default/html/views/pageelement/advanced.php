@@ -1,42 +1,42 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
-    <div class="or-table-wrapper">
-      <div class="or-table-filter">
-        <input type="search" name="filter" placeholder="<?php echo encodeHtml(htmlentities(@lang('SEARCH_FILTER'))) ?>" />
+    <div class="<?php echo escapeHtml('or-table-wrapper') ?>"><?php echo escapeHtml('') ?>
+      <div class="<?php echo escapeHtml('or-table-filter') ?>"><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('search') ?>" name="<?php echo escapeHtml('filter') ?>" placeholder="<?php echo escapeHtml(''.@lang('SEARCH_FILTER').'') ?>" /><?php echo escapeHtml('') ?>
       </div>
-      <div class="or-table-area">
-        <table width="100%">
-          <tr class="headline">
-            <th>
-              <span><?php echo encodeHtml(htmlentities(@lang('language'))) ?>
+      <div class="<?php echo escapeHtml('or-table-area') ?>"><?php echo escapeHtml('') ?>
+        <table width="<?php echo escapeHtml('100%') ?>"><?php echo escapeHtml('') ?>
+          <tr class="<?php echo escapeHtml('headline') ?>"><?php echo escapeHtml('') ?>
+            <th><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('language').'') ?>
               </span>
             </th>
-            <th>
-              <span><?php echo encodeHtml(htmlentities(@lang('value'))) ?>
+            <th><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('value').'') ?>
               </span>
             </th>
-            <th>
-              <span><?php echo encodeHtml(htmlentities(@lang('editor'))) ?>
+            <th><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('editor').'') ?>
               </span>
             </th>
           </tr>
-          <?php foreach($languages as $list_key=>$list_value) { extract($list_value); ?>
-            <tr class="data">
-              <td>
-                <span><?php echo encodeHtml(htmlentities(@$languagename)) ?>
+          <?php foreach((array)$languages as $list_key=>$list_value) { extract($list_value); ?>
+            <tr class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
+              <td><?php echo escapeHtml('') ?>
+                <span><?php echo escapeHtml(''.@$languagename.'') ?>
                 </span>
               </td>
-              <td class="clickable">
-                <a target="_self" data-type="edit" data-action="pageelement" data-method="value" data-id="" data-extra="{'languageid':'<?php echo encodeHtml(htmlentities(@$languageid)) ?>'}" href="/#/pageelement/">
-                  <span><?php echo encodeHtml(htmlentities(@$value)) ?>
+              <td class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
+                <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('edit') ?>" data-action="<?php echo escapeHtml('pageelement') ?>" data-method="<?php echo escapeHtml('value') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('{\'languageid\':\''.@$languageid.'\'}') ?>" href="<?php echo escapeHtml('/#/pageelement/') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@$value.'') ?>
                   </span>
                 </a>
               </td>
-              <td>
-                <?php foreach($editors as $id=>$name) {  ?>
-                  <div class="clickable">
-                    <a target="_self" data-type="edit" data-action="pageelement" data-method="value" data-id="" data-extra="{'languageid':'<?php echo encodeHtml(htmlentities(@$languageid)) ?>','format':'<?php echo encodeHtml(htmlentities(@$id)) ?>'}" href="/#/pageelement/">
-                      <span><?php echo encodeHtml(htmlentities(@$name)) ?>
+              <td><?php echo escapeHtml('') ?>
+                <?php foreach((array)$editors as $id=>$name) {  ?>
+                  <div class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
+                    <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('edit') ?>" data-action="<?php echo escapeHtml('pageelement') ?>" data-method="<?php echo escapeHtml('value') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('{\'languageid\':\''.@$languageid.'\',\'format\':\''.@$id.'\'}') ?>" href="<?php echo escapeHtml('/#/pageelement/') ?>"><?php echo escapeHtml('') ?>
+                      <span><?php echo escapeHtml(''.@$name.'') ?>
                       </span>
                     </a>
                   </div>

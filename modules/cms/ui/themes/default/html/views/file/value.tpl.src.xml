@@ -5,7 +5,7 @@
         <window>
             <row>
                 <column>
-                    <text text="GLOBAL_VALUE"></text>
+                    <text value="${message:GLOBAL_VALUE}"></text>
                 </column>
                 <column>
                     <editor name="value" type="code"></editor>

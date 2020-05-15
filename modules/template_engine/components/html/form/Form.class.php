@@ -19,12 +19,12 @@ class FormComponent extends Component
 
 	public $subaction = null;
 
-	public $id = '<?php echo OR_ID ?>';
+	public $id = '${_id}';
 
 	public $languageid = null;
 	public $modelid = null;
 
-	public $label = '#{button_ok}';
+	public $label = '${message:button_ok}';
 
 	public $apply = false;
 	public $cancel = true;
@@ -46,6 +46,8 @@ class FormComponent extends Component
 	public $type = '';
 
 	public $afterSuccess;
+
+	private $token = '${_token}';
 
 
 	public function createElement()
@@ -100,7 +102,7 @@ class FormComponent extends Component
 			(new CMSElement('input'))
 				->addAttribute('type', 'hidden')
 				->addAttribute('name', REQ_PARAM_TOKEN)
-				->addAttribute('value', '<?php echo token();?>') // TODO escaping
+				->addAttribute('value', $this->token)
 		);
 
 		$form->addChild(

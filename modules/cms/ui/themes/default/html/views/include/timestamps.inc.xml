@@ -1,6 +1,6 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-    <group title="message:prop_userinfo" open="false">
+    <group title="${message:prop_userinfo}" open="false">
         <part class="line">
             <part class="label">
                 <label for="create_date">
@@ -9,10 +9,10 @@
             </part>
             <part class="input">
                 <image icon="el_date"></image>
-                <date date="var:create_date"></date>
+                <date date="${create_date}"></date>
                 <newline></newline>
                 <image icon="user"></image>
-                <user user="var:create_user"></user>
+                <user user="${create_user}"></user>
             </part>
         </part>
         <part class="line">
@@ -23,10 +23,10 @@
             </part>
             <part class="input">
                 <image icon="el_date"></image>
-                <date date="var:lastchange_date"></date>
+                <date date="${lastchange_date}"></date>
                 <newline></newline>
                 <image icon="user"></image>
-                <user user="var:lastchange_user"></user>
+                <user user="${lastchange_user}"></user>
             </part>
         </part>
         <part class="line">
@@ -37,10 +37,10 @@
             </part>
             <part class="input">
                 <image icon="el_date"></image>
-                <date date="var:published_date"></date>
+                <date date="${published_date}"></date>
                 <newline></newline>
                 <image icon="user"></image>
-                <user user="var:published_user"></user>
+                <user user="${published_user}"></user>
             </part>
         </part>
     </group>

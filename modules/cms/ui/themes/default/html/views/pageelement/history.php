@@ -1,136 +1,136 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
-    <form name="" target="_self" data-target="view" action="./" data-method="diff" data-action="pageelement" data-id="<?php echo OR_ID ?>" method="get" enctype="application/x-www-form-urlencoded" data-async="" data-autosave="" class="or-form pageelement">
-      <input type="hidden" name="token" value="<?php echo token();?>" />
-      <input type="hidden" name="action" value="pageelement" />
-      <input type="hidden" name="subaction" value="diff" />
-      <input type="hidden" name="id" value="<?php echo OR_ID ?>" />
-      <div>
-        <div class="or-table-wrapper">
-          <div class="or-table-filter">
-            <input type="search" name="filter" placeholder="<?php echo encodeHtml(htmlentities(@lang('SEARCH_FILTER'))) ?>" />
+    <form name="<?php echo escapeHtml('') ?>" target="<?php echo escapeHtml('_self') ?>" data-target="<?php echo escapeHtml('view') ?>" action="<?php echo escapeHtml('./') ?>" data-method="<?php echo escapeHtml('diff') ?>" data-action="<?php echo escapeHtml('pageelement') ?>" data-id="<?php echo escapeHtml(''.@$_id.'') ?>" method="<?php echo escapeHtml('get') ?>" enctype="<?php echo escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo escapeHtml('') ?>" data-autosave="<?php echo escapeHtml('') ?>" class="<?php echo escapeHtml('or-form pageelement') ?>"><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('token') ?>" value="<?php echo escapeHtml(''.@$_token.'') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('action') ?>" value="<?php echo escapeHtml('pageelement') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('subaction') ?>" value="<?php echo escapeHtml('diff') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('id') ?>" value="<?php echo escapeHtml(''.@$_id.'') ?>" /><?php echo escapeHtml('') ?>
+      <div><?php echo escapeHtml('') ?>
+        <div class="<?php echo escapeHtml('or-table-wrapper') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo escapeHtml('or-table-filter') ?>"><?php echo escapeHtml('') ?>
+            <input type="<?php echo escapeHtml('search') ?>" name="<?php echo escapeHtml('filter') ?>" placeholder="<?php echo escapeHtml(''.@lang('SEARCH_FILTER').'') ?>" /><?php echo escapeHtml('') ?>
           </div>
-          <div class="or-table-area">
-            <table width="100%">
-              <tr class="headline">
-                <td class="help">
-                  <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_NR'))) ?>
+          <div class="<?php echo escapeHtml('or-table-area') ?>"><?php echo escapeHtml('') ?>
+            <table width="<?php echo escapeHtml('100%') ?>"><?php echo escapeHtml('') ?>
+              <tr class="<?php echo escapeHtml('headline') ?>"><?php echo escapeHtml('') ?>
+                <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@lang('GLOBAL_NR').'') ?>
                   </span>
                 </td>
-                <td colspan="2" class="help">
+                <td colspan="<?php echo escapeHtml('2') ?>" class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
                   <?php $if1=(isset($compareid)); if($if1) {  ?>
-                    <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_COMPARE'))) ?>
+                    <span><?php echo escapeHtml(''.@lang('GLOBAL_COMPARE').'') ?>
                     </span>
                    <?php } ?>
                   <?php if(!$if1) {  ?>
-                    <span> 
+                    <span><?php echo escapeHtml(' ') ?>
                     </span>
                    <?php } ?>
                 </td>
-                <td class="help">
-                  <span><?php echo encodeHtml(htmlentities(@lang('DATE'))) ?>
+                <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@lang('DATE').'') ?>
                   </span>
                 </td>
-                <td class="help">
-                  <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_USER'))) ?>
+                <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@lang('GLOBAL_USER').'') ?>
                   </span>
                 </td>
-                <td class="help">
-                  <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_VALUE'))) ?>
+                <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@lang('GLOBAL_VALUE').'') ?>
                   </span>
                 </td>
-                <td class="help">
-                  <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_STATE'))) ?>
+                <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@lang('GLOBAL_STATE').'') ?>
                   </span>
                 </td>
-                <td class="help">
-                  <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_ACTION'))) ?>
+                <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@lang('GLOBAL_ACTION').'') ?>
                   </span>
                 </td>
               </tr>
               <?php $if1=(($el)==FALSE); if($if1) {  ?>
-                <tr>
-                  <td colspan="8">
-                    <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_NOT_FOUND'))) ?>
+                <tr><?php echo escapeHtml('') ?>
+                  <td colspan="<?php echo escapeHtml('8') ?>"><?php echo escapeHtml('') ?>
+                    <span><?php echo escapeHtml(''.@lang('GLOBAL_NOT_FOUND').'') ?>
                     </span>
                   </td>
                 </tr>
                <?php } ?>
-              <?php foreach($el as $list_key=>$list_value) { extract($list_value); ?>
-                <tr class="data">
-                  <td>
-                    <span><?php echo encodeHtml(htmlentities(@$lfd_nr)) ?>
+              <?php foreach((array)$el as $list_key=>$list_value) { extract($list_value); ?>
+                <tr class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
+                  <td><?php echo escapeHtml('') ?>
+                    <span><?php echo escapeHtml(''.@$lfd_nr.'') ?>
                     </span>
                   </td>
-                  <td>
+                  <td><?php echo escapeHtml('') ?>
                     <?php $if1=(isset($compareid)); if($if1) {  ?>
-                      <input type="radio" name="compareid" disabled="" value="<?php echo encodeHtml(htmlentities(@$id)) ?>" checked="<?php echo encodeHtml(htmlentities(@$compareid)) ?>" />
+                      <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('compareid') ?>" value="<?php echo escapeHtml(''.@$id.'') ?>" checked="<?php echo escapeHtml(''.@$compareid.'') ?>" /><?php echo escapeHtml('') ?>
                      <?php } ?>
                     <?php if(!$if1) {  ?>
-                      <span> 
+                      <span><?php echo escapeHtml(' ') ?>
                       </span>
                      <?php } ?>
                   </td>
-                  <td>
+                  <td><?php echo escapeHtml('') ?>
                     <?php $if1=(isset($compareid)); if($if1) {  ?>
-                      <input type="radio" name="withid" disabled="" value="<?php echo encodeHtml(htmlentities(@$id)) ?>" checked="<?php echo encodeHtml(htmlentities(@$withid)) ?>" />
+                      <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('withid') ?>" value="<?php echo escapeHtml(''.@$id.'') ?>" checked="<?php echo escapeHtml(''.@$withid.'') ?>" /><?php echo escapeHtml('') ?>
                      <?php } ?>
                     <?php if(!$if1) {  ?>
-                      <span> 
+                      <span><?php echo escapeHtml(' ') ?>
                       </span>
                      <?php } ?>
                   </td>
-                  <td>
+                  <td><?php echo escapeHtml('') ?>
                     <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($date); ?>
                      <?php } ?>
                   </td>
-                  <td>
-                    <span><?php echo encodeHtml(htmlentities(@$user)) ?>
+                  <td><?php echo escapeHtml('') ?>
+                    <span><?php echo escapeHtml(''.@$user.'') ?>
                     </span>
                   </td>
-                  <td>
-                    <span><?php echo encodeHtml(htmlentities(@$value)) ?>
+                  <td><?php echo escapeHtml('') ?>
+                    <span><?php echo escapeHtml(''.@$value.'') ?>
                     </span>
                   </td>
                   <?php $if1=($public); if($if1) {  ?>
-                    <td>
-                      <strong><?php echo encodeHtml(htmlentities(@lang('GLOBAL_PUBLIC'))) ?>
+                    <td><?php echo escapeHtml('') ?>
+                      <strong><?php echo escapeHtml(''.@lang('GLOBAL_PUBLIC').'') ?>
                       </strong>
                     </td>
                    <?php } ?>
                   <?php if(!$if1) {  ?>
                     <?php $if1=(isset($releaseUrl)); if($if1) {  ?>
-                      <td class="clickable">
-                        <a title="<?php echo encodeHtml(htmlentities(@lang('GLOBAL_RELEASE_DESC'))) ?>" target="_self" data-type="post" data-action="" data-method="release" data-id="<?php echo encodeHtml(htmlentities(@$objectid)) ?>" data-extra="{'valueid':'<?php echo encodeHtml(htmlentities(@$valueid)) ?>'}" data-data="{"action":"pageelement","subaction":"release","id":"<?php echo encodeHtml(htmlentities(@$objectid)) ?>",\"token":"<?php echo token() ?>","valueid":"<?php echo encodeHtml(htmlentities(@$valueid)) ?>","none":"0"}"">
-                          <strong><?php echo encodeHtml(htmlentities(@lang('GLOBAL_RELEASE'))) ?>
+                      <td class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
+                        <a title="<?php echo escapeHtml(''.@lang('GLOBAL_RELEASE_DESC').'') ?>" target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('post') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('release') ?>" data-id="<?php echo escapeHtml(''.@$objectid.'') ?>" data-extra="<?php echo escapeHtml('{\'valueid\':\''.@$valueid.'\'}') ?>" data-data="<?php echo escapeHtml('{"action":"pageelement","subaction":"release","id":"'.@$objectid.'",\"token":"<?php echo token() ?>","valueid":"'.@$valueid.'","none":"0"}"') ?>"><?php echo escapeHtml('') ?>
+                          <strong><?php echo escapeHtml(''.@lang('GLOBAL_RELEASE').'') ?>
                           </strong>
                         </a>
                       </td>
                      <?php } ?>
                     <?php if(!$if1) {  ?>
-                      <td>
-                        <em><?php echo encodeHtml(htmlentities(@lang('GLOBAL_INACTIVE'))) ?>
+                      <td><?php echo escapeHtml('') ?>
+                        <em><?php echo escapeHtml(''.@lang('GLOBAL_INACTIVE').'') ?>
                         </em>
                       </td>
                      <?php } ?>
                    <?php } ?>
                   <?php $if1=($active); if($if1) {  ?>
-                    <td>
-                      <em><?php echo encodeHtml(htmlentities(@lang('GLOBAL_ACTIVE'))) ?>
+                    <td><?php echo escapeHtml('') ?>
+                      <em><?php echo escapeHtml(''.@lang('GLOBAL_ACTIVE').'') ?>
                       </em>
                     </td>
                    <?php } ?>
                   <?php if(!$if1) {  ?>
                     <?php $if1=(isset($useUrl)); if($if1) {  ?>
-                      <td class="clickable">
-                        <a title="<?php echo encodeHtml(htmlentities(@lang('GLOBAL_USE_DESC'))) ?>" target="_self" data-type="post" data-action="" data-method="use" data-id="<?php echo encodeHtml(htmlentities(@$objectid)) ?>" data-extra="{'valueid':'<?php echo encodeHtml(htmlentities(@$valueid)) ?>'}" data-data="{"action":"pageelement","subaction":"use","id":"<?php echo encodeHtml(htmlentities(@$objectid)) ?>",\"token":"<?php echo token() ?>","valueid":"<?php echo encodeHtml(htmlentities(@$valueid)) ?>","none":"0"}"">
-                          <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_USE'))) ?>
+                      <td class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
+                        <a title="<?php echo escapeHtml(''.@lang('GLOBAL_USE_DESC').'') ?>" target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('post') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('use') ?>" data-id="<?php echo escapeHtml(''.@$objectid.'') ?>" data-extra="<?php echo escapeHtml('{\'valueid\':\''.@$valueid.'\'}') ?>" data-data="<?php echo escapeHtml('{"action":"pageelement","subaction":"use","id":"'.@$objectid.'",\"token":"<?php echo token() ?>","valueid":"'.@$valueid.'","none":"0"}"') ?>"><?php echo escapeHtml('') ?>
+                          <span><?php echo escapeHtml(''.@lang('GLOBAL_USE').'') ?>
                           </span>
                         </a>
                       </td>
                      <?php } ?>
                     <?php if(!$if1) {  ?>
-                      <td>
+                      <td><?php echo escapeHtml('') ?>
                       </td>
                      <?php } ?>
                    <?php } ?>
@@ -140,8 +140,8 @@
           </div>
         </div>
       </div>
-      <div class="or-form-actionbar">
-        <input type="submit" value="<?php echo encodeHtml(htmlentities(@lang('compare'))) ?>" class="or-form-btn or-form-btn--primary or-form-btn--save" />
+      <div class="<?php echo escapeHtml('or-form-actionbar') ?>"><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('submit') ?>" value="<?php echo escapeHtml(''.@lang('compare').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo escapeHtml('') ?>
       </div>
     </form>
  <?php } ?>

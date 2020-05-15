@@ -1,29 +1,29 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
-    <div class="or-table-wrapper">
-      <div class="or-table-filter">
-        <input type="search" name="filter" placeholder="<?php echo encodeHtml(htmlentities(@lang('SEARCH_FILTER'))) ?>" />
+    <div class="<?php echo escapeHtml('or-table-wrapper') ?>"><?php echo escapeHtml('') ?>
+      <div class="<?php echo escapeHtml('or-table-filter') ?>"><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('search') ?>" name="<?php echo escapeHtml('filter') ?>" placeholder="<?php echo escapeHtml(''.@lang('SEARCH_FILTER').'') ?>" /><?php echo escapeHtml('') ?>
       </div>
-      <div class="or-table-area">
-        <table width="100%">
-          <tr class="headline">
-            <td class="help">
-              <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_NAME'))) ?>
+      <div class="<?php echo escapeHtml('or-table-area') ?>"><?php echo escapeHtml('') ?>
+        <table width="<?php echo escapeHtml('100%') ?>"><?php echo escapeHtml('') ?>
+          <tr class="<?php echo escapeHtml('headline') ?>"><?php echo escapeHtml('') ?>
+            <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('GLOBAL_NAME').'') ?>
               </span>
             </td>
-            <td class="help">
-              <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_VALUE'))) ?>
+            <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('GLOBAL_VALUE').'') ?>
               </span>
             </td>
           </tr>
-          <?php foreach($config as $list_key=>$list_value) { extract($list_value); ?>
-            <tr class="data">
-              <td>
-                <span><?php echo encodeHtml(htmlentities(@$key)) ?>
+          <?php foreach((array)$config as $list_key=>$list_value) { extract($list_value); ?>
+            <tr class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
+              <td><?php echo escapeHtml('') ?>
+                <span><?php echo escapeHtml(''.@$key.'') ?>
                 </span>
               </td>
-              <td class="<?php echo encodeHtml(htmlentities(@$class)) ?>">
-                <span class="<?php echo encodeHtml(htmlentities(@$class)) ?>"><?php echo encodeHtml(htmlentities(@$value)) ?>
+              <td class="<?php echo escapeHtml(''.@$class.'') ?>"><?php echo escapeHtml('') ?>
+                <span class="<?php echo escapeHtml(''.@$class.'') ?>"><?php echo escapeHtml(''.@$value.'') ?>
                 </span>
               </td>
             </tr>

@@ -1,45 +1,45 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
-    <form name="" target="_self" data-target="view" action="./" data-method="info" data-action="language" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" data-async="" data-autosave="" class="or-form language">
-      <input type="hidden" name="token" value="<?php echo token();?>" />
-      <input type="hidden" name="action" value="language" />
-      <input type="hidden" name="subaction" value="info" />
-      <input type="hidden" name="id" value="<?php echo OR_ID ?>" />
-      <div>
-        <span class="headline"><?php echo encodeHtml(htmlentities(@$name)) ?>
+    <form name="<?php echo escapeHtml('') ?>" target="<?php echo escapeHtml('_self') ?>" data-target="<?php echo escapeHtml('view') ?>" action="<?php echo escapeHtml('./') ?>" data-method="<?php echo escapeHtml('info') ?>" data-action="<?php echo escapeHtml('language') ?>" data-id="<?php echo escapeHtml(''.@$_id.'') ?>" method="<?php echo escapeHtml('POST') ?>" enctype="<?php echo escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo escapeHtml('') ?>" data-autosave="<?php echo escapeHtml('') ?>" class="<?php echo escapeHtml('or-form language') ?>"><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('token') ?>" value="<?php echo escapeHtml(''.@$_token.'') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('action') ?>" value="<?php echo escapeHtml('language') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('subaction') ?>" value="<?php echo escapeHtml('info') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('id') ?>" value="<?php echo escapeHtml(''.@$_id.'') ?>" /><?php echo escapeHtml('') ?>
+      <div><?php echo escapeHtml('') ?>
+        <span class="<?php echo escapeHtml('headline') ?>"><?php echo escapeHtml(''.@$name.'') ?>
         </span>
-        <div class="line">
-          <div class="label">
-            <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_NAME'))) ?>
+        <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+            <span><?php echo escapeHtml(''.@lang('GLOBAL_NAME').'') ?>
             </span>
           </div>
-          <div class="input clickable">
-            <span class="name"><?php echo encodeHtml(htmlentities(@$name)) ?>
-            </span>
-          </div>
-        </div>
-        <div class="line">
-          <div class="label">
-            <span><?php echo encodeHtml(htmlentities(@lang('LANGUAGE_ISOCODE'))) ?>
-            </span>
-          </div>
-          <div class="input clickable">
-            <span><?php echo encodeHtml(htmlentities(@$isocode)) ?>
+          <div class="<?php echo escapeHtml('input clickable') ?>"><?php echo escapeHtml('') ?>
+            <span class="<?php echo escapeHtml('name') ?>"><?php echo escapeHtml(''.@$name.'') ?>
             </span>
           </div>
         </div>
-        <div class="line">
-          <div class="label">
+        <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+            <span><?php echo escapeHtml(''.@lang('LANGUAGE_ISOCODE').'') ?>
+            </span>
           </div>
-          <div class="input clickable">
-            <a target="_self" data-type="edit" data-action="language" data-method="prop" data-id="" data-extra="[]" href="/#/language/" class="or-link-btn">
-              <span><?php echo encodeHtml(htmlentities(@lang('edit'))) ?>
+          <div class="<?php echo escapeHtml('input clickable') ?>"><?php echo escapeHtml('') ?>
+            <span><?php echo escapeHtml(''.@$isocode.'') ?>
+            </span>
+          </div>
+        </div>
+        <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+          </div>
+          <div class="<?php echo escapeHtml('input clickable') ?>"><?php echo escapeHtml('') ?>
+            <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('edit') ?>" data-action="<?php echo escapeHtml('language') ?>" data-method="<?php echo escapeHtml('prop') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('[]') ?>" href="<?php echo escapeHtml('/#/language/') ?>" class="<?php echo escapeHtml('or-link-btn') ?>"><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('edit').'') ?>
               </span>
             </a>
           </div>
         </div>
       </div>
-      <div class="or-form-actionbar">
+      <div class="<?php echo escapeHtml('or-form-actionbar') ?>"><?php echo escapeHtml('') ?>
       </div>
     </form>
  <?php } ?>

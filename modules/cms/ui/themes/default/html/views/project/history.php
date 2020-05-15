@@ -1,66 +1,66 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
-    <div class="or-table-wrapper">
-      <div class="or-table-filter">
-        <input type="search" name="filter" placeholder="<?php echo encodeHtml(htmlentities(@lang('SEARCH_FILTER'))) ?>" />
+    <div class="<?php echo escapeHtml('or-table-wrapper') ?>"><?php echo escapeHtml('') ?>
+      <div class="<?php echo escapeHtml('or-table-filter') ?>"><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('search') ?>" name="<?php echo escapeHtml('filter') ?>" placeholder="<?php echo escapeHtml(''.@lang('SEARCH_FILTER').'') ?>" /><?php echo escapeHtml('') ?>
       </div>
-      <div class="or-table-area">
-        <table width="100%">
-          <tr class="headline">
-            <td>
-              <span><?php echo encodeHtml(htmlentities(@lang('name'))) ?>
+      <div class="<?php echo escapeHtml('or-table-area') ?>"><?php echo escapeHtml('') ?>
+        <table width="<?php echo escapeHtml('100%') ?>"><?php echo escapeHtml('') ?>
+          <tr class="<?php echo escapeHtml('headline') ?>"><?php echo escapeHtml('') ?>
+            <td><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('name').'') ?>
               </span>
             </td>
-            <td>
-              <span><?php echo encodeHtml(htmlentities(@lang('filename'))) ?>
+            <td><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('filename').'') ?>
               </span>
             </td>
-            <td>
-              <span><?php echo encodeHtml(htmlentities(@lang('user_username'))) ?>
+            <td><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('user_username').'') ?>
               </span>
             </td>
-            <td>
-              <span><?php echo encodeHtml(htmlentities(@lang('lastchange'))) ?>
+            <td><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('lastchange').'') ?>
               </span>
             </td>
           </tr>
-          <?php foreach($timeline as $list_key=>$list_value) { extract($list_value); ?>
-            <?php $if1=($typeid=='1'); if($if1) {  ?>
-              <?php  { $type= 'folder'; ?>
+          <?php foreach((array)$timeline as $list_key=>$list_value) { extract($list_value); ?>
+            <?php $if1=($typeid==1); if($if1) {  ?>
+              <?php  { $type= folder; ?>
                <?php } ?>
              <?php } ?>
-            <?php $if1=($typeid=='2'); if($if1) {  ?>
-              <?php  { $type= 'file'; ?>
+            <?php $if1=($typeid==2); if($if1) {  ?>
+              <?php  { $type= file; ?>
                <?php } ?>
              <?php } ?>
-            <?php $if1=($typeid=='3'); if($if1) {  ?>
-              <?php  { $type= 'page'; ?>
+            <?php $if1=($typeid==3); if($if1) {  ?>
+              <?php  { $type= page; ?>
                <?php } ?>
              <?php } ?>
-            <?php $if1=($typeid=='4'); if($if1) {  ?>
-              <?php  { $type= 'link'; ?>
+            <?php $if1=($typeid==4); if($if1) {  ?>
+              <?php  { $type= link; ?>
                <?php } ?>
              <?php } ?>
-            <?php $if1=($typeid=='5'); if($if1) {  ?>
-              <?php  { $type= 'url'; ?>
+            <?php $if1=($typeid==5); if($if1) {  ?>
+              <?php  { $type= url; ?>
                <?php } ?>
              <?php } ?>
-            <tr class="data">
-              <td class="clickable">
-                <a target="_self" date-name="<?php echo encodeHtml(htmlentities(@$name)) ?>" name="<?php echo encodeHtml(htmlentities(@$name)) ?>" data-type="open" data-action="<?php echo encodeHtml(htmlentities(@$type)) ?>" data-method="" data-id="<?php echo encodeHtml(htmlentities(@$objectid)) ?>" data-extra="[]" href="/#/<?php echo encodeHtml(htmlentities(@$type)) ?>/<?php echo encodeHtml(htmlentities(@$objectid)) ?>">
-                  <span><?php echo encodeHtml(htmlentities(@$name)) ?>
+            <tr class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
+              <td class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
+                <a target="<?php echo escapeHtml('_self') ?>" date-name="<?php echo escapeHtml(''.@$name.'') ?>" name="<?php echo escapeHtml(''.@$name.'') ?>" data-type="<?php echo escapeHtml('open') ?>" data-action="<?php echo escapeHtml(''.@$type.'') ?>" data-method="<?php echo escapeHtml('') ?>" data-id="<?php echo escapeHtml(''.@$objectid.'') ?>" data-extra="<?php echo escapeHtml('[]') ?>" href="<?php echo escapeHtml('/#/'.@$type.'/'.@$objectid.'') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@$name.'') ?>
                   </span>
                 </a>
               </td>
-              <td>
-                <span><?php echo encodeHtml(htmlentities(@$filename)) ?>
+              <td><?php echo escapeHtml('') ?>
+                <span><?php echo escapeHtml(''.@$filename.'') ?>
                 </span>
               </td>
-              <td>
-                <span><?php echo encodeHtml(htmlentities(@$username)) ?>
+              <td><?php echo escapeHtml('') ?>
+                <span><?php echo escapeHtml(''.@$username.'') ?>
                 </span>
               </td>
-              <td>
+              <td><?php echo escapeHtml('') ?>
                 <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($lastchange_date); ?>
                  <?php } ?>
               </td>

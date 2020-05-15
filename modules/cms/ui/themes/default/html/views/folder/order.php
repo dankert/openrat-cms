@@ -1,60 +1,60 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
-    <form name="" target="_self" data-target="view" action="./" data-method="order" data-action="folder" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" data-async="" data-autosave="" class="or-form folder">
-      <input type="hidden" name="token" value="<?php echo token();?>" />
-      <input type="hidden" name="action" value="folder" />
-      <input type="hidden" name="subaction" value="order" />
-      <input type="hidden" name="id" value="<?php echo OR_ID ?>" />
-      <div>
-        <div class="or-table-wrapper">
-          <div class="or-table-filter">
-            <input type="search" name="filter" placeholder="<?php echo encodeHtml(htmlentities(@lang('SEARCH_FILTER'))) ?>" />
+    <form name="<?php echo escapeHtml('') ?>" target="<?php echo escapeHtml('_self') ?>" data-target="<?php echo escapeHtml('view') ?>" action="<?php echo escapeHtml('./') ?>" data-method="<?php echo escapeHtml('order') ?>" data-action="<?php echo escapeHtml('folder') ?>" data-id="<?php echo escapeHtml(''.@$_id.'') ?>" method="<?php echo escapeHtml('POST') ?>" enctype="<?php echo escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo escapeHtml('') ?>" data-autosave="<?php echo escapeHtml('') ?>" class="<?php echo escapeHtml('or-form folder') ?>"><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('token') ?>" value="<?php echo escapeHtml(''.@$_token.'') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('action') ?>" value="<?php echo escapeHtml('folder') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('subaction') ?>" value="<?php echo escapeHtml('order') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('id') ?>" value="<?php echo escapeHtml(''.@$_id.'') ?>" /><?php echo escapeHtml('') ?>
+      <div><?php echo escapeHtml('') ?>
+        <div class="<?php echo escapeHtml('or-table-wrapper') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo escapeHtml('or-table-filter') ?>"><?php echo escapeHtml('') ?>
+            <input type="<?php echo escapeHtml('search') ?>" name="<?php echo escapeHtml('filter') ?>" placeholder="<?php echo escapeHtml(''.@lang('SEARCH_FILTER').'') ?>" /><?php echo escapeHtml('') ?>
           </div>
-          <div class="or-table-area">
-            <table width="100%" class="or-table--sortable">
-              <tr class="headline">
-                <td class="help">
-                  <span><?php echo encodeHtml(htmlentities(@lang('FOLDER_ORDER'))) ?>
+          <div class="<?php echo escapeHtml('or-table-area') ?>"><?php echo escapeHtml('') ?>
+            <table width="<?php echo escapeHtml('100%') ?>" class="<?php echo escapeHtml('or-table--sortable') ?>"><?php echo escapeHtml('') ?>
+              <tr class="<?php echo escapeHtml('headline') ?>"><?php echo escapeHtml('') ?>
+                <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@lang('FOLDER_ORDER').'') ?>
                   </span>
                 </td>
-                <td class="help">
-                  <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_TYPE'))) ?>
+                <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@lang('GLOBAL_TYPE').'') ?>
                   </span>
                 </td>
-                <td class="help">
-                  <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_NAME'))) ?>
+                <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@lang('GLOBAL_NAME').'') ?>
                   </span>
                 </td>
-                <td class="help">
-                  <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_FILENAME'))) ?>
+                <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@lang('GLOBAL_FILENAME').'') ?>
                   </span>
                 </td>
-                <td class="help">
-                  <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_LASTCHANGE'))) ?>
+                <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@lang('GLOBAL_LASTCHANGE').'') ?>
                   </span>
                 </td>
               </tr>
-              <?php foreach($object as $list_key=>$list_value) { extract($list_value); ?>
-                <tr data-id="<?php echo encodeHtml(htmlentities(@$id)) ?>" class="data">
-                  <td>
-                    <span> 
+              <?php foreach((array)$object as $list_key=>$list_value) { extract($list_value); ?>
+                <tr data-id="<?php echo escapeHtml(''.@$id.'') ?>" class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
+                  <td><?php echo escapeHtml('') ?>
+                    <span><?php echo escapeHtml(' ') ?>
                     </span>
                   </td>
-                  <td>
-                    <span class="sort-value"><?php echo encodeHtml(htmlentities(@$icon)) ?>
+                  <td><?php echo escapeHtml('') ?>
+                    <span class="<?php echo escapeHtml('sort-value') ?>"><?php echo escapeHtml(''.@$icon.'') ?>
                     </span>
-                    <i class="image-icon image-icon--action-<?php echo encodeHtml(htmlentities(@$icon)) ?>">
+                    <i class="<?php echo escapeHtml('image-icon image-icon--action-'.@$icon.'') ?>"><?php echo escapeHtml('') ?>
                     </i>
                   </td>
-                  <td>
-                    <span><?php echo encodeHtml(htmlentities(@$name)) ?>
+                  <td><?php echo escapeHtml('') ?>
+                    <span><?php echo escapeHtml(''.@$name.'') ?>
                     </span>
                   </td>
-                  <td>
-                    <span><?php echo encodeHtml(htmlentities(@$filename)) ?>
+                  <td><?php echo escapeHtml('') ?>
+                    <span><?php echo escapeHtml(''.@$filename.'') ?>
                     </span>
                   </td>
-                  <td>
+                  <td><?php echo escapeHtml('') ?>
                     <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($date); ?>
                      <?php } ?>
                   </td>
@@ -63,11 +63,11 @@
             </table>
           </div>
         </div>
-        <input type="hidden" name="order" value="<?php echo encodeHtml(htmlentities(@$order)) ?>" />
+        <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('order') ?>" value="<?php echo escapeHtml(''.@$order.'') ?>" /><?php echo escapeHtml('') ?>
       </div>
-      <div class="or-form-actionbar">
-        <input type="button" value="<?php echo encodeHtml(htmlentities(@lang('CANCEL'))) ?>" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" />
-        <input type="submit" value="<?php echo encodeHtml(htmlentities(@lang('button_ok'))) ?>" class="or-form-btn or-form-btn--primary or-form-btn--save" />
+      <div class="<?php echo escapeHtml('or-form-actionbar') ?>"><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('button') ?>" value="<?php echo escapeHtml(''.@lang('CANCEL').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('submit') ?>" value="<?php echo escapeHtml(''.@lang('button_ok').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo escapeHtml('') ?>
       </div>
     </form>
  <?php } ?>

@@ -1,8 +1,8 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-    <form label="#{global_save}">
+    <form label="${message:global_save}">
 
-        <group title="#{global_prop}">
+        <group title="${message:global_prop}">
 
             <input name="filename" label="global_filename" class="filename" maxlength="150" focus="true" />
 

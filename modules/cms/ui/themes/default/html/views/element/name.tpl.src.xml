@@ -5,7 +5,7 @@
 			<window name="GLOBAL_NAME">
 				<row>
 					<column>
-						<text text="ELEMENT_NAME"></text>
+						<text value="${message:ELEMENT_NAME}"></text>
 					</column>
 					<column>
 						<input name="name"></input>
@@ -13,7 +13,7 @@
 				</row>
 				<row>
 					<column>
-						<text text="GLOBAL_DESCRIPTION"></text>
+						<text value="${message:GLOBAL_DESCRIPTION}"></text>
 					</column>
 					<column>
 						<inputarea name="description" rows="5" cols="50"></inputarea>

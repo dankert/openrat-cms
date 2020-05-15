@@ -2,59 +2,59 @@
   
     
       
-        <div class="or-table-wrapper">
-          <div class="or-table-filter">
-            <input type="search" name="filter" placeholder="<?php echo encodeHtml(htmlentities(@lang('SEARCH_FILTER'))) ?>" />
+        <div class="<?php echo escapeHtml('or-table-wrapper') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo escapeHtml('or-table-filter') ?>"><?php echo escapeHtml('') ?>
+            <input type="<?php echo escapeHtml('search') ?>" name="<?php echo escapeHtml('filter') ?>" placeholder="<?php echo escapeHtml(''.@lang('SEARCH_FILTER').'') ?>" /><?php echo escapeHtml('') ?>
           </div>
-          <div class="or-table-area">
-            <table width="100%">
-              <tr class="headline">
-                <td>
-                  <span><?php echo encodeHtml(htmlentities(@lang('name'))) ?>
+          <div class="<?php echo escapeHtml('or-table-area') ?>"><?php echo escapeHtml('') ?>
+            <table width="<?php echo escapeHtml('100%') ?>"><?php echo escapeHtml('') ?>
+              <tr class="<?php echo escapeHtml('headline') ?>"><?php echo escapeHtml('') ?>
+                <td><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@lang('name').'') ?>
                   </span>
                 </td>
-                <td>
-                  <span>
+                <td><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml('') ?>
                   </span>
                 </td>
-                <td>
-                  <span>
+                <td><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml('') ?>
                   </span>
                 </td>
               </tr>
-              <?php foreach($el as $list_key=>$list_value) { extract($list_value); ?>
-                <tr class="data">
-                  <td>
-                    <a target="_self" data-action="" data-method="" data-id="" data-extra="[]" href="/#//">
-                      <img src="./modules/cms/ui/themes/default/images/icon/icon_model.png" />
-                      <span><?php echo encodeHtml(htmlentities(@$name)) ?>
+              <?php foreach((array)$el as $list_key=>$list_value) { extract($list_value); ?>
+                <tr class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
+                  <td><?php echo escapeHtml('') ?>
+                    <a target="<?php echo escapeHtml('_self') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('[]') ?>" href="<?php echo escapeHtml('/#//') ?>"><?php echo escapeHtml('') ?>
+                      <img src="<?php echo escapeHtml('./modules/cms/ui/themes/default/images/icon/icon_model.png') ?>" /><?php echo escapeHtml('') ?>
+                      <span><?php echo escapeHtml(''.@$name.'') ?>
                       </span>
                     </a>
                   </td>
-                  <td>
+                  <td><?php echo escapeHtml('') ?>
                     <?php $if1=(isset($default_url)); if($if1) {  ?>
-                      <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_make_default'))) ?>
+                      <span><?php echo escapeHtml(''.@lang('GLOBAL_make_default').'') ?>
                       </span>
                      <?php } ?>
                     <?php if(!$if1) {  ?>
-                      <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_is_default'))) ?>
+                      <span><?php echo escapeHtml(''.@lang('GLOBAL_is_default').'') ?>
                       </span>
                      <?php } ?>
                   </td>
-                  <td>
+                  <td><?php echo escapeHtml('') ?>
                     <?php $if1=(isset($select_url)); if($if1) {  ?>
-                      <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_select'))) ?>
+                      <span><?php echo escapeHtml(''.@lang('GLOBAL_select').'') ?>
                       </span>
                      <?php } ?>
                     <?php if(!$if1) {  ?>
-                      <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_selected'))) ?>
+                      <span><?php echo escapeHtml(''.@lang('GLOBAL_selected').'') ?>
                       </span>
                      <?php } ?>
                   </td>
                 </tr>
                 <?php  { unset($select_url) ?>
                  <?php } ?>
-                <?php  { unset($default_url) ?>
+                <?php  { unset($default_url}) ?>
                  <?php } ?>
                <?php } ?>
             </table>

@@ -3,41 +3,41 @@
 	<table>
 		<row class="headline">
 			<column class="help">
-				<text key="GLOBAL_TYPE"></text>
-				<text raw="_/_"></text>
-				<text key="GLOBAL_NAME"></text>
+				<text value="${message:GLOBAL_TYPE}"></text>
+				<text value=" / "></text>
+				<text value="${message:GLOBAL_NAME}"></text>
 			</column>
 			<column class="help">
-				<text key="GLOBAL_LASTCHANGE"></text>
+				<text value="${message:GLOBAL_LASTCHANGE}"></text>
 			</column>
 		</row>
 		<if present="up_url">
 			<row class="data">
 				<column url="${up_url}">
 					<image type="folder"></image>
-					<text raw=".."></text>
+					<text value=".."></text>
 				</column>
 				<column>
 					<text raw=""></text>
 				</column>
 			</row>
 		</if>
-		<list list="object" extract="true">
+		<list list="${object}" extract="true">
 			<row class="data">
 				<column  id="${id}" name="${name}" action="${type}" title="${desc}" class="${class}">
 					<image type="${icon}"></image>
-					<text var="name"></text>
-					<text raw="_"></text>
+					<text value="${name}"></text>
+					<text value=" "></text>
 				</column>
 				<column>
 					<date date="${date}"></date>
 				</column>
 			</row>
 		</list>
-		<if empty="object">
+		<if empty="${object}">
 			<row>
 				<column colspan="2">
-					<text text="GLOBAL_NOT_FOUND"></text>
+					<text value="${message:GLOBAL_NOT_FOUND}"></text>
 				</column>
 			</row>
 		</if>
@@ -45,7 +45,7 @@
 			<column colspan="2">
 				<link type="view" action="folder" subaction="createfolder">
 					<image file="icon/create"></image>
-					<text key="menu_folder_createfolder"></text>
+					<text value="${message:menu_folder_createfolder}"></text>
 				</link>
 			</column>
 		</row>
@@ -53,7 +53,7 @@
 			<column colspan="2">
 				<link type="view" action="folder" subaction="createpage">
 					<image file="icon/create"></image>
-					<text key="menu_folder_createpage"></text>
+					<text value="${message:menu_folder_createpage}"></text>
 				</link>
 			</column>
 		</row>
@@ -61,7 +61,7 @@
 			<column colspan="2">
 				<link type="view" action="folder" subaction="createfile">
 					<image file="icon/create"></image>
-					<text key="menu_folder_createfile"></text>
+					<text value="${message:menu_folder_createfile}"></text>
 				</link>
 			</column>
 		</row>
@@ -69,7 +69,7 @@
 			<column colspan="2">
 				<link type="modal" action="folder" subaction="createlink">
 					<image file="icon/create"></image>
-					<text key="menu_folder_createlink"></text>
+					<text value="${message:menu_folder_createlink}"></text>
 				</link>
 			</column>
 		</row>

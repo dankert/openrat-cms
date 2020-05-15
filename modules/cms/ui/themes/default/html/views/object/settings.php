@@ -1,81 +1,81 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
-    <form name="" target="_self" data-target="view" action="./" data-method="settings" data-action="object" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" data-async="" data-autosave="" class="or-form object">
-      <input type="hidden" name="token" value="<?php echo token();?>" />
-      <input type="hidden" name="action" value="object" />
-      <input type="hidden" name="subaction" value="settings" />
-      <input type="hidden" name="id" value="<?php echo OR_ID ?>" />
-      <div>
-        <fieldset class="or-group toggle-open-close open show">
-          <legend class="on-click-open-close"><?php echo encodeHtml(htmlentities(@lang('validity'))) ?>
-            <img />
-            <div class="arrow arrow-right on-closed">
+    <form name="<?php echo escapeHtml('') ?>" target="<?php echo escapeHtml('_self') ?>" data-target="<?php echo escapeHtml('view') ?>" action="<?php echo escapeHtml('./') ?>" data-method="<?php echo escapeHtml('settings') ?>" data-action="<?php echo escapeHtml('object') ?>" data-id="<?php echo escapeHtml(''.@$_id.'') ?>" method="<?php echo escapeHtml('POST') ?>" enctype="<?php echo escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo escapeHtml('') ?>" data-autosave="<?php echo escapeHtml('') ?>" class="<?php echo escapeHtml('or-form object') ?>"><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('token') ?>" value="<?php echo escapeHtml(''.@$_token.'') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('action') ?>" value="<?php echo escapeHtml('object') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('subaction') ?>" value="<?php echo escapeHtml('settings') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('id') ?>" value="<?php echo escapeHtml(''.@$_id.'') ?>" /><?php echo escapeHtml('') ?>
+      <div><?php echo escapeHtml('') ?>
+        <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
+          <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('validity').'') ?>
+            <img /><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
             </div>
-            <div class="arrow arrow-down on-open">
+            <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
             </div>
           </legend>
-          <div class="closable">
-            <div class="line">
-              <div class="label">
-                <label class="label">
-                  <span><?php echo encodeHtml(htmlentities(@lang('from'))) ?>
+          <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+              <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@lang('from').'') ?>
                   </span>
                 </label>
               </div>
-              <div class="input">
-                <div class="inputholder">
-                  <input name="valid_from_date" type="date" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$valid_from_date)) ?>" />
+              <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+                <div class="<?php echo escapeHtml('inputholder') ?>"><?php echo escapeHtml('') ?>
+                  <input name="<?php echo escapeHtml('valid_from_date') ?>" type="<?php echo escapeHtml('date') ?>" maxlength="<?php echo escapeHtml('256') ?>" value="<?php echo escapeHtml(''.@$valid_from_date.'') ?>" /><?php echo escapeHtml('') ?>
                 </div>
-                <div class="inputholder">
-                  <input name="valid_from_time" type="time" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$valid_from_time)) ?>" />
+                <div class="<?php echo escapeHtml('inputholder') ?>"><?php echo escapeHtml('') ?>
+                  <input name="<?php echo escapeHtml('valid_from_time') ?>" type="<?php echo escapeHtml('time') ?>" maxlength="<?php echo escapeHtml('256') ?>" value="<?php echo escapeHtml(''.@$valid_from_time.'') ?>" /><?php echo escapeHtml('') ?>
                 </div>
               </div>
             </div>
-            <div class="line">
-              <div class="label">
-                <label class="label">
-                  <span><?php echo encodeHtml(htmlentities(@lang('until'))) ?>
+            <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+              <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@lang('until').'') ?>
                   </span>
                 </label>
               </div>
-              <div class="input">
-                <div class="inputholder">
-                  <input name="valid_until_date" type="date" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$valid_until_date)) ?>" />
+              <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+                <div class="<?php echo escapeHtml('inputholder') ?>"><?php echo escapeHtml('') ?>
+                  <input name="<?php echo escapeHtml('valid_until_date') ?>" type="<?php echo escapeHtml('date') ?>" maxlength="<?php echo escapeHtml('256') ?>" value="<?php echo escapeHtml(''.@$valid_until_date.'') ?>" /><?php echo escapeHtml('') ?>
                 </div>
-                <div class="inputholder">
-                  <input name="valid_until_time" type="time" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$valid_until_time)) ?>" />
+                <div class="<?php echo escapeHtml('inputholder') ?>"><?php echo escapeHtml('') ?>
+                  <input name="<?php echo escapeHtml('valid_until_time') ?>" type="<?php echo escapeHtml('time') ?>" maxlength="<?php echo escapeHtml('256') ?>" value="<?php echo escapeHtml(''.@$valid_until_time.'') ?>" /><?php echo escapeHtml('') ?>
                 </div>
               </div>
             </div>
           </div>
         </fieldset>
-        <fieldset class="or-group toggle-open-close open show">
-          <legend class="on-click-open-close"><?php echo encodeHtml(htmlentities(@lang('settings'))) ?>
-            <img />
-            <div class="arrow arrow-right on-closed">
+        <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
+          <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('settings').'') ?>
+            <img /><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
             </div>
-            <div class="arrow arrow-down on-open">
+            <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
             </div>
           </legend>
-          <div class="closable">
-            <div class="line">
-              <div class="label">
-                <label class="label">
-                  <span><?php echo encodeHtml(htmlentities(@lang('SETTINGS'))) ?>
+          <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+              <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@lang('SETTINGS').'') ?>
                   </span>
                 </label>
               </div>
-              <div class="input">
-                <textarea name="settings" data-extension="" data-mimetype="" data-mode="yaml" class="editor code-editor"><?php echo encodeHtml(htmlentities(@$settings)) ?>
+              <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+                <textarea name="<?php echo escapeHtml('settings') ?>" data-extension="<?php echo escapeHtml('') ?>" data-mimetype="<?php echo escapeHtml('') ?>" data-mode="<?php echo escapeHtml('yaml') ?>" class="<?php echo escapeHtml('editor code-editor') ?>"><?php echo escapeHtml(''.@$settings.'') ?>
                 </textarea>
               </div>
             </div>
           </div>
         </fieldset>
       </div>
-      <div class="or-form-actionbar">
-        <input type="button" value="<?php echo encodeHtml(htmlentities(@lang('CANCEL'))) ?>" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" />
-        <input type="submit" value="<?php echo encodeHtml(htmlentities(@lang('button_ok'))) ?>" class="or-form-btn or-form-btn--primary or-form-btn--save" />
+      <div class="<?php echo escapeHtml('or-form-actionbar') ?>"><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('button') ?>" value="<?php echo escapeHtml(''.@lang('CANCEL').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('submit') ?>" value="<?php echo escapeHtml(''.@lang('button_ok').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo escapeHtml('') ?>
       </div>
     </form>
  <?php } ?>

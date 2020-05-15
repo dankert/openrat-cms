@@ -1,29 +1,29 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
-    <div class="or-table-wrapper">
-      <div class="or-table-filter">
-        <input type="search" name="filter" placeholder="<?php echo encodeHtml(htmlentities(@lang('SEARCH_FILTER'))) ?>" />
+    <div class="<?php echo escapeHtml('or-table-wrapper') ?>"><?php echo escapeHtml('') ?>
+      <div class="<?php echo escapeHtml('or-table-filter') ?>"><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('search') ?>" name="<?php echo escapeHtml('filter') ?>" placeholder="<?php echo escapeHtml(''.@lang('SEARCH_FILTER').'') ?>" /><?php echo escapeHtml('') ?>
       </div>
-      <div class="or-table-area">
-        <table width="100%">
-          <tr class="data">
-            <td colspan="2">
-              <a target="_self" data-action="index" data-method="projectmenu" data-id="" data-extra="[]" href="/#/index/">
-                <span>OpenRat
+      <div class="<?php echo escapeHtml('or-table-area') ?>"><?php echo escapeHtml('') ?>
+        <table width="<?php echo escapeHtml('100%') ?>"><?php echo escapeHtml('') ?>
+          <tr class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
+            <td colspan="<?php echo escapeHtml('2') ?>"><?php echo escapeHtml('') ?>
+              <a target="<?php echo escapeHtml('_self') ?>" data-action="<?php echo escapeHtml('index') ?>" data-method="<?php echo escapeHtml('projectmenu') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('[]') ?>" href="<?php echo escapeHtml('/#/index/') ?>"><?php echo escapeHtml('') ?>
+                <span><?php echo escapeHtml('OpenRat') ?>
                 </span>
               </a>
             </td>
           </tr>
-          <?php foreach($applications as $list_key=>$list_value) { extract($list_value); ?>
-            <tr class="data">
-              <td>
-                <a target="_self" data-url="<?php echo encodeHtml(htmlentities(@$url)) ?>" data-action="" data-method="" data-id="" data-extra="[]" href="/#//">
-                  <span><?php echo encodeHtml(htmlentities(@$name)) ?>
+          <?php foreach((array)$applications as $list_key=>$list_value) { extract($list_value); ?>
+            <tr class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
+              <td><?php echo escapeHtml('') ?>
+                <a target="<?php echo escapeHtml('_self') ?>" data-url="<?php echo escapeHtml(''.@$url.'') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('[]') ?>" href="<?php echo escapeHtml('/#//') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@$name.'') ?>
                   </span>
                 </a>
               </td>
-              <td>
-                <span><?php echo encodeHtml(htmlentities(@$description)) ?>
+              <td><?php echo escapeHtml('') ?>
+                <span><?php echo escapeHtml(''.@$description.'') ?>
                 </span>
               </td>
             </tr>

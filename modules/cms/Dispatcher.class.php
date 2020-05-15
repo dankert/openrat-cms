@@ -115,6 +115,8 @@ class Dispatcher
         $result['session'] = array('name' => session_name(), 'id' => session_id(), 'token' => token());
         $result['version'] = OR_VERSION;
         $result['api'] = '2';
+        $result['output']['_token'] = token();
+        $result['output']['_id'   ] = $this->request->id;
 
 
         // Yes, closing the session flushes the session data and unlocks other waiting requests.

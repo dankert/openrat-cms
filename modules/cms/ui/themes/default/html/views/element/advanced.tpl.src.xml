@@ -1,9 +1,9 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-    <if true="%{security/disable_dynamic_code}">
+    <if true="${config:security/disable_dynamic_code}">
         <if value="${type}" equals="code" false="true">
             <part class="message warn">
-                <text key="NOTICE_CODE_DISABLED"/>
+                <text value="${message:NOTICE_CODE_DISABLED}"/>
             </part>
         </if>
     </if>
@@ -12,7 +12,7 @@
             <if present="subtype">
                 <part class="line">
                     <part class="label">
-                        <text text="ELEMENT_SUBTYPE"></text>
+                        <text value="${message:ELEMENT_SUBTYPE}"></text>
                     </part>
                     <part class="input">
                         <if present="subtypes">
@@ -31,7 +31,7 @@
                     <part class="input">
                         <checkbox name="with_icon"></checkbox>
                         <label for="with_icon">
-                            <text text="EL_PROP_WITH_ICON"></text>
+                            <text value="${message:EL_PROP_WITH_ICON}"></text>
                         </label>
                     </part>
                 </part>
@@ -43,7 +43,7 @@
                     <part class="input">
                         <checkbox name="inherit"></checkbox>
                         <label for="inherit">
-                            <text text="EL_PROP_INHERIT"></text>
+                            <text value="${message:EL_PROP_INHERIT}"></text>
                         </label>
                     </part>
                 </part>
@@ -55,7 +55,7 @@
                     <part class="input">
                         <checkbox name="all_languages"></checkbox>
                         <label for="all_languages">
-                            <text text="EL_PROP_ALL_LANGUAGES"></text>
+                            <text value="${message:EL_PROP_ALL_LANGUAGES}"></text>
                         </label>
                     </part>
                 </part>
@@ -67,7 +67,7 @@
                     <part class="input">
                         <checkbox name="writable"></checkbox>
                         <label for="writable">
-                            <text text="EL_PROP_writable"></text>
+                            <text value="${message:EL_PROP_writable}"></text>
                         </label>
                     </part>
                 </part>
@@ -75,7 +75,7 @@
             <if present="width">
                 <part class="line">
                     <part class="label">
-                        <text text="width"></text>
+                        <text value="${message:width}"></text>
                     </part>
                     <part class="input">
                         <input size="10" name="width"></input>
@@ -86,7 +86,7 @@
             <if present="height">
                 <part class="line">
                     <part class="label">
-                        <text text="height"></text>
+                        <text value="${message:height}"></text>
                     </part>
                     <part class="input">
                         <input size="10" name="height"></input>
@@ -96,7 +96,7 @@
             <if present="dateformat">
                 <part class="line">
                     <part class="label">
-                        <text text="EL_PROP_DATEFORMAT"></text>
+                        <text value="${message:EL_PROP_DATEFORMAT}"></text>
                     </part>
                     <part class="input">
                         <selectbox name="dateformat" list="dateformats"></selectbox>
@@ -106,7 +106,7 @@
             <if present="format">
                 <part class="line">
                     <part class="label">
-                        <text text="EL_PROP_FORMAT"></text>
+                        <text value="${message:EL_PROP_FORMAT}"></text>
                     </part>
                     <part class="input">
                         <radiobox name="format" list="formatlist"></radiobox>
@@ -116,7 +116,7 @@
             <if present="decimals">
                 <part class="line">
                     <part class="label">
-                        <text text="EL_PROP_DECIMALS"></text>
+                        <text value="${message:EL_PROP_DECIMALS}"></text>
                     </part>
                     <part class="input">
                         <input size="10" maxlength="2" name="decimals"></input>
@@ -126,7 +126,7 @@
             <if present="dec_point">
                 <part class="line">
                     <part class="label">
-                        <text text="EL_PROP_DEC_POINT"></text>
+                        <text value="${message:EL_PROP_DEC_POINT}"></text>
                     </part>
                     <part class="input">
                         <input size="10" maxlength="5" name="dec_point"></input>
@@ -136,7 +136,7 @@
             <if present="thousand_sep">
                 <part class="line">
                     <part class="label">
-                        <text text="EL_PROP_thousand_sep"></text>
+                        <text value="${message:EL_PROP_thousand_sep}"></text>
                     </part>
                     <part class="input">
                         <input size="10" maxlength="1" name="thousand_sep"></input>
@@ -146,7 +146,7 @@
             <if present="default_text">
                 <part class="line">
                     <part class="label">
-                        <text text="EL_PROP_default_text"></text>
+                        <text value="${message:EL_PROP_default_text}"></text>
                     </part>
                     <part class="input">
                         <input size="40" maxlength="255" name="default_text"></input>
@@ -156,7 +156,7 @@
             <if present="default_longtext">
                 <part class="line">
                     <part class="label">
-                        <text text="EL_PROP_default_longtext"></text>
+                        <text value="${message:EL_PROP_default_longtext}"></text>
                     </part>
                     <part class="input">
                         <inputarea rows="10" name="default_longtext"></inputarea>
@@ -166,7 +166,7 @@
             <if present="parameters">
                 <part class="line">
                     <part class="label">
-                        <text text="EL_PROP_DYNAMIC_PARAMETERS"></text>
+                        <text value="${message:EL_PROP_DYNAMIC_PARAMETERS}"></text>
                     </part>
                     <part class="input">
                         <inputarea rows="15" name="parameters"></inputarea>
@@ -176,12 +176,12 @@
                     <part class="label">
                     </part>
                     <part class="input">
-                        <list list="dynamic_class_parameters" key="paramName" value="defaultValue">
-                            <text var="paramName"></text>
-                            <text raw="_("></text>
-                            <text text="GLOBAL_DEFAULT"></text>
-                            <text raw=")_=_"></text>
-                            <text var="defaultValue"></text>
+                        <list list="${dynamic_class_parameters}" key="paramName" value="defaultValue">
+                            <text value="${paramName}"></text>
+                            <text value=" ("></text>
+                            <text value="${message:GLOBAL_DEFAULT}"></text>
+                            <text value=") = "></text>
+                            <text value="${defaultValue}"></text>
                             <newline></newline>
                         </list>
                     </part>
@@ -190,7 +190,7 @@
             <if present="select_items">
                 <part class="line">
                     <part class="label">
-                        <text text="EL_PROP_select_items"></text>
+                        <text value="${message:EL_PROP_select_items}"></text>
                     </part>
                     <part class="input">
                         <inputarea rows="15" cols="40" name="select_items"></inputarea>
@@ -200,7 +200,7 @@
             <if present="linkelement">
                 <part class="line">
                     <part class="label">
-                        <text text="EL_LINK"></text>
+                        <text value="${message:EL_LINK}"></text>
                     </part>
                     <part class="input">
                         <selectbox name="linkelement" list="linkelements"></selectbox>
@@ -210,7 +210,7 @@
             <if present="name">
                 <part class="line">
                     <part class="label">
-                        <text text="ELEMENT_NAME"></text>
+                        <text value="${message:ELEMENT_NAME}"></text>
                     </part>
                     <part class="input">
                         <selectbox name="name" list="names"></selectbox>
@@ -220,7 +220,7 @@
             <if present="folderobjectid">
                 <part class="line">
                     <part class="label">
-                        <text text="EL_PROP_DEFAULT_FOLDEROBJECT"></text>
+                        <text value="${message:EL_PROP_DEFAULT_FOLDEROBJECT}"></text>
                     </part>
                     <part class="input">
                         <selectbox name="folderobjectid" list="folders"></selectbox>
@@ -230,7 +230,7 @@
             <if present="default_objectid">
                 <part class="line">
                     <part class="label">
-                        <text text="EL_PROP_DEFAULT_OBJECT"></text>
+                        <text value="${message:EL_PROP_DEFAULT_OBJECT}"></text>
                     </part>
                     <part class="input">
                         <selectbox name="default_objectid" list="objects"
@@ -241,7 +241,7 @@
             <if present="code">
                 <part class="line">
                     <part class="label">
-                        <text text="EL_PROP_code"></text>
+                        <text value="${message:EL_PROP_code}"></text>
                     </part>
                     <part class="input">
                         <inputarea name="code" rows="35"></inputarea>

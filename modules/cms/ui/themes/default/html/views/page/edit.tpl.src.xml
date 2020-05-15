@@ -3,32 +3,32 @@
     <table>
         <row class="headline">
             <column header="true">
-                <text key="NAME"></text>
+                <text value="${message:NAME}"></text>
             </column>
             <column header="true">
-                <text text="DESCRIPTION"></text>
+                <text value="${message:DESCRIPTION}"></text>
             </column>
             <column header="true">
-                <text key="TYPE"></text>
+                <text value="${message:TYPE}"></text>
             </column>
         </row>
-        <if empty="elements">
+        <if empty="${elements}">
             <row>
                 <column>
-                    <text key="NOT_FOUND"></text>
+                    <text value="${message:NOT_FOUND}"></text>
                 </column>
             </row>
         </if>
-        <list list="elements" extract="true">
+        <list list="${elements}" extract="true">
             <row class="data clickable">
                 <column>
                     <link type="open" title="${desc}" name="${name}" action="pageelement" id="${pageelementid}">
                         <image action="pageelement"/>
-                        <text var="label"></text>
+                        <text value="${label}"></text>
                     </link>
                 </column>
                 <column title="${desc}">
-                    <text var="desc"></text>
+                    <text value="${desc}"></text>
                 </column>
                 <column>
                     <image elementtype="${typename}"/>

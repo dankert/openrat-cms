@@ -5,7 +5,7 @@
 	
 		<part class="line">
 			<part class="label">
-				<text text="global_name"></text>
+				<text value="${message:global_name}"></text>
 			</part>
 			<part class="input">
 				<input name="name" maxlength="50" required="true" focus="true"></input>
@@ -14,15 +14,15 @@
 		
 		<part class="line">
 			<part class="label">
-				<text text="element_type"></text>
+				<text value="${message:element_type}"></text>
 			</part>
 			<part class="input">
-				<set var="text" value="text"></set>
+				<set var="text" value="'text'"></set>
 				<selectbox list="types" name="typeid" lang="true"></selectbox>
 			</part>
 		</part>
 
-		<group title="#{options}"></group>
+		<group title="${message:options}"></group>
 		
 		<part class="line">
 			<part class="label">
@@ -30,7 +30,7 @@
 			<part class="input">
 				<label for="addtotemplate">
 					<checkbox name="addtotemplate" default="true"></checkbox>
-					<text key="menu_template_srcelement"></text>
+					<text value="${message:menu_template_srcelement}"></text>
 				</label>
 			</part>
 		</part>

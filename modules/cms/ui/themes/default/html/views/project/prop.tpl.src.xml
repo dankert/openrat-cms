@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<header views="remove,export,maintenance"></header>
 	<form>
-		<group title="#{NAME}">
+		<group title="${message:NAME}">
 			<part class="line">
 				<part class="label">
 					<label for="name" key="PROJECT_NAME"></label>
@@ -20,7 +20,7 @@
 				</part>
 			</part>
 		</group>
-		<group title="#{PUBLISH}">
+		<group title="${message:PUBLISH}">
 			<part class="line">
 				<part class="label">
 					<label for="target_dir" key="PROJECT_TARGET_DIR"></label>
@@ -30,7 +30,7 @@
 				</part>
 			</part>
 
-			<if true="%{publish/project/override_system_command}">
+			<if true="${config:publish/project/override_system_command}">
 				<part class="line">
 					<part class="label">
 						<label for="cmd_after_publish" key="PROJECT_CMD_AFTER_PUBLISH"></label>
@@ -61,9 +61,9 @@
 			<radio name="linksAbsolute" value="1" label="LINKS_ABSOLUTE" />
 
 		</group>
-		<if value="config:publish/ftp/enable">
+		<if value="${config:publish/ftp/enable}">
 
-			<group title="#{project_FTP}">
+			<group title="${message:project_FTP}">
 				<part class="line">
 					<part class="label">
 						<label for="ftp_url" key="PROJECT_FTP_URL"/>
@@ -77,7 +77,7 @@
 				</part>
 			</group>
 		</if>
-		<group title="#{options}">
+		<group title="${message:options}">
 			<part class="line">
 				<part class="label"></part>
 				<part class="input">

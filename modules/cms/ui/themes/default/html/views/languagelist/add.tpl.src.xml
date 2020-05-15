@@ -3,7 +3,7 @@
 	<form method="post">
 		<part class="line">
 			<part class="label">
-				<text text="LANGUAGE_ISOCODE"></text>
+				<text value="${message:LANGUAGE_ISOCODE}"></text>
 			</part>
 			<part class="input">
 				<selectbox list="isocodes" name="isocode"></selectbox>

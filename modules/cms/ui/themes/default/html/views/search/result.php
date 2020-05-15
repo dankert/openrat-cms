@@ -1,31 +1,31 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
-    <div class="or-table-wrapper">
-      <div class="or-table-filter">
-        <input type="search" name="filter" placeholder="<?php echo encodeHtml(htmlentities(@lang('SEARCH_FILTER'))) ?>" />
+    <div class="<?php echo escapeHtml('or-table-wrapper') ?>"><?php echo escapeHtml('') ?>
+      <div class="<?php echo escapeHtml('or-table-filter') ?>"><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('search') ?>" name="<?php echo escapeHtml('filter') ?>" placeholder="<?php echo escapeHtml(''.@lang('SEARCH_FILTER').'') ?>" /><?php echo escapeHtml('') ?>
       </div>
-      <div class="or-table-area">
-        <table width="100%">
-          <tr>
-            <td class="header">
-              <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_NAME'))) ?>
+      <div class="<?php echo escapeHtml('or-table-area') ?>"><?php echo escapeHtml('') ?>
+        <table width="<?php echo escapeHtml('100%') ?>"><?php echo escapeHtml('') ?>
+          <tr><?php echo escapeHtml('') ?>
+            <td class="<?php echo escapeHtml('header') ?>"><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('GLOBAL_NAME').'') ?>
               </span>
             </td>
-            <td class="header">
-              <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_LASTCHANGE'))) ?>
+            <td class="<?php echo escapeHtml('header') ?>"><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('GLOBAL_LASTCHANGE').'') ?>
               </span>
             </td>
           </tr>
-          <?php foreach($result as $list_key=>$list_value) { extract($list_value); ?>
-            <tr class="data">
-              <td class="clickable">
-                <a target="_self" date-name="<?php echo encodeHtml(htmlentities(@$name)) ?>" name="<?php echo encodeHtml(htmlentities(@$name)) ?>" data-type="open" data-action="<?php echo encodeHtml(htmlentities(@$type)) ?>" data-method="" data-id="<?php echo encodeHtml(htmlentities(@$id)) ?>" data-extra="[]" href="/#/<?php echo encodeHtml(htmlentities(@$type)) ?>/<?php echo encodeHtml(htmlentities(@$id)) ?>">
-                  <img src="./modules/cms/ui/themes/default/images/icon_<?php echo encodeHtml(htmlentities(@$type)) ?>.png" />
-                  <span title="<?php echo encodeHtml(htmlentities(@$desc)) ?>"><?php echo encodeHtml(htmlentities(@$name)) ?>
+          <?php foreach((array)$result as $list_key=>$list_value) { extract($list_value); ?>
+            <tr class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
+              <td class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
+                <a target="<?php echo escapeHtml('_self') ?>" date-name="<?php echo escapeHtml(''.@$name.'') ?>" name="<?php echo escapeHtml(''.@$name.'') ?>" data-type="<?php echo escapeHtml('open') ?>" data-action="<?php echo escapeHtml(''.@$type.'') ?>" data-method="<?php echo escapeHtml('') ?>" data-id="<?php echo escapeHtml(''.@$id.'') ?>" data-extra="<?php echo escapeHtml('[]') ?>" href="<?php echo escapeHtml('/#/'.@$type.'/'.@$id.'') ?>"><?php echo escapeHtml('') ?>
+                  <img src="<?php echo escapeHtml('./modules/cms/ui/themes/default/images/icon_'.@$type.'.png') ?>" /><?php echo escapeHtml('') ?>
+                  <span title="<?php echo escapeHtml(''.@$desc.'') ?>"><?php echo escapeHtml(''.@$name.'') ?>
                   </span>
                 </a>
               </td>
-              <td>
+              <td><?php echo escapeHtml('') ?>
                 <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($lastchange_date); ?>
                  <?php } ?>
               </td>

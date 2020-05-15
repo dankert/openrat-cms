@@ -6,22 +6,22 @@
 			<table>
 				<row class="headline">
 					<column>
-						<text key="name"></text>
+						<text value="${message:name}"></text>
 					</column>
 				</row>
-				<list list="templates" extract="true">
+				<list list="${templates}" extract="true">
 					<row class="data">
 						<column url="${url}">
-							<text var="name"></text>
+							<text value="${name}"></text>
 						</column>
 					</row>
 				</list>
 			</table>
-			<if empty="templates">
-				<text text="GLOBAL_NO_TEMPLATES_AVAILABLE_DESC"></text>
+			<if empty="${templates}">
+				<text value="${message:GLOBAL_NO_TEMPLATES_AVAILABLE_DESC}"></text>
 			</if>
 			<link class="action" action="template" subaction="add">
-				<text key="menu_template_add"></text>
+				<text value="${message:menu_template_add}"></text>
 			</link>
 		</window>
 	</dummy>

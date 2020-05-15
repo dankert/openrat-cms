@@ -1,60 +1,60 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
-    <div class="or-table-wrapper">
-      <div class="or-table-filter">
-        <input type="search" name="filter" placeholder="<?php echo encodeHtml(htmlentities(@lang('SEARCH_FILTER'))) ?>" />
+    <div class="<?php echo escapeHtml('or-table-wrapper') ?>"><?php echo escapeHtml('') ?>
+      <div class="<?php echo escapeHtml('or-table-filter') ?>"><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('search') ?>" name="<?php echo escapeHtml('filter') ?>" placeholder="<?php echo escapeHtml(''.@lang('SEARCH_FILTER').'') ?>" /><?php echo escapeHtml('') ?>
       </div>
-      <div class="or-table-area">
-        <table width="100%">
-          <tr class="headline">
-            <th>
-              <span><?php echo encodeHtml(htmlentities(@lang('TYPE'))) ?>
+      <div class="<?php echo escapeHtml('or-table-area') ?>"><?php echo escapeHtml('') ?>
+        <table width="<?php echo escapeHtml('100%') ?>"><?php echo escapeHtml('') ?>
+          <tr class="<?php echo escapeHtml('headline') ?>"><?php echo escapeHtml('') ?>
+            <th><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('TYPE').'') ?>
               </span>
             </th>
-            <th>
-              <span><?php echo encodeHtml(htmlentities(@lang('NAME'))) ?>
+            <th><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('NAME').'') ?>
               </span>
             </th>
-            <th>
-              <span><?php echo encodeHtml(htmlentities(@lang('LASTCHANGE'))) ?>
+            <th><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('LASTCHANGE').'') ?>
               </span>
             </th>
           </tr>
           <?php $if1=(isset($up_url)); if($if1) {  ?>
-            <tr class="data clickable">
-              <td>
-                <i class="image-icon image-icon--action-folder">
+            <tr class="<?php echo escapeHtml('data clickable') ?>"><?php echo escapeHtml('') ?>
+              <td><?php echo escapeHtml('') ?>
+                <i class="<?php echo escapeHtml('image-icon image-icon--action-folder') ?>"><?php echo escapeHtml('') ?>
                 </i>
               </td>
-              <td>
-                <span>..
+              <td><?php echo escapeHtml('') ?>
+                <span><?php echo escapeHtml('..') ?>
                 </span>
               </td>
-              <td>
-                <span>
+              <td><?php echo escapeHtml('') ?>
+                <span><?php echo escapeHtml('') ?>
                 </span>
               </td>
             </tr>
            <?php } ?>
-          <?php foreach($object as $list_key=>$list_value) { extract($list_value); ?>
-            <tr class="data">
-              <td title="<?php echo encodeHtml(htmlentities(@$desc)) ?>" data-name="<?php echo encodeHtml(htmlentities(@$name)) ?>" data-action="<?php echo encodeHtml(htmlentities(@$type)) ?>" data-id="<?php echo encodeHtml(htmlentities(@$id)) ?>" class="clickable <?php echo encodeHtml(htmlentities(@$class)) ?>">
-                <img src="./modules/cms/ui/themes/default/images/icon_<?php echo encodeHtml(htmlentities(@$icon)) ?>.png" />
-                <span><?php echo encodeHtml(htmlentities(@$name)) ?>
+          <?php foreach((array)$object as $list_key=>$list_value) { extract($list_value); ?>
+            <tr class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
+              <td title="<?php echo escapeHtml(''.@$desc.'') ?>" data-name="<?php echo escapeHtml(''.@$name.'') ?>" data-action="<?php echo escapeHtml(''.@$type.'') ?>" data-id="<?php echo escapeHtml(''.@$id.'') ?>" class="<?php echo escapeHtml('clickable '.@$class.'') ?>"><?php echo escapeHtml('') ?>
+                <img src="<?php echo escapeHtml('./modules/cms/ui/themes/default/images/icon_'.@$icon.'.png') ?>" /><?php echo escapeHtml('') ?>
+                <span><?php echo escapeHtml(''.@$name.'') ?>
                 </span>
-                <span> 
+                <span><?php echo escapeHtml(' ') ?>
                 </span>
               </td>
-              <td>
+              <td><?php echo escapeHtml('') ?>
                 <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($date); ?>
                  <?php } ?>
               </td>
             </tr>
            <?php } ?>
           <?php $if1=(($object)==FALSE); if($if1) {  ?>
-            <tr>
-              <td colspan="2">
-                <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_NOT_FOUND'))) ?>
+            <tr><?php echo escapeHtml('') ?>
+              <td colspan="<?php echo escapeHtml('2') ?>"><?php echo escapeHtml('') ?>
+                <span><?php echo escapeHtml(''.@lang('GLOBAL_NOT_FOUND').'') ?>
                 </span>
               </td>
             </tr>
@@ -62,11 +62,11 @@
         </table>
       </div>
     </div>
-    <div class="clickable">
-      <a target="_self" data-type="view" data-action="folder" data-method="create" data-id="" data-extra="[]" href="/#/folder/" class="or-link-btn">
-        <i class="image-icon image-icon--action-new">
+    <div class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
+      <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('view') ?>" data-action="<?php echo escapeHtml('folder') ?>" data-method="<?php echo escapeHtml('create') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('[]') ?>" href="<?php echo escapeHtml('/#/folder/') ?>" class="<?php echo escapeHtml('or-link-btn') ?>"><?php echo escapeHtml('') ?>
+        <i class="<?php echo escapeHtml('image-icon image-icon--action-new') ?>"><?php echo escapeHtml('') ?>
         </i>
-        <span><?php echo encodeHtml(htmlentities(@lang('new'))) ?>
+        <span><?php echo escapeHtml(''.@lang('new').'') ?>
         </span>
       </a>
     </div>

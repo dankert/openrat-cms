@@ -1,97 +1,91 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
-    <?php $if1=($type=='folder'); if($if1) {  ?>
-      
-     <?php } ?>
-    <?php if(!$if1) {  ?>
-      
-     <?php } ?>
-    <div class="or-table-wrapper">
-      <div class="or-table-filter">
-        <input type="search" name="filter" placeholder="<?php echo encodeHtml(htmlentities(@lang('SEARCH_FILTER'))) ?>" />
+    <div class="<?php echo escapeHtml('or-table-wrapper') ?>"><?php echo escapeHtml('') ?>
+      <div class="<?php echo escapeHtml('or-table-filter') ?>"><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('search') ?>" name="<?php echo escapeHtml('filter') ?>" placeholder="<?php echo escapeHtml(''.@lang('SEARCH_FILTER').'') ?>" /><?php echo escapeHtml('') ?>
       </div>
-      <div class="or-table-area">
-        <table width="100%">
-          <tr class="headline">
-            <td class="help">
-              <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_NAME'))) ?>
+      <div class="<?php echo escapeHtml('or-table-area') ?>"><?php echo escapeHtml('') ?>
+        <table width="<?php echo escapeHtml('100%') ?>"><?php echo escapeHtml('') ?>
+          <tr class="<?php echo escapeHtml('headline') ?>"><?php echo escapeHtml('') ?>
+            <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('GLOBAL_NAME').'') ?>
               </span>
             </td>
-            <td class="help">
-              <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_LANGUAGE'))) ?>
+            <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('GLOBAL_LANGUAGE').'') ?>
               </span>
             </td>
-            <?php foreach($show as $list_key=>$t) {  ?>
-              <td class="help">
-                <span><?php echo encodeHtml(htmlentities(@lang(''.@$t.''))) ?>
+            <?php foreach((array)$show as $list_key=>$t) {  ?>
+              <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
+                <span><?php echo escapeHtml(''.@lang('acl_'.@$t.'_abbrev').'') ?>
                 </span>
               </td>
              <?php } ?>
-            <td class="help">
-              <span><?php echo encodeHtml(htmlentities(@lang('global_delete'))) ?>
+            <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('global_delete').'') ?>
               </span>
             </td>
           </tr>
           <?php $if1=(($acls)==FALSE); if($if1) {  ?>
-            <tr class="data">
-              <td colspan="99">
-                <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_NOT_FOUND'))) ?>
+            <tr class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
+              <td colspan="<?php echo escapeHtml('99') ?>"><?php echo escapeHtml('') ?>
+                <span><?php echo escapeHtml(''.@lang('GLOBAL_NOT_FOUND').'') ?>
                 </span>
               </td>
             </tr>
            <?php } ?>
           <?php $if1=!(($acls)==FALSE); if($if1) {  ?>
            <?php } ?>
-          <?php foreach($acls as $aclid=>$acl) { extract($acl); ?>
-            <tr class="data">
-              <td>
+          <?php foreach((array)$acls as $aclid=>$acl) { extract($acl); ?>
+            <tr class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
+              <td><?php echo escapeHtml('') ?>
                 <?php $if1=(isset($username)); if($if1) {  ?>
-                  <i class="image-icon image-icon--action-user">
+                  <i class="<?php echo escapeHtml('image-icon image-icon--action-user') ?>"><?php echo escapeHtml('') ?>
                   </i>
-                  <span><?php echo encodeHtml(htmlentities(@$username)) ?>
+                  <span><?php echo escapeHtml(''.@$username.'') ?>
                   </span>
                  <?php } ?>
                 <?php $if1=(isset($groupname)); if($if1) {  ?>
-                  <i class="image-icon image-icon--action-group">
+                  <i class="<?php echo escapeHtml('image-icon image-icon--action-group') ?>"><?php echo escapeHtml('') ?>
                   </i>
-                  <span><?php echo encodeHtml(htmlentities(@$groupname)) ?>
+                  <span><?php echo escapeHtml(''.@$groupname.'') ?>
                   </span>
                  <?php } ?>
                 <?php $if1=!(isset($username)); if($if1) {  ?>
                   <?php $if1=!(isset($groupname)); if($if1) {  ?>
-                    <i class="image-icon image-icon--action-group">
+                    <i class="<?php echo escapeHtml('image-icon image-icon--action-group') ?>"><?php echo escapeHtml('') ?>
                     </i>
-                    <span><?php echo encodeHtml(htmlentities(@lang('global_all'))) ?>
+                    <span><?php echo escapeHtml(''.@lang('global_all').'') ?>
                     </span>
                    <?php } ?>
                  <?php } ?>
               </td>
-              <td>
-                <span><?php echo encodeHtml(htmlentities(@$languagename)) ?>
+              <td><?php echo escapeHtml('') ?>
+                <span><?php echo escapeHtml(''.@$languagename.'') ?>
                 </span>
               </td>
-              <?php foreach($show as $list_key=>$t) {  ?>
-                <td>
-                  <?php $if1=('var:$t'); if($if1) {  ?>
-                    <span>&check;
+              <?php foreach((array)$show as $list_key=>$t) {  ?>
+                <td><?php echo escapeHtml('') ?>
+                  <?php $if1=($t); if($if1) {  ?>
+                    <span><?php echo '&check;' ?>
                     </span>
                    <?php } ?>
                 </td>
                <?php } ?>
-              <td class="clickable">
-                <a target="_self" data-type="post" data-action="" data-method="delacl" data-id="" data-extra="{'aclid':'<?php echo encodeHtml(htmlentities(@$aclid)) ?>'}" data-data="{"action":"object","subaction":"delacl","id":"",\"token":"<?php echo token() ?>","aclid":"<?php echo encodeHtml(htmlentities(@$aclid)) ?>","none":"0"}"">
-                  <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_DELETE'))) ?>
+              <td class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
+                <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('post') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('delacl') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('{\'aclid\':\''.@$aclid.'\'}') ?>" data-data="<?php echo escapeHtml('{"action":"object","subaction":"delacl","id":"",\"token":"<?php echo token() ?>","aclid":"'.@$aclid.'","none":"0"}"') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@lang('GLOBAL_DELETE').'') ?>
                   </span>
                 </a>
               </td>
             </tr>
            <?php } ?>
-          <tr class="data">
-            <td colspan="99" class="clickable">
-              <a target="_self" date-name="<?php echo encodeHtml(htmlentities(@lang('menu_aclform'))) ?>" name="<?php echo encodeHtml(htmlentities(@lang('menu_aclform'))) ?>" data-type="dialog" data-action="" data-method="aclform" data-id="" data-extra="{'dialogAction':null,'dialogMethod':'aclform'}" href="/#//">
-                <i class="image-icon image-icon--method-add">
+          <tr class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
+            <td colspan="<?php echo escapeHtml('99') ?>" class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
+              <a target="<?php echo escapeHtml('_self') ?>" date-name="<?php echo escapeHtml(''.@lang('menu_aclform').'') ?>" name="<?php echo escapeHtml(''.@lang('menu_aclform').'') ?>" data-type="<?php echo escapeHtml('dialog') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('aclform') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'aclform\'}') ?>" href="<?php echo escapeHtml('/#//') ?>"><?php echo escapeHtml('') ?>
+                <i class="<?php echo escapeHtml('image-icon image-icon--method-add') ?>"><?php echo escapeHtml('') ?>
                 </i>
-                <span><?php echo encodeHtml(htmlentities(@lang('new'))) ?>
+                <span><?php echo escapeHtml(''.@lang('new').'') ?>
                 </span>
               </a>
             </td>

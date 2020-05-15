@@ -3,16 +3,16 @@
 	<table>
 		<row class="headline">
 			<column class="help">
-				<text key="GLOBAL_NAME"></text>
+				<text value="${message:GLOBAL_NAME}"></text>
 			</column>
 			<column class="help">
-				<text key="GLOBAL_VALUE"></text>
+				<text value="${message:GLOBAL_VALUE}"></text>
 			</column>
 		</row>
-		<list list="config" extract="true">
+		<list list="${config}" extract="true">
 			<row class="data">
 				<column> 
-					<text var="key"></text>
+					<text value="${key}"></text>
 				</column>
 				<column class="${class}">
 					<text class="${class}" var="value"></text>

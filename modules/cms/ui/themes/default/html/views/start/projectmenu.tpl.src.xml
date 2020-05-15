@@ -8,16 +8,16 @@
 		</row>
 		<row class="headline">
 			<column>
-				<text key="project" />
+				<text value="${message:project}" />
 			</column>
 		</row>
-		<list list="projects" extract="true">
+		<list list="${projects}" extract="true">
 			<row class="data">
 				<column class="clickable">
-					<link type="post" id="${id}" title="#{TREE_CHOOSE_PROJECT}">
+					<link type="post" id="${id}" title="${message:TREE_CHOOSE_PROJECT}">
 						<set var="project" value="project"></set>
 						<image type="project"></image>
-						<text var="name" maxlength="30"></text>
+						<text value="${name}" maxlength="30"></text>
 					</link>
 					<part class="onrowvisible">
 						<part class="arrow-down" />
@@ -33,7 +33,7 @@
 												default="${defaultlanguageid}"></radiobox>
 										</column>
 										<column>
-											<button type="ok" text="#{start}"></button>
+											<button type="ok" text="${message:start}"></button>
 										</column>
 									</row>
 								</table>

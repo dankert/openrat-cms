@@ -5,7 +5,7 @@
 
 		<part class="line">
 			<part class="label">
-				<text text="GLOBAL_NAME"></text>
+				<text value="${message:GLOBAL_NAME}"></text>
 			</part>
 			<part class="input">
 				<input name="name" class="focus" maxlength="50"></input>
@@ -15,7 +15,7 @@
 
 		<part class="line">
 			<part class="label">
-				<text text="LANGUAGE_ISOCODE"></text>
+				<text value="${message:LANGUAGE_ISOCODE}"></text>
 			</part>
 			<part class="input">
 				<input name="isocode"></input>

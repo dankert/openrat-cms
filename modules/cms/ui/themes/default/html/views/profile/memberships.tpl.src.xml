@@ -1,6 +1,6 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<table><row class="headline"><column><text key="name"></text></column></row><if
-		empty="groups"><row class="data"><column><text key="NOT_FOUND"></text></column></row></if><list
-		list="groups" value="group"><row class="data"><column><text var="group"></text></column></row></list></table>
+	<table><row class="headline"><column><text value="${message:name}"></text></column></row><if
+		empty="groups"><row class="data"><column><text value="${message:NOT_FOUND}"></text></column></row></if><list
+		list="groups" value="group"><row class="data"><column><text value="${group}"></text></column></row></list></table>
 </output>

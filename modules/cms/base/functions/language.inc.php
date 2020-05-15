@@ -89,6 +89,10 @@ function encodeHtml($text)
 {
 	return translateutf8tohtml($text);
 }
+function escapeHtml($text)
+{
+	return translateutf8tohtml( htmlentities( $text ) );
+}
 
 
 

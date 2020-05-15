@@ -1,69 +1,69 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
-    <div class="or-table-wrapper">
-      <div class="or-table-area">
-        <table width="100%">
-          <?php foreach($projects as $list_key=>$list_value) { extract($list_value); ?>
-            <tr>
-              <td>
-                <fieldset class="or-group toggle-open-close open show">
-                  <legend class="on-click-open-close"><?php echo encodeHtml(htmlentities(@$projectname)) ?>
-                    <img />
-                    <div class="arrow arrow-right on-closed">
+    <div class="<?php echo escapeHtml('or-table-wrapper') ?>"><?php echo escapeHtml('') ?>
+      <div class="<?php echo escapeHtml('or-table-area') ?>"><?php echo escapeHtml('') ?>
+        <table width="<?php echo escapeHtml('100%') ?>"><?php echo escapeHtml('') ?>
+          <?php foreach((array)$projects as $list_key=>$list_value) { extract($list_value); ?>
+            <tr><?php echo escapeHtml('') ?>
+              <td><?php echo escapeHtml('') ?>
+                <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
+                  <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@$projectname.'') ?>
+                    <img /><?php echo escapeHtml('') ?>
+                    <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
                     </div>
-                    <div class="arrow arrow-down on-open">
+                    <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
                     </div>
                   </legend>
-                  <div class="closable">
+                  <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
                     <?php $if1=(($rights)==FALSE); if($if1) {  ?>
-                      <tr>
-                        <td>
-                          <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_NOT_FOUND'))) ?>
+                      <tr><?php echo escapeHtml('') ?>
+                        <td><?php echo escapeHtml('') ?>
+                          <span><?php echo escapeHtml(''.@lang('GLOBAL_NOT_FOUND').'') ?>
                           </span>
                         </td>
                       </tr>
                      <?php } ?>
                     <?php $if1=!(($rights)==FALSE); if($if1) {  ?>
-                      <div class="or-table-wrapper">
-                        <div class="or-table-filter">
-                          <input type="search" name="filter" placeholder="<?php echo encodeHtml(htmlentities(@lang('SEARCH_FILTER'))) ?>" />
+                      <div class="<?php echo escapeHtml('or-table-wrapper') ?>"><?php echo escapeHtml('') ?>
+                        <div class="<?php echo escapeHtml('or-table-filter') ?>"><?php echo escapeHtml('') ?>
+                          <input type="<?php echo escapeHtml('search') ?>" name="<?php echo escapeHtml('filter') ?>" placeholder="<?php echo escapeHtml(''.@lang('SEARCH_FILTER').'') ?>" /><?php echo escapeHtml('') ?>
                         </div>
-                        <div class="or-table-area">
-                          <table width="100%">
-                            <tr class="headline">
-                              <td class="help">
-                                <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_USER'))) ?>
+                        <div class="<?php echo escapeHtml('or-table-area') ?>"><?php echo escapeHtml('') ?>
+                          <table width="<?php echo escapeHtml('100%') ?>"><?php echo escapeHtml('') ?>
+                            <tr class="<?php echo escapeHtml('headline') ?>"><?php echo escapeHtml('') ?>
+                              <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
+                                <span><?php echo escapeHtml(''.@lang('GLOBAL_USER').'') ?>
                                 </span>
                               </td>
-                              <td class="help">
-                                <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_NAME'))) ?>
+                              <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
+                                <span><?php echo escapeHtml(''.@lang('GLOBAL_NAME').'') ?>
                                 </span>
                               </td>
-                              <td class="help">
-                                <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_LANGUAGE'))) ?>
+                              <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
+                                <span><?php echo escapeHtml(''.@lang('GLOBAL_LANGUAGE').'') ?>
                                 </span>
                               </td>
-                              <?php foreach($show as $list_key=>$t) {  ?>
-                                <td class="help">
-                                  <span title="message:acl<?php echo encodeHtml(htmlentities()) ?>"><?php echo encodeHtml(htmlentities(@lang(''.@$t.''))) ?>
+                              <?php foreach((array)$show as $list_key=>$t) {  ?>
+                                <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
+                                  <span title="<?php echo escapeHtml('message:acl_{t}') ?>"><?php echo escapeHtml(''.@lang(''.@$t.'').'') ?>
                                   </span>
                                 </td>
                                <?php } ?>
                             </tr>
-                            <?php foreach($rights as $aclid=>$acl) { extract($acl); ?>
-                              <tr class="data clickable">
-                                <td>
+                            <?php foreach((array)$rights as $aclid=>$acl) { extract($acl); ?>
+                              <tr class="<?php echo escapeHtml('data clickable') ?>"><?php echo escapeHtml('') ?>
+                                <td><?php echo escapeHtml('') ?>
                                   <?php $if1=(isset($groupname)); if($if1) {  ?>
-                                    <i class="image-icon image-icon--action-group">
+                                    <i class="<?php echo escapeHtml('image-icon image-icon--action-group') ?>"><?php echo escapeHtml('') ?>
                                     </i>
-                                    <span><?php echo encodeHtml(htmlentities(@$groupname)) ?>
+                                    <span><?php echo escapeHtml(''.@$groupname.'') ?>
                                     </span>
                                    <?php } ?>
                                   <?php $if1=!(isset($username)); if($if1) {  ?>
                                     <?php $if1=!(isset($groupname)); if($if1) {  ?>
-                                      <i class="image-icon image-icon--action-group">
+                                      <i class="<?php echo escapeHtml('image-icon image-icon--action-group') ?>"><?php echo escapeHtml('') ?>
                                       </i>
-                                      <span><?php echo encodeHtml(htmlentities(@lang('global_all'))) ?>
+                                      <span><?php echo escapeHtml(''.@lang('global_all').'') ?>
                                       </span>
                                      <?php } ?>
                                    <?php } ?>
@@ -72,23 +72,23 @@
                                   <?php  { unset($groupname) ?>
                                    <?php } ?>
                                 </td>
-                                <td title="<?php echo encodeHtml(htmlentities(@$objectname)) ?>">
-                                  <i class="image-icon image-icon--action-<?php echo encodeHtml(htmlentities(@$objecttype)) ?>">
+                                <td title="<?php echo escapeHtml(''.@$objectname.'') ?>"><?php echo escapeHtml('') ?>
+                                  <i class="<?php echo escapeHtml('image-icon image-icon--action-'.@$objecttype.'') ?>"><?php echo escapeHtml('') ?>
                                   </i>
-                                  <a target="_self" data-type="open" data-action="<?php echo encodeHtml(htmlentities(@$objecttype)) ?>" data-method="" data-id="<?php echo encodeHtml(htmlentities(@$objectid)) ?>" data-extra="[]" href="/#/<?php echo encodeHtml(htmlentities(@$objecttype)) ?>/<?php echo encodeHtml(htmlentities(@$objectid)) ?>">
-                                    <span><?php echo encodeHtml(htmlentities(@$objectname)) ?>
+                                  <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('open') ?>" data-action="<?php echo escapeHtml(''.@$objecttype.'') ?>" data-method="<?php echo escapeHtml('') ?>" data-id="<?php echo escapeHtml(''.@$objectid.'') ?>" data-extra="<?php echo escapeHtml('[]') ?>" href="<?php echo escapeHtml('/#/'.@$objecttype.'/'.@$objectid.'') ?>"><?php echo escapeHtml('') ?>
+                                    <span><?php echo escapeHtml(''.@$objectname.'') ?>
                                     </span>
                                   </a>
                                 </td>
-                                <td>
-                                  <span><?php echo encodeHtml(htmlentities(@$languagename)) ?>
+                                <td><?php echo escapeHtml('') ?>
+                                  <span><?php echo escapeHtml(''.@$languagename.'') ?>
                                   </span>
                                 </td>
-                                <?php foreach($show as $list_key=>$list_value) {  ?>
-                                  <td>
+                                <?php foreach((array)$show as $list_key=>$list_value) {  ?>
+                                  <td><?php echo escapeHtml('') ?>
                                     <?php  { $$list_value= $bits[$list_value]; ?>
                                      <?php } ?>
-                                    <input type="checkbox" name="<?php echo encodeHtml(htmlentities(@$list_value)) ?>" disabled="disabled" value="1" <?php if(@$${list_value}){ ?>checked="1"<?php } ?> />
+                                    <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml(''.@$list_value.'') ?>" disabled="<?php echo escapeHtml('disabled') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$$list_value){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                                   </td>
                                  <?php } ?>
                               </tr>

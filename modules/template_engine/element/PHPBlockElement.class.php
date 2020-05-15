@@ -4,7 +4,7 @@
 namespace template_engine\element;
 
 
-use template_engine\element\XMLFormatter;
+use util\text\variables\VariableResolver;
 
 class PHPBlockElement extends HtmlElement
 {
@@ -41,32 +41,33 @@ class PHPBlockElement extends HtmlElement
 
 	public function textasvarname($value)
 	{
-		$expr = new Expression($value);
-		return $expr->getTextAsVarName();
-
+		return $this->value($value);
 	}
 
 
 	public function varname($value)
 	{
-		$expr = new Expression($value);
-		return $expr->getVarName();
+		return $this->value($value);
 	}
 
 
 
-	public function htmlvalue($value)
+	public static function value( $value )
 	{
-		$expr = new Expression($value);
-		return $expr->getHTMLValue();
-	}
+		$res = new VariableResolver();
+		$res->namespaceSeparator = ':';
+		$res->renderOnlyVariables = true;
 
+		$res->addDefaultResolver( function($var) {
+			return '$'.$var;
+		} );
 
+		$res->addResolver('config', function($name) {
+			$config_parts = explode('/', $name);
+			return 'config(' . "'" . implode("'" . ',' . "'", $config_parts) . "'" . ')';
+		});
 
-	public function value( $value )
-	{
-		$expr = new Expression($value);
-		return $expr->getPHPValue();
+		return $res->resolveVariables( $value );
 	}
 
 
@@ -75,105 +76,4 @@ class PHPBlockElement extends HtmlElement
 		return "include_once( 'modules/template_engine/components/html/".$file."');";
 	}
 
-}
-
-
-
-class Expression
-{
-	public $type;
-	public $value;
-	public $invert = false;
-
-	public function getHTMLValue()
-	{
-		switch ($this->type) {
-			case 'text':
-				return $this->value;
-
-			default:
-				return '<' . '?php echo ' . $this->getPHPValue() . ' ?>';
-		}
-	}
-
-
-	public function __construct($value)
-	{
-		// Falls der Wert 'true' oder 'false' ist.
-		if (is_bool($value))
-			$value = $value ? 'true' : 'false';
-
-		// Negierung berücksichtigen.
-		if (substr($value, 0, 4) == 'not:') {
-			$value = substr($value, 4);
-			$this->invert = true;
-		}
-
-		if ($value && strlen($value) >= 3 && $value[1] == '{') {
-			$this->type = $value[0];
-			$this->value = substr($value, 2, -1);
-		} else {
-			$this->type = 'text';
-			$this->value = $value;
-		}
-	}
-
-
-	public function getVarName()
-	{
-		switch ($this->type) {
-			case '$':
-				return '$' . $this->value;
-			case 'text':
-				return $this->value;
-			default:
-				throw new \LogicException("Invalid expression type '$this->type' in attribute value. Allowed: text|var");
-		}
-	}
-
-
-	public function getTextAsVarName()
-	{
-		switch ($this->type) {
-			case '$':
-				return '$$' . $this->value;
-			case 'text':
-				return '$' . $this->value;
-			default:
-				return $this->getPHPValue();
-		}
-	}
-
-
-	public function getPHPValue()
-	{
-		$value = $this->value;
-
-		$invert = $this->invert ? '!' : '';
-
-		switch ($this->type) {
-			case 'text':
-				// Sonderf�lle f�r die Attributwerte "true" und "false".
-				// Hinweis: Die Zeichenkette "false" entspricht in PHP true.
-				// Siehe http://de.php.net/manual/de/language.types.boolean.php
-				if ($value == 'true' || $value == 'false')
-					return $value;
-				else
-					return "'" . $value . "'";
-			case '$':
-				return $invert . '$' . $value;
-			case 'size':
-				return '@count($' . $value . ')';
-			case '#':
-				// macht aus "text1{var}text2" => "text1".$var."text2"
-				$value = preg_replace('/{(\w+)\}/', '\'.$\\1.\'', $value);
-				return 'lang(' . "'" . $value . "'" . ')';
-			case '%':
-				$config_parts = explode('/', $value);
-				return $invert . 'config(' . "'" . implode("'" . ',' . "'", $config_parts) . "'" . ')';
-
-			default:
-				throw new \LogicException("Unknown expression type '{$this->type}' in attribute value. Allowed: var|function|method|text|size|property|message|messagevar|arrayvar|config or none");
-		}
-	}
 }

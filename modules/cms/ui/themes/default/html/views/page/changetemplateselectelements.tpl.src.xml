@@ -1,11 +1,11 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<form visible="true" cancel="true" label="#{MENU_CHANGETEMPLATE}">
+	<form visible="true" cancel="true" label="${message:MENU_CHANGETEMPLATE}">
 		<hidden name="newtemplateid" />
-		<list list="elements" extract="true">
+		<list list="${elements}" extract="true">
 			<part class="line">
 				<part class="label">
-					<text var="name"></text>
+					<text value="${name}"></text>
 				</part>
 				<part class="input">
 					<selectbox name="${newElementsName}" default="" list="newElementsList"></selectbox>

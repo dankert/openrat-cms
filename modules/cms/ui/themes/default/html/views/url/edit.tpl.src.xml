@@ -4,7 +4,7 @@
 		<group>
 			<part class="line">
 				<part class="label">
-					<text text="link_url"></text>
+					<text value="${message:link_url}"></text>
 				</part>
 				<part class="input">
 					<input name="url" maxlength="255"></input>

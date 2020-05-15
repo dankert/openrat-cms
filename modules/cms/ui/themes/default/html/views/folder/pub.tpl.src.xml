@@ -4,14 +4,14 @@
     <!--
         Falls das Veroeffentlichen deaktiviert ist, eine Warnmeldung anzeigen.
     -->
-    <if true="%{security/nopublish}">
+    <if true="${config:security/nopublish}">
         <part class="message warn">
-            <text key="GLOBAL_NOPUBLISH_DESC" class="help"></text>
+            <text value="${message:GLOBAL_NOPUBLISH_DESC}" class="help"></text>
         </part>
     </if>
 
 
-    <form cancel="false" visible="true" label="#{publish}" async="true">
+    <form cancel="false" visible="true" label="${message:publish}" async="true">
         <if true="${pages}">
 
             <part class="line">
@@ -20,8 +20,8 @@
                 <part class="input">
                     <checkbox name="pages"></checkbox>
                     <label for="pages">
-                        <text raw="_"></text>
-                        <text text="global_pages"></text>
+                        <text value=" "></text>
+                        <text value="${message:global_pages}"></text>
                     </label>
                 </part>
             </part>
@@ -33,14 +33,14 @@
                 <part class="input">
                     <checkbox name="files"></checkbox>
                     <label for="files">
-                        <text raw="_"></text>
-                        <text text="global_files"></text>
+                        <text value=" "></text>
+                        <text value="${message:global_files}"></text>
                     </label>
                 </part>
             </part>
 
         </if>
-        <group title="#{options}">
+        <group title="${message:options}">
             <if present="subdirs">
                 <part class="line">
                     <part class="label">
@@ -48,8 +48,8 @@
                     <part class="input">
                         <checkbox readonly="${subdirs}" name="subdirs"></checkbox>
                         <label for="subdirs">
-                            <text raw="_"></text>
-                            <text text="GLOBAL_PUBLISH_WITH_SUBDIRS"></text>
+                            <text value=" "></text>
+                            <text value="${message:GLOBAL_PUBLISH_WITH_SUBDIRS}"></text>
                         </label>
                     </part>
                 </part>
@@ -61,8 +61,8 @@
                     <part class="input">
                         <checkbox name="clean"></checkbox>
                         <label for="clean">
-                            <text raw="_"></text>
-                            <text text="global_CLEAN_AFTER_PUBLISH"></text>
+                            <text value=" "></text>
+                            <text value="${message:global_CLEAN_AFTER_PUBLISH}"></text>
                         </label>
                     </part>
                 </part>

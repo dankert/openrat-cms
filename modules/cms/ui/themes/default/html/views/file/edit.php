@@ -1,32 +1,32 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
-    <form name="" target="_self" data-target="view" action="./" data-method="edit" data-action="file" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" data-async="" data-autosave="" class="or-form file">
-      <input type="hidden" name="languageid" value="<?php echo encodeHtml(htmlentities(@$languageid)) ?>" />
-      <input type="hidden" name="token" value="<?php echo token();?>" />
-      <input type="hidden" name="action" value="file" />
-      <input type="hidden" name="subaction" value="edit" />
-      <input type="hidden" name="id" value="<?php echo OR_ID ?>" />
-      <div>
-        <div class="line">
-          <div class="label">
+    <form name="<?php echo escapeHtml('') ?>" target="<?php echo escapeHtml('_self') ?>" data-target="<?php echo escapeHtml('view') ?>" action="<?php echo escapeHtml('./') ?>" data-method="<?php echo escapeHtml('edit') ?>" data-action="<?php echo escapeHtml('file') ?>" data-id="<?php echo escapeHtml(''.@$_id.'') ?>" method="<?php echo escapeHtml('POST') ?>" enctype="<?php echo escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo escapeHtml('') ?>" data-autosave="<?php echo escapeHtml('') ?>" class="<?php echo escapeHtml('or-form file') ?>"><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('languageid') ?>" value="<?php echo escapeHtml(''.@$languageid.'') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('token') ?>" value="<?php echo escapeHtml(''.@$_token.'') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('action') ?>" value="<?php echo escapeHtml('file') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('subaction') ?>" value="<?php echo escapeHtml('edit') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('id') ?>" value="<?php echo escapeHtml(''.@$_id.'') ?>" /><?php echo escapeHtml('') ?>
+      <div><?php echo escapeHtml('') ?>
+        <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
           </div>
-          <div class="input">
-            <br />
-            <input id="req0_file" name="file" size="40" class="upload" />
-            <br />
-            <br />
+          <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+            <br /><?php echo escapeHtml('') ?>
+            <input id="<?php echo escapeHtml('req0_file') ?>" name="<?php echo escapeHtml('file') ?>" size="<?php echo escapeHtml('40') ?>" class="<?php echo escapeHtml('upload') ?>" /><?php echo escapeHtml('') ?>
+            <br /><?php echo escapeHtml('') ?>
+            <br /><?php echo escapeHtml('') ?>
           </div>
         </div>
-        <div class="line or-dropzone-upload">
-          <div class="label">
+        <div class="<?php echo escapeHtml('line or-dropzone-upload') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
           </div>
-          <div class="input">
+          <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
           </div>
         </div>
       </div>
-      <div class="or-form-actionbar">
-        <input type="button" value="<?php echo encodeHtml(htmlentities(@lang('CANCEL'))) ?>" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" />
-        <input type="submit" value="<?php echo encodeHtml(htmlentities(@lang('button_ok'))) ?>" class="or-form-btn or-form-btn--primary or-form-btn--save" />
+      <div class="<?php echo escapeHtml('or-form-actionbar') ?>"><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('button') ?>" value="<?php echo escapeHtml(''.@lang('CANCEL').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('submit') ?>" value="<?php echo escapeHtml(''.@lang('button_ok').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo escapeHtml('') ?>
       </div>
     </form>
  <?php } ?>

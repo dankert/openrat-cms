@@ -39,7 +39,7 @@ class IfComponent extends Component
 		elseif (! empty($this->present))
 			$expr .= 'isset(' . '$'.$this->present.')'; // 'isset' verwenden! Nicht empty(), da false empty ist.
 		elseif (! empty($this->empty))
-			$expr .= '(' . $if->textasvarname($this->empty).')==FALSE';
+			$expr .= '(' . $if->value($this->empty).')==FALSE';
 		elseif ($this->value)
 			$expr .= $if->value($this->value);
 		else

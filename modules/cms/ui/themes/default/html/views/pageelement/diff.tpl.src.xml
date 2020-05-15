@@ -5,20 +5,20 @@
 			<column></column>
 			<column>
 				<text type="emphatic" text="GLOBAL_COMPARE"></text>
-				<text raw="_"></text>
+				<text value=" "></text>
 				<date date="${date_left}"></date>
 			</column>
 			<column></column>
 			<column>
 				<text type="emphatic" text="GLOBAL_WITH"></text>
-				<text raw="_"></text>
+				<text value=" "></text>
 				<date date="${date_right}"></date>
 			</column>
 		</row>
 		<row>
 			<column colspan="4"></column>
 		</row>
-		<list list="diff" extract="true">
+		<list list="${diff}" extract="true">
 			<row class="diff">
 				<if present="left">
 					<column width="5%" class="line">
@@ -28,7 +28,7 @@
 						<text value="${left.text}"></text>
 					</column>
 				</if>
-				<else><column colspan="2" class="help" width="50%"><text raw="_"></text></column></else>
+				<else><column colspan="2" class="help" width="50%"><text value=" "></text></column></else>
 				<if present="right">
 					<column width="5%" class="line">
 						<text value="${right.line}" type="tt"></text>
@@ -37,7 +37,7 @@
 						<text value="${right.text}"></text>
 					</column>
 				</if>
-				<else><column colspan="2" class="help" width="50%"><text raw="_"></text></column></else>
+				<else><column colspan="2" class="help" width="50%"><text value=" "></text></column></else>
 			</row>
 			<set var="left"></set>
 			<set var="right"></set>

@@ -1,12 +1,12 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<form method="post" label="#{save}" apply="true">
+	<form method="post" label="${message:save}" apply="true">
 		<hidden name="languageid" />
 		<hidden name="elementid" />
 		<hidden name="value_time" />
-			<text var="desc" class="help"></text>
+			<text value="${desc}" class="help"></text>
 			<if value="${type}" equals="date">
-				<group title="#{date}">
+				<group title="${message:date}">
 					<part class="line">
 							<input type="date" name="date" label="date" />
 							<input type="time" name="time" label="time" />
@@ -26,8 +26,8 @@
 				<hidden name="format" />
 				<if present="preview">
 					<part class="preview">
-						<group title="#{page_preview}">
-							<text var="preview" escape="false"></text>
+						<group title="${message:page_preview}">
+							<text value="${preview}" escape="false"></text>
 						</group>
 					</part>
 				</if>
@@ -41,55 +41,55 @@
 				<if value="${editor}" equals="wiki">
 					<if present="languagetext">
 						<group title="${languagename}">
-							<text var="languagetext"></text>
+							<text value="${languagetext}"></text>
 						</group>
 						<newline></newline>
 						<newline></newline>
 					</if>
 					<editor type="wiki" name="text"></editor>
-					<group title="#{help}" open="false">
+					<group title="${message:help}" open="false">
 						<table>
 							<column>
-								<text value="%{editor/text-markup/strong-begin}"></text>
-								<text key="text_markup_strong"></text>
-								<text value="%{editor/text-markup/strong-end}"></text>
+								<text value="${config:editor/text-markup/strong-begin}"></text>
+								<text value="${message:text_markup_strong}"></text>
+								<text value="${config:editor/text-markup/strong-end}"></text>
 								<newline></newline>
-								<text value="%{editor/text-markup/emphatic-begin}"></text>
-								<text key="text_markup_emphatic"></text>
-								<text value="%{editor/text-markup/emphatic-end}"></text>
+								<text value="${config:editor/text-markup/emphatic-begin}"></text>
+								<text value="${message:text_markup_emphatic}"></text>
+								<text value="${config:editor/text-markup/emphatic-end}"></text>
 							</column>
 							<column>
-								<text value="%{editor/text-markup/list-numbered}"></text>
-								<text key="text_markup_numbered_list"></text>
+								<text value="${config:editor/text-markup/list-numbered}"></text>
+								<text value="${message:text_markup_numbered_list}"></text>
 								<newline></newline>
-								<text value="%{editor/text-markup/list-numbered}"></text>
-								<text raw="..."></text>
-								<newline></newline>
-							</column>
-							<column>
-								<text value="%{editor/text-markup/list-unnumbered}"></text>
-								<text key="text_markup_unnumbered_list"></text>
-								<newline></newline>
-								<text value="%{editor/text-markup/list-unnumbered}"></text>
-								<text raw="..."></text>
+								<text value="${config:editor/text-markup/list-numbered}"></text>
+								<text value="..."></text>
 								<newline></newline>
 							</column>
 							<column>
-								<text value="%{editor/text-markup/table-cell-sep}"></text>
-								<text key="text_markup_table"></text>
-								<text value="%{editor/text-markup/table-cell-sep}"></text>
-								<text raw="..."></text>
-								<text value="%{editor/text-markup/table-cell-sep}"></text>
-								<text raw="..."></text>
-								<text value="%{editor/text-markup/table-cell-sep}"></text>
+								<text value="${config:editor/text-markup/list-unnumbered}"></text>
+								<text value="${message:text_markup_unnumbered_list}"></text>
 								<newline></newline>
-								<text value="%{editor/text-markup/table-cell-sep}"></text>
-								<text raw="..."></text>
-								<text value="%{editor/text-markup/table-cell-sep}"></text>
-								<text raw="..."></text>
-								<text value="%{editor/text-markup/table-cell-sep}"></text>
-								<text raw="..."></text>
-								<text value="%{editor/text-markup/table-cell-sep}"></text>
+								<text value="${config:editor/text-markup/list-unnumbered}"></text>
+								<text value="..."></text>
+								<newline></newline>
+							</column>
+							<column>
+								<text value="${config:editor/text-markup/table-cell-sep}"></text>
+								<text value="${message:text_markup_table}"></text>
+								<text value="${config:editor/text-markup/table-cell-sep}"></text>
+								<text value="..."></text>
+								<text value="${config:editor/text-markup/table-cell-sep}"></text>
+								<text value="..."></text>
+								<text value="${config:editor/text-markup/table-cell-sep}"></text>
+								<newline></newline>
+								<text value="${config:editor/text-markup/table-cell-sep}"></text>
+								<text value="..."></text>
+								<text value="${config:editor/text-markup/table-cell-sep}"></text>
+								<text value="..."></text>
+								<text value="${config:editor/text-markup/table-cell-sep}"></text>
+								<text value="..."></text>
+								<text value="${config:editor/text-markup/table-cell-sep}"></text>
 								<newline></newline>
 							</column>
 						</table>
@@ -105,7 +105,7 @@
 					<part class="line">
 						<part class="label">
 							<label for="linkobjectid">
-								<text key="link_target"></text>
+								<text value="${message:link_target}"></text>
 							</label>
 						</part>
 						<part class="input">
@@ -121,7 +121,7 @@
 
 						<part class="label">
 							<label for="link_url">
-								<text key="link_url"></text>
+								<text value="${message:link_url}"></text>
 							</label>
 						</part>
 						<part class="input">
@@ -164,34 +164,34 @@
 			<if value="${type}" equals="longtext">
 				<if value="${editor}" equals="wiki">
 					<if present="languages">
-						<group title="#{editor_show_language}">
+						<group title="${message:editor_show_language}">
 							<part>
-								<list list="languages" key="languageid" value="languagename">
+								<list list="${languages}" key="languageid" value="languagename">
 									<radio name="otherlanguageid" value="${languageid}"></radio>
 									<label for="otherlanguageid_${languageid}">
-										<text var="languagename"></text>
+										<text value="${languagename}"></text>
 									</label>
 									<newline></newline>
 								</list>
 							</part>
 						</group>
 					</if>
-					<group title="#{PAGE_PREVIEW}">
+					<group title="${message:PAGE_PREVIEW}">
 						<part>
 							<checkbox name="preview"></checkbox>
 							<label for="preview">
-								<text key="PAGE_PREVIEW"></text>
+								<text value="${message:PAGE_PREVIEW}"></text>
 							</label>
 						</part>
 					</group>
 				</if>
 			</if>
-			<group title="#{options}">
+			<group title="${message:options}">
 				<if present="release">
 					<part>
 						<checkbox name="release"></checkbox>
 						<label for="release">
-							<text text="GLOBAL_RELEASE"></text>
+							<text value="${message:GLOBAL_RELEASE}"></text>
 						</label>
 					</part>
 				</if>
@@ -199,7 +199,7 @@
 					<part>
 						<checkbox name="publish"></checkbox>
 						<label for="publish">
-							<text text="PAGE_PUBLISH_AFTER_SAVE"></text>
+							<text value="${message:PAGE_PUBLISH_AFTER_SAVE}"></text>
 						</label>
 					</part>
 				</if>

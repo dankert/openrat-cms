@@ -4,8 +4,8 @@
     <form>
         <text label="GLOBAL_NAME" var="name"></text>
 
-        <checkbox label="GLOBAL_DELETE" name="delete"></checkbox>
+        <checkbox label="${message:GLOBAL_DELETE}" name="delete"></checkbox>
 
-        <checkbox label="GLOBAL_DELETE_WITH_CHILDREN" name="withChildren" readonly="not:var:hasChildren"></checkbox>
+        <checkbox label="${message:GLOBAL_DELETE_WITH_CHILDREN}" name="withChildren" readonly="not:var:hasChildren"></checkbox>
     </form>
 </output>

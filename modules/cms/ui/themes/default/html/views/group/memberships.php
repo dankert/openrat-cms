@@ -1,35 +1,35 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
-    <form name="" target="_self" data-target="view" action="./" data-method="memberships" data-action="group" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" data-async="" data-autosave="1" class="or-form group">
-      <input type="hidden" name="token" value="<?php echo token();?>" />
-      <input type="hidden" name="action" value="group" />
-      <input type="hidden" name="subaction" value="memberships" />
-      <input type="hidden" name="id" value="<?php echo OR_ID ?>" />
-      <div>
-        <div class="or-table-wrapper">
-          <div class="or-table-filter">
-            <input type="search" name="filter" placeholder="<?php echo encodeHtml(htmlentities(@lang('SEARCH_FILTER'))) ?>" />
+    <form name="<?php echo escapeHtml('') ?>" target="<?php echo escapeHtml('_self') ?>" data-target="<?php echo escapeHtml('view') ?>" action="<?php echo escapeHtml('./') ?>" data-method="<?php echo escapeHtml('memberships') ?>" data-action="<?php echo escapeHtml('group') ?>" data-id="<?php echo escapeHtml(''.@$_id.'') ?>" method="<?php echo escapeHtml('POST') ?>" enctype="<?php echo escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo escapeHtml('') ?>" data-autosave="<?php echo escapeHtml('1') ?>" class="<?php echo escapeHtml('or-form group') ?>"><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('token') ?>" value="<?php echo escapeHtml(''.@$_token.'') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('action') ?>" value="<?php echo escapeHtml('group') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('subaction') ?>" value="<?php echo escapeHtml('memberships') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('id') ?>" value="<?php echo escapeHtml(''.@$_id.'') ?>" /><?php echo escapeHtml('') ?>
+      <div><?php echo escapeHtml('') ?>
+        <div class="<?php echo escapeHtml('or-table-wrapper') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo escapeHtml('or-table-filter') ?>"><?php echo escapeHtml('') ?>
+            <input type="<?php echo escapeHtml('search') ?>" name="<?php echo escapeHtml('filter') ?>" placeholder="<?php echo escapeHtml(''.@lang('SEARCH_FILTER').'') ?>" /><?php echo escapeHtml('') ?>
           </div>
-          <div class="or-table-area">
-            <table width="100%">
-              <tr class="headline">
-                <td width="10%">
+          <div class="<?php echo escapeHtml('or-table-area') ?>"><?php echo escapeHtml('') ?>
+            <table width="<?php echo escapeHtml('100%') ?>"><?php echo escapeHtml('') ?>
+              <tr class="<?php echo escapeHtml('headline') ?>"><?php echo escapeHtml('') ?>
+                <td width="<?php echo escapeHtml('10%') ?>"><?php echo escapeHtml('') ?>
                 </td>
-                <td>
-                  <span><?php echo encodeHtml(htmlentities(@lang('name'))) ?>
+                <td><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@lang('name').'') ?>
                   </span>
                 </td>
               </tr>
-              <?php foreach($memberships as $list_key=>$list_value) { extract($list_value); ?>
-                <tr class="data">
-                  <td>
-                    <input type="checkbox" name="<?php echo encodeHtml(htmlentities(@$var)) ?>" value="1" <?php if(@$${var}){ ?>checked="1"<?php } ?> />
+              <?php foreach((array)$memberships as $list_key=>$list_value) { extract($list_value); ?>
+                <tr class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
+                  <td><?php echo escapeHtml('') ?>
+                    <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml(''.@$var.'') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$$var){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                   </td>
-                  <td>
-                    <label class="label">
-                      <i class="image-icon image-icon--action-user">
+                  <td><?php echo escapeHtml('') ?>
+                    <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                      <i class="<?php echo escapeHtml('image-icon image-icon--action-user') ?>"><?php echo escapeHtml('') ?>
                       </i>
-                      <span><?php echo encodeHtml(htmlentities(@$name)) ?>
+                      <span><?php echo escapeHtml(''.@$name.'') ?>
                       </span>
                     </label>
                   </td>
@@ -38,15 +38,15 @@
             </table>
           </div>
         </div>
-        <tr>
-          <td colspan="2" class="act">
+        <tr><?php echo escapeHtml('') ?>
+          <td colspan="<?php echo escapeHtml('2') ?>" class="<?php echo escapeHtml('act') ?>"><?php echo escapeHtml('') ?>
             
           </td>
         </tr>
       </div>
-      <div class="or-form-actionbar">
-        <input type="button" value="<?php echo encodeHtml(htmlentities(@lang('CANCEL'))) ?>" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" />
-        <input type="submit" value="<?php echo encodeHtml(htmlentities(@lang('button_ok'))) ?>" class="or-form-btn or-form-btn--primary or-form-btn--save" />
+      <div class="<?php echo escapeHtml('or-form-actionbar') ?>"><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('button') ?>" value="<?php echo escapeHtml(''.@lang('CANCEL').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('submit') ?>" value="<?php echo escapeHtml(''.@lang('button_ok').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo escapeHtml('') ?>
       </div>
     </form>
  <?php } ?>

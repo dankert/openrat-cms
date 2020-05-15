@@ -3,22 +3,22 @@
 	<table>
 		<row class="headline">
 			<column>
-				<text key="name"></text>
+				<text value="${message:name}"></text>
 			</column>
 		</row>
-		<list list="templates" extract="true">
+		<list list="${templates}" extract="true">
 			<row class="data">
 				<column class="clickable">
 					<image action="template" />
 					<link type="open" id="${id}" name="${name}" action="template">
-					<text var="name"></text>
+					<text value="${name}"></text>
 					</link>
 				</column>
 			</row>
 		</list>
-		<if empty="templates">
+		<if empty="${templates}">
 			<row>
-				<text text="GLOBAL_NO_TEMPLATES_AVAILABLE_DESC"></text>
+				<text value="${message:GLOBAL_NO_TEMPLATES_AVAILABLE_DESC}"></text>
 			</row>
 		</if>
 
@@ -26,7 +26,7 @@
 			<column colspan="1" class="clickable">
 				<link type="dialog" subaction="add">
 					<image method="add" />
-					<text text="new" />
+					<text value="${message:new}" />
 				</link>
 			</column>
 		</row>

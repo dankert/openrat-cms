@@ -4,6 +4,7 @@ namespace template_engine\components;
 
 use template_engine\components\html\Component;
 use template_engine\element\CMSElement;
+use template_engine\element\PHPBlockElement;
 use template_engine\element\Value;
 use template_engine\element\ValueExpression;
 
@@ -26,11 +27,11 @@ class CheckboxComponent extends Component
 		$checkbox->addAttribute('value','1');
 
 		if   ( $this->default )
-			$checkbox->addAttribute('checked',$this->default);
-		else {
-			$condition = '@$'.$this->name;
-			$checkbox->addConditionalAttribute('checked', $condition, '1');
-		}
+			$condition = ''.PHPBlockElement::value($this->default);
+		else
+			$condition = '@$'.PHPBlockElement::value($this->name);
+
+		$checkbox->addConditionalAttribute('checked', $condition, '1');
 
 		if   ( $this->required )
 			$checkbox->addAttribute( 'required','required');

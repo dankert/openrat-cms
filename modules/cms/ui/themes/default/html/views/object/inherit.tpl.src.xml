@@ -4,7 +4,7 @@
 	<form>
 
 		<if value="${type}" equals="folder">
-			<group title="#{options}">
+			<group title="${message:options}">
 				<part class="line">
 					<part class="label">
 					</part>
@@ -12,7 +12,7 @@
 						<set var="inherit" value="1"></set>
 						<checkbox name="inherit" />
 						<label for="inherit">
-							<text key="inherit_rights"></text>
+							<text value="${message:inherit_rights}"></text>
 						</label>
 					</part>
 				</part>

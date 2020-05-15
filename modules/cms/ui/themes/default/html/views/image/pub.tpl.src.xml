@@ -4,13 +4,13 @@
 	<!--
 		Falls das Veroeffentlichen deaktiviert ist, eine Warnmeldung anzeigen.
 	-->
-	<if true="%{security/nopublish}">
+	<if true="${config:security/nopublish}">
 		<part class="message warn">
-			<text key="GLOBAL_NOPUBLISH_DESC" class="help"></text>
+			<text value="${message:GLOBAL_NOPUBLISH_DESC}" class="help"></text>
 		</part>
 	</if>
 
-	<form cancel="false" visible="true" label="#{publish}" async="true">
+	<form cancel="false" visible="true" label="${message:publish}" async="true">
 		<row>
 			<column>
 				<newline></newline>

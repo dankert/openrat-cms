@@ -1,129 +1,129 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
-    <form name="" target="_self" data-target="view" action="./" data-method="size" data-action="image" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" data-async="" data-autosave="" class="or-form image">
-      <input type="hidden" name="token" value="<?php echo token();?>" />
-      <input type="hidden" name="action" value="image" />
-      <input type="hidden" name="subaction" value="size" />
-      <input type="hidden" name="id" value="<?php echo OR_ID ?>" />
-      <div>
-        <div class="line">
-          <div class="label">
-            <span><?php echo encodeHtml(htmlentities(@lang('IMAGE_OLD_SIZE'))) ?>
+    <form name="<?php echo escapeHtml('') ?>" target="<?php echo escapeHtml('_self') ?>" data-target="<?php echo escapeHtml('view') ?>" action="<?php echo escapeHtml('./') ?>" data-method="<?php echo escapeHtml('size') ?>" data-action="<?php echo escapeHtml('image') ?>" data-id="<?php echo escapeHtml(''.@$_id.'') ?>" method="<?php echo escapeHtml('POST') ?>" enctype="<?php echo escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo escapeHtml('') ?>" data-autosave="<?php echo escapeHtml('') ?>" class="<?php echo escapeHtml('or-form image') ?>"><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('token') ?>" value="<?php echo escapeHtml(''.@$_token.'') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('action') ?>" value="<?php echo escapeHtml('image') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('subaction') ?>" value="<?php echo escapeHtml('size') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('id') ?>" value="<?php echo escapeHtml(''.@$_id.'') ?>" /><?php echo escapeHtml('') ?>
+      <div><?php echo escapeHtml('') ?>
+        <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+            <span><?php echo escapeHtml(''.@lang('IMAGE_OLD_SIZE').'') ?>
             </span>
           </div>
-          <div class="input">
-            <span><?php echo encodeHtml(htmlentities(@$width)) ?>
+          <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+            <span><?php echo escapeHtml(''.@$width.'') ?>
             </span>
-            <span> * 
+            <span><?php echo escapeHtml(' * ') ?>
             </span>
-            <span><?php echo encodeHtml(htmlentities(@$height)) ?>
+            <span><?php echo escapeHtml(''.@$height.'') ?>
             </span>
           </div>
         </div>
         <?php $if1=!(($formats)==FALSE); if($if1) {  ?>
-          <fieldset class="or-group toggle-open-close open show">
-            <legend class="on-click-open-close"><?php echo encodeHtml(htmlentities(@lang('IMAGE_NEW_SIZE'))) ?>
-              <img />
-              <div class="arrow arrow-right on-closed">
+          <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
+            <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('IMAGE_NEW_SIZE').'') ?>
+              <img /><?php echo escapeHtml('') ?>
+              <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
               </div>
-              <div class="arrow arrow-down on-open">
+              <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
               </div>
             </legend>
-            <div class="closable">
-              <div class="line">
-                <div class="label">
+            <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
+              <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+                <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 </div>
-                <div class="input">
-                  <input type="radio" name="type" disabled="" value="factor" checked="<?php echo encodeHtml(htmlentities(@$type)) ?>" />
-                  <label class="label">
-                    <span><?php echo encodeHtml(htmlentities(@lang('FILE_IMAGE_SIZE_FACTOR'))) ?>
+                <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+                  <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('factor') ?>" checked="<?php echo escapeHtml(''.@$type.'') ?>" /><?php echo escapeHtml('') ?>
+                  <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                    <span><?php echo escapeHtml(''.@lang('FILE_IMAGE_SIZE_FACTOR').'') ?>
                     </span>
                   </label>
-                  <select name="factor" size="1">
+                  <select name="<?php echo escapeHtml('factor') ?>" size="<?php echo escapeHtml('1') ?>"><?php echo escapeHtml('') ?>
                     <?php foreach($factors as $_key=>$_value) {  ?>
-                      <option value="<?php echo encodeHtml(htmlentities(@$_key)) ?>" <?php if($_key==$factor){ ?>selected="selected"<?php } ?>><?php echo encodeHtml(htmlentities(@$_value)) ?>
+                      <option value="<?php echo escapeHtml(''.@$_key.'') ?>" <?php if($_key==$factor){ ?>selected="<?php echo escapeHtml('selected') ?>"<?php } ?>><?php echo escapeHtml(''.@$_value.'') ?>
                       </option>
                      <?php } ?>
                   </select>
-                  <?php  { $factor= '1'; ?>
+                  <?php  { $factor= 1; ?>
                    <?php } ?>
                 </div>
               </div>
-              <div class="line">
-                <div class="label">
+              <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+                <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 </div>
-                <div class="input">
-                  <input type="radio" name="type" disabled="" value="input" checked="<?php echo encodeHtml(htmlentities(@$type)) ?>" />
-                  <label class="label">
-                    <span><?php echo encodeHtml(htmlentities(@lang('FILE_IMAGE_NEW_WIDTH_HEIGHT'))) ?>
+                <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+                  <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('input') ?>" checked="<?php echo escapeHtml(''.@$type.'') ?>" /><?php echo escapeHtml('') ?>
+                  <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                    <span><?php echo escapeHtml(''.@lang('FILE_IMAGE_NEW_WIDTH_HEIGHT').'') ?>
                     </span>
                   </label>
                 </div>
-                <div class="label">
+                <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 </div>
-                <div class="input">
-                  <div class="inputholder">
-                    <input name="width" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$width)) ?>" />
+                <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+                  <div class="<?php echo escapeHtml('inputholder') ?>"><?php echo escapeHtml('') ?>
+                    <input name="<?php echo escapeHtml('width') ?>" type="<?php echo escapeHtml('text') ?>" maxlength="<?php echo escapeHtml('256') ?>" value="<?php echo escapeHtml(''.@$width.'') ?>" /><?php echo escapeHtml('') ?>
                   </div>
-                  <span> * 
+                  <span><?php echo escapeHtml(' * ') ?>
                   </span>
-                  <div class="inputholder">
-                    <input name="height" type="text" maxlength="256" value="<?php echo encodeHtml(htmlentities(@$height)) ?>" />
+                  <div class="<?php echo escapeHtml('inputholder') ?>"><?php echo escapeHtml('') ?>
+                    <input name="<?php echo escapeHtml('height') ?>" type="<?php echo escapeHtml('text') ?>" maxlength="<?php echo escapeHtml('256') ?>" value="<?php echo escapeHtml(''.@$height.'') ?>" /><?php echo escapeHtml('') ?>
                   </div>
                 </div>
               </div>
             </div>
           </fieldset>
-          <fieldset class="or-group toggle-open-close open show">
-            <legend class="on-click-open-close"><?php echo encodeHtml(htmlentities(@lang('options'))) ?>
-              <img />
-              <div class="arrow arrow-right on-closed">
+          <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
+            <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('options').'') ?>
+              <img /><?php echo escapeHtml('') ?>
+              <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
               </div>
-              <div class="arrow arrow-down on-open">
+              <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
               </div>
             </legend>
-            <div class="closable">
-              <div class="line">
-                <div class="label">
-                  <label class="label">
-                    <span><?php echo encodeHtml(htmlentities(@lang('FILE_IMAGE_FORMAT'))) ?>
+            <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
+              <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+                <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                  <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                    <span><?php echo escapeHtml(''.@lang('FILE_IMAGE_FORMAT').'') ?>
                     </span>
                   </label>
                 </div>
-                <div class="input">
-                  <select name="format" size="1">
+                <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+                  <select name="<?php echo escapeHtml('format') ?>" size="<?php echo escapeHtml('1') ?>"><?php echo escapeHtml('') ?>
                     <?php foreach($formats as $_key=>$_value) {  ?>
-                      <option value="<?php echo encodeHtml(htmlentities(@$_key)) ?>" <?php if($_key==$format){ ?>selected="selected"<?php } ?>><?php echo encodeHtml(htmlentities(@$_value)) ?>
+                      <option value="<?php echo escapeHtml(''.@$_key.'') ?>" <?php if($_key==$format){ ?>selected="<?php echo escapeHtml('selected') ?>"<?php } ?>><?php echo escapeHtml(''.@$_value.'') ?>
                       </option>
                      <?php } ?>
                   </select>
                 </div>
               </div>
-              <div class="line">
-                <div class="label">
-                  <label class="label">
-                    <span><?php echo encodeHtml(htmlentities(@lang('FILE_IMAGE_JPEG_COMPRESSION'))) ?>
+              <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+                <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                  <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                    <span><?php echo escapeHtml(''.@lang('FILE_IMAGE_JPEG_COMPRESSION').'') ?>
                     </span>
                   </label>
                 </div>
-                <div class="input">
-                  <?php  { $jpeg_compression= '70'; ?>
+                <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+                  <?php  { $jpeg_compression= 70; ?>
                    <?php } ?>
-                  <select name="jpeg_compression" size="1">
+                  <select name="<?php echo escapeHtml('jpeg_compression') ?>" size="<?php echo escapeHtml('1') ?>"><?php echo escapeHtml('') ?>
                     <?php foreach($jpeglist as $_key=>$_value) {  ?>
-                      <option value="<?php echo encodeHtml(htmlentities(@$_key)) ?>" <?php if($_key==$jpeg_compression){ ?>selected="selected"<?php } ?>><?php echo encodeHtml(htmlentities(@$_value)) ?>
+                      <option value="<?php echo escapeHtml(''.@$_key.'') ?>" <?php if($_key==$jpeg_compression){ ?>selected="<?php echo escapeHtml('selected') ?>"<?php } ?>><?php echo escapeHtml(''.@$_value.'') ?>
                       </option>
                      <?php } ?>
                   </select>
                 </div>
               </div>
-              <div class="line">
-                <div class="label">
+              <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+                <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 </div>
-                <div class="input">
-                  <input type="checkbox" name="copy" value="1" <?php if(@$copy){ ?>checked="1"<?php } ?> />
-                  <label class="label">
-                    <span><?php echo encodeHtml(htmlentities(@lang('copy'))) ?>
+                <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+                  <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('copy') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$copy){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+                  <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                    <span><?php echo escapeHtml(''.@lang('copy').'') ?>
                     </span>
                   </label>
                 </div>
@@ -132,9 +132,9 @@
           </fieldset>
          <?php } ?>
       </div>
-      <div class="or-form-actionbar">
-        <input type="button" value="<?php echo encodeHtml(htmlentities(@lang('CANCEL'))) ?>" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" />
-        <input type="submit" value="<?php echo encodeHtml(htmlentities(@lang('button_ok'))) ?>" class="or-form-btn or-form-btn--primary or-form-btn--save" />
+      <div class="<?php echo escapeHtml('or-form-actionbar') ?>"><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('button') ?>" value="<?php echo escapeHtml(''.@lang('CANCEL').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('submit') ?>" value="<?php echo escapeHtml(''.@lang('button_ok').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo escapeHtml('') ?>
       </div>
     </form>
  <?php } ?>

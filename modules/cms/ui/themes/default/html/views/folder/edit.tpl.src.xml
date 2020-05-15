@@ -3,13 +3,13 @@
 	<table>
 		<row class="headline">
 			<column header="true">
-				<text key="TYPE"></text>
+				<text value="${message:TYPE}"></text>
 			</column>
 			<column header="true">
-				<text key="NAME"></text>
+				<text value="${message:NAME}"></text>
 			</column>
 			<column header="true">
-				<text key="LASTCHANGE"></text>
+				<text value="${message:LASTCHANGE}"></text>
 			</column>
 		</row>
 		<if present="up_url">
@@ -25,15 +25,15 @@
 				</column>
 			</row>
 		</if>
-		<list list="object" extract="true">
+		<list list="${object}" extract="true">
 			<row class="data clickable">
 				<column class="">
 					<image action="${icon}"></image>
 				</column>
 				<column class="">
 					<link type="open" id="${id}" name="${name}" action="${type}" title="${desc}">
-						<text var="name"></text>
-						<text raw="_"></text>
+						<text value="${name}"></text>
+						<text value=" "></text>
 					</link>
 				</column>
 				<column>
@@ -41,10 +41,10 @@
 				</column>
 			</row>
 		</list>
-		<if empty="object">
+		<if empty="${object}">
 			<row>
 				<column colspan="2">
-					<text text="GLOBAL_NOT_FOUND"></text>
+					<text value="${message:GLOBAL_NOT_FOUND}"></text>
 				</column>
 			</row>
 		</if>
@@ -54,7 +54,7 @@
 
 		<link type="dialog" action="folder" subaction="create" class="or-link-btn">
 			<image action="new" />
-			<text key="new"></text>
+			<text value="${message:new}"></text>
 		</link>
 	</part>
 </output>

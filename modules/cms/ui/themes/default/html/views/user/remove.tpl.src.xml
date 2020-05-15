@@ -2,16 +2,16 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
     <form>
-        <group title="#{NAME}">
+        <group title="${message:NAME}">
             <part class="line">
                 <part class="label">
                     <label key="user_username"></label>
                 </part>
                 <part class="input">
-                    <text var="name" class="name"></text>
+                    <text value="${name}" class="name"></text>
                 </part>
             </part>
-            <group title="#{options}"></group>
+            <group title="${message:options}"></group>
             <part class="line">
                 <part class="label"></part>
                 <part class="input">

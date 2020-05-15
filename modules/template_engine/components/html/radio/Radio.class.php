@@ -38,7 +38,8 @@ class RadioComponent extends FieldComponent
 
 
 		$radio->addAttribute('name',$this->name);
-		$radio->addAttribute('disabled',$this->readonly);
+		if   ($this->readonly)
+			$radio->addAttribute('disabled','disabled');
 		$radio->addAttribute('value',$this->value);
 		$radio->addAttribute('checked',Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->name));
 

@@ -6,11 +6,11 @@
 		<if true="${pwchange_enabled}">
 			<logo name="changepassword"></logo>
 
-			<group title="#{user_act_password}">
+			<group title="${message:user_act_password}">
 				<part class="line">
 					<part class="label">
 						<label for="act_password">
-							<text text="user_password"></text>
+							<text value="${message:user_password}"></text>
 						</label>
 					</part>
 					<part class="input">
@@ -18,11 +18,11 @@
 					</part>
 				</part>
 			</group>
-			<group title="#{user_new_password}">
+			<group title="${message:user_new_password}">
 				<part class="line">
 					<part class="label">
 						<label for="password1">
-							<text text="user_new_password"></text>
+							<text value="${message:user_new_password}"></text>
 						</label>
 					</part>
 					<part class="input">
@@ -32,7 +32,7 @@
 				<part class="line">
 					<part class="label">
 						<label for="password2">
-							<text text="user_new_password_repeat"></text>
+							<text value="${message:user_new_password_repeat}"></text>
 						</label>
 					</part>
 					<part class="input">
@@ -43,7 +43,7 @@
 		</if>
 		<else>
 			<part class="message warn">
-				<text key="pwchange_not_allowed" />
+				<text value="${message:pwchange_not_allowed}" />
 			</part>
 		</else>
 	</form>

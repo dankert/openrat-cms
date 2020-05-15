@@ -3,17 +3,17 @@
 	<table>
 		<row class="headline">
 			<column>
-				<text key="name"></text>
+				<text value="${message:name}"></text>
 			</column>
 			<column>
-				<text key="filename"></text>
+				<text value="${message:filename}"></text>
 			</column>
 			<column>
-				<text key="lastchange" />
+				<text value="${message:lastchange}" />
 			</column>
 		</row>
 
-		<list list="timeline" extract="true">
+		<list list="${timeline}" extract="true">
 
 			<!-- Den Typ des Objektes ermitteln -->
 			<if value="${typeid}" equals="1">
@@ -32,11 +32,11 @@
 			<row class="data">
 				<column class="clickable">
 					<link type="open" name="${name}" id="${objectid}" action="${type}">
-						<text var="name" maxlength="30"></text>
+						<text value="${name}" maxlength="30"></text>
 					</link>
 				</column>
 				<column>
-					<text var="filename" maxlength="30"></text>
+					<text value="${filename}" maxlength="30"></text>
 				</column>
 				<column>
 					<date date="${lastchange_date}" />

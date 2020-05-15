@@ -1,69 +1,69 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
     
-      <form name="" target="_self" data-target="view" action="./" data-method="form" data-action="page" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" data-async="" data-autosave="" class="or-form page">
-        <input type="hidden" name="token" value="<?php echo token();?>" />
-        <input type="hidden" name="action" value="page" />
-        <input type="hidden" name="subaction" value="form" />
-        <input type="hidden" name="id" value="<?php echo OR_ID ?>" />
-        <div>
+      <form name="<?php echo escapeHtml('') ?>" target="<?php echo escapeHtml('_self') ?>" data-target="<?php echo escapeHtml('view') ?>" action="<?php echo escapeHtml('./') ?>" data-method="<?php echo escapeHtml('form') ?>" data-action="<?php echo escapeHtml('page') ?>" data-id="<?php echo escapeHtml(''.@$_id.'') ?>" method="<?php echo escapeHtml('POST') ?>" enctype="<?php echo escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo escapeHtml('') ?>" data-autosave="<?php echo escapeHtml('') ?>" class="<?php echo escapeHtml('or-form page') ?>"><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('token') ?>" value="<?php echo escapeHtml(''.@$_token.'') ?>" /><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('action') ?>" value="<?php echo escapeHtml('page') ?>" /><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('subaction') ?>" value="<?php echo escapeHtml('form') ?>" /><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('id') ?>" value="<?php echo escapeHtml(''.@$_id.'') ?>" /><?php echo escapeHtml('') ?>
+        <div><?php echo escapeHtml('') ?>
           
-            <div class="or-table-wrapper">
-              <div class="or-table-filter">
-                <input type="search" name="filter" placeholder="<?php echo encodeHtml(htmlentities(@lang('SEARCH_FILTER'))) ?>" />
+            <div class="<?php echo escapeHtml('or-table-wrapper') ?>"><?php echo escapeHtml('') ?>
+              <div class="<?php echo escapeHtml('or-table-filter') ?>"><?php echo escapeHtml('') ?>
+                <input type="<?php echo escapeHtml('search') ?>" name="<?php echo escapeHtml('filter') ?>" placeholder="<?php echo escapeHtml(''.@lang('SEARCH_FILTER').'') ?>" /><?php echo escapeHtml('') ?>
               </div>
-              <div class="or-table-area">
-                <table width="100%">
+              <div class="<?php echo escapeHtml('or-table-area') ?>"><?php echo escapeHtml('') ?>
+                <table width="<?php echo escapeHtml('100%') ?>"><?php echo escapeHtml('') ?>
                   <?php $if1=(($el)==FALSE); if($if1) {  ?>
-                    <tr>
-                      <td colspan="4">
-                        <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_NOT_FOUND'))) ?>
+                    <tr><?php echo escapeHtml('') ?>
+                      <td colspan="<?php echo escapeHtml('4') ?>"><?php echo escapeHtml('') ?>
+                        <span><?php echo escapeHtml(''.@lang('GLOBAL_NOT_FOUND').'') ?>
                         </span>
                       </td>
                     </tr>
                    <?php } ?>
                   <?php $if1=!(($el)==FALSE); if($if1) {  ?>
-                    <tr>
-                      <td class="help">
-                        <span><?php echo encodeHtml(htmlentities(@lang('PAGE_ELEMENT_NAME'))) ?>
+                    <tr><?php echo escapeHtml('') ?>
+                      <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
+                        <span><?php echo escapeHtml(''.@lang('PAGE_ELEMENT_NAME').'') ?>
                         </span>
                       </td>
-                      <td class="help">
-                        <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_CHANGE'))) ?>
+                      <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
+                        <span><?php echo escapeHtml(''.@lang('GLOBAL_CHANGE').'') ?>
                         </span>
                       </td>
-                      <td class="help">
-                        <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_VALUE'))) ?>
+                      <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
+                        <span><?php echo escapeHtml(''.@lang('GLOBAL_VALUE').'') ?>
                         </span>
                       </td>
                     </tr>
-                    <?php foreach($el as $list_key=>$list_value) { extract($list_value); ?>
-                      <tr class="data">
-                        <td>
-                          <label class="label">
-                            <i class="image-icon image-icon--action-el_<?php echo encodeHtml(htmlentities(@$type)) ?>">
+                    <?php foreach((array)$el as $list_key=>$list_value) { extract($list_value); ?>
+                      <tr class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
+                        <td><?php echo escapeHtml('') ?>
+                          <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                            <i class="<?php echo escapeHtml('image-icon image-icon--action-el_'.@$type.'') ?>"><?php echo escapeHtml('') ?>
                             </i>
-                            <span><?php echo encodeHtml(htmlentities(@$name)) ?>
+                            <span><?php echo escapeHtml(''.@$name.'') ?>
                             </span>
                           </label>
                         </td>
-                        <td>
-                          <input type="checkbox" name="<?php echo encodeHtml(htmlentities(@$saveid)) ?>" value="1" <?php if(@$${saveid}){ ?>checked="1"<?php } ?> />
+                        <td><?php echo escapeHtml('') ?>
+                          <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml(''.@$saveid.'') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$$saveid){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                         </td>
-                        <td>
-                          <?php $if1=(in_array($type,explode(",",'text,date,number')); if($if1) {  ?>
-                            <div class="inputholder">
-                              <input name="<?php echo encodeHtml(htmlentities(@$id)) ?>" type="text" maxlength="255" value="<?php echo encodeHtml(htmlentities(@$value)) ?>" />
+                        <td><?php echo escapeHtml('') ?>
+                          <?php $if1=(in_array($type,explode(",",text,date,number)); if($if1) {  ?>
+                            <div class="<?php echo escapeHtml('inputholder') ?>"><?php echo escapeHtml('') ?>
+                              <input name="<?php echo escapeHtml(''.@$id.'') ?>" type="<?php echo escapeHtml('text') ?>" maxlength="<?php echo escapeHtml('255') ?>" value="<?php echo escapeHtml(''.@$value.'') ?>" /><?php echo escapeHtml('') ?>
                             </div>
                            <?php } ?>
-                          <?php $if1=($type=='longtext'); if($if1) {  ?>
-                            <textarea name="<?php echo encodeHtml(htmlentities(@$id)) ?>" class="inputarea"><?php echo encodeHtml(htmlentities(@$value)) ?>
+                          <?php $if1=($type==longtext); if($if1) {  ?>
+                            <textarea name="<?php echo escapeHtml(''.@$id.'') ?>" class="<?php echo escapeHtml('inputarea') ?>"><?php echo escapeHtml(''.@$value.'') ?>
                             </textarea>
                            <?php } ?>
-                          <?php $if1=(in_array($type,explode(",",'select,link,list')); if($if1) {  ?>
-                            <select name="<?php echo encodeHtml(htmlentities(@$id)) ?>" size="1">
+                          <?php $if1=(in_array($type,explode(",",select,link,list)); if($if1) {  ?>
+                            <select name="<?php echo escapeHtml(''.@$id.'') ?>" size="<?php echo escapeHtml('1') ?>"><?php echo escapeHtml('') ?>
                               <?php foreach($list as $_key=>$_value) {  ?>
-                                <option value="<?php echo encodeHtml(htmlentities(@$_key)) ?>" <?php if($_key==''.@$value.''){ ?>selected="selected"<?php } ?>><?php echo encodeHtml(htmlentities(@$_value)) ?>
+                                <option value="<?php echo escapeHtml(''.@$_key.'') ?>" <?php if($_key==$value){ ?>selected="<?php echo escapeHtml('selected') ?>"<?php } ?>><?php echo escapeHtml(''.@$_value.'') ?>
                                 </option>
                                <?php } ?>
                             </select>
@@ -75,33 +75,33 @@
                 </table>
               </div>
             </div>
-            <fieldset class="or-group toggle-open-close open show">
-              <legend class="on-click-open-close"><?php echo encodeHtml(htmlentities(@lang('options'))) ?>
-                <img />
-                <div class="arrow arrow-right on-closed">
+            <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
+              <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('options').'') ?>
+                <img /><?php echo escapeHtml('') ?>
+                <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
                 </div>
-                <div class="arrow arrow-down on-open">
+                <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
                 </div>
               </legend>
-              <div class="closable">
+              <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
                 <?php $if1=(isset($release)); if($if1) {  ?>
-                  <div class="">
-                    <input type="checkbox" name="release" value="1" <?php if(@$release){ ?>checked="1"<?php } ?> />
-                    <label class="label">
-                      <span> 
+                  <div class="<?php echo escapeHtml('') ?>"><?php echo escapeHtml('') ?>
+                    <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('release') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$release){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+                    <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                      <span><?php echo escapeHtml(' ') ?>
                       </span>
-                      <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_RELEASE'))) ?>
+                      <span><?php echo escapeHtml(''.@lang('GLOBAL_RELEASE').'') ?>
                       </span>
                     </label>
                   </div>
                  <?php } ?>
                 <?php $if1=(isset($publish)); if($if1) {  ?>
-                  <div class="">
-                    <input type="checkbox" name="publish" value="1" <?php if(@$publish){ ?>checked="1"<?php } ?> />
-                    <label class="label">
-                      <span> 
+                  <div class="<?php echo escapeHtml('') ?>"><?php echo escapeHtml('') ?>
+                    <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('publish') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$publish){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+                    <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                      <span><?php echo escapeHtml(' ') ?>
                       </span>
-                      <span><?php echo encodeHtml(htmlentities(@lang('PAGE_PUBLISH_AFTER_SAVE'))) ?>
+                      <span><?php echo escapeHtml(''.@lang('PAGE_PUBLISH_AFTER_SAVE').'') ?>
                       </span>
                     </label>
                   </div>
@@ -110,9 +110,9 @@
             </fieldset>
             
         </div>
-        <div class="or-form-actionbar">
-          <input type="button" value="<?php echo encodeHtml(htmlentities(@lang('CANCEL'))) ?>" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" />
-          <input type="submit" value="<?php echo encodeHtml(htmlentities(@lang('button_ok'))) ?>" class="or-form-btn or-form-btn--primary or-form-btn--save" />
+        <div class="<?php echo escapeHtml('or-form-actionbar') ?>"><?php echo escapeHtml('') ?>
+          <input type="<?php echo escapeHtml('button') ?>" value="<?php echo escapeHtml(''.@lang('CANCEL').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo escapeHtml('') ?>
+          <input type="<?php echo escapeHtml('submit') ?>" value="<?php echo escapeHtml(''.@lang('button_ok').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo escapeHtml('') ?>
         </div>
       </form>
  <?php } ?>

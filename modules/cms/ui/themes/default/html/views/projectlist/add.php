@@ -1,49 +1,49 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
-    <form name="" target="_self" data-target="view" action="./" data-method="add" data-action="projectlist" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" data-async="" data-autosave="" class="or-form projectlist">
-      <input type="hidden" name="token" value="<?php echo token();?>" />
-      <input type="hidden" name="action" value="projectlist" />
-      <input type="hidden" name="subaction" value="add" />
-      <input type="hidden" name="id" value="<?php echo OR_ID ?>" />
-      <div>
-        <div class="line">
-          <div class="label">
-            <span><?php echo encodeHtml(htmlentities(@lang('name'))) ?>
+    <form name="<?php echo escapeHtml('') ?>" target="<?php echo escapeHtml('_self') ?>" data-target="<?php echo escapeHtml('view') ?>" action="<?php echo escapeHtml('./') ?>" data-method="<?php echo escapeHtml('add') ?>" data-action="<?php echo escapeHtml('projectlist') ?>" data-id="<?php echo escapeHtml(''.@$_id.'') ?>" method="<?php echo escapeHtml('POST') ?>" enctype="<?php echo escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo escapeHtml('') ?>" data-autosave="<?php echo escapeHtml('') ?>" class="<?php echo escapeHtml('or-form projectlist') ?>"><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('token') ?>" value="<?php echo escapeHtml(''.@$_token.'') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('action') ?>" value="<?php echo escapeHtml('projectlist') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('subaction') ?>" value="<?php echo escapeHtml('add') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('id') ?>" value="<?php echo escapeHtml(''.@$_id.'') ?>" /><?php echo escapeHtml('') ?>
+      <div><?php echo escapeHtml('') ?>
+        <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+            <span><?php echo escapeHtml(''.@lang('name').'') ?>
             </span>
           </div>
-          <div class="input">
-            <div class="inputholder">
-              <input name="name" type="text" maxlength="128" value="<?php echo encodeHtml(htmlentities(@$name)) ?>" class="focus" />
+          <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('inputholder') ?>"><?php echo escapeHtml('') ?>
+              <input name="<?php echo escapeHtml('name') ?>" type="<?php echo escapeHtml('text') ?>" maxlength="<?php echo escapeHtml('128') ?>" value="<?php echo escapeHtml(''.@$name.'') ?>" class="<?php echo escapeHtml('focus') ?>" /><?php echo escapeHtml('') ?>
             </div>
           </div>
         </div>
-        <fieldset class="or-group toggle-open-close open show">
-          <legend class="on-click-open-close"><?php echo encodeHtml(htmlentities(@lang('options'))) ?>
-            <img />
-            <div class="arrow arrow-right on-closed">
+        <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
+          <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('options').'') ?>
+            <img /><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
             </div>
-            <div class="arrow arrow-down on-open">
+            <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
             </div>
           </legend>
-          <div class="closable">
-            <div class="line">
-              <div class="label">
+          <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+              <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
               </div>
-              <div class="input">
-                <input type="radio" name="type" disabled="" value="empty" checked="<?php echo encodeHtml(htmlentities(@$type)) ?>" />
-                <label class="label">
-                  <span><?php echo encodeHtml(htmlentities(@lang('empty'))) ?>
+              <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+                <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('empty') ?>" checked="<?php echo escapeHtml(''.@$type.'') ?>" /><?php echo escapeHtml('') ?>
+                <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@lang('empty').'') ?>
                   </span>
                 </label>
-                <br />
-                <input type="radio" name="type" disabled="" value="copy" checked="<?php echo encodeHtml(htmlentities(@$type)) ?>" />
-                <label class="label">
-                  <span><?php echo encodeHtml(htmlentities(@lang('copy'))) ?>
+                <br /><?php echo escapeHtml('') ?>
+                <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('copy') ?>" checked="<?php echo escapeHtml(''.@$type.'') ?>" /><?php echo escapeHtml('') ?>
+                <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@lang('copy').'') ?>
                   </span>
                 </label>
-                <select name="projectid" size="1">
+                <select name="<?php echo escapeHtml('projectid') ?>" size="<?php echo escapeHtml('1') ?>"><?php echo escapeHtml('') ?>
                   <?php foreach($projects as $_key=>$_value) {  ?>
-                    <option value="<?php echo encodeHtml(htmlentities(@$_key)) ?>" <?php if($_key==$projectid){ ?>selected="selected"<?php } ?>><?php echo encodeHtml(htmlentities(@$_value)) ?>
+                    <option value="<?php echo escapeHtml(''.@$_key.'') ?>" <?php if($_key==''){ ?>selected="<?php echo escapeHtml('selected') ?>"<?php } ?>><?php echo escapeHtml(''.@$_value.'') ?>
                     </option>
                    <?php } ?>
                 </select>
@@ -52,9 +52,9 @@
           </div>
         </fieldset>
       </div>
-      <div class="or-form-actionbar">
-        <input type="button" value="<?php echo encodeHtml(htmlentities(@lang('CANCEL'))) ?>" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" />
-        <input type="submit" value="<?php echo encodeHtml(htmlentities(@lang('button_ok'))) ?>" class="or-form-btn or-form-btn--primary or-form-btn--save" />
+      <div class="<?php echo escapeHtml('or-form-actionbar') ?>"><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('button') ?>" value="<?php echo escapeHtml(''.@lang('CANCEL').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('submit') ?>" value="<?php echo escapeHtml(''.@lang('button_ok').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo escapeHtml('') ?>
       </div>
     </form>
  <?php } ?>

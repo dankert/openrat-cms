@@ -5,35 +5,35 @@
 
             <row class="headline">
                 <column class="help">
-                    <text key="FOLDER_ORDER"></text>
+                    <text value="${message:FOLDER_ORDER}"></text>
                 </column>
                 <column class="help">
-                    <text key="GLOBAL_TYPE"></text>
+                    <text value="${message:GLOBAL_TYPE}"></text>
                 </column>
                 <column class="help">
-                    <text key="GLOBAL_NAME"></text>
+                    <text value="${message:GLOBAL_NAME}"></text>
                 </column>
                 <column class="help">
-                    <text key="GLOBAL_FILENAME"></text>
+                    <text value="${message:GLOBAL_FILENAME}"></text>
                 </column>
                 <column class="help">
-                    <text key="GLOBAL_LASTCHANGE"></text>
+                    <text value="${message:GLOBAL_LASTCHANGE}"></text>
                 </column>
             </row>
-            <list list="object" extract="true">
+            <list list="${object}" extract="true">
                 <row class="data" id="${id}">
                     <column>
-                        <text raw="_"></text>
+                        <text value=" "></text>
                     </column>
                     <column>
                         <text class="sort-value" value="${icon}" />
                         <image action="${icon}"></image>
                     </column>
                     <column>
-                        <text var="name"></text>
+                        <text value="${name}"></text>
                     </column>
                     <column>
-                        <text var="filename"></text>
+                        <text value="${filename}"></text>
                     </column>
                     <column>
                         <date date="${date}"></date>

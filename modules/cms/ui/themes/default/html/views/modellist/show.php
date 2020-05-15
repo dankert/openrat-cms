@@ -1,48 +1,48 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
-    <div class="or-table-wrapper">
-      <div class="or-table-filter">
-        <input type="search" name="filter" placeholder="<?php echo encodeHtml(htmlentities(@lang('SEARCH_FILTER'))) ?>" />
+    <div class="<?php echo escapeHtml('or-table-wrapper') ?>"><?php echo escapeHtml('') ?>
+      <div class="<?php echo escapeHtml('or-table-filter') ?>"><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('search') ?>" name="<?php echo escapeHtml('filter') ?>" placeholder="<?php echo escapeHtml(''.@lang('SEARCH_FILTER').'') ?>" /><?php echo escapeHtml('') ?>
       </div>
-      <div class="or-table-area">
-        <table width="100%">
-          <tr class="headline">
-            <td>
-              <span><?php echo encodeHtml(htmlentities(@lang('name'))) ?>
+      <div class="<?php echo escapeHtml('or-table-area') ?>"><?php echo escapeHtml('') ?>
+        <table width="<?php echo escapeHtml('100%') ?>"><?php echo escapeHtml('') ?>
+          <tr class="<?php echo escapeHtml('headline') ?>"><?php echo escapeHtml('') ?>
+            <td><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('name').'') ?>
               </span>
             </td>
-            <td>
-              <span>
+            <td><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml('') ?>
               </span>
             </td>
-            <td>
-              <span>
+            <td><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml('') ?>
               </span>
             </td>
           </tr>
-          <?php foreach($el as $list_key=>$list_value) { extract($list_value); ?>
-            <tr class="data">
-              <td class="clickable">
-                <a target="_self" date-name="<?php echo encodeHtml(htmlentities(@$name)) ?>" name="<?php echo encodeHtml(htmlentities(@$name)) ?>" data-type="open" data-action="model" data-method="" data-id="<?php echo encodeHtml(htmlentities(@$id)) ?>" data-extra="[]" href="/#/model/<?php echo encodeHtml(htmlentities(@$id)) ?>">
-                  <i class="image-icon image-icon--action-model">
+          <?php foreach((array)$el as $list_key=>$list_value) { extract($list_value); ?>
+            <tr class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
+              <td class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
+                <a target="<?php echo escapeHtml('_self') ?>" date-name="<?php echo escapeHtml(''.@$name.'') ?>" name="<?php echo escapeHtml(''.@$name.'') ?>" data-type="<?php echo escapeHtml('open') ?>" data-action="<?php echo escapeHtml('model') ?>" data-method="<?php echo escapeHtml('') ?>" data-id="<?php echo escapeHtml(''.@$id.'') ?>" data-extra="<?php echo escapeHtml('[]') ?>" href="<?php echo escapeHtml('/#/model/'.@$id.'') ?>"><?php echo escapeHtml('') ?>
+                  <i class="<?php echo escapeHtml('image-icon image-icon--action-model') ?>"><?php echo escapeHtml('') ?>
                   </i>
-                  <span><?php echo encodeHtml(htmlentities(@$name)) ?>
+                  <span><?php echo escapeHtml(''.@$name.'') ?>
                   </span>
                 </a>
               </td>
               <?php $if1=(!$is_default); if($if1) {  ?>
-                <td class="clickable">
+                <td class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
                   <?php $if1=(isset($id)); if($if1) {  ?>
-                    <a target="_self" data-type="post" data-action="model" data-method="setdefault" data-id="<?php echo encodeHtml(htmlentities(@$id)) ?>" data-extra="[]" data-data="{"action":"model","subaction":"setdefault","id":"<?php echo encodeHtml(htmlentities(@$id)) ?>",\"token":"<?php echo token() ?>","none":"0"}"">
-                      <span><?php echo encodeHtml(htmlentities(@lang('GLOBAL_make_default'))) ?>
+                    <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('post') ?>" data-action="<?php echo escapeHtml('model') ?>" data-method="<?php echo escapeHtml('setdefault') ?>" data-id="<?php echo escapeHtml(''.@$id.'') ?>" data-extra="<?php echo escapeHtml('[]') ?>" data-data="<?php echo escapeHtml('{"action":"model","subaction":"setdefault","id":"'.@$id.'",\"token":"<?php echo token() ?>","none":"0"}"') ?>"><?php echo escapeHtml('') ?>
+                      <span><?php echo escapeHtml(''.@lang('GLOBAL_make_default').'') ?>
                       </span>
                     </a>
                    <?php } ?>
                 </td>
                <?php } ?>
               <?php if(!$if1) {  ?>
-                <td>
-                  <em><?php echo encodeHtml(htmlentities(@lang('GLOBAL_is_default'))) ?>
+                <td><?php echo escapeHtml('') ?>
+                  <em><?php echo escapeHtml(''.@lang('GLOBAL_is_default').'') ?>
                   </em>
                 </td>
                <?php } ?>
@@ -52,12 +52,12 @@
             <?php  { unset($default_url) ?>
              <?php } ?>
            <?php } ?>
-          <tr class="data">
-            <td colspan="2" class="clickable">
-              <a target="_self" data-type="dialog" data-action="" data-method="add" data-id="" data-extra="{'dialogAction':null,'dialogMethod':'add'}" href="/#//">
-                <i class="image-icon image-icon--method-add">
+          <tr class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
+            <td colspan="<?php echo escapeHtml('2') ?>" class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
+              <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('dialog') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('add') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'add\'}') ?>" href="<?php echo escapeHtml('/#//') ?>"><?php echo escapeHtml('') ?>
+                <i class="<?php echo escapeHtml('image-icon image-icon--method-add') ?>"><?php echo escapeHtml('') ?>
                 </i>
-                <span><?php echo encodeHtml(htmlentities(@lang('new'))) ?>
+                <span><?php echo escapeHtml(''.@lang('new').'') ?>
                 </span>
               </a>
             </td>

@@ -5,14 +5,14 @@
 		<group>
 			<part class="line">
 				<part class="label">
-					<text key="ELEMENT_NAME"></text>
+					<text value="${message:ELEMENT_NAME}"></text>
 				</part>
 				<part class="input">
-					<text var="name" class="name"></text>
+					<text value="${name}" class="name"></text>
 				</part>
 			</part>
 		</group>
-		<group title="#{options}">
+		<group title="${message:options}">
 
 			<part class="line">
 				<part class="label">
@@ -20,7 +20,7 @@
 				<part class="input">
 					<checkbox name="confirm" required="true"></checkbox>
 					<label for="confirm">
-						<text text="CONFIRM_DELETE"></text>
+						<text value="${message:CONFIRM_DELETE}"></text>
 					</label>
 				</part>
 			</part>
@@ -29,16 +29,16 @@
 				<part class="label">
 				</part>
 				<part class="input">
-					<text raw="_____"></text>
+					<text value="     "></text>
 					<radio name="type" value="value"></radio>
 					<label for="type_value">
-						<text text="ELEMENT_DELETE_VALUES"></text>
+						<text value="${message:ELEMENT_DELETE_VALUES}"></text>
 					</label>
 					<newline></newline>
-					<text raw="_____"></text>
+					<text value="     "></text>
 					<radio name="type" value="all"></radio>
 					<label for="type_all">
-						<text text="DELETE"></text>
+						<text value="${message:DELETE}"></text>
 					</label>
 				</part>
 			</part>

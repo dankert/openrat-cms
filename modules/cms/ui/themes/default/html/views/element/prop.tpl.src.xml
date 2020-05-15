@@ -8,7 +8,7 @@
 
             <part class="line">
                 <part class="label">
-                    <text key="LABEL"></text>
+                    <text value="${message:LABEL}"></text>
                 </part>
                 <part class="input">
                     <input name="label" focus="true" required="true" maxlength="100"/>
@@ -17,7 +17,7 @@
 
             <part class="line">
                 <part class="label">
-                    <text key="NAME"></text>
+                    <text value="${message:NAME}"></text>
                 </part>
                 <part class="input">
                     <input name="name" required="true" maxlength="50"/>
@@ -26,7 +26,7 @@
 
             <part class="line">
                 <part class="label">
-                    <text text="GLOBAL_DESCRIPTION"></text>
+                    <text value="${message:GLOBAL_DESCRIPTION}"></text>
                 </part>
                 <part class="input">
                     <inputarea name="description" rows="5" maxlength="255"></inputarea>
@@ -37,7 +37,7 @@
         <group open="true">
             <part class="line">
                 <part class="label">
-                    <text text="ELEMENT_TYPE"></text>
+                    <text value="${message:ELEMENT_TYPE}"></text>
                 </part>
                 <part class="input">
                     <selectbox name="typeid" list="types" lang="true"></selectbox>

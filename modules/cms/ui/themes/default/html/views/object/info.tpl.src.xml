@@ -4,67 +4,67 @@
 		<group>
 			<part class="line">
 				<part class="label">
-					<text text="global_name"></text>
+					<text value="${message:global_name}"></text>
 				</part>
 				<part class="input">
-					<text var="name" class="name" />
+					<text value="${name}" class="name" />
 				</part>
 			</part>
 			<part class="line">
 				<part class="label">
-					<text text="global_filename"></text>
+					<text value="${message:global_filename}"></text>
 				</part>
 				<part class="input">
-					<text var="filename" class="filename" />
+					<text value="${filename}" class="filename" />
 				</part>
 			</part>
 			<part class="line">
 				<part class="label">
-					<text text="file_extension"></text>
+					<text value="${message:file_extension}"></text>
 				</part>
 				<part class="input">
-					<text var="extension" class="extension" />
+					<text value="${extension}" class="extension" />
 				</part>
 			</part>
 			<part class="line">
 				<part class="label">
-					<text text="global_description"></text>
+					<text value="${message:global_description}"></text>
 				</part>
 				<part class="input">
-					<text var="description" />
+					<text value="${description}" />
 				</part>
 			</part>
 		</group>
 
-		<group title="#{additional_info}">
+		<group title="${message:additional_info}">
 			<part class="line">
 				<part class="label">
 					<label for="full_filename">
-						<text text="global_full_filename"></text>
+						<text value="${message:global_full_filename}"></text>
 					</label>
 				</part>
 				<part class="input">
-					<text var="full_filename"></text>
+					<text value="${full_filename}"></text>
 				</part>
 			</part>
 			<part class="line">
 				<part class="label">
 					<label for="size">
-						<text text="FILE_SIZE"></text>
+						<text value="${message:FILE_SIZE}"></text>
 					</label>
 				</part>
 				<part class="input">
 				</part>
-				<text var="size" />
+				<text value="${size}" />
 			</part>
 			<part class="line">
 				<part class="label">
 					<label for="mimetype">
-						<text text="FILE_mimetype"></text>
+						<text value="${message:FILE_mimetype}"></text>
 					</label>
 				</part>
 				<part class="input">
-					<text var="mimetype"></text>
+					<text value="${mimetype}"></text>
 				</part>
 			</part>
 			<part class="line">
@@ -72,27 +72,27 @@
 				</part>
 				<part class="input,clickable">
 					<link class="action" type="dialog" subaction="size">
-						<text key="menu_file_size"></text>
+						<text value="${message:menu_file_size}"></text>
 					</link>
 				</part>
 			</part>
 			<part class="line">
 				<part class="label">
-					<text text="#{id}"></text>
+					<text value="${message:${message:id}}"></text>
 				</part>
 				<part class="input">
-					<text var="objectid"></text>
+					<text value="${objectid}"></text>
 				</part>
 			</part>
 			<if present="cache_filename">
 				<part class="line">
 					<part class="label">
 						<label for="cache_filename">
-							<text text="CACHE_FILENAME"></text>
+							<text value="${message:CACHE_FILENAME}"></text>
 						</label>
 					</part>
 					<part class="input">
-						<text var="cache_filename"></text>
+						<text value="${cache_filename}"></text>
 						<newline></newline>
 						<image icon="el_date"></image>
 						<date date="${cache_filemtime}"></date>
@@ -102,43 +102,43 @@
 			<part class="line">
 				<part class="label">
 					<label for="pages">
-						<text text="FILE_PAGES"></text>
+						<text value="${message:FILE_PAGES}"></text>
 					</label>
 				</part>
 				<part class="input">
 					<table>
-						<list list="pages" extract="true">
+						<list list="${pages}" extract="true">
 							<row>
 								<column>
 									<link url="${url}" target="cms_main">
 										<image type="page"></image>
-										<text var="name"></text>
+										<text value="${name}"></text>
 									</link>
 								</column>
 							</row>
 						</list>
 					</table>
-					<if empty="pages">
-						<text text="GLOBAL_NOT_FOUND"></text>
+					<if empty="${pages}">
+						<text value="${message:GLOBAL_NOT_FOUND}"></text>
 					</if>
 				</part>
 			</part>
 		</group>
-		<group title="#{validity}">
+		<group title="${message:validity}">
 			<part class="clickable">
 				<link subaction="settings" type="dialog">
 					<part class="line">
 						<part class="label">
-							<text key="global_state"></text>
+							<text value="${message:global_state}"></text>
 						</part>
 						<part class="input">
-							<if true="${is_valid}"><text key="is_yes" /></if>
-							<else><text key="is_no" /></else>
+							<if true="${is_valid}"><text value="${message:is_yes}" /></if>
+							<else><text value="${message:is_no}" /></else>
 						</part>
 					</part>
 					<part class="line">
 						<part class="label">
-							<text text="from"></text>
+							<text value="${message:from}"></text>
 						</part>
 						<part class="input">
 							<date date="${valid_from_date}" />
@@ -146,7 +146,7 @@
 					</part>
 					<part class="line">
 						<part class="label">
-							<text text="until"></text>
+							<text value="${message:until}"></text>
 						</part>
 						<part class="input">
 							<date date="${valid_to_date}" />
@@ -155,10 +155,10 @@
 				</link>
 			</part>
 		</group>
-		<group title="#{prop_userinfo}">
+		<group title="${message:prop_userinfo}">
 			<part class="line">
 				<part class="label">
-					<text text="global_created"></text>
+					<text value="${message:global_created}"></text>
 				</part>
 				<part class="input">
 					<image elementtype="date"></image>
@@ -170,7 +170,7 @@
 			</part>
 			<part class="line">
 				<part class="label">
-					<text text="global_lastchange"></text>
+					<text value="${message:global_lastchange}"></text>
 				</part>
 				<part class="input">
 					<image elementtype="date"></image>
@@ -183,7 +183,7 @@
 			<part class="line">
 				<part class="label">
 					<label for="published_date">
-						<text text="global_published"></text>
+						<text value="${message:global_published}"></text>
 					</label>
 				</part>
 				<part class="input">
@@ -196,16 +196,16 @@
 			</part>
 		</group>
 
-		<group title="#{settings}">
+		<group title="${message:settings}">
 			<table filter="true">
-				<list list="settings" key="name" value="value" >
+				<list list="${settings}" key="name" value="value" >
 					<row class="data">
 						<column>
-							<text var="name" />
+							<text value="${name}" />
 						</column>
 						<column class="clickable">
 							<link subaction="settings" type="dialog">
-								<text var="value" />
+								<text value="${value}" />
 							</link>
 						</column>
 					</row>

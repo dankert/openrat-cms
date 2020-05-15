@@ -10,7 +10,7 @@
 				<part class="label">
 					<radio name="type" value="addelement"></radio>
 					<label for="type_addelement">
-						<text key="value"></text>
+						<text value="${message:value}"></text>
 					</label>
 				</part>
 				<part class="input">
@@ -25,7 +25,7 @@
 				<part class="label">
 					<radio name="type" value="addicon"></radio>
 					<label for="type_addicon">
-						<text key="GLOBAL_ICON"></text>
+						<text value="${message:GLOBAL_ICON}"></text>
 					</label>
 				</part>
 				<part class="input">
@@ -36,7 +36,7 @@
 				<part class="label">
 					<radio name="type" value="addifempty"></radio>
 					<label for="type_addifempty">
-						<text key="TEMPLATE_SRC_IFEMPTY"></text>
+						<text value="${message:TEMPLATE_SRC_IFEMPTY}"></text>
 					</label>
 				</part>
 				<part class="input">
@@ -46,7 +46,7 @@
 				<part class="label">
 					<radio name="type" value="addifnotempty"></radio>
 					<label for="type_addifnotempty">
-						<text key="TEMPLATE_SRC_IFNOTEMPTY"></text>
+						<text value="${message:TEMPLATE_SRC_IFNOTEMPTY}"></text>
 					</label>
 				</part>
 				<part class="input">

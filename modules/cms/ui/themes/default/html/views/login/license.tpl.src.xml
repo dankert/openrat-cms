@@ -2,26 +2,26 @@
         xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 
     <part class="or-form">
-        <group title="#{USER}" open="true" show="true">
+        <group title="${message:USER}" open="true" show="true">
             <part class="line">
                 <part class="label">
-                    <text key="USER_USERNAME"></text>
+                    <text value="${message:USER_USERNAME}"></text>
                 </part>
                 <part class="input">
-                    <text var="user_name"/>
+                    <text value="${user_name}"/>
                 </part>
             </part>
             <part class="line">
                 <part class="label">
-                    <text key="USER_FULLNAME"></text>
+                    <text value="${message:USER_FULLNAME}"></text>
                 </part>
                 <part class="input">
-                    <text var="user_fullname"/>
+                    <text value="${user_fullname}"/>
                 </part>
             </part>
             <part class="line">
                 <part class="label">
-                    <text key="USER_LOGIN_DATE"></text>
+                    <text value="${message:USER_LOGIN_DATE}"></text>
                 </part>
                 <part class="input">
                     <date date="${user_login}"/>
@@ -30,77 +30,77 @@
 
         </group>
 
-        <group title="#{CMS}">
+        <group title="${message:CMS}">
             <part class="line">
                 <part class="label">
-                    <text key="NAME"></text>
+                    <text value="${message:NAME}"></text>
                 </part>
                 <part class="input">
-                    <text var="cms_name"/>
-                    <text var="cms_version"/>
+                    <text value="${cms_name}"/>
+                    <text value="${cms_version}"/>
                 </part>
             </part>
             <part class="line">
                 <part class="label">
-                    <text key="OPERATOR"></text>
+                    <text value="${message:OPERATOR}"></text>
                 </part>
                 <part class="input">
-                    <text var="cms_operator"/>
-                </part>
-            </part>
-
-        </group>
-
-        <group title="#{SYSTEM}">
-            <part class="line">
-                <part class="label">
-                    <text key="DATE_TIME"></text>
-                </part>
-                <part class="input">
-                    <text var="time"/>
-                </part>
-            </part>
-            <part class="line">
-                <part class="label">
-                    <text key="OPERATING_SYSTEM"></text>
-                </part>
-                <part class="input">
-                    <text var="os"/>
-                    <text var="release"/>
-                    <text var="machine"/>
-                </part>
-            </part>
-            <part class="line">
-                <part class="label">
-                    <text key="INTERPRETER"></text>
-                </part>
-                <part class="input">
-                    <text var="version"/>
+                    <text value="${cms_operator}"/>
                 </part>
             </part>
 
         </group>
 
-        <group title="#{LICENSE}">
+        <group title="${message:SYSTEM}">
+            <part class="line">
+                <part class="label">
+                    <text value="${message:DATE_TIME}"></text>
+                </part>
+                <part class="input">
+                    <text value="${time}"/>
+                </part>
+            </part>
+            <part class="line">
+                <part class="label">
+                    <text value="${message:OPERATING_SYSTEM}"></text>
+                </part>
+                <part class="input">
+                    <text value="${os}"/>
+                    <text value="${release}"/>
+                    <text value="${machine}"/>
+                </part>
+            </part>
+            <part class="line">
+                <part class="label">
+                    <text value="${message:INTERPRETER}"></text>
+                </part>
+                <part class="input">
+                    <text value="${version}"/>
+                </part>
+            </part>
+
+        </group>
+
+        <group title="${message:LICENSE}">
 
             <table filter="false">
                 <row class="headline">
                     <column>
-                        <text key="name"/>
+                        <text value="${message:name}"/>
                     </column>
                     <column>
-                        <text key="license"/>
+                        <text value="${message:license}"/>
                     </column>
                 </row>
-                <list list="software" extract="true">
+                <list list="${software}" extract="true">
                     <row class="data">
                         <column class="clickable">
                             <link type="external" url="${url}">
-                                <text var="name"></text>
+                                <text value="${name}"></text>
                             </link>
                         </column>
                         <column>
-                            <text var="license"></text>
+                            <text value="${license}"></text>
                         </column>
                     </row>
                 </list>

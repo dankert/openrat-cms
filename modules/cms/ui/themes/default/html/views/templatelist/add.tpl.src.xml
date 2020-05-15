@@ -3,27 +3,27 @@
 	<form>
 		<part class="line">
 			<part class="label" colspan="2">
-				<text text="name"></text>
+				<text value="${message:name}"></text>
 			</part>
 			<part class="input">
 				<input name="name" maxlength="50"></input>
 			</part>
 		</part>
-		<group title="#{options}">
+		<group title="${message:options}">
 			<part class="line">
 				<part class="label">
 					<radio name="type" value="empty"></radio>
 				</part>
 				<part class="input">
 					<label for="type_empty">
-						<text key="empty"></text>
+						<text value="${message:empty}"></text>
 					</label>
 				</part>
 			</part>
 			<part class="line">
 				<part class="label">
 					<label for="type_copy">
-						<text key="copy"></text>
+						<text value="${message:copy}"></text>
 					</label>
 					<radio name="type" value="copy"></radio>
 				</part>
@@ -34,7 +34,7 @@
 			<part class="line">
 				<part class="label">
 					<label for="type_example">
-						<text key="example"></text>
+						<text value="${message:example}"></text>
 					</label>
 					<radio name="type" value="example"></radio>
 				</part>

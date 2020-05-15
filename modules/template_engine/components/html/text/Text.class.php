@@ -76,7 +76,7 @@ class TextComponent extends HtmlComponent
        elseif	( $this->titlekey )
             //$text->addAttribute('title', Value::createExpression(ValueExpression::TYPE_MESSAGE,$this->titlekey));
             //$text->addAttribute('title', $this->titlekey);
-            $text->addAttribute('title', new ValueExpression( ValueExpression::TYPE_MESSAGE,new Value($this->titlekey),0) );
+            $text->addAttribute('title', new ValueExpression( ValueExpression::TYPE_MESSAGE,$this->titlekey,0) );
 
         //if   ( $this->newline)
 		//    $functions[] = 'nl2br(@)';
@@ -86,7 +86,7 @@ class TextComponent extends HtmlComponent
 		//	$functions[] = "Text::accessKey('".$this->accesskey."',@)";
 
 		if	( $this->key )
-			$text->content( new ValueExpression( ValueExpression::TYPE_MESSAGE,new Value($this->key),0) );
+			$text->content( new ValueExpression( ValueExpression::TYPE_MESSAGE,$this->key,0) );
 
 		elseif	( $this->text )
 			$text->content( Value::createExpression(ValueExpression::TYPE_MESSAGE,$this->text) );
@@ -103,7 +103,7 @@ class TextComponent extends HtmlComponent
 
 		if   ( $this->label ) {
 			$span  = (new HtmlElement('span' ))->addStyleClass('or-form-input');
-			$label = (new HtmlElement('label'))->addChild($span)->addStyleClass('or-form-row')->addChild( (new CMSElement('span'))->addStyleClass('or-form-label')->content('message:'.$this->label));
+			$label = (new HtmlElement('label'))->addChild($span)->addStyleClass('or-form-row')->addChild( (new CMSElement('span'))->addStyleClass('or-form-label')->content('${message:'.$this->label.'}'));
 
 			$this->adoptiveElement = $text;
 			return $label;

@@ -2,6 +2,8 @@
 
 namespace template_engine\element;
 
+use util\text\variables\VariableResolver;
+
 class Value
 {
     private $value;
@@ -13,62 +15,71 @@ class Value
 
     public static function createExpression($type, $name)
     {
-        return $type . '{' . $name . '}';
+    	$expr = new ValueExpression($type,$name,0);
+        return $expr->getAsString();
     }
 
     public function __construct($value)
     {
     	if   ( $value instanceof ValueExpression )
 		{
-			$value->position = 0;
-			$this->expressions = [ $value ];
-			$this->value = '';
+			$value = $value->getAsString();
 		}
-		else
-		{
-			while (true) {
-				if (!$value)
-					break;
 
-				$epos = strpos($value, '{', 1);
-				$fpos = strpos($value, '}', 1);
-
-				if ($epos === false || $fpos === false)
-					break;
-
-				$type = substr($value, $epos - 1, 1);
-				$name = substr($value, $epos + 1, $fpos - $epos - 1);
-
-				$this->expressions[] = new ValueExpression($type, $name, $epos - 1);
-				$value = substr($value, 0, $epos - 1) . substr($value, $fpos + 1);
-			}
-			$this->value = $value;
-		}
+		$this->value = $value;
     }
 
 
     public function render($context)
     {
+    	$res = new VariableResolver();
+    	$res->namespaceSeparator = ':';
+    	$res->defaultSeparator   = '?';
+
+    	$res->addDefaultResolver( function($name) {
+			$parts = explode('.', $name);
+
+			return array_reduce($parts, function ($carry, $item) {
+				if (!$carry)
+					return '\'.@$' . $item.'.\'';
+				else
+					return '\'.'.$carry . '[\' . '.$item.' . \'].\'';
+			}, '');
+		});
+
+		$res->addResolver( 'message',function($name) {
+
+			return '\'.@lang(\'' . $name . '\').\'';
+		});
+
+		$res->addResolver('config', function($name) {
+			$config_parts = explode('/', $name);
+			return '\'.config(' . "'" . implode("'" . ',' . "'", $config_parts) . "'" . ').\'';
+		});
+
+
         switch ($context) {
             case Value::CONTEXT_PHP:
-                return "'" . array_reduce(array_reverse($this->expressions), function ($carry, $expr) use ($context) {
-						/** @var ValueExpression $expr */
-						return substr($carry, 0, $expr->position) . "'." . $expr->render() . '.\'' . substr($carry, $expr->position);
-                    }, $this->value) . "'";
+				$escape = function ($expr) use ($context) {
+						return $expr;
+				};
 
             case Value::CONTEXT_HTML:
             case Value::CONTEXT_RAW:
-                $escape = function ($expr) use ($context) {
-                    if ($context == self::CONTEXT_HTML)
-                        return 'encodeHtml(htmlentities(' . $expr . '))';
-                    else
-                        return $expr;
-                };
-                return array_reduce(array_reverse($this->expressions), function ($carry, $expr) use ($escape,$context) {
-                    //echo "carry:".$carry.";expr:".$expr->position.':'.$expr->name;
-					/** @var ValueExpression $expr */
-					return substr($carry, 0, $expr->position) . "<?php echo " . $escape($expr->render()) . ' ?>' . substr($carry, $expr->position);
-                }, $this->value);
+				$escape = function ($expr) use ($context) {
+					if ($context == self::CONTEXT_HTML)
+						return 'escapeHtml(' . $expr . ')';
+					else
+						return $expr;
+				};
+
+				$this->value = str_replace('\'','\\\'',$this->value);
+				return '<'.'?'.'php '.'echo '. $escape('\''.$res->resolveVariables( $this->value ).'\'').' ?'.'>';
         }
     }
+
+    public function __xtoString()
+	{
+		return print_r($this,true);
+	}
 }

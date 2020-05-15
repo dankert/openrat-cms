@@ -1,38 +1,38 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
     
-    <form name="" target="_self" data-target="view" action="./" data-method="createfolder" data-action="folder" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" data-async="" data-autosave="" class="or-form folder">
-      <input type="hidden" name="token" value="<?php echo token();?>" />
-      <input type="hidden" name="action" value="folder" />
-      <input type="hidden" name="subaction" value="createfolder" />
-      <input type="hidden" name="id" value="<?php echo OR_ID ?>" />
-      <div>
-        <input type="hidden" name="languageid" value="<?php echo encodeHtml(htmlentities(@$languageid)) ?>" />
-        <div class="line">
-          <div class="label">
-            <span><?php echo encodeHtml(htmlentities(@lang('global_FOLDER'))) ?>
+    <form name="<?php echo escapeHtml('') ?>" target="<?php echo escapeHtml('_self') ?>" data-target="<?php echo escapeHtml('view') ?>" action="<?php echo escapeHtml('./') ?>" data-method="<?php echo escapeHtml('createfolder') ?>" data-action="<?php echo escapeHtml('folder') ?>" data-id="<?php echo escapeHtml(''.@$_id.'') ?>" method="<?php echo escapeHtml('POST') ?>" enctype="<?php echo escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo escapeHtml('') ?>" data-autosave="<?php echo escapeHtml('') ?>" class="<?php echo escapeHtml('or-form folder') ?>"><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('token') ?>" value="<?php echo escapeHtml(''.@$_token.'') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('action') ?>" value="<?php echo escapeHtml('folder') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('subaction') ?>" value="<?php echo escapeHtml('createfolder') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('id') ?>" value="<?php echo escapeHtml(''.@$_id.'') ?>" /><?php echo escapeHtml('') ?>
+      <div><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('languageid') ?>" value="<?php echo escapeHtml(''.@$languageid.'') ?>" /><?php echo escapeHtml('') ?>
+        <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+            <span><?php echo escapeHtml(''.@lang('global_FOLDER').'') ?>
             </span>
           </div>
-          <div class="input">
-            <div class="inputholder">
-              <input name="name" type="text" maxlength="256" value="" />
+          <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('inputholder') ?>"><?php echo escapeHtml('') ?>
+              <input name="<?php echo escapeHtml('name') ?>" type="<?php echo escapeHtml('text') ?>" maxlength="<?php echo escapeHtml('256') ?>" value="<?php echo escapeHtml('') ?>" /><?php echo escapeHtml('') ?>
             </div>
           </div>
         </div>
-        <div class="line">
-          <div class="label">
-            <span><?php echo encodeHtml(htmlentities(@lang('global_DESCRIPTION'))) ?>
+        <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+            <span><?php echo escapeHtml(''.@lang('global_DESCRIPTION').'') ?>
             </span>
           </div>
-          <div class="input">
-            <textarea name="description" class="inputarea">
+          <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+            <textarea name="<?php echo escapeHtml('description') ?>" class="<?php echo escapeHtml('inputarea') ?>"><?php echo escapeHtml('') ?>
             </textarea>
           </div>
         </div>
       </div>
-      <div class="or-form-actionbar">
-        <input type="button" value="<?php echo encodeHtml(htmlentities(@lang('CANCEL'))) ?>" class="or-form-btn or-form-btn--secondary or-form-btn--cancel" />
-        <input type="submit" value="<?php echo encodeHtml(htmlentities(@lang('add'))) ?>" class="or-form-btn or-form-btn--primary or-form-btn--save" />
+      <div class="<?php echo escapeHtml('or-form-actionbar') ?>"><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('button') ?>" value="<?php echo escapeHtml(''.@lang('CANCEL').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('submit') ?>" value="<?php echo escapeHtml(''.@lang('add').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo escapeHtml('') ?>
       </div>
     </form>
  <?php } ?>

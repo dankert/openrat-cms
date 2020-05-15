@@ -1,9 +1,9 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-    <form label="#{global_save}">
+    <form label="${message:global_save}">
 
         <hidden name="languageid" />
-        <group title="#{alias}" open="true">
+        <group title="${message:alias}" open="true">
 
             <input label="name" name="name" maxlength="255" required="true" />
 

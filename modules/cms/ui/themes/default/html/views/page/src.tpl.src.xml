@@ -12,7 +12,7 @@
 
     </form>
 
-    <group title="#{SOURCE}">
+    <group title="${message:SOURCE}">
         <editor type="code" mode="html" name="src" readonly="true" />
     </group>
 

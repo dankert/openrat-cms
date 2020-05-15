@@ -6,7 +6,7 @@
 				<if present="subtype">
 					<row>
 						<column>
-							<text text="ELEMENT_SUBTYPE"></text>
+							<text value="${message:ELEMENT_SUBTYPE}"></text>
 						</column>
 						<column>
 							<if present="subtypes">
@@ -21,7 +21,7 @@
 				<if present="with_icon">
 					<row>
 						<column>
-							<text text="EL_PROP_WITH_ICON"></text>
+							<text value="${message:EL_PROP_WITH_ICON}"></text>
 						</column>
 						<column>
 							<checkbox name="with_icon"></checkbox>
@@ -31,7 +31,7 @@
 				<if present="all_languages">
 					<row>
 						<column>
-							<text text="EL_PROP_ALL_LANGUAGES"></text>
+							<text value="${message:EL_PROP_ALL_LANGUAGES}"></text>
 						</column>
 						<column>
 							<checkbox name="all_languages"></checkbox>
@@ -41,7 +41,7 @@
 				<if present="writable">
 					<row>
 						<column>
-							<text text="EL_PROP_writable"></text>
+							<text value="${message:EL_PROP_writable}"></text>
 						</column>
 						<column>
 							<checkbox name="writable"></checkbox>
@@ -51,7 +51,7 @@
 				<if present="width">
 					<row>
 						<column>
-							<text text="width"></text>
+							<text value="${message:width}"></text>
 						</column>
 						<column>
 							<input size="10" name="width"></input>
@@ -61,7 +61,7 @@
 				<if present="height">
 					<row>
 						<column>
-							<text text="height"></text>
+							<text value="${message:height}"></text>
 						</column>
 						<column>
 							<input size="10" name="height"></input>
@@ -71,7 +71,7 @@
 				<if present="dateformat">
 					<row>
 						<column>
-							<text text="EL_PROP_DATEFORMAT"></text>
+							<text value="${message:EL_PROP_DATEFORMAT}"></text>
 						</column>
 						<column>
 							<selectbox name="dateformat" list="dateformats"></selectbox>
@@ -81,7 +81,7 @@
 				<if present="format">
 					<row>
 						<column>
-							<text text="EL_PROP_FORMAT"></text>
+							<text value="${message:EL_PROP_FORMAT}"></text>
 						</column>
 						<column>
 							<radiobox name="format" list="formatlist"></radiobox>
@@ -91,7 +91,7 @@
 				<if present="decimals">
 					<row>
 						<column>
-							<text text="EL_PROP_DECIMALS"></text>
+							<text value="${message:EL_PROP_DECIMALS}"></text>
 						</column>
 						<column>
 							<input size="10" maxlength="2" name="decimals"></input>
@@ -101,7 +101,7 @@
 				<if present="dec_point">
 					<row>
 						<column>
-							<text text="EL_PROP_DEC_POINT"></text>
+							<text value="${message:EL_PROP_DEC_POINT}"></text>
 						</column>
 						<column>
 							<input size="10" maxlength="5" name="dec_point"></input>
@@ -111,7 +111,7 @@
 				<if present="thousand_sep">
 					<row>
 						<column>
-							<text text="EL_PROP_thousand_sep"></text>
+							<text value="${message:EL_PROP_thousand_sep}"></text>
 						</column>
 						<column>
 							<input size="10" maxlength="1" name="thousand_sep"></input>
@@ -121,7 +121,7 @@
 				<if present="default_text">
 					<row>
 						<column>
-							<text text="EL_PROP_default_text"></text>
+							<text value="${message:EL_PROP_default_text}"></text>
 						</column>
 						<column>
 							<input size="40" maxlength="255" name="default_text"></input>
@@ -131,7 +131,7 @@
 				<if present="default_longtext">
 					<row>
 						<column>
-							<text text="EL_PROP_default_longtext"></text>
+							<text value="${message:EL_PROP_default_longtext}"></text>
 						</column>
 						<column>
 							<inputarea rows="10" cols="40" name="default_longtext"></inputarea>
@@ -141,7 +141,7 @@
 				<if present="parameters">
 					<row>
 						<column>
-							<text text="EL_PROP_DYNAMIC_PARAMETERS"></text>
+							<text value="${message:EL_PROP_DYNAMIC_PARAMETERS}"></text>
 						</column>
 						<column>
 							<inputarea rows="15" cols="40" name="parameters"></inputarea>
@@ -150,12 +150,12 @@
 					<row>
 						<column></column>
 						<column>
-							<list list="dynamic_class_parameters" key="paramName" value="defaultValue">
-								<text var="paramName"></text>
-								<text raw="_("></text>
-								<text text="GLOBAL_DEFAULT"></text>
-								<text raw=")_=_"></text>
-								<text var="defaultValue"></text>
+							<list list="${dynamic_class_parameters}" key="paramName" value="defaultValue">
+								<text value="${paramName}"></text>
+								<text value=" ("></text>
+								<text value="${message:GLOBAL_DEFAULT}"></text>
+								<text value=") = "></text>
+								<text value="${defaultValue}"></text>
 								<newline></newline>
 							</list>
 						</column>
@@ -164,7 +164,7 @@
 				<if present="select_items">
 					<row>
 						<column>
-							<text text="EL_PROP_select_items"></text>
+							<text value="${message:EL_PROP_select_items}"></text>
 						</column>
 						<column>
 							<inputarea rows="15" cols="40" name="select_items"></inputarea>
@@ -174,7 +174,7 @@
 				<if present="linkelement">
 					<row>
 						<column>
-							<text text="EL_LINK"></text>
+							<text value="${message:EL_LINK}"></text>
 						</column>
 						<column>
 							<selectbox name="linkelement" list="linkelements"></selectbox>
@@ -184,7 +184,7 @@
 				<if present="name">
 					<row>
 						<column>
-							<text text="ELEMENT_NAME"></text>
+							<text value="${message:ELEMENT_NAME}"></text>
 						</column>
 						<column>
 							<selectbox name="name" list="names"></selectbox>
@@ -194,7 +194,7 @@
 				<if present="folderobjectid">
 					<row>
 						<column>
-							<text text="EL_PROP_DEFAULT_FOLDEROBJECT"></text>
+							<text value="${message:EL_PROP_DEFAULT_FOLDEROBJECT}"></text>
 						</column>
 						<column>
 							<selectbox name="folderobjectid" list="folders"></selectbox>
@@ -204,7 +204,7 @@
 				<if present="default_objectid">
 					<row>
 						<column>
-							<text text="EL_PROP_DEFAULT_OBJECT"></text>
+							<text value="${message:EL_PROP_DEFAULT_OBJECT}"></text>
 						</column>
 						<column>
 							<selectbox name="default_objectid" list="objects"
@@ -215,7 +215,7 @@
 				<if present="code">
 					<row>
 						<column>
-							<text text="EL_PROP_code"></text>
+							<text value="${message:EL_PROP_code}"></text>
 						</column>
 						<column>
 							<inputarea name="code" rows="35" cols="60"></inputarea>

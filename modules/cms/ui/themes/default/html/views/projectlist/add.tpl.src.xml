@@ -3,26 +3,26 @@
 	<form>
 		<part class="line">
 			<part class="label">
-				<text text="name"></text>
+				<text value="${message:name}"></text>
 			</part>
 			<part class="input">
 				<input name="name" class="focus" maxlength="128"></input>
 			</part>
 		</part>
 
-		<group title="#{options}">
+		<group title="${message:options}">
 			<part class="line">
 				<part class="label">
 				</part>
 				<part class="input">
 					<radio name="type" value="empty" checked="true"></radio>
 					<label for="type_empty">
-						<text key="empty"></text>
+						<text value="${message:empty}"></text>
 					</label>
 					<newline />
 					<radio name="type" value="copy"></radio>
 					<label for="type_copy">
-						<text key="copy"></text>
+						<text value="${message:copy}"></text>
 					</label>
 					<selectbox name="projectid" list="projects" default=""></selectbox>
 				</part>

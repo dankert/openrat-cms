@@ -3,76 +3,76 @@
 	<table>
 		<row class="data">
 			<column>
-				<text text="name"></text>
+				<text value="${message:name}"></text>
 			</column>
 			<column class="name">
-				<text var="name"></text>
+				<text value="${name}"></text>
 			</column>
 		</row>
 		<row class="data">
 			<column>
-				<text text="description"></text>
+				<text value="${message:description}"></text>
 			</column>
 			<column>
-				<text var="description"></text>
+				<text value="${description}"></text>
 			</column>
 		</row>
 		<row class="data">
 			<column>
-				<text text="type"></text>
+				<text value="${message:type}"></text>
 			</column>
 			<column class="filename">
 				<image elementtype="${element_type}"></image>
-				<text key="el_${element_type}"></text>
+				<text value="${message:el_${element_type}}"></text>
 			</column>
 		</row>
 		<row class="data">
 			<column>
-				<text key="template"></text>
+				<text value="${message:template}"></text>
 			</column>
 			<column class="clickable">
 				<link type="open" action="template" id="${template_id}">
 					<image action="template"></image>
-					<text var="template_name"></text>
+					<text value="${template_name}"></text>
 				</link>
 			</column>
 		</row>
 		<row class="data">
 			<column>
-				<text key="element"></text>
+				<text value="${message:element}"></text>
 			</column>
 			<column class="clickable">
 				<link id="${element_id}" name="${element_name}" action="element">
 					<image elementtype="${element_type}"></image>
-					<text var="element_name"></text>
+					<text value="${element_name}"></text>
 				</link>
 			</column>
 		</row>
 		<row class="data">
 			<column>
-				<text key="format" />
-				<text key="element" />
+				<text value="${message:format}" />
+				<text value="${message:element}" />
 			</column>
 			<column>
-				<text var="element_format" />
-			</column>
-		</row>
-		<row class="data">
-			<column>
-				<text key="format" />
-			</column>
-			<column>
-				<text var="format" />
+				<text value="${element_format}" />
 			</column>
 		</row>
 		<row class="data">
 			<column>
-				<text text="lastchange"></text>
+				<text value="${message:format}" />
+			</column>
+			<column>
+				<text value="${format}" />
+			</column>
+		</row>
+		<row class="data">
+			<column>
+				<text value="${message:lastchange}"></text>
 			</column>
 			<column>
 				<image elementtype="date"></image>
 				<date date="${lastchange_date}"></date>
-				<text raw=", "></text>
+				<text value=", "></text>
 				<image action="user"></image>
 				<user user="${lastchange_user}"></user>
 			</column>

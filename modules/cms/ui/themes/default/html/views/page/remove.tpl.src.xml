@@ -4,6 +4,6 @@
     <form>
         <text label="GLOBAL_NAME" var="name"></text>
 
-        <checkbox label="GLOBAL_DELETE" name="delete"></checkbox>
+        <checkbox label="${message:GLOBAL_DELETE}" name="delete"></checkbox>
     </form>
 </output>
