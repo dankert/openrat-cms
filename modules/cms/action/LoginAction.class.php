@@ -296,11 +296,7 @@ class LoginAction extends BaseAction
             $dbconf += $conf['database-default']['defaults']; // Add Default-Values
 
             if	( is_array($dbconf) && $dbconf['enabled'] ) // Database-Connection is enabled
-                $dbids[$dbid] = array(
-                    'key'   => $dbid,
-                    'value' => !$dbconf['name'] ? $dbid : Text::maxLength($dbconf['name']),
-                    'title' => $dbconf['description']
-                );
+                $dbids[$dbid] = !$dbconf['name'] ? $dbid : $dbconf['name'].' - '.$dbconf['description'];
         }
 
 

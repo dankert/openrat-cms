@@ -35,7 +35,7 @@ class IfComponent extends Component
 		elseif ($this->lessthan)
 			$expr .= 'intval(' . $if->value($this->lessthan).')>intval('.$if->value($this->value).')';
 		elseif ($this->greaterthan)
-			$expr .= 'intval(' . $if->value($this->greaterthan).')<intval('.$if->value($this->value).')';
+			$expr .= 'intval(' . $if->value($this->greaterthan).')<count('.$if->value($this->value).')';
 		elseif (! empty($this->present))
 			$expr .= 'isset(' . '$'.$this->present.')'; // 'isset' verwenden! Nicht empty(), da false empty ist.
 		elseif (! empty($this->empty))
