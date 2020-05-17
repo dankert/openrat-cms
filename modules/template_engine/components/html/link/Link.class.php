@@ -123,37 +123,19 @@ class LinkComponent extends Component
 				
 				// Zusammenbau eines einzeligen JSON-Strings.
 				// Aufpassen: Keine doppelten Hochkommas, keine Zeilenumbrüche.
-				$data = '{';
+				$data = array();
 				
-				$data.= "\"action\":\"";
-				if (! empty($this->action))
-					$data.= $this->action;
-				else
-					$data.= $this->request->action;
-				$data.= "\",";
-				
-				$data.= "\"subaction\":\"";
-				if (! empty($this->subaction))
-					$data.= $this->subaction;
-				else
-					$data.= $this->request->method;
-				$data.= "\",";
-				
-				$data.= "\"id\":\"";
-				if (! empty($this->id))
-					$data.= $this->id;
-				else
-					$data.= "";
-				$data.= "\",";
-				
-				$data.= '\"'.REQ_PARAM_TOKEN . "\":\"" . '<?php echo token() ?>' . "\",";
+				$data['action'   ] = (!empty($this->action   ))?$this->action   :$this->request->action;
+				$data['subaction'] = (!empty($this->subaction))?$this->subaction:$this->request->method;
+				$data['id'       ] = (!empty($this->id       ))?$this->id       :'';
+				$data[REQ_PARAM_TOKEN] = '${_token}';
 
                 foreach( $this->getExtraParamArray() as $varname => $varvalue )
-					$data.= "\"".$varname."\":\"" . $varvalue . "\",";
+					$data[$varname] = $varvalue;
 
-                $data.= "\"none\":\"0\"}\"";
+                $data['none'] = '0';
 
-				$link->addAttribute('data-data',$data);
+				$link->addAttribute('data-data',str_replace(array("\t", "\r", "\n"),'',$json->encode($data)));
 				break;
 
 			case 'html':

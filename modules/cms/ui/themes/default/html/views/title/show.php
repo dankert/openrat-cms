@@ -148,7 +148,7 @@
               <div class="<?php echo escapeHtml('divide') ?>"><?php echo escapeHtml('') ?>
               </div>
               <div class="<?php echo escapeHtml('entry clickable') ?>"><?php echo escapeHtml('') ?>
-                <a title="<?php echo escapeHtml(''.@lang('USER_LOGOUT_DESC').'') ?>" target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('post') ?>" data-action="<?php echo escapeHtml('login') ?>" data-method="<?php echo escapeHtml('logout') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('[]') ?>" data-data="<?php echo escapeHtml('{"action":"login","subaction":"logout","id":"",\"token":"<?php echo token() ?>","none":"0"}"') ?>" class="<?php echo escapeHtml('entry') ?>"><?php echo escapeHtml('') ?>
+                <a title="<?php echo escapeHtml(''.@lang('USER_LOGOUT_DESC').'') ?>" target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('post') ?>" data-action="<?php echo escapeHtml('login') ?>" data-method="<?php echo escapeHtml('logout') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('[]') ?>" data-data="<?php echo escapeHtml('{"action":"login","subaction":"logout","id":"","token":"'.@$_token.'","none":"0"}') ?>" class="<?php echo escapeHtml('entry') ?>"><?php echo escapeHtml('') ?>
                   <i class="<?php echo escapeHtml('image-icon image-icon--method-logout') ?>"><?php echo escapeHtml('') ?>
                   </i>
                   <span><?php echo escapeHtml(''.@lang('USER_LOGOUT').'') ?>
@@ -404,7 +404,7 @@
               <div class="<?php echo escapeHtml('divide') ?>"><?php echo escapeHtml('') ?>
               </div>
               <div class="<?php echo escapeHtml('entry clickable') ?>"><?php echo escapeHtml('') ?>
-                <a data-after-success="<?php echo escapeHtml('reloadAll') ?>" title="<?php echo escapeHtml(''.@lang('USER_LOGOUT_DESC').'') ?>" target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('post') ?>" data-action="<?php echo escapeHtml('login') ?>" data-method="<?php echo escapeHtml('logout') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('[]') ?>" data-data="<?php echo escapeHtml('{"action":"login","subaction":"logout","id":"",\"token":"<?php echo token() ?>","none":"0"}"') ?>" class="<?php echo escapeHtml('entry') ?>"><?php echo escapeHtml('') ?>
+                <a data-after-success="<?php echo escapeHtml('reloadAll') ?>" title="<?php echo escapeHtml(''.@lang('USER_LOGOUT_DESC').'') ?>" target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('post') ?>" data-action="<?php echo escapeHtml('login') ?>" data-method="<?php echo escapeHtml('logout') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('[]') ?>" data-data="<?php echo escapeHtml('{"action":"login","subaction":"logout","id":"","token":"'.@$_token.'","none":"0"}') ?>" class="<?php echo escapeHtml('entry') ?>"><?php echo escapeHtml('') ?>
                   <i class="<?php echo escapeHtml('image-icon image-icon--method-logout') ?>"><?php echo escapeHtml('') ?>
                   </i>
                   <span><?php echo escapeHtml(''.@lang('USER_LOGOUT').'') ?>

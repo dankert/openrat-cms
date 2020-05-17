@@ -101,7 +101,7 @@
                   <?php if(!$if1) {  ?>
                     <?php $if1=(isset($releaseUrl)); if($if1) {  ?>
                       <td class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
-                        <a title="<?php echo escapeHtml(''.@lang('GLOBAL_RELEASE_DESC').'') ?>" target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('post') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('release') ?>" data-id="<?php echo escapeHtml(''.@$objectid.'') ?>" data-extra="<?php echo escapeHtml('{\'valueid\':\''.@$valueid.'\'}') ?>" data-data="<?php echo escapeHtml('{"action":"pageelement","subaction":"release","id":"'.@$objectid.'",\"token":"<?php echo token() ?>","valueid":"'.@$valueid.'","none":"0"}"') ?>"><?php echo escapeHtml('') ?>
+                        <a title="<?php echo escapeHtml(''.@lang('GLOBAL_RELEASE_DESC').'') ?>" target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('post') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('release') ?>" data-id="<?php echo escapeHtml(''.@$objectid.'') ?>" data-extra="<?php echo escapeHtml('{\'valueid\':\''.@$valueid.'\'}') ?>" data-data="<?php echo escapeHtml('{"action":"pageelement","subaction":"release","id":"'.@$objectid.'","token":"'.@$_token.'","valueid":"'.@$valueid.'","none":"0"}') ?>"><?php echo escapeHtml('') ?>
                           <strong><?php echo escapeHtml(''.@lang('GLOBAL_RELEASE').'') ?>
                           </strong>
                         </a>
@@ -123,7 +123,7 @@
                   <?php if(!$if1) {  ?>
                     <?php $if1=(isset($useUrl)); if($if1) {  ?>
                       <td class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
-                        <a title="<?php echo escapeHtml(''.@lang('GLOBAL_USE_DESC').'') ?>" target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('post') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('use') ?>" data-id="<?php echo escapeHtml(''.@$objectid.'') ?>" data-extra="<?php echo escapeHtml('{\'valueid\':\''.@$valueid.'\'}') ?>" data-data="<?php echo escapeHtml('{"action":"pageelement","subaction":"use","id":"'.@$objectid.'",\"token":"<?php echo token() ?>","valueid":"'.@$valueid.'","none":"0"}"') ?>"><?php echo escapeHtml('') ?>
+                        <a title="<?php echo escapeHtml(''.@lang('GLOBAL_USE_DESC').'') ?>" target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('post') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('use') ?>" data-id="<?php echo escapeHtml(''.@$objectid.'') ?>" data-extra="<?php echo escapeHtml('{\'valueid\':\''.@$valueid.'\'}') ?>" data-data="<?php echo escapeHtml('{"action":"pageelement","subaction":"use","id":"'.@$objectid.'","token":"'.@$_token.'","valueid":"'.@$valueid.'","none":"0"}') ?>"><?php echo escapeHtml('') ?>
                           <span><?php echo escapeHtml(''.@lang('GLOBAL_USE').'') ?>
                           </span>
                         </a>

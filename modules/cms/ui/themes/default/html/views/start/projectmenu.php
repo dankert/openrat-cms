@@ -30,7 +30,7 @@
           <?php foreach((array)$projects as $list_key=>$list_value) { extract($list_value); ?>
             <tr class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
               <td class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
-                <a title="<?php echo escapeHtml(''.@lang('TREE_CHOOSE_PROJECT').'') ?>" target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('post') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('') ?>" data-id="<?php echo escapeHtml(''.@$id.'') ?>" data-extra="<?php echo escapeHtml('[]') ?>" data-data="<?php echo escapeHtml('{"action":"start","subaction":"projectmenu","id":"'.@$id.'",\"token":"<?php echo token() ?>","none":"0"}"') ?>"><?php echo escapeHtml('') ?>
+                <a title="<?php echo escapeHtml(''.@lang('TREE_CHOOSE_PROJECT').'') ?>" target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('post') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('') ?>" data-id="<?php echo escapeHtml(''.@$id.'') ?>" data-extra="<?php echo escapeHtml('[]') ?>" data-data="<?php echo escapeHtml('{"action":"start","subaction":"projectmenu","id":"'.@$id.'","token":"'.@$_token.'","none":"0"}') ?>"><?php echo escapeHtml('') ?>
                   <?php  { $project= project; ?>
                    <?php } ?>
                   <img src="<?php echo escapeHtml('./modules/cms/ui/themes/default/images/icon_project.png') ?>" /><?php echo escapeHtml('') ?>

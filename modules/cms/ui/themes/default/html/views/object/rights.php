@@ -73,7 +73,7 @@
                 </td>
                <?php } ?>
               <td class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
-                <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('post') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('delacl') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('{\'aclid\':\''.@$aclid.'\'}') ?>" data-data="<?php echo escapeHtml('{"action":"object","subaction":"delacl","id":"",\"token":"<?php echo token() ?>","aclid":"'.@$aclid.'","none":"0"}"') ?>"><?php echo escapeHtml('') ?>
+                <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('post') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('delacl') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('{\'aclid\':\''.@$aclid.'\'}') ?>" data-data="<?php echo escapeHtml('{"action":"object","subaction":"delacl","id":"","token":"'.@$_token.'","aclid":"'.@$aclid.'","none":"0"}') ?>"><?php echo escapeHtml('') ?>
                   <span><?php echo escapeHtml(''.@lang('GLOBAL_DELETE').'') ?>
                   </span>
                 </a>

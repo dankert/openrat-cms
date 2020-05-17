@@ -45,7 +45,7 @@
                  <?php } ?>
               </td>
               <td class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
-                <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('post') ?>" data-action="<?php echo escapeHtml('user') ?>" data-method="<?php echo escapeHtml('switch') ?>" data-id="<?php echo escapeHtml(''.@$userid.'') ?>" data-extra="<?php echo escapeHtml('[]') ?>" data-data="<?php echo escapeHtml('{"action":"user","subaction":"switch","id":"'.@$userid.'",\"token":"<?php echo token() ?>","none":"0"}"') ?>"><?php echo escapeHtml('') ?>
+                <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('post') ?>" data-action="<?php echo escapeHtml('user') ?>" data-method="<?php echo escapeHtml('switch') ?>" data-id="<?php echo escapeHtml(''.@$userid.'') ?>" data-extra="<?php echo escapeHtml('[]') ?>" data-data="<?php echo escapeHtml('{"action":"user","subaction":"switch","id":"'.@$userid.'","token":"'.@$_token.'","none":"0"}') ?>"><?php echo escapeHtml('') ?>
                   <span><?php echo escapeHtml(''.@lang('LOGIN').'') ?>
                   </span>
                 </a>

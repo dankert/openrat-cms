@@ -27,7 +27,7 @@
           <?php foreach((array)$timeline as $list_key=>$list_value) { extract($list_value); ?>
             <tr class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
               <td class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
-                <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('post') ?>" data-action="<?php echo escapeHtml('start') ?>" data-method="<?php echo escapeHtml('projectmenu') ?>" data-id="<?php echo escapeHtml(''.@$projectid.'') ?>" data-extra="<?php echo escapeHtml('[]') ?>" data-data="<?php echo escapeHtml('{"action":"start","subaction":"projectmenu","id":"'.@$projectid.'",\"token":"<?php echo token() ?>","none":"0"}"') ?>"><?php echo escapeHtml('') ?>
+                <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('post') ?>" data-action="<?php echo escapeHtml('start') ?>" data-method="<?php echo escapeHtml('projectmenu') ?>" data-id="<?php echo escapeHtml(''.@$projectid.'') ?>" data-extra="<?php echo escapeHtml('[]') ?>" data-data="<?php echo escapeHtml('{"action":"start","subaction":"projectmenu","id":"'.@$projectid.'","token":"'.@$_token.'","none":"0"}') ?>"><?php echo escapeHtml('') ?>
                   <span><?php echo escapeHtml(''.@$projectname.'') ?>
                   </span>
                 </a>

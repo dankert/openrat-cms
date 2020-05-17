@@ -130,7 +130,7 @@
 			<newline />
 		-->
 
-		<if value="size:dbids" greaterthan="1">
+		<if value="${dbids}" greaterthan="1">
 			<!-- Mehr als 1 Datenbank zur Auswahl. Auswahlfeld anzeigen. -->
 			<group title="${message:DATABASE}" icon="database" open="true">
 				<part class="line">

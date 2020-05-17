@@ -44,7 +44,7 @@
               </div>
             </div>
           </fieldset>
-          <?php $if1=(intval(1)<intval(size:dbids)); if($if1) {  ?>
+          <?php $if1=(intval(1)<count(size:dbids)); if($if1) {  ?>
             <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
               <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('DATABASE').'') ?>
                 <img src="<?php echo escapeHtml('themes/default/images/icon/method/database.svg" />') ?>" /><?php echo escapeHtml('') ?>
