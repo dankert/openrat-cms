@@ -23,6 +23,8 @@ require('../../modules/cms/base/require.php');
 
 echo "Searching in $dir\n";
 
+$count = 0;
+
 foreach(FileUtils::readDir( $dir ) as $action )
 {
 	if   ( !is_dir($dir.'/'.$action ) )
@@ -30,11 +32,11 @@ foreach(FileUtils::readDir( $dir ) as $action )
 
     echo "Action: $action\n";
 
-
     foreach(FileUtils::readDir( $dir.'/'.$action ) as $file )
     {
         if   ( substr($file,-12 ) == '.tpl.src.xml' )
         {
+        	$count++;
             $method = substr($file, 0,-12 );
             echo "\tMethod $method\n";
 
@@ -56,4 +58,5 @@ foreach(FileUtils::readDir( $dir ) as $action )
         }
     }
 }
+echo "\nSummary: Compiled $count files.\n";
 

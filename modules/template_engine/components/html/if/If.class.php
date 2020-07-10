@@ -31,7 +31,7 @@ class IfComponent extends Component
 		elseif ($this->contains)
 			$expr .= 'in_array('.$if->value($this->value).',explode(",",'.$if->value($this->contains).')';
 		elseif ($this->equals)
-			$expr .= '' . $if->value($this->value).'=='.$if->value($this->equals);
+			$expr .= '' . $if->value($this->value).'==\''.$if->value($this->equals).'\'';
 		elseif ($this->lessthan)
 			$expr .= 'intval(' . $if->value($this->lessthan).')>intval('.$if->value($this->value).')';
 		elseif ($this->greaterthan)

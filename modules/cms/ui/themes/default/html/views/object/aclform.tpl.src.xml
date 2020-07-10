@@ -59,7 +59,7 @@
 				<part class="input">
 					<list list="${show}" value="t" key="k">
 						<part>
-							<if value="${t}" equals="'read'">
+							<if value="${t}" equals="read">
 								<set var="${t}" value="true" />
 								<checkbox name="${t}" readonly="true"></checkbox>
 							</if>

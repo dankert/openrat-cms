@@ -11,7 +11,7 @@
         <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('value_time') ?>" value="<?php echo escapeHtml(''.@$value_time.'') ?>" /><?php echo escapeHtml('') ?>
         <span class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml(''.@$desc.'') ?>
         </span>
-        <?php $if1=($type==date); if($if1) {  ?>
+        <?php $if1=($type=='date'); if($if1) {  ?>
           <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
             <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('date').'') ?>
               <img /><?php echo escapeHtml('') ?>
@@ -36,7 +36,7 @@
             </div>
           </fieldset>
          <?php } ?>
-        <?php $if1=($type==text); if($if1) {  ?>
+        <?php $if1=($type=='text'); if($if1) {  ?>
           <tr><?php echo escapeHtml('') ?>
             <td colspan="<?php echo escapeHtml('2') ?>"><?php echo escapeHtml('') ?>
               <div class="<?php echo escapeHtml('inputholder') ?>"><?php echo escapeHtml('') ?>
@@ -45,7 +45,7 @@
             </td>
           </tr>
          <?php } ?>
-        <?php $if1=($type==longtext); if($if1) {  ?>
+        <?php $if1=($type=='longtext'); if($if1) {  ?>
           <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('format') ?>" value="<?php echo escapeHtml(''.@$format.'') ?>" /><?php echo escapeHtml('') ?>
           <?php $if1=(isset($preview)); if($if1) {  ?>
             <div class="<?php echo escapeHtml('preview') ?>"><?php echo escapeHtml('') ?>
@@ -64,15 +64,15 @@
               </fieldset>
             </div>
            <?php } ?>
-          <?php $if1=($editor==markdown); if($if1) {  ?>
+          <?php $if1=($editor=='markdown'); if($if1) {  ?>
             <textarea name="<?php echo escapeHtml('text') ?>" class="<?php echo escapeHtml('editor markdown-editor') ?>"><?php echo escapeHtml(''.@$text.'') ?>
             </textarea>
            <?php } ?>
-          <?php $if1=($editor==html); if($if1) {  ?>
+          <?php $if1=($editor=='html'); if($if1) {  ?>
             <textarea name="<?php echo escapeHtml('text') ?>" id="<?php echo escapeHtml('pageelement_edit_editor') ?>" class="<?php echo escapeHtml('editor html-editor') ?>"><?php echo ''.@$text.'' ?>
             </textarea>
            <?php } ?>
-          <?php $if1=($editor==wiki); if($if1) {  ?>
+          <?php $if1=($editor=='wiki'); if($if1) {  ?>
             <?php $if1=(isset($languagetext)); if($if1) {  ?>
               <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
                 <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@$languagename.'') ?>
@@ -184,13 +184,13 @@
               </div>
             </fieldset>
            <?php } ?>
-          <?php $if1=($editor==text); if($if1) {  ?>
+          <?php $if1=($editor=='text'); if($if1) {  ?>
             <textarea name="<?php echo escapeHtml('text') ?>" class="<?php echo escapeHtml('editor raw-editor') ?>"><?php echo escapeHtml(''.@$text.'') ?>
             </textarea>
             
            <?php } ?>
          <?php } ?>
-        <?php $if1=($type==link); if($if1) {  ?>
+        <?php $if1=($type=='link'); if($if1) {  ?>
           <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
             <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
               <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
@@ -220,7 +220,7 @@
             </div>
           </fieldset>
          <?php } ?>
-        <?php $if1=($type==list); if($if1) {  ?>
+        <?php $if1=($type=='list'); if($if1) {  ?>
           <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
             <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
               <div class="<?php echo escapeHtml('') ?>"><?php echo escapeHtml('') ?>
@@ -235,7 +235,7 @@
             </div>
           </fieldset>
          <?php } ?>
-        <?php $if1=($type==insert); if($if1) {  ?>
+        <?php $if1=($type=='insert'); if($if1) {  ?>
           <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
             <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
               <div class="<?php echo escapeHtml('') ?>"><?php echo escapeHtml('') ?>
@@ -250,7 +250,7 @@
             </div>
           </fieldset>
          <?php } ?>
-        <?php $if1=($type==number); if($if1) {  ?>
+        <?php $if1=($type=='number'); if($if1) {  ?>
           <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
             <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
               <div class="<?php echo escapeHtml('') ?>"><?php echo escapeHtml('') ?>
@@ -262,7 +262,7 @@
             </div>
           </fieldset>
          <?php } ?>
-        <?php $if1=($type==select); if($if1) {  ?>
+        <?php $if1=($type=='select'); if($if1) {  ?>
           <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
             <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
               <div class="<?php echo escapeHtml('') ?>"><?php echo escapeHtml('') ?>
@@ -276,8 +276,8 @@
             </div>
           </fieldset>
          <?php } ?>
-        <?php $if1=($type==longtext); if($if1) {  ?>
-          <?php $if1=($editor==wiki); if($if1) {  ?>
+        <?php $if1=($type=='longtext'); if($if1) {  ?>
+          <?php $if1=($editor=='wiki'); if($if1) {  ?>
             <?php $if1=(isset($languages)); if($if1) {  ?>
               <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
                 <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('editor_show_language').'') ?>

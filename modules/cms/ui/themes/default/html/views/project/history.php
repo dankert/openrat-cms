@@ -25,23 +25,23 @@
             </td>
           </tr>
           <?php foreach((array)$timeline as $list_key=>$list_value) { extract($list_value); ?>
-            <?php $if1=($typeid==1); if($if1) {  ?>
+            <?php $if1=($typeid=='1'); if($if1) {  ?>
               <?php  { $type= folder; ?>
                <?php } ?>
              <?php } ?>
-            <?php $if1=($typeid==2); if($if1) {  ?>
+            <?php $if1=($typeid=='2'); if($if1) {  ?>
               <?php  { $type= file; ?>
                <?php } ?>
              <?php } ?>
-            <?php $if1=($typeid==3); if($if1) {  ?>
+            <?php $if1=($typeid=='3'); if($if1) {  ?>
               <?php  { $type= page; ?>
                <?php } ?>
              <?php } ?>
-            <?php $if1=($typeid==4); if($if1) {  ?>
+            <?php $if1=($typeid=='4'); if($if1) {  ?>
               <?php  { $type= link; ?>
                <?php } ?>
              <?php } ?>
-            <?php $if1=($typeid==5); if($if1) {  ?>
+            <?php $if1=($typeid=='5'); if($if1) {  ?>
               <?php  { $type= url; ?>
                <?php } ?>
              <?php } ?>

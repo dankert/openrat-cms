@@ -56,7 +56,7 @@
                               <input name="<?php echo escapeHtml(''.@$id.'') ?>" type="<?php echo escapeHtml('text') ?>" maxlength="<?php echo escapeHtml('255') ?>" value="<?php echo escapeHtml(''.@$value.'') ?>" /><?php echo escapeHtml('') ?>
                             </div>
                            <?php } ?>
-                          <?php $if1=($type==longtext); if($if1) {  ?>
+                          <?php $if1=($type=='longtext'); if($if1) {  ?>
                             <textarea name="<?php echo escapeHtml(''.@$id.'') ?>" class="<?php echo escapeHtml('inputarea') ?>"><?php echo escapeHtml(''.@$value.'') ?>
                             </textarea>
                            <?php } ?>

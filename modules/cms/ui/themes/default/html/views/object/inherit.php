@@ -7,7 +7,7 @@
       <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('subaction') ?>" value="<?php echo escapeHtml('inherit') ?>" /><?php echo escapeHtml('') ?>
       <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('id') ?>" value="<?php echo escapeHtml(''.@$_id.'') ?>" /><?php echo escapeHtml('') ?>
       <div><?php echo escapeHtml('') ?>
-        <?php $if1=($type==folder); if($if1) {  ?>
+        <?php $if1=($type=='folder'); if($if1) {  ?>
           <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
             <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('options').'') ?>
               <img /><?php echo escapeHtml('') ?>
