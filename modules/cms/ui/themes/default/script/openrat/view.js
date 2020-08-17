@@ -78,18 +78,18 @@ Openrat.View = function( action,method,id,params ) {
 
 		// Load the data for this view.
 		let apiUrl = Openrat.View.createUrl( this.action,this.method,this.id,this.params,true);
-		let loadViewApiPromise = $.getJSON( apiUrl );
+		//let loadViewApiPromise = $.getJSON( apiUrl );
 
 		loadViewHtmlPromise.done( function() {
 
-			loadViewApiPromise.done( function(data,status){
+			//loadViewApiPromise.done( function(data,status){
 				// Data binding.
-			} );
+			//} );
 		} );
 
-		loadViewApiPromise.fail( function(jqxhr,status,cause) {
-			Openrat.Workbench.notify('','','error','Server Error',['Server Error while requesting url '+apiUrl, status]);
-		});
+		//loadViewApiPromise.fail( function(jqxhr,status,cause) {
+		//	Openrat.Workbench.notify('','','error','Server Error',['Server Error while requesting url '+apiUrl, status]);
+		//});
 	}
 
 
