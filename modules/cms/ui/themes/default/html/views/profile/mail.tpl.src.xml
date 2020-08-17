@@ -20,7 +20,7 @@
 
             <link action="profile" subaction="confirmmail" type="dialog">
                 <text
-                        key="mail_code"/>
+                        value="${mail_code}"/>
             </link>
         </part>
 

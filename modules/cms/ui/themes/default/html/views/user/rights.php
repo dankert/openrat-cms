@@ -38,9 +38,9 @@
                     </td>
                     <?php foreach((array)$show as $list_key=>$t) {  ?>
                       <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
-                        <span title="<?php echo escapeHtml(''.@lang('acl_'.@$t.'').'') ?>"><?php echo escapeHtml(''.@lang('acl_'.@$t.'').'') ?>
+                        <span title="<?php echo escapeHtml(''.@lang('acl_'.@$t.'').'') ?>"><?php echo escapeHtml(''.@lang('acl_'.@$t.'_abbrev').'') ?>
                         </span>
-                        <span title="<?php echo escapeHtml(''.@lang('acl_').'') ?>"><?php echo escapeHtml(''.@lang('acl_').'') ?>
+                        <span title="<?php echo escapeHtml(''.@lang('acl_').'') ?>"><?php echo escapeHtml(''.@lang('acl__abbrev').'') ?>
                         </span>
                       </td>
                      <?php } ?>

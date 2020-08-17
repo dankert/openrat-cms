@@ -15,7 +15,7 @@
 					<text value="${key}"></text>
 				</column>
 				<column class="${class}">
-					<text class="${class}" var="value"></text>
+					<text class="${class}" value="${value}"></text>
 				</column>
 			</row>
 		</list>

@@ -9,7 +9,7 @@
 				<text value="${message:LANGUAGE_ISOCODE}"></text>
 			</column>
 			<column>
-				<text raw=""></text>
+				<text value=""></text>
 			</column>
 		</row>
 		<list list="${el}" extract="true">

@@ -2,7 +2,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
     <form>
-        <text label="GLOBAL_NAME" var="name"></text>
+        <text label="GLOBAL_NAME" value="${name}"></text>
 
         <checkbox label="${message:GLOBAL_DELETE}" name="delete"></checkbox>
 

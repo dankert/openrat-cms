@@ -43,7 +43,7 @@
         </fieldset>
         <div class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
           <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('dialog') ?>" data-action="<?php echo escapeHtml('profile') ?>" data-method="<?php echo escapeHtml('confirmmail') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('{\'dialogAction\':\'profile\',\'dialogMethod\':\'confirmmail\'}') ?>" href="<?php echo escapeHtml('/#/profile/') ?>"><?php echo escapeHtml('') ?>
-            <span><?php echo escapeHtml(''.@lang('mail_code').'') ?>
+            <span><?php echo escapeHtml(''.@$mail_code.'') ?>
             </span>
           </a>
         </div>

@@ -3,7 +3,7 @@
     <form readonly="true">
 
         <list list="${info}">
-            <text label="${list_key}" var="list_value"/>
+            <text label="${list_key}" value="${list_value}"/>
         </list>
     </form>
 </output>

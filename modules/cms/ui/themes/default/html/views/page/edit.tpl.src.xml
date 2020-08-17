@@ -32,7 +32,7 @@
                 </column>
                 <column>
                     <image elementtype="${typename}"/>
-                    <text prefix="el_" key="${typename}"></text>
+                    <text value="${message:el_${typename}}"></text>
                 </column>
             </row>
         </list>

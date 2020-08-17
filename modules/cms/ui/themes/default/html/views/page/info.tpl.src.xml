@@ -46,10 +46,10 @@
 
 			<group title="${languagename}">
 
-				<text label="name" var="name" />
-				<text label="description" var="description" />
+				<text label="name" value="${name}" />
+				<text label="description" value="${description}" />
 
-				<text label="alias" var="alias" />
+				<text label="alias" value="${alias}" />
 
 				<part class="clickable">
 					<link class="or-link-btn" type="edit" action="page" subaction="name" var1="languageid" value1="${languageid}">

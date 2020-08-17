@@ -20,7 +20,7 @@
 					</link>
 				</column>
 				<column>
-					<text value="${message:${type}}" prefix="EL_"></text>
+					<text value="${message:el_${type}}"></text>
 				</column>
 			</row>
 		</list>

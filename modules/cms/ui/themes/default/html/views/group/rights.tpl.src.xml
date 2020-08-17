@@ -26,7 +26,7 @@
                                     </column>
                                     <list list="${show}" value="t">
                                         <column class="help">
-                                            <text value="${message:${t}}" prefix="acl_" suffix="_abbrev"
+                                            <text value="${message:acl_${t}_abbrev}"
                                                   title="message:acl_{t}"></text>
                                         </column>
                                     </list>

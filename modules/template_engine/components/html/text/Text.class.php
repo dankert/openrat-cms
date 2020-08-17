@@ -9,22 +9,11 @@ use template_engine\element\ValueExpression;
 
 class TextComponent extends HtmlComponent
 {
-	public $prefix = '';
-	public $suffix = '';
 	public $title;
-	public $titlekey;
 	public $type;
 	public $escape = true;
-	public $var;
-	public $text;
-	public $key;
-	public $raw;
 	public $value;
-	public $maxlength; // DEPRECATED - use CSS.
-	public $accesskey;
-	public $cut = 'both';
 	public $label;
-	public $newline = true;
 
 	public function createElement()
 	{
@@ -73,10 +62,6 @@ class TextComponent extends HtmlComponent
 
        if	( $this->title )
             $text->addAttribute('title',$this->title);
-       elseif	( $this->titlekey )
-            //$text->addAttribute('title', Value::createExpression(ValueExpression::TYPE_MESSAGE,$this->titlekey));
-            //$text->addAttribute('title', $this->titlekey);
-            $text->addAttribute('title', new ValueExpression( ValueExpression::TYPE_MESSAGE,$this->titlekey,0) );
 
         //if   ( $this->newline)
 		//    $functions[] = 'nl2br(@)';
@@ -85,19 +70,7 @@ class TextComponent extends HtmlComponent
 		//if	( !empty($this->accesskey) )
 		//	$functions[] = "Text::accessKey('".$this->accesskey."',@)";
 
-		if	( $this->key )
-			$text->content( new ValueExpression( ValueExpression::TYPE_MESSAGE,$this->key,0) );
-
-		elseif	( $this->text )
-			$text->content( Value::createExpression(ValueExpression::TYPE_MESSAGE,$this->text) );
-
-		elseif	( $this->var )
-			$text->content( Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->var) );
-
-		elseif	( $this->raw )
-			$text->content( str_replace('_',' ',$this->raw) );
-				
-		elseif	( $this->value )
+		if	( $this->value )
 			$text->content( $this->value );
 
 

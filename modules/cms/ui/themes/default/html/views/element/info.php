@@ -14,7 +14,7 @@
             <td><?php echo escapeHtml('') ?>
               <i class="<?php echo escapeHtml('image-icon image-icon--action-el_'.@$type.'') ?>"><?php echo escapeHtml('') ?>
               </i>
-              <span><?php echo escapeHtml(''.@lang(''.@$type.'').'') ?>
+              <span><?php echo escapeHtml(''.@lang('el_'.@$type.'').'') ?>
               </span>
             </td>
           </tr>

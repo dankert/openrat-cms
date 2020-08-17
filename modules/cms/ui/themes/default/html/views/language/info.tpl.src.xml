@@ -3,7 +3,7 @@
 
     <form readonly="true" cancel="false">
 
-        <text class="headline" var="name"/>
+        <text class="headline" value="${name}"/>
 
         <part class="line">
             <part class="label">

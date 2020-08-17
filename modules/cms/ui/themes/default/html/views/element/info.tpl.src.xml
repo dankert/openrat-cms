@@ -7,7 +7,7 @@
 			</column>
 			<column>
 				<image elementtype="${type}" />
-				<text value="${message:${type}}" prefix="el_" />
+				<text value="${message:el_${type}}" />
 			</column>
 		</row>
 		<row class="data">

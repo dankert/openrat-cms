@@ -8,7 +8,7 @@
 				<text value="${message:name}"></text>
 			</column>
 			<column>
-				<text raw=""></text>
+				<text value=""></text>
 			</column>
 			<column>
 				<text value="${message:LOGIN}"></text>

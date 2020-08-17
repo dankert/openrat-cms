@@ -19,12 +19,11 @@
             <if present="dbname">
                 <part class="toolbar-icon">
                     <image action="database"></image>
-                    <text class="label" raw=" "/>
+                    <text class="label" value=""/>
                     <part class="arrow arrow-down"/>
                     <part class="dropdown">
                         <part class="entry">
-                            <text title="${dbid}" var="dbname"
-                                  maxlength="50"></text>
+                            <text title="${dbid}" value="${dbname}" />
                         </part>
                     </part>
                 </part>
@@ -82,7 +81,7 @@
             <if true="${isLoggedIn}">
                 <part class="toolbar-icon menu">
                     <image action="file"></image>
-                    <text class="label" key="file"></text>
+                    <text class="label" value="${message:file}"></text>
                     <part class="arrow arrow-down"/>
                     <part class="dropdown">
                         <part
@@ -214,7 +213,7 @@
 
                 <part class="toolbar-icon menu">
                     <image menu="edit"></image>
-                    <text class="label" key="edit"></text>
+                    <text class="label" value="${message:edit}"></text>
                     <part class="arrow arrow-down"/>
                     <part class="dropdown">
                         <part
@@ -297,7 +296,7 @@
 
                 <part class="toolbar-icon menu">
                     <image menu="extra"></image>
-                    <text class="label" key="extras"></text>
+                    <text class="label" value="${message:extras}"></text>
                     <part class="arrow arrow-down"/>
                     <part class="dropdown">
 
@@ -470,7 +469,7 @@
             <if not="" empty="${config:login/motd}">
                 <part class="toolbar-icon menu">
                     <image method="motd"></image>
-                    <text class="label" raw=" "/>
+                    <text class="label" value=" "/>
                     <part class="arrow arrow-down"/>
                     <part class="dropdown">
                         <part class="entry">
@@ -505,7 +504,7 @@
 
             <part class="toolbar-icon user menu">
                 <image action="user"></image>
-                <text class="label" var="userfullname" maxlength="25"></text>
+                <text class="label" value="${userfullname}"></text>
 
                 <part class="arrow arrow-down"/>
                 <!-- <part class="arrow arrow-down" />-->
@@ -580,7 +579,7 @@
                     <input name="text" hint="${message:search}"></input>
                     <part class="arrow arrow-down"/>
                     <part class="dropdown">
-                        <text raw=""></text>
+                        <text value=""></text>
                     </part>
                 </part>
             </if>

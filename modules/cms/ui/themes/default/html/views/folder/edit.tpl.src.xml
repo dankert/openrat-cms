@@ -21,7 +21,7 @@
 					</link>
 				</column>
 				<column>
-					<text raw=""></text>
+					<text value=""></text>
 				</column>
 			</row>
 		</if>

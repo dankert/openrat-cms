@@ -9,13 +9,13 @@
 						<text value="${message:name}"></text>
 					</column>
 					<column>
-						<text raw=""></text>
+						<text value=""></text>
 					</column>
 					<column>
-						<text raw=""></text>
+						<text value=""></text>
 					</column>
 					<column>
-						<text raw=""></text>
+						<text value=""></text>
 					</column>
 				</row>
 				<list list="${el}" extract="true">

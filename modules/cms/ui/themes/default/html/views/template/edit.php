@@ -28,7 +28,7 @@
                 </a>
               </td>
               <td><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang(''.@$type.'').'') ?>
+                <span><?php echo escapeHtml(''.@lang('el_'.@$type.'').'') ?>
                 </span>
               </td>
             </tr>

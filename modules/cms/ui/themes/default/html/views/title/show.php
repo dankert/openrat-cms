@@ -14,7 +14,7 @@
           <div class="<?php echo escapeHtml('toolbar-icon') ?>"><?php echo escapeHtml('') ?>
             <i class="<?php echo escapeHtml('image-icon image-icon--action-database') ?>"><?php echo escapeHtml('') ?>
             </i>
-            <span class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml(' ') ?>
+            <span class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
             </span>
             <div class="<?php echo escapeHtml('arrow arrow-down') ?>"><?php echo escapeHtml('') ?>
             </div>

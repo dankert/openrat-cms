@@ -22,7 +22,7 @@
 
 		<part class="line">
 			<part class="label">
-				<text class="help" key="file_max_size"></text>
+				<text class="help" value="${message:file_max_size}"></text>
 			</part>
 			<part class="input">
 				<text value="${max_size}"></text>

@@ -95,7 +95,7 @@
                   <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                     <span><?php echo escapeHtml(' ') ?>
                     </span>
-                    <span><?php echo escapeHtml(''.@lang(''.@$actiontype.'').'') ?>
+                    <span><?php echo escapeHtml(''.@lang('FOLDER_SELECT_'.@$actiontype.'').'') ?>
                     </span>
                   </label>
                 </div>
