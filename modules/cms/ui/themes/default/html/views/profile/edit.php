@@ -58,7 +58,7 @@
           </div>
         </fieldset>
         <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
-          <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('GLOBAL_PROP').'') ?>
+          <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('PROP').'') ?>
             <img /><?php echo escapeHtml('') ?>
             <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
             </div>
@@ -197,7 +197,7 @@
       </div>
       <div class="<?php echo escapeHtml('or-form-actionbar') ?>"><?php echo escapeHtml('') ?>
         <input type="<?php echo escapeHtml('button') ?>" value="<?php echo escapeHtml(''.@lang('CANCEL').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo escapeHtml('') ?>
-        <input type="<?php echo escapeHtml('submit') ?>" value="<?php echo escapeHtml(''.@lang('global_save').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('submit') ?>" value="<?php echo escapeHtml(''.@lang('save').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo escapeHtml('') ?>
       </div>
     </form>
  <?php } ?>

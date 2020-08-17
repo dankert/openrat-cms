@@ -27,7 +27,7 @@
           </div>
         </div>
         <?php $if1=(($templates)==FALSE); if($if1) {  ?>
-          <span><?php echo escapeHtml(''.@lang('GLOBAL_NO_TEMPLATES_AVAILABLE_DESC').'') ?>
+          <span><?php echo escapeHtml(''.@lang('NO_TEMPLATES_AVAILABLE_DESC').'') ?>
           </span>
          <?php } ?>
         <a target="<?php echo escapeHtml('_self') ?>" data-action="<?php echo escapeHtml('template') ?>" data-method="<?php echo escapeHtml('add') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('[]') ?>" href="<?php echo escapeHtml('/#/template/') ?>" class="<?php echo escapeHtml('action') ?>"><?php echo escapeHtml('') ?>

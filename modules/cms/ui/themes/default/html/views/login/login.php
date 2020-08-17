@@ -30,7 +30,7 @@
          <?php } ?>
         <?php $if1=(config('security','readonly')); if($if1) {  ?>
           <div class="<?php echo escapeHtml('message warn') ?>"><?php echo escapeHtml('') ?>
-            <span><?php echo escapeHtml(''.@lang('GLOBAL_READONLY_DESC').'') ?>
+            <span><?php echo escapeHtml(''.@lang('READONLY_DESC').'') ?>
             </span>
           </div>
          <?php } ?>

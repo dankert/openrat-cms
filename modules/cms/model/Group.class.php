@@ -110,7 +110,7 @@ class Group extends ModelBase
 	public function save()
 	{
 		if	( empty($this->name) )
-			$this->name = lang('GLOBAL_GROUP').' '.$this->groupid;
+			$this->name = lang('GROUP').' '.$this->groupid;
 			
 		// Gruppe speichern
 		$sql = db()->sql( 'UPDATE {{group}} '.
@@ -359,7 +359,7 @@ class Group extends ModelBase
 			$acl->setDatabaseRow( $row );
 			$acl->projectid    = $row['projectid'   ];
 			if	( intval($acl->languageid) == 0 )
-				$acl->languagename = lang('GLOBAL_ALL_LANGUAGES');
+				$acl->languagename = lang('ALL_LANGUAGES');
 			else
 				$acl->languagename = $row['languagename'];
 			$aclList[] = $acl;

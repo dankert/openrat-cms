@@ -34,7 +34,7 @@
                 <td class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
                   <?php $if1=(isset($id)); if($if1) {  ?>
                     <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('post') ?>" data-action="<?php echo escapeHtml('model') ?>" data-method="<?php echo escapeHtml('setdefault') ?>" data-id="<?php echo escapeHtml(''.@$id.'') ?>" data-extra="<?php echo escapeHtml('[]') ?>" data-data="<?php echo escapeHtml('{"action":"model","subaction":"setdefault","id":"'.@$id.'","token":"'.@$_token.'","none":"0"}') ?>"><?php echo escapeHtml('') ?>
-                      <span><?php echo escapeHtml(''.@lang('GLOBAL_make_default').'') ?>
+                      <span><?php echo escapeHtml(''.@lang('make_default').'') ?>
                       </span>
                     </a>
                    <?php } ?>
@@ -42,7 +42,7 @@
                <?php } ?>
               <?php if(!$if1) {  ?>
                 <td><?php echo escapeHtml('') ?>
-                  <em><?php echo escapeHtml(''.@lang('GLOBAL_is_default').'') ?>
+                  <em><?php echo escapeHtml(''.@lang('is_default').'') ?>
                   </em>
                 </td>
                <?php } ?>

@@ -18,7 +18,7 @@
 		</list>
 		<if empty="${templates}">
 			<row>
-				<text value="${message:GLOBAL_NO_TEMPLATES_AVAILABLE_DESC}"></text>
+				<text value="${message:NO_TEMPLATES_AVAILABLE_DESC}"></text>
 			</row>
 		</if>
 

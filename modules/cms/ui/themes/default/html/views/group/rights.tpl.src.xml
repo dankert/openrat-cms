@@ -8,7 +8,7 @@
                         <if empty="${rights}">
                             <row>
                                 <column>
-                                    <text value="${message:GLOBAL_NOT_FOUND}"></text>
+                                    <text value="${message:NOT_FOUND}"></text>
                                 </column>
                             </row>
                         </if>
@@ -16,18 +16,18 @@
                             <table>
                                 <row class="headline">
                                     <column class="help">
-                                        <text value="${message:GLOBAL_USER}"></text>
+                                        <text value="${message:USER}"></text>
                                     </column>
                                     <column class="help">
-                                        <text value="${message:GLOBAL_NAME}"></text>
+                                        <text value="${message:NAME}"></text>
                                     </column>
                                     <column class="help">
-                                        <text value="${message:GLOBAL_LANGUAGE}"></text>
+                                        <text value="${message:LANGUAGE}"></text>
                                     </column>
                                     <list list="${show}" value="t">
                                         <column class="help">
                                             <text value="${message:acl_${t}_abbrev}"
-                                                  title="message:acl_{t}"></text>
+                                                  title="${message:acl_${t}}"></text>
                                         </column>
                                     </list>
                                 </row>
@@ -41,7 +41,7 @@
                                             <if not="true" present="username">
                                                 <if not="true" present="groupname">
                                                     <image action="group"></image>
-                                                    <text value="${message:global_all}"></text>
+                                                    <text value="${message:all}"></text>
                                                 </if>
                                             </if>
                                             <set var="username"></set>

@@ -29,18 +29,18 @@
 						</column>
 						<column url="${default_url}">
 							<if present="default_url">
-								<text value="${message:GLOBAL_make_default}"></text>
+								<text value="${message:make_default}"></text>
 							</if>
 							<else>
-								<text value="${message:GLOBAL_is_default}"></text>
+								<text value="${message:is_default}"></text>
 							</else>
 						</column>
 						<column url="${select_url}">
 							<if present="select_url">
-								<text value="${message:GLOBAL_select}"></text>
+								<text value="${message:select}"></text>
 							</if>
 							<else>
-								<text value="${message:GLOBAL_selected}"></text>
+								<text value="${message:selected}"></text>
 							</else>
 						</column>
 					</row>

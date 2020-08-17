@@ -104,7 +104,7 @@ class Template extends ModelBase
 	function save()
 	{
 		if	( $this->name == "" )
-			$this->name = lang('GLOBAL_TEMPLATE').' #'.$this->templateid;
+			$this->name = lang('TEMPLATE').' #'.$this->templateid;
 
 		$db = db_connection();
 

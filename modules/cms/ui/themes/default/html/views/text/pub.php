@@ -2,7 +2,7 @@
   
     <?php $if1=(config('security','nopublish')); if($if1) {  ?>
       <div class="<?php echo escapeHtml('message warn') ?>"><?php echo escapeHtml('') ?>
-        <span class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml(''.@lang('GLOBAL_NOPUBLISH_DESC').'') ?>
+        <span class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml(''.@lang('NOPUBLISH_DESC').'') ?>
         </span>
       </div>
      <?php } ?>

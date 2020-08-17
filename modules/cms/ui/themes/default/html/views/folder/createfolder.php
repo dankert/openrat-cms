@@ -10,7 +10,7 @@
         <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('languageid') ?>" value="<?php echo escapeHtml(''.@$languageid.'') ?>" /><?php echo escapeHtml('') ?>
         <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
           <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-            <span><?php echo escapeHtml(''.@lang('global_FOLDER').'') ?>
+            <span><?php echo escapeHtml(''.@lang('FOLDER').'') ?>
             </span>
           </div>
           <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
@@ -21,7 +21,7 @@
         </div>
         <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
           <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-            <span><?php echo escapeHtml(''.@lang('global_DESCRIPTION').'') ?>
+            <span><?php echo escapeHtml(''.@lang('DESCRIPTION').'') ?>
             </span>
           </div>
           <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>

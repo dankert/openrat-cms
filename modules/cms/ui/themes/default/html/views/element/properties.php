@@ -210,7 +210,7 @@
                     </span>
                     <span><?php echo escapeHtml(' (') ?>
                     </span>
-                    <span><?php echo escapeHtml(''.@lang('GLOBAL_DEFAULT').'') ?>
+                    <span><?php echo escapeHtml(''.@lang('DEFAULT').'') ?>
                     </span>
                     <span><?php echo escapeHtml(') = ') ?>
                     </span>

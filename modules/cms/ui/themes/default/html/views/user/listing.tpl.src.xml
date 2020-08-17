@@ -2,7 +2,7 @@
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<dummy>
-		<window icon="user" name="GLOBAL_USERS" width="70%">
+		<window icon="user" name="USERS" width="70%">
 			<table>
 				<row class="headline">
 					<column>

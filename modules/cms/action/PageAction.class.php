@@ -246,7 +246,7 @@ class PageAction extends ObjectAction
 				if	( $o->getType() != 'folder' )
 				{
 					$f = new Folder( $o->parentid );
-					$objects[ $id ]  = lang( 'GLOBAL_'.$o->getType() ).': ';
+					$objects[ $id ]  = lang( ''.$o->getType() ).': ';
 					$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) );
 					$objects[ $id ] .= FILE_SEP.$o->name;
 				}

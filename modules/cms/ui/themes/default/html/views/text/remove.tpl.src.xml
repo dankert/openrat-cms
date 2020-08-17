@@ -4,7 +4,7 @@
     <form>
         <row>
             <column>
-                <text value="${message:GLOBAL_NAME}"></text>
+                <text value="${message:NAME}"></text>
             </column>
             <column>
                 <text value="${name}"></text>
@@ -12,7 +12,7 @@
         </row>
         <row>
             <column>
-                <text value="${message:GLOBAL_DELETE}"></text>
+                <text value="${message:DELETE}"></text>
             </column>
             <column>
                 <checkbox name="delete"></checkbox>

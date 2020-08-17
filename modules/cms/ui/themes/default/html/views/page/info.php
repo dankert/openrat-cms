@@ -23,7 +23,7 @@
             </div>
             <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
               <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang('global_filename').'') ?>
+                <span><?php echo escapeHtml(''.@lang('filename').'') ?>
                 </span>
               </div>
               <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
@@ -33,7 +33,7 @@
             </div>
             <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
               <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang('global_description').'') ?>
+                <span><?php echo escapeHtml(''.@lang('description').'') ?>
                 </span>
               </div>
               <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
@@ -102,7 +102,7 @@
             <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
               <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(''.@lang('global_full_filename').'') ?>
+                  <span><?php echo escapeHtml(''.@lang('full_filename').'') ?>
                   </span>
                 </label>
               </div>
@@ -114,7 +114,7 @@
             <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
               <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(''.@lang('global_full_filename').'') ?>
+                  <span><?php echo escapeHtml(''.@lang('full_filename').'') ?>
                   </span>
                 </label>
               </div>
@@ -126,7 +126,7 @@
             <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
               <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(''.@lang('global_template').'') ?>
+                  <span><?php echo escapeHtml(''.@lang('template').'') ?>
                   </span>
                 </label>
               </div>

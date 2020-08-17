@@ -10,7 +10,7 @@
           <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
             <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
               <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang('global_name').'') ?>
+                <span><?php echo escapeHtml(''.@lang('name').'') ?>
                 </span>
               </div>
               <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
@@ -20,7 +20,7 @@
             </div>
             <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
               <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang('global_filename').'') ?>
+                <span><?php echo escapeHtml(''.@lang('filename').'') ?>
                 </span>
               </div>
               <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
@@ -40,7 +40,7 @@
             </div>
             <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
               <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang('global_description').'') ?>
+                <span><?php echo escapeHtml(''.@lang('description').'') ?>
                 </span>
               </div>
               <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
@@ -62,7 +62,7 @@
             <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
               <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(''.@lang('global_full_filename').'') ?>
+                  <span><?php echo escapeHtml(''.@lang('full_filename').'') ?>
                   </span>
                 </label>
               </div>
@@ -162,7 +162,7 @@
                   </div>
                 </div>
                 <?php $if1=(($pages)==FALSE); if($if1) {  ?>
-                  <span><?php echo escapeHtml(''.@lang('GLOBAL_NOT_FOUND').'') ?>
+                  <span><?php echo escapeHtml(''.@lang('NOT_FOUND').'') ?>
                   </span>
                  <?php } ?>
               </div>
@@ -182,7 +182,7 @@
               <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('dialog') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('settings') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'settings\'}') ?>" href="<?php echo escapeHtml('/#//') ?>"><?php echo escapeHtml('') ?>
                 <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
                   <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                    <span><?php echo escapeHtml(''.@lang('global_state').'') ?>
+                    <span><?php echo escapeHtml(''.@lang('state').'') ?>
                     </span>
                   </div>
                   <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
@@ -231,7 +231,7 @@
           <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
             <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
               <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang('global_created').'') ?>
+                <span><?php echo escapeHtml(''.@lang('created').'') ?>
                 </span>
               </div>
               <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
@@ -248,7 +248,7 @@
             </div>
             <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
               <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang('global_lastchange').'') ?>
+                <span><?php echo escapeHtml(''.@lang('lastchange').'') ?>
                 </span>
               </div>
               <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
@@ -266,7 +266,7 @@
             <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
               <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(''.@lang('global_published').'') ?>
+                  <span><?php echo escapeHtml(''.@lang('published').'') ?>
                   </span>
                 </label>
               </div>

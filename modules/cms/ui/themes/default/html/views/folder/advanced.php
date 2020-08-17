@@ -17,11 +17,11 @@
                   <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('checkall') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$checkall){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                 </td>
                 <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(''.@lang('GLOBAL_TYPE').'') ?>
+                  <span><?php echo escapeHtml(''.@lang('TYPE').'') ?>
                   </span>
                   <span><?php echo escapeHtml(' / ') ?>
                   </span>
-                  <span><?php echo escapeHtml(''.@lang('GLOBAL_NAME').'') ?>
+                  <span><?php echo escapeHtml(''.@lang('NAME').'') ?>
                   </span>
                 </td>
               </tr>
@@ -53,7 +53,7 @@
               <?php $if1=(($object)==FALSE); if($if1) {  ?>
                 <tr><?php echo escapeHtml('') ?>
                   <td colspan="<?php echo escapeHtml('2') ?>"><?php echo escapeHtml('') ?>
-                    <span><?php echo escapeHtml(''.@lang('GLOBAL_NOT_FOUND').'') ?>
+                    <span><?php echo escapeHtml(''.@lang('NOT_FOUND').'') ?>
                     </span>
                   </td>
                 </tr>

@@ -4,7 +4,7 @@
 		<group>
 			<part class="line">
 				<part class="label">
-					<text value="${message:global_name}"></text>
+					<text value="${message:name}"></text>
 				</part>
 				<part class="input">
 					<text value="${name}" class="name" />
@@ -12,7 +12,7 @@
 			</part>
 			<part class="line">
 				<part class="label">
-					<text value="${message:global_filename}"></text>
+					<text value="${message:filename}"></text>
 				</part>
 				<part class="input">
 					<text value="${filename}" class="filename" />
@@ -28,7 +28,7 @@
 			</part>
 			<part class="line">
 				<part class="label">
-					<text value="${message:global_description}"></text>
+					<text value="${message:description}"></text>
 				</part>
 				<part class="input">
 					<text value="${description}" />
@@ -40,7 +40,7 @@
 			<part class="line">
 				<part class="label">
 					<label for="full_filename">
-						<text value="${message:global_full_filename}"></text>
+						<text value="${message:full_filename}"></text>
 					</label>
 				</part>
 				<part class="input">
@@ -119,7 +119,7 @@
 						</list>
 					</table>
 					<if empty="${pages}">
-						<text value="${message:GLOBAL_NOT_FOUND}"></text>
+						<text value="${message:NOT_FOUND}"></text>
 					</if>
 				</part>
 			</part>
@@ -129,7 +129,7 @@
 				<link subaction="settings" type="dialog">
 					<part class="line">
 						<part class="label">
-							<text value="${message:global_state}"></text>
+							<text value="${message:state}"></text>
 						</part>
 						<part class="input">
 							<if true="${is_valid}"><text value="${message:is_yes}" /></if>
@@ -158,7 +158,7 @@
 		<group title="${message:prop_userinfo}">
 			<part class="line">
 				<part class="label">
-					<text value="${message:global_created}"></text>
+					<text value="${message:created}"></text>
 				</part>
 				<part class="input">
 					<image elementtype="date"></image>
@@ -170,7 +170,7 @@
 			</part>
 			<part class="line">
 				<part class="label">
-					<text value="${message:global_lastchange}"></text>
+					<text value="${message:lastchange}"></text>
 				</part>
 				<part class="input">
 					<image elementtype="date"></image>
@@ -183,7 +183,7 @@
 			<part class="line">
 				<part class="label">
 					<label for="published_date">
-						<text value="${message:global_published}"></text>
+						<text value="${message:published}"></text>
 					</label>
 				</part>
 				<part class="input">

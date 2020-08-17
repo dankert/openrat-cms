@@ -9,7 +9,7 @@
         <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
           <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
             <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@lang('GLOBAL_NAME').'') ?>
+              <span><?php echo escapeHtml(''.@lang('NAME').'') ?>
               </span>
             </label>
           </div>

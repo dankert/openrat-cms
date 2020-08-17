@@ -8,11 +8,11 @@
         <table width="<?php echo escapeHtml('100%') ?>"><?php echo escapeHtml('') ?>
           <tr class="<?php echo escapeHtml('headline') ?>"><?php echo escapeHtml('') ?>
             <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@lang('GLOBAL_NAME').'') ?>
+              <span><?php echo escapeHtml(''.@lang('NAME').'') ?>
               </span>
             </td>
             <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@lang('GLOBAL_LANGUAGE').'') ?>
+              <span><?php echo escapeHtml(''.@lang('LANGUAGE').'') ?>
               </span>
             </td>
             <?php foreach((array)$show as $list_key=>$t) {  ?>
@@ -22,14 +22,14 @@
               </td>
              <?php } ?>
             <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@lang('global_delete').'') ?>
+              <span><?php echo escapeHtml(''.@lang('delete').'') ?>
               </span>
             </td>
           </tr>
           <?php $if1=(($acls)==FALSE); if($if1) {  ?>
             <tr class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
               <td colspan="<?php echo escapeHtml('99') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang('GLOBAL_NOT_FOUND').'') ?>
+                <span><?php echo escapeHtml(''.@lang('NOT_FOUND').'') ?>
                 </span>
               </td>
             </tr>
@@ -55,7 +55,7 @@
                   <?php $if1=!(isset($groupname)); if($if1) {  ?>
                     <i class="<?php echo escapeHtml('image-icon image-icon--action-group') ?>"><?php echo escapeHtml('') ?>
                     </i>
-                    <span><?php echo escapeHtml(''.@lang('global_all').'') ?>
+                    <span><?php echo escapeHtml(''.@lang('all').'') ?>
                     </span>
                    <?php } ?>
                  <?php } ?>
@@ -74,7 +74,7 @@
                <?php } ?>
               <td class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
                 <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('post') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('delacl') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('{\'aclid\':\''.@$aclid.'\'}') ?>" data-data="<?php echo escapeHtml('{"action":"object","subaction":"delacl","id":"","token":"'.@$_token.'","aclid":"'.@$aclid.'","none":"0"}') ?>"><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(''.@lang('GLOBAL_DELETE').'') ?>
+                  <span><?php echo escapeHtml(''.@lang('DELETE').'') ?>
                   </span>
                 </a>
               </td>

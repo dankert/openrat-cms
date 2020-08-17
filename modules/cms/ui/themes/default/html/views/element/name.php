@@ -21,7 +21,7 @@
             </tr>
             <tr><?php echo escapeHtml('') ?>
               <td><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang('GLOBAL_DESCRIPTION').'') ?>
+                <span><?php echo escapeHtml(''.@lang('DESCRIPTION').'') ?>
                 </span>
               </td>
               <td><?php echo escapeHtml('') ?>

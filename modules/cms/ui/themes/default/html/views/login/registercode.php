@@ -52,7 +52,7 @@
         </div>
         <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
           <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-            <span><?php echo escapeHtml(''.@lang('GLOBAL_DATABASE').'') ?>
+            <span><?php echo escapeHtml(''.@lang('DATABASE').'') ?>
             </span>
           </div>
           <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>

@@ -7,7 +7,7 @@
 					<if empty="${el}">
 						<row>
 							<column colspan="4">
-								<text value="${message:GLOBAL_NOT_FOUND}"></text>
+								<text value="${message:NOT_FOUND}"></text>
 							</column>
 						</row>
 					</if>
@@ -17,10 +17,10 @@
 								<text value="${message:PAGE_ELEMENT_NAME}"></text>
 							</column>
 							<column class="help">
-								<text value="${message:GLOBAL_CHANGE}"></text>
+								<text value="${message:CHANGE}"></text>
 							</column>
 							<column class="help">
-								<text value="${message:GLOBAL_VALUE}"></text>
+								<text value="${message:VALUE}"></text>
 							</column>
 						</row>
 						<list list="${el}" extract="true">
@@ -57,7 +57,7 @@
 							<checkbox name="release"></checkbox>
 							<label for="release">
 								<text value=" "></text>
-								<text value="${message:GLOBAL_RELEASE}"></text>
+								<text value="${message:RELEASE}"></text>
 							</label>
 						</part>
 					</if>

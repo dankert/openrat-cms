@@ -8,7 +8,7 @@
       <div><?php echo escapeHtml('') ?>
         <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
           <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-            <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml(''.@lang('GLOBAL_NAME').'') ?>
+            <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml(''.@lang('NAME').'') ?>
             </label>
           </div>
           <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>

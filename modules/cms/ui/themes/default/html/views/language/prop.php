@@ -9,7 +9,7 @@
       <div><?php echo escapeHtml('') ?>
         <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
           <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-            <span><?php echo escapeHtml(''.@lang('GLOBAL_NAME').'') ?>
+            <span><?php echo escapeHtml(''.@lang('NAME').'') ?>
             </span>
           </div>
           <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
@@ -34,7 +34,7 @@
           </div>
           <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
             <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('is_default') ?>" disabled="<?php echo escapeHtml('disabled') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$is_default){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
-            <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml(''.@lang('GLOBAL_is_default').'') ?>
+            <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml(''.@lang('is_default').'') ?>
             </label>
           </div>
         </div>

@@ -16,7 +16,7 @@
 			</part>
 			<part class="line">
 				<part class="label">
-					<text value="${message:global_filename}"></text>
+					<text value="${message:filename}"></text>
 				</part>
 				<part class="input">
 					<text value="${filename}" />
@@ -24,7 +24,7 @@
 			</part>
 			<part class="line">
 				<part class="label">
-					<text value="${message:global_description}"></text>
+					<text value="${message:description}"></text>
 				</part>
 				<part class="input">
 					<text value="${description}" class="description" />
@@ -65,7 +65,7 @@
 			<part class="line">
 				<part class="label">
 					<label for="full_filename">
-						<text value="${message:global_full_filename}"></text>
+						<text value="${message:full_filename}"></text>
 					</label>
 				</part>
 				<part class="input">
@@ -75,7 +75,7 @@
 			<part class="line">
 				<part class="label">
 					<label for="full_filename">
-						<text value="${message:global_full_filename}"></text>
+						<text value="${message:full_filename}"></text>
 					</label>
 				</part>
 				<part class="input">
@@ -85,7 +85,7 @@
 			<part class="line">
 				<part class="label">
 					<label for="template_name">
-						<text value="${message:global_template}"></text>
+						<text value="${message:template}"></text>
 					</label>
 				</part>
 				<part class="input">

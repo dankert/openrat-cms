@@ -2,7 +2,7 @@
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<dummy>
-		<window icon="group" name="GLOBAL_MODELS" widths="50%,25%,25%">
+		<window icon="group" name="MODELS" widths="50%,25%,25%">
 			<table>
 				<row class="headline">
 					<column>
@@ -25,18 +25,18 @@
 						</column>
 						<column url="${default_url}">
 							<if present="default_url">
-								<text value="${message:GLOBAL_make_default}"></text>
+								<text value="${message:make_default}"></text>
 							</if>
 							<else>
-								<text value="${message:GLOBAL_is_default}"></text>
+								<text value="${message:is_default}"></text>
 							</else>
 						</column>
 						<column url="${select_url}">
 							<if present="select_url">
-								<text value="${message:GLOBAL_select}"></text>
+								<text value="${message:select}"></text>
 							</if>
 							<else>
-								<text value="${message:GLOBAL_selected}"></text>
+								<text value="${message:selected}"></text>
 							</else>
 						</column>
 					</row>

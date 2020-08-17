@@ -26,7 +26,7 @@
 
 		<if true="${config:security/readonly}">
 			<part class="message warn">
-				<text value="${message:GLOBAL_READONLY_DESC}"></text>
+				<text value="${message:READONLY_DESC}"></text>
 			</part>
 		</if>
 

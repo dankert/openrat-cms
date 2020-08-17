@@ -35,14 +35,6 @@ function lang( $textVar,$vars = array() )
 	$text = strtoupper($textVar);
 
 	// Abfrage, ob Textvariable vorhanden ist
-	if   ( !isset( $lang[$text] ) && substr($text,0,9)=='GLOBAL_' )
-		$text = substr($text,7);
-
-	// Abfrage, ob Textvariable vorhanden ist
-	if   ( !isset( $lang[$text] ))
-		$text = 'GLOBAL_'.$text;
-	
-	// Abfrage, ob Textvariable vorhanden ist
 	if   ( isset( $lang[$text] ) )
 	{
 		$text = $lang[$text];

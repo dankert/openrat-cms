@@ -19,7 +19,7 @@
               <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('all') ?>" checked="<?php echo escapeHtml(''.@$type.'') ?>" /><?php echo escapeHtml('') ?>
                 <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(''.@lang('GLOBAL_ALL').'') ?>
+                  <span><?php echo escapeHtml(''.@lang('ALL').'') ?>
                   </span>
                 </label>
               </div>
@@ -30,7 +30,7 @@
               <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('user') ?>" checked="<?php echo escapeHtml(''.@$type.'') ?>" /><?php echo escapeHtml('') ?>
                 <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(''.@lang('GLOBAL_USER').'') ?>
+                  <span><?php echo escapeHtml(''.@lang('USER').'') ?>
                   </span>
                 </label>
               </div>
@@ -50,7 +50,7 @@
                 <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                   <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('group') ?>" checked="<?php echo escapeHtml(''.@$type.'') ?>" /><?php echo escapeHtml('') ?>
                   <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                    <span><?php echo escapeHtml(''.@lang('GLOBAL_GROUP').'') ?>
+                    <span><?php echo escapeHtml(''.@lang('GROUP').'') ?>
                     </span>
                   </label>
                 </div>
@@ -80,7 +80,7 @@
             <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
               <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(''.@lang('GLOBAL_LANGUAGE').'') ?>
+                  <span><?php echo escapeHtml(''.@lang('LANGUAGE').'') ?>
                   </span>
                 </label>
               </div>

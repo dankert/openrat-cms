@@ -334,7 +334,7 @@
               <div class="<?php echo escapeHtml('') ?>"><?php echo escapeHtml('') ?>
                 <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('release') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$release){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                 <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(''.@lang('GLOBAL_RELEASE').'') ?>
+                  <span><?php echo escapeHtml(''.@lang('RELEASE').'') ?>
                   </span>
                 </label>
               </div>

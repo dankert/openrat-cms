@@ -5,7 +5,7 @@
 	
 		<part class="line">
 			<part class="label">
-				<text value="${message:global_name}"></text>
+				<text value="${message:name}"></text>
 			</part>
 			<part class="input">
 				<input name="name" maxlength="50" required="true" focus="true"></input>

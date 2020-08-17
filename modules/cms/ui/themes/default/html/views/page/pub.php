@@ -2,7 +2,7 @@
   
     <?php $if1=(config('security','nopublish')); if($if1) {  ?>
       <div class="<?php echo escapeHtml('message warn') ?>"><?php echo escapeHtml('') ?>
-        <span class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml(''.@lang('GLOBAL_NOPUBLISH_DESC').'') ?>
+        <span class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml(''.@lang('NOPUBLISH_DESC').'') ?>
         </span>
       </div>
      <?php } ?>
@@ -27,7 +27,7 @@
               <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
                 <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('files') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$files){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                 <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(''.@lang('global_files').'') ?>
+                  <span><?php echo escapeHtml(''.@lang('files').'') ?>
                   </span>
                 </label>
               </div>

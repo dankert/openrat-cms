@@ -4,7 +4,7 @@
 	<form>
 		<part class="line">
 			<part class="label">
-				<text value="${message:global_TEMPLATE}"></text>
+				<text value="${message:TEMPLATE}"></text>
 			</part>
 			<part class="input">
 				<selectbox name="templateid" default="" list="templates"></selectbox>
@@ -14,7 +14,7 @@
 
 		<part class="line">
 			<part class="label">
-				<text value="${message:global_NAME}"></text>
+				<text value="${message:NAME}"></text>
 			</part>
 			<part class="input">
 				<input name="name" size="20" class="focus,name"></input>
@@ -24,7 +24,7 @@
 
 		<part class="line">
 			<part class="label">
-				<text value="${message:global_DESCRIPTION}"></text>
+				<text value="${message:DESCRIPTION}"></text>
 			</part>
 			<part class="input">
 

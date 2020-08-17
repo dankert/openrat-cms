@@ -4,10 +4,10 @@
 	<table>
 		<row class="headline">
 			<column class="help">
-				<text value="${message:GLOBAL_NAME}"></text>
+				<text value="${message:NAME}"></text>
 			</column>
 			<column class="help">
-				<text value="${message:GLOBAL_LANGUAGE}"></text>
+				<text value="${message:LANGUAGE}"></text>
 			</column>
 			<list list="${show}" value="t">
 				<column class="help">
@@ -15,13 +15,13 @@
 				</column>
 			</list>
 			<column class="help">
-				<text value="${message:global_delete}"></text>
+				<text value="${message:delete}"></text>
 			</column>
 		</row>
 		<if empty="${acls}">
 			<row class="data">
 				<column colspan="99">
-					<text value="${message:GLOBAL_NOT_FOUND}"></text>
+					<text value="${message:NOT_FOUND}"></text>
 				</column>
 			</row>
 		</if>
@@ -40,7 +40,7 @@
 					<if not="true" present="username">
 						<if not="true" present="groupname">
 							<image action="group"></image>
-							<text value="${message:global_all}"></text>
+							<text value="${message:all}"></text>
 						</if>
 					</if>
 				</column>
@@ -56,7 +56,7 @@
 				</list>
 				<column class="clickable">
 					<link type="post" subaction="delacl" var1="aclid" value1="${aclid}">
-						<text value="${message:GLOBAL_DELETE}"></text>
+						<text value="${message:DELETE}"></text>
 					</link>
 				</column>
 			</row>

@@ -36,7 +36,7 @@
           <?php $if1=(($elements)==FALSE); if($if1) {  ?>
             <tr><?php echo escapeHtml('') ?>
               <td colspan="<?php echo escapeHtml('2') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang('GLOBAL_NOT_FOUND').'') ?>
+                <span><?php echo escapeHtml(''.@lang('NOT_FOUND').'') ?>
                 </span>
               </td>
             </tr>

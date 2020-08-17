@@ -10,9 +10,9 @@
 					<checkbox name="checkall" />
 				</column>
 				<column class="help">
-					<text value="${message:GLOBAL_TYPE}"></text>
+					<text value="${message:TYPE}"></text>
 					<text value=" / "></text>
-					<text value="${message:GLOBAL_NAME}"></text>
+					<text value="${message:NAME}"></text>
 				</column>
 			</row>
 			<list list="${object}" extract="true">
@@ -39,7 +39,7 @@
 			<if empty="${object}">
 				<row>
 					<column colspan="2">
-						<text value="${message:GLOBAL_NOT_FOUND}"></text>
+						<text value="${message:NOT_FOUND}"></text>
 					</column>
 				</row>
 			</if>

@@ -6,7 +6,7 @@
     -->
     <if true="${config:security/nopublish}">
         <part class="message warn">
-            <text value="${message:GLOBAL_NOPUBLISH_DESC}" class="help"></text>
+            <text value="${message:NOPUBLISH_DESC}" class="help"></text>
         </part>
     </if>
 
@@ -21,7 +21,7 @@
                     <checkbox name="pages"></checkbox>
                     <label for="pages">
                         <text value=" "></text>
-                        <text value="${message:global_pages}"></text>
+                        <text value="${message:pages}"></text>
                     </label>
                 </part>
             </part>
@@ -34,7 +34,7 @@
                     <checkbox name="files"></checkbox>
                     <label for="files">
                         <text value=" "></text>
-                        <text value="${message:global_files}"></text>
+                        <text value="${message:files}"></text>
                     </label>
                 </part>
             </part>
@@ -49,7 +49,7 @@
                         <checkbox readonly="${subdirs}" name="subdirs"></checkbox>
                         <label for="subdirs">
                             <text value=" "></text>
-                            <text value="${message:GLOBAL_PUBLISH_WITH_SUBDIRS}"></text>
+                            <text value="${message:PUBLISH_WITH_SUBDIRS}"></text>
                         </label>
                     </part>
                 </part>
@@ -62,7 +62,7 @@
                         <checkbox name="clean"></checkbox>
                         <label for="clean">
                             <text value=" "></text>
-                            <text value="${message:global_CLEAN_AFTER_PUBLISH}"></text>
+                            <text value="${message:CLEAN_AFTER_PUBLISH}"></text>
                         </label>
                     </part>
                 </part>

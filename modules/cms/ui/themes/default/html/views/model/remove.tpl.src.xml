@@ -5,7 +5,7 @@
 		<group>
 			<part class="line">
 				<part class="label">
-					<text value="${message:GLOBAL_NAME}"></text>
+					<text value="${message:NAME}"></text>
 				</part>
 				<part class="input">
 					<text value="${name}" class="name"></text>

@@ -9,11 +9,11 @@
         <label class="<?php echo escapeHtml('or-form-row') ?>"><?php echo escapeHtml('') ?>
           <span class="<?php echo escapeHtml('or-form-input') ?>"><?php echo escapeHtml('') ?>
           </span>
-          <span class="<?php echo escapeHtml('or-form-label') ?>"><?php echo escapeHtml(''.@lang('GLOBAL_NAME').'') ?>
+          <span class="<?php echo escapeHtml('or-form-label') ?>"><?php echo escapeHtml(''.@lang('NAME').'') ?>
           </span>
         </label>
         <label class="<?php echo escapeHtml('or-form-row or-form-checkbox') ?>"><?php echo escapeHtml('') ?>
-          <span class="<?php echo escapeHtml('or-form-label') ?>"><?php echo escapeHtml(''.@lang('GLOBAL_DELETE').'') ?>
+          <span class="<?php echo escapeHtml('or-form-label') ?>"><?php echo escapeHtml(''.@lang('DELETE').'') ?>
           </span>
           <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('delete') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$delete){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
         </label>

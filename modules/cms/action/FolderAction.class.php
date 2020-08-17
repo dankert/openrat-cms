@@ -627,7 +627,7 @@ class FolderAction extends ObjectAction
 
 			// TAR speichern.
 			$tarFile = new File();
-			$tarFile->name     = lang('GLOBAL_ARCHIVE').' '.$this->getRequestVar('filename');
+			$tarFile->name     = lang('ARCHIVE').' '.$this->getRequestVar('filename');
 			$tarFile->filename = $this->getRequestVar('filename');
 			$tarFile->extension = 'tar';
 			$tarFile->parentid = $this->folder->objectid;

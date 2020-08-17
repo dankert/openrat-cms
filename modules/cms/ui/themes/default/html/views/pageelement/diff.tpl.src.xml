@@ -4,13 +4,13 @@
 		<row>
 			<column></column>
 			<column>
-				<text type="emphatic" value="${message:GLOBAL_COMPARE}"></text>
+				<text type="emphatic" value="${message:COMPARE}"></text>
 				<text value=" "></text>
 				<date date="${date_left}"></date>
 			</column>
 			<column></column>
 			<column>
-				<text type="emphatic" value="${message:GLOBAL_WITH}"></text>
+				<text type="emphatic" value="${message:WITH}"></text>
 				<text value=" "></text>
 				<date date="${date_right}"></date>
 			</column>

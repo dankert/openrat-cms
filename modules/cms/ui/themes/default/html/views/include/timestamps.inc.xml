@@ -4,7 +4,7 @@
         <part class="line">
             <part class="label">
                 <label for="create_date">
-					<text text="global_created"/>
+					<text text="created"/>
                 </label>
             </part>
             <part class="input">
@@ -18,7 +18,7 @@
         <part class="line">
             <part class="label">
                 <label for="lastchange_date">
-                    <text text="global_lastchange"></text>
+                    <text text="lastchange"></text>
                 </label>
             </part>
             <part class="input">
@@ -32,7 +32,7 @@
         <part class="line">
             <part class="label">
                 <label for="published_date">
-                    <text text="global_published"></text>
+                    <text text="published"></text>
                 </label>
             </part>
             <part class="input">

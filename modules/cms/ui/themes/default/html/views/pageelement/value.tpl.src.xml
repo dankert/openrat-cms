@@ -191,7 +191,7 @@
 					<part>
 						<checkbox name="release"></checkbox>
 						<label for="release">
-							<text value="${message:GLOBAL_RELEASE}"></text>
+							<text value="${message:RELEASE}"></text>
 						</label>
 					</part>
 				</if>

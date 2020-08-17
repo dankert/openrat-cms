@@ -10,7 +10,7 @@
           
             <tr><?php echo escapeHtml('') ?>
               <td><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang('GLOBAL_NAME').'') ?>
+                <span><?php echo escapeHtml(''.@lang('NAME').'') ?>
                 </span>
               </td>
               <td><?php echo escapeHtml('') ?>
@@ -20,7 +20,7 @@
             </tr>
             <tr><?php echo escapeHtml('') ?>
               <td><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang('GLOBAL_DELETE').'') ?>
+                <span><?php echo escapeHtml(''.@lang('DELETE').'') ?>
                 </span>
               </td>
               <td><?php echo escapeHtml('') ?>

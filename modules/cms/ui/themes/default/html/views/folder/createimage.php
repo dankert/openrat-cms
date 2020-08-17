@@ -11,7 +11,7 @@
         <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
           <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
             <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@lang('global_FILE').'') ?>
+              <span><?php echo escapeHtml(''.@lang('FILE').'') ?>
               </span>
             </label>
           </div>
@@ -59,7 +59,7 @@
         </fieldset>
         <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
           <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-            <span><?php echo escapeHtml(''.@lang('global_NAME').'') ?>
+            <span><?php echo escapeHtml(''.@lang('NAME').'') ?>
             </span>
           </div>
           <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
@@ -70,7 +70,7 @@
         </div>
         <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
           <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-            <span><?php echo escapeHtml(''.@lang('global_DESCRIPTION').'') ?>
+            <span><?php echo escapeHtml(''.@lang('DESCRIPTION').'') ?>
             </span>
           </div>
           <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>

@@ -18,7 +18,7 @@
                     <?php $if1=(($rights)==FALSE); if($if1) {  ?>
                       <tr><?php echo escapeHtml('') ?>
                         <td><?php echo escapeHtml('') ?>
-                          <span><?php echo escapeHtml(''.@lang('GLOBAL_NOT_FOUND').'') ?>
+                          <span><?php echo escapeHtml(''.@lang('NOT_FOUND').'') ?>
                           </span>
                         </td>
                       </tr>
@@ -32,20 +32,20 @@
                           <table width="<?php echo escapeHtml('100%') ?>"><?php echo escapeHtml('') ?>
                             <tr class="<?php echo escapeHtml('headline') ?>"><?php echo escapeHtml('') ?>
                               <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
-                                <span><?php echo escapeHtml(''.@lang('GLOBAL_USER').'') ?>
+                                <span><?php echo escapeHtml(''.@lang('USER').'') ?>
                                 </span>
                               </td>
                               <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
-                                <span><?php echo escapeHtml(''.@lang('GLOBAL_NAME').'') ?>
+                                <span><?php echo escapeHtml(''.@lang('NAME').'') ?>
                                 </span>
                               </td>
                               <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
-                                <span><?php echo escapeHtml(''.@lang('GLOBAL_LANGUAGE').'') ?>
+                                <span><?php echo escapeHtml(''.@lang('LANGUAGE').'') ?>
                                 </span>
                               </td>
                               <?php foreach((array)$show as $list_key=>$t) {  ?>
                                 <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
-                                  <span title="<?php echo escapeHtml('message:acl_{t}') ?>"><?php echo escapeHtml(''.@lang('acl_'.@$t.'_abbrev').'') ?>
+                                  <span title="<?php echo escapeHtml(''.@lang('acl_'.@$t.'').'') ?>"><?php echo escapeHtml(''.@lang('acl_'.@$t.'_abbrev').'') ?>
                                   </span>
                                 </td>
                                <?php } ?>
@@ -63,7 +63,7 @@
                                     <?php $if1=!(isset($groupname)); if($if1) {  ?>
                                       <i class="<?php echo escapeHtml('image-icon image-icon--action-group') ?>"><?php echo escapeHtml('') ?>
                                       </i>
-                                      <span><?php echo escapeHtml(''.@lang('global_all').'') ?>
+                                      <span><?php echo escapeHtml(''.@lang('all').'') ?>
                                       </span>
                                      <?php } ?>
                                    <?php } ?>

@@ -4,7 +4,7 @@
 	<form apply="true">
 		<row>
 			<column>
-				<text value="${message:GLOBAL_VALUE}"></text>
+				<text value="${message:VALUE}"></text>
 			</column>
 			<column>
 				<editor name="value" type="code" extension="${extension}" mimetype="${mimetype}"></editor>

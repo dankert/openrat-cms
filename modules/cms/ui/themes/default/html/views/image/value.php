@@ -9,7 +9,7 @@
         
           <tr><?php echo escapeHtml('') ?>
             <td><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@lang('GLOBAL_VALUE').'') ?>
+              <span><?php echo escapeHtml(''.@lang('VALUE').'') ?>
               </span>
             </td>
             <td><?php echo escapeHtml('') ?>

@@ -3,12 +3,12 @@
 	<table>
 		<row class="headline">
 			<column class="help">
-				<text value="${message:GLOBAL_TYPE}"></text>
+				<text value="${message:TYPE}"></text>
 				<text value=" / "></text>
-				<text value="${message:GLOBAL_NAME}"></text>
+				<text value="${message:NAME}"></text>
 			</column>
 			<column class="help">
-				<text value="${message:GLOBAL_LASTCHANGE}"></text>
+				<text value="${message:LASTCHANGE}"></text>
 			</column>
 		</row>
 		<if present="up_url">
@@ -37,7 +37,7 @@
 		<if empty="${object}">
 			<row>
 				<column colspan="2">
-					<text value="${message:GLOBAL_NOT_FOUND}"></text>
+					<text value="${message:NOT_FOUND}"></text>
 				</column>
 			</row>
 		</if>

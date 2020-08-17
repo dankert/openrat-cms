@@ -51,8 +51,8 @@ class Tree
 	{
 		$treeElement = new TreeElement();
 		$treeElement->id = 0;
-		$treeElement->text = lang('GLOBAL_PROJECTS');
-		$treeElement->description = lang('GLOBAL_PROJECTS');
+		$treeElement->text = lang('PROJECTS');
+		$treeElement->description = lang('PROJECTS');
 		$treeElement->action = 'projectlist';
 		$treeElement->icon = 'projectlist';
 		$treeElement->type = 'projects';
@@ -92,8 +92,8 @@ class Tree
 			throw new SecurityException();
 
 		$treeElement = new TreeElement();
-		$treeElement->text = lang('GLOBAL_USER');
-		$treeElement->description = lang('GLOBAL_USER');
+		$treeElement->text = lang('USER');
+		$treeElement->description = lang('USER');
 		$treeElement->action = 'userlist';
 		$treeElement->icon = 'userlist';
 		$treeElement->type = 'users';
@@ -101,8 +101,8 @@ class Tree
 		$this->addTreeElement($treeElement);
 
 		$treeElement = new TreeElement();
-		$treeElement->text = lang('GLOBAL_GROUPS');
-		$treeElement->description = lang('GLOBAL_GROUPS');
+		$treeElement->text = lang('GROUPS');
+		$treeElement->description = lang('GROUPS');
 		$treeElement->action = 'grouplist';
 		$treeElement->icon = 'userlist';
 		$treeElement->type = 'groups';
@@ -178,9 +178,9 @@ class Tree
 			$treeElement->extraId[REQ_PARAM_MODEL_ID] = $defaultModelId;
 			$treeElement->extraId[REQ_PARAM_LANGUAGE_ID] = $defaultLanguageId;
 			$treeElement->internalId = $projectid;
-			$treeElement->text = lang('GLOBAL_TEMPLATES');
+			$treeElement->text = lang('TEMPLATES');
 //			$treeElement->url        = Html::url('template','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
-			$treeElement->description = lang('GLOBAL_TEMPLATES_DESC');
+			$treeElement->description = lang('TEMPLATES_DESC');
 			$treeElement->icon = 'templatelist';
 			$treeElement->action = 'templatelist';
 			$treeElement->type = 'templates';
@@ -196,10 +196,10 @@ class Tree
 			$treeElement->extraId[REQ_PARAM_PROJECT_ID] = $projectid;
 			$treeElement->internalId = $projectid;
 			$treeElement->action = 'languagelist';
-			$treeElement->text = lang('GLOBAL_LANGUAGES');
+			$treeElement->text = lang('LANGUAGES');
 //		$treeElement->url        = Html::url('language','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
 			$treeElement->icon = 'languagelist';
-			$treeElement->description = lang('GLOBAL_LANGUAGES_DESC');
+			$treeElement->description = lang('LANGUAGES_DESC');
 
 			// Nur fuer Projekt-Administratoren aufklappbar
 			if ($userIsProjectAdmin)
@@ -221,8 +221,8 @@ class Tree
 			$treeElement->id = $projectid;
 			$treeElement->internalId = $projectid;
 			$treeElement->extraId[REQ_PARAM_PROJECT_ID] = $projectid;
-			$treeElement->description = lang('GLOBAL_MODELS_DESC');
-			$treeElement->text = lang('GLOBAL_MODELS');
+			$treeElement->description = lang('MODELS_DESC');
+			$treeElement->text = lang('MODELS');
 //		$treeElement->url        = Html::url('model','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
 			$treeElement->action = 'modellist';
 			$treeElement->icon = 'modellist';
@@ -252,7 +252,7 @@ class Tree
 			if ($user->isAdmin)
 				$desc .= ' (' . lang('USER_ADMIN') . ') ';
 			if ($user->desc == "")
-				$desc .= ' - ' . lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
+				$desc .= ' - ' . lang('NO_DESCRIPTION_AVAILABLE');
 			else
 				$desc .= ' - ' . $user->desc;
 
@@ -279,7 +279,7 @@ class Tree
 			$treeElement->internalId = $id;
 			$treeElement->text = $g->name;
 			$treeElement->icon = 'group';
-			$treeElement->description = lang('GLOBAL_GROUP') . ' ' . $g->name . ': ' . implode(', ', $g->getUsers());
+			$treeElement->description = lang('GROUP') . ' ' . $g->name . ': ' . implode(', ', $g->getUsers());
 			$treeElement->type = 'userofgroup';
 			$treeElement->action = 'group';
 
@@ -342,7 +342,7 @@ class Tree
 				if ($element->desc != '')
 					$treeElement->description .= ' - ' . Text::maxLength($element->desc, 25);
 				else
-					$treeElement->description .= ' - ' . lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
+					$treeElement->description .= ' - ' . lang('NO_DESCRIPTION_AVAILABLE');
 
 				$this->addTreeElement($treeElement);
 			}
@@ -382,7 +382,7 @@ class Tree
 				$treeElement->internalId = $o->objectid;
 				$treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $page->languageid, REQ_PARAM_MODEL_ID => $page->modelid);
 				$treeElement->text = $o->getName();
-				$treeElement->description = lang('GLOBAL_' . $o->getType()) . ' ' . $o->objectid;
+				$treeElement->description = lang('' . $o->getType()) . ' ' . $o->objectid;
 
 				$this->addTreeElement($treeElement);
 			}
@@ -415,11 +415,11 @@ class Tree
 				$treeElement->icon = $object->getType();
 				$treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $value->languageid);
 
-				$treeElement->description = lang('GLOBAL_' . $object->getType());
+				$treeElement->description = lang('' . $object->getType());
 				if ($object->desc != '')
 					$treeElement->description .= ' - ' . Text::maxLength($object->desc, 25);
 				else
-					$treeElement->description .= ' - ' . lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
+					$treeElement->description .= ' - ' . lang('NO_DESCRIPTION_AVAILABLE');
 
 				$this->addTreeElement($treeElement);
 			}
@@ -439,12 +439,12 @@ class Tree
 		$treeElement->id = $o->objectid;
 		$treeElement->internalId = $o->objectid;
 		$treeElement->text = $o->name;
-		$treeElement->description = lang('GLOBAL_' . $o->getType()) . ' ' . $id;
+		$treeElement->description = lang('' . $o->getType()) . ' ' . $id;
 
 		if ($o->desc != '')
 			$treeElement->description .= ': ' . $o->desc;
 		else
-			$treeElement->description .= ' - ' . lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
+			$treeElement->description .= ' - ' . lang('NO_DESCRIPTION_AVAILABLE');
 
 		$treeElement->action = $o->getType();
 		$treeElement->icon = $o->getType();
@@ -474,12 +474,12 @@ class Tree
 		$treeElement->id = $o->objectid;
 		$treeElement->internalId = $o->objectid;
 		$treeElement->text = $o->name;
-		$treeElement->description = lang('GLOBAL_' . $o->getType()) . ' ' . $id;
+		$treeElement->description = lang('' . $o->getType()) . ' ' . $id;
 
 		if ($o->desc != '')
 			$treeElement->description .= ': ' . $o->desc;
 		else
-			$treeElement->description .= ' - ' . lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
+			$treeElement->description .= ' - ' . lang('NO_DESCRIPTION_AVAILABLE');
 
 		$treeElement->action = $o->getType();
 		$treeElement->icon = $o->getType();
@@ -525,12 +525,12 @@ class Tree
 			$treeElement->internalId = $o->objectid;
 			$treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $f->languageid, REQ_PARAM_MODEL_ID => $f->modelid);
 			$treeElement->text = $o->name;
-			$treeElement->description = lang('GLOBAL_' . $o->getType()) . ' ' . $o->objectid;
+			$treeElement->description = lang('' . $o->getType()) . ' ' . $o->objectid;
 
 			if ($o->desc != '')
 				$treeElement->description .= ': ' . $o->desc;
 			else
-				$treeElement->description .= ' - ' . lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
+				$treeElement->description .= ' - ' . lang('NO_DESCRIPTION_AVAILABLE');
 
 			$treeElement->action = $o->getType();
 			$treeElement->icon = $o->getType();
@@ -557,7 +557,7 @@ class Tree
 			$treeElement->internalId = $id;
 			$treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $_REQUEST[REQ_PARAM_LANGUAGE_ID], REQ_PARAM_MODEL_ID => $_REQUEST[REQ_PARAM_MODEL_ID]);
 			$treeElement->type = 'template';
-			$treeElement->description = $t->name . ' (' . lang('GLOBAL_TEMPLATE') . ' ' . $id . '): ' . htmlentities(Text::maxLength($t->src, 40));
+			$treeElement->description = $t->name . ' (' . lang('TEMPLATE') . ' ' . $id . '): ' . htmlentities(Text::maxLength($t->src, 40));
 			$this->addTreeElement($treeElement);
 		}
 	}
@@ -588,7 +588,7 @@ class Tree
 			$treeElement->action = 'element';
 
 			if ($e->desc == '')
-				$desc = lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
+				$desc = lang('NO_DESCRIPTION_AVAILABLE');
 			else
 				$desc = $e->desc;
 			$treeElement->description = $e->name . ' (' . lang('EL_' . $e->type) . '): ' . Text::maxLength($desc, 40);

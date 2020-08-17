@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<dummy>
 		<form>
-			<window name="GLOBAL_NAME">
+			<window name="NAME">
 				<row>
 					<column>
 						<text value="${message:ELEMENT_NAME}"></text>
@@ -13,7 +13,7 @@
 				</row>
 				<row>
 					<column>
-						<text value="${message:GLOBAL_DESCRIPTION}"></text>
+						<text value="${message:DESCRIPTION}"></text>
 					</column>
 					<column>
 						<inputarea name="description" rows="5" cols="50"></inputarea>

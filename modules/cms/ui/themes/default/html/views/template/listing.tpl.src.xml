@@ -18,7 +18,7 @@
 				</list>
 			</table>
 			<if empty="${templates}">
-				<text value="${message:GLOBAL_NO_TEMPLATES_AVAILABLE_DESC}"></text>
+				<text value="${message:NO_TEMPLATES_AVAILABLE_DESC}"></text>
 			</if>
 			<link class="action" action="template" subaction="add">
 				<text value="${message:menu_template_add}"></text>

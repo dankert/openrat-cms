@@ -1818,837 +1818,837 @@ FOLDER_SUBFOLDER:
 FOLDER_UNMARK_ALL:
   de: Markierung entfernen
   en: --
-GLOBAL_ACTION:
+ACTION:
   de: Aktion
   en: Action
-GLOBAL_ACTIVE:
+ACTIVE:
   de: aktuell
   en: active
   es: actif
   fr: actif
-GLOBAL_ADD:
+ADD:
   de: Hinzufügen
   en: Add
   es: Ajouter
   fr: Ajouter
-GLOBAL_ADMINISTRATION:
+ADMINISTRATION:
   de: Administration
   en: Administration
-GLOBAL_ALL:
+ALL:
   de: Alle
   en: All
   es: Tous
   fr: Tous
-GLOBAL_ALL_LANGUAGES:
+ALL_LANGUAGES:
   de: Alle Sprachen
   en: All languages
   es: Toutes les langues
   fr: Toutes les langues
-GLOBAL_ARCHIVE:
+ARCHIVE:
   de: Archiv
   en: Archive
   es: Archives
   fr: Archives
-GLOBAL_ARCHIVE_DESC:
+ARCHIVE_DESC:
   de: Alle historischen Inhalte zu diesem Platzhalter.
   en: All archived values of this element.
-GLOBAL_CHANGE:
+CHANGE:
   de: ändern
   en: Change
   es: Changer
   fr: Changer
-GLOBAL_CHANGE_TO:
+CHANGE_TO:
   de: Wechseln zu
   en: Change to
-GLOBAL_CLEAN_AFTER_PUBLISH:
+CLEAN_AFTER_PUBLISH:
   de: Zielverzeichnis anschließend aufräumen und alte Dateien entfernen.
   en: Cleanup target directory and remove old files in it.
   es: "L'annuaire de cible de nettoyage et enlèvent de vieux dossiers dans lui."
   fr: "L'annuaire de cible de nettoyage et enlèvent de vieux dossiers dans lui."
-GLOBAL_CLIPBOARD:
+CLIPBOARD:
   de: Ablage
   en: Ablage
   it: Clipboard
   ru: Clipboard
-GLOBAL_COMMENT:
+COMMENT:
   de: Kommentar
   en: comment
   es: commentaire
   fr: commentaire
   it: comentario
-GLOBAL_COMMON:
+COMMON:
   de: Allgemein
   en: Common
   es: Terrain communal
   fr: Terrain communal
   it: Campo común
-GLOBAL_COMPARE:
+COMPARE:
   de: Vergleich
   en: Compare
   es: Comparer
   fr: Comparer
   it: Comparar
-GLOBAL_COPY:
+COPY:
   de: Kopieren
   en: Copy
-GLOBAL_COPY_OF:
+COPY_OF:
   de: Kopie von
   en: Copy of
   es: Copy de
   fr: Copy de
   it: Copy de
-GLOBAL_CREATED:
+CREATED:
   de: Erstellt
   en: created
   es: créé
   fr: créé
   it: creado
-GLOBAL_DATABASE:
+DATABASE:
   de: Datenbank
   en: Database
   es: Base de données
   fr: Base de données
   it: Base de datos
-GLOBAL_DAYS:
+DAYS:
   de: Tage
   en: Days
   es: Jours
   fr: Jours
   it: Días
-GLOBAL_DAY:
+DAY:
   de: Tag
   en: Day
   es: Jour
   fr: Jour
   it: Día
-GLOBAL_DEFAULT:
+DEFAULT:
   de: Standard
   en: Standard
   es: Norme
   fr: Norme
   it: Estándar
-GLOBAL_DEFAULT_TEXT:
+DEFAULT_TEXT:
   de: Text Vorbelegung
   en: Default text
   es: Texte de défaut
   fr: Texte de défaut
   it: Texto del defecto
-GLOBAL_DELETED:
+DELETED:
   de: Objekt wurde gelöscht
   en: Object was deleted
   es: "L'objet a été supprimé"
   fr: "L'objet a été supprimé"
   it: El objeto fue suprimido
-GLOBAL_DELETE:
+DELETE:
   de: Löschen
   en: Delete
   es: Effacement
   fr: Effacement
   it: Cancelación
-GLOBAL_DELETE_WITH_CHILDREN:
+DELETE_WITH_CHILDREN:
   de: Löschen mit Unterelementen
   en: Delete with children
-GLOBAL_DESCRIPTION:
+DESCRIPTION:
   de: Beschreibung
   en: Description
   it: Descripción
-GLOBAL_DIFFERENCES_DESC:
+DIFFERENCES_DESC:
   de: Sie können sich die Unterschiede zwischen 2 Versionen anzeigen lassen
   en: Show differences between 2 Revisions
   es: Montrer les différences entre 2 révisions
   fr: Montrer les différences entre 2 révisions
   it: Demostrar las diferencias entre 2 revisiones
-GLOBAL_DIFFERENCES:
+DIFFERENCES:
   de: Unterschiede
   en: Differences
   es: Différences
   fr: Différences
   it: Diferencias
-GLOBAL_DOWN:
+DOWN:
   de: runter
   en: down
   es: vers le bas
   fr: vers le bas
   it: abajo
-GLOBAL_ELEMENT:
+ELEMENT:
   de: Seitenvorlagen-Platzhalter
   en: Template-Element
-GLOBAL_EXTENSIONS:
+EXTENSIONS:
   de: Erweiterungen
   en: Extensions
   es: Prolongements
   fr: Prolongements
   it: Extensiones
-GLOBAL_FILE:
+FILE:
   de: Datei
   en: File
   es: Dossier
   fr: Dossier
   it: Archivo
-GLOBAL_FILENAME:
+FILENAME:
   de: Dateiname
   en: Filename
   es: Nom de fichier
   fr: Nom de fichier
   it: Nombre de fichero
-GLOBAL_FILENAME_DESC:
+FILENAME_DESC:
   de: Dateiname, welcher für die Generierung verwendet wird. Wird automatisch gemäß RFC 2396 angepasst. Max. 255 Zeichen
   en: Filename, which will be used for generating. Will automatically checked against RFC 2396 (max. 255 chars).
   es: Nom de fichier, qui sera employé pour se produire. La volonté a automatiquement vérifié contre RFC 2396 (maximum 255 chars).
   fr: Nom de fichier, qui sera employé pour se produire. La volonté a automatiquement vérifié contre RFC 2396 (maximum 255 chars).
   it: Nombre de fichero, que será utilizado para generar. La voluntad comprobó automáticamente contra RFC 2396 (máximo 255 carbones).
-GLOBAL_FILES:
+FILES:
   de: Dateien
   en: Files
   es: Dossiers
   fr: Dossiers
   it: Archivos
-GLOBAL_FILE_TRANSFER:
+FILE_TRANSFER:
   de: Dateitransfer
   en: File transfer
   es: Transfert de fichier
   fr: Transfert de fichier
   it: Transferencia de archivo
-GLOBAL_FILE_TRANSFER_DESC:
+FILE_TRANSFER_DESC:
   de: Mit dieser Funktion können Sie viele Dateien in einem Schritt in die Datenbank importieren
   en: Import multiple file into the media database
   es: Importer le dossier multiple dans la base de données de médias
   fr: Importer le dossier multiple dans la base de données de médias
   it: Importar el archivo múltiple en la base de datos de los medios
-GLOBAL_FOLDER_DESC:
+FOLDER_DESC:
   de: Ein Ordner kann Seiten, Dateien, Verknüpfungen und weitere Ordner enthalten.
   en: A Directory may contain other directories, pages, files and links.
   es: "Un annuaire peut contenir d'autres annuaires, pages, dossiers et liens."
   fr: "Un annuaire peut contenir d'autres annuaires, pages, dossiers et liens."
   it: Un directorio puede contener otros directorios, páginas, archivos y acoplamientos.
   ru: Справочник может содержать другие каталоги, Версия, файлы и ссылки.
-GLOBAL_FOLDER:
+FOLDER:
   de: Verzeichnis
   en: Directory
   es: Annuaire
   fr: Annuaire
   it: Directorio
-GLOBAL_FORMAT:
+FORMAT:
   de: Format
   en: Format
   it: Formato
-GLOBAL_FULL_FILENAME_DESC:
+FULL_FILENAME_DESC:
   de: Vollständiger Dateiname, welcher beim Veröffentlichen verwendet wird
   en: Full Filename, which is used while publishing
-GLOBAL_FULL_FILENAME:
+FULL_FILENAME:
   de: Voller Dateiname
   en: Complete Filename
   es: Accomplir le nom de fichier
   fr: Accomplir le nom de fichier
   it: Terminar el nombre de fichero
   ru: Формат файла Заполните
-GLOBAL_GPL:
+GPL:
   de: Für dieses Programm besteht KEINERLEI GARANTIE. Dies ist freie Software, die Sie unter bestimmten Bedingungen weitergeben dürfen.
   en: 'The software comes with ABSOLUTELY NO WARRANTY.<br/>This is free software, and you are welcome to redistribute it under certain conditions.'
   es: 'Le logiciel vient avec ABSOLUMENT AUCUN WARRANTY.<br/>This est logiciel libre, et vous êtes bienvenu pour le redistribuer dans certaines conditions.'
   fr: 'Le logiciel vient avec ABSOLUMENT AUCUN WARRANTY.<br/>This est logiciel libre, et vous êtes bienvenu pour le redistribuer dans certaines conditions.'
   it: 'El software viene con ABSOLUTAMENTE NINGÚN WARRANTY.<br/>This es software libre, y eres agradable redistribuirlo bajo ciertas condiciones.'
   ru: 'В комплект поставки ничего НЕ ГАРАНТИРУЕТ. <br> Это бесплатное программное обеспечение, и вы вправе распространять его на определенных условиях.'
-GLOBAL_GROUP:
+GROUP:
   de: Gruppe
   en: Group
   es: Groupe
   fr: Groupe
   it: Grupo
-GLOBAL_GROUPS:
+GROUPS:
   de: Gruppen
   en: Groups
   es: Groupes
   fr: Groupes
   it: Grupos
   ru: Группа группах
-GLOBAL_HIDETREE:
+HIDETREE:
   de: Baum ausblenden
   en: Hide tree
   es: Arbre de peau
   fr: Arbre de peau
   it: Árbol de la piel
   ru: Скрыть дерево час
-GLOBAL_HOURS:
+HOURS:
   de: Stunden
   en: Houres
-GLOBAL_HOUR:
+HOUR:
   de: Stunde
   en: Hour
   es: Heure
   fr: Heure
   it: Hora
-GLOBAL_ICON:
+ICON:
   de: Editier-Ikon
   en: Edit-icon
   es: Éditer-icône
   fr: Éditer-icône
   it: Corregir-icono
   ru: 'Houres Редактировать - значок ID'
-GLOBAL_ID:
+ID:
   de: ID
   en: ID
   es: Identification
   fr: Identification
   it: Identificación
-GLOBAL_INACTIVE:
+INACTIVE:
   de: nicht aktiv
   en: not active
-GLOBAL_INDEX:
+INDEX:
   de: OpenRat
   en: OpenRat
-GLOBAL_IS_DEFAULT:
+IS_DEFAULT:
   de: Ist Standard
   en: Is default
-GLOBAL_KEY:
+KEY:
   de: Taste
   en: Key
   es: Clef
   fr: Clef
   it: Llave
-GLOBAL_LANGUAGES_DESC:
+LANGUAGES_DESC:
   de: Alle Projektinhalte können in verschiedenen Sprachen erzeugt werden
   en: All content can be created in several languages
   es: Tout le contenu peut être créé dans plusieurs langues
   fr: Tout le contenu peut être créé dans plusieurs langues
   it: Todo el contenido se puede crear en varias idiomas
   ru: Языки Все содержание могут быть созданы на нескольких языках
-GLOBAL_LANGUAGES:
+LANGUAGES:
   de: Sprachen
   en: Languages
   es: Langues
   fr: Langues
   it: Idiomas
-GLOBAL_LASTCHANGE:
+LASTCHANGE:
   de: Letzte Änderung
   en: Last Change
   es: Dernier changement
   fr: Dernier changement
   it: Cambio pasado
   ru: Последние изменения
-GLOBAL_LINK_TO:
+LINK_TO:
   de: Verknüpfung zu
   en: Shortcut to
   es: Raccourci à
   fr: Raccourci à
   it: Atajo a
   ru: Ярлыки Ярлыки для перехода
-GLOBAL_LINK:
+LINK:
   de: Verknüpfung
   en: Shortcut
   es: Raccourci
   fr: Raccourci
   it: Atajo
-GLOBAL_LISTING:
+LISTING:
   de: Liste
   en: List
   es: Liste
   fr: Liste
   it: Lista
-GLOBAL_LOGIN:
+LOGIN:
   de: Anmeldung
   en: Login
   es: Ouverture
   fr: Ouverture
   it: Conexión
   ru: Вход Логин
-GLOBAL_LOG:
+LOG:
   de: Log
   en: Log
   es: Notation
   fr: Notation
   it: Registro
-GLOBAL_MAKE_DEFAULT:
+MAKE_DEFAULT:
   de: Auf Standard setzen
   en: Set to standard
   es: Placer à la norme
   fr: Placer à la norme
   it: Fijar al estándar
   ru: Комплект для стандартных
-GLOBAL_MENU_TITLE_FILEBROWSER_BROWSE:
+MENU_TITLE_FILEBROWSER_BROWSE:
   de: Auswahl
   en: Selection
-GLOBAL_MINUTE:
+MINUTE:
   de: Minute
   en: Minute
   es: Minuter
   fr: Minuter
   it: Minutar
-GLOBAL_MINUTES:
+MINUTES:
   de: Minuten
   en: Minutes
   it: Minutos
   ru: Минута минут
-GLOBAL_MODELS_DESC:
+MODELS_DESC:
   de: Mit Modellen künnen verschiedene Ansichten eines Projektes erzeugt werden, z.B. neben HTML kann es ein WML-Modell für WAP-Seiten geben
   en: With models you may do more views of an project, f.e. an HTML and an WML-Model.
   es: "Avec des modèles vous pouvez faire plus de vues d'un projet, de Fe un HTML et d'un WML-Modèle."
   fr: "Avec des modèles vous pouvez faire plus de vues d'un projet, de Fe un HTML et d'un WML-Modèle."
   it: Con los modelos puedes hacer más opiniones un proyecto, el FE un HTML y un WML-Modelo.
   ru: 'С моделями вы можете сделать больше мнений проекта f.e. HTML и WML - Образец. Месяц'
-GLOBAL_MODELS:
+MODELS:
   de: Varianten
   en: Models
   es: Modèles
   fr: Modèles
   it: Modelos
   ru: Типовые модели
-GLOBAL_MODEL:
+MODEL:
   de: Variante
   en: Model
   es: Modèle
   fr: Modèle
   it: Modelo
-GLOBAL_MONTH:
+MONTH:
   de: Monat
   en: Month
   es: Mois
   fr: Mois
   it: Mes
-GLOBAL_MONTHS:
+MONTHS:
   de: Monate
   en: Months
   es: Mois
   fr: Mois
   it: Meses
-GLOBAL_MOVE:
+MOVE:
   de: Verschieben
   en: Move
   es: Se déplacer
   fr: Se déplacer
   it: Moverte
   ru: месяцев
-GLOBAL_MUCH_TIME:
+MUCH_TIME:
   de: Dieser Vorgang kann längere Zeit dauern. Bitte brechen Sie das Laden der Seite nicht ab.
   en: 'Hint: This can take much time. Do not abort while loading the page.'
   es: '<em>Hint : </em> ceci peut prendre beaucoup de temps. Ne pas avorter tout en chargeant la page.'
   fr: '<em>Hint : </em> ceci peut prendre beaucoup de temps. Ne pas avorter tout en chargeant la page.'
   it: '<em>Hint: </em> esto puede tomar mucha hora. No abortar mientras que carga la página.'
   ru: 'Переместить <em> Подсказка : </em> Это может занять много времени. Не прервать во время загрузки страницы.'
-GLOBAL_NAME_DESC:
+NAME_DESC:
   de: Logischer Name des Objektes. Kann beliebige Zeichen enthalten (max. 255 Zeichen)
   en: Logical Name of this object. Can contain any chars (max. 255 chars)
   es: Nom logique de cet objet. Peut contenir tous les chars (maximum 255 chars)
   fr: Nom logique de cet objet. Peut contenir tous les chars (maximum 255 chars)
   it: Nombre lógico de este objeto. Puede contener cualquier carbón (máximo 255 carbones)
   ru: Имя Логические Имя данного объекта. Может содержать любые символы (макс. 255 символов)
-GLOBAL_NAME:
+NAME:
   de: Name
   en: Name
   es: Appeler
   fr: Appeler
   it: Nombrar
-GLOBAL_NEW:
+NEW:
   de: Neu
   en: New
   es: Nouveau
   fr: Nouveau
   it: Nuevo
-GLOBAL_NO_ARCHIVE_DESC:
+NO_ARCHIVE_DESC:
   de: Zu diesem Platzhalter ist noch kein Archiv verfügbar.
   en: For this element is no archive available.
-GLOBAL_NO_ARCHIVE:
+NO_ARCHIVE:
   de: Kein Archiv
   en: No archive
-GLOBAL_NO_DESCRIPTION_AVAILABLE:
+NO_DESCRIPTION_AVAILABLE:
   de: keine Beschreibung verfügbar
   en: No description available :(
   es: 'Aucune description disponible : ('
   fr: 'Aucune description disponible : ('
   it: 'Aucune description disponible : ('
   ru: 'Теперь не описание недоступно : ('
-GLOBAL_NO_DIFFERENCES_FOUND:
+NO_DIFFERENCES_FOUND:
   de: Keine Unterschiede gefunden
   en: No differences found
   es: Aucunes différences trouvées
   fr: Aucunes différences trouvées
   it: Aucunes différences trouvées
   ru: Нет отличий
-GLOBAL_NOPUBLISH_DESC:
+NOPUBLISH_DESC:
   de: Funktionen zum Veröffentlichen sind zur Zeit deaktiviert.
   en: All publishing functions are deactivated at the moment.
   es: "Toutes les fonctions de édition sont mises hors tension à l'heure actuelle."
   fr: "Toutes les fonctions de édition sont mises hors tension à l'heure actuelle."
   it: Todas las funciones que publican se desactivan en el momento.
   ru: Все издательские функции, дезактивируются в данный момент. Извещение
-GLOBAL_NOPUBLISH:
+NOPUBLISH:
   de: Veröffentlichen deaktiviert
   en: Publishing not available
   es: Éditant non disponible
   fr: Éditant non disponible
   it: Publicando no disponible
   ru: Новые публикации отсутствует
-GLOBAL_NOT_FOUND:
+NOT_FOUND:
   de: nicht gefunden
   en: not found
   es: non trouvé
   fr: non trouvé
   it: non trouvé
   ru: не найден
-GLOBAL_NOTICES:
+NOTICES:
   de: Hinweis
   en: Notice
   es: Notification
   fr: Notification
   it: Notification
-GLOBAL_NOT_LOGGED_IN:
+NOT_LOGGED_IN:
   de: nicht angemeldet
   en: not logged in
   es: non entré
   fr: non entré
   it: non entré
   ru: не вошли в систему
-GLOBAL_NOW:
+NOW:
   de: Jetzt
   en: Now
   es: Maintenant
   fr: Maintenant
   it: Maintenant
-GLOBAL_NR:
+NR:
   de: Nr.
   en: No.
   es: Non.
   fr: Non.
   it: Non.
   ru: №
-GLOBAL_OPEN_ALL:
+OPEN_ALL:
   de: Alle öffnen
   en: Open all
-GLOBAL_OR:
+OR:
   de: oder
   en: or
   es: ou
   fr: ou
   it: ou
   ru: или
-GLOBAL_OTHER_DESC:
+OTHER_DESC:
   de: Dateitransfer, Suche nach Objekten
   en: File transfer, search for objects
   es: Transfert de fichier, recherche des objets
   fr: Transfert de fichier, recherche des objets
   it: Transfert de fichier, recherche des objets
   ru: передача файлов, поиск объектов страницу
-GLOBAL_OTHER:
+OTHER:
   de: Sonstiges
   en: Other Stuff
   es: "L'autre substance"
   fr: "L'autre substance"
   it: "L'autre substance"
   ru: Другие предметы
-GLOBAL_PAGEELEMENT:
+PAGEELEMENT:
   de: Seitenelement
   en: Page element
-GLOBAL_PAGE:
+PAGE:
   de: Seite
   en: Page
-GLOBAL_PAGES:
+PAGES:
   de: Seiten
   en: Pages
-GLOBAL_PHP:
+PHP:
   de: Interpreter
   en: Interpreter
   es: Interprète
   fr: Interprète
   it: Interprète
   ru: Страницы Переводчик
-GLOBAL_PLEASE_LOGIN:
+PLEASE_LOGIN:
   de: Bitte melden Sie sich an
   en: Please log in
   es: Svp ouverture
   fr: Svp ouverture
   it: Svp ouverture
   ru: Пожалуйста, войдите Настройки
-GLOBAL_PREFS:
+PREFS:
   de: Einstellungen
   en: Preferences
   es: Préférences
   fr: Préférences
   it: Préférences
-GLOBAL_PROFILE:
+PROFILE:
   de: Benutzerprofil
   en: User profile
-GLOBAL_PROJECT:
+PROJECT:
   de: Projekt
   en: Project
   es: Projet
   fr: Projet
   it: Projet
-GLOBAL_PROJECTS:
+PROJECTS:
   de: Projekte
   en: Projects
   es: Projets
   fr: Projets
   it: Projets
   ru: Проект Проекты Свойства
-GLOBAL_PROP:
+PROP:
   de: Eigenschaften
   en: Properties
   es: Propriétés
   fr: Propriétés
   it: Propriétés
-GLOBAL_PUBLIC:
+PUBLIC:
   de: öffentlich
   en: public
-GLOBAL_PUBLISH:
+PUBLISH:
   de: Veröffentlichen
   en: publish
   es: éditer
   fr: éditer
   it: éditer
   ru: общественности
-GLOBAL_PUBLISH_WITH_SUBDIRS:
+PUBLISH_WITH_SUBDIRS:
   de: auch Unterverzeichnisse veröffentlichen
   en: publish with subdirectories
   es: éditer avec des sous-répertoires
   fr: éditer avec des sous-répertoires
   it: éditer avec des sous-répertoires
   ru: опубликовать опубликовать в подкаталогах
-GLOBAL_READONLY_DESC:
+READONLY_DESC:
   de: Das System ist im Nur-Lesen Modus. Sie können keine Daten speichern.
   en: The System is in read-only mode. You cannot save any data!
   es: Le système est en mode inaltérable. Vous ne pouvez sauver aucune données !
   fr: Le système est en mode inaltérable. Vous ne pouvez sauver aucune données !
   it: Le système est en mode inaltérable. Vous ne pouvez sauver aucune données !
   ru: режиме Система в режиме только для чтения. Вы не сможете сохранить любые данные! Обновить
-GLOBAL_READONLY:
+READONLY:
   de: Nur-Lesen Modus
   en: Read-only mode
   es: Mode inaltérable
   fr: Mode inaltérable
   it: Mode inaltérable
   ru: Только для чтения
-GLOBAL_REFRESH:
+REFRESH:
   de: Aktualisieren
   en: Refresh
   es: Régénérer
   fr: Régénérer
   it: Régénérer
-GLOBAL_REGISTER_DESC:
+REGISTER_DESC:
   de: Sie können sich registrieren. Sie erhalten dann Anmeldedaten per E-Mail und koennen sich sofort anmelden.
   en: Feel free to register now.
   es: "Se sentir libre pour s'enregistrer maintenant."
   fr: "Se sentir libre pour s'enregistrer maintenant."
   it: "Se sentir libre pour s'enregistrer maintenant."
   ru: Зарегистрироваться Вы можете зарегистрироваться сейчас. Освобождение
-GLOBAL_REGISTER:
+REGISTER:
   de: Registrieren
   en: Register
   es: Enregistrer
   fr: Enregistrer
   it: Enregistrer
-GLOBAL_RELEASE_DESC:
+RELEASE_DESC:
   de: Inhalt zur Veröffentlichung freigeben
   en: Release value for publishing
-GLOBAL_RELEASE:
+RELEASE:
   de: Freigeben
   en: Release content
   es: Contenu de la version
   fr: Contenu de la version
   it: Contenu de la version
-GLOBAL_REMOVE:
+REMOVE:
   de: entfernen
   en: remove
   es: enlever
   fr: enlever
   it: enlever
   ru: содержание удалять Переименовать
-GLOBAL_RENAME:
+RENAME:
   de: Umbenennen
   en: Rename
   es: Retitrer
   fr: Retitrer
   it: Retitrer
-GLOBAL_REPLACE:
+REPLACE:
   de: Auswechseln
   en: Replace
   es: Remplacer
   fr: Remplacer
   it: Remplacer
-GLOBAL_SAVE:
+SAVE:
   de: Speichern
   en: Save
   es: Économiser
   fr: Économiser
   it: Économiser
-GLOBAL_SEARCH_DESC:
+SEARCH_DESC:
   de: Bei großen Projekten können Sie nach Objekten suchen, z.B. über den Namen oder einen Inhalt
   en: In big projects you can search for objects by several attributes like name,id,...
   es: "Dans de grands projets vous pouvez rechercher des objets par plusieurs attributs comme le nom, l'identification,?"
   fr: "Dans de grands projets vous pouvez rechercher des objets par plusieurs attributs comme le nom, l'identification,?"
   it: "Dans de grands projets vous pouvez rechercher des objets par plusieurs attributs comme le nom, l'identification,?"
-GLOBAL_SEARCH:
+SEARCH:
   de: Suche
   en: Search
   es: Recherche
   fr: Recherche
   it: Recherche
-GLOBAL_SECOND:
+SECOND:
   de: Sekunde
   en: Second
   es: En second lieu
   fr: En second lieu
   it: En second lieu
-GLOBAL_SECONDS:
+SECONDS:
   de: Sekunden
   en: Seconds
   es: Secondes
   fr: Secondes
   it: Secondes
-GLOBAL_SELECT:
+SELECT:
   de: Auswählen
   en: Select
   es: Choisir
   fr: Choisir
   it: Choisir
-GLOBAL_SELECTED:
+SELECTED:
   de: Ist ausgewählt
   en: selected
   es: choisi
   fr: choisi
   it: choisi
-GLOBAL_SEND_PASSWORD_DESC:
+SEND_PASSWORD_DESC:
   de: Wenn Sie Ihr Kennwort vergessen haben koennen Sie sich ein neues zusenden lassen
   en: If you have forgotten your password, request a new one.
   es: Si vous avez oublié votre mot de passe, demander un neuf.
   fr: Si vous avez oublié votre mot de passe, demander un neuf.
   it: Si vous avez oublié votre mot de passe, demander un neuf.
-GLOBAL_SEND_PASSWORD:
+SEND_PASSWORD:
   de: Kennwort zusenden
   en: Forgotten password
   es: Mot de passe oublié
   fr: Mot de passe oublié
   it: Mot de passe oublié
-GLOBAL_SETTINGS:
+SETTINGS:
   de: Einstellungen
   en: Settings
   es: Arrangements
   fr: Arrangements
   it: Arrangements
-GLOBAL_SHOWTREE:
+SHOWTREE:
   de: Baum einblenden
   en: Show tree
   es: "Montrer l'arbre"
   fr: "Montrer l'arbre"
   it: "Montrer l'arbre"
-GLOBAL_STATE:
+STATE:
   de: Status
   en: State
-GLOBAL_SYSTEM:
+SYSTEM:
   de: System
   en: System
   es: Système
   fr: Système
   it: Système
-GLOBAL_TEMPLATES_DESC:
+TEMPLATES_DESC:
   de: Bearbeiten Sie Vorlagen, mit welchen Seiten erzeugt werden
   en: Edit the templates
   es: Éditer les calibres
   fr: Éditer les calibres
   it: Corregir las plantillas
-GLOBAL_TEMPLATES:
+TEMPLATES:
   de: Vorlagen
   en: Templates
   es: Calibres
   fr: Calibres
   it: Plantillas
-GLOBAL_TEMPLATE:
+TEMPLATE:
   de: Vorlage
   en: Template
   es: Calibre
   fr: Calibre
   it: Plantilla
-GLOBAL_TO:
+TO:
   de: nach
   en: to
   ru: до
-GLOBAL_TRANSFER:
+TRANSFER:
   de: Transfer
   en: Transfer
   es: Transfert
   fr: Transfert
   it: Transferencia
   ru: Сегодня передача типа
-GLOBAL_TREE:
+TREE:
   de: Übersicht
   en: Overview
-GLOBAL_TYPE:
+TYPE:
   de: Typ
   en: Type
   es: Dactylographier
   fr: Dactylographier
   it: Mecanografiar
-GLOBAL_UNDO:
+UNDO:
   de: Rückgängig
   en: Undo
   es: Défaire
   fr: Défaire
   it: Deshacer
-GLOBAL_UNKNOWN_TEXT:
+UNKNOWN_TEXT:
   de: kein Text verfügbar
   en: no text available
   es: aucun texte disponible
   fr: aucun texte disponible
   it: ningún texto disponible
   ru: нет текста до
-GLOBAL_UNKNOWN:
+UNKNOWN:
   de: unbekannt
   en: unknown
   es: inconnu
   fr: inconnu
   it: desconocido
   ru: Отменить неизвестных
-GLOBAL_UP:
+UP:
   de: hoch
   en: up
   es: vers le haut de
   fr: vers le haut de
   it: encima de
-GLOBAL_UPLOAD:
+UPLOAD:
   de: Upload
   en: Upload
   es: Téléchargement
   fr: Téléchargement
-GLOBAL_USE:
+USE:
   de: Benutzen
   en: Use
   es: Employer
   fr: Employer
   it: Utilizar
   ru: Загрузить Используйте
-GLOBAL_USE_DESC:
+USE_DESC:
   de: Diesen Inhalt zur Bearbeitung verwenden.
   en: Use this value for editing.
-GLOBAL_USER:
+USER:
   de: Benutzer
   en: User
   es: Utilisateur
   fr: Utilisateur
   it: Usuario
   ru: Пользователь
-GLOBAL_USERS:
+USERS:
   de: Benutzer
   en: Users
   es: Utilisateurs
   fr: Utilisateurs
   it: Usuarios
   ru: Пользователи
-GLOBAL_VALUE:
+VALUE:
   de: Inhalt
   en: Content
-GLOBAL_WITH:
+WITH:
   de: mit
   en: with
   es: avec
   fr: avec
   it: con
   ru: с
-GLOBAL_YEAR:
+YEAR:
   de: Jahr
   en: Year
   es: Année
   fr: Année
   it: Año
-GLOBAL_YEARS:
+YEARS:
   de: Jahre
   en: Years
   es: Années
@@ -5856,33 +5856,33 @@ FILE_IMAGE_NEW_WIDTH:
   fr: Nouvelle largeur
   it: Nueva anchura
   ru: Новая ширина климата
-GLOBAL_LANGUAGE:
+LANGUAGE:
   de: Sprache
   en: Language
   es: Langue
   fr: Langue
   it: Lengua
   ru: Ключевые Язык Sprache
-GLOBAL_PUBLISH:
+PUBLISH:
   en: Published
   de: Veröffentlicht
-GLOBAL_NO_TEMPLATES_AVAILABLE_DESC:
+NO_TEMPLATES_AVAILABLE_DESC:
   en: 'Hint: There are no templates available.'
   es: '<em>Hint : </em> là ne sont aucun calibre disponible.'
   fr: '<em>Hint : </em> là ne sont aucun calibre disponible.'
   it: '<em>Hint : </em> là ne sont aucun calibre disponible.'
   ru: '<em> Подсказка : </em> Там нет шаблонов имеется.'
-GLOBAL_SHOW:
+SHOW:
   en: Show
   es: Montrer
   fr: Montrer
   it: Montrer
-GLOBAL_TIME:
+TIME:
   en: Time
   es: Temps
   fr: Temps
   it: Tiempo
-GLOBAL_TODAY:
+TODAY:
   en: Today
   es: "Aujourd'hui"
   fr: "Aujourd'hui"
@@ -6135,7 +6135,7 @@ LABEL:
 NAME:
   de: Name
   en: Name
-GLOBAL_PUBLISHED:
+PUBLISHED:
   de: Veröffentlicht
   en: Published
 SECURITY:

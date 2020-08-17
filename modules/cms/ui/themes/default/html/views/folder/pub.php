@@ -2,7 +2,7 @@
   
     <?php $if1=(config('security','nopublish')); if($if1) {  ?>
       <div class="<?php echo escapeHtml('message warn') ?>"><?php echo escapeHtml('') ?>
-        <span class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml(''.@lang('GLOBAL_NOPUBLISH_DESC').'') ?>
+        <span class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml(''.@lang('NOPUBLISH_DESC').'') ?>
         </span>
       </div>
      <?php } ?>
@@ -21,7 +21,7 @@
               <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 <span><?php echo escapeHtml(' ') ?>
                 </span>
-                <span><?php echo escapeHtml(''.@lang('global_pages').'') ?>
+                <span><?php echo escapeHtml(''.@lang('pages').'') ?>
                 </span>
               </label>
             </div>
@@ -36,7 +36,7 @@
               <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 <span><?php echo escapeHtml(' ') ?>
                 </span>
-                <span><?php echo escapeHtml(''.@lang('global_files').'') ?>
+                <span><?php echo escapeHtml(''.@lang('files').'') ?>
                 </span>
               </label>
             </div>
@@ -60,7 +60,7 @@
                   <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                     <span><?php echo escapeHtml(' ') ?>
                     </span>
-                    <span><?php echo escapeHtml(''.@lang('GLOBAL_PUBLISH_WITH_SUBDIRS').'') ?>
+                    <span><?php echo escapeHtml(''.@lang('PUBLISH_WITH_SUBDIRS').'') ?>
                     </span>
                   </label>
                 </div>
@@ -75,7 +75,7 @@
                   <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                     <span><?php echo escapeHtml(' ') ?>
                     </span>
-                    <span><?php echo escapeHtml(''.@lang('global_CLEAN_AFTER_PUBLISH').'') ?>
+                    <span><?php echo escapeHtml(''.@lang('CLEAN_AFTER_PUBLISH').'') ?>
                     </span>
                   </label>
                 </div>

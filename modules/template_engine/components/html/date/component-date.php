@@ -2,7 +2,7 @@
 function component_date( $time )
 {
 	if	( $time==0)
-		echo lang('GLOBAL_UNKNOWN');
+		echo lang('UNKNOWN');
 	else
 	{
 		// Benutzereinstellung 'Zeitzonen-Offset' auswerten.
@@ -34,34 +34,34 @@ function component_date( $time )
 		
 		
 		if	( $sekunden == 1 )
-		echo $sekunden.' '.lang('GLOBAL_SECOND');
+		echo $sekunden.' '.lang('SECOND');
 		elseif	( $sekunden < 60 )
-		echo $sekunden.' '.lang('GLOBAL_SECONDS');
+		echo $sekunden.' '.lang('SECONDS');
 		
 		elseif	( $minuten == 1 )
-		echo $minuten.' '.lang('GLOBAL_MINUTE');
+		echo $minuten.' '.lang('MINUTE');
 		elseif	( $minuten < 60 )
-		echo $minuten.' '.lang('GLOBAL_MINUTES');
+		echo $minuten.' '.lang('MINUTES');
 		
 		elseif	( $stunden == 1 )
-		echo $stunden.' '.lang('GLOBAL_HOUR');
+		echo $stunden.' '.lang('HOUR');
 		elseif	( $stunden < 60 )
-		echo $stunden.' '.lang('GLOBAL_HOURS');
+		echo $stunden.' '.lang('HOURS');
 		
 		elseif	( $tage == 1 )
-		echo $tage.' '.lang('GLOBAL_DAY');
+		echo $tage.' '.lang('DAY');
 		elseif	( $tage < 60 )
-		echo $tage.' '.lang('GLOBAL_DAYS');
+		echo $tage.' '.lang('DAYS');
 		
 		elseif	( $monate == 1 )
-		echo $monate.' '.lang('GLOBAL_MONTH');
+		echo $monate.' '.lang('MONTH');
 		elseif	( $monate < 12 )
-		echo $monate.' '.lang('GLOBAL_MONTHS');
+		echo $monate.' '.lang('MONTHS');
 		
 		elseif	( $jahre == 1 )
-		echo $jahre.' '.lang('GLOBAL_YEAR');
+		echo $jahre.' '.lang('YEAR');
 		else
-			echo $jahre.' '.lang('GLOBAL_YEARS');
+			echo $jahre.' '.lang('YEARS');
 			
 		echo ')';
 						

@@ -10,7 +10,7 @@
             <td><?php echo escapeHtml('') ?>
             </td>
             <td><?php echo escapeHtml('') ?>
-              <em><?php echo escapeHtml(''.@lang('GLOBAL_COMPARE').'') ?>
+              <em><?php echo escapeHtml(''.@lang('COMPARE').'') ?>
               </em>
               <span><?php echo escapeHtml(' ') ?>
               </span>
@@ -20,7 +20,7 @@
             <td><?php echo escapeHtml('') ?>
             </td>
             <td><?php echo escapeHtml('') ?>
-              <em><?php echo escapeHtml(''.@lang('GLOBAL_WITH').'') ?>
+              <em><?php echo escapeHtml(''.@lang('WITH').'') ?>
               </em>
               <span><?php echo escapeHtml(' ') ?>
               </span>

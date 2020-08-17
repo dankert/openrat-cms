@@ -50,7 +50,7 @@
                   <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                     <span><?php echo escapeHtml(' ') ?>
                     </span>
-                    <span><?php echo escapeHtml(''.@lang('GLOBAL_RELEASE').'') ?>
+                    <span><?php echo escapeHtml(''.@lang('RELEASE').'') ?>
                     </span>
                   </label>
                 </td>

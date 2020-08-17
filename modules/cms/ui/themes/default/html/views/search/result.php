@@ -8,11 +8,11 @@
         <table width="<?php echo escapeHtml('100%') ?>"><?php echo escapeHtml('') ?>
           <tr><?php echo escapeHtml('') ?>
             <td class="<?php echo escapeHtml('header') ?>"><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@lang('GLOBAL_NAME').'') ?>
+              <span><?php echo escapeHtml(''.@lang('NAME').'') ?>
               </span>
             </td>
             <td class="<?php echo escapeHtml('header') ?>"><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@lang('GLOBAL_LASTCHANGE').'') ?>
+              <span><?php echo escapeHtml(''.@lang('LASTCHANGE').'') ?>
               </span>
             </td>
           </tr>

@@ -744,7 +744,7 @@ SQL
 			$acl->setDatabaseRow( $row );
 			$acl->projectid    = $row['projectid'   ];
 			if	( intval($acl->languageid) == 0 )
-				$acl->languagename = lang('GLOBAL_ALL_LANGUAGES');
+				$acl->languagename = lang('ALL_LANGUAGES');
 			else
 				$acl->languagename = $row['languagename'];
 			$aclList[] = $acl;

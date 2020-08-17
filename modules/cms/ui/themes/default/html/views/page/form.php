@@ -17,7 +17,7 @@
                   <?php $if1=(($el)==FALSE); if($if1) {  ?>
                     <tr><?php echo escapeHtml('') ?>
                       <td colspan="<?php echo escapeHtml('4') ?>"><?php echo escapeHtml('') ?>
-                        <span><?php echo escapeHtml(''.@lang('GLOBAL_NOT_FOUND').'') ?>
+                        <span><?php echo escapeHtml(''.@lang('NOT_FOUND').'') ?>
                         </span>
                       </td>
                     </tr>
@@ -29,11 +29,11 @@
                         </span>
                       </td>
                       <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
-                        <span><?php echo escapeHtml(''.@lang('GLOBAL_CHANGE').'') ?>
+                        <span><?php echo escapeHtml(''.@lang('CHANGE').'') ?>
                         </span>
                       </td>
                       <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
-                        <span><?php echo escapeHtml(''.@lang('GLOBAL_VALUE').'') ?>
+                        <span><?php echo escapeHtml(''.@lang('VALUE').'') ?>
                         </span>
                       </td>
                     </tr>
@@ -90,7 +90,7 @@
                     <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                       <span><?php echo escapeHtml(' ') ?>
                       </span>
-                      <span><?php echo escapeHtml(''.@lang('GLOBAL_RELEASE').'') ?>
+                      <span><?php echo escapeHtml(''.@lang('RELEASE').'') ?>
                       </span>
                     </label>
                   </div>

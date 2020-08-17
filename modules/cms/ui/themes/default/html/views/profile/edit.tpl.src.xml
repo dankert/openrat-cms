@@ -1,7 +1,7 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<header views="mail"></header>
-	<form label="${message:global_save}">
+	<form label="${message:save}">
 		<group title="${message:name}">
 			<part class="line">
 				<part class="label">
@@ -29,7 +29,7 @@
 				</part>
 			</part>
 		</group>
-		<group title="${message:GLOBAL_PROP}">
+		<group title="${message:PROP}">
 			<part class="line">
 				<part class="label">
 					<label for="fullname" key="user_fullname"></label>

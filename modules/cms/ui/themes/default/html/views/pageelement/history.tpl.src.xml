@@ -5,11 +5,11 @@
 		<table widths="5%,5%,5%,15%,15%,35%,10%,10%">
 			<row class="headline">
 				<column class="help">
-					<text value="${message:GLOBAL_NR}"></text>
+					<text value="${message:NR}"></text>
 				</column>
 				<column class="help" colspan="2">
 					<if present="compareid">
-						<text value="${message:GLOBAL_COMPARE}"></text>
+						<text value="${message:COMPARE}"></text>
 					</if>
 					<else>
 						<text value=" " />
@@ -19,22 +19,22 @@
 					<text value="${message:DATE}"></text>
 				</column>
 				<column class="help">
-					<text value="${message:GLOBAL_USER}"></text>
+					<text value="${message:USER}"></text>
 				</column>
 				<column class="help">
-					<text value="${message:GLOBAL_VALUE}"></text>
+					<text value="${message:VALUE}"></text>
 				</column>
 				<column class="help">
-					<text value="${message:GLOBAL_STATE}"></text>
+					<text value="${message:STATE}"></text>
 				</column>
 				<column class="help">
-					<text value="${message:GLOBAL_ACTION}"></text>
+					<text value="${message:ACTION}"></text>
 				</column>
 			</row>
 			<if empty="${el}">
 				<row>
 					<column colspan="8">
-						<text value="${message:GLOBAL_NOT_FOUND}"></text>
+						<text value="${message:NOT_FOUND}"></text>
 					</column>
 				</row>
 			</if>
@@ -70,35 +70,35 @@
 					</column>
 					<if true="${public}">
 						<column>
-							<text value="${message:GLOBAL_PUBLIC}" type="strong"></text>
+							<text value="${message:PUBLIC}" type="strong"></text>
 						</column>
 					</if>
 					<else>
 						<if present="releaseUrl">
 							<column class="clickable">
 								<link type="post" subaction="release" var1="valueid"
-									value1="${valueid}" id="${objectid}" title="${message:GLOBAL_RELEASE_DESC}">
-									<text value="${message:GLOBAL_RELEASE}" type="strong"></text>
+									value1="${valueid}" id="${objectid}" title="${message:RELEASE_DESC}">
+									<text value="${message:RELEASE}" type="strong"></text>
 								</link>
 							</column>
 						</if>
 						<else>
 							<column>
-								<text value="${message:GLOBAL_INACTIVE}" type="emphatic" />
+								<text value="${message:INACTIVE}" type="emphatic" />
 							</column>
 						</else>
 					</else>
 					<if true="${active}">
 						<column>
-							<text value="${message:GLOBAL_ACTIVE}" type="emphatic"></text>
+							<text value="${message:ACTIVE}" type="emphatic"></text>
 						</column>
 					</if>
 					<else>
 						<if present="useUrl">
 							<column class="clickable">
 								<link type="post" subaction="use" var1="valueid" value1="${valueid}"
-									id="${objectid}" title="${message:GLOBAL_USE_DESC}">
-									<text value="${message:GLOBAL_USE}"></text>
+									id="${objectid}" title="${message:USE_DESC}">
+									<text value="${message:USE}"></text>
 								</link>
 							</column>
 						</if>

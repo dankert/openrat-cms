@@ -26,7 +26,7 @@
            <?php } ?>
           <?php $if1=(($templates)==FALSE); if($if1) {  ?>
             <tr><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@lang('GLOBAL_NO_TEMPLATES_AVAILABLE_DESC').'') ?>
+              <span><?php echo escapeHtml(''.@lang('NO_TEMPLATES_AVAILABLE_DESC').'') ?>
               </span>
             </tr>
            <?php } ?>

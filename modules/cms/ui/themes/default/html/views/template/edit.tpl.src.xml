@@ -27,7 +27,7 @@
 		<if empty="${elements}">
 			<row>
 				<column colspan="2">
-					<text value="${message:GLOBAL_NOT_FOUND}"></text>
+					<text value="${message:NOT_FOUND}"></text>
 				</column>
 			</row>
 		</if>

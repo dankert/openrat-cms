@@ -3,9 +3,9 @@
 	<table>
 		<row class="headline">
 			<column>
-				<text value="${message:GLOBAL_TYPE}"></text>
+				<text value="${message:TYPE}"></text>
 				<text value=" / "></text>
-				<text value="${message:GLOBAL_NAME}"></text>
+				<text value="${message:NAME}"></text>
 			</column>
 		</row>
 		<if present="up_url">

@@ -25,7 +25,7 @@
 				<part class="label">
 					<radio name="type" value="addicon"></radio>
 					<label for="type_addicon">
-						<text value="${message:GLOBAL_ICON}"></text>
+						<text value="${message:ICON}"></text>
 					</label>
 				</part>
 				<part class="input">

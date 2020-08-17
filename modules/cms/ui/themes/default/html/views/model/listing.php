@@ -33,21 +33,21 @@
                   </td>
                   <td><?php echo escapeHtml('') ?>
                     <?php $if1=(isset($default_url)); if($if1) {  ?>
-                      <span><?php echo escapeHtml(''.@lang('GLOBAL_make_default').'') ?>
+                      <span><?php echo escapeHtml(''.@lang('make_default').'') ?>
                       </span>
                      <?php } ?>
                     <?php if(!$if1) {  ?>
-                      <span><?php echo escapeHtml(''.@lang('GLOBAL_is_default').'') ?>
+                      <span><?php echo escapeHtml(''.@lang('is_default').'') ?>
                       </span>
                      <?php } ?>
                   </td>
                   <td><?php echo escapeHtml('') ?>
                     <?php $if1=(isset($select_url)); if($if1) {  ?>
-                      <span><?php echo escapeHtml(''.@lang('GLOBAL_select').'') ?>
+                      <span><?php echo escapeHtml(''.@lang('select').'') ?>
                       </span>
                      <?php } ?>
                     <?php if(!$if1) {  ?>
-                      <span><?php echo escapeHtml(''.@lang('GLOBAL_selected').'') ?>
+                      <span><?php echo escapeHtml(''.@lang('selected').'') ?>
                       </span>
                      <?php } ?>
                   </td>

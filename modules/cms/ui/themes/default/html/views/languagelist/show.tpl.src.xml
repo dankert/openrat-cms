@@ -28,7 +28,7 @@
 					<column class="clickable">
 						<if present="id">
 							<link type="post" action="language" subaction="setdefault" id="${id}">
-								<text value="${message:GLOBAL_make_default}"></text>
+								<text value="${message:make_default}"></text>
 							</link>
 						</if>
 						<else>
@@ -37,7 +37,7 @@
 				</if>
 				<else>
 					<column>
-						<text value="${message:GLOBAL_is_default}" type="emphatic" />
+						<text value="${message:is_default}" type="emphatic" />
 					</column>
 				</else>
 			</row>

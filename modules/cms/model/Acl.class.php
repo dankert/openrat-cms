@@ -220,7 +220,7 @@ class Acl extends ModelBase
 		$this->setDatabaseRow( $row );		
 
 		if	( intval($this->languageid)==0 )
-			$this->languagename = lang('GLOBAL_ALL_LANGUAGES');
+			$this->languagename = lang('ALL_LANGUAGES');
 		else	$this->languagename = $row['languagename'];
 		$this->username     = $row['username'    ];
 		$this->groupname    = $row['groupname'   ];

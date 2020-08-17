@@ -18,19 +18,19 @@
                   </span>
                 </td>
                 <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(''.@lang('GLOBAL_TYPE').'') ?>
+                  <span><?php echo escapeHtml(''.@lang('TYPE').'') ?>
                   </span>
                 </td>
                 <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(''.@lang('GLOBAL_NAME').'') ?>
+                  <span><?php echo escapeHtml(''.@lang('NAME').'') ?>
                   </span>
                 </td>
                 <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(''.@lang('GLOBAL_FILENAME').'') ?>
+                  <span><?php echo escapeHtml(''.@lang('FILENAME').'') ?>
                   </span>
                 </td>
                 <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(''.@lang('GLOBAL_LASTCHANGE').'') ?>
+                  <span><?php echo escapeHtml(''.@lang('LASTCHANGE').'') ?>
                   </span>
                 </td>
               </tr>

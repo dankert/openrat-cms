@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<dummy>
 		<form>
-			<window name="GLOBAL_PREFS" widths="30%,70%">
+			<window name="PREFS" widths="30%,70%">
 				<if present="subtype">
 					<row>
 						<column>
@@ -153,7 +153,7 @@
 							<list list="${dynamic_class_parameters}" key="paramName" value="defaultValue">
 								<text value="${paramName}"></text>
 								<text value=" ("></text>
-								<text value="${message:GLOBAL_DEFAULT}"></text>
+								<text value="${message:DEFAULT}"></text>
 								<text value=") = "></text>
 								<text value="${defaultValue}"></text>
 								<newline></newline>
