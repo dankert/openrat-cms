@@ -161,7 +161,7 @@ class LoginAction extends BaseAction
 		}
 		else
 		{
-			Logger::info( "login failed for user {$user->name} from IP $ip" );
+			Logger::info( "login failed for user ".Logger::sanitizeInput($user->name)." from IP $ip" );
 
 			return false;
 		}
@@ -790,7 +790,7 @@ class LoginAction extends BaseAction
 		{
 			// Anmeldung nicht erfolgreich
 			
-			Logger::debug("Login failed for user '$loginName' from IP $ip");
+			Logger::debug("Login failed for user ".Logger::sanitizeInput($loginName)." from IP $ip");
 			
 			if	( $tokenFailed )
 			{

@@ -31,7 +31,7 @@ class RememberAuth implements Auth
 
 				if (!$dbConfig->has($dbid)) {
 
-					Logger::info('unknown DB-Id for token-login: ' . $dbid);
+					Logger::info('unknown DB-Id for token-login: ' . Logger::sanitizeInput($dbid));
 					return null;
 				}
 

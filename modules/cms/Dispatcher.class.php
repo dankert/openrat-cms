@@ -158,7 +158,7 @@ class Dispatcher
     {
         global $REQ;
         if (config('security', 'use_post_token') && $_SERVER['REQUEST_METHOD'] == 'POST' && @$REQ[REQ_PARAM_TOKEN] != token()) {
-            Logger::error('Token mismatch: Needed ' . token() . ' but got ' . @$REQ[REQ_PARAM_TOKEN] . '. Maybe an attacker?');
+            Logger::error('Token mismatch: Needed ' . token() . ' but got ' . Logger::sanitizeInput(@$REQ[REQ_PARAM_TOKEN]) . '. Maybe an attacker?');
             throw new SecurityException("Token mismatch");
         }
     }

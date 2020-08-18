@@ -3,6 +3,7 @@
 
 namespace logger;
 use Exception;
+use util\Text;
 
 define('LOGGER_LOG_TRACE', 5);
 define('LOGGER_LOG_DEBUG', 4);
@@ -156,6 +157,21 @@ class Logger
 		// ERROR- und WARN-Meldungen immer zusätzlich in das Error-Log schreiben.
 		if (Logger::$level <= LOGGER_LOG_WARN)
 			error_log($text . "\n");
+	}
+
+
+	/**
+	 * Sanitize user input.
+	 * Cutting out unsafe characters.
+	 *
+	 * @param $input potentially dangerous user input
+	 * @return string a safe representaton of the user input.
+	 */
+	public static function sanitizeInput( $input ) {
+		$length = strlen($input);
+		$white = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,_-';
+		$clean = Text::clean($input,$white);
+		return '"'.$input.'"/'.$length.'/'.strlen($clean);
 	}
 }
 

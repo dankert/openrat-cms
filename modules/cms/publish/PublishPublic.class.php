@@ -405,7 +405,7 @@ class PublishPublic extends Publish
         {
             $ausgabe = array();
             $rc      = false;
-            Logger::debug('Executing system command: '.$this->commandAfterPublish );
+            Logger::debug('Executing system command: '.Logger::sanitizeInput($this->commandAfterPublish) );
             $user = Session::getUser();
             putenv("CMS_USER_NAME=".$user->name  );
             putenv("CMS_USER_ID="  .$user->userid);
