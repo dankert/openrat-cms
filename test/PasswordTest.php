@@ -1,6 +1,8 @@
 <?php
 
-include('../util/Password.class.php');
+include('../modules/security/Password.class.php');
+use security\Password;
+
 ?>
 
 <p>

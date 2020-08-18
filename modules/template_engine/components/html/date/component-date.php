@@ -15,10 +15,10 @@ function component_date( $time )
 		echo '<span class="sort-value">'.str_pad($time, 20, "0", STR_PAD_LEFT).'</span>'; // For sorting a table.
 
 		echo '<span title="';
-		$dl = date(lang('DATE_FORMAT_LONG'),$time);
-		$dl = str_replace('{weekday}',lang('DATE_WEEKDAY'.strval(date('w',$time))),$dl);
-		$dl = str_replace('{month}'  ,lang('DATE_MONTH'  .strval(date('n',$time))),$dl);
-//		$dl = str_replace(' ','&nbsp;',$dl);
+		$dl = lang('DATE_FORMAT_LONG');
+		$dl = str_replace('{weekday}',addcslashes(lang('DATE_WEEKDAY'.strval(date('w',$time))),'A..z'),$dl);
+		$dl = str_replace('{month}'  ,addcslashes(lang('DATE_MONTH'  .strval(date('n',$time))),'A..z'),$dl);
+		$dl = date( $dl,$time );
 		echo $dl;
 		unset($dl);
 		

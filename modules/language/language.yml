@@ -488,8 +488,8 @@ DATE_FORMAT:
   it: "m/d Y, H: i:s"
   ru: 'm/d Y, H: i:s'
 DATE_FORMAT_LONG:
-  de: \{\w\\e\\e\k\d\a\y\}\, d.\{\m\o\\n\\t\h\} Y \u\m H:i:s
-  en: m/d Y, H:i
+  de: '{weekday}\, d. {month} Y \u\m H:i:s'
+  en: "l F jS Y, H:i"
 DATE_LAST_MONTH:
   de: Letzter Monat
   en: Last month
@@ -2862,36 +2862,36 @@ MAIL_SUBJECT_USER_MAIL:
   it: tu contraseña
   ru: Пароль
 MAIL_TEXT_MAIL_CHANGE_CODE:
-  de: 'Guten Tag {name},;;Sie erhalten diese E-Mail, weil Sie eine Änderung Ihrer E-Mail-Adresse wünschen.;;Mit dem nachfolgenden Code können Sie Ihre E-Mail-Adresse ändern:;;Code: {code};;Bitte kopieren Sie diese Zahl und fügen Sie diese in das entsprechende Eingabefeld ein.;;Wenn Sie nicht wissen, wieso Sie diese E-Mail erhalten haben, ignorieren Sie diese bitte.'
-  en: 'Hello {name},;;you are receiving this mail, because you want to change your e-mail-adresse.;;Enter the following code to verify your e-mail-adress:;;Code: {code};;Please copy this number an paste it into the input field.;;if you do not know where this mail comes from, please ignore it.'
+  de: 'Guten Tag ${name},;;Sie erhalten diese E-Mail, weil Sie eine Änderung Ihrer E-Mail-Adresse wünschen.;;Mit dem nachfolgenden Code können Sie Ihre E-Mail-Adresse ändern:;;Code: ${code};;Bitte kopieren Sie diese Zahl und fügen Sie diese in das entsprechende Eingabefeld ein.;;Wenn Sie nicht wissen, wieso Sie diese E-Mail erhalten haben, ignorieren Sie diese bitte.'
+  en: 'Hello ${name},;;you are receiving this mail, because you want to change your e-mail-adresse.;;Enter the following code to verify your e-mail-adress:;;Code: ${code};;Please copy this number an paste it into the input field.;;if you do not know where this mail comes from, please ignore it.'
 MAIL_TEXT_PASSWORD_COMMIT_CODE:
-  de: 'Guten Tag {name},;;Ihr Code zum Anfordern eines neuen Kennwortes lautet: {code}.;;Bitte kopieren Sie diese Zahl und fügen Sie diese in das entsprechende Eingabefeld ein;;Sollten Sie kein neues Kennwort angefordert haben, so ignorieren Sie bitte diese E-Mail.;;Vielen Dank.'
-  en: 'Hello {name};;your code for requesting a new password is: {code};;Please insert this number into the input field.;;If you have not request a new password, please ignore this e-mail. In this case, your password will stay unchanged.;;Thank you.'
-  es: "Bonjour {name},;;votre code pour demander un nouveau mot de passe est : {code};;Veuillez insérer ce nombre dans le champ d'entrée.;;Si vous n'avez pas la demande un nouveau mot de passe, ignorer svp cet E-mail. Dans ce cas-ci, votre mot de passe restera sans changement. ; ; Merci."
-  fr: "Bonjour {name};;votre code pour demander un nouveau mot de passe est : {code} ; ; Veuillez insérer ce nombre dans le champ d'entrée. ; ; Si vous n'avez pas la demande un nouveau mot de passe, ignorer svp cet E-mail. Dans ce cas-ci, votre mot de passe restera sans changement. ; ; Merci."
-  it: 'hola {name}; ; tu código para solicitar una nueva contraseña es: {code}; ; Insertar por favor este número en el campo de la entrada. ; ; Si no tienes petición una nueva contraseña, no hacer caso por favor de este E-mail. En este caso, tu contraseña permanecerá sin cambiar. ; ; Gracias.'
-  ru: 'название Hello {name};;Ваш код для отправки запроса на получение нового пароля : {code};;Введите это число в поле ввода.;;Если Вы еще не запрашивал новый пароль, пожалуйста, игнорируйте эту электронную почту. В этом случае Ваш пароль будет оставаться неизменным.;;Спасибо.'
+  de: 'Guten Tag ${name},;;Ihr Code zum Anfordern eines neuen Kennwortes lautet: ${code}.;;Bitte kopieren Sie diese Zahl und fügen Sie diese in das entsprechende Eingabefeld ein;;Sollten Sie kein neues Kennwort angefordert haben, so ignorieren Sie bitte diese E-Mail.;;Vielen Dank.'
+  en: 'Hello ${name};;your code for requesting a new password is: ${code};;Please insert this number into the input field.;;If you have not request a new password, please ignore this e-mail. In this case, your password will stay unchanged.;;Thank you.'
+  es: "Bonjour ${name},;;votre code pour demander un nouveau mot de passe est : ${code};;Veuillez insérer ce nombre dans le champ d'entrée.;;Si vous n'avez pas la demande un nouveau mot de passe, ignorer svp cet E-mail. Dans ce cas-ci, votre mot de passe restera sans changement. ; ; Merci."
+  fr: "Bonjour ${name};;votre code pour demander un nouveau mot de passe est : ${code} ; ; Veuillez insérer ce nombre dans le champ d'entrée. ; ; Si vous n'avez pas la demande un nouveau mot de passe, ignorer svp cet E-mail. Dans ce cas-ci, votre mot de passe restera sans changement. ; ; Merci."
+  it: 'hola ${name}; ; tu código para solicitar una nueva contraseña es: ${code}; ; Insertar por favor este número en el campo de la entrada. ; ; Si no tienes petición una nueva contraseña, no hacer caso por favor de este E-mail. En este caso, tu contraseña permanecerá sin cambiar. ; ; Gracias.'
+  ru: 'название Hello ${name};;Ваш код для отправки запроса на получение нового пароля : ${code};;Введите это число в поле ввода.;;Если Вы еще не запрашивал новый пароль, пожалуйста, игнорируйте эту электронную почту. В этом случае Ваш пароль будет оставаться неизменным.;;Спасибо.'
 MAIL_TEXT_PASSWORD_NEW:
-  de: 'Guten Tag {name},;;Ihr neues Kennwort lautet: {password};;Bitte notieren Sie sich dieses gut und löschen Sie anschließend diese E-Mail.;;Vielen Dank.'
-  en: 'Hello {name};;your new password: {password};;Please note this password at a secure place and delete this mail.;;Thank you.'
-  es: 'Hola {name};;tu nueva contraseña: {password};;Observar por favor esta contraseña en un lugar seguro y suprimir este correo.;;Gracias.'
-  fr: 'Bonjour {name};;votre nouveau mot de passe : {password};;Veuillez noter ce mot de passe à un endroit bloqué et supprimer ce courrier.;; Merci.'
-  it: 'Hola {name}; ; tu nueva contraseña: {password}; ; Observar por favor esta contraseña en un lugar seguro y suprimir este correo. ; ; Gracias.'
-  ru: 'Привет именем {name};;Ваш новый пароль : {password};;Обратите внимание, этот пароль на безопасное место и удалить это сообщение.;;Спасибо.'
+  de: 'Guten Tag ${name},;;Ihr neues Kennwort lautet: ${password};;Bitte notieren Sie sich dieses gut und löschen Sie anschließend diese E-Mail.;;Vielen Dank.'
+  en: 'Hello ${name};;your new password: ${password};;Please note this password at a secure place and delete this mail.;;Thank you.'
+  es: 'Hola ${name};;tu nueva contraseña: ${password};;Observar por favor esta contraseña en un lugar seguro y suprimir este correo.;;Gracias.'
+  fr: 'Bonjour ${name};;votre nouveau mot de passe : ${password};;Veuillez noter ce mot de passe à un endroit bloqué et supprimer ce courrier.;; Merci.'
+  it: 'Hola ${name}; ; tu nueva contraseña: ${password}; ; Observar por favor esta contraseña en un lugar seguro y suprimir este correo. ; ; Gracias.'
+  ru: 'Привет именем ${name};;Ваш новый пароль : ${password};;Обратите внимание, этот пароль на безопасное место и удалить это сообщение.;;Спасибо.'
 MAIL_TEXT_REGISTER_COMMIT_CODE:
-  de: 'Guten Tag,;;Sie oder jemand anderes möchte sich für die Nutzung des OpenRat-CMS registrieren, hiermit erhalten Sie den notwendigen Registrierungscode.;;Ihr Registrierungs-Code: {code};;Bitte kopieren Sie diese Zahl und fügen Sie diese in das entsprechende Eingabefeld ein.;;Falls Sie diese Registrierung nicht durchgeführt haben, so ignorieren Sie bitte diese E-Mail.;;Vielen Dank für Ihr Interesse.'
-  en: 'Hello,;;you (or another person) has requested a registration code.;;Your registration code: {code}.;;Please insert this number into the input field.;;Thank you.'
-  es: 'Hola,;;tú (u otra persona) has solicitado un código del registro.;;Tu código del registro: {code}.;;Insertar por favor este número en el campo de la entrada.;;Gracias.'
-  fr: "Bonjour,;; toi (ou une personne différente) a demandé un code d'enregistrement. ; ; Votre code d'enregistrement : {code}. ; ; Veuillez insérer ce nombre dans le champ d'entrée. ; ; Merci."
-  it: 'Hola,;; tú (u otra persona) has solicitado un código del registro. ; ; Tu código del registro: {code}. ; ; Insertar por favor este número en el campo de la entrada. ; ; Gracias.'
-  ru: 'Здравствуйте,;;Ваше имя (или другое лицо) обратилось регистрационного кода.;;Ваш регистрационный код : {code}.;;Введите это число в поле ввода.;;Спасибо.'
+  de: 'Guten Tag,;;Sie oder jemand anderes möchte sich für die Nutzung des OpenRat-CMS registrieren, hiermit erhalten Sie den notwendigen Registrierungscode.;;Ihr Registrierungs-Code: ${code};;Bitte kopieren Sie diese Zahl und fügen Sie diese in das entsprechende Eingabefeld ein.;;Falls Sie diese Registrierung nicht durchgeführt haben, so ignorieren Sie bitte diese E-Mail.;;Vielen Dank für Ihr Interesse.'
+  en: 'Hello,;;you (or another person) has requested a registration code.;;Your registration code: ${code}.;;Please insert this number into the input field.;;Thank you.'
+  es: 'Hola,;;tú (u otra persona) has solicitado un código del registro.;;Tu código del registro: ${code}.;;Insertar por favor este número en el campo de la entrada.;;Gracias.'
+  fr: "Bonjour,;; toi (ou une personne différente) a demandé un code d'enregistrement. ; ; Votre code d'enregistrement : ${code}. ; ; Veuillez insérer ce nombre dans le champ d'entrée. ; ; Merci."
+  it: 'Hola,;; tú (u otra persona) has solicitado un código del registro. ; ; Tu código del registro: ${code}. ; ; Insertar por favor este número en el campo de la entrada. ; ; Gracias.'
+  ru: 'Здравствуйте,;;Ваше имя (или другое лицо) обратилось регистрационного кода.;;Ваш регистрационный код : ${code}.;;Введите это число в поле ввода.;;Спасибо.'
 MAIL_TEXT_USER_MAIL:
-  de: 'Guten Tag {name},;;Ihre Zugangsdaten lauten wie folgt:;;Login: {username};Kennwort: {password};;Notieren Sie sich das Kennwort gut und löschen Sie anschließend diese E-Mail.;;Vielen Dank.'
-  en: 'Hello {name},;;Your account details for login in OpenRat Content Management System are the following.;;Login: {username};Password: {password};;Thank you.'
-  es: 'Hola {name};;Tus detalles de la cuenta para la conexión en sistema de gerencia contento de OpenRat son los siguientes.;;Conexión: {username}; Contraseña: {password};;Gracias.'
-  fr: "Bonjour {name} ;; Vos détails de compte pour l'ouverture dans le système de gestion content d'OpenRat sont les suivants. ; ; Ouverture : {username} ; Mot de passe : {password} ; ; Merci."
-  it: 'Hola {name}; ; Tus detalles de la cuenta para la conexión en sistema de gerencia contento de OpenRat son los siguientes. ; ; Conexión: {username}; Contraseña: {password}; ; Gracias.'
-  ru: 'Здравствуйте {name},;;Ваши данные учетной записи для входа в OpenRat Система управления контентом являются следующие.;;Логин: {username}; Пароль: {password};;Спасибо.'
+  de: 'Guten Tag ${name},;;Ihre Zugangsdaten lauten wie folgt:;;Login: ${username};Kennwort: ${password};;Notieren Sie sich das Kennwort gut und löschen Sie anschließend diese E-Mail.;;Vielen Dank.'
+  en: 'Hello ${name},;;Your account details for login in OpenRat Content Management System are the following.;;Login: ${username};Password: ${password};;Thank you.'
+  es: 'Hola ${name};;Tus detalles de la cuenta para la conexión en sistema de gerencia contento de OpenRat son los siguientes.;;Conexión: ${username}; Contraseña: ${password};;Gracias.'
+  fr: "Bonjour ${name} ;; Vos détails de compte pour l'ouverture dans le système de gestion content d'OpenRat sont les suivants. ; ; Ouverture : ${username} ; Mot de passe : ${password} ; ; Merci."
+  it: 'Hola ${name}; ; Tus detalles de la cuenta para la conexión en sistema de gerencia contento de OpenRat son los siguientes. ; ; Conexión: ${username}; Contraseña: ${password}; ; Gracias.'
+  ru: 'Здравствуйте ${name},;;Ваши данные учетной записи для входа в OpenRat Система управления контентом являются следующие.;;Логин: ${username}; Пароль: ${password};;Спасибо.'
 MENU_ACLFORM:
   de: Hinzufügen
   en: Add right
@@ -4756,11 +4756,11 @@ NOTICE_COMMON_VALIDATION_ERROR:
   de: Bitte korrigieren Sie Ihre Eingabefehler.
   en: Please correct your input data.
 NOTICE_CONCURRENT_VALUE_CHANGE_NOT_SAVED:
-  de: 'Während Ihrer Bearbeitung ist der Inhalt von einem anderen Benutzer um {last_change_time} geändert worden. Ihre Änderung wird nicht gespeichert.'
-  en: 'While your edit session another user has changed this content at {last_change_time}. Your changes where not saved.'
+  de: 'Während Ihrer Bearbeitung ist der Inhalt von einem anderen Benutzer um ${last_change_time} geändert worden. Ihre Änderung wird nicht gespeichert.'
+  en: 'While your edit session another user has changed this content at ${last_change_time}. Your changes where not saved.'
 NOTICE_CONCURRENT_VALUE_CHANGE:
-  de: 'Während Ihrer Bearbeitung ist dieser Inhalt von einem anderen Benutzer um {last_change_time} geändert worden. Ihre Änderungen wurden gespeichert, prüfen Sie jedoch über das Archiv, ob gemachte Änderungen von Ihnen übernommen werden müssen.'
-  en: 'While your edit session another user has changed this content at {last_change_time}. Your changes where saved, but you should check the archive if the overwritten content should be merged.'
+  de: 'Während Ihrer Bearbeitung ist dieser Inhalt von einem anderen Benutzer um ${last_change_time} geändert worden. Ihre Änderungen wurden gespeichert, prüfen Sie jedoch über das Archiv, ob gemachte Änderungen von Ihnen übernommen werden müssen.'
+  en: 'While your edit session another user has changed this content at ${last_change_time}. Your changes where saved, but you should check the archive if the overwritten content should be merged.'
 NOTICE_COPIED:
   de: wurde kopiert.
   en: was copied
@@ -4815,9 +4815,9 @@ NOTICE_IMAGE_RESIZING_UNKNOWN_TYPE:
 NOTICE_IMPORTED:
   de: Datei wurde importiert.
   en: File was imported
-  es: "archivo cambiante era ist ligado del '' del <em> del '' del username de la conexión failed.<br/><br/>The del importet"
+  es: "archivo cambiante era ist ligado del \" del <em> del \" del username de la conexión failed.<br/><br/>The del importet"
   fr: "Le dossier était l'importet"
-  it: "lima cambiata era ist collegato del '' del <em> del '' del username di inizio attività failed.<br/><br/>The del importet"
+  it: "lima cambiata era ist collegato del \" del <em> del \" del username di inizio attività failed.<br/><br/>The del importet"
   ru: Файл был importet
 NOTICE_INPUT_NEW_IMAGE_SIZE:
   de: Bitte geben Sie die neue Bildgröße an, entweder Größenfaktor oder Breite oder Höhe.
@@ -4827,12 +4827,12 @@ NOTICE_LINKED:
   en: linked
   fr: lié
 NOTICE_LOGIN_FAILED:
-  de: "Anmeldung nicht möglich. Der Benutzername ''{name}'' ist nicht vorhanden oder das eingegebene Kennwort ist falsch."
-  en: "Login failed. The username ''{name}'' does not exist or the password is wrong."
-  es: '</em> {conocido} no presente o la contraseña es incorrecta.'
-  fr: "L'ist de '' du <em> de '' d'username de l'ouverture failed.<br/><br/>The </em> {nommé} non actuel ou le mot de passe est erroné."
-  it: "</em> {nome} non assente o la parola d'accesso è errata."
-  ru: "связаны Войти провалилась. <br> <br> В''имя пользователя название <em> () </em>''агрессивным отсутствует или неверный пароль."
+  de: "Anmeldung nicht möglich. Der Benutzername \"${name}\" ist nicht vorhanden oder das eingegebene Kennwort ist falsch."
+  en: "Login failed. The username \"${name}\" does not exist or the password is wrong."
+  es: '</em> ${conocido} no presente o la contraseña es incorrecta.'
+  fr: "L'ist de \" du <em> de \" d'username de l'ouverture failed.<br/><br/>The </em> ${nommé} non actuel ou le mot de passe est erroné."
+  it: "</em> ${nome} non assente o la parola d'accesso è errata."
+  ru: "связаны Войти провалилась. <br> <br> В\"имя пользователя название <em> () </em>\"агрессивным отсутствует или неверный пароль."
 NOTICE_LOGIN_FAILED_MUSTCHANGEPASSWORD:
   de: Die Anmeldung ist nicht möglich, da Ihr Kennwort abgelaufen ist. Bitte geben Sie nochmals Ihre Anmeldedaten zusammen mit einem neuen Kennwort ein.
   en: The Login was denied, because your password has timed out. Please try to login again, but now together with an new password.
@@ -4841,15 +4841,15 @@ NOTICE_LOGIN_FAILED_MUSTCHANGEPASSWORD:
   it: "l'inizio attività è stato negato, perché la vostra parola d'accesso ha cronometrato fuori. Ancora, ma ora provare prego all'inizio attività insieme ad una nuova parola d'accesso."
   ru: В Логин было отказано, б Ввиду пароль по таймауту. Попробуйте авторизоваться еще раз, б Хизб Теперь вместе с новым паролем.
 NOTICE_LOGIN_OK:
-  de: 'Hallo {name}, Sie sind jetzt angemeldet.'
-  en: 'Hello {name}, you are signed in.'
+  de: 'Hallo ${name}, Sie sind jetzt angemeldet.'
+  en: 'Hello ${name}, you are signed in.'
 NOTICE_LOGOUT_OK:
   de: 'Sie sind jetzt abgemeldet.'
 
   en: 'You are signed out.'
 NOTICE_LOGIN_OPENID_FAILED:
-  de: 'Die Anmeldung für {name} am Open-ID-Server ist fehlgeschlagen.'
-  en: 'The login for {name} at Open-ID-Server failed.'
+  de: 'Die Anmeldung für ${name} am Open-ID-Server ist fehlgeschlagen.'
+  en: 'The login for ${name} at Open-ID-Server failed.'
 NOTICE_MAIL_NOT_SENT:
   de: Die E-Mail konnte nicht gesendet werden.
   en: The mail could not be sent.
@@ -4899,8 +4899,8 @@ NOTICE_PASSWORDCODE_NOT_MATCH:
   de: Der eingegebene Kennwort-Code ist ungültig.
   en: The password code is not valid.
 NOTICE_PASSWORD_MINLENGTH:
-  de: 'Das Kennwort ist zu kurz, es muss mindestens {minlength} Zeichen lang sein.'
-  en: 'the password is too short. The password must have at least {minlength} chars.'
+  de: 'Das Kennwort ist zu kurz, es muss mindestens ${minlength} Zeichen lang sein.'
+  en: 'the password is too short. The password must have at least ${minlength} chars.'
 NOTICE_PASSWORDS_DO_NOT_MATCH:
   de: Die Kennwörter stimmen nicht überein.
   en: The passwords do not match.
@@ -4953,8 +4953,8 @@ NOTICE_USER_ADDED:
   it: "L'utente era"
   ru: Пользователь был добавлен
 NOTICE_USER_ADDED_TO_GROUP:
-  de: 'Die Mitgliedschaften in der Gruppe wurden aktualisiert, {count} Benutzer hinzugefügt.'
-  en: 'The memberships of this group are updated, {count} users were added.'
+  de: 'Die Mitgliedschaften in der Gruppe wurden aktualisiert, ${count} Benutzer hinzugefügt.'
+  en: 'The memberships of this group are updated, ${count} users were added.'
 NOTICE_USER_ALREADY_IN_DATABASE:
   de: Der Benutzer ist bereits vorhanden. Bitte wählen Sie einen anderen Benutzernamen.
   en: The user is already there, please select another username.
@@ -6074,8 +6074,8 @@ MENU_START:
 MENU_START_DESC:
   en: Start
 NOTICE_MOTD:
-  en: "Message: {motd}"
-  de: "Systemnachricht: {motd}"
+  en: "Message: ${motd}"
+  de: "Systemnachricht: ${motd}"
 NOTICE_DEVELOPMENT_MODE:
   en: The development mode is enabled
   de: Der Entwicklungsmodus ist aktiviert

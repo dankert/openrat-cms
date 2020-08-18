@@ -16,6 +16,8 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 use logger\Logger;
+use util\ArrayUtils;
+use util\text\variables\VariableResolver;
 
 
 /**
@@ -39,12 +41,22 @@ function lang( $textVar,$vars = array() )
 	{
 		$text = $lang[$text];
      	
-		// Fuellen der Variablen im Text
-		foreach( $vars as $var=>$value )
-			$text = str_replace('{'.$var.'}',$value,$text);
+		// Fill in variables
+		if   ( $vars )
+		{
+			foreach( $vars as $var=>$value )
+				$text = str_replace('{'.$var.'}',$value,$text);
 
-		str_replace("''",'"',$text);
-			
+			$resolver = new VariableResolver();
+
+			// Resolve variable
+			$resolver->addDefaultResolver(function ($var) use ($vars) {
+				return @$vars[$var];
+			});
+
+			$text = $resolver->parseString( $text );
+		}
+
 		return $text;
 	}
 	

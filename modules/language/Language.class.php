@@ -98,8 +98,8 @@ class Language
                     $t = $value['en']; // Fallback to english
                 else
                     $t = $key;
-                $t = str_replace('"', '\"', $t); // escaping
-                file_put_contents($outputFilename, "'$key'=>\"$t\",\n", FILE_APPEND);
+                $t = str_replace('\'', '\\\'', $t); // escaping
+                file_put_contents($outputFilename, "'$key'=>'$t',\n", FILE_APPEND);
             }
             file_put_contents($outputFilename, ");}", FILE_APPEND);
 
