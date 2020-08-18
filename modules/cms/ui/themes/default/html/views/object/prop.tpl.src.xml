@@ -4,11 +4,11 @@
 
         <group title="${message:prop}">
 
-            <input name="filename" label="filename" class="filename" maxlength="150" focus="true" />
+            <input name="filename" label="${message:filename}" class="filename" maxlength="150" focus="true" />
 
-            <input name="alias_filename" label="alias" class="filename" maxlength="150" />
+            <input name="alias_filename" label="${message:alias}" class="filename" maxlength="150" />
 
-            <selectbox name="alias_folderid" label="folder" list="folders"/>
+            <selectbox name="alias_folderid" label="${message:folder}" list="folders"/>
         </group>
 
 

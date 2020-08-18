@@ -16,17 +16,17 @@
           </legend>
           <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
             <label class="<?php echo escapeHtml('or-form-row or-form-input') ?>"><?php echo escapeHtml('') ?>
-              <span class="<?php echo escapeHtml('or-form-label') ?>"><?php echo escapeHtml('filename') ?>
+              <span class="<?php echo escapeHtml('or-form-label') ?>"><?php echo escapeHtml(''.@lang('filename').'') ?>
               </span>
               <input name="<?php echo escapeHtml('filename') ?>" autofocus="<?php echo escapeHtml('autofocus') ?>" type="<?php echo escapeHtml('text') ?>" maxlength="<?php echo escapeHtml('150') ?>" value="<?php echo escapeHtml(''.@$filename.'') ?>" class="<?php echo escapeHtml('filename') ?>" /><?php echo escapeHtml('') ?>
             </label>
             <label class="<?php echo escapeHtml('or-form-row or-form-input') ?>"><?php echo escapeHtml('') ?>
-              <span class="<?php echo escapeHtml('or-form-label') ?>"><?php echo escapeHtml('alias') ?>
+              <span class="<?php echo escapeHtml('or-form-label') ?>"><?php echo escapeHtml(''.@lang('alias').'') ?>
               </span>
               <input name="<?php echo escapeHtml('alias_filename') ?>" type="<?php echo escapeHtml('text') ?>" maxlength="<?php echo escapeHtml('150') ?>" value="<?php echo escapeHtml(''.@$alias_filename.'') ?>" class="<?php echo escapeHtml('filename') ?>" /><?php echo escapeHtml('') ?>
             </label>
             <label class="<?php echo escapeHtml('or-form-row or-form-input') ?>"><?php echo escapeHtml('') ?>
-              <span class="<?php echo escapeHtml('or-form-label') ?>"><?php echo escapeHtml('folder') ?>
+              <span class="<?php echo escapeHtml('or-form-label') ?>"><?php echo escapeHtml(''.@lang('folder').'') ?>
               </span>
               <select name="<?php echo escapeHtml('alias_folderid') ?>" size="<?php echo escapeHtml('1') ?>"><?php echo escapeHtml('') ?>
                 <?php foreach($folders as $_key=>$_value) {  ?>
