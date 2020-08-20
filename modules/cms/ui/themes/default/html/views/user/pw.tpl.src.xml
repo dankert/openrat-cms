@@ -66,6 +66,5 @@
 				</part>
 			</if>
 		</if>
-		<focus field="password1"></focus>
 	</form>
 </output>

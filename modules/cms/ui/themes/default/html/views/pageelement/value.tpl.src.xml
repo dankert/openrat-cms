@@ -97,7 +97,6 @@
 				</if>
 				<if value="${editor}" equals="text">
 					<inputarea class="editor raw-editor" name="text" rows="25" cols="70"></inputarea>
-					<focus field="text"></focus>
 				</if>
 			</if>
 			<if value="${type}" equals="link">
@@ -134,7 +133,6 @@
 				<group>
 					<part>
 						<selectbox list="objects" name="linkobjectid"></selectbox>
-						<focus field="linkobjectid"></focus>
 					</part>
 				</group>
 			</if>
@@ -142,7 +140,6 @@
 				<group>
 					<part>
 						<selectbox list="objects" name="linkobjectid"></selectbox>
-						<focus field="linkobjectid"></focus>
 					</part>
 				</group>
 			</if>

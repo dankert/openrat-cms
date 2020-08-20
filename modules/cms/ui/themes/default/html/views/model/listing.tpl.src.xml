@@ -1,49 +1,45 @@
 <output xmlns="http://www.openrat.de/template"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<dummy>
-		<window icon="group" name="MODELS" widths="50%,25%,25%">
-			<table>
-				<row class="headline">
-					<column>
-						<text value="${message:name}"></text>
-					</column>
-					<column>
-						<text value=""></text>
-					</column>
-					<column>
-						<text value=""></text>
-					</column>
-				</row>
-				<list list="${el}" extract="true">
-					<row class="data">
-						<column url="${url}">
-							<link target="cms_main">
-								<image file="icon_model"></image>
-								<text value="${name}" maxlength="25"></text>
-							</link>
-						</column>
-						<column url="${default_url}">
-							<if present="default_url">
-								<text value="${message:make_default}"></text>
-							</if>
-							<else>
-								<text value="${message:is_default}"></text>
-							</else>
-						</column>
-						<column url="${select_url}">
-							<if present="select_url">
-								<text value="${message:select}"></text>
-							</if>
-							<else>
-								<text value="${message:selected}"></text>
-							</else>
-						</column>
-					</row>
-					<set var="select_url"></set>
-					<set var="default_url}"></set>
-				</list>
-			</table>
-		</window>
-	</dummy>
+	<table>
+		<row class="headline">
+			<column>
+				<text value="${message:name}"></text>
+			</column>
+			<column>
+				<text value=""></text>
+			</column>
+			<column>
+				<text value=""></text>
+			</column>
+		</row>
+		<list list="${el}" extract="true">
+			<row class="data">
+				<column url="${url}">
+					<link target="cms_main">
+						<image file="icon_model"></image>
+						<text value="${name}" maxlength="25"></text>
+					</link>
+				</column>
+				<column url="${default_url}">
+					<if present="default_url">
+						<text value="${message:make_default}"></text>
+					</if>
+					<else>
+						<text value="${message:is_default}"></text>
+					</else>
+				</column>
+				<column url="${select_url}">
+					<if present="select_url">
+						<text value="${message:select}"></text>
+					</if>
+					<else>
+						<text value="${message:selected}"></text>
+					</else>
+				</column>
+			</row>
+			<set var="select_url"></set>
+			<set var="default_url}"></set>
+		</list>
+	</table>
 </output>

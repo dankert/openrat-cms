@@ -1,78 +1,74 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<dummy>
-		<form>
-			<window>
-				<table>
-					<if empty="${el}">
-						<row>
-							<column colspan="4">
-								<text value="${message:NOT_FOUND}"></text>
-							</column>
-						</row>
-					</if>
-					<if not="" empty="${el}">
-						<row>
-							<column class="help">
-								<text value="${message:PAGE_ELEMENT_NAME}"></text>
-							</column>
-							<column class="help">
-								<text value="${message:CHANGE}"></text>
-							</column>
-							<column class="help">
-								<text value="${message:VALUE}"></text>
-							</column>
-						</row>
-						<list list="${el}" extract="true">
-							<row class="data">
-								<column>
-									<label for="${saveid}">
-										<image elementtype="${type}"></image>
-										<text value="${name}"></text>
-									</label>
-								</column>
-								<column>
-									<checkbox name="${saveid}" default="false" readonly="false"></checkbox>
-								</column>
-								<column>
-									<if value="${type}" contains="text,date,number">
-										<input index="true" type="text" name="${id}" default="${value}"
-											size="40" maxlength="255" onchange="onchange"></input>
-									</if>
-									<if value="${type}" equals="longtext">
-										<inputarea index="true" name="${id}" rows="7" cols="50"
-											onchange="onchange" default="${value}"></inputarea>
-									</if>
-									<if value="${type}" contains="select,link,list">
-										<selectbox name="${id}" list="list" default="${value}"></selectbox>
-									</if>
-								</column>
-							</row>
-						</list>
-					</if>
-				</table>
-				<group title="${message:options}">
-					<if present="release">
-						<part>
-							<checkbox name="release"></checkbox>
-							<label for="release">
-								<text value=" "></text>
-								<text value="${message:RELEASE}"></text>
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form>
+		<table>
+			<if empty="${el}">
+				<row>
+					<column colspan="4">
+						<text value="${message:NOT_FOUND}"></text>
+					</column>
+				</row>
+			</if>
+			<if not="" empty="${el}">
+				<row>
+					<column class="help">
+						<text value="${message:PAGE_ELEMENT_NAME}"></text>
+					</column>
+					<column class="help">
+						<text value="${message:CHANGE}"></text>
+					</column>
+					<column class="help">
+						<text value="${message:VALUE}"></text>
+					</column>
+				</row>
+				<list list="${el}" extract="true">
+					<row class="data">
+						<column>
+							<label for="${saveid}">
+								<image elementtype="${type}"></image>
+								<text value="${name}"></text>
 							</label>
-						</part>
-					</if>
-					<if present="publish">
-						<part>
-							<checkbox name="publish"></checkbox>
-							<label for="publish">
-								<text value=" "></text>
-								<text value="${message:PAGE_PUBLISH_AFTER_SAVE}"></text>
-							</label>
-						</part>
-					</if>
-				</group>
-				<button type="ok"></button>
-			</window>
-		</form>
-	</dummy>
+						</column>
+						<column>
+							<checkbox name="${saveid}" default="false" readonly="false"></checkbox>
+						</column>
+						<column>
+							<if value="${type}" contains="text,date,number">
+								<input index="true" type="text" name="${id}" default="${value}"
+									   size="40" maxlength="255" onchange="onchange"></input>
+							</if>
+							<if value="${type}" equals="longtext">
+								<inputarea index="true" name="${id}" rows="7" cols="50"
+										   onchange="onchange" default="${value}"></inputarea>
+							</if>
+							<if value="${type}" contains="select,link,list">
+								<selectbox name="${id}" list="list" default="${value}"></selectbox>
+							</if>
+						</column>
+					</row>
+				</list>
+			</if>
+		</table>
+		<group title="${message:options}">
+			<if present="release">
+				<part>
+					<checkbox name="release"></checkbox>
+					<label for="release">
+						<text value=" "></text>
+						<text value="${message:RELEASE}"></text>
+					</label>
+				</part>
+			</if>
+			<if present="publish">
+				<part>
+					<checkbox name="publish"></checkbox>
+					<label for="publish">
+						<text value=" "></text>
+						<text value="${message:PAGE_PUBLISH_AFTER_SAVE}"></text>
+					</label>
+				</part>
+			</if>
+		</group>
+		<button type="ok"></button>
+	</form>
 </output>

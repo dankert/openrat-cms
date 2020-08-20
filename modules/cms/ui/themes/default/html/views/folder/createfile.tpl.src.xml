@@ -1,6 +1,5 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<header back="true"></header>
 	<form enctype="multipart/form-data" target="upload" type="upload" visible="true">
 		<hidden name="type" default="file"></hidden>
 		<part class="line">
@@ -61,5 +60,4 @@
 		</part>
 
 	</form>
-	<focus field="name"></focus>
 </output>

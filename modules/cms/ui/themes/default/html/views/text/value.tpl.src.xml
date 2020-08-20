@@ -16,5 +16,4 @@
 			</column>
 		</row>
 	</form>
-	<focus field="value"></focus>
 </output>

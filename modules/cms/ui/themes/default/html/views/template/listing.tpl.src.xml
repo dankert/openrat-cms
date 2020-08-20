@@ -1,28 +1,23 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<header views="add"></header>
-	<dummy>
-		<window name="GLOBAL_TEMPLATES">
-			<table>
-				<row class="headline">
-					<column>
-						<text value="${message:name}"></text>
-					</column>
-				</row>
-				<list list="${templates}" extract="true">
-					<row class="data">
-						<column url="${url}">
-							<text value="${name}"></text>
-						</column>
-					</row>
-				</list>
-			</table>
-			<if empty="${templates}">
-				<text value="${message:NO_TEMPLATES_AVAILABLE_DESC}"></text>
-			</if>
-			<link class="action" action="template" subaction="add">
-				<text value="${message:menu_template_add}"></text>
-			</link>
-		</window>
-	</dummy>
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<table>
+		<row class="headline">
+			<column>
+				<text value="${message:name}"></text>
+			</column>
+		</row>
+		<list list="${templates}" extract="true">
+			<row class="data">
+				<column url="${url}">
+					<text value="${name}"></text>
+				</column>
+			</row>
+		</list>
+	</table>
+	<if empty="${templates}">
+		<text value="${message:NO_TEMPLATES_AVAILABLE_DESC}"></text>
+	</if>
+	<link class="action" action="template" subaction="add">
+		<text value="${message:menu_template_add}"></text>
+	</link>
 </output>

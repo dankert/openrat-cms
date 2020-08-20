@@ -35,5 +35,4 @@
 			</column>
 		</row>
 	</form>
-	<focus field="name"></focus>
 </output>

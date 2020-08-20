@@ -1,6 +1,5 @@
 <?php if (defined('OR_TITLE')) {  ?>
   
-    
     <div class="<?php echo escapeHtml('or-table-wrapper') ?>"><?php echo escapeHtml('') ?>
       <div class="<?php echo escapeHtml('or-table-filter') ?>"><?php echo escapeHtml('') ?>
         <input type="<?php echo escapeHtml('search') ?>" name="<?php echo escapeHtml('filter') ?>" placeholder="<?php echo escapeHtml(''.@lang('SEARCH_FILTER').'') ?>" /><?php echo escapeHtml('') ?>

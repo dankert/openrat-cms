@@ -187,7 +187,6 @@
           <?php $if1=($editor=='text'); if($if1) {  ?>
             <textarea name="<?php echo escapeHtml('text') ?>" class="<?php echo escapeHtml('editor raw-editor') ?>"><?php echo escapeHtml(''.@$text.'') ?>
             </textarea>
-            
            <?php } ?>
          <?php } ?>
         <?php $if1=($type=='link'); if($if1) {  ?>
@@ -230,7 +229,6 @@
                     </option>
                    <?php } ?>
                 </select>
-                
               </div>
             </div>
           </fieldset>
@@ -245,7 +243,6 @@
                     </option>
                    <?php } ?>
                 </select>
-                
               </div>
             </div>
           </fieldset>

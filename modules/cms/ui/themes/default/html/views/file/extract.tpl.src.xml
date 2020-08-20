@@ -1,15 +1,11 @@
 <output xmlns="http://www.openrat.de/template"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<dummy>
-		<form>
-			<window name="asdf" title="asdfdfs">
-				<row>
-					<column colspan="2" class="act">
-						<button type="ok"></button>
-					</column>
-				</row>
-			</window>
-		</form>
-	</dummy>
+	<form>
+		<row>
+			<column colspan="2" class="act">
+				<button type="ok"></button>
+			</column>
+		</row>
+	</form>
 </output>

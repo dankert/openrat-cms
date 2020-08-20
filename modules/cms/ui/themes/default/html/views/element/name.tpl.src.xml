@@ -1,31 +1,26 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<dummy>
-		<form>
-			<window name="NAME">
-				<row>
-					<column>
-						<text value="${message:ELEMENT_NAME}"></text>
-					</column>
-					<column>
-						<input name="name"></input>
-					</column>
-				</row>
-				<row>
-					<column>
-						<text value="${message:DESCRIPTION}"></text>
-					</column>
-					<column>
-						<inputarea name="description" rows="5" cols="50"></inputarea>
-					</column>
-				</row>
-				<row>
-					<column colspan="2" class="act">
-						<button type="ok"></button>
-					</column>
-				</row>
-			</window>
-		</form>
-		<focus field="name"></focus>
-	</dummy>
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form>
+		<row>
+			<column>
+				<text value="${message:ELEMENT_NAME}"></text>
+			</column>
+			<column>
+				<input name="name"></input>
+			</column>
+		</row>
+		<row>
+			<column>
+				<text value="${message:DESCRIPTION}"></text>
+			</column>
+			<column>
+				<inputarea name="description" rows="5" cols="50"></inputarea>
+			</column>
+		</row>
+		<row>
+			<column colspan="2" class="act">
+				<button type="ok"></button>
+			</column>
+		</row>
+	</form>
 </output>

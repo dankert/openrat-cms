@@ -1,53 +1,49 @@
 <output xmlns="http://www.openrat.de/template"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<dummy>
-		<window icon="language">
-			<table>
-				<row class="headline">
-					<column>
-						<text value="${message:name}"></text>
-					</column>
-					<column>
-						<text value=""></text>
-					</column>
-					<column>
-						<text value=""></text>
-					</column>
-					<column>
-						<text value=""></text>
-					</column>
-				</row>
-				<list list="${el}" extract="true">
-					<row class="data">
-						<column url="${url}">
-							<image file="icon_language"></image>
-							<text value="${name}" maxlength="25"></text>
-						</column>
-						<column>
-							<text value="${isocode}"></text>
-						</column>
-						<column url="${default_url}">
-							<if present="default_url">
-								<text value="${message:make_default}"></text>
-							</if>
-							<else>
-								<text value="${message:is_default}"></text>
-							</else>
-						</column>
-						<column url="${select_url}">
-							<if present="select_url">
-								<text value="${message:select}"></text>
-							</if>
-							<else>
-								<text value="${message:selected}"></text>
-							</else>
-						</column>
-					</row>
-					<set var="select_url"></set>
-					<set var="default_url}"></set>
-				</list>
-			</table>
-		</window>
-	</dummy>
+	<table>
+		<row class="headline">
+			<column>
+				<text value="${message:name}"></text>
+			</column>
+			<column>
+				<text value=""></text>
+			</column>
+			<column>
+				<text value=""></text>
+			</column>
+			<column>
+				<text value=""></text>
+			</column>
+		</row>
+		<list list="${el}" extract="true">
+			<row class="data">
+				<column url="${url}">
+					<image file="icon_language"></image>
+					<text value="${name}" maxlength="25"></text>
+				</column>
+				<column>
+					<text value="${isocode}"></text>
+				</column>
+				<column url="${default_url}">
+					<if present="default_url">
+						<text value="${message:make_default}"></text>
+					</if>
+					<else>
+						<text value="${message:is_default}"></text>
+					</else>
+				</column>
+				<column url="${select_url}">
+					<if present="select_url">
+						<text value="${message:select}"></text>
+					</if>
+					<else>
+						<text value="${message:selected}"></text>
+					</else>
+				</column>
+			</row>
+			<set var="select_url"></set>
+			<set var="default_url}"></set>
+		</list>
+	</table>
 </output>
