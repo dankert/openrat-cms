@@ -9,17 +9,15 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
-require('../../modules/autoload.php');
-
 use template_engine\engine\TemplateEngine;
 use util\FileUtils;
 
 
 $dir = __DIR__ . '/../../modules/cms/ui/themes/default/html/views';
 
-require('../../modules/util/require.php');
-require('../../modules/template_engine/require.php');
-require('../../modules/cms/base/require.php');
+require(__DIR__.'/../util/require.php');
+require(__DIR__.'/../template_engine/require.php');
+require(__DIR__.'/../cms/base/require.php');
 
 echo "Searching in $dir\n";
 

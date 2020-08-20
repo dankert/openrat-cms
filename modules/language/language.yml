@@ -3825,8 +3825,10 @@ MENU_OTHER:
   de: Andere
   en: Other
 MENU_ORDER:
+  en: Order
   de: Reihenfolge
 MENU_ORDER_DESC:
+  en: Change order
   de: Reihenfolge verändern
 MENU_PAGE_ACLFORM_DESC:
   de: Ein Recht zu dieser Seite hinzufügen
@@ -4196,6 +4198,7 @@ MENU_REMOVE:
   en: Delete
 MENU_REMOVE_DESC:
   de: Löschen
+  en: Delete
 MENU_RIGHTS:
   de: Berechtigungen
   en: Rights
@@ -4699,8 +4702,10 @@ MENU_USERTIMELINE:
   de: Meine Änderungen
   en: My changes
 MENU_VALUE:
+  en: Content
   de: Inhalt
 MENU_VALUE_DESC:
+  en: Content
   de: Inhalt
 MODE_EDIT:
   de: Bearbeiten
@@ -4775,8 +4780,10 @@ NOTICE_DATABASE_CONNECTION_ERROR:
   de: Es konnte keine Verbindung zur Datenbank hergestellt werden.
   en: The connection to the database could not be established.
 ERROR_DATABASE_CONNECTION:
+  en: The connection to the database could not be established.
   de: Es konnte keine Verbindung zur Datenbank hergestellt werden.
 ERROR_DATABASE:
+  en: The database query could not executed.
   de: Es gab einen Fehler bei der Durchführung einer Datenbankanfrage.
 NOTICE_DELETED:
   de: wurde gelöscht.
@@ -5751,19 +5758,25 @@ WINDOW_FULLSCREEN:
   de: Vollbild
   en: Fullscreen
 MENU_STRUCTURE_DESC:
+  en: Show structure
   de: Struktur anzeigen
 MENU_PREVIEW_DESC:
+  en: Preview
   de: Vorschau
 MENU_ARCHIVE_DESC:
   de: Archiv anzeigen
   en: Archive
 MENU_USERTIMELINE_DESC:
+  en: My last changes
   de: Meine letzten Änderungen
 MENU_OPENID_DESC:
+  en: Login with your OpenId
   de: Anmeldung über Ihre Open-Id-Kennung
 PAGEELEMENT_RELEASED:
+  en: The content has been released
   de: Der Inhalt wurde freigegeben.
 PAGEELEMENT_USE_FROM_ARCHIVE:
+  en: The content has been restored.
   de: Der Inhalt wurde wieder hergestellt.
 REMEMBER_ME:
   de: Angemeldet bleiben
@@ -5808,6 +5821,7 @@ PWCHANGE_NOT_ALLOWED:
   de: Eine Kennwortänderung ist nicht möglich
   en: Password change is not available
 ERROR_IN_ELEMENT:
+  en: The element could not be build
   de: Dieses Seitenelement konnte nicht erzeugt werden
 USER_PASSWORD_EXPIRES:
   de: Kennwort läuft ab
@@ -5819,8 +5833,10 @@ USER_TOTP:
   de: Zeitbasieres Token als Zweifaktorauthentifizierung
   en: Time-based 2-factor authentification
 NOTICE_LOGIN_FAILED_TOKEN_FAILED:
+  en: Please supply a valid token
   de: Bitte geben Sie ein gültiges Token ein
 USER_TOKEN:
+  en: Token
   de: Token
 ACCESSKEY_WINDOW_ACL:
   en: G
@@ -6059,12 +6075,14 @@ USER_MAIL_TEXT_SUFFIX:
 CHARSET:
   en: UTF-8
 MENU_TITLE_SEARCH_CONTENT:
+  en: Search for value
   es: Search for value
   fr: Search for value
   it: Search for value
   ru: Search for value
 MENU_TITLE_SEARCH_PROP:
   de: Suche nach Eigenschaft
+  en: Search for property
   es: Search for property
   fr: Search for property
   it: Search for property

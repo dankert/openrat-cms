@@ -5,15 +5,12 @@
 
 use util\FileUtils;
 
-error_reporting(E_ALL);
-
-require('../../util/FileUtils.class.php');
+require(__DIR__.'/../../util/FileUtils.class.php');
 
 // Baseclass of all components.
 require('html/Component.class.php');
 require('html/HtmlComponent.class.php');
 require('html/FieldComponent.class.php');
-header('Content-Type: text/plain');
 
 echo "XSD Generator\n\n";
 

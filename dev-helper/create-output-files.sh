@@ -96,6 +96,12 @@ function xsdfile
     if  [ -f $xsd ]; then
         chmod 666 -v $xsd
     fi
+
+    components="../modules/template_engine/components/components.ini"
+    if  [ -f $components ]; then
+        chmod 666 -v $components
+    fi
+
 }
 
 language
