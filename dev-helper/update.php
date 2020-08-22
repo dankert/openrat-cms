@@ -48,6 +48,7 @@ if   ( @$type )
 
 		default:
 			echo "Unknown type";
+			http_response_code(400); // "Bad Request"
 	}
 }
 

@@ -4,8 +4,8 @@
 VERSION=$1
 
 if   [ -z "$VERSION" ]; then
-    echo need version number
-    exit 4;
+  echo "Usage: $0 <version>" 1>&2;
+  exit 1;
 fi
 
 DATE=`date -R`
