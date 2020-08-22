@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd "$(dirname "$0")"
+
 # Calling the template compiler if a template or a component was modified.
 #
 # Need for:

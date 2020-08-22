@@ -2,12 +2,6 @@
 
 These files are only necessary **for developers**!
  
-## Generate output files
-
-This tool is generating output files and is fixing file permissions.
-
-`create-output-files.sh`
-
 ## Creating a release tag
 
 `tag-version.sh <version>`
@@ -17,8 +11,14 @@ This tool is generating output files and is fixing file permissions.
 - updates the file `version.php` with the snapshot version
 
 
-## Watching for template modifications
+## Updating UI 
 
-`template-watcher.sh http://host/`
+`update.sh -u http://host/ -w -x <type>`
 
-Watches for file modificatons in templates and components. If a file is saved, the template compiler is invoked via HTTP. This will save some of the developers time ;)
+Makes the necessary output files writable, then updates them.
+
+- `-u <url>` the current start url, where the CMS is installed.
+- `-w` do not exit, **watch**es the files for modifications 
+- `-x <type>` where `type` is one of `tpl`,`lang`,`js`,`css`,`xsd`.
+
+You can to the same while [invoking the update via your browser](./update.php). 
