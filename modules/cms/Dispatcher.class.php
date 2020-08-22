@@ -40,7 +40,8 @@ class Dispatcher
     public function doAction()
     {
         // Start the session. All classes should have been loaded up to now.
-        session_start();
+        session_name('or_sid');
+		session_start();
 
         $this->checkConfiguration();
 

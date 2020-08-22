@@ -305,6 +305,7 @@ class ProfileAction extends BaseAction
         $conf['language'] = $language->getLanguage($l,PRODUCTION);
         $conf['language']['language_code'] = $l;
         Session::setConfig($conf);
+        $this->setCookie('or_language',$l);
     }
 
 

@@ -723,6 +723,7 @@ function createDefaultConfig()
     $conf['security']['cookie']=array();
     $conf['security']['cookie']['secure']=false;
     $conf['security']['cookie']['httponly']=true;
+    $conf['security']['cookie']['samesite']='Strict';
     $conf['security']['cookie']['expire']=720;
     $conf['security']['readonly']=false;
     $conf['security']['nopublish']=false;

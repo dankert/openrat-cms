@@ -411,7 +411,23 @@ namespace cms\action {
 
             $secure   = config('security', 'cookie', 'secure');
             $httponly = config('security', 'cookie', 'httponly');
-            setcookie($name , $value, $expire,COOKIE_PATH, '', $secure, $httponly);
+			$samesite = config('security', 'cookie', 'samesite');
+
+            $cookieAttributes = [
+            	rawurlencode($name).'='.rawurlencode($value),
+				'Expires='.date('r',$expire),
+				'Path='.COOKIE_PATH
+			];
+
+            if   ( $secure )
+            	$cookieAttributes[] = 'Secure';
+
+            if   ( $httponly )
+            	$cookieAttributes[] = 'HttpOnly';
+
+            $cookieAttributes[] = 'SameSite='.$samesite;
+
+            header('Set-Cookie: '.implode('; ',$cookieAttributes) );
         }
     }
 
