@@ -296,22 +296,22 @@ class ThemeCompiler
 				continue;
 			}
 
-			file_put_contents($combinedJsFile, '/* Include script: '.$jsFileMin.' */'."\n",FILE_APPEND);
+			file_put_contents($combinedJsFile, '/* Include script: '.basename($jsFile).' */'."\n",FILE_APPEND);
 
-			if (!is_file($jsFileNormal) && is_file($jsFileMin))
+			if (is_file($jsFileMin))
 			{
 				// Nur eine Min-Version existiert. Das ist ok.
-				file_put_contents($combinedJsFile   , file_get_contents($jsFileMin),FILE_APPEND);
-				file_put_contents($combinedJsFileMin, file_get_contents($jsFileMin),FILE_APPEND);
+				file_put_contents($combinedJsFile   , file_get_contents($jsFileMin)."\n",FILE_APPEND);
+				file_put_contents($combinedJsFileMin, file_get_contents($jsFileMin)."\n",FILE_APPEND);
 
 				echo 'Copied content from minified source file '.$jsFileMin."\n";
 			}
 			else
 			{
-				file_put_contents($combinedJsFile   , file_get_contents($jsFileNormal),FILE_APPEND);
+				file_put_contents($combinedJsFile   , file_get_contents($jsFileNormal)."\n",FILE_APPEND);
 
 				$jz = new JSqueeze();
-				file_put_contents($combinedJsFileMin, $jz->squeeze(file_get_contents($jsFileNormal)."\n"),FILE_APPEND);
+				file_put_contents($combinedJsFileMin, $jz->squeeze(file_get_contents($jsFileNormal))."\n",FILE_APPEND);
 
 				echo 'Copied content from source file '.$jsFileNormal."\n";
 			}
