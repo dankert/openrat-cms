@@ -1949,7 +1949,7 @@ Openrat.Form = function() {
 
         // Felder mit Fehleingaben markieren, ggf. das übergeordnete Fieldset aktivieren.
         $.each(data['errors'], function(idx,value) {
-            $('input[name='+value+']').addClass('error').parent().addClass('error').parents('fieldset').addClass('show').addClass('open');
+            $('input[name='+value+']').addClass('error').parent().addClass('error').parents('fieldset').removeClass('closed').addClass('show').addClass('open');
         });
 
         // Jetzt das erhaltene Dokument auswerten.
