@@ -22,6 +22,7 @@ use Adresse;
 use LogicException;
 use util\Text;
 use unknown_type;
+use util\text\variables\VariableResolver;
 
 /**
  * Erzeugen und Versender einer E-Mail gemaess RFC 822.<br>
@@ -40,19 +41,18 @@ use unknown_type;
  * <br>
  *
  * @author Jan Dankert
- * @version $Id$
- * @package serviceClasses
  */
 class Mail
 {
-	var $from = '';
-	var $to = '';
-	var $bcc = '';
-	var $cc = '';
-	var $subject = '';
-	var $text = '';
-	var $header = array();
-	var $nl = '';
+	private $from    = '';
+	private $to      = '';
+	private $bcc     = '';
+	private $cc      = '';
+	private $subject = '';
+	private $text    = '';
+	private $header  = array();
+	private $nl      = '';
+	private $vars    = [];
 
 	/**
 	 * Falls beim Versendern der E-Mail etwas schiefgeht, steht hier drin
@@ -144,7 +144,7 @@ class Mail
 	 */
 	public function setVar($varName, $varInhalt)
 	{
-		$this->text = str_replace('{' . $varName . '}', $varInhalt, $this->text);
+		$this->vars[ $varName ] = $varInhalt;
 	}
 
 
@@ -195,12 +195,19 @@ class Mail
 		if (!empty($this->bcc))
 			$this->header[] = 'Bcc: ' . $this->bcc;
 
+		// Evaluate variables in mail data
+		$resolver = new VariableResolver();
+		$resolver->addDefaultResolver( function($key) {
+			return $this->vars[$key];
+		} );
+		$text = $resolver->resolveVariables( $this->text );
+
 		// Mail versenden
 		if (strtolower(@$conf['mail']['client']) == 'php') {
 			// PHP-interne Mailfunktion verwenden.
 			$result = @mail($this->to,                 // Empf�nger
 				$this->subject,            // Betreff
-				$this->text,               // Inhalt
+				$text,               // Inhalt
 				// Lt. RFC822 müssen Header mit CRLF enden.
 				// ABER: Der Parameter "additional headers" verlangt offenbar \n am Zeilenende.
 				implode("\n", $this->header));
@@ -353,7 +360,7 @@ class Mail
 			$this->header[] = 'Message-Id: ' . '<' . getenv('REMOTE_ADDR') . '.' . time() . '.openrat@' . getenv('SERVER_NAME') . '.' . getenv('HOSTNAME') . '>';
 
 			//observe the . after the newline, it signals the end of message
-			$smtpResponse = $this->sendSmtpCommand($smtpSocket, implode($this->nl, $this->header) . $this->nl . $this->nl . $this->text . $this->nl . '.');
+			$smtpResponse = $this->sendSmtpCommand($smtpSocket, implode($this->nl, $this->header) . $this->nl . $this->nl . $text . $this->nl . '.');
 			if (substr($smtpResponse, 0, 3) != '250') {
 				$this->error[] = "No 2xx after putting DATA, server says: " . $smtpResponse;
 				$this->sendSmtpQuit($smtpSocket);
