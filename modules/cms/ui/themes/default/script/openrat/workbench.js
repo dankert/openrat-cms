@@ -15,10 +15,32 @@ Openrat.Workbench = new function()
 
 		// Initialze Ping timer.
 		this.initializePingTimer();
+		this.initializeDirtyWarning();
         this.initializeState();
         this.openModalDialog();
     }
 
+
+    this.initializeDirtyWarning = function () {
+
+		// If the application should be closed, inform the user about unsaved changes.
+		window.addEventListener('beforeunload', function (e) {
+
+			// Are there views in the dirty state?
+			if   ( $('.view.dirty').length > 0 ) {
+
+				e.preventDefault(); // Cancel the event
+
+				// This text is replaced by modern browsers with a common message.
+				return 'Unsaved content will be lost.';
+			}
+			else {
+				// Let the browser quitting the page.
+				// Do NOT logout here, because there could be other windows/tabs with the same session.
+				return undefined; // nothing to do.
+			}
+		});
+	}
 
     /**
      * Starts a dialog, if necessary.

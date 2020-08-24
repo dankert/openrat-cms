@@ -1984,10 +1984,32 @@ Openrat.Workbench = new function()
 
 		// Initialze Ping timer.
 		this.initializePingTimer();
+		this.initializeDirtyWarning();
         this.initializeState();
         this.openModalDialog();
     }
 
+
+    this.initializeDirtyWarning = function () {
+
+		// If the application should be closed, inform the user about unsaved changes.
+		window.addEventListener('beforeunload', function (e) {
+
+			// Are there views in the dirty state?
+			if   ( $('.view.dirty').length > 0 ) {
+
+				e.preventDefault(); // Cancel the event
+
+				// This text is replaced by modern browsers with a common message.
+				return 'Unsaved content will be lost.';
+			}
+			else {
+				// Let the browser quitting the page.
+				// Do NOT logout here, because there could be other windows/tabs with the same session.
+				return undefined; // nothing to do.
+			}
+		});
+	}
 
     /**
      * Starts a dialog, if necessary.
@@ -2647,8 +2669,8 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 	
 	
 	// Bei Änderungen in der View das Tab als 'dirty' markieren
-	$(viewEl).find('input').change( function() {
-		$(this).parent('div.view').addClass('dirty');
+	$(viewEl).find('input,select,textarea').change( function() {
+		$(this).closest('.view').addClass('dirty');
 	});
 
 	// Theme-Auswahl mit Preview
@@ -2834,6 +2856,7 @@ function startDialog( name,action,method,id,params )
         if	( $('div#dialog').hasClass('modal') )
             return;
 
+		$('#dialog .view').removeClass('dirty');
         $('#dialog .view').html('');
         $('#dialog').removeClass('is-open').addClass('is-closed'); // Dialog schließen
 

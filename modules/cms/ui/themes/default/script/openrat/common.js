@@ -260,8 +260,8 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 	
 	
 	// Bei Änderungen in der View das Tab als 'dirty' markieren
-	$(viewEl).find('input').change( function() {
-		$(this).parent('div.view').addClass('dirty');
+	$(viewEl).find('input,select,textarea').change( function() {
+		$(this).closest('.view').addClass('dirty');
 	});
 
 	// Theme-Auswahl mit Preview
@@ -447,6 +447,7 @@ function startDialog( name,action,method,id,params )
         if	( $('div#dialog').hasClass('modal') )
             return;
 
+		$('#dialog .view').removeClass('dirty');
         $('#dialog .view').html('');
         $('#dialog').removeClass('is-open').addClass('is-closed'); // Dialog schließen
 
