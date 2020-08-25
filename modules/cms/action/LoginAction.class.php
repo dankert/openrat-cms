@@ -1195,7 +1195,7 @@ class LoginAction extends BaseAction
 		
 		// E-Mail and die eingegebene Adresse verschicken
 		$mail = new Mail($email_address,
-		                 'register_commit_code','register_commit_code');
+		                 'register_commit_code');
 		$mail->setVar('code',$registerCode); // Registrierungscode als Text-Variable
 		
 		if	( $mail->send() )

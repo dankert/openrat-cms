@@ -76,10 +76,9 @@ class Mail
 	 * Es werden folgende Parameter erwartet
 	 * @param String $to Empf�nger
 	 * @param String der Textschl�ssel
-	 * @param String unbenutzt.
 	 * @return Mail
 	 */
-	function __construct($to, $text, $xy = '')
+	function __construct($to, $text)
 	{
 		global $conf;
 
