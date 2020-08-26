@@ -98,64 +98,6 @@ class LinkAction extends ObjectAction
 
 
 	
-	/**
-	 * Liefert die Struktur zu diesem Ordner:
-	 * - Mit den übergeordneten Ordnern und
-	 * - den in diesem Ordner enthaltenen Objekten
-	 * 
-	 * Beispiel:
-	 * <pre>
-	 * - A
-	 *   - B
-	 *     - C (dieser Ordner)
-	 *       - Unterordner
-	 *       - Seite
-	 *       - Seite
-	 *       - Datei
-	 * </pre> 
-	 */
-	public function structureView()
-	{
-
-		$structure = array();
-		$tmp = &$structure;
-		$nr  = 0;
-		
-		$folder = new Folder( $this->link->parentid );
-		$parents = $folder->parentObjectNames(false,true);
-		
-		foreach( $parents as $id=>$name)
-		{
-			unset($children);
-			unset($o);
-			$children = array();
-			$o = array('id'=>$id,'name'=>$name,'type'=>'folder','level'=>++$nr,'children'=>&$children);
-			
-			$tmp[$id] = &$o;;
-			
-			unset($tmp);
-			
-			$tmp = &$children; 
-		}
-		
-		
-		
-		unset($children);
-		unset($id);
-		unset($name);
-		
-		$elementChildren = array();
-		
-		$tmp[ $this->link->objectid ] = array('id'=>$this->link->objectid,'name'=>$this->link->name,'type'=>'link','self'=>true,'children'=>&$elementChildren);
-		
-		// 
-		//$elementChildren[$id] = array('id'=>$this->page->objectid.'_'.$id,'name'=>$name,'type'=>'pageelement','children'=>array() );
-		
-		//Html::debug($structure);
-		
-		$this->setTemplateVar('outline',$structure);
-	}
-
     public function removeView()
     {
         $this->setTemplateVar( 'name',$this->link->filename );

@@ -198,30 +198,6 @@ class PageelementAction extends BaseAction
 	}
 
 
-
-	/**
-	 * Anzeigen des Element-Inhaltes.
-	 */
-	public function structureView()
-	{
-		$this->value->languageid = $this->page->languageid;
-		$this->value->objectid   = $this->page->objectid;
-		$this->value->pageid     = $this->page->pageid;
-		$this->value->page       = $this->page;
-		$this->value->simple = false;
-		$this->value->element = &$this->element;
-		$this->value->element->load();
-		$this->value->load();
-
-		if	( $this->value->element->type == 'longtext' && $this->value->element->wiki )
-		{
-			$this->setTemplateVar('text',$this->value->text);
-		}
-
-	}
-
-
-
 	/**
 	 * Normaler Editiermodus.
 	 *

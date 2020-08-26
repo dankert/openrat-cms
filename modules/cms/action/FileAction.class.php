@@ -596,62 +596,6 @@ class FileAction extends ObjectAction
 	
 	
 	
-	/**
-	 * Liefert die Struktur zu diesem Ordner:
-	 * - Mit den übergeordneten Ordnern und
-	 * - den in diesem Ordner enthaltenen Objekten
-	 * 
-	 * Beispiel:
-	 * <pre>
-	 * - A
-	 *   - B
-	 *     - C (dieser Ordner)
-	 *       - Unterordner
-	 *       - Seite
-	 *       - Seite
-	 *       - Datei
-	 * </pre> 
-	 */
-	public function structureView()
-	{
-
-		$structure = array();
-		$tmp = &$structure;
-		$nr  = 0;
-		
-		$folder = new Folder( $this->file->parentid );
-		$parents = $folder->parentObjectNames(false,true);
-		
-		foreach( $parents as $id=>$name)
-		{
-			unset($children);
-			unset($o);
-			$children = array();
-			$o = array('id'=>$id,'name'=>$name,'type'=>'folder','level'=>++$nr,'children'=>&$children);
-			
-			$tmp[$id] = &$o;;
-			
-			unset($tmp);
-			
-			$tmp = &$children; 
-		}
-		
-		
-		
-		unset($children);
-		unset($id);
-		unset($name);
-		
-		$elementChildren = array();
-		
-		$tmp[ $this->file->objectid ] = array('id'=>$this->file->objectid,'name'=>$this->file->name,'type'=>'file','self'=>true,'children'=>&$elementChildren);
-		
-		
-		//Html::debug($structure);
-		
-		$this->setTemplateVar('outline',$structure);
-	}
-
 
 	public function removeView()
     {

@@ -1,8 +1,0 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<if present="text">
-		<part class="structure">
-			<!--<editor type="dom" name="text"></editor>-->
-		</part>
-	</if>
-</output>
