@@ -6,7 +6,7 @@
 
 # Security warning:
 # Place your sensitive configuration outside of your document root!
-
+# DO NOT PLACE ANY SENSITIVE INFORMATION HERE - THIS FILE IS WORLD READABLE!
 
 database:
   db:
