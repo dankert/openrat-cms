@@ -1,3 +1,1 @@
-<?php if (defined('OR_TITLE')) {  ?>
-  
- <?php } ?>
+<?php if (!defined('OR_TITLE')) exit(); ?>

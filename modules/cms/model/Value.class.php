@@ -5,6 +5,7 @@ use cms\publish\Publish;
 use cms\macros\MacroRunner;
 use \ObjectNotFoundException;
 use logger\Logger;
+use util\exception\GeneratorException;
 use util\Text;
 use util\Html;
 use util\Http;
@@ -567,29 +568,27 @@ SQL
 	 */
 	private function generateValue()
 	{
-		global $conf;
-
 		if	( intval($this->valueid)==0 )
 			$this->load();
 	
 		$inhalt = '';
-		$raw    = false;
-		
+
 		global $conf;
 
 		// Inhalt ist mit anderer Seite verkn�pft.
 		if	( in_array($this->element->typeid,[Element::ELEMENT_TYPE_TEXT,Element::ELEMENT_TYPE_LONGTEXT,Element::ELEMENT_TYPE_DATE,Element::ELEMENT_TYPE_NUMBER]) && intval($this->linkToObjectId) != 0 && !$this->isLink )
 		{
 			$linkedPage = new Page( $this->linkToObjectId );
+			$linkedPage->context = $this->page->context;
 			$linkedPage->load();
 			
 			$linkedValue = new Value();
 			$linkedValue->isLink     = true;
 			$linkedValue->pageid     = $linkedPage->pageid;
 			$linkedValue->page       = $linkedPage;
+			$linkedValue->page->context = $this->page->context;
 			$linkedValue->element    = $this->element;
 			$linkedValue->languageid = $this->languageid;
-			$linkedValue->publisher  = $this->publisher;
 			//$v->modelid    = $this->modelid;
 			$linkedValue->load();
 			$linkedValue->generate();
@@ -645,6 +644,7 @@ SQL
 													$p->modelid        = $this->page->modelid;
 													$p->languageid     = $this->languageid;
 													$p->mime_type      = $this->page->mimeType();
+													$p->context        = $this->page->context;
 													$p->load();
 													$p->generate();
 													$inhalt .= $p->value;
@@ -664,6 +664,7 @@ SQL
 															$p->public         = $this->page->publisher->isPublic();
 															$p->modelid        = $this->page->modelid;
 															$p->languageid     = $this->languageid;
+															$p->context        = $this->page->context;
 															$p->load();
 															$p->generate();
 															$inhalt .= $p->value;
@@ -693,6 +694,7 @@ SQL
 					if   ( $this->publisher->isSimplePreview() )
 					{
 						$p = new Page( $objectid );
+						$p->context = $this->page->context;
 						$p->load();
 						$inhalt = $p->filename;
 						unset( $p );
@@ -711,6 +713,7 @@ SQL
 									$p->modelid        = $this->page->modelid;
 									$p->languageid     = $this->languageid;
 									$p->mime_type      = $this->page->mimeType();
+									$p->context        = $this->page->context;
 									$p->load();
 									$p->generate();
 									$inhalt = $p->value;
@@ -801,6 +804,7 @@ SQL
 					break;
 
 				$linkedPage = new Page( $linkValue->linkToObjectId );
+				$linkedPage->context = $this->page->context;
 				$linkedPage->load();
 
 				$linkedPageTemplate = new Template( $linkedPage->templateid );
@@ -1280,11 +1284,8 @@ SQL
 				try {
 					$inhalt .= $runner->executeMacro($macroName, $macroSettings,$this->page);
 				}
-				catch( \util\exception\OpenRatException $e ) {
-					if	( !$this->publisher->isPublic() )
-						$inhalt = lang($e->key).' ('.$e->getMessage().')'; // Inform the viewer
-					else
-						; // Keep empty value in public mode.
+				catch( \Exception $e ) {
+					throw new GeneratorException("Macro ".$macroName.' in value '.$this->__toString().' could not executed',$e);
 				}
 
 				// Wenn HTML-Ausgabe, dann Sonderzeichen in HTML �bersetzen
@@ -1497,13 +1498,10 @@ SQL
 				
 			default:
 				// this should never happen in production.
-				if	( ! $this->publisher->isPublic() )
-				    // inform the user.
-					throw new \LogicException( 'Error in element '.$this->element->name.': '.
+			    // inform the user.
+				throw new GeneratorException( 'Error in element '.$this->element->name.': '.
 				              'unknown type: '.$this->element->typeid.'');
-				else
-				    ; // do not crash the public publishing process.
-				
+
 		}
 
 		

@@ -5,6 +5,8 @@ namespace wikiparser\renderer;
 use cms\model\File;
 use cms\model\Image;
 use cms\model\BaseObject;
+use util\ClassUtils;
+use util\exception\GeneratorException;
 use wikiparser\model\DefinitionItemElement;
 use DefinitionListEntryElement;
 use DefinitionListItemElement;
@@ -84,7 +86,7 @@ class HtmlRenderer
 				$attr['title'] = $subChild1->title;
 		}
 
-		switch (strtolower(get_class($child))) {
+		switch (strtolower(ClassUtils::getSimpleClassName($child))) {
 			case 'tableofcontentelement':
 				$tag = 'p';
 				foreach ($this->children as $h) {
@@ -219,13 +221,9 @@ class HtmlRenderer
 
 				$runner = new MacroRunner();
 				try {
-
 					$val .= $runner->executeMacro($className, $child->attributes, $this->page);
 				} catch (Exception $e) {
-					if (config('editor', 'macro', 'show_errors'))
-						$tag = 'tt';
-					$attr['style'] = 'color:red';
-					$val .= 'Macro warning: ' . $e->getMessage();
+					throw new GeneratorException('Could not execute the macro '.$className,$e);
 				}
 
 				break;

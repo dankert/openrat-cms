@@ -14,7 +14,7 @@ use cms\update\Update;
 use util\Http;
 use logger\Logger;
 use LogicException;
-use util\exception\OpenRatException;
+use util\exception\UIException;
 use util\exception\SecurityException;
 use util\Session;
 
@@ -407,7 +407,7 @@ class Dispatcher
             Session::setDatabase( $db );
         }catch(\Exception $e)
         {
-            throw new OpenRatException('DATABASE_ERROR_CONNECTION',$e->getMessage() );
+            throw new UIException('DATABASE_ERROR_CONNECTION', $e->getMessage(),$e);
         }
 
 
@@ -422,7 +422,7 @@ class Dispatcher
      * Updating the database.
      *
      * @param $dbid integer
-     * @throws OpenRatException
+     * @throws UIException
      */
     private function updateDatabase($dbid)
     {
@@ -446,7 +446,7 @@ class Dispatcher
             $adminDb->id = $dbid;
         } catch (\Exception $e) {
 
-            throw new OpenRatException('DATABASE_ERROR_CONNECTION', $e->getMessage());
+            throw new UIException('DATABASE_ERROR_CONNECTION', $e->getMessage(),$e);
         }
 
         $updater->update($adminDb);

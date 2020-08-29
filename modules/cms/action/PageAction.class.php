@@ -12,8 +12,10 @@ use cms\model\Folder;
 use cms\model\BaseObject;
 use cms\model\Language;
 use cms\model\Model;
+use cms\publish\PageContext;
 use cms\publish\PublishPreview;
 use cms\publish\PublishPublic;
+use configuration\Config;
 use util\Html;
 use util\Http;
 use logger\Logger;
@@ -47,20 +49,26 @@ class PageAction extends ObjectAction
     public function init()
     {
         $page = new Page( $this->getRequestId() );
+        $context = new PageContext();
+        $context->sourceObjectId = $page->objectid;
 
 		if  ( $this->request->hasLanguageId())
-		    $page->languageid = $this->request->getLanguageId();
+			$context->languageId = $this->request->getLanguageId();
 
 		if  ( $this->request->hasModelId())
-		    $page->modelid = $this->request->getModelId();
+			$context->modelId = $this->request->getModelId();
 
 		$page->load();
 
-        if  ( !$page->languageid )
-            $page->languageid = $page->getProject()->getDefaultLanguageId();
+        if  ( !$context->languageId )
+			$context->languageId = $page->getProject()->getDefaultLanguageId();
 
-        if  ( !$page->modelid )
-            $page->modelid = $page->getProject()->getDefaultModelId();
+        if  ( !$context->modelId )
+			$context->modelId = $page->getProject()->getDefaultModelId();
+
+        $page->languageid = $context->languageId;
+        $page->modelid    = $context->modelId;
+        $page->context = $context;
 
 		// Hier kann leider nicht das Datum der letzten Änderung verwendet werden,
 		// da sich die Seite auch danach ändern kann, z.B. durch Includes anderer
@@ -644,16 +652,16 @@ class PageAction extends ObjectAction
 
 
 
-		/**
+	/**
 	 * Seite anzeigen
 	 */
 	function showView()
 	{
-	    // Do NOT use CSP here.
+	    // We must overwrite the CSP here.
         // The output is only shown in an iframe, so there is no security impact to the CMS.
         // But if the template is using inline JS or CSS, we would break this with a CSP-header.
-        header('Content-Security-Policy:');
-        // TODO: Read CSP from root folder settings.
+		$pageSettingsConfig =  new Config( $this->page->getTotalSettings() );
+        header('Content-Security-Policy: '.$pageSettingsConfig->get('content-security-policy','') );
 
         // Seite definieren
 		if	( $this->hasRequestVar('withIcons') )

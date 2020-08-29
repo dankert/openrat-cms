@@ -17,6 +17,8 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 namespace cms\publish;
 
+use cms\model\BaseObject;
+
 /**
  * Strategy-baseclass for generating and publishing content.
  *
@@ -24,11 +26,11 @@ namespace cms\publish;
  */
 abstract class Publish
 {
-    abstract public function linkToObject( $from, $to );
+	abstract public function isPublic();
 
-    abstract public function isPublic();
+	abstract public function linkToObject( BaseObject $from, BaseObject $to );
 
-    abstract public function isSimplePreview();
+	abstract public function isSimplePreview();
 
     abstract public function copy($tmp_filename,$dest_filename,$lastChangeDate=null);
 

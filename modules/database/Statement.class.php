@@ -18,8 +18,7 @@
 
 namespace database;
 use database\driver\PDODriver;
-use Exception;
-use RuntimeException;
+use util\exception\DatabaseException;
 
 /**
  * Darstellung einer Datenbank-Abfrage.
@@ -103,7 +102,7 @@ class Statement
 	
 		if	( $result === FALSE )
 		{
-			throw new RuntimeException( 'Database-Statement '.$this->sql->query.' could not be executed: '.$this->client->error);
+			throw new DatabaseException( 'Statement '.$this->sql->query.' could not be executed: '.$this->client->error);
 		}
 	
 		return $result;

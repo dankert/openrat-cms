@@ -19,6 +19,7 @@
 namespace database;
 use logger\Logger;
 use LogicException;
+use util\exception\DatabaseException;
 
 /**
  * SQL-Anweisung.<br>
@@ -101,7 +102,7 @@ class Sql
 			$nameParam = substr($query,$posKlLinks+1,$posKlRechts-$posKlLinks-1);  // Name Parameter
 			
 			if	( isset($this->param[$nameParam ]))
-				throw new LogicException( "The named parameter '$nameParam'' is used more than one time in the SQL query:\n$query" );
+				throw new DatabaseException( "The named parameter '$nameParam'' is used more than one time in the SQL query:\n$query" );
 				
 			$this->param[$nameParam] = $posKlLinks;
 			

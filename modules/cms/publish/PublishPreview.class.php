@@ -2,9 +2,11 @@
 
 namespace cms\publish;
 
+use cms\model\Alias;
 use cms\model\BaseObject;
 use cms\model\Link;
 use cms\model\Url;
+use util\exception\GeneratorException;
 
 /**
  * Created by PhpStorm.
@@ -19,7 +21,7 @@ class PublishPreview extends Publish
      * @param $from \cms\model\BaseObject
      * @param $to \cms\model\BaseObject
      */
-    public function linkToObject( $from, $to )
+    public function linkToObject( BaseObject $from, BaseObject $to )
     {
 
         $param = array(
@@ -67,6 +69,28 @@ class PublishPreview extends Publish
                 }
                 break;
 
+            case BaseObject::TYPEID_ALIAS:
+                $alias = new Alias( $to->objectid );
+				$alias->load();
+                $alias->linkedObjectId;
+
+                $linkedObject = new BaseObject( $alias->linkedObjectId );
+                $linkedObject->objectLoad();
+
+                switch( $linkedObject->typeid )
+                {
+                    case BaseObject::TYPEID_FILE:
+                        $inhalt = \util\Html::url('file','show',$alias->linkedObjectId,$param);
+                        break;
+
+                    case BaseObject::TYPEID_PAGE:
+                        $inhalt = \util\Html::url('page','show',$alias->linkedObjectId,$param);
+                        break;
+					default:
+						$inhalt = 'Unknown link type: '.$linkedObject->typeid;
+                }
+                break;
+
             case BaseObject::TYPEID_URL:
                 $url = new Url( $to->objectid );
                 $url->load();
@@ -74,7 +98,7 @@ class PublishPreview extends Publish
 
                 break;
 			default:
-				$inhalt = 'Unknown type: '.$to->typeid;
+				throw new GeneratorException('Unknown type '.$to->typeid.' in target '.$to->__toString() );
 
 		}
 

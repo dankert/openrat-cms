@@ -225,7 +225,6 @@ class BaseObject extends ModelBase
 
     /**
      * Strategy for publishing objects.
-     *
      * @var Publish
      */
     public $publisher;
@@ -1718,6 +1717,22 @@ SQL
         }
 
     }
+
+
+	/**
+	 * Returns the effective alias. If no alias exists, the actual object is returned.
+	 *
+	 * @return BaseObject
+	 */
+    public function getEffectiveAlias() {
+
+		$alias = $this->getAlias();
+		if   ( $alias )
+			return $alias;
+		else
+			return $this;
+	}
+
 
 
     /**

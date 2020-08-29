@@ -12,7 +12,7 @@ use \Less_Parser;
 use logger\Logger;
 use LogicException;
 use ObjectNotFoundException;
-use util\exception\OpenRatException;
+use util\exception\UIException;
 use util\exception\SecurityException;
 use template_engine\engine\TemplateEngine;
 use template_engine\TemplateEngineInfo;
@@ -52,7 +52,7 @@ class UI
         } catch (ObjectNotFoundException $e) {
             Logger::debug("Object not found: " . $e->__toString()); // Nur Debug, da dies bei gelöschten Objekten vorkommen kann.
             Http::noContent();
-        } catch (OpenRatException $e) {
+        } catch (UIException $e) {
             Logger::warn( $e->__toString() );
             throw new LogicException(lang($e->key),0, $e);
         } catch (SecurityException $e) {

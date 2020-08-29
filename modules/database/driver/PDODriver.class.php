@@ -25,7 +25,7 @@ use logger\Logger;
 use \PDO;
 use \PDOException;
 use PDOStatement;
-use \RuntimeException;
+use util\exception\DatabaseException;
 
 /**
  * Implementation of all database operations in PDO.
@@ -55,7 +55,7 @@ class PDODriver
 		if ( !defined('PDO::ATTR_DRIVER_NAME') ) {
 			// This should never happen, because PHP is always bundled with PDO.
 			// but maybe... some installation could miss the module.
-			throw new RuntimeException('PDO unavailable');
+			throw new DatabaseException('PDO unavailable');
 		}
 
 		$url    = $conf['dsn'     ];
@@ -102,12 +102,12 @@ class PDODriver
         catch(\PDOException $e)
         {
             Logger::warn( "Could not connect to database with dsn=$url and user=$user: ".$e->getMessage() );
-            throw new \RuntimeException("Could not connect to database on host $url.",0,$e);
+            throw new DatabaseException("Could not connect to database on host $url.",0,$e);
         }
 
         // This should never happen, because PDO should throw an exception if the connection fails.
 		if	( !is_object($this->connection) )
-			throw new RuntimeException("Could not connect to database on host '$url', Reason: ".PDO::errorInfo() );
+			throw new DatabaseException("Could not connect to database on host '$url', Reason: ".PDO::errorInfo() );
 				
 		return true;
     }
@@ -139,7 +139,7 @@ class PDODriver
 
 		if	( $erg === false )
 		{
-			throw new RuntimeException( 'Could not execute prepared statement "'.$query->query.'": '.implode('/',$stmt->errorInfo()) );
+			throw new DatabaseException( 'Could not execute prepared statement "'.$query->query.'": '.implode('/',$stmt->errorInfo()) );
 		}
 		
 		return $stmt;
@@ -175,7 +175,7 @@ class PDODriver
 		$stmt = $this->connection->prepare($query);
 		
 		if	( $stmt === false )
-			throw new RuntimeException("Could not prepare statement:\n$query\nCause: ".implode(' / ',$this->connection->errorInfo()) );
+			throw new DatabaseException("Could not prepare statement:\n$query\nCause: ".implode(' / ',$this->connection->errorInfo()) );
 
 		return $stmt;
 	}
@@ -199,7 +199,7 @@ class PDODriver
 		elseif( is_null($value))
 			$type = PDO::PARAM_NULL;
 		else
-			throw new RuntimeException( 'Unknown type for parameter '.$name.': '.gettype($value) );
+			throw new DatabaseException( 'Unknown type for parameter '.$name.': '.gettype($value) );
 		
 		$stmt->bindValue($name,$value,$type);
 	}

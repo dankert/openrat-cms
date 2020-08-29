@@ -1,326 +1,324 @@
-<?php if (defined('OR_TITLE')) {  ?>
-  
-    <form name="<?php echo escapeHtml('') ?>" target="<?php echo escapeHtml('_self') ?>" data-target="<?php echo escapeHtml('view') ?>" action="<?php echo escapeHtml('./') ?>" data-method="<?php echo escapeHtml('info') ?>" data-action="<?php echo escapeHtml('object') ?>" data-id="<?php echo escapeHtml(''.@$_id.'') ?>" method="<?php echo escapeHtml('POST') ?>" enctype="<?php echo escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo escapeHtml('') ?>" data-autosave="<?php echo escapeHtml('') ?>" class="<?php echo escapeHtml('or-form object') ?>"><?php echo escapeHtml('') ?>
-      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('token') ?>" value="<?php echo escapeHtml(''.@$_token.'') ?>" /><?php echo escapeHtml('') ?>
-      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('action') ?>" value="<?php echo escapeHtml('object') ?>" /><?php echo escapeHtml('') ?>
-      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('subaction') ?>" value="<?php echo escapeHtml('info') ?>" /><?php echo escapeHtml('') ?>
-      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('id') ?>" value="<?php echo escapeHtml(''.@$_id.'') ?>" /><?php echo escapeHtml('') ?>
-      <div><?php echo escapeHtml('') ?>
-        <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
-          <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
-            <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-              <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang('name').'') ?>
-                </span>
-              </div>
-              <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                <span class="<?php echo escapeHtml('name') ?>"><?php echo escapeHtml(''.@$name.'') ?>
-                </span>
-              </div>
-            </div>
-            <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-              <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang('filename').'') ?>
-                </span>
-              </div>
-              <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                <span class="<?php echo escapeHtml('filename') ?>"><?php echo escapeHtml(''.@$filename.'') ?>
-                </span>
-              </div>
-            </div>
-            <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-              <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang('file_extension').'') ?>
-                </span>
-              </div>
-              <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                <span class="<?php echo escapeHtml('extension') ?>"><?php echo escapeHtml(''.@$extension.'') ?>
-                </span>
-              </div>
-            </div>
-            <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-              <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang('description').'') ?>
-                </span>
-              </div>
-              <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@$description.'') ?>
-                </span>
-              </div>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
-          <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('additional_info').'') ?>
-            <img /><?php echo escapeHtml('') ?>
-            <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
-            </div>
-            <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
-            </div>
-          </legend>
-          <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
-            <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-              <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(''.@lang('full_filename').'') ?>
-                  </span>
-                </label>
-              </div>
-              <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@$full_filename.'') ?>
-                </span>
-              </div>
-            </div>
-            <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-              <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(''.@lang('FILE_SIZE').'') ?>
-                  </span>
-                </label>
-              </div>
-              <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-              </div>
-              <span><?php echo escapeHtml(''.@$size.'') ?>
+<?php if (!defined('OR_TITLE')) exit(); ?>
+  <form name="<?php echo escapeHtml('') ?>" target="<?php echo escapeHtml('_self') ?>" data-target="<?php echo escapeHtml('view') ?>" action="<?php echo escapeHtml('./') ?>" data-method="<?php echo escapeHtml('info') ?>" data-action="<?php echo escapeHtml('object') ?>" data-id="<?php echo escapeHtml(''.@$_id.'') ?>" method="<?php echo escapeHtml('POST') ?>" enctype="<?php echo escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo escapeHtml('') ?>" data-autosave="<?php echo escapeHtml('') ?>" class="<?php echo escapeHtml('or-form object') ?>"><?php echo escapeHtml('') ?>
+    <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('token') ?>" value="<?php echo escapeHtml(''.@$_token.'') ?>" /><?php echo escapeHtml('') ?>
+    <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('action') ?>" value="<?php echo escapeHtml('object') ?>" /><?php echo escapeHtml('') ?>
+    <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('subaction') ?>" value="<?php echo escapeHtml('info') ?>" /><?php echo escapeHtml('') ?>
+    <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('id') ?>" value="<?php echo escapeHtml(''.@$_id.'') ?>" /><?php echo escapeHtml('') ?>
+    <div><?php echo escapeHtml('') ?>
+      <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
+        <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('name').'') ?>
               </span>
             </div>
-            <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-              <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(''.@lang('FILE_mimetype').'') ?>
-                  </span>
-                </label>
-              </div>
-              <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@$mimetype.'') ?>
-                </span>
-              </div>
-            </div>
-            <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-              <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-              </div>
-              <div class="<?php echo escapeHtml('input clickable') ?>"><?php echo escapeHtml('') ?>
-                <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('dialog') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('size') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'size\'}') ?>" href="<?php echo escapeHtml('/#//') ?>" class="<?php echo escapeHtml('action') ?>"><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(''.@lang('menu_file_size').'') ?>
-                  </span>
-                </a>
-              </div>
-            </div>
-            <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-              <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang(''.@lang('id').'').'') ?>
-                </span>
-              </div>
-              <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@$objectid.'') ?>
-                </span>
-              </div>
-            </div>
-            <?php $if1=(isset($cache_filename)); if($if1) {  ?>
-              <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-                <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                  <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                    <span><?php echo escapeHtml(''.@lang('CACHE_FILENAME').'') ?>
-                    </span>
-                  </label>
-                </div>
-                <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(''.@$cache_filename.'') ?>
-                  </span>
-                  <br /><?php echo escapeHtml('') ?>
-                  <img src="<?php echo escapeHtml('./modules/cms/ui/themes/default/images/icon/el_date.png') ?>" /><?php echo escapeHtml('') ?>
-                  <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($cache_filemtime); ?>
-                   <?php } ?>
-                </div>
-              </div>
-             <?php } ?>
-            <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-              <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(''.@lang('FILE_PAGES').'') ?>
-                  </span>
-                </label>
-              </div>
-              <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                <div class="<?php echo escapeHtml('or-table-wrapper') ?>"><?php echo escapeHtml('') ?>
-                  <div class="<?php echo escapeHtml('or-table-filter') ?>"><?php echo escapeHtml('') ?>
-                    <input type="<?php echo escapeHtml('search') ?>" name="<?php echo escapeHtml('filter') ?>" placeholder="<?php echo escapeHtml(''.@lang('SEARCH_FILTER').'') ?>" /><?php echo escapeHtml('') ?>
-                  </div>
-                  <div class="<?php echo escapeHtml('or-table-area') ?>"><?php echo escapeHtml('') ?>
-                    <table width="<?php echo escapeHtml('100%') ?>"><?php echo escapeHtml('') ?>
-                      <?php foreach((array)$pages as $list_key=>$list_value) { extract($list_value); ?>
-                        <tr><?php echo escapeHtml('') ?>
-                          <td><?php echo escapeHtml('') ?>
-                            <a target="<?php echo escapeHtml('_self') ?>" data-url="<?php echo escapeHtml(''.@$url.'') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('[]') ?>" href="<?php echo escapeHtml('/#//') ?>"><?php echo escapeHtml('') ?>
-                              <img src="<?php echo escapeHtml('./modules/cms/ui/themes/default/images/icon_page.png') ?>" /><?php echo escapeHtml('') ?>
-                              <span><?php echo escapeHtml(''.@$name.'') ?>
-                              </span>
-                            </a>
-                          </td>
-                        </tr>
-                       <?php } ?>
-                    </table>
-                  </div>
-                </div>
-                <?php $if1=(($pages)==FALSE); if($if1) {  ?>
-                  <span><?php echo escapeHtml(''.@lang('NOT_FOUND').'') ?>
-                  </span>
-                 <?php } ?>
-              </div>
+            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+              <span class="<?php echo escapeHtml('name') ?>"><?php echo escapeHtml(''.@$name.'') ?>
+              </span>
             </div>
           </div>
-        </fieldset>
-        <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
-          <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('validity').'') ?>
-            <img /><?php echo escapeHtml('') ?>
-            <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('filename').'') ?>
+              </span>
             </div>
-            <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+              <span class="<?php echo escapeHtml('filename') ?>"><?php echo escapeHtml(''.@$filename.'') ?>
+              </span>
             </div>
-          </legend>
-          <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
-            <div class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
-              <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('dialog') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('settings') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'settings\'}') ?>" href="<?php echo escapeHtml('/#//') ?>"><?php echo escapeHtml('') ?>
-                <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-                  <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                    <span><?php echo escapeHtml(''.@lang('state').'') ?>
-                    </span>
-                  </div>
-                  <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                    <?php $if1=($is_valid); if($if1) {  ?>
-                      <span><?php echo escapeHtml(''.@lang('is_yes').'') ?>
-                      </span>
-                     <?php } ?>
-                    <?php if(!$if1) {  ?>
-                      <span><?php echo escapeHtml(''.@lang('is_no').'') ?>
-                      </span>
-                     <?php } ?>
-                  </div>
-                </div>
-                <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-                  <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                    <span><?php echo escapeHtml(''.@lang('from').'') ?>
-                    </span>
-                  </div>
-                  <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                    <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($valid_from_date); ?>
-                     <?php } ?>
-                  </div>
-                </div>
-                <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-                  <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                    <span><?php echo escapeHtml(''.@lang('until').'') ?>
-                    </span>
-                  </div>
-                  <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                    <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($valid_to_date); ?>
-                     <?php } ?>
-                  </div>
-                </div>
+          </div>
+          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('file_extension').'') ?>
+              </span>
+            </div>
+            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+              <span class="<?php echo escapeHtml('extension') ?>"><?php echo escapeHtml(''.@$extension.'') ?>
+              </span>
+            </div>
+          </div>
+          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('description').'') ?>
+              </span>
+            </div>
+            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@$description.'') ?>
+              </span>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
+        <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('additional_info').'') ?>
+          <img /><?php echo escapeHtml('') ?>
+          <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
+          </div>
+          <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
+          </div>
+        </legend>
+        <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+              <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                <span><?php echo escapeHtml(''.@lang('full_filename').'') ?>
+                </span>
+              </label>
+            </div>
+            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@$full_filename.'') ?>
+              </span>
+            </div>
+          </div>
+          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+              <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                <span><?php echo escapeHtml(''.@lang('FILE_SIZE').'') ?>
+                </span>
+              </label>
+            </div>
+            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+            </div>
+            <span><?php echo escapeHtml(''.@$size.'') ?>
+            </span>
+          </div>
+          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+              <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                <span><?php echo escapeHtml(''.@lang('FILE_mimetype').'') ?>
+                </span>
+              </label>
+            </div>
+            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@$mimetype.'') ?>
+              </span>
+            </div>
+          </div>
+          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+            </div>
+            <div class="<?php echo escapeHtml('input clickable') ?>"><?php echo escapeHtml('') ?>
+              <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('dialog') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('size') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'size\'}') ?>" href="<?php echo escapeHtml('/#//') ?>" class="<?php echo escapeHtml('action') ?>"><?php echo escapeHtml('') ?>
+                <span><?php echo escapeHtml(''.@lang('menu_file_size').'') ?>
+                </span>
               </a>
             </div>
           </div>
-        </fieldset>
-        <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
-          <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('prop_userinfo').'') ?>
-            <img /><?php echo escapeHtml('') ?>
-            <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang(''.@lang('id').'').'') ?>
+              </span>
             </div>
-            <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@$objectid.'') ?>
+              </span>
             </div>
-          </legend>
-          <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
-            <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-              <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang('created').'') ?>
-                </span>
-              </div>
-              <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                <i class="<?php echo escapeHtml('image-icon image-icon--action-el_date') ?>"><?php echo escapeHtml('') ?>
-                </i>
-                <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($create_date); ?>
-                 <?php } ?>
-                <br /><?php echo escapeHtml('') ?>
-                <i class="<?php echo escapeHtml('image-icon image-icon--action-user') ?>"><?php echo escapeHtml('') ?>
-                </i>
-                <?php include_once( 'modules/template_engine/components/html/user/component-user.php'); { component_user($create_user); ?>
-                 <?php } ?>
-              </div>
-            </div>
-            <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-              <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang('lastchange').'') ?>
-                </span>
-              </div>
-              <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                <i class="<?php echo escapeHtml('image-icon image-icon--action-el_date') ?>"><?php echo escapeHtml('') ?>
-                </i>
-                <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($lastchange_date); ?>
-                 <?php } ?>
-                <br /><?php echo escapeHtml('') ?>
-                <i class="<?php echo escapeHtml('image-icon image-icon--action-user') ?>"><?php echo escapeHtml('') ?>
-                </i>
-                <?php include_once( 'modules/template_engine/components/html/user/component-user.php'); { component_user($lastchange_user); ?>
-                 <?php } ?>
-              </div>
-            </div>
+          </div>
+          <?php $if1=(isset($cache_filename)); if($if1) {  ?>
             <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
               <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(''.@lang('published').'') ?>
+                  <span><?php echo escapeHtml(''.@lang('CACHE_FILENAME').'') ?>
                   </span>
                 </label>
               </div>
               <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                <i class="<?php echo escapeHtml('image-icon image-icon--action-el_date') ?>"><?php echo escapeHtml('') ?>
-                </i>
-                <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($published_date); ?>
-                 <?php } ?>
+                <span><?php echo escapeHtml(''.@$cache_filename.'') ?>
+                </span>
                 <br /><?php echo escapeHtml('') ?>
-                <i class="<?php echo escapeHtml('image-icon image-icon--action-user') ?>"><?php echo escapeHtml('') ?>
-                </i>
-                <?php include_once( 'modules/template_engine/components/html/user/component-user.php'); { component_user($published_user); ?>
+                <img src="<?php echo escapeHtml('./modules/cms/ui/themes/default/images/icon/el_date.png') ?>" /><?php echo escapeHtml('') ?>
+                <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($cache_filemtime); ?>
                  <?php } ?>
               </div>
             </div>
-          </div>
-        </fieldset>
-        <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
-          <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('settings').'') ?>
-            <img /><?php echo escapeHtml('') ?>
-            <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
+           <?php } ?>
+          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+              <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                <span><?php echo escapeHtml(''.@lang('FILE_PAGES').'') ?>
+                </span>
+              </label>
             </div>
-            <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
-            </div>
-          </legend>
-          <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
-            <div class="<?php echo escapeHtml('or-table-wrapper') ?>"><?php echo escapeHtml('') ?>
-              <div class="<?php echo escapeHtml('or-table-filter') ?>"><?php echo escapeHtml('') ?>
-                <input type="<?php echo escapeHtml('search') ?>" name="<?php echo escapeHtml('filter') ?>" placeholder="<?php echo escapeHtml(''.@lang('SEARCH_FILTER').'') ?>" /><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+              <div class="<?php echo escapeHtml('or-table-wrapper') ?>"><?php echo escapeHtml('') ?>
+                <div class="<?php echo escapeHtml('or-table-filter') ?>"><?php echo escapeHtml('') ?>
+                  <input type="<?php echo escapeHtml('search') ?>" name="<?php echo escapeHtml('filter') ?>" placeholder="<?php echo escapeHtml(''.@lang('SEARCH_FILTER').'') ?>" /><?php echo escapeHtml('') ?>
+                </div>
+                <div class="<?php echo escapeHtml('or-table-area') ?>"><?php echo escapeHtml('') ?>
+                  <table width="<?php echo escapeHtml('100%') ?>"><?php echo escapeHtml('') ?>
+                    <?php foreach((array)$pages as $list_key=>$list_value) { extract($list_value); ?>
+                      <tr><?php echo escapeHtml('') ?>
+                        <td><?php echo escapeHtml('') ?>
+                          <a target="<?php echo escapeHtml('_self') ?>" data-url="<?php echo escapeHtml(''.@$url.'') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('[]') ?>" href="<?php echo escapeHtml('/#//') ?>"><?php echo escapeHtml('') ?>
+                            <img src="<?php echo escapeHtml('./modules/cms/ui/themes/default/images/icon_page.png') ?>" /><?php echo escapeHtml('') ?>
+                            <span><?php echo escapeHtml(''.@$name.'') ?>
+                            </span>
+                          </a>
+                        </td>
+                      </tr>
+                     <?php } ?>
+                  </table>
+                </div>
               </div>
-              <div class="<?php echo escapeHtml('or-table-area') ?>"><?php echo escapeHtml('') ?>
-                <table width="<?php echo escapeHtml('100%') ?>"><?php echo escapeHtml('') ?>
-                  <?php foreach((array)$settings as $name=>$value) {  ?>
-                    <tr class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
-                      <td><?php echo escapeHtml('') ?>
-                        <span><?php echo escapeHtml(''.@$name.'') ?>
-                        </span>
-                      </td>
-                      <td class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
-                        <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('dialog') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('settings') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'settings\'}') ?>" href="<?php echo escapeHtml('/#//') ?>"><?php echo escapeHtml('') ?>
-                          <span><?php echo escapeHtml(''.@$value.'') ?>
-                          </span>
-                        </a>
-                      </td>
-                    </tr>
+              <?php $if1=(($pages)==FALSE); if($if1) {  ?>
+                <span><?php echo escapeHtml(''.@lang('NOT_FOUND').'') ?>
+                </span>
+               <?php } ?>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
+        <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('validity').'') ?>
+          <img /><?php echo escapeHtml('') ?>
+          <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
+          </div>
+          <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
+          </div>
+        </legend>
+        <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
+            <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('dialog') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('settings') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'settings\'}') ?>" href="<?php echo escapeHtml('/#//') ?>"><?php echo escapeHtml('') ?>
+              <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+                <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@lang('state').'') ?>
+                  </span>
+                </div>
+                <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+                  <?php $if1=($is_valid); if($if1) {  ?>
+                    <span><?php echo escapeHtml(''.@lang('is_yes').'') ?>
+                    </span>
                    <?php } ?>
-                </table>
+                  <?php if(!$if1) {  ?>
+                    <span><?php echo escapeHtml(''.@lang('is_no').'') ?>
+                    </span>
+                   <?php } ?>
+                </div>
               </div>
+              <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+                <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@lang('from').'') ?>
+                  </span>
+                </div>
+                <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+                  <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($valid_from_date); ?>
+                   <?php } ?>
+                </div>
+              </div>
+              <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+                <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@lang('until').'') ?>
+                  </span>
+                </div>
+                <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+                  <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($valid_to_date); ?>
+                   <?php } ?>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
+        <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('prop_userinfo').'') ?>
+          <img /><?php echo escapeHtml('') ?>
+          <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
+          </div>
+          <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
+          </div>
+        </legend>
+        <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('created').'') ?>
+              </span>
+            </div>
+            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+              <i class="<?php echo escapeHtml('image-icon image-icon--action-el_date') ?>"><?php echo escapeHtml('') ?>
+              </i>
+              <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($create_date); ?>
+               <?php } ?>
+              <br /><?php echo escapeHtml('') ?>
+              <i class="<?php echo escapeHtml('image-icon image-icon--action-user') ?>"><?php echo escapeHtml('') ?>
+              </i>
+              <?php include_once( 'modules/template_engine/components/html/user/component-user.php'); { component_user($create_user); ?>
+               <?php } ?>
             </div>
           </div>
-        </fieldset>
-      </div>
-      <div class="<?php echo escapeHtml('or-form-actionbar') ?>"><?php echo escapeHtml('') ?>
-        <input type="<?php echo escapeHtml('button') ?>" value="<?php echo escapeHtml(''.@lang('CANCEL').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo escapeHtml('') ?>
-      </div>
-    </form>
- <?php } ?>
+          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+              <span><?php echo escapeHtml(''.@lang('lastchange').'') ?>
+              </span>
+            </div>
+            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+              <i class="<?php echo escapeHtml('image-icon image-icon--action-el_date') ?>"><?php echo escapeHtml('') ?>
+              </i>
+              <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($lastchange_date); ?>
+               <?php } ?>
+              <br /><?php echo escapeHtml('') ?>
+              <i class="<?php echo escapeHtml('image-icon image-icon--action-user') ?>"><?php echo escapeHtml('') ?>
+              </i>
+              <?php include_once( 'modules/template_engine/components/html/user/component-user.php'); { component_user($lastchange_user); ?>
+               <?php } ?>
+            </div>
+          </div>
+          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+              <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                <span><?php echo escapeHtml(''.@lang('published').'') ?>
+                </span>
+              </label>
+            </div>
+            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+              <i class="<?php echo escapeHtml('image-icon image-icon--action-el_date') ?>"><?php echo escapeHtml('') ?>
+              </i>
+              <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($published_date); ?>
+               <?php } ?>
+              <br /><?php echo escapeHtml('') ?>
+              <i class="<?php echo escapeHtml('image-icon image-icon--action-user') ?>"><?php echo escapeHtml('') ?>
+              </i>
+              <?php include_once( 'modules/template_engine/components/html/user/component-user.php'); { component_user($published_user); ?>
+               <?php } ?>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
+        <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('settings').'') ?>
+          <img /><?php echo escapeHtml('') ?>
+          <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
+          </div>
+          <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
+          </div>
+        </legend>
+        <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo escapeHtml('or-table-wrapper') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('or-table-filter') ?>"><?php echo escapeHtml('') ?>
+              <input type="<?php echo escapeHtml('search') ?>" name="<?php echo escapeHtml('filter') ?>" placeholder="<?php echo escapeHtml(''.@lang('SEARCH_FILTER').'') ?>" /><?php echo escapeHtml('') ?>
+            </div>
+            <div class="<?php echo escapeHtml('or-table-area') ?>"><?php echo escapeHtml('') ?>
+              <table width="<?php echo escapeHtml('100%') ?>"><?php echo escapeHtml('') ?>
+                <?php foreach((array)$settings as $name=>$value) {  ?>
+                  <tr class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
+                    <td><?php echo escapeHtml('') ?>
+                      <span><?php echo escapeHtml(''.@$name.'') ?>
+                      </span>
+                    </td>
+                    <td class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
+                      <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('dialog') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('settings') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'settings\'}') ?>" href="<?php echo escapeHtml('/#//') ?>"><?php echo escapeHtml('') ?>
+                        <span><?php echo escapeHtml(''.@$value.'') ?>
+                        </span>
+                      </a>
+                    </td>
+                  </tr>
+                 <?php } ?>
+              </table>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <div class="<?php echo escapeHtml('or-form-actionbar') ?>"><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('button') ?>" value="<?php echo escapeHtml(''.@lang('CANCEL').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo escapeHtml('') ?>
+    </div>
+  </form>

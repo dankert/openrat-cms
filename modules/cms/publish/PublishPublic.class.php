@@ -9,10 +9,11 @@ use cms\model\Link;
 use cms\model\Page;
 use cms\model\Project;
 use cms\model\Url;
+use util\exception\PublisherException;
 use util\FileUtils;
 use cms\publish\Ftp;
 use logger\Logger;
-use util\exception\OpenRatException;
+use util\exception\UIException;
 use util\Session;
 
 
@@ -28,8 +29,10 @@ class PublishPublic extends Publish
     const SCHEMA_ABSOLUTE = 1;
     const SCHEMA_RELATIVE = 2;
 
+	const MAX_RECURSIVE_COUNT = 10;
 
-    /**
+
+	/**
      * Enthaelt bei Bedarf das FTP-Objekt. N�mlich dann, wenn
      * zu einem FTP-Server veroeffentlicht werden soll.
      * @var Object
@@ -154,17 +157,17 @@ class PublishPublic extends Publish
     private $linkSchema;
 
     /**
-     * @param $from \cms\model\Page
+     * @param $from \cms\model\BaseObject
      * @param $to \cms\model\BaseObject
      */
-    public function linkToObject( $from, $to ) {
+    public function linkToObject( BaseObject $from, BaseObject $to ) {
 
         $schema = $this->linkSchema;
 
 		$counter = 0;
         while( $to->typeid == BaseObject::TYPEID_LINK )
 		{
-			if   ( $counter++ > 10 )
+			if   ( $counter++ > self::MAX_RECURSIVE_COUNT)
 				throw new \LogicException("Too much redirects while following a link. Stopped at #".$to->objectid );
 
 			$link = new Link( $to->objectid );
@@ -239,7 +242,6 @@ class PublishPublic extends Publish
             $folder->load();
             $fromPathFolders = $folder->parentObjectFileNames(false,true);
 
-
             $folder = new Folder($to->getParentFolderId() );
 
             $toPathFolders = $folder->parentObjectFileNames(false, true);
@@ -309,13 +311,13 @@ class PublishPublic extends Publish
         {
         	// Is the output directory writable?
 			if   ( !is_writeable( $this->localDestinationDirectory ) )
-				throw new OpenRatException('ERROR_PUBLISH','directory not writable: '.$this->localDestinationDirectory );
+				throw new PublisherException('directory not writable: ' . $this->localDestinationDirectory);
 
             $dest   = $this->localDestinationDirectory.'/'.$dest_filename;
 
             // Is the destination writable?
 			if   ( is_file($dest) && !is_writeable( $dest ) )
-				throw new OpenRatException('ERROR_PUBLISH','file not writable: '.$this->dest );
+				throw new PublisherException('file not writable: ' . $this->dest);
 
 			// Copy file to destination
 			if   (!@copy( $source,$dest ));
@@ -324,9 +326,9 @@ class PublishPublic extends Publish
                 $this->mkdirs( dirname($dest) );
 
                 if   (!@copy( $source,$dest ))
-                    throw new OpenRatException('ERROR_PUBLISH','failed copying local file:'."\n".
-                        'source     : '.$source."\n".
-                        'destination: '.$dest);
+                    throw new PublisherException( 'failed copying local file:' . "\n" .
+						'source     : ' . $source . "\n" .
+						'destination: ' . $dest);
 
                 // Das Änderungsdatum der Datei auch in der Zieldatei setzen.
                 if  ( $conf['publish']['set_modification_date'] )
@@ -340,7 +342,7 @@ class PublishPublic extends Publish
             {
                 // CHMOD auf der Datei ausfuehren.
                 if	( ! @chmod($dest,octdec($conf['security']['chmod'])) )
-                    throw new OpenRatException('ERROR_PUBLISH','Unable to CHMOD file '.$dest);
+                    throw new PublisherException('Unable to CHMOD file ' . $dest);
             }
         }
 
@@ -375,13 +377,13 @@ class PublishPublic extends Publish
 
         //
         if	( ! @mkdir($path) )
-            throw new OpenRatException('ERROR_PUBLISH','Cannot create directory: '.$path);
+            throw new PublisherException( 'Cannot create directory: ' . $path);
 
         // CHMOD auf dem Verzeichnis ausgef�hren.
         if	(!empty($conf['security']['chmod_dir']))
         {
             if	( ! @chmod($path,octdec($conf['security']['chmod_dir'])) )
-                throw new OpenRatException('ERROR_PUBLISH','Unable to CHMOD directory: '.$path);
+                throw new PublisherException('Unable to CHMOD directory: ' . $path);
         }
     }
 
@@ -413,8 +415,8 @@ class PublishPublic extends Publish
             exec( $this->commandAfterPublish,$ausgabe,$rc );
 
             if	( $rc != 0 ) // Wenn Returncode ungleich 0, dann Fehler melden.
-                throw new OpenRatException('ERROR_PUBLISH','System command failed - returncode is '.$rc."\n".
-                    $ausgabe);
+                throw new PublisherException('System command failed - returncode is ' . $rc . "\n" .
+					$ausgabe);
             else
                 Logger::debug('System command successful' );
 

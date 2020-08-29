@@ -56,8 +56,8 @@
 				</part>
 			</part>
 
-			<radio name="linksAbsolute" value="0" label="LINKS_RELATIVE" />
-			<radio name="linksAbsolute" value="1" label="LINKS_ABSOLUTE" />
+			<radio name="linksAbsolute" value="0" label="${message:LINKS_RELATIVE}" />
+			<radio name="linksAbsolute" value="1" label="${message:LINKS_ABSOLUTE}" />
 
 		</group>
 		<if value="${config:publish/ftp/enable}">

@@ -1,3 +1,1 @@
-<?php if (defined('OR_TITLE')) {  ?>
-  <?php echo ''.@$value.'' ?>
- <?php } ?>
+<?php if (!defined('OR_TITLE')) exit(); ?><?php echo ''.@$value.'' ?>

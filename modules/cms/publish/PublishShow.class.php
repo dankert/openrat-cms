@@ -19,7 +19,7 @@ class PublishShow extends Publish
      * @param $from \cms\model\BaseObject
      * @param $to \cms\model\BaseObject
      */
-    public function linkToObject( $from, $to )
+    public function linkToObject( BaseObject $from, BaseObject $to )
     {
        return "...";
     }

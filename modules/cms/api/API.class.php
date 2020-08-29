@@ -10,7 +10,7 @@ use util\Http;
 use JSON;
 use logger\Logger;
 use ObjectNotFoundException;
-use util\exception\OpenRatException;
+use util\exception\UIException;
 use util\exception\SecurityException;
 use util\XML;
 
@@ -50,7 +50,7 @@ class API
 
             API::sendHTTPStatus(204, 'Object not found');
             $data = array('status' => 204)+ API::exceptionToArray( $e );
-        } catch (OpenRatException $e) {
+        } catch (UIException $e) {
             Logger::warn($e);
 
             API::sendHTTPStatus(500, 'Internal CMS Error');

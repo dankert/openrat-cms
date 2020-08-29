@@ -19,7 +19,7 @@
 namespace database;
 use database\driver\PDODriver;
 use logger\Logger;
-use RuntimeException;
+use util\exception\DatabaseException;
 
 /**
  * Darstellung einer Datenbank-Verbindung.
@@ -121,7 +121,7 @@ class Database
 			
 			if	( ! $ok )
 			{
-				throw new RuntimeException( "Could not execute connection-query '".$cmd."'");
+				throw new DatabaseException( "Could not execute connection-query '".$cmd."'");
 			}
 		}
 
@@ -214,7 +214,7 @@ class Database
             Logger::debug("Database command output: " . $zeile);
 
         if ($rc != 0) {
-            throw new RuntimeException('Command failed: ' . implode("", $ausgabe));
+            throw new DatabaseException('Command failed: ' . implode("", $ausgabe));
         }
     }
 

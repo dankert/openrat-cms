@@ -1,95 +1,93 @@
-<?php if (defined('OR_TITLE')) {  ?>
-  
-    <form name="<?php echo escapeHtml('') ?>" target="<?php echo escapeHtml('_self') ?>" data-target="<?php echo escapeHtml('view') ?>" action="<?php echo escapeHtml('./') ?>" data-method="<?php echo escapeHtml('pw') ?>" data-action="<?php echo escapeHtml('profile') ?>" data-id="<?php echo escapeHtml(''.@$_id.'') ?>" method="<?php echo escapeHtml('POST') ?>" enctype="<?php echo escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo escapeHtml('') ?>" data-autosave="<?php echo escapeHtml('') ?>" class="<?php echo escapeHtml('or-form profile') ?>"><?php echo escapeHtml('') ?>
-      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('token') ?>" value="<?php echo escapeHtml(''.@$_token.'') ?>" /><?php echo escapeHtml('') ?>
-      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('action') ?>" value="<?php echo escapeHtml('profile') ?>" /><?php echo escapeHtml('') ?>
-      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('subaction') ?>" value="<?php echo escapeHtml('pw') ?>" /><?php echo escapeHtml('') ?>
-      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('id') ?>" value="<?php echo escapeHtml(''.@$_id.'') ?>" /><?php echo escapeHtml('') ?>
-      <div><?php echo escapeHtml('') ?>
-        <?php $if1=($pwchange_enabled); if($if1) {  ?>
-          <div class="<?php echo escapeHtml('line logo') ?>"><?php echo escapeHtml('') ?>
-            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-              <img src="<?php echo escapeHtml('themes/default/images/logo_changepassword.png') ?>" border="<?php echo escapeHtml('') ?>" /><?php echo escapeHtml('') ?>
+<?php if (!defined('OR_TITLE')) exit(); ?>
+  <form name="<?php echo escapeHtml('') ?>" target="<?php echo escapeHtml('_self') ?>" data-target="<?php echo escapeHtml('view') ?>" action="<?php echo escapeHtml('./') ?>" data-method="<?php echo escapeHtml('pw') ?>" data-action="<?php echo escapeHtml('profile') ?>" data-id="<?php echo escapeHtml(''.@$_id.'') ?>" method="<?php echo escapeHtml('POST') ?>" enctype="<?php echo escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo escapeHtml('') ?>" data-autosave="<?php echo escapeHtml('') ?>" class="<?php echo escapeHtml('or-form profile') ?>"><?php echo escapeHtml('') ?>
+    <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('token') ?>" value="<?php echo escapeHtml(''.@$_token.'') ?>" /><?php echo escapeHtml('') ?>
+    <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('action') ?>" value="<?php echo escapeHtml('profile') ?>" /><?php echo escapeHtml('') ?>
+    <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('subaction') ?>" value="<?php echo escapeHtml('pw') ?>" /><?php echo escapeHtml('') ?>
+    <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('id') ?>" value="<?php echo escapeHtml(''.@$_id.'') ?>" /><?php echo escapeHtml('') ?>
+    <div><?php echo escapeHtml('') ?>
+      <?php $if1=($pwchange_enabled); if($if1) {  ?>
+        <div class="<?php echo escapeHtml('line logo') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+            <img src="<?php echo escapeHtml('themes/default/images/logo_changepassword.png') ?>" border="<?php echo escapeHtml('') ?>" /><?php echo escapeHtml('') ?>
+          </div>
+          <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+            <h2><?php echo escapeHtml(''.@lang('logo_changepassword').'') ?>
+            </h2>
+            <p><?php echo escapeHtml(''.@lang('logo_changepassword_text').'') ?>
+            </p>
+          </div>
+        </div>
+        <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
+          <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('user_act_password').'') ?>
+            <img /><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
             </div>
-            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-              <h2><?php echo escapeHtml(''.@lang('logo_changepassword').'') ?>
-              </h2>
-              <p><?php echo escapeHtml(''.@lang('logo_changepassword_text').'') ?>
-              </p>
+            <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
+            </div>
+          </legend>
+          <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+              <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@lang('user_password').'') ?>
+                  </span>
+                </label>
+              </div>
+              <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+                <div class="<?php echo escapeHtml('inputholder') ?>"><?php echo escapeHtml('') ?>
+                  <input type="<?php echo escapeHtml('password') ?>" name="<?php echo escapeHtml('act_password') ?>" size="<?php echo escapeHtml('40') ?>" maxlength="<?php echo escapeHtml('256') ?>" value="<?php echo escapeHtml(''.@$act_password.'') ?>" class="<?php echo escapeHtml('focus') ?>" /><?php echo escapeHtml('') ?>
+                </div>
+              </div>
             </div>
           </div>
-          <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
-            <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('user_act_password').'') ?>
-              <img /><?php echo escapeHtml('') ?>
-              <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
+        </fieldset>
+        <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
+          <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('user_new_password').'') ?>
+            <img /><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
+            </div>
+            <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
+            </div>
+          </legend>
+          <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+              <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@lang('user_new_password').'') ?>
+                  </span>
+                </label>
               </div>
-              <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
-              </div>
-            </legend>
-            <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
-              <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-                <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                  <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                    <span><?php echo escapeHtml(''.@lang('user_password').'') ?>
-                    </span>
-                  </label>
-                </div>
-                <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                  <div class="<?php echo escapeHtml('inputholder') ?>"><?php echo escapeHtml('') ?>
-                    <input type="<?php echo escapeHtml('password') ?>" name="<?php echo escapeHtml('act_password') ?>" size="<?php echo escapeHtml('40') ?>" maxlength="<?php echo escapeHtml('256') ?>" value="<?php echo escapeHtml(''.@$act_password.'') ?>" class="<?php echo escapeHtml('focus') ?>" /><?php echo escapeHtml('') ?>
-                  </div>
+              <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+                <div class="<?php echo escapeHtml('inputholder') ?>"><?php echo escapeHtml('') ?>
+                  <input type="<?php echo escapeHtml('password') ?>" name="<?php echo escapeHtml('password1') ?>" size="<?php echo escapeHtml('40') ?>" maxlength="<?php echo escapeHtml('256') ?>" value="<?php echo escapeHtml(''.@$password1.'') ?>" class="<?php echo escapeHtml('') ?>" /><?php echo escapeHtml('') ?>
                 </div>
               </div>
             </div>
-          </fieldset>
-          <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
-            <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('user_new_password').'') ?>
-              <img /><?php echo escapeHtml('') ?>
-              <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
+              <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+                  <span><?php echo escapeHtml(''.@lang('user_new_password_repeat').'') ?>
+                  </span>
+                </label>
               </div>
-              <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
-              </div>
-            </legend>
-            <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
-              <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-                <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                  <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                    <span><?php echo escapeHtml(''.@lang('user_new_password').'') ?>
-                    </span>
-                  </label>
-                </div>
-                <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                  <div class="<?php echo escapeHtml('inputholder') ?>"><?php echo escapeHtml('') ?>
-                    <input type="<?php echo escapeHtml('password') ?>" name="<?php echo escapeHtml('password1') ?>" size="<?php echo escapeHtml('40') ?>" maxlength="<?php echo escapeHtml('256') ?>" value="<?php echo escapeHtml(''.@$password1.'') ?>" class="<?php echo escapeHtml('') ?>" /><?php echo escapeHtml('') ?>
-                  </div>
-                </div>
-              </div>
-              <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-                <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                  <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                    <span><?php echo escapeHtml(''.@lang('user_new_password_repeat').'') ?>
-                    </span>
-                  </label>
-                </div>
-                <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                  <div class="<?php echo escapeHtml('inputholder') ?>"><?php echo escapeHtml('') ?>
-                    <input type="<?php echo escapeHtml('password') ?>" name="<?php echo escapeHtml('password2') ?>" size="<?php echo escapeHtml('40') ?>" maxlength="<?php echo escapeHtml('256') ?>" value="<?php echo escapeHtml(''.@$password2.'') ?>" class="<?php echo escapeHtml('') ?>" /><?php echo escapeHtml('') ?>
-                  </div>
+              <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+                <div class="<?php echo escapeHtml('inputholder') ?>"><?php echo escapeHtml('') ?>
+                  <input type="<?php echo escapeHtml('password') ?>" name="<?php echo escapeHtml('password2') ?>" size="<?php echo escapeHtml('40') ?>" maxlength="<?php echo escapeHtml('256') ?>" value="<?php echo escapeHtml(''.@$password2.'') ?>" class="<?php echo escapeHtml('') ?>" /><?php echo escapeHtml('') ?>
                 </div>
               </div>
             </div>
-          </fieldset>
-         <?php } ?>
-        <?php if(!$if1) {  ?>
-          <div class="<?php echo escapeHtml('message warn') ?>"><?php echo escapeHtml('') ?>
-            <span><?php echo escapeHtml(''.@lang('pwchange_not_allowed').'') ?>
-            </span>
           </div>
-         <?php } ?>
-      </div>
-      <div class="<?php echo escapeHtml('or-form-actionbar') ?>"><?php echo escapeHtml('') ?>
-        <input type="<?php echo escapeHtml('button') ?>" value="<?php echo escapeHtml(''.@lang('CANCEL').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo escapeHtml('') ?>
-        <input type="<?php echo escapeHtml('submit') ?>" value="<?php echo escapeHtml(''.@lang('button_ok').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo escapeHtml('') ?>
-      </div>
-    </form>
- <?php } ?>
+        </fieldset>
+       <?php } ?>
+      <?php if(!$if1) {  ?>
+        <div class="<?php echo escapeHtml('message warn') ?>"><?php echo escapeHtml('') ?>
+          <span><?php echo escapeHtml(''.@lang('pwchange_not_allowed').'') ?>
+          </span>
+        </div>
+       <?php } ?>
+    </div>
+    <div class="<?php echo escapeHtml('or-form-actionbar') ?>"><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('button') ?>" value="<?php echo escapeHtml(''.@lang('CANCEL').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo escapeHtml('submit') ?>" value="<?php echo escapeHtml(''.@lang('button_ok').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo escapeHtml('') ?>
+    </div>
+  </form>

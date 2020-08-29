@@ -18,7 +18,8 @@
 namespace cms\publish;
 
 use logger\Logger;
-use util\exception\OpenRatException;
+use util\exception\PublisherException;
+use util\exception\UIException;
 
 
 /**
@@ -65,7 +66,7 @@ class Ftp
 
 		// Nur FTP und FTPS (seit PHP 4.3) erlaubt
 		if (!in_array(@$ftp['scheme'], array('ftp', 'ftps'))) {
-			throw new OpenRatException('ERROR_PUBLISH', 'Unknown scheme in FTP Url: ' . @$ftp['scheme'] .
+			throw new PublisherException('Unknown scheme in FTP Url: ' . @$ftp['scheme'] .
 				'. Only FTP (and FTPS, if compiled in) are supported');
 		}
 
@@ -76,7 +77,7 @@ class Ftp
 
 		if (!$this->verb) {
 			Logger::error('Cannot connect to ' . $ftp['host'] . ':' . $ftp['port']);
-			throw new OpenRatException('ERROR_PUBLISH', 'Cannot connect to ' . $ftp['scheme'] . '-server: ' . $ftp['host'] . ':' . $ftp['port']);
+			throw new PublisherException('Cannot connect to ' . $ftp['scheme'] . '-server: ' . $ftp['host'] . ':' . $ftp['port']);
 		}
 
 		$this->log[] = 'Connected to FTP server ' . $ftp['host'] . ':' . $ftp['port'];
@@ -87,7 +88,7 @@ class Ftp
 		}
 
 		if (!ftp_login($this->verb, $ftp['user'], $ftp['pass']))
-			throw new OpenRatException('ERROR_PUBLISH', 'Unable to login as user ' . $ftp['user']);
+			throw new PublisherException('Unable to login as user ' . $ftp['user']);
 
 		$this->log[] = 'Logged in as user ' . $ftp['user'];
 
@@ -95,7 +96,7 @@ class Ftp
 
 		$this->log[] = 'entering passive mode ' . ($pasv ? 'on' : 'off');
 		if (!ftp_pasv($this->verb, true))
-			throw new OpenRatException('ERROR_PUBLISH', 'Cannot switch to FTP PASV mode');
+			throw new PublisherException('Cannot switch to FTP PASV mode');
 
 		if (!empty($ftp['query'])) {
 			parse_str($ftp['query'], $ftp_var);
@@ -104,7 +105,7 @@ class Ftp
 				$site_commands = explode(',', $ftp_var['site']);
 				foreach ($site_commands as $cmd) {
 					if (!@ftp_site($this->verb, $cmd))
-						throw new OpenRatException('ERROR_PUBLISH', 'unable to do SITE command: ' . $cmd);
+						throw new PublisherException('unable to do SITE command: ' . $cmd);
 				}
 			}
 		}
@@ -114,7 +115,7 @@ class Ftp
 		$this->log[] = 'Changing directory to ' . $this->path;
 
 		if (!@ftp_chdir($this->verb, $this->path))
-			throw new OpenRatException('ERROR_PUBLISH', 'unable CHDIR to directory: ' . $this->path);
+			throw new PublisherException('unable CHDIR to directory: ' . $this->path);
 	}
 
 
@@ -151,8 +152,7 @@ class Ftp
 			ftp_chdir($this->verb, $this->path);
 
 			if (!@ftp_put($this->verb, $dest, $source, $mode))
-				throw new OpenRatException('ERROR_PUBLISH',
-					"FTP PUT failed.\n" .
+				throw new PublisherException("FTP PUT failed.\n" .
 					"source     : $source\n" .
 					"destination: $dest");
 
@@ -177,7 +177,7 @@ class Ftp
 			return false;
 
 		if (!@ftp_mkdir($this->verb, $strPath))
-			throw new OpenRatException('ERROR_PUBLISH', "failed to create remote directory: $strPath");
+			throw new PublisherException("failed to create remote directory: $strPath");
 
 		return true;
 	}

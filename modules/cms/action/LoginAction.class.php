@@ -23,7 +23,7 @@ use util\Http;
 use cms\auth\InternalAuth;
 use logger\Logger;
 use \ObjectNotFoundException;
-use util\exception\OpenRatException;
+use util\exception\UIException;
 use \security\Password;
 use util\Session;
 use util\Html;
@@ -172,7 +172,7 @@ class LoginAction extends BaseAction
      * Anzeigen der Loginmaske.
      *
      * Es wird nur die Loginmaske angezeigt.
-     * @throws OpenRatException
+     * @throws UIException
      */
     function loginView()
     {

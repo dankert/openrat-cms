@@ -52,11 +52,16 @@ class TemplateEngine
 	{
 		$this->srcFilename = $srcXmlFilename;
 
-		// We are now building a complete DOM tree and this is the root element.
-		$rootElement = new PHPBlockElement();
+		$filename = $tplOutName;
+
+		if (is_file($filename) && ! is_writable($filename))
+			throw new LogicException("Template output file is read-only: $filename");
 
 		// The generated template should only be executable in our CMS environment (for security reasons).
-		$rootElement->beforeBlock = 'if (defined(\'OR_TITLE\'))';
+		$writtenBytes = file_put_contents( $filename,'<?php if (!defined(\'OR_TITLE\')) exit(); ?>' );
+
+		if ( $writtenBytes === FALSE )
+			throw new LogicException("Unable writing to output file: '$filename'");
 
 		try
 		{
@@ -75,14 +80,9 @@ class TemplateEngine
 			$rootComponent = $this->processElement( $document->documentElement );
 
 			// converting the component tree to a element tree
-			$rootElement->addChild( $rootComponent->getElement() );
+			$rootElement = $rootComponent->getElement();
 
-			$filename = $tplOutName;
-
-			if (is_file($filename) && ! is_writable($filename))
-				throw new LogicException("Template output file is read-only: $filename");
-
-			$writtenBytes = file_put_contents( $filename, $rootElement->render( new XMLFormatter('  ')) );
+			$writtenBytes = file_put_contents( $filename, $rootElement->render( new XMLFormatter('  ')),FILE_APPEND );
 
 			if ( $writtenBytes === FALSE )
 				throw new LogicException("Unable writing to output file: '$filename'");

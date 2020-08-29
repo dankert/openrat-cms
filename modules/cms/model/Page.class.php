@@ -16,6 +16,9 @@ namespace cms\model;
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+use cms\publish\PageContext;
+use Exception;
+use util\exception\GeneratorException;
 use util\Mustache;
 use cms\publish\PublishPreview;use cms\publish\PublishPublic;
 use http\Exception\RuntimeException;
@@ -88,7 +91,14 @@ class Page extends BaseObject
      */
     public $value;
 
-    function __construct( $objectid='' )
+	/**
+	 * Page context.
+	 *
+	 * @var PageContext
+	 */
+	public $context;
+
+	function __construct( $objectid='' )
 	{
 		parent::__construct( $objectid );
 		$this->isPage = true;
@@ -189,10 +199,17 @@ class Page extends BaseObject
 	{
 		if	( ! BaseObject::available( $objectid) )
 			return 'about:blank';
-			
-        $to = new BaseObject($objectid);
-        $to->load();
-        $inhalt = $this->publisher->linkToObject( $this, $to );
+
+		$from = new Page($this->context->sourceObjectId);
+		$from->load();
+
+		$to = new BaseObject($objectid);
+        $toAlias = $to->getAlias();
+        if   ( $toAlias )
+        	$to = $toAlias; // Alias exists.
+		$to->load();
+
+		$inhalt = $this->publisher->linkToObject( $from, $to );
 
 		return $inhalt;
 	}
@@ -451,40 +468,12 @@ SQL
 
 
 
-//	function language_filename()
-//	{
-//		global $SESS;
-//		
-//		$db = db_connection();
-//
-//		$sql  = $db->sql( 'SELECT COUNT(*) FROM {{language}}'.
-//		                 ' WHERE projectid={projectid}' );
-//		$sql->setInt('projectid',$SESS['projectid']);
-//
-//		if   ( $sql->getOne( $sql ) == 1 )
-//		{
-//			// Wenn es nur eine Sprache gibt, keine Sprachangabe im Dateinamen
-//			return '';
-//		}
-//		else
-//		{
-//			$sql = $db->sql( 'SELECT isocode FROM {{language}}'.
-//			                ' WHERE id={languageid}' );
-//			$sql->setInt('languageid',$this->languageid);
-//			$isocode = $sql->getOne( $sql );
-//
-//			return strtolower( $isocode );
-//		}		
-//	}
-
 
 	/**
 	  * Erzeugen der Inhalte zu allen Elementen dieser Seite
 	  * wird von generate() aufgerufen
-	  *
-	  * @access private 
 	  */
-	function getElementIds()
+	public function getElementIds()
 	{
 		$t = new Template( $this->templateid );
 		
@@ -496,10 +485,8 @@ SQL
 	/**
 	  * Erzeugen der Inhalte zu allen Elementen dieser Seite
 	  * wird von generate() aufgerufen
-	  *
-	  * @access private 
 	  */
-	function getElements()
+	public function getElements()
 	{
 		if	( !isset($this->template) )
 			$this->template = new Template( $this->templateid );
@@ -554,13 +541,7 @@ SQL
 				$val->generate();
 			} catch( \Exception $e ) {
 				// Unrecoverable Error while generating the content.
-
-				Logger::warn('Could not generate Value '.$val->__toString() . ': '.$e->getMessage() );
-
-				if   ( $this->publisher->isPublic() )
-					$val->value = '';
-				else
-					$val->value = '[Warning: '.$e->getMessage().']';
+				throw new GeneratorException('Could not generate Value '.$val->__toString(),$e );
 			}
 
 			$this->values[$elementid] = $val;
@@ -656,10 +637,10 @@ SQL
 		 	$templateid    = array_search($name,$project->getTemplates() );
 
 			if   ( ! $templateid )
-			 	return $this->publisher->isPublic()?'':"template '$name' not found";
+				throw new \InvalidArgumentException('template '.Logger::sanitizeInput($name).' not found');
 
 			if   ( $templateid == $this->template->templateid )
-				return $this->publisher->isPublic()?'':'Template recursion is not supported';
+				throw new \InvalidArgumentException('Template recursion detected on template-id '.$templateid);
 
 
 			$templatemodel = new TemplateModel( $templateid, $this->modelid );
@@ -808,6 +789,3 @@ SQL
     	return 'Id '.$this->pageid.' (filename='.$this->filename.',language='.$this->languageid.', modelid='.$this->modelid.', templateid='.$this->templateid.')';
     }
 }
-
-
-?>

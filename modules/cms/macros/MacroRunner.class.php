@@ -8,7 +8,8 @@ use cms\model\Template;
 use cms\model\Value;
 use logger\Logger;
 use util\ArrayUtils;
-use util\exception\OpenRatException;
+use util\exception\GeneratorException;
+use util\exception\UIException;
 use util\text\variables\VariableResolver;
 
 class MacroRunner
@@ -23,13 +24,13 @@ class MacroRunner
 		$output = '';
 
 		if (!class_exists($className))
-			throw new OpenRatException('ERROR_IN_ELEMENT', 'class not found:' . $className);
+			throw new GeneratorException('class not found:' . $className);
 
 		/** @var \util\Macro $macro */
 		$macro = new $className;
 
 		if (!method_exists($macro, 'execute'))
-			throw new OpenRatException('ERROR_IN_ELEMENT', ' (missing method: execute())');
+			throw new GeneratorException(' (missing method: execute())');
 
 		$macro->setContextPage($page);
 
@@ -63,8 +64,7 @@ class MacroRunner
 
 			if (!property_exists($macro, $param_name)) {
 
-				if (!$this->page->publisher->isPublic())
-					$output .= "*WARNING*: Unknown parameter $param_name in macro $className\n";
+				Logger::warn( "Unknown parameter $param_name in macro $className" );
 				continue;
 			}
 
