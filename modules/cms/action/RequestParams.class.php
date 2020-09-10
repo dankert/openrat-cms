@@ -32,7 +32,8 @@ namespace {
 
 namespace cms\action {
 
-    use util\Text;
+	use util\exception\ValidationException;
+	use util\Text;
 
     class RequestParams
     {
@@ -54,6 +55,18 @@ namespace cms\action {
             // Is this a POST request?
             $this->isAction = @$_SERVER['REQUEST_METHOD'] == 'POST';
         }
+
+
+
+        public function getRequiredRequestVar( $varName, $transcode ) {
+        	$value = $this->getRequestVar($varName,$transcode);
+
+        	if   ( empty( $value ) )
+        		throw new ValidationException($varName);
+
+        	return $value;
+		}
+
 
         /**
          * Ermittelt den Inhalt der gew�nschten Request-Variablen.
@@ -78,7 +91,12 @@ namespace cms\action {
             if (!isset($REQ[$varName]))
                 return '';
 
+            return $this->cleanText( $REQ[$varName], $transcode );
+        }
 
+
+        public function cleanText( $value, $transcode )
+		{
             switch ($transcode) {
                 case OR_FILTER_ALPHA:
                     $white = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -102,25 +120,21 @@ namespace cms\action {
 
                 case OR_FILTER_TEXT:
                 	// Allow all UTF-8 characters.
-                	return mb_convert_encoding($REQ[$varName], 'UTF-8', 'UTF-8');
+                	return mb_convert_encoding($value, 'UTF-8', 'UTF-8');
 
                 case OR_FILTER_NUMBER:
                     $white = '1234567890.';
                     break;
 
                 case OR_FILTER_RAW:
-                    return $REQ[$varName];
+                    return $value;
 
                 default:
                     throw new \LogicException('Unknown request filter', 'not found: ' . $transcode);
             }
 
-            $value = $REQ[$varName];
-            $newValue = Text::clean($value, $white);
-
-            return $newValue;
-        }
-
+			return Text::clean($value, $white);
+		}
 
         /**
          * Ermittelt, ob der aktuelle Request eine Variable mit dem

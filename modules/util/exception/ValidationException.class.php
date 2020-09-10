@@ -3,18 +3,17 @@
 namespace util\exception;
 use Exception;
 
-class ValidationException extends Exception
+class ValidationException extends UIException
 {
 	public $fieldName;
 
 	// Die Exception neu definieren, damit die Mitteilung nicht optional ist
-	public function __construct($fieldName)
+	public function __construct($fieldName,$key='COMMON_VALIDATION_ERROR')
 	{
-
 		$this->fieldName = $fieldName;
 
 		// sicherstellen, dass alles korrekt zugewiesen wird
-		parent::__construct('Field validation: ' . $fieldName, 0, null);
+		parent::__construct( $key, '');
 	}
 
 	// maßgeschneiderte Stringdarstellung des Objektes
@@ -25,6 +24,3 @@ class ValidationException extends Exception
 	}
 
 }
-
-
-?>

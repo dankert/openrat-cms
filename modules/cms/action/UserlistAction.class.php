@@ -3,6 +3,8 @@
 namespace cms\action;
 
 use cms\model\User;
+use language\Messages;
+use util\exception\ValidationException;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -64,22 +66,23 @@ class UserlistAction extends BaseAction
 		function addView()
 	{
 	}
-	
-	
-	
-	function addPost()
+
+
+	/**
+	 * @param $name name of the new user.
+	 */
+	public function addPost( $name )
 	{
-		if	( $this->getRequestVar('name') != '' )
-		{
-			$this->user = new User();
-			$this->user->add( $this->getRequestVar('name') );
-			$this->addNotice('user',$this->user->name,'ADDED','ok');
-		}
-		else
-		{
-			$this->addValidationError('name');
-			$this->callSubAction('add');
-		}
+		$name = $this->request->cleanText($name,OR_FILTER_ALPHANUM);
+
+		$user = User::loadWithName($name);
+
+		if   ( !empty($user) )
+			throw new ValidationException( 'name',Messages::USER_ALREADY_IN_DATABASE);
+
+		$user = new User();
+		$user->add( $name );
+		$this->addNoticeFor($user, Messages::ADDED);
 	}
 
 

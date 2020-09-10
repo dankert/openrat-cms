@@ -17,8 +17,11 @@ namespace {
 
 namespace cms\action {
 
-    use cms\model\User;
-    use util\Html;
+	use cms\model\BaseObject;
+	use cms\model\User;
+	use util\ClassUtils;
+	use util\exception\ValidationException;
+	use util\Html;
     use util\Session;
     use logger\Logger;
     use util\Http;
@@ -218,6 +221,47 @@ namespace cms\action {
             // TODO -
         }
 
+
+		/**
+		 * @param $baseObject BaseObject
+		 * @param $key String
+		 * @param array $vars
+		 * @param string $message
+		 */
+        protected function addNoticeFor($baseObject,$key,$vars = array(), $message='') {
+        	$this->addNotice( strtolower(ClassUtils::getSimpleClassName($baseObject)),$baseObject->getName(),$key,OR_NOTICE_OK,$vars,array($message));
+		}
+
+		/**
+		 * @param $baseObject BaseObject
+		 * @param $key String
+		 * @param array $vars
+		 * @param string $message
+		 */
+        protected function addInfoFor($baseObject,$key,$vars = array(), $message='') {
+        	$this->addNotice( strtolower(ClassUtils::getSimpleClassName($baseObject)),$baseObject->getName(),$key,OR_NOTICE_INFO,$vars,array($message));
+		}
+
+		/**
+		 * @param $baseObject BaseObject
+		 * @param $key String
+		 * @param array $vars
+		 * @param string $message
+		 */
+        protected function addWarningFor($baseObject,$key,$vars = array(), $message='') {
+        	$this->addNotice( strtolower(ClassUtils::getSimpleClassName($baseObject)),$baseObject->getName(),$key,OR_NOTICE_WARN,$vars,array($message));
+		}
+
+		/**
+		 * @param $baseObject BaseObject
+		 * @param $key String
+		 * @param array $vars
+		 * @param string $message
+		 */
+        protected function addErrorFor($baseObject,$key,$vars = array(), $message='') {
+        	$this->addNotice( strtolower(ClassUtils::getSimpleClassName($baseObject)),$baseObject->getName(),$key,OR_NOTICE_ERROR,$vars,array($message));
+		}
+
         /**
          * F�gt ein Meldung hinzu.
          *
@@ -239,9 +283,6 @@ namespace cms\action {
             $this->templateVars['status'] = $status;
             $this->templateVars['success'] = ($status == OR_NOTICE_ERROR ? 'false' : 'true');
 
-            if ($status == OR_NOTICE_OK && isset($_COOKIE['or_ignore_ok_notices']))
-                return;
-
             if (!is_array($log))
                 $log = array($log);
 
@@ -250,7 +291,7 @@ namespace cms\action {
 
             $this->templateVars['notices'][] = array('type' => $type,
                 'name' => $name,
-                'key' => 'NOTICE_' . $text,
+                'key' => $text,
                 'vars' => $vars,
                 'text' => lang('NOTICE_' . $text, $vars),
                 'log' => $log,

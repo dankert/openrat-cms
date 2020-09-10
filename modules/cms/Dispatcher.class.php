@@ -317,15 +317,19 @@ class Dispatcher
 
 
         try {
-            $method    = new \ReflectionMethod($do,$subactionMethodName);
-            $declaredClassName = $method->getDeclaringClass()->getShortName();
+			$method             = new \ReflectionMethod($do,$subactionMethodName);
+            $declaredClassName  = $method->getDeclaringClass()->getShortName();
             $declaredActionName = strtolower(substr($declaredClassName,0,strpos($declaredClassName,'Action')));
+			$params             = [];
+			foreach( $method->getParameters() as $parameter ) {
+				$params[ $parameter->getName() ] = $this->request->getRequiredRequestVar($parameter->getName(),OR_FILTER_RAW);
+			}
 
-            $method->invoke($do); // <== Executing the Action
+            $method->invokeArgs($do,$params); // <== Executing the Action
         }
         catch (\util\exception\ValidationException $ve)
         {
-            $do->addValidationError( $ve->fieldName );
+            $do->addValidationError( $ve->fieldName,$ve->key );
         }
         catch (\ReflectionException $re)
         {
