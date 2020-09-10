@@ -564,39 +564,6 @@ class FileAction extends ObjectAction
 
 
 
-	function checkMenu( $name )
-	{
-		$archiveTypes     = $this->getArchiveTypes();
-		$compressionTypes = $this->getCompressionTypes();
-		
-		switch( $name )
-		{
-			case 'uncompress':
-				return !readonly() && in_array($this->file->extension,$compressionTypes);
-
-			case 'compress':
-				return !readonly() && !in_array($this->file->extension,$compressionTypes);
-
-			case 'extract':
-				return !readonly() && in_array($this->file->extension,$archiveTypes);
-
-			case 'size':
-				return !readonly() && $this->file->isImage();
-
-			case 'editvalue':
-				return !readonly() && substr($this->file->mimeType(),0,5)=='text/';
-
-			case 'aclform':
-				return !readonly();
-				
-			default:
-				return true;
-		}
-	}
-	
-	
-	
-
 	public function removeView()
     {
         $this->setTemplateVar( 'name',$this->file->filename );

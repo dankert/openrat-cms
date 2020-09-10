@@ -272,27 +272,6 @@ class ProfileAction extends BaseAction
 	
 	
 	
-	/**
-	 * @param String $name Menüpunkt
-	 * @return boolean true, falls Menüpunkt zugelassen
-	 */
-	function checkMenu( $name )
-	{
-		global $conf;
-		
-		switch( $name )
-		{
-			case 'pwchange':
-				// Die Funktion "Kennwort setzen" ist nur aktiv, wenn als Authentifizierungs-Backend
-				// auch die interne Benutzerdatenbank eingesetzt wird.
-				return     @$conf['security']['auth']['type'] == 'database'
-				       && !@$conf['security']['auth']['userdn'];
-				
-			default:
-				return true;
-		}	
-	}
-
     /**
      * Setzt eine Sprache für den Benutzer.
      *

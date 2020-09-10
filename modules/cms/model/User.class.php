@@ -551,6 +551,8 @@ SQL
 		                'WHERE id={userid}' );
 		$sql->setInt   ('userid',$this->userid );
 		$sql->query();
+
+		$this->userid = null;
 	}
 
 

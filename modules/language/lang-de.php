@@ -396,6 +396,7 @@ function language() { return array(
 'DELETED'=>'wurde gelöscht.',
 'DELETE'=>'Löschen',
 'DELETE_WITH_CHILDREN'=>'Löschen mit Unterelementen',
+'CONTAINS_CHILDREN'=>'Enthält Inhalt',
 'DIFFERENCES_DESC'=>'Sie können sich die Unterschiede zwischen 2 Versionen anzeigen lassen',
 'DIFFERENCES'=>'Unterschiede',
 'DOWN'=>'runter',

@@ -928,46 +928,6 @@ class StartAction extends BaseAction
 
 
 
-	function checkMenu( $name )
-	{
-		global $conf;
-		
-		switch( $name )
-		{
-			case 'applications':
-				// Men�punkt "Anwendungen" wird nur angezeigt, wenn weitere Anwendungen
-				// konfiguriert sind.
-				return count(@$conf['applications']) > 0;
-
-			case 'register': // Registrierung
-				// Nur, wenn aktiviert und gegen eigene Datenbank authentisiert wird.
-				return @$conf['login']['register'] && @$conf['security']['auth']['type'] == 'database';
-
-			case 'password': // Kennwort vergessen
-				// Nur, wenn aktiviert und gegen eigene Datenbank authentisiert wird.
-				// Deaktiviert, falls LDAP-Lookup aktiviert ist.
-				return @$conf['login']['send_password'] && @$conf['security']['auth']['type'] == 'database'
-				                                        && !@$conf['security']['auth']['userdn'];
-				
-			case 'administration':
-				// "Administration" nat�rlich nur f�r Administratoren.
-				return $this->userIsAdmin();
-
-			case 'login':
-				return !@$conf['login']['nologin'];
-				
-			case 'logout':
-				return true;
-				
-			case 'projectmenu':
-				return true;
-				
-			default:
-				return false;
-		}	
-	}
-	
-	
 	/**
 	 * Maske anzeigen, um Benutzer zu registrieren.
 	 */

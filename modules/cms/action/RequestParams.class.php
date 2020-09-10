@@ -151,7 +151,17 @@ namespace cms\action {
         }
 
 
-        /**
+		public function getRequiredRequestId( $varName ) {
+
+			$id = intval($this->getRequestVar($this->getRequestVar( $varName )));
+
+			if   ( $id == 0 )
+				throw new ValidationException($varName);
+
+			return $id;
+		}
+
+		/**
          * Ermittelt die aktuelle Id aus dem Request.<br>
          * Um welche ID es sich handelt, ist abh�ngig von der Action.
          *

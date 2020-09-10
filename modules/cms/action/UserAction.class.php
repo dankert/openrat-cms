@@ -10,6 +10,7 @@ use cms\model\BaseObject;
 use cms\model\Language;
 
 
+use language\Messages;
 use util\Http;
 use security\Base2n;
 use \security\Password;
@@ -106,26 +107,21 @@ class UserAction extends BaseAction
 	
 	
 	
-	function removePost()
+	public function removePost()
 	{
-		if   ( $this->hasRequestVar('confirm') )
-		{
-			$this->user->delete();
-			$this->addNotice('user',$this->user->name,'DELETED','ok');
-		}
-		else
-		{
-			$this->addValidationError('confirm');
-			return;
-		}
+		$this->user->delete();
+		$this->addNoticeFor( $this->user ,Messages::DELETED);
 	}
 
 
-	function addgrouptouser()
+	public function addgrouptouserPost()
 	{
-		$this->user->addGroup( $this->getRequestVar('groupid') );
-	
-		$this->addNotice('user',$this->user->name,'ADDED','ok');
+		$group = new Group( $this->request->getRequiredRequestId('groupid' ) );
+		$group->load();
+
+		$this->user->addGroup( $group->groupid );
+
+		$this->addNoticeFor( $this->user, Messages::ADDED);
 	}
 
 
@@ -149,7 +145,7 @@ class UserAction extends BaseAction
 	 *
 	 * @access private
 	 */
-	function mailPw( $pw )
+	protected function mailPw( $pw )
 	{
 		$to   = $this->user->fullname.' <'.$this->user->mail.'>';
 		$mail = new Mail($to,'USER_MAIL');
@@ -318,17 +314,6 @@ class UserAction extends BaseAction
             + array('totpToken'=>Password::getTOTPCode($this->user->otpSecret))
         );
 
-        //$this->setTemplateVar( 'allstyles',$this->user->getAvailableStyles() );
-
-        //$this->setTemplateVar('timezone_list',timezone_identifiers_list() );
-
-        //$languages = explode(',',Config()->subset('i18n')->is('available'));
-        //foreach($languages as $id=>$name)
-        //{
-        //    unset($languages[$id]);
-        //    $languages[$name] = $name;
-        //}
-        //$this->setTemplateVar('language_list',$languages);
 	}
 
 
@@ -479,36 +464,6 @@ class UserAction extends BaseAction
 	}
 	
 	
-	/**
-	 * @param String $name Men�punkt
-	 * @return boolean
-	 */
-	function checkMenu( $menu )
-	{
-		global $conf;
-
-		switch( $menu )
-		{
-			case 'add':
-			case 'remove':
-				return !readonly();
-					
-			case 'addgroup':
-				return !readonly() && count($this->user->getOtherGroups()) > 0;
-
-			case 'groups':
-				return !readonly() && count(Group::getAll()) > 0;
-	
-			case 'pw':
-				return    !readonly()
-					   && @$conf['security']['auth']['type'] == 'database'
-				       && !@$conf['security']['auth']['userdn'];
-		}
-		
-		return true;
-	}
-
-
     /**
      * Wechselt zu einem ausgewählten User.
      * @throws \ObjectNotFoundException

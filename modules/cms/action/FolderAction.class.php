@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use language\Messages;
 use util\ArchiveTar;
 use cms\model\Acl;
 use cms\model\Image;
@@ -1308,36 +1309,6 @@ class FolderAction extends ObjectAction
 
 
 
-    public function checkMenu( $name )
-	{
-		switch( $name)
-		{
-			case 'createfolder':
-				return !readonly() && $this->folder->hasRight(Acl::ACL_CREATE_FOLDER);
-
-			case 'createfile':
-				return !readonly() && $this->folder->hasRight(Acl::ACL_CREATE_FILE);
-
-			case 'createlink':
-				return !readonly() && $this->folder->hasRight(Acl::ACL_CREATE_LINK);
-
-			case 'createpage':
-				return !readonly() && $this->folder->hasRight(Acl::ACL_CREATE_PAGE);
-
-			case 'remove':
-				return !readonly() && count($this->folder->getObjectIds()) == 0;
-
-			case 'select':
-			case 'order':
-			case 'aclform':
-				return !readonly();
-
-			default:
-				return true;
-		}
-	}
-
-
     /**
      * Shows the folder content as html.
      */
@@ -1386,18 +1357,15 @@ class FolderAction extends ObjectAction
 
     public function removePost()
     {
-        if   ( !$this->hasRequestVar('delete') )
-            throw new \util\exception\ValidationException("delete");
-
         if  ( $this->hasRequestVar( 'withChildren'))
             $this->folder->deleteAll();  // Delete with children
         else
             if   ( $this->folder->hasChildren() )
-                throw new \util\exception\ValidationException("withChildren");
+                throw new \util\exception\ValidationException("withChildren",Messages::CONTAINS_CHILDREN);
             else
                 $this->folder->delete();  // Only delete current folder.
 
-        $this->addNotice('folder',$this->folder->filename,'DELETED',OR_NOTICE_OK);
+        $this->addNoticeFor($this->folder, Messages::DELETED);
     }
 
 }

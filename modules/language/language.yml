@@ -1948,6 +1948,9 @@ DELETE:
 DELETE_WITH_CHILDREN:
   de: Löschen mit Unterelementen
   en: Delete with children
+CONTAINS_CHILDREN:
+  de: Enthält Inhalt
+  en: Contains content
 DESCRIPTION:
   de: Beschreibung
   en: Description

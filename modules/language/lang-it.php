@@ -396,6 +396,7 @@ function language() { return array(
 'DELETED'=>'è stata cancellata',
 'DELETE'=>'Cancelación',
 'DELETE_WITH_CHILDREN'=>'Delete with children',
+'CONTAINS_CHILDREN'=>'Contains content',
 'DIFFERENCES_DESC'=>'Demostrar las diferencias entre 2 revisiones',
 'DIFFERENCES'=>'Diferencias',
 'DOWN'=>'abajo',

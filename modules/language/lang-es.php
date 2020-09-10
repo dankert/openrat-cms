@@ -396,6 +396,7 @@ function language() { return array(
 'DELETED'=>'fue suprimida',
 'DELETE'=>'Effacement',
 'DELETE_WITH_CHILDREN'=>'Delete with children',
+'CONTAINS_CHILDREN'=>'Contains content',
 'DIFFERENCES_DESC'=>'Montrer les différences entre 2 révisions',
 'DIFFERENCES'=>'Différences',
 'DOWN'=>'vers le bas',

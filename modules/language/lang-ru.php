@@ -396,6 +396,7 @@ function language() { return array(
 'DELETED'=>'удалена',
 'DELETE'=>'Delete',
 'DELETE_WITH_CHILDREN'=>'Delete with children',
+'CONTAINS_CHILDREN'=>'Contains content',
 'DIFFERENCES_DESC'=>'Show differences between 2 Revisions',
 'DIFFERENCES'=>'Differences',
 'DOWN'=>'down',
