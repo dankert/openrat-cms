@@ -16,6 +16,7 @@ class UploadComponent extends Component
 	public function createElement()
 	{
 		$input = new CMSElement('input');
+		$input->addAttribute('type','file');
 
 		$input->addStyleClass( $this->class );
 

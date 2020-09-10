@@ -14,7 +14,7 @@
           </label>
         </div>
         <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-          <input multiple="<?php echo escapeHtml('multiple') ?>" id="<?php echo escapeHtml('req0_file') ?>" name="<?php echo escapeHtml('file') ?>" size="<?php echo escapeHtml('40') ?>" maxlength="<?php echo escapeHtml(''.@$maxlength.'') ?>" class="<?php echo escapeHtml('upload') ?>" /><?php echo escapeHtml('') ?>
+          <input type="<?php echo escapeHtml('file') ?>" multiple="<?php echo escapeHtml('multiple') ?>" id="<?php echo escapeHtml('req0_file') ?>" name="<?php echo escapeHtml('file') ?>" size="<?php echo escapeHtml('40') ?>" maxlength="<?php echo escapeHtml(''.@$maxlength.'') ?>" class="<?php echo escapeHtml('upload') ?>" /><?php echo escapeHtml('') ?>
         </div>
       </div>
       <div class="<?php echo escapeHtml('line or-dropzone-upload') ?>"><?php echo escapeHtml('') ?>

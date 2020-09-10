@@ -11,7 +11,7 @@
         </div>
         <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
           <br /><?php echo escapeHtml('') ?>
-          <input id="<?php echo escapeHtml('req0_file') ?>" name="<?php echo escapeHtml('file') ?>" size="<?php echo escapeHtml('40') ?>" class="<?php echo escapeHtml('upload') ?>" /><?php echo escapeHtml('') ?>
+          <input type="<?php echo escapeHtml('file') ?>" id="<?php echo escapeHtml('req0_file') ?>" name="<?php echo escapeHtml('file') ?>" size="<?php echo escapeHtml('40') ?>" class="<?php echo escapeHtml('upload') ?>" /><?php echo escapeHtml('') ?>
           <br /><?php echo escapeHtml('') ?>
           <br /><?php echo escapeHtml('') ?>
         </div>
