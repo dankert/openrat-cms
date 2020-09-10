@@ -44,9 +44,6 @@ function lang( $textVar,$vars = array() )
 		// Fill in variables
 		if   ( $vars )
 		{
-			foreach( $vars as $var=>$value )
-				$text = str_replace('{'.$var.'}',$value,$text);
-
 			$resolver = new VariableResolver();
 
 			// Resolve variable
@@ -54,7 +51,7 @@ function lang( $textVar,$vars = array() )
 				return @$vars[$var];
 			});
 
-			$text = $resolver->parseString( $text );
+			$text = $resolver->resolveVariables( $text );
 		}
 
 		return $text;
