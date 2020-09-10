@@ -1,17 +1,34 @@
 <?php
 
-require_once('../../../autoload.php');
+namespace util\text\variables;
 
-header('Content-Type: text/plain');
-set_time_limit(2);
+use util\test\TestCase;
 
-$res = new \util\text\variables\VariableResolver();
+class VariablesTest extends TestCase {
 
-$example = 'Hello ${planet:unknown planet}! Are you ok? My name is ${me.name:unnamed} and robots name is ${me.${nix.nada:name}}, i was born ${me.date:before some years}';
-#$example = 'Hello ${planet:unknown planet}! Are you ok? My name is ${me.name:unnamed}. I was born ${me.date:before some years}.';
-$res->addDefaultResolver( function($x) {return 'world';} );
-$res->addResolver('me', function($t) {if ($t == 'name') return 'alice';return '';});
+	public function testResolver() {
+		$res = new \util\text\variables\VariableResolver();
 
-echo 'result: '.$res->resolveVariables( $example );
-echo "\n\n";
-print_r($res);
+		$example = <<<SRC
+Hello \${planet:unknown planet}!
+
+Are you ok? My name is \${me.name:unnamed} and robots name is \${me.\${nix.nada:name}}, i was born \${me.date:before some years}.
+Message: \${message.somemessage:defaultMessage}
+SRC;
+
+		$res->addDefaultResolver( function($x) {return 'world';} );
+		$res->addResolver('me', function($t) {if ($t == 'name') return 'alice';return '';});
+		$res->addResolver('message', function($t) {return 'this is a message';});
+
+//		echo "Input:\n\n";
+//		echo $example."\n\n";
+//
+//		echo "Output:\n\n";
+//		echo $res->resolveVariables( $example )."\n\n";
+//
+//		echo "Resolver:\n\n";
+		//print_r($res);
+		$this->assertNotEmpty($res->resolveVariables( $example ) );
+	}
+}
+
