@@ -18,6 +18,7 @@ namespace {
 namespace cms\action {
 
 	use cms\model\BaseObject;
+	use cms\model\ModelBase;
 	use cms\model\User;
 	use util\ClassUtils;
 	use util\exception\ValidationException;
@@ -223,7 +224,7 @@ namespace cms\action {
 
 
 		/**
-		 * @param $baseObject BaseObject
+		 * @param $baseObject ModelBase
 		 * @param $key String
 		 * @param array $vars
 		 * @param string $message
@@ -233,7 +234,7 @@ namespace cms\action {
 		}
 
 		/**
-		 * @param $baseObject BaseObject
+		 * @param $baseObject ModelBase
 		 * @param $key String
 		 * @param array $vars
 		 * @param string $message
@@ -243,7 +244,7 @@ namespace cms\action {
 		}
 
 		/**
-		 * @param $baseObject BaseObject
+		 * @param $baseObject ModelBase
 		 * @param $key String
 		 * @param array $vars
 		 * @param string $message
@@ -253,7 +254,7 @@ namespace cms\action {
 		}
 
 		/**
-		 * @param $baseObject BaseObject
+		 * @param $baseObject ModelBase
 		 * @param $key String
 		 * @param array $vars
 		 * @param string $message
@@ -293,7 +294,7 @@ namespace cms\action {
                 'name' => $name,
                 'key' => $text,
                 'vars' => $vars,
-                'text' => lang('NOTICE_' . $text, $vars),
+                'text' => lang($text, $vars),
                 'log' => $log,
                 'status' => $status);
         }

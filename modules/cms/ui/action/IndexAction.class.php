@@ -9,6 +9,7 @@ use cms\model\User;
 use cms\model\Value;
 use Exception;
 use JSON;
+use language\Messages;
 use util\JSqueeze;
 use \Less_Parser;
 use logger\Logger;
@@ -136,10 +137,10 @@ class IndexAction extends Action
         $messageOfTheDay = config('login', 'motd');
 
         if ( !empty($messageOfTheDay) )
-            $this->addNotice('user','','MOTD',OR_NOTICE_INFO,array('motd'=>$messageOfTheDay) );
+            $this->addInfoFor( new User(),Messages::MOTD,array('motd'=>$messageOfTheDay) );
 
         if ( DEVELOPMENT )
-            $this->addNotice('user','','DEVELOPMENT_MODE',OR_NOTICE_INFO );
+            $this->addInfoFor( new User(),Messages::DEVELOPMENT_MODE );
 
         $methods = array(
             'edit'     => true,
