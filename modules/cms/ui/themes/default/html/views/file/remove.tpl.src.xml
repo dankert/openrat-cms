@@ -4,6 +4,6 @@
     <form>
         <text label="NAME" value="${name}"></text>
 
-        <checkbox label="${message:DELETE}" name="delete"></checkbox>
+        <checkbox label="${message:DELETE}" name="delete" required="true"></checkbox>
     </form>
 </output>

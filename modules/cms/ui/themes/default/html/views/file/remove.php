@@ -14,7 +14,7 @@
       <label class="<?php echo escapeHtml('or-form-row or-form-checkbox') ?>"><?php echo escapeHtml('') ?>
         <span class="<?php echo escapeHtml('or-form-label') ?>"><?php echo escapeHtml(''.@lang('DELETE').'') ?>
         </span>
-        <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('delete') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$delete){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+        <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('delete') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$delete){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> required="<?php echo escapeHtml('required') ?>" /><?php echo escapeHtml('') ?>
       </label>
     </div>
     <div class="<?php echo escapeHtml('or-form-actionbar') ?>"><?php echo escapeHtml('') ?>
