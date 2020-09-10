@@ -4725,58 +4725,58 @@ MODE_SHOW_DESC:
 MODE_SHOW:
   de: Nur Lesen
   en: Readonly
-NOTICE_ADDED:
+ADDED:
   de: wurde hinzugefügt.
   en: was added
   es: a été ajouté
   fr: a été ajouté
   it: non poteva
   ru: Снять был добавлен
-NOTICE_ADMIN_NEEDS_NO_RIGHTS:
+ADMIN_NEEDS_NO_RIGHTS:
   de: Administratoren haben automatisch Rechte auf alle Objekte. Die gesetzten Rechte werden daher ignoriert.
   en: Admins have rights to all objects. Because of this, these rights are ignored.
-NOTICE_ADMIN_NO_PROJECTS_AVAILABLE:
+ADMIN_NO_PROJECTS_AVAILABLE:
   de: Es ist kein Projekt verfügbar. Bitte legen Sie in der Administrationsoberfläche eines an.
   en: There is no project available, please add a project in the administration-modus.
-NOTICE_CANCELED:
+CANCELED:
   de: Vorgang wurde abgebrochen.
   en: Operation was canceled
-NOTICE_CANNOT_COPY_FOLDER:
+CANNOT_COPY_FOLDER:
   de: Ordner können nicht kopiert werden (nicht implementiert).
   en: Unable to copy directory (not implemented)
   es: "Incapable de copier l'annuaire (non mis en application)"
   fr: "Incapable de copier l'annuaire (non mis en application)"
   it: "aggiunto copiare l'indice (non effettuato)"
   ru: Невозможно скопировать каталог (не реализована)
-NOTICE_CODE_DISABLED:
+CODE_DISABLED:
   de: Der dynamische Programmcode wird in der aktuellen Umgebung aus Sicherheitsgründen nicht ausgeführt.
   en: The dynamic code will not be executed in the actual environment.
-NOTICE_CODE_NOT_MATCH:
+CODE_NOT_MATCH:
   de: Der Bestätigungs-Code ist ungültig.
   en: Confirmation code is not valid.
-NOTICE_COMMON_VALIDATION_EROR:
+COMMON_VALIDATION_EROR:
   de: Bitte korrigieren Sie Ihre Eingabefehler.
   en: Please correct your input data
-NOTICE_COMMON_VALIDATION_ERROR:
+COMMON_VALIDATION_ERROR:
   de: Bitte korrigieren Sie Ihre Eingabefehler.
   en: Please correct your input data.
-NOTICE_CONCURRENT_VALUE_CHANGE_NOT_SAVED:
+CONCURRENT_VALUE_CHANGE_NOT_SAVED:
   de: 'Während Ihrer Bearbeitung ist der Inhalt von einem anderen Benutzer um ${last_change_time} geändert worden. Ihre Änderung wird nicht gespeichert.'
   en: 'While your edit session another user has changed this content at ${last_change_time}. Your changes where not saved.'
-NOTICE_CONCURRENT_VALUE_CHANGE:
+CONCURRENT_VALUE_CHANGE:
   de: 'Während Ihrer Bearbeitung ist dieser Inhalt von einem anderen Benutzer um ${last_change_time} geändert worden. Ihre Änderungen wurden gespeichert, prüfen Sie jedoch über das Archiv, ob gemachte Änderungen von Ihnen übernommen werden müssen.'
   en: 'While your edit session another user has changed this content at ${last_change_time}. Your changes where saved, but you should check the archive if the overwritten content should be merged.'
-NOTICE_COPIED:
+COPIED:
   de: wurde kopiert.
   en: was copied
   es: fue copiada
   fr: a été copié
   it: è stata copiata
   ru: копирования
-NOTICE_DUPLICATE_INPUT:
+DUPLICATE_INPUT:
   de: Ihre Eingabe muss eindeutig sein.
   en: Duplicate Input detected.
-NOTICE_DATABASE_CONNECTION_ERROR:
+DATABASE_CONNECTION_ERROR:
   de: Es konnte keine Verbindung zur Datenbank hergestellt werden.
   en: The connection to the database could not be established.
 ERROR_DATABASE_CONNECTION:
@@ -4785,187 +4785,187 @@ ERROR_DATABASE_CONNECTION:
 ERROR_DATABASE:
   en: The database query could not executed.
   de: Es gab einen Fehler bei der Durchführung einer Datenbankanfrage.
-NOTICE_DELETED:
+DELETED:
   de: wurde gelöscht.
   en: was deleted
   es: fue suprimida
   fr: a été supprimé
   it: è stata cancellata
   ru: удалена
-NOTICE_DONE:
+DONE:
   de: Der Vorgang wurde ausgeführt.
   en: Finished successful
-NOTICE_ERROR:
+ERROR:
   de: Bei der Aktion trat ein Fehler auf.
   en: An error occured
   es: un error
   fr: "Une erreur s'est produite"
   it: un errore ha accaduto
   ru: Произошла ошибка
-NOTICE_GROUPS_MAY_CONFLICT_WITH_LDAP:
+GROUPS_MAY_CONFLICT_WITH_LDAP:
   de: Die in der Benutzerverwaltung eingetragenen Gruppenzugehörigkeiten stehen möglicherweise in Konflikt mit den Gruppenzugehörigkeiten aus dem Verzeichnisdienst. Beim Login ueber den Verzeichnisdienst werden die hier eingetragenenen Gruppenzugehörigkeiten überschrieben.
   en: The user-group-relations my conflict with the directory service. Memberships were synchronized at login time.
-NOTICE_IMAGE_RESIZED:
+IMAGE_RESIZED:
   de: Das Bild wurde geändert.
   en: The image was changed
   es: la imagen era
   fr: "L'image a été changée"
   it: "l'immagine era"
   ru: Изображение было изменено
-NOTICE_IMAGE_RESIZING_NOT_AVAILABLE:
+IMAGE_RESIZING_NOT_AVAILABLE:
   de: Das Verändern der Bildgröße ist momentan nicht möglich. Bitte stellen Sie sicher, dass die GD-Bibliothek installiert ist.
   en: Image resizing is not available at the moment, please ensure, that the GD library is installed.
-NOTICE_IMAGE_RESIZING_UNKNOWN_TYPE:
+IMAGE_RESIZING_UNKNOWN_TYPE:
   de: Das Verändern dieses Bildtyps ist leider nicht möglich.
   en: This image type is not supported.
   cn: cǐ túpiàn lèixíng bù zhīchí.
-NOTICE_IMPORTED:
+IMPORTED:
   de: Datei wurde importiert.
   en: File was imported
   es: "archivo cambiante era ist ligado del \" del <em> del \" del username de la conexión failed.<br/><br/>The del importet"
   fr: "Le dossier était l'importet"
   it: "lima cambiata era ist collegato del \" del <em> del \" del username di inizio attività failed.<br/><br/>The del importet"
   ru: Файл был importet
-NOTICE_INPUT_NEW_IMAGE_SIZE:
+INPUT_NEW_IMAGE_SIZE:
   de: Bitte geben Sie die neue Bildgröße an, entweder Größenfaktor oder Breite oder Höhe.
   en: Please enter the new image size, either a size factor or widht and height.
-NOTICE_LINKED:
+LINKED:
   de: Verknüpfung angelegt.
   en: linked
   fr: lié
-NOTICE_LOGIN_FAILED:
+LOGIN_FAILED:
   de: "Anmeldung nicht möglich. Der Benutzername \"${name}\" ist nicht vorhanden oder das eingegebene Kennwort ist falsch."
   en: "Login failed. The username \"${name}\" does not exist or the password is wrong."
   es: '</em> ${conocido} no presente o la contraseña es incorrecta.'
   fr: "L'ist de \" du <em> de \" d'username de l'ouverture failed.<br/><br/>The </em> ${nommé} non actuel ou le mot de passe est erroné."
   it: "</em> ${nome} non assente o la parola d'accesso è errata."
   ru: "связаны Войти провалилась. <br> <br> В\"имя пользователя название <em> () </em>\"агрессивным отсутствует или неверный пароль."
-NOTICE_LOGIN_FAILED_MUSTCHANGEPASSWORD:
+LOGIN_FAILED_MUSTCHANGEPASSWORD:
   de: Die Anmeldung ist nicht möglich, da Ihr Kennwort abgelaufen ist. Bitte geben Sie nochmals Ihre Anmeldedaten zusammen mit einem neuen Kennwort ein.
   en: The Login was denied, because your password has timed out. Please try to login again, but now together with an new password.
   es: la conexión fue negado, porque tu contraseña ha medido el tiempo hacia fuera. Otra vez, pero ahora intentar por favor a la conexión junto con una nueva contraseña.
   fr: "L'ouverture a été niée, parce que votre mot de passe a chronométré dehors. Essayer svp à l'ouverture encore, mais maintenant ainsi qu'un nouveau mot de passe."
   it: "l'inizio attività è stato negato, perché la vostra parola d'accesso ha cronometrato fuori. Ancora, ma ora provare prego all'inizio attività insieme ad una nuova parola d'accesso."
   ru: В Логин было отказано, б Ввиду пароль по таймауту. Попробуйте авторизоваться еще раз, б Хизб Теперь вместе с новым паролем.
-NOTICE_LOGIN_OK:
+LOGIN_OK:
   de: 'Hallo ${name}, Sie sind jetzt angemeldet.'
   en: 'Hello ${name}, you are signed in.'
-NOTICE_LOGOUT_OK:
+LOGOUT_OK:
   de: 'Sie sind jetzt abgemeldet.'
 
   en: 'You are signed out.'
-NOTICE_LOGIN_OPENID_FAILED:
+LOGIN_OPENID_FAILED:
   de: 'Die Anmeldung für ${name} am Open-ID-Server ist fehlgeschlagen.'
   en: 'The login for ${name} at Open-ID-Server failed.'
-NOTICE_MAIL_NOT_SENT:
+MAIL_NOT_SENT:
   de: Die E-Mail konnte nicht gesendet werden.
   en: The mail could not be sent.
-NOTICE_MAIL_SENT:
+MAIL_SENT:
   de: Die E-Mail wurde gesendet.
   en: The email was sent.
   es: El email fue enviado.
   fr: "L'email a été envoyé."
   it: Il email è stato trasmesso.
   ru: Это сообщение было отправлено.
-NOTICE_MAX_FILE_SIZE_EXCEEDED:
+MAX_FILE_SIZE_EXCEEDED:
   de: Die maximal erlaubte Dateigröße wurde überschritten.
   en: The maximum filesize is exceeded
-NOTICE_MOVED:
+MOVED:
   de: wurde verschoben.
   en: was moved
   es: fue movido
   fr: a été déplacé
   it: è stato spostato
   ru: Был переведен
-NOTICE_MUCH_TIME:
+MUCH_TIME:
   de: Dieser Vorgang kann längere Zeit dauern. Bitte brechen Sie das Laden der Seite nicht ab.
   en: This action may take some time. Do not cancel loading of this page.
-NOTICE_NO_DATABASE_CONFIGURATION:
+NO_DATABASE_CONFIGURATION:
   de: Es ist keine Datenbankverbindung konfiguriert
   en: No configured database connection
-NOTICE_NO_PROJECTS_AVAILABLE:
+NO_PROJECTS_AVAILABLE:
   de: Es ist kein Projekt verfügbar, für das Sie berechtigt sind.
   en: There is no project available.
-NOTICE_NO_TEMPLATES_AVAILABLE:
+NO_TEMPLATES_AVAILABLE:
   de: Es sind keine Seitenvorlagen verfügbar. Sie können erst Seiten anlegen, wenn es mindestens 1 Seitenvorlage gibt
   en: There are no templates. You are able to create a page, if there is at least 1 template.
-NOTICE_NOTHING_DONE:
+NOTHING_DONE:
   de: Die Aktion konnte nicht ausgeführt werden.
   en: The operation could not be done.
-NOTICE_NOT_SAVED:
+NOT_SAVED:
   de: wurde nicht gespeichert.
   en: not saved
   es: fue ahorrado
   fr: a été économisé
   it: è stato risparmiato
   ru: спас
-NOTICE_PAGE_WITH_TEMPLATE_EXIST:
+PAGE_WITH_TEMPLATE_EXIST:
   de: Es gibt mindestens 1 Seite, die auf dieser Vorlage basiert. Solange solche Seiten existieren, kann die Vorlage nicht gelöscht werden.
   en: There is already at least 1 page with this template, so this template cannot be removed.
-NOTICE_PASSWORDCODE_NOT_MATCH:
+PASSWORDCODE_NOT_MATCH:
   de: Der eingegebene Kennwort-Code ist ungültig.
   en: The password code is not valid.
-NOTICE_PASSWORD_MINLENGTH:
+PASSWORD_MINLENGTH:
   de: 'Das Kennwort ist zu kurz, es muss mindestens ${minlength} Zeichen lang sein.'
   en: 'the password is too short. The password must have at least ${minlength} chars.'
-NOTICE_PASSWORDS_DO_NOT_MATCH:
+PASSWORDS_DO_NOT_MATCH:
   de: Die Kennwörter stimmen nicht überein.
   en: The passwords do not match.
-NOTICE_PASSWORD_TIMEOUT:
+PASSWORD_TIMEOUT:
   de: Ihr Kennwort ist abgelaufen und muss geändert werden.
   en: Your password has timed out and must be changed.
   es: tu contraseña ha medido el tiempo hacia fuera y debe ser cambiado. ¡
   fr: Votre mot de passe a chronométré dehors et doit être changé.
   it: "la vostra parola d'accesso ha cronometrato fuori e deve essere cambiato."
   ru: Ваш пароль по таймауту, и должны быть изменены. Свойства
-NOTICE_PROP_SAVED:
+PROP_SAVED:
   de: Eigenschaften wurden gespeichert.
   en: Properties saved
   es: Las características ahorradas
   fr: Propriétés sauvées
   it: Le proprietà conservate
-NOTICE_PUBLISHED_ERROR:
+PUBLISHED_ERROR:
   de: Wurde nicht veröffentlicht.
   en: was not published.
-NOTICE_PUBLISHED:
+PUBLISHED:
   de: Wurde veröffentlicht.
   en: was published
   es: fueron publicadas
   fr: a été édité
   it: sono state pubblicate
   ru: спасти было опубликовано
-NOTICE_SAVED:
+SAVED:
   de: Wurde gespeichert.
   en: was saved
   es: fueron ahorradas
   fr: a été économisé
   it: sono state risparmiate
   ru: спас
-NOTICE_SEQUENCE_CHANGED:
+SEQUENCE_CHANGED:
   de: Die Reihenfolge wurde geändert.
   en: The sequence was changed
   es: la secuencia eran
   fr: "L'ordre a été changé"
   it: la sequenza erano
   ru: Последовательность изменения содержимого
-NOTICE_UNEXPECTED_CHARS:
+UNEXPECTED_CHARS:
   de: Ihre Eingabe enthielt ungültige Zeichen, diese wurden entfernt.
   en: The input data contains unexpected chars which were removed.
   cn: shūrù shùjù bāohán yìwài de zìfú ér bèi chāichú.
-NOTICE_USER_ADDED:
+USER_ADDED:
   de: Der Benutzer wurde hinzugefügt.
   en: The user was added
   es: El usuario era
   fr: "L'utilisateur a été ajouté"
   it: "L'utente era"
   ru: Пользователь был добавлен
-NOTICE_USER_ADDED_TO_GROUP:
+USER_ADDED_TO_GROUP:
   de: 'Die Mitgliedschaften in der Gruppe wurden aktualisiert, ${count} Benutzer hinzugefügt.'
   en: 'The memberships of this group are updated, ${count} users were added.'
-NOTICE_USER_ALREADY_IN_DATABASE:
+USER_ALREADY_IN_DATABASE:
   de: Der Benutzer ist bereits vorhanden. Bitte wählen Sie einen anderen Benutzernamen.
   en: The user is already there, please select another username.
-NOTICE_VALUE_SAVED:
+VALUE_SAVED:
   de: Inhalt wurde gespeichert.
   en: Content was saved
   es: contenido cambiante fueron ahorradas
@@ -5832,7 +5832,7 @@ USER_HOTP:
 USER_TOTP:
   de: Zeitbasieres Token als Zweifaktorauthentifizierung
   en: Time-based 2-factor authentification
-NOTICE_LOGIN_FAILED_TOKEN_FAILED:
+LOGIN_FAILED_TOKEN_FAILED:
   en: Please supply a valid token
   de: Bitte geben Sie ein gültiges Token ein
 USER_TOKEN:
@@ -6091,10 +6091,10 @@ MENU_START:
   en: Start
 MENU_START_DESC:
   en: Start
-NOTICE_MOTD:
+MOTD:
   en: "Message: ${motd}"
   de: "Systemnachricht: ${motd}"
-NOTICE_DEVELOPMENT_MODE:
+DEVELOPMENT_MODE:
   en: The development mode is enabled
   de: Der Entwicklungsmodus ist aktiviert
 METHOD_EDIT:
