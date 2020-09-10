@@ -96,8 +96,19 @@ Openrat.Workbench = new function()
             let pingPromise = $.getJSON( Openrat.View.createUrl('profile','ping',0, {}, true) );
 
             pingPromise.fail( function() {
-            	console.warn('The server ping has failed.')
-            } );
+				// oO, what has happened? There is no session with a logged in user, or the server has gone.
+				console.warn('The server ping has failed.');
+
+				// Is there any user input? Ok, we should warn the user that the data could not be saved.
+				if ($('.view.dirty').length > 0) {
+					window.alert("The server session is lost, please save your data.");
+				}
+				else {
+					// no input data, so lets reload all views?
+					// no, maybe an anonymous user is looking around.
+					//Openrat.reloadAll();
+				}
+			} );
         }
 
         // Alle 5 Minuten pingen.
