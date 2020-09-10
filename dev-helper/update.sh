@@ -73,7 +73,7 @@ function make_writable {
   type=$1
   theme=$2
   case $type in
-        lang ) chmod -v a+w ../modules/language/lang-*.php;;
+        lang ) chmod -v a+w ../modules/language/lang-*.php ../modules/language/Messages*;;
         xsd  ) chmod -v a+w ../modules/template_engine/components/template.xsd ../modules/template_engine/components/components.ini;;
         css  ) chmod -v a+w ../modules/cms/ui/themes/$theme/style/openrat*.css;;
         js   ) chmod -v a+w ../modules/cms/ui/themes/$theme/script/openrat*.js;;

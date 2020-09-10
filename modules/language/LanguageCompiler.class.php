@@ -11,10 +11,12 @@ class LanguageCompiler
     private $srcFile;
 
     private $fallback = 'en';
+    const DO_NOT_CHANGE = '/* DO NOT CHANGE THIS GENERATED FILE */';
 
     public function __construct()
     {
         $this->srcFile = __DIR__ . '/language.yml';
+        $this->keyFile = __DIR__ . '/Messages.class.php';
     }
 
     /**
@@ -40,6 +42,36 @@ class LanguageCompiler
     {
         $lang = $this->getLanguageSource();
 
+        $this->updateMessages($lang);
+        $this->updateLanguageFiles($lang);
+    }
+
+	/**
+	 * Creates the production environment.
+	 * @param $lang
+	 */
+    private function updateMessages( $lang )
+    {
+		$success = file_put_contents($this->keyFile, '<?php namespace '.__NAMESPACE__."; ".self::DO_NOT_CHANGE."\nclass Messages {\n");
+		if ($success)
+			;
+		else
+			throw new LogicException("File is not writable: '$this->keyFile'\n");
+
+		foreach ($lang as $key => $values)
+			file_put_contents($this->keyFile, '  const '.strtoupper($key).' = \''.strtoupper($key).'\';'."\n",FILE_APPEND);
+
+		file_put_contents($this->keyFile, '}',FILE_APPEND);
+		echo 'Success: Updated file '.$this->keyFile."\n";
+    }
+
+
+	/**
+	 * Creates the production environment.
+	 * @param $lang
+	 */
+    private function updateLanguageFiles( $lang )
+    {
         // creating a list of all language iso codes.
         $isoList = array();
         foreach ($lang as $key => $values)
@@ -52,10 +84,10 @@ class LanguageCompiler
 
         }
 
-        foreach ($isoList as $iso) {
+		foreach ($isoList as $iso) {
             $outputFilename = $this->getOutputLanguageFile($iso);
 
-            $success = file_put_contents($outputFilename, "<?php /* DO NOT CHANGE THIS GENERATED FILE */\n");
+            $success = file_put_contents($outputFilename, "<?php ".self::DO_NOT_CHANGE."\n");
 
             if ($success)
                 ;

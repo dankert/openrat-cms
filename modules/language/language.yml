@@ -1147,7 +1147,7 @@ EL_LINKINFO_LASTCH_USER_USERNAME:
 EL_LINKINFO:
   de: Link-Info
   en: Anchor-Info
-EL_LINKINFO_MIME-TYPE:
+EL_LINKINFO_MIME_TYPE:
   de: Mime-Type
   en: Mime-Type
 EL_LINKINFO_NAME:
@@ -1469,7 +1469,7 @@ EL_TEXT:
   es: Campo del texto
   fr: Gisement des textes
   ru: Текстовые области
-EMPTY:
+EMPTY_VALUE:
   de: Leer
   en: Empty
 ERROR_ACCESS_DENIED_DESC:
@@ -1921,7 +1921,7 @@ DAY:
   es: Jour
   fr: Jour
   it: Día
-DEFAULT:
+_DEFAULT:
   de: Standard
   en: Standard
   es: Norme
@@ -2238,7 +2238,7 @@ NAME:
   es: Appeler
   fr: Appeler
   it: Nombrar
-NEW:
+_NEW:
   de: Neu
   en: New
   es: Nouveau
@@ -2314,7 +2314,7 @@ NR:
 OPEN_ALL:
   de: Alle öffnen
   en: Open all
-OR:
+_OR:
   de: oder
   en: or
   es: ou
@@ -2386,7 +2386,7 @@ PROP:
   es: Propriétés
   fr: Propriétés
   it: Propriétés
-PUBLIC:
+_PUBLIC:
   de: öffentlich
   en: public
 PUBLISH:
@@ -2608,7 +2608,7 @@ UPLOAD:
   en: Upload
   es: Téléchargement
   fr: Téléchargement
-USE:
+_USE:
   de: Benutzen
   en: Use
   es: Employer
