@@ -2,6 +2,7 @@
 
 namespace cms\model;
 
+use cms\base\DB;
 use database\Database;
 use util\Session;
 
@@ -21,7 +22,6 @@ class Project extends ModelBase
     const FLAG_PUBLISH_PAGE_EXTENSION  = 8;
     const FLAG_LINK_ABSOLUTE           = 16;
 
-    
     // Eigenschaften
 	public $projectid;
 	public $name;
@@ -289,9 +289,9 @@ class Project extends ModelBase
 	// Speichern
 	public function save()
 	{
-		$db = db_connection();
+		$this->cleanTarget();
 
-		$sql = $db->sql( <<<SQL
+		$stmt = DB::sql( <<<SQL
 				UPDATE {{project}}
                   SET name                = {name},
                       target_dir          = {target_dir},
@@ -304,12 +304,12 @@ class Project extends ModelBase
 SQL
 );
 
-		$sql->setString('ftp_url'            ,$this->ftp_url );
-		$sql->setString('url'                ,$this->url );
-		$sql->setString('name'               ,$this->name );
-		$sql->setString('target_dir'         ,$this->target_dir );
-		$sql->setInt   ('ftp_passive'        ,$this->ftp_passive );
-		$sql->setString('cmd_after_publish'  ,$this->cmd_after_publish );
+		$stmt->setString('ftp_url'            ,$this->ftp_url );
+		$stmt->setString('url'                ,$this->url );
+		$stmt->setString('name'               ,$this->name );
+		$stmt->setString('target_dir'         ,$this->target_dir );
+		$stmt->setInt   ('ftp_passive'        ,$this->ftp_passive );
+		$stmt->setString('cmd_after_publish'  ,$this->cmd_after_publish );
 
         $flags = 0;
         if( $this->cut_index) $flags |= self::FLAG_CUT_INDEX;
@@ -318,10 +318,10 @@ SQL
         if( $this->publishPageExtension) $flags |= self::FLAG_PUBLISH_PAGE_EXTENSION;
         if( $this->linkAbsolute        ) $flags |= self::FLAG_LINK_ABSOLUTE;
 
-        $sql->setInt   ('flags'              ,$flags );
-		$sql->setInt   ('projectid'          ,$this->projectid );
+        $stmt->setInt   ('flags'              ,$flags );
+		$stmt->setInt   ('projectid'          ,$this->projectid );
 
-		$sql->query();
+		$stmt->query();
 
 		try
 		{
@@ -1061,6 +1061,29 @@ SQL
     {
         return $this->name;
     }
+
+
+	/**
+	 * Cleans up the target url.
+	 */
+	private function cleanTarget()
+	{
+		$target = parse_url( $this->target_dir );
+
+		$scheme   = isset($target['scheme']) ? $target['scheme'] . '://' : '';
+		if   ( empty($scheme) )
+			$scheme = 'file:/';
+
+		$host     = isset($target['host']) ? $target['host'] : '';
+		$port     = isset($target['port']) ? ':' . $target['port'] : '';
+		$user     = isset($target['user']) ? $target['user'] : '';
+		$pass     = isset($target['pass']) ? ':' . $target['pass']  : '';
+		$pass     = ($user || $pass) ? "$pass@" : '';
+		$path     = isset($target['path']) ? $target['path'] : '';
+		$query    = isset($target['query']) ? '?' . $target['query'] : '';
+		$fragment = isset($target['fragment']) ? '#' . $target['fragment'] : '';
+
+		$this->target_dir = "$scheme$user$pass$host$port$path$query$fragment";
+	}
 }
 
-?>

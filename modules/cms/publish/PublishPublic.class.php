@@ -9,9 +9,17 @@ use cms\model\Link;
 use cms\model\Page;
 use cms\model\Project;
 use cms\model\Url;
+use cms\publish\target\Dav;
+use cms\publish\target\Fax;
+use cms\publish\target\Ftp;
+use cms\publish\target\Ftps;
+use cms\publish\target\Local;
+use cms\publish\target\NoTarget;
+use cms\publish\target\Scp;
+use cms\publish\target\SFtp;
+use cms\publish\target\Target;
 use util\exception\PublisherException;
 use util\FileUtils;
-use cms\publish\Ftp;
 use logger\Logger;
 use util\exception\UIException;
 use util\Session;
@@ -33,11 +41,11 @@ class PublishPublic extends Publish
 
 
 	/**
-     * Enthaelt bei Bedarf das FTP-Objekt. N�mlich dann, wenn
-     * zu einem FTP-Server veroeffentlicht werden soll.
-     * @var Object
+     * The target to which the file will be copied to.
+	 *
+     * @var Target
      */
-    private $ftp;
+    private $target;
 
     private $localDestinationDirectory = '';
 
@@ -89,40 +97,22 @@ class PublishPublic extends Publish
 
         $this->linkSchema = ($project->linkAbsolute ? self::SCHEMA_ABSOLUTE : self::SCHEMA_RELATIVE);
 
-        // Feststellen, ob FTP benutzt wird.
-        // Dazu muss FTP aktiviert sein (enable=true) und eine URL vorhanden sein.
-        $ftpUrl = '';
-        if   ( $confPublish['ftp']['enable'] )
-        {
-            if	( $confPublish['ftp']['per_project'] && !empty($project->ftp_url) )
-                $ftpUrl = $project->ftp_url;
-            elseif ( !empty($confPublish['ftp']['host']) )
-                $ftpUrl = $project->ftp_url;
-        }
+        $targetScheme = parse_url( $project->target_dir,PHP_URL_SCHEME );
 
-        if	( $ftpUrl && $ftpUrl[0]!='#' )
-        {
-            $this->ftp = new \cms\publish\Ftp($project->ftp_url); // Aufbauen einer FTP-Verbindung
+        $availableTargets = [ Local::class,Ftp::class,Ftps::class,Fax::class,SFtp::class,Scp::class,Dav::class ];
 
-            $this->ftp->passive = ( $project->ftp_passive == '1' );
-        }
+		/** @var Target $target */
+		foreach($availableTargets as $target )
+		{
+			if   ( $target::isAvailable() && $target::accepts( $targetScheme ))
+			{
+				$this->target = new $target( $project->target_dir );
+				break;
+			}
+		}
 
-        $targetDir = rtrim( $project->target_dir,'/' );
-
-        if	( FileUtils::isAbsolutePath($targetDir) && $confPublish['filesystem']['per_project'] )
-        {
-            $this->localDestinationDirectory = FileUtils::toAbsolutePath([$targetDir]); // Projekteinstellung verwenden.
-        }
-        else
-        {
-            // Konfiguriertes Verzeichnis verwenden.
-            $this->localDestinationDirectory = FileUtils::toAbsolutePath([$confPublish['filesystem']['directory'],$targetDir]);
-        }
-
-
-        // Sofort pruefen, ob das Zielverzeichnis ueberhaupt beschreibbar ist.
-        if   ( $this->localDestinationDirectory && $this->localDestinationDirectory[0] == '#')
-            $this->localDestinationDirectory = '';
+		if   ( empty( $this->target ) )
+			throw new PublisherException('Cannot publish to the scheme '.$targetScheme );
 
         $this->contentNegotiation = ( $project->content_negotiation == '1' );
         $this->cutIndex           = ( $project->cut_index           == '1' );
@@ -142,10 +132,8 @@ class PublishPublic extends Publish
 
         if	( config('security','nopublish') )
         {
+        	$this->target = new NoTarget();
             Logger::warn('publishing is disabled.');
-            $this->commandAfterPublish = '';
-            $this->localDestinationDirectory = '';
-            $this->ftp = null;
         }
     }
 
@@ -302,90 +290,9 @@ class PublishPublic extends Publish
      */
     public function copy( $tmp_filename,$dest_filename,$lastChangeDate=null )
     {
-        global $conf;
-        $source = $tmp_filename;
-
-
-
-		if   ( $this->localDestinationDirectory )
-        {
-        	// Is the output directory writable?
-			if   ( !is_writeable( $this->localDestinationDirectory ) )
-				throw new PublisherException('directory not writable: ' . $this->localDestinationDirectory);
-
-            $dest   = $this->localDestinationDirectory.'/'.$dest_filename;
-
-            // Is the destination writable?
-			if   ( is_file($dest) && !is_writeable( $dest ) )
-				throw new PublisherException('file not writable: ' . $this->dest);
-
-			// Copy file to destination
-			if   (!@copy( $source,$dest ));
-            {
-            	// Create directories, if necessary.
-                $this->mkdirs( dirname($dest) );
-
-                if   (!@copy( $source,$dest ))
-                    throw new PublisherException( 'failed copying local file:' . "\n" .
-						'source     : ' . $source . "\n" .
-						'destination: ' . $dest);
-
-                // Das Änderungsdatum der Datei auch in der Zieldatei setzen.
-                if  ( $conf['publish']['set_modification_date'] )
-                    if	( ! is_null($lastChangeDate) )
-                        @touch( $dest,$lastChangeDate );
-
-                Logger::debug("published: $dest");
-            }
-
-            if	(!empty($conf['security']['chmod']))
-            {
-                // CHMOD auf der Datei ausfuehren.
-                if	( ! @chmod($dest,octdec($conf['security']['chmod'])) )
-                    throw new PublisherException('Unable to CHMOD file ' . $dest);
-            }
-        }
-
-        if   ( $this->ftp ) // Falls FTP aktiviert
-        {
-            $dest = $dest_filename;
-            $this->ftp->put( $source,$dest );
-        }
+		$this->target->put($tmp_filename,$dest_filename,$lastChangeDate);
     }
 
-
-
-    /**
-     * Rekursives Anlagen von Verzeichnisse
-     * Nett gemacht.
-     * Quelle: http://de3.php.net/manual/de/function.mkdir.php
-     * Thx to acroyear at io dot com
-     *
-     * @param String Verzeichnis
-     * @return boolean
-     */
-    private function mkdirs($path )
-    {
-        global $conf;
-
-        if	( is_dir($path) )
-            return;  // Path exists
-
-        $parentPath = dirname($path);
-
-        $this->mkdirs($parentPath);
-
-        //
-        if	( ! @mkdir($path) )
-            throw new PublisherException( 'Cannot create directory: ' . $path);
-
-        // CHMOD auf dem Verzeichnis ausgef�hren.
-        if	(!empty($conf['security']['chmod_dir']))
-        {
-            if	( ! @chmod($path,octdec($conf['security']['chmod_dir'])) )
-                throw new PublisherException('Unable to CHMOD directory: ' . $path);
-        }
-    }
 
 
 
@@ -396,11 +303,7 @@ class PublishPublic extends Publish
      */
     public function close()
     {
-        if   ( $this->ftp )
-        {
-            Logger::debug('Closing FTP connection' );
-            $this->ftp->close();
-        }
+        $this->target->close();
 
         // Ausfuehren des Systemkommandos.
         if	( !empty($this->commandAfterPublish) )
@@ -412,6 +315,7 @@ class PublishPublic extends Publish
             putenv("CMS_USER_NAME=".$user->name  );
             putenv("CMS_USER_ID="  .$user->userid);
             putenv("CMS_USER_MAIL=".$user->mail  );
+
             exec( $this->commandAfterPublish,$ausgabe,$rc );
 
             if	( $rc != 0 ) // Wenn Returncode ungleich 0, dann Fehler melden.

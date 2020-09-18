@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-namespace cms\publish;
+namespace cms\publish\target;
 
 use logger\Logger;
 use util\exception\PublisherException;
@@ -23,99 +23,65 @@ use util\exception\UIException;
 
 
 /**
- * Darstellen einer FTP-Verbindung, das beinhaltet
- * das Login, das Kopieren von Dateien sowie praktische
- * FTP-Funktionen
+ * FTP-Target.
  *
- * @author $Author$
- * @version $Revision$
- * @package openrat.services
+ * @author Jan Dankert
  */
-class Ftp
+class Ftp extends Target
 {
-	var $verb;
-	var $url;
-	var $log = array();
+	private $connection;
 
-	var $passive = false;
-
-	var $ok = true;
-
-	private $path;
-
-
-	// Konstruktor
-	public function __construct($url)
-	{
-		$this->connect($url);
+	public static function acceptsSchemes() {
+		return ['ftp'];
 	}
 
-
 	// Aufbauen der Verbindung
-	private function connect($url)
+	public function open()
 	{
-		$this->url = $url;
-
-		global $conf;
-
-		$conf_ftp = $conf['publish']['ftp'];
-		$ftp = parse_url($this->url);
+		//global $conf;
+		//$conf_ftp = $conf['publish']['ftp'];
+		$ftp = $this->url;
 
 		// Die projektspezifischen Werte gewinnen bei �berschneidungen mit den Default-Werten
-		$ftp = array_merge($conf_ftp, $ftp);
+		//$ftp = array_merge($conf_ftp, $ftp);
 
-		// Nur FTP und FTPS (seit PHP 4.3) erlaubt
-		if (!in_array(@$ftp['scheme'], array('ftp', 'ftps'))) {
-			throw new PublisherException('Unknown scheme in FTP Url: ' . @$ftp['scheme'] .
-				'. Only FTP (and FTPS, if compiled in) are supported');
+		$this->connection = $this->createConnection();
+
+		if (!$this->connection) {
+			Logger::error('Cannot connect to ' . $this->url->host . ':' . $this->url->port);
+			throw new PublisherException('Cannot connect to ' . $this->url->scheme . '-server: ' . $this->url->host . ':' . $this->url->port);
 		}
 
-		if (function_exists('ftp_ssl_connect') && $ftp['scheme'] == 'ftps')
-			$this->verb = @ftp_ssl_connect($ftp['host'], $ftp['port']);
-		else
-			$this->verb = @ftp_connect($ftp['host'], $ftp['port']);
-
-		if (!$this->verb) {
-			Logger::error('Cannot connect to ' . $ftp['host'] . ':' . $ftp['port']);
-			throw new PublisherException('Cannot connect to ' . $ftp['scheme'] . '-server: ' . $ftp['host'] . ':' . $ftp['port']);
-		}
-
-		$this->log[] = 'Connected to FTP server ' . $ftp['host'] . ':' . $ftp['port'];
-
-		if (empty($ftp['user'])) {
+		if (empty($this->url->user)) {
 			$ftp['user'] = 'anonymous';
 			$ftp['pass'] = 'openrat@openrat.de';
 		}
 
-		if (!ftp_login($this->verb, $ftp['user'], $ftp['pass']))
-			throw new PublisherException('Unable to login as user ' . $ftp['user']);
+		if (!ftp_login($this->connection, $this->url->user, $this->url->pass))
+			throw new PublisherException('Unable to login as user ' . $this->url->user);
 
-		$this->log[] = 'Logged in as user ' . $ftp['user'];
+		$pasv = $this->url->fragment == 'passive';
 
-		$pasv = (!empty($ftp['fragment']) && $ftp['fragment'] == 'passive');
+		if  ( $pasv )
+			if (!ftp_pasv($this->connection, true))
+				throw new PublisherException('Cannot switch to FTP PASV mode');
 
-		$this->log[] = 'entering passive mode ' . ($pasv ? 'on' : 'off');
-		if (!ftp_pasv($this->verb, true))
-			throw new PublisherException('Cannot switch to FTP PASV mode');
-
-		if (!empty($ftp['query'])) {
-			parse_str($ftp['query'], $ftp_var);
+		if ( $this->url->query ) {
+			parse_str($this->url->query, $ftp_var);
 
 			if (isset($ftp_var['site'])) {
 				$site_commands = explode(',', $ftp_var['site']);
 				foreach ($site_commands as $cmd) {
-					if (!@ftp_site($this->verb, $cmd))
+					if (!@ftp_site($this->connection, $cmd))
 						throw new PublisherException('unable to do SITE command: ' . $cmd);
 				}
 			}
 		}
 
-		$this->path = rtrim($ftp['path'], '/');
+		$path = rtrim($this->url->path, '/');
 
-		$this->log[] = 'Changing directory to ' . $this->path;
-
-		if (!@ftp_chdir($this->verb, $this->path))
-			throw new PublisherException('unable CHDIR to directory: ' . $this->path);
+		if (!@ftp_chdir($this->connection, $path))
+			throw new PublisherException('unable CHDIR to directory: ' . $path);
 	}
 
 
@@ -126,11 +92,11 @@ class Ftp
 	 * @param String Ziel
 	 * @param int FTP-Mode (BINARY oder ASCII)
 	 */
-	public function put($source, $dest)
+	public function put($source, $dest, $lastChangeDate)
 	{
-		$dest = $this->path . '/' . $dest;
+		$dest = $this->url->path . '/' . $dest;
 
-		$this->log .= "Copying file: $source -&gt; $dest ...\n";
+		//$this->log .= "Copying file: $source -&gt; $dest ...\n";
 
 		$mode = FTP_BINARY;
 		$p = strrpos(basename($dest), '.'); // Letzten Punkt suchen
@@ -145,13 +111,13 @@ class Ftp
 
 		Logger::debug("FTP PUT target:$dest mode:" . (($mode == FTP_ASCII) ? 'ascii' : 'binary'));
 
-		if (!@ftp_put($this->verb, $dest, $source, $mode)) {
+		if (!@ftp_put($this->connection, $dest, $source, $mode)) {
 			if (!$this->mkdirs(dirname($dest)))
 				return; // Fehler.
 
-			ftp_chdir($this->verb, $this->path);
+			ftp_chdir($this->connection, $this->url->path);
 
-			if (!@ftp_put($this->verb, $dest, $source, $mode))
+			if (!@ftp_put($this->connection, $dest, $source, $mode))
 				throw new PublisherException("FTP PUT failed.\n" .
 					"source     : $source\n" .
 					"destination: $dest");
@@ -168,7 +134,7 @@ class Ftp
 	 */
 	private function mkdirs($strPath)
 	{
-		if (@ftp_chdir($this->verb, $strPath))
+		if (@ftp_chdir($this->connection, $strPath))
 			return true; // Verzeichnis existiert schon :)
 
 		$pStrPath = dirname($strPath);
@@ -176,7 +142,7 @@ class Ftp
 		if (!$this->mkdirs($pStrPath))
 			return false;
 
-		if (!@ftp_mkdir($this->verb, $strPath))
+		if (!@ftp_mkdir($this->connection, $strPath))
 			throw new PublisherException("failed to create remote directory: $strPath");
 
 		return true;
@@ -189,12 +155,22 @@ class Ftp
 	 */
 	public function close()
 	{
-		if (!@ftp_quit($this->verb)) {
+		if (!@ftp_quit($this->connection)) {
 			// Closing not possible.
 			// Only logging. Maybe we could throw an Exception here?
 			Logger::warn('Failed to close FTP connection. Continueing...');
 			return;
 		}
+	}
+
+	protected function createConnection()
+	{
+		return ftp_connect($this->url->host, $this->url->port);
+	}
+
+	public static function isAvailable()
+	{
+		return function_exists('ftp_connect');
 	}
 }
 
