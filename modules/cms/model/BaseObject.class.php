@@ -4,7 +4,7 @@
 namespace cms\model;
 
 use util\ArrayUtils;
-use cms\publish\Publish;
+use cms\generator\Publish;
 use phpseclib\Math\BigInteger;
 use util\text\variables\VariableResolver;
 use util\YAML;

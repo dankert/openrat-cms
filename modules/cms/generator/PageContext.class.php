@@ -1,7 +1,7 @@
 <?php
 
 
-namespace cms\publish;
+namespace cms\generator;
 
 
 /**

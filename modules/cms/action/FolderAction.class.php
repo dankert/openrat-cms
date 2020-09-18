@@ -17,7 +17,7 @@ use cms\model\Link;
 
 use cms\model\Text;
 use cms\model\Url;
-use cms\publish\PublishPublic;
+use cms\generator\PublishPublic;
 use util\Http;
 use Publish;
 use util\Session;

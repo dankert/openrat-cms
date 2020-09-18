@@ -19,8 +19,8 @@ namespace cms\model;
 
 
 // Standard Mime-Type 
-use cms\publish\filter\AbstractFilter;
-use cms\publish\PublishPublic;
+use cms\generator\filter\AbstractFilter;
+use cms\generator\PublishPublic;
 use logger\Logger;
 use util\cache\FileCache;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace cms\publish;
+namespace cms\generator;
 
 use cms\model\BaseObject;
 use cms\model\File;
@@ -9,15 +9,15 @@ use cms\model\Link;
 use cms\model\Page;
 use cms\model\Project;
 use cms\model\Url;
-use cms\publish\target\Dav;
-use cms\publish\target\Fax;
-use cms\publish\target\Ftp;
-use cms\publish\target\Ftps;
-use cms\publish\target\Local;
-use cms\publish\target\NoTarget;
-use cms\publish\target\Scp;
-use cms\publish\target\SFtp;
-use cms\publish\target\Target;
+use cms\generator\target\Dav;
+use cms\generator\target\Fax;
+use cms\generator\target\Ftp;
+use cms\generator\target\Ftps;
+use cms\generator\target\Local;
+use cms\generator\target\NoTarget;
+use cms\generator\target\Scp;
+use cms\generator\target\SFtp;
+use cms\generator\target\Target;
 use util\exception\PublisherException;
 use util\FileUtils;
 use logger\Logger;

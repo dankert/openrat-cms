@@ -2,7 +2,7 @@
 
 namespace cms\model;
 
-use cms\publish\Publish;
+use cms\generator\Publish;
 use Exception;
 
 

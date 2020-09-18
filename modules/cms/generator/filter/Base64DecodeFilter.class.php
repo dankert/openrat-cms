@@ -1,7 +1,7 @@
 <?php
 
 
-namespace cms\publish\filter;
+namespace cms\generator\filter;
 
 
 class Base64DecodeFilter extends AbstractFilter

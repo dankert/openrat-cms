@@ -6,8 +6,8 @@ use cms\model\Folder;
 use cms\model\BaseObject;
 use cms\model\File;
 
-use cms\publish\PublishPreview;
-use cms\publish\PublishPublic;
+use cms\generator\PublishPreview;
+use cms\generator\PublishPublic;
 use util\Http;
 use util\Html;
 use util\Upload;

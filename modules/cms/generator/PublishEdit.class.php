@@ -1,6 +1,6 @@
 <?php
 
-namespace cms\publish;
+namespace cms\generator;
 
 use cms\model\BaseObject;
 use cms\model\Link;

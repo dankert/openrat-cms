@@ -17,7 +17,7 @@ namespace cms\model;
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 use cms\mustache\Mustache;
-use cms\publish\PublishPreview;use cms\publish\PublishPublic;
+use cms\generator\PublishPreview;use cms\generator\PublishPublic;
 use logger\Logger;
 use util\cache\FileCache;
 

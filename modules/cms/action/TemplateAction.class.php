@@ -11,7 +11,7 @@ use cms\model\Page;
 
 
 use cms\model\TemplateModel;
-use cms\publish\PublishPublic;
+use cms\generator\PublishPublic;
 use util\Session;
 use util\Html;
 use util\Text;

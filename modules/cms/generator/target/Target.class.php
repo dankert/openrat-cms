@@ -15,27 +15,65 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-namespace cms\publish;
+namespace cms\generator\target;
 
-use cms\model\BaseObject;
+use logger\Logger;
+use util\exception\PublisherException;
+use util\exception\UIException;
+use util\Url;
+
 
 /**
- * Strategy-baseclass for generating and publishing content.
+ * Superclass for publication targets.
  *
  * @author Jan Dankert
  */
-abstract class Publish
+abstract class Target
 {
-	abstract public function isPublic();
+	/**
+	 * @var Url
+	 */
+	protected $url;
 
-	abstract public function linkToObject( BaseObject $from, BaseObject $to );
+	public function __construct( $targetUrl ) {
+		$this->url = new Url( $targetUrl );
 
-	abstract public function isSimplePreview();
+		$this->open();
+	}
 
-    abstract public function copy($tmp_filename,$dest_filename,$lastChangeDate=null);
 
-    abstract public function clean();
+	public static function accepts( $scheme ) {
+		return in_array( $scheme, static::acceptsSchemes() );
+	}
 
-    abstract public function close();
+
+	/**
+	 * For which types this target is reponsible?
+	 *
+	 * @return array
+	 */
+	protected abstract static function acceptsSchemes();
+
+
+	public function open() {
+
+	}
+
+
+	public abstract function put($source, $dest, $timestamp);
+
+
+	/**
+	 * Closes the connection.
+	 */
+	public function close() {
+
+	}
+
+
+	public static function isAvailable() {
+
+		return true;
+	}
+
 }
-
