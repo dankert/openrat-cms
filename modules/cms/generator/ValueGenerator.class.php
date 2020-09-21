@@ -173,7 +173,7 @@ class ValueGenerator extends BaseGenerator
 				}
 				elseif	( $object->isPage )
 				{
-					if   ( $value->publisher->isSimplePreview() )
+					if   ( false&&$value->publisher->isSimplePreview() )
 					{
 						$p = new Page( $objectid );
 						$p->context = $page->context;
@@ -321,7 +321,6 @@ class ValueGenerator extends BaseGenerator
 				$linkValue->element   = $element;
 				$linkValue->pageid = $page->pageid;
 				$linkValue->languageid = $value->languageid;
-				$linkValue->publisher  = $value->publisher;
 				$linkValue->load();
 
 				$objectid = $linkValue->linkToObjectId;

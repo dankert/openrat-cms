@@ -87,7 +87,7 @@ class PageelementAction extends BaseAction
     {
 
         $this->value = new Value();
-        $this->value->publisher = new PublishPreview();
+        //$this->value->publisher = new PublishPreview();
 
 		$id = $this->request->id;
 		$ids = explode('_',$id);
@@ -231,9 +231,9 @@ class PageelementAction extends BaseAction
 		$this->value->objectid   = $this->page->objectid;
 		$this->value->pageid     = $this->page->pageid;
 		$this->value->page       = $this->page;
-		$this->value->element = &$this->element;
+		$this->value->element    = &$this->element;
+		$this->value->elementid  = $this->element->elementid;
 		$this->value->element->load();
-		$this->value->publisher = new PublishEdit();
 
 		$this->setTemplateVar('name'       ,$this->value->element->label    );
 		$this->setTemplateVar('description',$this->value->element->desc     );
@@ -250,8 +250,12 @@ class PageelementAction extends BaseAction
             $languages[$languageId] = array(
                 'languageid'   => $languageId,
                 'languagename' => $languageName,
-                'value'        => $this->value->value
-            );
+                'value'        => $this->value->text,
+                'text'         => $this->value->text,
+                'number'       => $this->value->number,
+                'date'         => $this->value->date,
+                'linkObjectId' => $this->value->linkToObjectId,
+        );
         }
 
         $this->setTemplateVar('languages',$languages);
@@ -272,7 +276,6 @@ class PageelementAction extends BaseAction
 		$this->value->page       = $this->page;
 		$this->value->element = &$this->element;
 		$this->value->element->load();
-		$this->value->publisher = new PublishEdit();
 
 		$this->setTemplateVar('name'       ,$this->value->element->label    );
 		$this->setTemplateVar('description',$this->value->element->desc     );
@@ -289,7 +292,11 @@ class PageelementAction extends BaseAction
             $languages[$languageId] = array(
                 'languageid'   => $languageId,
                 'languagename' => $languageName,
-                'value'        => $this->value->value,
+                'value'        => $this->value->text,
+                'text'         => $this->value->text,
+                'number'       => $this->value->number,
+                'date'         => $this->value->date,
+                'linkObjectId' => $this->value->linkToObjectId,
                 'editors'      => Element::getAvailableFormats()
             );
         }
@@ -305,6 +312,7 @@ class PageelementAction extends BaseAction
 		$this->value->objectid   = $this->page->objectid;
 		$this->value->pageid     = $this->page->pageid;
 		$this->value->element = &$this->element;
+		$this->value->elementid = &$this->element->elementid;
 		$this->value->element->load();
 		$this->value->publish = false;
 

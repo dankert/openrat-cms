@@ -1,5 +1,6 @@
 <?php
 namespace cms\model;
+use cms\base\DB;
 use util\ArrayUtils;
 use cms\generator\Publish;
 use cms\macros\MacroRunner;
@@ -139,8 +140,7 @@ class Value extends ModelBase
 	public $publisher;
 
 	/**
-	 * @type Publish
-     * @deprecated use #publisher
+	 * @type boolean
 	 */
 	var $publish = false;
 
@@ -179,20 +179,13 @@ class Value extends ModelBase
 	/**
 	 * Laden des aktuellen Inhaltes aus der Datenbank
 	 */
-	function load()
+	function loadForPublic()
 	{
-		if	( 1==1 || $this->publisher->isPublic() )
-			$stmt = db()->sql( 'SELECT * FROM {{value}}'.
+		$stmt = Db::sql( 'SELECT * FROM {{value}}'.
 			                '  WHERE elementid ={elementid}'.
 			                '    AND pageid    ={pageid}'.
 			                '    AND languageid={languageid}'.
 			                '    AND publish=1' );
-		else
-			$stmt = db()->sql( 'SELECT * FROM {{value}}'.
-			                '  WHERE elementid ={elementid}'.
-			                '    AND pageid    ={pageid}'.
-			                '    AND languageid={languageid}'.
-			                '    AND active=1' );
 		$stmt->setInt( 'elementid' ,$this->elementid );
 		$stmt->setInt( 'pageid'    ,$this->pageid    );
 		$stmt->setInt( 'languageid',$this->languageid);
@@ -210,6 +203,38 @@ class Value extends ModelBase
 			$this->active         = ( $row['active' ]=='1' );
 			$this->publish        = ( $row['publish']=='1' );
 	
+			$this->lastchangeTimeStamp = intval($row['lastchange_date'  ]);
+			$this->lastchangeUserId    = intval($row['lastchange_userid']);
+		}
+	}
+
+	/**
+	 * Laden des aktuellen Inhaltes aus der Datenbank
+	 */
+	function load()
+	{
+		$stmt = Db::sql( 'SELECT * FROM {{value}}'.
+			             '  WHERE elementid ={elementid}'.
+			             '    AND pageid    ={pageid}'.
+			             '    AND languageid={languageid}'.
+			             '    AND active=1' );
+		$stmt->setInt( 'elementid' ,$this->elementid );
+		$stmt->setInt( 'pageid'    ,$this->pageid    );
+		$stmt->setInt( 'languageid',$this->languageid);
+		$row = $stmt->getRow();
+
+		if	( count($row) > 0 ) // Wenn Inhalt gefunden
+		{
+			$this->text           = $row['text'  ];
+			$this->format         = $row['format'];
+			$this->valueid        = intval($row['id']          );
+			$this->linkToObjectId = intval($row['linkobjectid']);
+			$this->number         = intval($row['number'      ]);
+			$this->date           = intval($row['date'        ]);
+
+			$this->active         = ( $row['active' ]=='1' );
+			$this->publish        = ( $row['publish']=='1' );
+
 			$this->lastchangeTimeStamp = intval($row['lastchange_date'  ]);
 			$this->lastchangeUserId    = intval($row['lastchange_userid']);
 		}

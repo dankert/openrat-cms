@@ -18,7 +18,7 @@
 				</column>
 				<column title="${value}">
 					<link subaction="value" var1="languageid" value1="${languageid}" type="edit" action="pageelement">
-						<text value="${value}" maxlength="120" escape="true" />
+						<text value="${text}" maxlength="120" escape="true" />
 					</link>
 				</column>
 			</row>

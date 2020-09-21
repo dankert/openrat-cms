@@ -55,7 +55,6 @@ class MacroRunner
 			$elementid = array_search($var, $elements);
 
 			$value = new Value();
-			$value->publisher = $this->page->publisher;
 			$value->elementid = $elementid;
 			$value->element = new Element($elementid);
 			$value->element->load();
