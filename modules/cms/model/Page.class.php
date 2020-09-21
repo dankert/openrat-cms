@@ -104,7 +104,7 @@ class Page extends BaseObject
 		$this->isPage = true;
 		$this->typeid = BaseObject::TYPEID_PAGE;
 
-		$this->publisher = new PublishPreview();
+		//$this->publisher = new PublishPreview();
 
     }
 
@@ -424,6 +424,7 @@ SQL
      * ermittelt.
      *
      * @return String Kompletter Dateiname, z.B. '/pfad/seite.en.html'
+	 * @deprecated use pagecontext
      */
     function filename()
     {
@@ -470,9 +471,9 @@ SQL
 
 
 	/**
-	  * Erzeugen der Inhalte zu allen Elementen dieser Seite
-	  * wird von generate() aufgerufen
-	  */
+	  * Get all elements from this page.
+	 * @return Array
+	 */
 	public function getElementIds()
 	{
 		$t = new Template( $this->templateid );
@@ -513,184 +514,8 @@ SQL
 
 
 	/**
-	  * Erzeugen der Inhalte zu allen Elementen dieser Seite
-	  * wird von generate() aufgerufen
-	  */
-	public function generate_elements()
-	{
-		$this->values = array();
-		
-		if	( $this->publisher->isSimplePreview() )
-			$elements = $this->getWritableElements();
-		else
-			$elements = $this->getElements();
-			
-		foreach( $elements as $elementid=>$element )
-		{
-			// neues Inhaltobjekt erzeugen
-			$val = new Value();
-			$val->element = $element;
-
-			$val->publisher  = $this->publisher;
-			$val->objectid   = $this->objectid;
-			$val->pageid     = $this->pageid;
-			$val->languageid = $this->languageid;
-			$val->modelid    = $this->modelid;
-			$val->page       = $this;
-			try {
-				$val->generate();
-			} catch( \Exception $e ) {
-				// Unrecoverable Error while generating the content.
-				throw new GeneratorException('Could not generate Value '.$val->__toString(),$e );
-			}
-
-			$this->values[$elementid] = $val;
-		}
-	}
-
-
-
-	public function generate() {
-
-		return $this->getCache()->get();
-	}
-
-	/**
-	  * Erzeugen des Inhaltes der gesamten Seite.
-	  * 
-	  * @return String Inhalt
-	  */
-	private function generateValue()
-	{
-		global $conf;
-		
-		// Setzen der 'locale', damit sprachabhängige Systemausgaben (wie z.B. die
-		// Ausgabe von strftime()) in der korrekten Sprache dargestellt werden.
-		$language = new Language($this->languageid);
-		$language->load();
-
-		$language->setCurrentLocale();
-		
-
-		$this->template = new Template( $this->templateid );
-		$this->template->modelid = $this->modelid;
-		$this->template->load();
-		$this->ext = $this->template->extension;
-
-		$this->generate_elements();
-
-		// Get a List with ElementId->ElementName
-		$elements = array_map(function($element) {
-			return $element->name;
-		},$this->getElements() );
-		 
-		$templatemodel = new TemplateModel( $this->template->templateid, $this->modelid );
-		$templatemodel->load();
-		$src = $templatemodel->src;
-
-		$data = array();
-
-		// Template should have access to the page properties.
-		// Template should have access to the settings of this node object.
-		$data['_page'         ] = $this->getProperties()   ;
-		$data['_localsettings'] = $this->getSettings()     ;
-		$data['_settings'     ] = $this->getTotalSettings();
-
-		// No we are collecting the data and are fixing some old stuff.
-
-		foreach( $elements as $elementId=>$elementName )
-		{
-			$data[ $elementName ] = $this->values[$elementId]->generate();
-
-			// The following code is for old template values:
-
-			// convert {{<id>}} to {{<name>}}
-			$src = str_replace( '{{'.$elementId.'}}','{{'.$elementName.'}}',$src );
-
-            $src = str_replace( '{{IFNOTEMPTY:'.$elementId.':BEGIN}}','{{#'.$elementName.'}}',$src );
-            $src = str_replace( '{{IFNOTEMPTY:'.$elementId.':END}}'  ,'{{/'.$elementName.'}}',$src );
-            $src = str_replace( '{{IFEMPTY:'   .$elementId.':BEGIN}}','{{^'.$elementName.'}}',$src );
-            $src = str_replace( '{{IFEMPTY:'   .$elementId.':END}}'  ,'{{/'.$elementName.'}}',$src );
-
-			if   ( $this->icons )
-				$src = str_replace( '{{->'.$elementId.'}}','<a href="javascript:parent.openNewAction(\''.$elementName.'\',\'pageelement\',\''.$this->objectid.'_'.$value->element->elementid.'\');" title="'.$value->element->desc.'"><img src="'.OR_THEMES_DIR.$conf['interface']['theme'].'/images/icon_el_'.$value->element->type.IMG_ICON_EXT.'" border="0" align="left"></a>',$src );
-			else
-				$src = str_replace( '{{->'.$elementId.'}}','',$src );
-		}
-
-		Logger::trace( 'pagedata: '.print_r($data,true) );
-
-		// Now we have collected all data, lets call the template engine:
-
-        $template = new Mustache();
-		$template->escape = null; // No HTML escaping, this is the job of this CMS ;)
-		$template->partialLoader = function( $name ) {
-
-		 	if   ( substr($name,0,5) == 'file:') {
-		 	 	$fileid = intval( substr($name,5) );
-		 	 	$file = new File( $fileid );
-		 	 	return $file->loadValue();
-			}
-
-
-		 	$project       = new Project($this->projectid);
-		 	$templateid    = array_search($name,$project->getTemplates() );
-
-			if   ( ! $templateid )
-				throw new \InvalidArgumentException('template '.Logger::sanitizeInput($name).' not found');
-
-			if   ( $templateid == $this->template->templateid )
-				throw new \InvalidArgumentException('Template recursion detected on template-id '.$templateid);
-
-
-			$templatemodel = new TemplateModel( $templateid, $this->modelid );
-			$templatemodel->load();
-
-			return $templatemodel->src;
-		};
-
-        try {
-        	$template->parse($src);
-        } catch (\Exception $e) {
-			// Should we throw it to the caller?
-			// No, because it is not a technical error. So let's only log it.
-			Logger::warn("Template rendering failed: ".$e->getMessage() );
-			return $e->getMessage();
-        }
-        $src = $template->render( $data );
-
-        // now we have the fully generated source.
-
-		// should we do a UTF-8-escaping here?
-		// Default should be off, because if you are fully using utf-8 (you should do), this is unnecessary.
-		if	( config('publish','escape_8bit_characters') )
-			if	( substr($this->mimeType(),-4) == 'html' )
-			{
-				/*
-				 * 
-				$src = htmlentities($src,ENT_NOQUOTES,'UTF-8');
-				$src = str_replace('&lt;' , '<', $src);
-				$src = str_replace('&gt;' , '>', $src);
-				$src = str_replace('&amp;', '&', $src);
-				 */
-				$src = translateutf8tohtml($src);
-			}
-		
-		return $src;
-	}
-
-
-	/**
-	  * Schreiben des Seiteninhaltes in die temporaere Datei
-	  */
-	public function write()
-	{
-			$this->getCache()->load();
-	}
-
-
-	/**
 	 * Generieren dieser Seite in Dateisystem und/oder auf FTP-Server
+	 * @deprecated
 	 */
 	public function publish()
 	{
@@ -754,10 +579,8 @@ SQL
 
 	
 	
-	function setTimestamp()
+	public function setTimestamp()
 	{
-		$this->getCache()->invalidate();
-
 		parent::setTimestamp();
 	}
 	

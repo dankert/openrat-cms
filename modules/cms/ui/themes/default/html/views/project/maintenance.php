@@ -17,7 +17,7 @@
           <div class="<?php echo escapeHtml('') ?>"><?php echo escapeHtml('') ?>
             <span><?php echo escapeHtml('') ?>
             </span>
-            <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('check_limit') ?>" checked="<?php echo escapeHtml(''.@$type.'') ?>" /><?php echo escapeHtml('') ?>
+            <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('check_limit') ?>" <?php if(@$type=='check_limit'){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
             <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
               <span><?php echo escapeHtml(''.@lang('project_check_limit').'') ?>
               </span>
@@ -26,7 +26,7 @@
           <div class="<?php echo escapeHtml('') ?>"><?php echo escapeHtml('') ?>
             <span><?php echo escapeHtml('') ?>
             </span>
-            <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('check_files') ?>" checked="<?php echo escapeHtml(''.@$type.'') ?>" /><?php echo escapeHtml('') ?>
+            <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('check_files') ?>" <?php if(@$type=='check_files'){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
             <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
               <span><?php echo escapeHtml(''.@lang('project_check_files').'') ?>
               </span>

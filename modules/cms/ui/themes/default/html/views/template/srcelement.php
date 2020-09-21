@@ -8,7 +8,7 @@
       <?php $if1=(isset($elements)); if($if1) {  ?>
         <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
           <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-            <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('addelement') ?>" checked="<?php echo escapeHtml(''.@$type.'') ?>" /><?php echo escapeHtml('') ?>
+            <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('addelement') ?>" <?php if(@$type=='addelement'){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
             <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
               <span><?php echo escapeHtml(''.@lang('value').'') ?>
               </span>
@@ -31,7 +31,7 @@
         </fieldset>
         <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
           <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-            <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('addicon') ?>" checked="<?php echo escapeHtml(''.@$type.'') ?>" /><?php echo escapeHtml('') ?>
+            <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('addicon') ?>" <?php if(@$type=='addicon'){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
             <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
               <span><?php echo escapeHtml(''.@lang('ICON').'') ?>
               </span>
@@ -48,7 +48,7 @@
         </div>
         <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
           <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-            <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('addifempty') ?>" checked="<?php echo escapeHtml(''.@$type.'') ?>" /><?php echo escapeHtml('') ?>
+            <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('addifempty') ?>" <?php if(@$type=='addifempty'){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
             <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
               <span><?php echo escapeHtml(''.@lang('TEMPLATE_SRC_IFEMPTY').'') ?>
               </span>
@@ -59,7 +59,7 @@
         </div>
         <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
           <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-            <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('addifnotempty') ?>" checked="<?php echo escapeHtml(''.@$type.'') ?>" /><?php echo escapeHtml('') ?>
+            <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('addifnotempty') ?>" <?php if(@$type=='addifnotempty'){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
             <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
               <span><?php echo escapeHtml(''.@lang('TEMPLATE_SRC_IFNOTEMPTY').'') ?>
               </span>

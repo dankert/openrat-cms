@@ -27,7 +27,7 @@
         <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
           <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
             <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-              <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('empty') ?>" checked="<?php echo escapeHtml(''.@$type.'') ?>" /><?php echo escapeHtml('') ?>
+              <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('empty') ?>" <?php if(@$type=='empty'){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
             </div>
             <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
               <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
@@ -42,7 +42,7 @@
                 <span><?php echo escapeHtml(''.@lang('copy').'') ?>
                 </span>
               </label>
-              <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('copy') ?>" checked="<?php echo escapeHtml(''.@$type.'') ?>" /><?php echo escapeHtml('') ?>
+              <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('copy') ?>" <?php if(@$type=='copy'){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
             </div>
             <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
               <select name="<?php echo escapeHtml('templateid') ?>" size="<?php echo escapeHtml('1') ?>"><?php echo escapeHtml('') ?>
@@ -59,7 +59,7 @@
                 <span><?php echo escapeHtml(''.@lang('example').'') ?>
                 </span>
               </label>
-              <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('example') ?>" checked="<?php echo escapeHtml(''.@$type.'') ?>" /><?php echo escapeHtml('') ?>
+              <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('example') ?>" <?php if(@$type=='example'){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
             </div>
             <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
               <select name="<?php echo escapeHtml('example') ?>" size="<?php echo escapeHtml('1') ?>"><?php echo escapeHtml('') ?>

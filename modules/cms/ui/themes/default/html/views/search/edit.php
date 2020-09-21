@@ -28,31 +28,31 @@
           <br /><?php echo escapeHtml('') ?>
         </div>
         <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-          <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('id') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(config('search','quicksearch','flag','id')){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+          <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('id') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(config('search','quicksearch','flag','id')){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
           <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
             <span><?php echo escapeHtml(''.@lang('id').'') ?>
             </span>
           </label>
           <br /><?php echo escapeHtml('') ?>
-          <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('name') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(config('search','quicksearch','flag','name')){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+          <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('name') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(config('search','quicksearch','flag','name')){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
           <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
             <span><?php echo escapeHtml(''.@lang('name').'') ?>
             </span>
           </label>
           <br /><?php echo escapeHtml('') ?>
-          <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('filename') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(config('search','quicksearch','flag','filename')){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+          <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('filename') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(config('search','quicksearch','flag','filename')){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
           <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
             <span><?php echo escapeHtml(''.@lang('filename').'') ?>
             </span>
           </label>
           <br /><?php echo escapeHtml('') ?>
-          <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('description') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(config('search','quicksearch','flag','description')){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+          <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('description') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(config('search','quicksearch','flag','description')){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
           <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
             <span><?php echo escapeHtml(''.@lang('description').'') ?>
             </span>
           </label>
           <br /><?php echo escapeHtml('') ?>
-          <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('content') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(config('search','quicksearch','flag','content')){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+          <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('content') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(config('search','quicksearch','flag','content')){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
           <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
             <span><?php echo escapeHtml(''.@lang('content').'') ?>
             </span>

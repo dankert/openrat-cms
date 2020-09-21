@@ -30,7 +30,12 @@ class DocumentElement extends AbstractElement
 
 	var $encodeHtml = false;
 
-	/**
+    /**
+     * @var \cms\generator\PageContext
+     */
+    public $pageContext;
+
+    /**
 	 * Ein Text wird geparst.<br>
 	 * <br>
 	 * Zerlegt den Text zeilenweise und erzeugt die Unterobjekte.<br>
@@ -90,6 +95,7 @@ class DocumentElement extends AbstractElement
 		$renderer = new $rendererClass();
 		$renderer->children = $this->children;
 		$renderer->page = $this->page;
+		$renderer->pageContext = $this->pageContext;
 		$renderer->linkedObjectIds = $this->linkedObjectIds;
 		$renderer->encodeHtml = $this->encodeHtml;
 

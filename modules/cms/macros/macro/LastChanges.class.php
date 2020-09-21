@@ -16,6 +16,9 @@ namespace cms\macros\macro;
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+use cms\generator\PageContext;
+use cms\generator\ValueContext;
+use cms\generator\ValueGenerator;
 use cms\model\BaseObject;
 use cms\model\Folder;
 use cms\model\Link;
@@ -115,13 +118,22 @@ class LastChanges extends Macro
 				if	( $this->limit >= 0 && $count > $this->limit)
 					break; // Maximale Anzahl erreicht.
 				
-				$desc = $p->desc;
-				$p->generate_elements();
-				
+				$desc = $p->getNameForLanguage( $this->pageContext->languageId )->description;
+
+				$pageContext = clone $this->pageContext;
+				$pageContext->objectId = $o['objectid'];
+
 				if	( !empty($this->teaserElementId) )
 				{
-					$value = $p->values[$this->teaserElementId];
-					$desc = $value->value;
+					$valueContext = new ValueContext( $pageContext );
+					$valueContext->elementid = $this->teaserElementId;
+
+					$value = new ValueGenerator($valueContext);
+
+
+					$desc = $value->getCache()->get();
+
+
 					if	( istrue($this->plaintext)  )
 					{
 						$desc = strip_tags($desc);
@@ -135,8 +147,12 @@ class LastChanges extends Macro
 				$time = '';
 				if	( !empty($this->timeelementid) )
 				{
-					$value = $p->values[$this->timeelementid];
-					$time = $value->value;
+					$valueContext = new ValueContext( $pageContext );
+					$valueContext->elementid = $this->timeelementid;
+
+					$value = new ValueGenerator($valueContext);
+
+					$time = $value->getCache()->get();
 				}
 
 				$this->output('<div class="'.$this->css_class.'">');
@@ -151,7 +167,7 @@ class LastChanges extends Macro
 				
 				
 				$this->output( '<h3>');
-				$this->output( $p->name );
+				$this->output( $p->getNameForLanguage( $pageContext->languageId )->name );
 				$this->output( '</h3>' );
 					
 				$this->output( '<p>' );

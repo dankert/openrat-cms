@@ -1,6 +1,6 @@
 <?php
 
-namespace cms\generator;
+namespace cms\generator\link;
 
 use cms\model\Alias;
 use cms\model\BaseObject;
@@ -15,7 +15,7 @@ use util\exception\GeneratorException;
  * Time: 23:47
  */
 
-class PublishPreview extends Publish
+class PreviewLink implements LinkFormat
 {
     /**
      * @param $from \cms\model\BaseObject
@@ -36,6 +36,9 @@ class PublishPreview extends Publish
         // Interne Verlinkungen in der Seitenvorschau
         switch( $to->typeid )
         {
+            case BaseObject::TYPEID_FOLDER:
+				$inhalt = \util\Html::url('folder','show',$to->objectid,$param);
+				break;
             case BaseObject::TYPEID_FILE:
             case BaseObject::TYPEID_IMAGE:
             case BaseObject::TYPEID_TEXT:
@@ -106,27 +109,4 @@ class PublishPreview extends Publish
 
     }
 
-    public function isPublic()
-    {
-        return false;
-    }
-
-    public function copy($tmp_filename,$dest_filename,$lastChangeDate=null)
-    {
-        // nothing to do.
-    }
-
-    public function clean()
-    {
-        // nothing to do.
-    }
-
-    public function close()
-    {
-        // nothing to do.
-    }
-    public function isSimplePreview()
-    {
-        return false;
-    }
 }

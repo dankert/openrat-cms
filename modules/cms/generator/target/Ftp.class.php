@@ -23,11 +23,11 @@ use util\exception\UIException;
 
 
 /**
- * FTP-Target.
+ * FTP-BaseTarget.
  *
  * @author Jan Dankert
  */
-class Ftp extends Target
+class Ftp extends BaseTarget
 {
 	private $connection;
 

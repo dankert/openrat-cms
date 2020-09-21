@@ -2,6 +2,12 @@
 
 namespace cms\action;
 
+use cms\generator\FileContext;
+use cms\generator\FileGenerator;
+use cms\generator\PageContext;
+use cms\generator\PageGenerator;
+use cms\generator\Producer;
+use cms\generator\Publisher;
 use language\Messages;
 use util\ArchiveTar;
 use cms\model\Acl;
@@ -1279,32 +1285,72 @@ class FolderAction extends ObjectAction
 		if	( !$this->folder->hasRight( Acl::ACL_PUBLISH ) )
 			throw new \util\exception\SecurityException('no rights for publish');
 
-		$subdirs = ( $this->hasRequestVar('subdirs') );
-		$pages   = ( $this->hasRequestVar('pages'  ) );
-		$files   = ( $this->hasRequestVar('files'  ) );
+		$project = $this->folder->getProject();
+		$project->load();
 
+		// Nothing is written to the session from this point. so we should free the session.
 		Session::close();
-		$publisher = new PublishPublic( $this->folder->projectid );
 
-		$this->folder->publisher = &$publisher;
-		$this->folder->publish( $pages,$files,$subdirs );
+		$publisher = new Publisher( $project->projectid );
 
-		$publisher->close();
+		// Create a list of all folders.
+		$folderList = [ $this->folder->objectid ];
+
+		// Add all subfolders to the list
+		if   ( $this->request->hasRequestVar('subdirs') )
+			$folderList = array_merge( $folderList, $this->folder->getAllSubFolderIds() );
+
+		foreach( $folderList as $folderId ) {
+
+			$folder = new Folder( $folderId );
+			$folder->load();
+
+			// Publish all pages
+			if   ( $this->request->hasRequestVar('pages'  ) ) {
+
+				foreach( $folder->getPages() as $pageObjectId ) {
+
+					foreach( $project->getModelIds() as $modelId ) {
+
+						foreach( $project->getLanguageIds() as $languageId ) {
+
+							$pageContext = new PageContext( $pageObjectId, Producer::SCHEME_PUBLIC );
+							$pageContext->modelId    = $modelId;
+							$pageContext->languageId = $languageId;
+
+							$pageGenerator = new PageGenerator( $pageContext );
+
+							$publisher->publish( $pageGenerator->getCache()->load()->getFilename(),$pageGenerator->getPublicFilename(), 0 );
+						}
+					}
+				}
+			}
+
+			// Publish all files
+			if   ( $this->hasRequestVar('files'  ) ) {
+
+				foreach( $folder->getFiles() as $fileid ) {
+
+					$fileGenerator = new FileGenerator( new FileContext( $fileid, Producer::SCHEME_PUBLIC));
+					$publisher->publish( $fileGenerator->getCache()->load()->getFilename(),$fileGenerator->getPublicFilename(),0 );
+
+				}
+			}
+		}
 
 
-		$list = array_map(
-		    function($obj)
-            {
-                return $obj['full_filename'];
-            },
-            $publisher->publishedObjects
-        );
 
-		$this->addNotice('folder',$this->folder->getDefaultName()->name,'PUBLISHED',OR_NOTICE_OK,array(),$list);
 
-		// Wenn gewuenscht, das Zielverzeichnis aufraeumen
+		// Cleanup the target directory (if supported by the underlying target)
 		if	( $this->hasRequestVar('clean')      )
-			$publisher->clean();
+			$publisher->cleanOlderThan( START_TIME );
+
+
+		$this->addNoticeFor( $this->folder,
+			'PUBLISHED',
+			array(),
+			implode("\n",$publisher->publishedObjects)
+		);
 	}
 
 

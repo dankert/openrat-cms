@@ -31,7 +31,7 @@ use util\exception\UIException;
  * @version $Revision$
  * @package openrat.services
  */
-class Scp extends Target
+class Scp extends BaseTarget
 {
 	/**
 	 * @var resource
@@ -52,14 +52,17 @@ class Scp extends Target
 
 	protected function createConnection() {
 
+		if   ( empty($this->url->port) )
+			$this->url->port = 22; // Default-SSH-port
+
 		$sshConnection = @ssh2_connect($this->url->host,$this->url->port );
 
 		if (! $sshConnection)
-			throw new PublisherException("Could not connect to ".$this->url );
+			throw new PublisherException("Could not connect to ".$this->url->host.':'.$this->url->port );
 
 
 		if (! @ssh2_auth_password($sshConnection, $this->url->user,$this->url->pass) )
-			throw new PublisherException("Could not authenticate");
+			throw new PublisherException("Could not authenticate with user ".$this->url->user);
 
 		$this->sshConnection = $sshConnection;
 

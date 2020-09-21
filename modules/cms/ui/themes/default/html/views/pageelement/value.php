@@ -286,7 +286,7 @@
               <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
                 <div class="<?php echo escapeHtml('') ?>"><?php echo escapeHtml('') ?>
                   <?php foreach((array)$languages as $languageid=>$languagename) {  ?>
-                    <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('otherlanguageid') ?>" value="<?php echo escapeHtml(''.@$languageid.'') ?>" checked="<?php echo escapeHtml(''.@$otherlanguageid.'') ?>" /><?php echo escapeHtml('') ?>
+                    <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('otherlanguageid') ?>" value="<?php echo escapeHtml(''.@$languageid.'') ?>" <?php if(@$otherlanguageid=='${languageid}'){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                     <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                       <span><?php echo escapeHtml(''.@$languagename.'') ?>
                       </span>
@@ -307,7 +307,7 @@
             </legend>
             <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
               <div class="<?php echo escapeHtml('') ?>"><?php echo escapeHtml('') ?>
-                <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('preview') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$preview){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+                <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('preview') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$preview){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                 <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                   <span><?php echo escapeHtml(''.@lang('PAGE_PREVIEW').'') ?>
                   </span>
@@ -328,7 +328,7 @@
         <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
           <?php $if1=(isset($release)); if($if1) {  ?>
             <div class="<?php echo escapeHtml('') ?>"><?php echo escapeHtml('') ?>
-              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('release') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$release){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('release') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$release){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
               <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 <span><?php echo escapeHtml(''.@lang('RELEASE').'') ?>
                 </span>
@@ -337,7 +337,7 @@
            <?php } ?>
           <?php $if1=(isset($publish)); if($if1) {  ?>
             <div class="<?php echo escapeHtml('') ?>"><?php echo escapeHtml('') ?>
-              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('publish') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$publish){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('publish') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$publish){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
               <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 <span><?php echo escapeHtml(''.@lang('PAGE_PUBLISH_AFTER_SAVE').'') ?>
                 </span>

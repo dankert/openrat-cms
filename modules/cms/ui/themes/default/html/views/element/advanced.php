@@ -45,7 +45,7 @@
               <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
               </div>
               <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('with_icon') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$with_icon){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+                <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('with_icon') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$with_icon){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                 <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                   <span><?php echo escapeHtml(''.@lang('EL_PROP_WITH_ICON').'') ?>
                   </span>
@@ -58,7 +58,7 @@
               <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
               </div>
               <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('inherit') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$inherit){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+                <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('inherit') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$inherit){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                 <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                   <span><?php echo escapeHtml(''.@lang('EL_PROP_INHERIT').'') ?>
                   </span>
@@ -71,7 +71,7 @@
               <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
               </div>
               <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('all_languages') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$all_languages){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+                <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('all_languages') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$all_languages){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                 <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                   <span><?php echo escapeHtml(''.@lang('EL_PROP_ALL_LANGUAGES').'') ?>
                   </span>
@@ -84,7 +84,7 @@
               <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
               </div>
               <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('writable') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$writable){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+                <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('writable') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$writable){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                 <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                   <span><?php echo escapeHtml(''.@lang('EL_PROP_writable').'') ?>
                   </span>

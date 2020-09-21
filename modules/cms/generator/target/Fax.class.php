@@ -27,7 +27,7 @@ use util\exception\UIException;
  *
  * @author Jan Dankert
  */
-class Fax extends Target
+class Fax extends BaseTarget
 {
 	public function open()
 	{

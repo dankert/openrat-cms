@@ -21,7 +21,7 @@
               <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
                 <?php  { $inherit= 1; ?>
                  <?php } ?>
-                <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('inherit') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$inherit){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+                <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('inherit') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$inherit){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                 <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                   <span><?php echo escapeHtml(''.@lang('inherit_rights').'') ?>
                   </span>

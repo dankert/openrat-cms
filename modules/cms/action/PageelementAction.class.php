@@ -2,6 +2,10 @@
 
 namespace cms\action;
 
+use cms\generator\PageContext;
+use cms\generator\Producer;
+use cms\generator\ValueContext;
+use cms\generator\ValueGenerator;
 use cms\model\Acl;
 use cms\model\Project;
 use cms\model\User;
@@ -115,6 +119,28 @@ class PageelementAction extends BaseAction
 	}
 
 
+	protected function createValueContext( $scheme ) {
+
+		$pageContext = new PageContext( $this->page->objectid,$scheme );
+
+		if  ( $this->request->hasLanguageId())
+			$pageContext->languageId = $this->request->getLanguageId();
+
+		if  ( $this->request->hasModelId())
+			$pageContext->modelId = $this->request->getModelId();
+
+		if  ( !$pageContext->languageId )
+			$pageContext->languageId = $this->page->getProject()->getDefaultLanguageId();
+
+		if  ( !$pageContext->modelId )
+			$pageContext->modelId = $this->page->getProject()->getDefaultModelId();
+
+		$valueContext = new ValueContext( $pageContext );
+		$valueContext->elementid = $this->element->elementid;
+
+		return $valueContext;
+	}
+
 
 	/**
 	 * Anzeigen des Element-Inhaltes.
@@ -224,7 +250,7 @@ class PageelementAction extends BaseAction
             $languages[$languageId] = array(
                 'languageid'   => $languageId,
                 'languagename' => $languageName,
-                'value'        => $this->value->generate()
+                'value'        => $this->value->value
             );
         }
 
@@ -263,7 +289,7 @@ class PageelementAction extends BaseAction
             $languages[$languageId] = array(
                 'languageid'   => $languageId,
                 'languagename' => $languageName,
-                'value'        => $this->value->generate(),
+                'value'        => $this->value->value,
                 'editors'      => Element::getAvailableFormats()
             );
         }
@@ -321,24 +347,8 @@ class PageelementAction extends BaseAction
 	 */
 	public function previewView()
 	{
-		$this->value->languageid = $this->page->languageid;
-		$this->value->objectid   = $this->page->objectid;
-		$this->value->pageid     = $this->page->pageid;
-		$this->value->element = &$this->element;
-		$this->value->element->load();
-
-		if	( intval($this->value->valueid)!=0 )
-		$this->value->loadWithId();
-		else
-		$this->value->load();
-
-
-		$this->value->page             = new Page( $this->page->objectid );
-		$this->value->page->languageid = $this->value->languageid;
-		$this->value->page->load();
-
-		$this->value->generate();
-		$this->setTemplateVar('preview' ,$this->value->value );
+		$valueGenerator = new ValueGenerator( $this->createValueContext( Producer::SCHEME_PREVIEW) );
+		$this->setTemplateVar('preview' ,$valueGenerator->getCache()->get() );
 	}
 
 
@@ -963,6 +973,7 @@ class PageelementAction extends BaseAction
         {
             $inputText = $this->getRequestVar('text','raw');
 
+            /*
             if	( $this->hasRequestVar('preview') )
             {
                 $value->page             = $this->page;
@@ -971,7 +982,7 @@ class PageelementAction extends BaseAction
                 $value->page->load();
                 $value->generate();
                 $this->setTemplateVar('preview',$value->value );
-            }
+            }*/
 
 
             $this->setTemplateVar( 'release' ,$this->page->hasRight(Acl::ACL_RELEASE) );

@@ -16,7 +16,7 @@
           <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
           </div>
           <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-            <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('pages') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$pages){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+            <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('pages') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$pages){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
             <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
               <span><?php echo escapeHtml(' ') ?>
               </span>
@@ -31,7 +31,7 @@
           <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
           </div>
           <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-            <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('files') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$files){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+            <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('files') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$files){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
             <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
               <span><?php echo escapeHtml(' ') ?>
               </span>
@@ -55,7 +55,7 @@
               <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
               </div>
               <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('subdirs') ?>" disabled="<?php echo escapeHtml('disabled') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$subdirs){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+                <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('subdirs') ?>" disabled="<?php echo escapeHtml('disabled') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$subdirs){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                 <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                   <span><?php echo escapeHtml(' ') ?>
                   </span>
@@ -70,7 +70,7 @@
               <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
               </div>
               <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('clean') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$clean){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+                <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('clean') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$clean){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                 <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                   <span><?php echo escapeHtml(' ') ?>
                   </span>

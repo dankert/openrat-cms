@@ -13,7 +13,7 @@
           <table width="<?php echo escapeHtml('100%') ?>"><?php echo escapeHtml('') ?>
             <tr class="<?php echo escapeHtml('headline') ?>"><?php echo escapeHtml('') ?>
               <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
-                <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('checkall') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$checkall){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+                <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('checkall') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$checkall){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
               </td>
               <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
                 <span><?php echo escapeHtml(''.@lang('TYPE').'') ?>
@@ -28,7 +28,7 @@
               <tr class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
                 <td width="<?php echo escapeHtml('1%') ?>"><?php echo escapeHtml('') ?>
                   <?php $if1=($writable); if($if1) {  ?>
-                    <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml(''.@$id.'') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$$id){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+                    <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml(''.@$id.'') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$$id){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                    <?php } ?>
                   <?php $if1=(!writable); if($if1) {  ?>
                     <span><?php echo escapeHtml(' ') ?>
@@ -90,7 +90,7 @@
               <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
               </div>
               <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml(''.@$actiontype.'') ?>" checked="<?php echo escapeHtml(''.@$type.'') ?>" /><?php echo escapeHtml('') ?>
+                <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml(''.@$actiontype.'') ?>" <?php if(@$type=='${actiontype}'){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                 <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                   <span><?php echo escapeHtml(' ') ?>
                   </span>
@@ -106,7 +106,7 @@
             <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
               <span><?php echo escapeHtml('    ') ?>
               </span>
-              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('confirm') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$confirm){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> required="<?php echo escapeHtml('required') ?>" /><?php echo escapeHtml('') ?>
+              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('confirm') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$confirm){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> required="<?php echo escapeHtml('required') ?>" /><?php echo escapeHtml('') ?>
               <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 <span><?php echo escapeHtml(''.@lang('CONFIRM_DELETE').'') ?>
                 </span>

@@ -75,7 +75,7 @@
             <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
             </div>
             <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('publishFileExtension') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$publishFileExtension){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('publishFileExtension') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$publishFileExtension){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
               <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml(''.@lang('PROJECT_publish_File_Extension').'') ?>
               </label>
             </div>
@@ -84,7 +84,7 @@
             <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
             </div>
             <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('publishPageExtension') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$publishPageExtension){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('publishPageExtension') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$publishPageExtension){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
               <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml(''.@lang('PROJECT_publish_page_Extension').'') ?>
               </label>
             </div>
@@ -92,12 +92,12 @@
           <label class="<?php echo escapeHtml('or-form-row or-form-radio') ?>"><?php echo escapeHtml('') ?>
             <span class="<?php echo escapeHtml('or-form-label') ?>"><?php echo escapeHtml(''.@lang('LINKS_RELATIVE').'') ?>
             </span>
-            <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('linksAbsolute') ?>" value="<?php echo escapeHtml('') ?>" checked="<?php echo escapeHtml(''.@$linksAbsolute.'') ?>" /><?php echo escapeHtml('') ?>
+            <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('linksAbsolute') ?>" value="<?php echo escapeHtml('') ?>" <?php if(@$linksAbsolute=='0'){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
           </label>
           <label class="<?php echo escapeHtml('or-form-row or-form-radio') ?>"><?php echo escapeHtml('') ?>
             <span class="<?php echo escapeHtml('or-form-label') ?>"><?php echo escapeHtml(''.@lang('LINKS_ABSOLUTE').'') ?>
             </span>
-            <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('linksAbsolute') ?>" value="<?php echo escapeHtml('1') ?>" checked="<?php echo escapeHtml(''.@$linksAbsolute.'') ?>" /><?php echo escapeHtml('') ?>
+            <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('linksAbsolute') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$linksAbsolute=='1'){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
           </label>
         </div>
       </fieldset>
@@ -121,7 +121,7 @@
                   <input name="<?php echo escapeHtml('ftp_url') ?>" type="<?php echo escapeHtml('text') ?>" maxlength="<?php echo escapeHtml('256') ?>" value="<?php echo escapeHtml(''.@$ftp_url.'') ?>" class="<?php echo escapeHtml('filename') ?>" /><?php echo escapeHtml('') ?>
                 </div>
                 <br /><?php echo escapeHtml('') ?>
-                <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('ftp_passive') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$ftp_passive){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+                <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('ftp_passive') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$ftp_passive){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                 <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml(''.@lang('PROJECT_FTP_PASSIVE').'') ?>
                 </label>
               </div>
@@ -142,7 +142,7 @@
             <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
             </div>
             <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('content_negotiation') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$content_negotiation){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('content_negotiation') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$content_negotiation){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
               <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml(''.@lang('PROJECT_CONTENT_NEGOTIATION').'') ?>
               </label>
             </div>
@@ -151,7 +151,7 @@
             <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
             </div>
             <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('cut_index') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$cut_index){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('cut_index') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$cut_index){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
               <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml(''.@lang('PROJECT_CUT_INDEX').'') ?>
               </label>
             </div>

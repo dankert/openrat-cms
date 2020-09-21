@@ -9,7 +9,7 @@
         <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
         </div>
         <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-          <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('proposal') ?>" checked="<?php echo escapeHtml(''.@$type.'') ?>" /><?php echo escapeHtml('') ?>
+          <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('proposal') ?>" <?php if(@$type=='proposal'){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
           <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml(''.@$password_proposal.'') ?>
             <span><?php echo escapeHtml(''.@lang('USER_new_password').'') ?>
             </span>
@@ -26,7 +26,7 @@
           <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
           </div>
           <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-            <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('random') ?>" checked="<?php echo escapeHtml(''.@$type.'') ?>" /><?php echo escapeHtml('') ?>
+            <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('random') ?>" <?php if(@$type=='random'){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
             <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml(''.@lang('user_random_password').'') ?>
             </label>
           </div>
@@ -36,7 +36,7 @@
         <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
         </div>
         <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-          <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('input') ?>" checked="<?php echo escapeHtml(''.@$type.'') ?>" /><?php echo escapeHtml('') ?>
+          <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('input') ?>" <?php if(@$type=='input'){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
           <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml(''.@lang('USER_NEW_PASSWORD_INPUT').'') ?>
           </label>
         </div>
@@ -80,7 +80,7 @@
             <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
             </div>
             <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('email') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$email){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('email') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$email){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
               <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml(''.@lang('user_mail_new_password').'') ?>
               </label>
             </div>
@@ -89,7 +89,7 @@
             <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
             </div>
             <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('timeout') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$timeout){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('timeout') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$timeout){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
               <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml(''.@lang('user_password_timeout').'') ?>
               </label>
             </div>

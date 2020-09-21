@@ -172,7 +172,7 @@
             <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
             </div>
             <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('totp') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$totp){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('totp') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$totp){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
               <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml(''.@lang('user_totp').'') ?>
               </label>
               <i data-qrcode="<?php echo escapeHtml(''.@$totpSecretUrl.'') ?>" title="<?php echo escapeHtml(''.@lang('QRCODE_SHOW').'') ?>" class="<?php echo escapeHtml('image-icon image-icon--menu-qrcode or-qrcode or-info') ?>"><?php echo escapeHtml('') ?>
@@ -183,7 +183,7 @@
             <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
             </div>
             <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('hotp') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$hotp){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('hotp') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$hotp){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
               <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml(''.@lang('user_hotp').'') ?>
               </label>
               <i data-qrcode="<?php echo escapeHtml(''.@$hotpSecretUrl.'') ?>" title="<?php echo escapeHtml(''.@lang('QRCODE_SHOW').'') ?>" class="<?php echo escapeHtml('image-icon image-icon--menu-qrcode or-qrcode or-info') ?>"><?php echo escapeHtml('') ?>

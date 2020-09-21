@@ -24,7 +24,7 @@
             <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
             </div>
             <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('pages') ?>" disabled="<?php echo escapeHtml('disabled') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(1){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('pages') ?>" disabled="<?php echo escapeHtml('disabled') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(1){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
               <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 <span><?php echo escapeHtml(''.@lang('publish').'') ?>
                 </span>

@@ -16,6 +16,8 @@ namespace cms\macros\macro;
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+use cms\generator\ValueContext;
+use cms\generator\ValueGenerator;
 use cms\model\Folder;
 use cms\model\Page;
 use util\Macro;
@@ -48,7 +50,6 @@ class TeaserList extends Macro
 	 */
 	var $description = 'Creates a teaser list of pages in a folder';
 
-	// Erstellen des Hauptmenues
 	function execute()
 	{
 		$feed = array();
@@ -66,16 +67,23 @@ class TeaserList extends Macro
 		{
 			if ( $o->isPage ) // Nur wenn Ordner
 			{
+
+
 				$p = new Page( $o->objectid );
 				$p->load();
 				
 				$desc = $p->desc;
-				$p->generate_elements();
-				
+
 				if	( !empty($this->teaserElementId) )
 				{
-					$value = $p->values[$this->teaserElementId];
-					$desc = $value->value;
+					$valueContext = new ValueContext( $this->pageContext );
+					$valueContext->elementid = $this->teaserElementId;
+
+					$value = new ValueGenerator($valueContext);
+
+
+					$desc = $value->getCache()->get();
+
 					if	( istrue($this->plaintext)  )
 					{
 						$desc = strip_tags($desc);
@@ -89,8 +97,12 @@ class TeaserList extends Macro
 				$time = '';
 				if	( !empty($this->timeelementid) )
 				{
-					$value = $p->values[$this->timeelementid];
-					$time = $value->value;
+					$valueContext = new ValueContext( $this->pageContext );
+					$valueContext->elementid = $this->timeelementid;
+
+					$value = new ValueGenerator($valueContext);
+
+					$time = $value->getCache()->get();
 				}
 				
 				$this->output('<'.$this->time_html_tag.'>'.$time.'</'.$this->time_html_tag.'>');

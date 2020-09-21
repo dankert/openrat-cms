@@ -2,6 +2,10 @@
 
 namespace cms\action;
 
+use cms\generator\FileContext;
+use cms\generator\FileGenerator;
+use cms\generator\Producer;
+use cms\generator\Publisher;
 use cms\model\Folder;
 use cms\model\BaseObject;
 use cms\model\File;
@@ -149,7 +153,6 @@ class FileAction extends ObjectAction
 	 */
 	function previewView()
 	{
-	    $this->file->publisher = new PublishPreview();
 		$url = Html::url($this->file->getType(),'show',$this->file->objectid,array('target'=>'none') );
 		$this->setTemplateVar('preview_url',$url );
 	}
@@ -161,7 +164,10 @@ class FileAction extends ObjectAction
 	 */
 	function showView()
 	{
-	    $this->file->publisher = new PublishPreview();
+		$producer = new Producer();
+		$producer->generate( $this->file,Producer::SCHEME_PREVIEW );
+
+	    //$this->file->publisher = new PublishPreview();
 		$this->lastModified( $this->file->lastchangeDate );
 
 		if	( $this->file->extension == 'gz' )
@@ -202,11 +208,11 @@ class FileAction extends ObjectAction
 		header('Content-Transfer-Encoding: binary' );
 		header('Content-Description: '.$this->file->filename() );
 
-		$this->file->write(); // Bild aus Datenbank laden
+		//$this->file->write(); // Bild aus Datenbank laden
 
 		// Groesse des Bildes in Bytes
 		// Der Browser hat so die Moeglichkeit, einen Fortschrittsbalken zu zeigen
-		header('Content-Length: '.filesize($this->file->getCache()->getFilename()) );
+		header('Content-Length: '.$this->file->size );
 
 
 		if	( $this->request->getRequestVar('encoding') == 'base64')
@@ -232,12 +238,12 @@ class FileAction extends ObjectAction
 
             // PHP-Code ausfuehren
             ob_start();
-            require( $this->file->getCache()->getFilename() );
+            require( $producer->getCache()->getFilename() );
             $this->setTemplateVar('value',$encodingFunction(ob_get_contents()) );
             ob_end_clean();
         }
         else
-            $this->setTemplateVar('value',$encodingFunction(file_get_contents( $this->file->getCache()->getFilename()) ) );
+            $this->setTemplateVar('value',$encodingFunction( $producer->getValue() ) );
         // Maybe we want some gzip-encoding?
 	}
 
@@ -536,11 +542,12 @@ class FileAction extends ObjectAction
 	 */
 	function pubPost()
 	{
-	    $this->file->publisher = new PublishPublic( $this->file->projectid );
-		$this->file->publish();
-		$this->file->publisher->close();
-		
-		$this->addNotice('file',$this->file->fullFilename,'PUBLISHED',OR_NOTICE_OK,array(),$this->file->publisher->log);
+		$fileGenerator = new FileGenerator( new FileContext( $this->file->objectid, Producer::SCHEME_PUBLIC));
+
+		$publisher = new Publisher( $this->file->projectid );
+		$publisher->publish( $fileGenerator->getCache()->load()->getFilename(),$fileGenerator->getPublicFilename(),$this->file->lastchangeDate );
+
+		$this->addNoticeFor($this->file,'PUBLISHED',OR_NOTICE_OK );
 	}
 
 

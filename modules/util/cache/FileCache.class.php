@@ -6,13 +6,12 @@ use util\FileUtils;
 
 
 /**
- * Simple Cache for caching of generated content.
- *
- * @package util
+ * File-based cache.
  */
-class FileCache
+class FileCache implements Cache
 {
-    /**
+	const CACHE_FILENAME_PREFIX = 'openrat-cache';
+	/**
      * @var Callable
      */
     private $loader;
@@ -30,14 +29,14 @@ class FileCache
      */
     public function __construct( $key, $loader, $lastModified = 0 )
     {
-        $filename = FileUtils::getTempDir() . '/'. 'openrat-cache';
+        if   ( !is_array($key))
+        	$key = [ $key ];
+        $key = array_merge([ db()->id ], $key);
 
-        if   ( is_array($key))
-            foreach ($key as $a => $w)
-                $filename .= '.' . $a .'-'. $w;
-        else
-            $filename .= strval($key);
-
+        $filename  = FileUtils::getTempDir() . '/'. self::CACHE_FILENAME_PREFIX;
+        $filename .= array_reduce($key,function($carry,$item){
+        	return $carry.'-'.$item;
+		});
         $filename .= '.tmp';
 
         $this->filename = $filename;
@@ -69,7 +68,7 @@ class FileCache
 
 
     /**
-     * Get the content.
+     * Get the content. Loads the value if nessecary.
      */
     public function get() {
 
@@ -89,7 +88,21 @@ class FileCache
         if   ( ! is_file($this->filename)) {
             file_put_contents($this->filename,call_user_func($this->loader) );
         }
+
+        return $this;
     }
+
+
+	/**
+	 * Refreshes the cache.
+	 * @return $this
+	 */
+    public function refresh() {
+
+		file_put_contents($this->filename,call_user_func($this->loader) );
+
+		return $this;
+	}
 
 
     public function getFilename() {

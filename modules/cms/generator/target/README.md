@@ -21,4 +21,9 @@ The target is selected by the scheme in the target url in the project properties
 
 ## Example
 
-`scp://user@host/var/www` is publishing all files via SCP to the SSH-Server on host 'host'. 
+`scp://user@host/var/www` is publishing all files via SCP to the SSH-Server on host 'host'.
+
+## Requirements
+
+Some targets need special php modules:
+- `scp` and `sftp` need the php-ssh lib. On Ubuntu simply install it with `sudo apt-get install php-ssh2`.

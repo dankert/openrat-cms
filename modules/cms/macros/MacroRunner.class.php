@@ -3,20 +3,28 @@
 
 namespace cms\macros;
 
+use cms\generator\PageContext;
 use cms\model\Element;
 use cms\model\Template;
 use cms\model\Value;
 use logger\Logger;
 use util\ArrayUtils;
 use util\exception\GeneratorException;
-use util\exception\UIException;
 use util\text\variables\VariableResolver;
 
 class MacroRunner
 {
 	public $page;
 
-	public function executeMacro($name, $parameter, $page)
+	/**
+	 * @param $name
+	 * @param $parameter
+	 * @param $page
+	 * @param $pageContext PageContext
+	 * @return string
+	 * @throws GeneratorException
+	 */
+	public function executeMacro($name, $parameter, $page, $pageContext)
 	{
 		$this->page = $page;
 
@@ -32,7 +40,7 @@ class MacroRunner
 		if (!method_exists($macro, 'execute'))
 			throw new GeneratorException(' (missing method: execute())');
 
-		$macro->setContextPage($page);
+		$macro->setPageContext($pageContext);
 
 		$resolver = new VariableResolver();
 

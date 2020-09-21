@@ -33,7 +33,7 @@
                   <br /><?php echo escapeHtml('') ?>
                  <?php } ?>
                 <?php $if1=($openid_user_identity); if($if1) {  ?>
-                  <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('openid_provider') ?>" value="<?php echo escapeHtml('identity') ?>" checked="<?php echo escapeHtml(''.@$openid_provider.'') ?>" /><?php echo escapeHtml('') ?>
+                  <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('openid_provider') ?>" value="<?php echo escapeHtml('identity') ?>" <?php if(@$openid_provider=='identity'){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                   <div class="<?php echo escapeHtml('inputholder') ?>"><?php echo escapeHtml('') ?>
                     <input name="<?php echo escapeHtml('openid_url') ?>" type="<?php echo escapeHtml('text') ?>" maxlength="<?php echo escapeHtml('256') ?>" value="<?php echo escapeHtml(''.@$openid_url.'') ?>" class="<?php echo escapeHtml('name') ?>" /><?php echo escapeHtml('') ?>
                   </div>

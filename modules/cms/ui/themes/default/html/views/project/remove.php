@@ -29,7 +29,7 @@
             </div>
             <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
               <div class="<?php echo escapeHtml('') ?>"><?php echo escapeHtml('') ?>
-                <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('delete') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$delete){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> required="<?php echo escapeHtml('required') ?>" /><?php echo escapeHtml('') ?>
+                <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('delete') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$delete){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> required="<?php echo escapeHtml('required') ?>" /><?php echo escapeHtml('') ?>
                 <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                   <span><?php echo escapeHtml(''.@lang('CONFIRM_DELETE').'') ?>
                   </span>

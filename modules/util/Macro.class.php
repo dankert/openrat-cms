@@ -17,6 +17,8 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 namespace util;
 
+use cms\generator\PageContext;
+use cms\model\BaseObject;
 use cms\model\Page;
 use cms\model\Project;
 use util\Session;
@@ -32,13 +34,22 @@ use util\Session;
 class Macro
 {
 	/**
+	 * @var PageContext
+	 */
+	protected $pageContext;
+
+	/**
 	 * @var Page
+	 * @deprecated use getPage()
 	 */
 	protected $page;
 
-	public function setContextPage(&$page)
-	{
-		$this->page = $page;
+	/**
+	 * @param $pageContext PageContext
+	 */
+	public function setPageContext( $pageContext) {
+		$this->pageContext = $pageContext;
+		$this->page = new Page( $pageContext->objectId );
 	}
 
 	/**
@@ -65,7 +76,7 @@ class Macro
 	 */
 	protected function getObjectId()
 	{
-		return $this->page->objectid;
+		return $this->pageContext->objectId;
 	}
 
 
@@ -75,7 +86,10 @@ class Macro
 	 */
 	protected function getPage()
 	{
-		return $this->page;
+		$page = new Page($this->pageContext->objectId);
+		$page->load();
+
+		return $page;
 	}
 
 
@@ -85,7 +99,7 @@ class Macro
 	 */
 	protected function &getObject()
 	{
-		return $this->page;
+		return new Page( $this->pageContext->objectId );
 	}
 
 
@@ -94,7 +108,10 @@ class Macro
 	 */
 	protected function getRootObjectId()
 	{
-		$project = new Project($this->page->projectid);
+		$page = new Page( $this->pageContext->objectId );
+		$page->load();
+		$project = $page->getProject();
+;
 		return $project->getRootObjectId();
 	}
 
@@ -156,12 +173,15 @@ class Macro
 	 * @param Object
 	 * @return string
 	 */
-	public function pathToObject($obj)
+	public function pathToObject($targetObject)
 	{
-		if (is_object($obj))
-			return $this->page->path_to_object($obj->objectid);
-		else
-			return $this->page->path_to_object($obj);
+		if (is_numeric($targetObject))
+			$targetObject = new BaseObject( $targetObject );
+
+		$targetObject->load();
+		$linkFormat = $this->pageContext->getLinkScheme();
+
+		return $linkFormat->linkToObject( new Page( $this->pageContext->sourceObjectId), $targetObject );
 	}
 
 }

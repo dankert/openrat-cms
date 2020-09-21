@@ -27,7 +27,7 @@ use util\exception\UIException;
  *
  * @author Jan Dankert
  */
-class NoTarget extends Target
+class NoBaseTarget extends BaseTarget
 {
 	public static function acceptsSchemes()
 	{

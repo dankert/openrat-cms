@@ -16,8 +16,8 @@ namespace cms\model {
          */
         public $nameid;
 
-        public $objectid;
 
+		public $objectid;
         /** Sprach-ID
          * @see Language
          * @type Integer

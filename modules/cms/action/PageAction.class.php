@@ -2,6 +2,9 @@
 
 namespace cms\action;
 
+use cms\generator\PageGenerator;
+use cms\generator\Producer;
+use cms\generator\Publisher;
 use cms\model\Acl;
 use cms\model\Project;
 use cms\model\Value;
@@ -49,26 +52,26 @@ class PageAction extends ObjectAction
     public function init()
     {
         $page = new Page( $this->getRequestId() );
-        $context = new PageContext();
-        $context->sourceObjectId = $page->objectid;
+        //$context = new PageContext();
+        //$context->sourceObjectId = $page->objectid;
 
-		if  ( $this->request->hasLanguageId())
-			$context->languageId = $this->request->getLanguageId();
-
-		if  ( $this->request->hasModelId())
-			$context->modelId = $this->request->getModelId();
+//		if  ( $this->request->hasLanguageId())
+//			$context->languageId = $this->request->getLanguageId();
+//
+//		if  ( $this->request->hasModelId())
+//			$context->modelId = $this->request->getModelId();
 
 		$page->load();
+//
+//        if  ( !$context->languageId )
+//			$context->languageId = $page->getProject()->getDefaultLanguageId();
+//
+//        if  ( !$context->modelId )
+//			$context->modelId = $page->getProject()->getDefaultModelId();
 
-        if  ( !$context->languageId )
-			$context->languageId = $page->getProject()->getDefaultLanguageId();
-
-        if  ( !$context->modelId )
-			$context->modelId = $page->getProject()->getDefaultModelId();
-
-        $page->languageid = $context->languageId;
-        $page->modelid    = $context->modelId;
-        $page->context = $context;
+//        $page->languageid = $context->languageId;
+//        $page->modelid    = $context->modelId
+//        $page->context = $context;
 
 		// Hier kann leider nicht das Datum der letzten Änderung verwendet werden,
 		// da sich die Seite auch danach ändern kann, z.B. durch Includes anderer
@@ -202,6 +205,7 @@ class PageAction extends ObjectAction
 		// Vorschau anzeigen
 		if	( $value->element->type=='longtext' && ($this->hasRequestVar('preview')||$this->hasRequestVar('addmarkup')) )
 		{
+			/*
 			if	( $this->hasRequestVar('preview') )
 			{
 				$value->page             = $this->page;
@@ -210,7 +214,7 @@ class PageAction extends ObjectAction
 				$value->page->load();
 				$value->generate();
 				$this->setTemplateVar('preview_text',$value->value );
-			}
+			}*/
 
 			if	( $this->hasRequestVar('addmarkup') )
 			{
@@ -339,7 +343,7 @@ class PageAction extends ObjectAction
 	{
 		$this->setTemplateVar('id',$this->page->objectid);
 
-		$this->page->publisher = new PublishPublic( $this->page->projectid );
+		//$this->page->publisher = new PublishPublic( $this->page->projectid );
 		$this->page->load();
 		$this->page->full_filename();
 
@@ -634,7 +638,6 @@ class PageAction extends ObjectAction
 		$this->setTemplateVar( 'release',$this->page->hasRight(Acl::ACL_RELEASE) );
 		$this->setTemplateVar( 'publish',$this->page->hasRight(Acl::ACL_PUBLISH) );
 
-		$this->setWindowMenu( 'elements' );
 		$this->setTemplateVar('el',$list);
 	}
 
@@ -667,12 +670,15 @@ class PageAction extends ObjectAction
 		if	( $this->hasRequestVar('withIcons') )
 			$this->page->icons = true;
 
-		$publisher = new PublishPreview();
+		//$publisher = new PublishPreview();
 
-		$this->page->publisher = $publisher;
+		//$this->page->publisher = $publisher;
 
 		$this->page->load();
-		$this->page->generate();
+		//$this->page->generate();
+
+		$project = $this->page->getProject();
+		$this->page->modelid = $project->getDefaultModelId(); // FIXME
 
 		header('Content-Type: '.$this->page->mimeType().'; charset=UTF-8' );
 
@@ -683,17 +689,27 @@ class PageAction extends ObjectAction
 
 		Logger::debug("Preview page: ".$this->page->__toString() );
 
+
+		//$producer = new Producer();
+		//$producer->languages[] = $this->getRequestVar( REQ_PARAM_LANGUAGE_ID );
+		//$producer->models[]    = $this->getRequestVar( REQ_PARAM_MODEL_ID    );
+		//$producer->languages[] = $project->getDefaultLanguageId();
+		//producer->models[]    = $project->getDefaultModelId();
+
+		//$producer->generate( $this->page,Producer::SCHEME_PREVIEW );
+		$generator = new PageGenerator( $this->createPageContext( Producer::SCHEME_PREVIEW) );
+
 		// Executing PHP in Pages.
 		if	( ( config('publish','enable_php_in_page_content')=='auto' && $this->page->template->extension == 'php') ||
 		        config('publish','enable_php_in_page_content')===true )
         {
             ob_start();
-            require( $this->page->getCache()->getFilename() );
+            require( $generator->getCache()->load()->getFilename() );
             $this->setTemplateVar('output',ob_get_contents() );
             ob_end_clean();
         }
 		else
-            $this->setTemplateVar('output',file_get_contents( $this->page->getCache()->getFilename() ) );
+            $this->setTemplateVar('output',$generator->getCache()->get());
 	}
 
 
@@ -703,21 +719,18 @@ class PageAction extends ObjectAction
 	 *
 	 * Alle HTML-Sonderzeichen werden maskiert
 	 */
-	function srcView()
+	public function srcView()
 	{
 		$project = new Project( $this->page->projectid );
-
-		$this->page->withLanguage = config('publish','filename_language') == 'always' || count($project->getLanguageIds()) > 1;
-		$this->page->withModel    = config('publish','filename_type'    ) == 'always' || count($project->getModelIds()   ) > 1;
-
-		$this->page->publisher = new PublishPublic( $this->page->projectid );
-		$this->page->load();
-
 		$this->setModelAndLanguage();
 
-		$src = $this->page->generate();
+		$pageContext = new PageContext( $this->page->objectid,Producer::SCHEME_PUBLIC);
+		$pageContext->languageId = $project->getDefaultLanguageId();
+		$pageContext->modelId    = $project->getDefaultModelId();
 
-		$this->setTemplateVar('src',$src);
+		$generator = new PageGenerator( $pageContext );
+
+		$this->setTemplateVar('src',$generator->getCache()->get() );
 	}
 
 
@@ -779,42 +792,34 @@ class PageAction extends ObjectAction
 		if	( !$this->page->hasRight( Acl::ACL_PUBLISH ) )
             throw new \util\exception\SecurityException( 'no right for publish' );
 
+		$project = $this->page->getProject();
+
+		// Nothing is written to the session from this point. so we should free the session.
 		Session::close();
 
-		$publisher = new PublishPublic( $this->page->projectid );
+		$publisher = new Publisher( $project->projectid );
 
-		$this->page->publisher = $publisher;
-		$this->page->publish();
-		$publisher->close();
+		foreach( $project->getModelIds() as $modelId ) {
 
-		$this->addNotice( 'page',
-		                  $this->page->fullFilename,
-		                  'PUBLISHED',
-		                  OR_NOTICE_OK,
-		                  array(),
-		                  array_map(function($obj) {
-		                      return $obj['full_filename'];
-                          },$publisher->publishedObjects)
-         );
-	}
+			foreach( $project->getLanguageIds() as $languageId ) {
 
+				$pageContext = new PageContext( $this->page->objectid, Producer::SCHEME_PUBLIC );
+				$pageContext->modelId    = $modelId;
+				$pageContext->languageId = $languageId;
 
-	function setWindowMenu( $type ) {
-		switch( $type)
-		{
-			case 'elements':
-				$menu = array( array('subaction'=>'el'  ,'text'=>'all'),
-				               array('subaction'=>'form','text'=>'change'    )  );
-				$this->setTemplateVar('windowMenu',$menu);
-				break;
-			case 'acl':
-				$menu = array( array('subaction'=>'rights' ,'text'=>'show'),
-		                       array('subaction'=>'aclform','text'=>'add' ) );
-				$this->setTemplateVar('windowMenu',$menu);
-				break;
+				$pageGenerator = new PageGenerator( $pageContext );
 
+				$publisher->publish( $pageGenerator->getCache()->load()->getFilename(),$pageGenerator->getPublicFilename(), $this->page->lastchangeDate );
+			}
 		}
+
+		$this->addNoticeFor( $this->page,
+		                  'PUBLISHED',
+		                  array(),
+		                  implode("\n",$publisher->publishedObjects)
+        );
 	}
+
 
 
 
@@ -847,6 +852,25 @@ class PageAction extends ObjectAction
     }
 
 
-}
 
-?>
+    protected function createPageContext( $scheme ) {
+
+		$context = new PageContext( $this->page->objectid,$scheme );
+		$context->sourceObjectId = $this->page->objectid;
+
+		if  ( $this->request->hasLanguageId())
+			$context->languageId = $this->request->getLanguageId();
+
+		if  ( $this->request->hasModelId())
+			$context->modelId = $this->request->getModelId();
+
+        if  ( !$context->languageId )
+			$context->languageId = $this->page->getProject()->getDefaultLanguageId();
+
+        if  ( !$context->modelId )
+			$context->modelId = $this->page->getProject()->getDefaultModelId();
+
+        return $context;
+	}
+
+}

@@ -63,7 +63,7 @@
                 </td>
                 <td><?php echo escapeHtml('') ?>
                   <?php $if1=(isset($compareid)); if($if1) {  ?>
-                    <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('compareid') ?>" value="<?php echo escapeHtml(''.@$id.'') ?>" checked="<?php echo escapeHtml(''.@$compareid.'') ?>" /><?php echo escapeHtml('') ?>
+                    <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('compareid') ?>" value="<?php echo escapeHtml(''.@$id.'') ?>" <?php if(@$compareid=='${id}'){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                    <?php } ?>
                   <?php if(!$if1) {  ?>
                     <span><?php echo escapeHtml(' ') ?>
@@ -72,7 +72,7 @@
                 </td>
                 <td><?php echo escapeHtml('') ?>
                   <?php $if1=(isset($compareid)); if($if1) {  ?>
-                    <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('withid') ?>" value="<?php echo escapeHtml(''.@$id.'') ?>" checked="<?php echo escapeHtml(''.@$withid.'') ?>" /><?php echo escapeHtml('') ?>
+                    <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('withid') ?>" value="<?php echo escapeHtml(''.@$id.'') ?>" <?php if(@$withid=='${id}'){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                    <?php } ?>
                   <?php if(!$if1) {  ?>
                     <span><?php echo escapeHtml(' ') ?>

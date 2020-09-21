@@ -31,7 +31,7 @@ class CheckboxComponent extends Component
 		else
 			$condition = '@$'.PHPBlockElement::value($this->name);
 
-		$checkbox->addConditionalAttribute('checked', $condition, '1');
+		$checkbox->addConditionalAttribute('checked', $condition, 'checked');
 
 		if   ( $this->required )
 			$checkbox->addAttribute( 'required','required');

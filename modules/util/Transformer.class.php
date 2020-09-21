@@ -23,8 +23,12 @@ class Transformer
 	var $doc;
 	var $page;
 	var $element;
+    /**
+     * @var \cms\generator\PageContext
+     */
+    public $pageContext;
 
-	function transform()
+    function transform()
 	{
 		$this->parseDocument();
 		$this->renderDocument();
@@ -50,6 +54,7 @@ class Transformer
 		$this->doc->element = $this->element;
 		$this->doc->parse($zeilen);
 		$this->doc->page = $this->page;
+		$this->doc->pageContext = $this->pageContext;
 	}
 
 
@@ -73,7 +78,10 @@ class Transformer
 		// Das Dokument-Objekt hat keine Information ueber die aktuelle Seite,
 		// daher werden die Links auf Objekte hier gesetzt.
 		foreach ($linkedObjectIds as $objectId) {
-			$targetPath = $this->page->path_to_object($objectId);
+			$linkFormat = $this->pageContext->getLinkScheme();
+			$target = new BaseObject($objectId);
+			$target->load();
+			$targetPath = $linkFormat->linkToObject( $this->page, $target );
 
 			// Hack: Sonderzeichen muessen in URLs maskiert werden, aber nur bei URLs die aus Link-Objekten kommen, bei allem
 			// anderen (insbesondere Preview-Links zu andereen Seiten) darf die Umsetzung nicht erfolgen. 
@@ -101,4 +109,3 @@ class Transformer
 	}
 }
 
-?>

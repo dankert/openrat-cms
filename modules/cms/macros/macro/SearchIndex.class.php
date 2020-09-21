@@ -1,11 +1,15 @@
 <?php
 namespace cms\macros\macro;
 
+use cms\generator\ValueContext;
+use cms\generator\ValueGenerator;
+use cms\model\Element;
 use cms\model\Folder;
 use cms\model\Name;
 use cms\model\Page;
 use cms\model\Project;
 use cms\generator\PublishEdit;
+use JSON;
 use util\Macro;
 
 
@@ -44,13 +48,19 @@ class SearchIndex extends Macro
             foreach( $tf->getPages() as $pageid )
             {
                 $page = new Page( $pageid );
-
-                // Den einfachen Publisher benutzen, damit nur beschreibbare Inhalte auch in den Index wandern.
-                $page->publisher = new PublishEdit();
                 $page->load();
-                $page->generate();
 
-                $name = $page->getNameForLanguage( $this->page->languageid );
+                // Generating all values
+                $values = [];
+				/** @var Element $element */
+				foreach($page->getWritableElements() as $element ) {
+                	$valueContext = new ValueContext($this->pageContext);
+                	$valueContext->elementid = $element->elementid;
+                	$generator = new ValueGenerator( $valueContext );
+                	$value[] = $generator->getCache()->get();
+				}
+
+                $name = $page->getNameForLanguage( $this->getPage()->languageid );
 
                 $searchIndex[] = array(
                     'id'      => $pageid,
@@ -58,10 +68,10 @@ class SearchIndex extends Macro
                     'filename'=> $page->filename,
                     'url'     => $this->pathToObject( $pageid ),
                     'content' => $this->truncate(array_reduce(
-                        $page->values,
+                        $values,
                         function($act, $value)
                         {
-                            return $act.' '.$value->value;
+                            return $act.' '.$value;
                         },
                         ''
                     ))
@@ -71,7 +81,7 @@ class SearchIndex extends Macro
 
         // Output search index as JSON
         $json = new JSON();
-        $this->output( $json->encode( $searchIndex ) );
+        echo $json->encode( $searchIndex );
     }
 
 

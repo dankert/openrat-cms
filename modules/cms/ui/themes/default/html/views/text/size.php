@@ -33,7 +33,7 @@
               <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
               </div>
               <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('factor') ?>" checked="<?php echo escapeHtml(''.@$type.'') ?>" /><?php echo escapeHtml('') ?>
+                <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('factor') ?>" <?php if(@$type=='factor'){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                 <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                   <span><?php echo escapeHtml(''.@lang('FILE_IMAGE_SIZE_FACTOR').'') ?>
                   </span>
@@ -52,7 +52,7 @@
               <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
               </div>
               <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('input') ?>" checked="<?php echo escapeHtml(''.@$type.'') ?>" /><?php echo escapeHtml('') ?>
+                <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('input') ?>" <?php if(@$type=='input'){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                 <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                   <span><?php echo escapeHtml(''.@lang('FILE_IMAGE_NEW_WIDTH_HEIGHT').'') ?>
                   </span>
@@ -120,7 +120,7 @@
               <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
               </div>
               <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('copy') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$copy){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+                <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('copy') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$copy){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                 <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                   <span><?php echo escapeHtml(''.@lang('copy').'') ?>
                   </span>

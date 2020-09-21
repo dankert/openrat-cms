@@ -4,6 +4,7 @@ namespace template_engine\components;
 
 use template_engine\components\html\FieldComponent;
 use template_engine\element\CMSElement;
+use template_engine\element\PHPBlockElement;
 use template_engine\element\Value;
 use template_engine\element\ValueExpression;
 
@@ -41,7 +42,11 @@ class RadioComponent extends FieldComponent
 		if   ($this->readonly)
 			$radio->addAttribute('disabled','disabled');
 		$radio->addAttribute('value',$this->value);
-		$radio->addAttribute('checked',Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->name));
+
+		$condition = '@$'.PHPBlockElement::value($this->name).'==\''.$this->value.'\'';
+		$radio->addConditionalAttribute('checked', $condition, 'checked');
+
+		//$radio->addAttribute('checked',Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->name));
 
 		if ( $this->readonly && $this->required ) {
 			$hidden = (new CMSElement('input'))->addAttribute('type','hidden')->addAttribute('name',$this->name)->addAttribute('value','1');

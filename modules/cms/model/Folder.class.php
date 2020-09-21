@@ -364,7 +364,11 @@ class Folder extends BaseObject
 		return $o;
 	}
 
-	
+
+	/**
+	 * Returns a list of files.
+	 * @return array
+	 */
 	function getFiles()
 	{
 		$db = db_connection();

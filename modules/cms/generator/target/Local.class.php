@@ -29,7 +29,7 @@ use util\Url;
  *
  * @author Jan Dankert
  */
-class Local extends  Target
+class Local extends  BaseTarget
 {
 	/**
 	 * @var string
@@ -146,6 +146,58 @@ class Local extends  Target
 		{
 			if	( ! @chmod($path,octdec($conf['security']['chmod_dir'])) )
 				throw new PublisherException('Unable to CHMOD directory: ' . $path);
+		}
+	}
+
+
+
+
+
+
+	/**
+	 * Aufraeumen des Zielverzeichnisses.<br><br>
+	 * Es wird der komplette Zielordner samt Unterverzeichnissen durchsucht. Jede
+	 * Datei, die laenger existiert als der aktuelle Request alt ist, wird geloescht.<br>
+	 * Natuerlich darf diese Funktion nur nach einem Gesamt-Veroeffentlichen ausgefuehrt werden.
+	 */
+	public function clean()
+	{
+		if	( !empty($this->localDestinationDirectory) )
+			$this->cleanFolder($this->localDestinationDirectory);
+	}
+
+
+
+	/**
+	 * Aufr�umen eines Verzeichnisses.<br><br>
+	 * Dateien, die l�nger existieren als der aktuelle Request alt ist, werden gel�scht.<br>
+	 *
+	 * @param String Verzeichnis
+	 */
+	private function cleanFolder( $folderName )
+	{
+		$dh = opendir( $folderName );
+
+		while( $file = readdir($dh) )
+		{
+			if	( $file != '.' && $file != '..')
+			{
+				$fullpath = $folderName.'/'.$file;
+
+				// Wenn eine Datei beschreibbar und entsprechend alt
+				// ist, dann entfernen
+				if	( is_file($fullpath)     &&
+					is_writable($fullpath) &&
+					filemtime($fullpath) < START_TIME  )
+					unlink($fullpath);
+
+				// Bei Ordnern rekursiv absteigen
+				if	( is_dir( $fullpath) )
+				{
+					$this->cleanFolder($fullpath);
+					@rmdir($fullpath);
+				}
+			}
 		}
 	}
 

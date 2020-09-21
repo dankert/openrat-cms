@@ -55,7 +55,7 @@
           <label class="<?php echo escapeHtml('or-form-row or-form-checkbox') ?>"><?php echo escapeHtml('') ?>
             <span class="<?php echo escapeHtml('or-form-label') ?>"><?php echo escapeHtml(''.@lang('leave_link').'') ?>
             </span>
-            <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('leave_link') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$leave_link){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+            <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('leave_link') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$leave_link){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
           </label>
         </div>
       </fieldset>

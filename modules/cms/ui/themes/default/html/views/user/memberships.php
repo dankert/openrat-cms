@@ -20,7 +20,7 @@
             <?php foreach((array)$memberships as $list_key=>$list_value) { extract($list_value); ?>
               <tr class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
                 <td width="<?php echo escapeHtml('10%') ?>"><?php echo escapeHtml('') ?>
-                  <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml(''.@$var.'') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$$var){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+                  <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml(''.@$var.'') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$$var){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                 </td>
                 <td><?php echo escapeHtml('') ?>
                   <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>

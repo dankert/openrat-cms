@@ -4,6 +4,8 @@ namespace cms\action;
 
 use cms\model\Project;
 use cms\model\Folder;
+use language\Messages;
+use logger\Logger;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -69,7 +71,7 @@ class ProjectAction extends BaseAction
 			$this->project->publishPageExtension = $this->getRequestVar('publishPageExtension',OR_FILTER_NUMBER  );
 			$this->project->linkAbsolute         = $this->getRequestVar('linksAbsolute'       ,OR_FILTER_NUMBER  ) == '1';
 
-			$this->addNotice('project',$this->project->name,'SAVED','ok');
+			$this->addNoticeFor($this->project,Messages::SAVED);
 			$this->project->save(); // speichern
 			
 			$root = new Folder( $this->project->getRootObjectId() );

@@ -87,7 +87,7 @@
                                 <td><?php echo escapeHtml('') ?>
                                   <?php  { $$list_value= $bits[$list_value]; ?>
                                    <?php } ?>
-                                  <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml(''.@$list_value.'') ?>" disabled="<?php echo escapeHtml('disabled') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$$list_value){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+                                  <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml(''.@$list_value.'') ?>" disabled="<?php echo escapeHtml('disabled') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$$list_value){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                                 </td>
                                <?php } ?>
                             </tr>

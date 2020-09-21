@@ -28,7 +28,7 @@ use util\Url;
  *
  * @author Jan Dankert
  */
-class Dav extends Target
+class Dav extends BaseTarget
 {
 	/**
 	 * @var false|resource

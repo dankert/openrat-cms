@@ -45,7 +45,7 @@
                     </label>
                   </td>
                   <td><?php echo escapeHtml('') ?>
-                    <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml(''.@$saveid.'') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$$saveid){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+                    <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml(''.@$saveid.'') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$$saveid){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
                   </td>
                   <td><?php echo escapeHtml('') ?>
                     <?php $if1=(in_array($type,explode(",",text,date,number)); if($if1) {  ?>
@@ -83,7 +83,7 @@
         <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
           <?php $if1=(isset($release)); if($if1) {  ?>
             <div class="<?php echo escapeHtml('') ?>"><?php echo escapeHtml('') ?>
-              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('release') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$release){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('release') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$release){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
               <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 <span><?php echo escapeHtml(' ') ?>
                 </span>
@@ -94,7 +94,7 @@
            <?php } ?>
           <?php $if1=(isset($publish)); if($if1) {  ?>
             <div class="<?php echo escapeHtml('') ?>"><?php echo escapeHtml('') ?>
-              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('publish') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$publish){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('publish') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$publish){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
               <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 <span><?php echo escapeHtml(' ') ?>
                 </span>

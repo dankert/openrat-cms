@@ -37,7 +37,7 @@
             </span>
           </td>
           <td><?php echo escapeHtml('') ?>
-            <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('with_icon') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$with_icon){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+            <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('with_icon') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$with_icon){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
           </td>
         </tr>
        <?php } ?>
@@ -48,7 +48,7 @@
             </span>
           </td>
           <td><?php echo escapeHtml('') ?>
-            <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('all_languages') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$all_languages){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+            <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('all_languages') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$all_languages){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
           </td>
         </tr>
        <?php } ?>
@@ -59,7 +59,7 @@
             </span>
           </td>
           <td><?php echo escapeHtml('') ?>
-            <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('writable') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$writable){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+            <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('writable') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$writable){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
           </td>
         </tr>
        <?php } ?>

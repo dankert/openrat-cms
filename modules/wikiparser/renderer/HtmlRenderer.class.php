@@ -2,6 +2,7 @@
 
 namespace wikiparser\renderer;
 
+use cms\generator\PageContext;
 use cms\model\File;
 use cms\model\Image;
 use cms\model\BaseObject;
@@ -50,6 +51,11 @@ class HtmlRenderer
 	 * @var \cms\model\Page
 	 */
 	public $page;
+
+	/**
+	 * @var PageContext
+	 */
+	public $pageContext;
 
 	/**
 	 * @var array
@@ -221,7 +227,7 @@ class HtmlRenderer
 
 				$runner = new MacroRunner();
 				try {
-					$val .= $runner->executeMacro($className, $child->attributes, $this->page);
+					$val .= $runner->executeMacro($className, $child->attributes, $this->page,$this->pageContext);
 				} catch (Exception $e) {
 					throw new GeneratorException('Could not execute the macro '.$className,$e);
 				}

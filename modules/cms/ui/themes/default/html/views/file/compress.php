@@ -30,13 +30,13 @@
               </select>
               <?php  { $replace= 1; ?>
                <?php } ?>
-              <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('replace') ?>" value="<?php echo escapeHtml('1') ?>" checked="<?php echo escapeHtml(''.@$replace.'') ?>" /><?php echo escapeHtml('') ?>
+              <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('replace') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$replace=='1'){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
               <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 <span><?php echo escapeHtml(''.@lang('replace').'') ?>
                 </span>
               </label>
               <br /><?php echo escapeHtml('') ?>
-              <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('replace') ?>" value="<?php echo escapeHtml('') ?>" checked="<?php echo escapeHtml(''.@$replace.'') ?>" /><?php echo escapeHtml('') ?>
+              <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('replace') ?>" value="<?php echo escapeHtml('') ?>" <?php if(@$replace=='0'){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
               <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 <span><?php echo escapeHtml(''.@lang('new').'') ?>
                 </span>

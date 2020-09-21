@@ -43,7 +43,7 @@
       <?php $if1=(isset($release)); if($if1) {  ?>
         <tr><?php echo escapeHtml('') ?>
           <td colspan="<?php echo escapeHtml('2') ?>"><?php echo escapeHtml('') ?>
-            <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('release') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$release){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+            <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('release') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$release){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
             <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
               <span><?php echo escapeHtml(' ') ?>
               </span>
@@ -56,7 +56,7 @@
       <?php $if1=(isset($publish)); if($if1) {  ?>
         <tr><?php echo escapeHtml('') ?>
           <td colspan="<?php echo escapeHtml('2') ?>"><?php echo escapeHtml('') ?>
-            <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('publish') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$publish){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+            <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('publish') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$publish){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
             <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
               <span><?php echo escapeHtml(' ') ?>
               </span>

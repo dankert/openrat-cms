@@ -43,11 +43,6 @@ class File extends BaseObject
 	var $log_filenames = array();
 	var $fullFilename  = '';
 
-    /**
-     * @var \Publish
-     */
-	var $publish       = null;
-
 	var $mime_type     = '';
 
 	var $tmpfile;
@@ -64,8 +59,6 @@ class File extends BaseObject
 	var $storeValueAsBase64 = false;
 
     public $filterid;
-
-    public $public = false ;
 
     /**
 	 * Konstruktor
@@ -468,15 +461,6 @@ EOF
 		$sql->query();
 
 		$this->saveValue();
-	}
-
-
-	public function publish()
-	{
-		$this->write();
-		$this->publisher->copy( $this->getCache()->getFilename(),$this->full_filename(),$this->lastchangeDate );
-
-		$this->publisher->publishedObjects[] = $this->getProperties();
 	}
 
 

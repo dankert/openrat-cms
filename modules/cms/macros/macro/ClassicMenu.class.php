@@ -16,6 +16,7 @@ namespace cms\macros\macro;
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+use cms\model\BaseObject;
 use cms\model\Folder;
 use cms\model\Page;
 use util\Macro;
@@ -42,14 +43,18 @@ class ClassicMenu extends Macro
 	
 
 	// Erstellen des Hauptmenues
+	/**
+	 * @var array
+	 */
+	private $parentFolders;
+
 	public function execute()
 	{
 		$rootId = $this->getRootObjectId();
 		// Erstellen eines Untermenues
 
-		$f = new Folder( $this->page->parentid );
+		$f = new Folder( $this->getPage()->parentid );
 		$this->parentFolders = $f->parentObjectFileNames(false,true);
-		
 		$this->showFolder( $rootId );
 	}
 
@@ -59,11 +64,15 @@ class ClassicMenu extends Macro
 		$f = new Folder( $oid );
 
 		// Schleife ueber alle Objekte im aktuellen Ordner
-		foreach( $f->getObjects() as $o )
+		/** @var BaseObject $o */
+		foreach($f->getObjects() as $o )
 		{
 			$o->languageid = $this->page->languageid;
 			$o->load();
-			
+
+			// Wenn aktuelle Seite, dann markieren, sonst Link
+			$name = $o->getNameForLanguage($this->pageContext->languageId)->name;
+
 			// Ordner anzeigen
 			if ($o->isFolder )
 			{
@@ -72,14 +81,12 @@ class ClassicMenu extends Macro
 				
 				if	( is_object($fp) )
 				{
-	
-					// Wenn aktuelle Seite, dann markieren, sonst Link
-					if ( $this->page->objectid == $fp->objectid )
+					if ( $this->getPage()->objectid == $fp->objectid )
 						// aktuelle Seite
-						$this->outputLn( '<li class="active">'.$o->name.'' );
+						$this->outputLn( '<li class="active">'.$name.'' );
 					else
 						// Link erzeugen
-						$this->outputLn( '<li><a href="'.$this->pathToObject($fp->objectid).'">'.$o->name.'</a>' );
+						$this->outputLn( '<li><a href="'.$this->pathToObject($fp->objectid).'">'.$name.'</a>' );
 
 					if	( in_array($o->objectid,array_keys($this->parentFolders)) )
 					{
@@ -94,7 +101,7 @@ class ClassicMenu extends Macro
 			{
 				$page = new Page($o->objectid);
 				$page->load();
-				if	( $page->templateid != $this->page->templateid && $this->onlySameTemplate )
+				if	( $page->templateid != $this->getPage()->templateid && $this->onlySameTemplate )
 					continue;
 			}
 			
@@ -104,13 +111,13 @@ class ClassicMenu extends Macro
 				// Wenn aktuelle Seite, dann markieren, sonst Link
 				if ( $this->getObjectId() == $o->objectid)
 					// aktuelle Seite
-					$this->output( '<li class="active">'.$o->name.'</li>' );
+					$this->output( '<li class="active">'.$name.'</li>' );
 				elseif	( $o->isLink )
 					// Link mit HTML-Sonderzeichenumwandlung erzeugen
-					$this->output( '<li><a href="'.htmlspecialchars($this->pathToObject($o->objectid)).'">'.$o->name.'</a></li>' );
+					$this->output( '<li><a href="'.htmlspecialchars($this->pathToObject($o->objectid)).'">'.$name.'</a></li>' );
 				else
 					// Link erzeugen
-					$this->output( '<li><a href="'.$this->pathToObject($o->objectid).'">'.$o->name.'</a></li>' );
+					$this->output( '<li><a href="'.$this->pathToObject($o->objectid).'">'.$name.'</a></li>' );
 			}
 		}
 		$this->output('</ul>');

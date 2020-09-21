@@ -261,36 +261,10 @@ class Project extends ModelBase
 	}
 
 
-	// Laden
-	public function loadByName()
-	{
-		$db = db_connection();
-
-		$sql = $db->sql( 'SELECT * FROM {{project}} '.
-		                '   WHERE name={projectname}' );
-		$sql->setString( 'projectname',$this->name );
-
-		$row = $sql->getRow();
-
-		$this->projectid           = $row['id'                 ];
-		$this->target_dir          = $row['target_dir'         ];
-		$this->ftp_url             = $row['ftp_url'            ];
-		$this->url                 = $row['url'                ];
-		$this->ftp_passive         = $row['ftp_passive'        ];
-		$this->cmd_after_publish   = $row['cmd_after_publish'  ];
-        $this->cut_index           = $row['flags']&self::FLAG_CUT_INDEX;
-        $this->content_negotiation = $row['flags']&self::FLAG_CONTENT_NEGOTIATION;
-        $this->publishFileExtension = $row['flags']&self::FLAG_PUBLISH_FILE_EXTENSION;
-        $this->publishPageExtension = $row['flags']&self::FLAG_PUBLISH_PAGE_EXTENSION;
-        $this->linkAbsolute         = $row['flags']&self::FLAG_LINK_ABSOLUTE;
-    }
-
 
 	// Speichern
 	public function save()
 	{
-		$this->cleanTarget();
-
 		$stmt = DB::sql( <<<SQL
 				UPDATE {{project}}
                   SET name                = {name},
@@ -312,7 +286,7 @@ SQL
 		$stmt->setString('cmd_after_publish'  ,$this->cmd_after_publish );
 
         $flags = 0;
-        if( $this->cut_index) $flags |= self::FLAG_CUT_INDEX;
+        if( $this->cut_index           ) $flags |= self::FLAG_CUT_INDEX;
         if( $this->content_negotiation ) $flags |= self::FLAG_CONTENT_NEGOTIATION;
         if( $this->publishFileExtension) $flags |= self::FLAG_PUBLISH_FILE_EXTENSION;
         if( $this->publishPageExtension) $flags |= self::FLAG_PUBLISH_PAGE_EXTENSION;
@@ -1066,7 +1040,7 @@ SQL
 	/**
 	 * Cleans up the target url.
 	 */
-	private function cleanTarget()
+	public function getCleanTarget()
 	{
 		$target = parse_url( $this->target_dir );
 
@@ -1083,7 +1057,7 @@ SQL
 		$query    = isset($target['query']) ? '?' . $target['query'] : '';
 		$fragment = isset($target['fragment']) ? '#' . $target['fragment'] : '';
 
-		$this->target_dir = "$scheme$user$pass$host$port$path$query$fragment";
+		return "$scheme$user$pass$host$port$path$query$fragment";
 	}
 }
 

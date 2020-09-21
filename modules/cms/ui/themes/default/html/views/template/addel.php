@@ -48,7 +48,7 @@
         </div>
         <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
           <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-            <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('addtotemplate') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(1){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
+            <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('addtotemplate') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(1){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
             <span><?php echo escapeHtml(''.@lang('menu_template_srcelement').'') ?>
             </span>
           </label>

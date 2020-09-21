@@ -32,7 +32,7 @@
             <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
             </div>
             <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('confirm') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$confirm){ ?>checked="<?php echo escapeHtml('1') ?>"<?php } ?> required="<?php echo escapeHtml('required') ?>" /><?php echo escapeHtml('') ?>
+              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('confirm') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$confirm){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> required="<?php echo escapeHtml('required') ?>" /><?php echo escapeHtml('') ?>
               <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 <span><?php echo escapeHtml(''.@lang('CONFIRM_DELETE').'') ?>
                 </span>
@@ -45,7 +45,7 @@
             <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
               <span><?php echo escapeHtml('     ') ?>
               </span>
-              <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('value') ?>" checked="<?php echo escapeHtml(''.@$type.'') ?>" /><?php echo escapeHtml('') ?>
+              <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('value') ?>" <?php if(@$type=='value'){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
               <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 <span><?php echo escapeHtml(''.@lang('ELEMENT_DELETE_VALUES').'') ?>
                 </span>
@@ -53,7 +53,7 @@
               <br /><?php echo escapeHtml('') ?>
               <span><?php echo escapeHtml('     ') ?>
               </span>
-              <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('all') ?>" checked="<?php echo escapeHtml(''.@$type.'') ?>" /><?php echo escapeHtml('') ?>
+              <input type="<?php echo escapeHtml('radio') ?>" name="<?php echo escapeHtml('type') ?>" value="<?php echo escapeHtml('all') ?>" <?php if(@$type=='all'){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
               <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
                 <span><?php echo escapeHtml(''.@lang('DELETE').'') ?>
                 </span>
