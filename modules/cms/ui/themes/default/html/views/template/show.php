@@ -1,0 +1,1 @@
+<?php if (!defined('OR_TITLE')) exit(); ?><?php echo ''.@$text.'' ?>

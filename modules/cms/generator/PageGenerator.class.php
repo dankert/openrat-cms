@@ -85,9 +85,7 @@ class PageGenerator extends BaseGenerator
 		$page->load();
 
 		$template = new Template( $page->templateid );
-		$template->modelid = $this->context->modelId;
 		$template->load();
-		$this->ext = $template->extension;
 
 		$values = $this->generatePageElements( $page );
 
@@ -223,32 +221,30 @@ class PageGenerator extends BaseGenerator
 		$withLanguage = count($allLanguages) > 1 || config('publish','filename_language') == 'always';
 		$withModel    = count($allModels   ) > 1 || config('publish','filename_type'    ) == 'always';
 
-		if	( !$withLanguage || $project->content_negotiation && config('publish','negotiation','page_negotiate_language' ) )
-		{
-			$format = str_replace('{language}'    ,'',$format );
-			$format = str_replace('{language_sep}','',$format );
-		}
-		else
-		{
+		$languagePart = '';
+		$typePart     = '';
+
+		if	( $withLanguage  ) {
 			$l = new Language( $this->context->languageId );
 			$l->load();
-			$format = str_replace('{language}'    ,$l->isoCode                     ,$format );
-			$format = str_replace('{language_sep}',config('publish','language_sep'),$format );
+
+			$languagePart = $l->isoCode;
 		}
 
-		if	( !$withModel || $project->content_negotiation && config('publish','negotiation','page_negotiate_type' ) )
-		{
-			$format = str_replace('{type}'    ,'',$format );
-			$format = str_replace('{type_sep}','',$format );
-		}
-		else
-		{
+		if	( $withModel ) {
 			$templateModel = new TemplateModel( $page->templateid, $this->context->modelId );
 			$templateModel->load();
 
-			$format = str_replace('{type}'    ,$templateModel->extension               ,$format );
-			$format = str_replace('{type_sep}',config('publish','type_sep'),$format );
+			$typePart = $templateModel->extension;
 		}
+
+		$languageSep = $languagePart?config('publish','language_sep') :'';
+		$typeSep     = $typePart    ?config('publish','type_sep'    ) :'';
+
+		$format = str_replace('{language}'    ,$languagePart ,$format );
+		$format = str_replace('{language_sep}',$languageSep  ,$format );
+		$format = str_replace('{type}'        ,$typePart     ,$format );
+		$format = str_replace('{type_sep}'    ,$typeSep      ,$format );
 
 		return $page->path().'/'.$format;
 	}

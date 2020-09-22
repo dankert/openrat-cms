@@ -16,6 +16,8 @@ namespace cms\model;
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+use cms\base\DB;
+use language\Messages;
 
 
 /**
@@ -45,27 +47,7 @@ class Template extends ModelBase
 	 */
 	var $name = 'unnamed';
 	
-	/**
-	 * ID der Projektvariante
-     * @deprecated Zugriff über TemplateModel
-	 * @type Integer
-	 */
-	var $modelid = 0;
 
-	/**
-	 * Dateierweiterung dieses Templates (abh?ngig von der Projektvariante)
-     * @deprecated Zugriff über TemplateModel
-	 * @type String
-	 */
-	var $extension='';
-
-	/**
-	 * Inhalt des Templates (abh?ngig von der Projektvariante)
-     * @deprecated Zugriff über TemplateModel
-	 * @type String
-	 */
-	var $src='';
-	
 	// Konstruktor
 	function __construct( $templateid='' )
 	{
@@ -89,14 +71,16 @@ class Template extends ModelBase
 
 		$this->name      = $row['name'     ];
 		$this->projectid = $row['projectid'];
-
-		$templateModel = new TemplateModel( $this->templateid, $this->modelid );
-		$templateModel->load();
-
-        $this->extension = $templateModel->extension;
-        $this->src       = $templateModel->src;
 	}
 
+
+	public function loadTemplateModelFor( $modelid ) {
+
+		$templateModel = new TemplateModel( $this->templateid, $modelid );
+		$templateModel->load();
+
+		return $templateModel;
+	}
 
 	/**
  	 * Abspeichern des Templates in der Datenbank
@@ -104,49 +88,13 @@ class Template extends ModelBase
 	function save()
 	{
 		if	( $this->name == "" )
-			$this->name = lang('TEMPLATE').' #'.$this->templateid;
+			$this->name = lang(Messages::TEMPLATE).' #'.$this->templateid;
 
-		$db = db_connection();
-
-		$stmt = $db->sql( 'UPDATE {{template}}'.
+		$stmt = Db::sql( 'UPDATE {{template}}'.
 		                '  SET name={name}'.
 		                '  WHERE id={templateid}' );
 		$stmt->setString( 'name'      ,$this->name       );
 		$stmt->setInt   ( 'templateid',$this->templateid );
-		$stmt->query();
-
-		$stmt = $db->sql( 'SELECT COUNT(*) FROM {{templatemodel}}'.
-		                ' WHERE templateid={templateid}'.
-		                '   AND projectmodelid={modelid}' );
-		$stmt->setInt   ( 'templateid'    ,$this->templateid     );
-		$stmt->setInt   ( 'modelid'       ,$this->modelid );
-
-		if	( intval($stmt->getOne()) > 0 )
-		{
-			// Vorlagen-Quelltext existiert für diese Varianten schon.
-			$stmt = $db->sql( 'UPDATE {{templatemodel}}'.
-			                '  SET extension={extension},'.
-			                '      text={src} '.
-			                ' WHERE templateid={templateid}'.
-			                '   AND projectmodelid={modelid}' );
-		}
-		else
-		{
-			// Vorlagen-Quelltext wird für diese Varianten neu angelegt.
-			$stmt = $db->sql('SELECT MAX(id) FROM {{templatemodel}}');
-			$nextid = intval($stmt->getOne())+1;
-
-			$stmt = $db->sql( 'INSERT INTO {{templatemodel}}'.
-			                '        (id,templateid,projectmodelid,extension,text) '.
-			                ' VALUES ({id},{templateid},{modelid},{extension},{src}) ');
-			$stmt->setInt   ( 'id',$nextid         );
-		}
-
-		$stmt->setString( 'extension'     ,$this->extension      );
-		$stmt->setString( 'src'           ,$this->src            );
-		$stmt->setInt   ( 'templateid'    ,$this->templateid     );
-		$stmt->setInt   ( 'modelid'       ,$this->modelid        );
-		
 		$stmt->query();
 	}
 
@@ -359,38 +307,9 @@ SQL
 	}
 	
 	
-	/**
-	 * Ermittelt den Mime-Type zu diesem Template.
-	 * 
-	 * Es wird die Extension des Templates betrachtet und dann mit Hilfe der
-	 * Konfigurationsdatei 'mime-types.ini' der Mime-Type bestimmt. 
-	 *
-	 * @return String Mime-Type  
-	 */
-	function mimeType()
-	{
-		global $conf;
-		$mime_types = $conf['mime-types'];
-
-		// Nur den letzten Teil der Extension auswerten:
-		// Aus 'mobile.html' wird nur 'html' verwendet.
-		$parts = explode('.',$this->extension);
-		$extension = strtolower(array_pop($parts));
-
-		if	( !empty($mime_types[$extension]) )
-			$this->mime_type = $mime_types[$extension];
-		else
-			// Wenn kein Mime-Type gefunden, dann Standardwert setzen
-			$this->mime_type = 'application/octet-stream';
-			
-		return( $this->mime_type );
-	}
-
     public function getName()
     {
         return $this->name;
     }
 
 }
-
-?>

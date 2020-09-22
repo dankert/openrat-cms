@@ -21,6 +21,8 @@ namespace cms\macros\macro;
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 
+use cms\generator\PageContext;
+use cms\generator\Producer;
 use cms\model\Language;
 use cms\model\Page;
 use cms\model\Project;
@@ -56,15 +58,17 @@ class LanguageLinksForPage extends Macro
 
             $targetPage = new Page( $this->page->objectid );
             $targetPage->publisher  = $this->page->publisher;
-            $targetPage->languageid = $lid;
-            $targetPage->modelid    = $this->page->modelid;
             $targetPage->load();
 
-            $link = $this->page->publisher->linkToObject( $this->page, $targetPage );
+            $myPageContext = clone $this->pageContext;
+            $myPageContext->languageId = $lid;
+
+            $linkScheme = $myPageContext->getLinkScheme();
+
+            $link = $linkScheme->linkToObject( $this->getPage(), $targetPage );
 			echo '<li><a hreflang="'.$language->isoCode.'" href="'.$link.'">'.strtolower($language->isoCode).'</a></li>';
 			
 		}
-		$this->page->languageid = $languageId;
 		echo '</ul>';
 	}
 }

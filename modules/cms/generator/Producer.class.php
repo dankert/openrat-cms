@@ -3,8 +3,6 @@
 namespace cms\generator;
 
 
-use cms\generator\link\PreviewLink;
-use cms\generator\link\PublicLink;
 use cms\model\BaseObject;
 use cms\model\File;
 use cms\model\Page;

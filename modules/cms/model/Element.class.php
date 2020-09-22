@@ -572,9 +572,7 @@ SQL
 
     public function getName()
     {
-        return $this->name;
+        return $this->label;
     }
 
 }
-
-?>

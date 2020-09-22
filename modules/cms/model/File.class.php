@@ -47,9 +47,6 @@ class File extends BaseObject
 
 	var $tmpfile;
 
-	var $content_negotiation = false;
-
-
 
 	/**
 	 * Um Probleme mit BLOB-Feldern und Datenbank-Besonderheiten zu vermeiden,
@@ -84,49 +81,6 @@ class File extends BaseObject
         return new FileCache( $cacheKey,function() {
             return $this->loadValueFromDatabase();
         }, $this->lastchangeDate );
-    }
-
-	/**
-	  * Ermitteln des Dateinamens dieser Datei
-	  *
-	  * @return String Kompletter Dateiname, z.B. '/pfad/datei.jpeg'
-	  */
-	function full_filename()
-	{
-		if	( !empty($this->fullFilename) )
-			return $this->fullFilename;
-
-		$filename = parent::full_filename();
-
-		if	( $this->content_negotiation && config('publish','negotiation','file_negotiate_type' ) )
-		{
-			// Link auf Datei: Extension bleibt aufgrund Content-Negotiation leer
-		}
-		else
-		{
-		    // Nein, wurde bereits in filename() ergänzt.
-			//if	( !empty($this->extension) )
-			//	$filename .= '.'.$this->extension;
-		}
-
-		$this->fullFilename = $filename;
-		return $filename;
-	}
-
-
-
-    /**
-     * Ermitteln des Dateinamens dieser Datei (ohne Pfadangabe)
-     *
-     * @return String Kompletter Dateiname, z.B. '/pfad/datei.jpeg'
-     */
-	public function filename()
-    {
-        if	( $this->extension )
-            return parent::filename().'.'.$this->extension;
-        else
-            return parent::filename();
-
     }
 
 

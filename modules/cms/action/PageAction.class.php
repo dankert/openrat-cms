@@ -97,9 +97,6 @@ class PageAction extends ObjectAction
 	 */
 	function formPost()
 	{
-		$this->page->public = true;
-		$this->page->simple = true;
-
 		foreach( $this->page->getElements() as $elementid=>$name )
 		{
 			if   ( $this->hasRequestVar('saveid'.$elementid) )
@@ -345,7 +342,6 @@ class PageAction extends ObjectAction
 
 		//$this->page->publisher = new PublishPublic( $this->page->projectid );
 		$this->page->load();
-		$this->page->full_filename();
 
 		if	( $this->page->filename == $this->page->objectid )
 			$this->page->filename = '';
@@ -378,13 +374,15 @@ class PageAction extends ObjectAction
         if   ( $this->userIsProjectAdmin() )
 		{
 			$this->setTemplateVar('templateid',$this->page->templateid);
-			$this->setTemplateVar('modelid',$this->page->modelid);
 		}
 
 		$template = new Template( $this->page->templateid );
 		$template->load();
 		$this->setTemplateVar('template_name',$template->name );
-		$this->setTemplateVar('tmp_filename' ,$this->page->getCache()->getFilename() );
+
+		$generator = new PageGenerator( $this->createPageContext( Producer::SCHEME_PUBLIC) );
+
+		$this->setTemplateVar('tmp_filename' ,$generator->getPublicFilename() );
 
 	}
 
@@ -552,10 +550,6 @@ class PageAction extends ObjectAction
 	{
 		global $conf_php;
 
-		$this->page->public = false;
-		$this->page->simple = true;
-		$this->page->generate_elements();
-
 		$list = array();
 
 		foreach( $this->page->values as $id=>$value )
@@ -650,7 +644,7 @@ class PageAction extends ObjectAction
 	{
 	    $this->setModelAndLanguage();
 
-		$this->setTemplateVar('preview_url',Html::url('page','show',$this->page->objectid,array(REQ_PARAM_LANGUAGE_ID=>$this->page->languageid,REQ_PARAM_MODEL_ID=>$this->page->modelid) ) );
+		$this->setTemplateVar('preview_url',Html::url('page','show',$this->page->objectid,array(REQ_PARAM_LANGUAGE_ID=>$this->page->getProject()->getDefaultLanguageId(),REQ_PARAM_MODEL_ID=>$this->page->getProject()->getDefaultModelId()) ) );
 	}
 
 
@@ -666,19 +660,9 @@ class PageAction extends ObjectAction
 		$pageSettingsConfig =  new Config( $this->page->getTotalSettings() );
         header('Content-Security-Policy: '.$pageSettingsConfig->get('content-security-policy','') );
 
-        // Seite definieren
-		if	( $this->hasRequestVar('withIcons') )
-			$this->page->icons = true;
-
-		//$publisher = new PublishPreview();
-
-		//$this->page->publisher = $publisher;
-
 		$this->page->load();
-		//$this->page->generate();
 
 		$project = $this->page->getProject();
-		$this->page->modelid = $project->getDefaultModelId(); // FIXME
 
 		header('Content-Type: '.$this->page->mimeType().'; charset=UTF-8' );
 
@@ -689,18 +673,14 @@ class PageAction extends ObjectAction
 
 		Logger::debug("Preview page: ".$this->page->__toString() );
 
+		$pageContext = $this->createPageContext( Producer::SCHEME_PREVIEW);
+		$generator = new PageGenerator( $pageContext );
 
-		//$producer = new Producer();
-		//$producer->languages[] = $this->getRequestVar( REQ_PARAM_LANGUAGE_ID );
-		//$producer->models[]    = $this->getRequestVar( REQ_PARAM_MODEL_ID    );
-		//$producer->languages[] = $project->getDefaultLanguageId();
-		//producer->models[]    = $project->getDefaultModelId();
-
-		//$producer->generate( $this->page,Producer::SCHEME_PREVIEW );
-		$generator = new PageGenerator( $this->createPageContext( Producer::SCHEME_PREVIEW) );
+		$templateModel = $this->page->template->loadTemplateModelFor( $pageContext->modelId );
+		$templateModel->load();
 
 		// Executing PHP in Pages.
-		if	( ( config('publish','enable_php_in_page_content')=='auto' && $this->page->template->extension == 'php') ||
+		if	( ( config('publish','enable_php_in_page_content')=='auto' && $templateModel->extension == 'php') ||
 		        config('publish','enable_php_in_page_content')===true )
         {
             ob_start();
@@ -741,7 +721,6 @@ class PageAction extends ObjectAction
 	 */
 	function changetemplateView()
 	{
-		$this->page->public = true;
 		$this->page->load();
 
 
@@ -749,7 +728,7 @@ class PageAction extends ObjectAction
 
 		if   ( $this->userIsAdmin() )
 		{
-			$this->setTemplateVar('template_url',Html::url('main','template',$this->page->templateid,array(REQ_PARAM_MODEL_ID=>$this->page->modelid)));
+			$this->setTemplateVar('template_url',Html::url('template','show',$this->page->templateid));
 		}
 
 		$template = new Template( $this->page->templateid );
@@ -845,10 +824,10 @@ class PageAction extends ObjectAction
     protected function setModelAndLanguage()
     {
         $this->setTemplateVar('languages' ,$this->page->getProject()->getLanguages());
-        $this->setTemplateVar('languageid',$this->page->languageid );
+        $this->setTemplateVar('languageid',$this->page->getProject()->getDefaultLanguageId() );
 
         $this->setTemplateVar('models'    ,$this->page->getProject()->getModels()   );
-        $this->setTemplateVar('modelid'   ,$this->page->modelid    );
+        $this->setTemplateVar('modelid'   ,$this->page->getProject()->getDefaultModelId() );
     }
 
 

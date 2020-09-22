@@ -2,12 +2,15 @@
 
 namespace cms\generator\link;
 
+use cms\generator\PageContext;
 use cms\model\BaseObject;
 use cms\model\File;
 use cms\model\Folder;
+use cms\model\Language;
 use cms\model\Link;
 use cms\model\Page;
 use cms\model\Project;
+use cms\model\TemplateModel;
 use cms\model\Url;
 use cms\generator\target\Dav;
 use cms\generator\target\Fax;
@@ -37,8 +40,22 @@ class PublicLink implements LinkFormat
 
 	const MAX_RECURSIVE_COUNT = 10;
 
+	/**
+	 * @var PageContext
+	 */
+	private $pageContext;
 
-    /**
+	/**
+	 * PublicLink constructor.
+	 * @param $pageContext PageContext
+	 */
+	public function __construct($pageContext)
+	{
+		$this->pageContext = $pageContext;
+	}
+
+
+	/**
      * @param $from \cms\model\BaseObject
      * @param $to \cms\model\BaseObject
      */
@@ -62,38 +79,84 @@ class PublicLink implements LinkFormat
 			$to->objectLoad();
 		}
 
-        switch( $to->typeid )
-        {
-            case BaseObject::TYPEID_FILE:
-            case BaseObject::TYPEID_IMAGE:
-            case BaseObject::TYPEID_TEXT:
+        switch( $to->typeid ) {
+			case BaseObject::TYPEID_FILE:
+			case BaseObject::TYPEID_IMAGE:
+			case BaseObject::TYPEID_TEXT:
 
-                $f = new File( $to->objectid );
+				$f = new File($to->objectid);
 
-                $p = Project::create( $to->projectid )->load();
-                $f->content_negotiation = $p->content_negotiation;
+				$f->load();
+				$filename = $f->filename();
 
-                $f->load();
-                $filename = $f->filename();
-                break;
+				if   ( $fromProject->publishFileExtension && ! $fromProject->content_negotiation )
+					// Add file extension
+					$filename .= '.'.$f->extension;
 
-            case BaseObject::TYPEID_PAGE:
+				break;
 
-                $p = new Page( $to->objectid );
-                $p->languageid          = $from->languageid;
-                $p->modelid             = $from->modelid;
-                $p->cut_index           = $from->cut_index;
-                $p->content_negotiation = $from->content_negotiation;
-                $p->withLanguage        = $from->withLanguage;
-                $p->withModel           = $from->withModel;
-                $p->load();
-                $filename = $p->getFilename();
+			case BaseObject::TYPEID_PAGE:
+
+				if ($fromProject->cut_index && $to->filename == config('publish', 'default')) {
+					$filename = ''; // Link auf Index-Datei, der Dateiname bleibt leer.
+				} else {
+
+					$page = new Page($to->objectid);
+					$page->load();
+
+					$parentFolder = new Folder($page->parentid);
+					$parentFolder->load();
+
+					$format = config('publish', 'format');
+					$format = str_replace('{filename}', $page->filename(), $format);
+
+					$allLanguages = $fromProject->getLanguageIds();
+					$allModels    = $fromProject->getModelIds();
+
+					$withLanguage =
+						!$fromProject->content_negotiation  &&
+						$fromProject->publishPageExtension  &&
+						(count($allLanguages) > 1 || config('publish', 'filename_language') == 'always');
+
+					$withModel    =
+						! $fromProject->content_negotiation   &&
+						! $fromProject->publishPageExtension  &&
+						(count($allModels) > 1    || config('publish', 'filename_type') == 'always');
+
+					$languagePart = '';
+					$typePart     = '';
+
+					if ($withLanguage ) {
+						$l = new Language($this->pageContext->languageId);
+						$l->load();
+						$languagePart = $l->isoCode;
+					}
+
+					if	( $withModel ) {
+						$templateModel = new TemplateModel( $page->templateid, $this->pageContext->modelId );
+						$templateModel->load();
+
+						$typePart = $templateModel->extension;
+					}
+
+					$languageSep = $languagePart?config('publish','language_sep') :'';
+					$typeSep     = $typePart    ?config('publish','type_sep'    ) :'';
+
+					$format = str_replace('{language}'    ,$languagePart ,$format );
+					$format = str_replace('{language_sep}',$languageSep  ,$format );
+					$format = str_replace('{type}'        ,$typePart     ,$format );
+					$format = str_replace('{type_sep}'    ,$typeSep      ,$format );
+
+					$filename = $format;
+				}
+
                 break;
 
             case BaseObject::TYPEID_URL:
                 $url = new Url( $to->objectid );
                 $url->load();
                 return $url->url;
+
             default:
                 throw new \LogicException("Could not build a link to the unknown Type ".$to->typeid.':'.$to->getType() );
         }

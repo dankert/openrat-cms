@@ -3,7 +3,9 @@
 namespace cms\action;
 
 use cms\generator\PageContext;
+use cms\generator\PageGenerator;
 use cms\generator\Producer;
+use cms\generator\Publisher;
 use cms\generator\ValueContext;
 use cms\generator\ValueGenerator;
 use cms\model\Acl;
@@ -17,8 +19,11 @@ use cms\model\Folder;
 use cms\model\BaseObject;
 use cms\generator\PublishEdit;
 use cms\generator\PublishPreview;
+use language\Messages;
+use util\exception\SecurityException;
 use util\Html;
 use LogicException;
+use util\Session;
 use util\Transformer;
 use util\Text;
 use util\exception\ValidationException;
@@ -244,17 +249,17 @@ class PageelementAction extends BaseAction
 
 		foreach ( $this->page->getProject()->getLanguages() as $languageId=>$languageName )
         {
-            $this->value->languageid = $languageId;
-            $this->value->load();
+        	$value = clone $this->value; // do not overwrite the value
+            $value->languageid = $languageId;
+            $value->load();
 
             $languages[$languageId] = array(
                 'languageid'   => $languageId,
                 'languagename' => $languageName,
-                'value'        => $this->value->text,
-                'text'         => $this->value->text,
-                'number'       => $this->value->number,
-                'date'         => $this->value->date,
-                'linkObjectId' => $this->value->linkToObjectId,
+                'text'         => $this->calculateValue( $value ),
+                'number'       => $value->number,
+                'date'         => $value->date,
+                'linkObjectId' => $value->linkToObjectId,
         );
         }
 
@@ -275,6 +280,7 @@ class PageelementAction extends BaseAction
 		$this->value->pageid     = $this->page->pageid;
 		$this->value->page       = $this->page;
 		$this->value->element = &$this->element;
+		$this->value->elementid  = $this->element->elementid;
 		$this->value->element->load();
 
 		$this->setTemplateVar('name'       ,$this->value->element->label    );
@@ -292,8 +298,7 @@ class PageelementAction extends BaseAction
             $languages[$languageId] = array(
                 'languageid'   => $languageId,
                 'languagename' => $languageName,
-                'value'        => $this->value->text,
-                'text'         => $this->value->text,
+				'text'         => $this->calculateValue( $this->value ),
                 'number'       => $this->value->number,
                 'date'         => $this->value->date,
                 'linkObjectId' => $this->value->linkToObjectId,
@@ -934,14 +939,13 @@ class PageelementAction extends BaseAction
             $value->save();
         }
 
-        $this->addNotice('pageelement',$value->element->name,'SAVED',OR_NOTICE_OK);
+        $this->addNotice('pageelement',$value->element->label,'SAVED',OR_NOTICE_OK);
         $this->page->setTimestamp(); // "Letzte Aenderung" setzen
 
         // Falls ausgewaehlt die Seite sofort veroeffentlichen
         if	( $value->page->hasRight( Acl::ACL_PUBLISH ) && $this->hasRequestVar('publish') )
         {
-            $this->page->publish();
-            $this->addNotice('pageelement',$value->element->name,'PUBLISHED',OR_NOTICE_OK);
+			$this->publishPage();
         }
     }
 
@@ -1241,9 +1245,15 @@ class PageelementAction extends BaseAction
 
     private function linkifyOIDs( $text )
     {
+		$pageContext = new PageContext( $this->page->objectid, Producer::SCHEME_PREVIEW );
+		$pageContext->modelId    = 0;
+		$pageContext->languageId = $this->value->languageid;
+
+		$linkFormat = $pageContext->getLinkScheme();
+
         foreach( Text::parseOID($text) as $oid=>$t )
         {
-            $url = $this->page->path_to_object($oid);
+            $url = $linkFormat->linkToObject($this->page, new BaseObject($oid) );
             foreach( $t as $match)
                 $text = str_replace($match,$url,$text);
         }
@@ -1301,20 +1311,81 @@ class PageelementAction extends BaseAction
 	function pubPost()
 	{
 		if	( !$this->page->hasRight( Acl::ACL_PUBLISH ) )
-            throw new \util\exception\SecurityException( 'no right for publish' );
+            throw new SecurityException( 'no right for publish' );
 
-		$this->page->public = true;
-		$this->page->publish();
-		$this->page->publisher->close();
-
-		$this->addNotice( 'page',
-		                  $this->page->fullFilename,
-		                  'PUBLISHED',
-		                  OR_NOTICE_OK,
-		                  array(),
-		                  $this->page->publisher->log  );
+		$this->publishPage();
 	}
-	
+
+
+	private function publishPage() {
+
+		$project = $this->page->getProject();
+
+		// Nothing is written to the session from this point. so we should free the session.
+		Session::close();
+
+		$publisher = new Publisher( $project->projectid );
+
+		foreach( $project->getModelIds() as $modelId ) {
+
+			$pageContext = new PageContext( $this->page->objectid, Producer::SCHEME_PUBLIC );
+			$pageContext->modelId    = $modelId;
+			$pageContext->languageId = $this->value->languageid;
+
+			$pageGenerator = new PageGenerator( $pageContext );
+
+			$publisher->publish( $pageGenerator->getCache()->load()->getFilename(),$pageGenerator->getPublicFilename(), $this->page->lastchangeDate );
+		}
+
+
+		$this->addNoticeFor( $this->value,'PUBLISHED',array(),
+			implode("\n",$publisher->publishedObjects) );
+
+	}
+
+
+
+	/**
+	 * Textual representation of a value.
+	 *
+	 * @param Value $value
+	 * @return string
+	 */
+	private function calculateValue(Value $value)
+	{
+		switch( $value->element->typeid ) {
+			case Element::ELEMENT_TYPE_DATE:
+				if   ( ! $value->date )
+					return '';
+
+				return date( lang(Messages::DATE_FORMAT), $value->date );
+
+			case Element::ELEMENT_TYPE_TEXT:
+			case Element::ELEMENT_TYPE_LONGTEXT:
+			case Element::ELEMENT_TYPE_SELECT:
+				return $value->text;
+
+			case Element::ELEMENT_TYPE_LINK:
+
+				if   ( ! $value->linkToObjectId )
+					return '';
+
+				$linkObject = new BaseObject( $value->linkToObjectId );
+				$linkObject->load();
+				$name = $linkObject->getNameForLanguage( $value->languageid )->name;
+
+				if   ( empty( $name ))
+					$name = $linkObject->filename();
+
+				return $name;
+
+			case Element::ELEMENT_TYPE_NUMBER:
+				return $value->number;
+
+			default:
+				return '';
+		}
+	}
 }
 	
 ?>

@@ -2,6 +2,8 @@
 namespace cms\model;
 
 
+use cms\base\DB;
+
 /**
  * Templatemodell. Enthält den Template-Sourcecode und die Extension.
  *
@@ -83,12 +85,13 @@ class TemplateModel extends ModelBase
     /**
  	 * Abspeichern des Templates in der Datenbank
  	 */
-	function save()
+	public function save()
 	{
-		$db = db_connection();
+		if   ( ! $this->isPersistent() )
+			$this->add();
 
         // Vorlagen-Quelltext existiert für diese Varianten schon.
-        $stmt = $db->sql( 'UPDATE {{templatemodel}}'.
+        $stmt = Db::sql( 'UPDATE {{templatemodel}}'.
                         '  SET extension={extension},'.
                         '      text={src} '.
                         ' WHERE id={id}' );
@@ -105,21 +108,18 @@ class TemplateModel extends ModelBase
 	/**
  	 * Abspeichern des Templates in der Datenbank
  	 */
-	function add()
+	protected function add()
 	{
-		$db = db_connection();
-
         // Vorlagen-Quelltext wird neu angelegt.
-        $stmt = $db->sql('SELECT MAX(id) FROM {{templatemodel}}');
+        $stmt = Db::sql('SELECT MAX(id) FROM {{templatemodel}}');
         $nextid = intval($stmt->getOne())+1;
 
         $stmt = $db->sql( 'INSERT INTO {{templatemodel}}'.
-                        '        (id,templateid,projectmodelid,extension,text) '.
-                        ' VALUES ({id},{templateid},{modelid},{extension},{src}) ');
+                        '        (id,templateid,projectmodelid,extension) '.
+                        ' VALUES ({id},{templateid},{modelid},{extension}) ');
         $stmt->setInt   ( 'id',$nextid         );
 
 		$stmt->setString( 'extension'     ,$this->extension      );
-		$stmt->setString( 'src'           ,$this->src            );
 		$stmt->setInt   ( 'templateid'    ,$this->templateid     );
 		$stmt->setInt   ( 'modelid'       ,$this->modelid        );
 

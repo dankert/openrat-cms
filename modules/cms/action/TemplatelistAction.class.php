@@ -5,6 +5,8 @@ namespace cms\action;
 use cms\model\Element;
 use cms\model\Project;
 use cms\model\Template;
+use cms\model\TemplateModel;
+use util\exception\ValidationException;
 use util\Session;
 
 // OpenRat Content Management System
@@ -107,7 +109,7 @@ class TemplatelistAction extends BaseAction
 	
 	
 	
-	function addPost()
+	public function addPost()
 	{
 		// Hinzufuegen eines Templates
 		if   ( $this->getRequestVar('name') == '' )
@@ -161,19 +163,19 @@ class TemplatelistAction extends BaseAction
 				foreach( $project->getModelIds() as $modelid )
 				{
 					// Template laden
-					$copy_template->modelid = $modelid;
 					$copy_template->load();
-					
-					$template->modelid   = $modelid;
-					$src                 = $copy_template->src;
-					
+
+					$copyTemplateModel = $copy_template->loadTemplateModelFor( $modelid );
+					$src = $copyTemplateModel->src;
+
 					// Elemente im Quelltext an die geänderten Element-Idn anpassen.
 					foreach( $elementMapping as $oldId=>$newId)
 						$src = str_replace('{{'.$oldId.'}}','{{'.$newId.'}}',$src);
 						
-					$template->src       = $src;
-					$template->extension = $copy_template->extension;
-					$template->save();
+					$newTemplateModel = $template->loadTemplateModelFor( $modelid );
+					$newTemplateModel->src       = $src;
+					$newTemplateModel->extension = $copyTemplateModel->extension;
+					$newTemplateModel->save();
 				}
 				
 				$this->addNotice('template',$copy_template->name,'COPIED','ok');
@@ -188,6 +190,9 @@ class TemplatelistAction extends BaseAction
 
 				$template->add( $this->getRequestVar('name') );
 
+				$templateModel = $template->loadTemplateModelFor( $this->project->getDefaultModelId() );
+
+				// FIXME
 				$example = parse_ini_file('examples/templates/'.$this->getRequestVar('example'),true);
 
 				foreach( $example as $exampleKey=>$exampleElement )
@@ -209,31 +214,28 @@ class TemplatelistAction extends BaseAction
 						
 						$element->defaultText = str_replace(';',"\n",$element->defaultText);
 						$element->save();
-//						Html::debug($element,"Element");
 					}
 				}
-//				Html::debug($template,"Template");
 				$template->name = $this->getRequestVar('name');
-				$template->src = str_replace(';',"\n",$template->src);
+				$templateModel->src = str_replace(';',"\n",$templateModel->src);
 				
 				foreach( $template->getElementNames() as $elid=>$elname )
 				{
-					$template->src = str_replace('{{'.$elname.'}}'  ,'{{'.$elid.'}}'  ,$template->src );
-					$template->src = str_replace('{{->'.$elname.'}}','{{->'.$elid.'}}',$template->src );
+					$templateModel->src = str_replace('{{'.$elname.'}}'  ,'{{'.$elid.'}}'  ,$templateModel->src );
+					$templateModel->src = str_replace('{{->'.$elname.'}}','{{->'.$elid.'}}',$templateModel->src );
 				}
 				
 				$template->save();
+				$templateModel->save();
+
 				$this->addNotice('template',$template->name,'ADDED','ok');
 
 				break;
+
 			default:
-				$this->addValidationError('type');
-				$this->callSubAction('add');
-				return;
+				throw new ValidationException('type');
 		}
 
-
-		$this->setTemplateVar('tree_refresh',true);
 	}
 
 	

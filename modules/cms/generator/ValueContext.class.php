@@ -4,10 +4,6 @@
 namespace cms\generator;
 
 
-
-use cms\generator\link\PreviewLink;
-use cms\generator\link\PublicLink;
-
 /**
  * The page context, necessary for generating and publishing a page.
  */

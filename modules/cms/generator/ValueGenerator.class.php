@@ -158,7 +158,8 @@ class ValueGenerator extends BaseGenerator
 											break;
 
 										case 'ssi':
-											$inhalt .= '<!--#include virtual="'.$page->path_to_object($oid).'" -->';
+											$linkScheme = $pageContext->getLinkScheme();
+											$inhalt .= '<!--#include virtual="'.$linkScheme->linkToObject( $page,new BaseObject($oid)).'" -->';
 											break;
 
 										default:
@@ -176,7 +177,6 @@ class ValueGenerator extends BaseGenerator
 					if   ( false&&$value->publisher->isSimplePreview() )
 					{
 						$p = new Page( $objectid );
-						$p->context = $page->context;
 						$p->load();
 						$inhalt = $p->filename;
 						unset( $p );
@@ -198,7 +198,8 @@ class ValueGenerator extends BaseGenerator
 									break;
 
 								case 'ssi':
-									$inhalt = '<!--#include virtual="'.$page->path_to_object($objectid).'" -->';
+									$linkScheme = $pageContext->getLinkScheme();
+									$inhalt = '<!--#include virtual="'.$linkScheme->linkToObject( $page,new BaseObject($objectid)).'" -->';
 									break;
 
 								default:
@@ -285,7 +286,6 @@ class ValueGenerator extends BaseGenerator
 					break;
 
 				$linkedPage = new Page( $linkValue->linkToObjectId );
-				$linkedPage->context = $page->context;
 				$linkedPage->load();
 
 				$linkedPageTemplate = new Template( $linkedPage->templateid );
@@ -856,7 +856,7 @@ class ValueGenerator extends BaseGenerator
 						$inhalt = $page->getNameForLanguage( $pageContext->languageId )->description;
 						break;
 					case 'page_fullfilename':
-						$inhalt = $page->full_filename();
+						$inhalt = $this->getPublicFilename();
 						break;
 					case 'page_filename':
 						$inhalt = $page->filename();
@@ -1002,7 +1002,7 @@ class ValueGenerator extends BaseGenerator
 
 
 
-		if   ( $page->icons && $element->withIcon && $page->isHtml() )
+		if   ( $this->context->pageContext->scheme == Producer::SCHEME_PREVIEW && $element->withIcon && $page->isHtml() )
 		{
 			// Anklickbaren Link voranstellen.
 			$iconLink = '<a href="javascript:parent.openNewAction(\''.$element->name.'\',\'pageelement\',\''.$page->objectid.'_'.$element->elementid.'\');" title="'.$element->desc.'"><img src="'.OR_THEMES_DIR.$conf['interface']['theme'].'/images/icon_el_'.$element->type.IMG_ICON_EXT.'" border="0" align="left"></a>';

@@ -35,27 +35,15 @@ use util\cache\FileCache;
 
 class Page extends BaseObject
 {
-	var $enclosingObjectId = -1;    //Id der Seite in die diese Seite im Rahmen der Generierung eingefügt wird
-						     //Wichtig für include-Values
-	var $pageid;
-	var $templateid;
+	public $pageid;
+	public $templateid;
 
 	/**
 	 * @var Template
 	 */
-	var $template;
+	public $template;
 
-    /**
-     * @deprecated
-     */
-	var $simple = false;
-
-    /**
-	 * @deprecated replaced by publish->isPublic()
-     */
-	var $public = false;
-
-	var $el = array();
+	public $el = array();
 
 	/**
 	 * Stellt fest, ob die Editier-Icons angezeigt werden sollen. Dies ist
@@ -64,32 +52,9 @@ class Page extends BaseObject
 	 * natürlich "false" sein.
 	 * @var boolean
 	 */
-	var $icons = false;
 	var $src   = '';
-	var $edit  = false;
 
-	var $content_negotiation = false;
-	var $cut_index           = false;
-	var $default_language    = false;
-//	var $withLanguage        = false;
-	var $withLanguage        = true;
-	var $withModel           = true;
-//	var $withModel           = false;
-	var $link                = false;
-	var $fullFilename = '';
-
-	var $log_filenames       = array();
 	var $modelid = 0;
-
-    /**
-     * @var Value[]
-     */
-    public $values;
-
-    /**
-     * Inhalt der Seite.
-     */
-    public $value;
 
 	/**
 	 * Page context.
@@ -109,21 +74,6 @@ class Page extends BaseObject
     }
 
 
-    /**
-     * @return FileCache
-     */
-    public function getCache() {
-        $cacheKey =  array('db'=>db()->id,
-            'page' =>$this->objectid,
-            'language' =>$this->languageid,
-            'model' =>$this->modelid,
-            'publish' => \util\ClassUtils::getSimpleClassName($this->publisher) );
-
-        return new FileCache( $cacheKey,function() {
-            return $this->generateValue();
-        }, $this->lastchangeDate );
-
-    }
 
 	/**
 	 * Ermitteln der Objekt-ID (Tabelle object) anhand der Seiten-ID (Tablle page)
@@ -162,12 +112,12 @@ class Page extends BaseObject
 	/**
 	  * Ermitteln aller Eigenschaften
 	  *
-	  * @return Array
+	  * @return array
 	  */
 	function getProperties()
 	{
 		return array_merge( parent::getProperties(),
-		                    array('full_filename'=>$this->realFilename(),
+		                    array('full_filename'=>'',
 		                          'pageid'       =>$this->pageid,
 		                          'templateid'   =>$this->templateid,
 		                          'mime_type'    =>$this->mimeType() ) );
@@ -184,34 +134,6 @@ class Page extends BaseObject
 		$folder->folderid = $this->parentid;
 		
 		return $folder->parentObjectFileNames( false,true );
-	}
-
-
-
-
-	/**
-	  * Ermittelt den Pfad zu einem beliebigen Objekt
-	  *
-	  * @param Integer Objekt-ID des Zielobjektes
-	  * @return String Relative Link-angabe, Beispiel: '../../pfad/datei.jpeg'
-	  */
-	public function path_to_object( $objectid )
-	{
-		if	( ! BaseObject::available( $objectid) )
-			return 'about:blank';
-
-		$from = new Page($this->context->sourceObjectId);
-		$from->load();
-
-		$to = new BaseObject($objectid);
-        $toAlias = $to->getAlias();
-        if   ( $toAlias )
-        	$to = $toAlias; // Alias exists.
-		$to->load();
-
-		$inhalt = $this->publisher->linkToObject( $from, $to );
-
-		return $inhalt;
 	}
 
 
@@ -381,93 +303,6 @@ SQL
 	}
 
 
-	
-	/**
-	  * Ermitteln des Dateinamens dieser Seite.
-	  * 
-	  * Wenn '$this->content_negotiation' auf 'true' steht, wird der Dateiname ggf. gekürzt,
-	  * so wie er für HTML-Links verwendet wird. Sonst wird immer der echte Dateiname
-	  * ermittelt.
-	  *
-	  * @return String Kompletter Dateiname, z.B. '/pfad/seite.en.html'
-	  */
-	function full_filename()
-	{
-		$filename = $this->path().'/'.$this->getFilename();
-
-		$this->fullFilename = $filename;
-		return $filename;
-	}
-
-
-	/**
-	  * Ermitteln des Dateinamens dieser Seite.
-	  *
-	  * Wenn '$this->content_negotiation' auf 'true' steht, wird der Dateiname ggf. gekürzt,
-	  * so wie er für HTML-Links verwendet wird. Sonst wird immer der echte Dateiname
-	  * ermittelt.
-	  *
-	  * @return String Kompletter Dateiname, z.B. '/pfad/seite.en.html'
-	  */
-	function getFilename()
-	{
-		return self::filename();
-	}
-
-
-
-    /**
-     * Ermitteln des Dateinamens dieser Seite.
-     *
-     * Wenn '$this->content_negotiation' auf 'true' steht, wird der Dateiname ggf. gekürzt,
-     * so wie er für HTML-Links verwendet wird. Sonst wird immer der echte Dateiname
-     * ermittelt.
-     *
-     * @return String Kompletter Dateiname, z.B. '/pfad/seite.en.html'
-	 * @deprecated use pagecontext
-     */
-    function filename()
-    {
-        if	( $this->cut_index && $this->filename == config('publish','default') )
-        {
-            return ''; // Link auf Index-Datei, der Dateiname bleibt leer.
-        }
-        else
-        {
-            $format = config('publish','format');
-            $format = str_replace('{filename}',parent::filename(),$format );
-
-            if	( !$this->withLanguage || $this->content_negotiation && config('publish','negotiation','page_negotiate_language' ) )
-            {
-                $format = str_replace('{language}'    ,'',$format );
-                $format = str_replace('{language_sep}','',$format );
-            }
-            else
-            {
-                $l = new Language( $this->languageid );
-                $l->load();
-                $format = str_replace('{language}'    ,$l->isoCode                     ,$format );
-                $format = str_replace('{language_sep}',config('publish','language_sep'),$format );
-            }
-
-            if	( !$this->withModel || $this->content_negotiation && config('publish','negotiation','page_negotiate_type' ) )
-            {
-                $format = str_replace('{type}'    ,'',$format );
-                $format = str_replace('{type_sep}','',$format );
-            }
-            else
-            {
-                $t = new Template( $this->templateid );
-                $t->modelid = $this->modelid;
-                $t->load();
-                $format = str_replace('{type}'    ,$t->extension               ,$format );
-                $format = str_replace('{type_sep}',config('publish','type_sep'),$format );
-            }
-            return $format;
-        }
-    }
-
-
 
 
 	/**
@@ -513,50 +348,6 @@ SQL
 
 
 
-	/**
-	 * Generieren dieser Seite in Dateisystem und/oder auf FTP-Server
-	 * @deprecated
-	 */
-	public function publish()
-	{
-		$project = Project::create( $this->projectid );
-
-		$allLanguages = $project->getLanguageIds();
-		$allModels    = $project->getModelIds();
-		
-		// Schleife ueber alle Sprachvarianten
-		foreach( $allLanguages as $languageid )
-		{
-			$this->languageid   = $languageid;
-			$this->withLanguage = count($allLanguages) > 1 || config('publish','filename_language') == 'always';
-			$this->withModel    = count($allModels   ) > 1 || config('publish','filename_type'    ) == 'always';
-			
-			// Schleife ueber alle Projektvarianten
-			foreach( $allModels as $projectmodelid )
-			{
-				$this->modelid = $projectmodelid;
-			
-				$this->load();
-				$this->getCache()->load();
-
-				// Vorlage ermitteln.
-				$t = new Template( $this->templateid );
-				$t->modelid = $this->modelid;
-				$t->load();
-				
-				// Nur wenn eine Datei-Endung vorliegt wird die Seite veroeffentlicht
-				if	( !empty($t->extension) )
-				{ 	
-					$this->publisher->copy( $this->getCache()->getFilename(),$this->full_filename() );
-					$this->publisher->publishedObjects[] = $this->getProperties();
-				}
-			}
-		}
-
-		parent::setPublishedTimestamp();
-
-	}
-	
 
 	/**
 	 * Ermittelt den Mime-Type zu dieser Seite
@@ -565,14 +356,10 @@ SQL
 	 */
 	function mimeType()
 	{
-		if	( ! is_object($this->template) )
-		{
-			$this->template = new Template( $this->templateid );
-			$this->template->modelid = $this->modelid;
-			$this->template->load();
-		}
+		$templateModel = new TemplateModel( $this->templateid,$this->getProject()->getDefaultModelId() );
+		$templateModel->load();
 
-		$this->mime_type = $this->template->mimeType();
+		$this->mime_type = $templateModel->mimeType();
 			
 		return( $this->mime_type );
 	}
@@ -585,17 +372,6 @@ SQL
 	}
 	
 	
-	/**
-	 * Ermittelt den Dateinamen dieser Seite, so wie sie auch im Dateisystem steht.
-	 */
-	function realFilename()
-	{
-		$project = new Project( $this->projectid );
-		$this->withLanguage = config('publish','filename_language') == 'always' || count($project->getLanguageIds()) > 1;
-		$this->withModel    = config('publish','filename_type'    ) == 'always' || count($project->getModelIds()   ) > 1;
-		
-		return $this->full_filename();
-	}
 
 	
 	/**
@@ -609,6 +385,6 @@ SQL
 
     public function __toString()
     {
-    	return 'Id '.$this->pageid.' (filename='.$this->filename.',language='.$this->languageid.', modelid='.$this->modelid.', templateid='.$this->templateid.')';
+    	return 'Id '.$this->pageid.' (filename='.$this->filename.', templateid='.$this->templateid.')';
     }
 }

@@ -12,6 +12,8 @@ use cms\model\Page;
 
 use cms\model\TemplateModel;
 use cms\generator\PublishPublic;
+use language\Messages;
+use util\exception\ValidationException;
 use util\Session;
 use util\Html;
 use util\Text;
@@ -64,11 +66,9 @@ class TemplateAction extends BaseAction
     {
 		$this->template = new Template( $this->getRequestId() );
 
-		$this->template->modelid = $this->request->getModelId();
 		$this->template->load();
 
 		$this->setTemplateVar( 'templateid',$this->template->templateid );
-		$this->setTemplateVar( 'modelid'   ,$this->template->modelid    );
 
 		if	( intval($this->getRequestVar('elementid')) != 0 )
 		{
@@ -105,10 +105,7 @@ class TemplateAction extends BaseAction
 
         $templatemodel->src = $newSource;
 
-        if ( !$templatemodel->isPersistent() )
-            $templatemodel->add();
-        else
-            $templatemodel->save();
+       $templatemodel->save();
 
 		$this->addNotice('template',$this->template->name,'SAVED',OR_NOTICE_OK);
 	}
@@ -118,38 +115,24 @@ class TemplateAction extends BaseAction
 
 	function srcelementPost()
 	{
-		$text = $this->template->src;
+		$tplModel = $this->template->loadTemplateModelFor( $this->request->getRequestVar(REQ_PARAM_MODEL_ID));
+
+		$elementToAdd = new Element( $this->getRequestVar('elementid') );
+		$elementToAdd->load();
 
 		switch( $this->getRequestVar('type') )
 		{
 			case 'addelement':
-				$text .= "\n".'{{'.$this->getRequestVar('elementid').'}}';
-				break;
-		
-			case 'addicon':
-				$text .= "\n".'{{->'.$this->getRequestVar('writable_elementid').'}}';
-				break;
-
-			case 'addifempty':
-				$text .= "\n".'{{IFEMPTY:'.$this->getRequestVar('writable_elementid').':BEGIN}}  {{IFEMPTY:'.$this->getRequestVar('writable_elementid').':END}}';
-				break;
-
-			case 'addifnotempty':
-				$text .= "\n".'{{IFNOTEMPTY:'.$this->getRequestVar('writable_elementid').':BEGIN}}  {{IFNOTEMPTY:'.$this->getRequestVar('writable_elementid').':END}}';
+				$tplModel->src .= "\n".'{{'.$elementToAdd->name.'}}';
 				break;
 		
 			default:
-				$this->addValidationError('type');
-				$this->callSubAction('srcelement');
-				return;
+				throw new ValidationException('type');
 		}
 		
-		$this->template->src = $text;
+		$tplModel->save();
 
-		$this->template->save();
-		$this->template->load();
-
-		$this->addNotice('template',$this->template->name,'SAVED',OR_NOTICE_OK);
+		$this->addNoticeFor($this->template,Messages::SAVED);
 	}
 
 
@@ -249,10 +232,7 @@ class TemplateAction extends BaseAction
 
             $templatemodel->extension = $extensions[ $modelId ];
 
-            if ( !$templatemodel->isPersistent() )
-                $templatemodel->add();
-            else
-                $templatemodel->save();
+            $templatemodel->save();
         }
 
 		$this->addNotice('template',$this->template->name,'SAVED','ok');
@@ -304,10 +284,10 @@ class TemplateAction extends BaseAction
 		    foreach( $modelIds as $modelId )
             {
                 $template = new Template( $this->template->templateid );
-                $template->modelid = $modelId;
-                $template->load();
-                $template->src .= "\n".'{{'.$newElement->elementid.'}}';
-                $template->save();
+                $templateModel = $template->loadTemplateModelFor( $modelId );
+                $templateModel->load();
+                $templateModel->src .= "\n".'{{'.$newElement->name.'}}';
+                $templateModel->save();
             }
 
 		}
@@ -322,9 +302,9 @@ class TemplateAction extends BaseAction
 	 */
 	function propView()
 	{
-		$this->setTemplateVar('name'     ,$this->template->name       );
-		$this->setTemplateVar('extension',$this->template->extension  );
-		$this->setTemplateVar('mime_type',$this->template->mimeType() );
+		$this->setTemplateVar('name'     , $this->template->name       );
+		$this->setTemplateVar('extension','' );
+		$this->setTemplateVar('mime_type','' );
 	}
 
 
@@ -365,12 +345,13 @@ class TemplateAction extends BaseAction
 
         $this->setTemplateVar('models',$project->getModels() );
 
-        if   ( ! $this->template->modelid )
-            $this->template->modelid = $project->getDefaultModelId();
+		$modelId = $this->request->getRequestVar(REQ_PARAM_MODEL_ID);
+		if   ( ! $modelId )
+			$modelId = Project::create( $this->template->projectid )->getDefaultModelId();
 
-        $this->setTemplateVar('modelid'   ,$this->template->modelid );
+        $this->setTemplateVar('modelid'   ,$modelId);
 
-		$this->setTemplateVar('preview_url',Html::url('template','show',$this->template->templateid,array('target'=>'none','modelid'=>$this->template->modelid ) ) );
+		$this->setTemplateVar('preview_url',Html::url('template','show',$this->template->templateid,array('target'=>'none','modelid'=>$modelId ) ) );
 	}
 	
 	
@@ -381,15 +362,21 @@ class TemplateAction extends BaseAction
 	 */
 	function showView()
 	{
-		header('Content-Type: '.$this->template->mimeType().'; charset=UTF-8' );
-		$text = $this->template->src;
+		$modelId = $this->request->getRequestVar(REQ_PARAM_MODEL_ID);
+		if   ( ! $modelId )
+			$modelId = Project::create( $this->template->projectid )->getDefaultModelId();
+
+		$templatemodel = new TemplateModel($this->template->templateid, $modelId);
+		$templatemodel->load();
+
+		header('Content-Type: '.$templatemodel->mimeType().'; charset=UTF-8' );
+		$text = $templatemodel->src;
 	
 		foreach( $this->template->getElementIds() as $elid )
 		{
 			$element = new Element( $elid );
 			$element->load();
-			$url = Html::url( 'element','edit',$this->template->templateid,array('elementid'=>$elid));
-			
+
 			$text = str_replace('{{'.$elid.'}}',$element->name,
 			                    $text );
 			$text = str_replace('{{->'.$elid.'}}','',
@@ -408,9 +395,7 @@ class TemplateAction extends BaseAction
 			unset( $element );
 		}
 	
-		echo $text;
-		
-		exit();
+		$this->setTemplateVar('text',$text);
 	}
 
 

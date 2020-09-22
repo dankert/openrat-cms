@@ -366,12 +366,14 @@ SQL
 		$template = new Template();
 		$template->projectid  = $this->projectid;
 		$template->name       = '';
-		$template->modelid    = $model->modelid;
-		$template->languageid = $language->languageid;
-		$template->extension  = 'html';
-		$template->src        = '<html><body><h1>Hello world</h1><hr><p>Hello, World.</p></body></html>';
 		$template->add();
 		$template->save();
+
+		// Template anlegen
+		$templateModel = $template->loadTemplateModelFor( $model->modelid );
+		$templateModel->extension  = 'html';
+		$templateModel->src        = '<html><body><h1>Hello world</h1><hr><p>Hello, World.</p></body></html>';
+		$templateModel->save();
 
 		// Beispiel-Seite anlegen
 		$page = new Page();

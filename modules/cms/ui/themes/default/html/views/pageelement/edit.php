@@ -21,7 +21,7 @@
               <span><?php echo escapeHtml(''.@$languagename.'') ?>
               </span>
             </td>
-            <td title="<?php echo escapeHtml(''.@$value.'') ?>"><?php echo escapeHtml('') ?>
+            <td title="<?php echo escapeHtml(''.@$text.'') ?>"><?php echo escapeHtml('') ?>
               <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('edit') ?>" data-action="<?php echo escapeHtml('pageelement') ?>" data-method="<?php echo escapeHtml('value') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('{\'languageid\':\''.@$languageid.'\'}') ?>" href="<?php echo escapeHtml('/#/pageelement/') ?>"><?php echo escapeHtml('') ?>
                 <span><?php echo escapeHtml(''.@$text.'') ?>
                 </span>

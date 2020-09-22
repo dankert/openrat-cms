@@ -19,13 +19,13 @@
 				<column>
 					<text value="${languagename}" />
 				</column>
-				<column class="clickable">
+				<column class="clickable" title="${text}">
 					<link subaction="value" var1="languageid" value1="${languageid}" type="edit" action="pageelement">
 						<if true="${date}">
 							<date date="${date}" />
 						</if>
 						<if true="${text}">
-							<text value="${text}" maxlength="30" escape="true" />
+							<text value="${text}" escape="true" />
 						</if>
 					</link>
 				</column>

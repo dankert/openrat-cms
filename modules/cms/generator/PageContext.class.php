@@ -62,9 +62,9 @@ class PageContext extends BaseContext
 
 		switch( $this->scheme ) {
 			case Producer::SCHEME_PREVIEW:
-				return new PreviewLink();
+				return new PreviewLink( $this );
 			case Producer::SCHEME_PUBLIC:
-				return new PublicLink();
+				return new PublicLink( $this );
 			default:
 				return null;
 		}

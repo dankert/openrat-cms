@@ -699,7 +699,7 @@ SQL
 
     public function getName()
     {
-        return '';
+        return $this->element->label;
     }
 
 

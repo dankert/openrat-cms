@@ -14,6 +14,7 @@ use cms\model\Project;
 use cms\model\Group;
 use cms\model\Folder;
 use cms\model\Value;
+use language\Messages;
 use util\exception\SecurityException;
 use util\Session;
 use util\Text;
@@ -316,8 +317,6 @@ class Tree
 	public function page($id)
 	{
 		$page = new Page($id);
-		$page->languageid = $_REQUEST[REQ_PARAM_LANGUAGE_ID];
-		$page->modelid = $_REQUEST[REQ_PARAM_MODEL_ID];
 
 		$page->load();
 
@@ -335,7 +334,7 @@ class Tree
 				$treeElement->action = 'pageelement';
 				$treeElement->type = 'pageelement';
 				$treeElement->icon = 'el_' . $element->getTypeName();
-				$treeElement->extraId = array('elementid' => $elementid, REQ_PARAM_LANGUAGE_ID => $page->languageid, REQ_PARAM_MODEL_ID => $page->modelid);
+				$treeElement->extraId = array('elementid' => $elementid);
 
 
 				$treeElement->description = lang('EL_' . $element->getTypeName());
@@ -357,8 +356,6 @@ class Tree
 			list($pageid, $elementid) = $ids;
 
 			$page = new Page($pageid);
-			$page->languageid = $_REQUEST[REQ_PARAM_LANGUAGE_ID];
-			$page->modelid = $_REQUEST[REQ_PARAM_MODEL_ID];
 
 			$page->load();
 
@@ -379,7 +376,7 @@ class Tree
 				$treeElement->action = $o->getType();
 				$treeElement->id = $o->objectid;
 				$treeElement->internalId = $o->objectid;
-				$treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $page->languageid, REQ_PARAM_MODEL_ID => $page->modelid);
+				$treeElement->extraId = array();
 				$treeElement->text = $o->getName();
 				$treeElement->description = lang('' . $o->getType()) . ' ' . $o->objectid;
 
@@ -556,7 +553,7 @@ class Tree
 			$treeElement->internalId = $id;
 			$treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $_REQUEST[REQ_PARAM_LANGUAGE_ID], REQ_PARAM_MODEL_ID => $_REQUEST[REQ_PARAM_MODEL_ID]);
 			$treeElement->type = 'template';
-			$treeElement->description = $t->name . ' (' . lang('TEMPLATE') . ' ' . $id . '): ' . htmlentities(Text::maxLength($t->src, 40));
+			$treeElement->description = $t->name . ' (' . lang(Messages::TEMPLATE) . ' ' . $id . ')';
 			$this->addTreeElement($treeElement);
 		}
 	}
