@@ -676,7 +676,8 @@ class PageAction extends ObjectAction
 		$pageContext = $this->createPageContext( Producer::SCHEME_PREVIEW);
 		$generator = new PageGenerator( $pageContext );
 
-		$templateModel = $this->page->template->loadTemplateModelFor( $pageContext->modelId );
+		$template = new Template( $this->page->templateid );
+		$templateModel = $template->loadTemplateModelFor( $pageContext->modelId );
 		$templateModel->load();
 
 		// Executing PHP in Pages.
