@@ -3,7 +3,7 @@
 namespace cms\update\version;
 
 use database\DbVersion;
-use security\Password;
+use database\Column;
 
 /**
  * Converting element types from string to number.
@@ -18,11 +18,13 @@ class DBVersion000016 extends DbVersion
      */
     public function update()
     {
+    	$table = $this->table('element');
+
         // Type 3 = Text is the default.
-        $this->addColumn('element','typeid',OR_DB_COLUMN_TYPE_INT,0,3,OR_DB_COLUMN_NOT_NULLABLE);
+        $table->column('typeid')->type(Column::TYPE_INT)->size(0)->defaultValue(3)->add();
 
         $db = $this->getDb();
-        $tableProject = $this->getTableName('element');
+        $tableProject = $table->getSqlName();
 
         // Update the types
         $conversionTable = array(
@@ -52,11 +54,11 @@ SQL
             $updateStmt->query();
         }
 
-        $this->dropColumn('element','type');
+		$table->column('type')->drop();
 
 
 
-        $this->addColumn('element','flags',OR_DB_COLUMN_TYPE_INT,0,0,OR_DB_COLUMN_NOT_NULLABLE);
+        $table->column('flags')->type(Column::TYPE_INT)->size(0)->defaultValue(0)->add();
 
         $updateStmt = $db->sql(<<<SQL
 UPDATE $tableProject
@@ -88,7 +90,7 @@ SQL
 
 
 
-        $this->addColumn('element','format',OR_DB_COLUMN_TYPE_INT,0,0,OR_DB_COLUMN_NOT_NULLABLE);
+        $table->column('format')->type(Column::TYPE_INT)->size(0)->defaultValue(0)->add();
 
         // Format = HTML
         $updateStmt = $db->sql(<<<SQL
@@ -109,11 +111,11 @@ SQL
         // Other formats were not supported up to this version.
 
         // Cleanup
-        $this->dropColumn('element','wiki'         );
-        $this->dropColumn('element','html'         );
-        $this->dropColumn('element','all_languages');
-        $this->dropColumn('element','writable'     );
-        $this->dropColumn('element','with_icon'    );
+		$table->column('wiki'         )->drop();
+		$table->column('html'         )->drop();
+		$table->column('all_languages')->drop();
+		$table->column('writable'     )->drop();
+		$table->column('with_icon'    )->drop();
 
     }
 

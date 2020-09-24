@@ -2,8 +2,8 @@
 
 namespace cms\update\version;
 
+use database\Column;
 use database\DbVersion;
-use security\Password;
 
 /**
  * Objects gets new columns for storing valid-dates.
@@ -18,8 +18,10 @@ class DBVersion000017 extends DbVersion
      */
     public function update()
     {
-        $this->addColumn('object','valid_from',OR_DB_COLUMN_TYPE_INT,0,null,OR_DB_COLUMN_NULLABLE);
-        $this->addColumn('object','valid_to'  ,OR_DB_COLUMN_TYPE_INT,0,null,OR_DB_COLUMN_NULLABLE);
+
+    	$table = $this->table('object');
+        $table->column('valid_from')->type(Column::TYPE_INT)->size(0)->nullable()->add();
+        $table->column('valid_to'  )->type(Column::TYPE_INT)->size(0)->nullable()->add();
     }
 }
 

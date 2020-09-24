@@ -3,6 +3,7 @@
 namespace cms\update\version;
 
 use database\DbVersion;
+use database\Column;
 use security\Password;
 
 /**
@@ -18,7 +19,7 @@ class DBVersion000015 extends DbVersion
      */
     public function update()
     {
-        $this->addColumn('object','settings',OR_DB_COLUMN_TYPE_TEXT,0,null,OR_DB_COLUMN_NOT_NULLABLE);
+    	$this->table('object')->column('settings')->type(Column::TYPE_TEXT)->size(0)->add();
    }
 }
 

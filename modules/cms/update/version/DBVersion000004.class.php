@@ -3,6 +3,7 @@
 namespace cms\update\version;
 
 use database\DbVersion;
+use database\Column;
 
 /**
  * Add Columns for user language and user timezone.
@@ -14,16 +15,13 @@ class DBVersion000004 extends DbVersion
 {
 	public function update()
 	{
-		$not_nullable = false;
-		$nullable     = true;
-		
 		// Add user language
-		$this->addColumn('user','language',OR_DB_COLUMN_TYPE_VARCHAR, 2,null,$nullable);
+		$table = $this->table('user');
+
+		$table->column('language')->type(Column::TYPE_VARCHAR)->size( 2)->nullable()->add();
 		
 		// Add user timezone
-		$this->addColumn('user','timezone',OR_DB_COLUMN_TYPE_VARCHAR,64,null,$nullable);
+		$table->column('timezone')->type(Column::TYPE_VARCHAR)->size(64)->nullable()->add();
 		
 	}
 }
-
-?>

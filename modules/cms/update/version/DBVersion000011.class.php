@@ -4,7 +4,7 @@
 namespace cms\update\version;
 
 use database\DbVersion;
-use security\Password;
+use database\Column;
 
 /**
  * Project gets new columns.
@@ -19,15 +19,13 @@ class DBVersion000011 extends DbVersion
      */
     public function update()
     {
-        $not_nullable = false;
-        $nullable = true;
+        $table = $this->table('project');
 
-
-        $this->addColumn('project', 'url', OR_DB_COLUMN_TYPE_VARCHAR, 255, '', $not_nullable);
-        $this->addColumn('project', 'flags', OR_DB_COLUMN_TYPE_INT, 11, 0, $not_nullable);
+        $table->column( 'url')->type( Column::TYPE_VARCHAR)->size( 255)->defaultValue( '')->add();
+        $table->column( 'flags')->type( Column::TYPE_INT)->size( 11)->defaultValue( 0)->add();
 
         $db = $this->getDb();
-        $tableProject = $this->getTableName('project');
+        $tableProject = $table->getSqlName();
 
         // Update the url
         $updateStmt = $db->sql(<<<SQL
@@ -53,8 +51,8 @@ SQL
         $updateStmt->query();
 
         // now the information is hold in column 'flags', so we can delete the old columns.
-        $this->dropColumn('project', 'cut_index');
-        $this->dropColumn('project', 'content_negotiation');
+		$table->column( 'cut_index')->drop();
+		$table->column('content_negotiation')->drop();
     }
 }
 

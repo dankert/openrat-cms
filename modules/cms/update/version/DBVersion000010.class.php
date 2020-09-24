@@ -6,7 +6,7 @@ use database\DbVersion;
 use security\Password;
 
 /**
- * Filetype 'file' is now devided into 'file' (unchanged), 'image' (new) and OR_DB_COLUMN_TYPE_TEXT (new).
+ * Filetype 'file' is now devided into 'file' (unchanged), 'image' (new) and Column::TYPE_TEXT (new).
  * 
  * @author dankert
  *
@@ -18,9 +18,9 @@ class DBVersion000010 extends DbVersion
      */
     public function update()
 	{
-        $db    = $this->getDb();
-        $tableObject = $this->getTableName('object');
-        $tableFile   = $this->getTableName('file');
+        $db          = $this->getDb();
+        $tableObject = $this->table('object')->getSqlName();
+        $tableFile   = $this->table('file'  )->getSqlName();
 
         $updateStmt = $db->sql('UPDATE '.$tableObject.
             ' SET typeid=6 WHERE id IN (SELECT objectid FROM '.$tableFile.
@@ -34,8 +34,5 @@ class DBVersion000010 extends DbVersion
         );
         $updateStmt->query();
 
-
 	}
 }
-
-?>

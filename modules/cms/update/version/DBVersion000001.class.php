@@ -4,6 +4,7 @@ namespace cms\update\version;
 
 use database\Database;
 use database\DbVersion;
+use database\Column;
 
 
 /**
@@ -16,296 +17,293 @@ class DBVersion000001 extends DbVersion
 {
 	public function update()
 	{
-		$not_nullable = false;
-		$nullable     = true;
-		
-		$this->addTable('project');
+		$table = $this->table('project')->add();
 
-		$this->addColumn('project','name'               ,OR_DB_COLUMN_TYPE_VARCHAR, 128,null,$not_nullable);
-		$this->addColumn('project','target_dir'         ,OR_DB_COLUMN_TYPE_VARCHAR, 255,null,$not_nullable);
-		$this->addColumn('project','ftp_url'            ,OR_DB_COLUMN_TYPE_VARCHAR, 255,null,$not_nullable);
-		$this->addColumn('project','ftp_passive'        ,OR_DB_COLUMN_TYPE_INT    ,null,null,$not_nullable);
-		$this->addColumn('project','cmd_after_publish'  ,OR_DB_COLUMN_TYPE_VARCHAR, 255,null,$not_nullable);
-		$this->addColumn('project','content_negotiation',OR_DB_COLUMN_TYPE_INT    ,   1,   0,$not_nullable);
-		$this->addColumn('project','cut_index'          ,OR_DB_COLUMN_TYPE_INT    ,   1,   0,$not_nullable);
+		$table->column('name'               )->type(Column::TYPE_VARCHAR)->size( 128)->add();
+		$table->column('target_dir'         )->type(Column::TYPE_VARCHAR)->size( 255)->add();
+		$table->column('ftp_url'            )->type(Column::TYPE_VARCHAR)->size( 255)->add();
+		$table->column('ftp_passive'        )->type(Column::TYPE_INT    )->add();
+		$table->column('cmd_after_publish'  )->type(Column::TYPE_VARCHAR)->size( 255)->add();
+		$table->column('content_negotiation')->type(Column::TYPE_INT    )->size(   1)->defaultValue(   0)->add();
+		$table->column('cut_index'          )->type(Column::TYPE_INT    )->size(   1)->defaultValue(   0)->add();
 		
-		$this->addPrimaryKey('project','id');
-		$this->addIndex('project','name');
+		$table->addPrimaryKey('id');
+		$table->addIndex('name');
 		
 
-		$this->addTable('user');
-		$this->addColumn('user','name',OR_DB_COLUMN_TYPE_VARCHAR,128,null,$not_nullable);
-		$this->addColumn('user','password',OR_DB_COLUMN_TYPE_VARCHAR,50,null,$not_nullable);
-		$this->addColumn('user','ldap_dn',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$not_nullable);
-		$this->addColumn('user','fullname',OR_DB_COLUMN_TYPE_VARCHAR,128,null,$not_nullable);
-		$this->addColumn('user','tel',OR_DB_COLUMN_TYPE_VARCHAR,128,null,$not_nullable);
-		$this->addColumn('user','mail',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$not_nullable);
-		$this->addColumn('user','descr',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$not_nullable);
-		$this->addColumn('user','style',OR_DB_COLUMN_TYPE_VARCHAR,64,null,$not_nullable);
-		$this->addColumn('user','is_admin',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
-		$this->addPrimaryKey('user','id');
-		$this->addUniqueIndex('user','name');
+		$table = $this->table('user')->add();
+		$table->column('name')->type(Column::TYPE_VARCHAR)->size(128)->add();
+		$table->column('password')->type(Column::TYPE_VARCHAR)->size(50)->add();
+		$table->column('ldap_dn')->type(Column::TYPE_VARCHAR)->size(255)->add();
+		$table->column('fullname')->type(Column::TYPE_VARCHAR)->size(128)->add();
+		$table->column('tel')->type(Column::TYPE_VARCHAR)->size(128)->add();
+		$table->column('mail')->type(Column::TYPE_VARCHAR)->size(255)->add();
+		$table->column('descr')->type(Column::TYPE_VARCHAR)->size(255)->add();
+		$table->column('style')->type(Column::TYPE_VARCHAR)->size(64)->add();
+		$table->column('is_admin')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
+		$table->addPrimaryKey('id');
+		$table->addUniqueIndex('name');
 		
-		$this->addTable('group');
-		$this->addColumn('group','name',OR_DB_COLUMN_TYPE_VARCHAR,100,null,$not_nullable);
-		$this->addPrimaryKey('group','id');
-		$this->addUniqueIndex('group','name');
+		$table = $this->table('group')->add();
+		$table->column('name')->type(Column::TYPE_VARCHAR)->size(100)->add();
+		$table->addPrimaryKey('id');
+		$table->addUniqueIndex('name');
 		
-		$this->addTable('object');
-		$this->addColumn('object','parentid',OR_DB_COLUMN_TYPE_INT,null,null,$nullable);
-		$this->addColumn('object','projectid',OR_DB_COLUMN_TYPE_INT,0,0,$not_nullable);
-		$this->addColumn('object','filename',OR_DB_COLUMN_TYPE_VARCHAR,150,null,$not_nullable);
-		$this->addColumn('object','orderid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
-		$this->addColumn('object','create_date',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
-		$this->addColumn('object','create_userid',OR_DB_COLUMN_TYPE_INT,0,null,$nullable);
-		$this->addColumn('object','lastchange_date',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
-		$this->addColumn('object','lastchange_userid',OR_DB_COLUMN_TYPE_INT,0,null,$nullable);
-		$this->addColumn('object','is_folder',OR_DB_COLUMN_TYPE_INT,1,null,$not_nullable);
-		$this->addColumn('object','is_file',OR_DB_COLUMN_TYPE_INT,1,null,$not_nullable);
-		$this->addColumn('object','is_page',OR_DB_COLUMN_TYPE_INT,1,null,$not_nullable);
-		$this->addColumn('object','is_link',OR_DB_COLUMN_TYPE_INT,1,null,$not_nullable);
-		$this->addPrimaryKey('object','id');
-		$this->addConstraint('object','projectid','project','id');
-		$this->addConstraint('object','lastchange_userid','user','id');
-		$this->addConstraint('object','create_userid','user','id');
+		$table = $this->table('object')->add();
+		$table->column('parentid')->type(Column::TYPE_INT)->nullable()->add();
+		$table->column('projectid')->type(Column::TYPE_INT)->size(0)->defaultValue(0)->add();
+		$table->column('filename')->type(Column::TYPE_VARCHAR)->size(150)->add();
+		$table->column('orderid')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('create_date')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('create_userid')->type(Column::TYPE_INT)->size(0)->nullable()->add();
+		$table->column('lastchange_date')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('lastchange_userid')->type(Column::TYPE_INT)->size(0)->nullable()->add();
+		$table->column('is_folder')->type(Column::TYPE_INT)->size(1)->add();
+		$table->column('is_file')->type(Column::TYPE_INT)->size(1)->add();
+		$table->column('is_page')->type(Column::TYPE_INT)->size(1)->add();
+		$table->column('is_link')->type(Column::TYPE_INT)->size(1)->add();
+		$table->addPrimaryKey('id');
+		$table->addConstraint('projectid', 'project', 'id');
+		$table->addConstraint('lastchange_userid', 'user', 'id');
+		$table->addConstraint('create_userid', 'user', 'id');
 		
-		$this->addIndex('object','parentid');
-		$this->addIndex('object','projectid');
-		$this->addIndex('object','is_folder');
-		$this->addIndex('object','is_file');
-		$this->addIndex('object','is_page');
-		$this->addIndex('object','is_link');
-		$this->addIndex('object','orderid');
-		$this->addIndex('object','create_userid');
-		$this->addIndex('object','lastchange_userid');
-		$this->addUniqueIndex('object','parentid,filename');
-		
-		
-		
-		
-		$this->addTable('template');
-		$this->addColumn('template','projectid',OR_DB_COLUMN_TYPE_INT,null,null,$not_nullable);
-		$this->addColumn('template','name',OR_DB_COLUMN_TYPE_VARCHAR,50,null,$not_nullable);
-		$this->addPrimaryKey('template','id');
-		$this->addConstraint('template','projectid','project','id');
-		
-		$this->addIndex('template','projectid');
-		$this->addIndex('template','name');
-		$this->addUniqueIndex('template','projectid,name');
-		
-		
-		
-		$this->addTable('language');
-		$this->addColumn('language','projectid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
-		$this->addColumn('language','isocode',OR_DB_COLUMN_TYPE_VARCHAR,10,null,$not_nullable);
-		$this->addColumn('language','name',OR_DB_COLUMN_TYPE_VARCHAR,50,null,$not_nullable);
-		$this->addColumn('language','is_default',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
-		$this->addPrimaryKey('language','id');
-		$this->addConstraint('language','projectid','project','id');
-		$this->addUniqueIndex('language','projectid,isocode');
+		$table->addIndex('parentid');
+		$table->addIndex('projectid');
+		$table->addIndex('is_folder');
+		$table->addIndex('is_file');
+		$table->addIndex('is_page');
+		$table->addIndex('is_link');
+		$table->addIndex('orderid');
+		$table->addIndex('create_userid');
+		$table->addIndex('lastchange_userid');
+		$table->addUniqueIndex( ['parentid','filename'] );
 		
 		
 		
 		
-		$this->addTable('page');
-		$this->addColumn('page','objectid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
-		$this->addColumn('page','templateid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
-		$this->addPrimaryKey('page','id');
-		$this->addConstraint('page','templateid','template','id');
-		$this->addConstraint('page','objectid','object','id');
+		$table = $this->table('template')->add();
+		$table->column('projectid')->type(Column::TYPE_INT)->add();
+		$table->column('name')->type(Column::TYPE_VARCHAR)->size(50)->add();
+		$table->addPrimaryKey('id');
+		$table->addConstraint('projectid', 'project', 'id');
+		
+		$table->addIndex('projectid');
+		$table->addIndex('name');
+		$table->addUniqueIndex(['projectid','name']);
+		
+		
+		
+		$table = $this->table('language')->add();
+		$table->column('projectid')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('isocode')->type(Column::TYPE_VARCHAR)->size(10)->add();
+		$table->column('name')->type(Column::TYPE_VARCHAR)->size(50)->add();
+		$table->column('is_default')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
+		$table->addPrimaryKey('id');
+		$table->addConstraint('projectid', 'project', 'id');
+		$table->addUniqueIndex(['projectid','isocode']);
+		
+		
+		
+		
+		$table = $this->table('page')->add();
+		$table->column('objectid')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('templateid')->type(Column::TYPE_INT)->size(0)->add();
+		$table->addPrimaryKey('id');
+		$table->addConstraint('templateid', 'template', 'id');
+		$table->addConstraint('objectid', 'object', 'id');
 		 
-		$this->addUniqueIndex('page','objectid');
-		$this->addIndex('page','templateid');
+		$table->addUniqueIndex('objectid');
+		$table->addIndex('templateid');
 		
 		
 		
 		
-		$this->addTable('projectmodel');
-		$this->addColumn('projectmodel','projectid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
-		$this->addColumn('projectmodel','name',OR_DB_COLUMN_TYPE_VARCHAR,50,null,$not_nullable);
-		$this->addColumn('projectmodel','extension',OR_DB_COLUMN_TYPE_VARCHAR,10,null,$nullable);
-		$this->addColumn('projectmodel','is_default',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
-		$this->addPrimaryKey('projectmodel','id');
-		$this->addConstraint('projectmodel','projectid','project','id');
+		$table = $this->table('projectmodel')->add();
+		$table->column('projectid')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('name')->type(Column::TYPE_VARCHAR)->size(50)->add();
+		$table->column('extension')->type(Column::TYPE_VARCHAR)->size(10)->nullable()->add();
+		$table->column('is_default')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
+		$table->addPrimaryKey('id');
+		$table->addConstraint('projectid', 'project', 'id');
 		
-		$this->addIndex('projectmodel','projectid');
-		$this->addUniqueIndex('projectmodel','projectid,name');
-		
-		
-		$this->addTable('element');
-		$this->addColumn('element','templateid',OR_DB_COLUMN_TYPE_INT,0,0,$not_nullable);
-		$this->addColumn('element','name',OR_DB_COLUMN_TYPE_VARCHAR,50,null,$not_nullable);
-		$this->addColumn('element','descr',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$not_nullable);
-		$this->addColumn('element','type',OR_DB_COLUMN_TYPE_VARCHAR,20,null,$not_nullable);
-		$this->addColumn('element','subtype',OR_DB_COLUMN_TYPE_VARCHAR,20,null,$nullable);
-		$this->addColumn('element','with_icon',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
-		$this->addColumn('element','dateformat',OR_DB_COLUMN_TYPE_VARCHAR,100,null,$nullable);
-		$this->addColumn('element','wiki',OR_DB_COLUMN_TYPE_INT,1,0,$nullable);
-		$this->addColumn('element','html',OR_DB_COLUMN_TYPE_INT,1,0,$nullable);
-		$this->addColumn('element','all_languages',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
-		$this->addColumn('element','writable',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
-		$this->addColumn('element','decimals',OR_DB_COLUMN_TYPE_INT,0,null,$nullable);
-		$this->addColumn('element','dec_point',OR_DB_COLUMN_TYPE_VARCHAR,5,null,$nullable);
-		$this->addColumn('element','thousand_sep',OR_DB_COLUMN_TYPE_VARCHAR,1,null,$nullable);
-		$this->addColumn('element','code',OR_DB_COLUMN_TYPE_TEXT,null,null,$nullable);
-		$this->addColumn('element','default_text',OR_DB_COLUMN_TYPE_TEXT,null,null,$nullable);
-		$this->addColumn('element','folderobjectid',OR_DB_COLUMN_TYPE_INT,null,null,$nullable);
-		$this->addColumn('element','default_objectid',OR_DB_COLUMN_TYPE_INT,null,null,$nullable);
-		$this->addPrimaryKey('element','id');
-		$this->addConstraint('element','default_objectid','object','id');
-		$this->addConstraint('element','folderobjectid','object','id');
-		$this->addConstraint('element','templateid','template','id');
-		
-		$this->addIndex('element','templateid');
-		$this->addIndex('element','name');
-		$this->addUniqueIndex('element','templateid,name');
+		$table->addIndex('projectid');
+		$table->addUniqueIndex(['projectid','name'] );
 		
 		
+		$table = $this->table('element')->add();
+		$table->column('templateid')->type(Column::TYPE_INT)->size(0)->defaultValue(0)->add();
+		$table->column('name')->type(Column::TYPE_VARCHAR)->size(50)->add();
+		$table->column('descr')->type(Column::TYPE_VARCHAR)->size(255)->add();
+		$table->column('type')->type(Column::TYPE_VARCHAR)->size(20)->add();
+		$table->column('subtype')->type(Column::TYPE_VARCHAR)->size(20)->nullable()->add();
+		$table->column('with_icon')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
+		$table->column('dateformat')->type(Column::TYPE_VARCHAR)->size(100)->nullable()->add();
+		$table->column('wiki')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->nullable()->add();
+		$table->column('html')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->nullable()->add();
+		$table->column('all_languages')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
+		$table->column('writable')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
+		$table->column('decimals')->type(Column::TYPE_INT)->size(0)->nullable()->add();
+		$table->column('dec_point')->type(Column::TYPE_VARCHAR)->size(5)->nullable()->add();
+		$table->column('thousand_sep')->type(Column::TYPE_VARCHAR)->size(1)->nullable()->add();
+		$table->column('code')->type(Column::TYPE_TEXT)->nullable()->add();
+		$table->column('default_text')->type(Column::TYPE_TEXT)->nullable()->add();
+		$table->column('folderobjectid')->type(Column::TYPE_INT)->nullable()->add();
+		$table->column('default_objectid')->type(Column::TYPE_INT)->nullable()->add();
+		$table->addPrimaryKey('id');
+		$table->addConstraint('default_objectid', 'object', 'id');
+		$table->addConstraint('folderobjectid', 'object', 'id');
+		$table->addConstraint('templateid', 'template', 'id');
 		
-		
-		$this->addTable('file');
-		$this->addColumn('file','objectid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
-		$this->addColumn('file','extension',OR_DB_COLUMN_TYPE_VARCHAR,10,null,$not_nullable);
-		$this->addColumn('file','size',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
-		$this->addColumn('file','value',OR_DB_COLUMN_TYPE_BLOB,null,null,$not_nullable);
-		$this->addPrimaryKey('file','id');
-		$this->addConstraint('file','objectid','object','id');
-		
-		$this->addUniqueIndex('file','objectid');
-		
-		
-		
-		$this->addTable('folder');
-		$this->addColumn('folder','objectid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
-		$this->addPrimaryKey('folder','id');
-		$this->addConstraint('folder','objectid','object','id');
-		
-		$this->addUniqueIndex('folder','objectid');
+		$table->addIndex('templateid');
+		$table->addIndex('name');
+		$table->addUniqueIndex(['templateid','name']);
 		
 		
 		
 		
+		$table = $this->table('file')->add();
+		$table->column('objectid')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('extension')->type(Column::TYPE_VARCHAR)->size(10)->add();
+		$table->column('size')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('value')->type(Column::TYPE_BLOB)->add();
+		$table->addPrimaryKey('id');
+		$table->addConstraint('objectid', 'object', 'id');
 		
-		$this->addTable('link');
-		$this->addColumn('link','objectid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
-		$this->addColumn('link','link_objectid',OR_DB_COLUMN_TYPE_INT,null,null,$nullable);
-		$this->addColumn('link','url',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$nullable);
-		$this->addPrimaryKey('link','id');
-		$this->addConstraint('link','objectid','object','id');
-		$this->addConstraint('link','link_objectid','object','id');
+		$table->addUniqueIndex('objectid');
 		
-		$this->addUniqueIndex('link','objectid');
-		$this->addIndex('link','link_objectid');
+		
+		
+		$table = $this->table('folder')->add();
+		$table->column('objectid')->type(Column::TYPE_INT)->size(0)->add();
+		$table->addPrimaryKey('id');
+		$table->addConstraint('objectid', 'object', 'id');
+		
+		$table->addUniqueIndex('objectid');
 		
 		
 		
 		
 		
-		$this->addTable('name');
-		$this->addColumn('name','objectid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
-		$this->addColumn('name','name',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$not_nullable);
-		$this->addColumn('name','descr',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$not_nullable);
-		$this->addColumn('name','languageid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
-		$this->addPrimaryKey('name','id');
-		$this->addConstraint('name','objectid','object','id');
-		$this->addConstraint('name','languageid','language','id');
+		$table = $this->table('link')->add();
+		$table->column('objectid')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('link_objectid')->type(Column::TYPE_INT)->nullable()->add();
+		$table->column('url')->type(Column::TYPE_VARCHAR)->size(255)->nullable()->add();
+		$table->addPrimaryKey('id');
+		$table->addConstraint('objectid', 'object', 'id');
+		$table->addConstraint('link_objectid', 'object', 'id');
 		
-		$this->addIndex('name','objectid');
-		$this->addIndex('name','languageid');
-		$this->addUniqueIndex('name','objectid,languageid');
+		$table->addUniqueIndex('objectid');
+		$table->addIndex('link_objectid');
 		
 		
 		
 		
 		
-		$this->addTable('templatemodel');
-		$this->addColumn('templatemodel','templateid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
-		$this->addColumn('templatemodel','projectmodelid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
-		$this->addColumn('templatemodel','extension',OR_DB_COLUMN_TYPE_VARCHAR,10,null,$nullable);
-		$this->addColumn('templatemodel','text',OR_DB_COLUMN_TYPE_TEXT,null,null,$not_nullable);
-		$this->addPrimaryKey('templatemodel','id');
-		$this->addConstraint('templatemodel','templateid','template','id');
-		$this->addConstraint('templatemodel','projectmodelid','projectmodel','id');
+		$table = $this->table('name')->add();
+		$table->column('objectid')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('name')->type(Column::TYPE_VARCHAR)->size(255)->add();
+		$table->column('descr')->type(Column::TYPE_VARCHAR)->size(255)->add();
+		$table->column('languageid')->type(Column::TYPE_INT)->size(0)->add();
+		$table->addPrimaryKey('id');
+		$table->addConstraint('objectid', 'object', 'id');
+		$table->addConstraint('languageid', 'language', 'id');
 		
-		$this->addIndex('templatemodel','templateid');
-		$this->addUniqueIndex('templatemodel','templateid,extension');
-		$this->addUniqueIndex('templatemodel','templateid,projectmodelid');
-		
-		
-		
-		
-		
-		$this->addTable('usergroup');
-		$this->addColumn('usergroup','userid',OR_DB_COLUMN_TYPE_INT,null,null,$not_nullable);
-		$this->addColumn('usergroup','groupid',OR_DB_COLUMN_TYPE_INT,null,null,$not_nullable);
-		$this->addPrimaryKey('usergroup','id');
-		$this->addConstraint('usergroup','groupid','group','id');
-		$this->addConstraint('usergroup','userid','user','id');
-		
-		$this->addIndex('usergroup','groupid');
-		$this->addIndex('usergroup','userid');
-		$this->addUniqueIndex('usergroup','userid,groupid');
-		
-		
-		
-		
-		$this->addTable('value');
-		$this->addColumn('value','pageid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
-		$this->addColumn('value','languageid',OR_DB_COLUMN_TYPE_INT,null,null,$not_nullable);
-		$this->addColumn('value','elementid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
-		$this->addColumn('value','linkobjectid',OR_DB_COLUMN_TYPE_INT,null,null,$nullable);
-		$this->addColumn('value','text',OR_DB_COLUMN_TYPE_TEXT,null,null,$nullable);
-		$this->addColumn('value','number',OR_DB_COLUMN_TYPE_INT,null,null,$nullable);
-		$this->addColumn('value','date',OR_DB_COLUMN_TYPE_INT,null,null,$nullable);
-		$this->addColumn('value','active',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
-		$this->addColumn('value','lastchange_date',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
-		$this->addColumn('value','lastchange_userid',OR_DB_COLUMN_TYPE_INT,null,null,$nullable);
-		$this->addColumn('value','publish',OR_DB_COLUMN_TYPE_INT,null,null,$not_nullable);
-		$this->addPrimaryKey('value','id');
-		$this->addConstraint('value','pageid','page','id');
-		$this->addConstraint('value','elementid','element','id');
-		$this->addConstraint('value','languageid','language','id');
-		$this->addConstraint('value','lastchange_userid','user','id');
-		$this->addConstraint('value','linkobjectid','object','id');
-		
-		$this->addIndex('value','pageid');
-		$this->addIndex('value','languageid');
-		$this->addIndex('value','elementid');
-		$this->addIndex('value','active');
-		$this->addIndex('value','lastchange_date');
-		$this->addIndex('value','publish');
+		$table->addIndex('objectid');
+		$table->addIndex('languageid');
+		$table->addUniqueIndex(['objectid','languageid']);
 		
 		
 		
 		
 		
-		$this->addTable('acl');
-		$this->addColumn('acl','userid',OR_DB_COLUMN_TYPE_INT,null,null,$nullable);
-		$this->addColumn('acl','groupid',OR_DB_COLUMN_TYPE_INT,null,null,$nullable);
-		$this->addColumn('acl','objectid',OR_DB_COLUMN_TYPE_INT,null,null,$not_nullable);
-		$this->addColumn('acl','languageid',OR_DB_COLUMN_TYPE_INT,0,null,$nullable);
-		$this->addColumn('acl','is_write',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
-		$this->addColumn('acl','is_prop',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
-		$this->addColumn('acl','is_create_folder',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
-		$this->addColumn('acl','is_create_file',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
-		$this->addColumn('acl','is_create_link',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
-		$this->addColumn('acl','is_create_page',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
-		$this->addColumn('acl','is_delete',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
-		$this->addColumn('acl','is_release',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
-		$this->addColumn('acl','is_publish',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
-		$this->addColumn('acl','is_grant',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
-		$this->addColumn('acl','is_transmit',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
-		$this->addPrimaryKey('acl','id');
-		$this->addConstraint('acl','groupid','group','id');
-		$this->addConstraint('acl','userid','user','id');
-		$this->addConstraint('acl','objectid','object','id');
-		$this->addConstraint('acl','languageid','language','id');
+		$table = $this->table('templatemodel')->add();
+		$table->column('templateid')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('projectmodelid')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('extension')->type(Column::TYPE_VARCHAR)->size(10)->nullable()->add();
+		$table->column('text')->type(Column::TYPE_TEXT)->add();
+		$table->addPrimaryKey('id');
+		$table->addConstraint('templateid', 'template', 'id');
+		$table->addConstraint('projectmodelid', 'projectmodel', 'id');
 		
-		$this->addIndex('acl','userid');
-		$this->addIndex('acl','groupid');
-		$this->addIndex('acl','languageid');
-		$this->addIndex('acl','objectid');
-		$this->addIndex('acl','is_transmit');
+		$table->addIndex('templateid');
+		$table->addUniqueIndex(['templateid','extension'     ]);
+		$table->addUniqueIndex(['templateid','projectmodelid']);
+		
+		
+		
+		
+		
+		$table = $this->table('usergroup')->add();
+		$table->column('userid')->type(Column::TYPE_INT)->add();
+		$table->column('groupid')->type(Column::TYPE_INT)->add();
+		$table->addPrimaryKey('id');
+		$table->addConstraint('groupid', 'group', 'id');
+		$table->addConstraint('userid', 'user', 'id');
+		
+		$table->addIndex('groupid');
+		$table->addIndex('userid');
+		$table->addUniqueIndex(['userid','groupid']);
+		
+		
+		
+		
+		$table = $this->table('value')->add();
+		$table->column('pageid')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('languageid')->type(Column::TYPE_INT)->add();
+		$table->column('elementid')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('linkobjectid')->type(Column::TYPE_INT)->nullable()->add();
+		$table->column('text')->type(Column::TYPE_TEXT)->nullable()->add();
+		$table->column('number')->type(Column::TYPE_INT)->nullable()->add();
+		$table->column('date')->type(Column::TYPE_INT)->nullable()->add();
+		$table->column('active')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('lastchange_date')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('lastchange_userid')->type(Column::TYPE_INT)->nullable()->add();
+		$table->column('publish')->type(Column::TYPE_INT)->add();
+		$table->addPrimaryKey('id');
+		$table->addConstraint('pageid', 'page', 'id');
+		$table->addConstraint('elementid', 'element', 'id');
+		$table->addConstraint('languageid', 'language', 'id');
+		$table->addConstraint('lastchange_userid', 'user', 'id');
+		$table->addConstraint('linkobjectid', 'object', 'id');
+		
+		$table->addIndex('pageid');
+		$table->addIndex('languageid');
+		$table->addIndex('elementid');
+		$table->addIndex('active');
+		$table->addIndex('lastchange_date');
+		$table->addIndex('publish');
+		
+		
+		
+		
+		
+		$table = $this->table('acl')->add();
+		$table->column('userid')->type(Column::TYPE_INT)->nullable()->add();
+		$table->column('groupid')->type(Column::TYPE_INT)->nullable()->add();
+		$table->column('objectid')->type(Column::TYPE_INT)->add();
+		$table->column('languageid')->type(Column::TYPE_INT)->size(0)->nullable()->add();
+		$table->column('is_write')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
+		$table->column('is_prop')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
+		$table->column('is_create_folder')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
+		$table->column('is_create_file')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
+		$table->column('is_create_link')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
+		$table->column('is_create_page')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
+		$table->column('is_delete')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
+		$table->column('is_release')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
+		$table->column('is_publish')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
+		$table->column('is_grant')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
+		$table->column('is_transmit')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
+		$table->addPrimaryKey('id');
+		$table->addConstraint('groupid', 'group', 'id');
+		$table->addConstraint('userid', 'user', 'id');
+		$table->addConstraint('objectid', 'object', 'id');
+		$table->addConstraint('languageid', 'language', 'id');
+		
+		$table->addIndex('userid');
+		$table->addIndex('groupid');
+		$table->addIndex('languageid');
+		$table->addIndex('objectid');
+		$table->addIndex('is_transmit');
 
 		$this->afterUpdate( $this->getDb() );
 	}
@@ -335,5 +333,3 @@ class DBVersion000001 extends DbVersion
 
 
 }
-
-?>

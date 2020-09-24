@@ -3,6 +3,7 @@
 namespace cms\update\version;
 
 use database\DbVersion;
+use database\Column;
 
 /**
  * Security enhancements.
@@ -14,23 +15,19 @@ class DBVersion000005 extends DbVersion
 {
 	public function update()
 	{
-		$not_nullable = false;
-		$nullable     = true;
-		
+		$table = $this->table('user');
+
 		// longer Passwords! 50 is not enough.
-		$this->addColumn('user','password_hash',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$not_nullable);
+		$table->column('password_hash')->type(Column::TYPE_VARCHAR)->size(255)->add();
 		
 		$db    = $this->getDb();
-		$table = $this->getTableName('user');
-		$updateStmt = $db->sql('UPDATE '.$table.
+		$updateStmt = $db->sql('UPDATE '.$table->getSqlName().
 				' SET password_hash=password'
 		);
 		$updateStmt->query();
 
-		$this->dropColumn('user','password');
+		$table->column('password')->drop();
 		
-		$this->addColumn('user','password_salt',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$not_nullable);
+		$table->column('password_salt')->type(Column::TYPE_VARCHAR)->size(255)->add();
 	}
 }
-
-?>

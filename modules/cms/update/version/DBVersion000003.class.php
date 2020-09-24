@@ -15,5 +15,3 @@ class DBVersion000003 extends DbVersion
 		// Dummy version.
 	}
 }
-
-?>

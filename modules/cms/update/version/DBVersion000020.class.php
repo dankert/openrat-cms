@@ -3,6 +3,7 @@
 namespace cms\update\version;
 
 use database\DbVersion;
+use database\Column;
 
 /**
  * Aliases for node objects.
@@ -17,23 +18,22 @@ class DBVersion000020 extends DbVersion
      */
     public function update()
     {
-        $this->addTable('alias');
+        $table = $this->table('alias')->add();
 
-        $this->addColumn('alias','objectid'     ,OR_DB_COLUMN_TYPE_INT,null,null,OR_DB_COLUMN_NOT_NULLABLE);
-        $this->addColumn('alias','languageid'   ,OR_DB_COLUMN_TYPE_INT,null,null,OR_DB_COLUMN_NULLABLE);
-        $this->addColumn('alias','link_objectid',OR_DB_COLUMN_TYPE_INT,null,null,OR_DB_COLUMN_NOT_NULLABLE);
+        $table->column('objectid'     )->type(Column::TYPE_INT)->add();
+        $table->column('languageid'   )->type(Column::TYPE_INT)->nullable()->add();
+        $table->column('link_objectid')->type(Column::TYPE_INT)->add();
 
 
-        $this->addPrimaryKey ('alias','id');
+        $table->addPrimaryKey ('id');
 
-        $this->addConstraint ('alias','objectid'     ,'object'  ,'id');
-        $this->addConstraint ('alias','languageid'   ,'language','id');
-        $this->addConstraint ('alias','link_objectid','object'  ,'id');
+        $table->addConstraint ('objectid'     ,'object'  ,'id');
+        $table->addConstraint ('languageid'   ,'language','id');
+        $table->addConstraint ('link_objectid','object'  ,'id');
 
-        $this->addUniqueIndex('alias','objectid'                );
-        $this->addUniqueIndex('alias','link_objectid,languageid');
-        $this->addIndex      ('alias','link_objectid'           );
-
+        $table->addUniqueIndex('objectid');
+        $table->addUniqueIndex(['link_objectid','languageid']);
+        $table->addIndex      ('link_objectid');
     }
 }
 

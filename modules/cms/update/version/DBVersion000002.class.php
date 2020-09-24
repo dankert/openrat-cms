@@ -3,6 +3,8 @@
 namespace cms\update\version;
 
 use database\DbVersion;
+use database\Column;
+
 /**
  * new table: version.
  *
@@ -13,16 +15,14 @@ class DBVersion000002 extends DbVersion
 {
 	public function update()
 	{
-		$this->addTable('version');
+		$table = $this->table('version')->add();
 
-		$this->addColumn('version','version'  ,OR_DB_COLUMN_TYPE_INT,null,null,false);
-		$this->addColumn('version','status'   ,OR_DB_COLUMN_TYPE_INT,null,null,false);
-		$this->addColumn('version','installed',OR_DB_COLUMN_TYPE_INT,null,null,false);
+		$table->column('version'  )->type(Column::TYPE_INT)->add();
+		$table->column('status'   )->type(Column::TYPE_INT)->add();
+		$table->column('installed')->type(Column::TYPE_INT)->add();
 		
-		$this->addPrimaryKey ('version','id'      );
-		$this->addIndex      ('version','status'  );
-		$this->addUniqueIndex('version','version' );
+		$table->addPrimaryKey ('id'      );
+		$table->addIndex      ('status');
+		$table->addUniqueIndex('version');
 	}
 }
-
-?>

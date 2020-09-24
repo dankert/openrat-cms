@@ -3,6 +3,7 @@
 namespace cms\update\version;
 
 use database\DbVersion;
+use database\Column;
 use security\Password;
 
 /**
@@ -18,11 +19,12 @@ class DBVersion000019 extends DbVersion
      */
     public function update()
     {
-        $this->addColumn('value','format'  ,OR_DB_COLUMN_TYPE_INT,1,0,OR_DB_COLUMN_NOT_NULLABLE);
+    	$table = $this->table('value');
+        $table->column('format'  )->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
 
         // Initial Value: Copy from element.
-        $tableValue   = $this->getTableName('value');
-        $tableElement = $this->getTableName('element');
+        $tableValue   = $this->table('value')->getSqlName();
+        $tableElement = $this->table('element')->getSqlName();
 
         $updateStmt = $this->getDb()->sql(<<<SQL
 UPDATE $tableValue

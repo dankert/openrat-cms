@@ -3,6 +3,7 @@
 namespace cms\update\version;
 
 use database\DbVersion;
+use database\Column;
 
 /**
  * Security enhancements.
@@ -14,27 +15,23 @@ class DBVersion000006 extends DbVersion
 {
 	public function update()
 	{
-		$not_nullable = false;
-		$nullable     = true;
+		$table = $this->table('user');
+
+		$table->column('password_expires')->type(Column::TYPE_INT)->size(0)->nullable()->add();
 		
-		$this->addColumn('user','password_expires',OR_DB_COLUMN_TYPE_INT,0,null,$nullable);
+		$table->column('last_login'      )->type(Column::TYPE_INT)->size(0)->nullable()->add();
 		
-		$this->addColumn('user','last_login'      ,OR_DB_COLUMN_TYPE_INT,0,null,$nullable);
-		
-		$this->addColumn('user','password_algo'   ,OR_DB_COLUMN_TYPE_INT,0,2,$not_nullable);
+		$table->column('password_algo'   )->type(Column::TYPE_INT)->size(0)->defaultValue(2)->add();
 		
 		// Setting Password algo. Passwords beginning with '$' are (old) MD5-hashes. 
 		
 		// SUBSTR(s,pos,length) is supported by MySql,Postgres,SQLite
 		// SUBSTRING(s FROM pos FOR length) is NOT supported by SQLite
-		$table = $this->getTableName('user');
 		$db    = $this->getDb();
-		$updateAlgoStmt = $db->sql('UPDATE '.$table.
+		$updateAlgoStmt = $db->sql('UPDATE '.$table->getSqlName().
 				' SET password_algo=1 WHERE SUBSTR(password_hash,1,1) = '."'$'".';'
 		);
 		$updateAlgoStmt->query();
 		
 	}
 }
-
-?>

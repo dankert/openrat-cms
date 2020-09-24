@@ -3,6 +3,7 @@
 namespace cms\update\version;
 
 use database\DbVersion;
+use database\Column;
 use security\Password;
 
 /**
@@ -18,8 +19,7 @@ class DBVersion000013 extends DbVersion
      */
     public function update()
     {
-        $this->addColumn('file','filterid'  ,OR_DB_COLUMN_TYPE_INT,0,null,OR_DB_COLUMN_NULLABLE);
+    	$table = $this->table('file');
+        $table->column('filterid'  )->type(Column::TYPE_INT)->size(0)->nullable()->add();
     }
 }
-
-?>

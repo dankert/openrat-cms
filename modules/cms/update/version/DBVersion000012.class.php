@@ -3,7 +3,7 @@
 namespace cms\update\version;
 
 use database\DbVersion;
-use security\Password;
+use database\Column;
 
 /**
  * Objects gets new columns for storing the publish date.
@@ -18,10 +18,9 @@ class DBVersion000012 extends DbVersion
      */
     public function update()
     {
-        $this->addColumn('object','published_date'  ,OR_DB_COLUMN_TYPE_INT,0,null,OR_DB_COLUMN_NULLABLE);
-        $this->addColumn('object','published_userid',OR_DB_COLUMN_TYPE_INT,0,null,OR_DB_COLUMN_NULLABLE);
-        $this->addConstraint('object','published_userid','user','id');
+    	$table = $this->table('object');
+        $table->column('published_date'  )->type(Column::TYPE_INT)->size(0)->nullable()->add();
+        $table->column('published_userid')->type(Column::TYPE_INT)->size(0)->nullable()->add();
+        $table->addConstraint('published_userid', 'user', 'id');
     }
 }
-
-?>

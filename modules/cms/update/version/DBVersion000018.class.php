@@ -3,6 +3,7 @@
 namespace cms\update\version;
 
 use database\DbVersion;
+use database\Column;
 use security\Password;
 
 /**
@@ -18,10 +19,11 @@ class DBVersion000018 extends DbVersion
      */
     public function update()
     {
-        $this->addColumn('element','label'  ,OR_DB_COLUMN_TYPE_VARCHAR,100,'',OR_DB_COLUMN_NOT_NULLABLE);
+    	$table = $this->table('element');
+        $table->column('label'  )->type(Column::TYPE_VARCHAR)->size(100)->defaultValue('')->add();
 
         // Initial Value for Labels is the element name.
-        $tableElement = $this->getTableName('element');
+        $tableElement = $table->getSqlName();
 
         $updateStmt = $this->getDb()->sql(<<<SQL
 UPDATE $tableElement
@@ -30,7 +32,7 @@ SQL
         );
         $updateStmt->query();
 
-        $this->addUniqueIndex('element','templateid,label');
+        $table->addUniqueIndex(['templateid','label']);
     }
 }
 

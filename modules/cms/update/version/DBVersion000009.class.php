@@ -5,6 +5,7 @@ namespace cms\update\version;
 
 use cms\model\BaseObject;
 use database\DbVersion;
+use database\Column;
 use security\Password;
 
 /**
@@ -23,41 +24,37 @@ class DBVersion000009 extends DbVersion
      */
     public function update()
 	{
-		$not_nullable = false;
-		$nullable     = true;
-
 		// Creating new table 'url'
-        $this->addTable('url');
-        $this->addColumn('url','objectid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
-        $this->addColumn('url','url',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$not_nullable);
+        $table = $this->table('url')->add();
+        $table->column('objectid')->type(Column::TYPE_INT)->size(0)->add();
+        $table->column('url')->type(Column::TYPE_VARCHAR)->size(255)->add();
 
-        $this->addPrimaryKey('url','id');
-        $this->addConstraint('url','objectid','object','id');
+        $table->addPrimaryKey('id');
+        $table->addConstraint('objectid', 'object', 'id');
 
-        $this->addUniqueIndex('url','objectid');
+        $table->addUniqueIndex('objectid');
 
         // Copying values from table 'link' to new table 'url'
         $db    = $this->getDb();
 
-        $insertStmt = $db->sql('INSERT INTO '.$this->getTableName('url').
-            ' (id,objectid,url) SELECT id,objectid,url FROM '.$this->getTableName('link').' WHERE url is not null'
+        $insertStmt = $db->sql('INSERT INTO '.$table->getSqlName().
+            ' (id,objectid,url) SELECT id,objectid,url FROM '.$this->table('link')->getSqlName().' WHERE url is not null'
         );
         $insertStmt->query();
 
         // Updating the typeid for URL entrys in table 'object'
-        $updateStmt = $db->sql('UPDATE '.$this->getTableName('object').
-            ' SET typeid='.BaseObject::TYPEID_URL.' WHERE id IN (SELECT objectid FROM '.$this->getTableName('url').')'
+        $updateStmt = $db->sql('UPDATE '.$this->table('object')->getSqlName().
+            ' SET typeid='.BaseObject::TYPEID_URL.' WHERE id IN (SELECT objectid FROM '.$this->table('url')->getSqlName().')'
         );
         $updateStmt->query();
 
+        $tableLink = $this->table('link');
         // Remove old entrys in table 'link'
-        $updateStmt = $db->sql('DELETE FROM '.$this->getTableName('link').' WHERE url is not null'
+        $updateStmt = $db->sql('DELETE FROM '.$tableLink->getSqlName().' WHERE url is not null'
         );
         $updateStmt->query();
 
         // Cleanup: Drop unused column.
-        $this->dropColumn('link','url');
+		$tableLink->column('url')->drop();
 	}
 }
-
-?>
