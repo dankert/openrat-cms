@@ -114,14 +114,15 @@ class TemplateModel extends ModelBase
         $stmt = Db::sql('SELECT MAX(id) FROM {{templatemodel}}');
         $nextid = intval($stmt->getOne())+1;
 
-        $stmt = $db->sql( 'INSERT INTO {{templatemodel}}'.
-                        '        (id,templateid,projectmodelid,extension) '.
-                        ' VALUES ({id},{templateid},{modelid},{extension}) ');
+        $stmt = Db::sql( 'INSERT INTO {{templatemodel}}'.
+                        '        (id,templateid,projectmodelid,extension,text) '.
+                        ' VALUES ({id},{templateid},{modelid},{extension},{src}) ');
         $stmt->setInt   ( 'id',$nextid         );
 
 		$stmt->setString( 'extension'     ,$this->extension      );
 		$stmt->setInt   ( 'templateid'    ,$this->templateid     );
 		$stmt->setInt   ( 'modelid'       ,$this->modelid        );
+		$stmt->setString( 'src'           ,$this->src            );
 
 		$stmt->query();
 
