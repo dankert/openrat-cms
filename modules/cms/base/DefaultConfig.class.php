@@ -1,10 +1,12 @@
 <?php
-
-namespace cms\base;
-
 // DO NOT MAKE ANY CHANGES IN THIS FILE, please edit the file 'config.yml' or 'config-<host>.yml' instead.
 // This file should only be changed by developers.
 
+namespace cms\base;
+
+/**
+ * Default configuration.
+ */
 class DefaultConfig {
 
 	/**
@@ -13,909 +15,1069 @@ class DefaultConfig {
 	 */
 	public static function get()
 	{
-		$conf = array();
-		$conf['applications'] = array();
-		$conf['applications'][''] = 0;
-		$conf['applications']['phpmyadmin'] = array();
-		$conf['applications']['phpmyadmin']['name'] = 'PHPYourAdmin';
-		$conf['applications']['phpmyadmin']['url'] = "https://example.com/anotherapplication/index.cgi";
-		$conf['applications']['phpmyadmin']['param'] = "ticketidforopenrat";
-		$conf['applications']['phpmyadmin']['group'] = '0';
-		$conf['applications']['phpmyadmin']['description'] = "Your database administration";
-		$conf['cache'] = array();
-		$conf['cache']['conditional_get'] = true;
-		$conf['cache']['enable_cache'] = false;
-		$conf['cache']['tmp_dir'] = "";
-		$conf['config'] = array();
-		$conf['config']['auto_reload'] = true;
-		$conf['config']['session_destroy_on_config_reload'] = true;
-		$conf['content'] = array();
-		$conf['content']['file'] = array();
-		$conf['content']['file']['max_file_size'] = '1500';
-		$conf['content']['revision-limit'] = array();
-		$conf['content']['revision-limit']['enabled'] = false;
-		$conf['content']['revision-limit']['max-age'] = 120;
-		$conf['content']['revision-limit']['min-age'] = 1;
-		$conf['content']['revision-limit']['max-revisions'] = 100;
-		$conf['content']['revision-limit']['min-revisions'] = 3;
-		$conf['content']['language'] = array();
-		$conf['content']['language']['use_default_language'] = true;
-		$conf['countries'] = array();
-		$conf['countries'][''] = '0';
-		$conf['countries']['AA'] = 'Afar';
-		$conf['countries']['AB'] = 'Abkhazian';
-		$conf['countries']['AF'] = 'Afrikaans';
-		$conf['countries']['AM'] = 'Amharic';
-		$conf['countries']['AR'] = 'Arabic';
-		$conf['countries']['AS'] = 'Assamese';
-		$conf['countries']['AY'] = 'Aymara';
-		$conf['countries']['AZ'] = 'Azerbaijani';
-		$conf['countries']['BA'] = 'Bashkir';
-		$conf['countries']['BE'] = 'Byelorussian';
-		$conf['countries']['BG'] = 'Bulgarian';
-		$conf['countries']['BH'] = 'Bihari';
-		$conf['countries']['BI'] = 'Bislama';
-		$conf['countries']['BN'] = 'Bengali';
-		$conf['countries']['BO'] = 'Tibetan';
-		$conf['countries']['BR'] = 'Breton';
-		$conf['countries']['CA'] = 'Catalan';
-		$conf['countries']['CO'] = 'Corsican';
-		$conf['countries']['CS'] = 'Czech';
-		$conf['countries']['CY'] = 'Welsh';
-		$conf['countries']['DA'] = 'Danish';
-		$conf['countries']['DE'] = 'German';
-		$conf['countries']['DZ'] = 'Bhutani';
-		$conf['countries']['EL'] = 'Greek';
-		$conf['countries']['EN'] = 'English';
-		$conf['countries']['EO'] = 'Esperanto';
-		$conf['countries']['ES'] = 'Spanish';
-		$conf['countries']['ET'] = 'Estonian';
-		$conf['countries']['EU'] = 'Basque';
-		$conf['countries']['FA'] = 'Persian';
-		$conf['countries']['FI'] = 'Finnish';
-		$conf['countries']['FJ'] = 'Fiji';
-		$conf['countries']['FO'] = 'Faeroese';
-		$conf['countries']['FR'] = 'French';
-		$conf['countries']['FY'] = 'Frisian';
-		$conf['countries']['GA'] = 'Irish';
-		$conf['countries']['GD'] = 'Gaelic';
-		$conf['countries']['GL'] = 'Galician';
-		$conf['countries']['GN'] = 'Guarani';
-		$conf['countries']['GU'] = 'Gujarati';
-		$conf['countries']['HA'] = 'Hausa';
-		$conf['countries']['HI'] = 'Hindi';
-		$conf['countries']['HR'] = 'Croatian';
-		$conf['countries']['HU'] = 'Hungarian';
-		$conf['countries']['HY'] = 'Armenian';
-		$conf['countries']['IA'] = 'Interlingua';
-		$conf['countries']['IE'] = 'Interlingue';
-		$conf['countries']['IK'] = 'Inupiak';
-		$conf['countries']['IN'] = 'Indonesian';
-		$conf['countries']['IS'] = 'Icelandic';
-		$conf['countries']['IT'] = 'Italian';
-		$conf['countries']['IW'] = 'Hebrew';
-		$conf['countries']['JA'] = 'Japanese';
-		$conf['countries']['JI'] = 'Yiddish';
-		$conf['countries']['JW'] = 'Javanese';
-		$conf['countries']['KA'] = 'Georgian';
-		$conf['countries']['KK'] = 'Kazakh';
-		$conf['countries']['KL'] = 'Greenlandic';
-		$conf['countries']['KM'] = 'Cambodian';
-		$conf['countries']['KN'] = 'Kannada';
-		$conf['countries']['KO'] = 'Korean';
-		$conf['countries']['KS'] = 'Kashmiri';
-		$conf['countries']['KU'] = 'Kurdish';
-		$conf['countries']['KY'] = 'Kirghiz';
-		$conf['countries']['LA'] = 'Latin';
-		$conf['countries']['LN'] = 'Lingala';
-		$conf['countries']['LO'] = 'Laothian';
-		$conf['countries']['LT'] = 'Lithuanian';
-		$conf['countries']['LV'] = 'Latvian';
-		$conf['countries']['MG'] = 'Malagasy';
-		$conf['countries']['MI'] = 'Maori';
-		$conf['countries']['MK'] = 'Macedonian';
-		$conf['countries']['ML'] = 'Malayalam';
-		$conf['countries']['MN'] = 'Mongolian';
-		$conf['countries']['MO'] = 'Moldavian';
-		$conf['countries']['MR'] = 'Marathi';
-		$conf['countries']['MS'] = 'Malay';
-		$conf['countries']['MT'] = 'Maltese';
-		$conf['countries']['MY'] = 'Burmese';
-		$conf['countries']['NA'] = 'Nauru';
-		$conf['countries']['NE'] = 'Nepali';
-		$conf['countries']['NL'] = 'Dutch';
-		$conf['countries']['_NO'] = 'Norwegian';
-		$conf['countries']['OC'] = 'Occitan';
-		$conf['countries']['OM'] = 'Oromo';
-		$conf['countries']['OR'] = 'Oriya';
-		$conf['countries']['PA'] = 'Punjabi';
-		$conf['countries']['PL'] = 'Polish';
-		$conf['countries']['PS'] = 'Pashto';
-		$conf['countries']['PT'] = 'Portuguese';
-		$conf['countries']['QU'] = 'Quechua';
-		$conf['countries']['RM'] = 'Rhaeto-Romance';
-		$conf['countries']['RN'] = 'Kirundi';
-		$conf['countries']['RO'] = 'Romanian';
-		$conf['countries']['RU'] = 'Russian';
-		$conf['countries']['RW'] = 'Kinyarwanda';
-		$conf['countries']['SA'] = 'Sanskrit';
-		$conf['countries']['SD'] = 'Sindhi';
-		$conf['countries']['SG'] = 'Sangro';
-		$conf['countries']['SH'] = 'Serbo-Croatian';
-		$conf['countries']['SI'] = 'Singhalese';
-		$conf['countries']['SK'] = 'Slovak';
-		$conf['countries']['SL'] = 'Slovenian';
-		$conf['countries']['SM'] = 'Samoan';
-		$conf['countries']['SN'] = 'Shona';
-		$conf['countries']['SO'] = 'Somali';
-		$conf['countries']['SQ'] = 'Albanian';
-		$conf['countries']['SR'] = 'Serbian';
-		$conf['countries']['SS'] = 'Siswati';
-		$conf['countries']['ST'] = 'Sesotho';
-		$conf['countries']['SU'] = 'Sudanese';
-		$conf['countries']['SV'] = 'Swedish';
-		$conf['countries']['SW'] = 'Swahili';
-		$conf['countries']['TA'] = 'Tamil';
-		$conf['countries']['TE'] = 'Tegulu';
-		$conf['countries']['TG'] = 'Tajik';
-		$conf['countries']['TH'] = 'Thai';
-		$conf['countries']['TI'] = 'Tigrinya';
-		$conf['countries']['TK'] = 'Turkmen';
-		$conf['countries']['TL'] = 'Tagalog';
-		$conf['countries']['TN'] = 'Setswana';
-		$conf['countries']['TO'] = 'Tonga';
-		$conf['countries']['TR'] = 'Turkish';
-		$conf['countries']['TS'] = 'Tsonga';
-		$conf['countries']['TT'] = 'Tatar';
-		$conf['countries']['TW'] = 'Twi';
-		$conf['countries']['UK'] = 'Ukrainian';
-		$conf['countries']['UR'] = 'Urdu';
-		$conf['countries']['UZ'] = 'Uzbek';
-		$conf['countries']['VI'] = 'Vietnamese';
-		$conf['countries']['VO'] = 'Volapuk';
-		$conf['countries']['WO'] = 'Wolof';
-		$conf['countries']['XH'] = 'Xhosa';
-		$conf['countries']['YO'] = 'Yoruba';
-		$conf['countries']['ZH'] = 'Chinese';
-
-		$conf['database'] = array();
-
-		$conf['database-default'] = array();
-		$conf['database-default']['defaults'] = array();
-		$conf['database-default']['defaults']['prefix'] = '';
-		$conf['database-default']['defaults']['suffix'] = '';
-		$conf['database-default']['defaults']['enabled'] = true;
-		$conf['database-default']['defaults']['name'] = '';
-		$conf['database-default']['defaults']['description'] = '';
-		$conf['database-default']['defaults']['type'] = 'pdo';
-		$conf['database-default']['defaults']['dsn'] = 'mysql:localhost';
-		$conf['database-default']['defaults']['user'] = '';
-		$conf['database-default']['defaults']['password'] = '';
-		$conf['database-default']['defaults']['host'] = '';
-		$conf['database-default']['defaults']['database'] = '';
-		$conf['database-default']['defaults']['base64'] = false;
-		$conf['database-default']['defaults']['persistent'] = true;
-		$conf['database-default']['defaults']['charset'] = 'UTF-8';
-		$conf['database-default']['defaults']['connection_sql'] = '';
-		$conf['database-default']['defaults']['cmd'] = '';
-		$conf['database-default']['defaults']['prepare'] = true;
-		$conf['database-default']['defaults']['transaction'] = true;
-		$conf['database-default']['defaults']['update'] = array();
-		$conf['database-default']['defaults']['auto_update'] = true;
-		$conf['database-default']['default-id'] = '';
-
-		$conf['date'] = array();
-		$conf['date']['format'] = array();
-		$conf['date']['format']['SHORT'] = "";
-		$conf['date']['format']['ISO8601SHORT'] = "Ymd";
-		$conf['date']['format']['ISO8601'] = "Y-m-d";
-		$conf['date']['format']['ISO8601BAS'] = "YmdTHis";
-		$conf['date']['format']['ISO8601EXT'] = "Y-m-dTH:i:s";
-		$conf['date']['format']['ISO8601FULL'] = "Y-m-dTH:i:sO";
-		$conf['date']['format']['ISO8601WEEK'] = "YWW";
-		$conf['date']['format']['GER1'] = "d.m.Y";
-		$conf['date']['format']['GER2'] = "d.m.Y, H:i";
-		$conf['date']['format']['GER3'] = "d.m.Y, H:i:s";
-		$conf['date']['format']['GER4'] = "d. F Y, H:i:s";
-		$conf['date']['format']['ENGLONG'] = "l dS of F Y h:i:s A";
-		$conf['date']['format']['GMDATE'] = "D, d M Y H:i:s GMT";
-		$conf['date']['format']['RFC822'] = "r";
-		$conf['date']['format']['UNIX'] = "U";
-		$conf['date']['format']['LONG'] = "F j, Y, g:i a";
-		$conf['date']['timezone'] = array();
-		$conf['date']['timezone']['-6'] = "New York";
-		$conf['date']['timezone']['0'] = "UTC (GMT)";
-		$conf['date']['timezone']['60'] = "MET (Middle European Time)";
-		$conf['date']['timezone']['120'] = "MEST (Middle European Summertime)";
-		$conf['editor'] = array();
-		$conf['editor']['text-markup'] = array();
-		$conf['editor']['text-markup']['strong-begin'] = "*";
-		$conf['editor']['text-markup']['strong-end'] = "*";
-		$conf['editor']['text-markup']['emphatic-begin'] = "_";
-		$conf['editor']['text-markup']['emphatic-end'] = "_";
-		$conf['editor']['text-markup']['image-begin'] = "{";
-		$conf['editor']['text-markup']['image-end'] = "}";
-		$conf['editor']['text-markup']['speech-begin'] = 'QUOTE';
-		$conf['editor']['text-markup']['speech-end'] = 'QUOTE';
-		$conf['editor']['text-markup']['code-begin'] = "=";
-		$conf['editor']['text-markup']['code-end'] = "=";
-		$conf['editor']['text-markup']['footnote-begin'] = "[";
-		$conf['editor']['text-markup']['footnote-end'] = "]";
-		$conf['editor']['text-markup']['pre-begin'] = "=";
-		$conf['editor']['text-markup']['pre-end'] = "=";
-		$conf['editor']['text-markup']['insert-begin'] = "++";
-		$conf['editor']['text-markup']['insert-end'] = "++";
-		$conf['editor']['text-markup']['remove-begin'] = "--";
-		$conf['editor']['text-markup']['remove-end'] = "--";
-		$conf['editor']['text-markup']['definition-sep'] = "::";
-		$conf['editor']['text-markup']['headline'] = "+";
-		$conf['editor']['text-markup']['headline_level1_underline'] = "=";
-		$conf['editor']['text-markup']['headline_level2_underline'] = "-";
-		$conf['editor']['text-markup']['headline_level3_underline'] = ".";
-		$conf['editor']['text-markup']['list-unnumbered'] = "-";
-		$conf['editor']['text-markup']['list-numbered'] = "#";
-		$conf['editor']['text-markup']['table-of-content'] = "##TOC##";
-		$conf['editor']['text-markup']['linkto'] = "->";
-		$conf['editor']['text-markup']['table-cell-sep'] = "|";
-		$conf['editor']['text-markup']['style-begin'] = "'";
-		$conf['editor']['text-markup']['style-end'] = "'";
-		$conf['editor']['text-markup']['quote'] = ">";
-		$conf['editor']['text-markup']['quote-line-begin'] = ">";
-		$conf['editor']['text-markup']['quote-line-end'] = ">";
-		$conf['editor']['text-markup']['macro-begin'] = "<<";
-		$conf['editor']['text-markup']['macro-end'] = ">>";
-		$conf['editor']['text-markup']['macro-attribute-quote'] = "'";
-		$conf['editor']['text-markup']['macro-attribute-value-seperator'] = "=";
-		$conf['editor']['html'] = array();
-		$conf['editor']['html']['tag_strong'] = "strong";
-		$conf['editor']['html']['tag_emphatic'] = "em";
-		$conf['editor']['html']['tag_teletype'] = "tt";
-		$conf['editor']['html']['tag_speech'] = "cite";
-		$conf['editor']['html']['override_speech'] = false;
-		$conf['editor']['html']['override_speech_open'] = "&laquo;";
-		$conf['editor']['html']['override_speech_close'] = "&raquo;";
-		$conf['editor']['html']['rendermode'] = "sgml";
-		$conf['editor']['html']['rendermode'] = "xml";
-		$conf['editor']['html']['replace'] = "EUR:&euro;";
-		$conf['editor']['wiki'] = array();
-		$conf['editor']['wiki']['convert_html'] = true;
-		$conf['editor']['wiki']['convert_bbcode'] = true;
-		$conf['editor']['text'] = array();
-		$conf['editor']['text']['linelength'] = '70';
-		$conf['editor']['calendar'] = array();
-		$conf['editor']['calendar']['weekday_offset'] = '1';
-		$conf['editor']['text'] = array();
-		$conf['editor']['text']['linelength'] = '70';
-		$conf['editor']['macro'] = array();
-		$conf['editor']['macro']['show_errors'] = false;
-		$conf['filename'] = array();
-		$conf['filename']['edit'] = true;
-		$conf['filename']['default'] = 'index';
-		$conf['filename']['style'] = 'short';
-		$conf['filename']['url'] = 'relative';
-		$conf['ftp'] = array();
-		$conf['ftp']['ascii'] = "html,htm,php";
-		$conf['help'] = array();
-		$conf['help']['enabled'] = true;
-		$conf['help']['url'] = "http://help.openrat.de/";
-		$conf['help']['suffix'] = ".html";
-		$conf['html'] = array();
-		$conf['html']['tag_teletype'] = 'tt';
-		$conf['html']['tag_emphatic'] = 'em';
-		$conf['html']['tag_strong'] = 'strong';
-		$conf['html']['tag_speech'] = 'cite';
-		$conf['html']['speech_open'] = "&bdquo";
-		$conf['html']['speech_close'] = "&rdquo";
-		$conf['i18n'] = array();
-		$conf['i18n']['use_http'] = true;
-		$conf['i18n']['default'] = 'de';
-		$conf['i18n']['available'] = 'de,en,es,fr,it,ru,cn';
-		$conf['i18n']['locale'] = array();
-		$conf['i18n']['locale']['de'] = "de_DE.utf8";
-		$conf['i18n']['locale']['en'] = "en_US.utf8";
-		$conf['image'] = array();
-		$conf['image']['truecolor'] = true;
-		$conf['interface'] = array();
-		$conf['interface']['tree_width'] = "25%";
-		$conf['interface']['file_separator'] = " &raquo";
-		$conf['interface']['nice_urls'] = false;
-		$conf['interface']['url_sessionid'] = false;
-		$conf['interface']['theme'] = 'default';
-		$conf['interface']['timeout'] = '0';
-		$conf['interface']['override_title'] = '';
-		$conf['interface']['style'] = array();
-		$conf['interface']['style']['default'] = 'modern';
-		$conf['interface']['config'] = array();
-		$conf['interface']['config']['file_manager_url'] = "";
-		$conf['interface']['config']['enable'] = true;
-		$conf['interface']['config']['show_system'] = true;
-		$conf['interface']['config']['show_interpreter'] = true;
-		$conf['interface']['config']['show_extensions'] = true;
-		$conf['interface']['frames'] = array();
-		$conf['interface']['frames']['top'] = '_top';
-		$conf['interface']['url'] = array();
-		$conf['interface']['url']['fake_url'] = false;
-		$conf['interface']['url']['index'] = false;
-		$conf['interface']['url']['url_format'] = "%s,%s.%i";
-		$conf['interface']['url']['url_format'] = "%s,%s,%d.do";
-		$conf['interface']['url']['add_sessionid'] = false;
-		$conf['interface']['gravatar'] = array();
-		$conf['interface']['gravatar']['enable'] = true;
-		$conf['interface']['gravatar']['size'] = '80';
-		$conf['interface']['gravatar']['default'] = '404';
-		$conf['interface']['gravatar']['rating'] = 'g';
-		$conf['interface']['session'] = array();
-		$conf['interface']['session']['auto_extend'] = true;
-		$conf['ldap'] = array();
-		$conf['ldap']['host'] = "localhost";
-		$conf['ldap']['port'] = "389";
-		$conf['ldap']['protocol'] = "2";
-		$conf['ldap']['dn'] = "uid={user},ou=users,dc=example,dc=com";
-		$conf['ldap']['dn'] = "";
-		$conf['ldap']['search'] = array();
-		$conf['ldap']['search']['anonymous'] = true;
-		$conf['ldap']['search']['user'] = "uid=openrat,ou=users,dc=example,dc=com";
-		$conf['ldap']['search']['password'] = "verysecret";
-		$conf['ldap']['search']['basedn'] = "dc=example,dc=com";
-		$conf['ldap']['search']['filter'] = "(uid={user})";
-		$conf['ldap']['search']['aliases'] = true;
-		$conf['ldap']['search']['timeout'] = 30;
-		$conf['ldap']['search']['add'] = true;
-		$conf['ldap']['authorize'] = array();
-		$conf['ldap']['authorize']['group_filter'] = "(memberUid={dn})";
-		$conf['ldap']['authorize']['group_name'] = "cn";
-		$conf['ldap']['authorize']['auto_add'] = true;
-		$conf['login'] = array();
-		$conf['login']['motd'] = '';
-		$conf['login']['nologin'] = false;
-		$conf['login']['register'] = false;
-		$conf['login']['send_password'] = false;
-		$conf['login']['gpl'] = array();
-		$conf['login']['gpl']['url'] = "http://www.gnu.org/licenses/old-licenses/gpl-2.0.html";
-		$conf['login']['logo'] = array();
-		$conf['login']['logo']['enabled'] = false;
-		$conf['login']['logo']['image'] = "./modules/cms-ui/themes/default/images/logo.jpg";
-		$conf['login']['logo']['url'] = "http://www.openrat.de";
-		$conf['login']['start'] = array();
-		$conf['login']['start']['start_lastchanged_object'] = true;
-		$conf['login']['start']['start_single_project'] = true;
-		$conf['log'] = array();
-		$conf['log']['file'] = null;
-		$conf['log']['level'] = "warn";
-		$conf['log']['output'] = "plain";
-		$conf['log']['date_format'] = "M j H:i:s";
-		$conf['log']['ns_lookup'] = false;
-		$conf['log']['format'] = ['time', 'level', 'host', 'user', 'action', 'text'];
-		$conf['mail'] = array();
-		$conf['mail']['enabled'] = true;
-		$conf['mail']['from'] = "OpenRat <user@example.com>";
-		$conf['mail']['signature'] = '';
-		$conf['mail']['cc'] = '0';
-		$conf['mail']['bcc'] = '0';
-		$conf['mail']['priority'] = '3';
-		$conf['mail']['header_encoding'] = "Quoted-printable";
-		$conf['mail']['client'] = 'smtp';
-		$conf['mail']['client'] = 'php';
-		$conf['mail']['whitelist'] = "";
-		$conf['mail']['blacklist'] = "";
-		$conf['mail']['smtp'] = array();
-		$conf['mail']['smtp']['host'] = "mail.yourdomain.example";
-		$conf['mail']['smtp']['host'] = "locahost";
-		$conf['mail']['smtp']['port'] = "25";
-		$conf['mail']['smtp']['auth_username'] = "your.user@something.example";
-		$conf['mail']['smtp']['auth_password'] = "notsecret";
-		$conf['mail']['smtp']['timeout'] = "45";
-		$conf['mail']['smtp']['localhost'] = "your.fully.qualified.hostname.example";
-		$conf['mail']['smtp']['tls'] = false;
-		$conf['mail']['smtp']['ssl'] = false;
-
-		$conf['mime-types'] = array();
-		$conf['mime-types']['ez'] = 'application/andrew-inset';
-		$conf['mime-types']['csm'] = 'application/cu-seeme';
-		$conf['mime-types']['cu'] = 'application/cu-seeme';
-		$conf['mime-types']['tsp'] = 'application/dsptype';
-		$conf['mime-types']['spl'] = 'application/futuresplash';
-		$conf['mime-types']['cpt'] = 'application/mac-compactpro';
-		$conf['mime-types']['hqx'] = 'application/mac-binhex40';
-		$conf['mime-types']['nb'] = 'application/mathematica';
-		$conf['mime-types']['mdb'] = 'application/msaccess';
-		$conf['mime-types']['doc'] = 'application/msword';
-		$conf['mime-types']['dot'] = 'application/msword';
-		$conf['mime-types']['bin'] = 'application/octet-stream';
-		$conf['mime-types']['oda'] = 'application/oda';
-		$conf['mime-types']['pdf'] = 'application/pdf';
-		$conf['mime-types']['pgp'] = 'application/pgp-signature';
-		$conf['mime-types']['ps'] = 'application/postscript';
-		$conf['mime-types']['ai'] = 'application/postscript';
-		$conf['mime-types']['eps'] = 'application/postscript';
-		$conf['mime-types']['rtf'] = 'application/rtf';
-		$conf['mime-types']['smi'] = 'application/smil';
-		$conf['mime-types']['smil'] = 'application/smil';
-		$conf['mime-types']['xls'] = 'application/vnd.ms-excel';
-		$conf['mime-types']['xlb'] = 'application/vnd.ms-excel';
-		$conf['mime-types']['ppt'] = 'application/vnd.ms-powerpoint';
-		$conf['mime-types']['pps'] = 'application/vnd.ms-powerpoint';
-		$conf['mime-types']['pot'] = 'application/vnd.ms-powerpoint';
-		$conf['mime-types']['sdw'] = 'application/vnd.stardivision.writer';
-		$conf['mime-types']['sgl'] = 'application/vnd.stardivision.writer-global';
-		$conf['mime-types']['vor'] = 'application/vnd.stardivision.writer';
-		$conf['mime-types']['sdc'] = 'application/vnd.stardivision.calc';
-		$conf['mime-types']['sda'] = 'application/vnd.stardivision.draw';
-		$conf['mime-types']['sdd'] = 'application/vnd.stardivision.impress';
-		$conf['mime-types']['sdp'] = 'application/vnd.stardivision.impress-packed';
-		$conf['mime-types']['smf'] = 'application/vnd.stardivision.math';
-		$conf['mime-types']['sds'] = 'application/vnd.stardivision.chart';
-		$conf['mime-types']['smd'] = 'application/vnd.stardivision.mail';
-		$conf['mime-types']['wbxml'] = 'application/vnd.wap.wbxml ';
-		$conf['mime-types']['wmlc'] = 'application/vnd.wap.wmlc';
-		$conf['mime-types']['wmlsc'] = 'application/vnd.wap.wmlscriptc';
-		$conf['mime-types']['wp5'] = 'application/wordperfect5.1';
-		$conf['mime-types']['zip'] = 'application/zip';
-		$conf['mime-types']['wk'] = 'application/x-123';
-		$conf['mime-types']['bcpio'] = 'application/x-bcpio';
-		$conf['mime-types']['vcd'] = 'application/x-cdlink ';
-		$conf['mime-types']['pgn'] = 'application/x-chess-pgn';
-		$conf['mime-types']['cpio'] = 'application/x-cpio';
-		$conf['mime-types']['csh'] = 'application/x-csh';
-		$conf['mime-types']['deb'] = 'application/x-debian-package';
-		$conf['mime-types']['dcr'] = 'application/x-director';
-		$conf['mime-types']['dir'] = 'application/x-director';
-		$conf['mime-types']['dxr'] = 'application/x-director';
-		$conf['mime-types']['wad'] = 'application/x-doom';
-		$conf['mime-types']['dms'] = 'application/x-dms';
-		$conf['mime-types']['dvi'] = 'application/x-dvi';
-		$conf['mime-types']['pfa'] = 'application/x-font';
-		$conf['mime-types']['pfb'] = 'application/x-font';
-		$conf['mime-types']['gsf'] = 'application/x-font';
-		$conf['mime-types']['pcf'] = 'application/x-font';
-		$conf['mime-types']['spl'] = 'application/x-futuresplash ';
-		$conf['mime-types']['gnumeric'] = 'application/x-gnumeric';
-		$conf['mime-types']['gtar'] = 'application/x-gtar';
-		$conf['mime-types']['tgz'] = 'application/x-gtar';
-		$conf['mime-types']['taz'] = 'application/x-gtar';
-		$conf['mime-types']['hdf'] = 'application/x-hdf';
-		$conf['mime-types']['phtml'] = 'text/html';
-		$conf['mime-types']['pht'] = 'text/html';
-		$conf['mime-types']['php'] = 'text/html';
-		$conf['mime-types']['phps'] = 'text/html';
-		$conf['mime-types']['php3'] = 'text/html';
-		$conf['mime-types']['php3p'] = 'text/html ';
-		$conf['mime-types']['php4'] = 'text/html';
-		$conf['mime-types']['docbook'] = 'application/docbook+xml';
-		$conf['mime-types']['ica'] = 'application/x-ica';
-		$conf['mime-types']['jar'] = 'application/x-java-archive';
-		$conf['mime-types']['jnlp'] = 'application/x-java-jnlp-file';
-		$conf['mime-types']['ser'] = 'application/x-java-serialized-object';
-		$conf['mime-types']['class'] = 'application/x-java-vm';
-		$conf['mime-types']['js'] = 'application/x-javascript';
-		$conf['mime-types']['chrt'] = 'application/x-kchart';
-		$conf['mime-types']['kil'] = 'application/x-killustrator';
-		$conf['mime-types']['kpr'] = 'application/x-kpresenter';
-		$conf['mime-types']['kpt'] = 'application/x-kpresenter';
-		$conf['mime-types']['skp'] = 'application/x-koan ';
-		$conf['mime-types']['skd'] = 'application/x-koan ';
-		$conf['mime-types']['skt'] = 'application/x-koan ';
-		$conf['mime-types']['skm'] = 'application/x-koan ';
-		$conf['mime-types']['ksp'] = 'application/x-kspread';
-		$conf['mime-types']['kwd'] = 'application/x-kword';
-		$conf['mime-types'][' kwt'] = 'application/x-kword';
-		$conf['mime-types']['latex'] = 'application/x-latex';
-		$conf['mime-types']['lha'] = 'application/x-lha';
-		$conf['mime-types']['lzh'] = 'application/x-lzh';
-		$conf['mime-types']['lzx'] = 'application/x-lzx';
-		$conf['mime-types']['frm'] = 'fbdocapplication/x-maker';
-		$conf['mime-types']['maker'] = 'fbdocapplication/x-maker';
-		$conf['mime-types']['frame'] = 'fbdocapplication/x-maker';
-		$conf['mime-types']['fm'] = 'fbdocapplication/x-maker';
-		$conf['mime-types']['fb'] = 'fbdocapplication/x-maker';
-		$conf['mime-types']['book'] = 'fbdocapplication/x-maker';
-		$conf['mime-types']['mif'] = 'application/x-mif';
-		$conf['mime-types']['com'] = 'application/x-msdos-program';
-		$conf['mime-types']['exe'] = 'application/x-msdos-program';
-		$conf['mime-types']['bat'] = 'application/x-msdos-program';
-		$conf['mime-types']['dll'] = 'application/x-msdos-program';
-		$conf['mime-types']['msi'] = 'application/x-msi';
-		$conf['mime-types']['nc'] = 'application/x-netcdf';
-		$conf['mime-types']['cdf'] = 'application/x-netcdf';
-		$conf['mime-types']['pac'] = 'application/x-ns-proxy-autoconfig';
-		$conf['mime-types']['o'] = 'application/x-object';
-		$conf['mime-types']['ogg'] = 'application/x-ogg';
-		$conf['mime-types']['oza'] = 'application/x-oz-application';
-		$conf['mime-types']['pl'] = 'application/x-perl';
-		$conf['mime-types']['pm'] = 'application/x-perl';
-		$conf['mime-types']['crl'] = 'application/x-pkcs7-crl';
-		$conf['mime-types']['rpm'] = 'application/x-redhat-package-manager';
-		$conf['mime-types']['shar'] = 'application/x-shar';
-		$conf['mime-types']['swf'] = 'application/x-shockwave-flash';
-		$conf['mime-types']['swfl'] = 'application/x-shockwave-flash';
-		$conf['mime-types']['sh'] = 'application/x-sh ';
-		$conf['mime-types']['sit'] = 'application/x-stuffit';
-		$conf['mime-types']['sv4cpio'] = 'application/x-sv4cpio';
-		$conf['mime-types']['sv4crc'] = 'application/x-sv4crc';
-		$conf['mime-types']['tar'] = 'application/x-tar';
-		$conf['mime-types']['tcl'] = 'application/x-tcl';
-		$conf['mime-types']['tex'] = 'application/x-tex';
-		$conf['mime-types']['gf'] = 'application/x-tex-gf';
-		$conf['mime-types']['pk'] = 'application/x-tex-pk';
-		$conf['mime-types']['texinfo'] = 'application/x-texinfo';
-		$conf['mime-types']['texi'] = 'application/x-texinfo';
-		$conf['mime-types']['; "~"'] = 'application/x-trash';
-		$conf['mime-types'][';"%"'] = 'application/x-trash';
-		$conf['mime-types']['bak'] = 'application/x-trash';
-		$conf['mime-types']['old'] = 'application/x-trash';
-		$conf['mime-types']['sik'] = 'application/x-trash';
-		$conf['mime-types']['t'] = 'application/x-troff';
-		$conf['mime-types']['tr'] = 'application/x-troff';
-		$conf['mime-types']['roff'] = 'application/x-troff';
-		$conf['mime-types']['man'] = 'application/x-troff-man';
-		$conf['mime-types']['me'] = 'application/x-troff-me';
-		$conf['mime-types']['ms'] = 'application/x-troff-ms';
-		$conf['mime-types']['ustar'] = 'application/x-ustar';
-		$conf['mime-types']['src'] = 'application/x-wais-source';
-		$conf['mime-types']['wz'] = 'application/x-wingz';
-		$conf['mime-types']['crt'] = 'application/x-x509-ca-cert';
-		$conf['mime-types']['fig'] = 'application/x-xfig';
-		$conf['mime-types']['au'] = 'audio/basic';
-		$conf['mime-types']['snd'] = 'audio/basic';
-		$conf['mime-types']['mid'] = 'audio/midi';
-		$conf['mime-types']['midi'] = 'audio/midi';
-		$conf['mime-types']['kar'] = 'audio/midi';
-		$conf['mime-types']['mpga'] = 'audio/mpeg';
-		$conf['mime-types']['mpega'] = 'audio/mpeg';
-		$conf['mime-types']['mp2'] = 'audio/mpeg';
-		$conf['mime-types']['mp3'] = 'audio/mpeg';
-		$conf['mime-types']['m3u'] = 'audio/mpegurl';
-		$conf['mime-types']['sid'] = 'audio/prs.sid';
-		$conf['mime-types']['aif'] = 'audio/x-aiff';
-		$conf['mime-types']['aiff'] = 'audio/x-aiff';
-		$conf['mime-types']['aifc'] = 'audio/x-aiff';
-		$conf['mime-types']['gsm'] = 'audio/x-gsm';
-		$conf['mime-types']['m3u'] = 'audio/x-mpegurl';
-		$conf['mime-types']['rpm'] = 'audio/x-pn-realaudio-plugin ';
-		$conf['mime-types']['ra'] = 'audio/x-pn-realaudio';
-		$conf['mime-types']['rm'] = 'audio/x-pn-realaudio';
-		$conf['mime-types']['ram'] = 'audio/x-pn-realaudio';
-		$conf['mime-types']['ra'] = 'audio/x-realaudio ';
-		$conf['mime-types']['pls'] = 'audio/x-scpls';
-		$conf['mime-types']['wav'] = 'audio/x-wav';
-		$conf['mime-types']['pdb'] = 'chemical/x-pdb';
-		$conf['mime-types']['xyz'] = 'chemical/x-xyz ';
-		$conf['mime-types']['bmp'] = 'image/bmp';
-		$conf['mime-types']['gif'] = 'image/gif';
-		$conf['mime-types']['ief'] = 'image/ief';
-		$conf['mime-types']['jpeg'] = 'image/jpeg';
-		$conf['mime-types']['jpg'] = 'image/jpeg';
-		$conf['mime-types']['jpe'] = 'image/jpeg';
-		$conf['mime-types']['pcx'] = 'image/pcx';
-		$conf['mime-types']['png'] = 'image/png';
-		$conf['mime-types']['svg'] = 'image/svg+xml';
-		$conf['mime-types']['svgz'] = 'image/svg+xml';
-		$conf['mime-types']['tiff'] = 'image/tiff';
-		$conf['mime-types']['tif'] = 'image/tiff';
-		$conf['mime-types']['wbmp'] = 'image/vnd.wap.wbmp';
-		$conf['mime-types']['ras'] = 'image/x-cmu-raster';
-		$conf['mime-types']['cdr'] = 'image/x-coreldraw';
-		$conf['mime-types']['pat'] = 'image/x-coreldrawpattern';
-		$conf['mime-types']['cdt'] = 'image/x-coreldrawtemplate';
-		$conf['mime-types']['cpt'] = 'image/x-corelphotopaint';
-		$conf['mime-types']['djvu'] = 'image/x-djvu';
-		$conf['mime-types']['djv'] = 'image/x-djvu';
-		$conf['mime-types']['jng'] = 'image/x-jng';
-		$conf['mime-types']['bmp'] = 'image/x-ms-bmp';
-		$conf['mime-types']['pnm'] = 'image/x-portable-anymap';
-		$conf['mime-types']['pbm'] = 'image/x-portable-bitmap';
-		$conf['mime-types']['pgm'] = 'image/x-portable-graymap';
-		$conf['mime-types']['ppm'] = 'image/x-portable-pixmap';
-		$conf['mime-types']['rgb'] = 'image/x-rgb';
-		$conf['mime-types']['xbm'] = 'image/x-xbitmap';
-		$conf['mime-types']['xpm'] = 'image/x-xpixmap';
-		$conf['mime-types']['xwd'] = 'image/x-xwindowdump';
-		$conf['mime-types']['igs'] = 'model/iges';
-		$conf['mime-types']['iges'] = 'model/iges';
-		$conf['mime-types']['msh'] = 'model/mesh';
-		$conf['mime-types']['mesh'] = 'model/mesh';
-		$conf['mime-types']['silo'] = 'model/mesh';
-		$conf['mime-types']['wrl'] = 'model/vrml';
-		$conf['mime-types']['vrml'] = 'model/vrml';
-		$conf['mime-types']['csv'] = 'text/comma-separated-values';
-		$conf['mime-types']['css'] = 'text/css';
-		$conf['mime-types']['htm'] = 'text/html';
-		$conf['mime-types']['html'] = 'text/html';
-		$conf['mime-types']['xhtml'] = 'text/html';
-		$conf['mime-types']['mml'] = 'text/mathml';
-		$conf['mime-types']['asc'] = 'text/plain';
-		$conf['mime-types']['txt'] = 'text/plain';
-		$conf['mime-types']['text'] = 'text/plain';
-		$conf['mime-types']['diff'] = 'text/plain';
-		$conf['mime-types']['rtx'] = 'text/richtext';
-		$conf['mime-types']['rtf'] = 'text/rtf';
-		$conf['mime-types']['tsv'] = 'text/tab-separated-values';
-		$conf['mime-types']['wml'] = 'text/vnd.wap.wml';
-		$conf['mime-types']['wmls'] = 'text/vnd.wap.wmlscript';
-		$conf['mime-types']['xml'] = 'text/xml';
-		$conf['mime-types']['xsl'] = 'text/xml';
-		$conf['mime-types']['hpp'] = 'text/x-c++hdr';
-		$conf['mime-types']['hxx'] = 'text/x-c++hdr';
-		$conf['mime-types']['hh'] = 'text/x-c++hdr';
-		$conf['mime-types']['cpp'] = 'text/x-c++src';
-		$conf['mime-types']['cxx'] = 'text/x-c++src';
-		$conf['mime-types']['cc'] = 'text/x-c++src';
-		$conf['mime-types']['h'] = 'text/x-chdr';
-		$conf['mime-types']['csh'] = 'text/x-csh';
-		$conf['mime-types']['c'] = 'text/x-csrc';
-		$conf['mime-types']['java'] = 'text/x-java';
-		$conf['mime-types']['moc'] = 'text/x-moc';
-		$conf['mime-types']['p'] = 'text/x-pascal';
-		$conf['mime-types']['pas'] = 'text/x-pascal';
-		$conf['mime-types']['etx'] = 'text/x-setext';
-		$conf['mime-types']['sh'] = 'text/x-sh';
-		$conf['mime-types']['tcl'] = 'text/x-tcl';
-		$conf['mime-types']['tk'] = 'text/x-tcl';
-		$conf['mime-types']['tex'] = 'text/x-tex';
-		$conf['mime-types']['ltx'] = 'text/x-tex';
-		$conf['mime-types']['sty'] = 'text/x-tex';
-		$conf['mime-types']['cls'] = 'text/x-tex';
-		$conf['mime-types']['vcs'] = 'text/x-vcalendar';
-		$conf['mime-types']['vcf'] = 'text/x-vcard';
-		$conf['mime-types']['dl'] = 'video/dl';
-		$conf['mime-types']['fli'] = 'video/fli';
-		$conf['mime-types']['gl'] = 'video/gl';
-		$conf['mime-types']['mpeg'] = 'video/mpeg';
-		$conf['mime-types']['mpg'] = 'video/mpeg';
-		$conf['mime-types']['mpe'] = 'video/mpeg';
-		$conf['mime-types']['qt'] = 'video/quicktime';
-		$conf['mime-types']['mov'] = 'video/quicktime';
-		$conf['mime-types']['mxu'] = 'video/vnd.mpegurl';
-		$conf['mime-types']['mng'] = 'video/x-mng';
-		$conf['mime-types']['asf'] = 'video/x-ms-asf';
-		$conf['mime-types']['asx'] = 'video/x-ms-asf';
-		$conf['mime-types']['avi'] = 'video/x-msvideo';
-		$conf['mime-types']['movie'] = 'video/x-sgi-movie';
-		$conf['mime-types']['ice'] = 'x-conference/x-cooltalk';
-		$conf['mime-types']['vrm'] = 'x-world/x-vrml';
-		$conf['mime-types']['vrml'] = 'x-world/x-vrml';
-		$conf['mime-types']['wrl'] = 'x-world/x-vrml';
-
-		$conf['publish'] = array();
-		$conf['publish']['edit'] = true;
-		$conf['publish']['default'] = 'index';
-		$conf['publish']['format'] = "{filename}{language_sep}{language}{type_sep}{type}";
-		$conf['publish']['language_sep'] = ".";
-		$conf['publish']['type_sep'] = ".";
-		$conf['publish']['filename_language'] = 'auto';
-		$conf['publish']['filename_type'] = 'always';
-		$conf['publish']['style'] = "id";
-		$conf['publish']['url'] = 'relative';
-		$conf['publish']['enable_php_in_page_content'] = false;
-		$conf['publish']['enable_php_in_file_content'] = false;
-		$conf['publish']['escape_8bit_characters'] = false;
-		$conf['publish']['encode_utf8_in_html'] = true;
-		$conf['publish']['negotiation'] = array();
-		$conf['publish']['negotiation']['page_negotiate_type'] = true;
-		$conf['publish']['negotiation']['page_negotiate_language'] = true;
-		$conf['publish']['negotiation']['file_negotiate_type'] = true;
-		$conf['publish']['filesystem'] = array();
-		$conf['publish']['filesystem']['per_project'] = true;
-		$conf['publish']['filesystem']['directory'] = '/var/www/';
-		$conf['publish']['command'] = array();
-		$conf['publish']['command']['per_project'] = true;
-		$conf['publish']['command']['enable'] = false;
-		$conf['publish']['command']['command'] = '';
-		$conf['publish']['ftp'] = array();
-		$conf['publish']['ftp']['enable'] = true;
-		$conf['publish']['ftp']['per_project'] = true;
-		$conf['publish']['ftp']['port'] = '21';
-		$conf['publish']['ftp']['host'] = '';
-		$conf['publish']['ftp']['path'] = '';
-		$conf['publish']['ftp']['user'] = 'anonymous';
-		$conf['publish']['ftp']['pass'] = 'mail@example.com';
-		$conf['publish']['set_modification_date'] = true;
-		$conf['replace'] = array();
-		$conf['replace'][''] = '0';
-		$conf['replace'][''] = '0';
-		$conf['replace']['euro'] = "EUR,&euro;";
-		$conf['replace']['copy'] = "(c),&copy;";
-		$conf['search'] = array();
-		$conf['search'][''] = '0';
-		$conf['search']['quicksearch'] = array();
-		$conf['search']['quicksearch']['flag'] = array();
-		$conf['search']['quicksearch']['flag']['id'] = true;
-		$conf['search']['quicksearch']['flag']['name'] = true;
-		$conf['search']['quicksearch']['flag']['filename'] = true;
-		$conf['search']['quicksearch']['flag']['description'] = true;
-		$conf['search']['quicksearch']['flag']['content'] = false;
-		$conf['security'] = array();
-		$conf['security']['cookie'] = array();
-		$conf['security']['cookie']['secure'] = false;
-		$conf['security']['cookie']['httponly'] = true;
-		$conf['security']['cookie']['samesite'] = 'Strict';
-		$conf['security']['cookie']['expire'] = 720;
-		$conf['security']['readonly'] = false;
-		$conf['security']['nopublish'] = false;
-		$conf['security']['umask'] = '0';
-		$conf['security']['chmod'] = '0';
-		$conf['security']['chmod_dir'] = '0';
-		$conf['security'][''] = '0';
-		$conf['security']['disable_dynamic_code'] = true;
-		$conf['security']['show_system_info'] = true;
-		$conf['security']['use_post_token'] = true;
-		$conf['security']['default'] = array();
-		$conf['security']['default']['username'] = '';
-		$conf['security']['default']['password'] = '';
-		$conf['security']['guest'] = array();
-		$conf['security']['guest']['enable'] = false;
-		$conf['security']['guest']['user'] = 'guest';
-		$conf['security']['login'] = array();
-		$conf['security']['login']['type'] = 'form';
-		$conf['security']['auth'] = array();
-		$conf['security']['auth']['type'] = 'database';
-		$conf['security']['auth']['userdn'] = false;
-		$conf['security']['authorize'] = array();
-		$conf['security']['authorize']['type'] = 'database';
-		$conf['security']['authorize']['type'] = 'ldap';
-
-		$conf['security']['autologin'] = array();
-		$conf['security']['autologin']['modules'] = array('Remember', 'Guest', 'SingleSignon');
-		$conf['security']['preselect'] = array();
-		$conf['security']['preselect']['modules'] = array('Ident', 'SSL', 'Cookie');
-		$conf['security']['authenticate'] = array();
-		$conf['security']['authenticate']['modules'] = array('LdapUserDN', 'Database', 'Internal');
-
-		$conf['security']['newuser'] = array();
-		$conf['security']['newuser']['autoadd'] = true;
-		$conf['security']['newuser']['autogroups'] = "";
-
-		$conf['security']['password'] = array();
-		$conf['security']['password']['random_length'] = 10;
-		$conf['security']['password']['min_length'] = 6;
-		$conf['security']['password']['pepper'] = '';
-		$conf['security']['password']['deny_after_expiration_duration'] = 72;
-		$conf['security']['password']['force_change_if_cleartext'] = false;
-		$conf['security']['http'] = array();
-		$conf['security']['http']['url'] = "http://example.net/restricted-area";
-		$conf['security']['authdb'] = array();
-		$conf['security']['authdb']['enable'] = false;
-		$conf['security']['authdb']['type'] = 'postgresql';
-		$conf['security']['authdb']['user'] = 'dbuser';
-		$conf['security']['authdb']['password'] = 'dbpassword';
-		$conf['security']['authdb']['host'] = '127.0.0.1';
-		$conf['security']['authdb']['database'] = 'dbname';
-		$conf['security']['authdb']['persistent'] = false;
-		$conf['security']['authdb']['prepare'] = false;
-		$conf['security']['authdb']['sql'] = "select 1 from table where user={username} and password={password}";
-		$conf['security']['authdb']['hash_algo'] = 'md5';
-		$conf['security']['authdb']['add'] = true;
-		$conf['security']['ssl'] = array();
-		$conf['security']['ssl']['trust'] = false;
-		$conf['security']['ssl']['client_cert_dn_env'] = 'SSL_CLIENT_S_DN_CN';
-		$conf['security']['openid'] = array();
-		$conf['security']['openid']['enable'] = false;
-		$conf['security']['openid']['add'] = false;
-		$conf['security']['openid']['logo_url'] = '0';
-		$conf['security']['openid']['logo_url'] = "http://openid.net/login-bg.gif";
-		$conf['security']['openid']['trust_root'] = 'http://your.server.example/openrat/';
-		$conf['security']['openid']['trust_root'] = '0';
-		$conf['security']['openid']['trusted_server'] = 'openid1.example.com,openid2.example.com';
-		$conf['security']['openid']['trusted_server'] = '0';
-		$conf['security']['openid']['update_user'] = true;
-		$conf['security']['openid']['user_identity'] = true;
-		$conf['security']['openid']['provider']['name'] = 'google';
-		$conf['security']['openid']['provider']['google']['xrds_uri'] = "http://google.com/accounts/o8/id";
-		$conf['security']['openid']['provider']['google']['map_attribute'] = "email";
-		$conf['security']['openid']['provider']['google']['name'] = "Google";
-		$conf['security']['openid']['provider']['google']['map_internal'] = "mail";
-		$conf['security']['openid']['provider']['yahoo']['xrds_uri'] = "http://??????";
-		$conf['security']['openid']['provider']['yahoo']['map_attribute'] = "usename";
-		$conf['security']['openid']['provider']['yahoo']['map_internal'] = "mail";
-		$conf['security']['sso'] = array();
-		$conf['security']['sso']['enable'] = false;
-		$conf['security']['sso']['url'] = "http://localhost/check.php?phpsessid={id}&check=true";
-		$conf['security']['sso']['url'] = "https://www.example.com/phpmyadmin/main.php?server=1";
-		$conf['security']['sso']['auth_param_name'] = 'authid';
-		$conf['security']['sso']['auth_param_serialized'] = true;
-		$conf['security']['sso']['cookie'] = true;
-		$conf['security']['sso']['cookie_name'] = '0';
-		$conf['security']['sso']['force'] = true;
-		$conf['security']['sso']['expect'] = '0';
-		$conf['security']['sso']['expect_regexp'] = "/running on/";
-		$conf['security']['sso']['username_regexp'] = "/running on localhost as ([a-z]+)@localhost/";
-		$conf['security']['logout'] = array();
-		$conf['security']['logout']['redirect_url'] = "http://your.intranet.example/";
-		$conf['security']['logout']['redirect_url'] = '0';
-		$conf['security']['user'] = array();
-		$conf['security']['user']['show_admin_mail'] = true;
-		$conf['security']['user']['show_mail'] = true;
-		$conf['security']['user']['send_message'] = true;
-		$conf['security']['content-security-policy'] = true;
-
-		$conf['style-default'] = array();
-		$conf['style-default']['name'] = 'Unnamed';
-		$conf['style-default']['title_background_color'] = 'grey';
-		$conf['style-default']['title_text_color'] = 'white';
-		$conf['style-default']['text_color'] = 'black';
-		$conf['style-default']['background_color'] = '#d9d9d9';
-		$conf['style-default']['inactive_background_color'] = 'silver';
-
-
-		$conf['style'] = array();
-		$conf['style']['earlgrey'] = array();
-		$conf['style']['earlgrey']['name'] = 'Earl grey';
-		$conf['style']['earlgrey']['title_background_color'] = 'grey';
-		$conf['style']['earlgrey']['title_text_color'] = 'white';
-		$conf['style']['earlgrey']['text_color'] = 'black';
-		$conf['style']['earlgrey']['background_color'] = '#e9e9e9';
-		$conf['style']['earlgrey']['inactive_background_color'] = 'silver';
-
-		$conf['style']['dracula'] = array();
-		$conf['style']['dracula']['name'] = 'Dracula';
-		$conf['style']['dracula']['title_background_color'] = '#44475a';
-		$conf['style']['dracula']['title_text_color'] = '#f8f8f2';
-		$conf['style']['dracula']['text_color'] = '#f8f8f2';
-		$conf['style']['dracula']['background_color'] = '#282a36';
-		$conf['style']['dracula']['inactive_background_color'] = '#44475a';
-
-		// $conf['style']['system']=array();
-		// $conf['style']['system']['name']='System colors';
-		// $conf['style']['system']['title_background_color']='Menu';
-		// $conf['style']['system']['title_text_color']='MenuText';
-		// $conf['style']['system']['text_color'] ='WindowText';
-		// $conf['style']['system']['background_color'] = 'Background';
-		// $conf['style']['system']['inactive_background_color'] = 'WindowFrame';
-
-		$conf['style']['modern'] = array();
-		$conf['style']['modern']['name'] = 'Blue sky';
-		$conf['style']['modern']['title_background_color'] = '#3F6194';
-		$conf['style']['modern']['title_text_color'] = 'white';
-		$conf['style']['modern']['text_color'] = 'black';
-		$conf['style']['modern']['background_color'] = '#F3F3F3';
-		$conf['style']['modern']['inactive_background_color'] = '#CCCCCC';
-
-		$conf['style']['moorweide'] = array();
-		$conf['style']['moorweide']['name'] = 'Moorweide';
-		$conf['style']['moorweide']['title_background_color'] = '#2aaae7';
-		$conf['style']['moorweide']['title_text_color'] = 'white';
-		$conf['style']['moorweide']['text_color'] = '#005e51';
-		$conf['style']['moorweide']['background_color'] = '#edf6f3';
-		$conf['style']['moorweide']['inactive_background_color'] = '#ececed';
-
-		$conf['style']['dark'] = array();
-		$conf['style']['dark']['name'] = 'Dark';
-		$conf['style']['dark']['title_background_color'] = '#565655';
-		$conf['style']['dark']['title_text_color'] = '#DCDCDC';
-		$conf['style']['dark']['text_color'] = '#FFFFFF';
-		$conf['style']['dark']['background_color'] = '#201F1D';
-		$conf['style']['dark']['inactive_background_color'] = '#868685';
-
-		$conf['theme'] = array();
-		$conf['theme']['compiler'] = array();
-		$conf['theme']['compiler']['enable'] = true;
-		$conf['theme']['compiler']['cache'] = true;
-		$conf['theme']['compiler']['chmod'] = '';
-		$conf['theme']['compiler']['compile_at_logout'] = false;
-		$conf['theme']['favicon'] = 'modules/cms/ui/themes/default/images/openrat-logo.ico';
-		$conf['wiki'] = array();
-		$conf['wiki']['convert_html'] = true;
-		$conf['wiki']['convert_bbcode'] = true;
-		$conf['wiki']['tag_strong'] = "*";
-		$conf['wiki']['tag_emphatic'] = "_";
-
-		$conf['application']['name'] = OR_TITLE;
-		$conf['application']['version'] = OR_VERSION;
-		$conf['application']['operator'] = OR_TITLE;
-		$conf['production'] = true;
-
-		$conf['ui'] = array();
-		$conf['ui']['keybinding'] = array();
-		$conf['ui']['keybinding']['method'] = array();
-		$conf['ui']['keybinding']['method']['prop'] = 'F4';
-		$conf['ui']['keybinding']['method']['add'] = 'F1';
-		$conf['ui']['keybinding']['method']['pub'] = 'F8';
-		$conf['ui']['keybinding']['method']['archive'] = '';
-		$conf['ui']['keybinding']['method']['rights'] = '';
-
-		$conf['ui']['keybinding']['action'] = array();
-		$conf['ui']['keybinding']['action']['profile'] = 'ALT+P';
-
-		return $conf;
+		return 
+		[ 
+			'applications' =>
+				[ 
+					'' => 0,
+					'phpmyadmin' =>
+						[ 
+							'name' => 'PHPYourAdmin',
+							'url' => 'https://example.com/anotherapplication/index.cgi',
+							'param' => 'ticketidforopenrat',
+							'group' => '0',
+							'description' => 'Your database administration',
+						],
+				],
+			'cache' =>
+				[ 
+					'conditional_get' => true,
+					'enable_cache' => false,
+					'tmp_dir' => '',
+				],
+			'config' =>
+				[ 
+					'auto_reload' => true,
+					'session_destroy_on_config_reload' => true,
+				],
+			'content' =>
+				[ 
+					'file' =>
+						[ 
+							'max_file_size' => '1500',
+						],
+					'revision-limit' =>
+						[ 
+							'enabled' => false,
+							'max-age' => 120,
+							'min-age' => 1,
+							'max-revisions' => 100,
+							'min-revisions' => 3,
+						],
+					'language' =>
+						[ 
+							'use_default_language' => true,
+						],
+				],
+			'countries' =>
+				[ 
+					'AA' => 'Afar',
+					'AB' => 'Abkhazian',
+					'AF' => 'Afrikaans',
+					'AM' => 'Amharic',
+					'AR' => 'Arabic',
+					'AS' => 'Assamese',
+					'AY' => 'Aymara',
+					'AZ' => 'Azerbaijani',
+					'BA' => 'Bashkir',
+					'BE' => 'Byelorussian',
+					'BG' => 'Bulgarian',
+					'BH' => 'Bihari',
+					'BI' => 'Bislama',
+					'BN' => 'Bengali',
+					'BO' => 'Tibetan',
+					'BR' => 'Breton',
+					'CA' => 'Catalan',
+					'CO' => 'Corsican',
+					'CS' => 'Czech',
+					'CY' => 'Welsh',
+					'DA' => 'Danish',
+					'DE' => 'German',
+					'DZ' => 'Bhutani',
+					'EL' => 'Greek',
+					'EN' => 'English',
+					'EO' => 'Esperanto',
+					'ES' => 'Spanish',
+					'ET' => 'Estonian',
+					'EU' => 'Basque',
+					'FA' => 'Persian',
+					'FI' => 'Finnish',
+					'FJ' => 'Fiji',
+					'FO' => 'Faeroese',
+					'FR' => 'French',
+					'FY' => 'Frisian',
+					'GA' => 'Irish',
+					'GD' => 'Gaelic',
+					'GL' => 'Galician',
+					'GN' => 'Guarani',
+					'GU' => 'Gujarati',
+					'HA' => 'Hausa',
+					'HI' => 'Hindi',
+					'HR' => 'Croatian',
+					'HU' => 'Hungarian',
+					'HY' => 'Armenian',
+					'IA' => 'Interlingua',
+					'IE' => 'Interlingue',
+					'IK' => 'Inupiak',
+					'IN' => 'Indonesian',
+					'IS' => 'Icelandic',
+					'IT' => 'Italian',
+					'IW' => 'Hebrew',
+					'JA' => 'Japanese',
+					'JI' => 'Yiddish',
+					'JW' => 'Javanese',
+					'KA' => 'Georgian',
+					'KK' => 'Kazakh',
+					'KL' => 'Greenlandic',
+					'KM' => 'Cambodian',
+					'KN' => 'Kannada',
+					'KO' => 'Korean',
+					'KS' => 'Kashmiri',
+					'KU' => 'Kurdish',
+					'KY' => 'Kirghiz',
+					'LA' => 'Latin',
+					'LN' => 'Lingala',
+					'LO' => 'Laothian',
+					'LT' => 'Lithuanian',
+					'LV' => 'Latvian',
+					'MG' => 'Malagasy',
+					'MI' => 'Maori',
+					'MK' => 'Macedonian',
+					'ML' => 'Malayalam',
+					'MN' => 'Mongolian',
+					'MO' => 'Moldavian',
+					'MR' => 'Marathi',
+					'MS' => 'Malay',
+					'MT' => 'Maltese',
+					'MY' => 'Burmese',
+					'NA' => 'Nauru',
+					'NE' => 'Nepali',
+					'NL' => 'Dutch',
+					'_NO' => 'Norwegian',
+					'OC' => 'Occitan',
+					'OM' => 'Oromo',
+					'OR' => 'Oriya',
+					'PA' => 'Punjabi',
+					'PL' => 'Polish',
+					'PS' => 'Pashto',
+					'PT' => 'Portuguese',
+					'QU' => 'Quechua',
+					'RM' => 'Rhaeto-Romance',
+					'RN' => 'Kirundi',
+					'RO' => 'Romanian',
+					'RU' => 'Russian',
+					'RW' => 'Kinyarwanda',
+					'SA' => 'Sanskrit',
+					'SD' => 'Sindhi',
+					'SG' => 'Sangro',
+					'SH' => 'Serbo-Croatian',
+					'SI' => 'Singhalese',
+					'SK' => 'Slovak',
+					'SL' => 'Slovenian',
+					'SM' => 'Samoan',
+					'SN' => 'Shona',
+					'SO' => 'Somali',
+					'SQ' => 'Albanian',
+					'SR' => 'Serbian',
+					'SS' => 'Siswati',
+					'ST' => 'Sesotho',
+					'SU' => 'Sudanese',
+					'SV' => 'Swedish',
+					'SW' => 'Swahili',
+					'TA' => 'Tamil',
+					'TE' => 'Tegulu',
+					'TG' => 'Tajik',
+					'TH' => 'Thai',
+					'TI' => 'Tigrinya',
+					'TK' => 'Turkmen',
+					'TL' => 'Tagalog',
+					'TN' => 'Setswana',
+					'TO' => 'Tonga',
+					'TR' => 'Turkish',
+					'TS' => 'Tsonga',
+					'TT' => 'Tatar',
+					'TW' => 'Twi',
+					'UK' => 'Ukrainian',
+					'UR' => 'Urdu',
+					'UZ' => 'Uzbek',
+					'VI' => 'Vietnamese',
+					'VO' => 'Volapuk',
+					'WO' => 'Wolof',
+					'XH' => 'Xhosa',
+					'YO' => 'Yoruba',
+					'ZH' => 'Chinese',
+				],
+			'database' =>
+				[ 
+				],
+			'database-default' =>
+				[ 
+					'defaults' =>
+						[ 
+							'prefix' => '',
+							'suffix' => '',
+							'enabled' => true,
+							'name' => '',
+							'description' => '',
+							'type' => 'pdo',
+							'dsn' => 'mysql:localhost',
+							'user' => '',
+							'password' => '',
+							'host' => '',
+							'database' => '',
+							'base64' => false,
+							'persistent' => true,
+							'charset' => 'UTF-8',
+							'connection_sql' => '',
+							'cmd' => '',
+							'prepare' => true,
+							'transaction' => true,
+							'update' =>
+								[ 
+								],
+							'auto_update' => true,
+						],
+					'default-id' => '',
+				],
+			'date' =>
+				[ 
+					'format' =>
+						[ 
+							'SHORT' => '',
+							'ISO8601SHORT' => 'Ymd',
+							'ISO8601' => 'Y-m-d',
+							'ISO8601BAS' => 'YmdTHis',
+							'ISO8601EXT' => 'Y-m-dTH:i:s',
+							'ISO8601FULL' => 'Y-m-dTH:i:sO',
+							'ISO8601WEEK' => 'YWW',
+							'GER1' => 'd.m.Y',
+							'GER2' => 'd.m.Y, H:i',
+							'GER3' => 'd.m.Y, H:i:s',
+							'GER4' => 'd. F Y, H:i:s',
+							'ENGLONG' => 'l dS of F Y h:i:s A',
+							'GMDATE' => 'D, d M Y H:i:s GMT',
+							'RFC822' => 'r',
+							'UNIX' => 'U',
+							'LONG' => 'F j, Y, g:i a',
+						],
+					'timezone' =>
+						[ 
+							-6 => 'New York',
+							0 => 'UTC (GMT)',
+							60 => 'MET (Middle European Time)',
+							120 => 'MEST (Middle European Summertime)',
+						],
+				],
+			'editor' =>
+				[ 
+					'text-markup' =>
+						[ 
+							'strong-begin' => '*',
+							'strong-end' => '*',
+							'emphatic-begin' => '_',
+							'emphatic-end' => '_',
+							'image-begin' => '{',
+							'image-end' => '}',
+							'speech-begin' => 'QUOTE',
+							'speech-end' => 'QUOTE',
+							'code-begin' => '=',
+							'code-end' => '=',
+							'footnote-begin' => '[',
+							'footnote-end' => ']',
+							'pre-begin' => '=',
+							'pre-end' => '=',
+							'insert-begin' => '++',
+							'insert-end' => '++',
+							'remove-begin' => '--',
+							'remove-end' => '--',
+							'definition-sep' => '::',
+							'headline' => '+',
+							'headline_level1_underline' => '=',
+							'headline_level2_underline' => '-',
+							'headline_level3_underline' => '.',
+							'list-unnumbered' => '-',
+							'list-numbered' => '#',
+							'table-of-content' => '##TOC##',
+							'linkto' => '->',
+							'table-cell-sep' => '|',
+							'style-begin' => '\'',
+							'style-end' => '\'',
+							'quote' => '>',
+							'quote-line-begin' => '>',
+							'quote-line-end' => '>',
+							'macro-begin' => '<<',
+							'macro-end' => '>>',
+							'macro-attribute-quote' => '\'',
+							'macro-attribute-value-seperator' => '=',
+						],
+					'html' =>
+						[ 
+							'tag_strong' => 'strong',
+							'tag_emphatic' => 'em',
+							'tag_teletype' => 'tt',
+							'tag_speech' => 'cite',
+							'override_speech' => false,
+							'override_speech_open' => '&laquo;',
+							'override_speech_close' => '&raquo;',
+							'rendermode' => 'xml',
+							'replace' => 'EUR:&euro;',
+						],
+					'wiki' =>
+						[ 
+							'convert_html' => true,
+							'convert_bbcode' => true,
+						],
+					'text' =>
+						[ 
+							'linelength' => '70',
+						],
+					'calendar' =>
+						[ 
+							'weekday_offset' => '1',
+						],
+					'macro' =>
+						[ 
+							'show_errors' => false,
+						],
+				],
+			'filename' =>
+				[ 
+					'edit' => true,
+					'default' => 'index',
+					'style' => 'short',
+					'url' => 'relative',
+				],
+			'ftp' =>
+				[ 
+					'ascii' => 'html,htm,php',
+				],
+			'help' =>
+				[ 
+					'enabled' => true,
+					'url' => 'http://help.openrat.de/',
+					'suffix' => '.html',
+				],
+			'html' =>
+				[ 
+					'tag_teletype' => 'tt',
+					'tag_emphatic' => 'em',
+					'tag_strong' => 'strong',
+					'tag_speech' => 'cite',
+					'speech_open' => '&bdquo',
+					'speech_close' => '&rdquo',
+				],
+			'i18n' =>
+				[ 
+					'use_http' => true,
+					'default' => 'de',
+					'available' => 'de,en,es,fr,it,ru,cn',
+					'locale' =>
+						[ 
+							'de' => 'de_DE.utf8',
+							'en' => 'en_US.utf8',
+						],
+				],
+			'image' =>
+				[ 
+					'truecolor' => true,
+				],
+			'interface' =>
+				[ 
+					'tree_width' => '25%',
+					'file_separator' => ' &raquo',
+					'nice_urls' => false,
+					'url_sessionid' => false,
+					'theme' => 'default',
+					'timeout' => '0',
+					'override_title' => '',
+					'style' =>
+						[ 
+							'default' => 'modern',
+						],
+					'config' =>
+						[ 
+							'file_manager_url' => '',
+							'enable' => true,
+							'show_system' => true,
+							'show_interpreter' => true,
+							'show_extensions' => true,
+						],
+					'frames' =>
+						[ 
+							'top' => '_top',
+						],
+					'url' =>
+						[ 
+							'fake_url' => false,
+							'index' => false,
+							'url_format' => '%s,%s,%d.do',
+							'add_sessionid' => false,
+						],
+					'gravatar' =>
+						[ 
+							'enable' => true,
+							'size' => '80',
+							'default' => '404',
+							'rating' => 'g',
+						],
+					'session' =>
+						[ 
+							'auto_extend' => true,
+						],
+				],
+			'ldap' =>
+				[ 
+					'host' => 'localhost',
+					'port' => '389',
+					'protocol' => '2',
+					'dn' => '',
+					'search' =>
+						[ 
+							'anonymous' => true,
+							'user' => 'uid=openrat,ou=users,dc=example,dc=com',
+							'password' => 'verysecret',
+							'basedn' => 'dc=example,dc=com',
+							'filter' => '(uid={user})',
+							'aliases' => true,
+							'timeout' => 30,
+							'add' => true,
+						],
+					'authorize' =>
+						[ 
+							'group_filter' => '(memberUid={dn})',
+							'group_name' => 'cn',
+							'auto_add' => true,
+						],
+				],
+			'login' =>
+				[ 
+					'motd' => '',
+					'nologin' => false,
+					'register' => false,
+					'send_password' => false,
+					'gpl' =>
+						[ 
+							'url' => 'http://www.gnu.org/licenses/old-licenses/gpl-2.0.html',
+						],
+					'logo' =>
+						[ 
+							'enabled' => false,
+							'image' => './modules/cms-ui/themes/default/images/logo.jpg',
+							'url' => 'http://www.openrat.de',
+						],
+					'start' =>
+						[ 
+							'start_lastchanged_object' => true,
+							'start_single_project' => true,
+						],
+				],
+			'log' =>
+				[ 
+					'file' => NULL,
+					'level' => 'warn',
+					'output' => 'plain',
+					'date_format' => 'M j H:i:s',
+					'ns_lookup' => false,
+					'format' =>
+						[ 
+							0 => 'time',
+							1 => 'level',
+							2 => 'host',
+							3 => 'user',
+							4 => 'action',
+							5 => 'text',
+						],
+				],
+			'mail' =>
+				[ 
+					'enabled' => true,
+					'from' => 'OpenRat <user@example.com>',
+					'signature' => '',
+					'cc' => '0',
+					'bcc' => '0',
+					'priority' => '3',
+					'header_encoding' => 'Quoted-printable',
+					'client' => 'php',
+					'whitelist' => '',
+					'blacklist' => '',
+					'smtp' =>
+						[ 
+							'host' => 'locahost',
+							'port' => '25',
+							'auth_username' => 'your.user@something.example',
+							'auth_password' => 'notsecret',
+							'timeout' => '45',
+							'localhost' => 'your.fully.qualified.hostname.example',
+							'tls' => false,
+							'ssl' => false,
+						],
+				],
+			'mime-types' =>
+				[ 
+					'ez' => 'application/andrew-inset',
+					'csm' => 'application/cu-seeme',
+					'cu' => 'application/cu-seeme',
+					'tsp' => 'application/dsptype',
+					'spl' => 'application/x-futuresplash ',
+					'cpt' => 'image/x-corelphotopaint',
+					'hqx' => 'application/mac-binhex40',
+					'nb' => 'application/mathematica',
+					'mdb' => 'application/msaccess',
+					'doc' => 'application/msword',
+					'dot' => 'application/msword',
+					'bin' => 'application/octet-stream',
+					'oda' => 'application/oda',
+					'pdf' => 'application/pdf',
+					'pgp' => 'application/pgp-signature',
+					'ps' => 'application/postscript',
+					'ai' => 'application/postscript',
+					'eps' => 'application/postscript',
+					'rtf' => 'text/rtf',
+					'smi' => 'application/smil',
+					'smil' => 'application/smil',
+					'xls' => 'application/vnd.ms-excel',
+					'xlb' => 'application/vnd.ms-excel',
+					'ppt' => 'application/vnd.ms-powerpoint',
+					'pps' => 'application/vnd.ms-powerpoint',
+					'pot' => 'application/vnd.ms-powerpoint',
+					'sdw' => 'application/vnd.stardivision.writer',
+					'sgl' => 'application/vnd.stardivision.writer-global',
+					'vor' => 'application/vnd.stardivision.writer',
+					'sdc' => 'application/vnd.stardivision.calc',
+					'sda' => 'application/vnd.stardivision.draw',
+					'sdd' => 'application/vnd.stardivision.impress',
+					'sdp' => 'application/vnd.stardivision.impress-packed',
+					'smf' => 'application/vnd.stardivision.math',
+					'sds' => 'application/vnd.stardivision.chart',
+					'smd' => 'application/vnd.stardivision.mail',
+					'wbxml' => 'application/vnd.wap.wbxml ',
+					'wmlc' => 'application/vnd.wap.wmlc',
+					'wmlsc' => 'application/vnd.wap.wmlscriptc',
+					'wp5' => 'application/wordperfect5.1',
+					'zip' => 'application/zip',
+					'wk' => 'application/x-123',
+					'bcpio' => 'application/x-bcpio',
+					'vcd' => 'application/x-cdlink ',
+					'pgn' => 'application/x-chess-pgn',
+					'cpio' => 'application/x-cpio',
+					'csh' => 'text/x-csh',
+					'deb' => 'application/x-debian-package',
+					'dcr' => 'application/x-director',
+					'dir' => 'application/x-director',
+					'dxr' => 'application/x-director',
+					'wad' => 'application/x-doom',
+					'dms' => 'application/x-dms',
+					'dvi' => 'application/x-dvi',
+					'pfa' => 'application/x-font',
+					'pfb' => 'application/x-font',
+					'gsf' => 'application/x-font',
+					'pcf' => 'application/x-font',
+					'gnumeric' => 'application/x-gnumeric',
+					'gtar' => 'application/x-gtar',
+					'tgz' => 'application/x-gtar',
+					'taz' => 'application/x-gtar',
+					'hdf' => 'application/x-hdf',
+					'phtml' => 'text/html',
+					'pht' => 'text/html',
+					'php' => 'text/html',
+					'phps' => 'text/html',
+					'php3' => 'text/html',
+					'php3p' => 'text/html ',
+					'php4' => 'text/html',
+					'docbook' => 'application/docbook+xml',
+					'ica' => 'application/x-ica',
+					'jar' => 'application/x-java-archive',
+					'jnlp' => 'application/x-java-jnlp-file',
+					'ser' => 'application/x-java-serialized-object',
+					'class' => 'application/x-java-vm',
+					'js' => 'application/x-javascript',
+					'chrt' => 'application/x-kchart',
+					'kil' => 'application/x-killustrator',
+					'kpr' => 'application/x-kpresenter',
+					'kpt' => 'application/x-kpresenter',
+					'skp' => 'application/x-koan ',
+					'skd' => 'application/x-koan ',
+					'skt' => 'application/x-koan ',
+					'skm' => 'application/x-koan ',
+					'ksp' => 'application/x-kspread',
+					'kwd' => 'application/x-kword',
+					' kwt' => 'application/x-kword',
+					'latex' => 'application/x-latex',
+					'lha' => 'application/x-lha',
+					'lzh' => 'application/x-lzh',
+					'lzx' => 'application/x-lzx',
+					'frm' => 'fbdocapplication/x-maker',
+					'maker' => 'fbdocapplication/x-maker',
+					'frame' => 'fbdocapplication/x-maker',
+					'fm' => 'fbdocapplication/x-maker',
+					'fb' => 'fbdocapplication/x-maker',
+					'book' => 'fbdocapplication/x-maker',
+					'mif' => 'application/x-mif',
+					'com' => 'application/x-msdos-program',
+					'exe' => 'application/x-msdos-program',
+					'bat' => 'application/x-msdos-program',
+					'dll' => 'application/x-msdos-program',
+					'msi' => 'application/x-msi',
+					'nc' => 'application/x-netcdf',
+					'cdf' => 'application/x-netcdf',
+					'pac' => 'application/x-ns-proxy-autoconfig',
+					'o' => 'application/x-object',
+					'ogg' => 'application/x-ogg',
+					'oza' => 'application/x-oz-application',
+					'pl' => 'application/x-perl',
+					'pm' => 'application/x-perl',
+					'crl' => 'application/x-pkcs7-crl',
+					'rpm' => 'audio/x-pn-realaudio-plugin ',
+					'shar' => 'application/x-shar',
+					'swf' => 'application/x-shockwave-flash',
+					'swfl' => 'application/x-shockwave-flash',
+					'sh' => 'text/x-sh',
+					'sit' => 'application/x-stuffit',
+					'sv4cpio' => 'application/x-sv4cpio',
+					'sv4crc' => 'application/x-sv4crc',
+					'tar' => 'application/x-tar',
+					'tcl' => 'text/x-tcl',
+					'tex' => 'text/x-tex',
+					'gf' => 'application/x-tex-gf',
+					'pk' => 'application/x-tex-pk',
+					'texinfo' => 'application/x-texinfo',
+					'texi' => 'application/x-texinfo',
+					'; "~"' => 'application/x-trash',
+					';"%"' => 'application/x-trash',
+					'bak' => 'application/x-trash',
+					'old' => 'application/x-trash',
+					'sik' => 'application/x-trash',
+					't' => 'application/x-troff',
+					'tr' => 'application/x-troff',
+					'roff' => 'application/x-troff',
+					'man' => 'application/x-troff-man',
+					'me' => 'application/x-troff-me',
+					'ms' => 'application/x-troff-ms',
+					'ustar' => 'application/x-ustar',
+					'src' => 'application/x-wais-source',
+					'wz' => 'application/x-wingz',
+					'crt' => 'application/x-x509-ca-cert',
+					'fig' => 'application/x-xfig',
+					'au' => 'audio/basic',
+					'snd' => 'audio/basic',
+					'mid' => 'audio/midi',
+					'midi' => 'audio/midi',
+					'kar' => 'audio/midi',
+					'mpga' => 'audio/mpeg',
+					'mpega' => 'audio/mpeg',
+					'mp2' => 'audio/mpeg',
+					'mp3' => 'audio/mpeg',
+					'm3u' => 'audio/x-mpegurl',
+					'sid' => 'audio/prs.sid',
+					'aif' => 'audio/x-aiff',
+					'aiff' => 'audio/x-aiff',
+					'aifc' => 'audio/x-aiff',
+					'gsm' => 'audio/x-gsm',
+					'ra' => 'audio/x-realaudio ',
+					'rm' => 'audio/x-pn-realaudio',
+					'ram' => 'audio/x-pn-realaudio',
+					'pls' => 'audio/x-scpls',
+					'wav' => 'audio/x-wav',
+					'pdb' => 'chemical/x-pdb',
+					'xyz' => 'chemical/x-xyz ',
+					'bmp' => 'image/x-ms-bmp',
+					'gif' => 'image/gif',
+					'ief' => 'image/ief',
+					'jpeg' => 'image/jpeg',
+					'jpg' => 'image/jpeg',
+					'jpe' => 'image/jpeg',
+					'pcx' => 'image/pcx',
+					'png' => 'image/png',
+					'svg' => 'image/svg+xml',
+					'svgz' => 'image/svg+xml',
+					'tiff' => 'image/tiff',
+					'tif' => 'image/tiff',
+					'wbmp' => 'image/vnd.wap.wbmp',
+					'ras' => 'image/x-cmu-raster',
+					'cdr' => 'image/x-coreldraw',
+					'pat' => 'image/x-coreldrawpattern',
+					'cdt' => 'image/x-coreldrawtemplate',
+					'djvu' => 'image/x-djvu',
+					'djv' => 'image/x-djvu',
+					'jng' => 'image/x-jng',
+					'pnm' => 'image/x-portable-anymap',
+					'pbm' => 'image/x-portable-bitmap',
+					'pgm' => 'image/x-portable-graymap',
+					'ppm' => 'image/x-portable-pixmap',
+					'rgb' => 'image/x-rgb',
+					'xbm' => 'image/x-xbitmap',
+					'xpm' => 'image/x-xpixmap',
+					'xwd' => 'image/x-xwindowdump',
+					'igs' => 'model/iges',
+					'iges' => 'model/iges',
+					'msh' => 'model/mesh',
+					'mesh' => 'model/mesh',
+					'silo' => 'model/mesh',
+					'wrl' => 'x-world/x-vrml',
+					'vrml' => 'x-world/x-vrml',
+					'csv' => 'text/comma-separated-values',
+					'css' => 'text/css',
+					'htm' => 'text/html',
+					'html' => 'text/html',
+					'xhtml' => 'text/html',
+					'mml' => 'text/mathml',
+					'asc' => 'text/plain',
+					'txt' => 'text/plain',
+					'text' => 'text/plain',
+					'diff' => 'text/plain',
+					'rtx' => 'text/richtext',
+					'tsv' => 'text/tab-separated-values',
+					'wml' => 'text/vnd.wap.wml',
+					'wmls' => 'text/vnd.wap.wmlscript',
+					'xml' => 'text/xml',
+					'xsl' => 'text/xml',
+					'hpp' => 'text/x-c++hdr',
+					'hxx' => 'text/x-c++hdr',
+					'hh' => 'text/x-c++hdr',
+					'cpp' => 'text/x-c++src',
+					'cxx' => 'text/x-c++src',
+					'cc' => 'text/x-c++src',
+					'h' => 'text/x-chdr',
+					'c' => 'text/x-csrc',
+					'java' => 'text/x-java',
+					'moc' => 'text/x-moc',
+					'p' => 'text/x-pascal',
+					'pas' => 'text/x-pascal',
+					'etx' => 'text/x-setext',
+					'tk' => 'text/x-tcl',
+					'ltx' => 'text/x-tex',
+					'sty' => 'text/x-tex',
+					'cls' => 'text/x-tex',
+					'vcs' => 'text/x-vcalendar',
+					'vcf' => 'text/x-vcard',
+					'dl' => 'video/dl',
+					'fli' => 'video/fli',
+					'gl' => 'video/gl',
+					'mpeg' => 'video/mpeg',
+					'mpg' => 'video/mpeg',
+					'mpe' => 'video/mpeg',
+					'qt' => 'video/quicktime',
+					'mov' => 'video/quicktime',
+					'mxu' => 'video/vnd.mpegurl',
+					'mng' => 'video/x-mng',
+					'asf' => 'video/x-ms-asf',
+					'asx' => 'video/x-ms-asf',
+					'avi' => 'video/x-msvideo',
+					'movie' => 'video/x-sgi-movie',
+					'ice' => 'x-conference/x-cooltalk',
+					'vrm' => 'x-world/x-vrml',
+				],
+			'publish' =>
+				[ 
+					'edit' => true,
+					'default' => 'index',
+					'format' => '{filename}{language_sep}{language}{type_sep}{type}',
+					'language_sep' => '.',
+					'type_sep' => '.',
+					'filename_language' => 'auto',
+					'filename_type' => 'always',
+					'style' => 'id',
+					'url' => 'relative',
+					'enable_php_in_page_content' => false,
+					'enable_php_in_file_content' => false,
+					'escape_8bit_characters' => false,
+					'encode_utf8_in_html' => true,
+					'negotiation' =>
+						[ 
+							'page_negotiate_type' => true,
+							'page_negotiate_language' => true,
+							'file_negotiate_type' => true,
+						],
+					'filesystem' =>
+						[ 
+							'per_project' => true,
+							'directory' => '/var/www/',
+						],
+					'command' =>
+						[ 
+							'per_project' => true,
+							'enable' => false,
+							'command' => '',
+						],
+					'ftp' =>
+						[ 
+							'enable' => true,
+							'per_project' => true,
+							'port' => '21',
+							'host' => '',
+							'path' => '',
+							'user' => 'anonymous',
+							'pass' => 'mail@example.com',
+						],
+					'set_modification_date' => true,
+				],
+			'replace' =>
+				[ 
+					'' => '0',
+					'euro' => 'EUR,&euro;',
+					'copy' => '(c],&copy;',
+				],
+			'search' =>
+				[ 
+					'' => '0',
+					'quicksearch' =>
+						[ 
+							'flag' =>
+								[ 
+									'id' => true,
+									'name' => true,
+									'filename' => true,
+									'description' => true,
+									'content' => false,
+								],
+						],
+				],
+			'security' =>
+				[ 
+					'cookie' =>
+						[ 
+							'secure' => false,
+							'httponly' => true,
+							'samesite' => 'Strict',
+							'expire' => 720,
+						],
+					'readonly' => false,
+					'nopublish' => false,
+					'umask' => '0',
+					'chmod' => '0',
+					'chmod_dir' => '0',
+					'' => '0',
+					'disable_dynamic_code' => true,
+					'show_system_info' => true,
+					'use_post_token' => true,
+					'default' =>
+						[ 
+							'username' => '',
+							'password' => '',
+						],
+					'guest' =>
+						[ 
+							'enable' => false,
+							'user' => 'guest',
+						],
+					'login' =>
+						[ 
+							'type' => 'form',
+						],
+					'auth' =>
+						[ 
+							'type' => 'database',
+							'userdn' => false,
+						],
+					'authorize' =>
+						[ 
+							'type' => 'ldap',
+						],
+					'autologin' =>
+						[ 
+							'modules' =>
+								[ 
+									0 => 'Remember',
+									1 => 'Guest',
+									2 => 'SingleSignon',
+								],
+						],
+					'preselect' =>
+						[ 
+							'modules' =>
+								[ 
+									0 => 'Ident',
+									1 => 'SSL',
+									2 => 'Cookie',
+								],
+						],
+					'authenticate' =>
+						[ 
+							'modules' =>
+								[ 
+									0 => 'LdapUserDN',
+									1 => 'Database',
+									2 => 'Internal',
+								],
+						],
+					'newuser' =>
+						[ 
+							'autoadd' => true,
+							'autogroups' => '',
+						],
+					'password' =>
+						[ 
+							'random_length' => 10,
+							'min_length' => 6,
+							'pepper' => '',
+							'deny_after_expiration_duration' => 72,
+							'force_change_if_cleartext' => false,
+						],
+					'http' =>
+						[ 
+							'url' => 'http://example.net/restricted-area',
+						],
+					'authdb' =>
+						[ 
+							'enable' => false,
+							'type' => 'postgresql',
+							'user' => 'dbuser',
+							'password' => 'dbpassword',
+							'host' => '127.0.0.1',
+							'database' => 'dbname',
+							'persistent' => false,
+							'prepare' => false,
+							'sql' => 'select 1 from table where user={username} and password={password}',
+							'hash_algo' => 'md5',
+							'add' => true,
+						],
+					'ssl' =>
+						[ 
+							'trust' => false,
+							'client_cert_dn_env' => 'SSL_CLIENT_S_DN_CN',
+						],
+					'openid' =>
+						[ 
+							'enable' => false,
+							'add' => false,
+							'logo_url' => 'http://openid.net/login-bg.gif',
+							'trust_root' => '0',
+							'trusted_server' => '0',
+							'update_user' => true,
+							'user_identity' => true,
+							'provider' =>
+								[ 
+									'name' => 'google',
+									'google' =>
+										[ 
+											'xrds_uri' => 'http://google.com/accounts/o8/id',
+											'map_attribute' => 'email',
+											'name' => 'Google',
+											'map_internal' => 'mail',
+										],
+									'yahoo' =>
+										[ 
+											'xrds_uri' => 'http://??????',
+											'map_attribute' => 'usename',
+											'map_internal' => 'mail',
+										],
+								],
+						],
+					'sso' =>
+						[ 
+							'enable' => false,
+							'url' => 'https://www.example.com/phpmyadmin/main.php?server=1',
+							'auth_param_name' => 'authid',
+							'auth_param_serialized' => true,
+							'cookie' => true,
+							'cookie_name' => '0',
+							'force' => true,
+							'expect' => '0',
+							'expect_regexp' => '/running on/',
+							'username_regexp' => '/running on localhost as ([a-z]+)@localhost/',
+						],
+					'logout' =>
+						[ 
+							'redirect_url' => '0',
+						],
+					'user' =>
+						[ 
+							'show_admin_mail' => true,
+							'show_mail' => true,
+							'send_message' => true,
+						],
+					'content-security-policy' => true,
+				],
+			'style-default' =>
+				[ 
+					'name' => 'Unnamed',
+					'title_background_color' => 'grey',
+					'title_text_color' => 'white',
+					'text_color' => 'black',
+					'background_color' => '#d9d9d9',
+					'inactive_background_color' => 'silver',
+				],
+			'style' =>
+				[ 
+					'earlgrey' =>
+						[ 
+							'name' => 'Earl grey',
+							'title_background_color' => 'grey',
+							'title_text_color' => 'white',
+							'text_color' => 'black',
+							'background_color' => '#e9e9e9',
+							'inactive_background_color' => 'silver',
+						],
+					'dracula' =>
+						[ 
+							'name' => 'Dracula',
+							'title_background_color' => '#44475a',
+							'title_text_color' => '#f8f8f2',
+							'text_color' => '#f8f8f2',
+							'background_color' => '#282a36',
+							'inactive_background_color' => '#44475a',
+						],
+					'modern' =>
+						[ 
+							'name' => 'Blue sky',
+							'title_background_color' => '#3F6194',
+							'title_text_color' => 'white',
+							'text_color' => 'black',
+							'background_color' => '#F3F3F3',
+							'inactive_background_color' => '#CCCCCC',
+						],
+					'moorweide' =>
+						[ 
+							'name' => 'Moorweide',
+							'title_background_color' => '#2aaae7',
+							'title_text_color' => 'white',
+							'text_color' => '#005e51',
+							'background_color' => '#edf6f3',
+							'inactive_background_color' => '#ececed',
+						],
+					'dark' =>
+						[ 
+							'name' => 'Dark',
+							'title_background_color' => '#565655',
+							'title_text_color' => '#DCDCDC',
+							'text_color' => '#FFFFFF',
+							'background_color' => '#201F1D',
+							'inactive_background_color' => '#868685',
+						],
+				],
+			'theme' =>
+				[ 
+					'compiler' =>
+						[ 
+							'enable' => true,
+							'cache' => true,
+							'chmod' => '',
+							'compile_at_logout' => false,
+						],
+					'favicon' => 'modules/cms/ui/themes/default/images/openrat-logo.ico',
+				],
+			'wiki' =>
+				[ 
+					'convert_html' => true,
+					'convert_bbcode' => true,
+					'tag_strong' => '*',
+					'tag_emphatic' => '_',
+				],
+			'application' =>
+				[ 
+					'name' => 'OR_TITLE',
+					'version' => 'OR_VERSION',
+					'operator' => 'OR_TITLE',
+				],
+			'production' => true,
+			'ui' =>
+				[ 
+					'keybinding' =>
+						[ 
+							'method' =>
+								[ 
+									'prop' => 'F4',
+									'add' => 'F1',
+									'pub' => 'F8',
+									'archive' => '',
+									'rights' => '',
+								],
+							'action' =>
+								[ 
+									'profile' => 'ALT+P',
+								],
+						],
+				],
+		];
 	}
 }
