@@ -17,7 +17,6 @@ $dir = __DIR__ . '/../../modules/cms/ui/themes/default/html/views';
 
 require(__DIR__.'/../util/require.php');
 require(__DIR__.'/../template_engine/require.php');
-require(__DIR__.'/../cms/base/require.php');
 
 echo "Searching in $dir\n";
 

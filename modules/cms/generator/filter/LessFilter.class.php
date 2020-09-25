@@ -4,7 +4,7 @@
 namespace cms\generator\filter;
 
 
-use \Less_Parser;
+use util\Less;
 
 class LessFilter extends AbstractFilter
 {
@@ -15,7 +15,7 @@ class LessFilter extends AbstractFilter
 
 	public function filter($value)
 	{
-		$parser = new Less_Parser(array(
+		$parser = new Less(array(
 			'sourceMap' => $this->sourceMap,
 			'indentation' => $this->indentation,
 			'outputSourceFiles' => false,

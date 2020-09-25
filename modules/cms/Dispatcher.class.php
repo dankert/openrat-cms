@@ -17,6 +17,7 @@ use logger\Logger;
 use LogicException;
 use util\exception\UIException;
 use util\exception\SecurityException;
+use util\json\JSON;
 use util\Session;
 
 
@@ -49,8 +50,6 @@ class Dispatcher
         // Vorhandene Konfiguration aus der Sitzung lesen.
         global $conf;
         $conf = Session::getConfig();
-
-		require_once(__DIR__.'/../configuration/configuration.php');
 
 		define('PRODUCTION', Conf()->is('production',true));
         define('DEVELOPMENT', !PRODUCTION);
@@ -544,7 +543,7 @@ class Dispatcher
             $date = explode(" ",$micro_date);
             $filename = $dir.'/'.$auditConfig->get('prefix','audit' ).'-'.date('c',$date[1]).'-'.$date[0].'.json';
 
-            $json = new \JSON();
+            $json = new JSON();
             $user = Session::getUser();
 
             $data = array(

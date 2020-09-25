@@ -7,7 +7,7 @@ use cms\model\Element;
 use cms\model\Folder;
 use cms\model\Page;
 use cms\model\Project;
-use JSON;
+use util\json\JSON;
 use util\Macro;
 
 

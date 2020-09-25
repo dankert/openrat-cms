@@ -7,11 +7,11 @@ use cms\action\RequestParams;
 use cms\Dispatcher;
 use Exception;
 use util\Http;
-use JSON;
 use logger\Logger;
 use ObjectNotFoundException;
 use util\exception\UIException;
 use util\exception\SecurityException;
+use util\json\JSON;
 use util\XML;
 
 define('CMS_API_REQ_PARAM_SUBACTION', 'subaction');

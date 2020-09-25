@@ -3,6 +3,7 @@
 namespace logger;
 
 use Exception;
+use util\json\JSON;
 use util\Text;
 
 /**
@@ -174,7 +175,7 @@ class Logger
 				break;
 
 			case self::OUTPUT_JSON:
-				$json = new \JSON();
+				$json = new JSON();
 				$text = $json->encode( $values );
 				$text = str_replace("\n", "", $text);
 				break;

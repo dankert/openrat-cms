@@ -12,6 +12,7 @@ use cms\model\Project;
 use cms\model\Template;
 use cms\model\User;
 use cms\model\Value;
+use util\json\JSON;
 use util\Tree;
 use cms\model\Language;
 use cms\model\Model;
@@ -279,7 +280,7 @@ class TreeAction extends BaseAction
 
     private function outputTreeBranch($branch )
     {
-        $json = new \JSON();
+        $json = new JSON();
         echo '<ul class="or-navtree-list">';
 
         foreach( $branch as $b )

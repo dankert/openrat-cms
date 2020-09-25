@@ -2,10 +2,9 @@
 
 namespace template_engine\components;
 
-use util\Html;
-use JSON;
 use template_engine\components\html\Component;
 use template_engine\element\CMSElement;
+use util\json\JSON;
 
 /**
  * Erzeugt einen HTML-Link.

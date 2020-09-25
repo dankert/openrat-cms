@@ -5,7 +5,7 @@ namespace cms\ui\themes;
 use util\JSqueeze;
 use logger\Logger;
 use template_engine\TemplateEngineInfo;
-use \Less_Parser;
+use util\Less;
 
 require (__DIR__.'/../../../util/require.php');
 
@@ -80,7 +80,7 @@ class ThemeCompiler
 				// auf die LESS-Datei in der Sourcemap benötigt.
 				$pfx = substr(realpath($lessFile),0,0-strlen(basename($lessFile)));
 
-				$parser = new Less_Parser(array(
+				$parser = new Less(array(
 					'sourceMap' => true,
 					'indentation' => '	',
 					'outputSourceFiles' => false,
@@ -93,7 +93,7 @@ class ThemeCompiler
 
 				file_put_contents($combinedCssFile, $source."\n",FILE_APPEND);
 
-				$parser = new Less_Parser(array(
+				$parser = new Less(array(
 					'compress' => true,
 					'sourceMap' => false,
 					'indentation' => ''

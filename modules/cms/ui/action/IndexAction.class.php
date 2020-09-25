@@ -8,15 +8,13 @@ use cms\model\Project;
 use cms\model\User;
 use cms\model\Value;
 use Exception;
-use JSON;
 use language\Messages;
-use util\JSqueeze;
-use \Less_Parser;
+use util\json\JSON;
 use logger\Logger;
+use util\Less;
 use util\UIUtils;
 use ObjectNotFoundException;
 use util\Session;
-use template_engine\TemplateEngineInfo;
 
 
 /**
@@ -198,7 +196,7 @@ class IndexAction extends Action
 		{
 			try
 			{
-				$parser = new Less_Parser(array(
+				$parser = new Less(array(
 					'sourceMap' => DEVELOPMENT,
 					'indentation' => '	',
 					'outputSourceFiles' => false
