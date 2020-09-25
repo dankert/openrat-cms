@@ -18,6 +18,7 @@ namespace cms\action;
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
+use cms\base\DefaultConfig;
 use util\Session;
 /**
  * Action-Klasse fuer die Bearbeitung eines Template-Elementes.
@@ -50,8 +51,7 @@ class ConfigurationAction extends BaseAction
 	 */
 	public function showView()
 	{
-        require_once( OR_MODULES_DIR.'/util/config-default.php');
-        $conf = createDefaultConfig();
+        $conf = DefaultConfig::get();
         $conf_default = $conf;
 		
 		$conf_cms = Session::getConfig();

@@ -8,6 +8,7 @@ namespace cms;
 use BadMethodCallException;
 use cms\action\Action;
 use cms\action\RequestParams;
+use cms\base\DefaultConfig;
 use configuration\ConfigurationLoader;
 use database\Database;
 use cms\update\Update;
@@ -223,8 +224,7 @@ class Dispatcher
                 session_unset();
 
             // Fest eingebaute Standard-Konfiguration laden.
-            require(OR_MODULES_DIR . 'util/config-default.php');
-            $conf = createDefaultConfig();
+            $conf = DefaultConfig::get();
 
             $customConfig = $configLoader->load();
             $conf = array_replace_recursive($conf, $customConfig);
