@@ -67,7 +67,7 @@ class API
         }
 
 
-        if (Logger::$level >= LOGGER_LOG_TRACE)
+        if ( Logger::isTraceEnabled() )
             Logger::trace('Output' . "\n" . print_r($data, true));
 
         // Weitere Variablen anreichern.

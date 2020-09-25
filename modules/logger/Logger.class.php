@@ -1,150 +1,188 @@
 <?php
 
-
 namespace logger;
+
 use Exception;
 use util\Text;
 
-define('LOGGER_LOG_TRACE', 5);
-define('LOGGER_LOG_DEBUG', 4);
-define('LOGGER_LOG_INFO', 3);
-define('LOGGER_LOG_WARN', 2);
-define('LOGGER_LOG_ERROR', 1);
-
 /**
- * Schreiben eines Eintrages in die Logdatei.
+ * Writing log messages into a log file.
  *
  * @author Jan Dankert
  */
 class Logger
 {
-	public static $level = LOGGER_LOG_ERROR;
+	const LEVEL_TRACE = 5;
+	const LEVEL_DEBUG = 4;
+	const LEVEL_INFO  = 3;
+	const LEVEL_WARN  = 2;
+	const LEVEL_ERROR = 1;
+
+	const OUTPUT_PLAIN = 1;
+	const OUTPUT_JSON  = 2;
+
+
+	public static $level = self::LEVEL_ERROR;
 	public static $filename = null;
 
-	public static $messageFormat = '%time %level %host %text';
-	public static $dateFormat = 'M j H:i:s';
+	public static $messageFormat = ['time','level','host','text'];
+	public static $dateFormat = 'r';
 	public static $nsLookup = false;
-	public static $messageCallback;
+	/**
+	 * @var null | callable
+	 */
+	public static $messageCallback = null;
+	public static $outputType = self::OUTPUT_PLAIN;
 
 	public static function init()
 	{
-
 	}
 
 
 	/**
-	 * Schreiben einer Trace-Meldung in die Logdatei
+	 * Writes a trace message to log
 	 *
-	 * @param string message Log-Text
+	 * @param string message text
 	 */
 	public static function trace($message)
 	{
-		if (Logger::$level >= LOGGER_LOG_TRACE)
-			Logger::doLog(LOGGER_LOG_TRACE, $message);
+		Logger::doLog(self::LEVEL_TRACE, $message);
 	}
 
 
 	/**
-	 * Schreiben einer Debug-Meldung in die Logdatei
+	 * Is trace enabled?
+	 * @return bool
+	 */
+	public static function isTraceEnabled() {
+		return Logger::$level >= self::LEVEL_TRACE;
+	}
+
+	/**
+	 * Writes a debug message to log
 	 *
-	 * @param string message Log-Text
+	 * @param string message text
 	 */
 	public static function debug($message)
 	{
-		if (Logger::$level >= LOGGER_LOG_DEBUG)
-			Logger::doLog(LOGGER_LOG_DEBUG, $message);
+		Logger::doLog(self::LEVEL_DEBUG, $message);
 	}
 
 
 	/**
-	 * Schreiben einer Information in die Logdatei
+	 * Writes a information message to log
 	 *
-	 * @param string message Log-Text
+	 * @param string message text
 	 */
 	public static function info($message)
 	{
-		if (Logger::$level >= LOGGER_LOG_INFO)
-			Logger::doLog(LOGGER_LOG_INFO, $message);
+		Logger::doLog(self::LEVEL_INFO, $message);
 	}
 
 
 	/**
-	 * Schreiben einer Warnung in die Logdatei
+	 * Writes a warning message to log
 	 *
-	 * @param string message Log-Text
+	 * @param string message text
 	 */
 	public static function warn($message)
 	{
-		if (Logger::$level >= LOGGER_LOG_WARN)
-			Logger::doLog(LOGGER_LOG_WARN, $message);
+		Logger::doLog(self::LEVEL_WARN, $message);
 	}
 
 
 	/**
-	 * Schreiben einer normalen Fehlermeldung in die Logdatei
+	 * Writes an error message to log
 	 *
-	 * @param string message Log-Text
+	 * @param string message text
 	 */
 	public static function error($message)
 	{
-		if (Logger::$level >= LOGGER_LOG_ERROR)
-			Logger::doLog(LOGGER_LOG_ERROR, $message);
+		Logger::doLog(self::LEVEL_ERROR, $message);
 	}
 
 
 	/**
-	 * Schreiben der Meldung in die Logdatei
+	 * Writes a mesage into the log file
 	 *
-	 * @param string facility Schwere dieses Logdatei-Eintrages (z.B. warning)
-	 * @param string message Log-Text
-	 * @access private
+	 * @param string facility of log entry
+	 * @param string message text
 	 */
 	private static function doLog($facility, $message)
 	{
-		if ($facility == LOGGER_LOG_ERROR)
-			$thisLevel = 'ERROR';
-		elseif ($facility == LOGGER_LOG_WARN)
-			$thisLevel = 'WARN';
-		elseif ($facility == LOGGER_LOG_INFO)
-			$thisLevel = 'INFO';
-		elseif ($facility == LOGGER_LOG_DEBUG)
-			$thisLevel = 'DEBUG';
-		elseif ($facility == LOGGER_LOG_TRACE)
-			$thisLevel = 'TRACE';
+		if   ( Logger::$level < $facility )
+			return; // log level not reached.
 
-
-		// Ersetzen von Variablen
-		if (Logger::$nsLookup)
-			$vars['host'] = gethostbyaddr(getenv('REMOTE_ADDR'));
+		if ($facility == self::LEVEL_ERROR)
+			$levelName = 'ERROR';
+		elseif ($facility == self::LEVEL_WARN)
+			$levelName = 'WARN';
+		elseif ($facility == self::LEVEL_INFO)
+			$levelName = 'INFO';
+		elseif ($facility == self::LEVEL_DEBUG)
+			$levelName = 'DEBUG';
+		elseif ($facility == self::LEVEL_TRACE)
+			$levelName = 'TRACE';
 		else
-			$vars['host'] = getenv('REMOTE_ADDR');
+			$levelName = '';
 
-		if (isset(Logger::$messageCallback)) {
-			$cb = Logger::$messageCallback;
-			$vars += $cb();
-		}
-
-		$vars['level'] = str_pad($thisLevel, 5);
-		$vars['agent'] = getenv('HTTP_USER_AGENT');
-		$vars['time'] = date(Logger::$dateFormat);
 		if ($message instanceof Exception)
 			$message = $message->getTraceAsString();
-		$vars['text'] = $message;
 
-		$text = Logger::$messageFormat;
+		$values = array_map( function($key) use ($message, $levelName) {
+			switch( $key ) {
+				case 'host':
+					if (Logger::$nsLookup)
+						return gethostbyaddr(getenv('REMOTE_ADDR'));
+					else
+						return getenv('REMOTE_ADDR');
 
-		// Variablen ersetzen.
-		foreach ($vars as $key => $value) {
-			$text = str_replace('%' . $key, $value, $text);
+				case 'level':
+					return str_pad($levelName, 5);
+				case 'agent':
+					return getenv('HTTP_USER_AGENT');
+				case 'time':
+					return date(Logger::$dateFormat);
+				case 'text':
+					return $message;
+
+				default:
+					if   ( Logger::$messageCallback )
+						return call_user_func(Logger::$messageCallback,$key);
+					return '';
+			}
+		}, array_combine(Logger::$messageFormat,Logger::$messageFormat) );
+
+		switch( self::$outputType ) {
+			case self::OUTPUT_PLAIN:
+			default:
+
+				$text = '';
+				foreach( $values as $value ) {
+					if   ( ! $value )
+						$value = '-';
+
+					if   ( $text )
+						$text = $text . ' ';
+
+					$text .= '"'.str_replace('"','\"',$value).'"';
+				}
+
+				// Mehrzeilige Meldungen werden um 1 Spalte eingerueckt, um sie maschinell
+				// erkennen und auswerten zu koennen.
+				$text = str_replace("\n", "\n ", $text);
+				break;
+
+			case self::OUTPUT_JSON:
+				$json = new \JSON();
+				$text = $json->encode( $values );
+				$text = str_replace("\n", "", $text);
+				break;
 		}
 
-		// Mehrzeilige Meldungen werden um 1 Spalte eingerueckt, um sie maschinell
-		// erkennen und auswerten zu koennen.
-		$text = str_replace("\n", "\n ", $text);
+		if ( Logger::$filename ) {
 
-		if (isset(Logger::$filename)) {
-
-			if (!is_writable(Logger::$filename)) {
+			if (!is_writable( Logger::$filename )) {
 
 				error_log('logfile ' . Logger::$filename . ' is not writable');
 				error_log($text . "\n");
@@ -155,7 +193,7 @@ class Logger
 		}
 
 		// ERROR- und WARN-Meldungen immer zusätzlich in das Error-Log schreiben.
-		if (Logger::$level <= LOGGER_LOG_WARN)
+		if (Logger::$level <= self::LEVEL_WARN)
 			error_log($text . "\n");
 	}
 
@@ -164,7 +202,7 @@ class Logger
 	 * Sanitize user input.
 	 * Cutting out unsafe characters.
 	 *
-	 * @param $input potentially dangerous user input
+	 * @param $input string  potentially dangerous user input
 	 * @return string a safe representaton of the user input.
 	 */
 	public static function sanitizeInput( $input ) {
@@ -174,5 +212,3 @@ class Logger
 		return '"'.$input.'"/'.$length.'/'.strlen($clean);
 	}
 }
-
-?>

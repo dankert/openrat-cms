@@ -377,9 +377,10 @@ function createDefaultConfig()
     $conf['log'] = array();
     $conf['log']['file']= null;
     $conf['log']['level']= "warn";
+    $conf['log']['output']= "plain";
     $conf['log']['date_format']= "M j H:i:s";
     $conf['log']['ns_lookup']=false;
-    $conf['log']['format']= "%time %level %host %user %action %text";
+    $conf['log']['format']= ['time','level','host','user','action','text'];
     $conf['mail'] = array();
     $conf['mail']['enabled']=true;
     $conf['mail']['from']="OpenRat <user@example.com>";

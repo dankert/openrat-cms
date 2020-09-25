@@ -180,29 +180,30 @@ class Dispatcher
         //$logFile = __DIR__.'/../../'.$logFile;
 
         Logger::$messageFormat = $logConfig['format'];
-        Logger::$filename = $logFile;
+        Logger::$filename   = $logFile;
         Logger::$dateFormat = $logConfig['date_format'];
-        Logger::$nsLookup = $logConfig['ns_lookup'];
+        Logger::$nsLookup   = $logConfig['ns_lookup'];
 
-        $cname = 'LOGGER_LOG_' . strtoupper($logConfig['level']);
-        if (defined($cname))
-            Logger::$level = constant($cname);
+		Logger::$outputType = (int) constant(Logger::class.'::OUTPUT_' . strtoupper($logConfig['output']));
+		Logger::$level      = (int) constant(Logger::class.'::LEVEL_'  . strtoupper($logConfig['level' ]));
 
+        Logger::$messageCallback = function ( $key ) {
 
-        Logger::$messageCallback = function () {
+        	switch( $key) {
+				case 'action':
+					return Session::get('action');
 
-            $action = Session::get('action');
-            if (empty($action))
-                $action = '-';
-
-            $user = Session::getUser();
-            if (is_object($user))
-                $username = $user->name;
-            else
-                $username = '-';
-
-            return array('user' => $username, 'action' => $action);
+				case 'user':
+					$user = Session::getUser();
+					if (is_object($user))
+						return  $user->name;
+					else
+						return '';
+				default:
+					return '';
+			}
         };
+
         Logger::init();
     }
 
