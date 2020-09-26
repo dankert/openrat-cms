@@ -1,4 +1,4 @@
-<?php if (!defined('OR_TITLE')) exit(); ?>
+<?php defined('APP_STARTED') || die('Forbidden'); ?>
   <div class="<?php echo \template_engine\Output::escapeHtml('or-form') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
     <fieldset class="<?php echo \template_engine\Output::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
       <legend class="<?php echo \template_engine\Output::escapeHtml('on-click-open-close') ?>"><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('USER').'') ?>

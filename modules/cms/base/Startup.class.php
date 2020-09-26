@@ -23,6 +23,8 @@ use util\exception\ValidationException;
 
 class Startup {
 
+	private static $START_TIME;
+
 	const MIN_VERSION = '5.4'; // minimum required PHP version.
 
 	const IMG_EXT      = '.gif';
@@ -30,6 +32,9 @@ class Startup {
 
 	const HTML_MODULES_DIR = './modules/';
 	const THEMES_DIR       = './modules/cms/ui/themes/';
+
+	const TITLE   = 'OpenRat CMS';
+	const VERSION = Version::VERSION;
 
 	/**
 	 * Initialize.
@@ -39,7 +44,10 @@ class Startup {
 		self::checkPHPVersion();
 		self::securityCheck();
 		self::setErrorHandler();
-		self::setConstants();
+		self::setStartTime();
+
+		// in some situations we want to know, if the CMS is really started up.
+		define('APP_STARTED','1');
 	}
 
 	public static function checkPHPVersion()
@@ -49,11 +57,14 @@ class Startup {
 	}
 
 
-	public static function setConstants() {
+	public static function getStartTime() {
+		return self::$START_TIME;
+	}
 
-		require(__DIR__ . '/version.php');
-		define('OR_TITLE'  , 'OpenRat CMS');
-		define('START_TIME', time()); // The start time of the script.
+
+	public static function setStartTime() {
+
+		self::$START_TIME = time();
 	}
 
 

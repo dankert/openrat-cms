@@ -1055,9 +1055,9 @@ class DefaultConfig {
 				],
 			'application' =>
 				[ 
-					'name' => 'OR_TITLE',
-					'version' => 'OR_VERSION',
-					'operator' => 'OR_TITLE',
+					'name' => Startup::TITLE,
+					'version' => Startup::VERSION,
+					'operator' => '',
 				],
 			'production' => true,
 			'ui' =>

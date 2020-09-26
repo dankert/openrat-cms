@@ -3,6 +3,7 @@
 namespace util\cache;
 
 use cms\base\DB;
+use cms\base\Startup;
 use util\FileUtils;
 
 
@@ -46,7 +47,7 @@ class FileCache implements Cache
         if   ( \cms\base\Configuration::config()->subset('publishing')->is('cache_enabled',false) )
             $this->invalidateIfOlderThan( $lastModified );
         else
-            $this->invalidateIfOlderThan( START_TIME ); // Invalidate all before this request.
+            $this->invalidateIfOlderThan( Startup::getStartTime() ); // Invalidate all before this request.
     }
 
 

@@ -61,12 +61,12 @@ if (!headers_sent())
 <body>
 
 <header>
-    <h1>Sorry, <?php echo defined('OR_TITLE')?OR_TITLE:'our service' ?> is currently unavailable.</h1>
+    <h1>Sorry, our service is currently unavailable</h1>
 </header>
 
 <main>
 
-    <p>Something went terribly wrong.</p>
+    <p>Something went terribly wrong &#x1F61E;</p>
 
     <?php // Display exceptions only in development mode, because the may contain sensitive internal information like passwords.
       if (!defined('DEVELOPMENT') || DEVELOPMENT ) { ?>

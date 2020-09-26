@@ -1,4 +1,4 @@
-<?php if (!defined('OR_TITLE')) exit(); ?>
+<?php defined('APP_STARTED') || die('Forbidden'); ?>
   <?php $if1=(\cms\base\Configuration::config('security','disable_dynamic_code')); if($if1) {  ?>
     <?php $if1=(!1); if($if1) {  ?>
       <div class="<?php echo \template_engine\Output::escapeHtml('message warn') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>

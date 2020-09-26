@@ -1,4 +1,4 @@
-<?php if (!defined('OR_TITLE')) exit(); ?>
+<?php defined('APP_STARTED') || die('Forbidden'); ?>
   <?php $if1=(\cms\base\Configuration::config('security','nopublish')); if($if1) {  ?>
     <div class="<?php echo \template_engine\Output::escapeHtml('message warn') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
       <span class="<?php echo \template_engine\Output::escapeHtml('help') ?>"><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('NOPUBLISH_DESC').'') ?>

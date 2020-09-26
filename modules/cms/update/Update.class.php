@@ -2,6 +2,8 @@
 
 namespace cms\update;
 
+use cms\base\Startup;
+use cms\base\Version;
 use database\Database;
 use Exception;
 use logger\Logger;
@@ -28,7 +30,7 @@ class Update
 
 		elseif ($version > self::SUPPORTED_VERSION)
 			// Oh oh, in der Datenbank ist eine neuere Version, als wir unterstützen.
-			throw new \LogicException('Actual DB version is not supported. ' . "DB-Version is $version, but " . OR_TITLE . " " . OR_VERSION . " only supports version " . self::SUPPORTED_VERSION);
+			throw new \LogicException('Actual DB version is not supported. ' . "DB-Version is $version, but " . Startup::TITLE . " " . Startup::VERSION . " only supports version " . self::SUPPORTED_VERSION);
 
 		else
 			return true; // Update required.

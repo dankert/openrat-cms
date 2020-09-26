@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use cms\base\Startup;
 use cms\model\User;
 use cms\model\Project;
 use cms\model\Value;
@@ -896,7 +897,7 @@ class StartAction extends BaseAction
 				    
 					if	( ! $ok )
 					{
-						header( 'WWW-Authenticate: Basic realm="'.OR_TITLE.' - '.\cms\base\Language::lang('HTTP_REALM').'"' );
+						header( 'WWW-Authenticate: Basic realm="'.Startup::TITLE.' - '.\cms\base\Language::lang('HTTP_REALM').'"' );
 						header( 'HTTP/1.0 401 Unauthorized' );
 						echo 'Authorization Required!';
 						exit;

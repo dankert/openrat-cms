@@ -50,7 +50,7 @@ class TemplateEngine
 			throw new LogicException("Template output file is read-only: $filename");
 
 		// The generated template should only be executable in our CMS environment (for security reasons).
-		$writtenBytes = file_put_contents( $filename,'<?php if (!defined(\'OR_TITLE\')) exit(); ?>' );
+		$writtenBytes = file_put_contents( $filename,'<?php defined(\'APP_STARTED\') || die(\'Forbidden\'); ?>' );
 
 		if ( $writtenBytes === FALSE )
 			throw new LogicException("Unable writing to output file: '$filename'");

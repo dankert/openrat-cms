@@ -1,1 +1,1 @@
-<?php if (!defined('OR_TITLE')) exit(); ?>
+<?php defined('APP_STARTED') || die('Forbidden'); ?>

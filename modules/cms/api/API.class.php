@@ -4,6 +4,8 @@ namespace cms\api;
 
 use BadMethodCallException;
 use cms\action\RequestParams;
+use cms\base\Startup;
+use cms\base\Version;
 use cms\Dispatcher;
 use Exception;
 use util\Http;
@@ -73,7 +75,7 @@ class API
 
         // Weitere Variablen anreichern.
         $data['session'] = array('name' => session_name(), 'id' => session_id(), 'token' => Session::token());
-        $data['version'] = OR_VERSION;
+        $data['version'] = Startup::VERSION;
         $data['api'] = '2';
 
 

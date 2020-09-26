@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use cms\base\Startup;
 use cms\model\User;
 use cms\model\Project;
 use cms\model\Page;
@@ -163,7 +164,7 @@ class WebdavAction extends BaseAction
 				// Client ist nicht angemeldet, daher wird nun die
 				// Authentisierung angefordert.
 				Logger::debug( 'Requesting Client to authenticate' );
-				header('WWW-Authenticate: Basic realm="'.OR_TITLE.'"');
+				header('WWW-Authenticate: Basic realm="'.Startup::TITLE.'"');
 				$this->httpStatus('401 Unauthorized');
 				exit;
 			}

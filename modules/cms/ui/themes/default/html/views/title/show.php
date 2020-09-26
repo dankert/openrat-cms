@@ -1,4 +1,4 @@
-<?php if (!defined('OR_TITLE')) exit(); ?>
+<?php defined('APP_STARTED') || die('Forbidden'); ?>
   <div class="<?php echo \template_engine\Output::escapeHtml('or-menu') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
     <div class="<?php echo \template_engine\Output::escapeHtml('or-menu-group') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
       <div class="<?php echo \template_engine\Output::escapeHtml('toolbar-icon toggle-nav-open-close') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>

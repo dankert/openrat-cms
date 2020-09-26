@@ -19,6 +19,8 @@
 namespace util;
 
 use Adresse;
+use cms\base\Startup;
+use cms\base\Version;
 use LogicException;
 use util\Text;
 use unknown_type;
@@ -92,7 +94,7 @@ class Mail
 		if (!empty($conf['mail']['priority']))
 			$this->header[] = 'X-Priority: ' . $conf['mail']['priority'];
 
-		$this->header[] = 'X-Mailer: ' . $this->header_encode(OR_TITLE . ' ' . OR_VERSION);
+		$this->header[] = 'X-Mailer: ' . $this->header_encode(Startup::TITLE . ' ' . Startup::VERSION);
 		$this->header[] = 'Content-Type: text/plain; charset=UTF-8';
 		$this->subject = $this->header_encode(\cms\base\Language::lang('mail_subject_' . $text));
 		$this->to = $this->header_encode($to);

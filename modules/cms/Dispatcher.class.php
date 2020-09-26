@@ -10,6 +10,8 @@ use cms\action\Action;
 use cms\action\RequestParams;
 use cms\base\DB;
 use cms\base\DefaultConfig;
+use cms\base\Startup;
+use cms\base\Version;
 use configuration\ConfigurationLoader;
 use database\Database;
 use cms\update\Update;
@@ -115,7 +117,7 @@ class Dispatcher
 
         // Weitere Variablen anreichern.
         $result['session'] = array('name' => session_name(), 'id' => session_id(), 'token' => Session::token());
-        $result['version'] = OR_VERSION;
+        $result['version'] = Startup::VERSION;
         $result['api'] = '2';
         $result['output']['_token'] = Session::token();
         $result['output']['_id'   ] = $this->request->id;
@@ -440,7 +442,7 @@ class Dispatcher
 
 
         if   ( ! $dbConfig->is('auto_update',true))
-            throw new \LogicException('DB Update required, but auto-update is disabled. '.OR_TITLE." ".OR_VERSION." needs DB-version ".Update::SUPPORTED_VERSION );
+            throw new \LogicException('DB Update required, but auto-update is disabled. '.Startup::TITLE." ".Startup::VERSION." needs DB-version ".Update::SUPPORTED_VERSION );
 
 
         try {

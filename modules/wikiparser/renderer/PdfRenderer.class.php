@@ -13,6 +13,7 @@
 
 namespace wikiparser\renderer;
 
+use cms\base\Startup;
 use cms\model\BaseObject;
 use cms\model\File;
 use cms\model\Image;
@@ -200,7 +201,7 @@ class PdfRenderer
 	{
 		$this->pdf = new Pdf();
 		$this->pdf->AddPage();
-		$this->pdf->SetCreator(OR_TITLE);
+		$this->pdf->SetCreator(Startup::TITLE);
 		$this->pdf->SetFont('Arial', '', 12);
 
 		#$this->footnotes    = array();

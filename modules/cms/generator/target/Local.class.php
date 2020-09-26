@@ -17,6 +17,7 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 namespace cms\generator\target;
 
+use cms\base\Startup;
 use logger\Logger;
 use util\exception\PublisherException;
 use util\exception\UIException;
@@ -188,7 +189,7 @@ class Local extends  BaseTarget
 				// ist, dann entfernen
 				if	( is_file($fullpath)     &&
 					is_writable($fullpath) &&
-					filemtime($fullpath) < START_TIME  )
+					filemtime($fullpath) < Startup::getStartTime()  )
 					unlink($fullpath);
 
 				// Bei Ordnern rekursiv absteigen

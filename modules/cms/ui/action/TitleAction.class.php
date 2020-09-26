@@ -4,6 +4,7 @@ namespace cms\action;
 
 use cms\base\DB;
 use cms\base\Startup;
+use cms\base\Version;
 use cms\model\Project;
 use cms\model\BaseObject;
 use cms\model\Language;
@@ -44,7 +45,7 @@ class TitleAction extends Action
 	 */
 	public function showView()
 	{
-		$this->setTemplateVar('buildinfo',OR_TITLE.' '.OR_VERSION.' - build '.\cms\base\Configuration::config('build','build') );
+		$this->setTemplateVar('buildinfo',Startup::TITLE.' '.Startup::VERSION.' - build '.\cms\base\Configuration::config('build','build') );
 
 		$user = Session::getUser();
 

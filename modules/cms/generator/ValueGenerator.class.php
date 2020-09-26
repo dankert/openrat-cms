@@ -556,7 +556,7 @@ class ValueGenerator extends BaseGenerator
 					case 'date_published':
 						// START_TIME wird zu Beginn im Controller gesetzt.
 						// So erh�lt jede Datei das gleiche Ver�ffentlichungsdatum.
-						$date = START_TIME;
+						$date = Startup::getStartTime();
 						break;
 
 					case 'date_saved':
@@ -571,7 +571,7 @@ class ValueGenerator extends BaseGenerator
 						Logger::warn('element:'.$element->name.', '.
 							'type:'.$element->type.', '.
 							'unknown subtype:'.$element->subtype);
-						$date = START_TIME;
+						$date = Startup::getStartTime();
 				}
 
 				if	( strpos($element->dateformat,'%')!==FALSE )
@@ -789,7 +789,7 @@ class ValueGenerator extends BaseGenerator
 					case 'date_published':
 						// START_TIME wird zu Beginn im Controller gesetzt.
 						// So erh�lt jede Datei das gleiche Ver�ffentlichungsdatum.
-						$date = START_TIME;
+						$date = Startup::getStartTime();
 						break;
 
 					case 'date_saved':

@@ -1,4 +1,4 @@
-<?php if (!defined('OR_TITLE')) exit(); ?>
+<?php defined('APP_STARTED') || die('Forbidden'); ?>
   <div class="<?php echo \template_engine\Output::escapeHtml('or-linklist') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
     <?php $if1=($mayCreateFolder); if($if1) {  ?>
       <div class="<?php echo \template_engine\Output::escapeHtml('clickable or-linklist-line or-round-corners or-hover-effect') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>

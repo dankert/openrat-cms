@@ -1,4 +1,4 @@
-<?php if (!defined('OR_TITLE')) exit(); ?>
+<?php defined('APP_STARTED') || die('Forbidden'); ?>
   <div class="<?php echo \template_engine\Output::escapeHtml('toolbar-icon') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
     <i class="<?php echo \template_engine\Output::escapeHtml('image-icon image-icon--menu-refresh') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
     </i>

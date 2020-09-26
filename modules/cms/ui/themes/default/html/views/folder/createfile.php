@@ -1,4 +1,4 @@
-<?php if (!defined('OR_TITLE')) exit(); ?>
+<?php defined('APP_STARTED') || die('Forbidden'); ?>
   <form name="<?php echo \template_engine\Output::escapeHtml('') ?>" target="<?php echo \template_engine\Output::escapeHtml('_self') ?>" data-target="<?php echo \template_engine\Output::escapeHtml('upload') ?>" action="<?php echo \template_engine\Output::escapeHtml('./') ?>" data-method="<?php echo \template_engine\Output::escapeHtml('createfile') ?>" data-action="<?php echo \template_engine\Output::escapeHtml('folder') ?>" data-id="<?php echo \template_engine\Output::escapeHtml(''.@$_id.'') ?>" method="<?php echo \template_engine\Output::escapeHtml('POST') ?>" enctype="<?php echo \template_engine\Output::escapeHtml('multipart/form-data') ?>" data-async="<?php echo \template_engine\Output::escapeHtml('') ?>" data-autosave="<?php echo \template_engine\Output::escapeHtml('') ?>" class="<?php echo \template_engine\Output::escapeHtml('or-form folder') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
     <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('token') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$_token.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
     <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('action') ?>" value="<?php echo \template_engine\Output::escapeHtml('folder') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
@@ -14,7 +14,7 @@
           </label>
         </div>
         <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-          <input type="<?php echo \template_engine\Output::escapeHtml('file') ?>" multiple="<?php echo \template_engine\Output::escapeHtml('multiple') ?>" id="<?php echo \template_engine\Output::escapeHtml('req0_file') ?>" name="<?php echo \template_engine\Output::escapeHtml('file') ?>" size="<?php echo \template_engine\Output::escapeHtml('40') ?>" maxlength="<?php echo \template_engine\Output::escapeHtml(''.@$maxlength.'') ?>" class="<?php echo \template_engine\Output::escapeHtml('upload') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+          <input type="<?php echo \template_engine\Output::escapeHtml('file') ?>" multiple="<?php echo \template_engine\Output::escapeHtml('multiple') ?>" name="<?php echo \template_engine\Output::escapeHtml('file') ?>" size="<?php echo \template_engine\Output::escapeHtml('40') ?>" maxlength="<?php echo \template_engine\Output::escapeHtml(''.@$maxlength.'') ?>" class="<?php echo \template_engine\Output::escapeHtml('upload') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
         </div>
       </div>
       <div class="<?php echo \template_engine\Output::escapeHtml('line or-dropzone-upload') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>

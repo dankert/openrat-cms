@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use cms\base\Startup;
 use cms\generator\FileContext;
 use cms\generator\FileGenerator;
 use cms\generator\PageContext;
@@ -1337,7 +1338,7 @@ class FolderAction extends ObjectAction
 
 		// Cleanup the target directory (if supported by the underlying target)
 		if	( $this->hasRequestVar('clean')      )
-			$publisher->cleanOlderThan( START_TIME );
+			$publisher->cleanOlderThan( Startup::getStartTime() );
 
 
 		$this->addNoticeFor( $this->folder,
