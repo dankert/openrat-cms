@@ -5,19 +5,22 @@ namespace cms\ui;
 use BadMethodCallException;
 use cms\action\RequestParams;
 use cms\Dispatcher;
-use DomainException;
 use Exception;
 use util\Http;
-use \Less_Parser;
 use logger\Logger;
 use LogicException;
 use ObjectNotFoundException;
 use util\exception\UIException;
 use util\exception\SecurityException;
 use template_engine\engine\TemplateEngine;
-use template_engine\TemplateEngineInfo;
 
 
+/**
+ * Executing the Openrat CMS User Interface.
+ * The request is executed by a dispatcher and the output is displayed with a template.
+ *
+ * @package cms\ui
+ */
 class UI
 {
     /**
@@ -110,9 +113,10 @@ class UI
      */
     private static function setContentSecurityPolicy()
     {
-        //if (\cms\base\Configuration::config('security','content-security-policy')) // config is not loaded yet.
+        // config is not loaded yet.
         $contentSecurityPolicyEntries = array(
             'default-src \'none\'',
+            // no eval, no inline.
             'script-src \'self\'',
             // No <object>, <embed> or <applet>.
             'object-src \'none\'',

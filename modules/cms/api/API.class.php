@@ -17,19 +17,18 @@ use util\json\JSON;
 use util\Session;
 use util\XML;
 
-define('CMS_API_REQ_PARAM_SUBACTION', 'subaction');
-define('CMS_API_REQ_PARAM_ACTION', 'action');
-
-define('CMS_API_OUTPUT_PHPARRAY', 1);
-define('CMS_API_OUTPUT_PHPSERIALIZE', 2);
-define('CMS_API_OUTPUT_JSON', 3);
-define('CMS_API_OUTPUT_XML', 4);
-define('CMS_API_OUTPUT_YAML', 5);
-define('CMS_API_OUTPUT_HTML', 6);
 
 class API
 {
-    /**
+	const OUTPUT_PHPARRAY     = 1;
+	const OUTPUT_PHPSERIALIZE = 2;
+	const OUTPUT_JSON         = 3;
+	const OUTPUT_XML          = 4;
+	const OUTPUT_YAML         = 5;
+	const OUTPUT_HTML         = 6;
+
+
+	/**
      * Führt einen API-Request durch.
      */
     public static function execute()
@@ -81,17 +80,17 @@ class API
 
         switch (API::discoverOutputType()) {
 
-            case CMS_API_OUTPUT_PHPARRAY:
+            case self::OUTPUT_PHPARRAY:
                 header('Content-Type: application/php-array; charset=UTF-8');
                 $output = print_r($data, true);
                 break;
 
-            case CMS_API_OUTPUT_PHPSERIALIZE:
+            case self::OUTPUT_PHPSERIALIZE:
                 header('Content-Type: application/php-serialized; charset=UTF-8');
                 $output = serialize($data);
                 break;
 
-            case CMS_API_OUTPUT_JSON:
+            case self::OUTPUT_JSON:
                 header('Content-Type: application/json; charset=UTF-8');
                 if (function_exists('json_encode'))
                 {
@@ -111,21 +110,21 @@ class API
                 }
                 break;
 
-            case CMS_API_OUTPUT_XML:
+            case self::OUTPUT_XML:
                 $xml = new XML();
                 $xml->root = 'server'; // Name des XML-root-Elementes
                 header('Content-Type: application/xml; charset=UTF-8');
                 $output = $xml->encode($data);
                 break;
 
-            case CMS_API_OUTPUT_HTML:
+            case self::OUTPUT_HTML:
                 header('Content-Type: text/html; charset=UTF-8');
                 $output  = '<html><body><h1>API response:</h1><hr /><pre>';
                 $output .= print_r($data,true);
                 $output .= '</pre></body></html>';
                 break;
 
-            case CMS_API_OUTPUT_YAML:
+            case self::OUTPUT_YAML:
                 header('Content-Type: application/yaml; charset=UTF-8');
                 $output = \util\YAML::dump($data);
                 break;
@@ -145,7 +144,7 @@ class API
     /**
      * Discovering the output-type for this API-request
      *
-     * @return int constant of CMS_API_OUTPUT_*
+     * @return int constant of self::CMS_API_OUTPUT_*
      */
     private static function discoverOutputType()
     {
@@ -154,24 +153,24 @@ class API
         $reqOutput = @$_REQUEST['output'];
 
         if (in_array('application/php-array', $types) || $reqOutput == 'php-array')
-            return CMS_API_OUTPUT_PHPARRAY;
+            return self::OUTPUT_PHPARRAY;
 
         if (in_array('application/php-serialized', $types) || $reqOutput == 'php')
-            return CMS_API_OUTPUT_PHPSERIALIZE;
+            return self::OUTPUT_PHPSERIALIZE;
 
         if (in_array('application/json', $types) || $reqOutput == 'json')
-            return CMS_API_OUTPUT_JSON;
+            return self::OUTPUT_JSON;
 
         if (in_array('application/xml', $types) || $reqOutput == 'xml')
-            return CMS_API_OUTPUT_XML;
+            return self::OUTPUT_XML;
 
         if (in_array('application/yaml', $types) || $reqOutput == 'yaml')
-            return CMS_API_OUTPUT_YAML;
+            return self::OUTPUT_YAML;
 
         if (in_array('text/html', $types))
-            return CMS_API_OUTPUT_HTML;  // normally an ordinary browser.
+            return self::OUTPUT_HTML;  // normally an ordinary browser.
 
-        return CMS_API_OUTPUT_YAML;
+        return self::OUTPUT_YAML;
     }
 
     /**
