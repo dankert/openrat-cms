@@ -3,6 +3,7 @@
 namespace cms\ui\action;
 
 use cms\action\Action;
+use cms\action\RequestParams;
 use cms\auth\Auth;
 use cms\base\Startup;
 use cms\model\BaseObject;
