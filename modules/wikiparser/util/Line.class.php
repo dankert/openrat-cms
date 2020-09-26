@@ -43,7 +43,7 @@ class Line
 	 */
 	function __construct($s)
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		$text_markup = $conf['editor']['text-markup'];
 //		Html::debug($text_markup); 
 

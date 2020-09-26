@@ -108,7 +108,7 @@ class SearchAction extends BaseAction
 	 */
 	public function quicksearchView()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		$text = $this->getRequestVar('search');
 		

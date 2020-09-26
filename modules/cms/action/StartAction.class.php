@@ -56,7 +56,7 @@ class StartAction extends BaseAction
 	
 	function setDb( $dbid )
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		if	( !isset($conf['database'][$dbid] ))
 			throw new \LogicException( 'unknown DB-Id: '.$dbid );
@@ -77,7 +77,7 @@ class StartAction extends BaseAction
 
 	function checkForDb()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		$dbid = $this->getRequestVar('dbid'); 
 
 		if	( $dbid != '' )
@@ -94,7 +94,7 @@ class StartAction extends BaseAction
 		}
 		else
 		{
-			global $conf;
+			$conf = \cms\base\Configuration::rawConfig();
 	
 			if	( !isset($conf['database']['default']) )
 				throw new \LogicException('default-database not set');
@@ -111,7 +111,7 @@ class StartAction extends BaseAction
 	{
 		Logger::debug( "login user $name" );
 	
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		global $SESS;
 	
 		unset( $SESS['user'] );	
@@ -193,7 +193,7 @@ class StartAction extends BaseAction
 	 */
 	function loginView()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		$sso = $conf['security']['sso'];
 		$ssl = $conf['security']['ssl'];
 		
@@ -440,7 +440,7 @@ class StartAction extends BaseAction
 	 */
 	public function applicationsView()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		
 		// Diese Seite gilt pro Sitzung. 
 		$user       = Session::getUser();
@@ -490,7 +490,7 @@ class StartAction extends BaseAction
 	 */
 	function openid()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		$openId = Session::get('openid');
 
 		if	( !$openId->checkAuthentication() )
@@ -559,7 +559,7 @@ class StartAction extends BaseAction
 	 */
 	function loginPost()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		$this->checkForDb();
 		Session::setUser('');
@@ -649,7 +649,7 @@ class StartAction extends BaseAction
 	 */
 	function logoutPost()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		
 		$user = Session::getUser();
 		if	( is_object($user) )
@@ -854,7 +854,7 @@ class StartAction extends BaseAction
 	
 	function showView()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		global $PHP_AUTH_USER;
 		global $PHP_AUTH_PW;
 
@@ -980,7 +980,7 @@ class StartAction extends BaseAction
 	
 	public function registeruserdata()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		Session::set('registerMail',$this->getRequestVar('mail') );
 		// TODO: Attribut "Password" abfragen
@@ -1006,7 +1006,7 @@ class StartAction extends BaseAction
 	 */
 	public function registercommit()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		$this->checkForDb();
 
 		$origRegisterCode  = Session::get('registerCode');
@@ -1064,7 +1064,7 @@ class StartAction extends BaseAction
 	 */
 	public function password()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		
 		// TODO: Attribut "Password" abfragen
 		foreach( $conf['database'] as $dbname=>$dbconf )

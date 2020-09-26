@@ -93,7 +93,7 @@ class ElementAction extends BaseAction
 	 */
 	public function advancedPost()
 	{
-        global $conf;
+        $conf = \cms\base\Configuration::rawConfig();
         $ini_date_format = \cms\base\Configuration::config('date','format');
 
 
@@ -146,7 +146,7 @@ class ElementAction extends BaseAction
 
 	public function advancedView()
 	{
-        global $conf;
+        $conf = \cms\base\Configuration::rawConfig();
         $this->setTemplateVar('type',$this->element->getTypeName() );
 
         // Abhaengig vom aktuellen Element-Typ die Eigenschaften anzeigen

@@ -172,7 +172,7 @@ class FileAction extends ObjectAction
 
 		if	( $this->file->extension == 'gz' )
 		{
-			global $conf;
+			$conf = \cms\base\Configuration::rawConfig();
 			$mime_types = $conf['mime-types'];
 
 			$pos = strrpos($this->file->filename,'.');
@@ -270,7 +270,7 @@ class FileAction extends ObjectAction
 	 */
 	function editView()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		// MIME-Types aus Datei lesen
 		$this->setTemplateVars( $this->file->getProperties() );
 	}
@@ -289,7 +289,7 @@ class FileAction extends ObjectAction
 	 */
 	function valueView()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		// MIME-Types aus Datei lesen
 		$this->setTemplateVars( $this->file->getProperties() );
 		$this->setTemplateVar('value',$this->file->loadValue());

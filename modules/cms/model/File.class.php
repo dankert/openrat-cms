@@ -165,7 +165,7 @@ class File extends BaseObject
 		if	( !empty( $this->mime_type ) )
 			return $this->mime_type;
 
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		$mime_types = $conf['mime-types'];
 
 

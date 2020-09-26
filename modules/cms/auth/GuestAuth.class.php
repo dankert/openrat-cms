@@ -15,7 +15,7 @@ class GuestAuth implements Auth
 {
 	public function username()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		$guestConf = $conf['security']['guest'];
 
 		if ($guestConf['enable'])

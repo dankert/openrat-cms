@@ -207,7 +207,7 @@ class GroupAction extends BaseAction
 		}
 		$this->setTemplateVar('memberships',$userliste);
 
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		if	($conf['security']['authorize']['type']=='ldap')
 			$this->addNotice('group',$this->group->name,'GROUPS_MAY_CONFLICT_WITH_LDAP',OR_NOTICE_WARN);
 	}

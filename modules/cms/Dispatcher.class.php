@@ -49,8 +49,7 @@ class Dispatcher
         $this->checkConfiguration();
 
         // Vorhandene Konfiguration aus der Sitzung lesen.
-        global $conf;
-        $conf = Session::getConfig();
+        $conf = \cms\base\Configuration::rawConfig();
 
 		define('PRODUCTION', \cms\base\Configuration::Conf()->is('production',true));
         define('DEVELOPMENT', !PRODUCTION);

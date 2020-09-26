@@ -20,7 +20,7 @@ class LdapAuth implements Auth
 			return false;
 		}
 
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		$db = \cms\base\DB::get();
 		$this->mustChangePassword = false;
 

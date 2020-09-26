@@ -38,7 +38,7 @@ class Ftp extends BaseTarget
 	// Aufbauen der Verbindung
 	public function open()
 	{
-		//global $conf;
+		//$conf = \cms\base\Configuration::rawConfig();
 		//$conf_ftp = $conf['publish']['ftp'];
 		$ftp = $this->url;
 

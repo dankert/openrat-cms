@@ -75,7 +75,7 @@ class Local extends  BaseTarget
 	 */
 	public function put($source, $dest, $lastChangeDate)
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		// Is the output directory writable?
 		if   ( !is_writeable( $this->localDestinationDirectory ) )
@@ -128,7 +128,7 @@ class Local extends  BaseTarget
 	 */
 	private function mkdirs($path )
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		if	( is_dir($path) )
 			return;  // Path exists

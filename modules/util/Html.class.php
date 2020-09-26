@@ -43,7 +43,7 @@ class Html
 		if (intval($id) == 0)
 			$id = '-';
 
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		if (is_array($action)) {
 			$params = $action;

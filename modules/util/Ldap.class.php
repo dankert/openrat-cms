@@ -39,7 +39,7 @@ class Ldap
 	 */
 	function Ldap()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		$this->timeout = intval($conf['ldap']['search']['timeout']);
 
@@ -55,7 +55,7 @@ class Ldap
 	 */
 	function connect()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		$ldapHost = $conf['ldap']['host'];
 		$ldapPort = $conf['ldap']['port'];
@@ -113,7 +113,7 @@ class Ldap
 	 */
 	function searchUser($username)
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		$techUser = $conf['ldap']['search']['user'];
 		$techPass = $conf['ldap']['search']['password'];
@@ -143,7 +143,7 @@ class Ldap
 	 */
 	function searchAttribute($filter, $attr)
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		$timeout = intval($conf['ldap']['search']['timeout']);
 

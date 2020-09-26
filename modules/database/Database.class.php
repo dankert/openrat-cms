@@ -81,12 +81,11 @@ class Database
 	 * Erwartet die Datenbank-Konfiguration als Parameter.
 	 *
 	 * @param array Konfiguration der Verbindung
-	 * @param boolean admin Wenn es eine Admin-DB-Verbindung werden soll, die auch DDL ausfuehren darf
 	 */
 	public function __construct( $dbconf )
 	{
-		global $conf;
-		
+		$conf = \cms\base\Configuration::rawConfig();
+
 		$this->conf = $dbconf + $conf['database-default']['defaults']; // linksstehender Operator hat Priorität!
 		
 		$this->connect();

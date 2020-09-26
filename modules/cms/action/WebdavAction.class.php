@@ -85,7 +85,7 @@ class WebdavAction extends BaseAction
 
 		
 		//Changed tobias
-		//global $conf;		
+		//$conf = \cms\base\Configuration::rawConfig();
 		$prefs = new Preferences();
 		$conf = $prefs->load();
 		//End changed Tobias
@@ -260,7 +260,7 @@ class WebdavAction extends BaseAction
 	 */
 	function setDefaultDb()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		
 		if	( !isset($conf['database']['default']) )
 		{

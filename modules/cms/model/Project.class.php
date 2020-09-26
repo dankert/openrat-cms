@@ -553,7 +553,7 @@ EOF
 	 */
 	public function  sync()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		$syncConf = $conf['sync'];
 		
 		if	( ! $syncConf['enabled'] )
@@ -578,7 +578,7 @@ EOF
 	{
 		\logger\Logger::debug( 'Copying project '.$this->name.' to database '.$dbid_destination );
 		
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		$zeit = date('Y-m-d\TH:i:sO');
 		
 		$db_src  = \cms\base\DB::get();

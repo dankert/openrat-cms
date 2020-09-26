@@ -128,7 +128,7 @@ class Text
 	 */
 	public static function replaceHtmlChars($text)
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		foreach (explode(' ', $conf['editor']['html']['replace']) as $repl) {
 			list($ersetze, $mit) = explode(':', $repl . ':');

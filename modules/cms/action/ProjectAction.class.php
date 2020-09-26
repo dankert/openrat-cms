@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use cms\base\Configuration;
 use cms\model\Project;
 use cms\model\Folder;
 use language\Messages;
@@ -252,7 +253,7 @@ class ProjectAction extends BaseAction
 	 */
 	public function syncView()
 	{
-		global $conf;
+		$conf = Configuration::rawConfig();
 		$syncConf = $conf['sync'];
 		
 		if	( ! $syncConf['enabled'] )
@@ -317,7 +318,7 @@ class ProjectAction extends BaseAction
 		$db = \cms\base\DB::get();
 		$this->setTemplateVar( 'dbid',$db->id );
 
-		global $conf;
+		$conf = Configuration::rawConfig();
 		$dbids = array();
 		
 		foreach( $conf['database'] as $dbname=>$dbconf )
@@ -345,7 +346,7 @@ class ProjectAction extends BaseAction
 	 */
 	function phpinfo()
 	{
-		global $conf;
+		$conf = Configuration::rawConfig();
 		if	( !@$conf['security']['show_system_info'] )
 			Http::sendStatus(403,'Forbidden','Display of system information is disabled by configuration');
 			

@@ -46,7 +46,7 @@ class SFtp extends Scp
 	// Aufbauen der Verbindung
 	public function open()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		//$conf_ftp = $conf['publish']['sftp'];
 

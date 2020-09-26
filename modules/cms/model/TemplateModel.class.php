@@ -156,7 +156,7 @@ class TemplateModel extends ModelBase
 	 */
 	public function mimeType()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		$mime_types = $conf['mime-types'];
 
 		// Nur den letzten Teil der Extension auswerten:

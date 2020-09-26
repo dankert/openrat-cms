@@ -32,7 +32,7 @@ class HttpAuth implements Auth
 	 */
 	public function login($user, $password, $token)
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		$http = new Http($conf['security']['http']['url']);
 		$http->method = 'HEAD';

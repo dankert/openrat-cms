@@ -72,7 +72,7 @@ class LoginAction extends BaseAction
 	{
 		Logger::debug( "Login user: '$name'.'" );
 	
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		global $SESS;
 	
 		unset( $SESS['user'] );	
@@ -168,7 +168,7 @@ class LoginAction extends BaseAction
     {
         // Hier nie "304 not modified" setzen, da sonst keine
         // Login-Fehlermeldung erscheinen kann.
-        global $conf;
+        $conf = \cms\base\Configuration::rawConfig();
 
         $sso = $conf['security']['sso'];
         $ssl = $conf['security']['ssl'];
@@ -370,7 +370,7 @@ class LoginAction extends BaseAction
 	 */
 	function openidView()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		foreach( $conf['database'] as $dbname=>$dbconf )
 		{
@@ -419,7 +419,7 @@ class LoginAction extends BaseAction
 	 */
 	function applications()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		
 		// Diese Seite gilt pro Sitzung. 
 		$user       = Session::getUser();
@@ -470,7 +470,7 @@ class LoginAction extends BaseAction
 	 */
 	public function openidloginView()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		$openId = Session::get('openid');
 
 		if	( !$openId->checkAuthentication() )
@@ -541,7 +541,7 @@ class LoginAction extends BaseAction
 	 */
 	function openidPost()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		Session::setUser('');
 		
@@ -629,7 +629,7 @@ class LoginAction extends BaseAction
 	 */
 	function loginPost()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		Session::setUser(''); // Altes Login entfernen.
 		
@@ -842,7 +842,7 @@ class LoginAction extends BaseAction
 	 */
 	public function logoutPost()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		
 		$user = Session::getUser();
 		if	( is_object($user) )
@@ -1057,7 +1057,7 @@ class LoginAction extends BaseAction
 	
 	function show()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		global $PHP_AUTH_USER;
 		global $PHP_AUTH_PW;
 
@@ -1143,7 +1143,7 @@ class LoginAction extends BaseAction
 	 */
 	public function registercodeView()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		foreach( $conf['database'] as $dbname=>$dbconf )
 		{
 			if	( is_array($dbconf) && $dbconf['enabled'] )
@@ -1166,7 +1166,7 @@ class LoginAction extends BaseAction
 	
 	public function registerPost()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		Session::set('registerMail',$this->getRequestVar('mail') );
 		
@@ -1206,7 +1206,7 @@ class LoginAction extends BaseAction
 	 */
 	function registercodePost()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		$origRegisterCode  = Session::get('registerCode');
 		$inputRegisterCode = $this->getRequestVar('code');

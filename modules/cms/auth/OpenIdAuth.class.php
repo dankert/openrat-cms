@@ -111,7 +111,7 @@ class OpenIdAuth implements Auth
 	 */
 	function serverOk()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		$servers = $conf['security']['openid']['trusted_server'];
 
 		if (empty($servers)) {
@@ -177,7 +177,7 @@ class OpenIdAuth implements Auth
 	 */
 	public function getRedirectUrl()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		$this->handle = md5(microtime() . session_id());
 

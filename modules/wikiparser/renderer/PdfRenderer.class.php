@@ -44,7 +44,7 @@ class PdfRenderer
 	 */
 	function renderElement($child)
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		switch (strtolower(get_class($child))) {
 			case 'tableofcontentelement':

@@ -44,7 +44,7 @@ class HtmlDomRenderer
 	 */
 	function renderElement($child)
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		$this->path[] = $child;
 

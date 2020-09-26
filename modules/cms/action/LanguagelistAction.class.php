@@ -63,7 +63,7 @@ class LanguagelistAction extends BaseAction
 
 	public function showView()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		$countryList = $conf['countries'];
 
 		$list = array();
@@ -107,7 +107,7 @@ class LanguagelistAction extends BaseAction
 	 */
 	function addView()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		$countryList = $conf['countries'];
 		
 		foreach( $this->project->getLanguageIds() as $id )
@@ -127,7 +127,7 @@ class LanguagelistAction extends BaseAction
 	
 	function addPost()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		$countryList = $conf['countries'];
 		
 		// Hinzufuegen einer Sprache

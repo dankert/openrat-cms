@@ -72,7 +72,7 @@ class PageGenerator extends BaseGenerator
 	 */
 	private function generatePageValue()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		// Setzen der 'locale', damit sprachabhängige Systemausgaben (wie z.B. die
 		// Ausgabe von strftime()) in der korrekten Sprache dargestellt werden.

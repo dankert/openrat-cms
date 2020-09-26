@@ -92,7 +92,7 @@ class Image extends File
 	 */
 	function imageResize( $newWidth,$newHeight,$factor,$oldformat,$newformat,$jpegquality )
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		$this->write(); // Datei schreiben
 		
@@ -156,7 +156,7 @@ class Image extends File
 		}
 
 		// Ab Version 2 der GD-Bibliothek sind TrueColor-Umwandlungen moeglich.
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
  		$hasTrueColor = $conf['image']['truecolor'];
 
 		switch( $newformat )

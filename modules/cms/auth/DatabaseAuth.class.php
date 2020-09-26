@@ -18,7 +18,7 @@ class DatabaseAuth implements Auth
 	 */
 	public function login($user, $password, $token)
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		$authDbConf = $conf['security']['authdb'];
 

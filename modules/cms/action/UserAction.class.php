@@ -88,7 +88,7 @@ class UserAction extends BaseAction
         $this->user->hotp     = $this->hasRequestVar('hotp'    );
         $this->user->totp     = $this->hasRequestVar('totp'    );
 
-        global $conf;
+        $conf = \cms\base\Configuration::rawConfig();
         if	( @$conf['security']['user']['show_admin_mail'] )
             $this->user->mail = $this->getRequestVar('mail'    );
 
@@ -163,7 +163,7 @@ class UserAction extends BaseAction
 	 */
 	public function pwPost()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		$pw1 = $this->getRequestVar('password1');
 		$pw2 = $this->getRequestVar('password2');
@@ -232,7 +232,7 @@ class UserAction extends BaseAction
 	 */
 	public function propView()
 	{
-	    global $conf;
+	    $conf = \cms\base\Configuration::rawConfig();
 	    
 	    $issuer  = urlencode(\cms\base\Configuration::config('application','operator'));
 	    $account = $this->user->name.'@'.$_SERVER['SERVER_NAME'];
@@ -338,7 +338,7 @@ class UserAction extends BaseAction
 		}
 		$this->setTemplateVar('memberships',$gruppenListe);
 		
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		if	($conf['security']['authorize']['type']=='ldap')
 			$this->addNotice('user',$this->user->name,'GROUPS_MAY_CONFLICT_WITH_LDAP',OR_NOTICE_WARN);
 	}

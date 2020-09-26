@@ -324,7 +324,7 @@ SQL
 	 */
 	protected function setDatabaseRow( $row )
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		
 		$this->userid    = $row['id'      ];
 		$this->name      = $row['name'    ];
@@ -470,7 +470,7 @@ SQL
 	 */
 	function addNewUserGroups()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		$groupNames = explode(',',@$conf['security']['newuser']['groups']);
 		
 		if	( count($groupNames) == 0 )
@@ -836,7 +836,7 @@ SQL
 	 */ 
 	function hasRight( $objectid,$type )
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		if	( $this->isAdmin && !$conf['security']['readonly'] )
 			return true;
 
@@ -858,7 +858,7 @@ SQL
 	 */
 	function addRight( $objectid,$type )
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		
 		if	( $conf['security']['readonly'] )
 			if	( $type & Acl::ACL_READ )
@@ -882,7 +882,7 @@ SQL
 	 */
 	public function getAvailableStyles()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		$styles = array();
 		
 		foreach( $conf['style'] as $key=>$values)
@@ -923,7 +923,7 @@ SQL
 	 */
 	function createPassword()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		
 		$pw = '';
 		$c  = 'bcdfghjklmnprstvwz'; //consonants except hard to speak ones

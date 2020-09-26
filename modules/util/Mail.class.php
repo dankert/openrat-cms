@@ -80,7 +80,7 @@ class Mail
 	 */
 	function __construct($to, $text)
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		// Zeilenumbruch CR/LF gem. RFC 822.
 		$this->nl = chr(13) . chr(10);
@@ -155,7 +155,7 @@ class Mail
 	 */
 	public function send()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		if (strpos($this->to, '@') === FALSE)
 			throw new LogicException("E-Mail-Adress does not contain a domain name: " . $this->to);
@@ -440,7 +440,7 @@ class Mail
 	 */
 	private function header_encode($text)
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		if (empty($conf['mail']['header_encoding']))
 			return $text;

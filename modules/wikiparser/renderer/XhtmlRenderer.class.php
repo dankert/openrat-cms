@@ -44,7 +44,7 @@ class XhtmlRenderer
 	 */
 	function renderElement($child)
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		$attr = array();
 		$val = '';
@@ -407,7 +407,7 @@ class XhtmlRenderer
 	 */
 	function renderHtmlElement($tag, $value, $empty, $attr = array())
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		if ($tag == '')
 			return $value;
 

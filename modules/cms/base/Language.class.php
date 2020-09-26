@@ -34,7 +34,7 @@ class Language
 	 */
 	public static function lang($textVar, $vars = array())
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		$lang = $conf['language'];
 
 		$text = strtoupper($textVar);

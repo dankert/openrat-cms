@@ -30,7 +30,7 @@ class DocBookRenderer
 	 */
 	function renderElement($child)
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		$attr = array();
 		$val = '';
@@ -201,7 +201,7 @@ class DocBookRenderer
 	 */
 	function renderXmlElement($tag, $value, $empty, $attr = array())
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		if ($tag == '')
 			return $value;
 

@@ -560,7 +560,7 @@ SQL
      */
     public function filename()
     {
-        global $conf;
+        $conf = \cms\base\Configuration::rawConfig();
 
         $filename = $this->filename;
 
@@ -1353,7 +1353,7 @@ SQL
 
         // Resolve config variables.
 		$resolver->addResolver('config', function ($var) {
-                global $conf;
+                $conf = \cms\base\Configuration::rawConfig();
                 return ArrayUtils::getSubValue($conf,explode('.',$var) );
 		});
 

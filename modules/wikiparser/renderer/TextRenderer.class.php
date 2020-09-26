@@ -34,7 +34,7 @@ class TextRenderer
 	 */
 	function renderElement($child)
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		$className = strtolower(get_class($child));
 		$val = '';

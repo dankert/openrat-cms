@@ -74,7 +74,7 @@ class WikiParser
 	 */
 	function parseMultiLineText($zeilen)
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		$children = array();           // Initiales Anlegen der Unterobjektliste.
 		$anzahlZeilen = count($zeilen);  // Anzahl Zeilen

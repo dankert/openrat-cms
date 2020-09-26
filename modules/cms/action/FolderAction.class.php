@@ -857,7 +857,7 @@ class FolderAction extends ObjectAction
 	 */
 	private function maxFileSize()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		// When querying memory size values:
 		// Many ini memory size values, such as upload_max_filesize,

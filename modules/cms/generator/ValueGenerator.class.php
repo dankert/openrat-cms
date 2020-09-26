@@ -74,7 +74,7 @@ class ValueGenerator extends BaseGenerator
 
 		$inhalt = '';
 
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		// Inhalt ist mit anderer Seite verkn�pft.
 		if	( in_array($element->typeid,[Element::ELEMENT_TYPE_TEXT,Element::ELEMENT_TYPE_LONGTEXT,Element::ELEMENT_TYPE_DATE,Element::ELEMENT_TYPE_NUMBER]) && intval($value->linkToObjectId) != 0 && !$value->isLink )

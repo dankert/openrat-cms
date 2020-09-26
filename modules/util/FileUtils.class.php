@@ -30,7 +30,7 @@ class FileUtils
 	 */
 	public static function createTempFile()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		$tmpdir = @$conf['cache']['tmp_dir'];
 		$tmpfile = @tempnam($tmpdir, 'openrat_tmp');
 

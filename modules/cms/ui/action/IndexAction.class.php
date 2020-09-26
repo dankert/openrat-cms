@@ -85,7 +85,7 @@ class IndexAction extends Action
      */
 	public function showView()
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
         $user = Session::getUser();
 

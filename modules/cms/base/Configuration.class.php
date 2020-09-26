@@ -69,4 +69,9 @@ class Configuration {
 		return Session::getConfig();
 	}
 
+
+	public static function rawConfig() {
+		return self::getConfig();
+	}
+
 }

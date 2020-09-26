@@ -71,7 +71,7 @@ class HtmlRenderer
 	 */
 	function renderElement($child)
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 
 		$attr = array();
 		$val = '';
@@ -416,7 +416,7 @@ class HtmlRenderer
 	 */
 	function renderHtmlElement($tag, $value, $empty, $attr = array())
 	{
-		global $conf;
+		$conf = \cms\base\Configuration::rawConfig();
 		if ($tag == '')
 			return $value;
 
