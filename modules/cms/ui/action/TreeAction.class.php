@@ -1,7 +1,9 @@
 <?php
 
-namespace cms\action;
+namespace cms\ui\action;
 
+use cms\action\Action;
+use cms\action\BaseAction;
 use cms\model\BaseObject;
 use cms\model\Element;
 use cms\model\Folder;
@@ -353,5 +355,3 @@ class TreeAction extends BaseAction
 
 
 }
-
-?>

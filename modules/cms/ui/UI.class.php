@@ -40,11 +40,13 @@ class UI
             // Sending the Content-Security-Policy.
             self::setContentSecurityPolicy();
 
-            if (empty($request->action))
+            if (empty($request->action)) {
                 $request->action = 'index';
-
-            if (empty($request->method))
                 $request->method = 'show';
+			}
+
+            if   ( in_array( $request->action,['index','tree','title']) )
+				$request->isUIAction = true;
 
             UI::executeAction($request);
 

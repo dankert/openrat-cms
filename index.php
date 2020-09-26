@@ -1,7 +1,6 @@
 <?php
 // Excecuting the CMS user interface (UI)
 require('modules/autoload.php');
-require('modules/cms/ui/require.php');
 
 use cms\base\Startup;
 use cms\ui\UI;

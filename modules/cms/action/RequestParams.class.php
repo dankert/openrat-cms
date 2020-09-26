@@ -44,6 +44,11 @@ namespace cms\action {
         public $isAction;
 
         /**
+         * @var bool
+         */
+        public $isUIAction;
+
+        /**
          * RequestParams constructor.
          */
         public function __construct()

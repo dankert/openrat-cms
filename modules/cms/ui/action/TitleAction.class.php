@@ -1,14 +1,11 @@
 <?php
 
-namespace cms\action;
+namespace cms\ui\action;
 
+use cms\action\Action;
 use cms\base\DB;
 use cms\base\Startup;
-use cms\base\Version;
-use cms\model\Project;
 use cms\model\BaseObject;
-use cms\model\Language;
-use cms\model\Model;
 
 use util\Session;
 use util\Html;
@@ -106,5 +103,3 @@ class TitleAction extends Action
 		$this->setTemplateVar( 'history',$resultList );		
 	}
 }
-
-?>

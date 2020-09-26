@@ -277,7 +277,7 @@ class Dispatcher
     private function callActionMethod()
     {
         $actionClassName = ucfirst($this->request->action) . 'Action';
-        $actionClassNameWithNamespace = 'cms\\action\\' . $actionClassName;
+        $actionClassNameWithNamespace = 'cms\\'.($this->request->isUIAction?'ui\\':'').'action\\' . $actionClassName;
 
         if (!class_exists($actionClassNameWithNamespace))
         {
