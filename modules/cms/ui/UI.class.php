@@ -85,21 +85,21 @@ class UI
         $subaction = $dispatcher->request->method;
         $action    = $dispatcher->request->action;
 
-        $tplName = $action . '/' . $subaction;
-
-        UI::outputTemplate($request,$tplName, $data['output']);
+        UI::outputTemplate($request,$action, $subaction, $data['output']);
     }
 
 
-    /**
-     * Executes and outputs a HTML template.
-     *
-     * @param $templateName string Name of template
-     * @param $outputData array Output data
-     */
-    private static function outputTemplate($request, $templateName, $outputData)
+	/**
+	 * Executes and outputs a HTML template.
+	 *
+	 * @param $request RequestParams
+	 * @param $action string action
+	 * @param $subaction string method
+	 * @param $outputData array Output data
+	 */
+    private static function outputTemplate($request, $action, $subaction, $outputData)
     {
-        $templateFile = __DIR__ . '/themes/default/html/views/' . $templateName . '.tpl.src.xml';
+        $templateFile = __DIR__ . '/themes/default/html/views/' . $action.'/'.$subaction . '.php';
 
         if   ( DEVELOPMENT )
             header('X-OR-Template: '.$templateFile);

@@ -22,6 +22,16 @@ use template_engine\components\html\NativeHtmlComponent;
  */
 class TemplateEngine
 {
+	/**
+	 * The OpenRat template namespace.
+	 */
+	const NS_OPENRAT_COMPONENT = 'http://www.openrat.de/template';
+
+	/**
+	 * HTML5 namespace.
+	 */
+	const NS_HTML5 = 'http://www.w3.org/1999/xhtml';
+
 	// For now we are only supporting HTML rendering.
 	public $renderType = 'html';
 
@@ -29,7 +39,6 @@ class TemplateEngine
 	public $request;
 
 	private $srcFilename;
-	private $debug = false;
 
 	const CSS_PREFIX = 'or-';
 
@@ -88,7 +97,6 @@ class TemplateEngine
 		}
 		catch (Exception $e)
 		{
-			echo $e->getTraceAsString();
 			throw new LogicException("Template '$srcXmlFilename' failed to compile", 0, $e);
 		}
 	}
@@ -107,9 +115,9 @@ class TemplateEngine
 			return null;
 
 		// The namespace decides what to do with this element:
-		if   ( $element->namespaceURI == 'http://www.openrat.de/template')
+		if   ( $element->namespaceURI == self::NS_OPENRAT_COMPONENT)
 			return $this->processCMSElement( $element, $depth );
-		elseif   ( $element->namespaceURI == 'http://www.w3.org/1999/xhtml')
+		elseif   ( $element->namespaceURI == self::NS_HTML5)
 			return $this->processHTMLElement( $element, $depth );
 		else
 			throw new LogicException("Unknown Element ".$element->tagName.' in NS '.$element->namespaceURI );
@@ -208,44 +216,22 @@ class TemplateEngine
 	}
 
 
-    /**
-     * Führt das gewünschte Template aus und schreibt das Ergebnis auf die Standardausgabe.
-     *
-     * In Development-Mode the template is compiled.
-     *
-     * @param $srcFile string Quelldateiname des Templates (im XML-Format)
-     * @param $outputData array Ausgabedaten
-     */
-    public function executeTemplate($srcFile, $outputData)
+	/**
+	 * Executes the required template and writes the output to standard-out..
+	 *
+	 * @param $templateFile string filename of template
+	 * @param $outputData array output data
+	 */
+    public function executeTemplate($templateFile, $outputData)
     {
-        // Converting filename: '/path/file.src.xml' => '/path/file.php'.
-        $templateFile = dirname( $srcFile ).'/'.substr( basename($srcFile),0,strpos( basename($srcFile),'.')).'.php';
-
-        // In development mode, we are compiling every template on the fly.
-        if (DEVELOPMENT && false /*use dedicated template compiler in update.html */) {
-
-            // Compile the template.
-            // From a XML source file we are generating a PHP file.
-            try
-            {
-                $this->compile($srcFile, $templateFile);
-                unset($te);
-            } catch (Exception $e) {
-                throw new DomainException("Compilation failed for Template '$srcFile'.", 0, $e);
-            }
-
-        }
-
-		// Spätestens jetzt muss das Template vorhanden sein.
-        if (!is_file($templateFile))
+        if ( ! is_file($templateFile) )
             throw new LogicException("Template file '$templateFile' was not found.");
 
 		if   ( DEVELOPMENT )
 			// save a few bytes in production mode ;)
 			header("X-CMS-Template-File: " . $templateFile);
 
-		// Übertragen der Ausgabe-Variablen in den aktuellen Kontext
-        //
+		// Extracting all output data into the actual context
         extract($outputData);
 
         // Include the template

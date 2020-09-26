@@ -279,14 +279,8 @@ class Dispatcher
         $actionClassName = ucfirst($this->request->action) . 'Action';
         $actionClassNameWithNamespace = 'cms\\'.($this->request->isUIAction?'ui\\':'').'action\\' . $actionClassName;
 
-        if (!class_exists($actionClassNameWithNamespace))
-        {
-            // Laden der Action-Klasse.
-            $success = include_once(__DIR__. '/action/' . $actionClassName . '.class.php');
-
-            if ( !$success)
-                throw new LogicException("Action '$this->request->action' is not available");
-        }
+        if ( !class_exists($actionClassNameWithNamespace) )
+            throw new LogicException("Action '$this->request->action' is not available");
 
         // Erzeugen der Action-Klasse
         /* @type $do \cms\action\Action */
