@@ -79,9 +79,10 @@ class Config
     public function is($name, $default = false)
     {
         if (isset($this->config[$name]))
-            return (bool)$this->config[$name];
+        	// This filter accepts 'true' and 'yes' for true and 'false' and 'no' for false.
+            return filter_var( $this->config[$name],FILTER_VALIDATE_BOOLEAN );
         else
-            return $default;
+            return (bool) $default;
     }
 
 

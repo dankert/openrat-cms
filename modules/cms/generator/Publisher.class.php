@@ -4,6 +4,7 @@
 namespace cms\generator;
 
 
+use cms\base\Configuration as C;
 use cms\generator\target\Dav;
 use cms\generator\target\Fax;
 use cms\generator\target\Ftp;
@@ -17,6 +18,7 @@ use cms\model\BaseObject;
 use cms\model\File;
 use cms\model\Folder;
 use cms\model\Link;
+use cms\model\ModelBase;
 use cms\model\Page;
 use cms\model\Project;
 use cms\model\Url;
@@ -113,9 +115,9 @@ class Publisher
 	 */
 	public function init()
 	{
-		$confPublish = \cms\base\Configuration::config('publish');
+		$confPublish = C::subset('publish');
 
-		if	( \cms\base\Configuration::config('security','nopublish') )
+		if	( C::subset('security')->is('nopublish') )
 		{
 			$this->target = new NoBaseTarget();
 			Logger::warn('publishing is disabled.');
@@ -124,17 +126,25 @@ class Publisher
 
 		$targetScheme = parse_url( $this->project->target_dir,PHP_URL_SCHEME );
 
-		$availableTargets = [ Local::class,Ftp::class,Ftps::class,Fax::class,SFtp::class,Scp::class,Dav::class ];
+		$availableTargets = $confPublish->get('targets',[]);
 
-		/** @var BaseTarget $target */
 		foreach($availableTargets as $target )
 		{
-			if   ( $target::accepts( $targetScheme ))
+			$className = '\\cms\\generator\\target\\'.$target;
+			if   ( !class_exists($className )) {
+				Logger::warn('Target '.$target.' is not available, class '.$className.' not found.');
+				continue;
+			}
+
+			/** @var BaseTarget $className */
+			$targetObject = new $className( $this->project->target_dir );
+
+			if   ( $targetObject::accepts( $targetScheme ))
 			{
-				if   ( ! $target::isAvailable() )
+				if   ( ! $targetObject::isAvailable() )
 					throw new PublisherException('The target "'.$targetScheme.'" is not available.' );
 
-				$this->target = new $target( $this->project->target_dir );
+				$this->target = $targetObject;
 				break;
 			}
 		}
@@ -142,15 +152,15 @@ class Publisher
 		if   ( empty( $this->target ) )
 			throw new PublisherException('The scheme "'.$targetScheme.'" is not supported.' );
 
-		$this->contentNegotiation = ( $this->project->content_negotiation == '1' );
-		$this->cutIndex           = ( $this->project->cut_index           == '1' );
+		$this->target->open(); // Open the connetion to the target.
 
-		if	( $confPublish['command']['enable'] )
+		$commandConfig = $confPublish->subset('command');
+		if	( $commandConfig->is('enable') )
 		{
-			if	( $confPublish['command']['per_project'] && !empty($project->cmd_after_publish) )
+			if	( $commandConfig->is('per_project') && !empty($project->cmd_after_publish) )
 				$this->commandAfterPublish   = $project->cmd_after_publish;
 			else
-				$this->commandAfterPublish   = @$confPublish['command']['command'];
+				$this->commandAfterPublish   = @$commandConfig->get('command');
 		}
 
 		// Im Systemkommando Variablen ersetzen
@@ -183,10 +193,16 @@ class Publisher
 			$ausgabe = array();
 			$rc      = false;
 			Logger::debug('Executing system command: '.Logger::sanitizeInput($this->commandAfterPublish) );
-			$user = Session::getUser();
-			putenv("CMS_USER_NAME=".$user->name  );
-			putenv("CMS_USER_ID="  .$user->userid);
-			putenv("CMS_USER_MAIL=".$user->mail  );
+
+			/** @var ModelBase $baseObjectToEnv */
+			foreach( ['user'    => Session::getUser(),
+					  'project' => $this->project     ]
+					 as $key=> $baseObjectToEnv ) {
+
+				foreach( $baseObjectToEnv->getProperties() as $name=>$property )
+					putenv('CMS_'.strtoupper($key).'_'.strtoupper($name).'='.$property );
+
+			}
 
 			exec( $this->commandAfterPublish,$ausgabe,$rc );
 

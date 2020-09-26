@@ -185,8 +185,8 @@ class Dispatcher
         Logger::$dateFormat = $logConfig['date_format'];
         Logger::$nsLookup   = $logConfig['ns_lookup'];
 
-		Logger::$outputType = (int) constant(Logger::class.'::OUTPUT_' . strtoupper($logConfig['output']));
-		Logger::$level      = (int) constant(Logger::class.'::LEVEL_'  . strtoupper($logConfig['level' ]));
+		Logger::$outputType = (int) constant('\\logger\\Logger::OUTPUT_' . strtoupper($logConfig['output']));
+		Logger::$level      = (int) constant('\\logger\\Logger::LEVEL_'  . strtoupper($logConfig['level' ]));
 
         Logger::$messageCallback = function ( $key ) {
 

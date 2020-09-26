@@ -758,7 +758,8 @@ class DefaultConfig {
 					'vrm' => 'x-world/x-vrml',
 				],
 			'publish' =>
-				[ 
+				[
+					'targets' => ['Local','Ftp','Ftps','Fax','SFtp','Scp','Dav'],
 					'edit' => true,
 					'default' => 'index',
 					'format' => '{filename}{language_sep}{language}{type_sep}{type}',

@@ -34,8 +34,6 @@ abstract class BaseTarget implements Target
 
 	public function __construct( $targetUrl ) {
 		$this->url = new Url( $targetUrl );
-
-		$this->open();
 	}
 
 

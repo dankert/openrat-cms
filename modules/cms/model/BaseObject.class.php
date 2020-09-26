@@ -13,10 +13,7 @@ use util\YAML;
 use template_engine\components\ElseComponent;
 
 /**
- * Superklasse fuer Objekte im Projektbaum.
- *
- * Dieses Objekt ist die Oberklasse fuer die Klassen Ordner, Datei,
- * Link, Seite usw.
+ * Base class for all objects in the content tree.
  *
  * @author Jan Dankert
  */
@@ -1792,8 +1789,6 @@ SQL
 	{
 		return "";
 	}
-
-
 
 }
 
