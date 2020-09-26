@@ -2,12 +2,11 @@
 
 namespace cms\model;
 
-/**
+use cms\base\DB as Db;/**
  * <editor-fold defaultstate="collapsed" desc="license">
  *
  *  OpenRat Content Management System
  *  Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
-
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
  *  as published by the Free Software Foundation; either version 2
@@ -206,7 +205,7 @@ class Acl extends ModelBase
 	 */
 	public function load()
 	{
-		$sql = db()->sql( 'SELECT {{acl}}.*,{{user}}.name as username,{{group}}.name as groupname,{{language}}.name as languagename'.
+		$sql = Db::sql( 'SELECT {{acl}}.*,{{user}}.name as username,{{group}}.name as groupname,{{language}}.name as languagename'.
 		                '  FROM {{acl}} '.
 		                '    LEFT JOIN {{user}}     ON {{user}}.id     = {{acl}}.userid     '.
 		                '    LEFT JOIN {{group}}    ON {{group}}.id    = {{acl}}.groupid    '.
@@ -233,7 +232,7 @@ class Acl extends ModelBase
 	 */
 	public function loadRaw()
 	{
-		$sql = db()->sql( 'SELECT * '.
+		$sql = Db::sql( 'SELECT * '.
 		                '  FROM {{acl}} '.
 		                '  WHERE {{acl}}.id={aclid}' );
 
@@ -384,7 +383,7 @@ class Acl extends ModelBase
 	 */
 	public function delete()
 	{
-		$sql = db()->sql( 'DELETE FROM {{acl}} '.
+		$sql = Db::sql( 'DELETE FROM {{acl}} '.
 		                ' WHERE id      = {aclid}   '.
 		                '   AND objectid= {objectid}' );
 
@@ -410,7 +409,7 @@ class Acl extends ModelBase
 		$group_comp    = intval($this->groupid   )>0?'={groupid}':'IS NULL';
 		$language_comp = intval($this->languageid)>0?'={languageid}':'IS NULL';
 		
-		$stmt = db()->sql( <<<SQL
+		$stmt = Db::sql( <<<SQL
 		SELECT id FROM {{acl}}
 		 WHERE userid      $user_comp      AND
 		       groupid     $group_comp     AND
@@ -464,10 +463,10 @@ SQL
 			
 
 
-		$stmt = db()->sql('SELECT MAX(id) FROM {{acl}}');
+		$stmt = Db::sql('SELECT MAX(id) FROM {{acl}}');
 		$this->aclid = intval($stmt->getOne())+1;
 		
-		$stmt = db()->sql( <<<SQL
+		$stmt = Db::sql( <<<SQL
 		INSERT INTO {{acl}} 
 		                 (id,userid,groupid,objectid,is_write,is_prop,is_create_folder,is_create_file,is_create_link,is_create_page,is_delete,is_release,is_publish,is_grant,is_transmit,languageid)
 		                 VALUES( {aclid},{userid},{groupid},{objectid},{write},{prop},{create_folder},{create_file},{create_link},{create_page},{delete},{release},{publish},{grant},{transmit},{languageid} )

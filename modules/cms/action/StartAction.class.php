@@ -61,7 +61,7 @@ class StartAction extends BaseAction
 		if	( !isset($conf['database'][$dbid] ))
 			throw new \LogicException( 'unknown DB-Id: '.$dbid );
 			
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		if	( is_object($db) )
 		{
 			$db->rollback();
@@ -117,7 +117,7 @@ class StartAction extends BaseAction
 		unset( $SESS['user'] );	
 	
 		
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		
 		if	( !$db->available )
 		{

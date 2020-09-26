@@ -21,7 +21,7 @@ class LdapAuth implements Auth
 		}
 
 		global $conf;
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		$this->mustChangePassword = false;
 
 		// Lesen des Benutzers aus der DB-Tabelle

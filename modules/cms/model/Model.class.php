@@ -54,7 +54,7 @@ class Model extends ModelBase
 	 */
 	function available( $id )
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql('SELECT 1 FROM {{projectmodel}} '.
 		               ' WHERE id={id}');
@@ -71,7 +71,7 @@ class Model extends ModelBase
 	 */
 	function load()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'SELECT * FROM {{projectmodel}}'.
 		                ' WHERE id={modelid}' );
@@ -93,7 +93,7 @@ class Model extends ModelBase
 	 */
 	function save()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		// Gruppe speichern		
 		$sql = $db->sql( 'UPDATE {{projectmodel}} '.
@@ -132,7 +132,7 @@ class Model extends ModelBase
 		if	( $name != '' )
 			$this->name = $name;
 		
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql('SELECT MAX(id) FROM {{projectmodel}}');
 		$this->modelid = intval($sql->getOne())+1;
@@ -155,7 +155,7 @@ class Model extends ModelBase
 	function setDefault()
 	{
 		global $SESS;
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		// Zuerst alle auf nicht-Standard setzen
 		$sql = $db->sql( 'UPDATE {{projectmodel}} '.
@@ -180,7 +180,7 @@ class Model extends ModelBase
 	 */
 	function delete()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		// Vorlagen zu dieseem Modell loeschen
 		$sql = $db->sql( <<<SQL

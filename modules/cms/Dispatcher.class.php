@@ -8,6 +8,7 @@ namespace cms;
 use BadMethodCallException;
 use cms\action\Action;
 use cms\action\RequestParams;
+use cms\base\DB;
 use cms\base\DefaultConfig;
 use configuration\ConfigurationLoader;
 use database\Database;
@@ -437,7 +438,7 @@ class Dispatcher
 
         $updater = new Update();
 
-        if   ( ! $updater->isUpdateRequired( db() ) )
+        if   ( ! $updater->isUpdateRequired( DB::get() ) )
             return;
 
 
@@ -548,7 +549,7 @@ class Dispatcher
 
             $data = array(
                 'database'    => array(
-                    'id'      => db()->id ),
+                    'id'      => DB::get()->id ),
                 'user'        => array(
                     'id'      => @$user->userid,
                     'name'    => @$user->name ),

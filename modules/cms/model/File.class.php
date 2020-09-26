@@ -19,6 +19,7 @@ namespace cms\model;
 
 
 // Standard Mime-Type 
+use cms\base\DB as Db;
 use cms\generator\filter\AbstractFilter;
 use cms\generator\PublishPublic;
 use logger\Logger;
@@ -64,7 +65,7 @@ class File extends BaseObject
 	 */
 	function __construct( $objectid='' )
 	{
-		$this->storeValueAsBase64 = db()->conf['base64'];
+		$this->storeValueAsBase64 = DB::get()->conf['base64'];
 
 		parent::__construct( $objectid );
 		$this->isFile = true;
@@ -76,7 +77,7 @@ class File extends BaseObject
      * @return FileCache
      */
     public function getCache() {
-        $cacheKey = array('db'=>db()->id,'file'=>$this->objectid,'publish'=> \util\ClassUtils::getSimpleClassName($this->publisher));
+        $cacheKey = array('db'=>DB::get()->id,'file'=>$this->objectid,'publish'=> \util\ClassUtils::getSimpleClassName($this->publisher));
 
         return new FileCache( $cacheKey,function() {
             return $this->loadValueFromDatabase();
@@ -108,7 +109,7 @@ class File extends BaseObject
 	function getFileObjectIdsByExtension( $extension )
 	{
 		global $SESS;
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sqlquery = 'SELECT * FROM {{object}} ';
 
@@ -141,7 +142,7 @@ class File extends BaseObject
 	  */
 	public static function getObjectIdsByExtension( $extension )
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'SELECT {{file}}.objectid FROM {{file}} '.
 		                ' LEFT JOIN {{object}} '.
@@ -189,7 +190,7 @@ class File extends BaseObject
 	 */
 	public function load()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'SELECT id,extension,size,filterid'.
 		                ' FROM {{file}}'.
@@ -217,7 +218,7 @@ class File extends BaseObject
 	 */
 	function delete()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		// Datei l?schen
 		$sql = $db->sql( 'DELETE FROM {{file}} '.
@@ -282,7 +283,7 @@ class File extends BaseObject
 	 */
 	public function save()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( <<<EOF
 UPDATE {{file}} SET
@@ -340,7 +341,7 @@ EOF
 		else
 			$objectid = $this->objectid;
 
-		$sql = db()->sql( 'SELECT size,value'.
+		$sql = Db::sql( 'SELECT size,value'.
 		                ' FROM {{file}}'.
 		                ' WHERE objectid={objectid}' );
 		$sql->setInt( 'objectid', $objectid);
@@ -368,7 +369,7 @@ EOF
 	{
 		$this->getCache()->invalidate();
 
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'UPDATE {{file}}'.
 		                ' SET value={value}, '.
@@ -402,10 +403,10 @@ EOF
 	{
 		parent::add();
 
-		$sql = db()->sql('SELECT MAX(id) FROM {{file}}');
+		$sql = Db::sql('SELECT MAX(id) FROM {{file}}');
 		$this->fileid = intval($sql->getOne())+1;
 
-		$sql = db()->sql('INSERT INTO {{file}}'.
+		$sql = Db::sql('INSERT INTO {{file}}'.
 		               ' (id,objectid,extension,size,value)'.
 		               " VALUES( {fileid},{objectid},{extension},0,'' )" );
 		$sql->setInt   ('fileid'   ,$this->fileid        );
@@ -442,7 +443,7 @@ EOF
 	public function updateType()
 	{
 
-		$stmt = db()->sql(<<<SQL
+		$stmt = Db::sql(<<<SQL
 UPDATE {{object}} SET 
       typeid = {typeid}
 WHERE id={objectid}

@@ -99,7 +99,7 @@ class Project extends ModelBase
 	 */
 	public function isAvailable($id )
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql('SELECT 1 FROM {{project}} '.
 		               ' WHERE id={id}');
@@ -115,7 +115,7 @@ class Project extends ModelBase
      */
     public static function getAllProjects()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		$sql = $db->sql( 'SELECT id,name FROM {{project}} '.
 		                '   ORDER BY name' );
 
@@ -126,7 +126,7 @@ class Project extends ModelBase
     // Liefert alle verf?gbaren Projekt-Ids
     public function getAllProjectIds()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		$sql = $db->sql( 'SELECT id FROM {{project}} '.
 		                '   ORDER BY name' );
 
@@ -141,7 +141,7 @@ class Project extends ModelBase
      */
     public function getLanguages()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'SELECT id,name FROM {{language}}'.
 		                '  WHERE projectid={projectid} '.
@@ -165,7 +165,7 @@ class Project extends ModelBase
      */
 	public function getModels()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'SELECT id,name FROM {{projectmodel}}'.
 		                '  WHERE projectid= {projectid} '.
@@ -184,7 +184,7 @@ class Project extends ModelBase
 
     public function  getTemplateIds()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'SELECT id FROM {{template}}'.
 		                '  WHERE projectid= {projectid} ' );
@@ -196,7 +196,7 @@ class Project extends ModelBase
 
     public function  getTemplates()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'SELECT id,name FROM {{template}}'.
 		                '  WHERE projectid= {projectid} ' );
@@ -216,7 +216,7 @@ class Project extends ModelBase
 	 */
     public function  getRootObjectId()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		
 		$sql = $db->sql('SELECT id FROM {{object}}'.
 		               '  WHERE parentid IS NULL'.
@@ -236,7 +236,7 @@ class Project extends ModelBase
      */
     public function load()
 	{
-		$sql = db()->sql( 'SELECT * FROM {{project}} '.
+		$sql = Db::sql( 'SELECT * FROM {{project}} '.
 		                '   WHERE id={projectid}' );
 		$sql->setInt( 'projectid',$this->projectid );
 
@@ -325,7 +325,7 @@ SQL
      */
     public function add()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql('SELECT MAX(id) FROM {{project}}');
 		$this->projectid = intval($sql->getOne())+1;
@@ -390,7 +390,7 @@ SQL
 	// Projekt aus Datenbank entfernen
 	public function delete()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		// Root-Ordner rekursiv samt Inhalten loeschen
 		$folder = new Folder( $this->getRootObjectId() );
@@ -434,7 +434,7 @@ SQL
 	{
 		// ORDER BY deswegen, damit immer mind. eine Sprache
 		// gelesen wird
-		$sql = db()->sql( 'SELECT id FROM {{language}} '.
+		$sql = \cms\base\Db::sql( 'SELECT id FROM {{language}} '.
 		                '  WHERE projectid={projectid}'.
 		                '   ORDER BY is_default DESC, name ASC' );
 
@@ -448,7 +448,7 @@ SQL
 	{
 		// ORDER BY deswegen, damit immer mind. eine Sprache
 		// gelesen wird
-		$sql = db()->sql( 'SELECT id FROM {{projectmodel}} '.
+		$sql = \cms\base\Db::sql( 'SELECT id FROM {{projectmodel}} '.
 		                '  WHERE projectid={projectid}'.
 		                '   ORDER BY is_default DESC' );
 		$sql->setInt('projectid',$this->projectid );
@@ -499,7 +499,7 @@ SQL
 		$this->log = array();
 		
 		// Ordnerstruktur prüfen.
-		$stmt = db()->sql( <<<EOF
+		$stmt = \cms\base\Db::sql( <<<EOF
 SELECT thistab.id FROM {{object}} AS thistab
  LEFT JOIN {{object}} AS parenttab
         ON parenttab.id = thistab.parentid
@@ -530,7 +530,7 @@ EOF
 
 		
 		// Prüfe, ob die Verbindung Projekt->Template->Templatemodell->Projectmodell->Projekt konsistent ist. 
-		$stmt = db()->sql( <<<EOF
+		$stmt = \cms\base\Db::sql( <<<EOF
 SELECT DISTINCT projectid FROM {{projectmodel}} WHERE id IN (SELECT projectmodelid from {{templatemodel}} WHERE templateid in (SELECT id from {{template}} WHERE projectid={projectid}))
 EOF
 );
@@ -580,7 +580,7 @@ EOF
 		global $conf;
 		$zeit = date('Y-m-d\TH:i:sO');
 		
-		$db_src  = db_connection();
+		$db_src  = \cms\base\DB::get();
 		$db_dest = new Database( $conf['database'][$dbid_destination] );
 		$db_dest->id = $dbid_destination;
 		$db_dest->start();
@@ -782,7 +782,7 @@ EOF
 	 */
 	public function countObjects()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		$sql = $db->sql( 'SELECT COUNT(*) FROM {{object}} '.
 		                '   WHERE projectid = {projectid}' );
 		$sql->setInt( 'projectid', $this->projectid );
@@ -799,7 +799,7 @@ EOF
 	 */
 	public function size()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		
 		$sql = $db->sql( <<<SQL
 		SELECT SUM(size) FROM {{file}}
@@ -840,7 +840,7 @@ SQL
 	public function getMyLastChanges()
 	{
 		
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 
 		$sql = $db->sql( <<<SQL
@@ -880,7 +880,7 @@ SQL
 	 */
 	public static function getAllLastChanges()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( <<<SQL
 		SELECT {{object}}.id    as objectid,
@@ -914,7 +914,7 @@ SQL
 	public function  getLastChanges()
 	{
 		
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		
 		$sql = $db->sql( <<<SQL
 		SELECT {{object}}.id       as objectid,
@@ -956,7 +956,7 @@ SQL
      */
     public function getAllObjectIds( $types=array('folder','page','link','file','image','url','text') )
     {
-        $stmt = db()->sql( <<<SQL
+        $stmt = \cms\base\Db::sql( <<<SQL
           SELECT id FROM {{object}}
               WHERE projectid={projectid}
                 AND (    typeid  ={is_folder}
@@ -990,7 +990,7 @@ SQL
      */
     public function getAllFolders()
     {
-        $db = db_connection();
+        $db = \cms\base\DB::get();
 
         $stmt = $db->sql('SELECT id FROM {{object}}'.
             '  WHERE typeid='.BaseObject::TYPEID_FOLDER.

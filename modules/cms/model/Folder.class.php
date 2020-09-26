@@ -2,6 +2,7 @@
 
 namespace cms\model;
 
+use cms\base\DB as Db;
 use cms\generator\Publish;
 use Exception;
 
@@ -31,7 +32,7 @@ class Folder extends BaseObject
 	{
 		parent::add();
 
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql('SELECT MAX(id) FROM {{folder}}');
 		$this->folderid = intval($sql->getOne())+1;
@@ -49,7 +50,7 @@ class Folder extends BaseObject
 
 	public function hasFilename( $filename )
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql('SELECT COUNT(*) FROM {{object}}'.'  WHERE parentid={objectid} AND filename={filename}');
 
@@ -66,7 +67,7 @@ class Folder extends BaseObject
 
 	public function load()
 	{
-//		$db = db_connection();
+//		$db = \cms\base\DB::get();
 //
 //		$sql = $db->sql('SELECT * FROM {{folder}} WHERE objectid={objectid}');
 //		$sql->setInt('objectid',$this->objectid);
@@ -89,7 +90,7 @@ class Folder extends BaseObject
 	
 	function setOrderId( $orderid )
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql('UPDATE {{folder}} '.
 		               '  SET orderid={orderid}'.
@@ -105,7 +106,7 @@ class Folder extends BaseObject
 //	function getSubFolders()
 //	{
 //		global $SESS;
-//		$db = db_connection();
+//		$db = \cms\base\DB::get();
 //		
 //		$sql = $db->sql('SELECT id FROM {{folder}}'.
 //		               '  WHERE parentid={folderid}'.
@@ -121,7 +122,7 @@ class Folder extends BaseObject
 	// Liest alle Objekte in diesem Ordner
 	function getObjectIds()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql('SELECT id FROM {{object}}'.
 		               '  WHERE parentid={objectid}'.
@@ -139,7 +140,7 @@ class Folder extends BaseObject
 	 */
 	function getObjects()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql('SELECT {{object}}.*,{{name}}.name,{{name}}.descr'.
 		               '  FROM {{object}}'.
@@ -166,7 +167,7 @@ class Folder extends BaseObject
 	// Liest alle Objekte in diesem Ordner
 	function getObjectIdsByType()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql('SELECT id FROM {{object}}'.
 		               '  WHERE parentid={objectid}'.
@@ -180,7 +181,7 @@ class Folder extends BaseObject
 	// Liest alle Objekte in diesem Ordner sortiert nach dem Namen (nicht Dateinamen!)
 	function getChildObjectIdsByName()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql('SELECT {{object}}.id FROM {{object}}'.
 		               '  LEFT JOIN {{name}} ON {{object}}.id={{name}}.objectid AND {{name}}.languageid={languageid} '.
@@ -195,7 +196,7 @@ class Folder extends BaseObject
 	// Liest alle Objekte in diesem Ordner
 	function getObjectIdsByLastChange()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql('SELECT id FROM {{object}}'.
 		               '  WHERE parentid={objectid}'.
@@ -209,7 +210,7 @@ class Folder extends BaseObject
 
 	function getObjectIdByFileName( $filename )
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		
 		$sql = $db->sql('SELECT id FROM {{object}}'.
 		               '  WHERE parentid={objectid}'.
@@ -224,7 +225,7 @@ class Folder extends BaseObject
 	
 	public function getPages()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql('SELECT id FROM {{object}} '.
 		               '  WHERE parentid={objectid} AND typeid='.BaseObject::TYPEID_PAGE.
@@ -242,7 +243,7 @@ class Folder extends BaseObject
 	 */
 	public function getFirstPage()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql('SELECT id FROM {{object}} '.
 		               '  WHERE parentid={objectid}'.
@@ -268,7 +269,7 @@ class Folder extends BaseObject
 	 */
 	function getFirstPageOrLink()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql('SELECT id FROM {{object}} '.
 		               '  WHERE parentid={objectid}'.
@@ -289,7 +290,7 @@ class Folder extends BaseObject
 
 	function getLastPageOrLink()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql('SELECT id FROM {{object}} '.
 		               '  WHERE parentid={objectid}'.
@@ -314,7 +315,7 @@ class Folder extends BaseObject
 	 */
 	function getFiles()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql('SELECT id FROM {{object}} '.
 		               '  WHERE parentid={objectid} AND typeid='.BaseObject::TYPEID_FILE.
@@ -333,7 +334,7 @@ class Folder extends BaseObject
 	 */
 	function getFileFilenames()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql('SELECT id,filename FROM {{object}} '.
 		               '  WHERE parentid={objectid} AND typeid='.BaseObject::TYPEID_FILE.
@@ -346,7 +347,7 @@ class Folder extends BaseObject
 	
 	function getLinks()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql('SELECT id FROM {{object}} '.
 		               '  WHERE parentid={objectid} AND typeid='.BaseObject::TYPEID_LINK.
@@ -476,7 +477,7 @@ class Folder extends BaseObject
 	//
 	public function subfolder()
 	{
-		$stmt = db()->sql(<<<SQL
+		$stmt = Db::sql(<<<SQL
 
 SELECT id FROM {{object}}
 		                 WHERE parentid={objectid} AND typeid={typeid}
@@ -496,7 +497,7 @@ SQL
 	
 	public function getSubfolderFilenames()
 	{
-		$stmt = db()->sql(<<<SQL
+		$stmt = Db::sql(<<<SQL
 SELECT id,filename FROM {{object}}
 		                 WHERE parentid={objectid} AND typeid={typeid}
 		                 ORDER BY orderid ASC
@@ -547,7 +548,7 @@ SQL
 	 */
 	function delete()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		// Nur loeschen, wenn es keine Unterelemente gibt
 		if	( count( $this->getObjectIds() ) == 0 )
@@ -579,7 +580,7 @@ SQL
 	 */
 	function deleteAll()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		// L?schen aller Unterordner
 		foreach( $this->subfolder() as $folderid )
@@ -659,7 +660,7 @@ SQL
 	public function getLastChanges()
 	{
 	
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 	
 		$sql = $db->sql( <<<SQL
 		SELECT {{object}}.id       as objectid,

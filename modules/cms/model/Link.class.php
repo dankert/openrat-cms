@@ -2,6 +2,8 @@
 namespace cms\model;
 
 
+use cms\base\DB as Db;
+
 /**
  * Darstellen einer Verkn�pfung. Eine Verkn�pfung kann auf eine Objekt oder auf
  * eine beliebige Url zeigen
@@ -31,7 +33,7 @@ class Link extends BaseObject
      */
     public function load()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'SELECT *'.
 		                ' FROM {{link}}'.
@@ -53,7 +55,7 @@ class Link extends BaseObject
      */
     public function delete()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		// Verkn�pfung l�schen
 		$sql = $db->sql( 'DELETE FROM {{link}} '.
@@ -71,7 +73,7 @@ class Link extends BaseObject
      */
     public function save()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		
 		$sql = $db->sql('UPDATE {{link}} SET '.
 		               '  link_objectid = {linkobjectid}'.
@@ -107,10 +109,10 @@ class Link extends BaseObject
 	{
 		parent::add();
 
-		$stmt = db()->sql('SELECT MAX(id) FROM {{link}}');
+		$stmt = Db::sql('SELECT MAX(id) FROM {{link}}');
 		$this->linkid = intval($stmt->getOne())+1;
 
-		$stmt = db()->sql('INSERT INTO {{link}}'.
+		$stmt = Db::sql('INSERT INTO {{link}}'.
 		               ' (id,objectid,link_objectid)'.
 		               ' VALUES( {linkid},{objectid},{linkobjectid} )' );
 		$stmt->setInt   ('linkid'      ,$this->linkid         );

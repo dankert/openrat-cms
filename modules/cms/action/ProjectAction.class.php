@@ -313,7 +313,7 @@ class ProjectAction extends BaseAction
 	 */
 	public function copyPost()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		$this->setTemplateVar( 'dbid',$db->id );
 
 		global $conf;

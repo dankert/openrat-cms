@@ -54,7 +54,7 @@ namespace cms\model {
          */
         public function load()
         {
-            $db = db_connection();
+            $db = \cms\base\DB::get();
 
             $stmt = $db->sql( <<<SQL
   SELECT id,objectid,name,descr,languageid
@@ -98,7 +98,7 @@ SQL
          */
         public function save()
         {
-            $db = db_connection();
+            $db = \cms\base\DB::get();
 
             if ( intval($this->nameid)  > 0)
             {

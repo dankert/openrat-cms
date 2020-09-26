@@ -2,6 +2,9 @@
 
 namespace cms\base;
 
+use RuntimeException;
+use util\Session;
+
 class DB {
 
 	/**
@@ -11,6 +14,20 @@ class DB {
 	 * @return \database\Statement SQL-Statement
 	 */
 	public static function sql( $sql ) {
-		return db()->sql( $sql );
+		return self::get()->sql( $sql );
+	}
+
+	/**
+	 * Returns the database connection.
+	 * @return \database\Database
+	 */
+	public static function get() {
+
+		$db = Session::getDatabase();
+
+		if (!is_object($db))
+			throw new RuntimeException('no database available');
+
+		return $db;
 	}
 }

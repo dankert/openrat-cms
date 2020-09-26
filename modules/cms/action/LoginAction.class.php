@@ -4,21 +4,11 @@ namespace cms\action;
 
 
 use cms\auth\Auth;
+use cms\base\DB;
 use cms\model\User;
-use cms\model\Project;
 use cms\model\Group;
-use cms\model\Value;
-use cms\model\Element;
-use cms\model\Page;
-use cms\model\BaseObject;
-use cms\model\Language;
-use cms\model\Model;
 
 
-use \database\Database;
-use \DB;
-use cms\update\Update;
-use \Exception;
 use util\Http;
 use cms\auth\InternalAuth;
 use logger\Logger;
@@ -26,7 +16,6 @@ use \ObjectNotFoundException;
 use util\exception\UIException;
 use \security\Password;
 use util\Session;
-use util\Html;
 use util\Mail;
 use util\Text;
 
@@ -88,7 +77,7 @@ class LoginAction extends BaseAction
 		unset( $SESS['user'] );	
 	
 		
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		
 		if	( !is_object($db) )
 		{
@@ -408,7 +397,7 @@ class LoginAction extends BaseAction
 
 		$this->setTemplateVar( 'dbids',$dbids );
 
-		$db = db();
+		$db = DB::get();
 		if	( is_object($db) )
 			$this->setTemplateVar('actdbid',$db->id);
 		else
@@ -1162,7 +1151,7 @@ class LoginAction extends BaseAction
 
 		$this->setTemplateVar( 'dbids',$dbids );
 		
-		$db = db();
+		$db = DB::get();
 		if	( is_object($db) )
 			$this->setTemplateVar('actdbid',$db->id);
 		else
@@ -1280,7 +1269,7 @@ class LoginAction extends BaseAction
 		$this->setTemplateVar( 'dbids',$dbids );
 		
 		
-		$db = db();
+		$db = DB::get();
 		
 		if	( is_object($db) )
 			$this->setTemplateVar('actdbid',$db->id);

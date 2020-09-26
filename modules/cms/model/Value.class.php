@@ -249,7 +249,7 @@ class Value extends ModelBase
 		if	( $valueid != 0 )
 			$this->valueid = $valueid;
 
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'SELECT {{value}}.*,{{user}}.name as lastchange_username'.
 		                ' FROM {{value}}'.
@@ -283,7 +283,7 @@ class Value extends ModelBase
 	 */
 	function getVersionList()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'SELECT {{value}}.*,{{user}}.name as lastchange_username'.
 		                '  FROM {{value}}'.
@@ -327,7 +327,7 @@ class Value extends ModelBase
 	 */
 	function getCountVersions()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'SELECT COUNT(*) FROM {{value}}'.
 		                '  WHERE elementid ={elementid}'.
@@ -343,7 +343,7 @@ class Value extends ModelBase
 
 	function getLastChangeTime()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 
 <<<SQL
@@ -368,7 +368,7 @@ SQL
 	 */
 	function release()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'UPDATE {{value}}'.
 		                '  SET publish=0'.
@@ -399,7 +399,7 @@ SQL
 	 */
 	function save()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'UPDATE {{value}}'.
 		                '  SET active=0'.
@@ -482,7 +482,7 @@ SQL
 	{
 		$limit = config('content','revision-limit');
 
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( <<<SQL
 		SELECT id FROM {{value}}
@@ -549,7 +549,7 @@ SQL
 	 */
 	function delete()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		$sql = $db->sql( 'DELETE * FROM {{value}}'.
 		                '  WHERE elementid ={elementid}'.
 		                '    AND pageid    ={pageid}'.
@@ -569,7 +569,7 @@ SQL
 	  */
 	function getObjectIdsByValue( $text )
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		
 		$sql = $db->sql( 'SELECT {{object}}.id FROM {{value}} '.
 		                ' LEFT JOIN {{page}} '.
@@ -594,7 +594,7 @@ SQL
 	function getObjectIdsByLastChangeUserId( $userid )
 	{
 
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		
 		$sql = $db->sql( 'SELECT {{object}}.id FROM {{value}} '.
 		                ' LEFT JOIN {{page}} '.
@@ -619,7 +619,7 @@ SQL
 	  */
 	public static function getLastChangedObjectByUserId( $userid )
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		
 		$sql = $db->sql( <<<SQL
 SELECT {{object}}.id
@@ -644,7 +644,7 @@ SQL
 	  */
 	public static function getLastChangedObjectInProjectByUserId( $projectid, $userid )
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		
 		$sql = $db->sql( <<<SQL
 SELECT {{object}}.id
@@ -669,7 +669,7 @@ SQL
 	 */
 	function tmpfile()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		$filename = \util\FileUtils::getTempFileName(  );
 		return $filename;
 	}

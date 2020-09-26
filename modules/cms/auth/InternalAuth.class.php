@@ -2,7 +2,7 @@
 
 namespace cms\auth;
 
-use cms\auth\Auth;
+use cms\base\DB as Db;
 use cms\model\User;
 use LogicException;
 use security\Password;
@@ -24,7 +24,7 @@ class InternalAuth implements Auth
 	function login($username, $password, $token)
 	{
 		// Lesen des Benutzers aus der DB-Tabelle
-		$sql = db()->sql(<<<SQL
+		$sql = Db::sql(<<<SQL
 SELECT * FROM {{user}}
  WHERE name={name}
 SQL

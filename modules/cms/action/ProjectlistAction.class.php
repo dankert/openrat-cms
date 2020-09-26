@@ -105,7 +105,7 @@ class ProjectlistAction extends BaseAction
                 $this->addNotice('project',$project->name,'ADDED');
                 break;
             case 'copy':
-                $db = db_connection();
+                $db = \cms\base\DB::get();
                 $project = new Project($this->getRequestVar('projectid'));
                 $project->load();
                 $project->export($db->id);

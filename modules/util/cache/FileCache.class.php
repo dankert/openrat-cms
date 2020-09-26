@@ -2,6 +2,7 @@
 
 namespace util\cache;
 
+use cms\base\DB;
 use util\FileUtils;
 
 
@@ -31,7 +32,7 @@ class FileCache implements Cache
     {
         if   ( !is_array($key))
         	$key = [ $key ];
-        $key = array_merge([ db()->id ], $key);
+        $key = array_merge([ DB::get()->id ], $key);
 
         $filename  = FileUtils::getTempDir() . '/'. self::CACHE_FILENAME_PREFIX;
         $filename .= array_reduce($key,function($carry,$item){

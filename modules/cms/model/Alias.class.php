@@ -2,6 +2,8 @@
 namespace cms\model;
 
 
+use cms\base\DB as Db;
+
 /**
  * Alias. Ein Alias kann auf alle anderen Objekte zeigen.
  *
@@ -29,14 +31,14 @@ class Alias extends BaseObject
 	{
 	    if  ( $this->objectid != null )
         {
-            $sql = db()->sql( 'SELECT *'.
+            $sql = Db::sql( 'SELECT *'.
                 ' FROM {{alias}}'.
                 ' WHERE objectid={objectid}' );
             $sql->setInt( 'objectid',$this->objectid );
         }
         elseif  ( $this->linkedObjectId != null && intval($this->languageid) != 0 )
         {
-            $sql = db()->sql( 'SELECT *'.
+            $sql = Db::sql( 'SELECT *'.
                 ' FROM {{alias}}'.
                 ' WHERE link_objectid={objectid}'.
                 '   AND languageid={languageid}' );
@@ -45,7 +47,7 @@ class Alias extends BaseObject
         }
         elseif  ( $this->linkedObjectId != null )
         {
-            $sql = db()->sql( 'SELECT *'.
+            $sql = Db::sql( 'SELECT *'.
                 ' FROM {{alias}}'.
                 ' WHERE link_objectid={objectid}'.
                 '   AND languageid IS NULL' );
@@ -77,7 +79,7 @@ class Alias extends BaseObject
 	    if   ( ! $this->isPersistent() )
 	        return;
 
-		$sql = db()->sql( 'DELETE FROM {{alias}} '.
+		$sql = Db::sql( 'DELETE FROM {{alias}} '.
 		                ' WHERE id={aliasid}' );
 		$sql->setInt( 'aliasid',$this->aliasid );
 
@@ -95,7 +97,7 @@ class Alias extends BaseObject
 	    if   ( ! $this->isPersistent() )
 	        $this->add();
 
-		$sql = db()->sql('UPDATE {{alias}} SET '.
+		$sql = Db::sql('UPDATE {{alias}} SET '.
 		               '  link_objectid = {linkobjectid},'.
 		               '  languageid    = {languageid}'.
 		                ' WHERE objectid={objectid}' );
@@ -123,10 +125,10 @@ class Alias extends BaseObject
 	{
 		parent::add();
 
-		$stmt = db()->sql('SELECT MAX(id) FROM {{alias}}');
+		$stmt = Db::sql('SELECT MAX(id) FROM {{alias}}');
 		$this->aliasid = intval($stmt->getOne())+1;
 
-		$stmt = db()->sql( <<<SQL
+		$stmt = Db::sql( <<<SQL
             INSERT INTO {{alias}}
 		                (id,objectid,link_objectid,languageid)
 		                VALUES( {linkid},{objectid},{linkobjectid},{languageid} )

@@ -16,6 +16,7 @@ namespace cms\model;
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+use cms\base\DB as Db;
 use cms\generator\PageContext;
 use Exception;
 use util\exception\GeneratorException;
@@ -83,7 +84,7 @@ class Page extends BaseObject
 	 */
 	function getObjectIdFromPageId( $pageid )
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql  = $db->sql( 'SELECT objectid FROM {{page}} '.
 		                 '  WHERE id={pageid}' );
@@ -101,7 +102,7 @@ class Page extends BaseObject
 	 */
 	public static function getPageIdFromObjectId( $objectid )
 	{
-		$sql  = db()->sql( 'SELECT id FROM {{page}} '.
+		$sql  = Db::sql( 'SELECT id FROM {{page}} '.
 		                 '  WHERE objectid={objectid}' );
 		$sql->setInt('objectid',$objectid);
 
@@ -146,10 +147,10 @@ class Page extends BaseObject
 	{
 		parent::add(); // Hinzuf?gen von Objekt (dabei wird Objekt-ID ermittelt)
 
-		$sql = db()->sql('SELECT MAX(id) FROM {{page}}');
+		$sql = Db::sql('SELECT MAX(id) FROM {{page}}');
 		$this->pageid = intval($sql->getOne())+1;
 
-		$sql = db()->sql(<<<SQL
+		$sql = Db::sql(<<<SQL
 	INSERT INTO {{page}}
 	            (id,objectid,templateid)
 	       VALUES( {pageid},{objectid},{templateid} )
@@ -168,7 +169,7 @@ SQL
 	  */
 	function load()
 	{
-		$sql  = db()->sql( 'SELECT * FROM {{page}} '.
+		$sql  = Db::sql( 'SELECT * FROM {{page}} '.
 		                 '  WHERE objectid={objectid}' );
 		$sql->setInt('objectid',$this->objectid);
 		$row = $sql->getRow();
@@ -185,7 +186,7 @@ SQL
 
 	function delete()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'DELETE FROM {{value}} '.
 		                '  WHERE pageid={pageid}' );
@@ -238,7 +239,7 @@ SQL
 
 	function save()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql('UPDATE {{page}}'.
 		               '  SET templateid ={templateid}'.
@@ -256,7 +257,7 @@ SQL
 	{
 		$oldTemplateId = $this->templateid;
 
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		// Template-id dieser Seite aendern
 		$this->templateid = $newTemplateId;

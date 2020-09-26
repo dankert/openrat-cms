@@ -16,7 +16,7 @@ namespace cms\model;
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
+use cms\base\DB as Db;
 
 
 /**
@@ -54,7 +54,7 @@ class Group extends ModelBase
      */
 	public static function getAll()
 	{
-		$stmt = db()->sql( 'SELECT id,name FROM {{group}}' );
+		$stmt = Db::sql( 'SELECT id,name FROM {{group}}' );
 
 		return $stmt->getAssoc();
 	}
@@ -65,7 +65,7 @@ class Group extends ModelBase
      */
 	public function load()
 	{
-		$sql = db()->sql( 'SELECT * FROM {{group}}'.
+		$sql = Db::sql( 'SELECT * FROM {{group}}'.
 		                ' WHERE id={groupid}' );
 		$sql->setInt( 'groupid',$this->groupid );
 
@@ -85,7 +85,7 @@ class Group extends ModelBase
      */
 	public static function loadWithName( $name )
 	{
-		$sql = db()->sql( 'SELECT * FROM {{group}}'.
+		$sql = Db::sql( 'SELECT * FROM {{group}}'.
 		                ' WHERE name={name}' );
 		$sql->setString('name',$name );
 
@@ -113,7 +113,7 @@ class Group extends ModelBase
 			$this->name = lang('GROUP').' '.$this->groupid;
 			
 		// Gruppe speichern
-		$sql = db()->sql( 'UPDATE {{group}} '.
+		$sql = Db::sql( 'UPDATE {{group}} '.
 		                'SET name = {name} '.
 		                'WHERE id={groupid}' );
 		$sql->setString( 'name'  ,$this->name    );
@@ -138,7 +138,7 @@ class Group extends ModelBase
 	// Gruppe hinzufuegen
 	function add( $name = '' )
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		if	( $name != '' )
 			$this->name = $name;
@@ -160,7 +160,7 @@ class Group extends ModelBase
 	// Gruppe entfernen
 	function delete()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		// Berechtigungen zu dieser Gruppe loeschen
 		$sql = $db->sql( 'DELETE FROM {{acl}} '.
@@ -189,7 +189,7 @@ class Group extends ModelBase
      */
 	function getUsers()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'SELECT {{user}}.id,{{user}}.name FROM {{user}} '.
 		                'LEFT JOIN {{usergroup}} ON {{usergroup}}.userid={{user}}.id '.
@@ -203,7 +203,7 @@ class Group extends ModelBase
 	// Benutzer ermitteln, die *nicht* Mitglied dieser Gruppe sind
 	function getOtherUsers()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'SELECT {{user}}.id,{{user}}.name FROM {{user}}'.
 		                '   LEFT JOIN {{usergroup}} ON {{usergroup}}.userid={{user}}.id AND {{usergroup}}.groupid={groupid}'.
@@ -217,7 +217,7 @@ class Group extends ModelBase
 	// Benutzer einer Gruppe hinzufuegen
 	function addUser( $userid )
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql('SELECT MAX(id) FROM {{usergroup}}');
 		$usergroupid = intval($sql->getOne())+1;
@@ -237,7 +237,7 @@ class Group extends ModelBase
 	// Benutzer aus Gruppe entfernen
 	function delUser( $userid )
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'DELETE FROM {{usergroup}} '.
 		                '  WHERE userid={userid} AND groupid={groupid}' );
@@ -252,7 +252,7 @@ class Group extends ModelBase
 	function getRights()
 	{
 		global $SESS,$conf_php;
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		$var = array();
 
 		// Alle Projekte lesen
@@ -310,7 +310,7 @@ class Group extends ModelBase
 	function addRight( $data )
 	{
 		global $REQ,$SESS;
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		
 		$sql = $db->sql('INSERT INTO {{acl}} '.
 		               '(userid,groupid,folderid,`read`,`write`,`create`,`delete`,publish) '.
@@ -341,7 +341,7 @@ class Group extends ModelBase
 	 */
 	function getAllAcls()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		$sql = $db->sql( 'SELECT {{acl}}.*,{{object}}.projectid,{{language}}.name AS languagename FROM {{acl}}'.
 		                '  LEFT JOIN {{object}} '.
 		                '         ON {{object}}.id={{acl}}.objectid '.

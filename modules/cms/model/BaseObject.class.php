@@ -3,6 +3,7 @@
 
 namespace cms\model;
 
+use cms\base\DB as Db;
 use util\ArrayUtils;
 use cms\generator\Publish;
 use phpseclib\Math\BigInteger;
@@ -278,7 +279,7 @@ class BaseObject extends ModelBase
                 // Anonymous
                 $this->aclMask = 0;
 
-                $sql = db()->sql( <<<SQL
+                $sql = Db::sql( <<<SQL
     SELECT {{acl}}.* FROM {{acl}}
                  WHERE objectid={objectid}
                    AND {{acl}}.userid IS NULL
@@ -334,7 +335,7 @@ SQL
                 $this->aclMask = 0;
 
                 $sqlGroupClause = $user->getGroupClause();
-                $sql = db()->sql( <<<SQL
+                $sql = Db::sql( <<<SQL
 SELECT {{acl}}.* FROM {{acl}}
                  WHERE objectid={objectid}
                    AND ( languageid={languageid} OR languageid IS NULL )
@@ -643,7 +644,7 @@ SQL
      */
     public static function available( $objectid )
     {
-        $db = db_connection();
+        $db = \cms\base\DB::get();
 
         // Vielleicht k�nnen wir uns den DB-Zugriff auch ganz sparen.
         if	( !is_numeric($objectid) || $objectid <= 0 )
@@ -666,7 +667,7 @@ SQL
      */
     function objectLoad()
     {
-        $db = db_connection();
+        $db = \cms\base\DB::get();
 
         $stmt = $db->sql('SELECT {{object}}.*,' .
             '       {{name}}.name,{{name}}.descr,'.
@@ -709,7 +710,7 @@ SQL
     function objectLoadRaw()
     {
         global $SESS;
-        $db = db_connection();
+        $db = \cms\base\DB::get();
 
         $sql = $db->sql('SELECT * FROM {{object}}'.
             ' WHERE {{object}}.id={objectid}');
@@ -862,7 +863,7 @@ SQL
         $this->setTimestamp();
         $this->checkFilename();
 
-        $stmt = db()->sql( <<<SQL
+        $stmt = Db::sql( <<<SQL
 UPDATE {{object}} SET 
                   parentid          = {parentid},
                   lastchange_date   = {time}    ,
@@ -905,7 +906,7 @@ SQL
      */
     public function setTimestamp()
     {
-        $db = db_connection();
+        $db = \cms\base\DB::get();
 
         $sql = $db->sql('UPDATE {{object}} SET '.
             '  lastchange_date   = {time}  ,'.
@@ -927,7 +928,7 @@ SQL
 
     public function setCreationTimestamp()
     {
-        $db = db_connection();
+        $db = \cms\base\DB::get();
 
         $sql = $db->sql('UPDATE {{object}} SET '.
             '  create_date   = {time}  '.
@@ -942,7 +943,7 @@ SQL
 
     public function setPublishedTimestamp()
     {
-        $db = db_connection();
+        $db = \cms\base\DB::get();
 
         $sql = $db->sql('UPDATE {{object}} SET '.
             '  published_date   = {time}  ,'.
@@ -969,7 +970,7 @@ SQL
      */
     public function ObjectSaveName()
     {
-        $db = db_connection();
+        $db = \cms\base\DB::get();
 
         $sql = $db->sql(<<<SQL
 SELECT COUNT(*) FROM {{name}}  WHERE objectid  ={objectid} AND languageid={languageid}
@@ -1025,7 +1026,7 @@ SQL
      */
     public function delete()
     {
-        $db = db_connection();
+        $db = \cms\base\DB::get();
 
         $sql = $db->sql( 'UPDATE {{element}} '.
             '  SET default_objectid=NULL '.
@@ -1052,7 +1053,7 @@ SQL
         $sql->query();
 
         // Aliases löschen.
-        $sql = db()->sql('DELETE FROM {{alias}} WHERE objectid={objectid}');
+        $sql = Db::sql('DELETE FROM {{alias}} WHERE objectid={objectid}');
         $sql->setInt('objectid', $this->objectid);
         $sql->query();
 
@@ -1086,11 +1087,11 @@ SQL
     function add()
     {
         // Neue Objekt-Id bestimmen
-        $sql = db()->sql('SELECT MAX(id) FROM {{object}}');
+        $sql = Db::sql('SELECT MAX(id) FROM {{object}}');
         $this->objectid = intval($sql->getOne())+1;
 
         $this->checkFilename();
-        $sql = db()->sql('INSERT INTO {{object}}'.
+        $sql = Db::sql('INSERT INTO {{object}}'.
             ' (id,parentid,projectid,filename,orderid,create_date,create_userid,lastchange_date,lastchange_userid,typeid,settings)'.
             ' VALUES( {objectid},{parentid},{projectid},{filename},{orderid},{time},{createuserid},{createtime},{userid},{typeid},\'\' )');
 
@@ -1178,7 +1179,7 @@ SQL
      */
     private function filenameIsUnique( $filename )
     {
-        $sql = db()->sql( <<<SQL
+        $sql = Db::sql( <<<SQL
 SELECT COUNT(*) FROM {{object}}
 WHERE parentid={parentid} AND filename={filename}
 AND NOT id = {objectid}
@@ -1209,7 +1210,7 @@ SQL
 
     function getAllAclIds()
     {
-        $db = db_connection();
+        $db = \cms\base\DB::get();
 
         $sql = $db->sql( 'SELECT id FROM {{acl}} '.
             '  WHERE objectid={objectid}'.
@@ -1266,7 +1267,7 @@ SQL
      */
     public function setOrderId( $orderid )
     {
-        $sql = db()->sql('UPDATE {{object}} '.'  SET orderid={orderid}'.'  WHERE id={objectid}');
+        $sql = Db::sql('UPDATE {{object}} '.'  SET orderid={orderid}'.'  WHERE id={objectid}');
         $sql->setInt('objectid', $this->objectid);
         $sql->setInt('orderid', $orderid);
 
@@ -1282,7 +1283,7 @@ SQL
      */
     public function setParentId( $parentid )
     {
-        $db = db_connection();
+        $db = \cms\base\DB::get();
 
         $sql = $db->sql('UPDATE {{object}} '.'  SET parentid={parentid}'.'  WHERE id={objectid}');
         $sql->setInt('objectid', $this->objectid);
@@ -1294,7 +1295,7 @@ SQL
 
     public function getDependentObjectIds()
     {
-        $db = db_connection();
+        $db = \cms\base\DB::get();
 
         $sql = $db->sql( 'SELECT {{page}}.objectid FROM {{value}}'.
             '  LEFT JOIN {{page}} '.
@@ -1314,7 +1315,7 @@ SQL
      */
     public function getLinksToMe()
     {
-        $db = db_connection();
+        $db = \cms\base\DB::get();
 
         $sql = $db->sql( 'SELECT objectid FROM {{link}} '.
             ' WHERE link_objectid={myid}' );
@@ -1400,7 +1401,7 @@ SQL
 
         while( intval($foid)!=0 )
         {
-            $sql = db()->sql( <<<SQL
+            $sql = Db::sql( <<<SQL
             
 SELECT parentid,id,filename
   FROM {{object}}
@@ -1434,7 +1435,7 @@ SQL
 
         while( intval($foid)!=0 )
         {
-            $sql = db()->sql( <<<SQL
+            $sql = Db::sql( <<<SQL
             
 SELECT {{object}}.parentid,{{object}}.id,{{object}}.filename,{{name}}.name FROM {{object}}
   LEFT JOIN {{name}}
@@ -1524,7 +1525,7 @@ SQL
      */
     public static function getObjectIdsByFileName( $text )
     {
-        $db = db_connection();
+        $db = \cms\base\DB::get();
 
         $sql = $db->sql( 'SELECT id FROM {{object}} '.
             ' WHERE filename LIKE {filename}'.
@@ -1542,7 +1543,7 @@ SQL
      */
     public static function getObjectIdsByName( $text )
     {
-        $db = db_connection();
+        $db = \cms\base\DB::get();
 
         $sql = $db->sql( 'SELECT {{object}}.id FROM {{object}} '.
             ' LEFT JOIN {{name}} '.
@@ -1562,7 +1563,7 @@ SQL
      */
     public static function getObjectIdsByDescription( $text )
     {
-        $db = db_connection();
+        $db = \cms\base\DB::get();
 
         $sql = $db->sql( 'SELECT {{object}}.id FROM {{object}} '.
             ' LEFT JOIN {{name}} '.
@@ -1582,7 +1583,7 @@ SQL
      */
     public static function getObjectIdsByCreateUserId( $userid )
     {
-        $db = db_connection();
+        $db = \cms\base\DB::get();
 
         $sql = $db->sql( 'SELECT id FROM {{object}} '.
             ' WHERE create_userid={userid}'.
@@ -1600,7 +1601,7 @@ SQL
      */
     public static function getObjectIdsByLastChangeUserId( $userid )
     {
-        $db = db_connection();
+        $db = \cms\base\DB::get();
 
         $sql = $db->sql( 'SELECT id FROM {{object}} '.
             ' WHERE lastchange_userid={userid}'.

@@ -2,6 +2,7 @@
 namespace cms\model;
 
 
+use cms\base\DB as Db;
 use util\ArrayUtils;
 use logger\Logger;
 
@@ -189,10 +190,10 @@ class Element extends ModelBase
 	 */
 	function add()
 	{
-		$sql = db()->sql('SELECT MAX(id) FROM {{element}}');
+		$sql = Db::sql('SELECT MAX(id) FROM {{element}}');
 		$this->elementid = intval($sql->getOne())+1;
 
-		$sql = db()->sql( 'INSERT INTO {{element}}'.
+		$sql = Db::sql( 'INSERT INTO {{element}}'.
 		                ' (id,templateid,name,label,descr,typeid,flags) '.
 		                " VALUES ( {elementid},{templateid},{name},{label},{description},{typeid},{flags} ) " );
 
@@ -220,7 +221,7 @@ class Element extends ModelBase
 	{
 		if	( intval($this->elementid) != 0 )
 		{
-			$db = db_connection();
+			$db = \cms\base\DB::get();
 			$sql = $db->sql( <<<SQL
 SELECT * FROM {{element}}
  WHERE id={elementid}
@@ -278,7 +279,7 @@ SQL
 	 */
 	function save()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'UPDATE {{element}}'.
 		                ' SET templateid      = {templateid},'.
@@ -355,7 +356,7 @@ SQL
 	 */
 	public function delete()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		// Inhalte loeschen.
         // notwendig, damit die Fremdschlüsselbeziehungen auf diesen Element aufgehoben werden.
@@ -376,7 +377,7 @@ SQL
 	 */
 	public function deleteValues()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		// Alle Inhalte mit diesem Element l?schen
 		$sql = $db->sql('DELETE FROM {{value}} '.

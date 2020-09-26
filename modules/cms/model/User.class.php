@@ -18,6 +18,7 @@ namespace cms\model;
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+use cms\base\DB as Db;
 use security\Password;
 
 
@@ -74,7 +75,7 @@ class User extends ModelBase
      */
 	public static function listAll()
 	{
-		$sql = db()->sql( 'SELECT id,name '.
+		$sql = Db::sql( 'SELECT id,name '.
 		                '  FROM {{user}}'.
 		                '  ORDER BY name' );
 
@@ -90,7 +91,7 @@ class User extends ModelBase
 	public static function getAllUsers()
 	{
 		$list = array();
-		$sql = db()->sql( 'SELECT * '.
+		$sql = Db::sql( 'SELECT * '.
 		                '  FROM {{user}}'.
 		                '  ORDER BY name' );
 
@@ -123,7 +124,7 @@ class User extends ModelBase
 	  */
 	public function updateLoginTimestamp()
 	{
-	    $stmt = db()->sql( <<<SQL
+	    $stmt = Db::sql( <<<SQL
                      UPDATE {{user}}
 	                 SET last_login={time}
 	                 WHERE id={userid}
@@ -163,7 +164,7 @@ SQL
 	 */
 	public function getReadableProjects()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		if	( $this->isAdmin )
 		{
@@ -216,10 +217,10 @@ SQL
 
 	    $tokenHash = Password::hash($token,Password::ALGO_SHA1);
 
-		$stmt = db()->sql( 'SELECT max(id) FROM {{auth}}');
+		$stmt = Db::sql( 'SELECT max(id) FROM {{auth}}');
 		$count = $stmt->getOne();
 
-		$stmt = db()->sql( <<<SQL
+		$stmt = Db::sql( <<<SQL
               INSERT INTO {{auth}} (id,userid,selector,token,token_algo,expires,create_date,platform,name)
                  VALUES( {id},{userid},{selector},{token},{token_algo},{expires},{create_date},{platform},{name} )
 SQL
@@ -251,7 +252,7 @@ SQL
      */
     function deleteLoginToken( $selector )
     {
-        $stmt = db()->sql( <<<SQL
+        $stmt = Db::sql( <<<SQL
               DELETE FROM {{auth}}
                WHERE selector = {selector}
 SQL
@@ -266,7 +267,7 @@ SQL
 	 */ 
 	public function load()
 	{
-		$stmt = db()->sql( 'SELECT * FROM {{user}}'.
+		$stmt = Db::sql( 'SELECT * FROM {{user}}'.
 		                ' WHERE id={userid}' );
 		$stmt->setInt( 'userid',$this->userid );
 		$row = $stmt->getRow();
@@ -288,7 +289,7 @@ SQL
 	public static function loadWithName( $name )
 	{
 		// Benutzer �ber Namen suchen
-		$sql = db()->sql( 'SELECT id FROM {{user}}'.
+		$sql = Db::sql( 'SELECT id FROM {{user}}'.
 		                ' WHERE name={name}' );
 		//Html::debug($sql);
 		$sql->setString( 'name',$name );
@@ -375,7 +376,7 @@ SQL
 	 */
 	function getUserName( $userid )
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'SELECT name FROM {{user}}'.
 		                ' WHERE id={userid}' );
@@ -394,7 +395,7 @@ SQL
 	 */
 	function save()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( <<<SQL
                          UPDATE {{user}}
@@ -442,7 +443,7 @@ SQL
 		if	( $name != '' )
 			$this->name = $name;
 
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql('SELECT MAX(id) FROM {{user}}');
 		$this->userid = intval($sql->getOne())+1;
@@ -475,7 +476,7 @@ SQL
 		if	( count($groupNames) == 0 )
 			return; // Nichts zu tun.
 			
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$groupNames = "'".implode("','",$groupNames)."'";
 		$sql = $db->sql("SELECT id FROM {{group}} WHERE name IN($groupNames)");
@@ -503,7 +504,7 @@ SQL
 	 */
 	public function delete()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		// "Erzeugt von" f�r diesen Benutzer entfernen.
 		$sql = $db->sql( 'UPDATE {{object}} '.
@@ -538,7 +539,7 @@ SQL
 		$sql->setInt   ('userid',$this->userid );
 		$sql->query();
 
-        $stmt = db()->sql( <<<SQL
+        $stmt = Db::sql( <<<SQL
               DELETE FROM {{auth}}
                WHERE userid={userid}
 SQL
@@ -576,7 +577,7 @@ SQL
 	 */
 	function setPassword( $password, $always=true )
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'UPDATE {{user}} SET password_hash={password},password_algo={algo},password_expires={expires} '.
 		                'WHERE id={userid}' );
@@ -616,7 +617,7 @@ SQL
 	{
 		if	( !is_array($this->groups) )
 		{
-			$db = db_connection();
+			$db = \cms\base\DB::get();
 	
 			$sql = $db->sql( 'SELECT {{group}}.id,{{group}}.name FROM {{group}} '.
 			                'LEFT JOIN {{usergroup}} ON {{usergroup}}.groupid={{group}}.id '.
@@ -635,7 +636,7 @@ SQL
 		return array_keys( $this->getGroups() );
 
 		/*
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'SELECT groupid FROM {{usergroup}} '.
 		                'WHERE userid={userid}' );
@@ -649,7 +650,7 @@ SQL
 	// Gruppen ermitteln, in denen der Benutzer *nicht* Mitglied ist
 	function getOtherGroups()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'SELECT {{group}}.id,{{group}}.name FROM {{group}}'.
 		                '   LEFT JOIN {{usergroup}} ON {{usergroup}}.groupid={{group}}.id AND {{usergroup}}.userid={userid}'.
@@ -668,7 +669,7 @@ SQL
 	 */
 	function addGroup( $groupid )
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql('SELECT MAX(id) FROM {{usergroup}}');
 		$usergroupid = intval($sql->getOne())+1;
@@ -693,7 +694,7 @@ SQL
 	 */
 	function delGroup( $groupid )
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'DELETE FROM {{usergroup}} '.
 		                '  WHERE userid={userid} AND groupid={groupid}' );
@@ -728,7 +729,7 @@ SQL
 
 		$group_clause = $this->getGroupClause();
 
-		$sql = db()->sql( 'SELECT {{acl}}.*,{{object}}.projectid,{{language}}.name AS languagename FROM {{acl}}'.
+		$sql = Db::sql( 'SELECT {{acl}}.*,{{object}}.projectid,{{language}}.name AS languagename FROM {{acl}}'.
 		                '  LEFT JOIN {{object}} '.
 		                '         ON {{object}}.id={{acl}}.objectid '.
 		                '  LEFT JOIN {{language}} '.
@@ -764,7 +765,7 @@ SQL
 	{
 		throw new \DomainException('User.class::getRights()');
 		
-//		$db = db_connection();
+//		$db = \cms\base\DB::get();
 //		$var = array();
 //
 //		// Alle Projekte lesen
@@ -901,7 +902,7 @@ SQL
 	 */
 	function checkPassword( $password )
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		// Laden des Benutzers aus der Datenbank, um Password-Hash zu ermitteln.
 		$sql = $db->sql( 'SELECT * FROM {{user}}'.
 			' WHERE id={userid}' );
@@ -967,7 +968,7 @@ SQL
 	 */
 	public function getLastChanges()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 	
 		$sql = $db->sql( <<<SQL
 		SELECT {{object}}.id       as objectid,
@@ -1029,7 +1030,7 @@ SQL
 	    
 	    $secret = Password::randomHexString(64);
 	    
-	    $db = db_connection();
+	    $db = \cms\base\DB::get();
 	    
 	    $stmt = $db->sql('UPDATE {{user}} SET otp_secret={secret} WHERE id={id}');
 	    

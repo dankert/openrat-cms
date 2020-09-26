@@ -61,7 +61,7 @@ class Template extends ModelBase
  	 */
 	function load()
 	{
-		$stmt = db()->sql( 'SELECT * FROM {{template}}'.
+		$stmt = Db::sql( 'SELECT * FROM {{template}}'.
 		                ' WHERE id={templateid}' );
 		$stmt->setInt( 'templateid',$this->templateid );
 		$row = $stmt->getRow();
@@ -106,7 +106,7 @@ class Template extends ModelBase
 	  */
 	public static function getTemplateIdsByValue( $text )
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$stmt = $db->sql( 'SELECT templateid FROM {{templatemodel}}'.
 		                ' WHERE text LIKE {text} ' );
@@ -124,7 +124,7 @@ class Template extends ModelBase
  	 */
 	function getElementIds()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$stmt = $db->sql( 'SELECT id FROM {{element}}'.
 		                '  WHERE templateid={templateid}'.
@@ -143,7 +143,7 @@ class Template extends ModelBase
 	function getElements()
 	{
 		$list = array();
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'SELECT * FROM {{element}}'.
 		                '  WHERE templateid={templateid}'.
@@ -173,7 +173,7 @@ class Template extends ModelBase
 		$e = new Element();
 		$readonlyList = implode(',',Element::$readonlyElementTypeIds);
 		
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( <<<SQL
 SELECT * FROM {{element}}
@@ -206,7 +206,7 @@ SQL
  	 */
 	public function getElementNames()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'SELECT id,name FROM {{element}}'.
 		                '  WHERE templateid={templateid}'.
@@ -246,7 +246,7 @@ SQL
 		if	( !empty($name) )
 			$this->name = $name;
 
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql('SELECT MAX(id) FROM {{template}}');
 		$this->templateid = intval($sql->getOne())+1;
@@ -270,7 +270,7 @@ SQL
  	 */
 	function getDependentObjectIds()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'SELECT objectid FROM {{page}}'.
 		                '  WHERE templateid={templateid}' );
@@ -287,7 +287,7 @@ SQL
  	 */
 	function delete()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		
 		foreach( $this->getElementIds() as $elementid )
 		{

@@ -17,6 +17,7 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 namespace util;
 
+use cms\base\DB;
 use cms\generator\PageContext;
 use cms\model\BaseObject;
 use cms\model\Page;
@@ -66,7 +67,7 @@ class Macro
 	 */
 	protected function db()
 	{
-		return db();
+		return DB::get();
 	}
 
 

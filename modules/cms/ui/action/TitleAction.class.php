@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use cms\base\DB;
 use cms\model\Project;
 use cms\model\BaseObject;
 use cms\model\Language;
@@ -55,7 +56,7 @@ class TitleAction extends Action
 
         $this->setTemplateVar('isLoggedIn',true );
 
-        $db = db();
+        $db = DB::get();
         $this->setTemplateVar('dbname',$db->conf['name'].(readonly()?' ('.lang('readonly').')':''));
         $this->setTemplateVar('dbid'  ,$db->id);
 

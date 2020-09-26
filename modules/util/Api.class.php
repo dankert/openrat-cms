@@ -37,7 +37,7 @@ class Api
 
 	function db()
 	{
-		return db_connection();
+		return \cms\base\DB::get();
 	}
 
 	function pageid()

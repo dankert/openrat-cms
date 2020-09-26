@@ -16,6 +16,7 @@ namespace cms\model;
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+use cms\base\DB as Db;
 
 
 /**
@@ -67,7 +68,7 @@ class Language extends ModelBase
 	 */
 	function available( $id )
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql('SELECT 1 FROM {{language}} '.
 		               ' WHERE id={id}');
@@ -84,7 +85,7 @@ class Language extends ModelBase
      */
 	public function load()
 	{
-		$stmt = db()->sql( 'SELECT * FROM {{language}}'.
+		$stmt = Db::sql( 'SELECT * FROM {{language}}'.
 		                ' WHERE id={languageid}' );
 		$stmt->setInt( 'languageid',$this->languageid );
 
@@ -106,7 +107,7 @@ class Language extends ModelBase
      */
 	public function save()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		// Gruppe speichern		
 		$sql = $db->sql( 'UPDATE {{language}} '.
@@ -141,7 +142,7 @@ class Language extends ModelBase
 	{
 		global $SESS;
 		global $iso;
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		if	( $isocode != '' )
 		{
@@ -173,7 +174,7 @@ class Language extends ModelBase
 	function setDefault()
 	{
 		global $SESS;
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		// Zuerst alle auf nicht-Standard setzen
 		$sql = $db->sql( 'UPDATE {{language}} '.
@@ -194,7 +195,7 @@ class Language extends ModelBase
 	// Sprache entfernen
 	function delete()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		// Sprache l?schen
 //		$sql = $db->sql( 'SELECT COUNT(*) FROM {{language}} WHERE projectid={projectid}' );

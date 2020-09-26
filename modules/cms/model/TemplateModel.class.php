@@ -51,7 +51,7 @@ class TemplateModel extends ModelBase
  	 */
 	function load()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$stmt = $db->sql( 'SELECT * FROM {{templatemodel}}'.
 		                ' WHERE templateid={templateid}'.
@@ -137,7 +137,7 @@ class TemplateModel extends ModelBase
  	 */
 	public function delete()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		
 		$stmt = $db->sql( 'DELETE FROM {{templatemodel}}'.
 		                ' WHERE id={id}' );

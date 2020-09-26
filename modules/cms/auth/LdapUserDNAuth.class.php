@@ -18,7 +18,7 @@ class LdapUserDNAuth implements Auth
 	 */
 	public function login($username, $password, $token)
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		$this->mustChangePassword = false;
 
 		// Lesen des Benutzers aus der DB-Tabelle

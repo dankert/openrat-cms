@@ -4,6 +4,7 @@
 namespace cms\generator;
 
 
+use cms\base\DB;
 use cms\macros\MacroRunner;
 use cms\model\BaseObject;
 use cms\model\Element;
@@ -822,10 +823,10 @@ class ValueGenerator extends BaseGenerator
 				switch( $element->subtype )
 				{
 					case 'db_id':
-						$inhalt = db()->id;
+						$inhalt = DB::get()->id;
 						break;
 					case 'db_name':
-						$inhalt = $conf['database_'.db()->id]['description'];
+						$inhalt = $conf['database_'.DB::get()->id]['description'];
 						break;
 					case 'project_id':
 						$inhalt = $page->projectid;
@@ -877,7 +878,6 @@ class ValueGenerator extends BaseGenerator
 						if   ( substr($inhalt,-4) == 'api/' )
 							$inhalt = substr($inhalt,0,-4);
 
-						$db = db();
 						$inhalt .= '/#/page/'.$page->objectid;
 						break;
 					case 'lastch_user_username':

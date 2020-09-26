@@ -1,6 +1,8 @@
 <?php
 namespace cms\model;
 
+use cms\base\DB as Db;
+
 /**
  * Darstellen einer URL. An URL points to an string-based URL.
  *
@@ -23,7 +25,7 @@ class Url extends BaseObject
 	// Lesen der Verkn�pfung aus der Datenbank
 	function load()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'SELECT *'.
 		                ' FROM {{url}}'.
@@ -45,7 +47,7 @@ class Url extends BaseObject
      */
     function delete()
 	{
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'DELETE FROM {{url}} '.
 		                ' WHERE objectid={objectid}' );
@@ -61,7 +63,7 @@ class Url extends BaseObject
 	public function save()
 	{
 		global $SESS;
-		$db = db_connection();
+		$db = \cms\base\DB::get();
 		
 		$sql = $db->sql('UPDATE {{url}} SET '.
 		               '  url           = {url}'.
@@ -94,10 +96,10 @@ class Url extends BaseObject
 	{
 		parent::add();
 
-		$sql = db()->sql('SELECT MAX(id) FROM {{url}}');
+		$sql = Db::sql('SELECT MAX(id) FROM {{url}}');
 		$this->urlid = intval($sql->getOne())+1;
 
-		$sql = db()->sql('INSERT INTO {{url}}'.
+		$sql = Db::sql('INSERT INTO {{url}}'.
 		               ' (id,objectid,url)'.
 		               ' VALUES( {urlid},{objectid},{url} )' );
 		$sql->setInt   ('urlid'      ,$this->urlid         );

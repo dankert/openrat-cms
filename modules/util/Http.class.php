@@ -18,6 +18,7 @@
 
 
 namespace util;
+use cms\base\DB;
 use logger\Logger;
 use withPraefixQuestionMark;
 
@@ -394,7 +395,7 @@ class Http
 	public static function serverError($message, $reason = '')
 	{
 		if (class_exists('util\Session')) {
-			$db = db();
+			$db = DB::get();
 			if (is_object($db))
 				$db->rollback();
 		}
