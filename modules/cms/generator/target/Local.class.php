@@ -46,7 +46,7 @@ class Local extends  BaseTarget
 	 */
 	public function open()
 	{
-		$confPublish = config('publish');
+		$confPublish = \cms\base\Configuration::config('publish');
 
 		$targetDir = rtrim( $this->url->path,'/' );
 

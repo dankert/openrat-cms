@@ -113,9 +113,9 @@ class Publisher
 	 */
 	public function init()
 	{
-		$confPublish = config('publish');
+		$confPublish = \cms\base\Configuration::config('publish');
 
-		if	( config('security','nopublish') )
+		if	( \cms\base\Configuration::config('security','nopublish') )
 		{
 			$this->target = new NoBaseTarget();
 			Logger::warn('publishing is disabled.');

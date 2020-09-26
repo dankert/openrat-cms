@@ -231,8 +231,8 @@ class FileAction extends ObjectAction
 
 
 		// Unterscheidung, ob PHP-Code in der Datei ausgefuehrt werden soll.
-        $phpActive = ( config('publish','enable_php_in_file_content')=='auto' && $this->file->getRealExtension()=='php') ||
-            config('publish','enable_php_in_file_content')===true;
+        $phpActive = ( \cms\base\Configuration::config('publish','enable_php_in_file_content')=='auto' && $this->file->getRealExtension()=='php') ||
+            \cms\base\Configuration::config('publish','enable_php_in_file_content')===true;
 
         if	(  $phpActive ) {
 

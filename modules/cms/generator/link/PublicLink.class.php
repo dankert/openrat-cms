@@ -97,7 +97,7 @@ class PublicLink implements LinkFormat
 
 			case BaseObject::TYPEID_PAGE:
 
-				if ($fromProject->cut_index && $to->filename == config('publish', 'default')) {
+				if ($fromProject->cut_index && $to->filename == \cms\base\Configuration::config('publish', 'default')) {
 					$filename = ''; // Link auf Index-Datei, der Dateiname bleibt leer.
 				} else {
 
@@ -107,7 +107,7 @@ class PublicLink implements LinkFormat
 					$parentFolder = new Folder($page->parentid);
 					$parentFolder->load();
 
-					$format = config('publish', 'format');
+					$format = \cms\base\Configuration::config('publish', 'format');
 					$format = str_replace('{filename}', $page->filename(), $format);
 
 					$allLanguages = $fromProject->getLanguageIds();
@@ -116,12 +116,12 @@ class PublicLink implements LinkFormat
 					$withLanguage =
 						!$fromProject->content_negotiation  &&
 						$fromProject->publishPageExtension  &&
-						(count($allLanguages) > 1 || config('publish', 'filename_language') == 'always');
+						(count($allLanguages) > 1 || \cms\base\Configuration::config('publish', 'filename_language') == 'always');
 
 					$withModel    =
 						! $fromProject->content_negotiation   &&
 						! $fromProject->publishPageExtension  &&
-						(count($allModels) > 1    || config('publish', 'filename_type') == 'always');
+						(count($allModels) > 1    || \cms\base\Configuration::config('publish', 'filename_type') == 'always');
 
 					$languagePart = '';
 					$typePart     = '';
@@ -139,8 +139,8 @@ class PublicLink implements LinkFormat
 						$typePart = $templateModel->extension;
 					}
 
-					$languageSep = $languagePart?config('publish','language_sep') :'';
-					$typeSep     = $typePart    ?config('publish','type_sep'    ) :'';
+					$languageSep = $languagePart?\cms\base\Configuration::config('publish','language_sep') :'';
+					$typeSep     = $typePart    ?\cms\base\Configuration::config('publish','type_sep'    ) :'';
 
 					$format = str_replace('{language}'    ,$languagePart ,$format );
 					$format = str_replace('{language_sep}',$languageSep  ,$format );

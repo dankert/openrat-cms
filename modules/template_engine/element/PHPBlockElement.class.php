@@ -64,7 +64,7 @@ class PHPBlockElement extends HtmlElement
 
 		$res->addResolver('config', function($name) {
 			$config_parts = explode('/', $name);
-			return 'config(' . "'" . implode("'" . ',' . "'", $config_parts) . "'" . ')';
+			return '\cms\base\Configuration::config(' . "'" . implode("'" . ',' . "'", $config_parts) . "'" . ')';
 		});
 
 		return $res->resolveVariables( $value );

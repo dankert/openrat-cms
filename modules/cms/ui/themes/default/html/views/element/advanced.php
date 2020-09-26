@@ -1,5 +1,5 @@
 <?php if (!defined('OR_TITLE')) exit(); ?>
-  <?php $if1=(config('security','disable_dynamic_code')); if($if1) {  ?>
+  <?php $if1=(\cms\base\Configuration::config('security','disable_dynamic_code')); if($if1) {  ?>
     <?php $if1=(!1); if($if1) {  ?>
       <div class="<?php echo \template_engine\Output::escapeHtml('message warn') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
         <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('NOTICE_CODE_DISABLED').'') ?>

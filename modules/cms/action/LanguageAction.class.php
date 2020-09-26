@@ -103,7 +103,7 @@ class LanguageAction extends BaseAction
 		}
 		else
 		{
-			$countryList = config()['countries'];
+			$countryList = \cms\base\Configuration::config()['countries'];
 			$iso = $this->getRequestVar('isocode');
 			$this->language->name    = $countryList[$iso];
 			$this->language->isoCode = strtolower( $iso );

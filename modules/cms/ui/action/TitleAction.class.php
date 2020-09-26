@@ -44,7 +44,7 @@ class TitleAction extends Action
 	 */
 	public function showView()
 	{
-		$this->setTemplateVar('buildinfo',OR_TITLE.' '.OR_VERSION.' - build '.config('build','build') );
+		$this->setTemplateVar('buildinfo',OR_TITLE.' '.OR_VERSION.' - build '.\cms\base\Configuration::config('build','build') );
 
 		$user = Session::getUser();
 
@@ -69,7 +69,7 @@ class TitleAction extends Action
 		//$this->setTemplateVar('logout_url' ,Html::url( 'index','logout'  ));
 		$this->setTemplateVar('isAdmin',$this->userIsAdmin() );
 
-		if	( config('interface','session','auto_extend') )
+		if	( \cms\base\Configuration::config('interface','session','auto_extend') )
 		{
 			$this->setTemplateVar('ping_url'    ,Html::url('title','ping')            );			
 			$this->setTemplateVar('ping_timeout',ini_get('session.gc_maxlifetime')-60 );

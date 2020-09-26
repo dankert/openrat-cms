@@ -19,6 +19,7 @@ namespace cms\action;
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+use cms\base\Configuration;
 use cms\model\BaseObject;
 use cms\model\User;
 use language\Language;
@@ -210,9 +211,9 @@ class ProfileAction extends BaseAction
 		{
 			$this->addValidationError('password2','PASSWORDS_DO_NOT_MATCH');
 		}
-		elseif ( strlen($this->getRequestVar('password1'))<intval(config('security','password','min_length')) )
+		elseif ( strlen($this->getRequestVar('password1'))<intval(\cms\base\Configuration::config('security','password','min_length')) )
 		{
-			$this->addValidationError('password1','PASSWORD_MINLENGTH',array('minlength'=>config('security','password','min_length')));
+			$this->addValidationError('password1','PASSWORD_MINLENGTH',array('minlength'=>\cms\base\Configuration::config('security','password','min_length')));
 		}
 		else
 		{
@@ -228,7 +229,7 @@ class ProfileAction extends BaseAction
 	 */
 	function editView()
 	{
-	    $issuer  = urlencode(config('application','operator'));
+	    $issuer  = urlencode(\cms\base\Configuration::config('application','operator'));
 	    $account = $this->user->name.'@'.$_SERVER['SERVER_NAME'];
 	    
 	    $base32 = new Base2n(5, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567', FALSE, TRUE, TRUE);
@@ -241,7 +242,7 @@ class ProfileAction extends BaseAction
 		
 		$this->setTemplateVar('timezone_list',timezone_identifiers_list() );
 		
-		$languages = explode(',',config('i18n','available'));
+		$languages = explode(',',\cms\base\Configuration::config('i18n','available'));
 		foreach($languages as $id=>$name)
 		{
 		    unset($languages[$id]);
@@ -319,8 +320,8 @@ class ProfileAction extends BaseAction
 		$this->setTemplateVar('style',$currentStyle);
 
 
-		$styleConfig     = config('style-default'); // default style config
-		$userStyleConfig = config('style', $currentStyle); // user style config
+		$styleConfig     = \cms\base\Configuration::config('style-default'); // default style config
+		$userStyleConfig = \cms\base\Configuration::config('style', $currentStyle); // user style config
 
 		if (is_array($userStyleConfig))
 			$styleConfig = array_merge($styleConfig, $userStyleConfig ); // Merging user style into default style
@@ -337,7 +338,7 @@ class ProfileAction extends BaseAction
 	 */
 	public function uisettingsView() {
 
-		$this->setTemplateVar('settings',Config()->get('ui') );
+		$this->setTemplateVar('settings',Configuration::Conf()->get('ui') );
 	}
 
 
@@ -346,7 +347,7 @@ class ProfileAction extends BaseAction
 	 */
 	public function languageView() {
 
-    	$this->setTemplateVar('language',Config()->get('language') );
+    	$this->setTemplateVar('language',Configuration::Conf()->get('language') );
 	}
 
 
@@ -365,10 +366,10 @@ class ProfileAction extends BaseAction
 	private function getUserStyle( $user )
 	{
 		// Theme für den angemeldeten Benuter ermitteln
-		if  ( $user && isset(config('style')[$user->style]))
+		if  ( $user && isset(\cms\base\Configuration::config('style')[$user->style]))
 			$style = $user->style;
 		else
-			$style = config('interface', 'style', 'default');
+			$style = \cms\base\Configuration::config('interface', 'style', 'default');
 
 		return $style;
 	}

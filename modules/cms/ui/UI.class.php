@@ -110,7 +110,7 @@ class UI
      */
     private static function setContentSecurityPolicy()
     {
-        //if (config('security','content-security-policy')) // config is not loaded yet.
+        //if (\cms\base\Configuration::config('security','content-security-policy')) // config is not loaded yet.
         $contentSecurityPolicyEntries = array(
             'default-src \'none\'',
             'script-src \'self\'',

@@ -16,15 +16,38 @@ class VariableResolver
 	public $defaultSeparator    = ':';
 	public $renderOnlyVariables = false;
 
+	/**
+	 * @var callable
+	 */
+	private $filterValue = null;
+
 	private $resolvers = [];
 
 	private $value = null;
 
 
+	/**
+	 * Adding a filter function for values.
+	 * @param $filter callable
+	 */
+	public function addFilter( $filter ) {
+		$this->filterValue = $filter;
+	}
 
+	/**
+	 * Adding a default variable resolver.
+	 * @param $resolver callable
+	 */
 	public function addDefaultResolver( $resolver ) {
 		$this->resolvers[''] = $resolver;
 	}
+
+	/**
+	 * Adding a variable resolver for a key.
+	 *
+	 * @param $key key
+	 * @param $resolver callable
+	 */
 	public function addResolver( $key, $resolver ) {
 		$this->resolvers[$key] = $resolver;
 	}
@@ -96,6 +119,11 @@ class VariableResolver
 				}
 				if   ( ! $v )
 					$v = $this->render($expression->default);
+
+				if   ( $this->filterValue ) {
+					$filter = $this->filterValue;
+					$v = $filter( $v );
+				}
 
 				$text .= $v;
 			}else {

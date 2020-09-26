@@ -139,11 +139,11 @@ class OpenIdAuth implements Auth
 	function login2()
 	{
 		if ($this->provider != 'identity') {
-			$this->user = config('security', 'openid', 'provider.' . $this->provider . '.xrds_uri');
+			$this->user = \cms\base\Configuration::config('security', 'openid', 'provider.' . $this->provider . '.xrds_uri');
 			$this->identity = 'http://specs.openid.net/auth/2.0/identifier_select';
 		}
-		$this->supportSREG = config('security', 'openid', 'provider.' . $this->provider . '.sreg_1_0');
-		$this->supportAX = config('security', 'openid', 'provider.' . $this->provider . '.ax_1_0');
+		$this->supportSREG = \cms\base\Configuration::config('security', 'openid', 'provider.' . $this->provider . '.sreg_1_0');
+		$this->supportAX = \cms\base\Configuration::config('security', 'openid', 'provider.' . $this->provider . '.ax_1_0');
 
 		// Schritt 1: Identity aus Yadis-Dokument laden.
 		$this->getIdentityFromYadis();
@@ -335,7 +335,7 @@ class OpenIdAuth implements Auth
 			$http = new Http($this->identity);
 			return $http->url['host'];
 		} else {
-			$attribute_name = config('security', 'openid', 'provider.' . $this->provider . '.map_attribute');
+			$attribute_name = \cms\base\Configuration::config('security', 'openid', 'provider.' . $this->provider . '.map_attribute');
 			return $this->info[$attribute_name];
 		}
 	}

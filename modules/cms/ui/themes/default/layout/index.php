@@ -3,9 +3,9 @@
  if (!defined('OR_VERSION')) die('Forbidden');
  if (!headers_sent()) header('Content-Type: text/html; charset=UTF-8')
 ?><!DOCTYPE html>
-<html class="theme-<?php echo strtolower($style) ?> nojs" lang="<?php echo Conf()->subset('language')->get('language_code') ?>">
+<html class="theme-<?php echo strtolower($style) ?> nojs" lang="<?php echo \cms\base\Configuration::Conf()->subset('language')->get('language_code') ?>">
 <head>
-<?php $appName = config('application','name'); $appOperator = config('application','operator');
+<?php $appName = \cms\base\Configuration::config('application','name'); $appOperator = \cms\base\Configuration::config('application','operator');
       $title = $appName.(($appOperator!=$appName)?' - '.$appOperator:''); ?>
   <title data-default="<?php echo htmlentities($title,ENT_QUOTES|ENT_HTML5) ?>"><?php echo htmlentities($title,ENT_COMPAT|ENT_HTML5) ?></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">

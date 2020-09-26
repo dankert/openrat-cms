@@ -272,7 +272,7 @@ class LoginAction extends BaseAction
 
         $dbids = array();
 
-        $databases = Conf()->get('database');
+        $databases = \cms\base\Configuration::Conf()->get('database');
 
         if   ( !is_array($databases))
             throw new \LogicException("Corrupt configuration: Databases configuration must be an array.");
@@ -382,9 +382,9 @@ class LoginAction extends BaseAction
 
 		$openid_provider = array();
 		foreach( explode(',',$conf['security']['openid']['provider']['name']) as $provider )
-			$openid_provider[$provider] = config('security','openid','provider.'.$provider.'.name');
+			$openid_provider[$provider] = \cms\base\Configuration::config('security','openid','provider.'.$provider.'.name');
 		$this->setTemplateVar('openid_providers',$openid_provider);
-		$this->setTemplateVar('openid_user_identity',config('security','openid','user_identity'));
+		$this->setTemplateVar('openid_user_identity',\cms\base\Configuration::config('security','openid','user_identity'));
 		//$this->setTemplateVar('openid_provider','identity');
 
 
@@ -608,7 +608,7 @@ class LoginAction extends BaseAction
 				catch (ObjectNotFoundException $e)
 				{
 					// Gruppe fehlt. Anlegen?
-					if	( config('ldap','authorize','auto_add' ) )
+					if	( \cms\base\Configuration::config('ldap','authorize','auto_add' ) )
 					{
 						// Die Gruppe in der OpenRat-Datenbank hinzufuegen.
 						$g = new Group();
@@ -820,7 +820,7 @@ class LoginAction extends BaseAction
 			}
 				
 			// Anmeldung erfolgreich.
-            if	( config()->subset('security')->is('renew_session_login',false) )
+            if	( \cms\base\Configuration::config()->subset('security')->is('renew_session_login',false) )
 				$this->recreateSession();
 			
 			$this->addNotice('user',$user->name,'LOGIN_OK',OR_NOTICE_OK,array('name'=>$user->fullname));
@@ -848,7 +848,7 @@ class LoginAction extends BaseAction
 		if	( is_object($user) )
 			$this->setTemplateVar('login_username',$user->name);
 		
-		if	( config()->subset('security')->is('renew_session_logout',false) )
+		if	( \cms\base\Configuration::config()->subset('security')->is('renew_session_logout',false) )
 			$this->recreateSession();
 
 		if	( @$conf['theme']['compiler']['compile_at_logout'] )
@@ -898,7 +898,7 @@ class LoginAction extends BaseAction
 
 		// Style zurücksetzen.
 		// Der Style des Benutzers koennte auch stehen bleiben. Aber dann gäbe es Rückschlüsse darauf, wer zuletzt angemeldet war (Sicherheit!).
-		$this->setStyle( config('interface','style','default') );
+		$this->setStyle( \cms\base\Configuration::config('interface','style','default') );
 
         $this->addNotice('user',$user->name,'LOGOUT_OK',OR_NOTICE_OK);
 
@@ -1260,9 +1260,9 @@ class LoginAction extends BaseAction
 	function passwordView()
 	{
 		// TODO: Attribut "Password" abfragen
-		foreach( config('database') as $dbname=>$dbconf )
+		foreach( \cms\base\Configuration::config('database') as $dbname=>$dbconf )
 		{
-		    $dbconf = $dbconf + config('database-default','defaults');
+		    $dbconf = $dbconf + \cms\base\Configuration::config('database-default','defaults');
 			if	( $dbconf['enabled'] )
 				$dbids[$dbname] = $dbconf['description'];
 		}
@@ -1275,7 +1275,7 @@ class LoginAction extends BaseAction
 		if	( is_object($db) )
 			$this->setTemplateVar('actdbid',$db->id);
 		else
-			$this->setTemplateVar('actdbid',config('database-default','default-id'));		
+			$this->setTemplateVar('actdbid',\cms\base\Configuration::config('database-default','default-id'));
 	}	
 	
 	
@@ -1420,9 +1420,9 @@ class LoginAction extends BaseAction
         $this->setTemplateVar('machine'  ,php_uname('m') );
         $this->setTemplateVar('version' , phpversion()          );
 
-        $this->setTemplateVar('cms_name'    , Conf()->subset('application')->get('name'    ) );
-        $this->setTemplateVar('cms_version' , Conf()->subset('application')->get('version' ) );
-        $this->setTemplateVar('cms_operator', Conf()->subset('application')->get('operator') );
+        $this->setTemplateVar('cms_name'    , \cms\base\Configuration::Conf()->subset('application')->get('name'    ) );
+        $this->setTemplateVar('cms_version' , \cms\base\Configuration::Conf()->subset('application')->get('version' ) );
+        $this->setTemplateVar('cms_operator', \cms\base\Configuration::Conf()->subset('application')->get('operator') );
 
         $user = Session::getUser();
         if   ( !empty($user) )

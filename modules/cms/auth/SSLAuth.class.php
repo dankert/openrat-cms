@@ -13,9 +13,9 @@ class SSLAuth implements Auth
 {
 	public function username()
 	{
-		$conf = config('security', 'ssl');
-		if (isset($_SERVER[config('security', 'ssl', 'client_cert_dn_env')]))
-			return $_SERVER[config('security', 'ssl', 'client_cert_dn_env')];
+		$conf = \cms\base\Configuration::config('security', 'ssl');
+		if (isset($_SERVER[\cms\base\Configuration::config('security', 'ssl', 'client_cert_dn_env')]))
+			return $_SERVER[\cms\base\Configuration::config('security', 'ssl', 'client_cert_dn_env')];
 	}
 
 

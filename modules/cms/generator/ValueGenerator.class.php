@@ -4,6 +4,7 @@
 namespace cms\generator;
 
 
+use cms\base\Configuration as C;
 use cms\base\DB;
 use cms\macros\MacroRunner;
 use cms\model\BaseObject;
@@ -639,7 +640,7 @@ class ValueGenerator extends BaseGenerator
 
 					case Element::ELEMENT_FORMAT_MARKDOWN:
 
-						$mdConfig = Config()->subset('editor')->subset('markdown');
+						$mdConfig = C::Conf()->subset('editor')->subset('markdown');
 
 						$parser = new \util\Parsedown();
 						$parser->setUrlsLinked( $mdConfig->is('urls-linked',true));

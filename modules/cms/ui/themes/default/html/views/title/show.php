@@ -56,7 +56,7 @@
                 </i>
                 <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('menu_new').'') ?>
                 </span>
-                <span class="<?php echo \template_engine\Output::escapeHtml('keystroke') ?>"><?php echo \template_engine\Output::escapeHtml(''.config('ui','keybinding','method','add').'') ?>
+                <span class="<?php echo \template_engine\Output::escapeHtml('keystroke') ?>"><?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('ui','keybinding','method','add').'') ?>
                 </span>
               </a>
             </div>
@@ -172,7 +172,7 @@
                 </i>
                 <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('menu_prop').'') ?>
                 </span>
-                <span class="<?php echo \template_engine\Output::escapeHtml('keystroke') ?>"><?php echo \template_engine\Output::escapeHtml(''.config('ui','keybinding','method','prop').'') ?>
+                <span class="<?php echo \template_engine\Output::escapeHtml('keystroke') ?>"><?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('ui','keybinding','method','prop').'') ?>
                 </span>
               </a>
             </div>
@@ -190,7 +190,7 @@
                 </i>
                 <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('menu_pub').'') ?>
                 </span>
-                <span class="<?php echo \template_engine\Output::escapeHtml('keystroke') ?>"><?php echo \template_engine\Output::escapeHtml(''.config('ui','keybinding','method','pub').'') ?>
+                <span class="<?php echo \template_engine\Output::escapeHtml('keystroke') ?>"><?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('ui','keybinding','method','pub').'') ?>
                 </span>
               </a>
             </div>
@@ -200,7 +200,7 @@
                 </i>
                 <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('menu_archive').'') ?>
                 </span>
-                <span class="<?php echo \template_engine\Output::escapeHtml('keystroke') ?>"><?php echo \template_engine\Output::escapeHtml(''.config('ui','keybinding','method','archive').'') ?>
+                <span class="<?php echo \template_engine\Output::escapeHtml('keystroke') ?>"><?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('ui','keybinding','method','archive').'') ?>
                 </span>
               </a>
             </div>
@@ -210,7 +210,7 @@
                 </i>
                 <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('menu_rights').'') ?>
                 </span>
-                <span class="<?php echo \template_engine\Output::escapeHtml('keystroke') ?>"><?php echo \template_engine\Output::escapeHtml(''.config('ui','keybinding','method','rights').'') ?>
+                <span class="<?php echo \template_engine\Output::escapeHtml('keystroke') ?>"><?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('ui','keybinding','method','rights').'') ?>
                 </span>
               </a>
             </div>
@@ -362,7 +362,7 @@
                 </i>
                 <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('menu_profile').'') ?>
                 </span>
-                <span class="<?php echo \template_engine\Output::escapeHtml('keystroke') ?>"><?php echo \template_engine\Output::escapeHtml(''.config('ui','keybinding','action','profile').'') ?>
+                <span class="<?php echo \template_engine\Output::escapeHtml('keystroke') ?>"><?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('ui','keybinding','action','profile').'') ?>
                 </span>
               </a>
             </div>

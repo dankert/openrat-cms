@@ -5,35 +5,35 @@
     <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('subaction') ?>" value="<?php echo \template_engine\Output::escapeHtml('login') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
     <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('id') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$_id.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
     <div><?php echo \template_engine\Output::escapeHtml('') ?>
-      <?php $if1=(config('login','logo','enabled')); if($if1) {  ?>
-        <?php $if1=!((config('login','logo','url'))==FALSE); if($if1) {  ?>
-          <a target="<?php echo \template_engine\Output::escapeHtml('_self') ?>" data-url="<?php echo \template_engine\Output::escapeHtml(''.config('login','logo','url').'') ?>" data-action="<?php echo \template_engine\Output::escapeHtml('') ?>" data-method="<?php echo \template_engine\Output::escapeHtml('') ?>" data-id="<?php echo \template_engine\Output::escapeHtml('') ?>" data-extra="<?php echo \template_engine\Output::escapeHtml('[]') ?>" href="<?php echo \template_engine\Output::escapeHtml('/#//') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <img src="<?php echo \template_engine\Output::escapeHtml(''.config('login','logo','image').'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+      <?php $if1=(\cms\base\Configuration::config('login','logo','enabled')); if($if1) {  ?>
+        <?php $if1=!((\cms\base\Configuration::config('login','logo','url'))==FALSE); if($if1) {  ?>
+          <a target="<?php echo \template_engine\Output::escapeHtml('_self') ?>" data-url="<?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('login','logo','url').'') ?>" data-action="<?php echo \template_engine\Output::escapeHtml('') ?>" data-method="<?php echo \template_engine\Output::escapeHtml('') ?>" data-id="<?php echo \template_engine\Output::escapeHtml('') ?>" data-extra="<?php echo \template_engine\Output::escapeHtml('[]') ?>" href="<?php echo \template_engine\Output::escapeHtml('/#//') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <img src="<?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('login','logo','image').'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
           </a>
          <?php } ?>
         <?php if(!$if1) {  ?>
-          <img src="<?php echo \template_engine\Output::escapeHtml(''.config('login','logo','image').'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+          <img src="<?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('login','logo','image').'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
          <?php } ?>
        <?php } ?>
-      <?php $if1=!((config('login','motd'))==FALSE); if($if1) {  ?>
+      <?php $if1=!((\cms\base\Configuration::config('login','motd'))==FALSE); if($if1) {  ?>
         <div class="<?php echo \template_engine\Output::escapeHtml('message info') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-          <span><?php echo \template_engine\Output::escapeHtml(''.config('login','motd').'') ?>
+          <span><?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('login','motd').'') ?>
           </span>
         </div>
        <?php } ?>
-      <?php $if1=(config('login','nologin')); if($if1) {  ?>
+      <?php $if1=(\cms\base\Configuration::config('login','nologin')); if($if1) {  ?>
         <div class="<?php echo \template_engine\Output::escapeHtml('message error') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
           <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('LOGIN_NOLOGIN_DESC').'') ?>
           </span>
         </div>
        <?php } ?>
-      <?php $if1=(config('security','readonly')); if($if1) {  ?>
+      <?php $if1=(\cms\base\Configuration::config('security','readonly')); if($if1) {  ?>
         <div class="<?php echo \template_engine\Output::escapeHtml('message warn') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
           <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('READONLY_DESC').'') ?>
           </span>
         </div>
        <?php } ?>
-      <?php $if1=(!config('login','nologin')); if($if1) {  ?>
+      <?php $if1=(!\cms\base\Configuration::config('login','nologin')); if($if1) {  ?>
         <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
           <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
             <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>

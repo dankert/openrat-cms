@@ -420,7 +420,7 @@ class Folder extends BaseObject
      */
     public function filename()
     {
-        $filenameConfig = config('filename');
+        $filenameConfig = \cms\base\Configuration::config('filename');
 
         if	( $filenameConfig['edit'] )
         {

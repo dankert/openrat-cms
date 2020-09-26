@@ -42,14 +42,14 @@ class IndexAction extends Action
         $user = Session::getUser();
 
         if   ( $user )
-            $this->lastModified( config('config','last_modification_time') );
+            $this->lastModified( \cms\base\Configuration::config('config','last_modification_time') );
         else
             $this->lastModified( time() );
 
         $style = $this->getUserStyle( $user );
 
-        $styleConfig     = config('style-default'); // default style config
-        $userStyleConfig = config('style', $style); // user style config
+        $styleConfig     = \cms\base\Configuration::config('style-default'); // default style config
+        $userStyleConfig = \cms\base\Configuration::config('style', $style); // user style config
 
         if (is_array($userStyleConfig))
             $styleConfig = array_merge($styleConfig, $userStyleConfig ); // Merging user style into default style
@@ -62,7 +62,7 @@ class IndexAction extends Action
 
 
 
-        $appName = config('application','name');
+        $appName = \cms\base\Configuration::config('application','name');
 
         $value = array(
             'name' => $appName,
@@ -99,9 +99,9 @@ class IndexAction extends Action
         }
 
         if	( $user )
-            $this->lastModified( max( $user->loginDate,config('config','last_modification_time')) );
+            $this->lastModified( max( $user->loginDate,\cms\base\Configuration::config('config','last_modification_time')) );
         else
-            $this->lastModified( config('config','last_modification_time') );
+            $this->lastModified( \cms\base\Configuration::config('config','last_modification_time') );
 
         // Theme für den angemeldeten Benuter ermitteln
         $style = $this->getUserStyle($user);
@@ -121,8 +121,8 @@ class IndexAction extends Action
 		$this->setTemplateVar('jsFiles' , $this->getJSFiles() );
         $this->setTemplateVar('cssFiles',$this->getCSSFiles() );
 
-        $styleConfig     = config('style-default'); // default style config
-        $userStyleConfig = config('style', $style); // user style config
+        $styleConfig     = \cms\base\Configuration::config('style-default'); // default style config
+        $userStyleConfig = \cms\base\Configuration::config('style', $style); // user style config
 
         if (is_array($userStyleConfig))
             $styleConfig = array_merge($styleConfig,$userStyleConfig); // Merging user style into default style
@@ -132,7 +132,7 @@ class IndexAction extends Action
         // Theme base color for smartphones colorizing their status bar.
         $this->setTemplateVar('themeColor', UIUtils::getColorHexCode($styleConfig['title_background_color']));
 
-        $messageOfTheDay = config('login', 'motd');
+        $messageOfTheDay = \cms\base\Configuration::config('login', 'motd');
 
         if ( !empty($messageOfTheDay) )
             $this->addInfoFor( new User(),Messages::MOTD,array('motd'=>$messageOfTheDay) );
@@ -152,7 +152,7 @@ class IndexAction extends Action
             $methodList[] = array('name'=>$method,'open'=>$openByDefault);
         }
         $this->setTemplateVar('methodList', $methodList);
-		$this->setTemplateVar('favicon_url', Conf()->subset('theme')->get('favicon','modules/cms/ui/themes/default/images/openrat-logo.ico') );
+		$this->setTemplateVar('favicon_url', \cms\base\Configuration::Conf()->subset('theme')->get('favicon','modules/cms/ui/themes/default/images/openrat-logo.ico') );
 
         // HTML-Datei direkt einbinden.
         $vars = $this->getOutputData();
@@ -192,7 +192,7 @@ class IndexAction extends Action
 		$css = '';
 		
 		
-		foreach (array_keys(config('style')) as $styleId)
+		foreach (array_keys(\cms\base\Configuration::config('style')) as $styleId)
 		{
 			try
 			{
@@ -203,7 +203,7 @@ class IndexAction extends Action
 				));
 				$parser->parseFile($lessFile,basename($lessFile));
 				
-				$styleConfig = array_merge( config('style-default'), config('style', $styleId) );
+				$styleConfig = array_merge( \cms\base\Configuration::config('style-default'), \cms\base\Configuration::config('style', $styleId) );
 				$lessVars = array(
 					'cms-theme-id' => strtolower($styleId),
 					'cms-image-path' => 'themes/default/images/'
@@ -426,7 +426,7 @@ class IndexAction extends Action
 
 
         // Das zuletzt geänderte Objekt benutzen.
-        if	( config('login','start','start_lastchanged_object') )
+        if	( \cms\base\Configuration::config('login','start','start_lastchanged_object') )
         {
             $objectid = Value::getLastChangedObjectByUserId($user->userid);
 
@@ -442,7 +442,7 @@ class IndexAction extends Action
         }
 
         // Das einzige Projekt benutzen
-        if	( config('login','start','start_single_project') )
+        if	( \cms\base\Configuration::config('login','start','start_single_project') )
         {
             $projects = Project::getAllProjects();
             if ( count($projects) == 1 ) {
@@ -458,7 +458,7 @@ class IndexAction extends Action
 
     private function tryAutoLogin()
     {
-        $modules  = config('security','autologin','modules');
+        $modules  = \cms\base\Configuration::config('security','autologin','modules');
         $username = null;
 
         foreach( $modules as $module)
@@ -514,10 +514,10 @@ class IndexAction extends Action
     private function getUserStyle( $user )
     {
         // Theme für den angemeldeten Benuter ermitteln
-        if  ( $user && isset(config('style')[$user->style]))
+        if  ( $user && isset(\cms\base\Configuration::config('style')[$user->style]))
             $style = $user->style;
         else
-            $style = config('interface', 'style', 'default');
+            $style = \cms\base\Configuration::config('interface', 'style', 'default');
         return $style;
     }
 

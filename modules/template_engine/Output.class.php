@@ -4,6 +4,7 @@
 namespace template_engine;
 
 
+use cms\base\Configuration;
 use cms\base\Language;
 use util\Text;
 
@@ -26,5 +27,10 @@ class Output
 
 	public static function lang($key) {
 		return Language::lang($key);
+	}
+
+
+	public static function config($part1 = null, $part2 = null, $part3 = null, $part4 = null) {
+		Configuration::config($part1,$part2,$part3,$part4);
 	}
 }

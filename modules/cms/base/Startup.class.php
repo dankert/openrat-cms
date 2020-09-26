@@ -35,11 +35,6 @@ class Startup {
 		self::setErrorHandler();
 		self::setConstants();
 		self::createRequest();
-
-		//require __DIR__.'/Language.class.php';
-		require __DIR__.'/Configuration.class.php';
-		Language::registerFunctions();
-		\Configuration::registerFunctions();
 	}
 
 	public static function checkPHPVersion()
@@ -158,7 +153,7 @@ class Startup {
 	public static function readonly() {
 
 		// Gesamtes CMS ist readonly.
-		if (config('security', 'readonly'))
+		if (\cms\base\Configuration::config('security', 'readonly'))
 			return true;
 
 		// Aktuelle Datenbankverbindung ist readonly.

@@ -5,7 +5,7 @@
     <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('subaction') ?>" value="<?php echo \template_engine\Output::escapeHtml('login') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
     <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('id') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$_id.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
     <div><?php echo \template_engine\Output::escapeHtml('') ?>
-      <?php $if1=(config('security','openid','enable')); if($if1) {  ?>
+      <?php $if1=(\cms\base\Configuration::config('security','openid','enable')); if($if1) {  ?>
         <fieldset class="<?php echo \template_engine\Output::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
           <legend class="<?php echo \template_engine\Output::escapeHtml('on-click-open-close') ?>"><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('OPENID').'') ?>
             <img /><?php echo \template_engine\Output::escapeHtml('') ?>
@@ -19,8 +19,8 @@
               <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
                 <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('openid_user').'') ?>
                 </span>
-                <?php $if1=!((config('security','openid','logo_url'))==FALSE); if($if1) {  ?>
-                  <img src="<?php echo \template_engine\Output::escapeHtml(''.config('security','openid','logo_url').'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+                <?php $if1=!((\cms\base\Configuration::config('security','openid','logo_url'))==FALSE); if($if1) {  ?>
+                  <img src="<?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('security','openid','logo_url').'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
                  <?php } ?>
               </div>
               <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>

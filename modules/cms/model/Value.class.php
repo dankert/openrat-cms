@@ -469,7 +469,7 @@ SQL
 		$sql->query();
 		
 		// Nur ausfuehren, wenn in Konfiguration aktiviert.
-		$limit = config('content','revision-limit');
+		$limit = \cms\base\Configuration::config('content','revision-limit');
 		if	( isset($limit['enabled']) && $limit['enabled'] )
 			$this->checkLimit();
 	}
@@ -481,7 +481,7 @@ SQL
 	 */
 	function checkLimit()
 	{
-		$limit = config('content','revision-limit');
+		$limit = \cms\base\Configuration::config('content','revision-limit');
 
 		$db = \cms\base\DB::get();
 

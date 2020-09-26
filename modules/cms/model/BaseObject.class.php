@@ -299,7 +299,7 @@ SQL
                 }
 
                 $guestMask = 0;
-                switch( Conf()->subset('security')->get('guest-access','read') )
+                switch( \cms\base\Configuration::Conf()->subset('security')->get('guest-access','read') )
                 {
                     case 'read':
                     case 'readonly':
@@ -529,7 +529,7 @@ SQL
         $slug = str_replace(array_keys($replacements), array_values($replacements), $slug);
 
         // 2nd try is to use iconv with the current locale.
-        Language::setLocale( config('language','language_code' ) );
+        Language::setLocale( \cms\base\Configuration::config('language','language_code' ) );
         $slug = iconv('utf-8', 'ascii//TRANSLIT', $slug);
 
         // now replace every unpleasant char with a hyphen.

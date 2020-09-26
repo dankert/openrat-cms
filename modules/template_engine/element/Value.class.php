@@ -54,7 +54,7 @@ class Value
 
 		$res->addResolver('config', function($name) {
 			$config_parts = explode('/', $name);
-			return '\'.config(' . "'" . implode("'" . ',' . "'", $config_parts) . "'" . ').\'';
+			return '\'.\template_engine\Output::config(' . "'" . implode("'" . ',' . "'", $config_parts) . "'" . ').\'';
 		});
 
 

@@ -45,7 +45,7 @@ class Language extends ModelBase
 
     public static function setLocale( $isoCode )
     {
-        $localeConf = config()->subset('i18n')->subset('locale');
+        $localeConf = \cms\base\Configuration::config()->subset('i18n')->subset('locale');
 
         if	( $localeConf->has(strtolower($isoCode)) )
         {

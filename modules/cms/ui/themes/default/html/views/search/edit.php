@@ -28,31 +28,31 @@
           <br /><?php echo \template_engine\Output::escapeHtml('') ?>
         </div>
         <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-          <input type="<?php echo \template_engine\Output::escapeHtml('checkbox') ?>" name="<?php echo \template_engine\Output::escapeHtml('id') ?>" value="<?php echo \template_engine\Output::escapeHtml('1') ?>" <?php if(config('search','quicksearch','flag','id')){ ?>checked="<?php echo \template_engine\Output::escapeHtml('checked') ?>"<?php } ?> /><?php echo \template_engine\Output::escapeHtml('') ?>
+          <input type="<?php echo \template_engine\Output::escapeHtml('checkbox') ?>" name="<?php echo \template_engine\Output::escapeHtml('id') ?>" value="<?php echo \template_engine\Output::escapeHtml('1') ?>" <?php if(\cms\base\Configuration::config('search','quicksearch','flag','id')){ ?>checked="<?php echo \template_engine\Output::escapeHtml('checked') ?>"<?php } ?> /><?php echo \template_engine\Output::escapeHtml('') ?>
           <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
             <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('id').'') ?>
             </span>
           </label>
           <br /><?php echo \template_engine\Output::escapeHtml('') ?>
-          <input type="<?php echo \template_engine\Output::escapeHtml('checkbox') ?>" name="<?php echo \template_engine\Output::escapeHtml('name') ?>" value="<?php echo \template_engine\Output::escapeHtml('1') ?>" <?php if(config('search','quicksearch','flag','name')){ ?>checked="<?php echo \template_engine\Output::escapeHtml('checked') ?>"<?php } ?> /><?php echo \template_engine\Output::escapeHtml('') ?>
+          <input type="<?php echo \template_engine\Output::escapeHtml('checkbox') ?>" name="<?php echo \template_engine\Output::escapeHtml('name') ?>" value="<?php echo \template_engine\Output::escapeHtml('1') ?>" <?php if(\cms\base\Configuration::config('search','quicksearch','flag','name')){ ?>checked="<?php echo \template_engine\Output::escapeHtml('checked') ?>"<?php } ?> /><?php echo \template_engine\Output::escapeHtml('') ?>
           <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
             <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('name').'') ?>
             </span>
           </label>
           <br /><?php echo \template_engine\Output::escapeHtml('') ?>
-          <input type="<?php echo \template_engine\Output::escapeHtml('checkbox') ?>" name="<?php echo \template_engine\Output::escapeHtml('filename') ?>" value="<?php echo \template_engine\Output::escapeHtml('1') ?>" <?php if(config('search','quicksearch','flag','filename')){ ?>checked="<?php echo \template_engine\Output::escapeHtml('checked') ?>"<?php } ?> /><?php echo \template_engine\Output::escapeHtml('') ?>
+          <input type="<?php echo \template_engine\Output::escapeHtml('checkbox') ?>" name="<?php echo \template_engine\Output::escapeHtml('filename') ?>" value="<?php echo \template_engine\Output::escapeHtml('1') ?>" <?php if(\cms\base\Configuration::config('search','quicksearch','flag','filename')){ ?>checked="<?php echo \template_engine\Output::escapeHtml('checked') ?>"<?php } ?> /><?php echo \template_engine\Output::escapeHtml('') ?>
           <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
             <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('filename').'') ?>
             </span>
           </label>
           <br /><?php echo \template_engine\Output::escapeHtml('') ?>
-          <input type="<?php echo \template_engine\Output::escapeHtml('checkbox') ?>" name="<?php echo \template_engine\Output::escapeHtml('description') ?>" value="<?php echo \template_engine\Output::escapeHtml('1') ?>" <?php if(config('search','quicksearch','flag','description')){ ?>checked="<?php echo \template_engine\Output::escapeHtml('checked') ?>"<?php } ?> /><?php echo \template_engine\Output::escapeHtml('') ?>
+          <input type="<?php echo \template_engine\Output::escapeHtml('checkbox') ?>" name="<?php echo \template_engine\Output::escapeHtml('description') ?>" value="<?php echo \template_engine\Output::escapeHtml('1') ?>" <?php if(\cms\base\Configuration::config('search','quicksearch','flag','description')){ ?>checked="<?php echo \template_engine\Output::escapeHtml('checked') ?>"<?php } ?> /><?php echo \template_engine\Output::escapeHtml('') ?>
           <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
             <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('description').'') ?>
             </span>
           </label>
           <br /><?php echo \template_engine\Output::escapeHtml('') ?>
-          <input type="<?php echo \template_engine\Output::escapeHtml('checkbox') ?>" name="<?php echo \template_engine\Output::escapeHtml('content') ?>" value="<?php echo \template_engine\Output::escapeHtml('1') ?>" <?php if(config('search','quicksearch','flag','content')){ ?>checked="<?php echo \template_engine\Output::escapeHtml('checked') ?>"<?php } ?> /><?php echo \template_engine\Output::escapeHtml('') ?>
+          <input type="<?php echo \template_engine\Output::escapeHtml('checkbox') ?>" name="<?php echo \template_engine\Output::escapeHtml('content') ?>" value="<?php echo \template_engine\Output::escapeHtml('1') ?>" <?php if(\cms\base\Configuration::config('search','quicksearch','flag','content')){ ?>checked="<?php echo \template_engine\Output::escapeHtml('checked') ?>"<?php } ?> /><?php echo \template_engine\Output::escapeHtml('') ?>
           <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
             <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('content').'') ?>
             </span>

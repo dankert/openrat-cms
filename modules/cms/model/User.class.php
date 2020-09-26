@@ -225,7 +225,7 @@ SQL
                  VALUES( {id},{userid},{selector},{token},{token_algo},{expires},{create_date},{platform},{name} )
 SQL
         );
-		$expirationPeriodDays = Conf()->subset('user')->subset('security')->get('token_expires_after_days',730);
+		$expirationPeriodDays = \cms\base\Configuration::Conf()->subset('user')->subset('security')->get('token_expires_after_days',730);
 
 		$stmt->setInt( 'id'         ,++$count      );
 		$stmt->setInt( 'userid'     ,$this->userid );
@@ -955,7 +955,7 @@ SQL
 	 */
 	public static function pepperPassword( $pass )
 	{
-		$salt = Conf()->subset('security')->subset('password')->get('pepper');
+		$salt = \cms\base\Configuration::Conf()->subset('security')->subset('password')->get('pepper');
 
 		return $salt.$pass;
 	}

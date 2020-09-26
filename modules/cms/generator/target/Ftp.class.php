@@ -104,7 +104,7 @@ class Ftp extends BaseTarget
 		if ($p !== false) // Wennn letzten Punkt gefunden, dann dort aufteilen
 		{
 			$extension = substr(basename($dest), $p + 1);
-			$type = config('mime-types', $extension);
+			$type = \cms\base\Configuration::config('mime-types', $extension);
 			if (substr($type, 0, 5) == 'text/')
 				$mode = FTP_ASCII;
 		}

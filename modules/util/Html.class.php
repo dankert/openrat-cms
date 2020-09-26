@@ -71,7 +71,7 @@ class Html
 		if ($conf['interface']['url']['add_sessionid'])
 			$params[session_name()] = session_id();
 
-		if (config('security', 'use_post_token'))
+		if (\cms\base\Configuration::config('security', 'use_post_token'))
 			$params['token'] = Session::token();
 
 		$fake_urls = $conf['interface']['url']['fake_url'];

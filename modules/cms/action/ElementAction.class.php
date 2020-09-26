@@ -94,7 +94,7 @@ class ElementAction extends BaseAction
 	public function advancedPost()
 	{
         global $conf;
-        $ini_date_format = config('date','format');
+        $ini_date_format = \cms\base\Configuration::config('date','format');
 
 
         if	( $this->hasRequestVar('format'))
@@ -302,9 +302,9 @@ class ElementAction extends BaseAction
 
                 case 'dateformat':
 
-                    //$ini_date_format = config('date','format');
-                    //$ini_date_format = Conf()->subset('date')->get('format');
-                    $ini_date_format = config()->subset('date')->get('format');
+                    //$ini_date_format = \cms\base\Configuration::config('date','format');
+                    //$ini_date_format = \cms\base\Configuration::Conf()->subset('date')->get('format');
+                    $ini_date_format = \cms\base\Configuration::config()->subset('date')->get('format');
                     $dateformat = array();
 
                     $this->setTemplateVar('dateformat','');

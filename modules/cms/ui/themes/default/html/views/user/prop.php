@@ -36,7 +36,7 @@
               </div>
             </div>
           </div>
-          <?php $if1=(config('security','user','show_admin_mail')); if($if1) {  ?>
+          <?php $if1=(\cms\base\Configuration::config('security','user','show_admin_mail')); if($if1) {  ?>
             <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
               <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
                 <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('user_mail').'') ?>

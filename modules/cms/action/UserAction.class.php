@@ -234,7 +234,7 @@ class UserAction extends BaseAction
 	{
 	    global $conf;
 	    
-	    $issuer  = urlencode(config('application','operator'));
+	    $issuer  = urlencode(\cms\base\Configuration::config('application','operator'));
 	    $account = $this->user->name.'@'.$_SERVER['SERVER_NAME'];
 
 	    $base32 = new Base2n(5, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567', FALSE, TRUE, TRUE);
@@ -274,7 +274,7 @@ class UserAction extends BaseAction
 	{
 		$this->setTemplateVars( $this->user->getProperties() );
 
-		$gravatarConfig = config('interface','gravatar');
+		$gravatarConfig = \cms\base\Configuration::config('interface','gravatar');
 		
 		$this->setTemplateVar( 'image', 'about:blank' );
 		if	( is_array($gravatarConfig) )
@@ -298,7 +298,7 @@ class UserAction extends BaseAction
 
 
 
-        $issuer  = urlencode(config('application','operator'));
+        $issuer  = urlencode(\cms\base\Configuration::config('application','operator'));
         $account = $this->user->name.'@'.$_SERVER['SERVER_NAME'];
 
         $base32 = new Base2n(5, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567', FALSE, TRUE, TRUE);

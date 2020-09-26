@@ -311,9 +311,9 @@ class StartAction extends BaseAction
 		
 		$openid_provider = array();
 		foreach( explode(',',$conf['security']['openid']['provider']) as $provider )
-			$openid_provider[$provider] = config('security','openid','provider.'.$provider.'.name');
+			$openid_provider[$provider] = \cms\base\Configuration::config('security','openid','provider.'.$provider.'.name');
 		$this->setTemplateVar('openid_providers',$openid_provider);
-		$this->setTemplateVar('openid_user_identity',config('security','openid','user_identity'));
+		$this->setTemplateVar('openid_user_identity',\cms\base\Configuration::config('security','openid','user_identity'));
 		//$this->setTemplateVar('openid_provider','identity');
 
 		
@@ -633,7 +633,7 @@ class StartAction extends BaseAction
 			Logger::debug("Login successful for user '$loginName'");
 			
 			// Anmeldung erfolgreich.
-			if	( config('security','renew_session_login') )
+			if	( \cms\base\Configuration::config('security','renew_session_login') )
 				$this->recreateSession();
 			
 			$user = Session::getUser();
@@ -655,7 +655,7 @@ class StartAction extends BaseAction
 		if	( is_object($user) )
 			$this->setTemplateVar('login_username',$user->name);
 		
-		if	( config('security','renew_session_logout') )
+		if	( \cms\base\Configuration::config('security','renew_session_logout') )
 			$this->recreateSession();
 
 		session_unset();

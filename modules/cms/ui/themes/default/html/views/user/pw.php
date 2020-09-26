@@ -21,7 +21,7 @@
           <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('password_proposal') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$password_proposal.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
         </div>
       </div>
-      <?php $if1=(config('mail','enabled')); if($if1) {  ?>
+      <?php $if1=(\cms\base\Configuration::config('mail','enabled')); if($if1) {  ?>
         <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
           <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
           </div>
@@ -74,7 +74,7 @@
         <div class="<?php echo \template_engine\Output::escapeHtml('closable') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
         </div>
       </fieldset>
-      <?php $if1=(config('mail','enabled')); if($if1) {  ?>
+      <?php $if1=(\cms\base\Configuration::config('mail','enabled')); if($if1) {  ?>
         <?php $if1=(isset($mail)); if($if1) {  ?>
           <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
             <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>

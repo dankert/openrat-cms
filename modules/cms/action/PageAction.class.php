@@ -681,8 +681,8 @@ class PageAction extends ObjectAction
 		$templateModel->load();
 
 		// Executing PHP in Pages.
-		if	( ( config('publish','enable_php_in_page_content')=='auto' && $templateModel->extension == 'php') ||
-		        config('publish','enable_php_in_page_content')===true )
+		if	( ( \cms\base\Configuration::config('publish','enable_php_in_page_content')=='auto' && $templateModel->extension == 'php') ||
+		        \cms\base\Configuration::config('publish','enable_php_in_page_content')===true )
         {
             ob_start();
             require( $generator->getCache()->load()->getFilename() );

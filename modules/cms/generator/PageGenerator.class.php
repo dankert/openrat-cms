@@ -173,7 +173,7 @@ class PageGenerator extends BaseGenerator
 
 		// should we do a UTF-8-escaping here?
 		// Default should be off, because if you are fully using utf-8 (you should do), this is unnecessary.
-		if	( config('publish','escape_8bit_characters') )
+		if	( \cms\base\Configuration::config('publish','escape_8bit_characters') )
 			if	( substr($this->mimeType(),-4) == 'html' )
 			{
 				/*
@@ -212,14 +212,14 @@ class PageGenerator extends BaseGenerator
 		$project = $page->getProject();
 		$project->load();
 
-		$format = config('publish','format');
+		$format = \cms\base\Configuration::config('publish','format');
 		$format = str_replace('{filename}',$page->filename,$format );
 
 		$allLanguages = $project->getLanguageIds();
 		$allModels    = $project->getModelIds();
 
-		$withLanguage = count($allLanguages) > 1 || config('publish','filename_language') == 'always';
-		$withModel    = count($allModels   ) > 1 || config('publish','filename_type'    ) == 'always';
+		$withLanguage = count($allLanguages) > 1 || \cms\base\Configuration::config('publish','filename_language') == 'always';
+		$withModel    = count($allModels   ) > 1 || \cms\base\Configuration::config('publish','filename_type'    ) == 'always';
 
 		$languagePart = '';
 		$typePart     = '';
@@ -238,8 +238,8 @@ class PageGenerator extends BaseGenerator
 			$typePart = $templateModel->extension;
 		}
 
-		$languageSep = $languagePart?config('publish','language_sep') :'';
-		$typeSep     = $typePart    ?config('publish','type_sep'    ) :'';
+		$languageSep = $languagePart?\cms\base\Configuration::config('publish','language_sep') :'';
+		$typeSep     = $typePart    ?\cms\base\Configuration::config('publish','type_sep'    ) :'';
 
 		$format = str_replace('{language}'    ,$languagePart ,$format );
 		$format = str_replace('{language_sep}',$languageSep  ,$format );

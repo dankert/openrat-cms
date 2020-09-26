@@ -379,7 +379,7 @@ namespace cms\action {
                 return;
             
             // Conditional-Get eingeschaltet?
-            if (!config('cache', 'conditional_get'))
+            if (!\cms\base\Configuration::config('cache', 'conditional_get'))
                 return;
 
             $expires = substr(date('r', time() + $expirationDuration - date('Z')), 0, -5) . 'GMT';
@@ -449,11 +449,11 @@ namespace cms\action {
             if (empty($value))
                 $expire = time(); // Cookie wird gelöscht.
             else
-                $expire = time() + 60 * 60 * 24 * config('security', 'cookie', 'expire');
+                $expire = time() + 60 * 60 * 24 * \cms\base\Configuration::config('security', 'cookie', 'expire');
 
-            $secure   = config('security', 'cookie', 'secure');
-            $httponly = config('security', 'cookie', 'httponly');
-			$samesite = config('security', 'cookie', 'samesite');
+            $secure   = \cms\base\Configuration::config('security', 'cookie', 'secure');
+            $httponly = \cms\base\Configuration::config('security', 'cookie', 'httponly');
+			$samesite = \cms\base\Configuration::config('security', 'cookie', 'samesite');
 
             $cookieAttributes = [
             	rawurlencode($name).'='.rawurlencode($value),

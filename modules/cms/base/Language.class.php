@@ -23,14 +23,6 @@ use util\text\variables\VariableResolver;
 
 class Language
 {
-	public static function registerFunctions()
-	{
-
-
-
-	}
-
-
 	/**
 	 * Diese Funktion stellt ein Wort in der eingestellten
 	 * Sprache zur Verfuegung.

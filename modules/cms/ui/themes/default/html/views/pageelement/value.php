@@ -107,73 +107,73 @@
                 <div class="<?php echo \template_engine\Output::escapeHtml('or-table-area') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
                   <table width="<?php echo \template_engine\Output::escapeHtml('100%') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
                     <td><?php echo \template_engine\Output::escapeHtml('') ?>
-                      <span><?php echo \template_engine\Output::escapeHtml(''.config('editor','text-markup','strong-begin').'') ?>
+                      <span><?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('editor','text-markup','strong-begin').'') ?>
                       </span>
                       <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('text_markup_strong').'') ?>
                       </span>
-                      <span><?php echo \template_engine\Output::escapeHtml(''.config('editor','text-markup','strong-end').'') ?>
+                      <span><?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('editor','text-markup','strong-end').'') ?>
                       </span>
                       <br /><?php echo \template_engine\Output::escapeHtml('') ?>
-                      <span><?php echo \template_engine\Output::escapeHtml(''.config('editor','text-markup','emphatic-begin').'') ?>
+                      <span><?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('editor','text-markup','emphatic-begin').'') ?>
                       </span>
                       <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('text_markup_emphatic').'') ?>
                       </span>
-                      <span><?php echo \template_engine\Output::escapeHtml(''.config('editor','text-markup','emphatic-end').'') ?>
+                      <span><?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('editor','text-markup','emphatic-end').'') ?>
                       </span>
                     </td>
                     <td><?php echo \template_engine\Output::escapeHtml('') ?>
-                      <span><?php echo \template_engine\Output::escapeHtml(''.config('editor','text-markup','list-numbered').'') ?>
+                      <span><?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('editor','text-markup','list-numbered').'') ?>
                       </span>
                       <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('text_markup_numbered_list').'') ?>
                       </span>
                       <br /><?php echo \template_engine\Output::escapeHtml('') ?>
-                      <span><?php echo \template_engine\Output::escapeHtml(''.config('editor','text-markup','list-numbered').'') ?>
+                      <span><?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('editor','text-markup','list-numbered').'') ?>
                       </span>
                       <span><?php echo \template_engine\Output::escapeHtml('...') ?>
                       </span>
                       <br /><?php echo \template_engine\Output::escapeHtml('') ?>
                     </td>
                     <td><?php echo \template_engine\Output::escapeHtml('') ?>
-                      <span><?php echo \template_engine\Output::escapeHtml(''.config('editor','text-markup','list-unnumbered').'') ?>
+                      <span><?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('editor','text-markup','list-unnumbered').'') ?>
                       </span>
                       <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('text_markup_unnumbered_list').'') ?>
                       </span>
                       <br /><?php echo \template_engine\Output::escapeHtml('') ?>
-                      <span><?php echo \template_engine\Output::escapeHtml(''.config('editor','text-markup','list-unnumbered').'') ?>
+                      <span><?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('editor','text-markup','list-unnumbered').'') ?>
                       </span>
                       <span><?php echo \template_engine\Output::escapeHtml('...') ?>
                       </span>
                       <br /><?php echo \template_engine\Output::escapeHtml('') ?>
                     </td>
                     <td><?php echo \template_engine\Output::escapeHtml('') ?>
-                      <span><?php echo \template_engine\Output::escapeHtml(''.config('editor','text-markup','table-cell-sep').'') ?>
+                      <span><?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('editor','text-markup','table-cell-sep').'') ?>
                       </span>
                       <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('text_markup_table').'') ?>
                       </span>
-                      <span><?php echo \template_engine\Output::escapeHtml(''.config('editor','text-markup','table-cell-sep').'') ?>
+                      <span><?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('editor','text-markup','table-cell-sep').'') ?>
                       </span>
                       <span><?php echo \template_engine\Output::escapeHtml('...') ?>
                       </span>
-                      <span><?php echo \template_engine\Output::escapeHtml(''.config('editor','text-markup','table-cell-sep').'') ?>
+                      <span><?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('editor','text-markup','table-cell-sep').'') ?>
                       </span>
                       <span><?php echo \template_engine\Output::escapeHtml('...') ?>
                       </span>
-                      <span><?php echo \template_engine\Output::escapeHtml(''.config('editor','text-markup','table-cell-sep').'') ?>
+                      <span><?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('editor','text-markup','table-cell-sep').'') ?>
                       </span>
                       <br /><?php echo \template_engine\Output::escapeHtml('') ?>
-                      <span><?php echo \template_engine\Output::escapeHtml(''.config('editor','text-markup','table-cell-sep').'') ?>
+                      <span><?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('editor','text-markup','table-cell-sep').'') ?>
                       </span>
                       <span><?php echo \template_engine\Output::escapeHtml('...') ?>
                       </span>
-                      <span><?php echo \template_engine\Output::escapeHtml(''.config('editor','text-markup','table-cell-sep').'') ?>
+                      <span><?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('editor','text-markup','table-cell-sep').'') ?>
                       </span>
                       <span><?php echo \template_engine\Output::escapeHtml('...') ?>
                       </span>
-                      <span><?php echo \template_engine\Output::escapeHtml(''.config('editor','text-markup','table-cell-sep').'') ?>
+                      <span><?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('editor','text-markup','table-cell-sep').'') ?>
                       </span>
                       <span><?php echo \template_engine\Output::escapeHtml('...') ?>
                       </span>
-                      <span><?php echo \template_engine\Output::escapeHtml(''.config('editor','text-markup','table-cell-sep').'') ?>
+                      <span><?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('editor','text-markup','table-cell-sep').'') ?>
                       </span>
                       <br /><?php echo \template_engine\Output::escapeHtml('') ?>
                     </td>

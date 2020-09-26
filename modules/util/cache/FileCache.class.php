@@ -43,7 +43,7 @@ class FileCache implements Cache
         $this->filename = $filename;
         $this->loader   = $loader;
 
-        if   ( config()->subset('publishing')->is('cache_enabled',false) )
+        if   ( \cms\base\Configuration::config()->subset('publishing')->is('cache_enabled',false) )
             $this->invalidateIfOlderThan( $lastModified );
         else
             $this->invalidateIfOlderThan( START_TIME ); // Invalidate all before this request.

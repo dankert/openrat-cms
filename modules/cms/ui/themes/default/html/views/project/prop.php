@@ -58,7 +58,7 @@
               </div>
             </div>
           </div>
-          <?php $if1=(config('publish','project','override_system_command')); if($if1) {  ?>
+          <?php $if1=(\cms\base\Configuration::config('publish','project','override_system_command')); if($if1) {  ?>
             <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
               <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
                 <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('PROJECT_CMD_AFTER_PUBLISH').'') ?>
@@ -101,7 +101,7 @@
           </label>
         </div>
       </fieldset>
-      <?php $if1=(config('publish','ftp','enable')); if($if1) {  ?>
+      <?php $if1=(\cms\base\Configuration::config('publish','ftp','enable')); if($if1) {  ?>
         <fieldset class="<?php echo \template_engine\Output::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
           <legend class="<?php echo \template_engine\Output::escapeHtml('on-click-open-close') ?>"><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('project_FTP').'') ?>
             <img /><?php echo \template_engine\Output::escapeHtml('') ?>
