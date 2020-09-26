@@ -18,7 +18,6 @@
 
 
 namespace util;
-use function cms\base\translateutf8tohtml;
 
 /**
  * Nuetzliche Funktionen fuer das Bearbeiten von Texten/Zeichenketten
