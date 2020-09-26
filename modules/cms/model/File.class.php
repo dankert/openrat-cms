@@ -317,10 +317,7 @@ EOF
 
     public function loadValue()
     {
-        if	( is_file( $this->getCache()->getFilename() ) && filemtime($this->getCache()->getFilename() < $this->lastchangeDate))
-            $this->getCache()->invalidate();
-
-        return $this->getCache()->get();
+        return $this->loadValueFromDatabase();
     }
 
 
@@ -355,8 +352,6 @@ EOF
 
 		if	( $this->storeValueAsBase64 )
 			$this->value = base64_decode( $this->value );
-
-        $this->filterValue();
 
 		return $this->value;
 	}
@@ -481,63 +476,6 @@ SQL
 		}
 	}
 
-    private function filterValue()
-    {
-        $publishType = strtolower(substr(\util\ClassUtils::getSimpleClassName($this->publisher),7));
-
-        foreach(\util\ArrayUtils::getSubArray($this->getTotalSettings(), array( 'filter')) as $filterEntry )
-        {
-        	$filterName = @$filterEntry['name'];
-        	$extension  = @$filterEntry['extension'];
-
-			if   ( $extension && strtolower($extension) != strtolower($this->getRealExtension()) )
-        		continue; // File extension does not match
-
-        	$onPublish = (array) @$filterEntry['on'];
-        	if ( ! $onPublish || in_array('all',$onPublish ) )
-        		$onPublish = ['edit','public','preview','show'];
-
-        	if   ( $onPublish && ! in_array($publishType,$onPublish))
-        		continue; // Publish type does not match
-
-        	$parameter = (array) @$filterEntry['parameter'];
-
-			$filterClassNameWithNS = 'cms\\publish\\filter\\' . $filterName.'Filter';
-
-			if   ( !class_exists( $filterClassNameWithNS ) ) {
-				Logger::warn("Filter '$filterName' does not exist.");
-				continue;
-			}
-
-			/** @var AbstractFilter $filter */
-			$filter = new $filterClassNameWithNS();
-
-			// Copy filter configuration to filter instance.
-			foreach( $parameter as $name=>$value) {
-				if   ( property_exists($filter,$name))
-					$filter->$name = $value;
-			}
-
-
-			// Execute the filter.
-			Logger::debug("Filtering '$this->filename' with filter '$filterName'.");
-
-			try {
-
-				$this->value = $filter->filter( $this->value );
-			} catch( \Exception $e ) {
-				// Filter has some undefined error.
-				Logger::warn( $e->getTraceAsString() );
-				if   ( $this->publisher instanceof PublishPublic )
-					return ''; // Do not show errors on public publishing.
-				else
-					return $e->getMessage()."\n".$e->getTraceAsString();
-			}
-        }
-
-        // Store in cache.
-        $this->getCache()->invalidate();
-    }
 
 
 
