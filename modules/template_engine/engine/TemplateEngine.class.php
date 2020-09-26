@@ -33,6 +33,8 @@ class TemplateEngine
 
 	const CSS_PREFIX = 'or-';
 
+	const OUTPUT_ALIAS = 'O';
+
 	/**
      * Compile the template.
      * From a XML source file we are generating a PHP file.
@@ -50,7 +52,7 @@ class TemplateEngine
 			throw new LogicException("Template output file is read-only: $filename");
 
 		// The generated template should only be executable in our CMS environment (for security reasons).
-		$writtenBytes = file_put_contents( $filename,'<?php defined(\'APP_STARTED\') || die(\'Forbidden\'); ?>' );
+		$writtenBytes = file_put_contents( $filename,'<?php defined(\'APP_STARTED\') || die(\'Forbidden\'); use \\template_engine\Output as '.self::OUTPUT_ALIAS.'; ?>' );
 
 		if ( $writtenBytes === FALSE )
 			throw new LogicException("Unable writing to output file: '$filename'");

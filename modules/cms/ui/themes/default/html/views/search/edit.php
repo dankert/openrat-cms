@@ -1,67 +1,67 @@
-<?php defined('APP_STARTED') || die('Forbidden'); ?>
-  <form name="<?php echo \template_engine\Output::escapeHtml('') ?>" target="<?php echo \template_engine\Output::escapeHtml('_self') ?>" data-target="<?php echo \template_engine\Output::escapeHtml('view') ?>" action="<?php echo \template_engine\Output::escapeHtml('./') ?>" data-method="<?php echo \template_engine\Output::escapeHtml('result') ?>" data-action="<?php echo \template_engine\Output::escapeHtml('search') ?>" data-id="<?php echo \template_engine\Output::escapeHtml(''.@$_id.'') ?>" method="<?php echo \template_engine\Output::escapeHtml('GET') ?>" enctype="<?php echo \template_engine\Output::escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo \template_engine\Output::escapeHtml('') ?>" data-autosave="<?php echo \template_engine\Output::escapeHtml('') ?>" class="<?php echo \template_engine\Output::escapeHtml('or-form search') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('token') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$_token.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
-    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('action') ?>" value="<?php echo \template_engine\Output::escapeHtml('search') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
-    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('subaction') ?>" value="<?php echo \template_engine\Output::escapeHtml('result') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
-    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('id') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$_id.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
-    <div><?php echo \template_engine\Output::escapeHtml('') ?>
-      <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-        <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-          <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('value').'') ?>
+<?php defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
+  <form name="<?php echo O::escapeHtml('') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-target="<?php echo O::escapeHtml('view') ?>" action="<?php echo O::escapeHtml('./') ?>" data-method="<?php echo O::escapeHtml('result') ?>" data-action="<?php echo O::escapeHtml('search') ?>" data-id="<?php echo O::escapeHtml(''.@$_id.'') ?>" method="<?php echo O::escapeHtml('GET') ?>" enctype="<?php echo O::escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo O::escapeHtml('') ?>" data-autosave="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-form search') ?>"><?php echo O::escapeHtml('') ?>
+    <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('token') ?>" value="<?php echo O::escapeHtml(''.@$_token.'') ?>" /><?php echo O::escapeHtml('') ?>
+    <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('action') ?>" value="<?php echo O::escapeHtml('search') ?>" /><?php echo O::escapeHtml('') ?>
+    <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('subaction') ?>" value="<?php echo O::escapeHtml('result') ?>" /><?php echo O::escapeHtml('') ?>
+    <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml(''.@$_id.'') ?>" /><?php echo O::escapeHtml('') ?>
+    <div><?php echo O::escapeHtml('') ?>
+      <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+        <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+          <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+            <span><?php echo O::escapeHtml(''.@O::lang('value').'') ?>
             </span>
           </label>
-          <br /><?php echo \template_engine\Output::escapeHtml('') ?>
+          <br /><?php echo O::escapeHtml('') ?>
         </div>
-        <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-          <div class="<?php echo \template_engine\Output::escapeHtml('inputholder') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <input name="<?php echo \template_engine\Output::escapeHtml('text') ?>" placeholder="<?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('search').'') ?>" type="<?php echo \template_engine\Output::escapeHtml('text') ?>" maxlength="<?php echo \template_engine\Output::escapeHtml('256') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$text.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+        <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
+            <input name="<?php echo O::escapeHtml('text') ?>" placeholder="<?php echo O::escapeHtml(''.@O::lang('search').'') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$text.'') ?>" /><?php echo O::escapeHtml('') ?>
           </div>
         </div>
       </div>
-      <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-        <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-          <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('filter').'') ?>
+      <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+        <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+          <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+            <span><?php echo O::escapeHtml(''.@O::lang('filter').'') ?>
             </span>
           </label>
-          <br /><?php echo \template_engine\Output::escapeHtml('') ?>
+          <br /><?php echo O::escapeHtml('') ?>
         </div>
-        <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-          <input type="<?php echo \template_engine\Output::escapeHtml('checkbox') ?>" name="<?php echo \template_engine\Output::escapeHtml('id') ?>" value="<?php echo \template_engine\Output::escapeHtml('1') ?>" <?php if(\cms\base\Configuration::config('search','quicksearch','flag','id')){ ?>checked="<?php echo \template_engine\Output::escapeHtml('checked') ?>"<?php } ?> /><?php echo \template_engine\Output::escapeHtml('') ?>
-          <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('id').'') ?>
+        <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+          <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(\cms\base\Configuration::config('search','quicksearch','flag','id')){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
+          <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+            <span><?php echo O::escapeHtml(''.@O::lang('id').'') ?>
             </span>
           </label>
-          <br /><?php echo \template_engine\Output::escapeHtml('') ?>
-          <input type="<?php echo \template_engine\Output::escapeHtml('checkbox') ?>" name="<?php echo \template_engine\Output::escapeHtml('name') ?>" value="<?php echo \template_engine\Output::escapeHtml('1') ?>" <?php if(\cms\base\Configuration::config('search','quicksearch','flag','name')){ ?>checked="<?php echo \template_engine\Output::escapeHtml('checked') ?>"<?php } ?> /><?php echo \template_engine\Output::escapeHtml('') ?>
-          <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('name').'') ?>
+          <br /><?php echo O::escapeHtml('') ?>
+          <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('name') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(\cms\base\Configuration::config('search','quicksearch','flag','name')){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
+          <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+            <span><?php echo O::escapeHtml(''.@O::lang('name').'') ?>
             </span>
           </label>
-          <br /><?php echo \template_engine\Output::escapeHtml('') ?>
-          <input type="<?php echo \template_engine\Output::escapeHtml('checkbox') ?>" name="<?php echo \template_engine\Output::escapeHtml('filename') ?>" value="<?php echo \template_engine\Output::escapeHtml('1') ?>" <?php if(\cms\base\Configuration::config('search','quicksearch','flag','filename')){ ?>checked="<?php echo \template_engine\Output::escapeHtml('checked') ?>"<?php } ?> /><?php echo \template_engine\Output::escapeHtml('') ?>
-          <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('filename').'') ?>
+          <br /><?php echo O::escapeHtml('') ?>
+          <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('filename') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(\cms\base\Configuration::config('search','quicksearch','flag','filename')){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
+          <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+            <span><?php echo O::escapeHtml(''.@O::lang('filename').'') ?>
             </span>
           </label>
-          <br /><?php echo \template_engine\Output::escapeHtml('') ?>
-          <input type="<?php echo \template_engine\Output::escapeHtml('checkbox') ?>" name="<?php echo \template_engine\Output::escapeHtml('description') ?>" value="<?php echo \template_engine\Output::escapeHtml('1') ?>" <?php if(\cms\base\Configuration::config('search','quicksearch','flag','description')){ ?>checked="<?php echo \template_engine\Output::escapeHtml('checked') ?>"<?php } ?> /><?php echo \template_engine\Output::escapeHtml('') ?>
-          <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('description').'') ?>
+          <br /><?php echo O::escapeHtml('') ?>
+          <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('description') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(\cms\base\Configuration::config('search','quicksearch','flag','description')){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
+          <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+            <span><?php echo O::escapeHtml(''.@O::lang('description').'') ?>
             </span>
           </label>
-          <br /><?php echo \template_engine\Output::escapeHtml('') ?>
-          <input type="<?php echo \template_engine\Output::escapeHtml('checkbox') ?>" name="<?php echo \template_engine\Output::escapeHtml('content') ?>" value="<?php echo \template_engine\Output::escapeHtml('1') ?>" <?php if(\cms\base\Configuration::config('search','quicksearch','flag','content')){ ?>checked="<?php echo \template_engine\Output::escapeHtml('checked') ?>"<?php } ?> /><?php echo \template_engine\Output::escapeHtml('') ?>
-          <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('content').'') ?>
+          <br /><?php echo O::escapeHtml('') ?>
+          <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('content') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(\cms\base\Configuration::config('search','quicksearch','flag','content')){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
+          <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+            <span><?php echo O::escapeHtml(''.@O::lang('content').'') ?>
             </span>
           </label>
         </div>
       </div>
     </div>
-    <div class="<?php echo \template_engine\Output::escapeHtml('or-form-actionbar') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-      <input type="<?php echo \template_engine\Output::escapeHtml('button') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('CANCEL').'') ?>" class="<?php echo \template_engine\Output::escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
-      <input type="<?php echo \template_engine\Output::escapeHtml('submit') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('button_ok').'') ?>" class="<?php echo \template_engine\Output::escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+    <div class="<?php echo O::escapeHtml('or-form-actionbar') ?>"><?php echo O::escapeHtml('') ?>
+      <input type="<?php echo O::escapeHtml('button') ?>" value="<?php echo O::escapeHtml(''.@O::lang('CANCEL').'') ?>" class="<?php echo O::escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo O::escapeHtml('') ?>
+      <input type="<?php echo O::escapeHtml('submit') ?>" value="<?php echo O::escapeHtml(''.@O::lang('button_ok').'') ?>" class="<?php echo O::escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo O::escapeHtml('') ?>
     </div>
   </form>

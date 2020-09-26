@@ -1,3 +1,3 @@
-<?php defined('APP_STARTED') || die('Forbidden'); ?>
-  <span><?php echo \template_engine\Output::escapeHtml('1') ?>
+<?php defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
+  <span><?php echo O::escapeHtml('1') ?>
   </span>

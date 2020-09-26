@@ -2,6 +2,7 @@
 
 namespace template_engine\element;
 
+use template_engine\engine\TemplateEngine;
 use util\text\variables\VariableResolver;
 
 class Value
@@ -49,12 +50,12 @@ class Value
 
 		$res->addResolver( 'message',function($name) {
 
-			return '\'.@\template_engine\Output::lang(\'' . $name . '\').\'';
+			return '\'.@'.TemplateEngine::OUTPUT_ALIAS.'::lang(\'' . $name . '\').\'';
 		});
 
 		$res->addResolver('config', function($name) {
 			$config_parts = explode('/', $name);
-			return '\'.\template_engine\Output::config(' . "'" . implode("'" . ',' . "'", $config_parts) . "'" . ').\'';
+			return '\''.TemplateEngine::OUTPUT_ALIAS.'::config(' . "'" . implode("'" . ',' . "'", $config_parts) . "'" . ').\'';
 		});
 
 
@@ -68,7 +69,7 @@ class Value
             case Value::CONTEXT_RAW:
 				$escape = function ($expr) use ($context) {
 					if ($context == self::CONTEXT_HTML)
-						return '\template_engine\Output::escapeHtml(' . $expr . ')';
+						return TemplateEngine::OUTPUT_ALIAS.'::escapeHtml(' . $expr . ')';
 					else
 						return $expr;
 				};

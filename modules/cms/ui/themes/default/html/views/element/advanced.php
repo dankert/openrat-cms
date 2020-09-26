@@ -1,133 +1,133 @@
-<?php defined('APP_STARTED') || die('Forbidden'); ?>
+<?php defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
   <?php $if1=(\cms\base\Configuration::config('security','disable_dynamic_code')); if($if1) {  ?>
     <?php $if1=(!1); if($if1) {  ?>
-      <div class="<?php echo \template_engine\Output::escapeHtml('message warn') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-        <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('NOTICE_CODE_DISABLED').'') ?>
+      <div class="<?php echo O::escapeHtml('message warn') ?>"><?php echo O::escapeHtml('') ?>
+        <span><?php echo O::escapeHtml(''.@O::lang('NOTICE_CODE_DISABLED').'') ?>
         </span>
       </div>
      <?php } ?>
    <?php } ?>
-  <form name="<?php echo \template_engine\Output::escapeHtml('') ?>" target="<?php echo \template_engine\Output::escapeHtml('_self') ?>" data-target="<?php echo \template_engine\Output::escapeHtml('view') ?>" action="<?php echo \template_engine\Output::escapeHtml('./') ?>" data-method="<?php echo \template_engine\Output::escapeHtml('advanced') ?>" data-action="<?php echo \template_engine\Output::escapeHtml('element') ?>" data-id="<?php echo \template_engine\Output::escapeHtml(''.@$_id.'') ?>" method="<?php echo \template_engine\Output::escapeHtml('POST') ?>" enctype="<?php echo \template_engine\Output::escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo \template_engine\Output::escapeHtml('') ?>" data-autosave="<?php echo \template_engine\Output::escapeHtml('') ?>" class="<?php echo \template_engine\Output::escapeHtml('or-form element') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('token') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$_token.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
-    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('action') ?>" value="<?php echo \template_engine\Output::escapeHtml('element') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
-    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('subaction') ?>" value="<?php echo \template_engine\Output::escapeHtml('advanced') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
-    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('id') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$_id.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
-    <div><?php echo \template_engine\Output::escapeHtml('') ?>
-      <fieldset class="<?php echo \template_engine\Output::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-        <div class="<?php echo \template_engine\Output::escapeHtml('closable') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+  <form name="<?php echo O::escapeHtml('') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-target="<?php echo O::escapeHtml('view') ?>" action="<?php echo O::escapeHtml('./') ?>" data-method="<?php echo O::escapeHtml('advanced') ?>" data-action="<?php echo O::escapeHtml('element') ?>" data-id="<?php echo O::escapeHtml(''.@$_id.'') ?>" method="<?php echo O::escapeHtml('POST') ?>" enctype="<?php echo O::escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo O::escapeHtml('') ?>" data-autosave="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-form element') ?>"><?php echo O::escapeHtml('') ?>
+    <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('token') ?>" value="<?php echo O::escapeHtml(''.@$_token.'') ?>" /><?php echo O::escapeHtml('') ?>
+    <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('action') ?>" value="<?php echo O::escapeHtml('element') ?>" /><?php echo O::escapeHtml('') ?>
+    <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('subaction') ?>" value="<?php echo O::escapeHtml('advanced') ?>" /><?php echo O::escapeHtml('') ?>
+    <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml(''.@$_id.'') ?>" /><?php echo O::escapeHtml('') ?>
+    <div><?php echo O::escapeHtml('') ?>
+      <fieldset class="<?php echo O::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo O::escapeHtml('') ?>
+        <div class="<?php echo O::escapeHtml('closable') ?>"><?php echo O::escapeHtml('') ?>
           <?php $if1=(isset($subtype)); if($if1) {  ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('ELEMENT_SUBTYPE').'') ?>
+            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('ELEMENT_SUBTYPE').'') ?>
                 </span>
               </div>
-              <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
                 <?php $if1=(isset($subtypes)); if($if1) {  ?>
-                  <select name="<?php echo \template_engine\Output::escapeHtml('subtype') ?>" size="<?php echo \template_engine\Output::escapeHtml('1') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                    <option value="<?php echo \template_engine\Output::escapeHtml('') ?>"><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('LIST_ENTRY_EMPTY').'') ?>
+                  <select name="<?php echo O::escapeHtml('subtype') ?>" size="<?php echo O::escapeHtml('1') ?>"><?php echo O::escapeHtml('') ?>
+                    <option value="<?php echo O::escapeHtml('') ?>"><?php echo O::escapeHtml(''.@O::lang('LIST_ENTRY_EMPTY').'') ?>
                     </option>
                     <?php foreach($subtypes as $_key=>$_value) {  ?>
-                      <option value="<?php echo \template_engine\Output::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$subtype){ ?>selected="<?php echo \template_engine\Output::escapeHtml('selected') ?>"<?php } ?>><?php echo \template_engine\Output::escapeHtml(''.@$_value.'') ?>
+                      <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$subtype){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
                       </option>
                      <?php } ?>
                   </select>
                  <?php } ?>
                 <?php $if1=!(isset($subtypes)); if($if1) {  ?>
-                  <div class="<?php echo \template_engine\Output::escapeHtml('inputholder') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                    <input name="<?php echo \template_engine\Output::escapeHtml('subtype') ?>" type="<?php echo \template_engine\Output::escapeHtml('text') ?>" maxlength="<?php echo \template_engine\Output::escapeHtml('256') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$subtype.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+                  <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
+                    <input name="<?php echo O::escapeHtml('subtype') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$subtype.'') ?>" /><?php echo O::escapeHtml('') ?>
                   </div>
                  <?php } ?>
               </div>
             </div>
            <?php } ?>
           <?php $if1=(isset($with_icon)); if($if1) {  ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
               </div>
-              <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <input type="<?php echo \template_engine\Output::escapeHtml('checkbox') ?>" name="<?php echo \template_engine\Output::escapeHtml('with_icon') ?>" value="<?php echo \template_engine\Output::escapeHtml('1') ?>" <?php if(@$with_icon){ ?>checked="<?php echo \template_engine\Output::escapeHtml('checked') ?>"<?php } ?> /><?php echo \template_engine\Output::escapeHtml('') ?>
-                <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                  <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('EL_PROP_WITH_ICON').'') ?>
+              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+                <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('with_icon') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$with_icon){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
+                <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                  <span><?php echo O::escapeHtml(''.@O::lang('EL_PROP_WITH_ICON').'') ?>
                   </span>
                 </label>
               </div>
             </div>
            <?php } ?>
           <?php $if1=(isset($inherit)); if($if1) {  ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
               </div>
-              <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <input type="<?php echo \template_engine\Output::escapeHtml('checkbox') ?>" name="<?php echo \template_engine\Output::escapeHtml('inherit') ?>" value="<?php echo \template_engine\Output::escapeHtml('1') ?>" <?php if(@$inherit){ ?>checked="<?php echo \template_engine\Output::escapeHtml('checked') ?>"<?php } ?> /><?php echo \template_engine\Output::escapeHtml('') ?>
-                <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                  <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('EL_PROP_INHERIT').'') ?>
+              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+                <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('inherit') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$inherit){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
+                <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                  <span><?php echo O::escapeHtml(''.@O::lang('EL_PROP_INHERIT').'') ?>
                   </span>
                 </label>
               </div>
             </div>
            <?php } ?>
           <?php $if1=(isset($all_languages)); if($if1) {  ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
               </div>
-              <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <input type="<?php echo \template_engine\Output::escapeHtml('checkbox') ?>" name="<?php echo \template_engine\Output::escapeHtml('all_languages') ?>" value="<?php echo \template_engine\Output::escapeHtml('1') ?>" <?php if(@$all_languages){ ?>checked="<?php echo \template_engine\Output::escapeHtml('checked') ?>"<?php } ?> /><?php echo \template_engine\Output::escapeHtml('') ?>
-                <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                  <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('EL_PROP_ALL_LANGUAGES').'') ?>
+              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+                <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('all_languages') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$all_languages){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
+                <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                  <span><?php echo O::escapeHtml(''.@O::lang('EL_PROP_ALL_LANGUAGES').'') ?>
                   </span>
                 </label>
               </div>
             </div>
            <?php } ?>
           <?php $if1=(isset($writable)); if($if1) {  ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
               </div>
-              <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <input type="<?php echo \template_engine\Output::escapeHtml('checkbox') ?>" name="<?php echo \template_engine\Output::escapeHtml('writable') ?>" value="<?php echo \template_engine\Output::escapeHtml('1') ?>" <?php if(@$writable){ ?>checked="<?php echo \template_engine\Output::escapeHtml('checked') ?>"<?php } ?> /><?php echo \template_engine\Output::escapeHtml('') ?>
-                <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                  <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('EL_PROP_writable').'') ?>
+              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+                <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('writable') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$writable){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
+                <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                  <span><?php echo O::escapeHtml(''.@O::lang('EL_PROP_writable').'') ?>
                   </span>
                 </label>
               </div>
             </div>
            <?php } ?>
           <?php $if1=(isset($width)); if($if1) {  ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('width').'') ?>
+            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('width').'') ?>
                 </span>
               </div>
-              <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <div class="<?php echo \template_engine\Output::escapeHtml('inputholder') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                  <input name="<?php echo \template_engine\Output::escapeHtml('width') ?>" type="<?php echo \template_engine\Output::escapeHtml('text') ?>" maxlength="<?php echo \template_engine\Output::escapeHtml('256') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$width.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+                <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
+                  <input name="<?php echo O::escapeHtml('width') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$width.'') ?>" /><?php echo O::escapeHtml('') ?>
                 </div>
               </div>
             </div>
            <?php } ?>
           <?php $if1=(isset($height)); if($if1) {  ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('height').'') ?>
+            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('height').'') ?>
                 </span>
               </div>
-              <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <div class="<?php echo \template_engine\Output::escapeHtml('inputholder') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                  <input name="<?php echo \template_engine\Output::escapeHtml('height') ?>" type="<?php echo \template_engine\Output::escapeHtml('text') ?>" maxlength="<?php echo \template_engine\Output::escapeHtml('256') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$height.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+                <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
+                  <input name="<?php echo O::escapeHtml('height') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$height.'') ?>" /><?php echo O::escapeHtml('') ?>
                 </div>
               </div>
             </div>
            <?php } ?>
           <?php $if1=(isset($dateformat)); if($if1) {  ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('EL_PROP_DATEFORMAT').'') ?>
+            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('EL_PROP_DATEFORMAT').'') ?>
                 </span>
               </div>
-              <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <select name="<?php echo \template_engine\Output::escapeHtml('dateformat') ?>" size="<?php echo \template_engine\Output::escapeHtml('1') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+                <select name="<?php echo O::escapeHtml('dateformat') ?>" size="<?php echo O::escapeHtml('1') ?>"><?php echo O::escapeHtml('') ?>
                   <?php foreach($dateformats as $_key=>$_value) {  ?>
-                    <option value="<?php echo \template_engine\Output::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$dateformat){ ?>selected="<?php echo \template_engine\Output::escapeHtml('selected') ?>"<?php } ?>><?php echo \template_engine\Output::escapeHtml(''.@$_value.'') ?>
+                    <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$dateformat){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
                     </option>
                    <?php } ?>
                 </select>
@@ -135,140 +135,140 @@
             </div>
            <?php } ?>
           <?php $if1=(isset($format)); if($if1) {  ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('EL_PROP_FORMAT').'') ?>
+            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('EL_PROP_FORMAT').'') ?>
                 </span>
               </div>
-              <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
                 <?php foreach( $formatlist as $_key=>$_value) {  ?>
-                  <label><?php echo \template_engine\Output::escapeHtml('') ?>
-                    <input type="<?php echo \template_engine\Output::escapeHtml('radio') ?>" name="<?php echo \template_engine\Output::escapeHtml('format') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$format){ ?>checked="<?php echo \template_engine\Output::escapeHtml('checked') ?>"<?php } ?> /><?php echo \template_engine\Output::escapeHtml('') ?>
-                    <span><?php echo \template_engine\Output::escapeHtml(''.@$_value.'') ?>
+                  <label><?php echo O::escapeHtml('') ?>
+                    <input type="<?php echo O::escapeHtml('radio') ?>" name="<?php echo O::escapeHtml('format') ?>" value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$format){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
+                    <span><?php echo O::escapeHtml(''.@$_value.'') ?>
                     </span>
                   </label>
-                  <br /><?php echo \template_engine\Output::escapeHtml('') ?>
+                  <br /><?php echo O::escapeHtml('') ?>
                  <?php } ?>
               </div>
             </div>
            <?php } ?>
           <?php $if1=(isset($decimals)); if($if1) {  ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('EL_PROP_DECIMALS').'') ?>
+            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('EL_PROP_DECIMALS').'') ?>
                 </span>
               </div>
-              <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <div class="<?php echo \template_engine\Output::escapeHtml('inputholder') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                  <input name="<?php echo \template_engine\Output::escapeHtml('decimals') ?>" type="<?php echo \template_engine\Output::escapeHtml('text') ?>" maxlength="<?php echo \template_engine\Output::escapeHtml('2') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$decimals.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+                <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
+                  <input name="<?php echo O::escapeHtml('decimals') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('2') ?>" value="<?php echo O::escapeHtml(''.@$decimals.'') ?>" /><?php echo O::escapeHtml('') ?>
                 </div>
               </div>
             </div>
            <?php } ?>
           <?php $if1=(isset($dec_point)); if($if1) {  ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('EL_PROP_DEC_POINT').'') ?>
+            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('EL_PROP_DEC_POINT').'') ?>
                 </span>
               </div>
-              <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <div class="<?php echo \template_engine\Output::escapeHtml('inputholder') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                  <input name="<?php echo \template_engine\Output::escapeHtml('dec_point') ?>" type="<?php echo \template_engine\Output::escapeHtml('text') ?>" maxlength="<?php echo \template_engine\Output::escapeHtml('5') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$dec_point.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+                <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
+                  <input name="<?php echo O::escapeHtml('dec_point') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('5') ?>" value="<?php echo O::escapeHtml(''.@$dec_point.'') ?>" /><?php echo O::escapeHtml('') ?>
                 </div>
               </div>
             </div>
            <?php } ?>
           <?php $if1=(isset($thousand_sep)); if($if1) {  ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('EL_PROP_thousand_sep').'') ?>
+            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('EL_PROP_thousand_sep').'') ?>
                 </span>
               </div>
-              <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <div class="<?php echo \template_engine\Output::escapeHtml('inputholder') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                  <input name="<?php echo \template_engine\Output::escapeHtml('thousand_sep') ?>" type="<?php echo \template_engine\Output::escapeHtml('text') ?>" maxlength="<?php echo \template_engine\Output::escapeHtml('1') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$thousand_sep.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+                <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
+                  <input name="<?php echo O::escapeHtml('thousand_sep') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('1') ?>" value="<?php echo O::escapeHtml(''.@$thousand_sep.'') ?>" /><?php echo O::escapeHtml('') ?>
                 </div>
               </div>
             </div>
            <?php } ?>
           <?php $if1=(isset($default_text)); if($if1) {  ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('EL_PROP_default_text').'') ?>
+            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('EL_PROP_default_text').'') ?>
                 </span>
               </div>
-              <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <div class="<?php echo \template_engine\Output::escapeHtml('inputholder') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                  <input name="<?php echo \template_engine\Output::escapeHtml('default_text') ?>" type="<?php echo \template_engine\Output::escapeHtml('text') ?>" maxlength="<?php echo \template_engine\Output::escapeHtml('255') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$default_text.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+                <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
+                  <input name="<?php echo O::escapeHtml('default_text') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" value="<?php echo O::escapeHtml(''.@$default_text.'') ?>" /><?php echo O::escapeHtml('') ?>
                 </div>
               </div>
             </div>
            <?php } ?>
           <?php $if1=(isset($default_longtext)); if($if1) {  ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('EL_PROP_default_longtext').'') ?>
+            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('EL_PROP_default_longtext').'') ?>
                 </span>
               </div>
-              <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <textarea name="<?php echo \template_engine\Output::escapeHtml('default_longtext') ?>" class="<?php echo \template_engine\Output::escapeHtml('inputarea') ?>"><?php echo \template_engine\Output::escapeHtml(''.@$default_longtext.'') ?>
+              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+                <textarea name="<?php echo O::escapeHtml('default_longtext') ?>" class="<?php echo O::escapeHtml('inputarea') ?>"><?php echo O::escapeHtml(''.@$default_longtext.'') ?>
                 </textarea>
               </div>
             </div>
            <?php } ?>
           <?php $if1=(isset($parameters)); if($if1) {  ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('EL_PROP_DYNAMIC_PARAMETERS').'') ?>
+            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('EL_PROP_DYNAMIC_PARAMETERS').'') ?>
                 </span>
               </div>
-              <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <textarea name="<?php echo \template_engine\Output::escapeHtml('parameters') ?>" class="<?php echo \template_engine\Output::escapeHtml('inputarea') ?>"><?php echo \template_engine\Output::escapeHtml(''.@$parameters.'') ?>
+              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+                <textarea name="<?php echo O::escapeHtml('parameters') ?>" class="<?php echo O::escapeHtml('inputarea') ?>"><?php echo O::escapeHtml(''.@$parameters.'') ?>
                 </textarea>
               </div>
             </div>
-            <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
               </div>
-              <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
                 <?php foreach((array)$dynamic_class_parameters as $paramName=>$defaultValue) {  ?>
-                  <span><?php echo \template_engine\Output::escapeHtml(''.@$paramName.'') ?>
+                  <span><?php echo O::escapeHtml(''.@$paramName.'') ?>
                   </span>
-                  <span><?php echo \template_engine\Output::escapeHtml(' (') ?>
+                  <span><?php echo O::escapeHtml(' (') ?>
                   </span>
-                  <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('DEFAULT').'') ?>
+                  <span><?php echo O::escapeHtml(''.@O::lang('DEFAULT').'') ?>
                   </span>
-                  <span><?php echo \template_engine\Output::escapeHtml(') = ') ?>
+                  <span><?php echo O::escapeHtml(') = ') ?>
                   </span>
-                  <span><?php echo \template_engine\Output::escapeHtml(''.@$defaultValue.'') ?>
+                  <span><?php echo O::escapeHtml(''.@$defaultValue.'') ?>
                   </span>
-                  <br /><?php echo \template_engine\Output::escapeHtml('') ?>
+                  <br /><?php echo O::escapeHtml('') ?>
                  <?php } ?>
               </div>
             </div>
            <?php } ?>
           <?php $if1=(isset($select_items)); if($if1) {  ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('EL_PROP_select_items').'') ?>
+            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('EL_PROP_select_items').'') ?>
                 </span>
               </div>
-              <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <textarea name="<?php echo \template_engine\Output::escapeHtml('select_items') ?>" class="<?php echo \template_engine\Output::escapeHtml('inputarea') ?>"><?php echo \template_engine\Output::escapeHtml(''.@$select_items.'') ?>
+              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+                <textarea name="<?php echo O::escapeHtml('select_items') ?>" class="<?php echo O::escapeHtml('inputarea') ?>"><?php echo O::escapeHtml(''.@$select_items.'') ?>
                 </textarea>
               </div>
             </div>
            <?php } ?>
           <?php $if1=(isset($linkelement)); if($if1) {  ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('EL_LINK').'') ?>
+            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('EL_LINK').'') ?>
                 </span>
               </div>
-              <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <select name="<?php echo \template_engine\Output::escapeHtml('linkelement') ?>" size="<?php echo \template_engine\Output::escapeHtml('1') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+                <select name="<?php echo O::escapeHtml('linkelement') ?>" size="<?php echo O::escapeHtml('1') ?>"><?php echo O::escapeHtml('') ?>
                   <?php foreach($linkelements as $_key=>$_value) {  ?>
-                    <option value="<?php echo \template_engine\Output::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$linkelement){ ?>selected="<?php echo \template_engine\Output::escapeHtml('selected') ?>"<?php } ?>><?php echo \template_engine\Output::escapeHtml(''.@$_value.'') ?>
+                    <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$linkelement){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
                     </option>
                    <?php } ?>
                 </select>
@@ -276,15 +276,15 @@
             </div>
            <?php } ?>
           <?php $if1=(isset($name)); if($if1) {  ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('ELEMENT_NAME').'') ?>
+            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('ELEMENT_NAME').'') ?>
                 </span>
               </div>
-              <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <select name="<?php echo \template_engine\Output::escapeHtml('name') ?>" size="<?php echo \template_engine\Output::escapeHtml('1') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+                <select name="<?php echo O::escapeHtml('name') ?>" size="<?php echo O::escapeHtml('1') ?>"><?php echo O::escapeHtml('') ?>
                   <?php foreach($names as $_key=>$_value) {  ?>
-                    <option value="<?php echo \template_engine\Output::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$name){ ?>selected="<?php echo \template_engine\Output::escapeHtml('selected') ?>"<?php } ?>><?php echo \template_engine\Output::escapeHtml(''.@$_value.'') ?>
+                    <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$name){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
                     </option>
                    <?php } ?>
                 </select>
@@ -292,15 +292,15 @@
             </div>
            <?php } ?>
           <?php $if1=(isset($folderobjectid)); if($if1) {  ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('EL_PROP_DEFAULT_FOLDEROBJECT').'') ?>
+            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('EL_PROP_DEFAULT_FOLDEROBJECT').'') ?>
                 </span>
               </div>
-              <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <select name="<?php echo \template_engine\Output::escapeHtml('folderobjectid') ?>" size="<?php echo \template_engine\Output::escapeHtml('1') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+                <select name="<?php echo O::escapeHtml('folderobjectid') ?>" size="<?php echo O::escapeHtml('1') ?>"><?php echo O::escapeHtml('') ?>
                   <?php foreach($folders as $_key=>$_value) {  ?>
-                    <option value="<?php echo \template_engine\Output::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$folderobjectid){ ?>selected="<?php echo \template_engine\Output::escapeHtml('selected') ?>"<?php } ?>><?php echo \template_engine\Output::escapeHtml(''.@$_value.'') ?>
+                    <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$folderobjectid){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
                     </option>
                    <?php } ?>
                 </select>
@@ -308,17 +308,17 @@
             </div>
            <?php } ?>
           <?php $if1=(isset($default_objectid)); if($if1) {  ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('EL_PROP_DEFAULT_OBJECT').'') ?>
+            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('EL_PROP_DEFAULT_OBJECT').'') ?>
                 </span>
               </div>
-              <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <select name="<?php echo \template_engine\Output::escapeHtml('default_objectid') ?>" size="<?php echo \template_engine\Output::escapeHtml('1') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                  <option value="<?php echo \template_engine\Output::escapeHtml('') ?>"><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('LIST_ENTRY_EMPTY').'') ?>
+              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+                <select name="<?php echo O::escapeHtml('default_objectid') ?>" size="<?php echo O::escapeHtml('1') ?>"><?php echo O::escapeHtml('') ?>
+                  <option value="<?php echo O::escapeHtml('') ?>"><?php echo O::escapeHtml(''.@O::lang('LIST_ENTRY_EMPTY').'') ?>
                   </option>
                   <?php foreach($objects as $_key=>$_value) {  ?>
-                    <option value="<?php echo \template_engine\Output::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$default_objectid){ ?>selected="<?php echo \template_engine\Output::escapeHtml('selected') ?>"<?php } ?>><?php echo \template_engine\Output::escapeHtml(''.@$_value.'') ?>
+                    <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$default_objectid){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
                     </option>
                    <?php } ?>
                 </select>
@@ -326,13 +326,13 @@
             </div>
            <?php } ?>
           <?php $if1=(isset($code)); if($if1) {  ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('EL_PROP_code').'') ?>
+            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('EL_PROP_code').'') ?>
                 </span>
               </div>
-              <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <textarea name="<?php echo \template_engine\Output::escapeHtml('code') ?>" class="<?php echo \template_engine\Output::escapeHtml('inputarea') ?>"><?php echo \template_engine\Output::escapeHtml(''.@$code.'') ?>
+              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+                <textarea name="<?php echo O::escapeHtml('code') ?>" class="<?php echo O::escapeHtml('inputarea') ?>"><?php echo O::escapeHtml(''.@$code.'') ?>
                 </textarea>
               </div>
             </div>
@@ -340,8 +340,8 @@
         </div>
       </fieldset>
     </div>
-    <div class="<?php echo \template_engine\Output::escapeHtml('or-form-actionbar') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-      <input type="<?php echo \template_engine\Output::escapeHtml('button') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('CANCEL').'') ?>" class="<?php echo \template_engine\Output::escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
-      <input type="<?php echo \template_engine\Output::escapeHtml('submit') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('button_ok').'') ?>" class="<?php echo \template_engine\Output::escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+    <div class="<?php echo O::escapeHtml('or-form-actionbar') ?>"><?php echo O::escapeHtml('') ?>
+      <input type="<?php echo O::escapeHtml('button') ?>" value="<?php echo O::escapeHtml(''.@O::lang('CANCEL').'') ?>" class="<?php echo O::escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo O::escapeHtml('') ?>
+      <input type="<?php echo O::escapeHtml('submit') ?>" value="<?php echo O::escapeHtml(''.@O::lang('button_ok').'') ?>" class="<?php echo O::escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo O::escapeHtml('') ?>
     </div>
   </form>

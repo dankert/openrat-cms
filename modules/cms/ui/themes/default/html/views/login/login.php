@@ -1,166 +1,166 @@
-<?php defined('APP_STARTED') || die('Forbidden'); ?>
-  <form name="<?php echo \template_engine\Output::escapeHtml('') ?>" target="<?php echo \template_engine\Output::escapeHtml('_self') ?>" data-target="<?php echo \template_engine\Output::escapeHtml('view') ?>" action="<?php echo \template_engine\Output::escapeHtml('./') ?>" data-method="<?php echo \template_engine\Output::escapeHtml('login') ?>" data-action="<?php echo \template_engine\Output::escapeHtml('login') ?>" data-id="<?php echo \template_engine\Output::escapeHtml(''.@$_id.'') ?>" method="<?php echo \template_engine\Output::escapeHtml('POST') ?>" enctype="<?php echo \template_engine\Output::escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo \template_engine\Output::escapeHtml('') ?>" data-autosave="<?php echo \template_engine\Output::escapeHtml('') ?>" data-after-success="<?php echo \template_engine\Output::escapeHtml('reloadAll') ?>" class="<?php echo \template_engine\Output::escapeHtml('or-form login') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('token') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$_token.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
-    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('action') ?>" value="<?php echo \template_engine\Output::escapeHtml('login') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
-    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('subaction') ?>" value="<?php echo \template_engine\Output::escapeHtml('login') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
-    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('id') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$_id.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
-    <div><?php echo \template_engine\Output::escapeHtml('') ?>
+<?php defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
+  <form name="<?php echo O::escapeHtml('') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-target="<?php echo O::escapeHtml('view') ?>" action="<?php echo O::escapeHtml('./') ?>" data-method="<?php echo O::escapeHtml('login') ?>" data-action="<?php echo O::escapeHtml('login') ?>" data-id="<?php echo O::escapeHtml(''.@$_id.'') ?>" method="<?php echo O::escapeHtml('POST') ?>" enctype="<?php echo O::escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo O::escapeHtml('') ?>" data-autosave="<?php echo O::escapeHtml('') ?>" data-after-success="<?php echo O::escapeHtml('reloadAll') ?>" class="<?php echo O::escapeHtml('or-form login') ?>"><?php echo O::escapeHtml('') ?>
+    <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('token') ?>" value="<?php echo O::escapeHtml(''.@$_token.'') ?>" /><?php echo O::escapeHtml('') ?>
+    <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('action') ?>" value="<?php echo O::escapeHtml('login') ?>" /><?php echo O::escapeHtml('') ?>
+    <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('subaction') ?>" value="<?php echo O::escapeHtml('login') ?>" /><?php echo O::escapeHtml('') ?>
+    <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml(''.@$_id.'') ?>" /><?php echo O::escapeHtml('') ?>
+    <div><?php echo O::escapeHtml('') ?>
       <?php $if1=(\cms\base\Configuration::config('login','logo','enabled')); if($if1) {  ?>
         <?php $if1=!((\cms\base\Configuration::config('login','logo','url'))==FALSE); if($if1) {  ?>
-          <a target="<?php echo \template_engine\Output::escapeHtml('_self') ?>" data-url="<?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('login','logo','url').'') ?>" data-action="<?php echo \template_engine\Output::escapeHtml('') ?>" data-method="<?php echo \template_engine\Output::escapeHtml('') ?>" data-id="<?php echo \template_engine\Output::escapeHtml('') ?>" data-extra="<?php echo \template_engine\Output::escapeHtml('[]') ?>" href="<?php echo \template_engine\Output::escapeHtml('/#//') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <img src="<?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('login','logo','image').'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+          <a target="<?php echo O::escapeHtml('_self') ?>" data-url="<?php echo O::escapeHtml(''O::config('login','logo','url').'') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('/#//') ?>"><?php echo O::escapeHtml('') ?>
+            <img src="<?php echo O::escapeHtml(''O::config('login','logo','image').'') ?>" /><?php echo O::escapeHtml('') ?>
           </a>
          <?php } ?>
         <?php if(!$if1) {  ?>
-          <img src="<?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('login','logo','image').'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+          <img src="<?php echo O::escapeHtml(''O::config('login','logo','image').'') ?>" /><?php echo O::escapeHtml('') ?>
          <?php } ?>
        <?php } ?>
       <?php $if1=!((\cms\base\Configuration::config('login','motd'))==FALSE); if($if1) {  ?>
-        <div class="<?php echo \template_engine\Output::escapeHtml('message info') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-          <span><?php echo \template_engine\Output::escapeHtml(''.\template_engine\Output::config('login','motd').'') ?>
+        <div class="<?php echo O::escapeHtml('message info') ?>"><?php echo O::escapeHtml('') ?>
+          <span><?php echo O::escapeHtml(''O::config('login','motd').'') ?>
           </span>
         </div>
        <?php } ?>
       <?php $if1=(\cms\base\Configuration::config('login','nologin')); if($if1) {  ?>
-        <div class="<?php echo \template_engine\Output::escapeHtml('message error') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-          <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('LOGIN_NOLOGIN_DESC').'') ?>
+        <div class="<?php echo O::escapeHtml('message error') ?>"><?php echo O::escapeHtml('') ?>
+          <span><?php echo O::escapeHtml(''.@O::lang('LOGIN_NOLOGIN_DESC').'') ?>
           </span>
         </div>
        <?php } ?>
       <?php $if1=(\cms\base\Configuration::config('security','readonly')); if($if1) {  ?>
-        <div class="<?php echo \template_engine\Output::escapeHtml('message warn') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-          <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('READONLY_DESC').'') ?>
+        <div class="<?php echo O::escapeHtml('message warn') ?>"><?php echo O::escapeHtml('') ?>
+          <span><?php echo O::escapeHtml(''.@O::lang('READONLY_DESC').'') ?>
           </span>
         </div>
        <?php } ?>
       <?php $if1=(!\cms\base\Configuration::config('login','nologin')); if($if1) {  ?>
-        <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-          <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('USER_USERNAME').'') ?>
+        <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+            <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+              <span><?php echo O::escapeHtml(''.@O::lang('USER_USERNAME').'') ?>
               </span>
             </label>
           </div>
-          <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
             <?php $if1=!(isset($force_username)); if($if1) {  ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('inputholder') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <input name="<?php echo \template_engine\Output::escapeHtml('login_name') ?>" required="<?php echo \template_engine\Output::escapeHtml('required') ?>" placeholder="<?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('USER_USERNAME').'') ?>" autofocus="<?php echo \template_engine\Output::escapeHtml('autofocus') ?>" type="<?php echo \template_engine\Output::escapeHtml('text') ?>" maxlength="<?php echo \template_engine\Output::escapeHtml('128') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$login_name.'') ?>" class="<?php echo \template_engine\Output::escapeHtml('name') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
+                <input name="<?php echo O::escapeHtml('login_name') ?>" required="<?php echo O::escapeHtml('required') ?>" placeholder="<?php echo O::escapeHtml(''.@O::lang('USER_USERNAME').'') ?>" autofocus="<?php echo O::escapeHtml('autofocus') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('128') ?>" value="<?php echo O::escapeHtml(''.@$login_name.'') ?>" class="<?php echo O::escapeHtml('name') ?>" /><?php echo O::escapeHtml('') ?>
               </div>
              <?php } ?>
             <?php if(!$if1) {  ?>
-              <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('login_name') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$login_name.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
-              <span><?php echo \template_engine\Output::escapeHtml(''.@$force_username.'') ?>
+              <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('login_name') ?>" value="<?php echo O::escapeHtml(''.@$login_name.'') ?>" /><?php echo O::escapeHtml('') ?>
+              <span><?php echo O::escapeHtml(''.@$force_username.'') ?>
               </span>
              <?php } ?>
           </div>
         </div>
-        <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-          <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('USER_PASSWORD').'') ?>
+        <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+            <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+              <span><?php echo O::escapeHtml(''.@O::lang('USER_PASSWORD').'') ?>
               </span>
             </label>
           </div>
-          <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('inputholder') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <input type="<?php echo \template_engine\Output::escapeHtml('password') ?>" name="<?php echo \template_engine\Output::escapeHtml('login_password') ?>" size="<?php echo \template_engine\Output::escapeHtml('20') ?>" maxlength="<?php echo \template_engine\Output::escapeHtml('256') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$login_password.'') ?>" class="<?php echo \template_engine\Output::escapeHtml('name') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
+              <input type="<?php echo O::escapeHtml('password') ?>" name="<?php echo O::escapeHtml('login_password') ?>" size="<?php echo O::escapeHtml('20') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$login_password.'') ?>" class="<?php echo O::escapeHtml('name') ?>" /><?php echo O::escapeHtml('') ?>
             </div>
           </div>
         </div>
-        <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-          <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+        <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
           </div>
-          <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <input type="<?php echo \template_engine\Output::escapeHtml('checkbox') ?>" name="<?php echo \template_engine\Output::escapeHtml('remember') ?>" value="<?php echo \template_engine\Output::escapeHtml('1') ?>" <?php if(@$remember){ ?>checked="<?php echo \template_engine\Output::escapeHtml('checked') ?>"<?php } ?> /><?php echo \template_engine\Output::escapeHtml('') ?>
-            <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('REMEMBER_ME').'') ?>
+          <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+            <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('remember') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$remember){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
+            <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+              <span><?php echo O::escapeHtml(''.@O::lang('REMEMBER_ME').'') ?>
               </span>
             </label>
           </div>
         </div>
        <?php } ?>
-      <fieldset class="<?php echo \template_engine\Output::escapeHtml('or-group toggle-open-close closed') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-        <legend class="<?php echo \template_engine\Output::escapeHtml('on-click-open-close') ?>"><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('USER_NEW_PASSWORD').'') ?>
-          <img /><?php echo \template_engine\Output::escapeHtml('') ?>
-          <div class="<?php echo \template_engine\Output::escapeHtml('arrow arrow-right on-closed') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+      <fieldset class="<?php echo O::escapeHtml('or-group toggle-open-close closed') ?>"><?php echo O::escapeHtml('') ?>
+        <legend class="<?php echo O::escapeHtml('on-click-open-close') ?>"><?php echo O::escapeHtml(''.@O::lang('USER_NEW_PASSWORD').'') ?>
+          <img /><?php echo O::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('arrow arrow-right on-closed') ?>"><?php echo O::escapeHtml('') ?>
           </div>
-          <div class="<?php echo \template_engine\Output::escapeHtml('arrow arrow-down on-open') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('arrow arrow-down on-open') ?>"><?php echo O::escapeHtml('') ?>
           </div>
         </legend>
-        <div class="<?php echo \template_engine\Output::escapeHtml('closable') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('USER_NEW_PASSWORD').'') ?>
+        <div class="<?php echo O::escapeHtml('closable') ?>"><?php echo O::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+              <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('USER_NEW_PASSWORD').'') ?>
                 </span>
               </label>
             </div>
-            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('inputholder') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <input type="<?php echo \template_engine\Output::escapeHtml('password') ?>" name="<?php echo \template_engine\Output::escapeHtml('password1') ?>" size="<?php echo \template_engine\Output::escapeHtml('25') ?>" maxlength="<?php echo \template_engine\Output::escapeHtml('256') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$password1.'') ?>" class="<?php echo \template_engine\Output::escapeHtml('') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
+                <input type="<?php echo O::escapeHtml('password') ?>" name="<?php echo O::escapeHtml('password1') ?>" size="<?php echo O::escapeHtml('25') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$password1.'') ?>" class="<?php echo O::escapeHtml('') ?>" /><?php echo O::escapeHtml('') ?>
               </div>
             </div>
           </div>
-          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('USER_NEW_PASSWORD_REPEAT').'') ?>
+          <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+              <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('USER_NEW_PASSWORD_REPEAT').'') ?>
                 </span>
               </label>
             </div>
-            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('inputholder') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <input type="<?php echo \template_engine\Output::escapeHtml('password') ?>" name="<?php echo \template_engine\Output::escapeHtml('password2') ?>" size="<?php echo \template_engine\Output::escapeHtml('25') ?>" maxlength="<?php echo \template_engine\Output::escapeHtml('256') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$password2.'') ?>" class="<?php echo \template_engine\Output::escapeHtml('') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
+                <input type="<?php echo O::escapeHtml('password') ?>" name="<?php echo O::escapeHtml('password2') ?>" size="<?php echo O::escapeHtml('25') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$password2.'') ?>" class="<?php echo O::escapeHtml('') ?>" /><?php echo O::escapeHtml('') ?>
               </div>
             </div>
           </div>
         </div>
       </fieldset>
-      <fieldset class="<?php echo \template_engine\Output::escapeHtml('or-group toggle-open-close closed') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-        <legend class="<?php echo \template_engine\Output::escapeHtml('on-click-open-close') ?>"><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('USER_TOKEN').'') ?>
-          <img /><?php echo \template_engine\Output::escapeHtml('') ?>
-          <div class="<?php echo \template_engine\Output::escapeHtml('arrow arrow-right on-closed') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+      <fieldset class="<?php echo O::escapeHtml('or-group toggle-open-close closed') ?>"><?php echo O::escapeHtml('') ?>
+        <legend class="<?php echo O::escapeHtml('on-click-open-close') ?>"><?php echo O::escapeHtml(''.@O::lang('USER_TOKEN').'') ?>
+          <img /><?php echo O::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('arrow arrow-right on-closed') ?>"><?php echo O::escapeHtml('') ?>
           </div>
-          <div class="<?php echo \template_engine\Output::escapeHtml('arrow arrow-down on-open') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('arrow arrow-down on-open') ?>"><?php echo O::escapeHtml('') ?>
           </div>
         </legend>
-        <div class="<?php echo \template_engine\Output::escapeHtml('closable') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('USER_TOKEN').'') ?>
+        <div class="<?php echo O::escapeHtml('closable') ?>"><?php echo O::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+              <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('USER_TOKEN').'') ?>
                 </span>
               </label>
             </div>
-            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('inputholder') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <input name="<?php echo \template_engine\Output::escapeHtml('user_token') ?>" type="<?php echo \template_engine\Output::escapeHtml('text') ?>" maxlength="<?php echo \template_engine\Output::escapeHtml('30') ?>" value="<?php echo \template_engine\Output::escapeHtml('') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
+                <input name="<?php echo O::escapeHtml('user_token') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('30') ?>" value="<?php echo O::escapeHtml('') ?>" /><?php echo O::escapeHtml('') ?>
               </div>
             </div>
           </div>
         </div>
       </fieldset>
       <?php $if1=(intval(1)<count($dbids)); if($if1) {  ?>
-        <fieldset class="<?php echo \template_engine\Output::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-          <legend class="<?php echo \template_engine\Output::escapeHtml('on-click-open-close') ?>"><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('DATABASE').'') ?>
-            <img src="<?php echo \template_engine\Output::escapeHtml('themes/default/images/icon/method/database.svg" />') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('arrow arrow-right on-closed') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+        <fieldset class="<?php echo O::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo O::escapeHtml('') ?>
+          <legend class="<?php echo O::escapeHtml('on-click-open-close') ?>"><?php echo O::escapeHtml(''.@O::lang('DATABASE').'') ?>
+            <img src="<?php echo O::escapeHtml('themes/default/images/icon/method/database.svg" />') ?>" /><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('arrow arrow-right on-closed') ?>"><?php echo O::escapeHtml('') ?>
             </div>
-            <div class="<?php echo \template_engine\Output::escapeHtml('arrow arrow-down on-open') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('arrow arrow-down on-open') ?>"><?php echo O::escapeHtml('') ?>
             </div>
           </legend>
-          <div class="<?php echo \template_engine\Output::escapeHtml('closable') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                  <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('DATABASE').'') ?>
+          <div class="<?php echo O::escapeHtml('closable') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                  <span><?php echo O::escapeHtml(''.@O::lang('DATABASE').'') ?>
                   </span>
                 </label>
               </div>
-              <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <select name="<?php echo \template_engine\Output::escapeHtml('dbid') ?>" size="<?php echo \template_engine\Output::escapeHtml('1') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+                <select name="<?php echo O::escapeHtml('dbid') ?>" size="<?php echo O::escapeHtml('1') ?>"><?php echo O::escapeHtml('') ?>
                   <?php foreach($dbids as $_key=>$_value) {  ?>
-                    <option value="<?php echo \template_engine\Output::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$dbid){ ?>selected="<?php echo \template_engine\Output::escapeHtml('selected') ?>"<?php } ?>><?php echo \template_engine\Output::escapeHtml(''.@$_value.'') ?>
+                    <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$dbid){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
                     </option>
                    <?php } ?>
                 </select>
@@ -170,14 +170,14 @@
         </fieldset>
        <?php } ?>
       <?php if(!$if1) {  ?>
-        <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('dbid') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$dbid.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+        <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('dbid') ?>" value="<?php echo O::escapeHtml(''.@$dbid.'') ?>" /><?php echo O::escapeHtml('') ?>
        <?php } ?>
-      <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('objectid') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$objectid.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
-      <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('modelid') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$modelid.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
-      <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('projectid') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$projectid.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
-      <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('languageid') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$languageid.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+      <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('objectid') ?>" value="<?php echo O::escapeHtml(''.@$objectid.'') ?>" /><?php echo O::escapeHtml('') ?>
+      <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('modelid') ?>" value="<?php echo O::escapeHtml(''.@$modelid.'') ?>" /><?php echo O::escapeHtml('') ?>
+      <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('projectid') ?>" value="<?php echo O::escapeHtml(''.@$projectid.'') ?>" /><?php echo O::escapeHtml('') ?>
+      <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('languageid') ?>" value="<?php echo O::escapeHtml(''.@$languageid.'') ?>" /><?php echo O::escapeHtml('') ?>
     </div>
-    <div class="<?php echo \template_engine\Output::escapeHtml('or-form-actionbar') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-      <input type="<?php echo \template_engine\Output::escapeHtml('submit') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('menu_login').'') ?>" class="<?php echo \template_engine\Output::escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+    <div class="<?php echo O::escapeHtml('or-form-actionbar') ?>"><?php echo O::escapeHtml('') ?>
+      <input type="<?php echo O::escapeHtml('submit') ?>" value="<?php echo O::escapeHtml(''.@O::lang('menu_login').'') ?>" class="<?php echo O::escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo O::escapeHtml('') ?>
     </div>
   </form>

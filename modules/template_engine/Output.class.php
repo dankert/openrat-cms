@@ -8,6 +8,9 @@ use cms\base\Configuration;
 use cms\base\Language;
 use util\Text;
 
+/**
+ * A collection of methods, used by the templates.
+ */
 class Output
 {
 	/**
@@ -25,6 +28,11 @@ class Output
 		return Text::translateutf8tohtml(htmlentities($text));
 	}
 
+	/**
+	 * Gets a localized message
+	 * @param $key message key
+	 * @return mixed|string
+	 */
 	public static function lang($key) {
 		return Language::lang($key);
 	}

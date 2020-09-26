@@ -1,152 +1,152 @@
-<?php defined('APP_STARTED') || die('Forbidden'); ?>
-  <form name="<?php echo \template_engine\Output::escapeHtml('') ?>" target="<?php echo \template_engine\Output::escapeHtml('_self') ?>" data-target="<?php echo \template_engine\Output::escapeHtml('view') ?>" action="<?php echo \template_engine\Output::escapeHtml('./') ?>" data-method="<?php echo \template_engine\Output::escapeHtml('info') ?>" data-action="<?php echo \template_engine\Output::escapeHtml('file') ?>" data-id="<?php echo \template_engine\Output::escapeHtml(''.@$_id.'') ?>" method="<?php echo \template_engine\Output::escapeHtml('POST') ?>" enctype="<?php echo \template_engine\Output::escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo \template_engine\Output::escapeHtml('') ?>" data-autosave="<?php echo \template_engine\Output::escapeHtml('') ?>" class="<?php echo \template_engine\Output::escapeHtml('or-form file') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('token') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$_token.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
-    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('action') ?>" value="<?php echo \template_engine\Output::escapeHtml('file') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
-    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('subaction') ?>" value="<?php echo \template_engine\Output::escapeHtml('info') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
-    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('id') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$_id.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
-    <div><?php echo \template_engine\Output::escapeHtml('') ?>
-      <fieldset class="<?php echo \template_engine\Output::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-        <div class="<?php echo \template_engine\Output::escapeHtml('closable') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('name').'') ?>
+<?php defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
+  <form name="<?php echo O::escapeHtml('') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-target="<?php echo O::escapeHtml('view') ?>" action="<?php echo O::escapeHtml('./') ?>" data-method="<?php echo O::escapeHtml('info') ?>" data-action="<?php echo O::escapeHtml('file') ?>" data-id="<?php echo O::escapeHtml(''.@$_id.'') ?>" method="<?php echo O::escapeHtml('POST') ?>" enctype="<?php echo O::escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo O::escapeHtml('') ?>" data-autosave="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-form file') ?>"><?php echo O::escapeHtml('') ?>
+    <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('token') ?>" value="<?php echo O::escapeHtml(''.@$_token.'') ?>" /><?php echo O::escapeHtml('') ?>
+    <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('action') ?>" value="<?php echo O::escapeHtml('file') ?>" /><?php echo O::escapeHtml('') ?>
+    <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('subaction') ?>" value="<?php echo O::escapeHtml('info') ?>" /><?php echo O::escapeHtml('') ?>
+    <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml(''.@$_id.'') ?>" /><?php echo O::escapeHtml('') ?>
+    <div><?php echo O::escapeHtml('') ?>
+      <fieldset class="<?php echo O::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo O::escapeHtml('') ?>
+        <div class="<?php echo O::escapeHtml('closable') ?>"><?php echo O::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+              <span><?php echo O::escapeHtml(''.@O::lang('name').'') ?>
               </span>
             </div>
-            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <span class="<?php echo \template_engine\Output::escapeHtml('name') ?>"><?php echo \template_engine\Output::escapeHtml(''.@$name.'') ?>
-              </span>
-            </div>
-          </div>
-          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('filename').'') ?>
-              </span>
-            </div>
-            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <span class="<?php echo \template_engine\Output::escapeHtml('filename') ?>"><?php echo \template_engine\Output::escapeHtml(''.@$filename.'') ?>
+            <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+              <span class="<?php echo O::escapeHtml('name') ?>"><?php echo O::escapeHtml(''.@$name.'') ?>
               </span>
             </div>
           </div>
-          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('file_extension').'') ?>
+          <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+              <span><?php echo O::escapeHtml(''.@O::lang('filename').'') ?>
               </span>
             </div>
-            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <span class="<?php echo \template_engine\Output::escapeHtml('extension') ?>"><?php echo \template_engine\Output::escapeHtml(''.@$extension.'') ?>
+            <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+              <span class="<?php echo O::escapeHtml('filename') ?>"><?php echo O::escapeHtml(''.@$filename.'') ?>
               </span>
             </div>
           </div>
-          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('description').'') ?>
+          <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+              <span><?php echo O::escapeHtml(''.@O::lang('file_extension').'') ?>
               </span>
             </div>
-            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <span><?php echo \template_engine\Output::escapeHtml(''.@$description.'') ?>
+            <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+              <span class="<?php echo O::escapeHtml('extension') ?>"><?php echo O::escapeHtml(''.@$extension.'') ?>
+              </span>
+            </div>
+          </div>
+          <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+              <span><?php echo O::escapeHtml(''.@O::lang('description').'') ?>
+              </span>
+            </div>
+            <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+              <span><?php echo O::escapeHtml(''.@$description.'') ?>
               </span>
             </div>
           </div>
         </div>
       </fieldset>
-      <fieldset class="<?php echo \template_engine\Output::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-        <legend class="<?php echo \template_engine\Output::escapeHtml('on-click-open-close') ?>"><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('additional_info').'') ?>
-          <img /><?php echo \template_engine\Output::escapeHtml('') ?>
-          <div class="<?php echo \template_engine\Output::escapeHtml('arrow arrow-right on-closed') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+      <fieldset class="<?php echo O::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo O::escapeHtml('') ?>
+        <legend class="<?php echo O::escapeHtml('on-click-open-close') ?>"><?php echo O::escapeHtml(''.@O::lang('additional_info').'') ?>
+          <img /><?php echo O::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('arrow arrow-right on-closed') ?>"><?php echo O::escapeHtml('') ?>
           </div>
-          <div class="<?php echo \template_engine\Output::escapeHtml('arrow arrow-down on-open') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('arrow arrow-down on-open') ?>"><?php echo O::escapeHtml('') ?>
           </div>
         </legend>
-        <div class="<?php echo \template_engine\Output::escapeHtml('closable') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('full_filename').'') ?>
+        <div class="<?php echo O::escapeHtml('closable') ?>"><?php echo O::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+              <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('full_filename').'') ?>
                 </span>
               </label>
             </div>
-            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <span><?php echo \template_engine\Output::escapeHtml(''.@$full_filename.'') ?>
+            <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+              <span><?php echo O::escapeHtml(''.@$full_filename.'') ?>
               </span>
             </div>
           </div>
-          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('FILE_SIZE').'') ?>
+          <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+              <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('FILE_SIZE').'') ?>
                 </span>
               </label>
             </div>
-            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
             </div>
-            <span><?php echo \template_engine\Output::escapeHtml(''.@$size.'') ?>
+            <span><?php echo O::escapeHtml(''.@$size.'') ?>
             </span>
           </div>
-          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('FILE_mimetype').'') ?>
+          <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+              <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('FILE_mimetype').'') ?>
                 </span>
               </label>
             </div>
-            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <span><?php echo \template_engine\Output::escapeHtml(''.@$mimetype.'') ?>
+            <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+              <span><?php echo O::escapeHtml(''.@$mimetype.'') ?>
               </span>
-              <br /><?php echo \template_engine\Output::escapeHtml('') ?>
-              <a target="<?php echo \template_engine\Output::escapeHtml('_self') ?>" data-action="<?php echo \template_engine\Output::escapeHtml('file') ?>" data-method="<?php echo \template_engine\Output::escapeHtml('size') ?>" data-id="<?php echo \template_engine\Output::escapeHtml('') ?>" data-extra="<?php echo \template_engine\Output::escapeHtml('[]') ?>" href="<?php echo \template_engine\Output::escapeHtml('/#/file/') ?>" class="<?php echo \template_engine\Output::escapeHtml('action') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('menu_file_size').'') ?>
+              <br /><?php echo O::escapeHtml('') ?>
+              <a target="<?php echo O::escapeHtml('_self') ?>" data-action="<?php echo O::escapeHtml('file') ?>" data-method="<?php echo O::escapeHtml('size') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('/#/file/') ?>" class="<?php echo O::escapeHtml('action') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('menu_file_size').'') ?>
                 </span>
               </a>
             </div>
           </div>
-          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang(''.@\template_engine\Output::lang('id').'').'') ?>
+          <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+              <span><?php echo O::escapeHtml(''.@O::lang(''.@O::lang('id').'').'') ?>
               </span>
             </div>
-            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <span><?php echo \template_engine\Output::escapeHtml(''.@$objectid.'') ?>
+            <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+              <span><?php echo O::escapeHtml(''.@$objectid.'') ?>
               </span>
             </div>
           </div>
           <?php $if1=(isset($cache_filename)); if($if1) {  ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                  <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('CACHE_FILENAME').'') ?>
+            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                  <span><?php echo O::escapeHtml(''.@O::lang('CACHE_FILENAME').'') ?>
                   </span>
                 </label>
               </div>
-              <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@$cache_filename.'') ?>
+              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@$cache_filename.'') ?>
                 </span>
-                <br /><?php echo \template_engine\Output::escapeHtml('') ?>
-                <img src="<?php echo \template_engine\Output::escapeHtml('./modules/cms/ui/themes/default/images/icon/el_date.png') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+                <br /><?php echo O::escapeHtml('') ?>
+                <img src="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/images/icon/el_date.png') ?>" /><?php echo O::escapeHtml('') ?>
                 <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($cache_filemtime); ?>
                  <?php } ?>
               </div>
             </div>
            <?php } ?>
-          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('FILE_PAGES').'') ?>
+          <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+              <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('FILE_PAGES').'') ?>
                 </span>
               </label>
             </div>
-            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <div class="<?php echo \template_engine\Output::escapeHtml('or-table-wrapper') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <div class="<?php echo \template_engine\Output::escapeHtml('or-table-filter') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                  <input type="<?php echo \template_engine\Output::escapeHtml('search') ?>" name="<?php echo \template_engine\Output::escapeHtml('filter') ?>" placeholder="<?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('SEARCH_FILTER').'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('or-table-wrapper') ?>"><?php echo O::escapeHtml('') ?>
+                <div class="<?php echo O::escapeHtml('or-table-filter') ?>"><?php echo O::escapeHtml('') ?>
+                  <input type="<?php echo O::escapeHtml('search') ?>" name="<?php echo O::escapeHtml('filter') ?>" placeholder="<?php echo O::escapeHtml(''.@O::lang('SEARCH_FILTER').'') ?>" /><?php echo O::escapeHtml('') ?>
                 </div>
-                <div class="<?php echo \template_engine\Output::escapeHtml('or-table-area') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                  <table width="<?php echo \template_engine\Output::escapeHtml('100%') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+                <div class="<?php echo O::escapeHtml('or-table-area') ?>"><?php echo O::escapeHtml('') ?>
+                  <table width="<?php echo O::escapeHtml('100%') ?>"><?php echo O::escapeHtml('') ?>
                     <?php foreach((array)$pages as $list_key=>$list_value) { extract($list_value); ?>
-                      <tr><?php echo \template_engine\Output::escapeHtml('') ?>
-                        <td><?php echo \template_engine\Output::escapeHtml('') ?>
-                          <a target="<?php echo \template_engine\Output::escapeHtml('_self') ?>" data-url="<?php echo \template_engine\Output::escapeHtml(''.@$url.'') ?>" data-action="<?php echo \template_engine\Output::escapeHtml('') ?>" data-method="<?php echo \template_engine\Output::escapeHtml('') ?>" data-id="<?php echo \template_engine\Output::escapeHtml('') ?>" data-extra="<?php echo \template_engine\Output::escapeHtml('[]') ?>" href="<?php echo \template_engine\Output::escapeHtml('/#//') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                            <img src="<?php echo \template_engine\Output::escapeHtml('./modules/cms/ui/themes/default/images/icon_page.png') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
-                            <span><?php echo \template_engine\Output::escapeHtml(''.@$name.'') ?>
+                      <tr><?php echo O::escapeHtml('') ?>
+                        <td><?php echo O::escapeHtml('') ?>
+                          <a target="<?php echo O::escapeHtml('_self') ?>" data-url="<?php echo O::escapeHtml(''.@$url.'') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('/#//') ?>"><?php echo O::escapeHtml('') ?>
+                            <img src="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/images/icon_page.png') ?>" /><?php echo O::escapeHtml('') ?>
+                            <span><?php echo O::escapeHtml(''.@$name.'') ?>
                             </span>
                           </a>
                         </td>
@@ -156,70 +156,70 @@
                 </div>
               </div>
               <?php $if1=(($pages)==FALSE); if($if1) {  ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('NOT_FOUND').'') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('NOT_FOUND').'') ?>
                 </span>
                <?php } ?>
             </div>
           </div>
         </div>
       </fieldset>
-      <fieldset class="<?php echo \template_engine\Output::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-        <legend class="<?php echo \template_engine\Output::escapeHtml('on-click-open-close') ?>"><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('prop_userinfo').'') ?>
-          <img /><?php echo \template_engine\Output::escapeHtml('') ?>
-          <div class="<?php echo \template_engine\Output::escapeHtml('arrow arrow-right on-closed') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+      <fieldset class="<?php echo O::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo O::escapeHtml('') ?>
+        <legend class="<?php echo O::escapeHtml('on-click-open-close') ?>"><?php echo O::escapeHtml(''.@O::lang('prop_userinfo').'') ?>
+          <img /><?php echo O::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('arrow arrow-right on-closed') ?>"><?php echo O::escapeHtml('') ?>
           </div>
-          <div class="<?php echo \template_engine\Output::escapeHtml('arrow arrow-down on-open') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('arrow arrow-down on-open') ?>"><?php echo O::escapeHtml('') ?>
           </div>
         </legend>
-        <div class="<?php echo \template_engine\Output::escapeHtml('closable') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('created').'') ?>
+        <div class="<?php echo O::escapeHtml('closable') ?>"><?php echo O::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+              <span><?php echo O::escapeHtml(''.@O::lang('created').'') ?>
               </span>
             </div>
-            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <i class="<?php echo \template_engine\Output::escapeHtml('image-icon image-icon--action-el_date') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+              <i class="<?php echo O::escapeHtml('image-icon image-icon--action-el_date') ?>"><?php echo O::escapeHtml('') ?>
               </i>
               <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($create_date); ?>
                <?php } ?>
-              <br /><?php echo \template_engine\Output::escapeHtml('') ?>
-              <i class="<?php echo \template_engine\Output::escapeHtml('image-icon image-icon--action-user') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <br /><?php echo O::escapeHtml('') ?>
+              <i class="<?php echo O::escapeHtml('image-icon image-icon--action-user') ?>"><?php echo O::escapeHtml('') ?>
               </i>
               <?php include_once( 'modules/template_engine/components/html/user/component-user.php'); { component_user($create_user); ?>
                <?php } ?>
             </div>
           </div>
-          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('lastchange').'') ?>
+          <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+              <span><?php echo O::escapeHtml(''.@O::lang('lastchange').'') ?>
               </span>
             </div>
-            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <i class="<?php echo \template_engine\Output::escapeHtml('image-icon image-icon--action-el_date') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+              <i class="<?php echo O::escapeHtml('image-icon image-icon--action-el_date') ?>"><?php echo O::escapeHtml('') ?>
               </i>
               <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($lastchange_date); ?>
                <?php } ?>
-              <br /><?php echo \template_engine\Output::escapeHtml('') ?>
-              <i class="<?php echo \template_engine\Output::escapeHtml('image-icon image-icon--action-user') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <br /><?php echo O::escapeHtml('') ?>
+              <i class="<?php echo O::escapeHtml('image-icon image-icon--action-user') ?>"><?php echo O::escapeHtml('') ?>
               </i>
               <?php include_once( 'modules/template_engine/components/html/user/component-user.php'); { component_user($lastchange_user); ?>
                <?php } ?>
             </div>
           </div>
-          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('published').'') ?>
+          <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+              <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('published').'') ?>
                 </span>
               </label>
             </div>
-            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <i class="<?php echo \template_engine\Output::escapeHtml('image-icon image-icon--action-el_date') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+              <i class="<?php echo O::escapeHtml('image-icon image-icon--action-el_date') ?>"><?php echo O::escapeHtml('') ?>
               </i>
               <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($published_date); ?>
                <?php } ?>
-              <br /><?php echo \template_engine\Output::escapeHtml('') ?>
-              <i class="<?php echo \template_engine\Output::escapeHtml('image-icon image-icon--action-user') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <br /><?php echo O::escapeHtml('') ?>
+              <i class="<?php echo O::escapeHtml('image-icon image-icon--action-user') ?>"><?php echo O::escapeHtml('') ?>
               </i>
               <?php include_once( 'modules/template_engine/components/html/user/component-user.php'); { component_user($published_user); ?>
                <?php } ?>
@@ -228,7 +228,7 @@
         </div>
       </fieldset>
     </div>
-    <div class="<?php echo \template_engine\Output::escapeHtml('or-form-actionbar') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-      <input type="<?php echo \template_engine\Output::escapeHtml('button') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('CANCEL').'') ?>" class="<?php echo \template_engine\Output::escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+    <div class="<?php echo O::escapeHtml('or-form-actionbar') ?>"><?php echo O::escapeHtml('') ?>
+      <input type="<?php echo O::escapeHtml('button') ?>" value="<?php echo O::escapeHtml(''.@O::lang('CANCEL').'') ?>" class="<?php echo O::escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo O::escapeHtml('') ?>
     </div>
   </form>

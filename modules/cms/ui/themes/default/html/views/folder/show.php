@@ -1,59 +1,59 @@
-<?php defined('APP_STARTED') || die('Forbidden'); ?>
-  <div class="<?php echo \template_engine\Output::escapeHtml('or-table-wrapper') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-    <div class="<?php echo \template_engine\Output::escapeHtml('or-table-filter') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-      <input type="<?php echo \template_engine\Output::escapeHtml('search') ?>" name="<?php echo \template_engine\Output::escapeHtml('filter') ?>" placeholder="<?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('SEARCH_FILTER').'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+<?php defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
+  <div class="<?php echo O::escapeHtml('or-table-wrapper') ?>"><?php echo O::escapeHtml('') ?>
+    <div class="<?php echo O::escapeHtml('or-table-filter') ?>"><?php echo O::escapeHtml('') ?>
+      <input type="<?php echo O::escapeHtml('search') ?>" name="<?php echo O::escapeHtml('filter') ?>" placeholder="<?php echo O::escapeHtml(''.@O::lang('SEARCH_FILTER').'') ?>" /><?php echo O::escapeHtml('') ?>
     </div>
-    <div class="<?php echo \template_engine\Output::escapeHtml('or-table-area') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-      <table width="<?php echo \template_engine\Output::escapeHtml('100%') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-        <tr class="<?php echo \template_engine\Output::escapeHtml('headline') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-          <th><?php echo \template_engine\Output::escapeHtml('') ?>
-            <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('TYPE').'') ?>
+    <div class="<?php echo O::escapeHtml('or-table-area') ?>"><?php echo O::escapeHtml('') ?>
+      <table width="<?php echo O::escapeHtml('100%') ?>"><?php echo O::escapeHtml('') ?>
+        <tr class="<?php echo O::escapeHtml('headline') ?>"><?php echo O::escapeHtml('') ?>
+          <th><?php echo O::escapeHtml('') ?>
+            <span><?php echo O::escapeHtml(''.@O::lang('TYPE').'') ?>
             </span>
           </th>
-          <th><?php echo \template_engine\Output::escapeHtml('') ?>
-            <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('NAME').'') ?>
+          <th><?php echo O::escapeHtml('') ?>
+            <span><?php echo O::escapeHtml(''.@O::lang('NAME').'') ?>
             </span>
           </th>
-          <th><?php echo \template_engine\Output::escapeHtml('') ?>
-            <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('LASTCHANGE').'') ?>
+          <th><?php echo O::escapeHtml('') ?>
+            <span><?php echo O::escapeHtml(''.@O::lang('LASTCHANGE').'') ?>
             </span>
           </th>
         </tr>
         <?php $if1=(isset($up_url)); if($if1) {  ?>
-          <tr class="<?php echo \template_engine\Output::escapeHtml('data clickable') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <td><?php echo \template_engine\Output::escapeHtml('') ?>
-              <i class="<?php echo \template_engine\Output::escapeHtml('image-icon image-icon--action-folder') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+          <tr class="<?php echo O::escapeHtml('data clickable') ?>"><?php echo O::escapeHtml('') ?>
+            <td><?php echo O::escapeHtml('') ?>
+              <i class="<?php echo O::escapeHtml('image-icon image-icon--action-folder') ?>"><?php echo O::escapeHtml('') ?>
               </i>
             </td>
-            <td><?php echo \template_engine\Output::escapeHtml('') ?>
-              <span><?php echo \template_engine\Output::escapeHtml('..') ?>
+            <td><?php echo O::escapeHtml('') ?>
+              <span><?php echo O::escapeHtml('..') ?>
               </span>
             </td>
-            <td><?php echo \template_engine\Output::escapeHtml('') ?>
-              <span><?php echo \template_engine\Output::escapeHtml('') ?>
+            <td><?php echo O::escapeHtml('') ?>
+              <span><?php echo O::escapeHtml('') ?>
               </span>
             </td>
           </tr>
          <?php } ?>
         <?php foreach((array)$object as $list_key=>$list_value) { extract($list_value); ?>
-          <tr class="<?php echo \template_engine\Output::escapeHtml('data') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-            <td title="<?php echo \template_engine\Output::escapeHtml(''.@$desc.'') ?>" data-name="<?php echo \template_engine\Output::escapeHtml(''.@$name.'') ?>" data-action="<?php echo \template_engine\Output::escapeHtml(''.@$type.'') ?>" data-id="<?php echo \template_engine\Output::escapeHtml(''.@$id.'') ?>" class="<?php echo \template_engine\Output::escapeHtml('clickable '.@$class.'') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <img src="<?php echo \template_engine\Output::escapeHtml('./modules/cms/ui/themes/default/images/icon_'.@$icon.'.png') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
-              <span><?php echo \template_engine\Output::escapeHtml(''.@$name.'') ?>
+          <tr class="<?php echo O::escapeHtml('data') ?>"><?php echo O::escapeHtml('') ?>
+            <td title="<?php echo O::escapeHtml(''.@$desc.'') ?>" data-name="<?php echo O::escapeHtml(''.@$name.'') ?>" data-action="<?php echo O::escapeHtml(''.@$type.'') ?>" data-id="<?php echo O::escapeHtml(''.@$id.'') ?>" class="<?php echo O::escapeHtml('clickable '.@$class.'') ?>"><?php echo O::escapeHtml('') ?>
+              <img src="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/images/icon_'.@$icon.'.png') ?>" /><?php echo O::escapeHtml('') ?>
+              <span><?php echo O::escapeHtml(''.@$name.'') ?>
               </span>
-              <span><?php echo \template_engine\Output::escapeHtml(' ') ?>
+              <span><?php echo O::escapeHtml(' ') ?>
               </span>
             </td>
-            <td><?php echo \template_engine\Output::escapeHtml('') ?>
+            <td><?php echo O::escapeHtml('') ?>
               <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($date); ?>
                <?php } ?>
             </td>
           </tr>
          <?php } ?>
         <?php $if1=(($object)==FALSE); if($if1) {  ?>
-          <tr><?php echo \template_engine\Output::escapeHtml('') ?>
-            <td colspan="<?php echo \template_engine\Output::escapeHtml('2') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-              <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('NOT_FOUND').'') ?>
+          <tr><?php echo O::escapeHtml('') ?>
+            <td colspan="<?php echo O::escapeHtml('2') ?>"><?php echo O::escapeHtml('') ?>
+              <span><?php echo O::escapeHtml(''.@O::lang('NOT_FOUND').'') ?>
               </span>
             </td>
           </tr>
@@ -61,11 +61,11 @@
       </table>
     </div>
   </div>
-  <div class="<?php echo \template_engine\Output::escapeHtml('clickable') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-    <a target="<?php echo \template_engine\Output::escapeHtml('_self') ?>" data-type="<?php echo \template_engine\Output::escapeHtml('view') ?>" data-action="<?php echo \template_engine\Output::escapeHtml('folder') ?>" data-method="<?php echo \template_engine\Output::escapeHtml('create') ?>" data-id="<?php echo \template_engine\Output::escapeHtml('') ?>" data-extra="<?php echo \template_engine\Output::escapeHtml('[]') ?>" href="<?php echo \template_engine\Output::escapeHtml('/#/folder/') ?>" class="<?php echo \template_engine\Output::escapeHtml('or-link-btn') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
-      <i class="<?php echo \template_engine\Output::escapeHtml('image-icon image-icon--action-new') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+  <div class="<?php echo O::escapeHtml('clickable') ?>"><?php echo O::escapeHtml('') ?>
+    <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('view') ?>" data-action="<?php echo O::escapeHtml('folder') ?>" data-method="<?php echo O::escapeHtml('create') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('/#/folder/') ?>" class="<?php echo O::escapeHtml('or-link-btn') ?>"><?php echo O::escapeHtml('') ?>
+      <i class="<?php echo O::escapeHtml('image-icon image-icon--action-new') ?>"><?php echo O::escapeHtml('') ?>
       </i>
-      <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('new').'') ?>
+      <span><?php echo O::escapeHtml(''.@O::lang('new').'') ?>
       </span>
     </a>
   </div>
