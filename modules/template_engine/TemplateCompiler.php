@@ -14,21 +14,48 @@ use util\FileUtils;
 
 \cms\base\Startup::initialize();
 
-$dir = __DIR__ . '/../../modules/cms/ui/themes/default/html/views';
+$searchDir = __DIR__ . '/../../modules/cms/ui/themes/default/html/views';
 
 
-echo "Searching in $dir\n";
+echo "Searching in $searchDir\n";
 
 $count = 0;
 
-foreach(FileUtils::readDir( $dir ) as $action )
+
+spl_autoload_register(
+
+/**
+ * Loads component classes.
+ *
+ * @param $className Class name
+ * @return void
+ */
+	function ($className) {
+
+		if   ( substr($className,-9) == 'Component')
+		{
+			$pos = strrpos($className, '\\');
+			$className = substr($className, $pos + 1);
+
+			$componentName = substr($className,0,-9 );
+
+			$c = __DIR__.DIRECTORY_SEPARATOR.'components'.DIRECTORY_SEPARATOR.'html'.DIRECTORY_SEPARATOR.strtolower($componentName).DIRECTORY_SEPARATOR.$componentName.'.class.php';
+
+			if   ( is_file($c) )
+				require($c);
+		}
+	},true,true
+);
+
+
+foreach(FileUtils::readDir( $searchDir ) as $action )
 {
-	if   ( !is_dir($dir.'/'.$action ) )
+	if   ( !is_dir($searchDir.'/'.$action ) )
 		continue;
 
     echo "Action: $action\n";
 
-    foreach(FileUtils::readDir( $dir.'/'.$action ) as $file )
+    foreach(FileUtils::readDir( $searchDir.'/'.$action ) as $file )
     {
         if   ( substr($file,-12 ) == '.tpl.src.xml' )
         {
@@ -36,8 +63,8 @@ foreach(FileUtils::readDir( $dir ) as $action )
             $method = substr($file, 0,-12 );
             echo "\tMethod $method\n";
 
-            $templateFile = $dir.'/'.$action.'/'.$file;
-            $outFile      = $dir.'/'.$action.'/'.$method.'.php';
+            $templateFile = $searchDir.'/'.$action.'/'.$file;
+            $outFile      = $searchDir.'/'.$action.'/'.$method.'.php';
 
             $engine = new TemplateEngine();
 

@@ -419,39 +419,33 @@ class ElementAction extends BaseAction
 
                         case Element::ELEMENT_TYPE_DYNAMIC:
 
-                            $className = $this->element->subtype;
-                            $fileName  = OR_DYNAMICCLASSES_DIR.'/'.$className.'.class.'.PHP_EXT;
+                            $className = '\\cms\\macros\\macro\\'.ucfirst($this->element->subtype);
 
 							$description = '';
 							$paramList   = array();
 							$parameters  = array();
 
-							if	( is_file( $fileName ) )
-                            {
-                                require( $fileName );
+							if	( class_exists($className) )
+							{
+								$dynEl = new $className;
 
-                                if	( class_exists($className) )
-                                {
-                                    $dynEl = new $className;
+								$description = $dynEl->description;
 
-                                    $description = $dynEl->description;
+								$old = $this->element->getDynamicParameters();
 
-                                    $old = $this->element->getDynamicParameters();
+								$reflect = new ReflectionClass($dynEl);
+								$props   = $reflect->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED);
+								foreach( get_object_vars($dynEl) as $paramName=>$paramValue )
+								{
+									$paramList[$paramName] = print_r( $paramValue, true);
 
-									$reflect = new ReflectionClass($dynEl);
-									$props   = $reflect->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED);
-                                    foreach( get_object_vars($dynEl) as $paramName=>$paramValue )
-                                    {
-										$paramList[$paramName] = print_r( $paramValue, true);
+									if	( @$old[$paramName] )
+										$parameters[$paramName] = $old[$paramName];
+									else
+										$parameters[$paramName] = $paramValue;
+								}
 
-										if	( @$old[$paramName] )
-											$parameters[$paramName] = $old[$paramName];
-										else
-											$parameters[$paramName] = $paramValue;
-                                    }
-
-                                }
-                            }
+							}
 
 							$this->setTemplateVar('dynamic_class_description',$description );
 							$this->setTemplateVar('dynamic_class_parameters' ,$paramList          );

@@ -240,8 +240,6 @@ class BaseObject extends ModelBase
      */
     function __construct($objectid = '')
     {
-        global $SESS;
-
         if	( is_numeric($objectid) )
         {
             $this->objectid = $objectid;
@@ -710,7 +708,6 @@ SQL
      */
     function objectLoadRaw()
     {
-        global $SESS;
         $db = \cms\base\DB::get();
 
         $sql = $db->sql('SELECT * FROM {{object}}'.

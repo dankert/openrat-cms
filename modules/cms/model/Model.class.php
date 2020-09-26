@@ -154,7 +154,6 @@ class Model extends ModelBase
 	// Diese Sprache als 'default' markieren.
 	function setDefault()
 	{
-		global $SESS;
 		$db = \cms\base\DB::get();
 
 		// Zuerst alle auf nicht-Standard setzen

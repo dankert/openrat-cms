@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use cms\base\Configuration;
 use cms\model\Language;
 
 
@@ -107,8 +108,7 @@ class LanguagelistAction extends BaseAction
 	 */
 	function addView()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
-		$countryList = $conf['countries'];
+		$countryList = Configuration::subset('countries')->getConfig();
 		
 		foreach( $this->project->getLanguageIds() as $id )
 		{
@@ -119,7 +119,8 @@ class LanguagelistAction extends BaseAction
 			unset( $countryList[$l->isoCode] );
 		}
 
-		asort( $countryList );		
+		asort( $countryList );
+
 		$this->setTemplateVar('isocodes'  ,$countryList );
 		$this->setTemplateVar('isocode'  ,'' );
 	}

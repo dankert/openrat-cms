@@ -23,7 +23,7 @@ class UploadComponent extends Component
 		if	( $this->multiple )
 			$input->addAttribute( 'multiple','multiple' );
 
-		$input->addAttribute('id',REQUEST_ID.'_'.$this->name);
+		//$input->addAttribute('id',REQUEST_ID.'_'.$this->name);
 		$input->addAttribute('name',$this->name);
 		$input->addAttribute('size',$this->size);
 

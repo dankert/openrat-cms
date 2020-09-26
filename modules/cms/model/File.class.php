@@ -104,37 +104,6 @@ class File extends BaseObject
 
 
 	/**
-	 * @deprecated
-	 */
-	function getFileObjectIdsByExtension( $extension )
-	{
-		global $SESS;
-		$db = \cms\base\DB::get();
-
-		$sqlquery = 'SELECT * FROM {{object}} ';
-
-		if   ( $extension != '' )
-		{
-			$sqlquery .= " WHERE extension='";
-
-			$ext = explode(',',$extension);
-			$sqlquery .= implode( "' OR extension='",$ext );
-			$sqlquery .= "' AND typeid=".BaseObject::TYPEID_FILE." AND projectid={projectid}";
-		}
-		else
-		{
-			$sqlquery .= " WHERE typeid=".BaseObject::TYPEID_FILE." AND projectid={projectid}";
-		}
-
-		$sql = $db->sql( $sqlquery );
-		$sql->setInt( 'projectid',$SESS['projectid'] );
-
-		return $sql->getCol();
-	}
-
-
-
-	/**
 	  * Es werden Objekte zu einer Dateierweiterung ermittelt
 	  *
 	  * @param String Dateierweiterung ohne fuehrenden Punkt (z.B. 'jpeg')

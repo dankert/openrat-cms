@@ -73,9 +73,8 @@ class LoginAction extends BaseAction
 		Logger::debug( "Login user: '$name'.'" );
 	
 		$conf = \cms\base\Configuration::rawConfig();
-		global $SESS;
-	
-		unset( $SESS['user'] );	
+
+		Session::setUser(null);
 	
 		
 		$db = \cms\base\DB::get();
@@ -1058,8 +1057,6 @@ class LoginAction extends BaseAction
 	function show()
 	{
 		$conf = \cms\base\Configuration::rawConfig();
-		global $PHP_AUTH_USER;
-		global $PHP_AUTH_PW;
 
 		$user = Session::getUser();
 		// Gast-Login

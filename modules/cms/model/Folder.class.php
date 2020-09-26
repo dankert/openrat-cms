@@ -358,7 +358,13 @@ class Folder extends BaseObject
 	}
 
 	
-	// Rechte f?r diesen Ordner hinzuf?gen
+
+	/**
+	 * Rechte f?r diesen Ordner hinzuf?gen.
+	 * @param $rights
+	 * @param bool $inherit
+	 * @deprecated unused? bad code.
+	 */
 	function addrights( $rights,$inherit = true )
 	{
 		global $SESS;

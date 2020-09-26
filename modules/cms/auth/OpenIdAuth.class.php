@@ -220,7 +220,7 @@ class OpenIdAuth implements Auth
 			$trustRoot = $server;
 
 		$redirHttp->requestParameter['openid.trust_root'] = FileUtils::slashify($trustRoot);
-		$redirHttp->requestParameter['openid.return_to'] = FileUtils::slashify($server) . 'openid.' . PHP_EXT;
+		$redirHttp->requestParameter['openid.return_to'] = FileUtils::slashify($server) . 'openid.php'; // FIXME url
 		//$redirHttp->requestParameter['openid.realm'        ] = slashify($server).'openid.'.PHP_EXT;
 		$redirHttp->requestParameter['openid.assoc_handle'] = $this->handle;
 

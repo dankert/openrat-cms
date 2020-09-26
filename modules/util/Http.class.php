@@ -348,10 +348,8 @@ class Http
 	 */
 	public static function getLanguages()
 	{
-		global $HTTP_SERVER_VARS;
-
 		$languages = array();
-		$http_languages = @$HTTP_SERVER_VARS['HTTP_ACCEPT_LANGUAGE'];
+		$http_languages = @$_SERVER['HTTP_ACCEPT_LANGUAGE'];
 		foreach (explode(',', $http_languages) as $l) {
 			list($part) = explode(';', $l); // Priorit�ten ignorieren.
 			$languages[] = trim($part);

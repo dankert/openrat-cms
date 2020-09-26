@@ -3,6 +3,7 @@
 namespace cms\action;
 
 use cms\auth\Auth;
+use cms\base\Startup;
 use cms\model\BaseObject;
 use cms\model\Project;
 use cms\model\User;
@@ -168,14 +169,14 @@ class IndexAction extends Action
 	private function getCSSFiles()
 	{
 		return array(
-			OR_THEMES_DIR . 'default/style/openrat'.(PRODUCTION?'.min':'').'.css'
+			Startup::THEMES_DIR . 'default/style/openrat'.(PRODUCTION?'.min':'').'.css'
 		);
 	}
 
 	
 	public function themestyleView()
     {
-        $themeLessFile = OR_THEMES_DIR . 'default/style/theme/openrat-theme.less';
+        $themeLessFile = Startup::THEMES_DIR . 'default/style/theme/openrat-theme.less';
         $this->lastModified(filemtime($themeLessFile));
 
         header('Content-Type: text/css');
@@ -188,7 +189,7 @@ class IndexAction extends Action
 	private function getThemeCSS()
 	{
 		// Je Theme die Theme-CSS-Datei ausgeben.
-		$lessFile = OR_THEMES_DIR . 'default/style/theme/openrat-theme.less';
+		$lessFile = Startup::THEMES_DIR . 'default/style/theme/openrat-theme.less';
 		$css = '';
 		
 		
@@ -235,7 +236,7 @@ class IndexAction extends Action
 	private function getJSFiles()
 	{
 		return array(
-			OR_THEMES_DIR . 'default/script/openrat'.(PRODUCTION?'.min':'').'.js'
+			Startup::THEMES_DIR . 'default/script/openrat'.(PRODUCTION?'.min':'').'.js'
 		);
 	}
 	

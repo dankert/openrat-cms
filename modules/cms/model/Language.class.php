@@ -16,6 +16,7 @@ namespace cms\model;
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+use cms\base\Configuration;
 use cms\base\DB as Db;
 
 
@@ -140,8 +141,6 @@ class Language extends ModelBase
 	 */
 	function add( $isocode='' )
 	{
-		global $SESS;
-		global $iso;
 		$db = \cms\base\DB::get();
 
 		if	( $isocode != '' )
@@ -150,7 +149,7 @@ class Language extends ModelBase
 			$isocode = str_replace('_','',$isocode);
 			
 			$this->isocode = $isocode;
-			$codes = \util\GlobalFunctions::getIsoCodes();
+			$codes = Configuration::subset('countries')->getConfig();
 			$this->name    = $codes[ $isocode ];
 		}
 
@@ -173,7 +172,6 @@ class Language extends ModelBase
 	// Diese Sprache als 'default' markieren.
 	function setDefault()
 	{
-		global $SESS;
 		$db = \cms\base\DB::get();
 
 		// Zuerst alle auf nicht-Standard setzen

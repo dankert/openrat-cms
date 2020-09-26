@@ -86,12 +86,10 @@ namespace cms\action {
             if($varName == REQ_PARAM_SUBACTION)
                 return $this->method;
 
-            global $REQ;
-
-            if (!isset($REQ[$varName]))
+            if (!isset($_REQUEST[$varName]))
                 return '';
 
-            return $this->cleanText( $REQ[$varName], $transcode );
+            return $this->cleanText( $_REQUEST[$varName], $transcode );
         }
 
 
@@ -145,9 +143,7 @@ namespace cms\action {
          */
         public function hasRequestVar($varName)
         {
-            global $REQ;
-
-            return (isset($REQ[$varName]) && (!empty($REQ[$varName]) || $REQ[$varName] == '0'));
+            return (isset($_REQUEST[$varName]) && (!empty($_REQUEST[$varName]) || $_REQUEST[$varName] == '0'));
         }
 
 
@@ -199,5 +195,10 @@ namespace cms\action {
         {
             return $this->getRequestVar(REQ_PARAM_PROJECT_ID,OR_FILTER_NUMBER);
         }
-    }
+
+		public function getToken()
+		{
+			return $this->getRequestVar(REQ_PARAM_TOKEN,OR_FILTER_ALPHANUM);
+		}
+	}
 }

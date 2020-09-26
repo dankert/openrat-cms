@@ -13,6 +13,7 @@ use cms\base\DefaultConfig;
 use configuration\ConfigurationLoader;
 use database\Database;
 use cms\update\Update;
+use modules\cms\base\HttpRequest;
 use util\Http;
 use logger\Logger;
 use LogicException;
@@ -157,9 +158,8 @@ class Dispatcher
 
     private function checkPostToken()
     {
-        global $REQ;
-        if (\cms\base\Configuration::config('security', 'use_post_token') && $_SERVER['REQUEST_METHOD'] == 'POST' && @$REQ[REQ_PARAM_TOKEN] != Session::token()) {
-            Logger::error('Token mismatch: Needed ' . Session::token() . ' but got ' . Logger::sanitizeInput(@$REQ[REQ_PARAM_TOKEN]) . '. Maybe an attacker?');
+        if (\cms\base\Configuration::config('security', 'use_post_token') && $this->request->isAction && $this->request->getToken() != Session::token()) {
+            Logger::error('Token mismatch: Needed ' . Session::token() . ' but got ' . Logger::sanitizeInput($this->request->getToken()) . '. Maybe an attacker?');
             throw new SecurityException("Token mismatch");
         }
     }
@@ -176,8 +176,7 @@ class Dispatcher
 
         // Wenn Logfile relativ angegeben wurde, dann muss dies relativ zum Root der Anwendung sein.
         if   ( !empty($logFile) && $logFile[0] != '/' )
-            $logFile = CMS_ROOT_DIR . $logFile;
-        //$logFile = __DIR__.'/../../'.$logFile;
+            $logFile = __DIR__ . '/../../' . $logFile;
 
         Logger::$messageFormat = $logConfig['format'];
         Logger::$filename   = $logFile;
@@ -275,7 +274,6 @@ class Dispatcher
      */
     private function callActionMethod()
     {
-        global $REQ;
         $actionClassName = ucfirst($this->request->action) . 'Action';
         $actionClassNameWithNamespace = 'cms\\action\\' . $actionClassName;
 
@@ -313,7 +311,7 @@ class Dispatcher
         if   ( ! $this->request->isAction && $this->request->action != 'index' )
             Session::close();
 
-        Logger::debug("Dispatcher executing {$this->request->action}/{$this->request->method}/" . @$REQ[REQ_PARAM_ID].' -> '.$actionClassName.'#'.$subactionMethodName.'()');
+        Logger::debug("Dispatcher executing {$this->request->action}/{$this->request->method}/" . $this->request->getRequestId().' -> '.$actionClassName.'#'.$subactionMethodName.'()');
 
 
         try {

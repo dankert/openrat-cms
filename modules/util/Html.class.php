@@ -84,7 +84,6 @@ class Html
 //			if	( $id != '' )
 //				$id = '.'.$id;
 		} else {
-			global $view;
 			$params[REQ_PARAM_ACTION] = $action;
 			$params[REQ_PARAM_SUBACTION] = $subaction;
 			$params[REQ_PARAM_ID] = $id;

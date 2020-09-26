@@ -33,14 +33,6 @@ class TemplateEngine
 
 	const CSS_PREFIX = 'or-';
 
-
-    /**
-	 * Erzeugt einen Templateparser.
-	 */
-	public function __construct()
-	{
-	}
-
 	/**
      * Compile the template.
      * From a XML source file we are generating a PHP file.
@@ -140,14 +132,11 @@ class TemplateEngine
 		}
 
 		$className = ucfirst($tag);
-		$classFilename = dirname(__FILE__).'/../components/'.$this->renderType."/$tag/$className.class." . PHP_EXT;
+		$className = 'template_engine\components\\'.$className.'Component';
 
-		if (!is_file($classFilename))
-			throw new LogicException("Component Class File '$classFilename' does not exist." );
+		if   ( !class_exists($className ))
+			throw new LogicException("Component class ".$className.' does not exist');
 
-		require_once ($classFilename);
-
-		$className = 'template_engine\components\\'.$className .'Component';
 		/* @var $component Component */
 		$component = new $className();
 		$component->setDepth($depth+1);

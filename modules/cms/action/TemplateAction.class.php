@@ -548,8 +548,6 @@ class TemplateAction extends BaseAction
 	//
 	function listingView()
 	{
-		global $conf_php;
-
 		$list = array();
 
         $project = new Project( $this->template->projectid );

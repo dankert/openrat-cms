@@ -6,6 +6,7 @@ namespace cms\generator;
 
 use cms\base\Configuration as C;
 use cms\base\DB;
+use cms\base\Startup;
 use cms\macros\MacroRunner;
 use cms\model\BaseObject;
 use cms\model\Element;
@@ -1006,7 +1007,7 @@ class ValueGenerator extends BaseGenerator
 		if   ( $this->context->pageContext->scheme == Producer::SCHEME_PREVIEW && $element->withIcon && $page->isHtml() )
 		{
 			// Anklickbaren Link voranstellen.
-			$iconLink = '<a href="javascript:parent.openNewAction(\''.$element->name.'\',\'pageelement\',\''.$page->objectid.'_'.$element->elementid.'\');" title="'.$element->desc.'"><img src="'.OR_THEMES_DIR.$conf['interface']['theme'].'/images/icon_el_'.$element->type.IMG_ICON_EXT.'" border="0" align="left"></a>';
+			$iconLink = '<a href="javascript:parent.openNewAction(\''.$element->name.'\',\'pageelement\',\''.$page->objectid.'_'.$element->elementid.'\');" title="'.$element->desc.'"><img src="'.Startup::THEMES_DIR.$conf['interface']['theme'].'/images/icon_el_'.$element->type.Startup::IMG_ICON_EXT.'" border="0" align="left"></a>';
 			$inhalt   = $iconLink.$inhalt;
 		}
 

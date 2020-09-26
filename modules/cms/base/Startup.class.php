@@ -23,7 +23,13 @@ use util\exception\ValidationException;
 
 class Startup {
 
-	const MIN_VERSION = '5.4';
+	const MIN_VERSION = '5.4'; // minimum required PHP version.
+
+	const IMG_EXT      = '.gif';
+	const IMG_ICON_EXT = '.png';
+
+	const HTML_MODULES_DIR = './modules/';
+	const THEMES_DIR       = './modules/cms/ui/themes/';
 
 	/**
 	 * Initialize.
@@ -34,7 +40,6 @@ class Startup {
 		self::securityCheck();
 		self::setErrorHandler();
 		self::setConstants();
-		self::createRequest();
 	}
 
 	public static function checkPHPVersion()
@@ -46,28 +51,9 @@ class Startup {
 
 	public static function setConstants() {
 
-		define('PHP_EXT', 'php');
-
-		define('IMG_EXT', '.gif');
-		define('IMG_ICON_EXT', '.png');
-
 		require(__DIR__ . '/version.php');
-		define('OR_TITLE', 'OpenRat CMS');
-
-		define('CMS_ROOT_DIR', __DIR__ . '/../../../');
-
-		define('OR_MODULES_DIR', __DIR__ . '/../../');
-		define('OR_DYNAMICCLASSES_DIR', OR_MODULES_DIR . 'cms/macros/macro/');
-		define('OR_SERVICECLASSES_DIR', OR_MODULES_DIR . 'util/');
-		define('OR_AUTHCLASSES_DIR', OR_MODULES_DIR . 'cms/auth/');
-		define('OR_TMP_DIR', CMS_ROOT_DIR . 'tmp/');
-
-		define('START_TIME', time());
-		define('REQUEST_ID', 'req0'); // Nicht mehr notwendig, kann entfallen.
-
-// Must be relative to HTML-Path!
-		define('OR_HTML_MODULES_DIR', './modules/');
-		define('OR_THEMES_DIR', OR_HTML_MODULES_DIR . 'cms/ui/themes/');
+		define('OR_TITLE'  , 'OpenRat CMS');
+		define('START_TIME', time()); // The start time of the script.
 	}
 
 
@@ -122,6 +108,9 @@ class Startup {
 	}
 
 
+	/**
+	 * Check for some stupid security impacts.
+	 */
 	public static function securityCheck()
 	{
 		// REGISTER_GLOBALS
@@ -136,13 +125,6 @@ class Startup {
 			Logger::warn("MAGIC_QUOTES is active. For security reasons: DO NOT USE THIS!");
 	}
 
-
-	public static function createRequest()
-	{
-		// TODO: We should use $_REQUEST everywhere.
-		global $REQ;
-		$REQ = array_merge($_GET, $_POST);
-	}
 
 
 	/**

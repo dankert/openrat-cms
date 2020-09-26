@@ -548,8 +548,6 @@ class PageAction extends ObjectAction
 	 */
 	function formView()
 	{
-		global $conf_php;
-
 		$list = array();
 
 		foreach( $this->page->values as $id=>$value )

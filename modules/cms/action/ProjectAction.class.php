@@ -122,8 +122,6 @@ class ProjectAction extends BaseAction
 	 */
 	function listingView()
 	{
-		global $conf_php;
-
 		// Projekte ermitteln
 		$list = array();
 

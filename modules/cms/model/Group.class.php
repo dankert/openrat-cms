@@ -17,6 +17,7 @@ namespace cms\model;
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 use cms\base\DB as Db;
+use util\Session;
 
 
 /**
@@ -251,7 +252,6 @@ class Group extends ModelBase
 	// Alle Berechtigungen ermitteln
 	function getRights()
 	{
-		global $SESS,$conf_php;
 		$db = \cms\base\DB::get();
 		$var = array();
 
@@ -282,7 +282,6 @@ class Group extends ModelBase
 				$folder->load();
 				$var[$projectid]['rights'][$aclid] = $acl;
 				$var[$projectid]['rights'][$aclid]['foldername'] = implode(' &raquo; ',$folder->parentfolder( false,true ));
-				$var[$projectid]['rights'][$aclid]['delete_url'] = 'user.'.$conf_php.'?useraction=delright&aclid='.$aclid;
 			}
 			
 			$sql = $db->sql( 'SELECT id FROM {{folder}}'.
@@ -305,33 +304,7 @@ class Group extends ModelBase
 		return $var;
 	}
 	
-	
-	// Berechtigung der Gruppe hinzufuegen
-	function addRight( $data )
-	{
-		global $REQ,$SESS;
-		$db = \cms\base\DB::get();
-		
-		$sql = $db->sql('INSERT INTO {{acl}} '.
-		               '(userid,groupid,folderid,`read`,`write`,`create`,`delete`,publish) '.
-		               'VALUES({userid},{groupid},{folderid},{read},{write},{create},{delete},{publish})');
-		               
-		$sql->setNull('userid');
-		$sql->setInt ('groupid',$this->groupid);
-		$sql->setInt ('projectid',$SESS['projectid']);
-		$sql->setInt ('folderid',$data['folderid']);
 
-		$sql->setInt ('read'   ,$data['read'   ]);
-		$sql->setInt ('write'  ,$data['write'  ]);
-		$sql->setInt ('create' ,$data['create' ]);
-		$sql->setInt ('delete' ,$data['delete' ]);
-		$sql->setInt ('publish',$data['publish']);
-	
-		// Datenbankabfrage ausf?hren
-		$sql->query();
-	}
-
-	
 	
 	/**
 	 * Ermitteln aller Berechtigungen dieser Gruppe.<br>

@@ -2,6 +2,7 @@
 
 namespace template_engine\components;
 
+use cms\base\Startup;
 use template_engine\components\html\Component;
 use template_engine\element\Element;
 
@@ -34,7 +35,7 @@ HTML;
 		if (! empty($this->src))
 		{
 			$this->type = 'image';
-			$this->tmp_src = $image_dir . 'icon_' . $this->src . IMG_ICON_EXT;
+			$this->tmp_src = $image_dir . 'icon_' . $this->src . Startup::IMG_ICON_EXT;
 		}
 		else
 		{

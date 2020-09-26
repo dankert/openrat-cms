@@ -2,6 +2,7 @@
 
 namespace template_engine\components;
 
+use cms\base\Startup;
 use template_engine\components\html\Component;
 use template_engine\element\CMSElement;
 
@@ -51,19 +52,19 @@ class ImageComponent extends Component
 		}
 		elseif	( $this->type )
 		{
-			$file = OR_THEMES_DIR.'default/images/icon_'.$this->type.IMG_ICON_EXT;
+			$file = Startup::THEMES_DIR.'default/images/icon_'.$this->type.Startup::IMG_ICON_EXT;
 		}
 		elseif	( $this->icon )
 		{
-			$file = OR_THEMES_DIR.'default/images/icon/'.$this->icon.IMG_ICON_EXT;
+			$file = Startup::THEMES_DIR.'default/images/icon/'.$this->icon.Startup::IMG_ICON_EXT;
 		}
 		elseif	( $this->notice )
 		{
-			$file = OR_THEMES_DIR.'default/images/notice_'.$this->notice.IMG_ICON_EXT;
+			$file = Startup::THEMES_DIR.'default/images/notice_'.$this->notice.Startup::IMG_ICON_EXT;
 		}
 		elseif	( $this->tree )
 		{
-			$file = OR_THEMES_DIR.'default/images/tree_'.$this->tree.IMG_EXT;
+			$file = Startup::THEMES_DIR.'default/images/tree_'.$this->tree.Startup::IMG_EXT;
 		}
 		elseif	( $this->url )
 		{
@@ -71,11 +72,11 @@ class ImageComponent extends Component
 		}
 		elseif	( $this->fileext )
 		{
-			$file = OR_THEMES_DIR.'default/images/icon/'.$this->fileext;
+			$file = Startup::THEMES_DIR.'default/images/icon/'.$this->fileext;
 		}
 		elseif	( $this->file )
 		{
-			$file = OR_THEMES_DIR.'default/images/icon/'.$this->file.IMG_ICON_EXT;
+			$file = Startup::THEMES_DIR.'default/images/icon/'.$this->file.Startup::IMG_ICON_EXT;
 		}
 
 		if	( $this->class )

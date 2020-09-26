@@ -62,7 +62,6 @@ class Url extends BaseObject
 
 	public function save()
 	{
-		global $SESS;
 		$db = \cms\base\DB::get();
 		
 		$sql = $db->sql('UPDATE {{url}} SET '.

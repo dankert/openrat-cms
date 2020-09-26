@@ -110,7 +110,6 @@ class API
                 break;
 
             case CMS_API_OUTPUT_XML:
-                require_once(OR_SERVICECLASSES_DIR . "XML.class." . PHP_EXT);
                 $xml = new XML();
                 $xml->root = 'server'; // Name des XML-root-Elementes
                 header('Content-Type: application/xml; charset=UTF-8');

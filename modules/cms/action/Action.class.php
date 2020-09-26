@@ -100,11 +100,7 @@ namespace cms\action {
          */
         protected function getSessionVar($varName)
         {
-            global $SESS;
-
-            if (!isset($SESS[$varName]))
-                return '';
-            else    return $SESS[$varName];
+            return Session::get($varName);
         }
 
 
@@ -117,9 +113,7 @@ namespace cms\action {
          */
         protected function setSessionVar($varName, $value)
         {
-            global $SESS;
-
-            $SESS[$varName] = $value;
+            Session::set($varName,$value);
         }
 
 

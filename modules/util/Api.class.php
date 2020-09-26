@@ -25,9 +25,7 @@ use cms\model\Project;
  * Service-Klasse fuer allgemeine Interface-Methoden. Insbesondere
  * in Code-Elementen kann und soll auf diese Methoden zurueckgegriffen
  * werden.
- * @author $Author$
- * @version $Revision$
- * @package openrat.services
+ * @deprecated use Macro methods.
  */
 class Api
 {
@@ -42,9 +40,7 @@ class Api
 
 	function pageid()
 	{
-		echo 'WARNING: pageid() deprecated!<br>';
-		global $SESS;
-		return $SESS['objectid'];
+		throw new \LogicException( 'WARNING: pageid() deprecated!');
 	}
 
 	function getObjectId()
@@ -63,29 +59,12 @@ class Api
 		return $project::getRootObjectId();
 	}
 
+
 	function folderid()
 	{
-		global $SESS;
-		return $SESS['folderid'];
+		throw new \LogicException('folderid() impossible to call, information does not exist');
 	}
 
-
-	function execute($code)
-	{
-		global $conf_tmpdir;
-		$code = "<?php\n" . $code . "\n?>";
-
-		$tmp = $conf_tmpdir . '/' . md5(microtime()) . '.tmp';
-		$f = fopen($tmp, 'w');
-		fwrite($f, $code);
-		fclose($f);
-
-		require($tmp); // Ausfuehren des temporaeren PHP-Codes
-
-		unlink($tmp);
-		$inhalt = Api::getOutput();
-		$this->output($inhalt);
-	}
 
 	function delOutput()
 	{

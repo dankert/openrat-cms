@@ -1,5 +1,5 @@
     <?php
-    use util\Html;extract($output);
+	use cms\base\Startup;use util\Html;extract($output);
  if (!defined('OR_VERSION')) die('Forbidden');
  if (!headers_sent()) header('Content-Type: text/html; charset=UTF-8')
 ?><!DOCTYPE html>
@@ -16,7 +16,7 @@
   <meta name="robots" content="noindex,nofollow" >
 <?php foreach( $jsFiles  as $jsFile ) { ?>  <script src="<?php echo $jsFile ?>" defer></script>
 <?php } ?>
-  <link rel="stylesheet" type="text/css" href="<?php echo OR_HTML_MODULES_DIR . 'editor/codemirror/lib/codemirror.css' ?>" />
+  <link rel="stylesheet" type="text/css" href="<?php echo Startup::HTML_MODULES_DIR . 'editor/codemirror/lib/codemirror.css' ?>" />
 <?php foreach( $cssFiles as $cssFile) { ?>  <link rel="stylesheet" type="text/css" href="<?php echo $cssFile ?>" />
 <?php } ?>
   <link rel="stylesheet" type="text/css" href="<?php echo Html::url('index','themestyle',0,array('embed'=>'1')) ?>" />
@@ -66,9 +66,9 @@
 
                     <!--
                     <div class="view-toolbar">
-                        <img src="<?php echo OR_THEMES_DIR ?>/default/images/icon/menu/fullscreen.svg" class="image-icon on-normalscreen toolbar-action-fullscreen" />
-                        <img src="<?php echo OR_THEMES_DIR ?>/default/images/icon/menu/fullscreen_exit.svg" class="image-icon on-fullscreen toolbar-action-exit-fullscreen"  />
-                        <img src="<?php echo OR_THEMES_DIR ?>/default/images/icon/menu/refresh.svg" class="image-icon toolbar-action-refresh" />
+                        <img src="<?php echo Startup::THEMES_DIR ?>/default/images/icon/menu/fullscreen.svg" class="image-icon on-normalscreen toolbar-action-fullscreen" />
+                        <img src="<?php echo Startup::THEMES_DIR ?>/default/images/icon/menu/fullscreen_exit.svg" class="image-icon on-fullscreen toolbar-action-exit-fullscreen"  />
+                        <img src="<?php echo Startup::THEMES_DIR ?>/default/images/icon/menu/refresh.svg" class="image-icon toolbar-action-refresh" />
                     </div>
                         -->
 

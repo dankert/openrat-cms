@@ -997,8 +997,6 @@ class FolderAction extends ObjectAction
 	 */
 	public function editView()
 	{
-		global $conf_php;
-
 		if   ( ! $this->folder->isRoot )
 			$this->setTemplateVar('parentid',$this->folder->parentid);
 
@@ -1057,8 +1055,6 @@ class FolderAction extends ObjectAction
 	 */
 	public function contentView()
 	{
-		global $conf_php;
-
 		if   ( ! $this->folder->isRoot )
 			$this->setTemplateVar('up_url',Html::url('folder','show',$this->folder->parentid));
 
@@ -1214,8 +1210,6 @@ class FolderAction extends ObjectAction
 	 */
     public function orderView()
 	{
-		global $conf_php;
-
 		$list = array();
 		$last_objectid = 0;
 

@@ -22,9 +22,6 @@ use logger\Logger;
 use util\Macro;
 
 /**
- * @author $Author$
- * @version $Revision$
- * @package openrat.services
  */
 class Code extends Macro
 {
