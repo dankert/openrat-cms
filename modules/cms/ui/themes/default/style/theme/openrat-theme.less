@@ -30,7 +30,10 @@ html.theme-@{cms-theme-id} {
   scrollbar-arrow-color: @cms-title-background-color;
   scrollbar-base-color: @cms-title-text-color;
 
-  div#dialog {
+  scrollbar-color: @cms-text-color @cms-background-color;
+  scrollbar-width: thin;
+
+    div#dialog {
     > .view {
       background-color: @cms-background-color;
       color: @cms-text-color;
@@ -288,6 +291,7 @@ html.theme-@{cms-theme-id} {
       border: 1px solid mix(@cms-title-text-color, @cms-title-background-color);
       .box-shadow(0px, 0px, 3px, @cms-title-text-color);
     }
+
   }
 
   .or-table-filter {

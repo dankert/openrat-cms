@@ -511,6 +511,22 @@ main .or-form .or-form-actionbar {
 
 /* R e s p o n s i v e   f o r m s */
 .or-form {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+
+    .or-form-headline {
+        height:2em;
+    }
+    .or-form-content {
+        flex-grow: 1;
+        overflow-y: auto;
+
+    }
+    .or-form-actionbar {
+        height:3em;
+    }
+
   input[type=checkbox] + label,
   input[type=radio] + label {
     width: 80%;

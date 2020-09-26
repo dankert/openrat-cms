@@ -4,7 +4,9 @@
     <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('action') ?>" value="<?php echo O::escapeHtml('page') ?>" /><?php echo O::escapeHtml('') ?>
     <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('subaction') ?>" value="<?php echo O::escapeHtml('changetemplateselectelements') ?>" /><?php echo O::escapeHtml('') ?>
     <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml(''.@$_id.'') ?>" /><?php echo O::escapeHtml('') ?>
-    <div><?php echo O::escapeHtml('') ?>
+    <div class="<?php echo O::escapeHtml('or-form-headline') ?>"><?php echo O::escapeHtml('') ?>
+    </div>
+    <div class="<?php echo O::escapeHtml('or-form-content') ?>"><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('newtemplateid') ?>" value="<?php echo O::escapeHtml(''.@$newtemplateid.'') ?>" /><?php echo O::escapeHtml('') ?>
       <?php foreach((array)$elements as $list_key=>$list_value) { extract($list_value); ?>
         <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>

@@ -4,7 +4,9 @@
     <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('action') ?>" value="<?php echo O::escapeHtml('text') ?>" /><?php echo O::escapeHtml('') ?>
     <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('subaction') ?>" value="<?php echo O::escapeHtml('extract') ?>" /><?php echo O::escapeHtml('') ?>
     <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml(''.@$_id.'') ?>" /><?php echo O::escapeHtml('') ?>
-    <div><?php echo O::escapeHtml('') ?>
+    <div class="<?php echo O::escapeHtml('or-form-headline') ?>"><?php echo O::escapeHtml('') ?>
+    </div>
+    <div class="<?php echo O::escapeHtml('or-form-content') ?>"><?php echo O::escapeHtml('') ?>
       <tr><?php echo O::escapeHtml('') ?>
         <td colspan="<?php echo O::escapeHtml('2') ?>" class="<?php echo O::escapeHtml('act') ?>"><?php echo O::escapeHtml('') ?>
           

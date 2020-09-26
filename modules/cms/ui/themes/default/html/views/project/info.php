@@ -4,7 +4,9 @@
     <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('action') ?>" value="<?php echo O::escapeHtml('project') ?>" /><?php echo O::escapeHtml('') ?>
     <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('subaction') ?>" value="<?php echo O::escapeHtml('info') ?>" /><?php echo O::escapeHtml('') ?>
     <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml(''.@$_id.'') ?>" /><?php echo O::escapeHtml('') ?>
-    <div><?php echo O::escapeHtml('') ?>
+    <div class="<?php echo O::escapeHtml('or-form-headline') ?>"><?php echo O::escapeHtml('') ?>
+    </div>
+    <div class="<?php echo O::escapeHtml('or-form-content') ?>"><?php echo O::escapeHtml('') ?>
       <?php foreach((array)$info as $list_key=>$list_value) {  ?>
         <label class="<?php echo O::escapeHtml('or-form-row') ?>"><?php echo O::escapeHtml('') ?>
           <span class="<?php echo O::escapeHtml('or-form-input') ?>"><?php echo O::escapeHtml('') ?>

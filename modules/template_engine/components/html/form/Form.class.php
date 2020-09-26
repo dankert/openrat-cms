@@ -82,46 +82,8 @@ class FormComponent extends Component
 		if ($this->afterSuccess)
 			$form->addAttribute('data-after-success', $this->afterSuccess);
 
-		if ($this->languageid)
-			$form->addChild(
-				(new CMSElement('input'))
-					->addAttribute('type', 'hidden')
-					->addAttribute('name', REQ_PARAM_LANGUAGE_ID)
-					->addAttribute('value', $this->languageid)
-			);
-
-		if ($this->modelid)
-			$form->addChild(
-				(new CMSElement('input'))
-					->addAttribute('type', 'hidden')
-					->addAttribute('name', REQ_PARAM_MODEL_ID)
-					->addAttribute('value', $this->modelid)
-			);
-
 		$form->addChild(
-			(new CMSElement('input'))
-				->addAttribute('type', 'hidden')
-				->addAttribute('name', REQ_PARAM_TOKEN)
-				->addAttribute('value', $this->token)
-		);
-
-		$form->addChild(
-			(new CMSElement('input'))
-				->addAttribute('type', 'hidden')
-				->addAttribute('name', REQ_PARAM_ACTION)
-				->addAttribute('value', $this->action)
-		);
-		$form->addChild(
-			(new CMSElement('input'))
-				->addAttribute('type', 'hidden')
-				->addAttribute('name', REQ_PARAM_SUBACTION)
-				->addAttribute('value', $this->subaction)
-		);
-		$form->addChild(
-			(new CMSElement('input'))
-				->addAttribute('type', 'hidden')
-				->addAttribute('name', REQ_PARAM_ID)
-				->addAttribute('value', $this->id)
+			(new HtmlElement('div'))->addStyleClass('or-form-headline')
 		);
 
 		$actionBar = (new HtmlElement('div'))->addStyleClass('or-form-actionbar');
@@ -164,7 +126,53 @@ class FormComponent extends Component
 			);
 		}
 
-		$this->adoptiveElement = (new HtmlElement('div'))->asChildOf($form);
+		$formContent = (new HtmlElement('div'))->addStyleClass('or-form-content')->asChildOf($form);
+
+		if ($this->languageid)
+			$formContent->addChild(
+				(new CMSElement('input'))
+					->addAttribute('type', 'hidden')
+					->addAttribute('name', REQ_PARAM_LANGUAGE_ID)
+					->addAttribute('value', $this->languageid)
+			);
+
+		if ($this->modelid)
+			$formContent->addChild(
+				(new CMSElement('input'))
+					->addAttribute('type', 'hidden')
+					->addAttribute('name', REQ_PARAM_MODEL_ID)
+					->addAttribute('value', $this->modelid)
+			);
+
+		$formContent->addChild(
+			(new CMSElement('input'))
+				->addAttribute('type', 'hidden')
+				->addAttribute('name', REQ_PARAM_TOKEN)
+				->addAttribute('value', $this->token)
+		);
+
+		$formContent->addChild(
+			(new CMSElement('input'))
+				->addAttribute('type', 'hidden')
+				->addAttribute('name', REQ_PARAM_ACTION)
+				->addAttribute('value', $this->action)
+		);
+		$formContent->addChild(
+			(new CMSElement('input'))
+				->addAttribute('type', 'hidden')
+				->addAttribute('name', REQ_PARAM_SUBACTION)
+				->addAttribute('value', $this->subaction)
+		);
+		$formContent->addChild(
+			(new CMSElement('input'))
+				->addAttribute('type', 'hidden')
+				->addAttribute('name', REQ_PARAM_ID)
+				->addAttribute('value', $this->id)
+		);
+
+
+
+		$this->adoptiveElement = $formContent;
 
 		$form->addChild( $actionBar );
 

@@ -10,7 +10,9 @@
     <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('action') ?>" value="<?php echo O::escapeHtml('folder') ?>" /><?php echo O::escapeHtml('') ?>
     <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('subaction') ?>" value="<?php echo O::escapeHtml('pub') ?>" /><?php echo O::escapeHtml('') ?>
     <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml(''.@$_id.'') ?>" /><?php echo O::escapeHtml('') ?>
-    <div><?php echo O::escapeHtml('') ?>
+    <div class="<?php echo O::escapeHtml('or-form-headline') ?>"><?php echo O::escapeHtml('') ?>
+    </div>
+    <div class="<?php echo O::escapeHtml('or-form-content') ?>"><?php echo O::escapeHtml('') ?>
       <?php $if1=($pages); if($if1) {  ?>
         <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
           <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>

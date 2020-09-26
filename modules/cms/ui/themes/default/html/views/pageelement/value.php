@@ -4,7 +4,9 @@
     <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('action') ?>" value="<?php echo O::escapeHtml('pageelement') ?>" /><?php echo O::escapeHtml('') ?>
     <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('subaction') ?>" value="<?php echo O::escapeHtml('value') ?>" /><?php echo O::escapeHtml('') ?>
     <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml(''.@$_id.'') ?>" /><?php echo O::escapeHtml('') ?>
-    <div><?php echo O::escapeHtml('') ?>
+    <div class="<?php echo O::escapeHtml('or-form-headline') ?>"><?php echo O::escapeHtml('') ?>
+    </div>
+    <div class="<?php echo O::escapeHtml('or-form-content') ?>"><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('languageid') ?>" value="<?php echo O::escapeHtml(''.@$languageid.'') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('elementid') ?>" value="<?php echo O::escapeHtml(''.@$elementid.'') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('value_time') ?>" value="<?php echo O::escapeHtml(''.@$value_time.'') ?>" /><?php echo O::escapeHtml('') ?>
@@ -107,73 +109,73 @@
                 <div class="<?php echo O::escapeHtml('or-table-area') ?>"><?php echo O::escapeHtml('') ?>
                   <table width="<?php echo O::escapeHtml('100%') ?>"><?php echo O::escapeHtml('') ?>
                     <td><?php echo O::escapeHtml('') ?>
-                      <span><?php echo O::escapeHtml(''O::config('editor','text-markup','strong-begin').'') ?>
+                      <span><?php echo O::escapeHtml(''.O::config('editor','text-markup','strong-begin').'') ?>
                       </span>
                       <span><?php echo O::escapeHtml(''.@O::lang('text_markup_strong').'') ?>
                       </span>
-                      <span><?php echo O::escapeHtml(''O::config('editor','text-markup','strong-end').'') ?>
+                      <span><?php echo O::escapeHtml(''.O::config('editor','text-markup','strong-end').'') ?>
                       </span>
                       <br /><?php echo O::escapeHtml('') ?>
-                      <span><?php echo O::escapeHtml(''O::config('editor','text-markup','emphatic-begin').'') ?>
+                      <span><?php echo O::escapeHtml(''.O::config('editor','text-markup','emphatic-begin').'') ?>
                       </span>
                       <span><?php echo O::escapeHtml(''.@O::lang('text_markup_emphatic').'') ?>
                       </span>
-                      <span><?php echo O::escapeHtml(''O::config('editor','text-markup','emphatic-end').'') ?>
+                      <span><?php echo O::escapeHtml(''.O::config('editor','text-markup','emphatic-end').'') ?>
                       </span>
                     </td>
                     <td><?php echo O::escapeHtml('') ?>
-                      <span><?php echo O::escapeHtml(''O::config('editor','text-markup','list-numbered').'') ?>
+                      <span><?php echo O::escapeHtml(''.O::config('editor','text-markup','list-numbered').'') ?>
                       </span>
                       <span><?php echo O::escapeHtml(''.@O::lang('text_markup_numbered_list').'') ?>
                       </span>
                       <br /><?php echo O::escapeHtml('') ?>
-                      <span><?php echo O::escapeHtml(''O::config('editor','text-markup','list-numbered').'') ?>
+                      <span><?php echo O::escapeHtml(''.O::config('editor','text-markup','list-numbered').'') ?>
                       </span>
                       <span><?php echo O::escapeHtml('...') ?>
                       </span>
                       <br /><?php echo O::escapeHtml('') ?>
                     </td>
                     <td><?php echo O::escapeHtml('') ?>
-                      <span><?php echo O::escapeHtml(''O::config('editor','text-markup','list-unnumbered').'') ?>
+                      <span><?php echo O::escapeHtml(''.O::config('editor','text-markup','list-unnumbered').'') ?>
                       </span>
                       <span><?php echo O::escapeHtml(''.@O::lang('text_markup_unnumbered_list').'') ?>
                       </span>
                       <br /><?php echo O::escapeHtml('') ?>
-                      <span><?php echo O::escapeHtml(''O::config('editor','text-markup','list-unnumbered').'') ?>
+                      <span><?php echo O::escapeHtml(''.O::config('editor','text-markup','list-unnumbered').'') ?>
                       </span>
                       <span><?php echo O::escapeHtml('...') ?>
                       </span>
                       <br /><?php echo O::escapeHtml('') ?>
                     </td>
                     <td><?php echo O::escapeHtml('') ?>
-                      <span><?php echo O::escapeHtml(''O::config('editor','text-markup','table-cell-sep').'') ?>
+                      <span><?php echo O::escapeHtml(''.O::config('editor','text-markup','table-cell-sep').'') ?>
                       </span>
                       <span><?php echo O::escapeHtml(''.@O::lang('text_markup_table').'') ?>
                       </span>
-                      <span><?php echo O::escapeHtml(''O::config('editor','text-markup','table-cell-sep').'') ?>
+                      <span><?php echo O::escapeHtml(''.O::config('editor','text-markup','table-cell-sep').'') ?>
                       </span>
                       <span><?php echo O::escapeHtml('...') ?>
                       </span>
-                      <span><?php echo O::escapeHtml(''O::config('editor','text-markup','table-cell-sep').'') ?>
+                      <span><?php echo O::escapeHtml(''.O::config('editor','text-markup','table-cell-sep').'') ?>
                       </span>
                       <span><?php echo O::escapeHtml('...') ?>
                       </span>
-                      <span><?php echo O::escapeHtml(''O::config('editor','text-markup','table-cell-sep').'') ?>
+                      <span><?php echo O::escapeHtml(''.O::config('editor','text-markup','table-cell-sep').'') ?>
                       </span>
                       <br /><?php echo O::escapeHtml('') ?>
-                      <span><?php echo O::escapeHtml(''O::config('editor','text-markup','table-cell-sep').'') ?>
+                      <span><?php echo O::escapeHtml(''.O::config('editor','text-markup','table-cell-sep').'') ?>
                       </span>
                       <span><?php echo O::escapeHtml('...') ?>
                       </span>
-                      <span><?php echo O::escapeHtml(''O::config('editor','text-markup','table-cell-sep').'') ?>
+                      <span><?php echo O::escapeHtml(''.O::config('editor','text-markup','table-cell-sep').'') ?>
                       </span>
                       <span><?php echo O::escapeHtml('...') ?>
                       </span>
-                      <span><?php echo O::escapeHtml(''O::config('editor','text-markup','table-cell-sep').'') ?>
+                      <span><?php echo O::escapeHtml(''.O::config('editor','text-markup','table-cell-sep').'') ?>
                       </span>
                       <span><?php echo O::escapeHtml('...') ?>
                       </span>
-                      <span><?php echo O::escapeHtml(''O::config('editor','text-markup','table-cell-sep').'') ?>
+                      <span><?php echo O::escapeHtml(''.O::config('editor','text-markup','table-cell-sep').'') ?>
                       </span>
                       <br /><?php echo O::escapeHtml('') ?>
                     </td>
