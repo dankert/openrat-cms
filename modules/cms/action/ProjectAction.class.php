@@ -147,7 +147,7 @@ class ProjectAction extends BaseAction
 
 		// Administrator sieht Administrationsbereich
 		if   ( $user->isAdmin )
-			$projects = array_merge( array("-1"=>lang('ADMINISTRATION')),$projects );
+			$projects = array_merge( array("-1"=>\cms\base\Language::lang('ADMINISTRATION')),$projects );
 
 		// Projekte ermitteln
 		$list = array();

@@ -348,7 +348,7 @@ class StartAction extends BaseAction
 
 			if	( empty($username) )
 			{
-				echo lang('ERROR_LOGIN_BROKEN_SSL_CERT');
+				echo \cms\base\Language::lang('ERROR_LOGIN_BROKEN_SSL_CERT');
 				Logger::warn( 'no username in SSL client certificate (var='.$ssl_user_var.').' );
 				exit;
 			}
@@ -896,7 +896,7 @@ class StartAction extends BaseAction
 				    
 					if	( ! $ok )
 					{
-						header( 'WWW-Authenticate: Basic realm="'.OR_TITLE.' - '.lang('HTTP_REALM').'"' );
+						header( 'WWW-Authenticate: Basic realm="'.OR_TITLE.' - '.\cms\base\Language::lang('HTTP_REALM').'"' );
 						header( 'HTTP/1.0 401 Unauthorized' );
 						echo 'Authorization Required!';
 						exit;

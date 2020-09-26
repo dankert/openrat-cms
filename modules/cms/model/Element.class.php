@@ -427,7 +427,7 @@ SQL
 			default:
 		}
 
-		return lang('EL_TYPE_'.$this->type);
+		return \cms\base\Language::lang('EL_TYPE_'.$this->type);
 
 	}
 

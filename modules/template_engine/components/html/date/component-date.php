@@ -2,7 +2,7 @@
 function component_date( $time )
 {
 	if	( $time==0)
-		echo lang('UNKNOWN');
+		echo \cms\base\Language::lang('UNKNOWN');
 	else
 	{
 		// Benutzereinstellung 'Zeitzonen-Offset' auswerten.
@@ -15,9 +15,9 @@ function component_date( $time )
 		echo '<span class="sort-value">'.str_pad($time, 20, "0", STR_PAD_LEFT).'</span>'; // For sorting a table.
 
 		echo '<span title="';
-		$dl = lang('DATE_FORMAT_LONG');
-		$dl = str_replace('{weekday}',addcslashes(lang('DATE_WEEKDAY'.strval(date('w',$time))),'A..z'),$dl);
-		$dl = str_replace('{month}'  ,addcslashes(lang('DATE_MONTH'  .strval(date('n',$time))),'A..z'),$dl);
+		$dl = \cms\base\Language::lang('DATE_FORMAT_LONG');
+		$dl = str_replace('{weekday}',addcslashes(\cms\base\Language::lang('DATE_WEEKDAY'.strval(date('w',$time))),'A..z'),$dl);
+		$dl = str_replace('{month}'  ,addcslashes(\cms\base\Language::lang('DATE_MONTH'  .strval(date('n',$time))),'A..z'),$dl);
 		$dl = date( $dl,$time );
 		echo $dl;
 		unset($dl);
@@ -34,40 +34,40 @@ function component_date( $time )
 		
 		
 		if	( $sekunden == 1 )
-		echo $sekunden.' '.lang('SECOND');
+		echo $sekunden.' '.\cms\base\Language::lang('SECOND');
 		elseif	( $sekunden < 60 )
-		echo $sekunden.' '.lang('SECONDS');
+		echo $sekunden.' '.\cms\base\Language::lang('SECONDS');
 		
 		elseif	( $minuten == 1 )
-		echo $minuten.' '.lang('MINUTE');
+		echo $minuten.' '.\cms\base\Language::lang('MINUTE');
 		elseif	( $minuten < 60 )
-		echo $minuten.' '.lang('MINUTES');
+		echo $minuten.' '.\cms\base\Language::lang('MINUTES');
 		
 		elseif	( $stunden == 1 )
-		echo $stunden.' '.lang('HOUR');
+		echo $stunden.' '.\cms\base\Language::lang('HOUR');
 		elseif	( $stunden < 60 )
-		echo $stunden.' '.lang('HOURS');
+		echo $stunden.' '.\cms\base\Language::lang('HOURS');
 		
 		elseif	( $tage == 1 )
-		echo $tage.' '.lang('DAY');
+		echo $tage.' '.\cms\base\Language::lang('DAY');
 		elseif	( $tage < 60 )
-		echo $tage.' '.lang('DAYS');
+		echo $tage.' '.\cms\base\Language::lang('DAYS');
 		
 		elseif	( $monate == 1 )
-		echo $monate.' '.lang('MONTH');
+		echo $monate.' '.\cms\base\Language::lang('MONTH');
 		elseif	( $monate < 12 )
-		echo $monate.' '.lang('MONTHS');
+		echo $monate.' '.\cms\base\Language::lang('MONTHS');
 		
 		elseif	( $jahre == 1 )
-		echo $jahre.' '.lang('YEAR');
+		echo $jahre.' '.\cms\base\Language::lang('YEAR');
 		else
-			echo $jahre.' '.lang('YEARS');
+			echo $jahre.' '.\cms\base\Language::lang('YEARS');
 			
 		echo ')';
 						
 		
 		echo '">';
-		echo date(lang('DATE_FORMAT'),$time);
+		echo date(\cms\base\Language::lang('DATE_FORMAT'),$time);
 		echo '</span>';
 	}
 }

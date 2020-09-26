@@ -256,9 +256,9 @@ class FileAction extends ObjectAction
 		$this->setTemplateVar( 'extension',$this->file->extension );
 		$this->setTemplateVar( 'type'     ,$this->file->type      );
 		$this->setTemplateVar( 'types'    ,[
-			BaseObject::TYPEID_FILE  => lang('file' ),
-			BaseObject::TYPEID_IMAGE => lang('image'),
-			BaseObject::TYPEID_TEXT  => lang('text' )
+			BaseObject::TYPEID_FILE  => \cms\base\Language::lang('file' ),
+			BaseObject::TYPEID_IMAGE => \cms\base\Language::lang('image'),
+			BaseObject::TYPEID_TEXT  => \cms\base\Language::lang('text' )
 		] );
 	}
 
@@ -463,7 +463,7 @@ class FileAction extends ObjectAction
 	{
 		$formats = array();
 		foreach( $this->getCompressionTypes() as $t )
-			$formats[$t] = lang('compression_'.$t);
+			$formats[$t] = \cms\base\Language::lang('compression_'.$t);
 
 		$this->setTemplateVar('formats'       ,$formats    );
 	}

@@ -36,9 +36,9 @@ class Startup {
 		self::setConstants();
 		self::createRequest();
 
-		require __DIR__.'/Language.class.php';
+		//require __DIR__.'/Language.class.php';
 		require __DIR__.'/Configuration.class.php';
-		\Language::registerFunctions();
+		Language::registerFunctions();
 		\Configuration::registerFunctions();
 	}
 

@@ -54,7 +54,7 @@ class UI
             Http::noContent();
         } catch (UIException $e) {
             Logger::warn( $e->__toString() );
-            throw new LogicException(lang($e->key),0, $e);
+            throw new LogicException(\cms\base\Language::lang($e->key),0, $e);
         } catch (SecurityException $e) {
             Logger::info($e->getMessage());
             Http::noContent();

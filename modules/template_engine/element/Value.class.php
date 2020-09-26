@@ -49,7 +49,7 @@ class Value
 
 		$res->addResolver( 'message',function($name) {
 
-			return '\'.@lang(\'' . $name . '\').\'';
+			return '\'.@\template_engine\Output::lang(\'' . $name . '\').\'';
 		});
 
 		$res->addResolver('config', function($name) {
@@ -68,7 +68,7 @@ class Value
             case Value::CONTEXT_RAW:
 				$escape = function ($expr) use ($context) {
 					if ($context == self::CONTEXT_HTML)
-						return 'escapeHtml(' . $expr . ')';
+						return '\template_engine\Output::escapeHtml(' . $expr . ')';
 					else
 						return $expr;
 				};

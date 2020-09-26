@@ -51,14 +51,14 @@ class TitleAction extends Action
 		if	( !is_object($user) )
 		{
             $this->setTemplateVar('isLoggedIn'  ,false );
-            $this->setTemplateVar('userfullname',lang('NOT_LOGGED_IN') );
+            $this->setTemplateVar('userfullname',\cms\base\Language::lang('NOT_LOGGED_IN') );
             return; // Kein Benutzer angemeldet.
         }
 
         $this->setTemplateVar('isLoggedIn',true );
 
         $db = DB::get();
-        $this->setTemplateVar('dbname',$db->conf['name'].(Startup::readonly()?' ('.lang('readonly').')':''));
+        $this->setTemplateVar('dbname',$db->conf['name'].(Startup::readonly()?' ('.\cms\base\Language::lang('readonly').')':''));
         $this->setTemplateVar('dbid'  ,$db->id);
 
         $this->setTemplateVar('username'    ,$user->name    );
@@ -98,7 +98,7 @@ class TitleAction extends Action
 				if	( $o->desc != '' )
 					$resultList[$objectid]['desc'] = $o->desc;
 				else
-					$resultList[$objectid]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
+					$resultList[$objectid]['desc'] = \cms\base\Language::lang('NO_DESCRIPTION_AVAILABLE');
 			}
 		}
 

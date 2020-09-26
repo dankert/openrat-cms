@@ -1,50 +1,50 @@
 <?php if (!defined('OR_TITLE')) exit(); ?>
-  <div class="<?php echo escapeHtml('or-table-wrapper') ?>"><?php echo escapeHtml('') ?>
-    <div class="<?php echo escapeHtml('or-table-filter') ?>"><?php echo escapeHtml('') ?>
-      <input type="<?php echo escapeHtml('search') ?>" name="<?php echo escapeHtml('filter') ?>" placeholder="<?php echo escapeHtml(''.@lang('SEARCH_FILTER').'') ?>" /><?php echo escapeHtml('') ?>
+  <div class="<?php echo \template_engine\Output::escapeHtml('or-table-wrapper') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+    <div class="<?php echo \template_engine\Output::escapeHtml('or-table-filter') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+      <input type="<?php echo \template_engine\Output::escapeHtml('search') ?>" name="<?php echo \template_engine\Output::escapeHtml('filter') ?>" placeholder="<?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('SEARCH_FILTER').'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
     </div>
-    <div class="<?php echo escapeHtml('or-table-area') ?>"><?php echo escapeHtml('') ?>
-      <table width="<?php echo escapeHtml('100%') ?>"><?php echo escapeHtml('') ?>
-        <tr class="<?php echo escapeHtml('headline') ?>"><?php echo escapeHtml('') ?>
-          <td><?php echo escapeHtml('') ?>
-            <span><?php echo escapeHtml(''.@lang('name').'') ?>
+    <div class="<?php echo \template_engine\Output::escapeHtml('or-table-area') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+      <table width="<?php echo \template_engine\Output::escapeHtml('100%') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+        <tr class="<?php echo \template_engine\Output::escapeHtml('headline') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+          <td><?php echo \template_engine\Output::escapeHtml('') ?>
+            <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('name').'') ?>
             </span>
           </td>
-          <td><?php echo escapeHtml('') ?>
-            <span><?php echo escapeHtml(''.@lang('type').'') ?>
+          <td><?php echo \template_engine\Output::escapeHtml('') ?>
+            <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('type').'') ?>
             </span>
           </td>
         </tr>
         <?php foreach((array)$elements as $list_key=>$list_value) { extract($list_value); ?>
-          <tr class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
-            <td class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
-              <a target="<?php echo escapeHtml('_self') ?>" date-name="<?php echo escapeHtml(''.@$name.'') ?>" name="<?php echo escapeHtml(''.@$name.'') ?>" data-type="<?php echo escapeHtml('open') ?>" data-action="<?php echo escapeHtml('element') ?>" data-method="<?php echo escapeHtml('') ?>" data-id="<?php echo escapeHtml(''.@$id.'') ?>" data-extra="<?php echo escapeHtml('[]') ?>" href="<?php echo escapeHtml('/#/element/'.@$id.'') ?>"><?php echo escapeHtml('') ?>
-                <i class="<?php echo escapeHtml('image-icon image-icon--action-el_'.@$type.'') ?>"><?php echo escapeHtml('') ?>
+          <tr class="<?php echo \template_engine\Output::escapeHtml('data') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <td class="<?php echo \template_engine\Output::escapeHtml('clickable') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <a target="<?php echo \template_engine\Output::escapeHtml('_self') ?>" date-name="<?php echo \template_engine\Output::escapeHtml(''.@$name.'') ?>" name="<?php echo \template_engine\Output::escapeHtml(''.@$name.'') ?>" data-type="<?php echo \template_engine\Output::escapeHtml('open') ?>" data-action="<?php echo \template_engine\Output::escapeHtml('element') ?>" data-method="<?php echo \template_engine\Output::escapeHtml('') ?>" data-id="<?php echo \template_engine\Output::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo \template_engine\Output::escapeHtml('[]') ?>" href="<?php echo \template_engine\Output::escapeHtml('/#/element/'.@$id.'') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+                <i class="<?php echo \template_engine\Output::escapeHtml('image-icon image-icon--action-el_'.@$type.'') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
                 </i>
-                <span title="<?php echo escapeHtml(''.@$description.'') ?>"><?php echo escapeHtml(''.@$name.'') ?>
+                <span title="<?php echo \template_engine\Output::escapeHtml(''.@$description.'') ?>"><?php echo \template_engine\Output::escapeHtml(''.@$name.'') ?>
                 </span>
               </a>
             </td>
-            <td><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@lang('el_'.@$type.'').'') ?>
+            <td><?php echo \template_engine\Output::escapeHtml('') ?>
+              <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('el_'.@$type.'').'') ?>
               </span>
             </td>
           </tr>
          <?php } ?>
         <?php $if1=(($elements)==FALSE); if($if1) {  ?>
-          <tr><?php echo escapeHtml('') ?>
-            <td colspan="<?php echo escapeHtml('2') ?>"><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@lang('NOT_FOUND').'') ?>
+          <tr><?php echo \template_engine\Output::escapeHtml('') ?>
+            <td colspan="<?php echo \template_engine\Output::escapeHtml('2') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('NOT_FOUND').'') ?>
               </span>
             </td>
           </tr>
          <?php } ?>
-        <tr class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
-          <td colspan="<?php echo escapeHtml('2') ?>" class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
-            <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('dialog') ?>" data-action="<?php echo escapeHtml('template') ?>" data-method="<?php echo escapeHtml('addel') ?>" data-id="<?php echo escapeHtml(''.@$templateid.'') ?>" data-extra="<?php echo escapeHtml('{\'dialogAction\':\'template\',\'dialogMethod\':\'addel\'}') ?>" href="<?php echo escapeHtml('/#/template/'.@$templateid.'') ?>"><?php echo escapeHtml('') ?>
-              <i class="<?php echo escapeHtml('image-icon image-icon--method-add') ?>"><?php echo escapeHtml('') ?>
+        <tr class="<?php echo \template_engine\Output::escapeHtml('data') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+          <td colspan="<?php echo \template_engine\Output::escapeHtml('2') ?>" class="<?php echo \template_engine\Output::escapeHtml('clickable') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <a target="<?php echo \template_engine\Output::escapeHtml('_self') ?>" data-type="<?php echo \template_engine\Output::escapeHtml('dialog') ?>" data-action="<?php echo \template_engine\Output::escapeHtml('template') ?>" data-method="<?php echo \template_engine\Output::escapeHtml('addel') ?>" data-id="<?php echo \template_engine\Output::escapeHtml(''.@$templateid.'') ?>" data-extra="<?php echo \template_engine\Output::escapeHtml('{\'dialogAction\':\'template\',\'dialogMethod\':\'addel\'}') ?>" href="<?php echo \template_engine\Output::escapeHtml('/#/template/'.@$templateid.'') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <i class="<?php echo \template_engine\Output::escapeHtml('image-icon image-icon--method-add') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
               </i>
-              <span><?php echo escapeHtml(''.@lang('menu_template_addel').'') ?>
+              <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('menu_template_addel').'') ?>
               </span>
             </a>
           </td>
@@ -53,23 +53,23 @@
     </div>
   </div>
   <?php foreach((array)$models as $list_key=>$list_value) { extract($list_value); ?>
-    <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
-      <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@$name.'') ?>
-        <img /><?php echo escapeHtml('') ?>
-        <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
+    <fieldset class="<?php echo \template_engine\Output::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+      <legend class="<?php echo \template_engine\Output::escapeHtml('on-click-open-close') ?>"><?php echo \template_engine\Output::escapeHtml(''.@$name.'') ?>
+        <img /><?php echo \template_engine\Output::escapeHtml('') ?>
+        <div class="<?php echo \template_engine\Output::escapeHtml('arrow arrow-right on-closed') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
         </div>
-        <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
+        <div class="<?php echo \template_engine\Output::escapeHtml('arrow arrow-down on-open') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
         </div>
       </legend>
-      <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
-        <div class="<?php echo escapeHtml('clickable') ?>"><?php echo escapeHtml('') ?>
-          <code><?php echo escapeHtml(''.@$source.'') ?>
+      <div class="<?php echo \template_engine\Output::escapeHtml('closable') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+        <div class="<?php echo \template_engine\Output::escapeHtml('clickable') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+          <code><?php echo \template_engine\Output::escapeHtml(''.@$source.'') ?>
           </code>
-          <br /><?php echo escapeHtml('') ?>
-          <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('edit') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('src') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('{\'modelid\':\''.@$modelid.'\'}') ?>" href="<?php echo escapeHtml('/#//') ?>" class="<?php echo escapeHtml('or-form-button') ?>"><?php echo escapeHtml('') ?>
-            <i class="<?php echo escapeHtml('image-icon image-icon--action-template') ?>"><?php echo escapeHtml('') ?>
+          <br /><?php echo \template_engine\Output::escapeHtml('') ?>
+          <a target="<?php echo \template_engine\Output::escapeHtml('_self') ?>" data-type="<?php echo \template_engine\Output::escapeHtml('edit') ?>" data-action="<?php echo \template_engine\Output::escapeHtml('') ?>" data-method="<?php echo \template_engine\Output::escapeHtml('src') ?>" data-id="<?php echo \template_engine\Output::escapeHtml('') ?>" data-extra="<?php echo \template_engine\Output::escapeHtml('{\'modelid\':\''.@$modelid.'\'}') ?>" href="<?php echo \template_engine\Output::escapeHtml('/#//') ?>" class="<?php echo \template_engine\Output::escapeHtml('or-form-button') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <i class="<?php echo \template_engine\Output::escapeHtml('image-icon image-icon--action-template') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
             </i>
-            <span><?php echo escapeHtml(''.@lang('edit').'') ?>
+            <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('edit').'') ?>
             </span>
           </a>
         </div>

@@ -19,7 +19,7 @@ class GlobalFunctions
 	}
 
 
-	public static function lang($text)
+	public static function \cms\base\Language::lang($text)
 	{
 		global $SESS;
 		$text = strtoupper($text);

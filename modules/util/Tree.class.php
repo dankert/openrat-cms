@@ -52,8 +52,8 @@ class Tree
 	{
 		$treeElement = new TreeElement();
 		$treeElement->id = 0;
-		$treeElement->text = lang('PROJECTS');
-		$treeElement->description = lang('PROJECTS');
+		$treeElement->text = \cms\base\Language::lang('PROJECTS');
+		$treeElement->description = \cms\base\Language::lang('PROJECTS');
 		$treeElement->action = 'projectlist';
 		$treeElement->icon = 'projectlist';
 		$treeElement->type = 'projects';
@@ -63,8 +63,8 @@ class Tree
 		if ($this->userIsAdmin) {
 
 			$treeElement = new TreeElement();
-			$treeElement->text = lang('USER_AND_GROUPS');
-			$treeElement->description = lang('USER_AND_GROUPS');
+			$treeElement->text = \cms\base\Language::lang('USER_AND_GROUPS');
+			$treeElement->description = \cms\base\Language::lang('USER_AND_GROUPS');
 			$treeElement->icon = 'userlist';
 			$treeElement->type = 'userandgroups';
 			$treeElement->action = 'usergroup';
@@ -75,8 +75,8 @@ class Tree
 
 		if ($this->userIsAdmin) {
 			$treeElement = new TreeElement();
-			$treeElement->text = lang('PREFERENCES');
-			$treeElement->description = lang('PREFERENCES');
+			$treeElement->text = \cms\base\Language::lang('PREFERENCES');
+			$treeElement->description = \cms\base\Language::lang('PREFERENCES');
 			$treeElement->icon = 'configuration';
 			//$treeElement->type = 'configuration';
 			$treeElement->action = 'configuration';
@@ -93,8 +93,8 @@ class Tree
 			throw new SecurityException();
 
 		$treeElement = new TreeElement();
-		$treeElement->text = lang('USER');
-		$treeElement->description = lang('USER');
+		$treeElement->text = \cms\base\Language::lang('USER');
+		$treeElement->description = \cms\base\Language::lang('USER');
 		$treeElement->action = 'userlist';
 		$treeElement->icon = 'userlist';
 		$treeElement->type = 'users';
@@ -102,8 +102,8 @@ class Tree
 		$this->addTreeElement($treeElement);
 
 		$treeElement = new TreeElement();
-		$treeElement->text = lang('GROUPS');
-		$treeElement->description = lang('GROUPS');
+		$treeElement->text = \cms\base\Language::lang('GROUPS');
+		$treeElement->description = \cms\base\Language::lang('GROUPS');
 		$treeElement->action = 'grouplist';
 		$treeElement->icon = 'userlist';
 		$treeElement->type = 'groups';
@@ -158,8 +158,8 @@ class Tree
 			$treeElement = new TreeElement();
 			$treeElement->id = $folder->objectid;
 			//			$treeElement->text        = $folder->name;
-			$treeElement->text = lang('FOLDER_ROOT');
-			$treeElement->description = lang('FOLDER_ROOT_DESC');
+			$treeElement->text = \cms\base\Language::lang('FOLDER_ROOT');
+			$treeElement->description = \cms\base\Language::lang('FOLDER_ROOT_DESC');
 			$treeElement->extraId[REQ_PARAM_LANGUAGE_ID] = $defaultLanguageId;
 			$treeElement->extraId[REQ_PARAM_MODEL_ID] = $defaultModelId;
 			$treeElement->icon = 'folder';
@@ -179,9 +179,9 @@ class Tree
 			$treeElement->extraId[REQ_PARAM_MODEL_ID] = $defaultModelId;
 			$treeElement->extraId[REQ_PARAM_LANGUAGE_ID] = $defaultLanguageId;
 			$treeElement->internalId = $projectid;
-			$treeElement->text = lang('TEMPLATES');
+			$treeElement->text = \cms\base\Language::lang('TEMPLATES');
 //			$treeElement->url        = Html::url('template','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
-			$treeElement->description = lang('TEMPLATES_DESC');
+			$treeElement->description = \cms\base\Language::lang('TEMPLATES_DESC');
 			$treeElement->icon = 'templatelist';
 			$treeElement->action = 'templatelist';
 			$treeElement->type = 'templates';
@@ -197,10 +197,10 @@ class Tree
 			$treeElement->extraId[REQ_PARAM_PROJECT_ID] = $projectid;
 			$treeElement->internalId = $projectid;
 			$treeElement->action = 'languagelist';
-			$treeElement->text = lang('LANGUAGES');
+			$treeElement->text = \cms\base\Language::lang('LANGUAGES');
 //		$treeElement->url        = Html::url('language','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
 			$treeElement->icon = 'languagelist';
-			$treeElement->description = lang('LANGUAGES_DESC');
+			$treeElement->description = \cms\base\Language::lang('LANGUAGES_DESC');
 
 			// Nur fuer Projekt-Administratoren aufklappbar
 			if ($userIsProjectAdmin)
@@ -222,8 +222,8 @@ class Tree
 			$treeElement->id = $projectid;
 			$treeElement->internalId = $projectid;
 			$treeElement->extraId[REQ_PARAM_PROJECT_ID] = $projectid;
-			$treeElement->description = lang('MODELS_DESC');
-			$treeElement->text = lang('MODELS');
+			$treeElement->description = \cms\base\Language::lang('MODELS_DESC');
+			$treeElement->text = \cms\base\Language::lang('MODELS');
 //		$treeElement->url        = Html::url('model','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
 			$treeElement->action = 'modellist';
 			$treeElement->icon = 'modellist';
@@ -251,9 +251,9 @@ class Tree
 			$desc = $user->fullname;
 
 			if ($user->isAdmin)
-				$desc .= ' (' . lang('USER_ADMIN') . ') ';
+				$desc .= ' (' . \cms\base\Language::lang('USER_ADMIN') . ') ';
 			if ($user->desc == "")
-				$desc .= ' - ' . lang('NO_DESCRIPTION_AVAILABLE');
+				$desc .= ' - ' . \cms\base\Language::lang('NO_DESCRIPTION_AVAILABLE');
 			else
 				$desc .= ' - ' . $user->desc;
 
@@ -280,7 +280,7 @@ class Tree
 			$treeElement->internalId = $id;
 			$treeElement->text = $g->name;
 			$treeElement->icon = 'group';
-			$treeElement->description = lang('GROUP') . ' ' . $g->name . ': ' . implode(', ', $g->getUsers());
+			$treeElement->description = \cms\base\Language::lang('GROUP') . ' ' . $g->name . ': ' . implode(', ', $g->getUsers());
 			$treeElement->type = 'userofgroup';
 			$treeElement->action = 'group';
 
@@ -337,11 +337,11 @@ class Tree
 				$treeElement->extraId = array('elementid' => $elementid);
 
 
-				$treeElement->description = lang('EL_' . $element->getTypeName());
+				$treeElement->description = \cms\base\Language::lang('EL_' . $element->getTypeName());
 				if ($element->desc != '')
 					$treeElement->description .= ' - ' . Text::maxLength($element->desc, 25);
 				else
-					$treeElement->description .= ' - ' . lang('NO_DESCRIPTION_AVAILABLE');
+					$treeElement->description .= ' - ' . \cms\base\Language::lang('NO_DESCRIPTION_AVAILABLE');
 
 				$this->addTreeElement($treeElement);
 			}
@@ -378,7 +378,7 @@ class Tree
 				$treeElement->internalId = $o->objectid;
 				$treeElement->extraId = array();
 				$treeElement->text = $o->getName();
-				$treeElement->description = lang('' . $o->getType()) . ' ' . $o->objectid;
+				$treeElement->description = \cms\base\Language::lang('' . $o->getType()) . ' ' . $o->objectid;
 
 				$this->addTreeElement($treeElement);
 			}
@@ -411,11 +411,11 @@ class Tree
 				$treeElement->icon = $object->getType();
 				$treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $value->languageid);
 
-				$treeElement->description = lang('' . $object->getType());
+				$treeElement->description = \cms\base\Language::lang('' . $object->getType());
 				if ($object->desc != '')
 					$treeElement->description .= ' - ' . Text::maxLength($object->desc, 25);
 				else
-					$treeElement->description .= ' - ' . lang('NO_DESCRIPTION_AVAILABLE');
+					$treeElement->description .= ' - ' . \cms\base\Language::lang('NO_DESCRIPTION_AVAILABLE');
 
 				$this->addTreeElement($treeElement);
 			}
@@ -435,12 +435,12 @@ class Tree
 		$treeElement->id = $o->objectid;
 		$treeElement->internalId = $o->objectid;
 		$treeElement->text = $o->name;
-		$treeElement->description = lang('' . $o->getType()) . ' ' . $id;
+		$treeElement->description = \cms\base\Language::lang('' . $o->getType()) . ' ' . $id;
 
 		if ($o->desc != '')
 			$treeElement->description .= ': ' . $o->desc;
 		else
-			$treeElement->description .= ' - ' . lang('NO_DESCRIPTION_AVAILABLE');
+			$treeElement->description .= ' - ' . \cms\base\Language::lang('NO_DESCRIPTION_AVAILABLE');
 
 		$treeElement->action = $o->getType();
 		$treeElement->icon = $o->getType();
@@ -470,12 +470,12 @@ class Tree
 		$treeElement->id = $o->objectid;
 		$treeElement->internalId = $o->objectid;
 		$treeElement->text = $o->name;
-		$treeElement->description = lang('' . $o->getType()) . ' ' . $id;
+		$treeElement->description = \cms\base\Language::lang('' . $o->getType()) . ' ' . $id;
 
 		if ($o->desc != '')
 			$treeElement->description .= ': ' . $o->desc;
 		else
-			$treeElement->description .= ' - ' . lang('NO_DESCRIPTION_AVAILABLE');
+			$treeElement->description .= ' - ' . \cms\base\Language::lang('NO_DESCRIPTION_AVAILABLE');
 
 		$treeElement->action = $o->getType();
 		$treeElement->icon = $o->getType();
@@ -521,12 +521,12 @@ class Tree
 			$treeElement->internalId = $o->objectid;
 			$treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $f->languageid, REQ_PARAM_MODEL_ID => $f->modelid);
 			$treeElement->text = $o->name;
-			$treeElement->description = lang('' . $o->getType()) . ' ' . $o->objectid;
+			$treeElement->description = \cms\base\Language::lang('' . $o->getType()) . ' ' . $o->objectid;
 
 			if ($o->desc != '')
 				$treeElement->description .= ': ' . $o->desc;
 			else
-				$treeElement->description .= ' - ' . lang('NO_DESCRIPTION_AVAILABLE');
+				$treeElement->description .= ' - ' . \cms\base\Language::lang('NO_DESCRIPTION_AVAILABLE');
 
 			$treeElement->action = $o->getType();
 			$treeElement->icon = $o->getType();
@@ -553,7 +553,7 @@ class Tree
 			$treeElement->internalId = $id;
 			$treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $_REQUEST[REQ_PARAM_LANGUAGE_ID], REQ_PARAM_MODEL_ID => $_REQUEST[REQ_PARAM_MODEL_ID]);
 			$treeElement->type = 'template';
-			$treeElement->description = $t->name . ' (' . lang(Messages::TEMPLATE) . ' ' . $id . ')';
+			$treeElement->description = $t->name . ' (' . \cms\base\Language::lang(Messages::TEMPLATE) . ' ' . $id . ')';
 			$this->addTreeElement($treeElement);
 		}
 	}
@@ -584,10 +584,10 @@ class Tree
 			$treeElement->action = 'element';
 
 			if ($e->desc == '')
-				$desc = lang('NO_DESCRIPTION_AVAILABLE');
+				$desc = \cms\base\Language::lang('NO_DESCRIPTION_AVAILABLE');
 			else
 				$desc = $e->desc;
-			$treeElement->description = $e->name . ' (' . lang('EL_' . $e->type) . '): ' . Text::maxLength($desc, 40);
+			$treeElement->description = $e->name . ' (' . \cms\base\Language::lang('EL_' . $e->type) . '): ' . Text::maxLength($desc, 40);
 			$this->addTreeElement($treeElement);
 		}
 	}

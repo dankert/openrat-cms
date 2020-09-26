@@ -1,35 +1,35 @@
 <?php if (!defined('OR_TITLE')) exit(); ?>
-  <form name="<?php echo escapeHtml('') ?>" target="<?php echo escapeHtml('_self') ?>" data-target="<?php echo escapeHtml('view') ?>" action="<?php echo escapeHtml('./') ?>" data-method="<?php echo escapeHtml('prop') ?>" data-action="<?php echo escapeHtml('object') ?>" data-id="<?php echo escapeHtml(''.@$_id.'') ?>" method="<?php echo escapeHtml('POST') ?>" enctype="<?php echo escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo escapeHtml('') ?>" data-autosave="<?php echo escapeHtml('') ?>" class="<?php echo escapeHtml('or-form object') ?>"><?php echo escapeHtml('') ?>
-    <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('token') ?>" value="<?php echo escapeHtml(''.@$_token.'') ?>" /><?php echo escapeHtml('') ?>
-    <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('action') ?>" value="<?php echo escapeHtml('object') ?>" /><?php echo escapeHtml('') ?>
-    <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('subaction') ?>" value="<?php echo escapeHtml('prop') ?>" /><?php echo escapeHtml('') ?>
-    <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('id') ?>" value="<?php echo escapeHtml(''.@$_id.'') ?>" /><?php echo escapeHtml('') ?>
-    <div><?php echo escapeHtml('') ?>
-      <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
-        <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('prop').'') ?>
-          <img /><?php echo escapeHtml('') ?>
-          <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
+  <form name="<?php echo \template_engine\Output::escapeHtml('') ?>" target="<?php echo \template_engine\Output::escapeHtml('_self') ?>" data-target="<?php echo \template_engine\Output::escapeHtml('view') ?>" action="<?php echo \template_engine\Output::escapeHtml('./') ?>" data-method="<?php echo \template_engine\Output::escapeHtml('prop') ?>" data-action="<?php echo \template_engine\Output::escapeHtml('object') ?>" data-id="<?php echo \template_engine\Output::escapeHtml(''.@$_id.'') ?>" method="<?php echo \template_engine\Output::escapeHtml('POST') ?>" enctype="<?php echo \template_engine\Output::escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo \template_engine\Output::escapeHtml('') ?>" data-autosave="<?php echo \template_engine\Output::escapeHtml('') ?>" class="<?php echo \template_engine\Output::escapeHtml('or-form object') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('token') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$_token.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('action') ?>" value="<?php echo \template_engine\Output::escapeHtml('object') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('subaction') ?>" value="<?php echo \template_engine\Output::escapeHtml('prop') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('id') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$_id.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+    <div><?php echo \template_engine\Output::escapeHtml('') ?>
+      <fieldset class="<?php echo \template_engine\Output::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+        <legend class="<?php echo \template_engine\Output::escapeHtml('on-click-open-close') ?>"><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('prop').'') ?>
+          <img /><?php echo \template_engine\Output::escapeHtml('') ?>
+          <div class="<?php echo \template_engine\Output::escapeHtml('arrow arrow-right on-closed') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
           </div>
-          <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo \template_engine\Output::escapeHtml('arrow arrow-down on-open') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
           </div>
         </legend>
-        <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
-          <label class="<?php echo escapeHtml('or-form-row or-form-input') ?>"><?php echo escapeHtml('') ?>
-            <span class="<?php echo escapeHtml('or-form-label') ?>"><?php echo escapeHtml(''.@lang('filename').'') ?>
+        <div class="<?php echo \template_engine\Output::escapeHtml('closable') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+          <label class="<?php echo \template_engine\Output::escapeHtml('or-form-row or-form-input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <span class="<?php echo \template_engine\Output::escapeHtml('or-form-label') ?>"><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('filename').'') ?>
             </span>
-            <input name="<?php echo escapeHtml('filename') ?>" autofocus="<?php echo escapeHtml('autofocus') ?>" type="<?php echo escapeHtml('text') ?>" maxlength="<?php echo escapeHtml('150') ?>" value="<?php echo escapeHtml(''.@$filename.'') ?>" class="<?php echo escapeHtml('filename') ?>" /><?php echo escapeHtml('') ?>
+            <input name="<?php echo \template_engine\Output::escapeHtml('filename') ?>" autofocus="<?php echo \template_engine\Output::escapeHtml('autofocus') ?>" type="<?php echo \template_engine\Output::escapeHtml('text') ?>" maxlength="<?php echo \template_engine\Output::escapeHtml('150') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$filename.'') ?>" class="<?php echo \template_engine\Output::escapeHtml('filename') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
           </label>
-          <label class="<?php echo escapeHtml('or-form-row or-form-input') ?>"><?php echo escapeHtml('') ?>
-            <span class="<?php echo escapeHtml('or-form-label') ?>"><?php echo escapeHtml(''.@lang('alias').'') ?>
+          <label class="<?php echo \template_engine\Output::escapeHtml('or-form-row or-form-input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <span class="<?php echo \template_engine\Output::escapeHtml('or-form-label') ?>"><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('alias').'') ?>
             </span>
-            <input name="<?php echo escapeHtml('alias_filename') ?>" type="<?php echo escapeHtml('text') ?>" maxlength="<?php echo escapeHtml('150') ?>" value="<?php echo escapeHtml(''.@$alias_filename.'') ?>" class="<?php echo escapeHtml('filename') ?>" /><?php echo escapeHtml('') ?>
+            <input name="<?php echo \template_engine\Output::escapeHtml('alias_filename') ?>" type="<?php echo \template_engine\Output::escapeHtml('text') ?>" maxlength="<?php echo \template_engine\Output::escapeHtml('150') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$alias_filename.'') ?>" class="<?php echo \template_engine\Output::escapeHtml('filename') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
           </label>
-          <label class="<?php echo escapeHtml('or-form-row or-form-input') ?>"><?php echo escapeHtml('') ?>
-            <span class="<?php echo escapeHtml('or-form-label') ?>"><?php echo escapeHtml(''.@lang('folder').'') ?>
+          <label class="<?php echo \template_engine\Output::escapeHtml('or-form-row or-form-input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <span class="<?php echo \template_engine\Output::escapeHtml('or-form-label') ?>"><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('folder').'') ?>
             </span>
-            <select name="<?php echo escapeHtml('alias_folderid') ?>" size="<?php echo escapeHtml('1') ?>"><?php echo escapeHtml('') ?>
+            <select name="<?php echo \template_engine\Output::escapeHtml('alias_folderid') ?>" size="<?php echo \template_engine\Output::escapeHtml('1') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
               <?php foreach($folders as $_key=>$_value) {  ?>
-                <option value="<?php echo escapeHtml(''.@$_key.'') ?>" <?php if($_key==$alias_folderid){ ?>selected="<?php echo escapeHtml('selected') ?>"<?php } ?>><?php echo escapeHtml(''.@$_value.'') ?>
+                <option value="<?php echo \template_engine\Output::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$alias_folderid){ ?>selected="<?php echo \template_engine\Output::escapeHtml('selected') ?>"<?php } ?>><?php echo \template_engine\Output::escapeHtml(''.@$_value.'') ?>
                 </option>
                <?php } ?>
             </select>
@@ -37,8 +37,8 @@
         </div>
       </fieldset>
     </div>
-    <div class="<?php echo escapeHtml('or-form-actionbar') ?>"><?php echo escapeHtml('') ?>
-      <input type="<?php echo escapeHtml('button') ?>" value="<?php echo escapeHtml(''.@lang('CANCEL').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo escapeHtml('') ?>
-      <input type="<?php echo escapeHtml('submit') ?>" value="<?php echo escapeHtml(''.@lang('save').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo escapeHtml('') ?>
+    <div class="<?php echo \template_engine\Output::escapeHtml('or-form-actionbar') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+      <input type="<?php echo \template_engine\Output::escapeHtml('button') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('CANCEL').'') ?>" class="<?php echo \template_engine\Output::escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+      <input type="<?php echo \template_engine\Output::escapeHtml('submit') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('save').'') ?>" class="<?php echo \template_engine\Output::escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
     </div>
   </form>

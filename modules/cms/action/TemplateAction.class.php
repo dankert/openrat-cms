@@ -96,10 +96,10 @@ class TemplateAction extends BaseAction
         foreach ($this->template->getElementNames() as $elid => $elname) {
             $newSource = str_replace('{{' . $elname . '}}', '{{' . $elid . '}}', $newSource);
             $newSource = str_replace('{{->' . $elname . '}}', '{{->' . $elid . '}}', $newSource);
-            $newSource = str_replace('{{' . lang('TEMPLATE_SRC_IFEMPTY') . ':' . $elname . ':' . lang('TEMPLATE_SRC_BEGIN') . '}}', '{{IFEMPTY:' . $elid . ':BEGIN}}', $newSource);
-            $newSource = str_replace('{{' . lang('TEMPLATE_SRC_IFEMPTY') . ':' . $elname . ':' . lang('TEMPLATE_SRC_END') . '}}', '{{IFEMPTY:' . $elid . ':END}}', $newSource);
-            $newSource = str_replace('{{' . lang('TEMPLATE_SRC_IFNOTEMPTY') . ':' . $elname . ':' . lang('TEMPLATE_SRC_BEGIN') . '}}', '{{IFNOTEMPTY:' . $elid . ':BEGIN}}', $newSource);
-            $newSource = str_replace('{{' . lang('TEMPLATE_SRC_IFNOTEMPTY') . ':' . $elname . ':' . lang('TEMPLATE_SRC_END') . '}}', '{{IFNOTEMPTY:' . $elid . ':END}}', $newSource);
+            $newSource = str_replace('{{' . \cms\base\Language::lang('TEMPLATE_SRC_IFEMPTY') . ':' . $elname . ':' . \cms\base\Language::lang('TEMPLATE_SRC_BEGIN') . '}}', '{{IFEMPTY:' . $elid . ':BEGIN}}', $newSource);
+            $newSource = str_replace('{{' . \cms\base\Language::lang('TEMPLATE_SRC_IFEMPTY') . ':' . $elname . ':' . \cms\base\Language::lang('TEMPLATE_SRC_END') . '}}', '{{IFEMPTY:' . $elid . ':END}}', $newSource);
+            $newSource = str_replace('{{' . \cms\base\Language::lang('TEMPLATE_SRC_IFNOTEMPTY') . ':' . $elname . ':' . \cms\base\Language::lang('TEMPLATE_SRC_BEGIN') . '}}', '{{IFNOTEMPTY:' . $elid . ':BEGIN}}', $newSource);
+            $newSource = str_replace('{{' . \cms\base\Language::lang('TEMPLATE_SRC_IFNOTEMPTY') . ':' . $elname . ':' . \cms\base\Language::lang('TEMPLATE_SRC_END') . '}}', '{{IFNOTEMPTY:' . $elid . ':END}}', $newSource);
         }
         */
 

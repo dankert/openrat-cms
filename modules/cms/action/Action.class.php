@@ -294,7 +294,7 @@ namespace cms\action {
                 'name' => $name,
                 'key' => $text,
                 'vars' => $vars,
-                'text' => lang($text, $vars),
+                'text' => \cms\base\Language::lang($text, $vars),
                 'log' => $log,
                 'status' => $status);
         }

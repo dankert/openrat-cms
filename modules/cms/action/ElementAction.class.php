@@ -286,7 +286,7 @@ class ElementAction extends BaseAction
                         foreach( $subtypes as $t=>$v )
                         {
                             unset($subtypes[$t]);
-                            $subtypes[$v] = lang('EL_'.$this->element->getTypeName().'_'.$v);
+                            $subtypes[$v] = \cms\base\Language::lang('EL_'.$this->element->getTypeName().'_'.$v);
                         }
                     }
 
@@ -395,7 +395,7 @@ class ElementAction extends BaseAction
                         foreach( $t->getElements() as $element )
                         {
                             if	( !in_array($element->type,array('copy','linkinfo','link')) )
-                                $names[$element->name] = $t->name.' - '.$element->name.' ('.lang('EL_'.$element->type).')';
+                                $names[$element->name] = $t->name.' - '.$element->name.' ('.\cms\base\Language::lang('EL_'.$element->type).')';
                         }
                         unset($t);
                     }
@@ -514,7 +514,7 @@ class ElementAction extends BaseAction
                                 continue 2;
                         }
 
-                        $objects[ $id ]  = lang( $o->getType() ).': ';
+                        $objects[ $id ]  = \cms\base\Language::lang( $o->getType() ).': ';
 
                         if	( !$o->isRoot )
                         {

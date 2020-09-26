@@ -385,7 +385,7 @@ SQL
 		$name = $sql->getOne();
 		
 		if	( $name == '' )
-			return lang('UNKNOWN');
+			return \cms\base\Language::lang('UNKNOWN');
 		else return $name;
 	}
 
@@ -747,7 +747,7 @@ SQL
 			$acl->setDatabaseRow( $row );
 			$acl->projectid    = $row['projectid'   ];
 			if	( intval($acl->languageid) == 0 )
-				$acl->languagename = lang('ALL_LANGUAGES');
+				$acl->languagename = \cms\base\Language::lang('ALL_LANGUAGES');
 			else
 				$acl->languagename = $row['languagename'];
 			$aclList[] = $acl;

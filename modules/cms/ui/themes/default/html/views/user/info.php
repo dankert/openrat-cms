@@ -1,225 +1,225 @@
 <?php if (!defined('OR_TITLE')) exit(); ?>
-  <form name="<?php echo escapeHtml('') ?>" target="<?php echo escapeHtml('_self') ?>" data-target="<?php echo escapeHtml('view') ?>" action="<?php echo escapeHtml('./') ?>" data-method="<?php echo escapeHtml('info') ?>" data-action="<?php echo escapeHtml('user') ?>" data-id="<?php echo escapeHtml(''.@$_id.'') ?>" method="<?php echo escapeHtml('POST') ?>" enctype="<?php echo escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo escapeHtml('') ?>" data-autosave="<?php echo escapeHtml('') ?>" class="<?php echo escapeHtml('or-form user') ?>"><?php echo escapeHtml('') ?>
-    <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('token') ?>" value="<?php echo escapeHtml(''.@$_token.'') ?>" /><?php echo escapeHtml('') ?>
-    <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('action') ?>" value="<?php echo escapeHtml('user') ?>" /><?php echo escapeHtml('') ?>
-    <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('subaction') ?>" value="<?php echo escapeHtml('info') ?>" /><?php echo escapeHtml('') ?>
-    <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('id') ?>" value="<?php echo escapeHtml(''.@$_id.'') ?>" /><?php echo escapeHtml('') ?>
-    <div><?php echo escapeHtml('') ?>
-      <span class="<?php echo escapeHtml('headline') ?>"><?php echo escapeHtml(''.@$fullname.'') ?>
+  <form name="<?php echo \template_engine\Output::escapeHtml('') ?>" target="<?php echo \template_engine\Output::escapeHtml('_self') ?>" data-target="<?php echo \template_engine\Output::escapeHtml('view') ?>" action="<?php echo \template_engine\Output::escapeHtml('./') ?>" data-method="<?php echo \template_engine\Output::escapeHtml('info') ?>" data-action="<?php echo \template_engine\Output::escapeHtml('user') ?>" data-id="<?php echo \template_engine\Output::escapeHtml(''.@$_id.'') ?>" method="<?php echo \template_engine\Output::escapeHtml('POST') ?>" enctype="<?php echo \template_engine\Output::escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo \template_engine\Output::escapeHtml('') ?>" data-autosave="<?php echo \template_engine\Output::escapeHtml('') ?>" class="<?php echo \template_engine\Output::escapeHtml('or-form user') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('token') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$_token.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('action') ?>" value="<?php echo \template_engine\Output::escapeHtml('user') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('subaction') ?>" value="<?php echo \template_engine\Output::escapeHtml('info') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('id') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$_id.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+    <div><?php echo \template_engine\Output::escapeHtml('') ?>
+      <span class="<?php echo \template_engine\Output::escapeHtml('headline') ?>"><?php echo \template_engine\Output::escapeHtml(''.@$fullname.'') ?>
       </span>
       <?php $if1=!(($image)==FALSE); if($if1) {  ?>
-        <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-          <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-            <img src="<?php echo escapeHtml(''.@$image.'') ?>" /><?php echo escapeHtml('') ?>
+        <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+          <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <img src="<?php echo \template_engine\Output::escapeHtml(''.@$image.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
           </div>
         </div>
        <?php } ?>
-      <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-        <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-          <span><?php echo escapeHtml(''.@lang('user_username').'') ?>
+      <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+        <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+          <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('user_username').'') ?>
           </span>
         </div>
-        <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-          <span class="<?php echo escapeHtml('name') ?>"><?php echo escapeHtml(''.@$name.'') ?>
+        <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+          <span class="<?php echo \template_engine\Output::escapeHtml('name') ?>"><?php echo \template_engine\Output::escapeHtml(''.@$name.'') ?>
           </span>
         </div>
       </div>
-      <fieldset class="<?php echo escapeHtml('or-group toggle-open-close open show') ?>"><?php echo escapeHtml('') ?>
-        <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('ADDITIONAL_INFO').'') ?>
-          <img /><?php echo escapeHtml('') ?>
-          <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
+      <fieldset class="<?php echo \template_engine\Output::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+        <legend class="<?php echo \template_engine\Output::escapeHtml('on-click-open-close') ?>"><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('ADDITIONAL_INFO').'') ?>
+          <img /><?php echo \template_engine\Output::escapeHtml('') ?>
+          <div class="<?php echo \template_engine\Output::escapeHtml('arrow arrow-right on-closed') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
           </div>
-          <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo \template_engine\Output::escapeHtml('arrow arrow-down on-open') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
           </div>
         </legend>
-        <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
-          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@lang('user_fullname').'') ?>
+        <div class="<?php echo \template_engine\Output::escapeHtml('closable') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('user_fullname').'') ?>
               </span>
             </div>
-            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@$fullname.'') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <span><?php echo \template_engine\Output::escapeHtml(''.@$fullname.'') ?>
               </span>
             </div>
           </div>
           <?php $if1=(config('security','user','show_admin_mail')); if($if1) {  ?>
-            <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-              <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml(''.@lang('user_mail').'') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+                <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('user_mail').'') ?>
                 </label>
               </div>
-              <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-                <a target="<?php echo escapeHtml('_self') ?>" data-url="<?php echo escapeHtml('mailto:'.@$mail.'') ?>" data-type="<?php echo escapeHtml('external') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('[]') ?>" href="<?php echo escapeHtml('mailto:'.@$mail.'') ?>"><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(''.@$mail.'') ?>
+              <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+                <a target="<?php echo \template_engine\Output::escapeHtml('_self') ?>" data-url="<?php echo \template_engine\Output::escapeHtml('mailto:'.@$mail.'') ?>" data-type="<?php echo \template_engine\Output::escapeHtml('external') ?>" data-action="<?php echo \template_engine\Output::escapeHtml('') ?>" data-method="<?php echo \template_engine\Output::escapeHtml('') ?>" data-id="<?php echo \template_engine\Output::escapeHtml('') ?>" data-extra="<?php echo \template_engine\Output::escapeHtml('[]') ?>" href="<?php echo \template_engine\Output::escapeHtml('mailto:'.@$mail.'') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+                  <span><?php echo \template_engine\Output::escapeHtml(''.@$mail.'') ?>
                   </span>
                 </a>
-                <i data-qrcode="<?php echo escapeHtml('mailto:'.@$mail.'') ?>" title="<?php echo escapeHtml(''.@lang('QRCODE_SHOW').'') ?>" class="<?php echo escapeHtml('image-icon image-icon--menu-qrcode or-qrcode or-info') ?>"><?php echo escapeHtml('') ?>
+                <i data-qrcode="<?php echo \template_engine\Output::escapeHtml('mailto:'.@$mail.'') ?>" title="<?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('QRCODE_SHOW').'') ?>" class="<?php echo \template_engine\Output::escapeHtml('image-icon image-icon--menu-qrcode or-qrcode or-info') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
                 </i>
               </div>
             </div>
            <?php } ?>
-          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@lang('description').'') ?>
+          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('description').'') ?>
               </span>
             </div>
-            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@$desc.'') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <span><?php echo \template_engine\Output::escapeHtml(''.@$desc.'') ?>
               </span>
             </div>
           </div>
-          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-              <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml(''.@lang('user_tel').'') ?>
+          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('user_tel').'') ?>
               </label>
             </div>
-            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@$tel.'') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <span><?php echo \template_engine\Output::escapeHtml(''.@$tel.'') ?>
               </span>
-              <i data-qrcode="<?php echo escapeHtml('tel:'.@$tel.'') ?>" title="<?php echo escapeHtml(''.@lang('QRCODE_SHOW').'') ?>" class="<?php echo escapeHtml('image-icon image-icon--menu-qrcode or-qrcode or-info') ?>"><?php echo escapeHtml('') ?>
+              <i data-qrcode="<?php echo \template_engine\Output::escapeHtml('tel:'.@$tel.'') ?>" title="<?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('QRCODE_SHOW').'') ?>" class="<?php echo \template_engine\Output::escapeHtml('image-icon image-icon--menu-qrcode or-qrcode or-info') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
               </i>
             </div>
           </div>
-          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@lang('timezone').'') ?>
+          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('timezone').'') ?>
               </span>
             </div>
-            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@$timezone.'') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <span><?php echo \template_engine\Output::escapeHtml(''.@$timezone.'') ?>
               </span>
             </div>
           </div>
-          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-              <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang('language').'') ?>
+          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('language').'') ?>
                 </span>
               </label>
             </div>
-            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@$language.'') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <span><?php echo \template_engine\Output::escapeHtml(''.@$language.'') ?>
               </span>
             </div>
           </div>
-          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
             </div>
-            <div class="<?php echo escapeHtml('input clickable') ?>"><?php echo escapeHtml('') ?>
-              <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('dialog') ?>" data-action="<?php echo escapeHtml('') ?>" data-method="<?php echo escapeHtml('prop') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'prop\'}') ?>" href="<?php echo escapeHtml('/#//') ?>" class="<?php echo escapeHtml('or-link-btn') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang('edit').'') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('input clickable') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <a target="<?php echo \template_engine\Output::escapeHtml('_self') ?>" data-type="<?php echo \template_engine\Output::escapeHtml('dialog') ?>" data-action="<?php echo \template_engine\Output::escapeHtml('') ?>" data-method="<?php echo \template_engine\Output::escapeHtml('prop') ?>" data-id="<?php echo \template_engine\Output::escapeHtml('') ?>" data-extra="<?php echo \template_engine\Output::escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'prop\'}') ?>" href="<?php echo \template_engine\Output::escapeHtml('/#//') ?>" class="<?php echo \template_engine\Output::escapeHtml('or-link-btn') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('edit').'') ?>
                 </span>
               </a>
             </div>
           </div>
         </div>
       </fieldset>
-      <fieldset class="<?php echo escapeHtml('or-group toggle-open-close closed show') ?>"><?php echo escapeHtml('') ?>
-        <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('options').'') ?>
-          <img /><?php echo escapeHtml('') ?>
-          <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
+      <fieldset class="<?php echo \template_engine\Output::escapeHtml('or-group toggle-open-close closed show') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+        <legend class="<?php echo \template_engine\Output::escapeHtml('on-click-open-close') ?>"><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('options').'') ?>
+          <img /><?php echo \template_engine\Output::escapeHtml('') ?>
+          <div class="<?php echo \template_engine\Output::escapeHtml('arrow arrow-right on-closed') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
           </div>
-          <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo \template_engine\Output::escapeHtml('arrow arrow-down on-open') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
           </div>
         </legend>
-        <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
-          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+        <div class="<?php echo \template_engine\Output::escapeHtml('closable') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
             </div>
-            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('is_admin') ?>" disabled="<?php echo escapeHtml('disabled') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$is_admin){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
-              <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml(''.@lang('user_admin').'') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <input type="<?php echo \template_engine\Output::escapeHtml('checkbox') ?>" name="<?php echo \template_engine\Output::escapeHtml('is_admin') ?>" disabled="<?php echo \template_engine\Output::escapeHtml('disabled') ?>" value="<?php echo \template_engine\Output::escapeHtml('1') ?>" <?php if(@$is_admin){ ?>checked="<?php echo \template_engine\Output::escapeHtml('checked') ?>"<?php } ?> /><?php echo \template_engine\Output::escapeHtml('') ?>
+              <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('user_admin').'') ?>
               </label>
             </div>
           </div>
-          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@lang(':user_ldapdn').'') ?>
+          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang(':user_ldapdn').'') ?>
               </span>
             </div>
-            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@$ldap_dn.'') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <span><?php echo \template_engine\Output::escapeHtml(''.@$ldap_dn.'') ?>
               </span>
             </div>
           </div>
-          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@lang('user_style').'') ?>
+          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('user_style').'') ?>
               </span>
             </div>
-            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@$style.'') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <span><?php echo \template_engine\Output::escapeHtml(''.@$style.'') ?>
               </span>
             </div>
           </div>
         </div>
       </fieldset>
-      <fieldset class="<?php echo escapeHtml('or-group toggle-open-close closed show') ?>"><?php echo escapeHtml('') ?>
-        <legend class="<?php echo escapeHtml('on-click-open-close') ?>"><?php echo escapeHtml(''.@lang('security').'') ?>
-          <img /><?php echo escapeHtml('') ?>
-          <div class="<?php echo escapeHtml('arrow arrow-right on-closed') ?>"><?php echo escapeHtml('') ?>
+      <fieldset class="<?php echo \template_engine\Output::escapeHtml('or-group toggle-open-close closed show') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+        <legend class="<?php echo \template_engine\Output::escapeHtml('on-click-open-close') ?>"><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('security').'') ?>
+          <img /><?php echo \template_engine\Output::escapeHtml('') ?>
+          <div class="<?php echo \template_engine\Output::escapeHtml('arrow arrow-right on-closed') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
           </div>
-          <div class="<?php echo escapeHtml('arrow arrow-down on-open') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo \template_engine\Output::escapeHtml('arrow arrow-down on-open') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
           </div>
         </legend>
-        <div class="<?php echo escapeHtml('closable') ?>"><?php echo escapeHtml('') ?>
-          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@lang('user_password_expires').'') ?>
+        <div class="<?php echo \template_engine\Output::escapeHtml('closable') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('user_password_expires').'') ?>
               </span>
             </div>
-            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
               <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($passwordExpires); ?>
                <?php } ?>
             </div>
           </div>
-          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
+          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
             </div>
-            <div class="<?php echo escapeHtml('input clickable') ?>"><?php echo escapeHtml('') ?>
-              <a target="<?php echo escapeHtml('_self') ?>" data-type="<?php echo escapeHtml('dialog') ?>" data-action="<?php echo escapeHtml('user') ?>" data-method="<?php echo escapeHtml('pw') ?>" data-id="<?php echo escapeHtml('') ?>" data-extra="<?php echo escapeHtml('{\'dialogAction\':\'user\',\'dialogMethod\':\'pw\'}') ?>" href="<?php echo escapeHtml('/#/user/') ?>" class="<?php echo escapeHtml('or-link-btn') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang('edit_password').'') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('input clickable') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <a target="<?php echo \template_engine\Output::escapeHtml('_self') ?>" data-type="<?php echo \template_engine\Output::escapeHtml('dialog') ?>" data-action="<?php echo \template_engine\Output::escapeHtml('user') ?>" data-method="<?php echo \template_engine\Output::escapeHtml('pw') ?>" data-id="<?php echo \template_engine\Output::escapeHtml('') ?>" data-extra="<?php echo \template_engine\Output::escapeHtml('{\'dialogAction\':\'user\',\'dialogMethod\':\'pw\'}') ?>" href="<?php echo \template_engine\Output::escapeHtml('/#/user/') ?>" class="<?php echo \template_engine\Output::escapeHtml('or-link-btn') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('edit_password').'') ?>
                 </span>
               </a>
             </div>
           </div>
-          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@lang('user_last_login').'') ?>
+          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('user_last_login').'') ?>
               </span>
             </div>
-            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
               <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($lastLogin); ?>
                <?php } ?>
             </div>
           </div>
-          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@lang('token').'') ?>
+          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('token').'') ?>
               </span>
             </div>
-            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-              <span><?php echo escapeHtml(''.@$totpToken.'') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <span><?php echo \template_engine\Output::escapeHtml(''.@$totpToken.'') ?>
               </span>
             </div>
           </div>
-          <div class="<?php echo escapeHtml('line') ?>"><?php echo escapeHtml('') ?>
-            <div class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml('') ?>
-              <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml(''.@lang('user_totp').'') ?>
+          <div class="<?php echo \template_engine\Output::escapeHtml('line') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('user_totp').'') ?>
               </label>
             </div>
-            <div class="<?php echo escapeHtml('input') ?>"><?php echo escapeHtml('') ?>
-              <input type="<?php echo escapeHtml('checkbox') ?>" name="<?php echo escapeHtml('totp') ?>" value="<?php echo escapeHtml('1') ?>" <?php if(@$totp){ ?>checked="<?php echo escapeHtml('checked') ?>"<?php } ?> /><?php echo escapeHtml('') ?>
-              <label class="<?php echo escapeHtml('label') ?>"><?php echo escapeHtml(''.@lang('user_totp').'') ?>
+            <div class="<?php echo \template_engine\Output::escapeHtml('input') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <input type="<?php echo \template_engine\Output::escapeHtml('checkbox') ?>" name="<?php echo \template_engine\Output::escapeHtml('totp') ?>" value="<?php echo \template_engine\Output::escapeHtml('1') ?>" <?php if(@$totp){ ?>checked="<?php echo \template_engine\Output::escapeHtml('checked') ?>"<?php } ?> /><?php echo \template_engine\Output::escapeHtml('') ?>
+              <label class="<?php echo \template_engine\Output::escapeHtml('label') ?>"><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('user_totp').'') ?>
               </label>
-              <i data-qrcode="<?php echo escapeHtml(''.@$totpSecretUrl.'') ?>" title="<?php echo escapeHtml(''.@lang('QRCODE_SHOW').'') ?>" class="<?php echo escapeHtml('image-icon image-icon--menu-qrcode or-qrcode or-info') ?>"><?php echo escapeHtml('') ?>
+              <i data-qrcode="<?php echo \template_engine\Output::escapeHtml(''.@$totpSecretUrl.'') ?>" title="<?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('QRCODE_SHOW').'') ?>" class="<?php echo \template_engine\Output::escapeHtml('image-icon image-icon--menu-qrcode or-qrcode or-info') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
               </i>
             </div>
           </div>
         </div>
       </fieldset>
     </div>
-    <div class="<?php echo escapeHtml('or-form-actionbar') ?>"><?php echo escapeHtml('') ?>
+    <div class="<?php echo \template_engine\Output::escapeHtml('or-form-actionbar') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
     </div>
   </form>

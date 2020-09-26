@@ -444,7 +444,7 @@ class PageelementAction extends BaseAction
 
 		$objects = array();
 			
-		$objects[ 0 ] = lang('LIST_ENTRY_EMPTY'); // Wert "nicht ausgewählt"
+		$objects[ 0 ] = \cms\base\Language::lang('LIST_ENTRY_EMPTY'); // Wert "nicht ausgewählt"
 
 		
 		$t = new Template( $this->page->templateid );
@@ -459,7 +459,7 @@ class PageelementAction extends BaseAction
 			$f = new Folder( $o->parentid );
 			//					$f->load();
 
-			$objects[ $id ]  = lang( $o->getType() ).': ';
+			$objects[ $id ]  = \cms\base\Language::lang( $o->getType() ).': ';
 			$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) );
 			$objects[ $id ] .= FILE_SEP.$o->name;
 			//			}
@@ -524,7 +524,7 @@ class PageelementAction extends BaseAction
         $objects = array();
         //Änderung der möglichen Types
         $types = array('file','page','link');
-        $objects[ 0 ] = lang('LIST_ENTRY_EMPTY'); // Wert "nicht ausgewählt"
+        $objects[ 0 ] = \cms\base\Language::lang('LIST_ENTRY_EMPTY'); // Wert "nicht ausgewählt"
 
         $project = new Project( $this->page->projectid );
         $folder = new Folder($project->getRootObjectId());
@@ -536,7 +536,7 @@ class PageelementAction extends BaseAction
             $f = new Folder( $id );
             $f->load();
 
-            $objects[ $id ]  = lang( $f->getType() ).': ';
+            $objects[ $id ]  = \cms\base\Language::lang( $f->getType() ).': ';
             $objects[ $id ] .=  implode( ' &raquo; ',$f->parentObjectNames(false,true) );
         }
 
@@ -545,7 +545,7 @@ class PageelementAction extends BaseAction
             $f = new Folder( $id );
             $f->load();
 
-            $objects[ $id ]  = lang( $f->getType() ).': ';
+            $objects[ $id ]  = \cms\base\Language::lang( $f->getType() ).': ';
             $objects[ $id ] .=  implode( ' &raquo; ',$f->parentObjectNames(false,true) );
         }
 
@@ -734,7 +734,7 @@ class PageelementAction extends BaseAction
             $value->generate();
 
 
-            //			$date = date( lang('DATE_FORMAT'),$value->lastchangeTimeStamp);
+            //			$date = date( \cms\base\Language::lang('DATE_FORMAT'),$value->lastchangeTimeStamp);
 
             //			if	( in_array(	$this->element->type,array('text','longtext') ) )
             //				$version_list[ $value->valueid ] = '('.$lfd_nr.') '.$date;
@@ -917,7 +917,7 @@ class PageelementAction extends BaseAction
         $lastChangeTime = $value->getLastChangeTime();
         if	( $lastChangeTime > $this->getRequestVar('value_time') )
         {
-            $this->addNotice('pageelement',$value->element->name,'CONCURRENT_VALUE_CHANGE',OR_NOTICE_WARN,array('last_change_time'=>date(lang('DATE_FORMAT'),$lastChangeTime)));
+            $this->addNotice('pageelement',$value->element->name,'CONCURRENT_VALUE_CHANGE',OR_NOTICE_WARN,array('last_change_time'=>date(\cms\base\Language::lang('DATE_FORMAT'),$lastChangeTime)));
         }
 
         // Inhalt speichern
@@ -1179,7 +1179,7 @@ class PageelementAction extends BaseAction
 
         foreach( array('odf','plaintext') as $type )
         {
-            $types[$type] = lang('FILETYPE_'.$type);
+            $types[$type] = \cms\base\Language::lang('FILETYPE_'.$type);
         }
 
         $this->setTemplateVar('types',$types);
@@ -1192,7 +1192,7 @@ class PageelementAction extends BaseAction
 
         foreach( array('odf','plaintext') as $type )
         {
-            $types[$type] = lang('FILETYPE_'.$type);
+            $types[$type] = \cms\base\Language::lang('FILETYPE_'.$type);
         }
         $this->setTemplateVar('types',$types);
     }
@@ -1358,7 +1358,7 @@ class PageelementAction extends BaseAction
 				if   ( ! $value->date )
 					return '';
 
-				return date( lang(Messages::DATE_FORMAT), $value->date );
+				return date( \cms\base\Language::lang(Messages::DATE_FORMAT), $value->date );
 
 			case Element::ELEMENT_TYPE_TEXT:
 			case Element::ELEMENT_TYPE_LONGTEXT:

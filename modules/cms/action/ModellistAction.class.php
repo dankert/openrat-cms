@@ -103,7 +103,7 @@ class ModellistAction extends BaseAction
 		if	( empty($model->name) )
 		{
 			// Name ist "Variante <id>"
-			$model->name = lang('MODEL').' '.$model->modelid;
+			$model->name = \cms\base\Language::lang('MODEL').' '.$model->modelid;
 			$model->save();
 		}
 	}

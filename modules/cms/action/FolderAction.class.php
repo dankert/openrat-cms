@@ -634,7 +634,7 @@ class FolderAction extends ObjectAction
 
 			// TAR speichern.
 			$tarFile = new File();
-			$tarFile->name     = lang('ARCHIVE').' '.$this->getRequestVar('filename');
+			$tarFile->name     = \cms\base\Language::lang('ARCHIVE').' '.$this->getRequestVar('filename');
 			$tarFile->filename = $this->getRequestVar('filename');
 			$tarFile->extension = 'tar';
 			$tarFile->parentid = $this->folder->objectid;
@@ -695,7 +695,7 @@ class FolderAction extends ObjectAction
 								$f = new File( $id );
 								$f->load();
 								$f->filename = '';
-								$f->name     = lang('COPY_OF').' '.$f->name;
+								$f->name     = \cms\base\Language::lang('COPY_OF').' '.$f->name;
 								$f->parentid = $targetObjectId;
 								$f->add();
 								$f->copyValueFromFile( $id );
@@ -707,7 +707,7 @@ class FolderAction extends ObjectAction
 								$p = new Page( $id );
 								$p->load();
 								$p->filename = '';
-								$p->name     = lang('COPY_OF').' '.$p->name;
+								$p->name     = \cms\base\Language::lang('COPY_OF').' '.$p->name;
 								$p->parentid = $targetObjectId;
 								$p->add();
 								$p->copyValuesFromPage( $id );
@@ -718,7 +718,7 @@ class FolderAction extends ObjectAction
 								$l = new Link( $id );
 								$l->load();
 								$l->filename = '';
-								$l->name     = lang('COPY_OF').' '.$l->name;
+								$l->name     = \cms\base\Language::lang('COPY_OF').' '.$l->name;
 								$l->parentid = $targetObjectId;
 								$l->add();
 								$this->addNotice($o->getType(),$o->name,'COPIED','ok');
@@ -727,7 +727,7 @@ class FolderAction extends ObjectAction
 							default:
 								throw new \LogicException('fatal: what type to delete?');
 						}
-						$notices[] = lang('COPIED');
+						$notices[] = \cms\base\Language::lang('COPIED');
 						break;
 
 					case 'link':
@@ -742,7 +742,7 @@ class FolderAction extends ObjectAction
 
 							$link->linkedObjectId = $id;
 							$link->isLinkToObject = true;
-							$link->name           = lang('LINK_TO').' '.$o->name;
+							$link->name           = \cms\base\Language::lang('LINK_TO').' '.$o->name;
 							$link->add();
 							$this->addNotice($o->getType(),$o->name,'LINKED','ok');
 						}
@@ -1017,8 +1017,8 @@ class FolderAction extends ObjectAction
 				$list[$id]['filename'] = \util\Text::maxLength($o->filename, 20);
 				$list[$id]['desc']     = \util\Text::maxLength($o->desc, 30);
 				if	( $list[$id]['desc'] == '' )
-					$list[$id]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
-				$list[$id]['desc'] = $list[$id]['desc'].' - '.lang('IMAGE').' '.$id;
+					$list[$id]['desc'] = \cms\base\Language::lang('NO_DESCRIPTION_AVAILABLE');
+				$list[$id]['desc'] = $list[$id]['desc'].' - '.\cms\base\Language::lang('IMAGE').' '.$id;
 
 				$list[$id]['type'] = $o->getType();
 				$list[$id]['id'  ] = $id;
@@ -1078,8 +1078,8 @@ class FolderAction extends ObjectAction
 				$list[$id]['filename'] = \util\Text::maxLength($o->filename, 20);
 				$list[$id]['desc']     = \util\Text::maxLength($o->desc, 30);
 				if	( $list[$id]['desc'] == '' )
-					$list[$id]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
-				$list[$id]['desc'] = $list[$id]['desc'].' - '.lang('IMAGE').' '.$id;
+					$list[$id]['desc'] = \cms\base\Language::lang('NO_DESCRIPTION_AVAILABLE');
+				$list[$id]['desc'] = $list[$id]['desc'].' - '.\cms\base\Language::lang('IMAGE').' '.$id;
 
 				$list[$id]['type'] = $o->getType();
 				$list[$id]['id'  ] = $id;
@@ -1133,7 +1133,7 @@ class FolderAction extends ObjectAction
 				$list[$id]['filename'] = $o->filename;
 				$list[$id]['desc'    ] = $o->desc;
 				if	( $list[$id]['desc'] == '' )
-					$list[$id]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
+					$list[$id]['desc'] = \cms\base\Language::lang('NO_DESCRIPTION_AVAILABLE');
 				$list[$id]['desc'] = 'ID '.$id.' - '.$list[$id]['desc'];
 
 				$list[$id]['type'] = $o->getType();
@@ -1141,7 +1141,7 @@ class FolderAction extends ObjectAction
 				$list[$id]['icon'] = $o->getType();
 
 				$list[$id]['url' ] = Html::url($o->getType(),'',$id);
-				$list[$id]['date'] = date( lang('DATE_FORMAT'),$o->lastchangeDate );
+				$list[$id]['date'] = date( \cms\base\Language::lang('DATE_FORMAT'),$o->lastchangeDate );
 				$list[$id]['user'] = $o->lastchangeUser;
 
 				if	( $this->hasRequestVar("markall") || $this->hasRequestVar('obj'.$id) )
@@ -1232,7 +1232,7 @@ class FolderAction extends ObjectAction
 				$list[$id]['filename'] = \util\Text::maxLength( $o->filename ,20);
 				$list[$id]['desc']     = \util\Text::maxLength( $o->desc     ,30);
 				if	( $list[$id]['desc'] == '' )
-					$list[$id]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
+					$list[$id]['desc'] = \cms\base\Language::lang('NO_DESCRIPTION_AVAILABLE');
 				$list[$id]['desc'] = 'ID '.$id.' - '.$list[$id]['desc'];
 
 				$list[$id]['type'] = $o->getType();
@@ -1381,7 +1381,7 @@ class FolderAction extends ObjectAction
             {
                 echo '<li><a href="'. Html::url($o->getType(),'',$id).'">'.$o->filename.'</a></li>';
 
-                //echo date( lang('DATE_FORMAT'),$o->lastchangeDate );
+                //echo date( \cms\base\Language::lang('DATE_FORMAT'),$o->lastchangeDate );
                 //echo $o->lastchangeUser;
             }
         }

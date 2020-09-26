@@ -803,7 +803,7 @@ class ValueGenerator extends BaseGenerator
 							'type:'.$element->type.', '.
 							'unknown subtype:'.$element->subtype);
 						/*if	( !$value->publisher->isPublic() )
-							$inhalt = lang('ERROR_IN_ELEMENT');*/
+							$inhalt = \cms\base\Language::lang('ERROR_IN_ELEMENT');*/
 				}
 
 				if	( strpos($element->dateformat,'%')!==FALSE )
@@ -994,7 +994,7 @@ class ValueGenerator extends BaseGenerator
 				if	( $conf['publish']['encode_utf8_in_html'] )
 					// Wenn HTML-Ausgabe, dann UTF-8-Zeichen als HTML-Code uebersetzen
 					if   ( $page->isHtml() )
-						$inhalt = translateutf8tohtml($inhalt);
+						$inhalt = Text::translateutf8tohtml($inhalt);
 				break;
 
 			default:

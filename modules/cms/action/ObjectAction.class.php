@@ -139,7 +139,7 @@ class ObjectAction extends BaseAction
 				
 				$link = new Link();
 				$link->parentid = $oldParentId;
-				$link->name     = lang('LINK_TO').' '.$sourceObject->name;
+				$link->name     = \cms\base\Language::lang('LINK_TO').' '.$sourceObject->name;
 				$link->filename = $sourceObject->filename;
 				$link->linkedObjectId = $sourceObjectId;
 				$link->add();
@@ -161,7 +161,7 @@ class ObjectAction extends BaseAction
 						$f = new File( $sourceObjectId );
 						$f->load();
 						$f->filename = '';
-						$f->name     = lang('COPY_OF').' '.$f->name;
+						$f->name     = \cms\base\Language::lang('COPY_OF').' '.$f->name;
 						$f->parentid = $targetObjectId;
 						$f->add();
 						$f->copyValueFromFile( $sourceObjectId );
@@ -173,7 +173,7 @@ class ObjectAction extends BaseAction
 						$p = new Page( $sourceObjectId );
 						$p->load();
 						$p->filename = '';
-						$p->name     = lang('COPY_OF').' '.$p->name;
+						$p->name     = \cms\base\Language::lang('COPY_OF').' '.$p->name;
 						$p->parentid = $targetObjectId;
 						$p->add();
 						$p->copyValuesFromPage( $sourceObjectId );
@@ -184,7 +184,7 @@ class ObjectAction extends BaseAction
 						$l = new Link( $sourceObjectId );
 						$l->load();
 						$l->filename = '';
-						$l->name     = lang('COPY_OF').' '.$l->name;
+						$l->name     = \cms\base\Language::lang('COPY_OF').' '.$l->name;
 						$l->parentid = $targetObjectId;
 						$l->add();
 						$this->addNotice($sourceObject->getType(),$sourceObject->name,'COPIED','ok');
@@ -207,7 +207,7 @@ class ObjectAction extends BaseAction
 				
 				$link = new Link();
 				$link->parentid = $targetObjectId;
-				$link->name     = lang('LINK_TO').' '.$sourceObject->name;
+				$link->name     = \cms\base\Language::lang('LINK_TO').' '.$sourceObject->name;
 				$link->filename = $sourceObject->filename;
 				$link->linkedObjectId = $sourceObjectId;
 				$link->isLinkToObject = true;
@@ -444,7 +444,7 @@ class ObjectAction extends BaseAction
 		$this->setTemplateVar('users'    ,User::listAll()   );
 		$this->setTemplateVar('groups'   ,Group::getAll()   );
 
-		$languages = array(0=>lang('ALL_LANGUAGES'));
+		$languages = array(0=>\cms\base\Language::lang('ALL_LANGUAGES'));
 
 		$project = new Project( $this->baseObject->projectid );
 

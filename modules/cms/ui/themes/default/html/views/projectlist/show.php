@@ -5,7 +5,7 @@
 		<table width="100%">
 			<tr class="headline">
 				<td>
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'name'.'')))); ?></span>
+					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(\cms\base\Language::lang(''.'name'.'')))); ?></span>
 					
 				</td>
 			</tr>
@@ -24,10 +24,10 @@
 			<?php } ?>
 			<tr class="data">
 				<td class="clickable">
-					<a target="_self" date-name="<?php echo lang('new') ?>" name="<?php echo lang('new') ?>" data-type="dialog" data-action="" data-method="add" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','add','',array()) ?>">
+					<a target="_self" date-name="<?php echo \cms\base\Language::lang('new') ?>" name="<?php echo \cms\base\Language::lang('new') ?>" data-type="dialog" data-action="" data-method="add" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','add','',array()) ?>">
 						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/add.png" />
 						
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('new')))); ?></span>
+						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(\cms\base\Language::lang('new')))); ?></span>
 						
 					</a>
 

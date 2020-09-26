@@ -94,10 +94,10 @@ class Mail
 
 		$this->header[] = 'X-Mailer: ' . $this->header_encode(OR_TITLE . ' ' . OR_VERSION);
 		$this->header[] = 'Content-Type: text/plain; charset=UTF-8';
-		$this->subject = $this->header_encode(lang('mail_subject_' . $text));
+		$this->subject = $this->header_encode(\cms\base\Language::lang('mail_subject_' . $text));
 		$this->to = $this->header_encode($to);
 
-		$this->text = $this->nl . wordwrap(str_replace(';', $this->nl, lang('mail_text_' . $text)), 70, $this->nl) . $this->nl;
+		$this->text = $this->nl . wordwrap(str_replace(';', $this->nl, \cms\base\Language::lang('mail_text_' . $text)), 70, $this->nl) . $this->nl;
 
 		// Signatur anhaengen (sofern konfiguriert)
 		$signature = $conf['mail']['signature'];

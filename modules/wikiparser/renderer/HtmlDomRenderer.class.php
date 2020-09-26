@@ -73,7 +73,7 @@ class HtmlDomRenderer
 				$attr['title'] = $subChild1->title;
 		}
 
-		$praefix .= lang('TEXT_MARKUP_' . strtoupper(substr(get_class($child), 0, -7)));
+		$praefix .= \cms\base\Language::lang('TEXT_MARKUP_' . strtoupper(substr(get_class($child), 0, -7)));
 
 		switch (strtolower(get_class($child))) {
 			case 'rawelement':

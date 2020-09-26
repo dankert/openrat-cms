@@ -61,7 +61,7 @@
                         <div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div>
                         -->
                         <span class="or-view-icon image-icon image-icon--method-<?php echo $method['name'] ?>" ></span>
-                        <h1 class="or-view-headline"><?php echo lang('METHOD_'.$method['name'] ) ?></h1>
+                        <h1 class="or-view-headline"><?php echo \cms\base\Language::lang('METHOD_'.$method['name'] ) ?></h1>
                     </header>
 
                     <!--

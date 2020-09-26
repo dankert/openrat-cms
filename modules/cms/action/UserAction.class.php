@@ -417,7 +417,7 @@ class UserAction extends BaseAction
 			}
 			else
 			{
-				$right['languagename'] = lang('ALL_LANGUAGES');
+				$right['languagename'] = \cms\base\Language::lang('ALL_LANGUAGES');
 			}
 			
 			

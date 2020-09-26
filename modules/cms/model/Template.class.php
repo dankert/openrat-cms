@@ -88,7 +88,7 @@ class Template extends ModelBase
 	function save()
 	{
 		if	( $this->name == "" )
-			$this->name = lang(Messages::TEMPLATE).' #'.$this->templateid;
+			$this->name = \cms\base\Language::lang(Messages::TEMPLATE).' #'.$this->templateid;
 
 		$stmt = Db::sql( 'UPDATE {{template}}'.
 		                '  SET name={name}'.

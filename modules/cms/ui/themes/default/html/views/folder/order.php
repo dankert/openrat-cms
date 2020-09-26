@@ -1,59 +1,59 @@
 <?php if (!defined('OR_TITLE')) exit(); ?>
-  <form name="<?php echo escapeHtml('') ?>" target="<?php echo escapeHtml('_self') ?>" data-target="<?php echo escapeHtml('view') ?>" action="<?php echo escapeHtml('./') ?>" data-method="<?php echo escapeHtml('order') ?>" data-action="<?php echo escapeHtml('folder') ?>" data-id="<?php echo escapeHtml(''.@$_id.'') ?>" method="<?php echo escapeHtml('POST') ?>" enctype="<?php echo escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo escapeHtml('') ?>" data-autosave="<?php echo escapeHtml('') ?>" class="<?php echo escapeHtml('or-form folder') ?>"><?php echo escapeHtml('') ?>
-    <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('token') ?>" value="<?php echo escapeHtml(''.@$_token.'') ?>" /><?php echo escapeHtml('') ?>
-    <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('action') ?>" value="<?php echo escapeHtml('folder') ?>" /><?php echo escapeHtml('') ?>
-    <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('subaction') ?>" value="<?php echo escapeHtml('order') ?>" /><?php echo escapeHtml('') ?>
-    <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('id') ?>" value="<?php echo escapeHtml(''.@$_id.'') ?>" /><?php echo escapeHtml('') ?>
-    <div><?php echo escapeHtml('') ?>
-      <div class="<?php echo escapeHtml('or-table-wrapper') ?>"><?php echo escapeHtml('') ?>
-        <div class="<?php echo escapeHtml('or-table-filter') ?>"><?php echo escapeHtml('') ?>
-          <input type="<?php echo escapeHtml('search') ?>" name="<?php echo escapeHtml('filter') ?>" placeholder="<?php echo escapeHtml(''.@lang('SEARCH_FILTER').'') ?>" /><?php echo escapeHtml('') ?>
+  <form name="<?php echo \template_engine\Output::escapeHtml('') ?>" target="<?php echo \template_engine\Output::escapeHtml('_self') ?>" data-target="<?php echo \template_engine\Output::escapeHtml('view') ?>" action="<?php echo \template_engine\Output::escapeHtml('./') ?>" data-method="<?php echo \template_engine\Output::escapeHtml('order') ?>" data-action="<?php echo \template_engine\Output::escapeHtml('folder') ?>" data-id="<?php echo \template_engine\Output::escapeHtml(''.@$_id.'') ?>" method="<?php echo \template_engine\Output::escapeHtml('POST') ?>" enctype="<?php echo \template_engine\Output::escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo \template_engine\Output::escapeHtml('') ?>" data-autosave="<?php echo \template_engine\Output::escapeHtml('') ?>" class="<?php echo \template_engine\Output::escapeHtml('or-form folder') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('token') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$_token.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('action') ?>" value="<?php echo \template_engine\Output::escapeHtml('folder') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('subaction') ?>" value="<?php echo \template_engine\Output::escapeHtml('order') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+    <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('id') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$_id.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+    <div><?php echo \template_engine\Output::escapeHtml('') ?>
+      <div class="<?php echo \template_engine\Output::escapeHtml('or-table-wrapper') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+        <div class="<?php echo \template_engine\Output::escapeHtml('or-table-filter') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+          <input type="<?php echo \template_engine\Output::escapeHtml('search') ?>" name="<?php echo \template_engine\Output::escapeHtml('filter') ?>" placeholder="<?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('SEARCH_FILTER').'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
         </div>
-        <div class="<?php echo escapeHtml('or-table-area') ?>"><?php echo escapeHtml('') ?>
-          <table width="<?php echo escapeHtml('100%') ?>" class="<?php echo escapeHtml('or-table--sortable') ?>"><?php echo escapeHtml('') ?>
-            <tr class="<?php echo escapeHtml('headline') ?>"><?php echo escapeHtml('') ?>
-              <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang('FOLDER_ORDER').'') ?>
+        <div class="<?php echo \template_engine\Output::escapeHtml('or-table-area') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+          <table width="<?php echo \template_engine\Output::escapeHtml('100%') ?>" class="<?php echo \template_engine\Output::escapeHtml('or-table--sortable') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+            <tr class="<?php echo \template_engine\Output::escapeHtml('headline') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+              <td class="<?php echo \template_engine\Output::escapeHtml('help') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('FOLDER_ORDER').'') ?>
                 </span>
               </td>
-              <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang('TYPE').'') ?>
+              <td class="<?php echo \template_engine\Output::escapeHtml('help') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('TYPE').'') ?>
                 </span>
               </td>
-              <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang('NAME').'') ?>
+              <td class="<?php echo \template_engine\Output::escapeHtml('help') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('NAME').'') ?>
                 </span>
               </td>
-              <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang('FILENAME').'') ?>
+              <td class="<?php echo \template_engine\Output::escapeHtml('help') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('FILENAME').'') ?>
                 </span>
               </td>
-              <td class="<?php echo escapeHtml('help') ?>"><?php echo escapeHtml('') ?>
-                <span><?php echo escapeHtml(''.@lang('LASTCHANGE').'') ?>
+              <td class="<?php echo \template_engine\Output::escapeHtml('help') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+                <span><?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('LASTCHANGE').'') ?>
                 </span>
               </td>
             </tr>
             <?php foreach((array)$object as $list_key=>$list_value) { extract($list_value); ?>
-              <tr data-id="<?php echo escapeHtml(''.@$id.'') ?>" class="<?php echo escapeHtml('data') ?>"><?php echo escapeHtml('') ?>
-                <td><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(' ') ?>
+              <tr data-id="<?php echo \template_engine\Output::escapeHtml(''.@$id.'') ?>" class="<?php echo \template_engine\Output::escapeHtml('data') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+                <td><?php echo \template_engine\Output::escapeHtml('') ?>
+                  <span><?php echo \template_engine\Output::escapeHtml(' ') ?>
                   </span>
                 </td>
-                <td><?php echo escapeHtml('') ?>
-                  <span class="<?php echo escapeHtml('sort-value') ?>"><?php echo escapeHtml(''.@$icon.'') ?>
+                <td><?php echo \template_engine\Output::escapeHtml('') ?>
+                  <span class="<?php echo \template_engine\Output::escapeHtml('sort-value') ?>"><?php echo \template_engine\Output::escapeHtml(''.@$icon.'') ?>
                   </span>
-                  <i class="<?php echo escapeHtml('image-icon image-icon--action-'.@$icon.'') ?>"><?php echo escapeHtml('') ?>
+                  <i class="<?php echo \template_engine\Output::escapeHtml('image-icon image-icon--action-'.@$icon.'') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
                   </i>
                 </td>
-                <td><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(''.@$name.'') ?>
+                <td><?php echo \template_engine\Output::escapeHtml('') ?>
+                  <span><?php echo \template_engine\Output::escapeHtml(''.@$name.'') ?>
                   </span>
                 </td>
-                <td><?php echo escapeHtml('') ?>
-                  <span><?php echo escapeHtml(''.@$filename.'') ?>
+                <td><?php echo \template_engine\Output::escapeHtml('') ?>
+                  <span><?php echo \template_engine\Output::escapeHtml(''.@$filename.'') ?>
                   </span>
                 </td>
-                <td><?php echo escapeHtml('') ?>
+                <td><?php echo \template_engine\Output::escapeHtml('') ?>
                   <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($date); ?>
                    <?php } ?>
                 </td>
@@ -62,10 +62,10 @@
           </table>
         </div>
       </div>
-      <input type="<?php echo escapeHtml('hidden') ?>" name="<?php echo escapeHtml('order') ?>" value="<?php echo escapeHtml(''.@$order.'') ?>" /><?php echo escapeHtml('') ?>
+      <input type="<?php echo \template_engine\Output::escapeHtml('hidden') ?>" name="<?php echo \template_engine\Output::escapeHtml('order') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@$order.'') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
     </div>
-    <div class="<?php echo escapeHtml('or-form-actionbar') ?>"><?php echo escapeHtml('') ?>
-      <input type="<?php echo escapeHtml('button') ?>" value="<?php echo escapeHtml(''.@lang('CANCEL').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo escapeHtml('') ?>
-      <input type="<?php echo escapeHtml('submit') ?>" value="<?php echo escapeHtml(''.@lang('button_ok').'') ?>" class="<?php echo escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo escapeHtml('') ?>
+    <div class="<?php echo \template_engine\Output::escapeHtml('or-form-actionbar') ?>"><?php echo \template_engine\Output::escapeHtml('') ?>
+      <input type="<?php echo \template_engine\Output::escapeHtml('button') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('CANCEL').'') ?>" class="<?php echo \template_engine\Output::escapeHtml('or-form-btn or-form-btn--secondary or-form-btn--cancel') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
+      <input type="<?php echo \template_engine\Output::escapeHtml('submit') ?>" value="<?php echo \template_engine\Output::escapeHtml(''.@\template_engine\Output::lang('button_ok').'') ?>" class="<?php echo \template_engine\Output::escapeHtml('or-form-btn or-form-btn--primary or-form-btn--save') ?>" /><?php echo \template_engine\Output::escapeHtml('') ?>
     </div>
   </form>

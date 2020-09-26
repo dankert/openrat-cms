@@ -4,9 +4,9 @@ function component_user( $user )
 	extract( $user );
 	
 	if	( empty($name) )
-		$name = lang('UNKNOWN');
+		$name = \cms\base\Language::lang('UNKNOWN');
 	if	( empty($fullname) )
-		$fullname = lang('NO_DESCRIPTION_AVAILABLE');
+		$fullname = \cms\base\Language::lang('NO_DESCRIPTION_AVAILABLE');
 
 	if	( !empty($mail) && config('security','user','show_mail' ) )
 		echo "<a href=\"mailto:$mail\" title=\"$fullname\">$name</a>";

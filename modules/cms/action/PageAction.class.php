@@ -255,7 +255,7 @@ class PageAction extends ObjectAction
 				if	( $o->getType() != 'folder' )
 				{
 					$f = new Folder( $o->parentid );
-					$objects[ $id ]  = lang( ''.$o->getType() ).': ';
+					$objects[ $id ]  = \cms\base\Language::lang( ''.$o->getType() ).': ';
 					$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) );
 					$objects[ $id ] .= FILE_SEP.$o->name;
 				}
@@ -462,11 +462,11 @@ class PageAction extends ObjectAction
 					continue;
 
 				$oldElement = array();
-				$oldElement['name'] = $e->name.' - '.lang('EL_'.$e->type );
+				$oldElement['name'] = $e->name.' - '.\cms\base\Language::lang('EL_'.$e->type );
 				$oldElement['id'  ] = $e->elementid;
 
 				$newElements = Array();
-				$newElements[0] = lang('ELEMENT_DELETE_VALUES');
+				$newElements[0] = \cms\base\Language::lang('ELEMENT_DELETE_VALUES');
 
 				foreach( $newTemplate->getElementIds() as $newelementid )
 				{
@@ -475,7 +475,7 @@ class PageAction extends ObjectAction
 
 					// Nur neue Elemente anbieten, deren Typ identisch ist
 					if	( $ne->type == $e->type )
-						$newElements[$newelementid] = lang('ELEMENT').': '.$ne->name.' - '.lang('EL_'.$e->type );
+						$newElements[$newelementid] = \cms\base\Language::lang('ELEMENT').': '.$ne->name.' - '.\cms\base\Language::lang('EL_'.$e->type );
 				}
 				$oldElement['newElementsName'] = 'from'.$e->elementid;
 				$oldElement['newElementsList'] = $newElements;
@@ -596,7 +596,7 @@ class PageAction extends ObjectAction
 								$f = new Folder( $o->parentid );
 								$f->load();
 
-								$objects[ $oid ]  = lang( $o->getType() ).': ';
+								$objects[ $oid ]  = \cms\base\Language::lang( $o->getType() ).': ';
 								$objects[ $oid ] .=  implode( ' &raquo; ',$f->parentObjectNames(false,true) );
 								$objects[ $oid ] .= ' &raquo; '.$o->name;
 							}
@@ -615,7 +615,7 @@ class PageAction extends ObjectAction
 							$f = new Folder( $oid );
 							$f->load();
 
-							$objects[ $oid ]  = lang( $f->getType() ).': ';
+							$objects[ $oid ]  = \cms\base\Language::lang( $f->getType() ).': ';
 							$objects[ $oid ] .=  implode( ' &raquo; ',$f->parentObjectNames(false,true) );
 						}
 

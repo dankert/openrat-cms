@@ -119,8 +119,8 @@ class ImageAction extends FileAction
 			// Datei neu anlegen.
 			$imageFile = new Image($this->image->objectid);
 			$imageFile->load();
-			$imageFile->name       = lang('copy_of').' '.$imageFile->name;
-			$imageFile->desription = lang('copy_of').' '.$imageFile->description;
+			$imageFile->name       = \cms\base\Language::lang('copy_of').' '.$imageFile->name;
+			$imageFile->desription = \cms\base\Language::lang('copy_of').' '.$imageFile->description;
 			$imageFile->filename   = $imageFile->filename.'_resized_'.time();
 			$imageFile->add();
 			$imageFile->copyValueFromFile( $this->image->objectid );

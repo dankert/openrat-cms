@@ -47,7 +47,7 @@ HTML;
 <input type="<?php echo $this->type ?>" <?php if(isset($this->src)) { ?>
 	src="<?php $this->tmp_src ?>" <?php } ?>
 	name="<?php echo $this->value ?>" class="%class%"
-	title="<?php echo lang($this->text.'_DESC') ?>"
+	title="<?php echo \cms\base\Language::lang($this->text.'_DESC') ?>"
 	value="&nbsp;&nbsp;&nbsp;&nbsp;<?php echo langHtml($this->text) ?>&nbsp;&nbsp;&nbsp;&nbsp;" /><?php unset($this->src); ?>
 	<?php
 		
