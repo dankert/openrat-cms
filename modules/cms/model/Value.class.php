@@ -1,6 +1,7 @@
 <?php
 namespace cms\model;
 use cms\base\DB;
+use cms\base\Startup;
 use util\ArrayUtils;
 use cms\generator\Publish;
 use cms\macros\MacroRunner;
@@ -461,7 +462,7 @@ SQL
 		else	$sql->setInt   ( 'date',$this->date );
 
 		$sql->setBoolean( 'publish'          ,$this->publish );
-		$sql->setInt    ( 'lastchange_date'  ,now()         );
+		$sql->setInt    ( 'lastchange_date'  ,Startup::now()         );
 		$user = \util\Session::getUser();
 		$sql->setInt    ( 'lastchange_userid',$user->userid  );
 

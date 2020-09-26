@@ -86,8 +86,8 @@ class LastChanges extends Macro
 			if ($o['objectid'] == $this->getObjectId() )
 				continue;
 			
-			if	( ($o['typeid']==BaseObject::TYPEID_PAGE && istrue($this->showPages)) ||
-				  ($o['typeid']==BaseObject::TYPEID_LINK && istrue($this->showLinks))  ) // Nur wenn gewünschter Typ
+			if	( ($o['typeid']==BaseObject::TYPEID_PAGE && self::isTrue($this->showPages)) ||
+				  ($o['typeid']==BaseObject::TYPEID_LINK && self::isTrue($this->showLinks))  ) // Nur wenn gewünschter Typ
 			{
 				if	( $o['typeid']==BaseObject::TYPEID_LINK ) {
 					$l = new Link( $o['objectid'] );
@@ -134,7 +134,7 @@ class LastChanges extends Macro
 					$desc = $value->getCache()->get();
 
 
-					if	( istrue($this->plaintext)  )
+					if	( self::isTrue($this->plaintext)  )
 					{
 						$desc = strip_tags($desc);
 						// Und nur wenn die Tags raus sind duerfen wir nun den Text kuerzen.
@@ -157,7 +157,7 @@ class LastChanges extends Macro
 
 				$this->output('<div class="'.$this->css_class.'">');
 				
-				if	( istrue($this->linktitle) )
+				if	( self::isTrue($this->linktitle) )
 				{
 					$url = $this->pathToObject($o['objectid']);
 					$this->output( '<a href="'.$url.'"><div>' );
@@ -174,7 +174,7 @@ class LastChanges extends Macro
 				$this->output( $desc );
 				$this->output( '</p>'   );
 				
-				if	( istrue($this->linktitle) )
+				if	( self::isTrue($this->linktitle) )
 				{
 					$this->output( '</div></a>' );
 				}
@@ -182,5 +182,9 @@ class LastChanges extends Macro
 				$this->output( '</div>' );
 			}
 		}
+	}
+
+	public static function isTrue( $value ) {
+		return filter_var( $value,FILTER_VALIDATE_BOOLEAN);
 	}
 }

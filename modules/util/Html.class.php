@@ -72,7 +72,7 @@ class Html
 			$params[session_name()] = session_id();
 
 		if (config('security', 'use_post_token'))
-			$params['token'] = token();
+			$params['token'] = Session::token();
 
 		$fake_urls = $conf['interface']['url']['fake_url'];
 		$url_format = $conf['interface']['url']['url_format'];

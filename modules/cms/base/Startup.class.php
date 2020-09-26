@@ -37,10 +37,8 @@ class Startup {
 		self::createRequest();
 
 		require __DIR__.'/Language.class.php';
-		require __DIR__.'/Common.class.php';
 		require __DIR__.'/Configuration.class.php';
 		\Language::registerFunctions();
-		\Common::registerFunctions();
 		\Configuration::registerFunctions();
 	}
 
@@ -150,4 +148,38 @@ class Startup {
 		global $REQ;
 		$REQ = array_merge($_GET, $_POST);
 	}
+
+
+	/**
+	 * Stellt fest, ob das System in einem schreibgeschuetzten Zustand ist.
+	 *
+	 * @return boolean true, falls schreibgeschuetzt, sonst false
+	 */
+	public static function readonly() {
+
+		// Gesamtes CMS ist readonly.
+		if (config('security', 'readonly'))
+			return true;
+
+		// Aktuelle Datenbankverbindung ist readonly.
+		$db = DB::get();
+		if (isset($db->conf['readonly']) && $db->conf['readonly'])
+			return true;
+
+		return false;
+	}
+
+
+	/**
+	 * Ermittelt die aktuelle Systemzeit als Unix-Timestamp.<br>
+	 * Unix-Timestamp ist immer bezogen auf GMT.
+	 * -
+	 * @return Unix-Timestamp der aktuellen Zeit
+	 */
+	function now()
+	{
+		return time();
+	}
+
+
 }

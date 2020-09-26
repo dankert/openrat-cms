@@ -84,7 +84,7 @@ class TeaserList extends Macro
 
 					$desc = $value->getCache()->get();
 
-					if	( istrue($this->plaintext)  )
+					if	( filter_var($this->plaintext,FILTER_VALIDATE_BOOLEAN)  )
 					{
 						$desc = strip_tags($desc);
 						// Und nur wenn die Tags raus sind duerfen wir nun den Text kuerzen.
@@ -110,14 +110,14 @@ class TeaserList extends Macro
 				$url = $this->pathToObject($o->objectid);
 				
 				$this->output( '<'.$this->title_html_tag.' class="'.$this->title_css_class.'">');
-				if	( istrue($this->linktitle) )
+				if	( filter_var($this->linktitle,FILTER_VALIDATE_BOOLEAN))
 					$this->output( '<a href="'.$url.'">'.$p->name.'</a>' );
 				else
 					$this->output( $p->name );
 				$this->output( '</'.$this->title_html_tag.'>' );
 					
 				$this->output( '<p class="'.$this->description_css_class.'">' );
-				if	( istrue($this->linktext) )
+				if	( filter_var($this->linktext,FILTER_VALIDATE_BOOLEAN) )
 					$this->output( '<a href="'.$this->pathToObject($o->objectid).'">'.$desc.'</a>' );
 				else
 					$this->output( $desc );

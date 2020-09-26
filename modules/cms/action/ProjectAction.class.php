@@ -6,6 +6,7 @@ use cms\model\Project;
 use cms\model\Folder;
 use language\Messages;
 use logger\Logger;
+use util\FileUtils;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -257,7 +258,7 @@ class ProjectAction extends BaseAction
 		if	( ! $syncConf['enabled'] )
 			return;
 		
-		$syncDir = slashify($syncConf['directory']).$this->project->name;
+		$syncDir = FileUtils::slashify($syncConf['directory']).$this->project->name;
 		
 		
 	}

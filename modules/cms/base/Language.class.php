@@ -65,22 +65,6 @@ class Language
 			}
 
 
-			/**
-			 * Diese Funktion stellt ein Wort in der eingestellten
-			 * Sprache zur Verfuegung. Sonderzeichen werden als HTML maskiert.
-			 *
-			 * @param $key
-			 * @return unknown_type
-			 * @package openrat.functions
-			 * @var String Name der Sprachvariablen
-			 * @var Array Liste (Assoziatives Array) von Variablen
-			 *
-			 */
-			function langHtml($key, $vars = array())
-			{
-
-				return encodeHtml(lang($key, $vars));
-			}
 
 			/**
 			 * Ersetzt alle Zeichen mit dem Ordinalwert > 127 mit einer HTML-Maskierung.
@@ -157,21 +141,5 @@ class Language
 			}
 
 
-			/**
-			 * Diese Funktion prueft, ob ein Sprachelement vorhanden ist
-			 *
-			 * @var String Name der Sprachvariablen
-			 *
-			 * @package openrat.functions
-			 */
-			function hasLang($text)
-			{
-				$text = strtoupper($text);
-
-				global $conf;
-				$lang = $conf['language'];
-
-				return isset($lang[$text]);
-		}
 	}
 }

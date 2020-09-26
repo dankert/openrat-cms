@@ -4,6 +4,7 @@
 namespace cms\model;
 
 use cms\base\DB as Db;
+use cms\base\Startup;
 use util\ArrayUtils;
 use cms\generator\Publish;
 use phpseclib\Math\BigInteger;
@@ -358,7 +359,7 @@ SQL
             }
         }
 
-        if	( readonly() )
+        if	( Startup::readonly() )
             // System ist im Nur-Lese-Zustand
             $this->aclMask = Acl::ACL_READ && $this->aclMask;
 
@@ -884,7 +885,7 @@ SQL
 
         $user = \util\Session::getUser();
         $this->lastchangeUser = $user;
-        $this->lastchangeDate = now();
+        $this->lastchangeDate = Startup::now();
         $stmt->setInt   ('time'     , $this->lastchangeDate          );
         $stmt->setInt   ('userid'   , $this->lastchangeUser->userid  );
         $stmt->setString('filename' , $this->filename                );
@@ -915,7 +916,7 @@ SQL
 
         $user = \util\Session::getUser();
         $this->lastchangeUser = $user;
-        $this->lastchangeDate = now();
+        $this->lastchangeDate = Startup::now();
 
         $sql->setInt   ('userid'  ,$this->lastchangeUser->userid  );
         $sql->setInt   ('objectid',$this->objectid                );
@@ -952,7 +953,7 @@ SQL
 
         $user = \util\Session::getUser();
         $this->publishedUser = $user;
-        $this->publishedDate = now();
+        $this->publishedDate = Startup::now();
 
         $sql->setInt   ('userid'  ,$this->publishedUser->userid   );
         $sql->setInt   ('objectid',$this->objectid                );
@@ -1103,10 +1104,10 @@ SQL
         $sql->setString('filename' , $this->filename );
         $sql->setString('projectid', $this->projectid);
         $sql->setInt   ('orderid'  , 99999           );
-        $sql->setInt   ('time'     , now()           );
+        $sql->setInt   ('time'     , Startup::now()           );
         $user = \util\Session::getUser();
         $sql->setInt   ('createuserid'   , $user->userid   );
-        $sql->setInt   ('createtime'     , now()           );
+        $sql->setInt   ('createtime'     , Startup::now()           );
         $user = \util\Session::getUser();
         $sql->setInt   ('userid'   , $user->userid   );
 

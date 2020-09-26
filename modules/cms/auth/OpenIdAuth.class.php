@@ -7,6 +7,7 @@ use logger\Logger;
 use OpenId;
 use Parameter;
 use unknown;
+use util\FileUtils;
 use util\Http;
 
 
@@ -218,8 +219,8 @@ class OpenIdAuth implements Auth
 		if (empty($trustRoot))
 			$trustRoot = $server;
 
-		$redirHttp->requestParameter['openid.trust_root'] = slashify($trustRoot);
-		$redirHttp->requestParameter['openid.return_to'] = slashify($server) . 'openid.' . PHP_EXT;
+		$redirHttp->requestParameter['openid.trust_root'] = FileUtils::slashify($trustRoot);
+		$redirHttp->requestParameter['openid.return_to'] = FileUtils::slashify($server) . 'openid.' . PHP_EXT;
 		//$redirHttp->requestParameter['openid.realm'        ] = slashify($server).'openid.'.PHP_EXT;
 		$redirHttp->requestParameter['openid.assoc_handle'] = $this->handle;
 

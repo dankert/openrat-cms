@@ -4,6 +4,7 @@ namespace cms\model;
 
 use cms\base\DB;
 use database\Database;
+use util\FileUtils;
 use util\Session;
 
 
@@ -558,7 +559,7 @@ EOF
 		if	( ! $syncConf['enabled'] )
 			return;
 		
-		$syncDir = slashify($syncConf['directory']).$this->name;
+		$syncDir = FileUtils::slashify($syncConf['directory']).$this->name;
 		
 	}
 

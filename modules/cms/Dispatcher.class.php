@@ -114,10 +114,10 @@ class Dispatcher
             Logger::trace('Output' . "\n" . print_r($result, true));
 
         // Weitere Variablen anreichern.
-        $result['session'] = array('name' => session_name(), 'id' => session_id(), 'token' => token());
+        $result['session'] = array('name' => session_name(), 'id' => session_id(), 'token' => Session::token());
         $result['version'] = OR_VERSION;
         $result['api'] = '2';
-        $result['output']['_token'] = token();
+        $result['output']['_token'] = Session::token();
         $result['output']['_id'   ] = $this->request->id;
 
 
@@ -159,8 +159,8 @@ class Dispatcher
     private function checkPostToken()
     {
         global $REQ;
-        if (config('security', 'use_post_token') && $_SERVER['REQUEST_METHOD'] == 'POST' && @$REQ[REQ_PARAM_TOKEN] != token()) {
-            Logger::error('Token mismatch: Needed ' . token() . ' but got ' . Logger::sanitizeInput(@$REQ[REQ_PARAM_TOKEN]) . '. Maybe an attacker?');
+        if (config('security', 'use_post_token') && $_SERVER['REQUEST_METHOD'] == 'POST' && @$REQ[REQ_PARAM_TOKEN] != Session::token()) {
+            Logger::error('Token mismatch: Needed ' . Session::token() . ' but got ' . Logger::sanitizeInput(@$REQ[REQ_PARAM_TOKEN]) . '. Maybe an attacker?');
             throw new SecurityException("Token mismatch");
         }
     }

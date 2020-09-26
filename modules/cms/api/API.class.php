@@ -12,6 +12,7 @@ use ObjectNotFoundException;
 use util\exception\UIException;
 use util\exception\SecurityException;
 use util\json\JSON;
+use util\Session;
 use util\XML;
 
 define('CMS_API_REQ_PARAM_SUBACTION', 'subaction');
@@ -71,7 +72,7 @@ class API
             Logger::trace('Output' . "\n" . print_r($data, true));
 
         // Weitere Variablen anreichern.
-        $data['session'] = array('name' => session_name(), 'id' => session_id(), 'token' => token());
+        $data['session'] = array('name' => session_name(), 'id' => session_id(), 'token' => Session::token());
         $data['version'] = OR_VERSION;
         $data['api'] = '2';
 

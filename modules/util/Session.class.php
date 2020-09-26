@@ -113,6 +113,10 @@ class Session
 	{
 		session_write_close();
 	}
+
+
+	public static function token() {
+		return substr(session_id(), -10);
+	}
 }
 
-?>

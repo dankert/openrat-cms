@@ -9,6 +9,7 @@ use cms\model\User;
 use cms\model\Group;
 
 
+use util\FileUtils;
 use util\Http;
 use cms\auth\InternalAuth;
 use logger\Logger;
@@ -530,7 +531,7 @@ class LoginAction extends BaseAction
 
 		$server = Http::getServer();
 		Logger::debug("Redirecting to $server");
-		header('Location: '.slashify($server) );
+		header('Location: '.FileUtils::slashify($server) );
 		exit();
 	}
 	
