@@ -2,9 +2,12 @@
 
 namespace configuration;
 
+/**
+ * Reading configuration values.
+ */
 class Config
 {
-    private $config = array();
+    private $config;
 
 
     /**
@@ -25,7 +28,7 @@ class Config
      */
     public function subset($name)
     {
-        if (isset($this->config[$name]))
+        if (isset($this->config[$name]) && is_array($this->config[$name]))
             return new Config($this->config[$name]);
         else
             return new Config(array());

@@ -3,6 +3,7 @@
 namespace cms\base;
 
 use configuration\Config;
+use util\Session;
 
 class Configuration {
 
@@ -13,7 +14,7 @@ class Configuration {
  */
 	public static function config($part1 = null, $part2 = null, $part3 = null, $part4 = null)
 	{
-		global $conf;
+		$conf = self::getConfig();
 
 		if ($part1 == null)
 			return new Config($conf);
@@ -49,9 +50,23 @@ class Configuration {
 	public static function Conf()
 	{
 
-		global $conf;
-		return new Config($conf);
+		return new Config(self::getConfig() );
 
+	}
+
+
+	/**
+	 * Gives the subset with this key.
+	 * @param $key subset key
+	 * @return Config
+	 */
+	public static function subset( $key ) {
+		return self::Conf()->subset($key);
+	}
+
+	private static function getConfig()
+	{
+		return Session::getConfig();
 	}
 
 }
