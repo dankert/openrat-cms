@@ -185,8 +185,8 @@ class Dispatcher
         Logger::$dateFormat = $logConfig['date_format'];
         Logger::$nsLookup   = $logConfig['ns_lookup'];
 
-		Logger::$outputType = (int) constant('\\logger\\Logger::OUTPUT_' . strtoupper($logConfig['output']));
-		Logger::$level      = (int) constant('\\logger\\Logger::LEVEL_'  . strtoupper($logConfig['level' ]));
+		Logger::$outputType = (int) @constant('\\logger\\Logger::OUTPUT_' . strtoupper($logConfig['output']));
+		Logger::$level      = (int) @constant('\\logger\\Logger::LEVEL_'  . strtoupper($logConfig['level' ]));
 
         Logger::$messageCallback = function ( $key ) {
 
@@ -280,7 +280,7 @@ class Dispatcher
         $actionClassNameWithNamespace = 'cms\\'.($this->request->isUIAction?'ui\\':'').'action\\' . $actionClassName;
 
         if ( !class_exists($actionClassNameWithNamespace) )
-            throw new LogicException("Action '$this->request->action' is not available");
+            throw new LogicException('Action \''.$this->request->action.'\' is not available, class not found: '.$actionClassNameWithNamespace);
 
         // Erzeugen der Action-Klasse
         /* @type $do \cms\action\Action */

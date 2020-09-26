@@ -2,7 +2,6 @@
 // Excecuting the CMS application programming interface (API)
 
 require('../modules/autoload.php');
-require('../modules/cms/ui/require.php');
 
 use cms\api\API;
 use cms\base\Startup;

@@ -7,9 +7,6 @@ use logger\Logger;
 use template_engine\TemplateEngineInfo;
 use util\Less;
 
-require (__DIR__.'/../../../util/require.php');
-
-
 /**
  * Theme-Compiler.
  *

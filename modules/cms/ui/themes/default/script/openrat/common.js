@@ -112,7 +112,7 @@ $( function() {
 
     Openrat.Workbench.afterNewActionHandler.add( function() {
 
-        let url = './api/?action=tree&subaction=path&id=' + Openrat.Workbench.state.id + '&type=' + Openrat.Workbench.state.action + '&output=json';
+        let url = './?action=tree&subaction=path&id=' + Openrat.Workbench.state.id + '&type=' + Openrat.Workbench.state.action + '&output=json';
 
         // Die Inhalte des Zweiges laden.
         $.getJSON(url, function (json) {

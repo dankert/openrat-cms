@@ -28,7 +28,7 @@ jQuery.fn.orTree = function ()
                 var id = $(node).data('id');
                 var extraId = $(node).data('extra');
 
-                var loadBranchUrl = './api/?action=tree&subaction=loadBranch&id=' + id + '&type=' + type + '&output=json';
+                var loadBranchUrl = './?action=tree&subaction=loadBranch&id=' + id + '&type=' + type + '&output=json';
 
                 // Extra-Id ergänzen.
                 if (typeof extraId === 'string') {

@@ -297,7 +297,7 @@ jQuery.fn.orTree = function ()
                 var id = $(node).data('id');
                 var extraId = $(node).data('extra');
 
-                var loadBranchUrl = './api/?action=tree&subaction=loadBranch&id=' + id + '&type=' + type + '&output=json';
+                var loadBranchUrl = './?action=tree&subaction=loadBranch&id=' + id + '&type=' + type + '&output=json';
 
                 // Extra-Id ergänzen.
                 if (typeof extraId === 'string') {
@@ -2532,7 +2532,7 @@ $( function() {
 
     Openrat.Workbench.afterNewActionHandler.add( function() {
 
-        let url = './api/?action=tree&subaction=path&id=' + Openrat.Workbench.state.id + '&type=' + Openrat.Workbench.state.action + '&output=json';
+        let url = './?action=tree&subaction=path&id=' + Openrat.Workbench.state.id + '&type=' + Openrat.Workbench.state.action + '&output=json';
 
         // Die Inhalte des Zweiges laden.
         $.getJSON(url, function (json) {

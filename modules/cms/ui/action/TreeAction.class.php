@@ -64,6 +64,8 @@ class TreeAction extends BaseAction
 
         $branch = $this->loadTreeBranch( $type );
 
+        $this->outputAsJSON( ['output'=>['branch'=>$branch]]);
+
 		$this->setTemplateVar( 'branch',$branch ); 
 	}
 
@@ -124,20 +126,24 @@ class TreeAction extends BaseAction
     /**
      * The path to an object.
      */
-    public function pathView() {
+    public function pathView()
+	{
 
-        $type = $this->getRequestVar('type');
-        $id   = $this->getRequestVar('id',OR_FILTER_ALPHANUM);
+		$type = $this->getRequestVar('type');
+		$id = $this->getRequestVar('id', OR_FILTER_ALPHANUM);
 
-        $result = $this->calculatePath( $type, $id );
-        $this->setTemplateVar('path'  ,$result );
+		$result = $this->calculatePath($type, $id);
+		$this->setTemplateVar('path', $result);
 
-        $name = $this->calculateName($type, $id);
-        $this->setTemplateVar('actual',$this->pathItem($type,$id,$name) );
-    }
+		$name = $this->calculateName($type, $id);
+		$this->setTemplateVar('actual', $this->pathItem($type, $id, $name));
+
+		$this->outputAsJSON($this->templateVars);
+	}
 
 
-    /**
+
+		/**
      * The path to an object.
      */
     private function calculatePath($type, $id) {
@@ -354,4 +360,14 @@ class TreeAction extends BaseAction
     }
 
 
+	/**
+	 * @param array $output
+	 */
+	protected function outputAsJSON( $output )
+	{
+		$json = new JSON();
+		header('Content-Type: application/json');
+		echo $json->encode($output);
+		exit;
+	}
 }
