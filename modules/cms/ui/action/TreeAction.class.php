@@ -98,30 +98,6 @@ class TreeAction extends BaseAction
 
 
     /**
-     * Initialer Aufbau des Navigationsbaums.
-     */
-	public function treeView()
-    {
-        $branch = $this->loadTreeBranch( 'root' );
-
-        foreach( $branch as $k=>$b )
-        {
-            if   ( !empty($b['type']) )
-                $branch[$k]['children'] = $this->loadTreeBranch( $b['type'] );
-            else
-                $branch[$k]['children'] = array();
-        }
-
-        $this->outputTreeBranch( $branch );
-
-        //$this->setTemplateVar( 'branch',$branch );
-
-        exit; // no template available.
-
-    }
-
-
-    /**
      * The path to an object.
      */
     public function pathView()
@@ -279,30 +255,6 @@ class TreeAction extends BaseAction
         }
     }
 
-
-
-    private function outputTreeBranch($branch )
-    {
-        $json = new JSON();
-        echo '<ul class="or-navtree-list">';
-
-        foreach( $branch as $b )
-        {
-            $hasChildren = isset($b['children']) && !empty($b['children']);
-
-			$b['extraId']['type'] = $b['type'];
-            echo '<li class="or-navtree-node or-navtree-node--'.($hasChildren?'is-open':'is-closed').' or-draggable" data-id="'.$b['internalId'].'" data-type="'.$b['type'].'" data-extra="'.str_replace('"',"'",$json->encode($b['extraId'])).'"><div class="or-navtree-node-control"><i class="tree-icon image-icon image-icon--node-'.($hasChildren?'open':'closed').'"></i></div><div class="clickable"><a href="./#/'.$b['type'].($b['internalId']?'/'.$b['internalId']:'').'" class="entry" data-extra="'.str_replace('"',"'",$json->encode($b['extraId'])).'" data-id="'.$b['internalId'].'" data-action="'.$b['action'].'" data-type="open" title="'.$b['description'].'"><i class="image-icon image-icon--action-'.$b['icon'].'" ></i> '.$b['text'].'</a></div>';
-
-            if   ($hasChildren)
-            {
-                $this->outputTreeBranch($b['children']);
-            }
-
-            echo '</li>';
-        }
-
-        echo '</ul>';
-    }
 
 
     private function pathItem( $action, $id = 0, $name = '' ) {

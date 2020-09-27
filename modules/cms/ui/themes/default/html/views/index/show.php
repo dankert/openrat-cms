@@ -40,7 +40,7 @@
             <header>
                 <a href=""></a>
             </header>
-            <div id="navigation" class="or-navtree view view-static" data-action="tree" data-method="tree">
+            <div id="navigation" class="or-navtree view">
             </div>
 
         </nav>

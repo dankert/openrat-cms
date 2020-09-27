@@ -162,13 +162,12 @@ Openrat.Workbench = new function()
     this.reloadAll = function() {
 
     	// View in geschlossenen Sektionen löschen, damit diese nicht stehen bleiben.
-        $('#workbench .view').empty();
-
-        Openrat.Workbench.loadViews( $('#workbench .view.view-loader, #workbench .view.view-static') );
+        Openrat.Workbench.loadViews( $('.view-loader,.view-static').empty() );
 
         this.loadUserStyle();
         this.loadLanguage();
         this.loadUISettings();
+        this.loadNavigationTree();
     }
 
 
@@ -186,6 +185,25 @@ Openrat.Workbench = new function()
             Openrat.Workbench.setThemeColor(color);
         });
     }
+
+    this.loadNavigationTree = function() {
+		let loadBranchUrl = './?action=tree&subaction=branch&id=0&type=root';
+
+		$.get(loadBranchUrl).done( function (html) {
+
+			// Den neuen Unter-Zweig erzeugen.
+			let $ul = $('<ul class="or-navtree-list" />');
+			$ul.appendTo('.or-navtree').append( html );
+
+			$ul.find('li').orTree(); // All subnodes are getting event listener for open/close
+
+			// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
+			$ul.find('.clickable').orLinkify();
+
+			// Open the first node.
+			$ul.find('.or-navtree-node-control').first().click();
+		} );
+	};
 
 
 	this.settings = {};
