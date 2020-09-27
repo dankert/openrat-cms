@@ -1430,7 +1430,7 @@ div#workbench > .or-main-area > .or-workplace > #editor > section.closed .view-t
 	font-weight: normal;
 	white-space: nowrap;
 }
-.or-breadcrumb li {
+.or-breadcrumb * {
 	display: inline;
 	margin-right: 0.3em;
 }

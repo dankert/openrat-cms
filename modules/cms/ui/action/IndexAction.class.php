@@ -81,8 +81,10 @@ class IndexAction extends Action
 
         header("Content-Type: application/manifest+json");
 
-        $this->outputAsJSON( $value );
-    }
+		header('Content-Type: application/json');
+		$json = new JSON();
+		$this->setTemplateVar( 'manifest',$json->encode($value) );
+	}
 
 
 
@@ -160,13 +162,8 @@ class IndexAction extends Action
         $this->setTemplateVar('methodList', $methodList);
 		$this->setTemplateVar('favicon_url', \cms\base\Configuration::Conf()->subset('theme')->get('favicon','modules/cms/ui/themes/default/images/openrat-logo.ico') );
 
-        // HTML-Datei direkt einbinden.
         $vars = $this->getOutputData();
-        $output  = $vars['output']; // will be extracted in the included template file.
-        $notices = $vars['notices']; // will be extracted in the included template file.
-
-		require( __DIR__.'/../themes/default/layout/index.php');
-		exit;
+        $this->setTemplateVar( 'notices',$vars['notices'] ); // will be extracted in the included template file.
 	}
 
 
@@ -187,8 +184,8 @@ class IndexAction extends Action
         $this->lastModified(filemtime($themeLessFile));
 
         header('Content-Type: text/css');
-        echo $this->getThemeCSS();
-        exit;
+
+        $this->setTemplateVar('style',$this->getThemeCSS() );
     }
 
 
@@ -381,17 +378,6 @@ class IndexAction extends Action
         else
             $style = \cms\base\Configuration::config('interface', 'style', 'default');
         return $style;
-    }
-
-    /**
-     * @param array $output
-     */
-    protected function outputAsJSON( $output )
-    {
-        $json = new JSON();
-        header('Content-Type: application/json');
-        echo $json->encode($output);
-        exit;
     }
 
 }

@@ -93,7 +93,7 @@ class TemplateEngine
 			// CHMOD ausfuehren.
 			if ( @$confCompiler['chmod'] )
 				if (! @chmod($filename, octdec($confCompiler['chmod'])))
-					throw new \InvalidArgumentException("Template {$srcXmlFilename} failed to compile: CHMOD '{$confCompiler['chmod']}' failed on file {$filename}.");
+					throw new \InvalidArgumentException("CHMOD '{$confCompiler['chmod']}' failed on file {$filename}.");
 		}
 		catch (Exception $e)
 		{

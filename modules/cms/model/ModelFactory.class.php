@@ -12,15 +12,11 @@ class ModelFactory
     public static function create($type, $id) {
 
         // 'aBc' => 'Abc'
-        $className = ucfirst(strtolower($type));
+        $className = '\\cms\\model\\'.ucfirst(strtolower($type));
 
-        $filename = __DIR__.'/model/'.$className.'.class.php';
-        if   ( is_file($filename))
-            require_once ($filename);
-        else
-            return null;
+        if   ( ! class_exists($className))
+        	return null;
 
-        $nsClassName = '\cms\model\\'.$className;
-        return new $nsClassName( $id );
+        return new $className( $id );
    }
 }

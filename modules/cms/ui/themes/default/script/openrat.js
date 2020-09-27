@@ -280,24 +280,25 @@ jQuery.fn.orTree = function ()
         // Klick-Funktion zum Öffnen des Zweiges.
         $(treeEl).children('.or-navtree-node-control').click( function ()
         {
-            var node = $(this).parent('.or-navtree-node');
+            let $node = $(this).parent('.or-navtree-node');
 
-            if ($(node).is('.or-navtree-node--is-open')) {
+            if ($node.is('.or-navtree-node--is-open')) {
                 // Pfad ist offen -> schließen
-                $(node).children('ul').slideUp('fast').remove();
+                $node.children('ul').slideUp('fast').remove();
 
                 // Am Knoten die Klasse wechseln.
-                $(node).removeClass('or-navtree-node--is-open').addClass('or-navtree-node--is-closed').find('.tree-icon').removeClass('image-icon--node-open').addClass('image-icon--node-closed');
+                $node.removeClass('or-navtree-node--is-open').addClass('or-navtree-node--is-closed').find('.tree-icon').removeClass('image-icon--node-open').addClass('image-icon--node-closed');
             }
             else {
                 // Pfad ist geschlossen -> öffnen.
                 $(treeEl).closest('div.view').addClass('loader');
 
-                var type = $(node).data('type');
-                var id = $(node).data('id');
-                var extraId = $(node).data('extra');
+                let $link   = $node.find('a');
+                //let type    = $link.data('extra-type');
+                let id      = $link.data('id');
+                let extraId = $link.data('extra');
 
-                var loadBranchUrl = './?action=tree&subaction=loadBranch&id=' + id + '&type=' + type + '&output=json';
+                let loadBranchUrl = './?action=tree&subaction=branch&id=' + id + '';
 
                 // Extra-Id ergänzen.
                 if (typeof extraId === 'string') {
@@ -315,33 +316,27 @@ jQuery.fn.orTree = function ()
                 }
 
                 // Die Inhalte des Zweiges laden.
-                $.getJSON(loadBranchUrl, function (json) {
+                $.get(loadBranchUrl).done( function (html) {
 
                     // Den neuen Unter-Zweig erzeugen.
-                    let ul = $('<ul class="or-navtree-list" />');
-                    $(treeEl).append(ul);
-                    let output = json['output'];
-                    $.each(output['branch'], function (idx, line) {
-                        //if (!line.action || line.action == 'folder' || settings.selectable.length == 0 || settings.selectable[0] == '' || jQuery.inArray(line.action, settings.selectable) != -1) {
-                            //var img = (line.url!==undefined?'tree_plus':'tree_none');
-                            let new_li = $('<li class="or-navtree-node or-navtree-node--is-closed or-draggable or-draggable--type-'+line.type+'" data-name="' + line.text + '"  data-id="' + line.internalId + '" data-type="' + line.type + '" data-extra="' + JSON.stringify(line.extraId).replace(/"/g, "\'") + '"><div class="tree or-navtree-node-control"><i class="tree-icon image-icon image-icon--node-closed"></i></div><div class="clickable"><a href="' + Openrat.Navigator.createShortUrl(line.action,line.internalId) + '" class="entry" data-extra="' + JSON.stringify(line.extraId).replace(/"/g, "'") + '" data-id="' + line.internalId + '" data-action="' + line.action + '" data-type="open" title="' + line.description + '"><i class="image-icon image-icon--action-' + line['icon'] + '"></i> ' + line.text + '</a></div></li>');
-                            $(ul).append(new_li);
+                    let $ul = $('<ul class="or-navtree-list" />');
+                    $(treeEl).append($ul);
 
-                            $(new_li).orTree(); // Alle Unter-Knoten erhalten auch Event-Listener zum Öffnen/Schließen.
+                    $ul.append( html );
+                    $ul.find('li').orTree(); // All subnodes are getting event listener for open/close
 
-                            // Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
-                            $(new_li).find('.clickable').orLinkify();
-                            $(new_li).find('.clickable a').click( function(event) {
-                                event.preventDefault(); // Links werden per Javascript geöffnet. Beim Öffnen im neuen Tab hat das aber keine Bedeutung.
-                            } );
-                            registerTreeBranchEvents(ul);
-                        //}
-                    });
-                    $(ul).slideDown('fast'); // Einblenden
+					// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
+					$ul.find('.clickable').orLinkify();
+					/* macht linkify schon
+					$(new_li).find('.clickable a').click( function(event) {
+						event.preventDefault(); // Links werden per Javascript geöffnet. Beim Öffnen im neuen Tab hat das aber keine Bedeutung.
+					} );*/
+					registerTreeBranchEvents($ul);
+                    $ul.slideDown('fast'); // Einblenden
 
                 }).fail(function () {
                     // Ups... aber was können wir hier schon tun, außer hässliche Meldungen anzeigen.
-                    Openrat.Workbench.notify('','','ERROR','failed to load subtree',[],false);
+                    Openrat.Workbench.notify('','','ERROR','Failed to load subtree',[],false);
                 }).always(function () {
 
                     // Die Loader-Animation entfernen.
@@ -349,7 +344,7 @@ jQuery.fn.orTree = function ()
                 });
 
                 // Am Knoten die Klasse wechseln.
-                $(node).addClass('or-navtree-node--is-open').removeClass('or-navtree-node--is-closed').find('.tree-icon').addClass('image-icon--node-open').removeClass('image-icon--node-closed');
+                $node.addClass('or-navtree-node--is-open').removeClass('or-navtree-node--is-closed').find('.tree-icon').addClass('image-icon--node-open').removeClass('image-icon--node-closed');
             }
         });
 
@@ -2532,34 +2527,29 @@ $( function() {
 
     Openrat.Workbench.afterNewActionHandler.add( function() {
 
-        let url = './?action=tree&subaction=path&id=' + Openrat.Workbench.state.id + '&type=' + Openrat.Workbench.state.action + '&output=json';
+        let url = Openrat.View.createUrl('tree','path',Openrat.Workbench.state.id, {'type':Openrat.Workbench.state.action} );
 
         // Die Inhalte des Zweiges laden.
-        $.getJSON(url, function (json) {
+        let loadPromise = $.get(url);
 
-            $('nav .or-navtree-node').removeClass('or-navtree-node--selected');
+        loadPromise.done( function(data) {
 
-            let output = json['output'];
-            $.each(output.path, function (idx, path) {
+			$('.or-breadcrumb').empty().append( data ).find('.clickable').orLinkify();
 
-                $nav = $('nav .or-navtree-node[data-type='+path.type+'][data-id='+path.id+'].or-navtree-node--is-closed .or-navtree-node-control');
-                $nav.click();
+			// Open the path in the navigator tree
+			$('nav .or-navtree-node').removeClass('or-navtree-node--selected');
+
+			$('.or-breadcrumb a').each( function () {
+				let action = $(this).data('action');
+				let id     = $(this).data('id'    );
+                let $navControl = $('nav .or-navtree-node[data-type='+action+'][data-id='+id+'].or-navtree-node--is-closed .or-navtree-node-control');
+                $navControl.click();
             });
-            if   ( output.actual )
-                $('nav .or-navtree-node[data-type='+output.actual.type+'][data-id='+output.actual.id+']').addClass('or-navtree-node--selected');
-
-            let $breadcrumb = $('.or-breadcrumb').empty();
-            let items = [];
-            $.each(output.path.concat(output.actual), function (idx, path) {
-                items.push( '<li class="or-breadcrumb-item clickable" tabindex="0"><a href="'+Openrat.Navigator.createShortUrl(path.action,path.id)+'" data-type="open" data-action="'+path.action+'" data-id="'+path.id+'"><i class="image-icon image-icon--action-'+path.action+'" />'+path.name+'</a></li>');
-            });
-            $breadcrumb.append( items.join('<li><i class="tree-icon image-icon image-icon--node-closed"></i></li>') );
-            $('.or-breadcrumb .clickable').orLinkify();
 
         }).fail(function (e) {
             // Ups... aber was können wir hier schon tun, außer hässliche Meldungen anzeigen.
             console.warn(e);
-            console.warn('failed to load path from '+url);
+			console.warn('failed to load path from '+url);
         }).always(function () {
 
         });

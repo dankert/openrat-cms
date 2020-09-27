@@ -23,6 +23,7 @@ class ImageComponent extends Component
 	public $notice;
 	public $size;
 	public $title;
+	public $symbol;
 
 	public function createElement()
 	{
@@ -30,7 +31,12 @@ class ImageComponent extends Component
         $tagName = 'img';
         $file = '';
 
-		if	( $this->menu )
+		if	( $this->symbol )
+		{
+		    $tagName = 'i';
+			$styleClasses = ['image-icon','image-icon--'.$this->symbol];
+		}
+		elseif	( $this->menu )
 		{
 		    $tagName = 'i';
 			$styleClasses = ['image-icon','image-icon--menu-'.$this->menu];
@@ -81,7 +87,7 @@ class ImageComponent extends Component
 
 		if	( $this->class )
         {
-            $styleClasses .= ' '.$this->class;
+            $styleClasses[] = $this->class;
         }
 
 

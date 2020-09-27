@@ -1,18 +1,18 @@
 <?php defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
   <form name="<?php echo O::escapeHtml('') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-target="<?php echo O::escapeHtml('view') ?>" action="<?php echo O::escapeHtml('./') ?>" data-method="<?php echo O::escapeHtml('copy') ?>" data-action="<?php echo O::escapeHtml('object') ?>" data-id="<?php echo O::escapeHtml(''.@$_id.'') ?>" method="<?php echo O::escapeHtml('POST') ?>" enctype="<?php echo O::escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo O::escapeHtml('') ?>" data-autosave="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-form object') ?>"><?php echo O::escapeHtml('') ?>
-    <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('token') ?>" value="<?php echo O::escapeHtml(''.@$_token.'') ?>" /><?php echo O::escapeHtml('') ?>
-    <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('action') ?>" value="<?php echo O::escapeHtml('object') ?>" /><?php echo O::escapeHtml('') ?>
-    <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('subaction') ?>" value="<?php echo O::escapeHtml('copy') ?>" /><?php echo O::escapeHtml('') ?>
-    <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml(''.@$_id.'') ?>" /><?php echo O::escapeHtml('') ?>
     <div class="<?php echo O::escapeHtml('or-form-headline') ?>"><?php echo O::escapeHtml('') ?>
     </div>
     <div class="<?php echo O::escapeHtml('or-form-content') ?>"><?php echo O::escapeHtml('') ?>
+      <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('token') ?>" value="<?php echo O::escapeHtml(''.@$_token.'') ?>" /><?php echo O::escapeHtml('') ?>
+      <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('action') ?>" value="<?php echo O::escapeHtml('object') ?>" /><?php echo O::escapeHtml('') ?>
+      <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('subaction') ?>" value="<?php echo O::escapeHtml('copy') ?>" /><?php echo O::escapeHtml('') ?>
+      <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml(''.@$_id.'') ?>" /><?php echo O::escapeHtml('') ?>
       <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
         <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
           <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('sourceid') ?>" value="<?php echo O::escapeHtml(''.@$sourceId.'') ?>" /><?php echo O::escapeHtml('') ?>
         </div>
         <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-          <span><?php echo O::escapeHtml(''.'.@$source.'[' . name . '].'') ?>
+          <span><?php echo O::escapeHtml(''.@$source['name'].'') ?>
           </span>
         </div>
       </div>
@@ -33,7 +33,7 @@
           <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('targetid') ?>" value="<?php echo O::escapeHtml(''.@$targetId.'') ?>" /><?php echo O::escapeHtml('') ?>
         </div>
         <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-          <span><?php echo O::escapeHtml(''.'.@$target.'[' . name . '].'') ?>
+          <span><?php echo O::escapeHtml(''.@$target['name'].'') ?>
           </span>
         </div>
       </div>

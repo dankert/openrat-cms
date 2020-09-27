@@ -1,0 +1,21 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+
+	<list list="${path}" extract="true">
+		<part class="clickable,or-breadcrumb-item">
+			<link type="open" action="${action}" id="${id}">
+				<image action="${action}"></image>
+				<!--<text value="${name}" />--><!-- without names for saving place -->
+			</link>
+		</part>
+		<image symbol="node-closed" />
+	</list>
+
+	<part class="clickable,or-breadcrumb-item">
+		<link type="open" action="${actual.action}" id="${actual.id}">
+			<image action="${actual.action}"></image>
+			<text value="${actual.name}" />
+		</link>
+	</part>
+
+</output>

@@ -57,16 +57,14 @@ class TreeAction extends BaseAction
 	/**
 	 * Anzeigen des Baumes fuer asynchrone Anfragen.
 	 */
-	public function loadBranchView()
+	public function branchView()
 	{
 
         $type = $this->getRequestVar('type');
 
         $branch = $this->loadTreeBranch( $type );
 
-        $this->outputAsJSON( ['output'=>['branch'=>$branch]]);
-
-		$this->setTemplateVar( 'branch',$branch ); 
+		$this->setTemplateVar( 'branch',$branch );
 	}
 
 
@@ -128,7 +126,6 @@ class TreeAction extends BaseAction
      */
     public function pathView()
 	{
-
 		$type = $this->getRequestVar('type');
 		$id = $this->getRequestVar('id', OR_FILTER_ALPHANUM);
 
@@ -137,8 +134,6 @@ class TreeAction extends BaseAction
 
 		$name = $this->calculateName($type, $id);
 		$this->setTemplateVar('actual', $this->pathItem($type, $id, $name));
-
-		$this->outputAsJSON($this->templateVars);
 	}
 
 
@@ -295,6 +290,7 @@ class TreeAction extends BaseAction
         {
             $hasChildren = isset($b['children']) && !empty($b['children']);
 
+			$b['extraId']['type'] = $b['type'];
             echo '<li class="or-navtree-node or-navtree-node--'.($hasChildren?'is-open':'is-closed').' or-draggable" data-id="'.$b['internalId'].'" data-type="'.$b['type'].'" data-extra="'.str_replace('"',"'",$json->encode($b['extraId'])).'"><div class="or-navtree-node-control"><i class="tree-icon image-icon image-icon--node-'.($hasChildren?'open':'closed').'"></i></div><div class="clickable"><a href="./#/'.$b['type'].($b['internalId']?'/'.$b['internalId']:'').'" class="entry" data-extra="'.str_replace('"',"'",$json->encode($b['extraId'])).'" data-id="'.$b['internalId'].'" data-action="'.$b['action'].'" data-type="open" title="'.$b['description'].'"><i class="image-icon image-icon--action-'.$b['icon'].'" ></i> '.$b['text'].'</a></div>';
 
             if   ($hasChildren)
@@ -349,25 +345,18 @@ class TreeAction extends BaseAction
      */
     protected function calculateName($type, $id)
     {
-        $name = '';
         $o = ModelFactory::create($type, $id);
 
         if ($o) {
             $o->load();
             $name = $o->getName();
         }
+        else{
+        	//$name = \cms\base\Language::lang($type);
+			$name = '';
+		}
         return $name;
     }
 
 
-	/**
-	 * @param array $output
-	 */
-	protected function outputAsJSON( $output )
-	{
-		$json = new JSON();
-		header('Content-Type: application/json');
-		echo $json->encode($output);
-		exit;
-	}
 }

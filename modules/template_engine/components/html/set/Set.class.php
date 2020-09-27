@@ -19,7 +19,7 @@ class SetComponent extends Component
 		if ($this->value)
 		{
 			if ($this->key)
-				$set->inBlock = '$'.$set->varname($this->var).'= '.$set->value($this->value).'['.$set->value($this->key).'];';
+				$set->inBlock = '$'.$set->varname($this->var).'= '.$set->value($this->value).'['.'\''.$set->value($this->key).'\''.'];';
 			else 
 				$set->inBlock = '$'.$set->varname($this->var).'= '.$set->value($this->value).';';
 		}

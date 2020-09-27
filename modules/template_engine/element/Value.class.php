@@ -40,12 +40,12 @@ class Value
     	$res->addDefaultResolver( function($name) {
 			$parts = explode('.', $name);
 
-			return array_reduce($parts, function ($carry, $item) {
+			return '\'.'.array_reduce($parts, function ($carry, $item) {
 				if (!$carry)
-					return '\'.@$' . $item.'.\'';
+					return '@$' . $item;
 				else
-					return '\'.'.$carry . '[\' . '.$item.' . \'].\'';
-			}, '');
+					return $carry . '[\''.$item.'\']';
+			}, '').'.\'';
 		});
 
 		$res->addResolver( 'message',function($name) {

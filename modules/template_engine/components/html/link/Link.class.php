@@ -112,8 +112,11 @@ class LinkComponent extends Component
 
 		$json = new JSON();
         $arrayvalues = array();
-        foreach( $this->getExtraParamArray() as $varname => $varvalue )
+        foreach( $this->getExtraParamArray() as $varname => $varvalue ) {
+
+			$link->addAttribute('data-extra-'.$varname,$varvalue);
             $arrayvalues[ $varname ] = $varvalue;
+		}
 		$link->addAttribute('data-extra',str_replace('"',"'",str_replace(array("\t", "\r", "\n"),'',$json->encode($arrayvalues))));
 
 		switch ($this->type)

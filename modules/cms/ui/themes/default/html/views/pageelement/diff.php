@@ -35,11 +35,11 @@
           <tr class="<?php echo O::escapeHtml('diff') ?>"><?php echo O::escapeHtml('') ?>
             <?php $if1=(isset($left)); if($if1) {  ?>
               <td width="<?php echo O::escapeHtml('5%') ?>" class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
-                <tt><?php echo O::escapeHtml(''.'.@$left.'[' . line . '].'') ?>
+                <tt><?php echo O::escapeHtml(''.@$left['line'].'') ?>
                 </tt>
               </td>
-              <td width="<?php echo O::escapeHtml('45%') ?>" class="<?php echo O::escapeHtml(''.'.@$left.'[' . type . '].'') ?>"><?php echo O::escapeHtml('') ?>
-                <span><?php echo O::escapeHtml(''.'.@$left.'[' . text . '].'') ?>
+              <td width="<?php echo O::escapeHtml('45%') ?>" class="<?php echo O::escapeHtml(''.@$left['type'].'') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@$left['text'].'') ?>
                 </span>
               </td>
              <?php } ?>
@@ -51,11 +51,11 @@
              <?php } ?>
             <?php $if1=(isset($right)); if($if1) {  ?>
               <td width="<?php echo O::escapeHtml('5%') ?>" class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
-                <tt><?php echo O::escapeHtml(''.'.@$right.'[' . line . '].'') ?>
+                <tt><?php echo O::escapeHtml(''.@$right['line'].'') ?>
                 </tt>
               </td>
-              <td width="<?php echo O::escapeHtml('45%') ?>" class="<?php echo O::escapeHtml(''.'.@$right.'[' . type . '].'') ?>"><?php echo O::escapeHtml('') ?>
-                <span><?php echo O::escapeHtml(''.'.@$right.'[' . text . '].'') ?>
+              <td width="<?php echo O::escapeHtml('45%') ?>" class="<?php echo O::escapeHtml(''.@$right['type'].'') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@$right['text'].'') ?>
                 </span>
               </td>
              <?php } ?>

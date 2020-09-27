@@ -10,10 +10,11 @@ class PartComponent extends Component
 {
 	public $class = '';
 	public $id;
+	public $tag = 'div';
 	
 	public function createElement()
 	{
-		$element = (new CMSElement('div'));
+		$element = (new CMSElement($this->tag));
 
 		foreach( explode(',',$this->class ) as $styleClass )
 			$element->addStyleClass( $styleClass );

@@ -85,7 +85,7 @@
                               </td>
                               <?php foreach((array)$show as $list_key=>$list_value) {  ?>
                                 <td><?php echo O::escapeHtml('') ?>
-                                  <?php  { $$list_value= $bits[$list_value]; ?>
+                                  <?php  { $$list_value= $bits['$list_value']; ?>
                                    <?php } ?>
                                   <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml(''.@$list_value.'') ?>" disabled="<?php echo O::escapeHtml('disabled') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$$list_value){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
                                 </td>

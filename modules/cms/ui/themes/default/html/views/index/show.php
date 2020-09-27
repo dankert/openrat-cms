@@ -1,6 +1,6 @@
 <?php
  defined('APP_STARTED') || die('Forbidden');
- use cms\base\Startup;use util\Html;extract($output);
+ use cms\base\Startup;use util\Html;
  if (!headers_sent()) header('Content-Type: text/html; charset=UTF-8')
 ?><!DOCTYPE html>
 <html class="theme-<?php echo strtolower($style) ?> nojs" lang="<?php echo \cms\base\Configuration::Conf()->subset('language')->get('language_code') ?>">

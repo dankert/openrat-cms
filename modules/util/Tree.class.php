@@ -506,9 +506,9 @@ class Tree
 	public function folder($id)
 	{
 		$f = new Folder($id);
-		$t = time();
-		$f->languageid = $_REQUEST[REQ_PARAM_LANGUAGE_ID];
-		$f->modelid = $_REQUEST[REQ_PARAM_MODEL_ID];
+		$f->load();
+		$f->languageid = $f->getProject()->getDefaultLanguageId();
+		$f->modelid    = $f->getProject()->getDefaultModelId();
 
 		/** @var BaseObject $o */
 		foreach ($f->getObjects() as $o) {
@@ -551,7 +551,7 @@ class Tree
 			$treeElement->icon = 'template';
 			$treeElement->action = 'template';
 			$treeElement->internalId = $id;
-			$treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $_REQUEST[REQ_PARAM_LANGUAGE_ID], REQ_PARAM_MODEL_ID => $_REQUEST[REQ_PARAM_MODEL_ID]);
+			$treeElement->extraId = array();
 			$treeElement->type = 'template';
 			$treeElement->description = $t->name . ' (' . \cms\base\Language::lang(Messages::TEMPLATE) . ' ' . $id . ')';
 			$this->addTreeElement($treeElement);
@@ -578,7 +578,7 @@ class Tree
 			$treeElement = new TreeElement();
 			$treeElement->id = $elementid;
 			$treeElement->internalId = $elementid;
-			$treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $_REQUEST[REQ_PARAM_LANGUAGE_ID], REQ_PARAM_MODEL_ID => $_REQUEST[REQ_PARAM_MODEL_ID]);
+			$treeElement->extraId = array();
 			$treeElement->text = $e->label;
 			$treeElement->icon = 'el_' . $e->type;
 			$treeElement->action = 'element';
