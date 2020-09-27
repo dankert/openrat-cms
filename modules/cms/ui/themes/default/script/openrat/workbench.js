@@ -193,7 +193,7 @@ Openrat.Workbench = new function()
 
 			// Den neuen Unter-Zweig erzeugen.
 			let $ul = $('<ul class="or-navtree-list" />');
-			$ul.appendTo('.or-navtree').append( html );
+			$ul.appendTo( $('.or-navtree').empty() ).append( html );
 
 			$ul.find('li').orTree(); // All subnodes are getting event listener for open/close
 
