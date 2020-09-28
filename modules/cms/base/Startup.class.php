@@ -164,7 +164,7 @@ class Startup {
 	 * -
 	 * @return Unix-Timestamp der aktuellen Zeit
 	 */
-	function now()
+	public static function now()
 	{
 		return time();
 	}
