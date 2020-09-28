@@ -366,7 +366,6 @@ class PageAction extends ObjectAction
             $languagesVar['alias'       ] = $alias->full_filename();
 
             $languagesVars[] = $languagesVar;
-
         }
 
         $this->setTemplateVar('languages',$languagesVars );
@@ -384,6 +383,7 @@ class PageAction extends ObjectAction
 
 		$this->setTemplateVar('tmp_filename' ,$generator->getPublicFilename() );
 
+		$this->setTemplateVar('total_settings' ,$this->page->getTotalSettings() );
 	}
 
 
