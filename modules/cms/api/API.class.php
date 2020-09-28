@@ -150,7 +150,7 @@ class API
     {
         $types = Http::getAccept();
 
-        $reqOutput = @$_REQUEST['output'];
+        $reqOutput = strtolower(@$_REQUEST['output']);
 
         if (in_array('application/php-array', $types) || $reqOutput == 'php-array')
             return self::OUTPUT_PHPARRAY;
