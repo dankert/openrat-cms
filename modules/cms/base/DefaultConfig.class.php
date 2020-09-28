@@ -810,7 +810,7 @@ class DefaultConfig {
 				],
 			'search' =>
 				[ 
-					'' => '0',
+					'minlength' => 3,
 					'quicksearch' =>
 						[ 
 							'flag' =>

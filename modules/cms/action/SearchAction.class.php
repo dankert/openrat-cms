@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use cms\base\Configuration as C;
 use cms\model\Acl;
 use cms\model\Project;
 use cms\model\User;
@@ -13,7 +14,6 @@ use cms\model\File;
 
 
 use util\Session;
-use util\Html;
 
 
 
@@ -35,11 +35,6 @@ use util\Html;
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
-define('SEARCH_FLAG_ID'         , 1);
-define('SEARCH_FLAG_NAME'       , 2);
-define('SEARCH_FLAG_FILENAME'   , 4);
-define('SEARCH_FLAG_DESCRIPTION', 8);
-define('SEARCH_FLAG_VALUE'      ,16);
 
 
 /**
@@ -51,9 +46,14 @@ define('SEARCH_FLAG_VALUE'      ,16);
  */
 class SearchAction extends BaseAction
 {
+	const FLAG_ID          =  1;
+	const FLAG_NAME        =  2;
+	const FLAG_FILENAME    =  4;
+	const FLAG_DESCRIPTION =  8;
+	const FLAG_VALUE       = 16;
+
 	public $security = Action::SECURITY_USER;
 
-	
 	/**
 	 * leerer Kontruktor
 	 */
@@ -80,11 +80,11 @@ class SearchAction extends BaseAction
 		$suchText    = $this->getRequestVar('text');
 		$searchFlags = 0;
 		
-		if	( $this->hasRequestVar('id'         ) ) $searchFlags |= SEARCH_FLAG_ID;
-		if	( $this->hasRequestVar('filename'   ) ) $searchFlags |= SEARCH_FLAG_FILENAME;
-		if	( $this->hasRequestVar('name'       ) ) $searchFlags |= SEARCH_FLAG_NAME;
-		if	( $this->hasRequestVar('description') ) $searchFlags |= SEARCH_FLAG_DESCRIPTION;
-		if	( $this->hasRequestVar('content'    ) ) $searchFlags |= SEARCH_FLAG_VALUE;
+		if	( $this->hasRequestVar('id'         ) ) $searchFlags |= self::FLAG_ID;
+		if	( $this->hasRequestVar('filename'   ) ) $searchFlags |= self::FLAG_FILENAME;
+		if	( $this->hasRequestVar('name'       ) ) $searchFlags |= self::FLAG_NAME;
+		if	( $this->hasRequestVar('description') ) $searchFlags |= self::FLAG_DESCRIPTION;
+		if	( $this->hasRequestVar('content'    ) ) $searchFlags |= self::FLAG_VALUE;
 			
 		$this->performSearch($suchText, $searchFlags);
 
@@ -108,26 +108,34 @@ class SearchAction extends BaseAction
 	 */
 	public function quicksearchView()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$searchConfig = C::subset('search')->subset('quicksearch');
 
 		$text = $this->getRequestVar('search');
 		
-		$flag        = $conf['search']['quicksearch']['flag'];
+		$flag = $searchConfig->subset('flag');
+
 		$searchFlags = 0;
-		if	( $flag['id'         ] ) $searchFlags |= SEARCH_FLAG_ID; 
-		if	( $flag['name'       ] ) $searchFlags |= SEARCH_FLAG_NAME; 
-		if	( $flag['filename'   ] ) $searchFlags |= SEARCH_FLAG_FILENAME; 
-		if	( $flag['description'] ) $searchFlags |= SEARCH_FLAG_DESCRIPTION; 
-		if	( $flag['content'    ] ) $searchFlags |= SEARCH_FLAG_VALUE;
-		 
+
+		// Always search for the id without a max length
+		if	( $flag->is('id'         ) ) $searchFlags |= self::FLAG_ID;
+
+		if   ( strlen($text) >= $searchConfig->get('maxlength',3 ) ) {
+
+			if	( $flag->is('name'       ) ) $searchFlags |= self::FLAG_NAME;
+			if	( $flag->is('filename'   ) ) $searchFlags |= self::FLAG_FILENAME;
+			if	( $flag->is('description') ) $searchFlags |= self::FLAG_DESCRIPTION;
+			if	( $flag->is('content'    ) ) $searchFlags |= self::FLAG_VALUE;
+		}
+
 		$this->performSearch($text, $searchFlags);
 	}
-	
-	
-	
+
+
 	/**
-	 * Durchf?hren der Suche
-	 * und Anzeige der Ergebnisse
+	 * Query the search
+	 *
+	 * @param $searchText string search query text
+	 * @param $searchFlag int field selector
 	 */
 	private function performSearch($searchText, $searchFlag)
 	{
@@ -137,7 +145,7 @@ class SearchAction extends BaseAction
         $resultList = array();
 
 
-        if	( $searchFlag & SEARCH_FLAG_ID )
+        if	( $searchFlag & self::FLAG_ID )
         {
             if   ( BaseObject::available( intval($searchText) ) )
                 $listObjectIds[] = intval( $searchText );
@@ -163,7 +171,7 @@ class SearchAction extends BaseAction
             }
         }
 
-        if	( $searchFlag & SEARCH_FLAG_NAME )
+        if	( $searchFlag & self::FLAG_NAME )
         {
             if  ( $this->userIsAdmin() ) {
 
@@ -182,12 +190,12 @@ class SearchAction extends BaseAction
             $listObjectIds += BaseObject::getObjectIdsByName( $searchText );
         }
 
-        if	( $searchFlag & SEARCH_FLAG_DESCRIPTION )
+        if	( $searchFlag & self::FLAG_DESCRIPTION )
         {
             $listObjectIds += BaseObject::getObjectIdsByDescription( $searchText );
         }
 
-        if	( $searchFlag & SEARCH_FLAG_FILENAME )
+        if	( $searchFlag & self::FLAG_FILENAME )
         {
             $listObjectIds += BaseObject::getObjectIdsByFilename( $searchText );
 
@@ -195,7 +203,7 @@ class SearchAction extends BaseAction
         }
 
         // Inhalte durchsuchen
-        if	( $searchFlag & SEARCH_FLAG_VALUE )
+        if	( $searchFlag & self::FLAG_VALUE )
         {
             $e = new Value();
             $listObjectIds += $e->getObjectIdsByValue( $searchText );

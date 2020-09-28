@@ -15,7 +15,7 @@ jQuery.fn.orSearch = function( options )
 		let searchArgument = $(this).val();
 		let dropdownEl     = $( settings.dropdown );
 
-		if	( searchArgument.length > 3 )
+		if	( searchArgument.length )
 		{
 			$(dropdownEl).empty(); // Leeren.
 
