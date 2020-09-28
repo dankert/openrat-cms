@@ -2,6 +2,7 @@
 
 namespace util\cache;
 
+use cms\base\Configuration as C;
 use cms\base\DB;
 use cms\base\Startup;
 use util\FileUtils;
@@ -13,12 +14,16 @@ use util\FileUtils;
 class FileCache implements Cache
 {
 	const CACHE_FILENAME_PREFIX = 'openrat-cache';
+
 	/**
+	 * A loader which gets the value
      * @var Callable
      */
     private $loader;
 
     /**
+	 * Filename of the cache.
+	 *
      * @var string
      */
     private $filename;
@@ -26,13 +31,13 @@ class FileCache implements Cache
     /**
      * Creates a new Cache entry.
      *
-     * @param $key array Cache-Key
+     * @param $key array|string Cache-Key
      * @param $loader Callable
      */
     public function __construct( $key, $loader, $lastModified = 0 )
     {
         if   ( !is_array($key))
-        	$key = [ $key ];
+        	$key = [ (string) $key ];
         $key = array_merge([ DB::get()->id ], $key);
 
         $filename  = FileUtils::getTempDir() . '/'. self::CACHE_FILENAME_PREFIX;
@@ -44,16 +49,20 @@ class FileCache implements Cache
         $this->filename = $filename;
         $this->loader   = $loader;
 
-        if   ( \cms\base\Configuration::config()->subset('publishing')->is('cache_enabled',false) )
+        if   ( C::config()->subset('publishing')->is('cache_enabled',false) )
             $this->invalidateIfOlderThan( $lastModified );
         else
             $this->invalidateIfOlderThan( Startup::getStartTime() ); // Invalidate all before this request.
     }
 
 
-    public function invalidateIfOlderThan($lastModified) {
+	/**
+	 * Invalidates the cache entry, if it is older than a specific date.
+	 * @param $invalidateIfOlderDate
+	 */
+	public function invalidateIfOlderThan($invalidateIfOlderDate) {
 
-        if   ( is_file($this->filename) && filemtime($this->filename) < $lastModified )
+        if   ( is_file($this->filename) && filemtime($this->filename) < $invalidateIfOlderDate )
             $this->invalidate();
     }
 
@@ -83,7 +92,9 @@ class FileCache implements Cache
 
 
     /**
-     * Get the content.
+     * Makes sure that the value is loaded.
+	 *
+	 * @return FileCache
      */
     public function load() {
 
@@ -97,6 +108,7 @@ class FileCache implements Cache
 
 	/**
 	 * Refreshes the cache.
+	 *
 	 * @return $this
 	 */
     public function refresh() {
@@ -107,6 +119,12 @@ class FileCache implements Cache
 	}
 
 
+	/**
+	 * Gets the filename of the cache value.
+	 * Warning: The file may not exist. If you want to make sure that the file exists, you have to call #load() first.
+	 *
+	 * @return string filename of cache content
+	 */
     public function getFilename() {
         return $this->filename;
     }

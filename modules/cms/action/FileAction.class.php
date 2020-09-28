@@ -164,10 +164,10 @@ class FileAction extends ObjectAction
 	 */
 	function showView()
 	{
-		$producer = new Producer();
-		$producer->generate( $this->file,Producer::SCHEME_PREVIEW );
+		$fileContext = new FileContext($this->file->objectid, Producer::SCHEME_PREVIEW );
 
-	    //$this->file->publisher = new PublishPreview();
+		$generator = new FileGenerator( $fileContext);
+
 		$this->lastModified( $this->file->lastchangeDate );
 
 		if	( $this->file->extension == 'gz' )
@@ -238,12 +238,12 @@ class FileAction extends ObjectAction
 
             // PHP-Code ausfuehren
             ob_start();
-            require( $producer->getCache()->getFilename() );
+            require( $generator->getCache()->load()->getFilename() );
             $this->setTemplateVar('value',$encodingFunction(ob_get_contents()) );
             ob_end_clean();
         }
         else
-            $this->setTemplateVar('value',$encodingFunction( $producer->getValue() ) );
+            $this->setTemplateVar('value',$encodingFunction( $generator->getCache()->get() ) );
         // Maybe we want some gzip-encoding?
 	}
 

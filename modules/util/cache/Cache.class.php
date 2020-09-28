@@ -8,7 +8,7 @@ namespace util\cache;
  */
 interface Cache
 {
-    public function invalidateIfOlderThan($lastModified);
+    public function invalidateIfOlderThan($invalidateIfOlderDate);
 
     /**
      * Invalidates a cache entry.

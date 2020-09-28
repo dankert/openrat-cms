@@ -13,6 +13,9 @@ abstract class BaseGenerator implements Generator
 	 */
 	protected $context;
 
+	/**
+	 * @return FileCache
+	 */
 	public function getCache() {
 
 		return new FileCache( $this->context->getCacheKey(),function() {
