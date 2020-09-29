@@ -657,7 +657,9 @@ class ObjectAction extends BaseAction
 		$this->setTemplateVar('size',number_format($this->baseObject->getSize()/1000,0,',','.').' kB' );
 
 		$pad = str_repeat("\xC2\xA0",5); // Hard spaces
-		$this->setTemplateVar('settings', ArrayUtils::dryFlattenArray( $this->baseObject->getTotalSettings(),$pad ) );
+		$totalSettings = $this->baseObject->getTotalSettings();
+		$this->setTemplateVar('total_settings', $totalSettings,$pad );
+		$this->setTemplateVar('settings', ArrayUtils::dryFlattenArray( $totalSettings,$pad ) );
 	}
 
 }

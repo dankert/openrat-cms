@@ -340,11 +340,8 @@ class PageAction extends ObjectAction
 	{
 		$this->setTemplateVar('id',$this->page->objectid);
 
-		//$this->page->publisher = new PublishPublic( $this->page->projectid );
+		parent::infoView();
 		$this->page->load();
-
-		if	( $this->page->filename == $this->page->objectid )
-			$this->page->filename = '';
 
 		$this->setTemplateVars( $this->page->getProperties() );
 
@@ -382,8 +379,6 @@ class PageAction extends ObjectAction
 		$generator = new PageGenerator( $this->createPageContext( Producer::SCHEME_PUBLIC) );
 
 		$this->setTemplateVar('tmp_filename' ,$generator->getPublicFilename() );
-
-		$this->setTemplateVar('total_settings' ,$this->page->getTotalSettings() );
 	}
 
 
