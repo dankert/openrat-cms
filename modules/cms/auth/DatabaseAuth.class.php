@@ -36,7 +36,7 @@ class DatabaseAuth implements Auth
 
 		// noch nicht implementiert: $authdb->close();
 
-		return $ok ? OR_AUTH_STATUS_SUCCESS : OR_AUTH_STATUS_FAILED;
+		return $ok ? Auth::STATUS_SUCCESS : Auth::STATUS_FAILED;
 	}
 
 	public function username()

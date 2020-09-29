@@ -707,11 +707,11 @@ class LoginAction extends BaseAction
 			$auth        = new $moduleClass;
 			Logger::info('Trying to login with module '.$moduleClass);
 			$loginStatus = $auth->login( $loginName,$loginPassword, $token );
-			$loginOk     = $loginStatus === true || $loginStatus === OR_AUTH_STATUS_SUCCESS;
+			$loginOk     = $loginStatus === true || $loginStatus === Auth::STATUS_SUCCESS;
 			
-			if   ( $loginStatus === OR_AUTH_STATUS_PW_EXPIRED )
+			if   ( $loginStatus === Auth::STATUS_PW_EXPIRED )
 				$mustChangePassword = true;
-			if   ( $loginStatus === OR_AUTH_STATUS_TOKEN_NEEDED )
+			if   ( $loginStatus === Auth::STATUS_TOKEN_NEEDED )
 				$tokenFailed = true;
 				
 			if	( $loginOk )

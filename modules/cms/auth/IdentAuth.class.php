@@ -50,7 +50,7 @@ class IdentAuth implements Auth
 	 */
 	public function login($user, $password, $token)
 	{
-		return OR_AUTH_STATUS_FAILED;
+		return Auth::STATUS_FAILED;
 	}
 }
 

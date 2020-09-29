@@ -5,21 +5,22 @@ namespace cms\auth;
 use Benutzername;
 use Kennwort;
 
-DEFINE('OR_AUTH_STATUS_SUCCESS', 1);
-DEFINE('OR_AUTH_STATUS_FAILED', 2);
-DEFINE('OR_AUTH_STATUS_PW_EXPIRED', 3);
-DEFINE('OR_AUTH_STATUS_TOKEN_NEEDED', 4);
-
 interface Auth
 {
+
+	const STATUS_SUCCESS      = 1;
+	const STATUS_FAILED       = 2;
+	const STATUS_PW_EXPIRED   = 3;
+	const STATUS_TOKEN_NEEDED = 4;
+
 	const NS = __NAMESPACE__;
 
 	/**
 	 * Prüft den eingegebenen Benutzernamen und das Kennwort
 	 * auf Richtigkeit.
 	 *
-	 * @param Benutzername
-	 * @param Kennwort
+	 * @param string Benutzername
+	 * @param string Kennwort
 	 */
 	function login($username, $password, $token);
 
