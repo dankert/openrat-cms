@@ -4,6 +4,7 @@ namespace cms\ui\action;
 
 use cms\action\Action;
 use cms\action\BaseAction;
+use cms\action\RequestParams;
 use cms\model\BaseObject;
 use cms\model\Element;
 use cms\model\Folder;
@@ -103,7 +104,7 @@ class TreeAction extends BaseAction
     public function pathView()
 	{
 		$type = $this->getRequestVar('type');
-		$id = $this->getRequestVar('id', OR_FILTER_ALPHANUM);
+		$id = $this->getRequestVar('id', RequestParams::FILTER_ALPHANUM);
 
 		$result = $this->calculatePath($type, $id);
 		$this->setTemplateVar('path', $result);

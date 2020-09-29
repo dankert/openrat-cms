@@ -165,7 +165,7 @@ class SearchAction extends BaseAction
                         'lastchange_date' => 0 );
                     $resultList[] = $userResult;
                 }
-                catch( \ObjectNotFoundException $e) {
+                catch( \util\exception\ObjectNotFoundException $e) {
                     ; // userid is unknown
                 }
             }

@@ -54,7 +54,7 @@ class UserAction extends BaseAction
 
     /**
      * UserAction constructor.
-     * @throws \ObjectNotFoundException
+     * @throws \util\exception\ObjectNotFoundException
      */
     function __construct()
 	{
@@ -340,7 +340,7 @@ class UserAction extends BaseAction
 		
 		$conf = \cms\base\Configuration::rawConfig();
 		if	($conf['security']['authorize']['type']=='ldap')
-			$this->addNotice('user',$this->user->name,'GROUPS_MAY_CONFLICT_WITH_LDAP',OR_NOTICE_WARN);
+			$this->addNotice('user',$this->user->name,'GROUPS_MAY_CONFLICT_WITH_LDAP',Action::NOTICE_WARN);
 	}
 
 
@@ -387,7 +387,7 @@ class UserAction extends BaseAction
 
     /**
      * Anzeigen der Benutzerrechte
-     * @throws \ObjectNotFoundException
+     * @throws \util\exception\ObjectNotFoundException
      */
 	function rightsView()
 	{
@@ -460,13 +460,13 @@ class UserAction extends BaseAction
 		$this->setTemplateVar('show',Acl::getAvailableRights() );
 		
 		if	( $this->user->isAdmin )
-			$this->addNotice('user',$this->user->name,'ADMIN_NEEDS_NO_RIGHTS',OR_NOTICE_WARN);
+			$this->addNotice('user',$this->user->name,'ADMIN_NEEDS_NO_RIGHTS',Action::NOTICE_WARN);
 	}
 	
 	
     /**
      * Wechselt zu einem ausgewählten User.
-     * @throws \ObjectNotFoundException
+     * @throws \util\exception\ObjectNotFoundException
      */
 	public function switchPost()
 	{

@@ -38,9 +38,6 @@ use util\Mail;
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
-if	( !defined('PROJECTID_ADMIN') )
-	define('PROJECTID_ADMIN',-1);
-
 /**
  * Action-Klasse fuer die Start-Action
  * @author $Author$
@@ -89,9 +86,9 @@ class StartAction extends BaseAction
 
 	function setDefaultDb()
 	{
-		if	( $this->hasRequestVar(REQ_PARAM_DATABASE_ID) )
+		if	( $this->hasRequestVar(RequestParams::PARAM_DATABASE_ID) )
 		{
-			$dbid = $this->getRequestVar(REQ_PARAM_DATABASE_ID);
+			$dbid = $this->getRequestVar(RequestParams::PARAM_DATABASE_ID);
 		}
 		else
 		{
@@ -122,7 +119,7 @@ class StartAction extends BaseAction
 		
 		if	( !$db->available )
 		{
-			$this->addNotice('database',$db->conf['description'],'DATABASE_CONNECTION_ERROR',OR_NOTICE_ERROR,array(),array('Database Error: '.$db->error));
+			$this->addNotice('database',$db->conf['description'],'DATABASE_CONNECTION_ERROR',Action::NOTICE_ERROR,array(),array('Database Error: '.$db->error));
 			$this->callSubAction('showlogin');
 			return false;
 		}
@@ -319,7 +316,7 @@ class StartAction extends BaseAction
 
 		
 		if	( empty($dbids) )
-			$this->addNotice('','','no_database_configuration',OR_NOTICE_WARN);
+			$this->addNotice('','','no_database_configuration',Action::NOTICE_WARN);
 		
 		if	( !isset($this->templateVars['login_name']) && isset($_COOKIE['or_username']) )
 			$this->setTemplateVar('login_name',$_COOKIE['or_username']);
@@ -358,10 +355,10 @@ class StartAction extends BaseAction
 			$this->setTemplateVar('force_username',$username);
 		}
 
-		$this->setTemplateVar('objectid'  ,$this->getRequestVar('objectid'  ,OR_FILTER_NUMBER) );
-		$this->setTemplateVar('projectid' ,$this->getRequestVar('projectid' ,OR_FILTER_NUMBER) );
-		$this->setTemplateVar('modelid'   ,$this->getRequestVar('modelid'   ,OR_FILTER_NUMBER) );
-		$this->setTemplateVar('languageid',$this->getRequestVar('languageid',OR_FILTER_NUMBER) );
+		$this->setTemplateVar('objectid'  ,$this->getRequestVar('objectid'  ,RequestParams::FILTER_NUMBER) );
+		$this->setTemplateVar('projectid' ,$this->getRequestVar('projectid' ,RequestParams::FILTER_NUMBER) );
+		$this->setTemplateVar('modelid'   ,$this->getRequestVar('modelid'   ,RequestParams::FILTER_NUMBER) );
+		$this->setTemplateVar('languageid',$this->getRequestVar('languageid',RequestParams::FILTER_NUMBER) );
 				
 		$this->setTemplateVar('register'     ,$conf['login'   ]['register' ]);
 		$this->setTemplateVar('send_password',$conf['login'   ]['send_password']);
@@ -425,10 +422,10 @@ class StartAction extends BaseAction
 			// Kein Projekt vorhanden. Eine Hinweismeldung ausgeben.
 			if	( $this->userIsAdmin() )
 				// Administratoren bekommen bescheid, dass sie ein Projekt anlegen sollen
-				$this->addNotice('','','ADMIN_NO_PROJECTS_AVAILABLE',OR_NOTICE_WARN);
+				$this->addNotice('','','ADMIN_NO_PROJECTS_AVAILABLE',Action::NOTICE_WARN);
 			else
 				// Normale Benutzer erhalten eine Meldung, dass kein Projekt zur Verf�gung steht
-				$this->addNotice('','','NO_PROJECTS_AVAILABLE',OR_NOTICE_WARN);
+				$this->addNotice('','','NO_PROJECTS_AVAILABLE',Action::NOTICE_WARN);
 		}
 		
 		//$this->metaValues();
@@ -496,7 +493,7 @@ class StartAction extends BaseAction
 
 		if	( !$openId->checkAuthentication() )
 		{
-			$this->addNotice('user',$openId->user,'LOGIN_OPENID_FAILED',OR_NOTICE_ERROR,array('name'=>$openId->user),array($openId->error) );
+			$this->addNotice('user',$openId->user,'LOGIN_OPENID_FAILED',Action::NOTICE_ERROR,array('name'=>$openId->user),array($openId->error) );
 			$this->addValidationError('openid_url','');
 			$this->callSubAction('showlogin');
 			return;
@@ -569,10 +566,10 @@ class StartAction extends BaseAction
 			throw new \util\exception\SecurityException('login disabled');
 
 		$openid_user   = $this->getRequestVar('openid_url'    );
-		$loginName     = $this->getRequestVar('login_name'    ,OR_FILTER_ALPHANUM);
-		$loginPassword = $this->getRequestVar('login_password',OR_FILTER_ALPHANUM);
-		$newPassword1  = $this->getRequestVar('password1'     ,OR_FILTER_ALPHANUM);
-		$newPassword2  = $this->getRequestVar('password2'     ,OR_FILTER_ALPHANUM);
+		$loginName     = $this->getRequestVar('login_name'    ,RequestParams::FILTER_ALPHANUM);
+		$loginPassword = $this->getRequestVar('login_password',RequestParams::FILTER_ALPHANUM);
+		$newPassword1  = $this->getRequestVar('password1'     ,RequestParams::FILTER_ALPHANUM);
+		$newPassword2  = $this->getRequestVar('password2'     ,RequestParams::FILTER_ALPHANUM);
 		
 		// Cookie setzen
         $this->setCookie('or_username',$loginName );
@@ -638,7 +635,7 @@ class StartAction extends BaseAction
 				$this->recreateSession();
 			
 			$user = Session::getUser();
-			$this->addNotice('user',$user->name,'LOGIN_OK',OR_NOTICE_OK,array('name'=>$user->fullname));
+			$this->addNotice('user',$user->name,'LOGIN_OK',Action::NOTICE_OK,array('name'=>$user->fullname));
 		}
 		
 		// Benutzer ist angemeldet
@@ -812,7 +809,7 @@ class StartAction extends BaseAction
 			return;
 		}
 		
-		$this->evaluateRequestVars( array(REQ_PARAM_LANGUAGE_ID=>$this->getRequestId()) );
+		$this->evaluateRequestVars( array(RequestParams::PARAM_LANGUAGE_ID=>$this->getRequestId()) );
 	}
 
 
@@ -825,7 +822,7 @@ class StartAction extends BaseAction
 			return;
 		}
 		
-		$this->evaluateRequestVars( array(REQ_PARAM_MODEL_ID=>$this->getRequestId()) );
+		$this->evaluateRequestVars( array(RequestParams::PARAM_MODEL_ID=>$this->getRequestId()) );
 	}
 	
 
@@ -873,7 +870,7 @@ class StartAction extends BaseAction
 				else
 				{
 					Logger::warn('Guest login failed, user not found: '.$username);
-					$this->addNotice('user',$username,'LOGIN_FAILED',OR_NOTICE_WARN,array('name'=>$username) );
+					$this->addNotice('user',$username,'LOGIN_FAILED',Action::NOTICE_WARN,array('name'=>$username) );
 					$user = null;
 				}
 			}
@@ -967,11 +964,11 @@ class StartAction extends BaseAction
 		
 		if	( $mail->send() )
 		{
-			$this->addNotice('','','mail_sent',OR_NOTICE_OK);
+			$this->addNotice('','','mail_sent',Action::NOTICE_OK);
 		}
 		else
 		{
-			$this->addNotice('','','mail_not_sent',OR_NOTICE_ERROR,array(),$mail->error);
+			$this->addNotice('','','mail_not_sent',Action::NOTICE_ERROR,array(),$mail->error);
 			$this->callSubAction('register');
 			return;
 		}
@@ -1160,9 +1157,9 @@ class StartAction extends BaseAction
 			$eMail->setVar('name',$user->getName());
 			$eMail->setVar('code',$code);
 			if	( $eMail->send() )
-				$this->addNotice('user',$user->getName(),'mail_sent',OR_NOTICE_OK);
+				$this->addNotice('user',$user->getName(),'mail_sent',Action::NOTICE_OK);
 			else
-				$this->addNotice('user',$user->getName(),'mail_not_sent',OR_NOTICE_ERROR,array(),$eMail->error);
+				$this->addNotice('user',$user->getName(),'mail_not_sent',Action::NOTICE_ERROR,array(),$eMail->error);
 			
 		}
 		else
@@ -1209,7 +1206,7 @@ class StartAction extends BaseAction
 		if	( !$user->isValid() )
 		{
 			// Benutzer konnte nicht geladen werden.
-			$this->addNotice('user',$username,'error',OR_NOTICE_ERROR);
+			$this->addNotice('user',$username,'error',Action::NOTICE_ERROR);
 			return;
 		}
 		
@@ -1222,13 +1219,13 @@ class StartAction extends BaseAction
 		if	( $eMail->send() )
 		{
 			$user->setPassword( $newPw, false ); // Kennwort muss beim n�. Login ge�ndert werden.
-			$this->addNotice('user',$username,'mail_sent',OR_NOTICE_OK);
+			$this->addNotice('user',$username,'mail_sent',Action::NOTICE_OK);
 		}
 		else
 		{
 			// Sollte eigentlich nicht vorkommen, da der Benutzer ja auch schon den
 			// Code per E-Mail erhalten hat.
-			$this->addNotice('user',$username,'error',OR_NOTICE_ERROR,array(),$eMail->error);
+			$this->addNotice('user',$username,'error',Action::NOTICE_ERROR,array(),$eMail->error);
 		}
 	}
 	

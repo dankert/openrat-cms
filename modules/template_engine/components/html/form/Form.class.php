@@ -132,7 +132,7 @@ class FormComponent extends Component
 			$formContent->addChild(
 				(new CMSElement('input'))
 					->addAttribute('type', 'hidden')
-					->addAttribute('name', REQ_PARAM_LANGUAGE_ID)
+					->addAttribute('name', RequestParams::PARAM_LANGUAGE_ID)
 					->addAttribute('value', $this->languageid)
 			);
 
@@ -140,33 +140,33 @@ class FormComponent extends Component
 			$formContent->addChild(
 				(new CMSElement('input'))
 					->addAttribute('type', 'hidden')
-					->addAttribute('name', REQ_PARAM_MODEL_ID)
+					->addAttribute('name', RequestParams::PARAM_MODEL_ID)
 					->addAttribute('value', $this->modelid)
 			);
 
 		$formContent->addChild(
 			(new CMSElement('input'))
 				->addAttribute('type', 'hidden')
-				->addAttribute('name', REQ_PARAM_TOKEN)
+				->addAttribute('name', RequestParams::PARAM_TOKEN)
 				->addAttribute('value', $this->token)
 		);
 
 		$formContent->addChild(
 			(new CMSElement('input'))
 				->addAttribute('type', 'hidden')
-				->addAttribute('name', REQ_PARAM_ACTION)
+				->addAttribute('name', RequestParams::PARAM_ACTION)
 				->addAttribute('value', $this->action)
 		);
 		$formContent->addChild(
 			(new CMSElement('input'))
 				->addAttribute('type', 'hidden')
-				->addAttribute('name', REQ_PARAM_SUBACTION)
+				->addAttribute('name', RequestParams::PARAM_SUBACTION)
 				->addAttribute('value', $this->subaction)
 		);
 		$formContent->addChild(
 			(new CMSElement('input'))
 				->addAttribute('type', 'hidden')
-				->addAttribute('name', REQ_PARAM_ID)
+				->addAttribute('name', RequestParams::PARAM_ID)
 				->addAttribute('value', $this->id)
 		);
 

@@ -175,7 +175,7 @@ SQL
 		$row = $sql->getRow();
 
 		if   ( count($row)==0 )
-			throw new \ObjectNotFoundException("Page with Id $this->objectid not found.");
+			throw new \util\exception\ObjectNotFoundException("Page with Id $this->objectid not found.");
 
 		$this->pageid      = $row['id'        ];
 		$this->templateid  = $row['templateid'];

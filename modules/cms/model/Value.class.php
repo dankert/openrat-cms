@@ -5,7 +5,7 @@ use cms\base\Startup;
 use util\ArrayUtils;
 use cms\generator\Publish;
 use cms\macros\MacroRunner;
-use \ObjectNotFoundException;
+use \util\exception\ObjectNotFoundException;
 use logger\Logger;
 use util\exception\GeneratorException;
 use util\Text;

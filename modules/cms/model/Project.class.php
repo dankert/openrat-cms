@@ -78,7 +78,7 @@ class Project extends ModelBase
     /**
      * @param $projectid
      * @return Project
-     * @throws \ObjectNotFoundException
+     * @throws \util\exception\ObjectNotFoundException
      */
     public static function create($projectid)
     {
@@ -233,7 +233,7 @@ class Project extends ModelBase
 	// Laden
 
     /**
-     * @throws \ObjectNotFoundException
+     * @throws \util\exception\ObjectNotFoundException
      */
     public function load()
 	{
@@ -244,7 +244,7 @@ class Project extends ModelBase
 		$row = $sql->getRow();
 
 		if	( empty($row) )
-			throw new \ObjectNotFoundException('project '.$this->projectid.' not found');
+			throw new \util\exception\ObjectNotFoundException('project '.$this->projectid.' not found');
 			
 		$this->name                = $row['name'               ];
 		$this->url                 = $row['url'                ];

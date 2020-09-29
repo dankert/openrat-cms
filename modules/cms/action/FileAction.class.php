@@ -61,7 +61,7 @@ class FileAction extends ObjectAction
     public function init()
     {
 		$file = new File( $this->getRequestId() );
-		$file->languageid = $this->getRequestVar(REQ_PARAM_LANGUAGE_ID);
+		$file->languageid = $this->getRequestVar(RequestParams::PARAM_LANGUAGE_ID);
 		$file->load();
 
         $this->setBaseObject( $file );
@@ -131,9 +131,9 @@ class FileAction extends ObjectAction
      */
     function advancedPost()
     {
-        $this->file->extension = $this->getRequestVar('extension'  ,OR_FILTER_FILENAME);
+        $this->file->extension = $this->getRequestVar('extension'  ,RequestParams::FILTER_FILENAME);
 
-		$typeid = $this->getRequestVar('type',OR_FILTER_NUMBER  );
+		$typeid = $this->getRequestVar('type',RequestParams::FILTER_NUMBER  );
 
 		if   ( ! in_array($typeid,[BaseObject::TYPEID_FILE,BaseObject::TYPEID_IMAGE,BaseObject::TYPEID_TEXT]))
 			throw new ValidationException('type');
@@ -187,7 +187,7 @@ class FileAction extends ObjectAction
 				$mime_type = $mime_types[$ext];
 			else
 				// Wenn kein Mime-Type gefunden, dann Standardwert setzen
-				$mime_type = OR_FILE_DEFAULT_MIMETYPE;
+				$mime_type = File::DEFAULT_MIMETYPE;
 
 			header('Content-Type: '.$mime_type );
 			header('Content-Encoding: gzip' );
@@ -373,7 +373,7 @@ class FileAction extends ObjectAction
 				throw new \util\exception\UIException('','cannot uncompress file with extension: ' . $this->file->extension );
 		}
 
-		$this->addNotice('file',$this->file->name,'DONE',OR_NOTICE_OK);
+		$this->addNotice('file',$this->file->name,'DONE',Action::NOTICE_OK);
 		$this->callSubAction('edit');
 	}
 
@@ -475,12 +475,12 @@ class FileAction extends ObjectAction
 	 */
 	function compressPost()
 	{
-		$format = $this->getRequestVar('format',OR_FILTER_ALPHANUM);
+		$format = $this->getRequestVar('format',RequestParams::FILTER_ALPHANUM);
 		
 		switch( $format )
 		{
 			case 'gz':
-				if	( $this->getRequestVar('replace',OR_FILTER_NUMBER)=='1' )
+				if	( $this->getRequestVar('replace',RequestParams::FILTER_NUMBER)=='1' )
 				{
 					$this->file->value = gzencode( $this->file->loadValue(),1 );
 					$this->file->parse_filename( $this->file->filename.'.'.$this->file->extension.'.gz',FORCE_GZIP );
@@ -524,7 +524,7 @@ class FileAction extends ObjectAction
 				throw new \util\exception\UIException('unknown compress type: ' . $format );
 		}
 
-		$this->addNotice('file',$this->file->name,'DONE',OR_NOTICE_OK);
+		$this->addNotice('file',$this->file->name,'DONE',Action::NOTICE_OK);
 		$this->callSubAction('edit');
 	}
 
@@ -547,7 +547,7 @@ class FileAction extends ObjectAction
 		$publisher = new Publisher( $this->file->projectid );
 		$publisher->publish( $fileGenerator->getCache()->load()->getFilename(),$fileGenerator->getPublicFilename(),$this->file->lastchangeDate );
 
-		$this->addNoticeFor($this->file,'PUBLISHED',OR_NOTICE_OK );
+		$this->addNoticeFor($this->file,'PUBLISHED',Action::NOTICE_OK );
 	}
 
 
@@ -582,11 +582,11 @@ class FileAction extends ObjectAction
         if   ( $this->getRequestVar('delete') != '' )
         {
             $this->file->delete();
-            $this->addNotice('template',$this->file->filename,'DELETED',OR_NOTICE_OK);
+            $this->addNotice('template',$this->file->filename,'DELETED',Action::NOTICE_OK);
         }
         else
         {
-            $this->addNotice('template',$this->file->filename,'CANCELED',OR_NOTICE_WARN);
+            $this->addNotice('template',$this->file->filename,'CANCELED',Action::NOTICE_WARN);
         }
     }
 }

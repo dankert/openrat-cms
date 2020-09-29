@@ -659,7 +659,7 @@ SQL
      * Es werden
      * - die sprachunabh?ngigen Daten wie Dateiname, Typ sowie Erstellungs- und ?nderungsdatum geladen
      * - die sprachabh?ngigen Daten wie Name und Beschreibung geladen
-     * @throws \ObjectNotFoundException
+     * @throws \util\exception\ObjectNotFoundException
      */
     function objectLoad()
     {
@@ -692,7 +692,7 @@ SQL
         $row = $stmt->getRow();
 
         if (count($row) == 0)
-            throw new \ObjectNotFoundException('object '.$this->objectid.' not found');
+            throw new \util\exception\ObjectNotFoundException('object '.$this->objectid.' not found');
 
         $this->setDatabaseRow( $row );
     }
@@ -713,7 +713,7 @@ SQL
         $row = $sql->getRow();
 
         if (count($row) == 0)
-            throw new \ObjectNotFoundException('objectid not found: '.$this->objectid);
+            throw new \util\exception\ObjectNotFoundException('objectid not found: '.$this->objectid);
 
         $this->parentid  = $row['parentid' ];
         $this->filename  = $row['filename' ];
@@ -1504,7 +1504,7 @@ SQL
      * Liefert das Projekt-Objekt.
      *
      * @return Project
-     * @throws \ObjectNotFoundException
+     * @throws \util\exception\ObjectNotFoundException
      */
     public function getProject() {
         return Project::create( $this->projectid );
@@ -1629,7 +1629,7 @@ SQL
     /**
      * Liefert alle Name-Objekte.
      * @return array
-     * @throws \ObjectNotFoundException
+     * @throws \util\exception\ObjectNotFoundException
      */
     public function getNames()
     {
@@ -1652,7 +1652,7 @@ SQL
     /**
      * Liefert alle Name-Objekte.
      * @return Name
-     * @throws \ObjectNotFoundException
+     * @throws \util\exception\ObjectNotFoundException
      */
     public function getNameForLanguage( $languageId )
     {
@@ -1754,7 +1754,7 @@ SQL
      * Creates an Alias for a specific language.
      * @param $languageid could be null for the default alias.
      * @return Alias
-     * @throws \ObjectNotFoundException
+     * @throws \util\exception\ObjectNotFoundException
      */
     public function getAliasForLanguage( $languageid )
     {

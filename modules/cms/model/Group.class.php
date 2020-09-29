@@ -82,7 +82,7 @@ class Group extends ModelBase
      * Read a group.
      * @param $name string name of the group
      * @return Group
-     * @throws \ObjectNotFoundException
+     * @throws \util\exception\ObjectNotFoundException
      */
 	public static function loadWithName( $name )
 	{
@@ -100,7 +100,7 @@ class Group extends ModelBase
 		}
 		else
 		{
-			throw new \ObjectNotFoundException( "Group does not exist: ".$name);
+			throw new \util\exception\ObjectNotFoundException( "Group does not exist: ".$name);
 		}
 	}
 

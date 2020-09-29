@@ -14,7 +14,7 @@ use util\FileUtils;
 use util\Http;
 use cms\auth\InternalAuth;
 use logger\Logger;
-use \ObjectNotFoundException;
+use \util\exception\ObjectNotFoundException;
 use util\exception\UIException;
 use \security\Password;
 use util\Session;
@@ -38,8 +38,6 @@ use util\Text;
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-
-define('PROJECTID_ADMIN',-1);
 
 /**
  * Action-Klasse fuer die Start-Action
@@ -82,14 +80,14 @@ class LoginAction extends BaseAction
 		
 		if	( !is_object($db) )
 		{
-			$this->addNotice('database','','DATABASE_CONNECTION_ERROR',OR_NOTICE_ERROR,array(),array('no connection'));
+			$this->addNotice('database','','DATABASE_CONNECTION_ERROR',Action::NOTICE_ERROR,array(),array('no connection'));
 			//$this->callSubAction('showlogin');
 			return false;
 		}
 		
 		if	( !$db->available )
 		{
-			$this->addNotice('database',$db->conf['description'],'DATABASE_CONNECTION_ERROR',OR_NOTICE_ERROR,array(),array('Database Error: '.$db->error));
+			$this->addNotice('database',$db->conf['description'],'DATABASE_CONNECTION_ERROR',Action::NOTICE_ERROR,array(),array('Database Error: '.$db->error));
 			//$this->callSubAction('showlogin');
 			return false;
 		}
@@ -291,7 +289,7 @@ class LoginAction extends BaseAction
 
 
         if	( empty($dbids) )
-            $this->addNotice('','','no_database_configuration',OR_NOTICE_WARN);
+            $this->addNotice('','','no_database_configuration',Action::NOTICE_WARN);
 
         if	( !isset($this->templateVars['login_name']) && isset($_COOKIE['or_username']) )
             $this->setTemplateVar('login_name',$_COOKIE['or_username']);
@@ -329,10 +327,10 @@ class LoginAction extends BaseAction
 
         }
 
-        $this->setTemplateVar('objectid'  ,$this->getRequestVar('objectid'  ,OR_FILTER_NUMBER) );
-        $this->setTemplateVar('projectid' ,$this->getRequestVar('projectid' ,OR_FILTER_NUMBER) );
-        $this->setTemplateVar('modelid'   ,$this->getRequestVar('modelid'   ,OR_FILTER_NUMBER) );
-        $this->setTemplateVar('languageid',$this->getRequestVar('languageid',OR_FILTER_NUMBER) );
+        $this->setTemplateVar('objectid'  ,$this->getRequestVar('objectid'  ,RequestParams::FILTER_NUMBER) );
+        $this->setTemplateVar('projectid' ,$this->getRequestVar('projectid' ,RequestParams::FILTER_NUMBER) );
+        $this->setTemplateVar('modelid'   ,$this->getRequestVar('modelid'   ,RequestParams::FILTER_NUMBER) );
+        $this->setTemplateVar('languageid',$this->getRequestVar('languageid',RequestParams::FILTER_NUMBER) );
 
         $this->setTemplateVar('register'     ,$conf['login'   ]['register' ]);
         $this->setTemplateVar('send_password',$conf['login'   ]['send_password']);
@@ -389,7 +387,7 @@ class LoginAction extends BaseAction
 
 
 		if	( empty($dbids) )
-			$this->addNotice('','','no_database_configuration',OR_NOTICE_WARN);
+			$this->addNotice('','','no_database_configuration',Action::NOTICE_WARN);
 
 		if	( !isset($_COOKIE['or_username']) )
 			$this->setTemplateVar('login_name',$_COOKIE['or_username']);
@@ -404,10 +402,10 @@ class LoginAction extends BaseAction
 		else
 			$this->setTemplateVar('actdbid',$conf['database']['default']);
 
-		$this->setTemplateVar('objectid'  ,$this->getRequestVar('objectid'  ,OR_FILTER_NUMBER) );
-		$this->setTemplateVar('projectid' ,$this->getRequestVar('projectid' ,OR_FILTER_NUMBER) );
-		$this->setTemplateVar('modelid'   ,$this->getRequestVar('modelid'   ,OR_FILTER_NUMBER) );
-		$this->setTemplateVar('languageid',$this->getRequestVar('languageid',OR_FILTER_NUMBER) );
+		$this->setTemplateVar('objectid'  ,$this->getRequestVar('objectid'  ,RequestParams::FILTER_NUMBER) );
+		$this->setTemplateVar('projectid' ,$this->getRequestVar('projectid' ,RequestParams::FILTER_NUMBER) );
+		$this->setTemplateVar('modelid'   ,$this->getRequestVar('modelid'   ,RequestParams::FILTER_NUMBER) );
+		$this->setTemplateVar('languageid',$this->getRequestVar('languageid',RequestParams::FILTER_NUMBER) );
 
 	}
 
@@ -549,10 +547,10 @@ class LoginAction extends BaseAction
 			throw new \util\exception\SecurityException('login disabled');
 
 		$openid_user   = $this->getRequestVar('openid_url'    );
-		$loginName     = $this->getRequestVar('login_name'    ,OR_FILTER_ALPHANUM);
-		$loginPassword = $this->getRequestVar('login_password',OR_FILTER_ALPHANUM);
-		$newPassword1  = $this->getRequestVar('password1'     ,OR_FILTER_ALPHANUM);
-		$newPassword2  = $this->getRequestVar('password2'     ,OR_FILTER_ALPHANUM);
+		$loginName     = $this->getRequestVar('login_name'    ,RequestParams::FILTER_ALPHANUM);
+		$loginPassword = $this->getRequestVar('login_password',RequestParams::FILTER_ALPHANUM);
+		$newPassword1  = $this->getRequestVar('password1'     ,RequestParams::FILTER_ALPHANUM);
+		$newPassword2  = $this->getRequestVar('password2'     ,RequestParams::FILTER_ALPHANUM);
 		
 		// Cookie setzen
 		$this->setCookie('or_username',$loginName );
@@ -636,11 +634,11 @@ class LoginAction extends BaseAction
 		if	( $conf['login']['nologin'] )
 			throw new \util\exception\SecurityException('login disabled');
 
-		$loginName     = $this->getRequestVar('login_name'    ,OR_FILTER_ALPHANUM);
-		$loginPassword = $this->getRequestVar('login_password',OR_FILTER_ALPHANUM);
-		$newPassword1  = $this->getRequestVar('password1'     ,OR_FILTER_ALPHANUM);
-		$newPassword2  = $this->getRequestVar('password2'     ,OR_FILTER_ALPHANUM);
-		$token         = $this->getRequestVar('user_token'    ,OR_FILTER_ALPHANUM);
+		$loginName     = $this->getRequestVar('login_name'    ,RequestParams::FILTER_ALPHANUM);
+		$loginPassword = $this->getRequestVar('login_password',RequestParams::FILTER_ALPHANUM);
+		$newPassword1  = $this->getRequestVar('password1'     ,RequestParams::FILTER_ALPHANUM);
+		$newPassword2  = $this->getRequestVar('password2'     ,RequestParams::FILTER_ALPHANUM);
+		$token         = $this->getRequestVar('user_token'    ,RequestParams::FILTER_ALPHANUM);
 
 		// Der Benutzer hat zwar ein richtiges Kennwort eingegeben, aber dieses ist abgelaufen.
 		// Wir versuchen hier, das neue zu setzen (sofern eingegeben).
@@ -823,7 +821,7 @@ class LoginAction extends BaseAction
             if	( \cms\base\Configuration::config()->subset('security')->is('renew_session_login',false) )
 				$this->recreateSession();
 			
-			$this->addNotice('user',$user->name,'LOGIN_OK',OR_NOTICE_OK,array('name'=>$user->fullname));
+			$this->addNotice('user',$user->name,'LOGIN_OK',Action::NOTICE_OK,array('name'=>$user->fullname));
 			
 			$this->setStyle( $user->style ); // Benutzer-Style setzen
 
@@ -900,7 +898,7 @@ class LoginAction extends BaseAction
 		// Der Style des Benutzers koennte auch stehen bleiben. Aber dann gäbe es Rückschlüsse darauf, wer zuletzt angemeldet war (Sicherheit!).
 		$this->setStyle( \cms\base\Configuration::config('interface','style','default') );
 
-        $this->addNotice('user',$user->name,'LOGOUT_OK',OR_NOTICE_OK);
+        $this->addNotice('user',$user->name,'LOGOUT_OK',Action::NOTICE_OK);
 
     }
 
@@ -998,7 +996,7 @@ class LoginAction extends BaseAction
 			return;
 		}
 		
-		$this->evaluateRequestVars( array(REQ_PARAM_LANGUAGE_ID=>$this->getRequestId()) );
+		$this->evaluateRequestVars( array(RequestParams::PARAM_LANGUAGE_ID=>$this->getRequestId()) );
 	}
 
 
@@ -1011,7 +1009,7 @@ class LoginAction extends BaseAction
 			return;
 		}
 		
-		$this->evaluateRequestVars( array(REQ_PARAM_MODEL_ID=>$this->getRequestId()) );
+		$this->evaluateRequestVars( array(RequestParams::PARAM_MODEL_ID=>$this->getRequestId()) );
 
 		$user     = Session::getUser();
 	}
@@ -1072,7 +1070,7 @@ class LoginAction extends BaseAction
 				else
 				{
 					Logger::warn('Guest login failed, user not found: '.$username);
-					$this->addNotice('user',$username,'LOGIN_FAILED',OR_NOTICE_WARN,array('name'=>$username) );
+					$this->addNotice('user',$username,'LOGIN_FAILED',Action::NOTICE_WARN,array('name'=>$username) );
 					$user = null;
 				}
 			}
@@ -1173,7 +1171,7 @@ class LoginAction extends BaseAction
 		
 		Session::set('registerCode',$registerCode                );
 
-		$email_address = $this->getRequestVar('mail',OR_FILTER_MAIL);
+		$email_address = $this->getRequestVar('mail',RequestParams::FILTER_MAIL);
 		
 		if	( ! Mail::checkAddress($email_address) )
 		{
@@ -1188,11 +1186,11 @@ class LoginAction extends BaseAction
 		
 		if	( $mail->send() )
 		{
-			$this->addNotice('','','mail_sent',OR_NOTICE_OK);
+			$this->addNotice('','','mail_sent',Action::NOTICE_OK);
 		}
 		else
 		{
-			$this->addNotice('','','mail_not_sent',OR_NOTICE_ERROR,array(),$mail->error);
+			$this->addNotice('','','mail_not_sent',Action::NOTICE_ERROR,array(),$mail->error);
 			return;
 		}
 	}
@@ -1302,9 +1300,9 @@ class LoginAction extends BaseAction
 			$eMail->setVar('name',$user->getName());
 			$eMail->setVar('code',$code);
 			if	( $eMail->send() )
-				$this->addNotice('user',$user->getName(),'mail_sent',OR_NOTICE_OK);
+				$this->addNotice('user',$user->getName(),'mail_sent',Action::NOTICE_OK);
 			else
-				$this->addNotice('user',$user->getName(),'mail_not_sent',OR_NOTICE_ERROR,array(),$eMail->error);
+				$this->addNotice('user',$user->getName(),'mail_not_sent',Action::NOTICE_ERROR,array(),$eMail->error);
 			
 		}
 		else
@@ -1351,7 +1349,7 @@ class LoginAction extends BaseAction
 		if	( !$user->isValid() )
 		{
 			// Benutzer konnte nicht geladen werden.
-			$this->addNotice('user',$username,'error',OR_NOTICE_ERROR);
+			$this->addNotice('user',$username,'error',Action::NOTICE_ERROR);
 			return;
 		}
 		
@@ -1364,13 +1362,13 @@ class LoginAction extends BaseAction
 		if	( $eMail->send() )
 		{
 			$user->setPassword( $newPw, false ); // Kennwort muss beim n?. Login ge?ndert werden.
-			$this->addNotice('user',$username,'mail_sent',OR_NOTICE_OK);
+			$this->addNotice('user',$username,'mail_sent',Action::NOTICE_OK);
 		}
 		else
 		{
 			// Sollte eigentlich nicht vorkommen, da der Benutzer ja auch schon den
 			// Code per E-Mail erhalten hat.
-			$this->addNotice('user',$username,'error',OR_NOTICE_ERROR,array(),$eMail->error);
+			$this->addNotice('user',$username,'error',Action::NOTICE_ERROR,array(),$eMail->error);
 		}
 	}
 	

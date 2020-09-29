@@ -29,7 +29,7 @@ class Link extends BaseObject
 
     /**
      * Lesen der Verknuepfung aus der Datenbank
-     * @throws \ObjectNotFoundException
+     * @throws \util\exception\ObjectNotFoundException
      */
     public function load()
 	{

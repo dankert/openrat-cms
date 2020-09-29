@@ -512,7 +512,7 @@ SQL
      * Liefert das Projekt-Objekt.
      *
      * @return Project
-     * @throws \ObjectNotFoundException
+     * @throws \util\exception\ObjectNotFoundException
      */
     public function getProject() {
         return Project::create( $this->projectid );

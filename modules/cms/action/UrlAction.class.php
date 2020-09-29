@@ -98,11 +98,11 @@ class UrlAction extends ObjectAction
         if   ( $this->getRequestVar('delete') != '' )
         {
             $this->url->delete();
-            $this->addNotice('url',$this->url->filename,'DELETED',OR_NOTICE_OK);
+            $this->addNotice('url',$this->url->filename,'DELETED',Action::NOTICE_OK);
         }
         else
         {
-            $this->addNotice('url',$this->url->filename,'CANCELED',OR_NOTICE_WARN);
+            $this->addNotice('url',$this->url->filename,'CANCELED',Action::NOTICE_WARN);
         }
     }
 
@@ -116,7 +116,7 @@ class UrlAction extends ObjectAction
         $this->url->save();
         $this->url->setTimestamp();
 
-        $this->addNotice('url',$this->url->name,'SAVED',OR_NOTICE_OK);
+        $this->addNotice('url',$this->url->name,'SAVED',Action::NOTICE_OK);
 	}
 
 

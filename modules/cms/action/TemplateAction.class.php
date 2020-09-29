@@ -89,7 +89,7 @@ class TemplateAction extends BaseAction
         $templatemodel = new TemplateModel($this->template->templateid, $modelId);
         $templatemodel->load();
 
-        $newSource = $this->request->getRequestVar('source',OR_FILTER_RAW);
+        $newSource = $this->request->getRequestVar('source',RequestParams::FILTER_RAW);
 
         /*
         // Not useful any more. Technical name of a element should not be changed.
@@ -107,7 +107,7 @@ class TemplateAction extends BaseAction
 
        $templatemodel->save();
 
-		$this->addNotice('template',$this->template->name,'SAVED',OR_NOTICE_OK);
+		$this->addNotice('template',$this->template->name,'SAVED',Action::NOTICE_OK);
 	}
 
 
@@ -115,7 +115,7 @@ class TemplateAction extends BaseAction
 
 	function srcelementPost()
 	{
-		$tplModel = $this->template->loadTemplateModelFor( $this->request->getRequestVar(REQ_PARAM_MODEL_ID));
+		$tplModel = $this->template->loadTemplateModelFor( $this->request->getRequestVar(RequestParams::PARAM_MODEL_ID));
 
 		$elementToAdd = new Element( $this->getRequestVar('elementid') );
 		$elementToAdd->load();
@@ -151,7 +151,7 @@ class TemplateAction extends BaseAction
 		{
 			$this->template->name = $this->getRequestVar('name');
 			$this->template->save();
-			$this->addNotice('template',$this->template->name,'SAVED',OR_NOTICE_OK);
+			$this->addNotice('template',$this->template->name,'SAVED',Action::NOTICE_OK);
 		}
 	}
 
@@ -163,11 +163,11 @@ class TemplateAction extends BaseAction
 		if   ( $this->getRequestVar('delete') != '' )
 		{
 			$this->template->delete();
-			$this->addNotice('template',$this->template->name,'DELETED',OR_NOTICE_OK);
+			$this->addNotice('template',$this->template->name,'DELETED',Action::NOTICE_OK);
 		}
 		else
 		{
-			$this->addNotice('template',$this->template->name,'CANCELED',OR_NOTICE_WARN);
+			$this->addNotice('template',$this->template->name,'CANCELED',Action::NOTICE_WARN);
 		}
 	}
 
@@ -269,7 +269,7 @@ class TemplateAction extends BaseAction
 	function addelPost()
 	{
 
-		$name = $this->getRequestVar('name',OR_FILTER_ALPHANUM);
+		$name = $this->getRequestVar('name',RequestParams::FILTER_ALPHANUM);
 
 		if  ( empty($name) )
 		    throw new \util\exception\ValidationException('name');
@@ -292,7 +292,7 @@ class TemplateAction extends BaseAction
 
 		}
 
-		$this->addNotice('template',$this->template->name,'SAVED',OR_NOTICE_OK);
+		$this->addNotice('template',$this->template->name,'SAVED',Action::NOTICE_OK);
 	}
 
 
@@ -345,7 +345,7 @@ class TemplateAction extends BaseAction
 
         $this->setTemplateVar('models',$project->getModels() );
 
-		$modelId = $this->request->getRequestVar(REQ_PARAM_MODEL_ID);
+		$modelId = $this->request->getRequestVar(RequestParams::PARAM_MODEL_ID);
 		if   ( ! $modelId )
 			$modelId = Project::create( $this->template->projectid )->getDefaultModelId();
 
@@ -362,7 +362,7 @@ class TemplateAction extends BaseAction
 	 */
 	function showView()
 	{
-		$modelId = $this->request->getRequestVar(REQ_PARAM_MODEL_ID);
+		$modelId = $this->request->getRequestVar(RequestParams::PARAM_MODEL_ID);
 		if   ( ! $modelId )
 			$modelId = Project::create( $this->template->projectid )->getDefaultModelId();
 
@@ -601,7 +601,7 @@ class TemplateAction extends BaseAction
         $this->addNotice( 'template',
             $this->template->name,
             'PUBLISHED',
-            OR_NOTICE_OK,
+            Action::NOTICE_OK,
             array(),
             array_map( function($obj) {
                 return $obj['full_filename'];

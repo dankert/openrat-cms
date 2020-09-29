@@ -66,11 +66,11 @@ class GroupAction extends BaseAction
 		{
 			$this->group->delete();
 	
-			$this->addNotice('group',$this->group->name,'DELETED',OR_NOTICE_OK);
+			$this->addNotice('group',$this->group->name,'DELETED',Action::NOTICE_OK);
 		}
 		else
 		{
-			$this->addNotice('group',$this->group->name,'NOTHING_DONE',OR_NOTICE_WARN);
+			$this->addNotice('group',$this->group->name,'NOTHING_DONE',Action::NOTICE_WARN);
 		}
 	}
 	
@@ -116,7 +116,7 @@ class GroupAction extends BaseAction
 			{
 				$this->group->addUser( $uid );
 			}
-			$this->addNotice('group',$this->group->name,'USER_ADDED_TO_GROUP',OR_NOTICE_OK,array('count'=>count($userid)));
+			$this->addNotice('group',$this->group->name,'USER_ADDED_TO_GROUP',Action::NOTICE_OK,array('count'=>count($userid)));
 		}
 		elseif( intval($userid) > 0 )
 		{
@@ -127,7 +127,7 @@ class GroupAction extends BaseAction
 		else
 		{
 			// Es wurde kein Benutzer ausgew�hlt.
-			$this->addNotice('group',$this->group->name,'NOTHING_DONE',OR_NOTICE_WARN);
+			$this->addNotice('group',$this->group->name,'NOTHING_DONE',Action::NOTICE_WARN);
 		}
 	}
 
@@ -140,7 +140,7 @@ class GroupAction extends BaseAction
 	{
 		$this->group->delUser( intval($this->getRequestVar('userid')) );
 	
-		$this->addNotice('group',$this->group->name,'DELETED',OR_NOTICE_OK);
+		$this->addNotice('group',$this->group->name,'DELETED',Action::NOTICE_OK);
 	}
 
 
@@ -209,7 +209,7 @@ class GroupAction extends BaseAction
 
 		$conf = \cms\base\Configuration::rawConfig();
 		if	($conf['security']['authorize']['type']=='ldap')
-			$this->addNotice('group',$this->group->name,'GROUPS_MAY_CONFLICT_WITH_LDAP',OR_NOTICE_WARN);
+			$this->addNotice('group',$this->group->name,'GROUPS_MAY_CONFLICT_WITH_LDAP',Action::NOTICE_WARN);
 	}
 	
 	

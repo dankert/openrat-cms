@@ -2,6 +2,7 @@
 
 namespace util;
 
+use cms\action\RequestParams;
 use cms\model\Acl;
 use cms\model\Element;
 use cms\model\File;
@@ -160,11 +161,11 @@ class Tree
 			//			$treeElement->text        = $folder->name;
 			$treeElement->text = \cms\base\Language::lang('FOLDER_ROOT');
 			$treeElement->description = \cms\base\Language::lang('FOLDER_ROOT_DESC');
-			$treeElement->extraId[REQ_PARAM_LANGUAGE_ID] = $defaultLanguageId;
-			$treeElement->extraId[REQ_PARAM_MODEL_ID] = $defaultModelId;
+			$treeElement->extraId[RequestParams::PARAM_LANGUAGE_ID] = $defaultLanguageId;
+			$treeElement->extraId[RequestParams::PARAM_MODEL_ID] = $defaultModelId;
 			$treeElement->icon = 'folder';
 			$treeElement->action = 'folder';
-//			$treeElement->url         = Html::url( 'folder','',$folder->objectid,array(REQ_PARAM_TARGET=>'content') );
+//			$treeElement->url         = Html::url( 'folder','',$folder->objectid,array(RequestParams::PARAM_TARGET=>'content') );
 			$treeElement->type = 'folder';
 			$treeElement->internalId = $folder->objectid;
 			$this->addTreeElement($treeElement);
@@ -175,12 +176,12 @@ class Tree
 		if ($userIsProjectAdmin) {
 			$treeElement = new TreeElement();
 			$treeElement->id = $projectid;
-			$treeElement->extraId[REQ_PARAM_PROJECT_ID] = $projectid;
-			$treeElement->extraId[REQ_PARAM_MODEL_ID] = $defaultModelId;
-			$treeElement->extraId[REQ_PARAM_LANGUAGE_ID] = $defaultLanguageId;
+			$treeElement->extraId[RequestParams::PARAM_PROJECT_ID] = $projectid;
+			$treeElement->extraId[RequestParams::PARAM_MODEL_ID] = $defaultModelId;
+			$treeElement->extraId[RequestParams::PARAM_LANGUAGE_ID] = $defaultLanguageId;
 			$treeElement->internalId = $projectid;
 			$treeElement->text = \cms\base\Language::lang('TEMPLATES');
-//			$treeElement->url        = Html::url('template','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
+//			$treeElement->url        = Html::url('template','listing',0,array(RequestParams::PARAM_TARGETSUBACTION=>'listing',RequestParams::PARAM_TARGET=>'content'));
 			$treeElement->description = \cms\base\Language::lang('TEMPLATES_DESC');
 			$treeElement->icon = 'templatelist';
 			$treeElement->action = 'templatelist';
@@ -194,11 +195,11 @@ class Tree
 			$treeElement = new TreeElement();
 			$treeElement->description = '';
 			$treeElement->id = $projectid;
-			$treeElement->extraId[REQ_PARAM_PROJECT_ID] = $projectid;
+			$treeElement->extraId[RequestParams::PARAM_PROJECT_ID] = $projectid;
 			$treeElement->internalId = $projectid;
 			$treeElement->action = 'languagelist';
 			$treeElement->text = \cms\base\Language::lang('LANGUAGES');
-//		$treeElement->url        = Html::url('language','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
+//		$treeElement->url        = Html::url('language','listing',0,array(RequestParams::PARAM_TARGETSUBACTION=>'listing',RequestParams::PARAM_TARGET=>'content'));
 			$treeElement->icon = 'languagelist';
 			$treeElement->description = \cms\base\Language::lang('LANGUAGES_DESC');
 
@@ -221,10 +222,10 @@ class Tree
 
 			$treeElement->id = $projectid;
 			$treeElement->internalId = $projectid;
-			$treeElement->extraId[REQ_PARAM_PROJECT_ID] = $projectid;
+			$treeElement->extraId[RequestParams::PARAM_PROJECT_ID] = $projectid;
 			$treeElement->description = \cms\base\Language::lang('MODELS_DESC');
 			$treeElement->text = \cms\base\Language::lang('MODELS');
-//		$treeElement->url        = Html::url('model','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
+//		$treeElement->url        = Html::url('model','listing',0,array(RequestParams::PARAM_TARGETSUBACTION=>'listing',RequestParams::PARAM_TARGET=>'content'));
 			$treeElement->action = 'modellist';
 			$treeElement->icon = 'modellist';
 			$this->addTreeElement($treeElement);
@@ -409,7 +410,7 @@ class Tree
 				}
 				$treeElement->action = $object->getType();
 				$treeElement->icon = $object->getType();
-				$treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $value->languageid);
+				$treeElement->extraId = array(RequestParams::PARAM_LANGUAGE_ID => $value->languageid);
 
 				$treeElement->description = \cms\base\Language::lang('' . $object->getType());
 				if ($object->desc != '')
@@ -444,7 +445,7 @@ class Tree
 
 		$treeElement->action = $o->getType();
 		$treeElement->icon = $o->getType();
-		$treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $_REQUEST[REQ_PARAM_LANGUAGE_ID], REQ_PARAM_MODEL_ID => $_REQUEST[REQ_PARAM_MODEL_ID]);
+		$treeElement->extraId = array(RequestParams::PARAM_LANGUAGE_ID => $_REQUEST[RequestParams::PARAM_LANGUAGE_ID], RequestParams::PARAM_MODEL_ID => $_REQUEST[RequestParams::PARAM_MODEL_ID]);
 
 		// Besonderheiten fuer bestimmte Objekttypen
 
@@ -479,7 +480,7 @@ class Tree
 
 		$treeElement->action = $o->getType();
 		$treeElement->icon = $o->getType();
-		$treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $_REQUEST[REQ_PARAM_LANGUAGE_ID], REQ_PARAM_MODEL_ID => $_REQUEST[REQ_PARAM_MODEL_ID]);
+		$treeElement->extraId = array(RequestParams::PARAM_LANGUAGE_ID => $_REQUEST[RequestParams::PARAM_LANGUAGE_ID], RequestParams::PARAM_MODEL_ID => $_REQUEST[RequestParams::PARAM_MODEL_ID]);
 
 		// Besonderheiten fuer bestimmte Objekttypen
 		if ($o->isPage) {
@@ -519,7 +520,7 @@ class Tree
 			$treeElement = new TreeElement();
 			$treeElement->id = $o->objectid;
 			$treeElement->internalId = $o->objectid;
-			$treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $f->languageid, REQ_PARAM_MODEL_ID => $f->modelid);
+			$treeElement->extraId = array(RequestParams::PARAM_LANGUAGE_ID => $f->languageid, RequestParams::PARAM_MODEL_ID => $f->modelid);
 			$treeElement->text = $o->name;
 			$treeElement->description = \cms\base\Language::lang('' . $o->getType()) . ' ' . $o->objectid;
 

@@ -67,7 +67,7 @@ class LanguageAction extends BaseAction
 	{
 		$this->language->setDefault();
 
-        $this->addNotice('language',$this->language->name,'DONE',OR_NOTICE_OK);
+        $this->addNotice('language',$this->language->name,'DONE',Action::NOTICE_OK);
     }
 
 
@@ -114,7 +114,7 @@ class LanguageAction extends BaseAction
 		
 		$this->language->save();
 
-        $this->addNotice('language',$this->language->name,'DONE',OR_NOTICE_OK);
+        $this->addNotice('language',$this->language->name,'DONE',Action::NOTICE_OK);
 	}
 
 

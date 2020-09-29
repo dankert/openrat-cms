@@ -16,7 +16,7 @@ use util\json\JSON;
 use logger\Logger;
 use util\Less;
 use util\UIUtils;
-use ObjectNotFoundException;
+use \util\exception\ObjectNotFoundException;
 use util\Session;
 
 

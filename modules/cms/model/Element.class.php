@@ -215,7 +215,7 @@ class Element extends ModelBase
     /**
      * Lesen des Elementes aus der Datenbank
      * Alle Eigenschaften des Elementes werden aus der Datenbank gelesen
-     * @throws \ObjectNotFoundException
+     * @throws \util\exception\ObjectNotFoundException
      */
 	function load()
 	{
@@ -235,12 +235,12 @@ SQL
 
     /**
      * @param $prop
-     * @throws \ObjectNotFoundException
+     * @throws \util\exception\ObjectNotFoundException
      */
     function setDatabaseRow($prop )
 	{
 		if	( count($prop) <= 0 )
-			throw new \ObjectNotFoundException("Element not found");
+			throw new \util\exception\ObjectNotFoundException("Element not found");
 
 		$this->elementid      = $prop['id'        ];
 		$this->templateid     = $prop['templateid'];

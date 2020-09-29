@@ -79,7 +79,7 @@ class LinkAction extends ObjectAction
         $this->link->linkedObjectId = $this->getRequestVar('targetobjectid');
         $this->link->save();
 
-        $this->addNotice('link',$this->link->name,'SAVED',OR_NOTICE_OK);
+        $this->addNotice('link',$this->link->name,'SAVED',Action::NOTICE_OK);
 	}
 
 
@@ -108,9 +108,9 @@ class LinkAction extends ObjectAction
     {
         if ($this->getRequestVar('delete') != '') {
             $this->link->delete();
-            $this->addNotice('link', $this->link->filename, 'DELETED', OR_NOTICE_OK);
+            $this->addNotice('link', $this->link->filename, 'DELETED', Action::NOTICE_OK);
         } else {
-            $this->addNotice('link', $this->link->filename, 'CANCELED', OR_NOTICE_WARN);
+            $this->addNotice('link', $this->link->filename, 'CANCELED', Action::NOTICE_WARN);
         }
     }
 
@@ -132,7 +132,7 @@ class LinkAction extends ObjectAction
             $o->load();
             echo '<a href="'.Html::url($o->getType(),'show',$o->objectid).'">'.$o->filename.'</a>';
         }
-        catch( \ObjectNotFoundException $e ) {
+        catch( \util\exception\ObjectNotFoundException $e ) {
             echo '-';
         }
 

@@ -39,8 +39,8 @@ class PreviewLink implements LinkFormat
 
         $param = array(
             'oid'                 => '__OID__'.$to->objectid.'__',
-            REQ_PARAM_MODEL_ID    => $this->pageContext->modelId  ,
-            REQ_PARAM_LANGUAGE_ID => $this->pageContext->languageId );
+            RequestParams::PARAM_MODEL_ID    => $this->pageContext->modelId  ,
+            RequestParams::PARAM_LANGUAGE_ID => $this->pageContext->languageId );
 
         // Interne Verlinkungen in der Seitenvorschau
         switch( $to->typeid )

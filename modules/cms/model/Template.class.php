@@ -67,7 +67,7 @@ class Template extends ModelBase
 		$row = $stmt->getRow();
 		
 		if	( empty($row) )
-			throw new \ObjectNotFoundException("Template not found: ".$this->templateid);
+			throw new \util\exception\ObjectNotFoundException("Template not found: ".$this->templateid);
 
 		$this->name      = $row['name'     ];
 		$this->projectid = $row['projectid'];

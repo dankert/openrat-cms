@@ -70,14 +70,14 @@ class Column
 		switch ($this->type) {
 			case self::TYPE_INT:
 				switch ($this->dbmsType) {
-					case OR_DB_TYPE_MYSQL:
+					case DbVersion::TYPE_MYSQL:
 						if ($this->size == 1)
 							$dbmsInternalType = 'TINYINT';
 						else
 							$dbmsInternalType = 'INT';
 						break;
 
-					case OR_DB_TYPE_ORACLE:
+					case DbVersion::TYPE_ORACLE:
 						$dbmsInternalType = 'NUMBER';
 						break;
 
@@ -97,11 +97,11 @@ class Column
 
 			case self::TYPE_TEXT:
 				switch ($this->dbmsType) {
-					case OR_DB_TYPE_MYSQL:
+					case DbVersion::TYPE_MYSQL:
 						$dbmsInternalType = 'MEDIUMTEXT';
 						break;
 
-					case OR_DB_TYPE_ORACLE:
+					case DbVersion::TYPE_ORACLE:
 						$dbmsInternalType = 'CLOB';
 						break;
 
@@ -113,19 +113,19 @@ class Column
 
 			case self::TYPE_BLOB:
 				switch ($this->dbmsType) {
-					case OR_DB_TYPE_MYSQL:
+					case DbVersion::TYPE_MYSQL:
 						$dbmsInternalType = 'MEDIUMBLOB';
 						break;
 
-					case OR_DB_TYPE_ORACLE:
+					case DbVersion::TYPE_ORACLE:
 						$dbmsInternalType = 'CLOB';
 						break;
 
-					case OR_DB_TYPE_POSTGRES:
+					case DbVersion::TYPE_POSTGRES:
 						$dbmsInternalType = 'TEXT';
 						break;
 
-					case OR_DB_TYPE_SQLITE:
+					case DbVersion::TYPE_SQLITE:
 						$dbmsInternalType = 'TEXT';
 						break;
 
@@ -138,7 +138,7 @@ class Column
 				throw new \LogicException( 'Unknown Column type: ' . $this->type);
 		}
 
-		if ($this->dbmsType == OR_DB_TYPE_ORACLE) {
+		if ($this->dbmsType == DbVersion::TYPE_ORACLE) {
 			// TEXT-columns must be nullable in Oracle, because empty strings are treated as NULL. BAD BAD BAD, Oracle!
 			if ($this->type == self::TYPE_VARCHAR || $this->type == self::TYPE_TEXT)
 				$nullable = true;

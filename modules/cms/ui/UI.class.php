@@ -9,7 +9,7 @@ use Exception;
 use util\Http;
 use logger\Logger;
 use LogicException;
-use ObjectNotFoundException;
+use \util\exception\ObjectNotFoundException;
 use util\exception\UIException;
 use util\exception\SecurityException;
 use template_engine\engine\TemplateEngine;

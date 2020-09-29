@@ -199,7 +199,7 @@ class PageGenerator extends BaseGenerator
 	 * Creating the public filename of a page.
 	 *
 	 * @return string
-	 * @throws \ObjectNotFoundException
+	 * @throws \util\exception\ObjectNotFoundException
 	 */
 	public function getPublicFilename()
 	{

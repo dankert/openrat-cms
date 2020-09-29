@@ -589,7 +589,7 @@ class FolderAction extends ObjectAction
 				  $type == 'delete'  && $o->hasRight( Acl::ACL_DELETE )    )
 				$objectList[ $id ] = $o->getProperties();
 			else
-				$this->addNotice($o->getType(),$o->name,'no_rights',OR_NOTICE_WARN);
+				$this->addNotice($o->getType(),$o->name,'no_rights',Action::NOTICE_WARN);
 		}
 
 		$ids = array_keys($objectList);
@@ -628,7 +628,7 @@ class FolderAction extends ObjectAction
 				else
 				{
 					// Was anderes als Dateien ignorieren.
-					$this->addNotice($o->getType(),$o->name,'NOTHING_DONE',OR_NOTICE_WARN);
+					$this->addNotice($o->getType(),$o->name,'NOTHING_DONE',Action::NOTICE_WARN);
 				}
 
 			}
@@ -788,11 +788,11 @@ class FolderAction extends ObjectAction
 								default:
 									throw new \LogicException("Error while deleting: Unknown type: {$o->getType()}");
 							}
-							$this->addNotice($o->getType(),$o->name,'DELETED',OR_NOTICE_OK);
+							$this->addNotice($o->getType(),$o->name,'DELETED',Action::NOTICE_OK);
 						}
 						else
 						{
-							$this->addNotice($o->getType(),$o->name,'NOTHING_DONE',OR_NOTICE_WARN);
+							$this->addNotice($o->getType(),$o->name,'NOTHING_DONE',Action::NOTICE_WARN);
 						}
 
 						break;
@@ -978,7 +978,7 @@ class FolderAction extends ObjectAction
 		$this->setTemplateVar('objectid'  ,$this->folder->objectid );
 
 		if	( count($all_templates) == 0 )
-			$this->addNotice('folder',$this->folder->name,'NO_TEMPLATES_AVAILABLE',OR_NOTICE_WARN);
+			$this->addNotice('folder',$this->folder->name,'NO_TEMPLATES_AVAILABLE',Action::NOTICE_WARN);
 	}
 
 

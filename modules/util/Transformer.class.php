@@ -5,7 +5,7 @@ namespace util;
 use cms\model\Link;
 use cms\model\BaseObject;
 use cms\model\Url;
-use ObjectNotFoundException;
+use \util\exception\ObjectNotFoundException;
 use wikiparser\model\DocumentElement;
 use wikiparser\parser\WikiParser;
 

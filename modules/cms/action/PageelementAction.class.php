@@ -210,7 +210,7 @@ class PageelementAction extends BaseAction
 
 		try{
             $user->load();
-        }catch (\ObjectNotFoundException $e) {
+        }catch (\util\exception\ObjectNotFoundException $e) {
 		    $user = new User(); // Empty User.
         }
 
@@ -679,7 +679,7 @@ class PageelementAction extends BaseAction
         // Inhalt wieder herstellen, in dem er neu gespeichert wird.
         $this->value->save();
 
-        $this->addNotice('pageelement',$this->value->element->name,'PAGEELEMENT_USE_FROM_ARCHIVE',OR_NOTICE_OK);
+        $this->addNotice('pageelement',$this->value->element->name,'PAGEELEMENT_USE_FROM_ARCHIVE',Action::NOTICE_OK);
     }
 
 
@@ -702,7 +702,7 @@ class PageelementAction extends BaseAction
         // Inhalt freigeben
         $this->value->release();
 
-        $this->addNotice('pageelement',$this->value->element->name,'PAGEELEMENT_RELEASED',OR_NOTICE_OK);
+        $this->addNotice('pageelement',$this->value->element->name,'PAGEELEMENT_RELEASED',Action::NOTICE_OK);
     }
 
 
@@ -897,7 +897,7 @@ class PageelementAction extends BaseAction
      * <br>
      * Nicht zu verwechseln mit <i>Aftershave</i> :)
      * @param $value Value
-     * @throws \ObjectNotFoundException
+     * @throws \util\exception\ObjectNotFoundException
      */
     private function afterSave( $value )
     {
@@ -917,7 +917,7 @@ class PageelementAction extends BaseAction
         $lastChangeTime = $value->getLastChangeTime();
         if	( $lastChangeTime > $this->getRequestVar('value_time') )
         {
-            $this->addNotice('pageelement',$value->element->name,'CONCURRENT_VALUE_CHANGE',OR_NOTICE_WARN,array('last_change_time'=>date(\cms\base\Language::lang('DATE_FORMAT'),$lastChangeTime)));
+            $this->addNotice('pageelement',$value->element->name,'CONCURRENT_VALUE_CHANGE',Action::NOTICE_WARN,array('last_change_time'=>date(\cms\base\Language::lang('DATE_FORMAT'),$lastChangeTime)));
         }
 
         // Inhalt speichern
@@ -939,7 +939,7 @@ class PageelementAction extends BaseAction
             $value->save();
         }
 
-        $this->addNotice('pageelement',$value->element->label,'SAVED',OR_NOTICE_OK);
+        $this->addNotice('pageelement',$value->element->label,'SAVED',Action::NOTICE_OK);
         $this->page->setTimestamp(); // "Letzte Aenderung" setzen
 
         // Falls ausgewaehlt die Seite sofort veroeffentlichen

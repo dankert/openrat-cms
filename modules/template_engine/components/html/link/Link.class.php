@@ -130,7 +130,7 @@ class LinkComponent extends Component
 				$data['action'   ] = (!empty($this->action   ))?$this->action   :$this->request->action;
 				$data['subaction'] = (!empty($this->subaction))?$this->subaction:$this->request->method;
 				$data['id'       ] = (!empty($this->id       ))?$this->id       :'';
-				$data[REQ_PARAM_TOKEN] = '${_token}';
+				$data[RequestParams::PARAM_TOKEN] = '${_token}';
 
                 foreach( $this->getExtraParamArray() as $varname => $varvalue )
 					$data[$varname] = $varvalue;

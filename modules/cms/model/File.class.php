@@ -25,17 +25,16 @@ use cms\generator\PublishPublic;
 use logger\Logger;
 use util\cache\FileCache;
 
-define('OR_FILE_DEFAULT_MIMETYPE','application/octet-stream');
-
 
 /**
- * Datei.
+ * File.
  *
  * @author Jan Dankert
- * @package openrat.objects
  */
 class File extends BaseObject
 {
+	const DEFAULT_MIMETYPE = 'application/octet-stream';
+
 	var $fileid;
 
 	var $size          = 0;
@@ -145,7 +144,7 @@ class File extends BaseObject
 			$this->mime_type = $mime_types[$ext];
 		else
 			// Wenn kein Mime-Type gefunden, dann Standartwert setzen
-			$this->mime_type = OR_FILE_DEFAULT_MIMETYPE;
+			$this->mime_type = self::OR_FILE_DEFAULT_MIMETYPE;
 
 		return( $this->mime_type );
 	}

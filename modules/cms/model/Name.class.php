@@ -50,7 +50,7 @@ namespace cms\model {
          * Lesen der Eigenschaften aus der Datenbank
          * Es werden
          * - die sprachabh?ngigen Daten wie Name und Beschreibung geladen
-         * @throws \ObjectNotFoundException
+         * @throws \util\exception\ObjectNotFoundException
          */
         public function load()
         {

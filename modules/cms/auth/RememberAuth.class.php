@@ -6,7 +6,7 @@ use cms\auth\Auth;
 use database\Database;
 use cms\model\User;
 use logger\Logger;
-use ObjectNotFoundException;
+use \util\exception\ObjectNotFoundException;
 
 /**
  * Authentifizierung mit einem Login-Token.

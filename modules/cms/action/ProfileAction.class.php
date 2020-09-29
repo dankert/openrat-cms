@@ -147,11 +147,11 @@ class ProfileAction extends BaseAction
 			
 			if	( $mail->send() )
 			{
-				$this->addNotice('user',$this->user->name,'mail_sent',OR_NOTICE_OK); // Meldung
+				$this->addNotice('user',$this->user->name,'mail_sent',Action::NOTICE_OK); // Meldung
 			}
 			else
 			{
-				$this->addNotice('user',$this->user->name,'mail_not_sent',OR_NOTICE_ERROR,array(),$mail->error); // Meldung
+				$this->addNotice('user',$this->user->name,'mail_not_sent',Action::NOTICE_ERROR,array(),$mail->error); // Meldung
 				return;
 			}
 		}
@@ -185,7 +185,7 @@ class ProfileAction extends BaseAction
 			$this->user->mail = $newMail;
 			$this->user->save();
 			
-			$this->addNotice('user',$this->user->name,'SAVED',OR_NOTICE_OK);
+			$this->addNotice('user',$this->user->name,'SAVED',Action::NOTICE_OK);
 		}
 		else
 		{

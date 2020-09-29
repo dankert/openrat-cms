@@ -73,7 +73,7 @@ class UserlistAction extends BaseAction
 	 */
 	public function addPost( $name )
 	{
-		$name = $this->request->cleanText($name,OR_FILTER_ALPHANUM);
+		$name = $this->request->cleanText($name,RequestParams::FILTER_ALPHANUM);
 
 		$user = User::loadWithName($name);
 

@@ -61,17 +61,17 @@ class ProjectAction extends BaseAction
 	{
 		if	( $this->getRequestVar('name') != '')
 		{
-			$this->project->name                 = $this->getRequestVar('name'               ,OR_FILTER_ALPHANUM);
-			$this->project->url                  = $this->getRequestVar('url'                ,OR_FILTER_ALPHANUM);
-			$this->project->target_dir           = $this->getRequestVar('target_dir'         ,OR_FILTER_RAW     );
-			$this->project->ftp_url              = $this->getRequestVar('ftp_url'            ,OR_FILTER_RAW     );
-			$this->project->ftp_passive          = $this->getRequestVar('ftp_passive'        ,OR_FILTER_RAW     );
-			$this->project->cmd_after_publish    = $this->getRequestVar('cmd_after_publish'  ,OR_FILTER_RAW     );
-			$this->project->content_negotiation  = $this->getRequestVar('content_negotiation',OR_FILTER_NUMBER  );
-			$this->project->cut_index            = $this->getRequestVar('cut_index'          ,OR_FILTER_NUMBER  );
-			$this->project->publishFileExtension = $this->getRequestVar('publishFileExtension',OR_FILTER_NUMBER  );
-			$this->project->publishPageExtension = $this->getRequestVar('publishPageExtension',OR_FILTER_NUMBER  );
-			$this->project->linkAbsolute         = $this->getRequestVar('linksAbsolute'       ,OR_FILTER_NUMBER  ) == '1';
+			$this->project->name                 = $this->getRequestVar('name'               ,RequestParams::FILTER_ALPHANUM);
+			$this->project->url                  = $this->getRequestVar('url'                ,RequestParams::FILTER_ALPHANUM);
+			$this->project->target_dir           = $this->getRequestVar('target_dir'         ,RequestParams::FILTER_RAW     );
+			$this->project->ftp_url              = $this->getRequestVar('ftp_url'            ,RequestParams::FILTER_RAW     );
+			$this->project->ftp_passive          = $this->getRequestVar('ftp_passive'        ,RequestParams::FILTER_RAW     );
+			$this->project->cmd_after_publish    = $this->getRequestVar('cmd_after_publish'  ,RequestParams::FILTER_RAW     );
+			$this->project->content_negotiation  = $this->getRequestVar('content_negotiation',RequestParams::FILTER_NUMBER  );
+			$this->project->cut_index            = $this->getRequestVar('cut_index'          ,RequestParams::FILTER_NUMBER  );
+			$this->project->publishFileExtension = $this->getRequestVar('publishFileExtension',RequestParams::FILTER_NUMBER  );
+			$this->project->publishPageExtension = $this->getRequestVar('publishPageExtension',RequestParams::FILTER_NUMBER  );
+			$this->project->linkAbsolute         = $this->getRequestVar('linksAbsolute'       ,RequestParams::FILTER_NUMBER  ) == '1';
 
 			$this->addNoticeFor($this->project,Messages::SAVED);
 			$this->project->save(); // speichern
@@ -218,7 +218,7 @@ class ProjectAction extends BaseAction
 			case 'check_files':
 				// Konsistenzprüfungen
 				$this->project->checkLostFiles();
-				$status = empty($this->project->log) ? OR_NOTICE_OK : OR_NOTICE_ERROR;
+				$status = empty($this->project->log) ? Action::NOTICE_OK : Action::NOTICE_ERROR;
 					
 				$this->addNotice('project',$this->project->name,'DONE',$status,array(),$this->project->log);
 				break;

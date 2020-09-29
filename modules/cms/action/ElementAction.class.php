@@ -76,13 +76,13 @@ class ElementAction extends BaseAction
 		{
 		    // Nur Inhalte löschen
 			$this->element->deleteValues();
-			$this->addNotice('element',$this->element->name,'DELETED',OR_NOTICE_OK);
+			$this->addNotice('element',$this->element->name,'DELETED',Action::NOTICE_OK);
 		}
 		elseif ( $type == 'all' )
 		{
 		    // Element löschen
 			$this->element->delete();
-			$this->addNotice('element',$this->element->name,'DELETED',OR_NOTICE_OK);
+			$this->addNotice('element',$this->element->name,'DELETED',Action::NOTICE_OK);
 		}
 	}
 
@@ -106,9 +106,9 @@ class ElementAction extends BaseAction
 
 
         if	( $this->hasRequestVar('default_longtext'))
-            $this->element->defaultText     = $this->getRequestVar('default_longtext',OR_FILTER_TEXT);
+            $this->element->defaultText     = $this->getRequestVar('default_longtext',RequestParams::FILTER_TEXT);
         else
-            $this->element->defaultText     = $this->getRequestVar('default_text',OR_FILTER_TEXT);
+            $this->element->defaultText     = $this->getRequestVar('default_text',RequestParams::FILTER_TEXT);
 
         $this->element->subtype         = $this->getRequestVar('subtype');
 
@@ -127,7 +127,7 @@ class ElementAction extends BaseAction
         if	( $this->hasRequestVar('select_items'))
             $this->element->code         = $this->getRequestVar('select_items');
         else
-            $this->element->code         = $this->getRequestVar('code'            ,OR_FILTER_RAW);
+            $this->element->code         = $this->getRequestVar('code'            ,RequestParams::FILTER_RAW);
 
         if	( $this->hasRequestVar('name') )
             $this->element->name = $this->getRequestVar('name');
@@ -136,7 +136,7 @@ class ElementAction extends BaseAction
             $this->element->setPrefix( $this->getRequestVar('linkelement') );
 
         if	( $this->hasRequestVar('parameters'))
-            $this->element->code = $this->getRequestVar('parameters',OR_FILTER_RAW);
+            $this->element->code = $this->getRequestVar('parameters',RequestParams::FILTER_RAW);
 
         $this->element->save();
         $this->addNotice('element',$this->element->name,'SAVED');
@@ -456,7 +456,7 @@ class ElementAction extends BaseAction
 
                         case Element::ELEMENT_TYPE_CODE:
                             if	( $conf['security']['disable_dynamic_code'] )
-                                $this->addNotice('element',$this->element->name,'CODE_DISABLED',OR_NOTICE_WARN);
+                                $this->addNotice('element',$this->element->name,'CODE_DISABLED',Action::NOTICE_WARN);
 
                             $this->setTemplateVar('code',$this->element->code);
                             break;
@@ -608,13 +608,13 @@ class ElementAction extends BaseAction
 
         $this->element->typeid = $this->getRequestId('typeid');
 
-        $this->element->name = $this->getRequestVar('name'       ,OR_FILTER_ALPHANUM);
-        $this->element->label= $this->getRequestVar('label'      ,OR_FILTER_TEXT);
-        $this->element->desc = $this->getRequestVar('description',OR_FILTER_TEXT);
+        $this->element->name = $this->getRequestVar('name'       ,RequestParams::FILTER_ALPHANUM);
+        $this->element->label= $this->getRequestVar('label'      ,RequestParams::FILTER_TEXT);
+        $this->element->desc = $this->getRequestVar('description',RequestParams::FILTER_TEXT);
 
         $this->element->save();
 
-        $this->addNotice('element',$this->element->name,'SAVED',OR_NOTICE_OK);
+        $this->addNotice('element',$this->element->name,'SAVED',Action::NOTICE_OK);
 	}
 }
 

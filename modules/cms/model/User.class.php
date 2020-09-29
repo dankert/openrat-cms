@@ -273,7 +273,7 @@ SQL
 		$row = $stmt->getRow();
 
 		if	( count($row) == 0 )
-			throw new \ObjectNotFoundException();
+			throw new \util\exception\ObjectNotFoundException();
 		
 		$this->setDatabaseRow( $row );		
 	}

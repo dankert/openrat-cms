@@ -62,7 +62,7 @@ class ObjectAction extends BaseAction
 		$sourceObject = new BaseObject( $this->getRequestId());
 		$sourceObject->load();
 		
-		$targetFolder = new BaseObject( $this->getRequestVar('targetFolderId',OR_FILTER_NUMBER));
+		$targetFolder = new BaseObject( $this->getRequestVar('targetFolderId',RequestParams::FILTER_NUMBER));
 		$targetFolder->load();
 		
 		$this->setTemplateVar('source'  ,$sourceObject->getProperties() );
@@ -73,7 +73,7 @@ class ObjectAction extends BaseAction
 		
 		if   ( ! $targetFolder->hasRight(Acl::ACL_WRITE) )
 		{
-			$this->addNotice('folder', $targetFolder->name, 'NOT_WRITABLE',OR_NOTICE_ERROR);
+			$this->addNotice('folder', $targetFolder->name, 'NOT_WRITABLE',Action::NOTICE_ERROR);
 		}
 	}
 	
@@ -84,8 +84,8 @@ class ObjectAction extends BaseAction
 	public function copyPost()
 	{
 		$type           = $this->getRequestVar('type');
-		$targetObjectId = $this->getRequestVar('targetid',OR_FILTER_NUMBER);
-		$sourceObjectId = $this->getRequestVar('sourceid',OR_FILTER_NUMBER);
+		$targetObjectId = $this->getRequestVar('targetid',RequestParams::FILTER_NUMBER);
+		$sourceObjectId = $this->getRequestVar('sourceid',RequestParams::FILTER_NUMBER);
 
 		$sourceObject = new BaseObject( $sourceObjectId );
 		$sourceObject->load();
@@ -96,7 +96,7 @@ class ObjectAction extends BaseAction
 		// Prüfen, ob Schreibrechte im Zielordner bestehen.
 		if   ( ! $targetFolder->hasRight(Acl::ACL_WRITE) )
 		{
-			$this->addNotice('folder', $targetFolder->name, 'NOT_WRITABLE',OR_NOTICE_ERROR);
+			$this->addNotice('folder', $targetFolder->name, 'NOT_WRITABLE',Action::NOTICE_ERROR);
 			return;
 		}
 		
@@ -118,7 +118,7 @@ class ObjectAction extends BaseAction
 					// dann verschieben
 					if	( in_array($targetObjectId,$allsubfolders) || $sourceObjectId == $targetObjectId )
 					{
-						$this->addNotice('folder',$sourceObject->name,'ERROR',OR_NOTICE_ERROR);
+						$this->addNotice('folder',$sourceObject->name,'ERROR',Action::NOTICE_ERROR);
 						return;
 					}
 				}
@@ -201,7 +201,7 @@ class ObjectAction extends BaseAction
 				// von Verkn�pfungen vorhanden sein.
 				if   ( ! $targetFolder->hasRight(Acl::ACL_CREATE_LINK) )
 				{
-					$this->addNotice('folder', $targetFolder->name, 'NOT_WRITABLE',OR_NOTICE_ERROR);
+					$this->addNotice('folder', $targetFolder->name, 'NOT_WRITABLE',Action::NOTICE_ERROR);
 					return;
 				}
 				
@@ -275,7 +275,7 @@ class ObjectAction extends BaseAction
 				return;
 		}
 
-		$acl->languageid    = $this->getRequestVar(REQ_PARAM_LANGUAGE_ID);
+		$acl->languageid    = $this->getRequestVar(RequestParams::PARAM_LANGUAGE_ID);
 
 		$acl->write         = ( $this->hasRequestVar('write'        ) );
 		$acl->prop          = ( $this->hasRequestVar('prop'         ) );
@@ -313,7 +313,7 @@ class ObjectAction extends BaseAction
 		
 		
 		
-		$this->addNotice('','','ADDED',OR_NOTICE_OK);
+		$this->addNotice('','','ADDED',Action::NOTICE_OK);
 		
 		$o->setTimestamp();
 	}
@@ -378,7 +378,7 @@ class ObjectAction extends BaseAction
 		
 		if	( ! $this->hasRequestVar('inherit') )
 		{
-			$this->addNotice('folder',$folder->name,'NOTHING_DONE',OR_NOTICE_WARN);
+			$this->addNotice('folder',$folder->name,'NOTHING_DONE',Action::NOTICE_WARN);
 			return;
 		}
 		
@@ -426,7 +426,7 @@ class ObjectAction extends BaseAction
 			}
 		}
 		
-		$this->addNotice('folder',$folder->name,'SAVED',OR_NOTICE_OK);
+		$this->addNotice('folder',$folder->name,'SAVED',Action::NOTICE_OK);
 	}
 
 
@@ -475,7 +475,7 @@ class ObjectAction extends BaseAction
 
 		$acl->delete(); // Weg mit der ACL
 		
-		$this->addNotice('','','DELETED',OR_NOTICE_OK);
+		$this->addNotice('','','DELETED',Action::NOTICE_OK);
 	}
 
 
@@ -503,7 +503,7 @@ class ObjectAction extends BaseAction
 
         // Should we do this?
         if	( $this->hasRequestVar('creationTimestamp') && $this->userIsAdmin() )
-            $this->baseObject->createDate = $this->getRequestVar('creationTimestamp',OR_FILTER_NUMBER);
+            $this->baseObject->createDate = $this->getRequestVar('creationTimestamp',RequestParams::FILTER_NUMBER);
         $this->baseObject->setCreationTimestamp();
 
 
@@ -607,7 +607,7 @@ class ObjectAction extends BaseAction
 
         $this->baseObject->save();
 
-        $this->addNotice($this->baseObject->getType(),$this->baseObject->filename,'SAVED',OR_NOTICE_OK);
+        $this->addNotice($this->baseObject->getType(),$this->baseObject->filename,'SAVED',Action::NOTICE_OK);
     }
 
 

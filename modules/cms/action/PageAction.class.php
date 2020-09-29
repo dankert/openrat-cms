@@ -161,7 +161,7 @@ class PageAction extends ObjectAction
 				else
 				{
 					// sonst nur 1x speichern (fuer die aktuelle Sprache)
-					$value->languageid = $this->getSessionVar(REQ_PARAM_LANGUAGE_ID);
+					$value->languageid = $this->getSessionVar(RequestParams::PARAM_LANGUAGE_ID);
 					$value->save();
 				}
 			}
@@ -503,10 +503,10 @@ class PageAction extends ObjectAction
 		if	( $newTemplateId != 0  )
 		{
 			$this->page->replaceTemplate( $newTemplateId,$replaceElementMap );
-			$this->addNotice('page',$this->page->name,'SAVED',OR_NOTICE_OK);
+			$this->addNotice('page',$this->page->name,'SAVED',Action::NOTICE_OK);
 		}
 		else
-			$this->addNotice('page',$this->page->name,'NOT_SAVED',OR_NOTICE_WARN);
+			$this->addNotice('page',$this->page->name,'NOT_SAVED',Action::NOTICE_WARN);
 	}
 
 
@@ -637,7 +637,7 @@ class PageAction extends ObjectAction
 	{
 	    $this->setModelAndLanguage();
 
-		$this->setTemplateVar('preview_url',Html::url('page','show',$this->page->objectid,array(REQ_PARAM_LANGUAGE_ID=>$this->page->getProject()->getDefaultLanguageId(),REQ_PARAM_MODEL_ID=>$this->page->getProject()->getDefaultModelId()) ) );
+		$this->setTemplateVar('preview_url',Html::url('page','show',$this->page->objectid,array(RequestParams::PARAM_LANGUAGE_ID=>$this->page->getProject()->getDefaultLanguageId(),RequestParams::PARAM_MODEL_ID=>$this->page->getProject()->getDefaultModelId()) ) );
 	}
 
 
@@ -807,11 +807,11 @@ class PageAction extends ObjectAction
         if   ( $this->getRequestVar('delete') != '' )
         {
             $this->page->delete();
-            $this->addNotice('page',$this->page->filename,'DELETED',OR_NOTICE_OK);
+            $this->addNotice('page',$this->page->filename,'DELETED',Action::NOTICE_OK);
         }
         else
         {
-            $this->addNotice('page',$this->page->filename,'CANCELED',OR_NOTICE_WARN);
+            $this->addNotice('page',$this->page->filename,'CANCELED',Action::NOTICE_WARN);
         }
     }
 

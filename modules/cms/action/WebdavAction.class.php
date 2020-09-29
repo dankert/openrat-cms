@@ -136,7 +136,7 @@ class WebdavAction extends BaseAction
 		// Authentisierung erzwingen (au�er bei Methode OPTIONS).
         // For the motivation for not checking OPTIONS requests see 
         // http://pear.php.net/bugs/bug.php?id=5363
-		if	( !is_object($user) && $_GET[REQ_PARAM_SUBACTION] != 'options' )
+		if	( !is_object($user) && $_GET[RequestParams::PARAM_SUBACTION] != 'options' )
 		{
 			Logger::debug( 'Checking Authentication' );
 			
@@ -169,7 +169,7 @@ class WebdavAction extends BaseAction
 				exit;
 			}
 		}
-		elseif	( !is_object($user) && $_GET[REQ_PARAM_SUBACTION] == 'options' )
+		elseif	( !is_object($user) && $_GET[RequestParams::PARAM_SUBACTION] == 'options' )
 		{
 			$this->setDefaultDb();
 		}

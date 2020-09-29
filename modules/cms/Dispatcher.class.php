@@ -289,12 +289,6 @@ class Dispatcher
         $do->request         = $this->request;
         $do->init();
 
-        if(!defined('OR_ID'))
-        //if (isset($REQ[REQ_PARAM_ID]))
-            define('OR_ID', $this->request->id);
-        //else
-          //  define('OR_ID', '');
-
         $this->checkAccess($do);
 
         // POST-Request => ...Post() wird aufgerufen.
@@ -316,7 +310,7 @@ class Dispatcher
             $declaredActionName = strtolower(substr($declaredClassName,0,strpos($declaredClassName,'Action')));
 			$params             = [];
 			foreach( $method->getParameters() as $parameter ) {
-				$params[ $parameter->getName() ] = $this->request->getRequiredRequestVar($parameter->getName(),OR_FILTER_RAW);
+				$params[ $parameter->getName() ] = $this->request->getRequiredRequestVar($parameter->getName(),RequestParams::FILTER_RAW);
 			}
 
             $method->invokeArgs($do,$params); // <== Executing the Action
@@ -347,7 +341,7 @@ class Dispatcher
         $firstDbContact = ! Session::getDatabaseId() || $this->request->hasRequestVar('dbid');
 
         if   ( $this->request->hasRequestVar('dbid') )
-            $dbid = $this->request->getRequestVar('dbid',OR_FILTER_ALPHANUM);
+            $dbid = $this->request->getRequestVar('dbid',RequestParams::FILTER_ALPHANUM);
         elseif   ( Session::getDatabaseId() )
             $dbid = Session::getDatabaseId();
         elseif   ( isset($_COOKIE['or_dbid']) )

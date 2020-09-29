@@ -69,7 +69,7 @@ class Table
 	{
 		$tableName = $this->getSqlName();
 
-		$table_opts = $this->dbmsType == OR_DB_TYPE_MYSQL ? ' ENGINE=InnoDB CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci' : '';
+		$table_opts = $this->dbmsType == DbVersion::TYPE_MYSQL ? ' ENGINE=InnoDB CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci' : '';
 
 		$ddl = $this->db->sql('CREATE TABLE ' . $tableName . '(id INTEGER)' . $table_opts . ';');
 		// The syntax 'TYPE = InnoDB' was deprecated in MySQL 5.0 and was removed in MySQL 5.1 and later versions.

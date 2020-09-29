@@ -18,6 +18,8 @@
 
 
 namespace util;
+use cms\action\RequestParams;
+
 /**
  * Bereitstellen von Methoden fuer die Darstellung von HTML-Elementen
  *
@@ -84,9 +86,9 @@ class Html
 //			if	( $id != '' )
 //				$id = '.'.$id;
 		} else {
-			$params[REQ_PARAM_ACTION] = $action;
-			$params[REQ_PARAM_SUBACTION] = $subaction;
-			$params[REQ_PARAM_ID] = $id;
+			$params[RequestParams::PARAM_ACTION] = $action;
+			$params[RequestParams::PARAM_SUBACTION] = $subaction;
+			$params[RequestParams::PARAM_ID] = $id;
 		}
 
 		if (count($params) > 0) {
@@ -95,8 +97,8 @@ class Html
 				$urlParameterList[] = urlencode($var) . '=' . urlencode($value);
 			}
 
-			$urlParameterList['_'] = @$urlParameterList[REQ_PARAM_ACTION] . '-' . @$urlParameterList[REQ_PARAM_ID];
-			unset($urlParameterList[REQ_PARAM_ACTION], $urlParameterList[REQ_PARAM_ID]);
+			$urlParameterList['_'] = @$urlParameterList[RequestParams::PARAM_ACTION] . '-' . @$urlParameterList[RequestParams::PARAM_ID];
+			unset($urlParameterList[RequestParams::PARAM_ACTION], $urlParameterList[RequestParams::PARAM_ID]);
 
 			// We do not escape '&' as '&amp;' here, as it would brake things like Ajax-Urls.
 			// Maybe the escaping should be controled by a parameter.
