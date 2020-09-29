@@ -1020,11 +1020,11 @@ class DefaultConfig {
 					'moorweide' =>
 						[ 
 							'name' => 'Moorweide',
-							'title_background_color' => '#2aaae7',
-							'title_text_color' => 'white',
-							'text_color' => '#005e51',
-							'background_color' => '#edf6f3',
-							'inactive_background_color' => '#ececed',
+							'title_background_color' => '#edf7f2',
+							'title_text_color' => '#005f52',
+							'text_color' => 'black',
+							'background_color' => 'white',
+							'inactive_background_color' => '#edf7f2',
 						],
 					'dark' =>
 						[ 

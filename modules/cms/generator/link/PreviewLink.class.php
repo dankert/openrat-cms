@@ -2,6 +2,7 @@
 
 namespace cms\generator\link;
 
+use cms\action\RequestParams;
 use cms\generator\PageContext;
 use cms\model\Alias;
 use cms\model\BaseObject;

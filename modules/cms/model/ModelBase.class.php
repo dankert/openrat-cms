@@ -3,13 +3,6 @@ namespace cms\model;
 
 abstract class ModelBase
 {
-    /*
-    protected function setDatabaseRow( $row )
-    {
-        
-    }
-    */
-
     public function __construct()
     {
     }
