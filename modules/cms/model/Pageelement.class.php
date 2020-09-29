@@ -51,5 +51,10 @@ class Pageelement extends ModelBase
 		$e->load();
 		return $e->getName();
 	}
+
+	public function delete()
+	{
+
+	}
 }
 

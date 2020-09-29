@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use cms\base\Language as L;
 use cms\generator\PageContext;
 use cms\generator\PageGenerator;
 use cms\generator\Producer;
@@ -914,11 +915,9 @@ class PageelementAction extends BaseAction
         $value->publish = false;
 
         // Up-To-Date-Check
-        $lastChangeTime = $value->getLastChangeTime();
-        if	( $lastChangeTime > $this->getRequestVar('value_time') )
-        {
-            $this->addNotice('pageelement',$value->element->name,'CONCURRENT_VALUE_CHANGE',Action::NOTICE_WARN,array('last_change_time'=>date(\cms\base\Language::lang('DATE_FORMAT'),$lastChangeTime)));
-        }
+        $lastChangeTime = $value->getLastChangeSinceByAnotherUser( $this->getRequestVar('value_time'), Session::getUser()->userid );
+        if	( $lastChangeTime  )
+            $this->addWarningFor( $this->value,Messages::CONCURRENT_VALUE_CHANGE, array('last_change_time'=>date(L::lang('DATE_FORMAT'),$lastChangeTime)));
 
         // Inhalt speichern
 

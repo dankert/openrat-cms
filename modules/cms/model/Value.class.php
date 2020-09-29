@@ -361,9 +361,38 @@ SQL
 
 		return $sql->getOne();
 	}
-	
-	
-	
+
+
+	/**
+	 * Gets the last change date by another user since a specific date.
+	 * @param $date
+	 * @param $userid
+	 * @return String
+	 */
+	public function getLastChangeSinceByAnotherUser( $date, $userid )
+	{
+		$sql = Db::sql(
+<<<SQL
+	SELECT lastchange_date FROM {{value}}
+		WHERE elementid ={elementid}
+		  AND pageid    ={pageid}
+		  AND languageid={languageid}
+		  AND lastchange_date > {date}
+		  AND lastchange_userid != {userid}
+		  ORDER BY id DESC
+SQL
+		);
+		$sql->setInt( 'elementid' ,$this->element->elementid );
+		$sql->setInt( 'pageid'    ,$this->pageid    );
+		$sql->setInt( 'languageid',$this->languageid);
+		$sql->setInt( 'date'      ,$date  );
+		$sql->setInt( 'userid'    ,$userid);
+
+		return $sql->getOne();
+	}
+
+
+
 	/**
 	 * Inhalt freigeben
 	 */
