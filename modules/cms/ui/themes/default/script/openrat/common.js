@@ -179,9 +179,9 @@ Openrat.Workbench.afterNewActionHandler.add( function() {
 Openrat.Workbench.afterViewLoadedHandler.add( function(element) {
 
     // Refresh already opened popup windows.
-    if   ( typeof popupWindow != "undefined" )
+    if   ( Openrat.Workbench.popupWindow )
         $(element).find("a[data-type='popup']").each( function() {
-            popupWindow.location.href = $(this).attr('data-url');
+			Openrat.Workbench.popupWindow.location.href = $(this).attr('data-url');
         });
 
 });
@@ -293,7 +293,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
         $($element).find('.search input').orSearch( {
             dropdown:'#title div.search div.dropdown',
             select: function(obj) {
-                openNewAction( obj.name, obj.action, obj.id );
+                Openrat.Workbench.openNewAction( obj.name, obj.action, obj.id );
             }
         } );
 
@@ -329,8 +329,8 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
     function registerDragAndDrop(viewEl)
     {
 
-        registerDraggable(viewEl);
-        registerDroppable(viewEl);
+		Openrat.Workbench.registerDraggable(viewEl);
+		Openrat.Workbench.registerDroppable(viewEl);
     }
 
     registerDragAndDrop(viewEl);
@@ -338,240 +338,3 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 
 } );
 
-
-
-function registerDraggable(viewEl) {
-
-// Drag n Drop: Inhaltselemente (Dateien,Seiten,Ordner,Verknuepfungen) koennen auf Ordner gezogen werden.
-
-    $(viewEl).find('.or-draggable').draggable(
-        {
-            helper: 'clone',
-            opacity: 0.7,
-            zIndex: 2,
-            distance: 10,
-            cursor: 'move',
-            revert: 'false'
-        }
-    );
-
-}
-
-function registerTreeBranchEvents(viewEl)
-{
-    registerDraggable(viewEl);
-}
-
-
-function registerDroppable(viewEl) {
-
-
-    $(viewEl).find('.or-droppable').droppable({
-        accept: '.or-draggable',
-        hoverClass: 'or-droppable--hover',
-        activeClass: 'or-droppable--active',
-
-        drop: function (event, ui) {
-
-            let dropped = ui.draggable;
-
-            let id   = dropped.data('id'  );
-            let name = dropped.data('name');
-            if   (!name)
-                name = id;
-
-            $(this).find('.or-selector-link-value').val( id );
-            $(this).find('.or-selector-link-name' ).val( name ).attr('placeholder',name );
-        }
-    });
-}
-
-
-
-
-
-
-/**
- * Setzt neuen modalen Dialog und aktualisiert alle Fenster.
- * @param name
- * @param action Action
- * @param method
- * @param id Id
- * @param params
- */
-function startDialog( name,action,method,id,params )
-{
-	// Attribute aus dem aktuellen Editor holen, falls die Daten beim Aufrufer nicht angegeben sind.
-	if (!action)
-		action = $('#editor').attr('data-action');
-
-    if  (!id)
-        id = $('#editor').attr('data-id');
-
-	let view = new Openrat.View( action,method,id,params );
-
-    view.before = function() {
-        $('#dialog > .view').html('<div class="header"><img class="icon" title="" src="./themes/default/images/icon/'+method+'.png" />'+name+'</div>');
-        $('#dialog > .view').data('id',id);
-        $('#dialog').removeClass('is-closed').addClass('is-open');
-
-        let view = this;
-
-        this.escapeKeyClosingHandler = function (e) {
-            if (e.keyCode == 27) { // ESC keycode
-                view.close();
-
-                $(document).off('keyup'); // de-register.
-            }
-        };
-
-        $(document).keyup(this.escapeKeyClosingHandler);
-
-        // Nicht-Modale Dialoge durch Klick auf freie Fläche schließen.
-        $('#dialog .filler').click( function()
-        {
-             view.close();
-        });
-
-    }
-
-    view.close = function() {
-
-        // Strong modal dialogs are unable to close.
-        // Really?
-        if	( $('div#dialog').hasClass('modal') )
-            return;
-
-		$('#dialog .view').removeClass('dirty');
-        $('#dialog .view').html('');
-        $('#dialog').removeClass('is-open').addClass('is-closed'); // Dialog schließen
-
-        $(document).unbind('keyup',this.escapeKeyClosingHandler); // Cleanup ESC-Key-Listener
-    }
-
-	view.start( $('div#dialog > .view') );
-}
-
-
-
-
-/**
- * Setzt einen Fenster-Titel für die ganze Anwendung. 
- */
-function setTitle( title )
-{
-	if	( title )
-		$('head > title').text( title + ' - ' + $('head > title').data('default') );
-	else
-		$('head > title').text( $('head > title').data('default') );
-}
-
-
-
-/**
- * Setzt neue Action und aktualisiert alle Fenster.
- * 
- * @param action Action
- * @param id Id
- */
-function openNewAction( name,action,id )
-{
-	// Im Mobilmodus soll das Menü verschwinden, wenn eine neue Action geoeffnet wird.
-    $('nav').removeClass('open');
-
-    setTitle( name ); // Title setzen.
-
-    Openrat.Navigator.navigateToNew( {'action':action, 'id':id } );
-}
-
-
-
-
-//Quelle:
-//http://aktuell.de.selfhtml.org/tippstricks/javascript/bbcode/
-function insert(tagName, aTag, eTag)
-{
-var input = document.forms[0].elements[tagName];
-input.focus();
-/* IE */
-if(typeof document.selection != 'undefined') {
- /* Einfuegen des Formatierungscodes */
-// alert('IE');
- var range = document.selection.createRange();
- var insText = range.text;
- range.text = aTag + insText + eTag;
- /* Anpassen der Cursorposition */
- range = document.selection.createRange();
- if (insText.length == 0) {
-   range.move('character', -eTag.length);
- } else {
-   range.moveStart('character', aTag.length + insText.length + eTag.length);      
- }
- range.select();
-}
-/* Gecko */
-else if(typeof input.selectionStart != 'undefined')
-{
-// alert('Gecko');
- /* Einfuegen des Formatierungscodes */
- var start = input.selectionStart;
- var end = input.selectionEnd;
- var insText = input.value.substring(start, end);
- input.value = input.value.substr(0, start) + aTag + insText + eTag + input.value.substr(end);
- /* Anpassen der Cursorposition */
- var pos;
- if (insText.length == 0) {
-   pos = start + aTag.length;
- } else {
-   pos = start + aTag.length + insText.length + eTag.length;
- }
- input.selectionStart = pos;
- input.selectionEnd = pos;
-}
-/* uebrige Browser */
-else
-{
- /* Abfrage der Einfuegeposition */
- 
- /*
- var pos;
- var re = new RegExp('^[0-9]{0,3}$');
- while(!re.test(pos)) {
-   pos = prompt("Position (0.." + input.value.length + "):", "0");
- }
- if(pos > input.value.length) {
-   pos = input.value.length;
- }
-	*/
- pos = input.value.length;
- 
- /* Einfuegen des Formatierungscodes */
- var insText = prompt("Text");
- input.value = input.value.substr(0, pos) + aTag + insText + eTag + input.value.substr(pos);
-}
-}
-
-
-
-
-
-function help(el,url,suffix)
-{
-	var action = $(el).closest('div.panel').find('li.action.active').attr('data-action');
-	var method = $(el).closest('div.panel').find('li.action.active').attr('data-method');
-	
-	window.open(url + action + '/'+ method + suffix, 'OpenRat_Help', 'location=no,menubar=no,scrollbars=yes,toolbar=no,resizable=yes');
-}
-
-
-function htmlEntities(str) {
-    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
-
-function registerOpenClose( $el )
-{
-    $($el).children('.on-click-open-close').click( function() {
-        $(this).closest('.toggle-open-close').toggleClass('open closed');
-    });
-
-}

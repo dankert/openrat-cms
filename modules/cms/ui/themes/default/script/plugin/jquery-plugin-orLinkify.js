@@ -1,21 +1,19 @@
 /**
- * Enable clicking on '.clickable'-Areas.
+ * JQuery-Plugin, enable clicking on an area.
+ * It searches for an anchor (<a href="..." />) in the child elements and virtually clicks on it.
  */
-
-var popupWindow;
-
 jQuery.fn.orLinkify = function()
 {
 
-    // Das 'echte' Ausführen der Links deaktivieren, da dies schon per Javascript erfolgt.
-    // Das Öffnen in einem neuen Tab funktioniert aber weiterhin über die URL.
+    // Disable all links in this linkified area.
+    // The user is already able to open the link in a new tab.
     $(this).find('a').click( function(event) {
         event.preventDefault();
     } );
 
     return $(this).click(function()
 	{
-
+		// Searching for the first link in all children.
 		$(this).find('a').first().each( function() {
 
 			let type = $(this).attr('data-type');
@@ -26,6 +24,9 @@ jQuery.fn.orLinkify = function()
 
 			switch( type )
 			{
+				/**
+				 * Creating a temporary form element for submitting a POST request.
+				 */
 				case 'post':
 
 					// Create a temporary form element.
@@ -49,7 +50,7 @@ jQuery.fn.orLinkify = function()
 
 				case 'edit':
 				case 'dialog':
-					startDialog($(this).attr('data-name'),$(this).attr('data-action'),$(this).attr('data-method'),$(this).attr('data-id'),$(this).attr('data-extra') );
+					Openrat.Workbench.startDialog($(this).attr('data-name'),$(this).attr('data-action'),$(this).attr('data-method'),$(this).attr('data-id'),$(this).attr('data-extra') );
 					break;
 
 				case 'external':
@@ -57,7 +58,7 @@ jQuery.fn.orLinkify = function()
 					break;
 
 				case 'popup':
-					popupWindow = window.open( $(this).attr('data-url'), 'Popup', 'location=no,menubar=no,scrollbars=yes,toolbar=no,resizable=yes');
+					Openrat.Workbench.popupWindow = window.open( $(this).attr('data-url'), 'Popup', 'location=no,menubar=no,scrollbars=yes,toolbar=no,resizable=yes');
 					break;
 
 				case 'help':
@@ -69,7 +70,7 @@ jQuery.fn.orLinkify = function()
 					break;
 
 				case 'open':
-					openNewAction( $(this).attr('data-name'),$(this).attr('data-action'),$(this).attr('data-id') );
+					Openrat.Workbench.openNewAction( $(this).attr('data-name'),$(this).attr('data-action'),$(this).attr('data-id') );
 					break;
 
 				default:

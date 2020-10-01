@@ -6,7 +6,13 @@
  */
 jQuery.fn.orTree = function ()
 {
-    $(this).each(function (idxx, treeEl)
+	let registerTreeBranchEvents = function (viewEl)
+	{
+		Openrat.Workbench.registerDraggable(viewEl);
+	}
+
+
+	$(this).each(function (idxx, treeEl)
     {
         // Klick-Funktion zum Öffnen des Zweiges.
         $(treeEl).children('.or-navtree-node-control').click( function ()
@@ -56,13 +62,13 @@ jQuery.fn.orTree = function ()
                     $ul.append( html );
                     $ul.find('li').orTree(); // All subnodes are getting event listener for open/close
 
-					// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
-					$ul.find('.clickable').orLinkify();
 					/* macht linkify schon
 					$(new_li).find('.clickable a').click( function(event) {
 						event.preventDefault(); // Links werden per Javascript geöffnet. Beim Öffnen im neuen Tab hat das aber keine Bedeutung.
 					} );*/
 					registerTreeBranchEvents($ul);
+					// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
+					$ul.find('.clickable').orLinkify();
                     $ul.slideDown('fast'); // Einblenden
 
                 }).fail(function () {

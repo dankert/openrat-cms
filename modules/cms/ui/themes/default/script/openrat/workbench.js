@@ -7,6 +7,7 @@ Openrat.Workbench = new function()
 
     this.state = {};
 
+    this.popupWindow = null;
 
     /**
 	 * Initializes the Workbench.
@@ -48,7 +49,7 @@ Openrat.Workbench = new function()
     this.openModalDialog = function () {
 
         if   ( $('#dialog').data('action') ) {
-            startDialog('',$('#dialog').data('action'),$('#dialog').data('action'),0,{})
+            this.startDialog('',$('#dialog').data('action'),$('#dialog').data('action'),0,{})
         }
     }
 
@@ -400,8 +401,8 @@ Openrat.Workbench = new function()
 	this.dataChangedHandler = $.Callbacks();
 
 	this.dataChangedHandler.add( function() {
-		if   ( popupWindow !== undefined )
-			popupWindow.location.reload();
+		if   ( Openrat.Workbench.popupWindow )
+			Openrat.Workbench.popupWindow.location.reload();
 	} );
 
     this.afterViewLoadedHandler = $.Callbacks();
@@ -419,6 +420,167 @@ Openrat.Workbench = new function()
         });
     }
 
-}
 
+	/**
+	 * Sets the application title.
+	 */
+	this.setApplicationTitle = function( title ) {
+
+		if (title)
+			$('head > title').text( title + ' - ' + $('head > title').data('default') );
+		else
+			$('head > title').text( $('head > title').data('default') );
+	}
+
+
+	/**
+	 * Escape HTML entities.
+	 *
+	 * @param str
+	 * @returns {string}
+	 */
+	var htmlEntities = function( str ) {
+		return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+	}
+
+
+	/**
+	 * open and close groups.
+	 *
+	 * @param $el
+	 */
+	this.registerOpenClose = function( $el )
+	{
+		$($el).children('.on-click-open-close').click( function() {
+			$(this).closest('.toggle-open-close').toggleClass('open closed');
+		});
+	}
+
+
+
+	/**
+	 * Setzt neue Action und aktualisiert alle Fenster.
+	 *
+	 * @param action Action
+	 * @param id Id
+	 */
+	this.openNewAction = function( name,action,id )
+	{
+		// Im Mobilmodus soll das Menü verschwinden, wenn eine neue Action geoeffnet wird.
+		$('nav').removeClass('open');
+
+		Openrat.Workbench.setApplicationTitle( name ); // Sets the title.
+
+		Openrat.Navigator.navigateToNew( {'action':action, 'id':id } );
+	}
+
+
+
+	/**
+	 * Creating a new modal dialog.
+	 *
+	 * @param name
+	 * @param action Action
+	 * @param method
+	 * @param id Id
+	 * @param params
+	 */
+	this.startDialog = function( name,action,method,id,params )
+	{
+		// Attribute aus dem aktuellen Editor holen, falls die Daten beim Aufrufer nicht angegeben sind.
+		if (!action)
+			action = $('#editor').attr('data-action');
+
+		if  (!id)
+			id = $('#editor').attr('data-id');
+
+		let view = new Openrat.View( action,method,id,params );
+
+		view.before = function() {
+			$('#dialog > .view').html('<div class="header"><img class="icon" title="" src="./themes/default/images/icon/'+method+'.png" />'+name+'</div>');
+			$('#dialog > .view').data('id',id);
+			$('#dialog').removeClass('is-closed').addClass('is-open');
+
+			let view = this;
+
+			this.escapeKeyClosingHandler = function (e) {
+				if (e.keyCode == 27) { // ESC keycode
+					view.close();
+
+					$(document).off('keyup'); // de-register.
+				}
+			};
+
+			$(document).keyup(this.escapeKeyClosingHandler);
+
+			// Nicht-Modale Dialoge durch Klick auf freie Fläche schließen.
+			$('#dialog .filler').click( function()
+			{
+				view.close();
+			});
+
+		}
+
+		view.close = function() {
+
+			// Strong modal dialogs are unable to close.
+			// Really?
+			if	( $('div#dialog').hasClass('modal') )
+				return;
+
+			$('#dialog .view').removeClass('dirty');
+			$('#dialog .view').html('');
+			$('#dialog').removeClass('is-open').addClass('is-closed'); // Dialog schließen
+
+			$(document).unbind('keyup',this.escapeKeyClosingHandler); // Cleanup ESC-Key-Listener
+		}
+
+		view.start( $('div#dialog > .view') );
+	}
+
+
+
+
+	this.registerDraggable = function(viewEl) {
+
+// Drag n Drop: Inhaltselemente (Dateien,Seiten,Ordner,Verknuepfungen) koennen auf Ordner gezogen werden.
+
+		$(viewEl).find('.or-draggable').draggable(
+			{
+				helper: 'clone',
+				opacity: 0.7,
+				zIndex: 2,
+				distance: 10,
+				cursor: 'move',
+				revert: 'false'
+			}
+		);
+
+	}
+
+
+	this.registerDroppable = function(viewEl) {
+
+
+		$(viewEl).find('.or-droppable').droppable({
+			accept: '.or-draggable',
+			hoverClass: 'or-droppable--hover',
+			activeClass: 'or-droppable--active',
+
+			drop: function (event, ui) {
+
+				let dropped = ui.draggable;
+
+				let id   = dropped.data('id'  );
+				let name = dropped.data('name');
+				if   (!name)
+					name = id;
+
+				$(this).find('.or-selector-link-value').val( id );
+				$(this).find('.or-selector-link-name' ).val( name ).attr('placeholder',name );
+			}
+		});
+	}
+
+}
 
