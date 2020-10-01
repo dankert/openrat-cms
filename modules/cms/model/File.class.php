@@ -144,7 +144,7 @@ class File extends BaseObject
 			$this->mime_type = $mime_types[$ext];
 		else
 			// Wenn kein Mime-Type gefunden, dann Standartwert setzen
-			$this->mime_type = self::OR_FILE_DEFAULT_MIMETYPE;
+			$this->mime_type = self::DEFAULT_MIMETYPE;
 
 		return( $this->mime_type );
 	}
