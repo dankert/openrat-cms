@@ -139,7 +139,7 @@ class LanguagelistAction extends BaseAction
 		$language->name      = $countryList[$iso];
 		$language->add();
 		
-		$this->addNotice('language',$language->name,'ADDED','ok');
+		$this->addNotice('language', 0, $language->name, 'ADDED', 'ok');
 	}
 
 	

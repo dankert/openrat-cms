@@ -358,6 +358,9 @@ class Group extends ModelBase
         return $this->name;
     }
 
-}
+	public function getId()
+	{
+		return $this->groupid;
+	}
 
-?>
+}

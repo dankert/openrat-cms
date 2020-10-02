@@ -40,7 +40,7 @@
                   <span><?php echo O::escapeHtml(''.@O::lang('FILE_IMAGE_SIZE_FACTOR').'') ?>
                   </span>
                 </label>
-                <select name="<?php echo O::escapeHtml('factor') ?>" size="<?php echo O::escapeHtml('1') ?>"><?php echo O::escapeHtml('') ?>
+                <select name="<?php echo O::escapeHtml('factor') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
                   <?php foreach($factors as $_key=>$_value) {  ?>
                     <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$factor){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
                     </option>
@@ -63,14 +63,10 @@
               <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
               </div>
               <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-                <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
-                  <input name="<?php echo O::escapeHtml('width') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$width.'') ?>" /><?php echo O::escapeHtml('') ?>
-                </div>
+                <input name="<?php echo O::escapeHtml('width') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$width.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(' * ') ?>
                 </span>
-                <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
-                  <input name="<?php echo O::escapeHtml('height') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$height.'') ?>" /><?php echo O::escapeHtml('') ?>
-                </div>
+                <input name="<?php echo O::escapeHtml('height') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$height.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
               </div>
             </div>
           </div>
@@ -92,7 +88,7 @@
                 </label>
               </div>
               <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-                <select name="<?php echo O::escapeHtml('format') ?>" size="<?php echo O::escapeHtml('1') ?>"><?php echo O::escapeHtml('') ?>
+                <select name="<?php echo O::escapeHtml('format') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
                   <?php foreach($formats as $_key=>$_value) {  ?>
                     <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$format){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
                     </option>
@@ -110,7 +106,7 @@
               <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
                 <?php  { $jpeg_compression= 70; ?>
                  <?php } ?>
-                <select name="<?php echo O::escapeHtml('jpeg_compression') ?>" size="<?php echo O::escapeHtml('1') ?>"><?php echo O::escapeHtml('') ?>
+                <select name="<?php echo O::escapeHtml('jpeg_compression') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
                   <?php foreach($jpeglist as $_key=>$_value) {  ?>
                     <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$jpeg_compression){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
                     </option>

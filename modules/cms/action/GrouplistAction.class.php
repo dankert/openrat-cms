@@ -76,7 +76,7 @@ class GrouplistAction extends BaseAction
 			$this->group = new Group();
 			$this->group->name = $this->getRequestVar('name');
 			$this->group->add();
-			$this->addNotice('group',$this->group->name,'ADDED','ok');
+			$this->addNotice('group', 0, $this->group->name, 'ADDED', 'ok');
 			$this->callSubAction('listing');
 		}
 		else

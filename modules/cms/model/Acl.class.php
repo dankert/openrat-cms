@@ -524,4 +524,11 @@ SQL
         return '';
     }
 
+
+	public function getId()
+	{
+		return $this->aclid;
+	}
+
+
 }

@@ -13,9 +13,7 @@
           </span>
         </td>
         <td><?php echo O::escapeHtml('') ?>
-          <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
-            <input name="<?php echo O::escapeHtml('name') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$name.'') ?>" /><?php echo O::escapeHtml('') ?>
-          </div>
+          <input name="<?php echo O::escapeHtml('name') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$name.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
         </td>
       </tr>
       <tr><?php echo O::escapeHtml('') ?>
@@ -42,7 +40,7 @@
                   <span><?php echo O::escapeHtml(''.@O::lang('copy').'') ?>
                   </span>
                 </label>
-                <select name="<?php echo O::escapeHtml('projectid') ?>" size="<?php echo O::escapeHtml('1') ?>"><?php echo O::escapeHtml('') ?>
+                <select name="<?php echo O::escapeHtml('projectid') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
                   <?php foreach($projects as $_key=>$_value) {  ?>
                     <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$projectid){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
                     </option>

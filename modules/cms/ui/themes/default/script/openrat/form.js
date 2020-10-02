@@ -103,7 +103,7 @@ Openrat.Form = function() {
 
         // Alle vorhandenen Error-Marker entfernen.
         // Falls wieder ein Fehler auftritt, werden diese erneut gesetzt.
-        $(this.element).find('.error').removeClass('error');
+        $(this.element).find('.or-input.error').removeClass('error');
 
         let params = $(this.element).serializeArray();
         let data = {};
@@ -183,12 +183,12 @@ Openrat.Form = function() {
                     try
                     {
                         let error = jQuery.parseJSON( jqXHR.responseText );
-                        Openrat.Workbench.notify('','','error',error.error,[error.description]);
+                        Openrat.Workbench.notify('', 0, '', 'error', error.error, [error.description]);
                     }
                     catch( e )
                     {
                         let msg = jqXHR.responseText;
-                        Openrat.Workbench.notify('','','error','Server Error',[msg]);
+                        Openrat.Workbench.notify('', 0, '', 'error', 'Server Error', [msg]);
                     }
 
 
@@ -226,7 +226,7 @@ Openrat.Form = function() {
             // gewechselt hat.
             let notifyBrowser = $(element).data('async');
 
-            Openrat.Workbench.notify(value.type, value.name, value.status, value.text, value.log, notifyBrowser ); // Notice anhängen.
+            Openrat.Workbench.notify(value.type, value.id, value.name, value.status, value.text, value.log, notifyBrowser); // Notice anhängen.
 
             if	( value.status == 'ok' ) // Kein Fehler?
             {
@@ -239,17 +239,12 @@ Openrat.Form = function() {
             }
         });
 
-        // Felder mit Fehleingaben markieren, ggf. das übergeordnete Fieldset aktivieren.
+        // Validation error should mark the input field.
         $.each(data['errors'], function(idx,value) {
-            $('input[name='+value+']').addClass('error').parent().addClass('error').parents('fieldset').removeClass('closed').addClass('show').addClass('open');
+            $('.or-input[name='+value+']').addClass('error').parent().addClass('error').parents('fieldset').removeClass('closed').addClass('show').addClass('open');
         });
 
         // Jetzt das erhaltene Dokument auswerten.
-
-
-        if	( data.control.redirect )
-        // Redirect
-            window.location.href = data.control.redirect;
     }
 
 

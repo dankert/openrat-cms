@@ -24,12 +24,8 @@
               </label>
             </div>
             <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-              <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
-                <input name="<?php echo O::escapeHtml('valid_from_date') ?>" type="<?php echo O::escapeHtml('date') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$valid_from_date.'') ?>" /><?php echo O::escapeHtml('') ?>
-              </div>
-              <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
-                <input name="<?php echo O::escapeHtml('valid_from_time') ?>" type="<?php echo O::escapeHtml('time') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$valid_from_time.'') ?>" /><?php echo O::escapeHtml('') ?>
-              </div>
+              <input name="<?php echo O::escapeHtml('valid_from_date') ?>" type="<?php echo O::escapeHtml('date') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$valid_from_date.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
+              <input name="<?php echo O::escapeHtml('valid_from_time') ?>" type="<?php echo O::escapeHtml('time') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$valid_from_time.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
             </div>
           </div>
           <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
@@ -40,12 +36,8 @@
               </label>
             </div>
             <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-              <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
-                <input name="<?php echo O::escapeHtml('valid_until_date') ?>" type="<?php echo O::escapeHtml('date') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$valid_until_date.'') ?>" /><?php echo O::escapeHtml('') ?>
-              </div>
-              <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
-                <input name="<?php echo O::escapeHtml('valid_until_time') ?>" type="<?php echo O::escapeHtml('time') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$valid_until_time.'') ?>" /><?php echo O::escapeHtml('') ?>
-              </div>
+              <input name="<?php echo O::escapeHtml('valid_until_date') ?>" type="<?php echo O::escapeHtml('date') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$valid_until_date.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
+              <input name="<?php echo O::escapeHtml('valid_until_time') ?>" type="<?php echo O::escapeHtml('time') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$valid_until_time.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
             </div>
           </div>
         </div>

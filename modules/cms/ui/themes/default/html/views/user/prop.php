@@ -13,9 +13,7 @@
           </label>
         </div>
         <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-          <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
-            <input name="<?php echo O::escapeHtml('name') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('128') ?>" value="<?php echo O::escapeHtml(''.@$name.'') ?>" class="<?php echo O::escapeHtml('name,focus') ?>" /><?php echo O::escapeHtml('') ?>
-          </div>
+          <input name="<?php echo O::escapeHtml('name') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('128') ?>" value="<?php echo O::escapeHtml(''.@$name.'') ?>" class="<?php echo O::escapeHtml('name,focus or-input') ?>" /><?php echo O::escapeHtml('') ?>
         </div>
       </div>
       <fieldset class="<?php echo O::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo O::escapeHtml('') ?>
@@ -33,9 +31,7 @@
               </label>
             </div>
             <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-              <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
-                <input name="<?php echo O::escapeHtml('fullname') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('128') ?>" value="<?php echo O::escapeHtml(''.@$fullname.'') ?>" /><?php echo O::escapeHtml('') ?>
-              </div>
+              <input name="<?php echo O::escapeHtml('fullname') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('128') ?>" value="<?php echo O::escapeHtml(''.@$fullname.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
             </div>
           </div>
           <?php $if1=(\cms\base\Configuration::config('security','user','show_admin_mail')); if($if1) {  ?>
@@ -45,9 +41,7 @@
                 </label>
               </div>
               <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-                <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
-                  <input name="<?php echo O::escapeHtml('mail') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" value="<?php echo O::escapeHtml(''.@$mail.'') ?>" /><?php echo O::escapeHtml('') ?>
-                </div>
+                <input name="<?php echo O::escapeHtml('mail') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" value="<?php echo O::escapeHtml(''.@$mail.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
                 <i data-qrcode="<?php echo O::escapeHtml('mailto:'.@$mail.'') ?>" title="<?php echo O::escapeHtml(''.@O::lang('QRCODE_SHOW').'') ?>" class="<?php echo O::escapeHtml('image-icon image-icon--menu-qrcode or-qrcode or-info') ?>"><?php echo O::escapeHtml('') ?>
                 </i>
               </div>
@@ -59,9 +53,7 @@
               </label>
             </div>
             <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-              <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
-                <input name="<?php echo O::escapeHtml('desc') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" value="<?php echo O::escapeHtml(''.@$desc.'') ?>" /><?php echo O::escapeHtml('') ?>
-              </div>
+              <input name="<?php echo O::escapeHtml('desc') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" value="<?php echo O::escapeHtml(''.@$desc.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
             </div>
           </div>
           <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
@@ -70,9 +62,7 @@
               </label>
             </div>
             <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-              <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
-                <input name="<?php echo O::escapeHtml('tel') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('128') ?>" value="<?php echo O::escapeHtml(''.@$tel.'') ?>" /><?php echo O::escapeHtml('') ?>
-              </div>
+              <input name="<?php echo O::escapeHtml('tel') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('128') ?>" value="<?php echo O::escapeHtml(''.@$tel.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
               <i data-qrcode="<?php echo O::escapeHtml('tel:'.@$tel.'') ?>" title="<?php echo O::escapeHtml(''.@O::lang('QRCODE_SHOW').'') ?>" class="<?php echo O::escapeHtml('image-icon image-icon--menu-qrcode or-qrcode or-info') ?>"><?php echo O::escapeHtml('') ?>
               </i>
             </div>
@@ -85,7 +75,7 @@
               </label>
             </div>
             <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-              <select name="<?php echo O::escapeHtml('timezone') ?>" size="<?php echo O::escapeHtml('1') ?>"><?php echo O::escapeHtml('') ?>
+              <select name="<?php echo O::escapeHtml('timezone') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
                 <option value="<?php echo O::escapeHtml('') ?>"><?php echo O::escapeHtml(''.@O::lang('LIST_ENTRY_EMPTY').'') ?>
                 </option>
                 <?php foreach($timezone_list as $_key=>$_value) {  ?>
@@ -103,7 +93,7 @@
               </label>
             </div>
             <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-              <select name="<?php echo O::escapeHtml('language') ?>" size="<?php echo O::escapeHtml('1') ?>"><?php echo O::escapeHtml('') ?>
+              <select name="<?php echo O::escapeHtml('language') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
                 <option value="<?php echo O::escapeHtml('') ?>"><?php echo O::escapeHtml(''.@O::lang('LIST_ENTRY_EMPTY').'') ?>
                 </option>
                 <?php foreach($language_list as $_key=>$_value) {  ?>
@@ -139,9 +129,7 @@
               </label>
             </div>
             <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-              <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
-                <input name="<?php echo O::escapeHtml('ldap_dn') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$ldap_dn.'') ?>" /><?php echo O::escapeHtml('') ?>
-              </div>
+              <input name="<?php echo O::escapeHtml('ldap_dn') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$ldap_dn.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
             </div>
           </div>
           <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
@@ -150,7 +138,7 @@
               </label>
             </div>
             <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-              <select name="<?php echo O::escapeHtml('style') ?>" size="<?php echo O::escapeHtml('1') ?>"><?php echo O::escapeHtml('') ?>
+              <select name="<?php echo O::escapeHtml('style') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
                 <?php foreach($allstyles as $_key=>$_value) {  ?>
                   <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$style){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
                   </option>

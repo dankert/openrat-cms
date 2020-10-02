@@ -124,7 +124,7 @@ class TemplatelistAction extends BaseAction
 				$template = new Template();
 				$template->projectid = $this->project->projectid;
 				$template->add( $this->getRequestVar('name') );
-				$this->addNotice('template',$template->name,'ADDED','ok');
+				$this->addNotice('template', 0, $template->name, 'ADDED', 'ok');
 				break;
 				
 			case 'copy':
@@ -141,7 +141,7 @@ class TemplatelistAction extends BaseAction
 				$template = new Template();
                 $template->projectid = $this->project->projectid;
 				$template->add( $this->getRequestVar('name') );
-				$this->addNotice('template',$template->name,'ADDED','ok');
+				$this->addNotice('template', 0, $template->name, 'ADDED', 'ok');
 
 				// Template kopieren.
 				$copy_template = new Template( $copy_templateid );
@@ -178,7 +178,7 @@ class TemplatelistAction extends BaseAction
 					$newTemplateModel->save();
 				}
 				
-				$this->addNotice('template',$copy_template->name,'COPIED','ok');
+				$this->addNotice('template', 0, $copy_template->name, 'COPIED', 'ok');
 
 				break;
 
@@ -228,7 +228,7 @@ class TemplatelistAction extends BaseAction
 				$template->save();
 				$templateModel->save();
 
-				$this->addNotice('template',$template->name,'ADDED','ok');
+				$this->addNotice('template', 0, $template->name, 'ADDED', 'ok');
 
 				break;
 

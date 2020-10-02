@@ -343,7 +343,7 @@ jQuery.fn.orTree = function ()
 
                 }).fail(function () {
                     // Ups... aber was können wir hier schon tun, außer hässliche Meldungen anzeigen.
-                    Openrat.Workbench.notify('','','ERROR','Failed to load subtree',[],false);
+                    Openrat.Workbench.notify('', 0, '', 'ERROR', 'Failed to load subtree', [], false);
                 }).always(function () {
 
                     // Die Loader-Animation entfernen.
@@ -1637,7 +1637,7 @@ Openrat.View = function( action,method,id,params ) {
 		loadViewHtmlPromise.fail( function(jqxhr,status,cause) {
 			$(element).html("");
 
-			Openrat.Workbench.notify('','','error','Server Error',['Server Error while requesting url '+url, status]);
+			Openrat.Workbench.notify('', 0, '', 'error', 'Server Error', ['Server Error while requesting url ' + url, status]);
 		});
 
 		// Load the data for this view.
@@ -1813,7 +1813,7 @@ Openrat.Form = function() {
 
         // Alle vorhandenen Error-Marker entfernen.
         // Falls wieder ein Fehler auftritt, werden diese erneut gesetzt.
-        $(this.element).find('.error').removeClass('error');
+        $(this.element).find('.or-input.error').removeClass('error');
 
         let params = $(this.element).serializeArray();
         let data = {};
@@ -1893,12 +1893,12 @@ Openrat.Form = function() {
                     try
                     {
                         let error = jQuery.parseJSON( jqXHR.responseText );
-                        Openrat.Workbench.notify('','','error',error.error,[error.description]);
+                        Openrat.Workbench.notify('', 0, '', 'error', error.error, [error.description]);
                     }
                     catch( e )
                     {
                         let msg = jqXHR.responseText;
-                        Openrat.Workbench.notify('','','error','Server Error',[msg]);
+                        Openrat.Workbench.notify('', 0, '', 'error', 'Server Error', [msg]);
                     }
 
 
@@ -1936,7 +1936,7 @@ Openrat.Form = function() {
             // gewechselt hat.
             let notifyBrowser = $(element).data('async');
 
-            Openrat.Workbench.notify(value.type, value.name, value.status, value.text, value.log, notifyBrowser ); // Notice anhängen.
+            Openrat.Workbench.notify(value.type, value.id, value.name, value.status, value.text, value.log, notifyBrowser); // Notice anhängen.
 
             if	( value.status == 'ok' ) // Kein Fehler?
             {
@@ -1949,17 +1949,12 @@ Openrat.Form = function() {
             }
         });
 
-        // Felder mit Fehleingaben markieren, ggf. das übergeordnete Fieldset aktivieren.
+        // Validation error should mark the input field.
         $.each(data['errors'], function(idx,value) {
-            $('input[name='+value+']').addClass('error').parent().addClass('error').parents('fieldset').removeClass('closed').addClass('show').addClass('open');
+            $('.or-input[name='+value+']').addClass('error').parent().addClass('error').parents('fieldset').removeClass('closed').addClass('show').addClass('open');
         });
 
         // Jetzt das erhaltene Dokument auswerten.
-
-
-        if	( data.control.redirect )
-        // Redirect
-            window.location.href = data.control.redirect;
     }
 
 
@@ -2310,7 +2305,7 @@ Openrat.Workbench = new function()
      * @param msg
      * @param log
      */
-    this.notify = function( type,name,status,msg,log=[],notifyTheBrowser=false )
+    this.notify = function (type, id, name, status, msg, log = [], notifyTheBrowser = false)
     {
         // Notice-Bar mit dieser Meldung erweitern.
 
@@ -2325,9 +2320,8 @@ Openrat.Workbench = new function()
         $(toolbar).append('<i class="or-action-close image-icon image-icon--menu-close"></i>');
         $(notice).append(toolbar);
 
-        let id = 0; // TODO id of objects to click on
         if	(name)
-            $(notice).append('<div class="name clickable"><a href="" data-type="open" data-action="'+type+'" data-id="'+id+'"><i class="or-action-full image-icon image-icon--action-'+type+'"></i> '+name+'</a></div>');
+            $(notice).append('<div class="name clickable"><a href="'+Openrat.Navigator.createShortUrl(type,id)+'" data-type="open" data-action="'+type+'" data-id="'+id+'"><i class="or-action-full image-icon image-icon--action-'+type+'"></i> '+name+'</a></div>');
 
         $(notice).append( '<div class="text">'+htmlEntities(msg)+'</div>');
 
@@ -2691,7 +2685,7 @@ $( function() {
 
     // Initial Notices
     $('.or-initial-notice').each( function() {
-       Openrat.Workbench.notify('','','info',$(this).text());
+       Openrat.Workbench.notify('', 0, '', 'info', $(this).text());
        $(this).remove();
     });
 
@@ -3423,7 +3417,7 @@ Openrat.Workbench.handleFileUpload = function(form,files)
 					msg = jqXHR.responseText;
 				}
 				
-				Openrat.Workbench.notify('Upload error',msg);
+				Openrat.Workbench.notify('Upload error', 0, msg);
 			}
 			
 		} );

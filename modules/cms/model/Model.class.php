@@ -216,6 +216,12 @@ SQL
     {
         return $this->name;
     }
-}
 
-?>
+
+	public function getId()
+	{
+		return $this->modelid;
+	}
+
+
+}

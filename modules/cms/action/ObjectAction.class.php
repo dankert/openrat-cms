@@ -73,7 +73,7 @@ class ObjectAction extends BaseAction
 		
 		if   ( ! $targetFolder->hasRight(Acl::ACL_WRITE) )
 		{
-			$this->addNotice('folder', $targetFolder->name, 'NOT_WRITABLE',Action::NOTICE_ERROR);
+			$this->addNotice('folder', 0, $targetFolder->name, 'NOT_WRITABLE', Action::NOTICE_ERROR);
 		}
 	}
 	
@@ -96,7 +96,7 @@ class ObjectAction extends BaseAction
 		// Prüfen, ob Schreibrechte im Zielordner bestehen.
 		if   ( ! $targetFolder->hasRight(Acl::ACL_WRITE) )
 		{
-			$this->addNotice('folder', $targetFolder->name, 'NOT_WRITABLE',Action::NOTICE_ERROR);
+			$this->addNotice('folder', 0, $targetFolder->name, 'NOT_WRITABLE', Action::NOTICE_ERROR);
 			return;
 		}
 		
@@ -118,7 +118,7 @@ class ObjectAction extends BaseAction
 					// dann verschieben
 					if	( in_array($targetObjectId,$allsubfolders) || $sourceObjectId == $targetObjectId )
 					{
-						$this->addNotice('folder',$sourceObject->name,'ERROR',Action::NOTICE_ERROR);
+						$this->addNotice('folder', 0, $sourceObject->name, 'ERROR', Action::NOTICE_ERROR);
 						return;
 					}
 				}
@@ -127,7 +127,7 @@ class ObjectAction extends BaseAction
 				// Beim Verschieben und Kopieren muss im Zielordner die Berechtigung
 				// zum Erstellen von Ordner, Dateien oder Seiten vorhanden sein.
 				$sourceObject->setParentId( $targetObjectId );
-				$this->addNotice($sourceObject->type, $sourceObject->name, 'moved');
+				$this->addNotice($sourceObject->type, 0, $sourceObject->name, 'moved');
 				break;
 				
 			case 'moveandlink':
@@ -135,7 +135,7 @@ class ObjectAction extends BaseAction
 				$oldParentId = $sourceObject->parentid;
 				
 				$sourceObject->setParentId( $targetObjectId );
-				$this->addNotice($sourceObject->type, $sourceObject->name, 'moved');
+				$this->addNotice($sourceObject->type, 0, $sourceObject->name, 'moved');
 				
 				$link = new Link();
 				$link->parentid = $oldParentId;
@@ -143,7 +143,7 @@ class ObjectAction extends BaseAction
 				$link->filename = $sourceObject->filename;
 				$link->linkedObjectId = $sourceObjectId;
 				$link->add();
-				$this->addNotice('link', $link->name, 'added');
+				$this->addNotice('link', 0, $link->name, 'added');
 				
 				break;
 				
@@ -154,7 +154,7 @@ class ObjectAction extends BaseAction
 					case 'folder':
 						// Ordner zur Zeit nicht kopieren
 						// Funktion waere zu verwirrend
-						$this->addNotice($sourceObject->getType(),$sourceObject->name,'CANNOT_COPY_FOLDER','error');
+						$this->addNotice($sourceObject->getType(), 0, $sourceObject->name, 'CANNOT_COPY_FOLDER', 'error');
 						break;
 							
 					case 'file':
@@ -166,7 +166,7 @@ class ObjectAction extends BaseAction
 						$f->add();
 						$f->copyValueFromFile( $sourceObjectId );
 				
-						$this->addNotice($sourceObject->getType(),$sourceObject->name,'COPIED','ok');
+						$this->addNotice($sourceObject->getType(), 0, $sourceObject->name, 'COPIED', 'ok');
 						break;
 				
 					case 'page':
@@ -177,7 +177,7 @@ class ObjectAction extends BaseAction
 						$p->parentid = $targetObjectId;
 						$p->add();
 						$p->copyValuesFromPage( $sourceObjectId );
-						$this->addNotice($sourceObject->getType(),$sourceObject->name,'COPIED','ok');
+						$this->addNotice($sourceObject->getType(), 0, $sourceObject->name, 'COPIED', 'ok');
 						break;
 							
 					case 'link':
@@ -187,7 +187,7 @@ class ObjectAction extends BaseAction
 						$l->name     = \cms\base\Language::lang('COPY_OF').' '.$l->name;
 						$l->parentid = $targetObjectId;
 						$l->add();
-						$this->addNotice($sourceObject->getType(),$sourceObject->name,'COPIED','ok');
+						$this->addNotice($sourceObject->getType(), 0, $sourceObject->name, 'COPIED', 'ok');
 						break;
 							
 					default:
@@ -201,7 +201,7 @@ class ObjectAction extends BaseAction
 				// von Verkn�pfungen vorhanden sein.
 				if   ( ! $targetFolder->hasRight(Acl::ACL_CREATE_LINK) )
 				{
-					$this->addNotice('folder', $targetFolder->name, 'NOT_WRITABLE',Action::NOTICE_ERROR);
+					$this->addNotice('folder', 0, $targetFolder->name, 'NOT_WRITABLE', Action::NOTICE_ERROR);
 					return;
 				}
 				
@@ -212,7 +212,7 @@ class ObjectAction extends BaseAction
 				$link->linkedObjectId = $sourceObjectId;
 				$link->isLinkToObject = true;
 				$link->add();
-				$this->addNotice('link', $link->name, 'added');
+				$this->addNotice('link', 0, $link->name, 'added');
 				// OK
 				break;
 				
@@ -313,7 +313,7 @@ class ObjectAction extends BaseAction
 		
 		
 		
-		$this->addNotice('','','ADDED',Action::NOTICE_OK);
+		$this->addNotice('', 0, '', 'ADDED', Action::NOTICE_OK);
 		
 		$o->setTimestamp();
 	}
@@ -378,7 +378,7 @@ class ObjectAction extends BaseAction
 		
 		if	( ! $this->hasRequestVar('inherit') )
 		{
-			$this->addNotice('folder',$folder->name,'NOTHING_DONE',Action::NOTICE_WARN);
+			$this->addNotice('folder', 0, $folder->name, 'NOTHING_DONE', Action::NOTICE_WARN);
 			return;
 		}
 		
@@ -426,7 +426,7 @@ class ObjectAction extends BaseAction
 			}
 		}
 		
-		$this->addNotice('folder',$folder->name,'SAVED',Action::NOTICE_OK);
+		$this->addNotice('folder', 0, $folder->name, 'SAVED', Action::NOTICE_OK);
 	}
 
 
@@ -475,7 +475,7 @@ class ObjectAction extends BaseAction
 
 		$acl->delete(); // Weg mit der ACL
 		
-		$this->addNotice('','','DELETED',Action::NOTICE_OK);
+		$this->addNotice('', 0, '', 'DELETED', Action::NOTICE_OK);
 	}
 
 
@@ -507,7 +507,7 @@ class ObjectAction extends BaseAction
         $this->baseObject->setCreationTimestamp();
 
 
-        $this->addNotice($this->baseObject->getType(),$this->baseObject->filename,'PROP_SAVED','ok');
+        $this->addNotice($this->baseObject->getType(), 0, $this->baseObject->filename, 'PROP_SAVED', 'ok');
     }
 
 
@@ -529,7 +529,7 @@ class ObjectAction extends BaseAction
 
         $name->save();
 
-        $this->addNotice($this->baseObject->getType(),$this->baseObject->filename,'SAVED','ok');
+        $this->addNotice($this->baseObject->getType(), 0, $this->baseObject->filename, 'SAVED', 'ok');
     }
 
 
@@ -607,7 +607,7 @@ class ObjectAction extends BaseAction
 
         $this->baseObject->save();
 
-        $this->addNotice($this->baseObject->getType(),$this->baseObject->filename,'SAVED',Action::NOTICE_OK);
+        $this->addNotice($this->baseObject->getType(), 0, $this->baseObject->filename, 'SAVED', Action::NOTICE_OK);
     }
 
 

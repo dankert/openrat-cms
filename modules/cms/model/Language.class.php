@@ -239,6 +239,11 @@ class Language extends ModelBase
         return $this->name;
     }
 
-}
 
-?>
+
+	public function getId()
+	{
+		return $this->languageid;
+	}
+
+}

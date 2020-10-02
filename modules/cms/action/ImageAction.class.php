@@ -62,13 +62,13 @@ class ImageAction extends FileAction
 
 		if	( $format == 0 )
 		{
-			$this->addNotice( 'image','','IMAGE_RESIZING_UNKNOWN_TYPE',Action::NOTICE_WARN);
+			$this->addNotice('image', 0, '', 'IMAGE_RESIZING_UNKNOWN_TYPE', Action::NOTICE_WARN);
 		}
 			
 		$formats = $this->imageFormats();
 			
 		if	( empty($formats) )
-			$this->addNotice( 'image','','IMAGE_RESIZING_NOT_AVAILABLE',Action::NOTICE_WARN);
+			$this->addNotice('image', 0, '', 'IMAGE_RESIZING_NOT_AVAILABLE', Action::NOTICE_WARN);
 		
 		$sizes = array();
 		foreach( array(10,25,50,75,100,125,150,175,200,250,300,350,400,500,600,800) as $s )
@@ -147,7 +147,7 @@ class ImageAction extends FileAction
 		$imageFile->save();      // Um z.B. Groesse abzuspeichern
 		$imageFile->saveValue();
 
-		$this->addNotice($imageFile->getType(),$imageFile->name,'IMAGE_RESIZED','ok');
+		$this->addNotice($imageFile->getType(), 0, $imageFile->name, 'IMAGE_RESIZED', 'ok');
 	}
 
 

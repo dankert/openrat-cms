@@ -19,17 +19,17 @@
           <label class="<?php echo O::escapeHtml('or-form-row or-form-input') ?>"><?php echo O::escapeHtml('') ?>
             <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('filename').'') ?>
             </span>
-            <input name="<?php echo O::escapeHtml('filename') ?>" autofocus="<?php echo O::escapeHtml('autofocus') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('150') ?>" value="<?php echo O::escapeHtml(''.@$filename.'') ?>" class="<?php echo O::escapeHtml('filename') ?>" /><?php echo O::escapeHtml('') ?>
+            <input name="<?php echo O::escapeHtml('filename') ?>" autofocus="<?php echo O::escapeHtml('autofocus') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('150') ?>" value="<?php echo O::escapeHtml(''.@$filename.'') ?>" class="<?php echo O::escapeHtml('filename or-input') ?>" /><?php echo O::escapeHtml('') ?>
           </label>
           <label class="<?php echo O::escapeHtml('or-form-row or-form-input') ?>"><?php echo O::escapeHtml('') ?>
             <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('alias').'') ?>
             </span>
-            <input name="<?php echo O::escapeHtml('alias_filename') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('150') ?>" value="<?php echo O::escapeHtml(''.@$alias_filename.'') ?>" class="<?php echo O::escapeHtml('filename') ?>" /><?php echo O::escapeHtml('') ?>
+            <input name="<?php echo O::escapeHtml('alias_filename') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('150') ?>" value="<?php echo O::escapeHtml(''.@$alias_filename.'') ?>" class="<?php echo O::escapeHtml('filename or-input') ?>" /><?php echo O::escapeHtml('') ?>
           </label>
           <label class="<?php echo O::escapeHtml('or-form-row or-form-input') ?>"><?php echo O::escapeHtml('') ?>
             <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('folder').'') ?>
             </span>
-            <select name="<?php echo O::escapeHtml('alias_folderid') ?>" size="<?php echo O::escapeHtml('1') ?>"><?php echo O::escapeHtml('') ?>
+            <select name="<?php echo O::escapeHtml('alias_folderid') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
               <?php foreach($folders as $_key=>$_value) {  ?>
                 <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$alias_folderid){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
                 </option>

@@ -76,13 +76,13 @@ class ElementAction extends BaseAction
 		{
 		    // Nur Inhalte löschen
 			$this->element->deleteValues();
-			$this->addNotice('element',$this->element->name,'DELETED',Action::NOTICE_OK);
+			$this->addNotice('element', 0, $this->element->name, 'DELETED', Action::NOTICE_OK);
 		}
 		elseif ( $type == 'all' )
 		{
 		    // Element löschen
 			$this->element->delete();
-			$this->addNotice('element',$this->element->name,'DELETED',Action::NOTICE_OK);
+			$this->addNotice('element', 0, $this->element->name, 'DELETED', Action::NOTICE_OK);
 		}
 	}
 
@@ -139,7 +139,7 @@ class ElementAction extends BaseAction
             $this->element->code = $this->getRequestVar('parameters',RequestParams::FILTER_RAW);
 
         $this->element->save();
-        $this->addNotice('element',$this->element->name,'SAVED');
+        $this->addNotice('element', 0, $this->element->name, 'SAVED');
 
     }
 
@@ -456,7 +456,7 @@ class ElementAction extends BaseAction
 
                         case Element::ELEMENT_TYPE_CODE:
                             if	( $conf['security']['disable_dynamic_code'] )
-                                $this->addNotice('element',$this->element->name,'CODE_DISABLED',Action::NOTICE_WARN);
+                                $this->addNotice('element', 0, $this->element->name, 'CODE_DISABLED', Action::NOTICE_WARN);
 
                             $this->setTemplateVar('code',$this->element->code);
                             break;
@@ -614,7 +614,7 @@ class ElementAction extends BaseAction
 
         $this->element->save();
 
-        $this->addNotice('element',$this->element->name,'SAVED',Action::NOTICE_OK);
+        $this->addNotice('element', 0, $this->element->name, 'SAVED', Action::NOTICE_OK);
 	}
 }
 

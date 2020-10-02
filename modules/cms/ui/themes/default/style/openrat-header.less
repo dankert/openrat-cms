@@ -51,26 +51,17 @@
                 cursor: default;
             }
             &.search {
-                .inputholder {
+                input {
+                    border: 0;
                     margin: 0;
                     padding: 0;
-                    border: 0;
+                    width: 3em;
                     display: inline;
-
-                    input {
-                        border: 0;
-                        margin: 0;
-                        padding: 0;
-                        width: 3em;
-                        display: inline;
-                        transition: width 0.3s ease-in-out;
-                        &:focus {
-                            width: 8em;
-
-                        }
+                    transition: width 0.3s ease-in-out;
+                    &:focus {
+                        width: 8em;
 
                     }
-
                 }
             }
 

@@ -737,4 +737,13 @@ SQL
 	{
 		return "Value: ".print_r($this,true);
 	}
+
+
+
+	public function getId()
+	{
+		return $this->valueid;
+	}
+
+
 }

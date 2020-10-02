@@ -95,7 +95,7 @@ class UserAction extends BaseAction
         $this->user->style    = $this->getRequestVar('style'   );
 
         $this->user->save();
-        $this->addNotice('user',$this->user->name,'SAVED','ok');
+        $this->addNotice('user', 0, $this->user->name, 'SAVED', 'ok');
 	}
 
 
@@ -136,7 +136,7 @@ class UserAction extends BaseAction
 	{
 		$this->user->delGroup( $this->getRequestVar('groupid') );
 
-		$this->addNotice('user',$this->user->name,'DELETED','ok');
+		$this->addNotice('user', 0, $this->user->name, 'DELETED', 'ok');
 	}
 
 
@@ -205,10 +205,10 @@ class UserAction extends BaseAction
 		if	( $this->hasRequestVar('email') && !empty($this->user->mail) && $conf['mail']['enabled'] )
 		{
 		    $this->mailPw( $newPassword );
-			$this->addNotice('user',$this->user->name,'MAIL_SENT','ok');
+			$this->addNotice('user', 0, $this->user->name, 'MAIL_SENT', 'ok');
 		}
 
-		$this->addNotice('user',$this->user->name,'SAVED','ok');
+		$this->addNotice('user', 0, $this->user->name, 'SAVED', 'ok');
 
 	}
 
@@ -340,7 +340,7 @@ class UserAction extends BaseAction
 		
 		$conf = \cms\base\Configuration::rawConfig();
 		if	($conf['security']['authorize']['type']=='ldap')
-			$this->addNotice('user',$this->user->name,'GROUPS_MAY_CONFLICT_WITH_LDAP',Action::NOTICE_WARN);
+			$this->addNotice('user', 0, $this->user->name, 'GROUPS_MAY_CONFLICT_WITH_LDAP', Action::NOTICE_WARN);
 	}
 
 
@@ -357,20 +357,20 @@ class UserAction extends BaseAction
 			if	( !$hasGroup && $this->hasRequestVar('group'.$id) )
 			{
 				$this->user->addGroup($id);
-				$this->addNotice('group',$name,'ADDED');
+				$this->addNotice('group', 0, $name, 'ADDED');
 				$aenderung = true;
 			}
 
 			if	( $hasGroup && !$this->hasRequestVar('group'.$id) )
 			{
 				$this->user->delGroup($id);
-				$this->addNotice('group',$name,'DELETED');
+				$this->addNotice('group', 0, $name, 'DELETED');
 				$aenderung = true;
 			}
 		}
 		
 		if	( ! $aenderung )
-				$this->addNotice('group',$name,'NOTHING_DONE');
+				$this->addNotice('group', 0, $name, 'NOTHING_DONE');
 	}
 
 
@@ -460,7 +460,7 @@ class UserAction extends BaseAction
 		$this->setTemplateVar('show',Acl::getAvailableRights() );
 		
 		if	( $this->user->isAdmin )
-			$this->addNotice('user',$this->user->name,'ADMIN_NEEDS_NO_RIGHTS',Action::NOTICE_WARN);
+			$this->addNotice('user', 0, $this->user->name, 'ADMIN_NEEDS_NO_RIGHTS', Action::NOTICE_WARN);
 	}
 	
 	

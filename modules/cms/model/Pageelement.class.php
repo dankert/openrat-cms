@@ -56,5 +56,13 @@ class Pageelement extends ModelBase
 	{
 
 	}
+
+
+	public function getId()
+	{
+		return $this->pageid.'_'.$this->elementid;
+	}
+
+
 }
 

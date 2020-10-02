@@ -20,7 +20,7 @@
         <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
         </div>
         <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-          <select name="<?php echo O::escapeHtml('type') ?>" size="<?php echo O::escapeHtml('1') ?>"><?php echo O::escapeHtml('') ?>
+          <select name="<?php echo O::escapeHtml('type') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
             <?php foreach($types as $_key=>$_value) {  ?>
               <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$type){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
               </option>

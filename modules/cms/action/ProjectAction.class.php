@@ -194,7 +194,7 @@ class ProjectAction extends BaseAction
 		$this->project->delete();
 
 		$this->setTemplateVar('tree_refresh',true);
-		$this->addNotice('project',$this->project->name,'DELETED'); 
+		$this->addNotice('project', 0, $this->project->name, 'DELETED');
 	}
 	
 	
@@ -220,13 +220,13 @@ class ProjectAction extends BaseAction
 				$this->project->checkLostFiles();
 				$status = empty($this->project->log) ? Action::NOTICE_OK : Action::NOTICE_ERROR;
 					
-				$this->addNotice('project',$this->project->name,'DONE',$status,array(),$this->project->log);
+				$this->addNotice('project', 0, $this->project->name, 'DONE', $status, array(), $this->project->log);
 				break;
 				
 			case 'check_limit':
 				// Alte Versionen löschen.
 				$this->project->checkLimit();
-				$this->addNotice('project',$this->project->name,'DONE');
+				$this->addNotice('project', 0, $this->project->name, 'DONE');
 				break;
 				
 			default:
@@ -331,7 +331,7 @@ class ProjectAction extends BaseAction
 		{
 			$this->project->export( $this->getRequestVar('dbid') );
 			
-			$this->addNotice('project',$this->project->name,'DONE');
+			$this->addNotice('project', 0, $this->project->name, 'DONE');
 			$this->setTemplateVar('done',true);
 		}
 	}

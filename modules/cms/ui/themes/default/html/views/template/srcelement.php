@@ -17,7 +17,7 @@
             </label>
           </div>
           <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-            <select name="<?php echo O::escapeHtml('elementid') ?>" size="<?php echo O::escapeHtml('1') ?>"><?php echo O::escapeHtml('') ?>
+            <select name="<?php echo O::escapeHtml('elementid') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
               <?php foreach($elements as $_key=>$_value) {  ?>
                 <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$elementid){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
                 </option>
@@ -40,7 +40,7 @@
             </label>
           </div>
           <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-            <select name="<?php echo O::escapeHtml('writable_elementid') ?>" size="<?php echo O::escapeHtml('1') ?>"><?php echo O::escapeHtml('') ?>
+            <select name="<?php echo O::escapeHtml('writable_elementid') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
               <?php foreach($writable_elements as $_key=>$_value) {  ?>
                 <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$writable_elementid){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
                 </option>

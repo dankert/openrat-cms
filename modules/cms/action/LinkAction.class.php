@@ -79,7 +79,7 @@ class LinkAction extends ObjectAction
         $this->link->linkedObjectId = $this->getRequestVar('targetobjectid');
         $this->link->save();
 
-        $this->addNotice('link',$this->link->name,'SAVED',Action::NOTICE_OK);
+        $this->addNotice('link', 0, $this->link->name, 'SAVED', Action::NOTICE_OK);
 	}
 
 
@@ -108,9 +108,9 @@ class LinkAction extends ObjectAction
     {
         if ($this->getRequestVar('delete') != '') {
             $this->link->delete();
-            $this->addNotice('link', $this->link->filename, 'DELETED', Action::NOTICE_OK);
+            $this->addNotice('link', 0, $this->link->filename, 'DELETED', Action::NOTICE_OK);
         } else {
-            $this->addNotice('link', $this->link->filename, 'CANCELED', Action::NOTICE_WARN);
+            $this->addNotice('link', 0, $this->link->filename, 'CANCELED', Action::NOTICE_WARN);
         }
     }
 

@@ -13,9 +13,7 @@
           </span>
         </div>
         <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-          <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
-            <input name="<?php echo O::escapeHtml('url') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml('') ?>" /><?php echo O::escapeHtml('') ?>
-          </div>
+          <input name="<?php echo O::escapeHtml('url') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
         </div>
       </div>
       <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
@@ -24,9 +22,7 @@
           </span>
         </div>
         <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-          <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
-            <input name="<?php echo O::escapeHtml('name') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml('') ?>" /><?php echo O::escapeHtml('') ?>
-          </div>
+          <input name="<?php echo O::escapeHtml('name') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
         </div>
       </div>
       <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>

@@ -16,9 +16,7 @@
           <br /><?php echo O::escapeHtml('') ?>
         </div>
         <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-          <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
-            <input name="<?php echo O::escapeHtml('text') ?>" placeholder="<?php echo O::escapeHtml(''.@O::lang('search').'') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$text.'') ?>" /><?php echo O::escapeHtml('') ?>
-          </div>
+          <input name="<?php echo O::escapeHtml('text') ?>" placeholder="<?php echo O::escapeHtml(''.@O::lang('search').'') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$text.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
         </div>
       </div>
       <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>

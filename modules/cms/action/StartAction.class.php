@@ -119,7 +119,7 @@ class StartAction extends BaseAction
 		
 		if	( !$db->available )
 		{
-			$this->addNotice('database',$db->conf['description'],'DATABASE_CONNECTION_ERROR',Action::NOTICE_ERROR,array(),array('Database Error: '.$db->error));
+			$this->addNotice('database', 0, $db->conf['description'], 'DATABASE_CONNECTION_ERROR', Action::NOTICE_ERROR, array(), array('Database Error: ' . $db->error));
 			$this->callSubAction('showlogin');
 			return false;
 		}
@@ -316,7 +316,7 @@ class StartAction extends BaseAction
 
 		
 		if	( empty($dbids) )
-			$this->addNotice('','','no_database_configuration',Action::NOTICE_WARN);
+			$this->addNotice('', 0, '', 'no_database_configuration', Action::NOTICE_WARN);
 		
 		if	( !isset($this->templateVars['login_name']) && isset($_COOKIE['or_username']) )
 			$this->setTemplateVar('login_name',$_COOKIE['or_username']);
@@ -386,7 +386,7 @@ class StartAction extends BaseAction
 		
 		if	( $user->mustChangePassword ) 
 		{
-			$this->addNotice( 'user',$user->name,'PASSWORD_TIMEOUT','warn' );
+			$this->addNotice('user', 0, $user->name, 'PASSWORD_TIMEOUT', 'warn');
 			$this->callSubAction( 'changepassword' ); // Zwang, das Kennwort zu �ndern.
 		}
 		
@@ -422,10 +422,10 @@ class StartAction extends BaseAction
 			// Kein Projekt vorhanden. Eine Hinweismeldung ausgeben.
 			if	( $this->userIsAdmin() )
 				// Administratoren bekommen bescheid, dass sie ein Projekt anlegen sollen
-				$this->addNotice('','','ADMIN_NO_PROJECTS_AVAILABLE',Action::NOTICE_WARN);
+				$this->addNotice('', 0, '', 'ADMIN_NO_PROJECTS_AVAILABLE', Action::NOTICE_WARN);
 			else
 				// Normale Benutzer erhalten eine Meldung, dass kein Projekt zur Verf�gung steht
-				$this->addNotice('','','NO_PROJECTS_AVAILABLE',Action::NOTICE_WARN);
+				$this->addNotice('', 0, '', 'NO_PROJECTS_AVAILABLE', Action::NOTICE_WARN);
 		}
 		
 		//$this->metaValues();
@@ -493,7 +493,7 @@ class StartAction extends BaseAction
 
 		if	( !$openId->checkAuthentication() )
 		{
-			$this->addNotice('user',$openId->user,'LOGIN_OPENID_FAILED',Action::NOTICE_ERROR,array('name'=>$openId->user),array($openId->error) );
+			$this->addNotice('user', 0, $openId->user, 'LOGIN_OPENID_FAILED', Action::NOTICE_ERROR, array('name' => $openId->user), array($openId->error));
 			$this->addValidationError('openid_url','');
 			$this->callSubAction('showlogin');
 			return;
@@ -508,7 +508,7 @@ class StartAction extends BaseAction
 		if	( empty($username) )
 		{
 			// Es konnte kein Benutzername ermittelt werden.
-			$this->addNotice('user',$username,'LOGIN_OPENID_FAILED','error',array('name'=>$username) );
+			$this->addNotice('user', 0, $username, 'LOGIN_OPENID_FAILED', 'error', array('name' => $username));
 			$this->addValidationError('openid_url','');
 			$this->callSubAction('showlogin');
 			return;
@@ -531,7 +531,7 @@ class StartAction extends BaseAction
 			else
 			{
 				// Benutzer ist nicht in Benutzertabelle vorhanden (und angelegt werden soll er auch nicht).
-				$this->addNotice('user',$username,'LOGIN_OPENID_FAILED','error',array('name'=>$username) );
+				$this->addNotice('user', 0, $username, 'LOGIN_OPENID_FAILED', 'error', array('name' => $username));
 				$this->addValidationError('openid_url','');
 				$this->callSubAction('showlogin');
 				return;
@@ -581,7 +581,7 @@ class StartAction extends BaseAction
 			
 			if	( ! $openId->login() )
 			{
-				$this->addNotice('user',$openid_user,'LOGIN_OPENID_FAILED','error',array('name'=>$openid_user),array($openId->error) );
+				$this->addNotice('user', 0, $openid_user, 'LOGIN_OPENID_FAILED', 'error', array('name' => $openid_user), array($openId->error));
 				$this->addValidationError('openid_url','');
 				$this->callSubAction('showlogin');
 				return;
@@ -609,14 +609,14 @@ class StartAction extends BaseAction
 			if	( $this->mustChangePassword )
 			{
 				// Anmeldung gescheitert, Benutzer muss Kennwort �ndern.
-				$this->addNotice('user',$loginName,'LOGIN_FAILED_MUSTCHANGEPASSWORD','error' );
+				$this->addNotice('user', 0, $loginName, 'LOGIN_FAILED_MUSTCHANGEPASSWORD', 'error');
 				$this->addValidationError('password1','');
 				$this->addValidationError('password2','');
 			}
 			else
 			{
 				// Anmeldung gescheitert.
-				$this->addNotice('user',$loginName,'LOGIN_FAILED','error',array('name'=>$loginName) );
+				$this->addNotice('user', 0, $loginName, 'LOGIN_FAILED', 'error', array('name' => $loginName));
 				$this->addValidationError('login_name'    ,'');
 				$this->addValidationError('login_password','');
 			}
@@ -635,7 +635,7 @@ class StartAction extends BaseAction
 				$this->recreateSession();
 			
 			$user = Session::getUser();
-			$this->addNotice('user',$user->name,'LOGIN_OK',Action::NOTICE_OK,array('name'=>$user->fullname));
+			$this->addNotice('user', 0, $user->name, 'LOGIN_OK', Action::NOTICE_OK, array('name' => $user->fullname));
 		}
 		
 		// Benutzer ist angemeldet
@@ -870,7 +870,7 @@ class StartAction extends BaseAction
 				else
 				{
 					Logger::warn('Guest login failed, user not found: '.$username);
-					$this->addNotice('user',$username,'LOGIN_FAILED',Action::NOTICE_WARN,array('name'=>$username) );
+					$this->addNotice('user', 0, $username, 'LOGIN_FAILED', Action::NOTICE_WARN, array('name' => $username));
 					$user = null;
 				}
 			}
@@ -914,7 +914,7 @@ class StartAction extends BaseAction
 		
 		if	( $user->mustChangePassword ) 
 		{
-			$this->addNotice( 'user',$user->name,'PASSWORD_TIMEOUT','warn' );
+			$this->addNotice('user', 0, $user->name, 'PASSWORD_TIMEOUT', 'warn');
 			$this->callSubAction( 'changepassword' ); // Zwang, das Kennwort zu �ndern.
 		}
 
@@ -964,11 +964,11 @@ class StartAction extends BaseAction
 		
 		if	( $mail->send() )
 		{
-			$this->addNotice('','','mail_sent',Action::NOTICE_OK);
+			$this->addNotice('', 0, '', 'mail_sent', Action::NOTICE_OK);
 		}
 		else
 		{
-			$this->addNotice('','','mail_not_sent',Action::NOTICE_ERROR,array(),$mail->error);
+			$this->addNotice('', 0, '', 'mail_not_sent', Action::NOTICE_ERROR, array(), $mail->error);
 			$this->callSubAction('register');
 			return;
 		}
@@ -1052,7 +1052,7 @@ class StartAction extends BaseAction
 			
 		$newUser->setPassword( $this->getRequestVar('password'),true );
 			
-		$this->addNotice('user',$newUser->name,'user_added','ok');
+		$this->addNotice('user', 0, $newUser->name, 'user_added', 'ok');
 	}
 
 
@@ -1157,9 +1157,9 @@ class StartAction extends BaseAction
 			$eMail->setVar('name',$user->getName());
 			$eMail->setVar('code',$code);
 			if	( $eMail->send() )
-				$this->addNotice('user',$user->getName(),'mail_sent',Action::NOTICE_OK);
+				$this->addNotice('user', 0, $user->getName(), 'mail_sent', Action::NOTICE_OK);
 			else
-				$this->addNotice('user',$user->getName(),'mail_not_sent',Action::NOTICE_ERROR,array(),$eMail->error);
+				$this->addNotice('user', 0, $user->getName(), 'mail_not_sent', Action::NOTICE_ERROR, array(), $eMail->error);
 			
 		}
 		else
@@ -1168,7 +1168,7 @@ class StartAction extends BaseAction
 			// Trotzdem vort�uschen, eine E-Mail zu senden, damit die G�ltigkeit
 			// eines Benutzernamens nicht von au�en gepr�ft werden kann.
 			// 
-			$this->addNotice('user',$this->getRequestVar("username"),'mail_sent');
+			$this->addNotice('user', 0, $this->getRequestVar("username"), 'mail_sent');
 		}
 		
 		$this->setSessionVar("password_commit_name",$user->name);
@@ -1206,7 +1206,7 @@ class StartAction extends BaseAction
 		if	( !$user->isValid() )
 		{
 			// Benutzer konnte nicht geladen werden.
-			$this->addNotice('user',$username,'error',Action::NOTICE_ERROR);
+			$this->addNotice('user', 0, $username, 'error', Action::NOTICE_ERROR);
 			return;
 		}
 		
@@ -1219,13 +1219,13 @@ class StartAction extends BaseAction
 		if	( $eMail->send() )
 		{
 			$user->setPassword( $newPw, false ); // Kennwort muss beim n�. Login ge�ndert werden.
-			$this->addNotice('user',$username,'mail_sent',Action::NOTICE_OK);
+			$this->addNotice('user', 0, $username, 'mail_sent', Action::NOTICE_OK);
 		}
 		else
 		{
 			// Sollte eigentlich nicht vorkommen, da der Benutzer ja auch schon den
 			// Code per E-Mail erhalten hat.
-			$this->addNotice('user',$username,'error',Action::NOTICE_ERROR,array(),$eMail->error);
+			$this->addNotice('user', 0, $username, 'error', Action::NOTICE_ERROR, array(), $eMail->error);
 		}
 	}
 	

@@ -451,6 +451,7 @@ SQL
 	{
 		return $this->size;
 	}
+
 }
 
 ?>

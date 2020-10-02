@@ -102,14 +102,14 @@ class ProjectlistAction extends BaseAction
                 $project = new Project();
                 $project->name = $this->getRequestVar('name');
                 $project->add();
-                $this->addNotice('project',$project->name,'ADDED');
+                $this->addNotice('project', 0, $project->name, 'ADDED');
                 break;
             case 'copy':
                 $db = \cms\base\DB::get();
                 $project = new Project($this->getRequestVar('projectid'));
                 $project->load();
                 $project->export($db->id);
-                $this->addNotice('project',$project->name,'DONE');
+                $this->addNotice('project', 0, $project->name, 'DONE');
                 break;
             default:
                 throw new \LogicException('Unknown type while adding project '.$this->getRequestVar('type') );

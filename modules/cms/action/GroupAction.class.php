@@ -66,11 +66,11 @@ class GroupAction extends BaseAction
 		{
 			$this->group->delete();
 	
-			$this->addNotice('group',$this->group->name,'DELETED',Action::NOTICE_OK);
+			$this->addNotice('group', 0, $this->group->name, 'DELETED', Action::NOTICE_OK);
 		}
 		else
 		{
-			$this->addNotice('group',$this->group->name,'NOTHING_DONE',Action::NOTICE_WARN);
+			$this->addNotice('group', 0, $this->group->name, 'NOTHING_DONE', Action::NOTICE_WARN);
 		}
 	}
 	
@@ -91,7 +91,7 @@ class GroupAction extends BaseAction
         $this->group->name = $this->getRequestVar('name');
         $this->group->save();
 
-        $this->addNotice('group',$this->group->name,'SAVED','ok');
+        $this->addNotice('group', 0, $this->group->name, 'SAVED', 'ok');
 	}
 
 
@@ -116,18 +116,18 @@ class GroupAction extends BaseAction
 			{
 				$this->group->addUser( $uid );
 			}
-			$this->addNotice('group',$this->group->name,'USER_ADDED_TO_GROUP',Action::NOTICE_OK,array('count'=>count($userid)));
+			$this->addNotice('group', 0, $this->group->name, 'USER_ADDED_TO_GROUP', Action::NOTICE_OK, array('count' => count($userid)));
 		}
 		elseif( intval($userid) > 0 )
 		{
 			// Nur 1 Benutzer hinzuf�gen.
 			$this->group->addUser( intval($userid) );
-			$this->addNotice('group',$this->group->name,'USER_ADDED_TO_GROUP',OK_NOTICE_OK,array('count'=>'1'));
+			$this->addNotice('group', 0, $this->group->name, 'USER_ADDED_TO_GROUP', OK_NOTICE_OK, array('count' => '1'));
 		}
 		else
 		{
 			// Es wurde kein Benutzer ausgew�hlt.
-			$this->addNotice('group',$this->group->name,'NOTHING_DONE',Action::NOTICE_WARN);
+			$this->addNotice('group', 0, $this->group->name, 'NOTHING_DONE', Action::NOTICE_WARN);
 		}
 	}
 
@@ -140,7 +140,7 @@ class GroupAction extends BaseAction
 	{
 		$this->group->delUser( intval($this->getRequestVar('userid')) );
 	
-		$this->addNotice('group',$this->group->name,'DELETED',Action::NOTICE_OK);
+		$this->addNotice('group', 0, $this->group->name, 'DELETED', Action::NOTICE_OK);
 	}
 
 
@@ -209,7 +209,7 @@ class GroupAction extends BaseAction
 
 		$conf = \cms\base\Configuration::rawConfig();
 		if	($conf['security']['authorize']['type']=='ldap')
-			$this->addNotice('group',$this->group->name,'GROUPS_MAY_CONFLICT_WITH_LDAP',Action::NOTICE_WARN);
+			$this->addNotice('group', 0, $this->group->name, 'GROUPS_MAY_CONFLICT_WITH_LDAP', Action::NOTICE_WARN);
 	}
 	
 	
@@ -225,13 +225,13 @@ class GroupAction extends BaseAction
 			if	( !$hasUser && $this->hasRequestVar('user'.$id) )
 			{
 				$this->group->addUser($id);
-				$this->addNotice('user',$name,'ADDED');
+				$this->addNotice('user', 0, $name, 'ADDED');
 			}
 
 			if	( $hasUser && !$this->hasRequestVar('user'.$id) )
 			{
 				$this->group->delUser($id);
-				$this->addNotice('user',$name,'DELETED');
+				$this->addNotice('user', 0, $name, 'DELETED');
 			}
 		}
 	}

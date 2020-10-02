@@ -339,7 +339,7 @@ Openrat.Workbench = new function()
      * @param msg
      * @param log
      */
-    this.notify = function( type,name,status,msg,log=[],notifyTheBrowser=false )
+    this.notify = function (type, id, name, status, msg, log = [], notifyTheBrowser = false)
     {
         // Notice-Bar mit dieser Meldung erweitern.
 
@@ -354,9 +354,8 @@ Openrat.Workbench = new function()
         $(toolbar).append('<i class="or-action-close image-icon image-icon--menu-close"></i>');
         $(notice).append(toolbar);
 
-        let id = 0; // TODO id of objects to click on
         if	(name)
-            $(notice).append('<div class="name clickable"><a href="" data-type="open" data-action="'+type+'" data-id="'+id+'"><i class="or-action-full image-icon image-icon--action-'+type+'"></i> '+name+'</a></div>');
+            $(notice).append('<div class="name clickable"><a href="'+Openrat.Navigator.createShortUrl(type,id)+'" data-type="open" data-action="'+type+'" data-id="'+id+'"><i class="or-action-full image-icon image-icon--action-'+type+'"></i> '+name+'</a></div>');
 
         $(notice).append( '<div class="text">'+htmlEntities(msg)+'</div>');
 

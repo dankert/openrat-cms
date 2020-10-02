@@ -80,7 +80,7 @@ Openrat.Workbench.handleFileUpload = function(form,files)
 					msg = jqXHR.responseText;
 				}
 				
-				Openrat.Workbench.notify('Upload error',msg);
+				Openrat.Workbench.notify('Upload error', 0, msg);
 			}
 			
 		} );

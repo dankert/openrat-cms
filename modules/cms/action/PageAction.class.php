@@ -419,12 +419,12 @@ class PageAction extends ObjectAction
         if   ( ! $alias->filename ) {
 
             $alias->delete();
-            $this->addNotice($alias->getType(),'','DELETED','ok');
+            $this->addNotice($alias->getType(), 0, '', 'DELETED', 'ok');
         }
         else
         {
             $alias->save();
-            $this->addNotice($alias->getType(),$alias->filename,'SAVED','ok');
+            $this->addNotice($alias->getType(), 0, $alias->filename, 'SAVED', 'ok');
         }
 
     }
@@ -503,10 +503,10 @@ class PageAction extends ObjectAction
 		if	( $newTemplateId != 0  )
 		{
 			$this->page->replaceTemplate( $newTemplateId,$replaceElementMap );
-			$this->addNotice('page',$this->page->name,'SAVED',Action::NOTICE_OK);
+			$this->addNotice('page', 0, $this->page->name, 'SAVED', Action::NOTICE_OK);
 		}
 		else
-			$this->addNotice('page',$this->page->name,'NOT_SAVED',Action::NOTICE_WARN);
+			$this->addNotice('page', 0, $this->page->name, 'NOT_SAVED', Action::NOTICE_WARN);
 	}
 
 
@@ -807,11 +807,11 @@ class PageAction extends ObjectAction
         if   ( $this->getRequestVar('delete') != '' )
         {
             $this->page->delete();
-            $this->addNotice('page',$this->page->filename,'DELETED',Action::NOTICE_OK);
+            $this->addNotice('page', 0, $this->page->filename, 'DELETED', Action::NOTICE_OK);
         }
         else
         {
-            $this->addNotice('page',$this->page->filename,'CANCELED',Action::NOTICE_WARN);
+            $this->addNotice('page', 0, $this->page->filename, 'CANCELED', Action::NOTICE_WARN);
         }
     }
 

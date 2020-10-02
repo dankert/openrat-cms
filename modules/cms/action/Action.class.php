@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use cms\base\Language as L;
 use cms\model\BaseObject;
 use cms\model\ModelBase;
 use cms\model\User;
@@ -64,21 +65,12 @@ class Action
 	}
 
 
-	protected function setStyle($style)
-	{
-		$this->setControlVar("new_style", $style);
-	}
-
-
 	public function __construct()
 	{
-		//$this->request = new RequestParams();
-
 		$this->currentUser = Session::getUser();
 
 		$this->templateVars['errors'] = array();
 		$this->templateVars['notices'] = array();
-		$this->templateVars['control'] = array();
 		$this->templateVars['output'] = array();
 	}
 
@@ -161,19 +153,6 @@ class Action
 
 
 	/**
-	 * Setzt eine Variable f�r die Oberfl�che.
-	 *
-	 * @param String $varName Schl�ssel
-	 * @param Mixed $value
-	 * @deprecated Diese Schicht soll keine Dialog-Logik enthalten.
-	 */
-	protected function setControlVar($varName, $value)
-	{
-		$this->templateVars['control'][$varName] = $value;
-	}
-
-
-	/**
 	 * Setzt eine Liste von Variablen f�r die Oberfl�che.
 	 *
 	 * @param array $varList Assoziatives Array
@@ -195,7 +174,7 @@ class Action
 	public function addValidationError($name, $message = "COMMON_VALIDATION_ERROR", $vars = array(), $log = array())
 	{
 		if (!empty($message))
-			$this->addNotice('', '', $message, Action::NOTICE_ERROR, $vars, $log);
+			$this->addNotice('', 0, '', $message, Action::NOTICE_ERROR, $vars, $log);
 
 		$this->templateVars['errors'][] = $name;
 	}
@@ -214,7 +193,7 @@ class Action
 	 * @param string $message
 	 */
 	protected function addNoticeFor($baseObject,$key,$vars = array(), $message='') {
-		$this->addNotice( strtolower(ClassUtils::getSimpleClassName($baseObject)),$baseObject->getName(),$key,Action::NOTICE_OK,$vars,array($message));
+		$this->addNotice(strtolower(ClassUtils::getSimpleClassName($baseObject)), $baseObject->getId(), $baseObject->getName(), $key, Action::NOTICE_OK, $vars, array($message));
 	}
 
 	/**
@@ -224,7 +203,7 @@ class Action
 	 * @param string $message
 	 */
 	protected function addInfoFor($baseObject,$key,$vars = array(), $message='') {
-		$this->addNotice( strtolower(ClassUtils::getSimpleClassName($baseObject)),$baseObject->getName(),$key,Action::NOTICE_INFO,$vars,array($message));
+		$this->addNotice(strtolower(ClassUtils::getSimpleClassName($baseObject)), $baseObject->getId(), $baseObject->getName(), $key, Action::NOTICE_INFO, $vars, array($message));
 	}
 
 	/**
@@ -234,7 +213,7 @@ class Action
 	 * @param string $message
 	 */
 	protected function addWarningFor($baseObject,$key,$vars = array(), $message='') {
-		$this->addNotice( strtolower(ClassUtils::getSimpleClassName($baseObject)),$baseObject->getName(),$key,Action::NOTICE_WARN,$vars,array($message));
+		$this->addNotice(strtolower(ClassUtils::getSimpleClassName($baseObject)), $baseObject->getId(), $baseObject->getName(), $key, Action::NOTICE_WARN, $vars, array($message));
 	}
 
 	/**
@@ -244,20 +223,21 @@ class Action
 	 * @param string $message
 	 */
 	protected function addErrorFor($baseObject,$key,$vars = array(), $message='') {
-		$this->addNotice( strtolower(ClassUtils::getSimpleClassName($baseObject)),$baseObject->getName(),$key,Action::NOTICE_ERROR,$vars,array($message));
+		$this->addNotice(strtolower(ClassUtils::getSimpleClassName($baseObject)), $baseObject->getId(), $baseObject->getName(), $key, Action::NOTICE_ERROR, $vars, array($message));
 	}
 
 	/**
 	 * F�gt ein Meldung hinzu.
 	 *
 	 * @param String $type Typ des Objektes, zu dem diese Meldung geh�rt.
+	 * @param $id
 	 * @param String $name Name des Objektes, zu dem diese Meldung geh�rt.
 	 * @param String $text Textschl�ssel der Fehlermeldung (optional)
 	 * @param String $status Einer der Werte Action::NOTICE_(OK|WARN|ERROR)
 	 * @param array $vars Variablen f�r den Textschl�ssel
 	 * @param array $log Weitere Hinweistexte f�r diese Meldung.
 	 */
-	protected function addNotice($type, $name, $text, $status = Action::NOTICE_OK, $vars = array(), $log = array())
+	protected function addNotice($type, $id, $name, $text, $status = Action::NOTICE_OK, $vars = array(), $log = array())
 	{
 		if ($status === true)
 			$status = Action::NOTICE_OK;
@@ -274,13 +254,15 @@ class Action
 		if (!is_array($vars))
 			$vars = array($vars);
 
-		$this->templateVars['notices'][] = array('type' => $type,
-			'name' => $name,
-			'key' => $text,
-			'vars' => $vars,
-			'text' => \cms\base\Language::lang($text, $vars),
-			'log' => $log,
-			'status' => $status);
+		$this->templateVars['notices'][] = [
+			'type'   => $type,
+			'id'     => $id  ,
+			'name'   => $name,
+			'key'    => $text,
+			'vars'   => $vars,
+			'text'   => L::lang($text, $vars),
+			'log'    => $log ,
+			'status' => $status];
 	}
 
 
@@ -416,15 +398,6 @@ class Action
 		header('Pragma: '); // 'Pragma' ist Bullshit und
 		// wird von den meisten Browsern ignoriert.
 		header('Cache-Control: public, max-age=' . $max . ", s-maxage=" . $max);
-	}
-
-
-	/**
-	 * Erzeugt einen Redirect auf einen bestimmte URL.
-	 */
-	protected function redirect($url)
-	{
-		$this->setControlVar('redirect', $url);
 	}
 
 

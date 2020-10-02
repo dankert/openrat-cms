@@ -107,7 +107,7 @@ class TemplateAction extends BaseAction
 
        $templatemodel->save();
 
-		$this->addNotice('template',$this->template->name,'SAVED',Action::NOTICE_OK);
+		$this->addNotice('template', 0, $this->template->name, 'SAVED', Action::NOTICE_OK);
 	}
 
 
@@ -151,7 +151,7 @@ class TemplateAction extends BaseAction
 		{
 			$this->template->name = $this->getRequestVar('name');
 			$this->template->save();
-			$this->addNotice('template',$this->template->name,'SAVED',Action::NOTICE_OK);
+			$this->addNotice('template', 0, $this->template->name, 'SAVED', Action::NOTICE_OK);
 		}
 	}
 
@@ -163,11 +163,11 @@ class TemplateAction extends BaseAction
 		if   ( $this->getRequestVar('delete') != '' )
 		{
 			$this->template->delete();
-			$this->addNotice('template',$this->template->name,'DELETED',Action::NOTICE_OK);
+			$this->addNotice('template', 0, $this->template->name, 'DELETED', Action::NOTICE_OK);
 		}
 		else
 		{
-			$this->addNotice('template',$this->template->name,'CANCELED',Action::NOTICE_WARN);
+			$this->addNotice('template', 0, $this->template->name, 'CANCELED', Action::NOTICE_WARN);
 		}
 	}
 
@@ -218,7 +218,7 @@ class TemplateAction extends BaseAction
             // Validierung: Werte dürfen nicht doppelt vorkommen.
             if ( in_array($input, $extensions) )
             {
-                $this->addNotice('template',$this->template->name,'DUPLICATE_INPUT','error');
+                $this->addNotice('template', 0, $this->template->name, 'DUPLICATE_INPUT', 'error');
                 throw new \util\exception\ValidationException( $modelName );
             }
 
@@ -235,7 +235,7 @@ class TemplateAction extends BaseAction
             $templatemodel->save();
         }
 
-		$this->addNotice('template',$this->template->name,'SAVED','ok');
+		$this->addNotice('template', 0, $this->template->name, 'SAVED', 'ok');
 	}
 
 
@@ -292,7 +292,7 @@ class TemplateAction extends BaseAction
 
 		}
 
-		$this->addNotice('template',$this->template->name,'SAVED',Action::NOTICE_OK);
+		$this->addNotice('template', 0, $this->template->name, 'SAVED', Action::NOTICE_OK);
 	}
 
 
@@ -598,14 +598,9 @@ class TemplateAction extends BaseAction
 			$page->publish();
         }
 
-        $this->addNotice( 'template',
-            $this->template->name,
-            'PUBLISHED',
-            Action::NOTICE_OK,
-            array(),
-            array_map( function($obj) {
-                return $obj['full_filename'];
-            },$publisher->publishedObjects) );
+        $this->addNotice('template', 0, $this->template->name, 'PUBLISHED', Action::NOTICE_OK, array(), array_map(function ($obj) {
+			return $obj['full_filename'];
+		}, $publisher->publishedObjects));
 
         $publisher->close();
     }

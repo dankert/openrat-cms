@@ -1062,5 +1062,14 @@ SQL
 
 		return "$scheme$user$pass$host$port$path$query$fragment";
 	}
+
+
+
+	public function getId()
+	{
+		return $this->projectid;
+	}
+
+
 }
 

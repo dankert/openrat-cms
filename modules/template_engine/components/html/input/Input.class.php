@@ -73,10 +73,7 @@ class InputComponent extends FieldComponent
 		else
 			$input->addAttribute('value',Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->name));
 
-			// Unused:
-			//if(isset($this->icon))
-			//	echo '<img src="'.OR_THEMES_DIR.'default/images/icon_'.$this->htmlvalue($this->icon). IMG_ICON_EXT .'" width="16" height="16" />';
-
+		$input->addStyleClass('or-input');
 
 		if   ( $this->label ) {
 			$label = new CMSElement('label');
@@ -86,6 +83,6 @@ class InputComponent extends FieldComponent
 			return $label;
 		}
 
-		return (new HtmlElement('div'))->addStyleClass('inputholder')->addChild($input);
+		return $input;
 	}
 }

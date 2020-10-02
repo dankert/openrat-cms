@@ -1040,6 +1040,13 @@ SQL
 	    $stmt->execute();
 	    
 	}
-	
+
+
+	public function getId()
+	{
+		return $this->userid;
+	}
+
+
 }
 

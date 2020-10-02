@@ -23,9 +23,7 @@
               <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
                 <?php  { $inherit= 1; ?>
                  <?php } ?>
-                <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
-                  <input name="<?php echo O::escapeHtml('inherit') ?>" type="<?php echo O::escapeHtml('checkbox') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$inherit.'') ?>" /><?php echo O::escapeHtml('') ?>
-                </div>
+                <input name="<?php echo O::escapeHtml('inherit') ?>" type="<?php echo O::escapeHtml('checkbox') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$inherit.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
                 <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
                   <span><?php echo O::escapeHtml(''.@O::lang('inherit_rights').'') ?>
                   </span>

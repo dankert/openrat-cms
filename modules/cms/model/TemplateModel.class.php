@@ -179,5 +179,12 @@ class TemplateModel extends ModelBase
         return '';
     }
 
+
+	public function getId()
+	{
+		return $this->templatemodelid;
+	}
+
+
 }
 

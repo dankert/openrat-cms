@@ -17,7 +17,7 @@
 			</part>
 			<part class="input">
 				<link type="view" subaction="extension">
-					<part class="inputholder">
+					<part>
 						<text value="${extension}"></text>
 					</part>
 				</link>
@@ -35,7 +35,7 @@
 			</part>
 			<part class="input">
 				<link action="template" subaction="extension">
-					<part class="inputholder">
+					<part>
 						<text value="${mime_type}"></text>
 					</part>
 				</link>

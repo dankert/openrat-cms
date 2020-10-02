@@ -98,6 +98,8 @@ class SelectboxComponent extends Component
 
 		$optionLoop->addChild($option);
 
+		$selectbox->addStyleClass('or-input');
+
 		// Wrap into a label, if necessary.
 		if   ( $this->label ) {
 			$label = new CMSElement('label');

@@ -25,6 +25,7 @@ use cms\model\Link;
 use cms\model\Text;
 use cms\model\Url;
 use cms\generator\PublishPublic;
+use util\exception\ValidationException;
 use util\Http;
 use Publish;
 use util\Session;
@@ -72,36 +73,26 @@ class FolderAction extends ObjectAction
 	}
 
 
-	public function createfolderPost()
+	public function createfolderPost( $name )
 	{
-		$name        = $this->getRequestVar('name'       );
 		$description = $this->getRequestVar('description');
 
-		if   ( !empty($name) )
-		{
-			$f = new Folder();
-			$f->projectid  = $this->folder->projectid;
-			$f->languageid = $this->folder->languageid;
-			$f->name       = $name;
-			$f->filename   = BaseObject::urlify( $name );
-			$f->desc       = $description;
-			$f->parentid   = $this->folder->objectid;
+		$f = new Folder();
+		$f->projectid  = $this->folder->projectid;
+		$f->languageid = $this->folder->languageid;
+		$f->name       = $name;
+		$f->filename   = BaseObject::urlify( $name );
+		$f->desc       = $description;
+		$f->parentid   = $this->folder->objectid;
 
-			$f->add();
-			$f->setNameForAllLanguages( $name,$description );
+		$f->add();
+		$f->setNameForAllLanguages( $name,$description );
 
-			$this->addNotice('folder',$f->name,'ADDED','ok');
+		$this->addNoticeFor($f, Messages::ADDED);
+		// Die neue Folder-Id (wichtig für API-Aufrufe).
+		$this->setTemplateVar('objectid',$f->objectid);
 
-			// Die neue Folder-Id (wichtig für API-Aufrufe).
-            $this->setTemplateVar('objectid',$f->objectid);
-
-            $this->folder->setTimestamp(); // Zeitstempel setzen.
-        }
-    else
-        {
-            $this->addValidationError('name');
-        }
-
+		$this->folder->setTimestamp(); // Zeitstempel setzen.
     }
 
 
@@ -127,7 +118,6 @@ class FolderAction extends ObjectAction
 			if	( !$ok )
 			{
 				$this->addValidationError('url','COMMON_VALIDATION_ERROR',array(),$http->error);
-				$this->callSubAction('createfile');
 				return;
 			}
 
@@ -179,7 +169,7 @@ class FolderAction extends ObjectAction
 		$file->add(); // Datei hinzufuegen
         $file->setNameForAllLanguages( $name,$description );
 
-		$this->addNotice('file',$file->filename,'ADDED','ok');
+		$this->addNoticeFor( $file, Messages::ADDED );
 		$this->setTemplateVar('objectid',$file->objectid);
 
 		$this->folder->setTimestamp();
@@ -208,7 +198,6 @@ class FolderAction extends ObjectAction
 			if	( !$ok )
 			{
 				$this->addValidationError('url','COMMON_VALIDATION_ERROR',array(),$http->error);
-				$this->callSubAction('createfile');
 				return;
 			}
 
@@ -247,7 +236,7 @@ class FolderAction extends ObjectAction
 		}
 
 		$image->add(); // Datei hinzufuegen
-		$this->addNotice('file',$image->name,'ADDED','ok');
+		$this->addNoticeFor( $image, Messages::ADDED );
         $image->setNameForAllLanguages( $name,$description );
 		$this->setTemplateVar('objectid',$image->objectid);
 
@@ -313,7 +302,7 @@ class FolderAction extends ObjectAction
 
 		$text->add(); // Datei hinzufuegen
         $text->setNameForAllLanguages( $name,$description );
-		$this->addNotice('file',$text->name,'ADDED','ok');
+		$this->addNoticeFor($text, Messages::ADDED);
 		$this->setTemplateVar('objectid',$text->objectid);
 
 		$this->folder->setTimestamp();
@@ -321,99 +310,66 @@ class FolderAction extends ObjectAction
 
 
 
-    public function createlinkPost()
+    public function createlinkPost( $name )
 	{
-		$name        = $this->getRequestVar('name'       );
         $description = $this->getRequestVar('description');
 
-        if   ( !empty($name) )
-        {
-            $link = new Link();
-            $link->filename       = BaseObject::urlify( $name );
-            $link->parentid       = $this->folder->objectid;
+		$link = new Link();
+		$link->filename       = BaseObject::urlify( $name );
+		$link->parentid       = $this->folder->objectid;
 
-            $link->linkedObjectId = $this->getRequestVar('targetobjectid');
-            $link->projectid      = $this->folder->projectid;
+		$link->linkedObjectId = $this->getRequestVar('targetobjectid');
+		$link->projectid      = $this->folder->projectid;
 
-            $link->add();
-            $link->setNameForAllLanguages( $name,$description );
+		$link->add();
+		$link->setNameForAllLanguages( $name,$description );
 
-            $this->addNotice('link',$link->name,'ADDED','ok');
-            $this->setTemplateVar('objectid',$link->objectid);
-        }
-        else
-        {
-            $this->addValidationError('name');
-            $this->callSubAction('createlink');
-            return;
-        }
+		$this->addNoticeFor( $link, Messages::ADDED);
+		$this->setTemplateVar('objectid',$link->objectid);
 
         $this->folder->setTimestamp();
     }
 
-	public function createurlPost()
+	public function createurlPost( $name )
 	{
-		$name        = $this->getRequestVar('name'       );
 		$description = $this->getRequestVar('description');
         $filename    = $this->getRequestVar('filename'   );
 
-		if   ( !empty($name) )
-		{
-			$url = new Url();
-			$url->filename       = BaseObject::urlify( $name );
-			$url->parentid       = $this->folder->objectid;
-            $url->projectid      = $this->folder->projectid;
+		$url = new Url();
+		$url->filename       = BaseObject::urlify( $name );
+		$url->parentid       = $this->folder->objectid;
+		$url->projectid      = $this->folder->projectid;
 
-			$url->url            = $this->getRequestVar('url');
+		$url->url            = $this->getRequestVar('url');
 
-			$url->add();
-            $url->setNameForAllLanguages( $name,$description );
+		$url->add();
+		$url->setNameForAllLanguages( $name,$description );
 
-			$this->addNotice('url',$url->name,'ADDED','ok');
-			$this->setTemplateVar('objectid',$url->objectid);
-		}
-		else
-		{
-			$this->addValidationError('name');
-			$this->callSubAction('createurl');
-			return;
-		}
+		$this->addNoticeFor( $url, Messages::ADDED );
+		$this->setTemplateVar('objectid',$url->objectid);
 
 		$this->folder->setTimestamp();
 	}
 
 
 
-    public function createpagePost()
+    public function createpagePost( $name )
 	{
-		$type        = $this->getRequestVar('type'       );
-		$name        = $this->getRequestVar('name'       );
 		$filename    = $this->getRequestVar('filename'   );
 		$description = $this->getRequestVar('description');
 
-		if   ( $this->getRequestVar('name') != '' )
-		{
-			$page = new Page();
-			$page->name       = $name;
-			$page->desc       = $description;
-			$page->filename   = BaseObject::urlify( $name );
-			$page->templateid = $this->getRequestVar('templateid');
-			$page->parentid   = $this->folder->objectid;
-			$page->projectid  = $this->folder->projectid;
+		$page = new Page();
+		$page->filename   = BaseObject::urlify( $name );
+		$page->templateid = $this->getRequestVar('templateid');
+		$page->parentid   = $this->folder->objectid;
+		$page->projectid  = $this->folder->projectid;
 
 
-			$page->add();
-            $page->setNameForAllLanguages( $name,$description );
+		$page->add();
+		$page->setNameForAllLanguages( $name,$description );
 
-			$this->addNotice('page',$page->name,'ADDED','ok');
-			$this->setTemplateVar('objectid',$page->objectid);
-		}
-		else
-		{
-			$this->addValidationError('name');
-			$this->callSubAction('createpage');
-			return;
-		}
+		$this->addNoticeFor( $page, Messages::ADDED );
+		$this->setTemplateVar('objectid',$page->objectid);
 
 		$this->folder->setTimestamp();
 	}
@@ -444,87 +400,8 @@ class FolderAction extends ObjectAction
 			unset( $o ); // Selfmade Garbage Collection :-)
 		}
 
-		$this->addNotice($this->folder->getType(),$this->folder->name,'SEQUENCE_CHANGED','ok');
+		$this->addNoticeFor($this->folder, Messages::SEQUENCE_CHANGED);
 		$this->folder->setTimestamp();
-	}
-
-
-	private function OLD__________editPost()
-	{
-		$type = $this->getRequestVar('type'); // Typ der Aktion, z.B "copy" oder "move"
-
-		switch( $type )
-		{
-			case 'move':
-			case 'copy':
-			case 'link':
-				// Liste von m�glichen Zielordnern anzeigen
-
-				$otherfolder = array();
-				foreach( $this->folder->getAllFolders() as $id )
-				{
-					$f = new Folder( $id );
-
-					// Beim Verkn�pfen muss im Zielordner die Berechtigung zum Erstellen
-					// von Verkn�pfungen vorhanden sein.
-					//
-					// Beim Verschieben und Kopieren muss im Zielordner die Berechtigung
-					// zum Erstellen von Ordner, Dateien oder Seiten vorhanden sein.
-					if	( ( $type=='link' && $f->hasRight( Acl::ACL_CREATE_LINK ) ) ||
-						  ( ( $type=='move' || $type == 'copy' ) &&
-						    ( $f->hasRight(Acl::ACL_CREATE_FOLDER) || $f->hasRight(Acl::ACL_CREATE_FILE) || $f->hasRight(Acl::ACL_CREATE_PAGE) ) ) )
-						// Zielordner hinzuf�gen
-						$otherfolder[$id] = FILE_SEP.implode( FILE_SEP,$f->parentObjectNames(false,true) );
-				}
-
-				// Zielordner-Liste alphabetisch sortieren
-				asort( $otherfolder );
-
-				$this->setTemplateVar('folder',$otherfolder);
-
-				break;
-
-			case 'archive':
-				$this->setTemplateVar('ask_filename','');
-				break;
-
-			case 'delete':
-				$this->setTemplateVar('ask_commit','');
-				break;
-
-			default:
-				$this->addValidationError('type');
-				return;
-
-		} // switch
-
-		$ids        = $this->folder->getObjectIds();
-		$objectList = array();
-
-		foreach( $ids as $id )
-		{
-			// Nur, wenn Objekt ausgewaehlt wurde
-			if	( !$this->hasRequestVar('obj'.$id) )
-				continue;
-
-			$o = new BaseObject( $id );
-			$o->load();
-
-			// F�r die gew�nschte Aktion m�ssen pro Objekt die entsprechenden Rechte
-			// vorhanden sein.
-			if	( $type == 'copy'    && $o->hasRight( Acl::ACL_READ   ) ||
-				  $type == 'move'    && $o->hasRight( Acl::ACL_DELETE ) ||
-				  $type == 'link'    && $o->hasRight( Acl::ACL_READ   ) ||
-				  $type == 'archive' && $o->hasRight( Acl::ACL_READ   ) ||
-				  $type == 'delete'  && $o->hasRight( Acl::ACL_DELETE )    )
-				$objectList[ $id ] = $o->getProperties();
-		}
-
-		$this->setTemplateVar('type'  ,$type       );
-		$this->setTemplateVar('objectlist',$objectList );
-
-		// Komma-separierte Liste von ausgew�hlten Objekt-Ids erzeugen
-		$this->setTemplateVar('ids',join(array_keys($objectList),',') );
 	}
 
 
@@ -589,7 +466,7 @@ class FolderAction extends ObjectAction
 				  $type == 'delete'  && $o->hasRight( Acl::ACL_DELETE )    )
 				$objectList[ $id ] = $o->getProperties();
 			else
-				$this->addNotice($o->getType(),$o->name,'no_rights',Action::NOTICE_WARN);
+				$this->addNotice($o->getType(), 0, $o->name, 'no_rights', Action::NOTICE_WARN);
 		}
 
 		$ids = array_keys($objectList);
@@ -628,7 +505,7 @@ class FolderAction extends ObjectAction
 				else
 				{
 					// Was anderes als Dateien ignorieren.
-					$this->addNotice($o->getType(),$o->name,'NOTHING_DONE',Action::NOTICE_WARN);
+					$this->addNotice($o->getType(), 0, $o->name, 'NOTHING_DONE', Action::NOTICE_WARN);
 				}
 
 			}
@@ -668,18 +545,18 @@ class FolderAction extends ObjectAction
 							// dann verschieben
 							if	( !in_array($targetObjectId,$allsubfolders) && $id != $targetObjectId )
 							{
-								$this->addNotice($o->getType(),$o->name,'MOVED','ok');
+								$this->addNotice($o->getType(), 0, $o->name, 'MOVED', 'ok');
 								$o->setParentId( $targetObjectId );
 							}
 							else
 							{
-								$this->addNotice($o->getType(),$o->name,'ERROR','error');
+								$this->addNotice($o->getType(), 0, $o->name, 'ERROR', 'error');
 							}
 						}
 						else
 						{
 							$o->setParentId( $targetObjectId );
-							$this->addNotice($o->getType(),$o->name,'MOVED','ok');
+							$this->addNotice($o->getType(), 0, $o->name, 'MOVED', 'ok');
 						}
 						break;
 
@@ -689,7 +566,7 @@ class FolderAction extends ObjectAction
 							case 'folder':
 								// Ordner zur Zeit nicht kopieren
 								// Funktion waere zu verwirrend
-								$this->addNotice($o->getType(),$o->name,'CANNOT_COPY_FOLDER','error');
+								$this->addNotice($o->getType(), 0, $o->name, 'CANNOT_COPY_FOLDER', 'error');
 								break;
 
 							case 'file':
@@ -701,7 +578,7 @@ class FolderAction extends ObjectAction
 								$f->add();
 								$f->copyValueFromFile( $id );
 
-								$this->addNotice($o->getType(),$o->name,'COPIED','ok');
+								$this->addNotice($o->getType(), 0, $o->name, 'COPIED', 'ok');
 								break;
 
 							case 'page':
@@ -712,7 +589,7 @@ class FolderAction extends ObjectAction
 								$p->parentid = $targetObjectId;
 								$p->add();
 								$p->copyValuesFromPage( $id );
-								$this->addNotice($o->getType(),$o->name,'COPIED','ok');
+								$this->addNotice($o->getType(), 0, $o->name, 'COPIED', 'ok');
 								break;
 
 							case 'link':
@@ -722,7 +599,7 @@ class FolderAction extends ObjectAction
 								$l->name     = \cms\base\Language::lang('COPY_OF').' '.$l->name;
 								$l->parentid = $targetObjectId;
 								$l->add();
-								$this->addNotice($o->getType(),$o->name,'COPIED','ok');
+								$this->addNotice($o->getType(), 0, $o->name, 'COPIED', 'ok');
 								break;
 
 							default:
@@ -745,11 +622,11 @@ class FolderAction extends ObjectAction
 							$link->isLinkToObject = true;
 							$link->name           = \cms\base\Language::lang('LINK_TO').' '.$o->name;
 							$link->add();
-							$this->addNotice($o->getType(),$o->name,'LINKED','ok');
+							$this->addNotice($o->getType(), 0, $o->name, 'LINKED', 'ok');
 						}
 						else
 						{
-							$this->addNotice($o->getType(),$o->name,'ERROR','error');
+							$this->addNotice($o->getType(), 0, $o->name, 'ERROR', 'error');
 						}
 						break;
 
@@ -788,17 +665,17 @@ class FolderAction extends ObjectAction
 								default:
 									throw new \LogicException("Error while deleting: Unknown type: {$o->getType()}");
 							}
-							$this->addNotice($o->getType(),$o->name,'DELETED',Action::NOTICE_OK);
+							$this->addNotice($o->getType(), 0, $o->name, 'DELETED', Action::NOTICE_OK);
 						}
 						else
 						{
-							$this->addNotice($o->getType(),$o->name,'NOTHING_DONE',Action::NOTICE_WARN);
+							$this->addNotice($o->getType(), 0, $o->name, 'NOTHING_DONE', Action::NOTICE_WARN);
 						}
 
 						break;
 
 					default:
-						$this->addNotice($o->getType(),$o->name,'ERROR','error');
+						$this->addNotice($o->getType(), 0, $o->name, 'ERROR', 'error');
 				}
 
 			}
@@ -978,7 +855,7 @@ class FolderAction extends ObjectAction
 		$this->setTemplateVar('objectid'  ,$this->folder->objectid );
 
 		if	( count($all_templates) == 0 )
-			$this->addNotice('folder',$this->folder->name,'NO_TEMPLATES_AVAILABLE',Action::NOTICE_WARN);
+			$this->addNotice('folder', 0, $this->folder->name, 'NO_TEMPLATES_AVAILABLE', Action::NOTICE_WARN);
 	}
 
 

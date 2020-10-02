@@ -80,14 +80,14 @@ class LoginAction extends BaseAction
 		
 		if	( !is_object($db) )
 		{
-			$this->addNotice('database','','DATABASE_CONNECTION_ERROR',Action::NOTICE_ERROR,array(),array('no connection'));
+			$this->addNotice('database', 0, '', 'DATABASE_CONNECTION_ERROR', Action::NOTICE_ERROR, array(), array('no connection'));
 			//$this->callSubAction('showlogin');
 			return false;
 		}
 		
 		if	( !$db->available )
 		{
-			$this->addNotice('database',$db->conf['description'],'DATABASE_CONNECTION_ERROR',Action::NOTICE_ERROR,array(),array('Database Error: '.$db->error));
+			$this->addNotice('database', 0, $db->conf['description'], 'DATABASE_CONNECTION_ERROR', Action::NOTICE_ERROR, array(), array('Database Error: ' . $db->error));
 			//$this->callSubAction('showlogin');
 			return false;
 		}
@@ -289,7 +289,7 @@ class LoginAction extends BaseAction
 
 
         if	( empty($dbids) )
-            $this->addNotice('','','no_database_configuration',Action::NOTICE_WARN);
+            $this->addNotice('', 0, '', 'no_database_configuration', Action::NOTICE_WARN);
 
         if	( !isset($this->templateVars['login_name']) && isset($_COOKIE['or_username']) )
             $this->setTemplateVar('login_name',$_COOKIE['or_username']);
@@ -387,7 +387,7 @@ class LoginAction extends BaseAction
 
 
 		if	( empty($dbids) )
-			$this->addNotice('','','no_database_configuration',Action::NOTICE_WARN);
+			$this->addNotice('', 0, '', 'no_database_configuration', Action::NOTICE_WARN);
 
 		if	( !isset($_COOKIE['or_username']) )
 			$this->setTemplateVar('login_name',$_COOKIE['or_username']);
@@ -525,8 +525,6 @@ class LoginAction extends BaseAction
 		Logger::info("User login successful: ".$username);
 		$user->setCurrent();  // Benutzer ist jetzt in der Sitzung.
 		
-		$this->setStyle( $user->style );
-
 		$server = Http::getServer();
 		Logger::debug("Redirecting to $server");
 		header('Location: '.FileUtils::slashify($server) );
@@ -562,14 +560,14 @@ class LoginAction extends BaseAction
 			
 			if	( ! $openId->login() )
 			{
-				$this->addNotice('user',$openid_user,'LOGIN_OPENID_FAILED','error',array('name'=>$openid_user),array($openId->error) );
+				$this->addNotice('user', 0, $openid_user, 'LOGIN_OPENID_FAILED', 'error', array('name' => $openid_user), array($openId->error));
 				$this->addValidationError('openid_url','');
 				$this->callSubAction('showlogin');
 				return;
 			}
 			
 			Session::set('openid',$openId);
-			$this->redirect( $openId->getRedirectUrl() );
+			//$this->redirect( $openId->getRedirectUrl() );
 			return;
 		}
 	}
@@ -678,7 +676,7 @@ class LoginAction extends BaseAction
 			else
 			{
 				// Anmeldung gescheitert.
-				$this->addNotice('user',$loginName,'LOGIN_FAILED','error',array('name'=>$loginName) );
+				$this->addNotice('user', 0, $loginName, 'LOGIN_FAILED', 'error', array('name' => $loginName));
 				$this->addValidationError('login_name'    ,'');
 				$this->addValidationError('login_password','');
 				return;
@@ -783,20 +781,20 @@ class LoginAction extends BaseAction
 			if	( $tokenFailed )
 			{
 				// Token falsch.
-				$this->addNotice('user',$loginName,'LOGIN_FAILED_TOKEN_FAILED','error' );
+				$this->addNotice('user', 0, $loginName, 'LOGIN_FAILED_TOKEN_FAILED', 'error');
 				$this->addValidationError('user_token','');
 			}
 			elseif	( $mustChangePassword )
 			{
 				// Anmeldung gescheitert, Benutzer muss Kennwort ?ndern.
-				$this->addNotice('user',$loginName,'LOGIN_FAILED_MUSTCHANGEPASSWORD','error' );
+				$this->addNotice('user', 0, $loginName, 'LOGIN_FAILED_MUSTCHANGEPASSWORD', 'error');
 				$this->addValidationError('password1','');
 				$this->addValidationError('password2','');
 			}
 			else
 			{
 				// Anmeldung gescheitert.
-				$this->addNotice('user',$loginName,'LOGIN_FAILED','error',array('name'=>$loginName) );
+				$this->addNotice('user', 0, $loginName, 'LOGIN_FAILED', 'error', array('name' => $loginName));
 				$this->addValidationError('login_name'    ,'');
 				$this->addValidationError('login_password','');
 			}
@@ -821,10 +819,8 @@ class LoginAction extends BaseAction
             if	( \cms\base\Configuration::config()->subset('security')->is('renew_session_login',false) )
 				$this->recreateSession();
 			
-			$this->addNotice('user',$user->name,'LOGIN_OK',Action::NOTICE_OK,array('name'=>$user->fullname));
+			$this->addNotice('user', 0, $user->name, 'LOGIN_OK', Action::NOTICE_OK, array('name' => $user->fullname));
 			
-			$this->setStyle( $user->style ); // Benutzer-Style setzen
-
             $config = Session::getConfig();
             $language = new \language\Language();
             $config['language'] = $language->getLanguage($user->language);
@@ -886,19 +882,7 @@ class LoginAction extends BaseAction
         //session_unset();
         Session::setUser(null);
 
-        // Umleiten auf eine definierte URL.s
-		$redirect_url = @$conf['security']['logout']['redirect_url'];
-
-		if	( !empty($redirect_url) )
-		{
-			$this->redirect($redirect_url);
-		}
-
-		// Style zurücksetzen.
-		// Der Style des Benutzers koennte auch stehen bleiben. Aber dann gäbe es Rückschlüsse darauf, wer zuletzt angemeldet war (Sicherheit!).
-		$this->setStyle( \cms\base\Configuration::config('interface','style','default') );
-
-        $this->addNotice('user',$user->name,'LOGOUT_OK',Action::NOTICE_OK);
+        $this->addNotice('user', 0, $user->name, 'LOGOUT_OK', Action::NOTICE_OK);
 
     }
 
@@ -1070,7 +1054,7 @@ class LoginAction extends BaseAction
 				else
 				{
 					Logger::warn('Guest login failed, user not found: '.$username);
-					$this->addNotice('user',$username,'LOGIN_FAILED',Action::NOTICE_WARN,array('name'=>$username) );
+					$this->addNotice('user', 0, $username, 'LOGIN_FAILED', Action::NOTICE_WARN, array('name' => $username));
 					$user = null;
 				}
 			}
@@ -1113,7 +1097,7 @@ class LoginAction extends BaseAction
 		
 		if	( $user->mustChangePassword ) 
 		{
-			$this->addNotice( 'user',$user->name,'PASSWORD_TIMEOUT','warn' );
+			$this->addNotice('user', 0, $user->name, 'PASSWORD_TIMEOUT', 'warn');
 			$this->callSubAction( 'changepassword' ); // Zwang, das Kennwort zu ?ndern.
 		}
 
@@ -1186,11 +1170,11 @@ class LoginAction extends BaseAction
 		
 		if	( $mail->send() )
 		{
-			$this->addNotice('','','mail_sent',Action::NOTICE_OK);
+			$this->addNotice('', 0, '', 'mail_sent', Action::NOTICE_OK);
 		}
 		else
 		{
-			$this->addNotice('','','mail_not_sent',Action::NOTICE_ERROR,array(),$mail->error);
+			$this->addNotice('', 0, '', 'mail_not_sent', Action::NOTICE_ERROR, array(), $mail->error);
 			return;
 		}
 	}
@@ -1245,7 +1229,7 @@ class LoginAction extends BaseAction
 			
 		$newUser->setPassword( $this->getRequestVar('password'),true );
 			
-		$this->addNotice('user',$newUser->name,'user_added','ok');
+		$this->addNotice('user', 0, $newUser->name, 'user_added', 'ok');
 	}
 
 
@@ -1300,9 +1284,9 @@ class LoginAction extends BaseAction
 			$eMail->setVar('name',$user->getName());
 			$eMail->setVar('code',$code);
 			if	( $eMail->send() )
-				$this->addNotice('user',$user->getName(),'mail_sent',Action::NOTICE_OK);
+				$this->addNotice('user', 0, $user->getName(), 'mail_sent', Action::NOTICE_OK);
 			else
-				$this->addNotice('user',$user->getName(),'mail_not_sent',Action::NOTICE_ERROR,array(),$eMail->error);
+				$this->addNotice('user', 0, $user->getName(), 'mail_not_sent', Action::NOTICE_ERROR, array(), $eMail->error);
 			
 		}
 		else
@@ -1311,7 +1295,7 @@ class LoginAction extends BaseAction
 			// Trotzdem vort?uschen, eine E-Mail zu senden, damit die G?ltigkeit
 			// eines Benutzernamens nicht von au?en gepr?ft werden kann.
 			// 
-			$this->addNotice('user',$this->getRequestVar("username"),'mail_sent');
+			$this->addNotice('user', 0, $this->getRequestVar("username"), 'mail_sent');
 
 		}
 		
@@ -1349,7 +1333,7 @@ class LoginAction extends BaseAction
 		if	( !$user->isValid() )
 		{
 			// Benutzer konnte nicht geladen werden.
-			$this->addNotice('user',$username,'error',Action::NOTICE_ERROR);
+			$this->addNotice('user', 0, $username, 'error', Action::NOTICE_ERROR);
 			return;
 		}
 		
@@ -1362,13 +1346,13 @@ class LoginAction extends BaseAction
 		if	( $eMail->send() )
 		{
 			$user->setPassword( $newPw, false ); // Kennwort muss beim n?. Login ge?ndert werden.
-			$this->addNotice('user',$username,'mail_sent',Action::NOTICE_OK);
+			$this->addNotice('user', 0, $username, 'mail_sent', Action::NOTICE_OK);
 		}
 		else
 		{
 			// Sollte eigentlich nicht vorkommen, da der Benutzer ja auch schon den
 			// Code per E-Mail erhalten hat.
-			$this->addNotice('user',$username,'error',Action::NOTICE_ERROR,array(),$eMail->error);
+			$this->addNotice('user', 0, $username, 'error', Action::NOTICE_ERROR, array(), $eMail->error);
 		}
 	}
 	

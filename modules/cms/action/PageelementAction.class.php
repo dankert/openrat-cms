@@ -680,7 +680,7 @@ class PageelementAction extends BaseAction
         // Inhalt wieder herstellen, in dem er neu gespeichert wird.
         $this->value->save();
 
-        $this->addNotice('pageelement',$this->value->element->name,'PAGEELEMENT_USE_FROM_ARCHIVE',Action::NOTICE_OK);
+        $this->addNotice('pageelement', 0, $this->value->element->name, 'PAGEELEMENT_USE_FROM_ARCHIVE', Action::NOTICE_OK);
     }
 
 
@@ -703,7 +703,7 @@ class PageelementAction extends BaseAction
         // Inhalt freigeben
         $this->value->release();
 
-        $this->addNotice('pageelement',$this->value->element->name,'PAGEELEMENT_RELEASED',Action::NOTICE_OK);
+        $this->addNotice('pageelement', 0, $this->value->element->name, 'PAGEELEMENT_RELEASED', Action::NOTICE_OK);
     }
 
 
@@ -938,7 +938,7 @@ class PageelementAction extends BaseAction
             $value->save();
         }
 
-        $this->addNotice('pageelement',$value->element->label,'SAVED',Action::NOTICE_OK);
+        $this->addNotice('pageelement', 0, $value->element->label, 'SAVED', Action::NOTICE_OK);
         $this->page->setTimestamp(); // "Letzte Aenderung" setzen
 
         // Falls ausgewaehlt die Seite sofort veroeffentlichen

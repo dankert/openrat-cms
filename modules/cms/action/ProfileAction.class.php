@@ -23,6 +23,7 @@ use cms\base\Configuration;
 use cms\model\BaseObject;
 use cms\model\User;
 use language\Language;
+use language\Messages;
 use LogicException;
 use util\Mail;
 use util\UIUtils;
@@ -71,14 +72,12 @@ class ProfileAction extends BaseAction
 		$this->user->totp     = $this->hasRequestVar('totp'    );
 		
 		
-		$this->setStyle( $this->user->style ); // Style sofort anwenden
 		Session::setUser( $this->user );
 		
 		if	( !empty($this->user->fullname) )
 		{
 			$this->user->save();
-			$this->setStyle($this->user->style);
-			$this->addNotice('user',$this->user->name,'SAVED','ok');
+			$this->addNoticeFor( $this->user,Messages::SAVED);
 		}
 		else
 		{
@@ -147,11 +146,11 @@ class ProfileAction extends BaseAction
 			
 			if	( $mail->send() )
 			{
-				$this->addNotice('user',$this->user->name,'mail_sent',Action::NOTICE_OK); // Meldung
+				$this->addNotice('user', 0, $this->user->name, 'mail_sent', Action::NOTICE_OK); // Meldung
 			}
 			else
 			{
-				$this->addNotice('user',$this->user->name,'mail_not_sent',Action::NOTICE_ERROR,array(),$mail->error); // Meldung
+				$this->addNotice('user', 0, $this->user->name, 'mail_not_sent', Action::NOTICE_ERROR, array(), $mail->error); // Meldung
 				return;
 			}
 		}
@@ -185,7 +184,7 @@ class ProfileAction extends BaseAction
 			$this->user->mail = $newMail;
 			$this->user->save();
 			
-			$this->addNotice('user',$this->user->name,'SAVED',Action::NOTICE_OK);
+			$this->addNotice('user', 0, $this->user->name, 'SAVED', Action::NOTICE_OK);
 		}
 		else
 		{
@@ -218,7 +217,7 @@ class ProfileAction extends BaseAction
 		else
 		{
 			$this->user->setPassword( $this->getRequestVar('password1') );
-			$this->addNotice('user',$this->user->name,'SAVED','ok');
+			$this->addNotice('user', 0, $this->user->name, 'SAVED', 'ok');
 		}
 	}
 

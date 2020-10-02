@@ -36,7 +36,7 @@
               </label>
             </div>
             <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-              <select name="<?php echo O::escapeHtml('userid') ?>" size="<?php echo O::escapeHtml('1') ?>"><?php echo O::escapeHtml('') ?>
+              <select name="<?php echo O::escapeHtml('userid') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
                 <option value="<?php echo O::escapeHtml('') ?>"><?php echo O::escapeHtml(''.@O::lang('LIST_ENTRY_EMPTY').'') ?>
                 </option>
                 <?php foreach($users as $_key=>$_value) {  ?>
@@ -56,7 +56,7 @@
                 </label>
               </div>
               <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-                <select name="<?php echo O::escapeHtml('groupid') ?>" size="<?php echo O::escapeHtml('1') ?>"><?php echo O::escapeHtml('') ?>
+                <select name="<?php echo O::escapeHtml('groupid') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
                   <option value="<?php echo O::escapeHtml('') ?>"><?php echo O::escapeHtml(''.@O::lang('LIST_ENTRY_EMPTY').'') ?>
                   </option>
                   <?php foreach($groups as $_key=>$_value) {  ?>
@@ -86,7 +86,7 @@
               </label>
             </div>
             <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-              <select name="<?php echo O::escapeHtml('languageid') ?>" size="<?php echo O::escapeHtml('1') ?>"><?php echo O::escapeHtml('') ?>
+              <select name="<?php echo O::escapeHtml('languageid') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
                 <?php foreach($languages as $_key=>$_value) {  ?>
                   <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==''){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
                   </option>

@@ -89,7 +89,7 @@ $( function() {
 
     // Initial Notices
     $('.or-initial-notice').each( function() {
-       Openrat.Workbench.notify('','','info',$(this).text());
+       Openrat.Workbench.notify('', 0, '', 'info', $(this).text());
        $(this).remove();
     });
 

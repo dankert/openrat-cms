@@ -45,9 +45,7 @@
           </div>
           <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
             <?php $if1=!(isset($force_username)); if($if1) {  ?>
-              <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
-                <input name="<?php echo O::escapeHtml('login_name') ?>" required="<?php echo O::escapeHtml('required') ?>" placeholder="<?php echo O::escapeHtml(''.@O::lang('USER_USERNAME').'') ?>" autofocus="<?php echo O::escapeHtml('autofocus') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('128') ?>" value="<?php echo O::escapeHtml(''.@$login_name.'') ?>" class="<?php echo O::escapeHtml('name') ?>" /><?php echo O::escapeHtml('') ?>
-              </div>
+              <input name="<?php echo O::escapeHtml('login_name') ?>" required="<?php echo O::escapeHtml('required') ?>" placeholder="<?php echo O::escapeHtml(''.@O::lang('USER_USERNAME').'') ?>" autofocus="<?php echo O::escapeHtml('autofocus') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('128') ?>" value="<?php echo O::escapeHtml(''.@$login_name.'') ?>" class="<?php echo O::escapeHtml('name or-input') ?>" /><?php echo O::escapeHtml('') ?>
              <?php } ?>
             <?php if(!$if1) {  ?>
               <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('login_name') ?>" value="<?php echo O::escapeHtml(''.@$login_name.'') ?>" /><?php echo O::escapeHtml('') ?>
@@ -64,9 +62,7 @@
             </label>
           </div>
           <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-            <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
-              <input type="<?php echo O::escapeHtml('password') ?>" name="<?php echo O::escapeHtml('login_password') ?>" size="<?php echo O::escapeHtml('20') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$login_password.'') ?>" class="<?php echo O::escapeHtml('name') ?>" /><?php echo O::escapeHtml('') ?>
-            </div>
+            <input type="<?php echo O::escapeHtml('password') ?>" name="<?php echo O::escapeHtml('login_password') ?>" size="<?php echo O::escapeHtml('20') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$login_password.'') ?>" class="<?php echo O::escapeHtml('name or-input') ?>" /><?php echo O::escapeHtml('') ?>
           </div>
         </div>
         <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
@@ -98,9 +94,7 @@
               </label>
             </div>
             <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-              <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
-                <input type="<?php echo O::escapeHtml('password') ?>" name="<?php echo O::escapeHtml('password1') ?>" size="<?php echo O::escapeHtml('25') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$password1.'') ?>" class="<?php echo O::escapeHtml('') ?>" /><?php echo O::escapeHtml('') ?>
-              </div>
+              <input type="<?php echo O::escapeHtml('password') ?>" name="<?php echo O::escapeHtml('password1') ?>" size="<?php echo O::escapeHtml('25') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$password1.'') ?>" class="<?php echo O::escapeHtml(' or-input') ?>" /><?php echo O::escapeHtml('') ?>
             </div>
           </div>
           <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
@@ -111,9 +105,7 @@
               </label>
             </div>
             <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-              <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
-                <input type="<?php echo O::escapeHtml('password') ?>" name="<?php echo O::escapeHtml('password2') ?>" size="<?php echo O::escapeHtml('25') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$password2.'') ?>" class="<?php echo O::escapeHtml('') ?>" /><?php echo O::escapeHtml('') ?>
-              </div>
+              <input type="<?php echo O::escapeHtml('password') ?>" name="<?php echo O::escapeHtml('password2') ?>" size="<?php echo O::escapeHtml('25') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$password2.'') ?>" class="<?php echo O::escapeHtml(' or-input') ?>" /><?php echo O::escapeHtml('') ?>
             </div>
           </div>
         </div>
@@ -135,9 +127,7 @@
               </label>
             </div>
             <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-              <div class="<?php echo O::escapeHtml('inputholder') ?>"><?php echo O::escapeHtml('') ?>
-                <input name="<?php echo O::escapeHtml('user_token') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('30') ?>" value="<?php echo O::escapeHtml('') ?>" /><?php echo O::escapeHtml('') ?>
-              </div>
+              <input name="<?php echo O::escapeHtml('user_token') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('30') ?>" value="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
             </div>
           </div>
         </div>
@@ -160,7 +150,7 @@
                 </label>
               </div>
               <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-                <select name="<?php echo O::escapeHtml('dbid') ?>" size="<?php echo O::escapeHtml('1') ?>"><?php echo O::escapeHtml('') ?>
+                <select name="<?php echo O::escapeHtml('dbid') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
                   <?php foreach($dbids as $_key=>$_value) {  ?>
                     <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$dbid){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
                     </option>

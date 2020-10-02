@@ -73,7 +73,7 @@ Openrat.View = function( action,method,id,params ) {
 		loadViewHtmlPromise.fail( function(jqxhr,status,cause) {
 			$(element).html("");
 
-			Openrat.Workbench.notify('','','error','Server Error',['Server Error while requesting url '+url, status]);
+			Openrat.Workbench.notify('', 0, '', 'error', 'Server Error', ['Server Error while requesting url ' + url, status]);
 		});
 
 		// Load the data for this view.

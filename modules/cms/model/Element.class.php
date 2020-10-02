@@ -576,4 +576,11 @@ SQL
         return $this->label;
     }
 
+
+	public function getId()
+	{
+		return $this->elementid;
+	}
+
+
 }

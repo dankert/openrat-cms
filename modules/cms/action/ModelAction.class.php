@@ -79,7 +79,7 @@ class ModelAction extends BaseAction
         if  ( $this->hasRequestVar('is_default') )
             $this->model->setDefault();
 
-        $this->addNotice('model',$this->model->name,'DONE',Action::NOTICE_OK);
+        $this->addNotice('model', 0, $this->model->name, 'DONE', Action::NOTICE_OK);
     }
 
 
@@ -103,11 +103,11 @@ class ModelAction extends BaseAction
 		if   ( $this->hasRequestVar('confirm') )
 		{
 			$this->model->delete();
-			$this->addNotice('model',$this->model->name,'DONE',Action::NOTICE_OK);
+			$this->addNotice('model', 0, $this->model->name, 'DONE', Action::NOTICE_OK);
 		}
 		else
 		{
-			$this->addNotice('model',$this->model->name,'NOTHING_DONE',Action::NOTICE_WARN);
+			$this->addNotice('model', 0, $this->model->name, 'NOTHING_DONE', Action::NOTICE_WARN);
 		}
 	}
 	
@@ -119,7 +119,7 @@ class ModelAction extends BaseAction
 
 		$this->model->setDefault();
 	
-        $this->addNotice('model',$this->model->name,'DONE',Action::NOTICE_OK);
+        $this->addNotice('model', 0, $this->model->name, 'DONE', Action::NOTICE_OK);
 	}
 
 

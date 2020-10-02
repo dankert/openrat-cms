@@ -121,7 +121,7 @@ class FileAction extends ObjectAction
 
         $this->file->setTimestamp();
 
-		$this->addNotice($this->file->getType(),$this->file->filename,'VALUE_SAVED','ok');
+		$this->addNotice($this->file->getType(), 0, $this->file->filename, 'VALUE_SAVED', 'ok');
 	}
 
 
@@ -142,7 +142,7 @@ class FileAction extends ObjectAction
         $this->file->updateType();
         $this->file->save();
 
-        $this->addNotice($this->file->getType(),$this->file->filename,'PROP_SAVED','ok');
+        $this->addNotice($this->file->getType(), 0, $this->file->filename, 'PROP_SAVED', 'ok');
     }
 
 
@@ -373,7 +373,7 @@ class FileAction extends ObjectAction
 				throw new \util\exception\UIException('','cannot uncompress file with extension: ' . $this->file->extension );
 		}
 
-		$this->addNotice('file',$this->file->name,'DONE',Action::NOTICE_OK);
+		$this->addNotice('file', 0, $this->file->name, 'DONE', Action::NOTICE_OK);
 		$this->callSubAction('edit');
 	}
 
@@ -406,7 +406,7 @@ class FileAction extends ObjectAction
 					$newFile->lastchangeDate = $file['time'];
 					$newFile->add();
 					
-					$this->addNotice('file',$newFile->name,'ADDED');
+					$this->addNotice('file', 0, $newFile->name, 'ADDED');
 				}
 				
 				unset($tar);
@@ -439,7 +439,7 @@ class FileAction extends ObjectAction
 					$newFile->value       = $zip->unzip($fileName);
 					$newFile->add();
 					
-					$this->addNotice('file',$newFile->name,'ADDED');
+					$this->addNotice('file', 0, $newFile->name, 'ADDED');
 					unset($newFile);
 				}
 
@@ -524,7 +524,7 @@ class FileAction extends ObjectAction
 				throw new \util\exception\UIException('unknown compress type: ' . $format );
 		}
 
-		$this->addNotice('file',$this->file->name,'DONE',Action::NOTICE_OK);
+		$this->addNotice('file', 0, $this->file->name, 'DONE', Action::NOTICE_OK);
 		$this->callSubAction('edit');
 	}
 
@@ -582,11 +582,11 @@ class FileAction extends ObjectAction
         if   ( $this->getRequestVar('delete') != '' )
         {
             $this->file->delete();
-            $this->addNotice('template',$this->file->filename,'DELETED',Action::NOTICE_OK);
+            $this->addNotice('template', 0, $this->file->filename, 'DELETED', Action::NOTICE_OK);
         }
         else
         {
-            $this->addNotice('template',$this->file->filename,'CANCELED',Action::NOTICE_WARN);
+            $this->addNotice('template', 0, $this->file->filename, 'CANCELED', Action::NOTICE_WARN);
         }
     }
 }

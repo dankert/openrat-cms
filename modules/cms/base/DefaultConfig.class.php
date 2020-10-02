@@ -967,10 +967,6 @@ class DefaultConfig {
 							'expect_regexp' => '/running on/',
 							'username_regexp' => '/running on localhost as ([a-z]+)@localhost/',
 						],
-					'logout' =>
-						[ 
-							'redirect_url' => '0',
-						],
 					'user' =>
 						[ 
 							'show_admin_mail' => true,

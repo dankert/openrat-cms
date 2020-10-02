@@ -20,7 +20,7 @@
           <label class="<?php echo O::escapeHtml('or-form-row or-form-input') ?>"><?php echo O::escapeHtml('') ?>
             <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml('name') ?>
             </span>
-            <input name="<?php echo O::escapeHtml('name') ?>" required="<?php echo O::escapeHtml('required') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" value="<?php echo O::escapeHtml(''.@$name.'') ?>" /><?php echo O::escapeHtml('') ?>
+            <input name="<?php echo O::escapeHtml('name') ?>" required="<?php echo O::escapeHtml('required') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" value="<?php echo O::escapeHtml(''.@$name.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
           </label>
           <label class="<?php echo O::escapeHtml('or-form-row or-form-checkbox') ?>"><?php echo O::escapeHtml('') ?>
             <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml('description') ?>

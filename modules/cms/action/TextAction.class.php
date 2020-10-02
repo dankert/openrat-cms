@@ -69,7 +69,7 @@ class TextAction extends FileAction
 		$this->text->value = $this->getRequestVar('value', RequestParams::FILTER_RAW);
 		$this->text->saveValue();
 
-		$this->addNotice($this->text->getType(), $this->text->name, 'VALUE_SAVED', 'ok');
+		$this->addNotice($this->text->getType(), 0, $this->text->name, 'VALUE_SAVED', 'ok');
 		$this->text->setTimestamp();
 	}
 

@@ -21,4 +21,6 @@ abstract class ModelBase
     public abstract function load();
 
     public abstract function delete();
+
+    public abstract function getId();
 }
