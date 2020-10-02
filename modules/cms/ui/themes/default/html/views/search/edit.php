@@ -28,31 +28,31 @@
           <br /><?php echo O::escapeHtml('') ?>
         </div>
         <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-          <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(\cms\base\Configuration::config('search','quicksearch','flag','id')){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
+          <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(O::config('search','quicksearch','flag','id')){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
           <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml(''.@O::lang('id').'') ?>
             </span>
           </label>
           <br /><?php echo O::escapeHtml('') ?>
-          <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('name') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(\cms\base\Configuration::config('search','quicksearch','flag','name')){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
+          <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('name') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(O::config('search','quicksearch','flag','name')){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
           <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml(''.@O::lang('name').'') ?>
             </span>
           </label>
           <br /><?php echo O::escapeHtml('') ?>
-          <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('filename') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(\cms\base\Configuration::config('search','quicksearch','flag','filename')){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
+          <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('filename') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(O::config('search','quicksearch','flag','filename')){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
           <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml(''.@O::lang('filename').'') ?>
             </span>
           </label>
           <br /><?php echo O::escapeHtml('') ?>
-          <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('description') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(\cms\base\Configuration::config('search','quicksearch','flag','description')){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
+          <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('description') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(O::config('search','quicksearch','flag','description')){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
           <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml(''.@O::lang('description').'') ?>
             </span>
           </label>
           <br /><?php echo O::escapeHtml('') ?>
-          <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('content') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(\cms\base\Configuration::config('search','quicksearch','flag','content')){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
+          <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('content') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(O::config('search','quicksearch','flag','content')){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
           <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml(''.@O::lang('content').'') ?>
             </span>

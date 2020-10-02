@@ -54,7 +54,7 @@
               <input name="<?php echo O::escapeHtml('target_dir') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" value="<?php echo O::escapeHtml(''.@$target_dir.'') ?>" class="<?php echo O::escapeHtml('filename or-input') ?>" /><?php echo O::escapeHtml('') ?>
             </div>
           </div>
-          <?php $if1=(\cms\base\Configuration::config('publish','project','override_system_command')); if($if1) {  ?>
+          <?php $if1=(O::config('publish','project','override_system_command')); if($if1) {  ?>
             <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
               <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
                 <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml(''.@O::lang('PROJECT_CMD_AFTER_PUBLISH').'') ?>
@@ -95,7 +95,7 @@
           </label>
         </div>
       </fieldset>
-      <?php $if1=(\cms\base\Configuration::config('publish','ftp','enable')); if($if1) {  ?>
+      <?php $if1=(O::config('publish','ftp','enable')); if($if1) {  ?>
         <fieldset class="<?php echo O::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo O::escapeHtml('') ?>
           <legend class="<?php echo O::escapeHtml('on-click-open-close') ?>"><?php echo O::escapeHtml(''.@O::lang('project_FTP').'') ?>
             <img /><?php echo O::escapeHtml('') ?>

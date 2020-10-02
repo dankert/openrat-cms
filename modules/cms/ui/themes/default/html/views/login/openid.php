@@ -7,7 +7,7 @@
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('action') ?>" value="<?php echo O::escapeHtml('login') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('subaction') ?>" value="<?php echo O::escapeHtml('login') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml(''.@$_id.'') ?>" /><?php echo O::escapeHtml('') ?>
-      <?php $if1=(\cms\base\Configuration::config('security','openid','enable')); if($if1) {  ?>
+      <?php $if1=(O::config('security','openid','enable')); if($if1) {  ?>
         <fieldset class="<?php echo O::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo O::escapeHtml('') ?>
           <legend class="<?php echo O::escapeHtml('on-click-open-close') ?>"><?php echo O::escapeHtml(''.@O::lang('OPENID').'') ?>
             <img /><?php echo O::escapeHtml('') ?>
@@ -21,7 +21,7 @@
               <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(''.@O::lang('openid_user').'') ?>
                 </span>
-                <?php $if1=!((\cms\base\Configuration::config('security','openid','logo_url'))==FALSE); if($if1) {  ?>
+                <?php $if1=!((O::config('security','openid','logo_url'))==FALSE); if($if1) {  ?>
                   <img src="<?php echo O::escapeHtml(''.O::config('security','openid','logo_url').'') ?>" /><?php echo O::escapeHtml('') ?>
                  <?php } ?>
               </div>

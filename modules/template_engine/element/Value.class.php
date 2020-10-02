@@ -62,21 +62,30 @@ class Value
         switch ($context) {
             case Value::CONTEXT_PHP:
 				$escape = function ($expr) use ($context) {
-						return $expr;
+					return $expr;
 				};
+				break;
 
             case Value::CONTEXT_HTML:
-            case Value::CONTEXT_RAW:
 				$escape = function ($expr) use ($context) {
-					if ($context == self::CONTEXT_HTML)
 						return TemplateEngine::OUTPUT_ALIAS.'::escapeHtml(' . $expr . ')';
-					else
-						return $expr;
 				};
-
-				$this->value = str_replace('\'','\\\'',$this->value);
-				return '<'.'?'.'php '.'echo '. $escape('\''.$res->resolveVariables( $this->value ).'\'').' ?'.'>';
+				break;
+			case Value::CONTEXT_RAW:
+				$escape = function ($expr) use ($context) {
+					return $expr;
+				};
+				break;
         }
+
+        if   ( $context == self::CONTEXT_PHP ) {
+			return '\''.$res->resolveVariables( $this->value ).'\'';
+
+		} else {
+
+			$this->value = str_replace('\'','\\\'',$this->value);
+			return '<'.'?'.'php '.'echo '. $escape('\''.$res->resolveVariables( $this->value ).'\'').' ?'.'>';
+		}
     }
 
     public function __xtoString()

@@ -49,7 +49,8 @@
 				</column>
 				<list list="${show}" value="t">
 					<column>
-						<if true="${t}">
+						<set var="bit" value="${acl}" key="${t}" />
+						<if true="${bit}">
 							<text value="&amp;check;" escape="false" />
 						</if>
 					</column>

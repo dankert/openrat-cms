@@ -65,7 +65,9 @@
             </td>
             <?php foreach((array)$show as $list_key=>$t) {  ?>
               <td><?php echo O::escapeHtml('') ?>
-                <?php $if1=($t); if($if1) {  ?>
+                <?php  { $bit= $acl[''.@$t.'']; ?>
+                 <?php } ?>
+                <?php $if1=($bit); if($if1) {  ?>
                   <span><?php echo '&check;' ?>
                   </span>
                  <?php } ?>

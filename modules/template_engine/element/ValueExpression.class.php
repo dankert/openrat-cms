@@ -9,9 +9,9 @@ class ValueExpression
     public $name;
     public $position;
 
-    const TYPE_DATA_VAR = '$';
-    const TYPE_MESSAGE = '#';
-    const TYPE_CONFIG = '%';
+    const TYPE_DATA_VAR = 1;
+    const TYPE_MESSAGE  = 2;
+    const TYPE_CONFIG   = 3;
 
     /**
      * ValueExpression constructor.

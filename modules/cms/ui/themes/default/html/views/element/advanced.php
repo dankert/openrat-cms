@@ -1,5 +1,5 @@
 <?php defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
-  <?php $if1=(\cms\base\Configuration::config('security','disable_dynamic_code')); if($if1) {  ?>
+  <?php $if1=(O::config('security','disable_dynamic_code')); if($if1) {  ?>
     <?php $if1=(!1); if($if1) {  ?>
       <div class="<?php echo O::escapeHtml('message warn') ?>"><?php echo O::escapeHtml('') ?>
         <span><?php echo O::escapeHtml(''.@O::lang('NOTICE_CODE_DISABLED').'') ?>

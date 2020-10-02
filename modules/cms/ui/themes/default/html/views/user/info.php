@@ -45,7 +45,7 @@
               </span>
             </div>
           </div>
-          <?php $if1=(\cms\base\Configuration::config('security','user','show_admin_mail')); if($if1) {  ?>
+          <?php $if1=(O::config('security','user','show_admin_mail')); if($if1) {  ?>
             <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
               <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
                 <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml(''.@O::lang('user_mail').'') ?>

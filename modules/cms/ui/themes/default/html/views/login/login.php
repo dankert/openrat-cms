@@ -7,8 +7,8 @@
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('action') ?>" value="<?php echo O::escapeHtml('login') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('subaction') ?>" value="<?php echo O::escapeHtml('login') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml(''.@$_id.'') ?>" /><?php echo O::escapeHtml('') ?>
-      <?php $if1=(\cms\base\Configuration::config('login','logo','enabled')); if($if1) {  ?>
-        <?php $if1=!((\cms\base\Configuration::config('login','logo','url'))==FALSE); if($if1) {  ?>
+      <?php $if1=(O::config('login','logo','enabled')); if($if1) {  ?>
+        <?php $if1=!((O::config('login','logo','url'))==FALSE); if($if1) {  ?>
           <a target="<?php echo O::escapeHtml('_self') ?>" data-url="<?php echo O::escapeHtml(''.O::config('login','logo','url').'') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('/#//') ?>"><?php echo O::escapeHtml('') ?>
             <img src="<?php echo O::escapeHtml(''.O::config('login','logo','image').'') ?>" /><?php echo O::escapeHtml('') ?>
           </a>
@@ -17,25 +17,25 @@
           <img src="<?php echo O::escapeHtml(''.O::config('login','logo','image').'') ?>" /><?php echo O::escapeHtml('') ?>
          <?php } ?>
        <?php } ?>
-      <?php $if1=!((\cms\base\Configuration::config('login','motd'))==FALSE); if($if1) {  ?>
+      <?php $if1=!((O::config('login','motd'))==FALSE); if($if1) {  ?>
         <div class="<?php echo O::escapeHtml('message info') ?>"><?php echo O::escapeHtml('') ?>
           <span><?php echo O::escapeHtml(''.O::config('login','motd').'') ?>
           </span>
         </div>
        <?php } ?>
-      <?php $if1=(\cms\base\Configuration::config('login','nologin')); if($if1) {  ?>
+      <?php $if1=(O::config('login','nologin')); if($if1) {  ?>
         <div class="<?php echo O::escapeHtml('message error') ?>"><?php echo O::escapeHtml('') ?>
           <span><?php echo O::escapeHtml(''.@O::lang('LOGIN_NOLOGIN_DESC').'') ?>
           </span>
         </div>
        <?php } ?>
-      <?php $if1=(\cms\base\Configuration::config('security','readonly')); if($if1) {  ?>
+      <?php $if1=(O::config('security','readonly')); if($if1) {  ?>
         <div class="<?php echo O::escapeHtml('message warn') ?>"><?php echo O::escapeHtml('') ?>
           <span><?php echo O::escapeHtml(''.@O::lang('READONLY_DESC').'') ?>
           </span>
         </div>
        <?php } ?>
-      <?php $if1=(!\cms\base\Configuration::config('login','nologin')); if($if1) {  ?>
+      <?php $if1=(!O::config('login','nologin')); if($if1) {  ?>
         <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
           <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
             <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>

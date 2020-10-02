@@ -4,6 +4,7 @@
 namespace template_engine\element;
 
 
+use template_engine\engine\TemplateEngine;
 use util\text\variables\VariableResolver;
 
 class PHPBlockElement extends HtmlElement
@@ -64,7 +65,7 @@ class PHPBlockElement extends HtmlElement
 
 		$res->addResolver('config', function($name) {
 			$config_parts = explode('/', $name);
-			return '\cms\base\Configuration::config(' . "'" . implode("'" . ',' . "'", $config_parts) . "'" . ')';
+			return TemplateEngine::OUTPUT_ALIAS.'::config(' . "'" . implode("'" . ',' . "'", $config_parts) . "'" . ')';
 		});
 
 		return $res->resolveVariables( $value );

@@ -231,6 +231,9 @@ class TemplateEngine
 			// save a few bytes in production mode ;)
 			header("X-CMS-Template-File: " . $templateFile);
 
+		if   ( DEVELOPMENT )
+			echo '<!-- '."\n".print_r($outputData,true)."\n".' -->';
+
 		// Extracting all output data into the actual context
         extract($outputData);
 

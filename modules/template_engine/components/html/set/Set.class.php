@@ -4,6 +4,7 @@ namespace template_engine\components;
 
 use template_engine\components\html\Component;
 use template_engine\element\PHPBlockElement;
+use template_engine\element\Value;
 
 class SetComponent extends Component
 {
@@ -19,7 +20,7 @@ class SetComponent extends Component
 		if ($this->value)
 		{
 			if ($this->key)
-				$set->inBlock = '$'.$set->varname($this->var).'= '.$set->value($this->value).'['.'\''.$set->value($this->key).'\''.'];';
+				$set->inBlock = '$'.$set->varname($this->var).'= '.$set->value($this->value).'['.((new Value($this->key))->render(Value::CONTEXT_PHP)).'];';
 			else 
 				$set->inBlock = '$'.$set->varname($this->var).'= '.$set->value($this->value).';';
 		}

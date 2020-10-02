@@ -1,5 +1,5 @@
 <?php defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
-  <?php $if1=(\cms\base\Configuration::config('security','nopublish')); if($if1) {  ?>
+  <?php $if1=(O::config('security','nopublish')); if($if1) {  ?>
     <div class="<?php echo O::escapeHtml('message warn') ?>"><?php echo O::escapeHtml('') ?>
       <span class="<?php echo O::escapeHtml('help') ?>"><?php echo O::escapeHtml(''.@O::lang('NOPUBLISH_DESC').'') ?>
       </span>

@@ -23,7 +23,7 @@
           <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('password_proposal') ?>" value="<?php echo O::escapeHtml(''.@$password_proposal.'') ?>" /><?php echo O::escapeHtml('') ?>
         </div>
       </div>
-      <?php $if1=(\cms\base\Configuration::config('mail','enabled')); if($if1) {  ?>
+      <?php $if1=(O::config('mail','enabled')); if($if1) {  ?>
         <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
           <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
           </div>
@@ -72,7 +72,7 @@
         <div class="<?php echo O::escapeHtml('closable') ?>"><?php echo O::escapeHtml('') ?>
         </div>
       </fieldset>
-      <?php $if1=(\cms\base\Configuration::config('mail','enabled')); if($if1) {  ?>
+      <?php $if1=(O::config('mail','enabled')); if($if1) {  ?>
         <?php $if1=(isset($mail)); if($if1) {  ?>
           <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
             <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
