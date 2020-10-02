@@ -1,8 +1,4 @@
 
-// The crap in this file should be refactored into namespaced objects...
-
-var OR_THEMES_EXT_DIR = 'modules/cms-ui/themes/';
-
 // Execute after DOM ready:
 $( function() {
     // JS is available.

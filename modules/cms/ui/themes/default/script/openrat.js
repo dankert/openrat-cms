@@ -2601,10 +2601,6 @@ Openrat.Navigator = new function () {
 
 /* Include script: common */
 
-// The crap in this file should be refactored into namespaced objects...
-
-var OR_THEMES_EXT_DIR = 'modules/cms-ui/themes/';
-
 // Execute after DOM ready:
 $( function() {
     // JS is available.
@@ -3370,30 +3366,31 @@ Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
 		 var files = e.originalEvent.dataTransfer.files;
 
 		 //We need to send dropped files to Server
-		 handleFileUpload(form,files);
+		Openrat.Workbench.handleFileUpload(form,files);
 	});
 	
 	
 	// Dateiupload über File-Input-Button
 	$(element).find('input[type=file]').change( function() {
 		
-		var files = $(this).prop('files');   
+		var files = $(this).prop('files');
 
-		handleFileUpload(form,files);
+		Openrat.Workbench.handleFileUpload(form,files);
 	});
 
 });
 
 
-
-
-
-
-function handleFileUpload(form,files)
+/**
+ * Upload of files.
+ * @param form
+ * @param files
+ */
+Openrat.Workbench.handleFileUpload = function(form,files)
 {
-	for (var i = 0, f; f = files[i]; i++)
+	for (let i = 0, f; f = files[i]; i++)
 	{
-	    var form_data = new FormData();                  
+	    let form_data = new FormData();
 	    form_data.append('file'     , f);
 	    form_data.append('action'   ,'folder');
 	    form_data.append('subaction',$(form).data('method'));
@@ -3415,10 +3412,10 @@ function handleFileUpload(form,files)
 				$(form).closest('div.content').removeClass('loader');
 				$(status).remove();
 				
-				var msg;
+				let msg;
 				try
 				{
-					var error = jQuery.parseJSON( jqXHR.responseText );
+					let error = jQuery.parseJSON( jqXHR.responseText );
 					msg = error.error + '/' + error.description + ': ' + error.reason;
 				}
 				catch( e )
