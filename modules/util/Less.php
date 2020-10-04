@@ -9705,7 +9705,7 @@ class Less_Exception_Chunk extends Less_Exception_Parser{
 				case 40:
 					$parenLevel++;
 					$lastParen = $this->parserCurrentIndex;
-					continue;
+					break;
 
 				// )
 				case 41:
@@ -9713,18 +9713,18 @@ class Less_Exception_Chunk extends Less_Exception_Parser{
 					if( $parenLevel < 0 ){
 						return $this->fail("missing opening `(`");
 					}
-					continue;
+					break;
 
 				// ;
 				case 59:
 					//if (!$parenLevel) { $this->emitChunk();	}
-					continue;
+					break;
 
 				// {
 				case 123:
 					$level++;
 					$lastOpening = $this->parserCurrentIndex;
-					continue;
+					break;
 
 				// }
 				case 125:
@@ -9734,7 +9734,7 @@ class Less_Exception_Chunk extends Less_Exception_Parser{
 
 					}
 					//if (!$level && !$parenLevel) { $this->emitChunk(); }
-					continue;
+					break;
 				// \
 				case 92:
 					if ($this->parserCurrentIndex < $this->input_len - 1) { $this->parserCurrentIndex++; continue; }
@@ -10328,9 +10328,9 @@ class Less_SourceMap_Generator extends Less_Configurable {
 		$basePath = $this->getOption('sourceMapBasepath');
 
 		// "Trim" the 'sourceMapBasepath' from the output filename.
-		if (strpos($filename, $basePath) === 0) {
-			$filename = substr($filename, strlen($basePath));
-		}
+		//if (strpos($filename, strval($basePath)) === 0) {
+		//	$filename = substr($filename, strlen($basePath));
+		//}
 
 		// Remove extra leading path separators.
 		if(strpos($filename, '\\') === 0 || strpos($filename, '/') === 0){

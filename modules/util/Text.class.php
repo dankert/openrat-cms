@@ -391,17 +391,17 @@ class Text
 		//$txt = html_entity_decode($txt);
 		$txt2 = '';
 		for ($i = 0; $i < strlen($txt); $i++) {
-			$o = ord($txt{$i});
+			$o = ord($txt[$i]);
 			if ($o < 128) {
 				// 0..127: raw
-				$txt2 .= $txt{$i};
+				$txt2 .= $txt[$i];
 			} else {
 				$o1 = 0;
 				$o2 = 0;
 				$o3 = 0;
-				if ($i < strlen($txt) - 1) $o1 = ord($txt{$i + 1});
-				if ($i < strlen($txt) - 2) $o2 = ord($txt{$i + 2});
-				if ($i < strlen($txt) - 3) $o3 = ord($txt{$i + 3});
+				if ($i < strlen($txt) - 1) $o1 = ord($txt[$i + 1]);
+				if ($i < strlen($txt) - 2) $o2 = ord($txt[$i + 2]);
+				if ($i < strlen($txt) - 3) $o3 = ord($txt[$i + 3]);
 				$hexval = 0;
 				if ($o >= 0xc0 && $o < 0xc2) {
 					// INVALID --- should never occur: 2-byte UTF-8 although value < 128
