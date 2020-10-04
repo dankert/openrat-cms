@@ -22,13 +22,15 @@
 
             <!-- Info-Meldung anzeigen (sofern vorhanden) -->
             <if present="dbname">
-                <part class="toolbar-icon">
-                    <image action="database"></image>
-                    <text class="label" value=""/>
+                <part class="toolbar-icon menu">
+                    <image symbol="database"></image>
+                    <text class="label" value="${message:database}"/>
                     <image symbol="dropdown"/>
                     <part class="dropdown">
-                        <part class="entry">
-                            <text title="${dbid}" value="${dbname}" />
+                        <part class="entry inactive">
+							<link>
+                            	<text title="${dbid}" value="${dbname}" />
+							</link>
                         </part>
                     </part>
                 </part>

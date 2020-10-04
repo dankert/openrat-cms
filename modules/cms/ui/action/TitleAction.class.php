@@ -55,9 +55,11 @@ class TitleAction extends Action
 
         $this->setTemplateVar('isLoggedIn',true );
 
-        $db = DB::get();
-        $this->setTemplateVar('dbname',$db->conf['name'].(Startup::readonly()?' ('.\cms\base\Language::lang('readonly').')':''));
-        $this->setTemplateVar('dbid'  ,$db->id);
+		if   ( DEVELOPMENT ) {
+			$db = DB::get();
+			$this->setTemplateVar('dbname',$db->conf['name'].(Startup::readonly()?' ('.\cms\base\Language::lang('readonly').')':''));
+			$this->setTemplateVar('dbid'  ,$db->id);
+		}
 
         $this->setTemplateVar('username'    ,$user->name    );
         $this->setTemplateVar('userfullname',$user->fullname);

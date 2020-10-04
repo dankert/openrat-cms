@@ -10,17 +10,19 @@
         </i>
       </div>
       <?php $if1=(isset($dbname)); if($if1) {  ?>
-        <div class="<?php echo O::escapeHtml('toolbar-icon') ?>"><?php echo O::escapeHtml('') ?>
-          <i class="<?php echo O::escapeHtml('image-icon image-icon--action-database') ?>"><?php echo O::escapeHtml('') ?>
+        <div class="<?php echo O::escapeHtml('toolbar-icon menu') ?>"><?php echo O::escapeHtml('') ?>
+          <i class="<?php echo O::escapeHtml('image-icon image-icon--database') ?>"><?php echo O::escapeHtml('') ?>
           </i>
-          <span class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+          <span class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml(''.@O::lang('database').'') ?>
           </span>
           <i class="<?php echo O::escapeHtml('image-icon image-icon--dropdown') ?>"><?php echo O::escapeHtml('') ?>
           </i>
           <div class="<?php echo O::escapeHtml('dropdown') ?>"><?php echo O::escapeHtml('') ?>
-            <div class="<?php echo O::escapeHtml('entry') ?>"><?php echo O::escapeHtml('') ?>
-              <span title="<?php echo O::escapeHtml(''.@$dbid.'') ?>"><?php echo O::escapeHtml(''.@$dbname.'') ?>
-              </span>
+            <div class="<?php echo O::escapeHtml('entry inactive') ?>"><?php echo O::escapeHtml('') ?>
+              <a target="<?php echo O::escapeHtml('_self') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('/#//') ?>"><?php echo O::escapeHtml('') ?>
+                <span title="<?php echo O::escapeHtml(''.@$dbid.'') ?>"><?php echo O::escapeHtml(''.@$dbname.'') ?>
+                </span>
+              </a>
             </div>
           </div>
         </div>
