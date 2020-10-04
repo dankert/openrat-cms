@@ -15,8 +15,8 @@
           </i>
           <span class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
           </span>
-          <div class="<?php echo O::escapeHtml('arrow arrow-down') ?>"><?php echo O::escapeHtml('') ?>
-          </div>
+          <i class="<?php echo O::escapeHtml('image-icon image-icon--dropdown') ?>"><?php echo O::escapeHtml('') ?>
+          </i>
           <div class="<?php echo O::escapeHtml('dropdown') ?>"><?php echo O::escapeHtml('') ?>
             <div class="<?php echo O::escapeHtml('entry') ?>"><?php echo O::escapeHtml('') ?>
               <span title="<?php echo O::escapeHtml(''.@$dbid.'') ?>"><?php echo O::escapeHtml(''.@$dbname.'') ?>
@@ -47,8 +47,8 @@
           </i>
           <span class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml(''.@O::lang('file').'') ?>
           </span>
-          <div class="<?php echo O::escapeHtml('arrow arrow-down') ?>"><?php echo O::escapeHtml('') ?>
-          </div>
+          <i class="<?php echo O::escapeHtml('image-icon image-icon--dropdown') ?>"><?php echo O::escapeHtml('') ?>
+          </i>
           <div class="<?php echo O::escapeHtml('dropdown') ?>"><?php echo O::escapeHtml('') ?>
             <div class="<?php echo O::escapeHtml('entry clickable filtered on-action-folder on-action-page on-action-file on-action-projectlist on-action-templatelist on-action-userlist on-action-grouplist on-action-languagelist on-action-modellist') ?>"><?php echo O::escapeHtml('') ?>
               <a title="<?php echo O::escapeHtml(''.@O::lang('menu_new_desc').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('add') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('add') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'add\'}') ?>" href="<?php echo O::escapeHtml('/#//') ?>"><?php echo O::escapeHtml('') ?>
@@ -163,8 +163,8 @@
           </i>
           <span class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml(''.@O::lang('edit').'') ?>
           </span>
-          <div class="<?php echo O::escapeHtml('arrow arrow-down') ?>"><?php echo O::escapeHtml('') ?>
-          </div>
+          <i class="<?php echo O::escapeHtml('image-icon image-icon--dropdown') ?>"><?php echo O::escapeHtml('') ?>
+          </i>
           <div class="<?php echo O::escapeHtml('dropdown') ?>"><?php echo O::escapeHtml('') ?>
             <div class="<?php echo O::escapeHtml('entry clickable filtered on-action-user on-action-project on-action-link on-action-folder on-action-page on-action-template on-action-element on-action-file on-action-url on-action-image on-action-text on-action-language on-action-model') ?>"><?php echo O::escapeHtml('') ?>
               <a title="<?php echo O::escapeHtml(''.@O::lang('menu_prop_desc').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('prop') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('prop') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'prop\'}') ?>" href="<?php echo O::escapeHtml('/#//') ?>"><?php echo O::escapeHtml('') ?>
@@ -251,8 +251,8 @@
           </i>
           <span class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml(''.@O::lang('extras').'') ?>
           </span>
-          <div class="<?php echo O::escapeHtml('arrow arrow-down') ?>"><?php echo O::escapeHtml('') ?>
-          </div>
+          <i class="<?php echo O::escapeHtml('image-icon image-icon--dropdown') ?>"><?php echo O::escapeHtml('') ?>
+          </i>
           <div class="<?php echo O::escapeHtml('dropdown') ?>"><?php echo O::escapeHtml('') ?>
             <div class="<?php echo O::escapeHtml('entry clickable filtered on-action-user') ?>"><?php echo O::escapeHtml('') ?>
               <a title="<?php echo O::escapeHtml(''.@O::lang('menu_password_desc').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('pw') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('pw') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'pw\'}') ?>" href="<?php echo O::escapeHtml('/#//') ?>"><?php echo O::escapeHtml('') ?>
@@ -352,8 +352,8 @@
         </i>
         <span class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml(''.@$userfullname.'') ?>
         </span>
-        <div class="<?php echo O::escapeHtml('arrow arrow-down') ?>"><?php echo O::escapeHtml('') ?>
-        </div>
+        <i class="<?php echo O::escapeHtml('image-icon image-icon--dropdown') ?>"><?php echo O::escapeHtml('') ?>
+        </i>
         <div class="<?php echo O::escapeHtml('dropdown') ?>"><?php echo O::escapeHtml('') ?>
           <?php $if1=($isLoggedIn); if($if1) {  ?>
             <div class="<?php echo O::escapeHtml('entry clickable') ?>"><?php echo O::escapeHtml('') ?>
@@ -428,8 +428,8 @@
           <i class="<?php echo O::escapeHtml('image-icon image-icon--method-search') ?>"><?php echo O::escapeHtml('') ?>
           </i>
           <input name="<?php echo O::escapeHtml('text') ?>" placeholder="<?php echo O::escapeHtml(''.@O::lang('search').'') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$text.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
-          <div class="<?php echo O::escapeHtml('arrow arrow-down') ?>"><?php echo O::escapeHtml('') ?>
-          </div>
+          <i class="<?php echo O::escapeHtml('image-icon image-icon--dropdown') ?>"><?php echo O::escapeHtml('') ?>
+          </i>
           <div class="<?php echo O::escapeHtml('dropdown') ?>"><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml('') ?>
             </span>

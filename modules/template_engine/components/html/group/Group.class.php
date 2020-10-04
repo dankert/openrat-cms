@@ -42,10 +42,10 @@ class GroupComponent extends Component
 				$image->addAttribute('src','themes/default/images/icon/method/'.$this->icon.'.svg" />');
 			$legend->addChild( $image );
 
-			$arrowRight = (new HtmlElement('div'))->addStyleClass('arrow')->addStyleClass('arrow-right')->addStyleClass('on-closed');
+			$arrowRight = (new HtmlElement('i'))->addStyleClass(['image-icon','image-icon--node-closed','on-closed']);
 			$legend->addChild($arrowRight );
 
-			$arrowDown  = (new HtmlElement('div'))->addStyleClass('arrow')->addStyleClass('arrow-down' )->addStyleClass('on-open'  );
+			$arrowDown  = (new HtmlElement('i'))->addStyleClass(['image-icon','image-icon--node-open','on-open']);
 			$legend->addChild($arrowDown  );
 
 			$fieldset->addChild( $legend );

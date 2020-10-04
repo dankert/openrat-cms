@@ -16,8 +16,17 @@ class HtmlElement extends Element
 	private $escape = true;
 
 
-	public function addStyleClass( $clazz ) {
-		$this->styleClasses[] = $clazz;
+	/**
+	 * Add one or more style classes to the element.
+	 * @param int|array $classes
+	 * @return $this
+	 */
+	public function addStyleClass( $classes ) {
+
+		if   ( ! is_array($classes) )
+			$classes = [$classes];
+
+		$this->styleClasses = array_merge( $this->styleClasses, $classes );
 		return $this;
 	}
 

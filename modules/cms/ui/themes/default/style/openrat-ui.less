@@ -42,104 +42,99 @@
   white-space: nowrap;
   direction: ltr;
 
-  /* Support for all WebKit browsers. */
-  //-webkit-font-smoothing: antialiased;
-
-  /* Support for Safari and Chrome. */
-  //text-rendering: optimizeLegibility;
-
-  /* Support for Firefox. */
-  //-moz-osx-font-smoothing: grayscale;
-
   /* Support for IE. */
   font-feature-settings: 'liga';
 
   //&.image-icon--method-publish:after { content: "\F21E"; }
-  &.image-icon--action-el_text:after { content: "spellcheck"; }
-  &.image-icon--action-el_longtext:after { content: "view_headline"; }
-  &.image-icon--action-el_select:after { content: "list"; }
-  &.image-icon--action-el_number:after { content: "looks_one"; }
-  &.image-icon--action-el_link:after { content: "call_made"; }
-  &.image-icon--action-el_date:after { content: "date_range"; }
-  &.image-icon--action-el_insert:after { content: "keyboard_return"; }
-  &.image-icon--action-el_copy:after { content: "flip_to_back"; }
-  &.image-icon--action-el_linkinfo:after { content: "info"; }
-  &.image-icon--action-el_linkdate:after { content: "info"; }
-  &.image-icon--action-el_code:after { content: "code"; }
-  &.image-icon--action-el_dynamic:after { content: "play_circle_outline"; }
-  &.image-icon--action-el_info:after { content: "info"; }
-  &.image-icon--action-el_infodate:after { content: "info"; }
-  &.image-icon--action-el_checkbox:after { content: "check_box"; }
+  &--action-el_text:after { content: "spellcheck"; }
+  &--action-el_longtext:after { content: "view_headline"; }
+  &--action-el_select:after { content: "list"; }
+  &--action-el_number:after { content: "looks_one"; }
+  &--action-el_link:after { content: "call_made"; }
+  &--action-el_date:after { content: "date_range"; }
+  &--action-el_insert:after { content: "keyboard_return"; }
+  &--action-el_copy:after { content: "flip_to_back"; }
+  &--action-el_linkinfo:after { content: "info"; }
+  &--action-el_linkdate:after { content: "info"; }
+  &--action-el_code:after { content: "code"; }
+  &--action-el_dynamic:after { content: "play_circle_outline"; }
+  &--action-el_info:after { content: "info"; }
+  &--action-el_infodate:after { content: "info"; }
+  &--action-el_checkbox:after { content: "check_box"; }
 
-  &.image-icon--action-image:after { content: "image"; }
-  &.image-icon--action-link:after { content: "call_made"; }
-  &.image-icon--action-url:after { content: "link"; }
-  &.image-icon--action-alias:after { content: "bookmark_border"; }
-  &.image-icon--action-text:after { content: "text_format"; }
-  &.image-icon--action-page:after { content: "insert_drive_file"; }
-  &.image-icon--action-file:after { content: "save"; }
-  &.image-icon--action-modellist:after { content: "device_hub"; }
-  &.image-icon--action-model:after { content: "device_hub"; }
-  &.image-icon--action-folder:after { content: "folder_open"; }
-  &.image-icon--action-languagelist:after { content: "language"; }
-  &.image-icon--action-language:after { content: "language"; }
-  &.image-icon--action-template:after { content: "receipt"; }
-  &.image-icon--action-templatelist:after { content: "receipt"; }
-  &.image-icon--action-groupllist:after { content: "group"; }
-  &.image-icon--action-group:after { content: "group"; }
-  &.image-icon--action-userlist:after { content: "person"; }
-  &.image-icon--action-user:after { content: "person"; }
-  &.image-icon--action-profile:after { content: "person_pin"; }
-  &.image-icon--method-settings:after { content: "settings"; }
-  &.image-icon--action-configuration:after { content: "settings"; }
-  &.image-icon--action-projectlist:after { content: "list"; }
-  &.image-icon--action-project:after { content: "account_balance"; }
-  //&.image-icon--action-alias:after { content: "forward"; }
-  &.image-icon--action-macro:after { content: "data_usage"; }
+  &--action-image:after { content: "image"; }
+  &--action-link:after { content: "call_made"; }
+  &--action-url:after { content: "link"; }
+  &--action-alias:after { content: "bookmark_border"; }
+  &--action-text:after { content: "text_format"; }
+  &--action-page:after { content: "insert_drive_file"; }
+  &--action-file:after { content: "save"; }
+  &--action-modellist:after { content: "device_hub"; }
+  &--action-model:after { content: "device_hub"; }
+  &--action-folder:after { content: "folder_open"; }
+  &--action-languagelist:after { content: "language"; }
+  &--action-language:after { content: "language"; }
+  &--action-template:after { content: "receipt"; }
+  &--action-templatelist:after { content: "receipt"; }
+  &--action-groupllist:after { content: "group"; }
+  &--action-group:after { content: "group"; }
+  &--action-userlist:after { content: "person"; }
+  &--action-user:after { content: "person"; }
+  &--action-profile:after { content: "person_pin"; }
+  &--method-settings:after { content: "settings"; }
+  &--action-configuration:after { content: "settings"; }
+  &--action-projectlist:after { content: "list"; }
+  &--action-project:after { content: "account_balance"; }
+  //&--action-alias:after { content: "forward"; }
+  &--action-macro:after { content: "data_usage"; }
 
-  &.image-icon--action-membership { content: "card_membership"; }
-  &.image-icon--method-password:after { content: "lock"; }
-  &.image-icon--method-publish:after { content: "cloud_upload"; }
-  &.image-icon--method-show:after { content: "slideshow"; }
-  &.image-icon--method-src:after { content: "code"; }
-  &.image-icon--method-acl:after { content: "https"; }
-  &.image-icon--method-rights:after { content: "https"; }
-  &.image-icon--method-archive:after { content: "schedule"; }
-  &.image-icon--method-mail:after { content: "mail"; }
-  &.image-icon--method-search:after { content: "search"; }
-  &.image-icon--method-add:after { content: "add_box"; }
-  &.image-icon--menu-close:after { content: "close"; }
-  &.image-icon--menu-fullscreen:after { content: "fullscreen"; }
-  &.image-icon--menu-edit:after { content: "description"; }
-  &.image-icon--menu-extra:after { content: "build"; }
+  &--action-membership { content: "card_membership"; }
+  &--method-password:after { content: "lock"; }
+  &--method-publish:after { content: "cloud_upload"; }
+  &--method-show:after { content: "slideshow"; }
+  &--method-src:after { content: "code"; }
+  &--method-acl:after { content: "https"; }
+  &--method-rights:after { content: "https"; }
+  &--method-archive:after { content: "schedule"; }
+  &--method-mail:after { content: "mail"; }
+  &--method-search:after { content: "search"; }
+  &--method-add:after { content: "add_box"; }
+  &--menu-close:after { content: "close"; }
+  &--menu-fullscreen:after { content: "fullscreen"; }
+  &--menu-edit:after { content: "description"; }
+  &--menu-extra:after { content: "build"; }
 
-  &.image-icon--menu-menu:after { content: "menu"; }
-  &.image-icon--menu-minimize:after { content: "compare_arrows"; }
-  &.image-icon--menu-qrcode:after { content: "phone_android"; }
+  &--menu-menu:after { content: "menu"; }
+  &--menu-minimize:after { content: "compare_arrows"; }
+  &--menu-qrcode:after { content: "phone_android"; }
 
-  &.image-icon--node-open:after { content: "expand_more"; }
-  &.image-icon--node-closed:after { content: "chevron_right"; }
+  &--node-open:after { content: "expand_more"; }
+  &--node-closed:after { content: "chevron_right"; }
+  &--dropdown:after { content: "arrow_drop_down"; }
 
-  &.image-icon--form-ok:after { content: "done"; }
-  &.image-icon--form-cancel:after { content: "clear"; }
+  &--arrow-left:after { content: "chevron_left"; }
+  &--arrow-right:after { content: "chevron_right"; }
 
-  &.image-icon--editor-bold:after { content: "format_bold"; }
-  &.image-icon--editor-italic:after { content: "format_italic"; }
-  &.image-icon--editor-headline:after { content: "format_size"; }
-  &.image-icon--editor-help:after { content: "help_outline"; }
-  &.image-icon--editor-fullscreen:after { content: "fullscreen"; }
-  &.image-icon--editor-quote:after { content: "format_quote"; }
-  &.image-icon--editor-unnumberedlist:after { content: "format_list_bulleted"; }
-  &.image-icon--editor-numberedlist:after { content: "format_list_numbered"; }
-  &.image-icon--editor-preview:after { content: "desktop_windows"; }
-  &.image-icon--editor-sidebyside:after { content: "flip"; }
-  &.image-icon--editor-link:after { content: "link"; }
-  &.image-icon--editor-image:after { content: "image"; }
-  &.image-icon--editor-undo:after { content: "undo"; }
-  &.image-icon--editor-redo:after { content: "redo"; }
-  &.image-icon--editor-code:after { content: "code"; }
-  &.image-icon--editor-horizontalrule:after { content: "remove"; }
-  &.image-icon--editor-table:after { content: "view_comfy"; }
+  &--form-ok:after { content: "done"; }
+  &--form-cancel:after { content: "clear"; }
+
+  &--editor-bold:after { content: "format_bold"; }
+  &--editor-italic:after { content: "format_italic"; }
+  &--editor-headline:after { content: "format_size"; }
+  &--editor-help:after { content: "help_outline"; }
+  &--editor-fullscreen:after { content: "fullscreen"; }
+  &--editor-quote:after { content: "format_quote"; }
+  &--editor-unnumberedlist:after { content: "format_list_bulleted"; }
+  &--editor-numberedlist:after { content: "format_list_numbered"; }
+  &--editor-preview:after { content: "desktop_windows"; }
+  &--editor-sidebyside:after { content: "flip"; }
+  &--editor-link:after { content: "link"; }
+  &--editor-image:after { content: "image"; }
+  &--editor-undo:after { content: "undo"; }
+  &--editor-redo:after { content: "redo"; }
+  &--editor-code:after { content: "code"; }
+  &--editor-horizontalrule:after { content: "remove"; }
+  &--editor-table:after { content: "view_comfy"; }
 }
 
 .editor-toolbar {

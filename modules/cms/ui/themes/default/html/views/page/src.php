@@ -27,10 +27,10 @@
   <fieldset class="<?php echo O::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo O::escapeHtml('') ?>
     <legend class="<?php echo O::escapeHtml('on-click-open-close') ?>"><?php echo O::escapeHtml(''.@O::lang('SOURCE').'') ?>
       <img /><?php echo O::escapeHtml('') ?>
-      <div class="<?php echo O::escapeHtml('arrow arrow-right on-closed') ?>"><?php echo O::escapeHtml('') ?>
-      </div>
-      <div class="<?php echo O::escapeHtml('arrow arrow-down on-open') ?>"><?php echo O::escapeHtml('') ?>
-      </div>
+      <i class="<?php echo O::escapeHtml('image-icon image-icon--node-closed on-closed') ?>"><?php echo O::escapeHtml('') ?>
+      </i>
+      <i class="<?php echo O::escapeHtml('image-icon image-icon--node-open on-open') ?>"><?php echo O::escapeHtml('') ?>
+      </i>
     </legend>
     <div class="<?php echo O::escapeHtml('closable') ?>"><?php echo O::escapeHtml('') ?>
       <textarea name="<?php echo O::escapeHtml('src') ?>" data-extension="<?php echo O::escapeHtml('') ?>" data-mimetype="<?php echo O::escapeHtml('') ?>" data-mode="<?php echo O::escapeHtml('html') ?>" class="<?php echo O::escapeHtml('editor code-editor') ?>"><?php echo O::escapeHtml(''.@$src.'') ?>
