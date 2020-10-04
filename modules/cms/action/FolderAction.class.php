@@ -817,7 +817,7 @@ class FolderAction extends ObjectAction
 	private function stringToBytes($val)
 	{
 		$val  = trim($val);
-		$last = strtolower($val{strlen($val)-1});
+		$last = strtolower($val[strlen($val)-1]);
 		$val  = intval($val);
 		// Achtung: Der Trick ist das "Fallthrough", kein "break" vorhanden!
 		switch($last)
