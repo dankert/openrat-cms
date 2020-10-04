@@ -15,6 +15,7 @@ use cms\base\Version;
 use configuration\ConfigurationLoader;
 use database\Database;
 use cms\update\Update;
+use language\Messages;
 use modules\cms\base\HttpRequest;
 use util\Http;
 use logger\Logger;
@@ -399,7 +400,7 @@ class Dispatcher
             Session::setDatabase( $db );
         }catch(\Exception $e)
         {
-            throw new UIException('DATABASE_ERROR_CONNECTION', $e->getMessage(),$e);
+            throw new UIException(Messages::DATABASE_CONNECTION_ERROR, $e->getMessage(),$e);
         }
 
 

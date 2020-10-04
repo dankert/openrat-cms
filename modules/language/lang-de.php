@@ -978,7 +978,6 @@ function language() { return array(
 'COPIED'=>'wurde kopiert.',
 'DUPLICATE_INPUT'=>'Ihre Eingabe muss eindeutig sein.',
 'DATABASE_CONNECTION_ERROR'=>'Es konnte keine Verbindung zur Datenbank hergestellt werden.',
-'ERROR_DATABASE_CONNECTION'=>'Es konnte keine Verbindung zur Datenbank hergestellt werden.',
 'ERROR_DATABASE'=>'Es gab einen Fehler bei der Durchführung einer Datenbankanfrage.',
 'DONE'=>'Der Vorgang wurde ausgeführt.',
 'GROUPS_MAY_CONFLICT_WITH_LDAP'=>'Die in der Benutzerverwaltung eingetragenen Gruppenzugehörigkeiten stehen möglicherweise in Konflikt mit den Gruppenzugehörigkeiten aus dem Verzeichnisdienst. Beim Login ueber den Verzeichnisdienst werden die hier eingetragenenen Gruppenzugehörigkeiten überschrieben.',

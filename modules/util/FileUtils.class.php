@@ -77,12 +77,13 @@ class FileUtils
 
 
 	/**
-	 * Liest die Dateien aus dem angegebenen Ordner in ein Array.
+	 * Gets all files from a directory.
 	 *
-	 * @param $dir string Verzeichnis, welches gelesen werden soll
-	 * @return array Liste der Dateien im Ordner
+	 * @param $dir string directory to read
+	 * @param null $extension only files with this extension (default: all files)
+	 * @return array List of all files in this directory
 	 */
-	public static function readDir($dir)
+	public static function readDir($dir,$extension=null)
 	{
 		$dir = FileUtils::slashify($dir);
 		$dateien = array();
@@ -94,7 +95,9 @@ class FileUtils
 		if ($dh = opendir($dir)) {
 			while (($verzEintrag = readdir($dh)) !== false) {
 				if (substr($verzEintrag, 0, 1) != '.') {
-					$dateien[] = $verzEintrag;
+					if   ( !$extension || substr($verzEintrag,(strlen($extension)+1)*-1) == '.'.$extension ) {
+						$dateien[] = $verzEintrag;
+					}
 				}
 			}
 			closedir($dh);

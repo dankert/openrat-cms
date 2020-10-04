@@ -978,7 +978,6 @@ function language() { return array(
 'COPIED'=>'a été copié',
 'DUPLICATE_INPUT'=>'Duplicate Input detected.',
 'DATABASE_CONNECTION_ERROR'=>'The connection to the database could not be established.',
-'ERROR_DATABASE_CONNECTION'=>'The connection to the database could not be established.',
 'ERROR_DATABASE'=>'The database query could not executed.',
 'DONE'=>'Finished successful',
 'GROUPS_MAY_CONFLICT_WITH_LDAP'=>'The user-group-relations my conflict with the directory service. Memberships were synchronized at login time.',

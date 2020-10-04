@@ -4782,9 +4782,6 @@ DUPLICATE_INPUT:
 DATABASE_CONNECTION_ERROR:
   de: Es konnte keine Verbindung zur Datenbank hergestellt werden.
   en: The connection to the database could not be established.
-ERROR_DATABASE_CONNECTION:
-  en: The connection to the database could not be established.
-  de: Es konnte keine Verbindung zur Datenbank hergestellt werden.
 ERROR_DATABASE:
   en: The database query could not executed.
   de: Es gab einen Fehler bei der Durchführung einer Datenbankanfrage.
