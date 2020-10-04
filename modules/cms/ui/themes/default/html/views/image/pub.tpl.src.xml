@@ -10,7 +10,7 @@
 		</part>
 	</if>
 
-	<form cancel="false" visible="true" label="${message:publish}" async="true">
+	<form label="${message:publish}" async="true">
 		<row>
 			<column>
 				<newline></newline>
