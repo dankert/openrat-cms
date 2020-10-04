@@ -55,6 +55,16 @@ class TreeAction extends BaseAction
         parent::__construct();
     }
 
+
+	/**
+	 * Starting the tree.
+	 */
+    public function showView() {
+
+    	// no data required here.
+	}
+
+
 	/**
 	 * Anzeigen des Baumes fuer asynchrone Anfragen.
 	 */

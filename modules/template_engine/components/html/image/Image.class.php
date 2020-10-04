@@ -87,14 +87,13 @@ class ImageComponent extends Component
 
 		if	( $this->class )
         {
-            $styleClasses[] = $this->class;
+            $styleClasses = array_merge($styleClasses, Component::splitByComma( $this->class ));
         }
 
 
 		$image = new CMSElement($tagName );
 
-		foreach( $styleClasses as $styleClass )
-		    $image->addStyleClass($styleClass);
+	    $image->addStyleClass($styleClasses);
 
 		if($this->title)
 			$image->addAttribute('title',$this->title);

@@ -31,13 +31,9 @@ Openrat.View = function( action,method,id,params ) {
     }
 
 
-    function registerViewEvents(element) {
+    function fireViewLoadedEvents(element) {
 
         Openrat.Workbench.afterViewLoadedHandler.fire( element );
-
-        let f = $(element).data('afterViewLoaded');
-        if   ( f instanceof Function)
-            f(element);
     }
 
 
@@ -67,7 +63,7 @@ Openrat.View = function( action,method,id,params ) {
 
 			});
 
-			registerViewEvents( element );
+			fireViewLoadedEvents( element );
 		} );
 
 		loadViewHtmlPromise.fail( function(jqxhr,status,cause) {

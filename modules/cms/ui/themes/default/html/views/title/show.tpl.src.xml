@@ -5,15 +5,20 @@
 
         <part class="or-menu-group">
 
-            <part class="toolbar-icon toggle-nav-open-close">
+            <part class="toolbar-icon or-act-nav-open-close or--visible-on-mobile">
+                <image menu="menu"/>
+                <!--<text class="label" key="menu"></text>-->
+            </part>
+            <part class="toolbar-icon or-act-nav-toggle-small or--visible-on-desktop">
                 <image menu="menu"/>
                 <!--<text class="label" key="menu"></text>-->
             </part>
 
+			<!--
             <part class="toolbar-icon toggle-nav-small">
                 <image menu="minimize"/>
-                <!--<text class="label" key="menu"></text>-->
-            </part>
+                <text class="label" key="menu"></text>
+            </part>-->
 
             <!-- Info-Meldung anzeigen (sofern vorhanden) -->
             <if present="dbname">

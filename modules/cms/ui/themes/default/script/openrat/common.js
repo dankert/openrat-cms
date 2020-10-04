@@ -159,10 +159,6 @@ let filterMenus = function ()
 }
 
 
-$('#title.view').data('afterViewLoaded', function() {
-    filterMenus();
-} );
-
 Openrat.Workbench.afterNewActionHandler.add( function() {
     filterMenus();
 } );
@@ -181,6 +177,37 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(element) {
         });
 
 });
+
+
+
+Openrat.Workbench.afterViewLoadedHandler.add( function($element) {
+
+	$element.find('.or-navtree').each( function() {
+
+		let type = $(this).data('type') || 'root';
+		let loadBranchUrl = './?action=tree&subaction=branch&id=0&type='+type;
+		let $targetElement = $(this);
+
+		$.get(loadBranchUrl).done( function (html) {
+
+			// Den neuen Unter-Zweig erzeugen.
+			let $ul = $('<ul class="or-navtree-list" />');
+			$ul.appendTo( $targetElement.empty() ).append( html );
+
+			$ul.find('li').orTree(); // All subnodes are getting event listener for open/close
+
+			// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
+			$ul.find('.clickable').orLinkify();
+
+			// Open the first node.
+			$ul.find('.or-navtree-node-control').first().click();
+		} );
+
+	} );
+
+} );
+
+
 
 
 /**
@@ -204,12 +231,21 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 	// Untermenüpunkte aus der View in das Fenstermenü kopieren...
 	$(viewEl).closest('div.panel').find('div.header div.dropdown div.entry.perview').remove(); // Alte Einträge löschen
 
-	$(viewEl).find('.toggle-nav-open-close').click( function() {
-		$('nav').toggleClass('open');
+	// Handler for mobile navigation
+	$(viewEl).find('.or-act-nav-open-close').click( function() {
+		$('nav').toggleClass('or-nav--is-open');
+	});
+	// Handler for desktop navigation
+	$(viewEl).find('.or-act-nav-toggle-small').click( function() {
+		$('nav').toggleClass('or-nav--is-small');
 	});
 
-	$(viewEl).find('.toggle-nav-small').click( function() {
-		$('nav').toggleClass('small');
+	// Handler for desktop navigation
+	$(viewEl).find('.or-act-nav-small').click( function() {
+		$('nav').addClass('or-nav--is-small');
+	});
+	$(viewEl).find('.or-act-nav-wide').click( function() {
+		$('nav').removeClass('or-nav--is-small');
 	});
 
 	$(viewEl).find('div.headermenu > a').each( function(idx,el)

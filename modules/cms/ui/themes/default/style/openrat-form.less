@@ -1,0 +1,189 @@
+
+.border-radius (@radius) {
+    border-radius: @radius;
+    -moz-border-radius: @radius;
+    -webkit-border-radius: @radius;
+    -khtml-border-radius: @radius;
+}
+.box-shadow (@x, @y, @radius, @color) {
+    -webkit-box-shadow: @x @y @radius @color;
+    -moz-box-shadow: @x @y @radius @color;
+    box-shadow: @x @y @radius @color;
+}
+
+
+/* R e s p o n s i v e   f o r m s */
+.or-form {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+
+    .or-form-headline {
+        height:2em;
+    }
+    .or-form-content {
+        flex-grow: 1;
+        overflow-y: auto;
+
+    }
+    .or-form-actionbar {
+        height:3em;
+    }
+
+  input[type=checkbox] + label,
+  input[type=radio] + label {
+    width: 80%;
+  }
+
+  .headline {
+    font-size: 1.8em;
+  }
+
+  label div.description {
+    //font-size: 0.75em;
+  }
+
+  div.inputholder > div.dropdown {
+    width: 70%;
+  }
+
+  input.submit {
+    padding: 7px;
+    border: 0px;
+    -moz-border-radius: 7px; /* Mozilla */
+    -webkit-border-radius: 7px; /* Webkit */
+    -khtml-border-radius: 7px; /* Konqui */
+    border-radius: 7px;
+    margin-left: 20px;
+    cursor: pointer;
+  }
+
+
+
+  padding: 1em;
+
+  /* Style inputs, select elements and textareas */
+  input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    resize: vertical;
+  }
+
+  /* Style the label to display next to the inputs */
+  label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+  }
+
+  /* Style the submit button */
+  input[type=submit] {
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+  }
+
+  /* Floating column for labels: 25% width */
+  div.label {
+    float: left;
+    width: 25%;
+    margin-top: 6px;
+  }
+
+  /* Floating column for inputs: 75% width */
+  div.input {
+    float: left;
+    width: 75%;
+    margin-top: 6px;
+  }
+
+  /* Clear floats after the columns */
+  .line:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  .or-form-row {
+    display: flex;
+    align-items: center;
+
+    .or-form-label {
+      width:25%;
+    }
+    .or-form-input {
+      width: 75%;
+    }
+  }
+
+  //padding-bottom: 4em;
+  //position: relative;
+
+  .or-form-actionbar {
+
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+    justify-content: end;
+    padding: 1em;
+    height: auto;
+
+
+   .or-form-btn {
+     padding: 1em 2em;
+     margin-left: 1.5em;
+     min-width: 14em;
+     border: 0;
+
+     .border-radius(0.5em);
+     cursor: pointer;
+
+     &--primary {
+       font-weight: bold; /* Primäre Aktion in Fettdruck */
+     }
+
+   }
+  }
+
+
+
+
+  /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+  @media screen and (max-width: 65rem) {
+
+    div.label, div.input {
+      width: 100%;
+      margin-top: 0;
+    }
+
+    .or-form-row {
+     flex-direction: column;
+      .or-form-label,
+      .or-form-input {
+        width: 100%;
+      }
+    }
+
+    .or-form-actionbar {
+
+      align-items: center;
+      display: block;
+
+      .or-form-btn {
+        width:90%;
+      }
+    }
+
+  }
+}
+
+
+

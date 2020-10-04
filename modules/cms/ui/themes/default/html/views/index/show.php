@@ -37,10 +37,7 @@
     <div class="or-main-area">
 
         <nav class="or-navigation">
-            <header>
-                <a href=""></a>
-            </header>
-            <div id="navigation" class="or-navtree view">
+            <div class="view view-static" data-action="tree" data-method="show">
             </div>
 
         </nav>

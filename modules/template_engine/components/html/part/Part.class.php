@@ -16,8 +16,7 @@ class PartComponent extends Component
 	{
 		$element = (new CMSElement($this->tag));
 
-		foreach( explode(',',$this->class ) as $styleClass )
-			$element->addStyleClass( $styleClass );
+		$element->addStyleClass( Component::splitByComma( $this->class ) );
 		
 		if	( $this->id )
 			$element->addAttribute('id',$this->id);

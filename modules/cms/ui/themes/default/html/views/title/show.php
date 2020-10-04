@@ -1,12 +1,12 @@
 <?php defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
   <div class="<?php echo O::escapeHtml('or-menu') ?>"><?php echo O::escapeHtml('') ?>
     <div class="<?php echo O::escapeHtml('or-menu-group') ?>"><?php echo O::escapeHtml('') ?>
-      <div class="<?php echo O::escapeHtml('toolbar-icon toggle-nav-open-close') ?>"><?php echo O::escapeHtml('') ?>
+      <div class="<?php echo O::escapeHtml('toolbar-icon or-act-nav-open-close or--visible-on-mobile') ?>"><?php echo O::escapeHtml('') ?>
         <i class="<?php echo O::escapeHtml('image-icon image-icon--menu-menu') ?>"><?php echo O::escapeHtml('') ?>
         </i>
       </div>
-      <div class="<?php echo O::escapeHtml('toolbar-icon toggle-nav-small') ?>"><?php echo O::escapeHtml('') ?>
-        <i class="<?php echo O::escapeHtml('image-icon image-icon--menu-minimize') ?>"><?php echo O::escapeHtml('') ?>
+      <div class="<?php echo O::escapeHtml('toolbar-icon or-act-nav-toggle-small or--visible-on-desktop') ?>"><?php echo O::escapeHtml('') ?>
+        <i class="<?php echo O::escapeHtml('image-icon image-icon--menu-menu') ?>"><?php echo O::escapeHtml('') ?>
         </i>
       </div>
       <?php $if1=(isset($dbname)); if($if1) {  ?>

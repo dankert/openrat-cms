@@ -1595,13 +1595,9 @@ Openrat.View = function( action,method,id,params ) {
     }
 
 
-    function registerViewEvents(element) {
+    function fireViewLoadedEvents(element) {
 
         Openrat.Workbench.afterViewLoadedHandler.fire( element );
-
-        let f = $(element).data('afterViewLoaded');
-        if   ( f instanceof Function)
-            f(element);
     }
 
 
@@ -1631,7 +1627,7 @@ Openrat.View = function( action,method,id,params ) {
 
 			});
 
-			registerViewEvents( element );
+			fireViewLoadedEvents( element );
 		} );
 
 		loadViewHtmlPromise.fail( function(jqxhr,status,cause) {
@@ -2134,7 +2130,6 @@ Openrat.Workbench = new function()
         this.loadUserStyle();
         this.loadLanguage();
         this.loadUISettings();
-        this.loadNavigationTree();
     }
 
 
@@ -2153,24 +2148,6 @@ Openrat.Workbench = new function()
         });
     }
 
-    this.loadNavigationTree = function() {
-		let loadBranchUrl = './?action=tree&subaction=branch&id=0&type=root';
-
-		$.get(loadBranchUrl).done( function (html) {
-
-			// Den neuen Unter-Zweig erzeugen.
-			let $ul = $('<ul class="or-navtree-list" />');
-			$ul.appendTo( $('.or-navtree').empty() ).append( html );
-
-			$ul.find('li').orTree(); // All subnodes are getting event listener for open/close
-
-			// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
-			$ul.find('.clickable').orLinkify();
-
-			// Open the first node.
-			$ul.find('.or-navtree-node-control').first().click();
-		} );
-	};
 
 
 	this.settings = {};
@@ -2372,18 +2349,6 @@ Openrat.Workbench = new function()
 
     this.afterViewLoadedHandler = $.Callbacks();
 
-    let afterViewFunctions = [];
-
-    this.registerAfterViewLoaded = function( f ) {
-        afterViewFunctions.push( f );
-    }
-
-    this.afterViewLoaded = function( element ) {
-
-        afterViewFunctions.forEach( function( f ) {
-           f(element);
-        });
-    }
 
 
 	/**
@@ -2432,7 +2397,7 @@ Openrat.Workbench = new function()
 	this.openNewAction = function( name,action,id )
 	{
 		// Im Mobilmodus soll das Menü verschwinden, wenn eine neue Action geoeffnet wird.
-		$('nav').removeClass('open');
+		$('nav').removeClass('or-nav--is-open');
 
 		Openrat.Workbench.setApplicationTitle( name ); // Sets the title.
 
@@ -2755,10 +2720,6 @@ let filterMenus = function ()
 }
 
 
-$('#title.view').data('afterViewLoaded', function() {
-    filterMenus();
-} );
-
 Openrat.Workbench.afterNewActionHandler.add( function() {
     filterMenus();
 } );
@@ -2777,6 +2738,37 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(element) {
         });
 
 });
+
+
+
+Openrat.Workbench.afterViewLoadedHandler.add( function($element) {
+
+	$element.find('.or-navtree').each( function() {
+
+		let type = $(this).data('type') || 'root';
+		let loadBranchUrl = './?action=tree&subaction=branch&id=0&type='+type;
+		let $targetElement = $(this);
+
+		$.get(loadBranchUrl).done( function (html) {
+
+			// Den neuen Unter-Zweig erzeugen.
+			let $ul = $('<ul class="or-navtree-list" />');
+			$ul.appendTo( $targetElement.empty() ).append( html );
+
+			$ul.find('li').orTree(); // All subnodes are getting event listener for open/close
+
+			// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
+			$ul.find('.clickable').orLinkify();
+
+			// Open the first node.
+			$ul.find('.or-navtree-node-control').first().click();
+		} );
+
+	} );
+
+} );
+
+
 
 
 /**
@@ -2800,12 +2792,21 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 	// Untermenüpunkte aus der View in das Fenstermenü kopieren...
 	$(viewEl).closest('div.panel').find('div.header div.dropdown div.entry.perview').remove(); // Alte Einträge löschen
 
-	$(viewEl).find('.toggle-nav-open-close').click( function() {
-		$('nav').toggleClass('open');
+	// Handler for mobile navigation
+	$(viewEl).find('.or-act-nav-open-close').click( function() {
+		$('nav').toggleClass('or-nav--is-open');
+	});
+	// Handler for desktop navigation
+	$(viewEl).find('.or-act-nav-toggle-small').click( function() {
+		$('nav').toggleClass('or-nav--is-small');
 	});
 
-	$(viewEl).find('.toggle-nav-small').click( function() {
-		$('nav').toggleClass('small');
+	// Handler for desktop navigation
+	$(viewEl).find('.or-act-nav-small').click( function() {
+		$('nav').addClass('or-nav--is-small');
+	});
+	$(viewEl).find('.or-act-nav-wide').click( function() {
+		$('nav').removeClass('or-nav--is-small');
 	});
 
 	$(viewEl).find('div.headermenu > a').each( function(idx,el)

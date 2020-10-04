@@ -168,7 +168,6 @@ Openrat.Workbench = new function()
         this.loadUserStyle();
         this.loadLanguage();
         this.loadUISettings();
-        this.loadNavigationTree();
     }
 
 
@@ -187,24 +186,6 @@ Openrat.Workbench = new function()
         });
     }
 
-    this.loadNavigationTree = function() {
-		let loadBranchUrl = './?action=tree&subaction=branch&id=0&type=root';
-
-		$.get(loadBranchUrl).done( function (html) {
-
-			// Den neuen Unter-Zweig erzeugen.
-			let $ul = $('<ul class="or-navtree-list" />');
-			$ul.appendTo( $('.or-navtree').empty() ).append( html );
-
-			$ul.find('li').orTree(); // All subnodes are getting event listener for open/close
-
-			// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
-			$ul.find('.clickable').orLinkify();
-
-			// Open the first node.
-			$ul.find('.or-navtree-node-control').first().click();
-		} );
-	};
 
 
 	this.settings = {};
@@ -406,18 +387,6 @@ Openrat.Workbench = new function()
 
     this.afterViewLoadedHandler = $.Callbacks();
 
-    let afterViewFunctions = [];
-
-    this.registerAfterViewLoaded = function( f ) {
-        afterViewFunctions.push( f );
-    }
-
-    this.afterViewLoaded = function( element ) {
-
-        afterViewFunctions.forEach( function( f ) {
-           f(element);
-        });
-    }
 
 
 	/**
@@ -466,7 +435,7 @@ Openrat.Workbench = new function()
 	this.openNewAction = function( name,action,id )
 	{
 		// Im Mobilmodus soll das Menü verschwinden, wenn eine neue Action geoeffnet wird.
-		$('nav').removeClass('open');
+		$('nav').removeClass('or-nav--is-open');
 
 		Openrat.Workbench.setApplicationTitle( name ); // Sets the title.
 

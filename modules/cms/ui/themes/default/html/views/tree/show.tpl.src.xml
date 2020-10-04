@@ -1,0 +1,9 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+
+	<!-- The tree is displayed by javascript calls -->
+	<part class="or-navtree" />
+
+	<image class="or-act-nav-small, or-link-btn, or-view-flying-button" symbol="arrow-left"  />
+	<image class="or-act-nav-wide , or-link-btn, or-view-flying-button" symbol="arrow-right" />
+</output>

@@ -18,7 +18,7 @@ class HtmlElement extends Element
 
 	/**
 	 * Add one or more style classes to the element.
-	 * @param int|array $classes
+	 * @param string|array $classes
 	 * @return $this
 	 */
 	public function addStyleClass( $classes ) {

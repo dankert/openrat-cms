@@ -75,4 +75,21 @@ abstract class Component
 		return $this->element;
 	}
 
+
+
+	/**
+	 * Splits a text at the comma char and trims the parts.
+	 *
+	 * @param $text
+	 * @return array
+	 */
+	public static function splitByComma($text)
+	{
+		$parts = explode(',',$text);
+		return array_map( function($text) {
+			return trim($text);
+		},$parts);
+	}
+
+
 }

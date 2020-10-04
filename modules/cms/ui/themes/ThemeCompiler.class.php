@@ -2,6 +2,7 @@
 
 namespace cms\ui\themes;
 
+use util\FileUtils;
 use util\JSqueeze;
 use logger\Logger;
 use template_engine\TemplateEngineInfo;
@@ -32,13 +33,10 @@ class ThemeCompiler
 
 		$css = [];
 
-        $styleFiles = \util\FileUtils::readDir( __DIR__.'/default/style');
+        $styleFiles = FileUtils::readDir( __DIR__.'/default/style','less');
         foreach( $styleFiles as $styleFile ) {
-            if  (substr($styleFile,-5) == '.less' )
-                $css[] = __DIR__.'/default/style'.'/'.substr($styleFile,0,-5);
+        	$css[] = __DIR__.'/default/style'.'/'.substr($styleFile,0,-5);
         }
-
-        //$css[] = __DIR__.'/../../../editor/codemirror/lib/codemirror';
 
         // Komponentenbasiertes CSS
         foreach (TemplateEngineInfo::getComponentList() as $c)

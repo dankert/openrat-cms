@@ -22,9 +22,8 @@ Basis-Style for Openrat.
 */
 
 
-
-
-
+/* Usage to this variable is safe to be removed */
+@color-overridden-by-theme: black;
 
 .border-radius (@radius) {
     border-radius: @radius;
@@ -32,7 +31,11 @@ Basis-Style for Openrat.
     -webkit-border-radius: @radius;
     -khtml-border-radius: @radius;
 }
-
+.box-shadow (@x, @y, @radius, @color) {
+    -webkit-box-shadow: @x @y @radius @color;
+    -moz-box-shadow: @x @y @radius @color;
+    box-shadow: @x @y @radius @color;
+}
 
 
 
@@ -237,30 +240,42 @@ div#workbench {
             }
 
 
-            &.small {
-                width: 5%;
-                opacity: 0.5;
-                overflow-y: hidden;
+            &.or-nav--is-small {
+                //width: 5em;
+                width: 0;
+                //overflow-y: hidden;
 
-                &:hover {
-                    width: 33%;
-                    overflow-y: auto;
-                    opacity: 1;
-                    background-color: inherit;
-                    border-right: 1px solid inherit;
+                .or-navtree {
+                    //display: none;
+                    //opacity: 0.5;
                 }
 
+                /*
+                &:hover {
+                    .or-navtree {
+                        opacity: 1;
+                    }
+                    width: 33%;
+                    overflow-y: auto;
+                    background-color: inherit;
+                    border-right: 1px solid inherit;
+                    & ~ .or-workplace {
+                        margin-left:33%;
+                    }
+                }*/
+
                 & ~ .or-workplace {
-                    margin-left:5%;
+                    margin-left:0;
                 }
             }
 
-            &.open {
+            &.or-nav--is-open {
 
-                overflow-y: auto;
                 @media @smartphones {
+                    overflow-y: auto;
                     width: 95%;
                     border-right: 1px solid;
+                    .box-shadow(3px,2px,2px,@color-overridden-by-theme);
                     opacity: 0.95;
                 }
             }
@@ -358,6 +373,44 @@ div#workbench {
 
 }
 
+
+
+/* */
+nav {
+
+    .or-act-nav-small {
+        display: block;
+    }
+    .or-act-nav-wide {
+        display: none;
+    }
+
+    &.or-nav--is-small {
+        .or-act-nav-small {
+            display: none;
+        }
+        .or-act-nav-wide {
+            display: block;
+        }
+    }
+}
+
+
+.or--visible-on-mobile {
+    display: none;
+    @media @smartphones {
+        display: inline;
+    }
+
+}
+.or--visible-on-desktop {
+    display: inline;
+    @media @smartphones {
+        display: none;
+    }
+}
+
+
 #title {
 
     .toggle-nav-small {
@@ -413,10 +466,10 @@ div#workbench {
 .toggle-nav-small,
 .or-navigation
 {
-    z-index: 102;
+    //z-index: 102;
 
     &:hover {
-        z-index: 112;
+        //z-index: 112;
     }
 }
 
