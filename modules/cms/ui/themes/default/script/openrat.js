@@ -1748,16 +1748,19 @@ Openrat.Form = function() {
         });
         */
 
-        $(element).find('.or-form-btn--cancel').click( function() {
+        $(element).find('.or-act-form-cancel').click( function() {
             form.cancel();
 
         });
-        $(element).find('.or-form-btn--reset').click( function() {
+        $(element).find('.or-act-form-reset').click( function() {
             form.rollback();
 
         });
-        $(element).find('.or-form-btn--apply').click( function() {
+        $(element).find('.or-act-form-apply').click( function() {
 			form.submit(modes.keepOpen);
+        });
+        $(element).find('.or-act-form-save').click( function() {
+			form.submit();
         });
 
         // Submithandler for the whole form.

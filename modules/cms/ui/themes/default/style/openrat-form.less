@@ -1,3 +1,4 @@
+@color-overridden-by-theme: black;
 
 .border-radius (@radius) {
     border-radius: @radius;
@@ -11,6 +12,7 @@
     box-shadow: @x @y @radius @color;
 }
 
+@small: ~"only screen and (max-width: 65rem)";
 
 /* R e s p o n s i v e   f o r m s */
 .or-form {
@@ -25,9 +27,6 @@
         flex-grow: 1;
         overflow-y: auto;
 
-    }
-    .or-form-actionbar {
-        height:3em;
     }
 
   input[type=checkbox] + label,
@@ -121,11 +120,10 @@
     }
   }
 
-  //padding-bottom: 4em;
-  //position: relative;
 
   .or-form-actionbar {
 
+    height:3em;
     position: sticky;
     bottom: 0;
     left: 0;
@@ -136,28 +134,18 @@
     padding: 1em;
     height: auto;
 
-
-   .or-form-btn {
-     padding: 1em 2em;
-     margin-left: 1.5em;
-     min-width: 14em;
-     border: 0;
-
-     .border-radius(0.5em);
-     cursor: pointer;
-
-     &--primary {
-       font-weight: bold; /* Primäre Aktion in Fettdruck */
-     }
-
-   }
+      .or-btn {
+          padding: 1em 2em;
+          margin-left: 1.5em;
+          min-width: 14em;
+      }
   }
 
 
 
 
-  /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
-  @media screen and (max-width: 65rem) {
+    /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+  @media @small {
 
     div.label, div.input {
       width: 100%;
@@ -174,16 +162,34 @@
 
     .or-form-actionbar {
 
-      align-items: center;
-      display: block;
-
-      .or-form-btn {
-        width:90%;
+      .or-btn {
+          padding: 1em 1em;
+          min-width: 5em;
       }
+        .or-act-form-apply {
+            display: none;
+        }
+        .or-btn--secondary {
+            min-width: 0;
+            .or-form-btn-label {
+                //display: none;
+            }
+        }
     }
-
   }
 }
 
 
 
+/* Buttons  */
+.or-btn {
+    padding: 0.5em 0.5em;
+    border: 1px solid @color-overridden-by-theme;
+
+    .border-radius(0.5em);
+    cursor: pointer;
+
+    &--primary {
+        font-weight: bold;
+    }
+}

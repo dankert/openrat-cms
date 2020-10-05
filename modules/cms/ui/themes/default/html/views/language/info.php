@@ -33,7 +33,7 @@
         <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
         </div>
         <div class="<?php echo O::escapeHtml('input clickable') ?>"><?php echo O::escapeHtml('') ?>
-          <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('edit') ?>" data-action="<?php echo O::escapeHtml('language') ?>" data-method="<?php echo O::escapeHtml('prop') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('/#/language/') ?>" class="<?php echo O::escapeHtml('or-link-btn') ?>"><?php echo O::escapeHtml('') ?>
+          <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('edit') ?>" data-action="<?php echo O::escapeHtml('language') ?>" data-method="<?php echo O::escapeHtml('prop') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('/#/language/') ?>" class="<?php echo O::escapeHtml('or-btn') ?>"><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml(''.@O::lang('edit').'') ?>
             </span>
           </a>

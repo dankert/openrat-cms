@@ -4,6 +4,6 @@
 	<!-- The tree is displayed by javascript calls -->
 	<part class="or-navtree" />
 
-	<image class="or-act-nav-small, or-link-btn, or-view-flying-button" symbol="arrow-left"  />
-	<image class="or-act-nav-wide , or-link-btn, or-view-flying-button" symbol="arrow-right" />
+	<image class="or-act-nav-small, or-btn, or-view-flying-button" symbol="arrow-left"  />
+	<image class="or-act-nav-wide , or-btn, or-view-flying-button" symbol="arrow-right" />
 </output>

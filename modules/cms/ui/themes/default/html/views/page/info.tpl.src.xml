@@ -33,7 +33,7 @@
 				<part class="label">
 				</part>
 				<part class="input clickable">
-					<link subaction="prop" class="or-link-btn" type="dialog">
+					<link subaction="prop" class="or-btn" type="dialog">
 						<text value="${message:edit}" />
 					</link>
 				</part>
@@ -51,7 +51,7 @@
 				<text label="alias" value="${alias}" />
 
 				<part class="clickable">
-					<link class="or-link-btn" type="edit" action="page" subaction="name" var1="languageid" value1="${languageid}">
+					<link class="or-btn" type="edit" action="page" subaction="name" var1="languageid" value1="${languageid}">
 						<text value="${message:edit}" />
 					</link>
 				</part>

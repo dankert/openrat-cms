@@ -84,7 +84,7 @@
                 <part class="label">
                 </part>
                 <part class="input clickable">
-                    <link type="dialog" subaction="prop" class="or-link-btn">
+                    <link type="dialog" subaction="prop" class="or-btn">
                         <text value="${message:edit}"/>
                     </link>
                 </part>
@@ -133,7 +133,7 @@
                 <part class="label">
                 </part>
                 <part class="input clickable">
-                    <link type="dialog" subaction="pw" action="user" class="or-link-btn">
+                    <link type="dialog" subaction="pw" action="user" class="or-btn">
                         <text value="${message:edit_password}"/>
                     </link>
                 </part>

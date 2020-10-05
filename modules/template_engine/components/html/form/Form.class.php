@@ -3,6 +3,7 @@
 namespace template_engine\components;
 
 use cms\action\RequestParams;
+use language\Messages;
 use template_engine\components\html\Component;
 use template_engine\element\CMSElement;
 use template_engine\element\HtmlElement;
@@ -87,43 +88,51 @@ class FormComponent extends Component
 			(new HtmlElement('div'))->addStyleClass('or-form-headline')
 		);
 
+		// Creating the action bar
 		$actionBar = (new HtmlElement('div'))->addStyleClass('or-form-actionbar');
 
-		// Cancel-Button nicht anzeigen, wenn cancel==false.
 		if ($this->cancel) {
+			// Adding a cancel-button.
 			$actionBar->addChild(
-				(new CMSElement('input'))
-					->addAttribute('type', 'button')
-					->addStyleClass('or-form-btn')
-					->addStyleClass('or-form-btn--secondary')
-					->addStyleClass('or-form-btn--cancel')
-					->addAttribute('value',
-						Value::createExpression(ValueExpression::TYPE_MESSAGE, 'CANCEL')
+				(new CMSElement('div'))
+					->addStyleClass('or-btn')
+					->addStyleClass('or-btn--secondary')
+					->addStyleClass('or-act-form-cancel')
+					->addChild(
+						(new HtmlElement('i'))->addStyleClass(['image-icon','image-icon--form-cancel'])
+					)->addChild(
+						(new HtmlElement('span'))->addStyleClass('or-form-btn-label')->content(Value::createExpression(ValueExpression::TYPE_MESSAGE, Messages::CANCEL))
 					)
 			);
 		}
 
 		if ($this->apply && !$this->readonly) {
+			// Adding an apply-button
 			$actionBar->addChild(
-				(new CMSElement('input'))
-					->addAttribute('type', 'button')
-					->addStyleClass('or-form-btn')
-					->addStyleClass('or-form-btn--primary')
-					->addStyleClass('or-form-btn--apply')
-					->addAttribute('value',
-						Value::createExpression(ValueExpression::TYPE_MESSAGE, 'APPLY')
+				(new CMSElement('div'))
+					->addStyleClass('or-btn')
+					->addStyleClass('or-btn--primary')
+					->addStyleClass('or-act-form-apply')
+					->addChild(
+						(new HtmlElement('i'))->addStyleClass(['image-icon','image-icon--form-apply'])
+					)->addChild(
+						(new HtmlElement('span'))->addStyleClass('or-form-btn-label')->content(Value::createExpression(ValueExpression::TYPE_MESSAGE, Messages::APPLY))
 					)
 			);
 		}
 
 		if (!$this->readonly) {
+			// Adding the save-button
 			$actionBar->addChild(
-				(new CMSElement('input'))
-					->addAttribute('type', 'submit')
-					->addStyleClass('or-form-btn')
-					->addStyleClass('or-form-btn--primary')
-					->addStyleClass('or-form-btn--save')
-					->addAttribute('value', $this->label)
+				(new CMSElement('div'))
+					->addStyleClass('or-btn')
+					->addStyleClass('or-btn--primary')
+					->addStyleClass('or-act-form-save')
+					->addChild(
+						(new HtmlElement('i'))->addStyleClass(['image-icon','image-icon--form-ok'])
+					)->addChild(
+						(new HtmlElement('span'))->addStyleClass('or-form-btn-label')->content($this->label)
+					)
 			);
 		}
 

@@ -132,7 +132,7 @@ class Startup {
 		// MAGIC_QUOTES
 		// This feature has been DEPRECATED as of PHP 5.3.0 and REMOVED as of PHP 5.4.0.
 		// always returns FALSE as of PHP 5.4.0.
-		if (get_magic_quotes_gpc() == 1)
+		if (@get_magic_quotes_gpc() == 1) // function is deprecated since PHP 7.4
 			Logger::warn("MAGIC_QUOTES is active. For security reasons: DO NOT USE THIS!");
 	}
 
@@ -146,7 +146,7 @@ class Startup {
 	public static function readonly() {
 
 		// Gesamtes CMS ist readonly.
-		if (\cms\base\Configuration::config('security', 'readonly'))
+		if (Configuration::config('security', 'readonly'))
 			return true;
 
 		// Aktuelle Datenbankverbindung ist readonly.

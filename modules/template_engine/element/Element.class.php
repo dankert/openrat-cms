@@ -51,6 +51,12 @@ class Element
 		return $this->attributes[$name]->render();
 	}
 
+	/**
+	 * The textual content of the element.
+	 *
+	 * @param string $content
+	 * @return $this
+	 */
 	public function content( $content )
 	{
 		$this->content = $content;

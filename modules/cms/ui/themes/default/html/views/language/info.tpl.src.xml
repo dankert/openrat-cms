@@ -27,7 +27,7 @@
             <part class="label">
             </part>
             <part class="input clickable">
-                <link class="or-link-btn" action="language" subaction="prop" type="edit">
+                <link class="or-btn" action="language" subaction="prop" type="edit">
                     <text value="${message:edit}"/>
                 </link>
             </part>

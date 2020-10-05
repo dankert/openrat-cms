@@ -10,7 +10,7 @@
             </part>
             <part class="input clickable">
                 <text value="${name}"/>
-                <link class="or-link-btn" action="model" subaction="prop" type="edit">
+                <link class="or-btn" action="model" subaction="prop" type="edit">
                     <text value="${message:edit}"/>
                 </link>
             </part>

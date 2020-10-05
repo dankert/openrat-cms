@@ -52,7 +52,7 @@
 
 	<part class="clickable">
 
-		<link type="dialog" action="folder" subaction="create" class="or-link-btn">
+		<link type="dialog" action="folder" subaction="create" class="or-btn">
 			<image action="new" />
 			<text value="${message:new}"></text>
 		</link>

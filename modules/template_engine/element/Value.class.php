@@ -14,6 +14,12 @@ class Value
     const CONTEXT_HTML = 1;
     const CONTEXT_RAW = 2;
 
+
+	/**
+	 * @param int $type a type from ValueExpression
+	 * @param string $name
+	 * @return string
+	 */
     public static function createExpression($type, $name)
     {
     	$expr = new ValueExpression($type,$name,0);
