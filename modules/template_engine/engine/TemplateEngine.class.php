@@ -227,13 +227,6 @@ class TemplateEngine
         if ( ! is_file($templateFile) )
             throw new LogicException("Template file '$templateFile' was not found.");
 
-		if   ( DEVELOPMENT )
-			// save a few bytes in production mode ;)
-			header("X-CMS-Template-File: " . $templateFile);
-
-		if   ( DEVELOPMENT )
-			echo '<!-- '."\n".print_r($outputData,true)."\n".' -->';
-
 		// Extracting all output data into the actual context
         extract($outputData);
 
