@@ -432,8 +432,8 @@
           <input name="<?php echo O::escapeHtml('text') ?>" placeholder="<?php echo O::escapeHtml(''.@O::lang('search').'') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$text.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
           <i class="<?php echo O::escapeHtml('image-icon image-icon--dropdown') ?>"><?php echo O::escapeHtml('') ?>
           </i>
-          <div class="<?php echo O::escapeHtml('dropdown') ?>"><?php echo O::escapeHtml('') ?>
-            <span><?php echo O::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('dropdown or-act-global-search-results') ?>"><?php echo O::escapeHtml('') ?>
+            <span class="<?php echo O::escapeHtml('entry') ?>"><?php echo O::escapeHtml('') ?>
             </span>
           </div>
         </div>

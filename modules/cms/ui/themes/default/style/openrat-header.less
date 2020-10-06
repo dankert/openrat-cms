@@ -5,6 +5,53 @@
     padding: 5px;
 }
 
+
+
+.dropdown {
+    z-index: 120;
+    min-width: 250px;
+    position: absolute;
+    padding: 5px 0px;
+
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+
+    .entry {
+        padding: 0;
+
+        > a {
+            display: flex;
+            align-items: center;
+            padding: 0 0.5em;
+
+            * {
+                margin: 0.25em;
+            }
+
+            span:first-of-type {
+                flex: 1; /* Menü-Text füllt den Platz auf */
+            }
+        }
+
+        /* Außenabstand Text */
+        > .text {
+            display: block;
+            margin: 10px;
+        }
+    }
+
+    div.divide {
+        height: 1px;
+        width: 100%;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+}
+
+
+
+
 .or-menu {
 
     display: flex;
@@ -65,54 +112,13 @@
                 }
             }
 
-            /*   D r o p d o w n  -  M e n u e s  */
-            div.dropdown {
-                z-index: 120;
-                min-width: 250px;
-                display: none;
-                position: absolute;
-                padding: 5px 0px;
-
-                font-style: normal;
-                font-weight: normal;
-                text-decoration: none;
-
-                div.entry {
-                    padding: 0;
-
-                    > a {
-                        display: flex;
-                        align-items: center;
-                        padding: 0 0.5em;
-
-                        * {
-                            margin: 0.25em;
-                        }
-
-                        span:first-of-type {
-                            flex: 1; /* Menü-Text füllt den Platz auf */
-                        }
-                    }
-
-                    /* Außenabstand Text */
-                    > .text {
-                        display: block;
-                        margin: 10px;
-                    }
-                }
-
-                div.divide {
-                    height: 1px;
-                    width: 100%;
-                    margin-top: 5px;
-                    margin-bottom: 5px;
-                }
-
-            }
         }
 
     }
 
+    .dropdown {
+        display: none;
+    }
     /* Dropdown anzeigen, wenn Titel geöffnet und wenn mit Maus überstrichen */
     &.open {
         .toolbar-icon.open {

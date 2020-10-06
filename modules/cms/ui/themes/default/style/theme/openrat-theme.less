@@ -236,40 +236,42 @@ html.theme-@{cms-theme-id} {
         }
       }
     }
-
-    div.dropdown {
-      .border-radius(5px);
-      .box-shadow(3px, 2px, 10px, @cms-title-background-color);
-      opacity: 0.95;
-      border: 2px solid @cms-title-background-color;
-
-      background-color: @cms-title-text-color;
-      color: @cms-title-background-color;
+  }
 
 
-      > div.entry,
-      > div.entry > a {
+
+    .dropdown {
+        .border-radius(5px);
+        .box-shadow(3px, 2px, 10px, @cms-title-background-color);
+        opacity: 0.95;
+        border: 2px solid @cms-title-background-color;
+
         background-color: @cms-title-text-color;
         color: @cms-title-background-color;
-      }
 
-      > div.entry.inactive,
-      > div.entry.inactive > a {
-        color: mix(@cms-title-background-color, @cms-title-text-color, 40%);
-      }
 
-      > div.entry.active:hover,
-      > div.entry.active:hover > a {
-        background-color: @cms-title-background-color;
-        color: @cms-title-text-color;
-      }
+        > div.entry,
+        > div.entry > a {
+            background-color: @cms-title-text-color;
+            color: @cms-title-background-color;
+        }
 
-      > div.divide {
-        background-color: @cms-title-background-color;
-      }
+        > div.entry.inactive,
+        > div.entry.inactive > a {
+            color: mix(@cms-title-background-color, @cms-title-text-color, 40%);
+        }
+
+        > div.entry.active:hover,
+        > div.entry.active:hover > a {
+            background-color: @cms-title-background-color;
+            color: @cms-title-text-color;
+        }
+
+        > div.divide {
+            background-color: @cms-title-background-color;
+        }
 
     }
-  }
 
   div.toolbar-icon {
     border: 1px solid @cms-title-background-color;

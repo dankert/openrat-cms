@@ -585,8 +585,8 @@
                     <image method="search"></image>
                     <input name="text" hint="${message:search}"></input>
                     <image symbol="dropdown"/>
-                    <part class="dropdown">
-                        <text value=""></text>
+                    <part class="dropdown or-act-global-search-results">
+                        <text class="entry" value=""></text>
                     </part>
                 </part>
             </if>

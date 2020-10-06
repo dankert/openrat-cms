@@ -4,6 +4,9 @@ namespace template_engine\components;
 
 use template_engine\components\html\Component;
 use template_engine\element\CMSElement;
+use template_engine\element\HtmlElement;
+use template_engine\element\Value;
+use template_engine\element\ValueExpression;
 
 class SelectorComponent extends Component
 {
@@ -20,29 +23,15 @@ class SelectorComponent extends Component
 
 	public function createElement()
 	{
-		return new CMSElement(null);
+		return (new HtmlElement('div'))->addStyleClass('selector')->addChild(
+			(new HtmlElement('input'))->addAttribute('type','hidden')->addStyleClass('or-selector-link-value')->addAttribute('name',$this->param)->addAttribute('value',Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->param))
+		)->addChild(
+			(new HtmlElement('input'))->addAttribute('type','text')->addStyleClass('or-selector-link-name')->addAttribute('name',$this->param.'_text')->addAttribute('placeholder',$this->name)->addAttribute('value',$this->name)
+		)->addChild(
+			(new HtmlElement('div'))->addStyleClass('dropdown')->addStyleClass('or-act-selector-search-results')
+		)->addChild(
+			(new HtmlElement('div'))->addAttribute('type','hidden')->addStyleClass('or-navtree or-act-load-selector-tree')->addAttribute('data-types',$this->types)->addAttribute('data-init-id',$this->id)->addAttribute('data-init-folderid',$this->folderid)
+		);
 	}
 
-	public function unused____begin()
-	{
-		$types = mlvalue($this->types);
-		$name = $this->htmlvalue($this->name);
-		$id = $this->htmlvalue($this->id);
-		$folderid = $this->htmlvalue($this->folderid);
-		$param = $this->htmlvalue($this->param);
-		
-		echo <<<HTML
-<div class="selector">
-<div class="inputholder or-droppable">
-<input type="hidden" class="or-selector-link-value" name="{$param}" value="{$id}" />
-<input type="text" class="or-selector-link-name" value="{$name}" placeholder="{$name}" />
-</div>
-<div class="dropdown"></div>
-<div class="tree selector" data-types="{types}" data-init-id="{$id}" data-init-folderid="{$folderid}">
-</div>
-</div>
-HTML;
-	}
 }
-
-?>

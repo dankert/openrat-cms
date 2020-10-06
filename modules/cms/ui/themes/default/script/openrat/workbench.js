@@ -496,7 +496,7 @@ Openrat.Workbench = new function()
 			if	( $('div#dialog').hasClass('modal') )
 				return;
 
-			$('#dialog .view').removeClass('dirty');
+			$('.view.dirty').removeClass('dirty');
 			$('#dialog .view').html('');
 			$('#dialog').removeClass('is-open').addClass('is-closed'); // Dialog schließen
 

@@ -182,7 +182,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(element) {
 
 Openrat.Workbench.afterViewLoadedHandler.add( function($element) {
 
-	$element.find('.or-navtree').each( function() {
+	$element.find('.or-act-load-nav-tree').each( function() {
 
 		let type = $(this).data('type') || 'root';
 		let loadBranchUrl = './?action=tree&subaction=branch&id=0&type='+type;
@@ -270,8 +270,9 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 
 	// Selectors (Einzel-Ausahl für Dateien) initialisieren
 	// Wurzel des Baums laden
-	$(viewEl).find('div.selector.tree').each( function() {
+	$(viewEl).find('.or-act-load-selector-tree').each( function() {
 		var selectorEl = this;
+		/*
 		$(this).orTree( { type:'project',selectable:$(selectorEl).attr('data-types').split(','),id:$(selectorEl).attr('data-init-folderid'),onSelect:function(name,type,id) {
 		
 			var selector = $(selectorEl).parent();
@@ -280,8 +281,30 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 			$(selector).find('input[type=text]'  ).attr( 'value',name );
 			$(selector).find('input[type=hidden]').attr( 'value',id   );
 		} });
+		*/
+
+		let id   = $(this).data('init-folder-id');
+		let type = id?'folder':'projects';
+		let loadBranchUrl = './?action=tree&subaction=branch&id='+id+'&type='+type;
+		let $targetElement = $(this);
+
+		$.get(loadBranchUrl).done( function (html) {
+
+			// Den neuen Unter-Zweig erzeugen.
+			let $ul = $('<ul class="or-navtree-list" />');
+			$ul.appendTo( $targetElement.empty() ).append( html );
+
+			$ul.find('li').orTree(); // All subnodes are getting event listener for open/close
+
+			// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
+			$ul.find('.clickable').orLinkify();
+
+			// Open the first node.
+			$ul.find('.or-navtree-node-control').first().click();
+		} );
+
 	} );
-	
+
 
 	registerDragAndDrop(viewEl);
 	
@@ -323,7 +346,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
     function registerGlobalSearch($element )
     {
         $($element).find('.search input').orSearch( {
-            dropdown:'#title div.search div.dropdown',
+            dropdown:'.dropdown.or-act-global-search-results',
             select: function(obj) {
                 Openrat.Workbench.openNewAction( obj.name, obj.action, obj.id );
             }
@@ -334,11 +357,14 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
     function registerSelectorSearch( $element )
     {
         $($element).find('.selector input').orSearch( {
-            dropdown: '.dropdown',
+            dropdown: '.dropdown.or-act-selector-search-results',
             select: function(obj) {
                 $($element).find('.or-selector-link-value').val(obj.id  );
                 $($element).find('.or-selector-link-name' ).val(obj.name).attr('placeholder',obj.name);
-            }
+            },
+			afterSelect: function() {
+				$('.dropdown.or-act-selector-search-results').empty();
+			}
         } );
 
     }

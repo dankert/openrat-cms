@@ -124,7 +124,10 @@ jQuery.fn.orSearch = function( options )
     // Create some defaults, extending them with any options that were provided
     var settings = $.extend( {
       'dropdown': $(), // empty element
-      'select'  : function( obj ) {}
+      'select'  : function( obj ) {},
+      'afterSelect' : function() {},
+	  'action': 'search',
+	  'method': 'quicksearch'
     }, options);
 	
 	
@@ -137,7 +140,7 @@ jQuery.fn.orSearch = function( options )
 		{
 			$(dropdownEl).empty(); // Leeren.
 
-			$.ajax( { 'type':'GET',url:'./api/?action=search&subaction=quicksearch&output=json&search='+searchArgument, data:null, success:function(data, textStatus, jqXHR)
+			$.ajax( { 'type':'GET',url:'./api/?action='+settings.action+'&subaction='+settings.method+'&output=json&search='+searchArgument, data:null, success:function(data, textStatus, jqXHR)
 				{
 					for( id in data.output.result )
 					{
@@ -168,6 +171,7 @@ jQuery.fn.orSearch = function( options )
 					// Register clickhandler for search results.
 					$(dropdownEl).find('.or-search-result').click( function(e) {
 						settings.select( $(this).data('object') );
+						settings.afterSelect();
 					} );
 
 				} } );
@@ -2461,7 +2465,7 @@ Openrat.Workbench = new function()
 			if	( $('div#dialog').hasClass('modal') )
 				return;
 
-			$('#dialog .view').removeClass('dirty');
+			$('.view.dirty').removeClass('dirty');
 			$('#dialog .view').html('');
 			$('#dialog').removeClass('is-open').addClass('is-closed'); // Dialog schließen
 
@@ -2746,7 +2750,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(element) {
 
 Openrat.Workbench.afterViewLoadedHandler.add( function($element) {
 
-	$element.find('.or-navtree').each( function() {
+	$element.find('.or-act-load-nav-tree').each( function() {
 
 		let type = $(this).data('type') || 'root';
 		let loadBranchUrl = './?action=tree&subaction=branch&id=0&type='+type;
@@ -2834,8 +2838,9 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 
 	// Selectors (Einzel-Ausahl für Dateien) initialisieren
 	// Wurzel des Baums laden
-	$(viewEl).find('div.selector.tree').each( function() {
+	$(viewEl).find('.or-act-load-selector-tree').each( function() {
 		var selectorEl = this;
+		/*
 		$(this).orTree( { type:'project',selectable:$(selectorEl).attr('data-types').split(','),id:$(selectorEl).attr('data-init-folderid'),onSelect:function(name,type,id) {
 		
 			var selector = $(selectorEl).parent();
@@ -2844,8 +2849,30 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 			$(selector).find('input[type=text]'  ).attr( 'value',name );
 			$(selector).find('input[type=hidden]').attr( 'value',id   );
 		} });
+		*/
+
+		let id   = $(this).data('init-folder-id');
+		let type = id?'folder':'projects';
+		let loadBranchUrl = './?action=tree&subaction=branch&id='+id+'&type='+type;
+		let $targetElement = $(this);
+
+		$.get(loadBranchUrl).done( function (html) {
+
+			// Den neuen Unter-Zweig erzeugen.
+			let $ul = $('<ul class="or-navtree-list" />');
+			$ul.appendTo( $targetElement.empty() ).append( html );
+
+			$ul.find('li').orTree(); // All subnodes are getting event listener for open/close
+
+			// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
+			$ul.find('.clickable').orLinkify();
+
+			// Open the first node.
+			$ul.find('.or-navtree-node-control').first().click();
+		} );
+
 	} );
-	
+
 
 	registerDragAndDrop(viewEl);
 	
@@ -2887,7 +2914,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
     function registerGlobalSearch($element )
     {
         $($element).find('.search input').orSearch( {
-            dropdown:'#title div.search div.dropdown',
+            dropdown:'.dropdown.or-act-global-search-results',
             select: function(obj) {
                 Openrat.Workbench.openNewAction( obj.name, obj.action, obj.id );
             }
@@ -2898,11 +2925,14 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
     function registerSelectorSearch( $element )
     {
         $($element).find('.selector input').orSearch( {
-            dropdown: '.dropdown',
+            dropdown: '.dropdown.or-act-selector-search-results',
             select: function(obj) {
                 $($element).find('.or-selector-link-value').val(obj.id  );
                 $($element).find('.or-selector-link-name' ).val(obj.name).attr('placeholder',obj.name);
-            }
+            },
+			afterSelect: function() {
+				$('.dropdown.or-act-selector-search-results').empty();
+			}
         } );
 
     }

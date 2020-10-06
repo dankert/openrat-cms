@@ -15,7 +15,14 @@
               </span>
             </div>
             <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-              <?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('selector') ?>"><?php echo O::escapeHtml('') ?>
+                <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('targetobjectid') ?>" value="<?php echo O::escapeHtml(''.@$targetobjectid.'') ?>" class="<?php echo O::escapeHtml('or-selector-link-value') ?>" /><?php echo O::escapeHtml('') ?>
+                <input type="<?php echo O::escapeHtml('text') ?>" name="<?php echo O::escapeHtml('targetobjectid_text') ?>" placeholder="<?php echo O::escapeHtml(''.@$targetobjectname.'') ?>" value="<?php echo O::escapeHtml(''.@$targetobjectname.'') ?>" class="<?php echo O::escapeHtml('or-selector-link-name') ?>" /><?php echo O::escapeHtml('') ?>
+                <div class="<?php echo O::escapeHtml('dropdown or-act-selector-search-results') ?>"><?php echo O::escapeHtml('') ?>
+                </div>
+                <div type="<?php echo O::escapeHtml('hidden') ?>" data-types="<?php echo O::escapeHtml('page,file') ?>" data-init-id="<?php echo O::escapeHtml(''.@$targetobjectid.'') ?>" data-init-folderid="<?php echo O::escapeHtml('parentid') ?>" class="<?php echo O::escapeHtml('or-navtree or-act-load-selector-tree') ?>"><?php echo O::escapeHtml('') ?>
+                </div>
+              </div>
             </div>
           </div>
         </div>

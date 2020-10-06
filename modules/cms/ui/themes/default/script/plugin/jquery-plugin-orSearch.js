@@ -6,7 +6,10 @@ jQuery.fn.orSearch = function( options )
     // Create some defaults, extending them with any options that were provided
     var settings = $.extend( {
       'dropdown': $(), // empty element
-      'select'  : function( obj ) {}
+      'select'  : function( obj ) {},
+      'afterSelect' : function() {},
+	  'action': 'search',
+	  'method': 'quicksearch'
     }, options);
 	
 	
@@ -19,7 +22,7 @@ jQuery.fn.orSearch = function( options )
 		{
 			$(dropdownEl).empty(); // Leeren.
 
-			$.ajax( { 'type':'GET',url:'./api/?action=search&subaction=quicksearch&output=json&search='+searchArgument, data:null, success:function(data, textStatus, jqXHR)
+			$.ajax( { 'type':'GET',url:'./api/?action='+settings.action+'&subaction='+settings.method+'&output=json&search='+searchArgument, data:null, success:function(data, textStatus, jqXHR)
 				{
 					for( id in data.output.result )
 					{
@@ -50,6 +53,7 @@ jQuery.fn.orSearch = function( options )
 					// Register clickhandler for search results.
 					$(dropdownEl).find('.or-search-result').click( function(e) {
 						settings.select( $(this).data('object') );
+						settings.afterSelect();
 					} );
 
 				} } );
