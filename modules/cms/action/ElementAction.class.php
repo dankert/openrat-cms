@@ -240,7 +240,7 @@ class ElementAction extends BaseAction
                                 'id',
                                 'name',
                                 'description',
-                                'mime-type',
+                                'mime_type',
                                 'lastch_user_username',
                                 'lastch_user_fullname',
                                 'lastch_user_mail',

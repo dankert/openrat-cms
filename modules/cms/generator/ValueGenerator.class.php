@@ -495,7 +495,7 @@ class ValueGenerator extends BaseGenerator
 						}
 						break;
 
-					case 'mime-type':
+					case 'mime_type':
 						if	( $linkedObject->isFile || $linkedObject->isImage || $linkedObject->isText  )
 						{
 							$f = new File( $objectid );
