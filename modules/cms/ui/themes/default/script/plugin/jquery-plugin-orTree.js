@@ -4,8 +4,14 @@
  * Die Controls zum Öffnen/Schließen der Teilbäume werden mit Event-Listener bestückt.
  * Beim Öffnen von Teilbäumen wird der Inhalt vom Server geladen.
  */
-jQuery.fn.orTree = function ()
+jQuery.fn.orTree = function (options)
 {
+	// Create some defaults, extending them with any options that were provided
+	var settings = $.extend( {
+		'openAction' : function(name,action,id) {
+		}
+	}, options);
+
 	let registerTreeBranchEvents = function (viewEl)
 	{
 		Openrat.Workbench.registerDraggable(viewEl);
@@ -60,7 +66,7 @@ jQuery.fn.orTree = function ()
                     $(treeEl).append($ul);
 
                     $ul.append( html );
-                    $ul.find('li').orTree(); // All subnodes are getting event listener for open/close
+                    $ul.find('li').orTree(settings); // All subnodes are getting event listener for open/close
 
 					/* macht linkify schon
 					$(new_li).find('.clickable a').click( function(event) {
@@ -68,7 +74,9 @@ jQuery.fn.orTree = function ()
 					} );*/
 					registerTreeBranchEvents($ul);
 					// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
-					$ul.find('.clickable').orLinkify();
+					$ul.find('.clickable').orLinkify( {
+						'openAction':settings.openAction
+					} );
                     $ul.slideDown('fast'); // Einblenden
 
                 }).fail(function () {

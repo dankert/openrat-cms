@@ -2,8 +2,16 @@
  * JQuery-Plugin, enable clicking on an area.
  * It searches for an anchor (<a href="..." />) in the child elements and virtually clicks on it.
  */
-jQuery.fn.orLinkify = function()
+jQuery.fn.orLinkify = function( options )
 {
+	// Create some defaults, extending them with any options that were provided
+	var settings = $.extend( {
+		'openAction' : function(name,action,id) {
+			Openrat.Workbench.openNewAction( name,action,id );
+		}
+	}, options);
+
+	$(this).addClass('or-linkified');
 
     // Disable all links in this linkified area.
     // The user is already able to open the link in a new tab.
@@ -70,7 +78,7 @@ jQuery.fn.orLinkify = function()
 					break;
 
 				case 'open':
-					Openrat.Workbench.openNewAction( $(this).attr('data-name'),$(this).attr('data-action'),$(this).attr('data-id') );
+					settings.openAction( $(this).text().trim(),$(this).attr('data-action'),$(this).attr('data-id') );
 					break;
 
 				default:

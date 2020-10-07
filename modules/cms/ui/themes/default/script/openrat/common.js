@@ -194,7 +194,12 @@ Openrat.Workbench.afterViewLoadedHandler.add( function($element) {
 			let $ul = $('<ul class="or-navtree-list" />');
 			$ul.appendTo( $targetElement.empty() ).append( html );
 
-			$ul.find('li').orTree(); // All subnodes are getting event listener for open/close
+			$ul.find('li').orTree( {
+				'openAction': function( name,action,id) {
+					Openrat.Workbench.openNewAction( name,action,id );
+				}
+
+			} ); // All subnodes are getting event listener for open/close
 
 			// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
 			$ul.find('.clickable').orLinkify();
@@ -294,7 +299,14 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 			let $ul = $('<ul class="or-navtree-list" />');
 			$ul.appendTo( $targetElement.empty() ).append( html );
 
-			$ul.find('li').orTree(); // All subnodes are getting event listener for open/close
+			$ul.find('li').orTree(
+				{
+					'openAction' : function(name,action,id) {
+						viewEl.find('.or-selector-link-value').val(id  );
+						viewEl.find('.or-selector-link-name' ).val(name).attr('placeholder',name);
+					}
+				}
+			); // All subnodes are getting event listener for open/close
 
 			// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
 			$ul.find('.clickable').orLinkify();
@@ -310,7 +322,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 	
 	
 	// Bei Änderungen in der View das Tab als 'dirty' markieren
-	$(viewEl).find('input,select,textarea').change( function() {
+	$(viewEl).find('.or-input').change( function() {
 		$(this).closest('.view').addClass('dirty');
 	});
 
@@ -374,7 +386,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
     function registerTree(element) {
 
         // Klick-Funktionen zum Öffnen/Schließen des Zweiges.
-        $(element).find('.or-navtree-node').orTree();
+        //$(element).find('.or-navtree-node').orTree();
 
     }
 

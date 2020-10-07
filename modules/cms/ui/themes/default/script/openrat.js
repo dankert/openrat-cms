@@ -190,8 +190,16 @@ jQuery.fn.orSearch = function( options )
  * JQuery-Plugin, enable clicking on an area.
  * It searches for an anchor (<a href="..." />) in the child elements and virtually clicks on it.
  */
-jQuery.fn.orLinkify = function()
+jQuery.fn.orLinkify = function( options )
 {
+	// Create some defaults, extending them with any options that were provided
+	var settings = $.extend( {
+		'openAction' : function(name,action,id) {
+			Openrat.Workbench.openNewAction( name,action,id );
+		}
+	}, options);
+
+	$(this).addClass('or-linkified');
 
     // Disable all links in this linkified area.
     // The user is already able to open the link in a new tab.
@@ -258,7 +266,7 @@ jQuery.fn.orLinkify = function()
 					break;
 
 				case 'open':
-					Openrat.Workbench.openNewAction( $(this).attr('data-name'),$(this).attr('data-action'),$(this).attr('data-id') );
+					settings.openAction( $(this).text().trim(),$(this).attr('data-action'),$(this).attr('data-id') );
 					break;
 
 				default:
@@ -278,8 +286,14 @@ jQuery.fn.orLinkify = function()
  * Die Controls zum Öffnen/Schließen der Teilbäume werden mit Event-Listener bestückt.
  * Beim Öffnen von Teilbäumen wird der Inhalt vom Server geladen.
  */
-jQuery.fn.orTree = function ()
+jQuery.fn.orTree = function (options)
 {
+	// Create some defaults, extending them with any options that were provided
+	var settings = $.extend( {
+		'openAction' : function(name,action,id) {
+		}
+	}, options);
+
 	let registerTreeBranchEvents = function (viewEl)
 	{
 		Openrat.Workbench.registerDraggable(viewEl);
@@ -334,7 +348,7 @@ jQuery.fn.orTree = function ()
                     $(treeEl).append($ul);
 
                     $ul.append( html );
-                    $ul.find('li').orTree(); // All subnodes are getting event listener for open/close
+                    $ul.find('li').orTree(settings); // All subnodes are getting event listener for open/close
 
 					/* macht linkify schon
 					$(new_li).find('.clickable a').click( function(event) {
@@ -342,7 +356,9 @@ jQuery.fn.orTree = function ()
 					} );*/
 					registerTreeBranchEvents($ul);
 					// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
-					$ul.find('.clickable').orLinkify();
+					$ul.find('.clickable').orLinkify( {
+						'openAction':settings.openAction
+					} );
                     $ul.slideDown('fast'); // Einblenden
 
                 }).fail(function () {
@@ -2762,7 +2778,12 @@ Openrat.Workbench.afterViewLoadedHandler.add( function($element) {
 			let $ul = $('<ul class="or-navtree-list" />');
 			$ul.appendTo( $targetElement.empty() ).append( html );
 
-			$ul.find('li').orTree(); // All subnodes are getting event listener for open/close
+			$ul.find('li').orTree( {
+				'openAction': function( name,action,id) {
+					Openrat.Workbench.openNewAction( name,action,id );
+				}
+
+			} ); // All subnodes are getting event listener for open/close
 
 			// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
 			$ul.find('.clickable').orLinkify();
@@ -2862,7 +2883,14 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 			let $ul = $('<ul class="or-navtree-list" />');
 			$ul.appendTo( $targetElement.empty() ).append( html );
 
-			$ul.find('li').orTree(); // All subnodes are getting event listener for open/close
+			$ul.find('li').orTree(
+				{
+					'openAction' : function(name,action,id) {
+						viewEl.find('.or-selector-link-value').val(id  );
+						viewEl.find('.or-selector-link-name' ).val(name).attr('placeholder',name);
+					}
+				}
+			); // All subnodes are getting event listener for open/close
 
 			// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
 			$ul.find('.clickable').orLinkify();
@@ -2878,7 +2906,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 	
 	
 	// Bei Änderungen in der View das Tab als 'dirty' markieren
-	$(viewEl).find('input,select,textarea').change( function() {
+	$(viewEl).find('.or-input').change( function() {
 		$(this).closest('.view').addClass('dirty');
 	});
 
@@ -2942,7 +2970,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
     function registerTree(element) {
 
         // Klick-Funktionen zum Öffnen/Schließen des Zweiges.
-        $(element).find('.or-navtree-node').orTree();
+        //$(element).find('.or-navtree-node').orTree();
 
     }
 
