@@ -27,6 +27,10 @@ namespace util;
  */
 class Text
 {
+    const ARROW_RIGHT = "\xE2\x86\x92";
+	const FILE_SEP = " \xE2\x86\x92 ";
+
+
 	/**
 	 *
 	 * @param unknown $key

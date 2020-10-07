@@ -991,13 +991,14 @@ SQL
      */
     public function getAllFolders()
     {
-        $db = \cms\base\DB::get();
-
-        $stmt = $db->sql('SELECT id FROM {{object}}'.
-            '  WHERE typeid='.BaseObject::TYPEID_FOLDER.
-            '    AND projectid={projectid}' );
-
-        $stmt->setInt( 'projectid',$this->projectid   );
+        $stmt = DB::sql( <<<SQL
+			SELECT id FROM {{object}}
+              WHERE typeid={typeid}
+                AND projectid={projectid}
+SQL
+		);
+        $stmt->setInt( 'typeid'   ,BaseObject::TYPEID_FOLDER );
+        $stmt->setInt( 'projectid',$this->projectid                 );
 
         return( $stmt->getCol() );
     }
@@ -1023,10 +1024,10 @@ SQL
                 $names = $f->parentObjectNames(true,true);
                 foreach( $names as $fid=>$name )
                     $names[$fid] = \util\Text::maxLength($name,15,'..',STR_PAD_BOTH);
-                $folders[ $id ] = implode( ' &raquo; ',$names );
-                $folders[ $id ] .= ' &raquo; ';
+                $folders[ $id ] = implode( \util\Text::FILE_SEP,$names );
+                $folders[ $id ] .= \util\Text::FILE_SEP;
             }
-            $folders[ $id ] .= $o->name;
+            $folders[ $id ] .= $o->getName();
         }
 
         asort( $folders ); // Sortieren

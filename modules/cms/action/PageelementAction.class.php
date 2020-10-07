@@ -461,8 +461,8 @@ class PageelementAction extends BaseAction
 			//					$f->load();
 
 			$objects[ $id ]  = \cms\base\Language::lang( $o->getType() ).': ';
-			$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) );
-			$objects[ $id ] .= FILE_SEP.$o->name;
+			$objects[ $id ] .=  implode( \util\Text::FILE_SEP,$f->parentObjectNames(false,true) );
+			$objects[ $id ] .= \util\Text::FILE_SEP.$o->name;
 			//			}
 		}
 

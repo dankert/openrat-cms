@@ -24,6 +24,7 @@ use util\exception\UIException;
 use util\exception\SecurityException;
 use util\json\JSON;
 use util\Session;
+use util\Text;
 
 
 /**
@@ -85,8 +86,6 @@ class Dispatcher
             set_time_limit(intval($conf['interface']['timeout']));
 
         $this->checkPostToken();
-
-        define('FILE_SEP', $conf['interface']['file_separator']);
 
         $this->connectToDatabase();
         $this->startDatabaseTransaction();

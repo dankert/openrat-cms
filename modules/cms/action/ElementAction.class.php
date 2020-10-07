@@ -517,10 +517,10 @@ class ElementAction extends BaseAction
                             $names = $f->parentObjectNames(false,true);
                             foreach( $names as $fid=>$name )
                                 $names[$fid] = Text::maxLength($name,15,'..',STR_PAD_BOTH);
-                            $objects[ $id ] .= implode( FILE_SEP,$names );
+                            $objects[ $id ] .= implode( \util\Text::FILE_SEP,$names );
                         }
 
-                        $objects[ $id ] .= FILE_SEP.$o->name;
+                        $objects[ $id ] .= \util\Text::FILE_SEP.$o->getName();
                     }
 
                     asort( $objects ); // Sortieren
