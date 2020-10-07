@@ -159,7 +159,8 @@ class Password
 	 */
 	static public function randomNumber( $bytesCount )
 	{
-   		return bindec( Password::randomBytes($bytesCount) );
+		// With '@' we reject the message "Invalid characters passed" since PHP 7.4
+   		return @bindec( Password::randomBytes($bytesCount) );
 	}
 	
 
