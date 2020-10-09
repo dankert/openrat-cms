@@ -1,5 +1,5 @@
 <?php defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
-  <form name="<?php echo O::escapeHtml('') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-target="<?php echo O::escapeHtml('view') ?>" action="<?php echo O::escapeHtml('./') ?>" data-method="<?php echo O::escapeHtml('order') ?>" data-action="<?php echo O::escapeHtml('folder') ?>" data-id="<?php echo O::escapeHtml(''.@$_id.'') ?>" method="<?php echo O::escapeHtml('POST') ?>" enctype="<?php echo O::escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo O::escapeHtml('') ?>" data-autosave="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-form folder') ?>"><?php echo O::escapeHtml('') ?>
+  <form name="<?php echo O::escapeHtml('') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-target="<?php echo O::escapeHtml('view') ?>" action="<?php echo O::escapeHtml('./') ?>" data-method="<?php echo O::escapeHtml('order') ?>" data-action="<?php echo O::escapeHtml('folder') ?>" data-id="<?php echo O::escapeHtml(''.@$_id.'') ?>" method="<?php echo O::escapeHtml('POST') ?>" enctype="<?php echo O::escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo O::escapeHtml('') ?>" data-autosave="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-form or-folder') ?>"><?php echo O::escapeHtml('') ?>
     <div class="<?php echo O::escapeHtml('or-form-headline') ?>"><?php echo O::escapeHtml('') ?>
     </div>
     <div class="<?php echo O::escapeHtml('or-form-content') ?>"><?php echo O::escapeHtml('') ?>
@@ -13,38 +13,38 @@
         </div>
         <div class="<?php echo O::escapeHtml('or-table-area') ?>"><?php echo O::escapeHtml('') ?>
           <table width="<?php echo O::escapeHtml('100%') ?>" class="<?php echo O::escapeHtml('or-table--sortable') ?>"><?php echo O::escapeHtml('') ?>
-            <tr class="<?php echo O::escapeHtml('headline') ?>"><?php echo O::escapeHtml('') ?>
-              <td class="<?php echo O::escapeHtml('help') ?>"><?php echo O::escapeHtml('') ?>
+            <tr class="<?php echo O::escapeHtml('or-headline') ?>"><?php echo O::escapeHtml('') ?>
+              <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(''.@O::lang('FOLDER_ORDER').'') ?>
                 </span>
               </td>
-              <td class="<?php echo O::escapeHtml('help') ?>"><?php echo O::escapeHtml('') ?>
+              <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(''.@O::lang('TYPE').'') ?>
                 </span>
               </td>
-              <td class="<?php echo O::escapeHtml('help') ?>"><?php echo O::escapeHtml('') ?>
+              <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(''.@O::lang('NAME').'') ?>
                 </span>
               </td>
-              <td class="<?php echo O::escapeHtml('help') ?>"><?php echo O::escapeHtml('') ?>
+              <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(''.@O::lang('FILENAME').'') ?>
                 </span>
               </td>
-              <td class="<?php echo O::escapeHtml('help') ?>"><?php echo O::escapeHtml('') ?>
+              <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(''.@O::lang('LASTCHANGE').'') ?>
                 </span>
               </td>
             </tr>
             <?php foreach((array)$object as $list_key=>$list_value) { extract($list_value); ?>
-              <tr data-id="<?php echo O::escapeHtml(''.@$id.'') ?>" class="<?php echo O::escapeHtml('data') ?>"><?php echo O::escapeHtml('') ?>
+              <tr data-id="<?php echo O::escapeHtml(''.@$id.'') ?>" class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
                 <td><?php echo O::escapeHtml('') ?>
                   <span><?php echo O::escapeHtml(' ') ?>
                   </span>
                 </td>
                 <td><?php echo O::escapeHtml('') ?>
-                  <span class="<?php echo O::escapeHtml('sort-value') ?>"><?php echo O::escapeHtml(''.@$icon.'') ?>
+                  <span class="<?php echo O::escapeHtml('or-sort-value') ?>"><?php echo O::escapeHtml(''.@$icon.'') ?>
                   </span>
-                  <i class="<?php echo O::escapeHtml('image-icon image-icon--action-'.@$icon.'') ?>"><?php echo O::escapeHtml('') ?>
+                  <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-'.@$icon.'') ?>"><?php echo O::escapeHtml('') ?>
                   </i>
                 </td>
                 <td><?php echo O::escapeHtml('') ?>
@@ -68,13 +68,13 @@
     </div>
     <div class="<?php echo O::escapeHtml('or-form-actionbar') ?>"><?php echo O::escapeHtml('') ?>
       <div class="<?php echo O::escapeHtml('or-btn or-btn--secondary or-act-form-cancel') ?>"><?php echo O::escapeHtml('') ?>
-        <i class="<?php echo O::escapeHtml('image-icon image-icon--form-cancel') ?>"><?php echo O::escapeHtml('') ?>
+        <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--form-cancel') ?>"><?php echo O::escapeHtml('') ?>
         </i>
         <span class="<?php echo O::escapeHtml('or-form-btn-label') ?>"><?php echo O::escapeHtml(''.@O::lang('CANCEL').'') ?>
         </span>
       </div>
       <div class="<?php echo O::escapeHtml('or-btn or-btn--primary or-act-form-save') ?>"><?php echo O::escapeHtml('') ?>
-        <i class="<?php echo O::escapeHtml('image-icon image-icon--form-ok') ?>"><?php echo O::escapeHtml('') ?>
+        <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--form-ok') ?>"><?php echo O::escapeHtml('') ?>
         </i>
         <span class="<?php echo O::escapeHtml('or-form-btn-label') ?>"><?php echo O::escapeHtml(''.@O::lang('button_ok').'') ?>
         </span>

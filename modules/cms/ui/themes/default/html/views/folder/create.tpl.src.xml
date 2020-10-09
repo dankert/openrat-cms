@@ -1,10 +1,10 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 
-    <part class="or-linklist">
+    <part class="linklist">
 
         <if true="${mayCreateFolder}">
-            <part class="clickable or-linklist-line or-round-corners or-hover-effect">
+            <part class="clickable,linklist-line,round-corners,hover-effect">
                 <link type="dialog" subaction="createfolder">
                     <text value="${message:menu_createfolder}"></text>
                 </link>
@@ -12,7 +12,7 @@
         </if>
 
         <if true="${mayCreatePage}">
-            <part class="clickable or-linklist-line or-round-corners or-hover-effect">
+            <part class="clickable,linklist-line,round-corners,hover-effect">
                 <link type="dialog" subaction="createpage">
                     <text value="${message:menu_createpage}"></text>
                 </link>
@@ -20,7 +20,7 @@
         </if>
 
         <if true="${mayCreateFile}">
-            <part class="clickable or-linklist-line or-round-corners or-hover-effect">
+            <part class="clickable,linklist-line,round-corners,hover-effect">
                 <link type="dialog" subaction="createfile">
                     <text value="${message:menu_createfile}"></text>
                 </link>
@@ -28,7 +28,7 @@
         </if>
 
         <if true="${mayCreateImage}">
-            <part class="clickable or-linklist-line or-round-corners or-hover-effect">
+            <part class="clickable,linklist-line,round-corners,hover-effect">
                 <link type="dialog" subaction="createimage">
                     <text value="${message:menu_createimage}"></text>
                 </link>
@@ -36,7 +36,7 @@
         </if>
 
         <if true="${mayCreateText}">
-            <part class="clickable or-linklist-line or-round-corners or-hover-effect">
+            <part class="clickable,linklist-line,round-corners,hover-effect">
                 <link type="dialog" subaction="createtext">
                     <text value="${message:menu_createtext}"></text>
                 </link>
@@ -44,7 +44,7 @@
         </if>
 
         <if true="${mayCreateUrl}">
-            <part class="clickable or-linklist-line or-round-corners or-hover-effect">
+            <part class="clickable,linklist-line,round-corners,hover-effect">
                 <link type="dialog" subaction="createurl">
                     <text value="${message:menu_createurl}"></text>
                 </link>
@@ -52,7 +52,7 @@
         </if>
 
         <if true="${mayCreateLink}">
-            <part class="clickable or-linklist-line or-round-corners or-hover-effect">
+            <part class="clickable,linklist-line,round-corners,hover-effect">
                 <link type="dialog" subaction="createlink">
                     <text value="${message:menu_createlink}"></text>
                 </link>

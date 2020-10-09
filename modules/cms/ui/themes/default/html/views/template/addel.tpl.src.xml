@@ -6,7 +6,7 @@
 			<part class="label">
 				<text value="${message:name}"></text>
 			</part>
-			<part class="input">
+			<part class="value">
 				<input name="name" maxlength="50" required="true" focus="true"></input>
 			</part>
 		</part>
@@ -15,7 +15,7 @@
 			<part class="label">
 				<text value="${message:element_type}"></text>
 			</part>
-			<part class="input">
+			<part class="value">
 				<set var="text" value="'text'"></set>
 				<selectbox list="types" name="typeid" lang="true"></selectbox>
 			</part>
@@ -26,7 +26,7 @@
 		<part class="line">
 			<part class="label">
 			</part>
-			<part class="input">
+			<part class="value">
 				<label for="addtotemplate">
 					<checkbox name="addtotemplate" default="true"></checkbox>
 					<text value="${message:menu_template_srcelement}"></text>

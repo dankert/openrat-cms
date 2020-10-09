@@ -77,7 +77,7 @@ class FormComponent extends Component
 		$form->addAttribute('data-id', $this->id);
 		$form->addAttribute('method', $this->method);
 		$form->addAttribute('enctype', $this->enctype);
-		$form->addStyleClass('or-form')->addStyleClass($this->action);
+		$form->addStyleClass('form')->addStyleClass($this->action);
 		$form->addAttribute('data-async', $this->async);
 		$form->addAttribute('data-autosave', $this->autosave);
 
@@ -85,23 +85,23 @@ class FormComponent extends Component
 			$form->addAttribute('data-after-success', $this->afterSuccess);
 
 		$form->addChild(
-			(new HtmlElement('div'))->addStyleClass('or-form-headline')
+			(new HtmlElement('div'))->addStyleClass('form-headline')
 		);
 
 		// Creating the action bar
-		$actionBar = (new HtmlElement('div'))->addStyleClass('or-form-actionbar');
+		$actionBar = (new HtmlElement('div'))->addStyleClass('form-actionbar');
 
 		if ($this->cancel) {
 			// Adding a cancel-button.
 			$actionBar->addChild(
 				(new CMSElement('div'))
-					->addStyleClass('or-btn')
-					->addStyleClass('or-btn--secondary')
-					->addStyleClass('or-act-form-cancel')
+					->addStyleClass('btn')
+					->addStyleClass('btn--secondary')
+					->addStyleClass('act-form-cancel')
 					->addChild(
 						(new HtmlElement('i'))->addStyleClass(['image-icon','image-icon--form-cancel'])
 					)->addChild(
-						(new HtmlElement('span'))->addStyleClass('or-form-btn-label')->content(Value::createExpression(ValueExpression::TYPE_MESSAGE, Messages::CANCEL))
+						(new HtmlElement('span'))->addStyleClass('form-btn-label')->content(Value::createExpression(ValueExpression::TYPE_MESSAGE, Messages::CANCEL))
 					)
 			);
 		}
@@ -110,13 +110,13 @@ class FormComponent extends Component
 			// Adding an apply-button
 			$actionBar->addChild(
 				(new CMSElement('div'))
-					->addStyleClass('or-btn')
-					->addStyleClass('or-btn--primary')
-					->addStyleClass('or-act-form-apply')
+					->addStyleClass('btn')
+					->addStyleClass('btn--primary')
+					->addStyleClass('act-form-apply')
 					->addChild(
 						(new HtmlElement('i'))->addStyleClass(['image-icon','image-icon--form-apply'])
 					)->addChild(
-						(new HtmlElement('span'))->addStyleClass('or-form-btn-label')->content(Value::createExpression(ValueExpression::TYPE_MESSAGE, Messages::APPLY))
+						(new HtmlElement('span'))->addStyleClass('form-btn-label')->content(Value::createExpression(ValueExpression::TYPE_MESSAGE, Messages::APPLY))
 					)
 			);
 		}
@@ -125,18 +125,18 @@ class FormComponent extends Component
 			// Adding the save-button
 			$actionBar->addChild(
 				(new CMSElement('div'))
-					->addStyleClass('or-btn')
-					->addStyleClass('or-btn--primary')
-					->addStyleClass('or-act-form-save')
+					->addStyleClass('btn')
+					->addStyleClass('btn--primary')
+					->addStyleClass('act-form-save')
 					->addChild(
 						(new HtmlElement('i'))->addStyleClass(['image-icon','image-icon--form-ok'])
 					)->addChild(
-						(new HtmlElement('span'))->addStyleClass('or-form-btn-label')->content($this->label)
+						(new HtmlElement('span'))->addStyleClass('form-btn-label')->content($this->label)
 					)
 			);
 		}
 
-		$formContent = (new HtmlElement('div'))->addStyleClass('or-form-content')->asChildOf($form);
+		$formContent = (new HtmlElement('div'))->addStyleClass('form-content')->asChildOf($form);
 
 		if ($this->languageid)
 			$formContent->addChild(

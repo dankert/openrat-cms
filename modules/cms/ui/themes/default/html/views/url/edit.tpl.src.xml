@@ -6,7 +6,7 @@
 				<part class="label">
 					<text value="${message:link_url}"></text>
 				</part>
-				<part class="input">
+				<part class="value">
 					<input name="url" maxlength="255"></input>
 				</part>
 			</part>

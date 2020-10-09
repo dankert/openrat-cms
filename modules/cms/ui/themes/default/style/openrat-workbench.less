@@ -40,15 +40,16 @@ Basis-Style for Openrat.
 
 
 
-div#dialog {
+.or-dialog {
 
-    > .view {
+    .or-view {
         overflow: auto;
 
         /*width:60%;*/
         position: absolute;
         top: 5%;
         left: 10%;
+        display: none;
         width: 80%;
         height: 80%;
 
@@ -65,14 +66,20 @@ div#dialog {
         border: 1px solid !important;
     }
 
-    &.is-closed {
-        display: none;
-        width: 0;
+    &--is-open {
+        .or-view {
+            display: block;
+        }
+
+        .or-dialog-filler {
+            display: block;
+        }
     }
 
     /* Modale Dialoge */
-    .filler {
+    &-filler {
         position: absolute;
+        display: none;
         z-index: 100;
         top: 0;
         left: 0;
@@ -80,14 +87,9 @@ div#dialog {
         width: 100%;
         opacity: 0.5;
 
-        span.icon {
+        &-icon {
             opacity: 1;
             font-size: 3em;
-            font-weight: bold;
-            text-align: center;
-            width: 40px;
-            height: 40px;
-
             position: absolute;
             right: 20px;
             top: 20px;
@@ -109,18 +111,18 @@ html.nojs .noscript {
     display: block;
 }
 
-.toggle-open-close {
+.or-toggle-open-close {
 
     display: flex;
     flex-direction: column;
 
-    .on-click-open-close {
+    .or-act-open-close {
         cursor: pointer;
         font-weight: normal;
         //flex: 1;
     }
 
-    > .closable {
+    > .or-closable {
         //transition: transform 0.5s ease-in-out;
         transition: opacity 0.3s ease-out;
         //transition: max-height 1s linear;
@@ -130,31 +132,29 @@ html.nojs .noscript {
     }
 
     /* Geschlossen */
-    &.closed {
-        > .on-click-open-close > .on-closed {
+    &.or--is-closed {
+        > * > .or-group--on-closed {
             display: inline;
         }
-        > .on-click-open-close > .on-open {
+        > * > .or-group--on-open {
             display: none;
         }
-        > .closable {
-            //flex: 0.0001;
+        > .or-closable {
             opacity: 0;
             max-height: 0;
             overflow: hidden;
-            //display: none;
         }
     }
 
     /* Offen */
-    &.open {
-        > .closable {
+    &.or--is-open {
+        > .or-closable {
             height: auto;
         }
-        > .on-click-open-close > .on-closed {
+        > * > .or-group--on-closed {
             display: none;
         }
-        > .on-click-open-close > .on-open {
+        > * > .or-group--on-open {
             display: inline;
         }
     }
@@ -166,7 +166,7 @@ html.nojs .noscript {
 
 html, body { width:100%; height:100%;}
 
-div#workbench {
+#workbench {
 
     width: 100%;
     height: 100%;
@@ -286,7 +286,7 @@ div#workbench {
             }
 
 
-            div.view {
+            .or-view {
                 height: 100%;
             }
         }
@@ -341,27 +341,23 @@ div#workbench {
                     .border-radius(5px);
 
 
-                    .view-toolbar {
+                    .or-view-toolbar {
                         display: inline;
                     }
 
-                    .view {
-                        //transition: flex 0.5s ease-in-out;
-                    }
-
                     // Wenn Sektion geschlossen, keine Toolbar anzeigen.
-                    &.closed {
-                        .view-toolbar {
+                    &.or--is-closed {
+                        .or-view-toolbar {
                             display: none;
                         }
                         //.view {                        flex: 0;                    }
                     }
 
                     // Diabled Sections are not displayed.
-                    &.disabled {
+                    &.or--disabled {
                         //display: none;
                     }
-                    &.is-empty {
+                    &.or--is-empty {
                         //display: none;
                     }
                 }
@@ -396,38 +392,40 @@ nav {
 }
 
 
-.or--visible-on-mobile {
-    display: none;
-    @media @smartphones {
-        display: inline;
-    }
 
-}
-.or--visible-on-desktop {
-    display: inline;
-    @media @smartphones {
+
+
+.or- {
+
+    &-visible-on-mobile {
         display: none;
+        @media @smartphones {
+            display: inline;
+        }
+
     }
-}
-
-
-#title {
-
-    .toggle-nav-small {
+    &-visible-on-desktop {
         display: inline;
         @media @smartphones {
             display: none;
         }
     }
 
-    .toggle-nav-open-close {
+    &toggle-nav-small {
+        display: inline;
+        @media @smartphones {
+            display: none;
+        }
+    }
+
+    &toggle-nav-open-close {
         display: none;
         @media @smartphones {
             display: inline;
         }
     }
 
-    .toolbar-icon.search {
+    &toolbar-icon.or-search {
         //width: 8em;
         @media @smartphones {
             //width: 8em;
@@ -442,16 +440,7 @@ nav {
 }
 
 
-/* Fortschrittsbalken, fuer alle Elemente verfuegbar. */
-.loader
-{
-    background: url(../images/loader.gif) no-repeat;
-    background-position: center, top;
-    height: 30px;
-    opacity: 0.5;
-    cursor: wait;
-    pointer-events: none;
-}
+
 
 
 
@@ -462,31 +451,33 @@ nav {
 }
 
 
-/* Navigation over the filler */
-.toggle-nav-small,
-.or-navigation
-{
-    //z-index: 102;
 
-    &:hover {
-        //z-index: 112;
-    }
-}
-
-.or-breadcrumb
-{
-    margin-bottom: 0.1em;
-    margin-left:1.5em;
-    line-height: 18px;
-    font-weight: normal;
-    white-space: nowrap;
-
-    * {
-        display: inline;
-        margin-right: 0.3em;
+.or- {
+    /* Fortschrittsbalken, fuer alle Elemente verfuegbar. */
+    &loader
+    {
+        background: url(../images/loader.gif) no-repeat;
+        background-position: center, top;
+        height: 30px;
+        opacity: 0.5;
+        cursor: wait;
+        pointer-events: none;
     }
 
-    .or-breadcrumb-item .image-icon {
-        margin-right:0.2em;
+    &breadcrumb {
+        margin-bottom: 0.1em;
+        margin-left: 1.5em;
+        line-height: 18px;
+        font-weight: normal;
+        white-space: nowrap;
+
+        * {
+            display: inline;
+            margin-right: 0.3em;
+        }
+
+        &-item .or-image-icon {
+            margin-right: 0.2em;
+        }
     }
 }

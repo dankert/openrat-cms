@@ -9,7 +9,7 @@
 						<text value="${message:ALL}"></text>
 					</label>
 				</part>
-				<part class="input">
+				<part class="value">
 				</part>
 			</part>
 			<part class="line">
@@ -19,7 +19,7 @@
 						<text value="${message:USER}"></text>
 					</label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<selectbox name="userid" list="users" addempty="true" default=""></selectbox>
 				</part>
 			</part>
@@ -31,7 +31,7 @@
 							<text value="${message:GROUP}"></text>
 						</label>
 					</part>
-					<part class="input">
+					<part class="value">
 						<selectbox name="groupid" list="groups" addempty="true" default=""></selectbox>
 					</part>
 				</part>
@@ -46,7 +46,7 @@
 					</label>
 				</part>
 
-				<part class="input">
+				<part class="value">
 					<selectbox name="languageid" list="languages" default=""></selectbox>
 				</part>
 			</part>
@@ -56,7 +56,7 @@
 			<part class="line">
 				<part class="label">
 				</part>
-				<part class="input">
+				<part class="value">
 					<list list="${show}" value="t" key="k">
 						<part>
 							<if value="${t}" equals="read">

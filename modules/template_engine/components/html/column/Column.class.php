@@ -48,7 +48,7 @@ class ColumnComponent extends Component
 			$column->addStyleClass('clickable');
         }
         if	( $this->class )
-			$column->addStyleClass( $this->class );
+			$column->addStyleClass( Component::splitByComma($this->class) );
 
         return $column;
 	}

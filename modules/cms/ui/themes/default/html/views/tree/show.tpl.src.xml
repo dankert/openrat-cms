@@ -2,8 +2,8 @@
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 
 	<!-- The tree is displayed by javascript calls -->
-	<part class="or-navtree or-act-load-nav-tree" />
+	<part class="navtree,act-load-nav-tree" />
 
-	<image class="or-act-nav-small, or-btn, or-view-flying-button" symbol="arrow-left"  />
-	<image class="or-act-nav-wide , or-btn, or-view-flying-button" symbol="arrow-right" />
+	<image class="act-nav-small, btn, view-flying-button" symbol="arrow-left"  />
+	<image class="act-nav-wide , btn, view-flying-button" symbol="arrow-right" />
 </output>

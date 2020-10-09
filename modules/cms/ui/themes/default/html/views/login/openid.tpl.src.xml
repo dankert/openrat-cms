@@ -12,7 +12,7 @@
 							<image url="${config:security/openid/logo_url}"></image>
 						</if>
 					</part>
-					<part class="input">
+					<part class="value">
 						<radiobox name="openid_provider" list="openid_providers"></radiobox>
 						<if true="${openid_user_identity}">
 							<radio name="openid_provider" value="identity"></radio>
@@ -30,7 +30,7 @@
 								<text value="${message:DATABASE}"></text>
 							</label>
 						</part>
-						<part class="input">
+						<part class="value">
 							<selectbox name="dbid" list="dbids" default="${actdbid}"></selectbox>
 							<hidden name="screenwidth" default="9999"></hidden>
 						</part>

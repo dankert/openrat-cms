@@ -10,7 +10,7 @@
                 <part class="label">
                     <text value="${message:LABEL}"></text>
                 </part>
-                <part class="input">
+                <part class="value">
                     <input name="label" focus="true" required="true" maxlength="100"/>
                 </part>
             </part>
@@ -19,7 +19,7 @@
                 <part class="label">
                     <text value="${message:NAME}"></text>
                 </part>
-                <part class="input">
+                <part class="value">
                     <input name="name" required="true" maxlength="50"/>
                 </part>
             </part>
@@ -28,7 +28,7 @@
                 <part class="label">
                     <text value="${message:DESCRIPTION}"></text>
                 </part>
-                <part class="input">
+                <part class="value">
                     <inputarea name="description" rows="5" maxlength="255"></inputarea>
                 </part>
             </part>
@@ -39,7 +39,7 @@
                 <part class="label">
                     <text value="${message:ELEMENT_TYPE}"></text>
                 </part>
-                <part class="input">
+                <part class="value">
                     <selectbox name="typeid" list="types" lang="true"></selectbox>
                 </part>
             </part>

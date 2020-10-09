@@ -13,7 +13,7 @@
 			</column>
 		</row>
 		<if present="up_url">
-			<row class="data clickable">
+			<row class="data,clickable">
 				<column>
 					<link type="open" id="${parentid}" name="" action="folder">
 						<image action="folder"></image>
@@ -26,7 +26,7 @@
 			</row>
 		</if>
 		<list list="${object}" extract="true">
-			<row class="data clickable">
+			<row class="data,clickable">
 				<column class="">
 					<image action="${icon}"></image>
 				</column>
@@ -52,7 +52,7 @@
 
 	<part class="clickable">
 
-		<link type="dialog" action="folder" subaction="create" class="or-btn">
+		<link type="dialog" action="folder" subaction="create" class="btn">
 			<image action="new" />
 			<text value="${message:new}"></text>
 		</link>

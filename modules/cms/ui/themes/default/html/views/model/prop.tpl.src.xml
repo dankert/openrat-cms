@@ -6,7 +6,7 @@
 			<part class="label">
 				<text value="${message:NAME}"></text>
 			</part>
-			<part class="input">
+			<part class="value">
 				<input name="name" focus="true" maxlength="50"></input>
 			</part>
 		</part>
@@ -14,7 +14,7 @@
 		<part class="line">
 			<part class="label">
 			</part>
-			<part class="input">
+			<part class="value">
 				<checkbox name="is_default" readonly="${is_default}"></checkbox>
 				<label key="is_default" for="is_default" />
 			</part>

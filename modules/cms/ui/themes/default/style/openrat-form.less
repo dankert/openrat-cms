@@ -34,7 +34,7 @@
     width: 80%;
   }
 
-  .headline {
+  .or-headline {
     font-size: 1.8em;
   }
 
@@ -42,11 +42,11 @@
     //font-size: 0.75em;
   }
 
-  div.inputholder > div.dropdown {
+  div.or-inputholder > div.or-dropdown {
     width: 70%;
   }
 
-  input.submit {
+  input.or-submit {
     padding: 7px;
     border: 0px;
     -moz-border-radius: 7px; /* Mozilla */
@@ -88,21 +88,21 @@
   }*/
 
   /* Floating column for labels: 25% width */
-  div.label {
+  .or-label {
     float: left;
     width: 25%;
     margin-top: 6px;
   }
 
   /* Floating column for inputs: 75% width */
-  div.input {
+  .or-value {
     float: left;
     width: 75%;
     margin-top: 6px;
   }
 
   /* Clear floats after the columns */
-  .line:after {
+  .or-line:after {
     content: "";
     display: table;
     clear: both;
@@ -147,7 +147,7 @@
     /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
   @media @small {
 
-    div.label, div.input {
+    div.or-label, div.or-value {
       width: 100%;
       margin-top: 0;
     }
@@ -182,14 +182,16 @@
 
 
 /* Buttons  */
-.or-btn {
-    padding: 0.5em 0.5em;
-    border: 1px solid @color-overridden-by-theme;
+.or- {
+    &btn {
+        padding: 0.5em 0.5em;
+        border: 1px solid @color-overridden-by-theme;
 
-    .border-radius(0.5em);
-    cursor: pointer;
+        .border-radius(0.5em);
+        cursor: pointer;
 
-    &--primary {
-        font-weight: bold;
+        &--primary {
+            font-weight: bold;
+        }
     }
 }

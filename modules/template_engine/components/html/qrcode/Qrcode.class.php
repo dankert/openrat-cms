@@ -18,8 +18,8 @@ class QrcodeComponent extends Component
 		$qrcode = (new CMSElement('i'))
 			->addStyleClass('image-icon')
 			->addStyleClass('image-icon--menu-qrcode')
-			->addStyleClass('or-qrcode')
-			->addStyleClass('or-info')
+			->addStyleClass('qrcode')
+			->addStyleClass('info')
 			->addAttribute('data-qrcode', $this->value)
 			->addAttribute('title', Value::createExpression(ValueExpression::TYPE_MESSAGE, 'QRCODE_SHOW'));
 

@@ -10,7 +10,7 @@
                 <label for="code" key="mail_code"></label>
             </part>
 
-            <part class="input">
+            <part class="value">
                 <input type="text" name="code" size="30" focus="true" required="true"></input>
             </part>
         </part>

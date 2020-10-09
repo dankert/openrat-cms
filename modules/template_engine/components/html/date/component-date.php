@@ -12,7 +12,7 @@ function component_date( $time )
 			$time += ((int)$_COOKIE['or_timezone_offset']*60);
 		}
 	
-		echo '<span class="sort-value">'.str_pad($time, 20, "0", STR_PAD_LEFT).'</span>'; // For sorting a table.
+		echo '<span class="or-table-sort-value">'.str_pad($time, 20, "0", STR_PAD_LEFT).'</span>'; // For sorting a table.
 
 		echo '<span title="';
 		$dl = \cms\base\Language::lang('DATE_FORMAT_LONG');

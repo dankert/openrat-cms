@@ -6,7 +6,7 @@
 			<part class="label">
 				<text value="${message:FOLDER}"></text>
 			</part>
-			<part class="input">
+			<part class="value">
 				<input name="name" size="20" default=""></input>
 			</part>
 		</part>
@@ -15,7 +15,7 @@
 			<part class="label">
 				<text value="${message:DESCRIPTION}"></text>
 			</part>
-			<part class="input">
+			<part class="value">
 				<inputarea rows="5" cols="50" name="description" default=""></inputarea>
 			</part>
 		</part>

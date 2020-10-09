@@ -5,7 +5,7 @@
 			<part class="label" colspan="2">
 				<text value="${message:name}"></text>
 			</part>
-			<part class="input">
+			<part class="value">
 				<input name="name" maxlength="50"></input>
 			</part>
 		</part>
@@ -14,7 +14,7 @@
 				<part class="label">
 					<radio name="type" value="empty"></radio>
 				</part>
-				<part class="input">
+				<part class="value">
 					<label for="type_empty">
 						<text value="${message:empty}"></text>
 					</label>
@@ -27,7 +27,7 @@
 					</label>
 					<radio name="type" value="copy"></radio>
 				</part>
-				<part class="input">
+				<part class="value">
 					<selectbox name="templateid" list="templates"></selectbox>
 				</part>
 			</part>
@@ -38,7 +38,7 @@
 					</label>
 					<radio name="type" value="example"></radio>
 				</part>
-				<part class="input">
+				<part class="value">
 					<selectbox name="example" list="examples"></selectbox>
 				</part>
 			</part>

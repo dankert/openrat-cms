@@ -6,7 +6,7 @@
 				<part class="label">
 					<label for="name" key="user_username"></label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<text value="${name}" class="name"></text>
 				</part>
 			</part>
@@ -16,7 +16,7 @@
 				<part class="label">
 					<label for="mail" key="user_mail"></label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<text value="${mail}"></text>
 					<newline />
 					<newline />
@@ -33,7 +33,7 @@
 				<part class="label">
 					<label for="fullname" key="user_fullname"></label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<input name="fullname" maxlength="128"></input>
 				</part>
 			</part>
@@ -41,7 +41,7 @@
 				<part class="label">
 					<label for="tel" key="user_tel"></label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<input name="tel" size="40" maxlength="128"></input>
 				</part>
 			</part>
@@ -49,7 +49,7 @@
 				<part class="label">
 					<label for="desc" key="user_desc"></label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<input name="desc" size="40" maxlength="128"></input>
 				</part>
 			</part>
@@ -57,9 +57,9 @@
 				<part class="label">
 					<label for="style" key="user_style"></label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<selectbox name="style" list="allstyles"
-						class="or-theme-chooser"></selectbox>
+						class="theme-chooser"></selectbox>
 				</part>
 			</part>
 			<part class="line">
@@ -68,7 +68,7 @@
 						<text value="${message:timezone}" />
 					</label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<selectbox name="timezone" list="timezone_list"
 						addempty="true"></selectbox>
 				</part>
@@ -79,7 +79,7 @@
 						<text value="${message:language}" />
 					</label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<selectbox name="language" list="language_list" addempty="true"></selectbox>
 				</part>
 			</part>
@@ -89,14 +89,14 @@
 				<part class="label">
 					<text value="${message:user_password_expires}" />
 				</part>
-				<part class="input">
+				<part class="value">
 					<date date="${passwordExpires}" />
 				</part>  
 			</part>
 			<part class="line">
 				<part class="label">
 				</part>
-				<part class="input">
+				<part class="value">
 					<checkbox name="totp"/><label for="totp" key="user_totp"></label>
 					<qrcode value="${totpSecretUrl}" />
 				</part>  
@@ -104,7 +104,7 @@
 			<part class="line">
 				<part class="label">
 				</part>
-				<part class="input">
+				<part class="value">
 					<checkbox name="hotp"/><label for="hotp" key="user_hotp"></label>
 					<qrcode value="${hotpSecretUrl}" />
 				</part>

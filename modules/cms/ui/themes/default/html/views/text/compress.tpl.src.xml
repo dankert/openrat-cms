@@ -6,7 +6,7 @@
 				<part class="label">
 					<text value="${message:type}"></text>
 				</part>
-				<part class="input">
+				<part class="value">
 					<set var="gz" value="gz"></set>
 					<selectbox list="formats" name="format" default="gz"></selectbox>
 					<set var="replace" value="1"></set>

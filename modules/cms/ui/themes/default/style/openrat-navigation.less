@@ -1,39 +1,43 @@
 /*   N a v i g a t i o n   */
 
-.or-navtree {
+.or- {
+    &navtree {
 
-    ul.or-navtree-list {
+        &-list {
 
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-
-        ul {
-            margin-left: 18px;
-        }
-        .or-navtree-node-control {
-            width: 18px;
-            min-width: 18px;
-            height: 18px;
-            float: left;
-            cursor: pointer;
-        }
-        .or-navtree-node {
+            list-style-type: none;
             margin: 0;
             padding: 0;
-            line-height: 18px;
-            font-weight: normal;
-            white-space: nowrap;
 
-            &.or-navtree-node--selected {
-                font-weight: bold;
-                & > div > a {
+            ul {
+                margin-left: 18px;
+            }
+
+            .or-navtree-node-control {
+                width: 18px;
+                min-width: 18px;
+                height: 18px;
+                float: left;
+                cursor: pointer;
+            }
+
+            .or-navtree-node {
+                margin: 0;
+                padding: 0;
+                line-height: 18px;
+                font-weight: normal;
+                white-space: nowrap;
+
+                &--selected {
                     font-weight: bold;
+
+                    & > div > a {
+                        font-weight: bold;
+                    }
                 }
             }
+
         }
 
     }
-
 }
-

@@ -1,5 +1,5 @@
 <?php defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
-  <form name="<?php echo O::escapeHtml('') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-target="<?php echo O::escapeHtml('view') ?>" action="<?php echo O::escapeHtml('./') ?>" data-method="<?php echo O::escapeHtml('value') ?>" data-action="<?php echo O::escapeHtml('pageelement') ?>" data-id="<?php echo O::escapeHtml(''.@$_id.'') ?>" method="<?php echo O::escapeHtml('post') ?>" enctype="<?php echo O::escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo O::escapeHtml('') ?>" data-autosave="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-form pageelement') ?>"><?php echo O::escapeHtml('') ?>
+  <form name="<?php echo O::escapeHtml('') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-target="<?php echo O::escapeHtml('view') ?>" action="<?php echo O::escapeHtml('./') ?>" data-method="<?php echo O::escapeHtml('value') ?>" data-action="<?php echo O::escapeHtml('pageelement') ?>" data-id="<?php echo O::escapeHtml(''.@$_id.'') ?>" method="<?php echo O::escapeHtml('post') ?>" enctype="<?php echo O::escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo O::escapeHtml('') ?>" data-autosave="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-form or-pageelement') ?>"><?php echo O::escapeHtml('') ?>
     <div class="<?php echo O::escapeHtml('or-form-headline') ?>"><?php echo O::escapeHtml('') ?>
     </div>
     <div class="<?php echo O::escapeHtml('or-form-content') ?>"><?php echo O::escapeHtml('') ?>
@@ -10,19 +10,19 @@
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('languageid') ?>" value="<?php echo O::escapeHtml(''.@$languageid.'') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('elementid') ?>" value="<?php echo O::escapeHtml(''.@$elementid.'') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('value_time') ?>" value="<?php echo O::escapeHtml(''.@$value_time.'') ?>" /><?php echo O::escapeHtml('') ?>
-      <span class="<?php echo O::escapeHtml('help') ?>"><?php echo O::escapeHtml(''.@$desc.'') ?>
+      <span class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml(''.@$desc.'') ?>
       </span>
       <?php $if1=($type=='date'); if($if1) {  ?>
-        <fieldset class="<?php echo O::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo O::escapeHtml('') ?>
-          <legend class="<?php echo O::escapeHtml('on-click-open-close') ?>"><?php echo O::escapeHtml(''.@O::lang('date').'') ?>
+        <fieldset class="<?php echo O::escapeHtml('or-group or-toggle-open-close or--is-open or-show') ?>"><?php echo O::escapeHtml('') ?>
+          <legend class="<?php echo O::escapeHtml('or-act-open-close') ?>"><?php echo O::escapeHtml(''.@O::lang('date').'') ?>
             <img /><?php echo O::escapeHtml('') ?>
-            <i class="<?php echo O::escapeHtml('image-icon image-icon--node-closed on-closed') ?>"><?php echo O::escapeHtml('') ?>
+            <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-closed or-group--on-closed') ?>"><?php echo O::escapeHtml('') ?>
             </i>
-            <i class="<?php echo O::escapeHtml('image-icon image-icon--node-open on-open') ?>"><?php echo O::escapeHtml('') ?>
+            <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-open or-group--on-open') ?>"><?php echo O::escapeHtml('') ?>
             </i>
           </legend>
-          <div class="<?php echo O::escapeHtml('closable') ?>"><?php echo O::escapeHtml('') ?>
-            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('or-closable') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('or-line') ?>"><?php echo O::escapeHtml('') ?>
               <label class="<?php echo O::escapeHtml('or-form-row or-form-input') ?>"><?php echo O::escapeHtml('') ?>
                 <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml('date') ?>
                 </span>
@@ -40,23 +40,23 @@
       <?php $if1=($type=='text'); if($if1) {  ?>
         <tr><?php echo O::escapeHtml('') ?>
           <td colspan="<?php echo O::escapeHtml('2') ?>"><?php echo O::escapeHtml('') ?>
-            <input name="<?php echo O::escapeHtml('text') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" value="<?php echo O::escapeHtml(''.@$text.'') ?>" class="<?php echo O::escapeHtml('text or-input') ?>" /><?php echo O::escapeHtml('') ?>
+            <input name="<?php echo O::escapeHtml('text') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" value="<?php echo O::escapeHtml(''.@$text.'') ?>" class="<?php echo O::escapeHtml('or-text or-input') ?>" /><?php echo O::escapeHtml('') ?>
           </td>
         </tr>
        <?php } ?>
       <?php $if1=($type=='longtext'); if($if1) {  ?>
         <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('format') ?>" value="<?php echo O::escapeHtml(''.@$format.'') ?>" /><?php echo O::escapeHtml('') ?>
         <?php $if1=(isset($preview)); if($if1) {  ?>
-          <div class="<?php echo O::escapeHtml('preview') ?>"><?php echo O::escapeHtml('') ?>
-            <fieldset class="<?php echo O::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo O::escapeHtml('') ?>
-              <legend class="<?php echo O::escapeHtml('on-click-open-close') ?>"><?php echo O::escapeHtml(''.@O::lang('page_preview').'') ?>
+          <div class="<?php echo O::escapeHtml('or-preview') ?>"><?php echo O::escapeHtml('') ?>
+            <fieldset class="<?php echo O::escapeHtml('or-group or-toggle-open-close or--is-open or-show') ?>"><?php echo O::escapeHtml('') ?>
+              <legend class="<?php echo O::escapeHtml('or-act-open-close') ?>"><?php echo O::escapeHtml(''.@O::lang('page_preview').'') ?>
                 <img /><?php echo O::escapeHtml('') ?>
-                <i class="<?php echo O::escapeHtml('image-icon image-icon--node-closed on-closed') ?>"><?php echo O::escapeHtml('') ?>
+                <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-closed or-group--on-closed') ?>"><?php echo O::escapeHtml('') ?>
                 </i>
-                <i class="<?php echo O::escapeHtml('image-icon image-icon--node-open on-open') ?>"><?php echo O::escapeHtml('') ?>
+                <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-open or-group--on-open') ?>"><?php echo O::escapeHtml('') ?>
                 </i>
               </legend>
-              <div class="<?php echo O::escapeHtml('closable') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('or-closable') ?>"><?php echo O::escapeHtml('') ?>
                 <span><?php echo ''.@$preview.'' ?>
                 </span>
               </div>
@@ -64,24 +64,24 @@
           </div>
          <?php } ?>
         <?php $if1=($editor=='markdown'); if($if1) {  ?>
-          <textarea name="<?php echo O::escapeHtml('text') ?>" class="<?php echo O::escapeHtml('editor markdown-editor') ?>"><?php echo O::escapeHtml(''.@$text.'') ?>
+          <textarea name="<?php echo O::escapeHtml('text') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-markdown-editor') ?>"><?php echo O::escapeHtml(''.@$text.'') ?>
           </textarea>
          <?php } ?>
         <?php $if1=($editor=='html'); if($if1) {  ?>
-          <textarea name="<?php echo O::escapeHtml('text') ?>" id="<?php echo O::escapeHtml('pageelement_edit_editor') ?>" class="<?php echo O::escapeHtml('editor html-editor') ?>"><?php echo ''.@$text.'' ?>
+          <textarea name="<?php echo O::escapeHtml('text') ?>" id="<?php echo O::escapeHtml('pageelement_edit_editor') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-html-editor') ?>"><?php echo ''.@$text.'' ?>
           </textarea>
          <?php } ?>
         <?php $if1=($editor=='wiki'); if($if1) {  ?>
           <?php $if1=(isset($languagetext)); if($if1) {  ?>
-            <fieldset class="<?php echo O::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo O::escapeHtml('') ?>
-              <legend class="<?php echo O::escapeHtml('on-click-open-close') ?>"><?php echo O::escapeHtml(''.@$languagename.'') ?>
+            <fieldset class="<?php echo O::escapeHtml('or-group or-toggle-open-close or--is-open or-show') ?>"><?php echo O::escapeHtml('') ?>
+              <legend class="<?php echo O::escapeHtml('or-act-open-close') ?>"><?php echo O::escapeHtml(''.@$languagename.'') ?>
                 <img /><?php echo O::escapeHtml('') ?>
-                <i class="<?php echo O::escapeHtml('image-icon image-icon--node-closed on-closed') ?>"><?php echo O::escapeHtml('') ?>
+                <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-closed or-group--on-closed') ?>"><?php echo O::escapeHtml('') ?>
                 </i>
-                <i class="<?php echo O::escapeHtml('image-icon image-icon--node-open on-open') ?>"><?php echo O::escapeHtml('') ?>
+                <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-open or-group--on-open') ?>"><?php echo O::escapeHtml('') ?>
                 </i>
               </legend>
-              <div class="<?php echo O::escapeHtml('closable') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('or-closable') ?>"><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(''.@$languagetext.'') ?>
                 </span>
               </div>
@@ -89,17 +89,17 @@
             <br /><?php echo O::escapeHtml('') ?>
             <br /><?php echo O::escapeHtml('') ?>
            <?php } ?>
-          <textarea name="<?php echo O::escapeHtml('text') ?>" class="<?php echo O::escapeHtml('editor wiki-editor') ?>"><?php echo ''.@$text.'' ?>
+          <textarea name="<?php echo O::escapeHtml('text') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-wiki-editor') ?>"><?php echo ''.@$text.'' ?>
           </textarea>
-          <fieldset class="<?php echo O::escapeHtml('or-group toggle-open-close closed show') ?>"><?php echo O::escapeHtml('') ?>
-            <legend class="<?php echo O::escapeHtml('on-click-open-close') ?>"><?php echo O::escapeHtml(''.@O::lang('help').'') ?>
+          <fieldset class="<?php echo O::escapeHtml('or-group or-toggle-open-close or--is-closed or-show') ?>"><?php echo O::escapeHtml('') ?>
+            <legend class="<?php echo O::escapeHtml('or-act-open-close') ?>"><?php echo O::escapeHtml(''.@O::lang('help').'') ?>
               <img /><?php echo O::escapeHtml('') ?>
-              <i class="<?php echo O::escapeHtml('image-icon image-icon--node-closed on-closed') ?>"><?php echo O::escapeHtml('') ?>
+              <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-closed or-group--on-closed') ?>"><?php echo O::escapeHtml('') ?>
               </i>
-              <i class="<?php echo O::escapeHtml('image-icon image-icon--node-open on-open') ?>"><?php echo O::escapeHtml('') ?>
+              <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-open or-group--on-open') ?>"><?php echo O::escapeHtml('') ?>
               </i>
             </legend>
-            <div class="<?php echo O::escapeHtml('closable') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('or-closable') ?>"><?php echo O::escapeHtml('') ?>
               <div class="<?php echo O::escapeHtml('or-table-wrapper') ?>"><?php echo O::escapeHtml('') ?>
                 <div class="<?php echo O::escapeHtml('or-table-filter') ?>"><?php echo O::escapeHtml('') ?>
                   <input type="<?php echo O::escapeHtml('search') ?>" name="<?php echo O::escapeHtml('filter') ?>" placeholder="<?php echo O::escapeHtml(''.@O::lang('SEARCH_FILTER').'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
@@ -184,39 +184,39 @@
           </fieldset>
          <?php } ?>
         <?php $if1=($editor=='text'); if($if1) {  ?>
-          <textarea name="<?php echo O::escapeHtml('text') ?>" class="<?php echo O::escapeHtml('editor raw-editor') ?>"><?php echo O::escapeHtml(''.@$text.'') ?>
+          <textarea name="<?php echo O::escapeHtml('text') ?>" class="<?php echo O::escapeHtml('or-input or-editor raw-editor') ?>"><?php echo O::escapeHtml(''.@$text.'') ?>
           </textarea>
          <?php } ?>
        <?php } ?>
       <?php $if1=($type=='link'); if($if1) {  ?>
-        <fieldset class="<?php echo O::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo O::escapeHtml('') ?>
-          <div class="<?php echo O::escapeHtml('closable') ?>"><?php echo O::escapeHtml('') ?>
-            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
-              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
-                <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+        <fieldset class="<?php echo O::escapeHtml('or-group or-toggle-open-close or--is-open or-show') ?>"><?php echo O::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('or-closable') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('or-line') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
+                <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
                   <span><?php echo O::escapeHtml(''.@O::lang('link_target').'') ?>
                   </span>
                 </label>
               </div>
-              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
-                <div class="<?php echo O::escapeHtml('selector') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('or-value') ?>"><?php echo O::escapeHtml('') ?>
+                <div class="<?php echo O::escapeHtml('or-selector') ?>"><?php echo O::escapeHtml('') ?>
                   <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('linkobjectid') ?>" value="<?php echo O::escapeHtml(''.@$linkobjectid.'') ?>" class="<?php echo O::escapeHtml('or-selector-link-value') ?>" /><?php echo O::escapeHtml('') ?>
                   <input type="<?php echo O::escapeHtml('text') ?>" name="<?php echo O::escapeHtml('linkobjectid_text') ?>" placeholder="<?php echo O::escapeHtml(''.@$linkname.'') ?>" value="<?php echo O::escapeHtml(''.@$linkname.'') ?>" class="<?php echo O::escapeHtml('or-selector-link-name') ?>" /><?php echo O::escapeHtml('') ?>
-                  <div class="<?php echo O::escapeHtml('dropdown or-act-selector-search-results') ?>"><?php echo O::escapeHtml('') ?>
+                  <div class="<?php echo O::escapeHtml('or-dropdown or-act-selector-search-results') ?>"><?php echo O::escapeHtml('') ?>
                   </div>
                   <div type="<?php echo O::escapeHtml('hidden') ?>" data-types="<?php echo O::escapeHtml(''.@$types.'') ?>" data-init-id="<?php echo O::escapeHtml(''.@$linkobjectid.'') ?>" data-init-folderid="<?php echo O::escapeHtml(''.@$rootfolderid.'') ?>" class="<?php echo O::escapeHtml('or-navtree or-act-load-selector-tree') ?>"><?php echo O::escapeHtml('') ?>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="<?php echo O::escapeHtml('line') ?>"><?php echo O::escapeHtml('') ?>
-              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
-                <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('or-line') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
+                <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
                   <span><?php echo O::escapeHtml(''.@O::lang('link_url').'') ?>
                   </span>
                 </label>
               </div>
-              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('or-value') ?>"><?php echo O::escapeHtml('') ?>
                 <input name="<?php echo O::escapeHtml('linkurl') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$linkurl.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
               </div>
             </div>
@@ -224,9 +224,9 @@
         </fieldset>
        <?php } ?>
       <?php $if1=($type=='list'); if($if1) {  ?>
-        <fieldset class="<?php echo O::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo O::escapeHtml('') ?>
-          <div class="<?php echo O::escapeHtml('closable') ?>"><?php echo O::escapeHtml('') ?>
-            <div class="<?php echo O::escapeHtml('') ?>"><?php echo O::escapeHtml('') ?>
+        <fieldset class="<?php echo O::escapeHtml('or-group or-toggle-open-close or--is-open or-show') ?>"><?php echo O::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('or-closable') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('or-') ?>"><?php echo O::escapeHtml('') ?>
               <select name="<?php echo O::escapeHtml('linkobjectid') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
                 <?php foreach($objects as $_key=>$_value) {  ?>
                   <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$linkobjectid){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
@@ -238,9 +238,9 @@
         </fieldset>
        <?php } ?>
       <?php $if1=($type=='insert'); if($if1) {  ?>
-        <fieldset class="<?php echo O::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo O::escapeHtml('') ?>
-          <div class="<?php echo O::escapeHtml('closable') ?>"><?php echo O::escapeHtml('') ?>
-            <div class="<?php echo O::escapeHtml('') ?>"><?php echo O::escapeHtml('') ?>
+        <fieldset class="<?php echo O::escapeHtml('or-group or-toggle-open-close or--is-open or-show') ?>"><?php echo O::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('or-closable') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('or-') ?>"><?php echo O::escapeHtml('') ?>
               <select name="<?php echo O::escapeHtml('linkobjectid') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
                 <?php foreach($objects as $_key=>$_value) {  ?>
                   <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$linkobjectid){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
@@ -252,9 +252,9 @@
         </fieldset>
        <?php } ?>
       <?php $if1=($type=='number'); if($if1) {  ?>
-        <fieldset class="<?php echo O::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo O::escapeHtml('') ?>
-          <div class="<?php echo O::escapeHtml('closable') ?>"><?php echo O::escapeHtml('') ?>
-            <div class="<?php echo O::escapeHtml('') ?>"><?php echo O::escapeHtml('') ?>
+        <fieldset class="<?php echo O::escapeHtml('or-group or-toggle-open-close or--is-open or-show') ?>"><?php echo O::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('or-closable') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('or-') ?>"><?php echo O::escapeHtml('') ?>
               <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('decimals') ?>" value="<?php echo O::escapeHtml('decimals') ?>" /><?php echo O::escapeHtml('') ?>
               <input name="<?php echo O::escapeHtml('number') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('20') ?>" value="<?php echo O::escapeHtml(''.@$number.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
             </div>
@@ -262,9 +262,9 @@
         </fieldset>
        <?php } ?>
       <?php $if1=($type=='select'); if($if1) {  ?>
-        <fieldset class="<?php echo O::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo O::escapeHtml('') ?>
-          <div class="<?php echo O::escapeHtml('closable') ?>"><?php echo O::escapeHtml('') ?>
-            <div class="<?php echo O::escapeHtml('') ?>"><?php echo O::escapeHtml('') ?>
+        <fieldset class="<?php echo O::escapeHtml('or-group or-toggle-open-close or--is-open or-show') ?>"><?php echo O::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('or-closable') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('or-') ?>"><?php echo O::escapeHtml('') ?>
               <select name="<?php echo O::escapeHtml('text') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
                 <?php foreach($items as $_key=>$_value) {  ?>
                   <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$text){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
@@ -278,19 +278,19 @@
       <?php $if1=($type=='longtext'); if($if1) {  ?>
         <?php $if1=($editor=='wiki'); if($if1) {  ?>
           <?php $if1=(isset($languages)); if($if1) {  ?>
-            <fieldset class="<?php echo O::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo O::escapeHtml('') ?>
-              <legend class="<?php echo O::escapeHtml('on-click-open-close') ?>"><?php echo O::escapeHtml(''.@O::lang('editor_show_language').'') ?>
+            <fieldset class="<?php echo O::escapeHtml('or-group or-toggle-open-close or--is-open or-show') ?>"><?php echo O::escapeHtml('') ?>
+              <legend class="<?php echo O::escapeHtml('or-act-open-close') ?>"><?php echo O::escapeHtml(''.@O::lang('editor_show_language').'') ?>
                 <img /><?php echo O::escapeHtml('') ?>
-                <i class="<?php echo O::escapeHtml('image-icon image-icon--node-closed on-closed') ?>"><?php echo O::escapeHtml('') ?>
+                <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-closed or-group--on-closed') ?>"><?php echo O::escapeHtml('') ?>
                 </i>
-                <i class="<?php echo O::escapeHtml('image-icon image-icon--node-open on-open') ?>"><?php echo O::escapeHtml('') ?>
+                <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-open or-group--on-open') ?>"><?php echo O::escapeHtml('') ?>
                 </i>
               </legend>
-              <div class="<?php echo O::escapeHtml('closable') ?>"><?php echo O::escapeHtml('') ?>
-                <div class="<?php echo O::escapeHtml('') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('or-closable') ?>"><?php echo O::escapeHtml('') ?>
+                <div class="<?php echo O::escapeHtml('or-') ?>"><?php echo O::escapeHtml('') ?>
                   <?php foreach((array)$languages as $languageid=>$languagename) {  ?>
                     <input type="<?php echo O::escapeHtml('radio') ?>" name="<?php echo O::escapeHtml('otherlanguageid') ?>" value="<?php echo O::escapeHtml(''.@$languageid.'') ?>" <?php if(@$otherlanguageid=='${languageid}'){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
-                    <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                    <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
                       <span><?php echo O::escapeHtml(''.@$languagename.'') ?>
                       </span>
                     </label>
@@ -300,18 +300,18 @@
               </div>
             </fieldset>
            <?php } ?>
-          <fieldset class="<?php echo O::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo O::escapeHtml('') ?>
-            <legend class="<?php echo O::escapeHtml('on-click-open-close') ?>"><?php echo O::escapeHtml(''.@O::lang('PAGE_PREVIEW').'') ?>
+          <fieldset class="<?php echo O::escapeHtml('or-group or-toggle-open-close or--is-open or-show') ?>"><?php echo O::escapeHtml('') ?>
+            <legend class="<?php echo O::escapeHtml('or-act-open-close') ?>"><?php echo O::escapeHtml(''.@O::lang('PAGE_PREVIEW').'') ?>
               <img /><?php echo O::escapeHtml('') ?>
-              <i class="<?php echo O::escapeHtml('image-icon image-icon--node-closed on-closed') ?>"><?php echo O::escapeHtml('') ?>
+              <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-closed or-group--on-closed') ?>"><?php echo O::escapeHtml('') ?>
               </i>
-              <i class="<?php echo O::escapeHtml('image-icon image-icon--node-open on-open') ?>"><?php echo O::escapeHtml('') ?>
+              <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-open or-group--on-open') ?>"><?php echo O::escapeHtml('') ?>
               </i>
             </legend>
-            <div class="<?php echo O::escapeHtml('closable') ?>"><?php echo O::escapeHtml('') ?>
-              <div class="<?php echo O::escapeHtml('') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('or-closable') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('or-') ?>"><?php echo O::escapeHtml('') ?>
                 <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('preview') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$preview){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
-                <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+                <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
                   <span><?php echo O::escapeHtml(''.@O::lang('PAGE_PREVIEW').'') ?>
                   </span>
                 </label>
@@ -320,28 +320,28 @@
           </fieldset>
          <?php } ?>
        <?php } ?>
-      <fieldset class="<?php echo O::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo O::escapeHtml('') ?>
-        <legend class="<?php echo O::escapeHtml('on-click-open-close') ?>"><?php echo O::escapeHtml(''.@O::lang('options').'') ?>
+      <fieldset class="<?php echo O::escapeHtml('or-group or-toggle-open-close or--is-open or-show') ?>"><?php echo O::escapeHtml('') ?>
+        <legend class="<?php echo O::escapeHtml('or-act-open-close') ?>"><?php echo O::escapeHtml(''.@O::lang('options').'') ?>
           <img /><?php echo O::escapeHtml('') ?>
-          <i class="<?php echo O::escapeHtml('image-icon image-icon--node-closed on-closed') ?>"><?php echo O::escapeHtml('') ?>
+          <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-closed or-group--on-closed') ?>"><?php echo O::escapeHtml('') ?>
           </i>
-          <i class="<?php echo O::escapeHtml('image-icon image-icon--node-open on-open') ?>"><?php echo O::escapeHtml('') ?>
+          <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-open or-group--on-open') ?>"><?php echo O::escapeHtml('') ?>
           </i>
         </legend>
-        <div class="<?php echo O::escapeHtml('closable') ?>"><?php echo O::escapeHtml('') ?>
+        <div class="<?php echo O::escapeHtml('or-closable') ?>"><?php echo O::escapeHtml('') ?>
           <?php $if1=(isset($release)); if($if1) {  ?>
-            <div class="<?php echo O::escapeHtml('') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('or-') ?>"><?php echo O::escapeHtml('') ?>
               <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('release') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$release){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
-              <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+              <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(''.@O::lang('RELEASE').'') ?>
                 </span>
               </label>
             </div>
            <?php } ?>
           <?php $if1=(isset($publish)); if($if1) {  ?>
-            <div class="<?php echo O::escapeHtml('') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('or-') ?>"><?php echo O::escapeHtml('') ?>
               <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('publish') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$publish){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
-              <label class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+              <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(''.@O::lang('PAGE_PUBLISH_AFTER_SAVE').'') ?>
                 </span>
               </label>
@@ -352,19 +352,19 @@
     </div>
     <div class="<?php echo O::escapeHtml('or-form-actionbar') ?>"><?php echo O::escapeHtml('') ?>
       <div class="<?php echo O::escapeHtml('or-btn or-btn--secondary or-act-form-cancel') ?>"><?php echo O::escapeHtml('') ?>
-        <i class="<?php echo O::escapeHtml('image-icon image-icon--form-cancel') ?>"><?php echo O::escapeHtml('') ?>
+        <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--form-cancel') ?>"><?php echo O::escapeHtml('') ?>
         </i>
         <span class="<?php echo O::escapeHtml('or-form-btn-label') ?>"><?php echo O::escapeHtml(''.@O::lang('CANCEL').'') ?>
         </span>
       </div>
       <div class="<?php echo O::escapeHtml('or-btn or-btn--primary or-act-form-apply') ?>"><?php echo O::escapeHtml('') ?>
-        <i class="<?php echo O::escapeHtml('image-icon image-icon--form-apply') ?>"><?php echo O::escapeHtml('') ?>
+        <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--form-apply') ?>"><?php echo O::escapeHtml('') ?>
         </i>
         <span class="<?php echo O::escapeHtml('or-form-btn-label') ?>"><?php echo O::escapeHtml(''.@O::lang('APPLY').'') ?>
         </span>
       </div>
       <div class="<?php echo O::escapeHtml('or-btn or-btn--primary or-act-form-save') ?>"><?php echo O::escapeHtml('') ?>
-        <i class="<?php echo O::escapeHtml('image-icon image-icon--form-ok') ?>"><?php echo O::escapeHtml('') ?>
+        <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--form-ok') ?>"><?php echo O::escapeHtml('') ?>
         </i>
         <span class="<?php echo O::escapeHtml('or-form-btn-label') ?>"><?php echo O::escapeHtml(''.@O::lang('save').'') ?>
         </span>

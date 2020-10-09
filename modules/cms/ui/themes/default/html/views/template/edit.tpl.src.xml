@@ -47,7 +47,7 @@
 				<text value="${source}" escape="true" type="code" maxlength="200"></text>
 				<newline/>
 
-				<link type="edit" subaction="src" var1="modelid" value1="${modelid}" class="or-form-button">
+				<link type="edit" subaction="src" var1="modelid" value1="${modelid}" class="form-button">
 					<image action="template"/>
 					<text value="${message:edit}"></text>
 				</link>

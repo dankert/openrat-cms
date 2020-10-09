@@ -3,7 +3,7 @@
 	<form>
 		<part class="line">
 			<part class="label"></part>
-			<part class="input">
+			<part class="value">
 				<radio name="type" value="proposal"></radio>
 				<label for="type" value="proposal" text="${password_proposal}">
 					<text value="${message:USER_new_password}" />
@@ -17,7 +17,7 @@
 		<if true="${config:mail/enabled}">
 			<part class="line">
 				<part class="label"></part>
-				<part class="input">
+				<part class="value">
 					<radio name="type" value="random"></radio>
 					<label for="type" value="random" key="user_random_password"></label>
 				</part>
@@ -25,7 +25,7 @@
 		</if>
 		<part class="line">
 			<part class="label"></part>
-			<part class="input">
+			<part class="value">
 				<radio name="type" value="input" checked="true"></radio>
 				<label for="type" value="input" key="USER_NEW_PASSWORD_INPUT">
 				</label>
@@ -35,7 +35,7 @@
 			<part class="label">
 				<label for="password1" key="USER_new_password"></label>
 			</part>
-			<part class="input">
+			<part class="value">
 				<password name="password1"></password>
 			</part>
 		</part>
@@ -43,7 +43,7 @@
 			<part class="label">
 				<label for="password2" key="USER_new_password_repeat"></label>
 			</part>
-			<part class="input">
+			<part class="value">
 				<password name="password2"></password>
 			</part>
 		</part>
@@ -52,14 +52,14 @@
 			<if present="mail">
 				<part class="line">
 					<part class="label"></part>
-					<part class="input">
+					<part class="value">
 						<checkbox name="email"></checkbox>
 						<label for="email" key="user_mail_new_password"></label>
 					</part>
 				</part>
 				<part class="line">
 					<part class="label"></part>
-					<part class="input">
+					<part class="value">
 						<checkbox name="timeout"></checkbox>
 						<label for="timeout" key="user_password_timeout"></label>
 					</part>

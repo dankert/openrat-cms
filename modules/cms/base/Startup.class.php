@@ -32,6 +32,7 @@ class Startup {
 
 	const HTML_MODULES_DIR = './modules/';
 	const THEMES_DIR       = './modules/cms/ui/themes/';
+	const CSS_PREFIX       = 'or-';
 
 	const TITLE   = 'OpenRat CMS';
 	const VERSION = Version::VERSION;

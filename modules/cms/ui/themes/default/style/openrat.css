@@ -191,11 +191,13 @@ th {
 ::after {
 	box-sizing: border-box;
 }
-/* After page loading, all elements are hidden. This class will be removed by javascript. */
-.initial-hidden {
+.or- {
+	/* After page loading, all elements are hidden. This class will be removed by javascript. */
+}
+.or-initial-hidden {
 	display: none;
 }
-.sort-value {
+.or-table-sort-value {
 	display: none;
 }
 legend {
@@ -203,7 +205,7 @@ legend {
 	font-weight: bold;
 	padding: 0 0.5em;
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-base.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3BAAKA%3BCACE%2CaAAa%2CUAAU%2C6CAA6C%2CYAAY%2CaAAa%2CUAAU%2CaACvG%2CaAAa%2CcAAc%2C4BAD3B%3BCAEA%3BCACA%3BCACA%3B%3BAAIF%3BCAAO%3B%3BAAMP%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BCACE%3B%3BAAKF%3BAACA%3BAACA%3BAACA%3BCACE%3BCACA%3B%3BAAKF%2CKAAK%2CIAAI%3BCACP%3BCACA%3B%3BAAKF%3BAACA%3BCACE%3B%3BAAKF%3BCACE%3B%3BAAEA%2CCAAC%3BAACD%2CCAAC%3BCACC%3B%3BAAOJ%2CIAAI%3BCAAU%2CyBAAA%3B%3BAAGd%3BAACA%3BCACE%3B%3BAAIF%3BCAAM%3B%3BAAGN%3BCACE%3BCACA%2CgBAAA%3B%3BAAIF%3BCACE%3BCACA%3B%3BAAIF%3BCAAQ%3B%3BAAGR%3BAACA%3BCACE%3BCACA%3BCACA%3BCACA%3B%3BAAGF%3BCAAM%3B%3BAACN%3BCAAM%3B%3BAAIN%3BCAAM%3B%3BAAGN%2CGAAG%2CIAAI%3BCAAU%3B%3BAAIjB%3BCAAS%2CgBAAA%3B%3BAAGT%3BCACE%3BCACA%3BCACA%3B%3BAAIF%3BCAAM%3B%3BAAGN%3BAACA%3BAACA%3BAACA%3BCACE%2CaAAa%2CuCAAb%3BCACA%3B%3BAAWF%3BAACA%3BAACA%3BAACA%3BAACA%3BCACE%3BCACA%3BCACA%3BCACA%3B%3BAAIF%3BCAAS%3B%3BAAMT%3BAACA%3BCACE%3B%3BAAMF%3BAACA%2CIAAK%2CMAAK%3BCACR%3BCACA%3B%3BAAIF%2CMAAM%3BAACN%2CIAAK%2CMAAK%3BCACR%3B%3BAAMA%2CMADF%2CMACG%3BCACC%3BCACA%3B%3BAAKJ%3BCACE%3B%3BAACA%2CKAAC%3BAACD%2CKAAC%3BCACC%3BCACA%3B%3BAAOF%2CKAAC%3BAACD%2CKAAC%3BCACC%3BCACA%3B%3BAAOA%2CKADD%2CeACE%3BAACD%2CKAFD%2CeAEE%3BCACC%3B%3BAAMJ%2CKAAC%3BCACC%3BCACA%3BCACA%3BCACA%3B%3BAAKA%2CKATD%2CeASE%3BAACD%2CKAVD%2CeAUE%3BCACC%3B%3BAAON%3BCACE%2CyBAAA%3BCACA%2CaAAA%3BCACA%2C8BAAA%3B%3BAAKF%3BCACE%3BCACA%3B%3BAAIF%3BCAAW%3B%3BAAIX%3BCAAW%3B%3BAAIX%3BCACE%3BCACA%3B%3BAAGF%3BAACA%3BCACE%3BCACA%3B%3B%3BAAUF%3BAAAG%3BAAAU%3BCACX%3B%3B%3BAAOF%3BCACE%3B%3BAAGF%3BCACE%3B%3BAAKF%3BCACI%3BCACA%3BCACA%2CgBAAA%22%7D */
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-base.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3BAAKA%3BCACE%2CaAAa%2CUAAU%2C6CAA6C%2CYAAY%2CaAAa%2CUAAU%2CaACvG%2CaAAa%2CcAAc%2C4BAD3B%3BCAEA%3BCACA%3BCACA%3B%3BAAIF%3BCAAO%3B%3BAAMP%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BCACE%3B%3BAAKF%3BAACA%3BAACA%3BAACA%3BCACE%3BCACA%3B%3BAAKF%2CKAAK%2CIAAI%3BCACP%3BCACA%3B%3BAAKF%3BAACA%3BCACE%3B%3BAAKF%3BCACE%3B%3BAAEA%2CCAAC%3BAACD%2CCAAC%3BCACC%3B%3BAAOJ%2CIAAI%3BCAAU%2CyBAAA%3B%3BAAGd%3BAACA%3BCACE%3B%3BAAIF%3BCAAM%3B%3BAAGN%3BCACE%3BCACA%2CgBAAA%3B%3BAAIF%3BCACE%3BCACA%3B%3BAAIF%3BCAAQ%3B%3BAAGR%3BAACA%3BCACE%3BCACA%3BCACA%3BCACA%3B%3BAAGF%3BCAAM%3B%3BAACN%3BCAAM%3B%3BAAIN%3BCAAM%3B%3BAAGN%2CGAAG%2CIAAI%3BCAAU%3B%3BAAIjB%3BCAAS%2CgBAAA%3B%3BAAGT%3BCACE%3BCACA%3BCACA%3B%3BAAIF%3BCAAM%3B%3BAAGN%3BAACA%3BAACA%3BAACA%3BCACE%2CaAAa%2CuCAAb%3BCACA%3B%3BAAWF%3BAACA%3BAACA%3BAACA%3BAACA%3BCACE%3BCACA%3BCACA%3BCACA%3B%3BAAIF%3BCAAS%3B%3BAAMT%3BAACA%3BCACE%3B%3BAAMF%3BAACA%2CIAAK%2CMAAK%3BCACR%3BCACA%3B%3BAAIF%2CMAAM%3BAACN%2CIAAK%2CMAAK%3BCACR%3B%3BAAMA%2CMADF%2CMACG%3BCACC%3BCACA%3B%3BAAKJ%3BCACE%3B%3BAACA%2CKAAC%3BAACD%2CKAAC%3BCACC%3BCACA%3B%3BAAOF%2CKAAC%3BAACD%2CKAAC%3BCACC%3BCACA%3B%3BAAOA%2CKADD%2CeACE%3BAACD%2CKAFD%2CeAEE%3BCACC%3B%3BAAMJ%2CKAAC%3BCACC%3BCACA%3BCACA%3BCACA%3B%3BAAKA%2CKATD%2CeASE%3BAACD%2CKAVD%2CeAUE%3BCACC%3B%3BAAON%3BCACE%2CyBAAA%3BCACA%2CaAAA%3BCACA%2C8BAAA%3B%3BAAKF%3BCACE%3BCACA%3B%3BAAIF%3BCAAW%3B%3BAAIX%3BCAAW%3B%3BAAIX%3BCACE%3BCACA%3B%3BAAGF%3BAACA%3BCACE%3BCACA%3B%3B%3BAAUF%3BAAAG%3BAAAU%3BCACX%3B%3BAAKF%3B%3B%3BAAEI%2CIAAC%3BCACG%3B%3BAAQA%2CGAFH%2CMAEI%3BCACG%3B%3BAAOZ%3BCACI%3BCACA%3BCACA%2CgBAAA%22%7D */
 /* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-ui */
 /* Usage to this variable is safe to be removed */
 /* oxygen-regular - latin */
@@ -230,7 +232,7 @@ legend {
 	font-weight: 400;
 	src: local('Material Icons'), local('MaterialIcons-Regular'), url('../font/MaterialIcons-Regular.woff2') format('woff2'), url('../font/MaterialIcons-Regular.woff') format('woff');
 }
-.image-icon {
+.or-image-icon {
 	font-family: 'Material Icons';
 	font-weight: normal;
 	font-style: normal;
@@ -243,256 +245,256 @@ legend {
 	/* Support for IE. */
 	font-feature-settings: 'liga';
 }
-.image-icon--action-el_text:after {
+.or-image-icon--action-el_text:after {
 	content: "spellcheck";
 }
-.image-icon--action-el_longtext:after {
+.or-image-icon--action-el_longtext:after {
 	content: "view_headline";
 }
-.image-icon--action-el_select:after {
+.or-image-icon--action-el_select:after {
 	content: "list";
 }
-.image-icon--action-el_number:after {
+.or-image-icon--action-el_number:after {
 	content: "looks_one";
 }
-.image-icon--action-el_link:after {
+.or-image-icon--action-el_link:after {
 	content: "call_made";
 }
-.image-icon--action-el_date:after {
+.or-image-icon--action-el_date:after {
 	content: "date_range";
 }
-.image-icon--action-el_insert:after {
+.or-image-icon--action-el_insert:after {
 	content: "keyboard_return";
 }
-.image-icon--action-el_copy:after {
+.or-image-icon--action-el_copy:after {
 	content: "flip_to_back";
 }
-.image-icon--action-el_linkinfo:after {
+.or-image-icon--action-el_linkinfo:after {
 	content: "info";
 }
-.image-icon--action-el_linkdate:after {
+.or-image-icon--action-el_linkdate:after {
 	content: "info";
 }
-.image-icon--action-el_code:after {
+.or-image-icon--action-el_code:after {
 	content: "code";
 }
-.image-icon--action-el_dynamic:after {
+.or-image-icon--action-el_dynamic:after {
 	content: "play_circle_outline";
 }
-.image-icon--action-el_info:after {
+.or-image-icon--action-el_info:after {
 	content: "info";
 }
-.image-icon--action-el_infodate:after {
+.or-image-icon--action-el_infodate:after {
 	content: "info";
 }
-.image-icon--action-el_checkbox:after {
+.or-image-icon--action-el_checkbox:after {
 	content: "check_box";
 }
-.image-icon--action-image:after {
+.or-image-icon--action-image:after {
 	content: "image";
 }
-.image-icon--action-link:after {
+.or-image-icon--action-link:after {
 	content: "call_made";
 }
-.image-icon--action-url:after {
+.or-image-icon--action-url:after {
 	content: "link";
 }
-.image-icon--action-alias:after {
+.or-image-icon--action-alias:after {
 	content: "bookmark_border";
 }
-.image-icon--action-text:after {
+.or-image-icon--action-text:after {
 	content: "text_format";
 }
-.image-icon--action-page:after {
+.or-image-icon--action-page:after {
 	content: "insert_drive_file";
 }
-.image-icon--action-file:after {
+.or-image-icon--action-file:after {
 	content: "save";
 }
-.image-icon--action-modellist:after {
+.or-image-icon--action-modellist:after {
 	content: "device_hub";
 }
-.image-icon--action-model:after {
+.or-image-icon--action-model:after {
 	content: "device_hub";
 }
-.image-icon--action-folder:after {
+.or-image-icon--action-folder:after {
 	content: "folder_open";
 }
-.image-icon--action-languagelist:after {
+.or-image-icon--action-languagelist:after {
 	content: "language";
 }
-.image-icon--action-language:after {
+.or-image-icon--action-language:after {
 	content: "language";
 }
-.image-icon--action-template:after {
+.or-image-icon--action-template:after {
 	content: "receipt";
 }
-.image-icon--action-templatelist:after {
+.or-image-icon--action-templatelist:after {
 	content: "receipt";
 }
-.image-icon--action-groupllist:after {
+.or-image-icon--action-groupllist:after {
 	content: "group";
 }
-.image-icon--action-group:after {
+.or-image-icon--action-group:after {
 	content: "group";
 }
-.image-icon--action-userlist:after {
+.or-image-icon--action-userlist:after {
 	content: "person";
 }
-.image-icon--action-user:after {
+.or-image-icon--action-user:after {
 	content: "person";
 }
-.image-icon--action-profile:after {
+.or-image-icon--action-profile:after {
 	content: "person_pin";
 }
-.image-icon--method-settings:after {
+.or-image-icon--method-settings:after {
 	content: "settings";
 }
-.image-icon--action-configuration:after {
+.or-image-icon--action-configuration:after {
 	content: "settings";
 }
-.image-icon--action-projectlist:after {
+.or-image-icon--action-projectlist:after {
 	content: "list";
 }
-.image-icon--action-project:after {
+.or-image-icon--action-project:after {
 	content: "account_balance";
 }
-.image-icon--action-macro:after {
+.or-image-icon--action-macro:after {
 	content: "data_usage";
 }
-.image-icon--action-membership {
+.or-image-icon--action-membership {
 	content: "card_membership";
 }
-.image-icon--method-password:after {
+.or-image-icon--method-password:after {
 	content: "lock";
 }
-.image-icon--method-publish:after {
+.or-image-icon--method-publish:after {
 	content: "cloud_upload";
 }
-.image-icon--method-show:after {
+.or-image-icon--method-show:after {
 	content: "slideshow";
 }
-.image-icon--method-src:after {
+.or-image-icon--method-src:after {
 	content: "code";
 }
-.image-icon--method-acl:after {
+.or-image-icon--method-acl:after {
 	content: "https";
 }
-.image-icon--method-rights:after {
+.or-image-icon--method-rights:after {
 	content: "https";
 }
-.image-icon--method-archive:after {
+.or-image-icon--method-archive:after {
 	content: "schedule";
 }
-.image-icon--method-mail:after {
+.or-image-icon--method-mail:after {
 	content: "mail";
 }
-.image-icon--method-search:after {
+.or-image-icon--method-search:after {
 	content: "search";
 }
-.image-icon--method-add:after {
+.or-image-icon--method-add:after {
 	content: "add_box";
 }
-.image-icon--menu-close:after {
+.or-image-icon--menu-close:after {
 	content: "close";
 }
-.image-icon--menu-fullscreen:after {
+.or-image-icon--menu-fullscreen:after {
 	content: "fullscreen";
 }
-.image-icon--menu-edit:after {
+.or-image-icon--menu-edit:after {
 	content: "description";
 }
-.image-icon--menu-extra:after {
+.or-image-icon--menu-extra:after {
 	content: "build";
 }
-.image-icon--menu-menu:after {
+.or-image-icon--menu-menu:after {
 	content: "menu";
 }
-.image-icon--menu-minimize:after {
+.or-image-icon--menu-minimize:after {
 	content: "compare_arrows";
 }
-.image-icon--menu-qrcode:after {
+.or-image-icon--menu-qrcode:after {
 	content: "phone_android";
 }
-.image-icon--node-open:after {
+.or-image-icon--node-open:after {
 	content: "expand_more";
 }
-.image-icon--node-closed:after {
+.or-image-icon--node-closed:after {
 	content: "chevron_right";
 }
-.image-icon--dropdown:after {
+.or-image-icon--dropdown:after {
 	content: "arrow_drop_down";
 }
-.image-icon--database:after {
+.or-image-icon--database:after {
 	content: "storage";
 }
-.image-icon--arrow-left:after {
+.or-image-icon--arrow-left:after {
 	content: "chevron_left";
 }
-.image-icon--arrow-right:after {
+.or-image-icon--arrow-right:after {
 	content: "chevron_right";
 }
-.image-icon--form-ok:after {
+.or-image-icon--form-ok:after {
 	content: "done";
 }
-.image-icon--form-apply:after {
+.or-image-icon--form-apply:after {
 	content: "done";
 }
-.image-icon--form-cancel:after {
+.or-image-icon--form-cancel:after {
 	content: "clear";
 }
-.image-icon--editor-bold:after {
+.or-image-icon--editor-bold:after {
 	content: "format_bold";
 }
-.image-icon--editor-italic:after {
+.or-image-icon--editor-italic:after {
 	content: "format_italic";
 }
-.image-icon--editor-headline:after {
+.or-image-icon--editor-headline:after {
 	content: "format_size";
 }
-.image-icon--editor-help:after {
+.or-image-icon--editor-help:after {
 	content: "help_outline";
 }
-.image-icon--editor-fullscreen:after {
+.or-image-icon--editor-fullscreen:after {
 	content: "fullscreen";
 }
-.image-icon--editor-quote:after {
+.or-image-icon--editor-quote:after {
 	content: "format_quote";
 }
-.image-icon--editor-unnumberedlist:after {
+.or-image-icon--editor-unnumberedlist:after {
 	content: "format_list_bulleted";
 }
-.image-icon--editor-numberedlist:after {
+.or-image-icon--editor-numberedlist:after {
 	content: "format_list_numbered";
 }
-.image-icon--editor-preview:after {
+.or-image-icon--editor-preview:after {
 	content: "desktop_windows";
 }
-.image-icon--editor-sidebyside:after {
+.or-image-icon--editor-sidebyside:after {
 	content: "flip";
 }
-.image-icon--editor-link:after {
+.or-image-icon--editor-link:after {
 	content: "link";
 }
-.image-icon--editor-image:after {
+.or-image-icon--editor-image:after {
 	content: "image";
 }
-.image-icon--editor-undo:after {
+.or-image-icon--editor-undo:after {
 	content: "undo";
 }
-.image-icon--editor-redo:after {
+.or-image-icon--editor-redo:after {
 	content: "redo";
 }
-.image-icon--editor-code:after {
+.or-image-icon--editor-code:after {
 	content: "code";
 }
-.image-icon--editor-horizontalrule:after {
+.or-image-icon--editor-horizontalrule:after {
 	content: "remove";
 }
-.image-icon--editor-table:after {
+.or-image-icon--editor-table:after {
 	content: "view_comfy";
 }
-.editor-toolbar {
+.or-editor-toolbar {
 	font-size: 1.5em;
 }
 iframe {
@@ -500,12 +502,7 @@ iframe {
 	height: 500px;
 	display: block;
 }
-div.breadcrumb,
-div.breadcrumb a,
-div.panel > div.title {
-	font-weight: bold;
-}
-div#noticebar {
+.or-notices {
 	display: block;
 	position: fixed;
 	bottom: 40px;
@@ -514,7 +511,7 @@ div#noticebar {
 	width: 25em;
 	z-index: 113;
 }
-div#noticebar div.notice {
+.or-notice {
 	border: 2px solid #000000;
 	padding: 1.1em;
 	margin: 5px;
@@ -527,17 +524,17 @@ div#noticebar div.notice {
 	-moz-box-shadow: 3px 2px 5px #000000;
 	box-shadow: 3px 2px 5px #000000;
 }
-div#noticebar div.notice .or-notice-toolbar {
+.or-notice-toolbar {
 	float: right;
 	margin: 0 0.2em;
 	font-size: 2em;
 	color: gray;
 	cursor: pointer;
 }
-div#noticebar div.notice:hover .or-notice-toolbar {
+.or-notice:hover .or-notice-toolbar {
 	color: black;
 }
-div#noticebar div.notice.full {
+.or-notice-full {
 	display: block;
 	position: fixed;
 	bottom: 10%;
@@ -547,13 +544,13 @@ div#noticebar div.notice.full {
 	width: 80%;
 	z-index: 114;
 }
-div#noticebar div.notice.error div.text {
+.or-notice-error div.text {
 	font-weight: bold;
 }
-div#noticebar div.notice div.text {
+.or-notice-text {
 	font-size: 1.1em;
 }
-div#noticebar div.notice:after {
+.or-notice:after {
 	content: '';
 	position: absolute;
 	right: 0;
@@ -565,17 +562,17 @@ div#noticebar div.notice:after {
 	margin-top: -1em;
 	margin-right: -1em;
 }
-div#noticebar div.notice div.log {
+.or-notice-log {
 	display: none;
 	position: relative;
 	max-height: 90%;
 	overflow: auto;
 	font-family: 'Source Code Pro', Monospace, Monospaced, Courier;
 }
-div#noticebar div.notice.full div.log {
+.or-notice-full-log {
 	display: block;
 }
-div.onrowvisible {
+div.or-onrowvisible {
 	visibility: hidden;
 	display: inline;
 }
@@ -599,15 +596,15 @@ img[align=right] {
 }
 /* Vorformatierter Text */
 /* Lizenzhinweis  */
-div.logo h2 {
+div.or-logo h2 {
 	font-weight: normal;
 	font-size: 24px;
 }
-div.logo p {
+div.or-logo p {
 	font-size: 13px;
 }
 label,
-.clickable {
+.or-clickable {
 	cursor: pointer;
 }
 /* Drag and Drop */
@@ -620,172 +617,211 @@ label,
 	cursor: move;
 }
 /*   T a b s   */
+/*
 img.icon {
-	padding: 4px;
-	width: 16px;
-	height: 16px;
+  padding: 4px;
+  width: 16px;
+  height: 16px;
 }
+*/
+/*
 div.panel ul.views li {
-	vertical-align: middle;
-	padding: 0px;
-	cursor: pointer;
-	border-right: 1px solid #000000;
-	-moz-border-radius-topleft: 5px;
-	/* Mozilla */
-	-webkit-border-radius-topleft: 5px;
-	/* Webkit */
-	-khtml-border-top-radius-topleft: 5px;
-	/* Konqui */
-	-moz-border-radius-topright: 5px;
-	/* Mozilla */
-	-webkit-border-radius-topright: 5px;
-	/* Webkit */
-	-khtml-border-top-radius-topright: 5px;
-	/* Konqui */
-	border-top-right-radius: 5px;
-	display: inline;
-	white-space: nowrap;
-	float: left;
+  vertical-align: middle;
+  padding: 0px;
+
+  cursor: pointer;
+
+  border-right: 1px solid @color-overridden-by-theme;
+
+  -moz-border-radius-topleft: 5px;
+  -webkit-border-radius-topleft: 5px;
+  -khtml-border-top-radius-topleft: 5px;
+  border-top-right-radius: 5px;
+  -moz-border-radius-topright: 5px;
+  -webkit-border-radius-topright: 5px;
+  -khtml-border-top-radius-topright: 5px;
+  border-top-right-radius: 5px;
+
+  display: inline;
+  white-space: nowrap;
+  float: left;
 }
+*/
+/*
 div.panel {
-	margin: 0px;
-	padding: 0px;
+  margin: 0px;
+  padding: 0px;
 }
+*/
 /*   S t a t u s z e i l e   */
+/*
 div.panel div.status {
-	padding: 10px;
+  padding: 10px;
 }
+*/
+/*
 div.panel div.status div.error,
 div.message.error {
-	background: url(../images/notice_error.png) no-repeat;
-	background-position: 5px 7px;
+  background: url(../images/notice_error.png) no-repeat;
+  background-position: 5px 7px;
 }
+ */
+/*
 div.panel div.status div.warn,
 div.message.warn {
-	background: url(../images/notice_warning.png) no-repeat;
-	background-position: 5px 7px;
+  background: url(../images/notice_warning.png) no-repeat;
+  background-position: 5px 7px;
 }
+
+ */
+/*
 div.panel div.status div.ok,
 div.message.ok {
-	background: url(../images/notice_ok.png) no-repeat;
-	background-position: 5px 7px;
+  background: url(../images/notice_ok.png) no-repeat;
+  background-position: 5px 7px;
 }
+ */
+/*
 div.panel div.status div.info,
 div.message.info {
-	background: url(../images/notice_info.png) no-repeat;
-	background-position: 5px 7px;
+  background: url(../images/notice_info.png) no-repeat;
+  background-position: 5px 7px;
 }
+ */
+/*
 div.panel div.status div,
 div.message {
-	border: 1px solid #000000;
-	padding: 5px 0px 5px 25px;
-	margin: 10px 10px 20px 10px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-khtml-border-radius: 5px;
-	border-radius: 5px;
+  border: 1px solid @color-overridden-by-theme;
+  padding: 5px 0px 5px 25px;
+  margin: 10px 10px 20px 10px;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
 }
-#workbench div.panel.fullscreen {
-	display: block;
-	z-index: 109;
-	position: fixed;
-	top: 0;
-	left: 0;
-	background-color: #000000;
-	margin: 0px;
-	width: 100% !important;
-	height: 100% !important;
-}
-#workbench div.panel.fullscreen > div.content {
-	width: 100% !important;
-	height: 100% !important;
-}
-#workbench div.panel {
-	border: 1px solid #000000;
-	margin: 0px;
-	padding: 0px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-khtml-border-radius: 5px;
-	border-radius: 5px;
-}
-#workbench div.container,
-#workbench div.panel,
-#workbench div.divider {
-	display: inline;
-	float: left;
-	margin: 0px;
-}
-#workbench div.panel > div.content {
-	overflow: auto;
-}
-.invisible {
+*/
+/*
+#workbench {
+  div.panel.fullscreen {
+    display: block;
+    z-index: 109;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: @color-overridden-by-theme;
+    margin: 0px;
+    width: 100% ! important;
+    height: 100% ! important;
+  }
+*/
+/*
+  div.panel.fullscreen > div.content {
+    width: 100% ! important;
+    height: 100% ! important;
+  }
+*/
+/*
+  div.panel {
+    border: 1px solid @color-overridden-by-theme;
+    margin: 0px;
+    padding: 0px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    border-radius: 5px;
+  }
+*/
+/*
+  div.container, div.panel, div.divider {
+    display: inline;
+    float: left;
+    margin: 0px;
+  }
+*/
+/*
+  div.panel > div.content {
+    overflow: auto;
+  }
+
+ */
+.or--invisible {
 	visibility: hidden;
 }
-.visible {
+.or--visible {
 	visibility: visible;
 }
 /*
  * Formular-Button-Leiste
  */
+/*
 div.panel {
-	position: relative;
+  position: relative;
 }
+*/
+/*
 div.content div.bottom {
-	height: 55px;
-	width: 100%;
-	position: absolute;
-	padding-right: 40px;
-	bottom: 0px;
-	right: 0px;
-	xvisibility: hidden;
+  height: 55px;
+  width: 100%;
+  position: absolute;
+  padding-right: 40px;
+  bottom: 0px;
+  right: 0px;
+  xvisibility: hidden;
 }
+
 div.content div.bottom > div.command {
-	xvisibility: visible;
-	float: right;
-	z-index: 20;
+  xvisibility: visible;
+  float: right;
+  z-index: 20;
 }
+
 div.content form[data-autosave='true'] div.command {
-	display: none;
+  display: none;
 }
+
 div.content > form {
-	padding-bottom: 45px;
+  padding-bottom: 45px;
 }
+*/
 main .or-form .or-form-actionbar {
 	display: none;
 }
-div.search > .or-input {
+.or-search > .or-input {
 	padding-top: 1px;
+	-webkit-box-shadow: 0 0 0 #000000 !important;
+	-moz-box-shadow: 0 0 0 #000000 !important;
+	box-shadow: 0 0 0 #000000 !important;
+	background-color: transparent !important;
 }
 .or-input {
 	padding: 2px;
 	margin: 0px;
 }
 /* Eingabfeld fuer Namen */
-fieldset > div input.name,
-fieldset > div span.name {
+.or-input--name {
 	font-weight: bold;
 }
 /* Eingabfelder fuer Dateiname */
-fieldset > div input.filename,
-fieldset > div input.extension,
-fieldset > div input.ansidate,
-fieldset > div span.filename,
-fieldset > div span.extension,
-fieldset > div span.ansidate {
+.or-input--filename {
 	font-family: 'Source Code Pro', Monospace, Monospaced, Courier;
 }
-dl.notice {
+dl.or-notice {
 	padding: 15px;
 }
+/*
 div.content pre,
 .dropdown {
-	min-width: 150px;
-	max-width: 450px;
+  min-width: 150px;
+  max-width: 450px;
 }
-img.image-icon {
-	visibility: hidden;
+
+ */
+/*
+img.or-image-icon {
+  visibility: hidden;
 }
+*/
 /* Make Codemirror Auto-Resizable */
 .CodeMirror {
 	height: auto;
@@ -834,14 +870,14 @@ img.image-icon {
 	right: 1em;
 	position: absolute;
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-ui.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3BAAIA%3BCACE%3BCACA%3BCACA%3BCACA%2CKAAK%2CMAAM%2CmBAAmB%2CMAAM%2CuBAChC%2CwCAAwC%2COAAO%2CuDAC%5C%2FC%2CwCAAwC%2COAAO%2COAFnD%3B%3B%3B%3B%3BAAMF%3BCACE%2CaAAa%2CiBAAb%3BCACA%3BCACA%3BCACA%2CKAAK%2CMAAM%2CoBAAoB%2CMAAM%2C8BACjC%2CkDAAkD%2COAAO%2CuDACzD%2CiDAAiD%2COAAO%2COAF5D%3B%3B%3B%3BAAKF%3BCACE%2CaAAa%2CgBAAb%3BCACA%3BCACA%3BCACA%2CKAAK%2CMAAM%2CmBACX%2CMAAM%2C8BACF%2CuCAAuC%2COAAO%2CcAC9C%2CsCAAsC%2COAAO%2COAHjD%3B%3BAAMF%3BCACE%2CaAAa%2CgBAAb%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BCAGA%3B%3BAAGA%2CWAAC%2CgBAAgB%3BCAAS%3B%3BAAC1B%2CWAAC%2CoBAAoB%3BCAAS%2CSAAS%2CeAAT%3B%3BAAC9B%2CWAAC%2CkBAAkB%3BCAAS%3B%3BAAC5B%2CWAAC%2CkBAAkB%3BCAAS%2CSAAS%2CWAAT%3B%3BAAC5B%2CWAAC%2CgBAAgB%3BCAAS%2CSAAS%2CWAAT%3B%3BAAC1B%2CWAAC%2CgBAAgB%3BCAAS%2CSAAS%2CYAAT%3B%3BAAC1B%2CWAAC%2CkBAAkB%3BCAAS%2CSAAS%2CiBAAT%3B%3BAAC5B%2CWAAC%2CgBAAgB%3BCAAS%2CSAAS%2CcAAT%3B%3BAAC1B%2CWAAC%2CoBAAoB%3BCAAS%3B%3BAAC9B%2CWAAC%2CoBAAoB%3BCAAS%3B%3BAAC9B%2CWAAC%2CgBAAgB%3BCAAS%3B%3BAAC1B%2CWAAC%2CmBAAmB%3BCAAS%2CSAAS%2CqBAAT%3B%3BAAC7B%2CWAAC%2CgBAAgB%3BCAAS%3B%3BAAC1B%2CWAAC%2CoBAAoB%3BCAAS%3B%3BAAC9B%2CWAAC%2CoBAAoB%3BCAAS%2CSAAS%2CWAAT%3B%3BAAE9B%2CWAAC%2CcAAc%3BCAAS%3B%3BAACxB%2CWAAC%2CaAAa%3BCAAS%2CSAAS%2CWAAT%3B%3BAACvB%2CWAAC%2CYAAY%3BCAAS%3B%3BAACtB%2CWAAC%2CcAAc%3BCAAS%2CSAAS%2CiBAAT%3B%3BAACxB%2CWAAC%2CaAAa%3BCAAS%2CSAAS%2CaAAT%3B%3BAACvB%2CWAAC%2CaAAa%3BCAAS%2CSAAS%2CmBAAT%3B%3BAACvB%2CWAAC%2CaAAa%3BCAAS%3B%3BAACvB%2CWAAC%2CkBAAkB%3BCAAS%2CSAAS%2CYAAT%3B%3BAAC5B%2CWAAC%2CcAAc%3BCAAS%2CSAAS%2CYAAT%3B%3BAACxB%2CWAAC%2CeAAe%3BCAAS%2CSAAS%2CaAAT%3B%3BAACzB%2CWAAC%2CqBAAqB%3BCAAS%3B%3BAAC%5C%2FB%2CWAAC%2CiBAAiB%3BCAAS%3B%3BAAC3B%2CWAAC%2CiBAAiB%3BCAAS%3B%3BAAC3B%2CWAAC%2CqBAAqB%3BCAAS%3B%3BAAC%5C%2FB%2CWAAC%2CmBAAmB%3BCAAS%3B%3BAAC7B%2CWAAC%2CcAAc%3BCAAS%3B%3BAACxB%2CWAAC%2CiBAAiB%3BCAAS%3B%3BAAC3B%2CWAAC%2CaAAa%3BCAAS%3B%3BAACvB%2CWAAC%2CgBAAgB%3BCAAS%2CSAAS%2CYAAT%3B%3BAAC1B%2CWAAC%2CiBAAiB%3BCAAS%3B%3BAAC3B%2CWAAC%2CsBAAsB%3BCAAS%3B%3BAAChC%2CWAAC%2CoBAAoB%3BCAAS%3B%3BAAC9B%2CWAAC%2CgBAAgB%3BCAAS%2CSAAS%2CiBAAT%3B%3BAAE1B%2CWAAC%2CcAAc%3BCAAS%2CSAAS%2CYAAT%3B%3BAAExB%2CWAAC%3BCAAsB%2CSAAS%2CiBAAT%3B%3BAACvB%2CWAAC%2CiBAAiB%3BCAAS%3B%3BAAC3B%2CWAAC%2CgBAAgB%3BCAAS%2CSAAS%2CcAAT%3B%3BAAC1B%2CWAAC%2CaAAa%3BCAAS%3B%3BAACvB%2CWAAC%2CYAAY%3BCAAS%3B%3BAACtB%2CWAAC%2CYAAY%3BCAAS%3B%3BAACtB%2CWAAC%2CeAAe%3BCAAS%3B%3BAACzB%2CWAAC%2CgBAAgB%3BCAAS%3B%3BAAC1B%2CWAAC%2CaAAa%3BCAAS%3B%3BAACvB%2CWAAC%2CeAAe%3BCAAS%3B%3BAACzB%2CWAAC%2CYAAY%3BCAAS%2CSAAS%2CSAAT%3B%3BAACtB%2CWAAC%2CYAAY%3BCAAS%3B%3BAACtB%2CWAAC%2CiBAAiB%3BCAAS%3B%3BAAC3B%2CWAAC%2CWAAW%3BCAAS%3B%3BAACrB%2CWAAC%2CYAAY%3BCAAS%3B%3BAAEtB%2CWAAC%2CWAAW%3BCAAS%3B%3BAACrB%2CWAAC%2CeAAe%3BCAAS%2CSAAS%2CgBAAT%3B%3BAACzB%2CWAAC%2CaAAa%3BCAAS%2CSAAS%2CeAAT%3B%3BAAEvB%2CWAAC%2CWAAW%3BCAAS%2CSAAS%2CaAAT%3B%3BAACrB%2CWAAC%2CaAAa%3BCAAS%2CSAAS%2CeAAT%3B%3BAACvB%2CWAAC%2CUAAU%3BCAAS%2CSAAS%2CiBAAT%3B%3BAACpB%2CWAAC%2CUAAU%3BCAAS%3B%3BAAEpB%2CWAAC%2CYAAY%3BCAAS%2CSAAS%2CcAAT%3B%3BAACtB%2CWAAC%2CaAAa%3BCAAS%2CSAAS%2CeAAT%3B%3BAAEvB%2CWAAC%2CSAAS%3BCAAS%3B%3BAACnB%2CWAAC%2CYAAY%3BCAAS%3B%3BAACtB%2CWAAC%2CaAAa%3BCAAS%3B%3BAAEvB%2CWAAC%2CaAAa%3BCAAS%2CSAAS%2CaAAT%3B%3BAACvB%2CWAAC%2CeAAe%3BCAAS%2CSAAS%2CeAAT%3B%3BAACzB%2CWAAC%2CiBAAiB%3BCAAS%2CSAAS%2CaAAT%3B%3BAAC3B%2CWAAC%2CaAAa%3BCAAS%2CSAAS%2CcAAT%3B%3BAACvB%2CWAAC%2CmBAAmB%3BCAAS%3B%3BAAC7B%2CWAAC%2CcAAc%3BCAAS%2CSAAS%2CcAAT%3B%3BAACxB%2CWAAC%2CuBAAuB%3BCAAS%2CSAAS%2CsBAAT%3B%3BAACjC%2CWAAC%2CqBAAqB%3BCAAS%2CSAAS%2CsBAAT%3B%3BAAC%5C%2FB%2CWAAC%2CgBAAgB%3BCAAS%2CSAAS%2CiBAAT%3B%3BAAC1B%2CWAAC%2CmBAAmB%3BCAAS%3B%3BAAC7B%2CWAAC%2CaAAa%3BCAAS%3B%3BAACvB%2CWAAC%2CcAAc%3BCAAS%3B%3BAACxB%2CWAAC%2CaAAa%3BCAAS%3B%3BAACvB%2CWAAC%2CaAAa%3BCAAS%3B%3BAACvB%2CWAAC%2CaAAa%3BCAAS%3B%3BAACvB%2CWAAC%2CuBAAuB%3BCAAS%3B%3BAACjC%2CWAAC%2CcAAc%3BCAAS%2CSAAS%2CYAAT%3B%3BAAG1B%3BCACE%3B%3BAAgBF%3BCACE%3BCACA%3BCACA%3B%3BAAGF%2CGAAG%3BAACH%2CGAAG%2CWAAY%3BAACf%2CGAAG%2CMAAS%2CMAAG%3BCACb%3B%3BAAGF%2CGAAG%3BCAED%3BCACA%3BCACA%3B%3BCAEA%3BCACA%3BCACA%3B%3BAARF%2CGAAG%2CUAWD%2CIAAG%3BCACD%2CyBAAA%3BCACA%3BCACA%3BCACA%3BCAvCF%2CkBAAA%3BCACA%2CuBAAA%3BCACA%2C0BAAA%3BCACA%2CyBAAA%3BCAGA%2CuCAAA%3BCACA%2CoCAAA%3BCACA%2C%2BBAAA%3B%3BAAgBF%2CGAAG%2CUAWD%2CIAAG%2COASD%3BCACE%3BCACA%2CeAAA%3BCACA%3BCACA%3BCACA%3B%3BAAGF%2CGA5BD%2CUAWD%2CIAAG%2COAiBA%2CMACC%3BCACE%3B%3BAAIJ%2CGAlCD%2CUAWD%2CIAAG%2COAuBA%3BCACC%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAIF%2CGA9CD%2CUAWD%2CIAAG%2COAmCA%2CMAEC%2CIAAG%3BCACD%3B%3BAAjDR%2CGAAG%2CUAWD%2CIAAG%2COA0CD%2CIAAG%3BCACD%3B%3BAAGF%2CGAzDD%2CUAWD%2CIAAG%2COA8CA%3BCACC%2CSAAS%2CEAAT%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%2C6BAAA%3BCACA%3BCACA%3BCACA%3B%3BAAnEN%2CGAAG%2CUAWD%2CIAAG%2COA2DD%2CIAAG%3BCACD%3BCACA%3BCACA%3BCACA%3BCACA%2CaAAa%2CiDAAb%3B%3BAAGF%2CGA9ED%2CUAWD%2CIAAG%2COAmEA%2CKACC%2CIAAG%3BCACD%3B%3BAAmBR%2CGAAG%3BCACD%3BCACA%3B%3B%3B%3BAAQF%2CCAAC%3BAACD%2CCAAC%3BCACC%3BCACA%3B%3BAAGF%2CCAAC%3BAACD%2CCAAC%3BCACC%3BCACA%3B%3B%3BAAIF%2CGAAG%3BAACH%2CGAAG%3BCACD%3BCACA%3B%3B%3B%3BAAaF%2CGAAG%2CKAAM%3BCACP%3BCACA%3B%3BAAGF%2CGAAG%2CKAAM%3BCACP%3B%3BAAGF%3BAACA%3BCACE%3B%3B%3BAAQA%2CaAAC%3BCAEC%3BCACA%3B%3BAAGF%2CaAAC%3BCACC%3BCACA%3B%3B%3BAAOJ%2CGAAG%3BCACD%3BCACA%3BCACA%3B%3BAAGF%2CGAAG%2CMAAO%2CGAAE%2CMAAO%3BCACjB%3BCACA%3BCAEA%3BCAEA%2C%2BBAAA%3BCAEA%3B%3BCACA%3B%3BCACA%3B%3BCAEA%3B%3BCACA%3B%3BCACA%3B%3BCACA%3BCAEA%3BCACA%3BCACA%3B%3BAAGF%2CGAAG%3BCACD%3BCACA%3B%3B%3BAAOF%2CGAAG%2CMAAO%2CIAAG%3BCACX%3B%3BAAGF%2CGAAG%2CMAAO%2CIAAG%2COAAQ%2CIAAG%3BAACxB%2CGAAG%2CQAAQ%3BCACT%2CqDAAA%3BCACA%2C4BAAA%3B%3BAAGF%2CGAAG%2CMAAO%2CIAAG%2COAAQ%2CIAAG%3BAACxB%2CGAAG%2CQAAQ%3BCACT%2CuDAAA%3BCACA%2C4BAAA%3B%3BAAGF%2CGAAG%2CMAAO%2CIAAG%2COAAQ%2CIAAG%3BAACxB%2CGAAG%2CQAAQ%3BCACT%2CkDAAA%3BCACA%2C4BAAA%3B%3BAAGF%2CGAAG%2CMAAO%2CIAAG%2COAAQ%2CIAAG%3BAACxB%2CGAAG%2CQAAQ%3BCACT%2CoDAAA%3BCACA%2C4BAAA%3B%3BAAGF%2CGAAG%2CMAAO%2CIAAG%2COAAQ%3BAACrB%2CGAAG%3BCACD%2CyBAAA%3BCACA%2CyBAAA%3BCACA%2C2BAAA%3BCAEA%3BCACA%3BCACA%3BCACA%3B%3BAAIF%2CUACE%2CIAAG%2CMAAM%3BCACP%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%2CyBAAA%3BCACA%3BCACA%3BCACA%3B%3BAAVJ%2CUAaE%2CIAAG%2CMAAM%2CWAAc%2CMAAG%3BCACxB%3BCACA%3B%3BAAfJ%2CUAkBE%2CIAAG%3BCACD%2CyBAAA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAzBJ%2CUA4BE%2CIAAG%3BAA5BL%2CUA4BiB%2CIAAG%3BAA5BpB%2CUA4B4B%2CIAAG%3BCAC3B%3BCACA%3BCACA%3B%3BAA%5C%2FBJ%2CUAkCE%2CIAAG%2CMAAS%2CMAAG%3BCACb%3B%3BAAIJ%3BCACE%3B%3BAAGF%3BCACE%3B%3B%3B%3B%3BAAMF%2CGAAG%3BCACD%3B%3BAAGF%2CGAAG%2CQAAS%2CIAAG%3BCACb%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAGF%2CGAAG%2CQAAS%2CIAAG%2COAAU%2CMAAG%3BCAC1B%3BCACA%3BCACA%3B%3BAAGF%2CGAAG%2CQAAS%2CKAAI%2CsBAAuB%2CIAAG%3BCACxC%3B%3BAAGF%2CGAAG%2CQAAW%3BCACZ%3B%3BAAQF%2CIAAK%2CSAAS%3BCACZ%3B%3BAAIF%2CGAAG%2COAAU%3BCACX%3B%3BAAGF%3BCACE%3BCACA%3B%3B%3BAAIF%2CQAAW%2CMAAI%2CMAAK%3BAACpB%2CQAAW%2CMAAI%2CKAAI%3BCACjB%3B%3B%3BAAIF%2CQAAW%2CMAAI%2CMAAK%3BAACpB%2CQAAW%2CMAAI%2CMAAK%3BAACpB%2CQAAW%2CMAAI%2CMAAK%3BAACpB%2CQAAW%2CMAAI%2CKAAI%3BAACnB%2CQAAW%2CMAAI%2CKAAI%3BAACnB%2CQAAW%2CMAAI%2CKAAI%3BCACjB%2CaAAa%2CiDAAb%3B%3BAAGF%2CEAAE%3BCACA%3B%3BAAIF%2CGAAG%2CQAAS%3BAACZ%3BCACE%3BCACA%3B%3BAAGF%2CGAAG%3BCACD%3B%3B%3BAAIF%3BCACE%3B%3BAAGF%3BCACE%3BCACA%3BCACA%2CgBAAA%3B%3BAAHF%2CYAKI%3BCACA%2CiBAAA%3BCACA%3BCACA%3BCA%5C%2FZF%2CoBAAA%3BCACA%2CyBAAA%3BCACA%2C4BAAA%3BCACA%2C2BAAA%3B%3BAAkaF%3BCAEE%3B%3BAAEA%2CQAAC%2CMACC%3BCACE%3B%3BAANN%2CQAUE%3BCACE%3BCACA%3BCACA%3BCACA%3BCACA%3BCAEA%3BCACA%3BCAvbF%2CoBAAA%3BCACA%2CyBAAA%3BCACA%2C4BAAA%3BCACA%2C2BAAA%3BCAsbE%3BCAEA%3B%3BAAtBJ%2CQAUE%2CeAcI%3BCACA%3B%3BAAMN%3BCACI%3BCACA%3BCACA%3BCACA%22%7D */
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-ui.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3BAAIA%3BCACE%3BCACA%3BCACA%3BCACA%2CKAAK%2CMAAM%2CmBAAmB%2CMAAM%2CuBAChC%2CwCAAwC%2COAAO%2CuDAC%5C%2FC%2CwCAAwC%2COAAO%2COAFnD%3B%3B%3B%3B%3BAAMF%3BCACE%2CaAAa%2CiBAAb%3BCACA%3BCACA%3BCACA%2CKAAK%2CMAAM%2CoBAAoB%2CMAAM%2C8BACjC%2CkDAAkD%2COAAO%2CuDACzD%2CiDAAiD%2COAAO%2COAF5D%3B%3B%3B%3BAAKF%3BCACE%2CaAAa%2CgBAAb%3BCACA%3BCACA%3BCACA%2CKAAK%2CMAAM%2CmBACX%2CMAAM%2C8BACF%2CuCAAuC%2COAAO%2CcAC9C%2CsCAAsC%2COAAO%2COAHjD%3B%3BAAMF%3BCACE%2CaAAa%2CgBAAb%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BCAGA%3B%3BAAGA%2CcAAC%2CgBAAgB%3BCAAS%3B%3BAAC1B%2CcAAC%2CoBAAoB%3BCAAS%2CSAAS%2CeAAT%3B%3BAAC9B%2CcAAC%2CkBAAkB%3BCAAS%3B%3BAAC5B%2CcAAC%2CkBAAkB%3BCAAS%2CSAAS%2CWAAT%3B%3BAAC5B%2CcAAC%2CgBAAgB%3BCAAS%2CSAAS%2CWAAT%3B%3BAAC1B%2CcAAC%2CgBAAgB%3BCAAS%2CSAAS%2CYAAT%3B%3BAAC1B%2CcAAC%2CkBAAkB%3BCAAS%2CSAAS%2CiBAAT%3B%3BAAC5B%2CcAAC%2CgBAAgB%3BCAAS%2CSAAS%2CcAAT%3B%3BAAC1B%2CcAAC%2CoBAAoB%3BCAAS%3B%3BAAC9B%2CcAAC%2CoBAAoB%3BCAAS%3B%3BAAC9B%2CcAAC%2CgBAAgB%3BCAAS%3B%3BAAC1B%2CcAAC%2CmBAAmB%3BCAAS%2CSAAS%2CqBAAT%3B%3BAAC7B%2CcAAC%2CgBAAgB%3BCAAS%3B%3BAAC1B%2CcAAC%2CoBAAoB%3BCAAS%3B%3BAAC9B%2CcAAC%2CoBAAoB%3BCAAS%2CSAAS%2CWAAT%3B%3BAAE9B%2CcAAC%2CcAAc%3BCAAS%3B%3BAACxB%2CcAAC%2CaAAa%3BCAAS%2CSAAS%2CWAAT%3B%3BAACvB%2CcAAC%2CYAAY%3BCAAS%3B%3BAACtB%2CcAAC%2CcAAc%3BCAAS%2CSAAS%2CiBAAT%3B%3BAACxB%2CcAAC%2CaAAa%3BCAAS%2CSAAS%2CaAAT%3B%3BAACvB%2CcAAC%2CaAAa%3BCAAS%2CSAAS%2CmBAAT%3B%3BAACvB%2CcAAC%2CaAAa%3BCAAS%3B%3BAACvB%2CcAAC%2CkBAAkB%3BCAAS%2CSAAS%2CYAAT%3B%3BAAC5B%2CcAAC%2CcAAc%3BCAAS%2CSAAS%2CYAAT%3B%3BAACxB%2CcAAC%2CeAAe%3BCAAS%2CSAAS%2CaAAT%3B%3BAACzB%2CcAAC%2CqBAAqB%3BCAAS%3B%3BAAC%5C%2FB%2CcAAC%2CiBAAiB%3BCAAS%3B%3BAAC3B%2CcAAC%2CiBAAiB%3BCAAS%3B%3BAAC3B%2CcAAC%2CqBAAqB%3BCAAS%3B%3BAAC%5C%2FB%2CcAAC%2CmBAAmB%3BCAAS%3B%3BAAC7B%2CcAAC%2CcAAc%3BCAAS%3B%3BAACxB%2CcAAC%2CiBAAiB%3BCAAS%3B%3BAAC3B%2CcAAC%2CaAAa%3BCAAS%3B%3BAACvB%2CcAAC%2CgBAAgB%3BCAAS%2CSAAS%2CYAAT%3B%3BAAC1B%2CcAAC%2CiBAAiB%3BCAAS%3B%3BAAC3B%2CcAAC%2CsBAAsB%3BCAAS%3B%3BAAChC%2CcAAC%2CoBAAoB%3BCAAS%3B%3BAAC9B%2CcAAC%2CgBAAgB%3BCAAS%2CSAAS%2CiBAAT%3B%3BAAE1B%2CcAAC%2CcAAc%3BCAAS%2CSAAS%2CYAAT%3B%3BAAExB%2CcAAC%3BCAAsB%2CSAAS%2CiBAAT%3B%3BAACvB%2CcAAC%2CiBAAiB%3BCAAS%3B%3BAAC3B%2CcAAC%2CgBAAgB%3BCAAS%2CSAAS%2CcAAT%3B%3BAAC1B%2CcAAC%2CaAAa%3BCAAS%3B%3BAACvB%2CcAAC%2CYAAY%3BCAAS%3B%3BAACtB%2CcAAC%2CYAAY%3BCAAS%3B%3BAACtB%2CcAAC%2CeAAe%3BCAAS%3B%3BAACzB%2CcAAC%2CgBAAgB%3BCAAS%3B%3BAAC1B%2CcAAC%2CaAAa%3BCAAS%3B%3BAACvB%2CcAAC%2CeAAe%3BCAAS%3B%3BAACzB%2CcAAC%2CYAAY%3BCAAS%2CSAAS%2CSAAT%3B%3BAACtB%2CcAAC%2CYAAY%3BCAAS%3B%3BAACtB%2CcAAC%2CiBAAiB%3BCAAS%3B%3BAAC3B%2CcAAC%2CWAAW%3BCAAS%3B%3BAACrB%2CcAAC%2CYAAY%3BCAAS%3B%3BAAEtB%2CcAAC%2CWAAW%3BCAAS%3B%3BAACrB%2CcAAC%2CeAAe%3BCAAS%2CSAAS%2CgBAAT%3B%3BAACzB%2CcAAC%2CaAAa%3BCAAS%2CSAAS%2CeAAT%3B%3BAAEvB%2CcAAC%2CWAAW%3BCAAS%2CSAAS%2CaAAT%3B%3BAACrB%2CcAAC%2CaAAa%3BCAAS%2CSAAS%2CeAAT%3B%3BAACvB%2CcAAC%2CUAAU%3BCAAS%2CSAAS%2CiBAAT%3B%3BAACpB%2CcAAC%2CUAAU%3BCAAS%3B%3BAAEpB%2CcAAC%2CYAAY%3BCAAS%2CSAAS%2CcAAT%3B%3BAACtB%2CcAAC%2CaAAa%3BCAAS%2CSAAS%2CeAAT%3B%3BAAEvB%2CcAAC%2CSAAS%3BCAAS%3B%3BAACnB%2CcAAC%2CYAAY%3BCAAS%3B%3BAACtB%2CcAAC%2CaAAa%3BCAAS%3B%3BAAEvB%2CcAAC%2CaAAa%3BCAAS%2CSAAS%2CaAAT%3B%3BAACvB%2CcAAC%2CeAAe%3BCAAS%2CSAAS%2CeAAT%3B%3BAACzB%2CcAAC%2CiBAAiB%3BCAAS%2CSAAS%2CaAAT%3B%3BAAC3B%2CcAAC%2CaAAa%3BCAAS%2CSAAS%2CcAAT%3B%3BAACvB%2CcAAC%2CmBAAmB%3BCAAS%3B%3BAAC7B%2CcAAC%2CcAAc%3BCAAS%2CSAAS%2CcAAT%3B%3BAACxB%2CcAAC%2CuBAAuB%3BCAAS%2CSAAS%2CsBAAT%3B%3BAACjC%2CcAAC%2CqBAAqB%3BCAAS%2CSAAS%2CsBAAT%3B%3BAAC%5C%2FB%2CcAAC%2CgBAAgB%3BCAAS%2CSAAS%2CiBAAT%3B%3BAAC1B%2CcAAC%2CmBAAmB%3BCAAS%3B%3BAAC7B%2CcAAC%2CaAAa%3BCAAS%3B%3BAACvB%2CcAAC%2CcAAc%3BCAAS%3B%3BAACxB%2CcAAC%2CaAAa%3BCAAS%3B%3BAACvB%2CcAAC%2CaAAa%3BCAAS%3B%3BAACvB%2CcAAC%2CaAAa%3BCAAS%3B%3BAACvB%2CcAAC%2CuBAAuB%3BCAAS%3B%3BAACjC%2CcAAC%2CcAAc%3BCAAS%2CSAAS%2CYAAT%3B%3BAAG1B%3BCACE%3B%3BAAgBF%3BCACE%3BCACA%3BCACA%3B%3BAAME%2CIAAC%3BCAEG%3BCACA%3BCACA%3B%3BCAEA%3BCACA%3BCACA%3B%3BAAGF%2CIAAC%3BCACC%2CyBAAA%3BCACA%3BCACA%3BCACA%3BCApCN%2CkBAAA%3BCACA%2CuBAAA%3BCACA%2C0BAAA%3BCACA%2CyBAAA%3BCAGA%2CuCAAA%3BCACA%2CoCAAA%3BCACA%2C%2BBAAA%3B%3BAAiCM%2CIATD%2CMASE%3BCACC%3BCACA%2CeAAA%3BCACA%3BCACA%3BCACA%3B%3BAAGF%2CIAjBD%2CMAiBE%2CMACC%3BCACE%3B%3BAAIJ%2CIAvBD%2CMAuBE%3BCACC%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAIF%2CIAnCD%2CMAmCE%2CMAEC%2CIAAG%3BCACD%3B%3BAAIJ%2CIA1CD%2CMA0CE%3BCACC%3B%3BAAGF%2CIA9CD%2CMA8CE%3BCACC%2CSAAS%2CEAAT%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%2C6BAAA%3BCACA%3BCACA%3BCACA%3B%3BAAGF%2CIA3DD%2CMA2DE%3BCACC%3BCACA%3BCACA%3BCACA%3BCACA%2CaAAa%2CiDAAb%3B%3BAAIA%2CIApEH%2CMAmEE%2CKACE%3BCACC%3B%3BAAoBZ%2CGAAG%3BCACD%3BCACA%3B%3B%3B%3BAAQF%2CCAAC%3BAACD%2CCAAC%3BCACC%3BCACA%3B%3BAAGF%2CCAAC%3BAACD%2CCAAC%3BCACC%3BCACA%3B%3B%3BAAIF%2CGAAG%3BAACH%2CGAAG%3BCACD%3BCACA%3B%3B%3B%3BAAaF%2CGAAG%2CQAAS%3BCACV%3BCACA%3B%3BAAGF%2CGAAG%2CQAAS%3BCACV%3B%3BAAGF%3BAACA%3BCACE%3B%3B%3BAAQA%2CaAAC%3BCAEC%3BCACA%3B%3BAAGF%2CaAAC%3BCACC%3BCACA%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAiKA%2CIAAC%3BCACC%3B%3BAAIN%3BCACE%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAA2CF%2CIAAK%2CSAAS%3BCACZ%3B%3BAAIF%2CUAAa%3BCACX%3BCA7YA%2CiCAAA%3BCACA%2C8BAAA%3BCACA%2CyBAAA%3BCA6YE%3B%3BAAIJ%3BCACE%3BCACA%3B%3B%3BAAMF%3BCACE%3B%3B%3BAAIF%3BCACE%2CaAAa%2CiDAAb%3B%3BAAGF%2CEAAE%3BCACA%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAoBF%3BCACE%3B%3BAAGF%3BCACE%3BCACA%3BCACA%2CgBAAA%3B%3BAAHF%2CYAKI%3BCACA%2CiBAAA%3BCACA%3BCACA%3BCA3cF%2CoBAAA%3BCACA%2CyBAAA%3BCACA%2C4BAAA%3BCACA%2C2BAAA%3B%3BAA8cF%3BCAEE%3B%3BAAEA%2CQAAC%2CMACC%3BCACE%3B%3BAANN%2CQAUE%3BCACE%3BCACA%3BCACA%3BCACA%3BCACA%3BCAEA%3BCACA%3BCAneF%2CoBAAA%3BCACA%2CyBAAA%3BCACA%2C4BAAA%3BCACA%2C2BAAA%3BCAkeE%3BCAEA%3B%3BAAtBJ%2CQAUE%2CeAcI%3BCACA%3B%3BAAMN%3BCACI%3BCACA%3BCACA%3BCACA%22%7D */
 /* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-header */
 /*   H e a d e r   */
 #title {
 	overflow: hidden;
 	padding: 5px;
 }
-.dropdown {
+.or-dropdown {
 	z-index: 120;
 	min-width: 250px;
 	position: absolute;
@@ -850,27 +886,27 @@ img.image-icon {
 	font-weight: normal;
 	text-decoration: none;
 }
-.dropdown .entry {
+.or-dropdown .or-entry {
 	padding: 0;
 	/* Außenabstand Text */
 }
-.dropdown .entry > a {
+.or-dropdown .or-entry > a {
 	display: flex;
 	align-items: center;
 	padding: 0 0.5em;
 }
-.dropdown .entry > a * {
+.or-dropdown .or-entry > a * {
 	margin: 0.25em;
 }
-.dropdown .entry > a span:first-of-type {
+.or-dropdown .or-entry > a span:first-of-type {
 	flex: 1;
 	/* Menü-Text füllt den Platz auf */
 }
-.dropdown .entry > .text {
+.or-dropdown .or-entry > .or-text {
 	display: block;
 	margin: 10px;
 }
-.dropdown div.divide {
+.or-dropdown .or-divide {
 	height: 1px;
 	width: 100%;
 	margin-top: 5px;
@@ -883,38 +919,30 @@ img.image-icon {
 }
 .or-menu .or-menu-group {
 	display: flex;
-	/* Pfeile */
 }
 .or-menu .or-menu-group:nth-last-child(1) div.dropdown {
 	right: 10px;
 }
-.or-menu .or-menu-group i.image-icon {
+.or-menu .or-menu-group .or-image-icon {
 	width: 1.1em;
 }
-.or-menu .or-menu-group div > div.arrow-down {
-	width: 0;
-	height: 0;
-	margin: 6px;
-	padding: 0px;
-	margin-top: 10px;
-}
-.or-menu .or-menu-group div.toolbar-icon {
+.or-menu .or-menu-group .or-toolbar-icon {
 	padding: 2px;
 	margin-left: 10px;
 	float: left;
 	/* Bestimmte Menüs sind nach rechts ausgerichet */
 }
-.or-menu .or-menu-group div.toolbar-icon.user,
-.or-menu .or-menu-group div.toolbar-icon.search,
-.or-menu .or-menu-group div.toolbar-icon.history {
+.or-menu .or-menu-group .or-toolbar-icon.or-user,
+.or-menu .or-menu-group .or-toolbar-icon.or-search,
+.or-menu .or-menu-group .or-toolbar-icon.or-history {
 	float: right;
 	margin-right: 10px;
 	margin-left: 10px;
 }
-.or-menu .or-menu-group div.toolbar-icon.menu {
+.or-menu .or-menu-group .or-toolbar-icon.or-menu-category {
 	cursor: default;
 }
-.or-menu .or-menu-group div.toolbar-icon.search input {
+.or-menu .or-menu-group .or-toolbar-icon.or-search input {
 	border: 0;
 	margin: 0;
 	padding: 0;
@@ -922,16 +950,19 @@ img.image-icon {
 	display: inline;
 	transition: width 0.3s ease-in-out;
 }
-.or-menu .or-menu-group div.toolbar-icon.search input:focus {
+.or-menu .or-menu-group .or-toolbar-icon.or-search input:focus {
 	width: 8em;
 }
-.or-menu .dropdown {
-	display: none;
-}
-.or-menu.open .toolbar-icon.open > div.dropdown {
+.or-menu--is-open .or-menu-category--is-open > .or-dropdown {
 	display: block;
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-header.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3BAACA%3BCAEI%3BCACA%3B%3BAAKJ%3BCACI%3BCACA%3BCACA%3BCACA%2CgBAAA%3BCAEA%3BCACA%3BCACA%3B%3BAARJ%2CSAUI%3BCACI%3B%3B%3BAAXR%2CSAUI%2COAGM%3BCACE%3BCACA%3BCACA%2CgBAAA%3B%3BAAhBZ%2CSAUI%2COAGM%2CIAKE%3BCACI%3B%3BAAnBhB%2CSAUI%2COAGM%2CIASE%2CKAAI%3BCACA%3B%3B%3BAAvBhB%2CSAUI%2COAkBM%3BCACE%3BCACA%3B%3BAA9BZ%2CSAkCI%2CIAAG%3BCACC%3BCACA%3BCACA%3BCACA%3B%3BAAOR%3BCAEI%3BCACA%3B%3B%3BAAHJ%2CQAKI%3BCACI%3B%3B%3BAAGA%2CQAJJ%2CeAIK%2CeAAe%2CGACZ%2CIAAG%3BCACC%3B%3BAAXhB%2CQAKI%2CeASI%2CEAAC%3BCAEG%3B%3BAAhBZ%2CQAKI%2CeAcI%2CIAAM%2CMAAG%3BCACL%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAxBZ%2CQAKI%2CeAsBI%2CIAAG%3BCACC%3BCAEA%3BCACA%3B%3B%3BAAGA%2CQA7BR%2CeAsBI%2CIAAG%2CaAOE%3BAACD%2CQA9BR%2CeAsBI%2CIAAG%2CaAQE%3BAACD%2CQA%5C%2FBR%2CeAsBI%2CIAAG%2CaASE%3BCACG%3BCACA%3BCACA%3B%3BAAGJ%2CQArCR%2CeAsBI%2CIAAG%2CaAeE%3BCACG%3B%3BAAEJ%2CQAxCR%2CeAsBI%2CIAAG%2CaAkBE%2COACG%3BCACI%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%2CkCAAA%3B%3BAACA%2CQAhDhB%2CeAsBI%2CIAAG%2CaAkBE%2COACG%2CMAOK%3BCACG%3B%3BAAtDxB%2CQAgEI%3BCACI%3B%3BAAGJ%2CQAAC%2CKACG%2CcAAa%2CKACP%2CMAAG%3BCACD%22%7D */
+.or-dropdown {
+	display: none;
+}
+.or-dropdown--is-open {
+	display: block;
+}
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-header.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3BAACA%3BCAEI%3BCACA%3B%3BAAKA%2CIAAC%3BCACG%3BCACA%3BCACA%3BCACA%2CgBAAA%3BCAEA%3BCACA%3BCACA%3B%3BAARJ%2CIAAC%2CQAUG%3BCACI%3B%3B%3BAAXR%2CIAAC%2CQAUG%2CUAGM%3BCACE%3BCACA%3BCACA%2CgBAAA%3B%3BAAhBZ%2CIAAC%2CQAUG%2CUAGM%2CIAKE%3BCACI%3B%3BAAnBhB%2CIAAC%2CQAUG%2CUAGM%2CIASE%2CKAAI%3BCACA%3B%3B%3BAAvBhB%2CIAAC%2CQAUG%2CUAmBM%3BCACE%3BCACA%3B%3BAA%5C%2FBZ%2CIAAC%2CQAmCG%3BCACI%3BCACA%3BCACA%3BCACA%3B%3BAAOV%2CIAAC%3BCAEC%3BCACA%3B%3B%3BAAHF%2CIAAC%2CIAKC%3BCACI%3B%3BAAGA%2CIATL%2CIAKC%2CeAIK%2CeAAe%2CGACZ%2CIAAG%3BCACC%3B%3BAAXd%2CIAAC%2CIAKC%2CeASI%3BCAEI%3B%3BAAhBV%2CIAAC%2CIAKC%2CeAcI%3BCACI%3BCAEA%3BCACA%3B%3B%3BAAGA%2CIA1BT%2CIAKC%2CeAcI%2CiBAOK%3BAACD%2CIA3BT%2CIAKC%2CeAcI%2CiBAQK%3BAACD%2CIA5BT%2CIAKC%2CeAcI%2CiBASK%3BCACG%3BCACA%3BCACA%3B%3BAAGJ%2CIAlCT%2CIAKC%2CeAcI%2CiBAeK%3BCACG%3B%3BAAEJ%2CIArCT%2CIAKC%2CeAcI%2CiBAkBK%2CUACG%3BCACI%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%2CkCAAA%3B%3BAACA%2CIA7CjB%2CIAKC%2CeAcI%2CiBAkBK%2CUACG%2CMAOK%3BCACG%3B%3BAAWpB%2CIAzDD%2CIAyDE%2CSACG%2C2BACM%3BCACE%3B%3BAAMd%2CIAAC%3BCACG%3B%3BAAEA%2CIAHH%2CQAGI%3BCACG%22%7D */
 /* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-form */
 /* R e s p o n s i v e   f o r m s */
 .or-form {
@@ -966,13 +997,13 @@ img.image-icon {
 .or-form input[type=radio] + label {
 	width: 80%;
 }
-.or-form .headline {
+.or-form .or-headline {
 	font-size: 1.8em;
 }
-.or-form div.inputholder > div.dropdown {
+.or-form div.or-inputholder > div.or-dropdown {
 	width: 70%;
 }
-.or-form input.submit {
+.or-form input.or-submit {
 	padding: 7px;
 	border: 0px;
 	-moz-border-radius: 7px;
@@ -997,17 +1028,17 @@ img.image-icon {
 	padding: 12px 12px 12px 0;
 	display: inline-block;
 }
-.or-form div.label {
+.or-form .or-label {
 	float: left;
 	width: 25%;
 	margin-top: 6px;
 }
-.or-form div.input {
+.or-form .or-value {
 	float: left;
 	width: 75%;
 	margin-top: 6px;
 }
-.or-form .line:after {
+.or-form .or-line:after {
 	content: "";
 	display: table;
 	clear: both;
@@ -1039,8 +1070,8 @@ img.image-icon {
 	min-width: 14em;
 }
 @media only screen and (max-width: 65rem) {
-	.or-form div.label,
-	.or-form div.input {
+	.or-form div.or-label,
+	.or-form div.or-value {
 		width: 100%;
 		margin-top: 0;
 	}
@@ -1075,38 +1106,38 @@ img.image-icon {
 .or-btn--primary {
 	font-weight: bold;
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-form.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3BAAiBA%3BCACI%3BCACA%3BCACA%3BCAyCF%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAA5CF%2CQAKI%3BCACI%3B%3BAANR%2CQAQI%3BCACI%3BCACA%3B%3BAAVR%2CQAcE%2CMAAK%2CeAAkB%3BAAdzB%2CQAeE%2CMAAK%2CYAAe%3BCAClB%3B%3BAAhBJ%2CQAmBE%3BCACE%3B%3BAApBJ%2CQA2BE%2CIAAG%2CYAAe%2CMAAG%3BCACnB%3B%3BAA5BJ%2CQA%2BBE%2CMAAK%3BCACH%3BCACA%3BCACA%3B%3BCACA%3B%3BCACA%3B%3BCACA%3BCACA%3BCACA%3B%3BAAvCJ%2CQA%2BCE%3BCACE%3BCACA%3BCACA%2CsBAAA%3BCACA%3BCACA%3BCACA%3B%3BAArDJ%2CQAyDE%3BCACE%2CyBAAA%3BCACA%3B%3BAA3DJ%2CQAyEE%2CIAAG%3BCACD%3BCACA%3BCACA%3B%3BAA5EJ%2CQAgFE%2CIAAG%3BCACD%3BCACA%3BCACA%3B%3BAAnFJ%2CQAuFE%2CMAAK%3BCACH%2CSAAS%2CEAAT%3BCACA%3BCACA%3B%3BAA1FJ%2CQA6FE%3BCACE%3BCACA%3B%3BAA%5C%2FFJ%2CQA6FE%2CaAIE%3BCACE%3B%3BAAlGN%2CQA6FE%2CaAOE%3BCACE%3B%3BAArGN%2CQA0GE%3BCAEE%3BCACA%3BCACA%3BCACA%3BCACA%3BCAEA%3BCACA%3BCACA%3BCACA%3B%3BAArHJ%2CQA0GE%2CmBAaI%3BCACI%2CgBAAA%3BCACA%3BCACA%3B%3BAAwCV%3BCAAA%2CQA9BI%2CIAAG%3BCA8BP%2CQA9Be%2CIAAG%3BEACZ%3BEACA%3B%3BCA4BN%2CQAzBI%3BEACC%3B%3BCAwBL%2CQAzBI%2CaAEE%3BCAuBN%2CQAzBI%2CaAGE%3BEACE%3B%3BCAqBR%2CQAjBI%2CmBAEE%3BEACI%2CgBAAA%3BEACA%3B%3BCAaV%2CQAjBI%2CmBAMI%3BEACI%3B%3BCAUZ%2CQAjBI%2CmBASI%3BEACI%3B%3B%3B%3BAAYZ%3BCACI%2CoBAAA%3BCACA%2CyBAAA%3BCAvLA%2CoBAAA%3BCACA%2CyBAAA%3BCACA%2C4BAAA%3BCACA%2C2BAAA%3BCAuLA%3B%3BAAEA%2COAAC%3BCACG%22%7D */
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-form.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3BAAiBA%3BCACI%3BCACA%3BCACA%3BCAyCF%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAA5CF%2CQAKI%3BCACI%3B%3BAANR%2CQAQI%3BCACI%3BCACA%3B%3BAAVR%2CQAcE%2CMAAK%2CeAAkB%3BAAdzB%2CQAeE%2CMAAK%2CYAAe%3BCAClB%3B%3BAAhBJ%2CQAmBE%3BCACE%3B%3BAApBJ%2CQA2BE%2CIAAG%2CeAAkB%2CMAAG%3BCACtB%3B%3BAA5BJ%2CQA%2BBE%2CMAAK%3BCACH%3BCACA%3BCACA%3B%3BCACA%3B%3BCACA%3B%3BCACA%3BCACA%3BCACA%3B%3BAAvCJ%2CQA%2BCE%3BCACE%3BCACA%3BCACA%2CsBAAA%3BCACA%3BCACA%3BCACA%3B%3BAArDJ%2CQAyDE%3BCACE%2CyBAAA%3BCACA%3B%3BAA3DJ%2CQAyEE%3BCACE%3BCACA%3BCACA%3B%3BAA5EJ%2CQAgFE%3BCACE%3BCACA%3BCACA%3B%3BAAnFJ%2CQAuFE%2CSAAQ%3BCACN%2CSAAS%2CEAAT%3BCACA%3BCACA%3B%3BAA1FJ%2CQA6FE%3BCACE%3BCACA%3B%3BAA%5C%2FFJ%2CQA6FE%2CaAIE%3BCACE%3B%3BAAlGN%2CQA6FE%2CaAOE%3BCACE%3B%3BAArGN%2CQA0GE%3BCAEE%3BCACA%3BCACA%3BCACA%3BCACA%3BCAEA%3BCACA%3BCACA%3BCACA%3B%3BAArHJ%2CQA0GE%2CmBAaI%3BCACI%2CgBAAA%3BCACA%3BCACA%3B%3BAAwCV%3BCAAA%2CQA9BI%2CIAAG%3BCA8BP%2CQA9BkB%2CIAAG%3BEACf%3BEACA%3B%3BCA4BN%2CQAzBI%3BEACC%3B%3BCAwBL%2CQAzBI%2CaAEE%3BCAuBN%2CQAzBI%2CaAGE%3BEACE%3B%3BCAqBR%2CQAjBI%2CmBAEE%3BEACI%2CgBAAA%3BEACA%3B%3BCAaV%2CQAjBI%2CmBAMI%3BEACI%3B%3BCAUZ%2CQAjBI%2CmBASI%3BEACI%3B%3B%3B%3BAAaR%2CIAAC%3BCACG%2CoBAAA%3BCACA%2CyBAAA%3BCAxLJ%2CoBAAA%3BCACA%2CyBAAA%3BCACA%2C4BAAA%3BCACA%2C2BAAA%3BCAwLI%3B%3BAAEA%2CIAPH%2CGAOI%3BCACG%22%7D */
 /* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-navigation */
 /*   N a v i g a t i o n   */
-.or-navtree ul.or-navtree-list {
+.or-navtree-list {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
 }
-.or-navtree ul.or-navtree-list ul {
+.or-navtree-list ul {
 	margin-left: 18px;
 }
-.or-navtree ul.or-navtree-list .or-navtree-node-control {
+.or-navtree-list .or-navtree-node-control {
 	width: 18px;
 	min-width: 18px;
 	height: 18px;
 	float: left;
 	cursor: pointer;
 }
-.or-navtree ul.or-navtree-list .or-navtree-node {
+.or-navtree-list .or-navtree-node {
 	margin: 0;
 	padding: 0;
 	line-height: 18px;
 	font-weight: normal;
 	white-space: nowrap;
 }
-.or-navtree ul.or-navtree-list .or-navtree-node.or-navtree-node--selected {
+.or-navtree-list .or-navtree-node--selected {
 	font-weight: bold;
 }
-.or-navtree ul.or-navtree-list .or-navtree-node.or-navtree-node--selected > div > a {
+.or-navtree-list .or-navtree-node--selected > div > a {
 	font-weight: bold;
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-navigation.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3BAAEA%2CWAEI%2CGAAE%3BCAEE%3BCACA%3BCACA%3B%3BAANR%2CWAEI%2CGAAE%2CgBAME%3BCACI%3B%3BAATZ%2CWAEI%2CGAAE%2CgBASE%3BCACI%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAhBZ%2CWAEI%2CGAAE%2CgBAgBE%3BCACI%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAEA%2CWAvBR%2CGAAE%2CgBAgBE%2CiBAOK%3BCACG%3B%3BAACA%2CWAzBZ%2CGAAE%2CgBAgBE%2CiBAOK%2C0BAEO%2CMAAM%3BCACN%22%7D */
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-navigation.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3BAAKQ%2CIAFH%2COAEI%3BCAEG%3BCACA%3BCACA%3B%3BAAJJ%2CIAFH%2COAEI%2CKAMG%3BCACI%3B%3BAAPR%2CIAFH%2COAEI%2CKAUG%3BCACI%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAfR%2CIAFH%2COAEI%2CKAkBG%3BCACI%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAEA%2CIA3BX%2COAEI%2CKAkBG%2CiBAOK%3BCACG%3B%3BAAEA%2CIA9Bf%2COAEI%2CKAkBG%2CiBAOK%2CUAGO%2CMAAM%3BCACN%22%7D */
 /* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-workbench */
 /*
 OpenRat Content Management System
@@ -1130,34 +1161,38 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 Basis-Style for Openrat.
 */
 /* Usage to this variable is safe to be removed */
-div#dialog {
+.or-dialog {
 	/* Modale Dialoge */
 }
-div#dialog > .view {
+.or-dialog .or-view {
 	overflow: auto;
 	/*width:60%;*/
 	position: absolute;
 	top: 5%;
 	left: 10%;
+	display: none;
 	width: 80%;
 	height: 80%;
 	z-index: 110;
 	border: 1px solid !important;
 }
 @media only screen and (max-width: 55rem) {
-	div#dialog > .view {
+	.or-dialog .or-view {
 		top: 2.5%;
 		left: 2.5%;
 		width: 95%;
 		height: 95%;
 	}
 }
-div#dialog.is-closed {
-	display: none;
-	width: 0;
+.or-dialog--is-open .or-view {
+	display: block;
 }
-div#dialog .filler {
+.or-dialog--is-open .or-dialog-filler {
+	display: block;
+}
+.or-dialog-filler {
 	position: absolute;
+	display: none;
 	z-index: 100;
 	top: 0;
 	left: 0;
@@ -1165,13 +1200,9 @@ div#dialog .filler {
 	width: 100%;
 	opacity: 0.5;
 }
-div#dialog .filler span.icon {
+.or-dialog-filler-icon {
 	opacity: 1;
 	font-size: 3em;
-	font-weight: bold;
-	text-align: center;
-	width: 40px;
-	height: 40px;
 	position: absolute;
 	right: 20px;
 	top: 20px;
@@ -1185,39 +1216,39 @@ div#dialog .filler span.icon {
 html.nojs .noscript {
 	display: block;
 }
-.toggle-open-close {
+.or-toggle-open-close {
 	display: flex;
 	flex-direction: column;
 	/* Geschlossen */
 	/* Offen */
 }
-.toggle-open-close .on-click-open-close {
+.or-toggle-open-close .or-act-open-close {
 	cursor: pointer;
 	font-weight: normal;
 }
-.toggle-open-close > .closable {
+.or-toggle-open-close > .or-closable {
 	transition: opacity 0.3s ease-out;
 	flex: 1;
 	display: block;
 }
-.toggle-open-close.closed > .on-click-open-close > .on-closed {
+.or-toggle-open-close.or--is-closed > * > .or-group--on-closed {
 	display: inline;
 }
-.toggle-open-close.closed > .on-click-open-close > .on-open {
+.or-toggle-open-close.or--is-closed > * > .or-group--on-open {
 	display: none;
 }
-.toggle-open-close.closed > .closable {
+.or-toggle-open-close.or--is-closed > .or-closable {
 	opacity: 0;
 	max-height: 0;
 	overflow: hidden;
 }
-.toggle-open-close.open > .closable {
+.or-toggle-open-close.or--is-open > .or-closable {
 	height: auto;
 }
-.toggle-open-close.open > .on-click-open-close > .on-closed {
+.or-toggle-open-close.or--is-open > * > .or-group--on-closed {
 	display: none;
 }
-.toggle-open-close.open > .on-click-open-close > .on-open {
+.or-toggle-open-close.or--is-open > * > .or-group--on-open {
 	display: inline;
 }
 html,
@@ -1225,7 +1256,7 @@ body {
 	width: 100%;
 	height: 100%;
 }
-div#workbench {
+#workbench {
 	width: 100%;
 	height: 100%;
 	display: flex;
@@ -1240,19 +1271,19 @@ div#workbench {
      */
 	/* vertikale Flex-Box zwischen Header und Hauptbereich */
 }
-div#workbench > header {
+#workbench > header {
 	height: 3.0rem;
 }
-div#workbench > header .toolbar-icon .arrow-down {
+#workbench > header .toolbar-icon .arrow-down {
 	display: inline;
 }
 @media only screen and (max-width: 55rem) {
-	div#workbench > header .toolbar-icon span.label,
-	div#workbench > header .toolbar-icon .arrow-down {
+	#workbench > header .toolbar-icon span.label,
+	#workbench > header .toolbar-icon .arrow-down {
 		display: none;
 	}
 }
-div#workbench > .or-main-area {
+#workbench > .or-main-area {
 	flex: 1;
 	/* Horizontale Flexbox */
 	/*
@@ -1262,25 +1293,25 @@ div#workbench > .or-main-area {
 	min-height: 0;
 	padding-top: 0.5em;
 }
-div#workbench > .or-main-area > * {
+#workbench > .or-main-area > * {
 	min-width: 0;
 	min-height: 0;
 	overflow-y: auto;
 	overflow-x: hidden;
 	height: 100%;
 }
-div#workbench > .or-main-area > nav {
+#workbench > .or-main-area > nav {
 	width: 33%;
 	transition: width 0.15s ease-in-out;
 	position: fixed;
 	height: calc(100% - 3.0rem - 0.5em);
 }
 @media only screen and (max-width: 55rem) {
-	div#workbench > .or-main-area > nav {
+	#workbench > .or-main-area > nav {
 		width: 0;
 	}
 }
-div#workbench > .or-main-area > nav.or-nav--is-small {
+#workbench > .or-main-area > nav.or-nav--is-small {
 	width: 0;
 	/*
                 &:hover {
@@ -1296,11 +1327,11 @@ div#workbench > .or-main-area > nav.or-nav--is-small {
                     }
                 }*/
 }
-div#workbench > .or-main-area > nav.or-nav--is-small ~ .or-workplace {
+#workbench > .or-main-area > nav.or-nav--is-small ~ .or-workplace {
 	margin-left: 0;
 }
 @media only screen and (max-width: 55rem) {
-	div#workbench > .or-main-area > nav.or-nav--is-open {
+	#workbench > .or-main-area > nav.or-nav--is-open {
 		overflow-y: auto;
 		width: 95%;
 		border-right: 1px solid;
@@ -1311,46 +1342,46 @@ div#workbench > .or-main-area > nav.or-nav--is-small ~ .or-workplace {
 	}
 }
 @media only screen and (min-width: 75rem) {
-	div#workbench > .or-main-area > nav {
+	#workbench > .or-main-area > nav {
 		width: 33%;
 		overflow-y: auto;
 	}
 }
-div#workbench > .or-main-area > nav div.view {
+#workbench > .or-main-area > nav .or-view {
 	height: 100%;
 }
-div#workbench > .or-main-area header .or-view-icon,
-div#workbench > .or-main-area header .or-view-headline {
+#workbench > .or-main-area header .or-view-icon,
+#workbench > .or-main-area header .or-view-headline {
 	margin: 0.3em;
 	display: inline;
 	font-size: 1.2em;
 	line-height: 1.5em;
 }
-div#workbench > .or-main-area > .or-workplace {
+#workbench > .or-main-area > .or-workplace {
 	margin-left: 33%;
 	transition: margin-left 0.15s ease-in-out;
 }
 @media only screen and (max-width: 55rem) {
-	div#workbench > .or-main-area > .or-workplace {
+	#workbench > .or-main-area > .or-workplace {
 		margin-left: 0;
 	}
 }
-div#workbench > .or-main-area > .or-workplace > #editor {
+#workbench > .or-main-area > .or-workplace > #editor {
 	transition: opacity 0.5s ease;
 	display: flex;
 	flex-direction: column;
 }
-div#workbench > .or-main-area > .or-workplace > #editor.is-closed {
+#workbench > .or-main-area > .or-workplace > #editor.is-closed {
 	flex: 0.5;
 	cursor: not-allowed;
 	pointer-events: none;
 }
 @media only screen and (max-width: 55rem) {
-	div#workbench > .or-main-area > .or-workplace > #editor.is-closed {
+	#workbench > .or-main-area > .or-workplace > #editor.is-closed {
 		flex: 0;
 	}
 }
-div#workbench > .or-main-area > .or-workplace > #editor > section {
+#workbench > .or-main-area > .or-workplace > #editor > section {
 	margin: 1.5em;
 	border: 1px solid;
 	border-radius: 5px;
@@ -1359,14 +1390,14 @@ div#workbench > .or-main-area > .or-workplace > #editor > section {
 	-khtml-border-radius: 5px;
 }
 @media only screen and (max-width: 55rem) {
-	div#workbench > .or-main-area > .or-workplace > #editor > section {
+	#workbench > .or-main-area > .or-workplace > #editor > section {
 		margin: 0.5em;
 	}
 }
-div#workbench > .or-main-area > .or-workplace > #editor > section .view-toolbar {
+#workbench > .or-main-area > .or-workplace > #editor > section .or-view-toolbar {
 	display: inline;
 }
-div#workbench > .or-main-area > .or-workplace > #editor > section.closed .view-toolbar {
+#workbench > .or-main-area > .or-workplace > #editor > section.or--is-closed .or-view-toolbar {
 	display: none;
 }
 /* */
@@ -1398,29 +1429,36 @@ nav.or-nav--is-small .or-act-nav-wide {
 		display: none;
 	}
 }
-#title .toggle-nav-small {
+.or-toggle-nav-small {
 	display: inline;
 }
 @media only screen and (max-width: 55rem) {
-	#title .toggle-nav-small {
+	.or-toggle-nav-small {
 		display: none;
 	}
 }
-#title .toggle-nav-open-close {
+.or-toggle-nav-open-close {
 	display: none;
 }
 @media only screen and (max-width: 55rem) {
-	#title .toggle-nav-open-close {
+	.or-toggle-nav-open-close {
 		display: inline;
 	}
 }
 @media only screen and (max-width: 55rem) {
-	#title .toolbar-icon.search input {
+	.or-toolbar-icon.or-search input {
 		width: 3em;
 	}
 }
-/* Fortschrittsbalken, fuer alle Elemente verfuegbar. */
-.loader {
+@media only screen and (max-width: 55rem) {
+	html {
+		font-size: 1em;
+	}
+}
+.or- {
+	/* Fortschrittsbalken, fuer alle Elemente verfuegbar. */
+}
+.or-loader {
 	background: url(../images/loader.gif) no-repeat;
 	background-position: center, top;
 	height: 30px;
@@ -1428,12 +1466,6 @@ nav.or-nav--is-small .or-act-nav-wide {
 	cursor: wait;
 	pointer-events: none;
 }
-@media only screen and (max-width: 55rem) {
-	html {
-		font-size: 1em;
-	}
-}
-/* Navigation over the filler */
 .or-breadcrumb {
 	margin-bottom: 0.1em;
 	margin-left: 1.5em;
@@ -1445,10 +1477,10 @@ nav.or-nav--is-small .or-act-nav-wide {
 	display: inline;
 	margin-right: 0.3em;
 }
-.or-breadcrumb .or-breadcrumb-item .image-icon {
+.or-breadcrumb-item .or-image-icon {
 	margin-right: 0.2em;
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-workbench.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAA0CA%2CGAAG%3B%3B%3BAAAH%2CGAAG%2COAEG%3BCACE%3B%3BCAGA%3BCACA%3BCACA%3BCACA%3BCACA%3BCAUA%3BCAEA%2C4BAAA%3B%3BAAFA%3BCAAA%2CGApBL%2COAEG%3BEAWM%3BEACA%3BEACA%3BEACA%3B%3B%3BAASR%2CGAzBD%2COAyBE%3BCACG%3BCACA%3B%3BAA3BR%2CGAAG%2COA%2BBC%3BCACI%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAtCR%2CGAAG%2COA%2BBC%2CQASI%2CKAAI%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCAEA%3BCACA%3BCACA%3B%3BAAOZ%2COAAQ%3BCACJ%3B%3BAAGJ%3BCACI%3B%3BAAGJ%2CIAAI%2CKAAM%3BCACN%3B%3BAAGJ%3BCAEI%3BCACA%3B%3B%3B%3BAAHJ%2CkBAKI%3BCACI%3BCACA%3B%3BAAPR%2CkBAWM%3BCAEE%2CiCAAA%3BCAEA%3BCACA%3B%3BAAKJ%2CkBAAC%2COACK%2CuBAAuB%3BCACrB%3B%3BAAFR%2CkBAAC%2COAIK%2CuBAAuB%3BCACrB%3B%3BAALR%2CkBAAC%2COAOK%3BCAEE%3BCACA%3BCACA%3B%3BAAMR%2CkBAAC%2CKACK%3BCACE%3B%3BAAFR%2CkBAAC%2CKAIK%2CuBAAuB%3BCACrB%3B%3BAALR%2CkBAAC%2CKAOK%2CuBAAuB%3BCACrB%3B%3BAASZ%3BAAAM%3BCAAO%3BCAAY%3B%3BAAEzB%2CGAAG%3BCAEC%3BCACA%3BCACA%3BCACA%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAALJ%2CGAAG%2CUAqBG%3BCACE%3B%3BAAtBR%2CGAAG%2CUAqBG%2CSAGE%2CcAEI%3BCACI%3B%3BAAOJ%3BCAAA%2CGAlCT%2CUAqBG%2CSAGE%2CcAMI%2CKAAI%3BCAIJ%2CGAlCT%2CUAqBG%2CSAGE%2CcAMgB%3BEAEJ%3B%3B%3BAAhCpB%2CGAAG%2CUAsCG%3BCACE%3B%3B%3B%3B%3B%3BCAWA%3BCAEA%3B%3BAApDR%2CGAAG%2CUAsCG%2CgBAgBI%3BCACE%3BCACA%3BCACA%3BCACA%3BCAEA%3B%3BAA5DZ%2CGAAG%2CUAsCG%2CgBAyBI%3BCACE%3BCACA%2CmCAAA%3BCACA%3BCACA%2CmCAAA%3B%3BAAOA%3BCAAA%2CGA1ET%2CUAsCG%2CgBAyBI%3BEAOM%3B%3B%3BAAIJ%2CGA1ET%2CUAsCG%2CgBAyBI%2CMAWG%3BCAEG%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAsBA%2CGAlGb%2CUAsCG%2CgBAyBI%2CMAWG%2CiBAwBO%3BCACA%3B%3BAAaR%3BCAAA%2CGAhHT%2CUAsCG%2CgBAyBI%2CMAwCG%3BEAGO%3BEACA%3BEACA%2CuBAAA%3BEAlPhB%2CuCAAA%3BEACA%2CoCAAA%3BEACA%2C%2BBAAA%3BEAkPgB%3B%3B%3BAAUR%3BCAAA%2CGAxHT%2CUAsCG%2CgBAyBI%3BEAoDM%3BEACA%3B%3B%3BAApHhB%2CGAAG%2CUAsCG%2CgBAyBI%2CMAyDE%2CIAAG%3BCACC%3B%3BAAzHhB%2CGAAG%2CUAsCG%2CgBAuFE%2COAEI%3BAA%5C%2FHZ%2CGAAG%2CUAsCG%2CgBAuFE%2COAEmB%3BCACX%3BCACA%3BCACA%3BCACA%3B%3BAAnIhB%2CGAAG%2CUAsCG%2CgBAkGI%3BCAEE%3BCACA%2CyCAAA%3B%3BAAMA%3BCAAA%2CGAjJT%2CUAsCG%2CgBAkGI%3BEAMM%3B%3B%3BAA9IhB%2CGAAG%2CUAsCG%2CgBAkGI%2CgBASI%3BCAEE%2C6BAAA%3BCACA%3BCACA%3B%3BAAEA%2CGAvJb%2CUAsCG%2CgBAkGI%2CgBASI%2CUAMG%3BCACG%3BCACA%3BCACA%3B%3BAAOA%3BCAAA%2CGAjKjB%2CUAsCG%2CgBAkGI%2CgBASI%2CUAMG%3BEAOO%3B%3B%3BAA9JxB%2CGAAG%2CUAsCG%2CgBAkGI%2CgBASI%2CUAmBI%3BCACE%3BCAKA%2CiBAAA%3BCAtThB%2CkBAAA%3BCACA%2CuBAAA%3BCACA%2C0BAAA%3BCACA%2CyBAAA%3B%3BAAmTgB%3BCAAA%2CGA1KjB%2CUAsCG%2CgBAkGI%2CgBASI%2CUAmBI%3BEAGM%3B%3B%3BAAvKxB%2CGAAG%2CUAsCG%2CgBAkGI%2CgBASI%2CUAmBI%2CUAWE%3BCACI%3B%3BAAQJ%2CGAxLjB%2CUAsCG%2CgBAkGI%2CgBASI%2CUAmBI%2CUAoBG%2COACG%3BCACI%3B%3B%3BAAwB5B%2CGAEI%3BCACI%3B%3BAAHR%2CGAKI%3BCACI%3B%3BAAGJ%2CGAAC%2CiBACG%3BCACI%3B%3BAAFR%2CGAAC%2CiBAIG%3BCACI%3B%3BAAMZ%3BCACI%3B%3BAAKJ%3BCAAA%3BEAHQ%3B%3B%3BAAIR%3BCACI%3B%3BAAIJ%3BCAAA%3BEAFQ%3B%3B%3BAAKR%2CMAEI%3BCACI%3B%3BAAIJ%3BCAAA%2CMALA%3BEAGQ%3B%3B%3BAALZ%2CMASI%3BCACI%3B%3BAAIJ%3BCAAA%2CMALA%3BEAGQ%3B%3B%3BAAcJ%3BCAAA%2CMAVJ%2CcAAa%2COAMT%3BEAEQ%3B%3B%3B%3BAAQhB%3BCAEI%2C%2BCAAA%3BCACA%2CgCAAA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAYJ%3BCANI%3BEACI%3B%3B%3B%3BAAgBR%3BCAEI%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAANJ%2CcAQI%3BCACI%3BCACA%3B%3BAAVR%2CcAaI%2CoBAAoB%3BCAChB%22%7D */
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-workbench.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAA0CA%3B%3B%3BAAAA%2CUAEI%3BCACI%3B%3BCAGA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCAUA%3BCAEA%2C4BAAA%3B%3BAAFA%3BCAAA%2CUAnBJ%3BEAYQ%3BEACA%3BEACA%3BEACA%3B%3B%3BAASR%2CUAAC%2CSACG%3BCACI%3B%3BAAFR%2CUAAC%2CSAKG%3BCACI%3B%3BAAKR%2CUAAC%3BCACG%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAEA%2CUAVH%2COAUI%3BCACG%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAOZ%2COAAQ%3BCACJ%3B%3BAAGJ%3BCACI%3B%3BAAGJ%2CIAAI%2CKAAM%3BCACN%3B%3BAAGJ%3BCAEI%3BCACA%3B%3B%3B%3BAAHJ%2CqBAKI%3BCACI%3BCACA%3B%3BAAPR%2CqBAWM%3BCAEE%2CiCAAA%3BCAEA%3BCACA%3B%3BAAKJ%2CqBAAC%2CcACK%2CIAAI%3BCACF%3B%3BAAFR%2CqBAAC%2CcAIK%2CIAAI%3BCACF%3B%3BAALR%2CqBAAC%2CcAOK%3BCACE%3BCACA%3BCACA%3B%3BAAKR%2CqBAAC%2CYACK%3BCACE%3B%3BAAFR%2CqBAAC%2CYAIK%2CIAAI%3BCACF%3B%3BAALR%2CqBAAC%2CYAOK%2CIAAI%3BCACF%3B%3BAASZ%3BAAAM%3BCAAO%3BCAAY%3B%3BAAEzB%3BCAEI%3BCACA%3BCACA%3BCACA%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAALJ%2CUAqBM%3BCACE%3B%3BAAtBR%2CUAqBM%2CSAGE%2CcAEI%3BCACI%3B%3BAAOJ%3BCAAA%2CUAbN%2CSAGE%2CcAMI%2CKAAI%3BCAIJ%2CUAbN%2CSAGE%2CcAMgB%3BEAEJ%3B%3B%3BAAhCpB%2CUAsCM%3BCACE%3B%3B%3B%3B%3B%3BCAWA%3BCAEA%3B%3BAApDR%2CUAsCM%2CgBAgBI%3BCACE%3BCACA%3BCACA%3BCACA%3BCAEA%3B%3BAA5DZ%2CUAsCM%2CgBAyBI%3BCACE%3BCACA%2CmCAAA%3BCACA%3BCACA%2CmCAAA%3B%3BAAOA%3BCAAA%2CUApCN%2CgBAyBI%3BEAOM%3B%3B%3BAAIJ%2CUApCN%2CgBAyBI%2CMAWG%3BCAEG%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAsBA%2CUA5DV%2CgBAyBI%2CMAWG%2CiBAwBO%3BCACA%3B%3BAAaR%3BCAAA%2CUA1EN%2CgBAyBI%2CMAwCG%3BEAGO%3BEACA%3BEACA%2CuBAAA%3BEAlPhB%2CuCAAA%3BEACA%2CoCAAA%3BEACA%2C%2BBAAA%3BEAkPgB%3B%3B%3BAAUR%3BCAAA%2CUAlFN%2CgBAyBI%3BEAoDM%3BEACA%3B%3B%3BAApHhB%2CUAsCM%2CgBAyBI%2CMAyDE%3BCACI%3B%3BAAzHhB%2CUAsCM%2CgBAuFE%2COAEI%3BAA%5C%2FHZ%2CUAsCM%2CgBAuFE%2COAEmB%3BCACX%3BCACA%3BCACA%3BCACA%3B%3BAAnIhB%2CUAsCM%2CgBAkGI%3BCAEE%3BCACA%2CyCAAA%3B%3BAAMA%3BCAAA%2CUA3GN%2CgBAkGI%3BEAMM%3B%3B%3BAA9IhB%2CUAsCM%2CgBAkGI%2CgBASI%3BCAEE%2C6BAAA%3BCACA%3BCACA%3B%3BAAEA%2CUAjHV%2CgBAkGI%2CgBASI%2CUAMG%3BCACG%3BCACA%3BCACA%3B%3BAAOA%3BCAAA%2CUA3Hd%2CgBAkGI%2CgBASI%2CUAMG%3BEAOO%3B%3B%3BAA9JxB%2CUAsCM%2CgBAkGI%2CgBASI%2CUAmBI%3BCACE%3BCAKA%2CiBAAA%3BCAtThB%2CkBAAA%3BCACA%2CuBAAA%3BCACA%2C0BAAA%3BCACA%2CyBAAA%3B%3BAAmTgB%3BCAAA%2CUApId%2CgBAkGI%2CgBASI%2CUAmBI%3BEAGM%3B%3B%3BAAvKxB%2CUAsCM%2CgBAkGI%2CgBASI%2CUAmBI%2CUAWE%3BCACI%3B%3BAAIJ%2CUA9Id%2CgBAkGI%2CgBASI%2CUAmBI%2CUAgBG%2CcACG%3BCACI%3B%3B%3BAAwB5B%2CGAEI%3BCACI%3B%3BAAHR%2CGAKI%3BCACI%3B%3BAAGJ%2CGAAC%2CiBACG%3BCACI%3B%3BAAFR%2CGAAC%2CiBAIG%3BCACI%3B%3BAAWR%2CIAAC%3BCACG%3B%3BAAKJ%3BCAAA%2CIANC%3BEAGO%3B%3B%3BAAIR%2CIAAC%3BCACG%3B%3BAAIJ%3BCAAA%2CIALC%3BEAGO%3B%3B%3BAAIR%2CIAAC%3BCACG%3B%3BAAIJ%3BCAAA%2CIALC%3BEAGO%3B%3B%3BAAIR%2CIAAC%3BCACG%3B%3BAAIJ%3BCAAA%2CIALC%3BEAGO%3B%3B%3BAAcJ%3BCAAA%2CIAVH%2CYAAY%2CUAMT%3BEAEQ%3B%3B%3BAAmBhB%3BCAPI%3BEACI%3B%3B%3BAAMR%3B%3B%3BAAEI%2CIAAC%3BCAEG%2C%2BCAAA%3BCACA%2CgCAAA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAGJ%2CIAAC%3BCACG%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAALJ%2CIAAC%2CUAOG%3BCACI%3BCACA%3B%3BAAGJ%2CIAZH%2CUAYI%2CKAAM%3BCACH%22%7D */
 /* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/../../../template_engine/components/html/editor/editor */
 .editor__text-editor {
 	width: 100%;
@@ -1505,20 +1537,20 @@ a.editorlink:visited {
 	/* Hilfe-Texte */
 	/* Logo */
 }
-.or-table-wrapper .or-table-area table tr.headline > td,
+.or-table-wrapper .or-table-area table tr.or-headline > td,
 .or-table-wrapper .or-table-area table tr > th {
 	padding: 3px;
 	font-weight: bold;
 }
-.or-table-wrapper .or-table-area table tr.headline > td.sort-asc > span:last-child:after,
-.or-table-wrapper .or-table-area table tr > th.sort-asc > span:last-child:after {
+.or-table-wrapper .or-table-area table tr.or-headline > td.or-sort-asc > span:last-child:after,
+.or-table-wrapper .or-table-area table tr > th.or-sort-asc > span:last-child:after {
 	content: " \2193";
 }
-.or-table-wrapper .or-table-area table tr.headline > td.sort-desc > span:last-child:after,
-.or-table-wrapper .or-table-area table tr > th.sort-desc > span:last-child:after {
+.or-table-wrapper .or-table-area table tr.or-headline > td.or-sort-desc > span:last-child:after,
+.or-table-wrapper .or-table-area table tr > th.or-sort-desc > span:last-child:after {
 	content: " \2191";
 }
-.or-table-wrapper .or-table-area table tr.data > td {
+.or-table-wrapper .or-table-area table tr.or-data > td {
 	padding: 3px;
 }
 .or-table-wrapper .or-table-area table tr > td {
@@ -1527,118 +1559,118 @@ a.editorlink:visited {
 	overflow: hidden;
 	max-width: 0;
 }
-.or-table-wrapper .or-table-area table td.readonly {
+.or-table-wrapper .or-table-area table td.or-readonly {
 	font-style: italic;
 	font-weight: normal;
 }
-.or-table-wrapper .or-table-area table td.default {
+.or-table-wrapper .or-table-area table td.or-default {
 	font-style: normal;
 	font-weight: normal;
 }
-.or-table-wrapper .or-table-area table td.changed {
+.or-table-wrapper .or-table-area table td.or-changed {
 	font-style: normal;
 	font-weight: bold;
 }
-.or-table-wrapper .or-table-area table td.notice {
+.or-table-wrapper .or-table-area table td.or-notice {
 	margin: 0px;
 	padding: 5%;
 	text-align: center;
 }
-.or-table-wrapper .or-table-area table.notice {
+.or-table-wrapper .or-table-area table.or-notice {
 	width: 100%;
 	border: 1px solid;
 	border-spacing: 0px;
 }
-.or-table-wrapper .or-table-area table.notice th {
+.or-table-wrapper .or-table-area table.or-notice th {
 	padding: 2px;
 	white-space: nowrap;
 	border-bottom: 1px solid #000000;
 	font-weight: normal;
 	text-align: left;
 }
-.or-table-wrapper .or-table-area table.notice tr.warning {
+.or-table-wrapper .or-table-area table.or-notice tr.or-warning {
 	margin: 0px;
 	padding: 0px;
 }
-.or-table-wrapper .or-table-area table.calendar {
+.or-table-wrapper .or-table-area table.or-calendar {
 	table-layout: fixed;
 	border-collapse: collapse;
 	text-align: center;
 }
-.or-table-wrapper .or-table-area table.calendar td {
+.or-table-wrapper .or-table-area table.or-calendar td {
 	border: 1px dotted;
 }
-.or-table-wrapper .or-table-area table td.notice {
+.or-table-wrapper .or-table-area table td.or-notice {
 	margin: 0px;
 	padding: 5%;
 	text-align: center;
 }
-.or-table-wrapper .or-table-area table.notice {
+.or-table-wrapper .or-table-area table.or-notice {
 	width: 100%;
 	border: 1px solid;
 	border-spacing: 0px;
 }
-.or-table-wrapper .or-table-area table.notice th {
+.or-table-wrapper .or-table-area table.or-notice th {
 	padding: 2px;
 	white-space: nowrap;
 	border-bottom: 1px solid #000000;
 	font-weight: normal;
 	text-align: left;
 }
-.or-table-wrapper .or-table-area table.notice tr.warning {
+.or-table-wrapper .or-table-area table.or-notice tr.warning {
 	margin: 0px;
 	padding: 0px;
 }
-.or-table-wrapper .or-table-area table.calendar {
+.or-table-wrapper .or-table-area table.or-calendar {
 	table-layout: fixed;
 	border-collapse: collapse;
 	text-align: center;
 }
-.or-table-wrapper .or-table-area table.calendar td {
+.or-table-wrapper .or-table-area table.or-calendar td {
 	border: 1px dotted;
 }
-.or-table-wrapper .or-table-area table td.motd {
+.or-table-wrapper .or-table-area table td.or-motd {
 	border-left: 3px solid red;
 	border-right: 3px solid red;
 	font-weight: bold;
 	padding: 10px;
 	margin: 10px;
 }
-.or-table-wrapper .or-table-area table td:hover > div.onrowvisible {
+.or-table-wrapper .or-table-area table td:hover > div.or-onrowvisible {
 	visibility: visible;
 }
-.or-table-wrapper .or-table-area table tr.diff {
+.or-table-wrapper .or-table-area table tr.or-diff {
 	/* Unveränderter Text */
 	/* Entfernter Text */
 	/* Hinzugefuegter Text */
 	/* Geaenderter Text */
 }
-.or-table-wrapper .or-table-area table tr.diff > td.line {
+.or-table-wrapper .or-table-area table tr.or-diff > td.or-line {
 	background-color: #000000;
 	padding-right: 2px;
 	border-right: 3px solid #000000;
 	text-align: right;
 	margin-right: 2px;
 }
-.or-table-wrapper .or-table-area table tr.diff > td.old {
+.or-table-wrapper .or-table-area table tr.or-diff > td.or-old {
 	background-color: red;
 }
-.or-table-wrapper .or-table-area table tr.diff td.new {
+.or-table-wrapper .or-table-area table tr.or-diff td.or-new {
 	background-color: green;
 }
-.or-table-wrapper .or-table-area table tr.diff td.notequal {
+.or-table-wrapper .or-table-area table tr.or-diff td.or-notequal {
 	background-color: yellow;
 }
-.or-table-wrapper .or-table-area table tr td.help {
+.or-table-wrapper .or-table-area table tr td.or-help {
 	font-style: italic;
 }
-.or-table-wrapper .or-table-area table tr.headline td.help {
+.or-table-wrapper .or-table-area table tr.or-headline td.or-help {
 	/*
                 border-bottom:1px solid @color-overridden-by-theme;
                 */
 	font-style: normal;
 }
-.or-table-wrapper .or-table-area table td.logo {
+.or-table-wrapper .or-table-area table td.or-logo {
 	padding: 10px;
 	margin: 0px;
 }
@@ -1657,7 +1689,7 @@ a.editorlink:visited {
 	color: #000000;
 	border: 1px solid #000000;
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Ftemplate_engine%5C%2Fcomponents%5C%2Fhtml%5C%2Ftable%5C%2Ftable.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AASA%2CiBAEI%3B%3B%3B%3BAAQI%2CmBALoC%3BCAKpC%2CiBARJ%3BEAKQ%3B%3B%3BAAPZ%2CiBAEI%2CeASI%3BCACI%3BCACA%3BCACA%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAdZ%2CiBAEI%2CeASI%2CMAKI%2CGAAE%2CSAAY%3BAAhB1B%2CiBAEI%2CeASI%2CMAMI%2CGAAK%3BCAED%3BCACA%3B%3BAAEA%2CiBApBZ%2CeASI%2CMAKI%2CGAAE%2CSAAY%2CKAMT%2CSAAY%2COAAI%2CWAAW%3BAAA5B%2CiBApBZ%2CeASI%2CMAMI%2CGAAK%2CKAKA%2CSAAY%2COAAI%2CWAAW%3BCACxB%2CSAAS%2CQAAT%3B%3BAAEJ%2CiBAvBZ%2CeASI%2CMAKI%2CGAAE%2CSAAY%2CKAST%2CUAAa%2COAAI%2CWAAW%3BAAA7B%2CiBAvBZ%2CeASI%2CMAMI%2CGAAK%2CKAQA%2CUAAa%2COAAI%2CWAAW%3BCACzB%2CSAAS%2CQAAT%3B%3BAA1BpB%2CiBAEI%2CeASI%2CMAmBI%2CGAAE%2CKAAQ%3BCACN%3B%3BAA%5C%2FBhB%2CiBAEI%2CeASI%2CMAuBI%2CGAAK%3BCACD%3BCACA%3BCACA%3BCACA%3B%3BAAtChB%2CiBAEI%2CeASI%2CMA8BI%2CGAAE%3BCACE%3BCACA%3B%3BAA3ChB%2CiBAEI%2CeASI%2CMAkCI%2CGAAE%3BCACE%3BCACA%3B%3BAA%5C%2FChB%2CiBAEI%2CeASI%2CMAsCI%2CGAAE%3BCACE%3BCACA%3B%3BAAnDhB%2CiBAEI%2CeASI%2CMA2CI%2CGAAE%3BCACE%3BCACA%3BCACA%3B%3BAAGJ%2CiBA1DR%2CeASI%2CMAiDK%3BCACG%3BCACA%2CiBAAA%3BCACA%3B%3BAAHJ%2CiBA1DR%2CeASI%2CMAiDK%2COAIG%3BCACI%3BCACA%3BCACA%2CgCAAA%3BCACA%3BCACA%3B%3BAATR%2CiBA1DR%2CeASI%2CMAiDK%2COAeG%2CGAAE%3BCACE%3BCACA%3B%3BAAKR%2CiBAhFR%2CeASI%2CMAuEK%3BCACG%3BCACA%3BCACA%3B%3BAAHJ%2CiBAhFR%2CeASI%2CMAuEK%2CSAKG%3BCACI%2CkBAAA%3B%3BAAxFpB%2CiBAEI%2CeASI%2CMAkFI%2CGAAE%3BCACE%3BCACA%3BCACA%3B%3BAAGJ%2CiBAjGR%2CeASI%2CMAwFK%3BCACG%3BCACA%2CiBAAA%3BCACA%3B%3BAAGJ%2CiBAvGR%2CeASI%2CMA8FK%2COAAQ%3BCACL%3BCACA%3BCACA%2CgCAAA%3BCACA%3BCACA%3B%3BAAMJ%2CiBAlHR%2CeASI%2CMAyGK%2COAAQ%2CGAAE%3BCACP%3BCACA%3B%3BAAIJ%2CiBAxHR%2CeASI%2CMA%2BGK%3BCACG%3BCACA%3BCACA%3B%3BAAGJ%2CiBA9HR%2CeASI%2CMAqHK%2CSAAU%3BCACP%2CkBAAA%3B%3BAAjIhB%2CiBAEI%2CeASI%2CMAyHI%2CGAAE%3BCACE%2C0BAAA%3BCACA%2C2BAAA%3BCACA%3BCACA%3BCACA%3B%3BAAzIhB%2CiBAEI%2CeASI%2CMAgII%2CGAAE%2CMAAS%2CMAAG%3BCACV%3B%3BAA5IhB%2CiBAEI%2CeASI%2CMAqII%2CGAAE%3B%3B%3B%3B%3B%3BAAhJd%2CiBAEI%2CeASI%2CMAqII%2CGAAE%2CKACI%2CKAAE%3BCACA%2CyBAAA%3BCACA%3BCACA%2C%2BBAAA%3BCACA%3BCACA%3B%3BAAtJpB%2CiBAEI%2CeASI%2CMAqII%2CGAAE%2CKAcI%2CKAAE%3BCACA%3B%3BAA%5C%2FJpB%2CiBAEI%2CeASI%2CMAqII%2CGAAE%2CKAmBE%2CGAAE%3BCACE%3B%3BAApKpB%2CiBAEI%2CeASI%2CMAqII%2CGAAE%2CKAwBE%2CGAAE%3BCACE%3B%3BAAzKpB%2CiBAEI%2CeASI%2CMAmKI%2CGAAG%2CGAAE%3BCACD%3B%3BAA%5C%2FKhB%2CiBAEI%2CeASI%2CMAuKI%2CGAAE%2CSAAU%2CGAAE%3B%3B%3B%3BCAIV%3B%3BAAtLhB%2CiBAEI%2CeASI%2CMAgLI%2CGAAE%3BCACE%3BCACA%3B%3BAA7LhB%2CiBAsMI%3BCACI%3BCACA%3B%3BAAxMR%2CiBAsMI%2CiBAII%3BCAhNJ%2CkBAAA%3BCACA%2CuBAAA%3BCACA%2C0BAAA%3BCACA%2CyBAAA%3BCA%2BMQ%3BCACA%3BCACA%2CyBAAA%3BCACA%2CcAAA%3BCACA%2CyBAAA%22%7D */
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Ftemplate_engine%5C%2Fcomponents%5C%2Fhtml%5C%2Ftable%5C%2Ftable.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AASA%2CiBAEI%3B%3B%3B%3BAAQI%2CmBALoC%3BCAKpC%2CiBARJ%3BEAKQ%3B%3B%3BAAPZ%2CiBAEI%2CeASI%3BCACI%3BCACA%3BCACA%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAdZ%2CiBAEI%2CeASI%2CMAKI%2CGAAE%2CYAAe%3BAAhB7B%2CiBAEI%2CeASI%2CMAMI%2CGAAK%3BCAED%3BCACA%3B%3BAAEA%2CiBApBZ%2CeASI%2CMAKI%2CGAAE%2CYAAe%2CKAMZ%2CYAAe%2COAAI%2CWAAW%3BAAA%5C%2FB%2CiBApBZ%2CeASI%2CMAMI%2CGAAK%2CKAKA%2CYAAe%2COAAI%2CWAAW%3BCAC3B%2CSAAS%2CQAAT%3B%3BAAEJ%2CiBAvBZ%2CeASI%2CMAKI%2CGAAE%2CYAAe%2CKASZ%2CaAAgB%2COAAI%2CWAAW%3BAAAhC%2CiBAvBZ%2CeASI%2CMAMI%2CGAAK%2CKAQA%2CaAAgB%2COAAI%2CWAAW%3BCAC5B%2CSAAS%2CQAAT%3B%3BAA1BpB%2CiBAEI%2CeASI%2CMAmBI%2CGAAE%2CQAAW%3BCACT%3B%3BAA%5C%2FBhB%2CiBAEI%2CeASI%2CMAuBI%2CGAAK%3BCACD%3BCACA%3BCACA%3BCACA%3B%3BAAtChB%2CiBAEI%2CeASI%2CMA8BI%2CGAAE%3BCACE%3BCACA%3B%3BAA3ChB%2CiBAEI%2CeASI%2CMAkCI%2CGAAE%3BCACE%3BCACA%3B%3BAA%5C%2FChB%2CiBAEI%2CeASI%2CMAsCI%2CGAAE%3BCACE%3BCACA%3B%3BAAnDhB%2CiBAEI%2CeASI%2CMA2CI%2CGAAE%3BCACE%3BCACA%3BCACA%3B%3BAAGJ%2CiBA1DR%2CeASI%2CMAiDK%3BCACG%3BCACA%2CiBAAA%3BCACA%3B%3BAAHJ%2CiBA1DR%2CeASI%2CMAiDK%2CUAIG%3BCACI%3BCACA%3BCACA%2CgCAAA%3BCACA%3BCACA%3B%3BAATR%2CiBA1DR%2CeASI%2CMAiDK%2CUAeG%2CGAAE%3BCACE%3BCACA%3B%3BAAKR%2CiBAhFR%2CeASI%2CMAuEK%3BCACG%3BCACA%3BCACA%3B%3BAAHJ%2CiBAhFR%2CeASI%2CMAuEK%2CYAKG%3BCACI%2CkBAAA%3B%3BAAxFpB%2CiBAEI%2CeASI%2CMAkFI%2CGAAE%3BCACE%3BCACA%3BCACA%3B%3BAAGJ%2CiBAjGR%2CeASI%2CMAwFK%3BCACG%3BCACA%2CiBAAA%3BCACA%3B%3BAAGJ%2CiBAvGR%2CeASI%2CMA8FK%2CUAAW%3BCACR%3BCACA%3BCACA%2CgCAAA%3BCACA%3BCACA%3B%3BAAMJ%2CiBAlHR%2CeASI%2CMAyGK%2CUAAW%2CGAAE%3BCACV%3BCACA%3B%3BAAIJ%2CiBAxHR%2CeASI%2CMA%2BGK%3BCACG%3BCACA%3BCACA%3B%3BAAGJ%2CiBA9HR%2CeASI%2CMAqHK%2CYAAa%3BCACV%2CkBAAA%3B%3BAAjIhB%2CiBAEI%2CeASI%2CMAyHI%2CGAAE%3BCACE%2C0BAAA%3BCACA%2C2BAAA%3BCACA%3BCACA%3BCACA%3B%3BAAzIhB%2CiBAEI%2CeASI%2CMAgII%2CGAAE%2CMAAS%2CMAAG%3BCACV%3B%3BAA5IhB%2CiBAEI%2CeASI%2CMAqII%2CGAAE%3B%3B%3B%3B%3B%3BAAhJd%2CiBAEI%2CeASI%2CMAqII%2CGAAE%2CQACI%2CKAAE%3BCACA%2CyBAAA%3BCACA%3BCACA%2C%2BBAAA%3BCACA%3BCACA%3B%3BAAtJpB%2CiBAEI%2CeASI%2CMAqII%2CGAAE%2CQAcI%2CKAAE%3BCACA%3B%3BAA%5C%2FJpB%2CiBAEI%2CeASI%2CMAqII%2CGAAE%2CQAmBE%2CGAAE%3BCACE%3B%3BAApKpB%2CiBAEI%2CeASI%2CMAqII%2CGAAE%2CQAwBE%2CGAAE%3BCACE%3B%3BAAzKpB%2CiBAEI%2CeASI%2CMAmKI%2CGAAG%2CGAAE%3BCACD%3B%3BAA%5C%2FKhB%2CiBAEI%2CeASI%2CMAuKI%2CGAAE%2CYAAa%2CGAAE%3B%3B%3B%3BCAIb%3B%3BAAtLhB%2CiBAEI%2CeASI%2CMAgLI%2CGAAE%3BCACE%3BCACA%3B%3BAA7LhB%2CiBAsMI%3BCACI%3BCACA%3B%3BAAxMR%2CiBAsMI%2CiBAII%3BCAhNJ%2CkBAAA%3BCACA%2CuBAAA%3BCACA%2C0BAAA%3BCACA%2CyBAAA%3BCA%2BMQ%3BCACA%3BCACA%2CyBAAA%3BCACA%2CcAAA%3BCACA%2CyBAAA%22%7D */
 /* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/../../../template_engine/components/html/image/image */
 
 /*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%22%7D */

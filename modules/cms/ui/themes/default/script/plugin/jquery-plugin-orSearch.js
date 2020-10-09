@@ -20,17 +20,18 @@ jQuery.fn.orSearch = function( options )
 
 		if	( searchArgument.length )
 		{
-			$(dropdownEl).empty(); // Leeren.
 
 			$.ajax( { 'type':'GET',url:'./api/?action='+settings.action+'&subaction='+settings.method+'&output=json&search='+searchArgument, data:null, success:function(data, textStatus, jqXHR)
 				{
+					$(dropdownEl).empty(); // Leeren.
+
 					for( id in data.output.result )
 					{
 						let result = data.output.result[id];
 						
 						// Suchergebnis-Zeile in das Ergebnis schreiben.
 
-						let div = $('<div class="entry or-search-result" title="'+result.desc+'"></div>');
+						let div = $('<div class="or-entry or-search-result or-active" title="'+result.desc+'"></div>');
 						div.data('object',{
 							'name':result.name,
 						    'action':result.type,
@@ -40,15 +41,20 @@ jQuery.fn.orSearch = function( options )
 						link.click( function(e) {
 							e.preventDefault();
 						});
-						$(link).append('<i class="image-icon image-icon--action-'+result.type+'" />');
+						$(link).append('<i class="or-image-icon or-image-icon--action-'+result.type+'" />');
 						$(link).append('<span>'+result.name+'</span>');
 
 						$(div).append(link);
 						$(dropdownEl).append(div);
 					}
 
-					// Open the menu
-                    $(dropdownEl).closest('.or-menu').addClass('open');
+					if   ( data.output.result ) {
+						// Open the menu
+						$(dropdownEl).closest('.or-menu').addClass('menu--is-open');
+						$(dropdownEl).addClass('dropdown--is-open');
+					}else {
+						$(dropdownEl).removeClass('dropdown--is-open');
+					}
 
 					// Register clickhandler for search results.
 					$(dropdownEl).find('.or-search-result').click( function(e) {

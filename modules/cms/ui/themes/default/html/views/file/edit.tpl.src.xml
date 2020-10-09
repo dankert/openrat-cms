@@ -4,7 +4,7 @@
 
 		<part class="line">
 			<part class="label" />
-			<part class="input">
+			<part class="value">
 				<newline />
 				<upload name="file"></upload>
 				<newline />
@@ -12,10 +12,10 @@
 			</part>
 		</part>
 
-		<part class="line or-dropzone-upload">
+		<part class="line dropzone-upload">
 			<part class="label">
 			</part>
-			<part class="input">
+			<part class="value">
 			</part>
 		</part>
 

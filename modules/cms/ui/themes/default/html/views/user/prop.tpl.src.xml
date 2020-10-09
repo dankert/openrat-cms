@@ -5,7 +5,7 @@
 			<part class="label">
 				<label for="name" key="user_username"></label>
 			</part>
-			<part class="input">
+			<part class="value">
 				<input name="name" size="20" class="name,focus" maxlength="128"></input>
 			</part>
 		</part>
@@ -14,7 +14,7 @@
 				<part class="label">
 					<label for="fullname" key="user_fullname"></label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<input name="fullname" maxlength="128"></input>
 				</part>
 			</part>
@@ -23,7 +23,7 @@
 					<part class="label">
 						<label for="mail" key="user_mail"></label>
 					</part>
-					<part class="input">
+					<part class="value">
 						<input name="mail" maxlength="255"></input>
 						<qrcode value="mailto:${mail}" />
 					</part>
@@ -33,7 +33,7 @@
 				<part class="label">
 					<label for="desc" key="user_desc"></label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<input name="desc" maxlength="255"></input>
 				</part>
 			</part>
@@ -41,7 +41,7 @@
 				<part class="label">
 					<label for="tel" key="user_tel"></label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<input name="tel" maxlength="128"></input>
 					<qrcode value="tel:${tel}" />
 					
@@ -53,7 +53,7 @@
 						<text value="${message:timezone}" />
 					</label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<selectbox name="timezone" list="timezone_list"
 						addempty="true"></selectbox>
 				</part>
@@ -64,7 +64,7 @@
 						<text value="${message:language}" />
 					</label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<selectbox name="language" list="language_list" addempty="true"></selectbox>
 				</part>
 			</part>
@@ -72,7 +72,7 @@
 		<group title="${message:options}">
 			<part class="line">
 				<part class="label"></part>
-				<part class="input">
+				<part class="value">
 					<checkbox name="is_admin"></checkbox>
 					<label for="is_admin" key="user_admin"></label>
 				</part>
@@ -81,7 +81,7 @@
 				<part class="label">
 					<label for="ldap_dn" key="user_ldapdn"></label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<input name="ldap_dn"></input>
 				</part>
 			</part>
@@ -89,7 +89,7 @@
 				<part class="label">
 					<label for="style" key="user_style"></label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<selectbox list="allstyles" name="style"></selectbox>
 				</part>
 			</part>
@@ -98,7 +98,7 @@
 			<part class="line">
 				<part class="label">
 				</part>
-				<part class="input">
+				<part class="value">
 					<checkbox name="totp"/><label for="totp" key="user_totp"></label>
 				
 					<!--<text value="${otpSecret}"></text>-->
@@ -108,7 +108,7 @@
 			<part class="line">
 				<part class="label">
 				</part>
-				<part class="input">
+				<part class="value">
 					<checkbox name="hotp"/><label for="hotp" key="user_hotp"></label>
 				
 					<qrcode value="${hotpSecretUrl}" />

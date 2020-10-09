@@ -4,6 +4,9 @@
 namespace template_engine\element;
 
 
+use template_engine\AppInfo;
+use template_engine\components\html\Component;
+
 class HtmlElement extends Element
 {
 	private $styleClasses = [];
@@ -24,7 +27,11 @@ class HtmlElement extends Element
 	public function addStyleClass( $classes ) {
 
 		if   ( ! is_array($classes) )
-			$classes = [$classes];
+			$classes = Component::splitByComma($classes);
+
+		$classes = array_map( function($styleClass){
+			return AppInfo::$styleClassPrefix.$styleClass;
+		},$classes);
 
 		$this->styleClasses = array_merge( $this->styleClasses, $classes );
 		return $this;

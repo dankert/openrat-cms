@@ -121,9 +121,9 @@ class ConfigurationAction extends BaseAction
         $conf['interpreter'] = array('version' => phpversion(),
             'SAPI' => php_sapi_name(),
             'session-name' => session_name(),
-            'magic_quotes_gpc' => get_magic_quotes_gpc(),
+            'magic_quotes_gpc' => @get_magic_quotes_gpc(),
             'loaded_ini_file' => php_ini_loaded_file(),
-            'magic_quotes_runtime' => get_magic_quotes_runtime());
+            'magic_quotes_runtime' => @get_magic_quotes_runtime());
 
         $conf['interpreter']['server'] = $_SERVER;
         $conf['interpreter']['environment'] = $_ENV;

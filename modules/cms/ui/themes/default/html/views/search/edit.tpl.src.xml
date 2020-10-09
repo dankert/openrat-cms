@@ -8,7 +8,7 @@
 				</label>
 				<newline></newline>
 			</part>
-			<part class="input">
+			<part class="value">
 				<input name="text" hint="${message:search}"></input>
 			</part>
 		</part>
@@ -19,7 +19,7 @@
 				</label>
 				<newline></newline>
 			</part>
-			<part class="input">
+			<part class="value">
 				<checkbox name="id" default="${config:search/quicksearch/flag/id}" />
 				<label for="id">
 					<text value="${message:id}"></text>

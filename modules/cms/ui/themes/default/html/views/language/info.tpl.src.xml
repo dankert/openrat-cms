@@ -9,7 +9,7 @@
             <part class="label">
                 <text value="${message:NAME}"></text>
             </part>
-            <part class="input clickable">
+            <part class="value,clickable">
                 <text value="${name}" class="name"/>
             </part>
         </part>
@@ -17,7 +17,7 @@
             <part class="label">
                 <text value="${message:LANGUAGE_ISOCODE}"></text>
             </part>
-            <part class="input clickable">
+            <part class="value,clickable">
                 <text value="${isocode}"/>
             </part>
         </part>
@@ -26,8 +26,8 @@
         <part class="line">
             <part class="label">
             </part>
-            <part class="input clickable">
-                <link class="or-btn" action="language" subaction="prop" type="edit">
+            <part class="value,clickable">
+                <link class="btn" action="language" subaction="prop" type="edit">
                     <text value="${message:edit}"/>
                 </link>
             </part>

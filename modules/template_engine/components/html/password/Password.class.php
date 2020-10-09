@@ -35,6 +35,6 @@ class PasswordComponent extends FieldComponent
 		else
 			$input->addAttribute('value',Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->name));
 
-		return $input->addStyleClass('or-input');
+		return $input->addStyleClass('input');
 	}
 }

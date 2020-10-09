@@ -12,7 +12,7 @@
 		</row>
 
 		<list list="${languages}" extract="true">
-			<row class="data clickable">
+			<row class="data,clickable">
 				<column>
 					<text value="${languagename}" />
 				</column>

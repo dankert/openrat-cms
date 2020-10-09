@@ -5,7 +5,7 @@
 			<part class="label">
 				<text value="${message:name}"></text>
 			</part>
-			<part class="input">
+			<part class="value">
 				<input name="name" class="focus" maxlength="128"></input>
 			</part>
 		</part>
@@ -14,7 +14,7 @@
 			<part class="line">
 				<part class="label">
 				</part>
-				<part class="input">
+				<part class="value">
 					<radio name="type" value="empty" checked="true"></radio>
 					<label for="type_empty">
 						<text value="${message:empty}"></text>

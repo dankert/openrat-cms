@@ -20,7 +20,7 @@ class EditorComponent extends FieldComponent
 		$textarea = new CMSElement('textarea');
 		$textarea->addAttribute('name',$this->name);
 
-		$textarea->addStyleClass('editor')->setEscaping(false);
+		$textarea->addStyleClass('input')->addStyleClass('editor')->setEscaping(false);
 
 		switch( $this->type )
 		{

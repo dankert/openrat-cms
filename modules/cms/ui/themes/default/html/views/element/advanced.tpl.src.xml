@@ -14,7 +14,7 @@
                     <part class="label">
                         <text value="${message:ELEMENT_SUBTYPE}"></text>
                     </part>
-                    <part class="input">
+                    <part class="value">
                         <if present="subtypes">
                             <selectbox name="subtype" list="subtypes" addempty="true"></selectbox>
                         </if>
@@ -28,7 +28,7 @@
                 <part class="line">
                     <part class="label">
                     </part>
-                    <part class="input">
+                    <part class="value">
                         <checkbox name="with_icon"></checkbox>
                         <label for="with_icon">
                             <text value="${message:EL_PROP_WITH_ICON}"></text>
@@ -40,7 +40,7 @@
                 <part class="line">
                     <part class="label">
                     </part>
-                    <part class="input">
+                    <part class="value">
                         <checkbox name="inherit"></checkbox>
                         <label for="inherit">
                             <text value="${message:EL_PROP_INHERIT}"></text>
@@ -52,7 +52,7 @@
                 <part class="line">
                     <part class="label">
                     </part>
-                    <part class="input">
+                    <part class="value">
                         <checkbox name="all_languages"></checkbox>
                         <label for="all_languages">
                             <text value="${message:EL_PROP_ALL_LANGUAGES}"></text>
@@ -64,7 +64,7 @@
                 <part class="line">
                     <part class="label">
                     </part>
-                    <part class="input">
+                    <part class="value">
                         <checkbox name="writable"></checkbox>
                         <label for="writable">
                             <text value="${message:EL_PROP_writable}"></text>
@@ -77,7 +77,7 @@
                     <part class="label">
                         <text value="${message:width}"></text>
                     </part>
-                    <part class="input">
+                    <part class="value">
                         <input size="10" name="width"></input>
                     </part>
                 </part>
@@ -88,7 +88,7 @@
                     <part class="label">
                         <text value="${message:height}"></text>
                     </part>
-                    <part class="input">
+                    <part class="value">
                         <input size="10" name="height"></input>
                     </part>
                 </part>
@@ -98,7 +98,7 @@
                     <part class="label">
                         <text value="${message:EL_PROP_DATEFORMAT}"></text>
                     </part>
-                    <part class="input">
+                    <part class="value">
                         <selectbox name="dateformat" list="dateformats"></selectbox>
                     </part>
                 </part>
@@ -108,7 +108,7 @@
                     <part class="label">
                         <text value="${message:EL_PROP_FORMAT}"></text>
                     </part>
-                    <part class="input">
+                    <part class="value">
                         <radiobox name="format" list="formatlist"></radiobox>
                     </part>
                 </part>
@@ -118,7 +118,7 @@
                     <part class="label">
                         <text value="${message:EL_PROP_DECIMALS}"></text>
                     </part>
-                    <part class="input">
+                    <part class="value">
                         <input size="10" maxlength="2" name="decimals"></input>
                     </part>
                 </part>
@@ -128,7 +128,7 @@
                     <part class="label">
                         <text value="${message:EL_PROP_DEC_POINT}"></text>
                     </part>
-                    <part class="input">
+                    <part class="value">
                         <input size="10" maxlength="5" name="dec_point"></input>
                     </part>
                 </part>
@@ -138,7 +138,7 @@
                     <part class="label">
                         <text value="${message:EL_PROP_thousand_sep}"></text>
                     </part>
-                    <part class="input">
+                    <part class="value">
                         <input size="10" maxlength="1" name="thousand_sep"></input>
                     </part>
                 </part>
@@ -148,7 +148,7 @@
                     <part class="label">
                         <text value="${message:EL_PROP_default_text}"></text>
                     </part>
-                    <part class="input">
+                    <part class="value">
                         <input size="40" maxlength="255" name="default_text"></input>
                     </part>
                 </part>
@@ -158,7 +158,7 @@
                     <part class="label">
                         <text value="${message:EL_PROP_default_longtext}"></text>
                     </part>
-                    <part class="input">
+                    <part class="value">
                         <inputarea rows="10" name="default_longtext"></inputarea>
                     </part>
                 </part>
@@ -168,14 +168,14 @@
                     <part class="label">
                         <text value="${message:EL_PROP_DYNAMIC_PARAMETERS}"></text>
                     </part>
-                    <part class="input">
+                    <part class="value">
                         <inputarea rows="15" name="parameters"></inputarea>
                     </part>
                 </part>
                 <part class="line">
                     <part class="label">
                     </part>
-                    <part class="input">
+                    <part class="value">
                         <list list="${dynamic_class_parameters}" key="paramName" value="defaultValue">
                             <text value="${paramName}"></text>
                             <text value=" ("></text>
@@ -192,7 +192,7 @@
                     <part class="label">
                         <text value="${message:EL_PROP_select_items}"></text>
                     </part>
-                    <part class="input">
+                    <part class="value">
                         <inputarea rows="15" cols="40" name="select_items"></inputarea>
                     </part>
                 </part>
@@ -202,7 +202,7 @@
                     <part class="label">
                         <text value="${message:EL_LINK}"></text>
                     </part>
-                    <part class="input">
+                    <part class="value">
                         <selectbox name="linkelement" list="linkelements"></selectbox>
                     </part>
                 </part>
@@ -212,7 +212,7 @@
                     <part class="label">
                         <text value="${message:ELEMENT_NAME}"></text>
                     </part>
-                    <part class="input">
+                    <part class="value">
                         <selectbox name="name" list="names"></selectbox>
                     </part>
                 </part>
@@ -222,7 +222,7 @@
                     <part class="label">
                         <text value="${message:EL_PROP_DEFAULT_FOLDEROBJECT}"></text>
                     </part>
-                    <part class="input">
+                    <part class="value">
                         <selectbox name="folderobjectid" list="folders"></selectbox>
                     </part>
                 </part>
@@ -232,7 +232,7 @@
                     <part class="label">
                         <text value="${message:EL_PROP_DEFAULT_OBJECT}"></text>
                     </part>
-                    <part class="input">
+                    <part class="value">
                         <selectbox name="default_objectid" list="objects"
                                    addempty="true"></selectbox>
                     </part>
@@ -243,7 +243,7 @@
                     <part class="label">
                         <text value="${message:EL_PROP_code}"></text>
                     </part>
-                    <part class="input">
+                    <part class="value">
                         <inputarea name="code" rows="35"></inputarea>
                     </part>
                 </part>

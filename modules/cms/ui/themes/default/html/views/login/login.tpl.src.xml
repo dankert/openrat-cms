@@ -38,7 +38,7 @@
 						<text value="${message:USER_USERNAME}"></text>
 					</label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<if not="true" present="force_username">
 						<input type="text" name="login_name" class="name" value=""
 							hint="${message:USER_USERNAME}" size="20" maxlength="128" focus="true" required="true"></input>
@@ -55,7 +55,7 @@
 						<text value="${message:USER_PASSWORD}"></text>
 					</label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<password name="login_password" class="name" default=""
 						size="20"></password>
 				</part>
@@ -70,7 +70,7 @@
 			<part class="line">
 				<part class="label">
 				</part>
- 				<part class="input">
+ 				<part class="value">
 					<checkbox name="remember" default="false"></checkbox>
 					<label for="remember">
 						<text value="${message:REMEMBER_ME}"></text>
@@ -89,7 +89,7 @@
 						<text value="${message:USER_NEW_PASSWORD}"></text>
 					</label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<password name="password1" default="" size="25"></password>
 				</part>
 			</part>
@@ -99,7 +99,7 @@
 						<text value="${message:USER_NEW_PASSWORD_REPEAT}"></text>
 					</label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<password name="password2" default="" size="25"></password>
 				</part>
 			</part>
@@ -112,7 +112,7 @@
 						<text value="${message:USER_TOKEN}"></text>
 					</label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<input name="user_token" default="" size="25" maxlength="30" />
 				</part>
 			</part>
@@ -139,7 +139,7 @@
 							<text value="${message:DATABASE}"></text>
 						</label>
 					</part>
-					<part class="input">
+					<part class="value">
 						<selectbox name="dbid" list="dbids"></selectbox>
 					</part>
 				</part>

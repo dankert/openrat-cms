@@ -8,9 +8,9 @@
             <part class="label">
                 <text value="${message:NAME}"></text>
             </part>
-            <part class="input clickable">
+            <part class="value,clickable">
                 <text value="${name}"/>
-                <link class="or-btn" action="model" subaction="prop" type="edit">
+                <link class="btn" action="model" subaction="prop" type="edit">
                     <text value="${message:edit}"/>
                 </link>
             </part>

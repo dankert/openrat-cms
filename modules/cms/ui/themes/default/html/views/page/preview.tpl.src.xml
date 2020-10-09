@@ -14,7 +14,7 @@
 
     <group title="${message:PREVIEW}">
 
-        <part class="toolbar-icon clickable">
+        <part class="toolbar-icon,clickable">
             <link type="popup" class="action" url="${preview_url}">
                 <image menu="open_in_new"></image>
                 <text value="${message:link_open_in_new_window}"></text>

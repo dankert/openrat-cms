@@ -28,7 +28,7 @@
 									</list>
 								</row>
 								<list list="${rights}" key="aclid" value="acl" extract="true">
-									<row class="data clickable">
+									<row class="data,clickable">
 										<column>
 											<if present="username">
 												<image action="user"></image>

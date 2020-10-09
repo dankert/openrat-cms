@@ -5,7 +5,7 @@
 		<part class="line">
 			<part class="label">
 			</part>
-			<part class="input">
+			<part class="value">
 				<set var="replace" value="1"></set>
 				<radio name="replace" value="1"></radio>
 				<label for="replace_1">

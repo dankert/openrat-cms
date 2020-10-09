@@ -9,7 +9,7 @@
 						<text value="${message:value}"></text>
 					</label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<selectbox name="elementid" list="elements"></selectbox>
 				</part>
 			</part>
@@ -24,7 +24,7 @@
 						<text value="${message:ICON}"></text>
 					</label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<selectbox name="writable_elementid" list="writable_elements"></selectbox>
 				</part>
 			</part>
@@ -35,7 +35,7 @@
 						<text value="${message:TEMPLATE_SRC_IFEMPTY}"></text>
 					</label>
 				</part>
-				<part class="input">
+				<part class="value">
 				</part>
 			</part>
 			<part class="line">
@@ -45,7 +45,7 @@
 						<text value="${message:TEMPLATE_SRC_IFNOTEMPTY}"></text>
 					</label>
 				</part>
-				<part class="input">
+				<part class="value">
 				</part>
 			</part>
 		</if>

@@ -7,7 +7,7 @@
                     <text value="${message:NAME}"></text>
                 </label>
             </part>
-            <part class="input">
+            <part class="value">
                 <input name="name" class="name focus" maxlength="100"></input>
             </part>
         </part>

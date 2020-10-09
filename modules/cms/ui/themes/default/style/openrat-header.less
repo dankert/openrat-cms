@@ -6,53 +6,54 @@
 }
 
 
+.or- {
+    &dropdown {
+        z-index: 120;
+        min-width: 250px;
+        position: absolute;
+        padding: 5px 0px;
 
-.dropdown {
-    z-index: 120;
-    min-width: 250px;
-    position: absolute;
-    padding: 5px 0px;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
 
-    font-style: normal;
-    font-weight: normal;
-    text-decoration: none;
+        .or-entry {
+            padding: 0;
 
-    .entry {
-        padding: 0;
+            > a {
+                display: flex;
+                align-items: center;
+                padding: 0 0.5em;
 
-        > a {
-            display: flex;
-            align-items: center;
-            padding: 0 0.5em;
+                * {
+                    margin: 0.25em;
+                }
 
-            * {
-                margin: 0.25em;
+                span:first-of-type {
+                    flex: 1; /* Menü-Text füllt den Platz auf */
+                }
             }
 
-            span:first-of-type {
-                flex: 1; /* Menü-Text füllt den Platz auf */
+            /* Außenabstand Text */
+
+            > .or-text {
+                display: block;
+                margin: 10px;
             }
         }
 
-        /* Außenabstand Text */
-        > .text {
-            display: block;
-            margin: 10px;
+        .or-divide {
+            height: 1px;
+            width: 100%;
+            margin-top: 5px;
+            margin-bottom: 5px;
         }
-    }
-
-    div.divide {
-        height: 1px;
-        width: 100%;
-        margin-top: 5px;
-        margin-bottom: 5px;
     }
 }
 
 
-
-
-.or-menu {
+.or- {
+  &menu {
 
     display: flex;
     justify-content: space-between;
@@ -66,38 +67,30 @@
                 right: 10px;
             }
         }
-        i.image-icon
+        .or-image-icon
         {
             width: 1.1em;
         }
-        /* Pfeile */
-        div > div.arrow-down {
-            width: 0;
-            height: 0;
-            margin: 6px;
-            padding: 0px;
-            margin-top: 10px;
-        }
 
-        div.toolbar-icon {
+        .or-toolbar-icon {
             padding: 2px;
 
             margin-left: 10px;
             float: left;
 
             /* Bestimmte Menüs sind nach rechts ausgerichet */
-            &.user,
-            &.search,
-            &.history {
+            &.or-user,
+            &.or-search,
+            &.or-history {
                 float: right;
                 margin-right: 10px;
                 margin-left: 10px;
             }
 
-            &.menu {
+            &.or-menu-category {
                 cursor: default;
             }
-            &.search {
+            &.or-search {
                 input {
                     border: 0;
                     margin: 0;
@@ -116,16 +109,22 @@
 
     }
 
-    .dropdown {
-        display: none;
-    }
     /* Dropdown anzeigen, wenn Titel geöffnet und wenn mit Maus überstrichen */
-    &.open {
-        .toolbar-icon.open {
-            > div.dropdown {
+    &--is-open {
+        .or-menu-category--is-open {
+            > .or-dropdown {
                 display: block;
             }
         }
     }
+  }
+
+  &dropdown {
+      display: none;
+
+      &--is-open {
+          display: block;
+      }
+  }
 
 }

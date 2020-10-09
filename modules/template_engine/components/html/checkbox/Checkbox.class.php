@@ -43,8 +43,8 @@ class CheckboxComponent extends Component
 
 		if   ( $this->label ) {
 			$label = new CMSElement('label');
-			$label->addStyleClass('or-form-row')->addStyleClass('or-form-checkbox');
-			$label->addChild( (new CMSElement('span'))->addStyleClass('or-form-label')->content($this->label));
+			$label->addStyleClass('form-row')->addStyleClass('form-checkbox');
+			$label->addChild( (new CMSElement('span'))->addStyleClass('form-label')->content($this->label));
 			$label->addChild($checkbox);
 			return $label;
 		}

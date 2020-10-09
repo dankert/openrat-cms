@@ -3,7 +3,7 @@
  use cms\base\Startup;use util\Html;
  if (!headers_sent()) header('Content-Type: text/html; charset=UTF-8')
 ?><!DOCTYPE html>
-<html class="theme-<?php echo strtolower($style) ?> nojs" lang="<?php echo \cms\base\Configuration::Conf()->subset('language')->get('language_code') ?>">
+<html class="or-theme-<?php echo strtolower($style) ?> nojs" lang="<?php echo \cms\base\Configuration::Conf()->subset('language')->get('language_code') ?>">
 <head>
 <?php $appName = \cms\base\Configuration::config('application','name'); $appOperator = \cms\base\Configuration::config('application','operator');
       $title = $appName.(($appOperator!=$appName)?' - '.$appOperator:''); ?>
@@ -28,16 +28,16 @@
 <body>
 
 
-<div id="workbench" class="initial-hidden">
+<div id="workbench" class="or--initial-hidden">
 
-    <header id="title" class="view view-static" data-action="title" data-method="show">
+    <header id="title" class="or-view or-act-view-static" data-action="title" data-method="show">
     </header>
 
 
     <div class="or-main-area">
 
         <nav class="or-navigation">
-            <div class="view view-static" data-action="tree" data-method="show">
+            <div class="or-view or-act-view-static" data-action="tree" data-method="show">
             </div>
 
         </nav>
@@ -70,7 +70,7 @@
                         -->
 
 
-                    <div class="view view-loader closable" data-method="<?php echo $method['name'] ?>"></div>
+                    <div class="or-view or-act-view-loader or-closable" data-method="<?php echo $method['name'] ?>"></div>
 
                 </section>
                 <?php } ?>
@@ -84,25 +84,25 @@
 
 
 <?php /* Modal dialog */ ?>
-<div id="dialog" class="is-<?php echo empty($dialogAction)?'closed':'open' ?>" data-action="<?php echo (!empty($dialogAction)?$dialogAction:'') ?>" data-method="<?php echo (!empty($dialogMethod)?$dialogMethod:'') ?>">
-    <div class="view or-round-corners">
+<div id="dialog" class="or-dialog <?php echo empty($dialogAction)?'':'or-dialog--is-open' ?>" data-action="<?php echo (!empty($dialogAction)?$dialogAction:'') ?>" data-method="<?php echo (!empty($dialogMethod)?$dialogMethod:'') ?>">
+    <div class="or-view or-round-corners">
     </div>
 
-    <div class="filler"><?php /* empty element, this is only for styling the background. */ ?>
-        <span class="icon">X</span>
+    <div class="or-dialog-filler"><?php /* empty element, this is only for styling the background. */ ?>
+        <span class="or-dialog-filler-icon or-btn or-image-icon or-image-icon--menu-close"></span>
     </div>
 </div>
 
 
-<div id="noticebar">
+<div id="noticebar" class="or-notices">
 </div>
 
 <?php /* Inline Notices */ foreach( $notices as $notice ) { ?>
-<div class="invisible or-initial-notice"><?php echo $notice['text'] ?></div>
+<div class="or--invisible or-act-initial-notice"><?php echo $notice['text'] ?></div>
 <?php } ?>
 
 
-<footer class="initial-hidden" id="footer">
+<footer class="or--initial-hidden" id="footer">
 
 </footer>
 

@@ -9,7 +9,7 @@
 				<part class="label">
 					<text value="${message:type}" />
 				</part>
-				<part class="input">
+				<part class="value">
 					<text value="${message:${type}}" />
 				</part>
 			</part>
@@ -17,7 +17,7 @@
 				<part class="label">
 					<text value="${message:filename}"></text>
 				</part>
-				<part class="input">
+				<part class="value">
 					<text value="${filename}" />
 				</part>
 			</part>
@@ -25,15 +25,15 @@
 				<part class="label">
 					<text value="${message:description}"></text>
 				</part>
-				<part class="input">
+				<part class="value">
 					<text value="${description}" class="description" />
 				</part>
 			</part>
 			<part class="line">
 				<part class="label">
 				</part>
-				<part class="input clickable">
-					<link subaction="prop" class="or-btn" type="dialog">
+				<part class="value,clickable">
+					<link subaction="prop" class="btn" type="dialog">
 						<text value="${message:edit}" />
 					</link>
 				</part>
@@ -51,7 +51,7 @@
 				<text label="alias" value="${alias}" />
 
 				<part class="clickable">
-					<link class="or-btn" type="edit" action="page" subaction="name" var1="languageid" value1="${languageid}">
+					<link class="btn" type="edit" action="page" subaction="name" var1="languageid" value1="${languageid}">
 						<text value="${message:edit}" />
 					</link>
 				</part>
@@ -67,7 +67,7 @@
 						<text value="${message:full_filename}"></text>
 					</label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<text value="${full_filename}" class="filename"></text>
 				</part>
 			</part>
@@ -77,7 +77,7 @@
 						<text value="${message:full_filename}"></text>
 					</label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<text value="${tmp_filename}" class="filename"></text>
 				</part>
 			</part>
@@ -87,7 +87,7 @@
 						<text value="${message:template}"></text>
 					</label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<if present="templateid">
 						<part class="clickable">
 							<link action="template" id="${templateid}" type="open">
@@ -108,7 +108,7 @@
 						<text value="${message:FILE_MIMETYPE}"></text>
 					</label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<text value="${mime_type}" class="filename"></text>
 				</part>
 			</part>
@@ -118,7 +118,7 @@
 						<text value="${message:id}"></text>
 					</label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<text value="${objectid}"></text>
 				</part>
 			</part>

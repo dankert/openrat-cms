@@ -62,7 +62,7 @@
 							<part class="line">
 								<part class="label">
 								</part>
-								<part class="input">
+								<part class="value">
 									<radio name="type" value="${actiontype}"></radio>
 									<label for="type" value="${actiontype}">
 										<text value=" "></text>
@@ -74,7 +74,7 @@
 							<part class="line">
 								<part class="label">
 								</part>
-								<part class="input">
+								<part class="value">
 									<text value="    " />
 									<checkbox name="confirm" required="true" />
 									<label for="confirm">
@@ -87,7 +87,7 @@
 							<part class="label">
 								<text value="${message:FOLDER_SELECT_TARGET_FOLDER}" />
 							</part>
-							<part class="input">
+							<part class="value">
 								<selector types="folder" param="targetobjectid" name="${rootfoldername}"
 									id="${rootfolderid}" folderid="${rootfolderid}" />
 							</part>

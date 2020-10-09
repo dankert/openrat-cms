@@ -7,15 +7,15 @@
 					<text value="${message:FILE}"></text>
 				</label>
 			</part>
-			<part class="input">
+			<part class="value">
 				<upload name="file" maxlength="${maxlength}" multiple="true"></upload>
 			</part>
 		</part>
 
-		<part class="line or-dropzone-upload">
+		<part class="line dropzone-upload">
 			<part class="label">
 			</part>
-			<part class="input">
+			<part class="value">
 			</part>
 		</part>
 
@@ -23,7 +23,7 @@
 			<part class="label">
 				<text class="help" value="${message:file_max_size}"></text>
 			</part>
-			<part class="input">
+			<part class="value">
 				<text value="${max_size}"></text>
 			</part>
 		</part>
@@ -32,7 +32,7 @@
 			<part class="label">
 				<text value="${message:HTTP_URL}"></text>
 			</part>
-			<part class="input">
+			<part class="value">
 				<input name="url" size="50"></input>
 			</part>
 		</part>
@@ -43,7 +43,7 @@
 			<part class="label">
 				<text value="${message:NAME}"></text>
 			</part>
-			<part class="input">
+			<part class="value">
 				<input name="name" size="50"></input>
 			</part>
 		</part>
@@ -53,7 +53,7 @@
 			<part class="label">
 				<text value="${message:DESCRIPTION}"></text>
 			</part>
-			<part class="input">
+			<part class="value">
 				<inputarea rows="5" cols="50" name="description" default=""></inputarea>
 			</part>
 		</part>

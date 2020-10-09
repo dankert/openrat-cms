@@ -1,5 +1,5 @@
 <?php defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
-  <form name="<?php echo O::escapeHtml('') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-target="<?php echo O::escapeHtml('view') ?>" action="<?php echo O::escapeHtml('./') ?>" data-method="<?php echo O::escapeHtml('diff') ?>" data-action="<?php echo O::escapeHtml('pageelement') ?>" data-id="<?php echo O::escapeHtml(''.@$_id.'') ?>" method="<?php echo O::escapeHtml('get') ?>" enctype="<?php echo O::escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo O::escapeHtml('') ?>" data-autosave="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-form pageelement') ?>"><?php echo O::escapeHtml('') ?>
+  <form name="<?php echo O::escapeHtml('') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-target="<?php echo O::escapeHtml('view') ?>" action="<?php echo O::escapeHtml('./') ?>" data-method="<?php echo O::escapeHtml('diff') ?>" data-action="<?php echo O::escapeHtml('pageelement') ?>" data-id="<?php echo O::escapeHtml(''.@$_id.'') ?>" method="<?php echo O::escapeHtml('get') ?>" enctype="<?php echo O::escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo O::escapeHtml('') ?>" data-autosave="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-form or-pageelement') ?>"><?php echo O::escapeHtml('') ?>
     <div class="<?php echo O::escapeHtml('or-form-headline') ?>"><?php echo O::escapeHtml('') ?>
     </div>
     <div class="<?php echo O::escapeHtml('or-form-content') ?>"><?php echo O::escapeHtml('') ?>
@@ -13,12 +13,12 @@
         </div>
         <div class="<?php echo O::escapeHtml('or-table-area') ?>"><?php echo O::escapeHtml('') ?>
           <table width="<?php echo O::escapeHtml('100%') ?>"><?php echo O::escapeHtml('') ?>
-            <tr class="<?php echo O::escapeHtml('headline') ?>"><?php echo O::escapeHtml('') ?>
-              <td class="<?php echo O::escapeHtml('help') ?>"><?php echo O::escapeHtml('') ?>
+            <tr class="<?php echo O::escapeHtml('or-headline') ?>"><?php echo O::escapeHtml('') ?>
+              <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(''.@O::lang('NR').'') ?>
                 </span>
               </td>
-              <td colspan="<?php echo O::escapeHtml('2') ?>" class="<?php echo O::escapeHtml('help') ?>"><?php echo O::escapeHtml('') ?>
+              <td colspan="<?php echo O::escapeHtml('2') ?>" class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
                 <?php $if1=(isset($compareid)); if($if1) {  ?>
                   <span><?php echo O::escapeHtml(''.@O::lang('COMPARE').'') ?>
                   </span>
@@ -28,23 +28,23 @@
                   </span>
                  <?php } ?>
               </td>
-              <td class="<?php echo O::escapeHtml('help') ?>"><?php echo O::escapeHtml('') ?>
+              <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(''.@O::lang('DATE').'') ?>
                 </span>
               </td>
-              <td class="<?php echo O::escapeHtml('help') ?>"><?php echo O::escapeHtml('') ?>
+              <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(''.@O::lang('USER').'') ?>
                 </span>
               </td>
-              <td class="<?php echo O::escapeHtml('help') ?>"><?php echo O::escapeHtml('') ?>
+              <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(''.@O::lang('VALUE').'') ?>
                 </span>
               </td>
-              <td class="<?php echo O::escapeHtml('help') ?>"><?php echo O::escapeHtml('') ?>
+              <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(''.@O::lang('STATE').'') ?>
                 </span>
               </td>
-              <td class="<?php echo O::escapeHtml('help') ?>"><?php echo O::escapeHtml('') ?>
+              <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(''.@O::lang('ACTION').'') ?>
                 </span>
               </td>
@@ -58,7 +58,7 @@
               </tr>
              <?php } ?>
             <?php foreach((array)$el as $list_key=>$list_value) { extract($list_value); ?>
-              <tr class="<?php echo O::escapeHtml('data') ?>"><?php echo O::escapeHtml('') ?>
+              <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
                 <td><?php echo O::escapeHtml('') ?>
                   <span><?php echo O::escapeHtml(''.@$lfd_nr.'') ?>
                   </span>
@@ -101,7 +101,7 @@
                  <?php } ?>
                 <?php if(!$if1) {  ?>
                   <?php $if1=(isset($releaseUrl)); if($if1) {  ?>
-                    <td class="<?php echo O::escapeHtml('clickable') ?>"><?php echo O::escapeHtml('') ?>
+                    <td class="<?php echo O::escapeHtml('or-clickable') ?>"><?php echo O::escapeHtml('') ?>
                       <a title="<?php echo O::escapeHtml(''.@O::lang('RELEASE_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('post') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('release') ?>" data-id="<?php echo O::escapeHtml(''.@$objectid.'') ?>" data-extra-valueid="<?php echo O::escapeHtml(''.@$valueid.'') ?>" data-extra="<?php echo O::escapeHtml('{\'valueid\':\''.@$valueid.'\'}') ?>" data-data="<?php echo O::escapeHtml('{"action":"pageelement","subaction":"release","id":"'.@$objectid.'","token":"'.@$_token.'","valueid":"'.@$valueid.'","none":"0"}') ?>"><?php echo O::escapeHtml('') ?>
                         <strong><?php echo O::escapeHtml(''.@O::lang('RELEASE').'') ?>
                         </strong>
@@ -123,7 +123,7 @@
                  <?php } ?>
                 <?php if(!$if1) {  ?>
                   <?php $if1=(isset($useUrl)); if($if1) {  ?>
-                    <td class="<?php echo O::escapeHtml('clickable') ?>"><?php echo O::escapeHtml('') ?>
+                    <td class="<?php echo O::escapeHtml('or-clickable') ?>"><?php echo O::escapeHtml('') ?>
                       <a title="<?php echo O::escapeHtml(''.@O::lang('USE_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('post') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('use') ?>" data-id="<?php echo O::escapeHtml(''.@$objectid.'') ?>" data-extra-valueid="<?php echo O::escapeHtml(''.@$valueid.'') ?>" data-extra="<?php echo O::escapeHtml('{\'valueid\':\''.@$valueid.'\'}') ?>" data-data="<?php echo O::escapeHtml('{"action":"pageelement","subaction":"use","id":"'.@$objectid.'","token":"'.@$_token.'","valueid":"'.@$valueid.'","none":"0"}') ?>"><?php echo O::escapeHtml('') ?>
                         <span><?php echo O::escapeHtml(''.@O::lang('USE').'') ?>
                         </span>
@@ -143,7 +143,7 @@
     </div>
     <div class="<?php echo O::escapeHtml('or-form-actionbar') ?>"><?php echo O::escapeHtml('') ?>
       <div class="<?php echo O::escapeHtml('or-btn or-btn--primary or-act-form-save') ?>"><?php echo O::escapeHtml('') ?>
-        <i class="<?php echo O::escapeHtml('image-icon image-icon--form-ok') ?>"><?php echo O::escapeHtml('') ?>
+        <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--form-ok') ?>"><?php echo O::escapeHtml('') ?>
         </i>
         <span class="<?php echo O::escapeHtml('or-form-btn-label') ?>"><?php echo O::escapeHtml(''.@O::lang('compare').'') ?>
         </span>

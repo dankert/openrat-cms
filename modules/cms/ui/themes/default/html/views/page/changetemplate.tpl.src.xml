@@ -8,7 +8,7 @@
 			<part class="label">
 				<text value="${message:page_template_old}"></text>
 			</part>
-			<part class="input">
+			<part class="value">
 				<link url="${template_url}" target="cms_main">
 					<image type="template"></image>
 					<text value="${template_name}"></text>
@@ -20,7 +20,7 @@
 			<part class="label">
 				<text value="${message:page_template_new}"></text>
 			</part>
-			<part class="input">
+			<part class="value">
 				<selectbox name="newtemplateid" list="templates" default=""></selectbox>
 			</part>
 		</part>

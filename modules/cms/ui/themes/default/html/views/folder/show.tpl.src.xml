@@ -13,7 +13,7 @@
 			</column>
 		</row>
 		<if present="up_url">
-			<row class="data clickable">
+			<row class="data,clickable">
 				<column>
 					<image action="folder" />
 				</column>
@@ -48,7 +48,7 @@
 
 	<part class="clickable">
 
-		<link type="view" action="folder" subaction="create" class="or-btn">
+		<link type="view" action="folder" subaction="create" class="btn">
 			<image action="new" />
 			<text value="${message:new}"></text>
 		</link>

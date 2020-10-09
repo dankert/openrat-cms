@@ -6,12 +6,12 @@
     <div class="<?php echo O::escapeHtml('or-table-area') ?>"><?php echo O::escapeHtml('') ?>
       <table width="<?php echo O::escapeHtml('100%') ?>"><?php echo O::escapeHtml('') ?>
         <tr><?php echo O::escapeHtml('') ?>
-          <td colspan="<?php echo O::escapeHtml('2') ?>" class="<?php echo O::escapeHtml('logo') ?>"><?php echo O::escapeHtml('') ?>
-            <div class="<?php echo O::escapeHtml('line logo') ?>"><?php echo O::escapeHtml('') ?>
-              <div class="<?php echo O::escapeHtml('label') ?>"><?php echo O::escapeHtml('') ?>
+          <td colspan="<?php echo O::escapeHtml('2') ?>" class="<?php echo O::escapeHtml('or-logo') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('or-line logo') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
                 <img src="<?php echo O::escapeHtml('themes/default/images/logo_projectmenu.png') ?>" border="<?php echo O::escapeHtml('') ?>" /><?php echo O::escapeHtml('') ?>
               </div>
-              <div class="<?php echo O::escapeHtml('input') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
                 <h2><?php echo O::escapeHtml(''.@O::lang('logo_projectmenu').'') ?>
                 </h2>
                 <p><?php echo O::escapeHtml(''.@O::lang('logo_projectmenu_text').'') ?>
@@ -20,15 +20,15 @@
             </div>
           </td>
         </tr>
-        <tr class="<?php echo O::escapeHtml('headline') ?>"><?php echo O::escapeHtml('') ?>
+        <tr class="<?php echo O::escapeHtml('or-headline') ?>"><?php echo O::escapeHtml('') ?>
           <td><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml(''.@O::lang('project').'') ?>
             </span>
           </td>
         </tr>
         <?php foreach((array)$projects as $list_key=>$list_value) { extract($list_value); ?>
-          <tr class="<?php echo O::escapeHtml('data') ?>"><?php echo O::escapeHtml('') ?>
-            <td class="<?php echo O::escapeHtml('clickable') ?>"><?php echo O::escapeHtml('') ?>
+          <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
+            <td class="<?php echo O::escapeHtml('or-clickable') ?>"><?php echo O::escapeHtml('') ?>
               <a title="<?php echo O::escapeHtml(''.@O::lang('TREE_CHOOSE_PROJECT').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('post') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('') ?>" data-id="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" data-data="<?php echo O::escapeHtml('{"action":"start","subaction":"projectmenu","id":"'.@$id.'","token":"'.@$_token.'","none":"0"}') ?>"><?php echo O::escapeHtml('') ?>
                 <?php  { $project= project; ?>
                  <?php } ?>
@@ -36,11 +36,11 @@
                 <span><?php echo O::escapeHtml(''.@$name.'') ?>
                 </span>
               </a>
-              <div class="<?php echo O::escapeHtml('onrowvisible') ?>"><?php echo O::escapeHtml('') ?>
-                <div class="<?php echo O::escapeHtml('arrow-down') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('or-onrowvisible') ?>"><?php echo O::escapeHtml('') ?>
+                <div class="<?php echo O::escapeHtml('or-arrow-down') ?>"><?php echo O::escapeHtml('') ?>
                 </div>
-                <div class="<?php echo O::escapeHtml('dropdown') ?>"><?php echo O::escapeHtml('') ?>
-                  <form name="<?php echo O::escapeHtml('') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-target="<?php echo O::escapeHtml('view') ?>" action="<?php echo O::escapeHtml('./') ?>" data-method="<?php echo O::escapeHtml('project') ?>" data-action="<?php echo O::escapeHtml('index') ?>" data-id="<?php echo O::escapeHtml(''.@$id.'') ?>" method="<?php echo O::escapeHtml('POST') ?>" enctype="<?php echo O::escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo O::escapeHtml('') ?>" data-autosave="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-form index') ?>"><?php echo O::escapeHtml('') ?>
+                <div class="<?php echo O::escapeHtml('or-dropdown') ?>"><?php echo O::escapeHtml('') ?>
+                  <form name="<?php echo O::escapeHtml('') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-target="<?php echo O::escapeHtml('view') ?>" action="<?php echo O::escapeHtml('./') ?>" data-method="<?php echo O::escapeHtml('project') ?>" data-action="<?php echo O::escapeHtml('index') ?>" data-id="<?php echo O::escapeHtml(''.@$id.'') ?>" method="<?php echo O::escapeHtml('POST') ?>" enctype="<?php echo O::escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo O::escapeHtml('') ?>" data-autosave="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-form or-index') ?>"><?php echo O::escapeHtml('') ?>
                     <div class="<?php echo O::escapeHtml('or-form-headline') ?>"><?php echo O::escapeHtml('') ?>
                     </div>
                     <div class="<?php echo O::escapeHtml('or-form-content') ?>"><?php echo O::escapeHtml('') ?>
@@ -85,13 +85,13 @@
                     </div>
                     <div class="<?php echo O::escapeHtml('or-form-actionbar') ?>"><?php echo O::escapeHtml('') ?>
                       <div class="<?php echo O::escapeHtml('or-btn or-btn--secondary or-act-form-cancel') ?>"><?php echo O::escapeHtml('') ?>
-                        <i class="<?php echo O::escapeHtml('image-icon image-icon--form-cancel') ?>"><?php echo O::escapeHtml('') ?>
+                        <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--form-cancel') ?>"><?php echo O::escapeHtml('') ?>
                         </i>
                         <span class="<?php echo O::escapeHtml('or-form-btn-label') ?>"><?php echo O::escapeHtml(''.@O::lang('CANCEL').'') ?>
                         </span>
                       </div>
                       <div class="<?php echo O::escapeHtml('or-btn or-btn--primary or-act-form-save') ?>"><?php echo O::escapeHtml('') ?>
-                        <i class="<?php echo O::escapeHtml('image-icon image-icon--form-ok') ?>"><?php echo O::escapeHtml('') ?>
+                        <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--form-ok') ?>"><?php echo O::escapeHtml('') ?>
                         </i>
                         <span class="<?php echo O::escapeHtml('or-form-btn-label') ?>"><?php echo O::escapeHtml(''.@O::lang('button_ok').'') ?>
                         </span>

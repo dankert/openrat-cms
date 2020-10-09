@@ -73,12 +73,12 @@ class InputComponent extends FieldComponent
 		else
 			$input->addAttribute('value',Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->name));
 
-		$input->addStyleClass('or-input');
+		$input->addStyleClass('input');
 
 		if   ( $this->label ) {
 			$label = new CMSElement('label');
-			$label->addStyleClass('or-form-row')->addStyleClass('or-form-input');
-			$label->addChild( (new CMSElement('span'))->addStyleClass('or-form-label')->content($this->label));
+			$label->addStyleClass('form-row')->addStyleClass('form-input');
+			$label->addChild( (new CMSElement('span'))->addStyleClass('form-label')->content($this->label));
 			$input->asChildOf($label);
 			return $label;
 		}

@@ -12,7 +12,7 @@
 						<text value="${message:USER_MAIL}"></text>
 					</label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<input name="mail" default="" class="focus"></input>
 				</part>
 			</part>
@@ -20,7 +20,7 @@
 			<part class="line">
 				<part class="label">
 				</part>
-				<part class="input">
+				<part class="value">
 				</part>
 			</part>
 		</form>

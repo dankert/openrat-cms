@@ -8,7 +8,7 @@
 			<part class="label">
 				<text value="${message:USER_REGISTER_CODE}"></text>
 			</part>
-			<part class="input">
+			<part class="value">
 				<input name="code" default="" size="25" class="focus"></input>
 			</part>
 		</part>
@@ -20,7 +20,7 @@
 			<part class="label">
 				<text value="${message:USER_USERNAME}"></text>
 			</part>
-			<part class="input">
+			<part class="value">
 				<input type="text" name="username" value="" size="25"></input>
 			</part>
 		</part>
@@ -30,7 +30,7 @@
 			<part class="label">
 				<text value="${message:USER_PASSWORD}"></text>
 			</part>
-			<part class="input">
+			<part class="value">
 				<password name="password" default="" size="25"></password>
 			</part>
 		</part>
@@ -40,7 +40,7 @@
 			<part class="label">
 				<text value="${message:DATABASE}"></text>
 			</part>
-			<part class="input">
+			<part class="value">
 				<selectbox name="dbid" list="dbids" default="actdbid"></selectbox>
 			</part>
 		</part>

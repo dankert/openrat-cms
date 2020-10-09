@@ -289,14 +289,21 @@ th {
 
 
 
+.or- {
+    /* After page loading, all elements are hidden. This class will be removed by javascript. */
+    &initial-hidden {
+        display: none;
+    }
 
-/* After page loading, all elements are hidden. This class will be removed by javascript. */
-.initial-hidden {
-  display: none;
 }
 
-.sort-value {
-  display: none;
+.or {
+    &-table {
+
+        &-sort-value {
+            display: none;
+        }
+    }
 }
 
 

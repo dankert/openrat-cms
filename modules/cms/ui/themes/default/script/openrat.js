@@ -138,17 +138,18 @@ jQuery.fn.orSearch = function( options )
 
 		if	( searchArgument.length )
 		{
-			$(dropdownEl).empty(); // Leeren.
 
 			$.ajax( { 'type':'GET',url:'./api/?action='+settings.action+'&subaction='+settings.method+'&output=json&search='+searchArgument, data:null, success:function(data, textStatus, jqXHR)
 				{
+					$(dropdownEl).empty(); // Leeren.
+
 					for( id in data.output.result )
 					{
 						let result = data.output.result[id];
 						
 						// Suchergebnis-Zeile in das Ergebnis schreiben.
 
-						let div = $('<div class="entry or-search-result" title="'+result.desc+'"></div>');
+						let div = $('<div class="or-entry or-search-result or-active" title="'+result.desc+'"></div>');
 						div.data('object',{
 							'name':result.name,
 						    'action':result.type,
@@ -158,15 +159,20 @@ jQuery.fn.orSearch = function( options )
 						link.click( function(e) {
 							e.preventDefault();
 						});
-						$(link).append('<i class="image-icon image-icon--action-'+result.type+'" />');
+						$(link).append('<i class="or-image-icon or-image-icon--action-'+result.type+'" />');
 						$(link).append('<span>'+result.name+'</span>');
 
 						$(div).append(link);
 						$(dropdownEl).append(div);
 					}
 
-					// Open the menu
-                    $(dropdownEl).closest('.or-menu').addClass('open');
+					if   ( data.output.result ) {
+						// Open the menu
+						$(dropdownEl).closest('.or-menu').addClass('menu--is-open');
+						$(dropdownEl).addClass('dropdown--is-open');
+					}else {
+						$(dropdownEl).removeClass('dropdown--is-open');
+					}
 
 					// Register clickhandler for search results.
 					$(dropdownEl).find('.or-search-result').click( function(e) {
@@ -199,7 +205,7 @@ jQuery.fn.orLinkify = function( options )
 		}
 	}, options);
 
-	$(this).addClass('or-linkified');
+	$(this).addClass('linkified');
 
     // Disable all links in this linkified area.
     // The user is already able to open the link in a new tab.
@@ -312,7 +318,7 @@ jQuery.fn.orTree = function (options)
                 $node.children('ul').slideUp('fast').remove();
 
                 // Am Knoten die Klasse wechseln.
-                $node.removeClass('or-navtree-node--is-open').addClass('or-navtree-node--is-closed').find('.tree-icon').removeClass('image-icon--node-open').addClass('image-icon--node-closed');
+                $node.removeClass('navtree-node--is-open').addClass('navtree-node--is-closed').find('.or-navtree-tree-icon').removeClass('image-icon--node-open').addClass('image-icon--node-closed');
             }
             else {
                 // Pfad ist geschlossen -> öffnen.
@@ -356,7 +362,7 @@ jQuery.fn.orTree = function (options)
 					} );*/
 					registerTreeBranchEvents($ul);
 					// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
-					$ul.find('.clickable').orLinkify( {
+					$ul.find('.or-clickable').orLinkify( {
 						'openAction':settings.openAction
 					} );
                     $ul.slideDown('fast'); // Einblenden
@@ -367,11 +373,11 @@ jQuery.fn.orTree = function (options)
                 }).always(function () {
 
                     // Die Loader-Animation entfernen.
-                    $(treeEl).closest('div.view').removeClass('loader');
+                    $(treeEl).closest('div.or-view').removeClass('loader');
                 });
 
                 // Am Knoten die Klasse wechseln.
-                $node.addClass('or-navtree-node--is-open').removeClass('or-navtree-node--is-closed').find('.tree-icon').addClass('image-icon--node-open').removeClass('image-icon--node-closed');
+                $node.addClass('navtree-node--is-open').removeClass('navtree-node--is-closed').find('.navtree-tree-icon').addClass('image-icon--node-open').removeClass('image-icon--node-closed');
             }
         });
 
@@ -1581,6 +1587,28 @@ jQuery.trumbowyg={langs:{en:{viewHTML:"View HTML",undo:"Undo",redo:"Redo",format
 
 window.Openrat = {};
 
+let originalAddClass = jQuery.fn.addClass;
+jQuery.fn.addClass = function (styleClass) {
+	return originalAddClass.call(this,'or-'+styleClass);
+}
+
+let originalRemoveClass = jQuery.fn.removeClass;
+jQuery.fn.removeClass = function (styleClass) {
+	return originalRemoveClass.call(this,'or-'+styleClass);
+}
+
+/*
+let originalToggleClass = jQuery.fn.toggleClass;
+jQuery.fn.toggleClass = function (styleClass) {
+	return originalToggleClass.call(this,'or-'+styleClass);
+}
+*/
+
+let originalHasClass = jQuery.fn.hasClass;
+jQuery.fn.hasClass = function (styleClass) {
+	return originalHasClass.call(this,'or-'+styleClass);
+}
+
 /* Include script: view */
 /**
  * View.
@@ -2013,7 +2041,7 @@ Openrat.Workbench = new function()
 		window.addEventListener('beforeunload', function (e) {
 
 			// Are there views in the dirty state?
-			if   ( $('.view.dirty').length > 0 ) {
+			if   ( $('.or-view--is-dirty').length > 0 ) {
 
 				e.preventDefault(); // Cancel the event
 
@@ -2139,16 +2167,16 @@ Openrat.Workbench = new function()
     this.reloadViews = function() {
 
         // View in geschlossenen Sektionen löschen, damit diese nicht stehen bleiben.
-        $('#workbench section.closed .view-loader').empty();
+        $('#workbench section.closed .or-act-view-loader').empty();
 
-        Openrat.Workbench.loadViews( $('#workbench section.open .view-loader') );
+        Openrat.Workbench.loadViews( $('#workbench section.open .or-act-view-loader') );
     }
 
 
     this.reloadAll = function() {
 
     	// View in geschlossenen Sektionen löschen, damit diese nicht stehen bleiben.
-        Openrat.Workbench.loadViews( $('.view-loader,.view-static').empty() );
+        Openrat.Workbench.loadViews( $('.or-act-view-loader,.or-act-view-static').empty() );
 
         this.loadUserStyle();
         this.loadLanguage();
@@ -2216,7 +2244,7 @@ Openrat.Workbench = new function()
     this.loadNewActionIntoElement = function( $viewElement )
     {
         let action;
-        if   ( $viewElement.is('.view-static') )
+        if   ( $viewElement.is('.or-act-view-static') )
             // Static views have always the same action.
             action = $viewElement.attr('data-action');
         else
@@ -2243,8 +2271,8 @@ Openrat.Workbench = new function()
         var html = $('html');
         var classList = html.attr('class').split(/\s+/);
         $.each(classList, function(index, item) {
-            if (item.startsWith('theme-')) {
-                html.removeClass(item);
+            if (item.startsWith('or-theme-')) {
+                html.removeClass(item.substring(3));
             }
         });
         html.addClass( 'theme-' + styleName.toLowerCase() );
@@ -2312,18 +2340,18 @@ Openrat.Workbench = new function()
         if   ( notifyTheBrowser )
             notifyBrowser( msg );  // Notify browser if wanted.
 
-        let notice = $('<div class="notice '+status+'"></div>');
+        let notice = $('<div class="or-notice or-notice--'+status+'"></div>');
 
         let toolbar = $('<div class="or-notice-toolbar"></div>');
         if   ( log.length )
-            $(toolbar).append('<i class="or-action-full image-icon image-icon--menu-fullscreen"></i>');
-        $(toolbar).append('<i class="or-action-close image-icon image-icon--menu-close"></i>');
+            $(toolbar).append('<i class="or-notice-action--full or-image-icon or-image-icon--menu-fullscreen"></i>');
+        $(toolbar).append('<i class="or-image-icon or-image-icon--menu-close or-notice-act-close"></i>');
         $(notice).append(toolbar);
 
         if	(name)
-            $(notice).append('<div class="name clickable"><a href="'+Openrat.Navigator.createShortUrl(type,id)+'" data-type="open" data-action="'+type+'" data-id="'+id+'"><i class="or-action-full image-icon image-icon--action-'+type+'"></i> '+name+'</a></div>');
+            $(notice).append('<div class="or-notice-name or-clickable"><a href="'+Openrat.Navigator.createShortUrl(type,id)+'" data-type="open" data-action="'+type+'" data-id="'+id+'"><i class="or-notice-action-full or-image-icon or-image-icon--action-'+type+'"></i> '+name+'</a></div>');
 
-        $(notice).append( '<div class="text">'+htmlEntities(msg)+'</div>');
+        $(notice).append( '<div class="or-notice-text">'+htmlEntities(msg)+'</div>');
 
         if (log.length) {
 
@@ -2331,7 +2359,7 @@ Openrat.Workbench = new function()
                 result += '<li><pre>'+htmlEntities(item)+'</pre></li>';
                 return result;
             }, '');
-            $(notice).append('<div class="log"><ul>'+logLi+'</ul></div>');
+            $(notice).append('<div class="or-notice-log"><ul>'+logLi+'</ul></div>');
         }
 
         $('#noticebar').prepend(notice); // Notice anhängen.
@@ -2339,12 +2367,12 @@ Openrat.Workbench = new function()
 
 
         // Toogle Fullscreen for notice
-        $(notice).find('.or-action-full').click( function() {
-            $(notice).toggleClass('full');
+        $(notice).find('.or-notice-action-full').click( function() {
+            $(notice).toggleClass('or-notice--is-full');
         });
 
         // Close the notice on click
-        $(notice).find('.or-action-close').click( function() {
+        $(notice).find('.or-notice-act-close').click( function() {
             $(notice).fadeOut('fast',function() { $(notice).remove(); } );
         });
 
@@ -2404,8 +2432,8 @@ Openrat.Workbench = new function()
 	 */
 	this.registerOpenClose = function( $el )
 	{
-		$($el).children('.on-click-open-close').click( function() {
-			$(this).closest('.toggle-open-close').toggleClass('open closed');
+		$($el).children('.or-act-open-close').click( function() {
+			$(this).closest('.or-toggle-open-close').toggleClass('-is-open').toggleClass('-is-closed');
 		});
 	}
 
@@ -2420,7 +2448,7 @@ Openrat.Workbench = new function()
 	this.openNewAction = function( name,action,id )
 	{
 		// Im Mobilmodus soll das Menü verschwinden, wenn eine neue Action geoeffnet wird.
-		$('nav').removeClass('or-nav--is-open');
+		$('nav').removeClass('nav--is-open');
 
 		Openrat.Workbench.setApplicationTitle( name ); // Sets the title.
 
@@ -2450,9 +2478,9 @@ Openrat.Workbench = new function()
 		let view = new Openrat.View( action,method,id,params );
 
 		view.before = function() {
-			$('#dialog > .view').html('<div class="header"><img class="icon" title="" src="./themes/default/images/icon/'+method+'.png" />'+name+'</div>');
+			$('#dialog > .view').html('<div class="header"><img class="or-icon" title="" src="./themes/default/images/icon/'+method+'.png" />'+name+'</div>');
 			$('#dialog > .view').data('id',id);
-			$('#dialog').removeClass('is-closed').addClass('is-open');
+			$('#dialog').removeClass('dialog--is-closed').addClass('dialog--is-open');
 
 			let view = this;
 
@@ -2467,7 +2495,7 @@ Openrat.Workbench = new function()
 			$(document).keyup(this.escapeKeyClosingHandler);
 
 			// Nicht-Modale Dialoge durch Klick auf freie Fläche schließen.
-			$('#dialog .filler').click( function()
+			$('.or-dialog-filler').click( function()
 			{
 				view.close();
 			});
@@ -2478,17 +2506,17 @@ Openrat.Workbench = new function()
 
 			// Strong modal dialogs are unable to close.
 			// Really?
-			if	( $('div#dialog').hasClass('modal') )
+			if	( $('.or-dialog').hasClass('or-dialog--modal') )
 				return;
 
-			$('.view.dirty').removeClass('dirty');
-			$('#dialog .view').html('');
-			$('#dialog').removeClass('is-open').addClass('is-closed'); // Dialog schließen
+			$('.or-view.or-view--is-dirty').removeClass('or-view--is-dirty');
+			$('#dialog .or-view').html('');
+			$('#dialog').removeClass('dialog--is-open').addClass('dialog--is-closed'); // Dialog schließen
 
 			$(document).unbind('keyup',this.escapeKeyClosingHandler); // Cleanup ESC-Key-Listener
 		}
 
-		view.start( $('div#dialog > .view') );
+		view.start( $('.or-dialog > .or-view') );
 	}
 
 
@@ -2672,7 +2700,7 @@ $( function() {
     }
 
     // Initial Notices
-    $('.or-initial-notice').each( function() {
+    $('.or-act-initial-notice').each( function() {
        Openrat.Workbench.notify('', 0, '', 'info', $(this).text());
        $(this).remove();
     });
@@ -2683,7 +2711,8 @@ $( function() {
     let closeMenu = function() {
         // Mit der Maus irgendwo hin geklickt, das Menü muss schließen.
         $('body').click( function() {
-            $('.toolbar-icon.menu').parents('.or-menu').removeClass('open');
+            //$('.toolbar-icon.or-menu-category').parents('.or-menu').removeClass('menu--is-open');
+            $('.or-menu').removeClass('menu--is-open');
         });
     };
     closeMenu();
@@ -2699,7 +2728,7 @@ $( function() {
 
         loadPromise.done( function(data) {
 
-			$('.or-breadcrumb').empty().append( data ).find('.clickable').orLinkify();
+			$('.or-breadcrumb').empty().append( data ).find('.or-clickable').orLinkify();
 
 			// Open the path in the navigator tree
 			$('nav .or-navtree-node').removeClass('or-navtree-node--selected');
@@ -2729,16 +2758,13 @@ let filterMenus = function ()
 {
     let action = Openrat.Workbench.state.action;
     let id     = Openrat.Workbench.state.id;
-    $('div.clickable').addClass('active');
-    $('div.clickable.filtered').removeClass('active').addClass('inactive');
+    $('.or-clickable').addClass('active');
+    $('.or-clickable.or-filtered').removeClass('active').addClass('inactive');
 
-    $('div.clickable.filtered.on-action-'+action).addClass('active').removeClass('inactive');
+    $('.or-clickable.or-filtered.or-on-action-'+action).addClass('active').removeClass('inactive');
 
     // Jeder Menüeintrag bekommt die Id und Parameter.
-    $('div.clickable.filtered a').attr('data-id'    ,id    );
-    /*
-        $('div.clickable.filtered a').attr('data-action',action);
-    */
+    $('.or-clickable.or-filtered a').attr('data-id'    ,id    );
 
 }
 
@@ -2786,7 +2812,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function($element) {
 			} ); // All subnodes are getting event listener for open/close
 
 			// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
-			$ul.find('.clickable').orLinkify();
+			$ul.find('.or-clickable').orLinkify();
 
 			// Open the first node.
 			$ul.find('.or-navtree-node-control').first().click();
@@ -2818,38 +2844,38 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 		section.slideUp('fast');
 
 	// Untermenüpunkte aus der View in das Fenstermenü kopieren...
-	$(viewEl).closest('div.panel').find('div.header div.dropdown div.entry.perview').remove(); // Alte Einträge löschen
+	//$(viewEl).closest('div.panel').find('div.header div.dropdown div.entry.perview').remove(); // Alte Einträge löschen
 
 	// Handler for mobile navigation
 	$(viewEl).find('.or-act-nav-open-close').click( function() {
-		$('nav').toggleClass('or-nav--is-open');
+		$('nav').toggleClass('nav--is-open');
 	});
 	// Handler for desktop navigation
 	$(viewEl).find('.or-act-nav-toggle-small').click( function() {
-		$('nav').toggleClass('or-nav--is-small');
+		$('nav').toggleClass('nav--is-small');
 	});
 
 	// Handler for desktop navigation
 	$(viewEl).find('.or-act-nav-small').click( function() {
-		$('nav').addClass('or-nav--is-small');
+		$('nav').addClass('nav--is-small');
 	});
 	$(viewEl).find('.or-act-nav-wide').click( function() {
-		$('nav').removeClass('or-nav--is-small');
+		$('nav').removeClass('nav--is-small');
 	});
 
-	$(viewEl).find('div.headermenu > a').each( function(idx,el)
-	{
+	//$(viewEl).find('div.headermenu > a').each( function(idx,el)
+	//{
 		// Jeden Untermenüpunkt zum Fenstermenü hinzufügen.
 		
 		// Nein, Untermenüs erscheinen jetzt in der View selbst.
 		// $(el).wrap('<div class="entry clickable modal perview" />').parent().appendTo( $(viewEl).closest('div.panel').find('div.header div.dropdown').first() );
-	} );
+	//} );
 	
-	$(viewEl).find('div.header > a.back').each( function(idx,el)
-	{
+	//$(viewEl).find('div.header > a.back').each( function(idx,el)
+	//{
 		// Zurück-Knopf zum Fenstermenü hinzufügen.
-		$(el).removeClass('button').wrap('<div class="entry perview" />').parent().appendTo( $(viewEl).closest('div.panel').find('div.header div.dropdown').first() );
-	} );
+	//	$(el).removeClass('button').wrap('<div class="entry perview" />').parent().appendTo( $(viewEl).closest('div.panel').find('div.header div.dropdown').first() );
+	//} );
 	//$(viewEl).find('div.header').html('<!-- moved to window-menu -->');
 	
 //	$(viewEl).find('input,select,textarea').focus( function() {
@@ -2893,7 +2919,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 			); // All subnodes are getting event listener for open/close
 
 			// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
-			$ul.find('.clickable').orLinkify();
+			$ul.find('.or-clickable').orLinkify();
 
 			// Open the first node.
 			$ul.find('.or-navtree-node-control').first().click();
@@ -2920,29 +2946,27 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 
     function registerMenuEvents($element )
     {
-        //$e = $($element);
-
         // Mit der Maus geklicktes Menü aktivieren.
-        $($element).find('.toolbar-icon.menu').click( function(event) {
+        $($element).find('.or-menu-category').click( function(event) {
             event.stopPropagation();
-            $(this).parents('.or-menu').toggleClass('open');
+            $(this).parents('.or-menu').toggleClass('menu--is-open');
         });
 
         // Mit der Maus überstrichenes Menü aktivieren.
-        $($element).find('.toolbar-icon.menu').mouseover( function() {
+        $($element).find('.or-menu-category').mouseover( function() {
 
             // close other menus.
-            $(this).parents('.or-menu').find('.toolbar-icon.menu').removeClass('open');
+            $(this).parents('.or-menu').find('.or-menu-category').removeClass('menu-category--is-open');
             // open the mouse-overed menu.
-            $(this).addClass('open');
+            $(this).addClass('menu-category--is-open');
         });
 
     }
 
     function registerGlobalSearch($element )
     {
-        $($element).find('.search input').orSearch( {
-            dropdown:'.dropdown.or-act-global-search-results',
+        $($element).find('.or-search .or-input').orSearch( {
+            dropdown:'.or-dropdown.or-act-global-search-results',
             select: function(obj) {
                 Openrat.Workbench.openNewAction( obj.name, obj.action, obj.id );
             }
@@ -2952,14 +2976,14 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 
     function registerSelectorSearch( $element )
     {
-        $($element).find('.selector input').orSearch( {
-            dropdown: '.dropdown.or-act-selector-search-results',
+        $($element).find('.or-selector .or-selector-link-name').orSearch( {
+            dropdown: '.or-dropdown.or-act-selector-search-results',
             select: function(obj) {
                 $($element).find('.or-selector-link-value').val(obj.id  );
                 $($element).find('.or-selector-link-name' ).val(obj.name).attr('placeholder',obj.name);
             },
 			afterSelect: function() {
-				$('.dropdown.or-act-selector-search-results').empty();
+				$('.or-dropdown.or-act-selector-search-results').empty();
 			}
         } );
 
@@ -3000,7 +3024,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(element ) {
 
 	
 	// Codemirror-Editor anzeigen
-	$(element).find("textarea.editor.code-editor").each( function() {
+	$(element).find("textarea.or-editor.or-code-editor").each( function() {
 
 		let mode = $(this).data('mode');
 
@@ -3047,7 +3071,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(element ) {
     } );
 
 	// Markdown-Editor anzeigen
-	$(element).find("textarea.editor.markdown-editor").each( function() {
+	$(element).find("textarea.or-editor.or-markdown-editor").each( function() {
 
 	    let textarea = this;
 	    let toolbar = [{
@@ -3206,7 +3230,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(element ) {
     } );
 
 	// HTML-Editor anzeigen
-	$(element).find("textarea.editor.html-editor").each( function() {
+	$(element).find("textarea.or-editor.or-html-editor").each( function() {
 
 	    let textarea = this;
 
@@ -3249,7 +3273,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(element ) {
 Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
 
 	// Links aktivieren...
-	$(element).find('.clickable').orLinkify();
+	$(element).find('.or-clickable').orLinkify();
 
 });
 
@@ -3289,15 +3313,15 @@ Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
 
 
     // Manuelles Sortieren von Tabellen per Drag and drop.
-	$(element).find('table.or-table--sortable > tbody').sortable();
+	$(element).find('.or-table--sortable > tbody').sortable();
 
 
-    $(element).find('table.or-table--sortable > tbody').closest('form').submit( function() {
+    $(element).find('.or-table--sortable > tbody').closest('form').submit( function() {
 
             // Analyse the order of the objects in this folder.
             var order = new Array();
 
-            $(this).find('table.or-table--sortable').find('tbody > tr.data').each(function () {
+            $(this).find('.or-table--sortable').find('tbody > tr.data').each(function () {
                 let objectid = $(this).data('id');
                 order.push(objectid);
             });
@@ -3310,7 +3334,7 @@ Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
 
 	// Alle Checkboxen setzen oder nicht setzen.
 	$(element).find('tr.headline > td > input.checkbox').click( function() {
-		$(this).closest('table').find('tr.data > td > input.checkbox').attr('checked',Boolean( $(this).attr('checked') ) );
+		$(this).closest('table').find('tr.or-data > td > input.or-checkbox').attr('checked',Boolean( $(this).attr('checked') ) );
 	});
 
     /**
@@ -3343,7 +3367,7 @@ Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
         table.addClass('loader');
 
         let isAscending = !column.hasClass('sort-asc');
-        table.find('tr.headline > td, tr > th').removeClass('sort-asc sort-desc');
+        table.find('tr.headline > td, tr > th').removeClass('sort-asc').removeClass('sort-desc');
         if ( isAscending ) column.addClass('sort-asc'); else column.addClass('sort-desc');
 
         setTimeout(function () {  // Sorting should be asynchronous, because we do not want to block the UI.
@@ -3393,7 +3417,7 @@ $(document).on('orViewLoaded',function(event, data) {
  */
 Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
 
-    Openrat.Workbench.registerOpenClose( $(element).find('.or-group.toggle-open-close') );
+    Openrat.Workbench.registerOpenClose( $(element).find('.or-group.or-toggle-open-close') );
 });
 
 /* Include script: upload */

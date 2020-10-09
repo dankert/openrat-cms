@@ -5,7 +5,7 @@
     </div>
     <div class="<?php echo O::escapeHtml('or-table-area') ?>"><?php echo O::escapeHtml('') ?>
       <table width="<?php echo O::escapeHtml('100%') ?>"><?php echo O::escapeHtml('') ?>
-        <tr class="<?php echo O::escapeHtml('data') ?>"><?php echo O::escapeHtml('') ?>
+        <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
           <td colspan="<?php echo O::escapeHtml('2') ?>"><?php echo O::escapeHtml('') ?>
             <a target="<?php echo O::escapeHtml('_self') ?>" data-action="<?php echo O::escapeHtml('index') ?>" data-method="<?php echo O::escapeHtml('projectmenu') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('/#/index/') ?>"><?php echo O::escapeHtml('') ?>
               <span><?php echo O::escapeHtml('OpenRat') ?>
@@ -14,7 +14,7 @@
           </td>
         </tr>
         <?php foreach((array)$applications as $list_key=>$list_value) { extract($list_value); ?>
-          <tr class="<?php echo O::escapeHtml('data') ?>"><?php echo O::escapeHtml('') ?>
+          <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
             <td><?php echo O::escapeHtml('') ?>
               <a target="<?php echo O::escapeHtml('_self') ?>" data-url="<?php echo O::escapeHtml(''.@$url.'') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('/#//') ?>"><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(''.@$name.'') ?>

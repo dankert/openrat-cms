@@ -28,7 +28,7 @@ Openrat.Workbench = new function()
 		window.addEventListener('beforeunload', function (e) {
 
 			// Are there views in the dirty state?
-			if   ( $('.view.dirty').length > 0 ) {
+			if   ( $('.or-view--is-dirty').length > 0 ) {
 
 				e.preventDefault(); // Cancel the event
 
@@ -154,16 +154,16 @@ Openrat.Workbench = new function()
     this.reloadViews = function() {
 
         // View in geschlossenen Sektionen löschen, damit diese nicht stehen bleiben.
-        $('#workbench section.closed .view-loader').empty();
+        $('#workbench section.closed .or-act-view-loader').empty();
 
-        Openrat.Workbench.loadViews( $('#workbench section.open .view-loader') );
+        Openrat.Workbench.loadViews( $('#workbench section.open .or-act-view-loader') );
     }
 
 
     this.reloadAll = function() {
 
     	// View in geschlossenen Sektionen löschen, damit diese nicht stehen bleiben.
-        Openrat.Workbench.loadViews( $('.view-loader,.view-static').empty() );
+        Openrat.Workbench.loadViews( $('.or-act-view-loader,.or-act-view-static').empty() );
 
         this.loadUserStyle();
         this.loadLanguage();
@@ -231,7 +231,7 @@ Openrat.Workbench = new function()
     this.loadNewActionIntoElement = function( $viewElement )
     {
         let action;
-        if   ( $viewElement.is('.view-static') )
+        if   ( $viewElement.is('.or-act-view-static') )
             // Static views have always the same action.
             action = $viewElement.attr('data-action');
         else
@@ -258,8 +258,8 @@ Openrat.Workbench = new function()
         var html = $('html');
         var classList = html.attr('class').split(/\s+/);
         $.each(classList, function(index, item) {
-            if (item.startsWith('theme-')) {
-                html.removeClass(item);
+            if (item.startsWith('or-theme-')) {
+                html.removeClass(item.substring(3));
             }
         });
         html.addClass( 'theme-' + styleName.toLowerCase() );
@@ -327,18 +327,18 @@ Openrat.Workbench = new function()
         if   ( notifyTheBrowser )
             notifyBrowser( msg );  // Notify browser if wanted.
 
-        let notice = $('<div class="notice '+status+'"></div>');
+        let notice = $('<div class="or-notice or-notice--'+status+'"></div>');
 
         let toolbar = $('<div class="or-notice-toolbar"></div>');
         if   ( log.length )
-            $(toolbar).append('<i class="or-action-full image-icon image-icon--menu-fullscreen"></i>');
-        $(toolbar).append('<i class="or-action-close image-icon image-icon--menu-close"></i>');
+            $(toolbar).append('<i class="or-notice-action--full or-image-icon or-image-icon--menu-fullscreen"></i>');
+        $(toolbar).append('<i class="or-image-icon or-image-icon--menu-close or-notice-act-close"></i>');
         $(notice).append(toolbar);
 
         if	(name)
-            $(notice).append('<div class="name clickable"><a href="'+Openrat.Navigator.createShortUrl(type,id)+'" data-type="open" data-action="'+type+'" data-id="'+id+'"><i class="or-action-full image-icon image-icon--action-'+type+'"></i> '+name+'</a></div>');
+            $(notice).append('<div class="or-notice-name or-clickable"><a href="'+Openrat.Navigator.createShortUrl(type,id)+'" data-type="open" data-action="'+type+'" data-id="'+id+'"><i class="or-notice-action-full or-image-icon or-image-icon--action-'+type+'"></i> '+name+'</a></div>');
 
-        $(notice).append( '<div class="text">'+htmlEntities(msg)+'</div>');
+        $(notice).append( '<div class="or-notice-text">'+htmlEntities(msg)+'</div>');
 
         if (log.length) {
 
@@ -346,7 +346,7 @@ Openrat.Workbench = new function()
                 result += '<li><pre>'+htmlEntities(item)+'</pre></li>';
                 return result;
             }, '');
-            $(notice).append('<div class="log"><ul>'+logLi+'</ul></div>');
+            $(notice).append('<div class="or-notice-log"><ul>'+logLi+'</ul></div>');
         }
 
         $('#noticebar').prepend(notice); // Notice anhängen.
@@ -354,12 +354,12 @@ Openrat.Workbench = new function()
 
 
         // Toogle Fullscreen for notice
-        $(notice).find('.or-action-full').click( function() {
-            $(notice).toggleClass('full');
+        $(notice).find('.or-notice-action-full').click( function() {
+            $(notice).toggleClass('or-notice--is-full');
         });
 
         // Close the notice on click
-        $(notice).find('.or-action-close').click( function() {
+        $(notice).find('.or-notice-act-close').click( function() {
             $(notice).fadeOut('fast',function() { $(notice).remove(); } );
         });
 
@@ -419,8 +419,8 @@ Openrat.Workbench = new function()
 	 */
 	this.registerOpenClose = function( $el )
 	{
-		$($el).children('.on-click-open-close').click( function() {
-			$(this).closest('.toggle-open-close').toggleClass('open closed');
+		$($el).children('.or-act-open-close').click( function() {
+			$(this).closest('.or-toggle-open-close').toggleClass('-is-open').toggleClass('-is-closed');
 		});
 	}
 
@@ -435,7 +435,7 @@ Openrat.Workbench = new function()
 	this.openNewAction = function( name,action,id )
 	{
 		// Im Mobilmodus soll das Menü verschwinden, wenn eine neue Action geoeffnet wird.
-		$('nav').removeClass('or-nav--is-open');
+		$('nav').removeClass('nav--is-open');
 
 		Openrat.Workbench.setApplicationTitle( name ); // Sets the title.
 
@@ -465,9 +465,9 @@ Openrat.Workbench = new function()
 		let view = new Openrat.View( action,method,id,params );
 
 		view.before = function() {
-			$('#dialog > .view').html('<div class="header"><img class="icon" title="" src="./themes/default/images/icon/'+method+'.png" />'+name+'</div>');
+			$('#dialog > .view').html('<div class="header"><img class="or-icon" title="" src="./themes/default/images/icon/'+method+'.png" />'+name+'</div>');
 			$('#dialog > .view').data('id',id);
-			$('#dialog').removeClass('is-closed').addClass('is-open');
+			$('#dialog').removeClass('dialog--is-closed').addClass('dialog--is-open');
 
 			let view = this;
 
@@ -482,7 +482,7 @@ Openrat.Workbench = new function()
 			$(document).keyup(this.escapeKeyClosingHandler);
 
 			// Nicht-Modale Dialoge durch Klick auf freie Fläche schließen.
-			$('#dialog .filler').click( function()
+			$('.or-dialog-filler').click( function()
 			{
 				view.close();
 			});
@@ -493,17 +493,17 @@ Openrat.Workbench = new function()
 
 			// Strong modal dialogs are unable to close.
 			// Really?
-			if	( $('div#dialog').hasClass('modal') )
+			if	( $('.or-dialog').hasClass('or-dialog--modal') )
 				return;
 
-			$('.view.dirty').removeClass('dirty');
-			$('#dialog .view').html('');
-			$('#dialog').removeClass('is-open').addClass('is-closed'); // Dialog schließen
+			$('.or-view.or-view--is-dirty').removeClass('or-view--is-dirty');
+			$('#dialog .or-view').html('');
+			$('#dialog').removeClass('dialog--is-open').addClass('dialog--is-closed'); // Dialog schließen
 
 			$(document).unbind('keyup',this.escapeKeyClosingHandler); // Cleanup ESC-Key-Listener
 		}
 
-		view.start( $('div#dialog > .view') );
+		view.start( $('.or-dialog > .or-view') );
 	}
 
 

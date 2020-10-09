@@ -5,7 +5,7 @@
 			<part class="label">
 				<text value="${message:name}"></text>
 			</part>
-			<part class="input">
+			<part class="value">
 				<input name="name" class="focus"></input>
 			</part>
 		</part>

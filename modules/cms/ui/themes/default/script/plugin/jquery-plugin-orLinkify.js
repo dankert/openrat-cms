@@ -11,7 +11,7 @@ jQuery.fn.orLinkify = function( options )
 		}
 	}, options);
 
-	$(this).addClass('or-linkified');
+	$(this).addClass('linkified');
 
     // Disable all links in this linkified area.
     // The user is already able to open the link in a new tab.

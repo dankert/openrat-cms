@@ -6,7 +6,7 @@
 				<part class="label">
 					<label for="name" key="PROJECT_NAME"></label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<input name="name" class="name" maxlength="128"></input>
 				</part>
 			</part>
@@ -14,7 +14,7 @@
 				<part class="label">
 					<label for="url" key="PROJECT_HOSTNAME"></label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<input name="url" maxlength="255"></input>
 				</part>
 			</part>
@@ -24,7 +24,7 @@
 				<part class="label">
 					<label for="target_dir" key="PROJECT_TARGET_DIR"></label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<input name="target_dir" class="filename" maxlength="255"></input>
 				</part>
 			</part>
@@ -34,7 +34,7 @@
 					<part class="label">
 						<label for="cmd_after_publish" key="PROJECT_CMD_AFTER_PUBLISH"></label>
 					</part>
-					<part class="input">
+					<part class="value">
 						<input name="cmd_after_publish" class="filename"
 							maxlength="255"></input>
 
@@ -43,14 +43,14 @@
 			</if>
 			<part class="line">
 				<part class="label"></part>
-				<part class="input">
+				<part class="value">
 					<checkbox name="publishFileExtension"></checkbox>
 					<label for="publishFileExtension" key="PROJECT_publish_File_Extension"></label>
 				</part>
 			</part>
 			<part class="line">
 				<part class="label"></part>
-				<part class="input">
+				<part class="value">
 					<checkbox name="publishPageExtension"></checkbox>
 					<label for="publishPageExtension" key="PROJECT_publish_page_Extension"></label>
 				</part>
@@ -67,7 +67,7 @@
 					<part class="label">
 						<label for="ftp_url" key="PROJECT_FTP_URL"/>
 					</part>
-					<part class="input">
+					<part class="value">
 						<input name="ftp_url" class="filename"/>
 						<newline/>
 						<checkbox name="ftp_passive"/>
@@ -79,14 +79,14 @@
 		<group title="${message:options}">
 			<part class="line">
 				<part class="label"></part>
-				<part class="input">
+				<part class="value">
 					<checkbox name="content_negotiation"></checkbox>
 					<label for="content_negotiation" key="PROJECT_CONTENT_NEGOTIATION"></label>
 				</part>
 			</part>
 			<part class="line">
 				<part class="label"></part>
-				<part class="input">
+				<part class="value">
 					<checkbox name="cut_index"></checkbox>
 					<label for="cut_index" key="PROJECT_CUT_INDEX"></label>
 				</part>

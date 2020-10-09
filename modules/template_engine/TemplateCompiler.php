@@ -9,10 +9,14 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
+use cms\base\Startup;
+use template_engine\AppInfo;
 use template_engine\engine\TemplateEngine;
 use util\FileUtils;
 
-\cms\base\Startup::initialize();
+Startup::initialize();
+
+AppInfo::$styleClassPrefix = Startup::CSS_PREFIX;
 
 $searchDir = __DIR__ . '/../../modules/cms/ui/themes/default/html/views';
 

@@ -6,7 +6,7 @@
 				<part class="label">
 					<text value="${message:name}"></text>
 				</part>
-				<part class="input">
+				<part class="value">
 					<text value="${name}" class="name" />
 				</part>
 			</part>
@@ -14,7 +14,7 @@
 				<part class="label">
 					<text value="${message:filename}"></text>
 				</part>
-				<part class="input">
+				<part class="value">
 					<text value="${filename}" class="filename" />
 				</part>
 			</part>
@@ -22,7 +22,7 @@
 				<part class="label">
 					<text value="${message:file_extension}"></text>
 				</part>
-				<part class="input">
+				<part class="value">
 					<text value="${extension}" class="extension" />
 				</part>
 			</part>
@@ -30,7 +30,7 @@
 				<part class="label">
 					<text value="${message:description}"></text>
 				</part>
-				<part class="input">
+				<part class="value">
 					<text value="${description}" />
 				</part>
 			</part>
@@ -43,7 +43,7 @@
 						<text value="${message:full_filename}"></text>
 					</label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<text value="${full_filename}"></text>
 				</part>
 			</part>
@@ -53,7 +53,7 @@
 						<text value="${message:FILE_SIZE}"></text>
 					</label>
 				</part>
-				<part class="input">
+				<part class="value">
 				</part>
 				<text value="${size}"></text>
 			</part>
@@ -63,7 +63,7 @@
 						<text value="${message:FILE_mimetype}"></text>
 					</label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<text value="${mimetype}"></text>
 					<newline></newline>
 					<link class="action" action="file" subaction="size">
@@ -75,7 +75,7 @@
 				<part class="label">
 					<text value="${message:${message:id}}"></text>
 				</part>
-				<part class="input">
+				<part class="value">
 					<text value="${objectid}"></text>
 				</part>
 			</part>
@@ -86,7 +86,7 @@
 							<text value="${message:CACHE_FILENAME}"></text>
 						</label>
 					</part>
-					<part class="input">
+					<part class="value">
 						<text value="${cache_filename}"></text>
 						<newline></newline>
 						<image icon="el_date"></image>
@@ -100,7 +100,7 @@
 						<text value="${message:FILE_PAGES}"></text>
 					</label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<table>
 						<list list="${pages}" extract="true">
 							<row>
@@ -124,7 +124,7 @@
 				<part class="label">
 					<text value="${message:created}"></text>
 				</part>
-				<part class="input">
+				<part class="value">
 					<image elementtype="date"></image>
 					<date date="${create_date}"></date>
 					<newline></newline>
@@ -136,7 +136,7 @@
 				<part class="label">
 					<text value="${message:lastchange}"></text>
 				</part>
-				<part class="input">
+				<part class="value">
 					<image elementtype="date"></image>
 					<date date="${lastchange_date}"></date>
 					<newline></newline>
@@ -150,7 +150,7 @@
 						<text value="${message:published}"></text>
 					</label>
 				</part>
-				<part class="input">
+				<part class="value">
 					<image elementtype="date"></image>
 					<date date="${published_date}"></date>
 					<newline></newline>

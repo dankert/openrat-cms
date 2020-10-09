@@ -20,13 +20,12 @@ class GroupComponent extends Component
 	public function createElement()
 	{
 		$fieldset = new HtmlElement('fieldset');
-		$fieldset->addStyleClass('or-group');
-		$fieldset->addStyleClass('toggle-open-close');
+		$fieldset->addStyleClass('group')->addStyleClass('toggle-open-close');
 
 		if   ( $this->open )
-			$fieldset->addStyleClass('open');
+			$fieldset->addStyleClass('-is-open');
 		else
-			$fieldset->addStyleClass('closed');
+			$fieldset->addStyleClass('-is-closed');
 
 		if   ( $this->show )
 			$fieldset->addStyleClass('show' );
@@ -34,7 +33,7 @@ class GroupComponent extends Component
 		if	( $this->title )
 		{
 			$legend = new HtmlElement('legend');
-			$legend->addStyleClass('on-click-open-close');
+			$legend->addStyleClass('act-open-close');
 			$legend->content( $this->title );
 
 			$image = new CMSElement('img');
@@ -42,10 +41,10 @@ class GroupComponent extends Component
 				$image->addAttribute('src','themes/default/images/icon/method/'.$this->icon.'.svg" />');
 			$legend->addChild( $image );
 
-			$arrowRight = (new HtmlElement('i'))->addStyleClass(['image-icon','image-icon--node-closed','on-closed']);
+			$arrowRight = (new HtmlElement('i'))->addStyleClass(['image-icon','image-icon--node-closed','group--on-closed']);
 			$legend->addChild($arrowRight );
 
-			$arrowDown  = (new HtmlElement('i'))->addStyleClass(['image-icon','image-icon--node-open','on-open']);
+			$arrowDown  = (new HtmlElement('i'))->addStyleClass(['image-icon','image-icon--node-open','group--on-open']);
 			$legend->addChild($arrowDown  );
 
 			$fieldset->addChild( $legend );

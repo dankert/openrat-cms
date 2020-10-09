@@ -13,7 +13,7 @@
 							<text value="${message:user_password}"></text>
 						</label>
 					</part>
-					<part class="input">
+					<part class="value">
 						<password name="act_password" class="focus"></password>
 					</part>
 				</part>
@@ -25,7 +25,7 @@
 							<text value="${message:user_new_password}"></text>
 						</label>
 					</part>
-					<part class="input">
+					<part class="value">
 						<password name="password1"></password>
 					</part>
 				</part>
@@ -35,7 +35,7 @@
 							<text value="${message:user_new_password_repeat}"></text>
 						</label>
 					</part>
-					<part class="input">
+					<part class="value">
 						<password name="password2"></password>
 					</part>
 				</part>

@@ -5,7 +5,7 @@
 			<part class="label">
 				<text value="${message:IMAGE_OLD_SIZE}"></text>
 			</part>
-			<part class="input">
+			<part class="value">
 				<text value="${width}"></text>
 				<text value=" * "></text>
 				<text value="${height}"></text>
@@ -16,7 +16,7 @@
 				<part class="line">
 					<part class="label"></part>
 
-					<part class="input">
+					<part class="value">
 
 						<radio name="type" value="factor"></radio>
 						<label for="type_factor">
@@ -30,14 +30,14 @@
 				</part>
 				<part class="line">
 					<part class="label"></part>
-					<part class="input">
+					<part class="value">
 						<radio name="type" value="input"></radio>
 						<label for="type_input">
 							<text value="${message:FILE_IMAGE_NEW_WIDTH_HEIGHT}"></text>
 						</label>
 					</part>
 					<part class="label"></part>
-					<part class="input">
+					<part class="value">
 						<input name="width" size="10"></input>
 						<text value=" * "></text>
 						<input name="height" size="10"></input>
@@ -51,7 +51,7 @@
 							<text value="${message:FILE_IMAGE_FORMAT}"></text>
 						</label>
 					</part>
-					<part class="input">
+					<part class="value">
 						<selectbox name="format" list="formats"></selectbox>
 					</part>
 				</part>
@@ -61,7 +61,7 @@
 							<text value="${message:FILE_IMAGE_JPEG_COMPRESSION}"></text>
 						</label>
 					</part>
-					<part class="input">
+					<part class="value">
 						<set var="jpeg_compression" value="70"></set>
 						<selectbox list="jpeglist" name="jpeg_compression"></selectbox>
 					</part>
@@ -69,7 +69,7 @@
 				<part class="line">
 					<part class="label">
 					</part>
-					<part class="input">
+					<part class="value">
 						<checkbox name="copy"></checkbox>
 						<label for="copy">
 							<text value="${message:copy}"></text>

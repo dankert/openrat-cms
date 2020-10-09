@@ -5,7 +5,7 @@
     </div>
     <div class="<?php echo O::escapeHtml('or-table-area') ?>"><?php echo O::escapeHtml('') ?>
       <table width="<?php echo O::escapeHtml('100%') ?>"><?php echo O::escapeHtml('') ?>
-        <tr class="<?php echo O::escapeHtml('headline') ?>"><?php echo O::escapeHtml('') ?>
+        <tr class="<?php echo O::escapeHtml('or-headline') ?>"><?php echo O::escapeHtml('') ?>
           <td><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml(''.@O::lang('name').'') ?>
             </span>
@@ -16,10 +16,10 @@
           </td>
         </tr>
         <?php foreach((array)$elements as $list_key=>$list_value) { extract($list_value); ?>
-          <tr class="<?php echo O::escapeHtml('data') ?>"><?php echo O::escapeHtml('') ?>
-            <td class="<?php echo O::escapeHtml('clickable') ?>"><?php echo O::escapeHtml('') ?>
+          <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
+            <td class="<?php echo O::escapeHtml('or-clickable') ?>"><?php echo O::escapeHtml('') ?>
               <a target="<?php echo O::escapeHtml('_self') ?>" date-name="<?php echo O::escapeHtml(''.@$name.'') ?>" name="<?php echo O::escapeHtml(''.@$name.'') ?>" data-type="<?php echo O::escapeHtml('open') ?>" data-action="<?php echo O::escapeHtml('element') ?>" data-method="<?php echo O::escapeHtml('') ?>" data-id="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('/#/element/'.@$id.'') ?>"><?php echo O::escapeHtml('') ?>
-                <i class="<?php echo O::escapeHtml('image-icon image-icon--action-el_'.@$type.'') ?>"><?php echo O::escapeHtml('') ?>
+                <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-el_'.@$type.'') ?>"><?php echo O::escapeHtml('') ?>
                 </i>
                 <span title="<?php echo O::escapeHtml(''.@$description.'') ?>"><?php echo O::escapeHtml(''.@$name.'') ?>
                 </span>
@@ -39,10 +39,10 @@
             </td>
           </tr>
          <?php } ?>
-        <tr class="<?php echo O::escapeHtml('data') ?>"><?php echo O::escapeHtml('') ?>
-          <td colspan="<?php echo O::escapeHtml('2') ?>" class="<?php echo O::escapeHtml('clickable') ?>"><?php echo O::escapeHtml('') ?>
+        <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
+          <td colspan="<?php echo O::escapeHtml('2') ?>" class="<?php echo O::escapeHtml('or-clickable') ?>"><?php echo O::escapeHtml('') ?>
             <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('template') ?>" data-method="<?php echo O::escapeHtml('addel') ?>" data-id="<?php echo O::escapeHtml(''.@$templateid.'') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('template') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('addel') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':\'template\',\'dialogMethod\':\'addel\'}') ?>" href="<?php echo O::escapeHtml('/#/template/'.@$templateid.'') ?>"><?php echo O::escapeHtml('') ?>
-              <i class="<?php echo O::escapeHtml('image-icon image-icon--method-add') ?>"><?php echo O::escapeHtml('') ?>
+              <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-add') ?>"><?php echo O::escapeHtml('') ?>
               </i>
               <span><?php echo O::escapeHtml(''.@O::lang('menu_template_addel').'') ?>
               </span>
@@ -53,21 +53,21 @@
     </div>
   </div>
   <?php foreach((array)$models as $list_key=>$list_value) { extract($list_value); ?>
-    <fieldset class="<?php echo O::escapeHtml('or-group toggle-open-close open show') ?>"><?php echo O::escapeHtml('') ?>
-      <legend class="<?php echo O::escapeHtml('on-click-open-close') ?>"><?php echo O::escapeHtml(''.@$name.'') ?>
+    <fieldset class="<?php echo O::escapeHtml('or-group or-toggle-open-close or--is-open or-show') ?>"><?php echo O::escapeHtml('') ?>
+      <legend class="<?php echo O::escapeHtml('or-act-open-close') ?>"><?php echo O::escapeHtml(''.@$name.'') ?>
         <img /><?php echo O::escapeHtml('') ?>
-        <i class="<?php echo O::escapeHtml('image-icon image-icon--node-closed on-closed') ?>"><?php echo O::escapeHtml('') ?>
+        <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-closed or-group--on-closed') ?>"><?php echo O::escapeHtml('') ?>
         </i>
-        <i class="<?php echo O::escapeHtml('image-icon image-icon--node-open on-open') ?>"><?php echo O::escapeHtml('') ?>
+        <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-open or-group--on-open') ?>"><?php echo O::escapeHtml('') ?>
         </i>
       </legend>
-      <div class="<?php echo O::escapeHtml('closable') ?>"><?php echo O::escapeHtml('') ?>
-        <div class="<?php echo O::escapeHtml('clickable') ?>"><?php echo O::escapeHtml('') ?>
+      <div class="<?php echo O::escapeHtml('or-closable') ?>"><?php echo O::escapeHtml('') ?>
+        <div class="<?php echo O::escapeHtml('or-clickable') ?>"><?php echo O::escapeHtml('') ?>
           <code><?php echo O::escapeHtml(''.@$source.'') ?>
           </code>
           <br /><?php echo O::escapeHtml('') ?>
           <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('edit') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('src') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-modelid="<?php echo O::escapeHtml(''.@$modelid.'') ?>" data-extra="<?php echo O::escapeHtml('{\'modelid\':\''.@$modelid.'\'}') ?>" href="<?php echo O::escapeHtml('/#//') ?>" class="<?php echo O::escapeHtml('or-form-button') ?>"><?php echo O::escapeHtml('') ?>
-            <i class="<?php echo O::escapeHtml('image-icon image-icon--action-template') ?>"><?php echo O::escapeHtml('') ?>
+            <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-template') ?>"><?php echo O::escapeHtml('') ?>
             </i>
             <span><?php echo O::escapeHtml(''.@O::lang('edit').'') ?>
             </span>

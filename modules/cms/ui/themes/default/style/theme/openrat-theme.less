@@ -12,7 +12,7 @@
 @cms-background-color: silver;
 @cms-inactive-background-color: gray;
 
-html.theme-@{cms-theme-id} {
+html.or-theme-@{cms-theme-id} {
 
   .border-radius (@radius) {
     border-radius: @radius;
@@ -33,36 +33,29 @@ html.theme-@{cms-theme-id} {
   scrollbar-color: @cms-title-text-color @cms-background-color;
   scrollbar-width: thin;
 
-    div#dialog {
-    > .view {
+    .or-dialog {
+    > .or-view {
       background-color: @cms-background-color;
       color: @cms-text-color;
       border-color: @cms-text-color ! important;
       .box-shadow(0px, 0px, 40px, @cms-text-color);
     }
 
-    .filler {
+    .or-filler {
       background-color: @cms-background-color;
-
-      span.icon {
-        color: @cms-background-color;
-      }
-
     }
   }
-
-  div#noticebar {
 
     @notice-ok-color: #00d95a;
     @notice-info-color: #86caff;
     @notice-warning-color: #FBDE2D;
     @notice-error-color: #f54b07;
 
-    div.notice {
+    .or-notice {
       color: black;
       line-height: 1.5em;
 
-      &.ok {
+      &--ok {
         background-color: @notice-ok-color;
         border-color: darken(@notice-ok-color, 10%);
 
@@ -73,7 +66,7 @@ html.theme-@{cms-theme-id} {
         .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @notice-ok-color, 20%));
       }
 
-      &.warning {
+      &--warning {
         background-color: @notice-warning-color;
         border-color: darken(@notice-warning-color, 10%);
 
@@ -84,7 +77,7 @@ html.theme-@{cms-theme-id} {
         .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @notice-warning-color, 20%));
       }
 
-      &.info {
+      &--info {
         background-color: @notice-info-color;
         border-color: darken(@notice-info-color, 10%);
 
@@ -95,7 +88,7 @@ html.theme-@{cms-theme-id} {
         .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @notice-info-color, 20%));
       }
 
-      &.error {
+      &--error {
         background-color: @notice-error-color;
         border-color: darken(@notice-error-color, 10%);
 
@@ -107,6 +100,8 @@ html.theme-@{cms-theme-id} {
 
       }
     }
+
+    /*
     dl.notice {
       border-left: 10px @cms-inactive-background-color solid;
       border-right: 1px @cms-inactive-background-color solid;
@@ -118,10 +113,9 @@ html.theme-@{cms-theme-id} {
       & > dd {
         border-bottom: 1px @cms-inactive-background-color solid;
       }
-    }
-  }
+    }*/
 
-  .preview {
+  .or-preview {
     a:link, a:visited, a:active, a:hover {
     }
     color: blue;
@@ -135,13 +129,15 @@ html.theme-@{cms-theme-id} {
     border: 1px solid @cms-text-color;
   }
 
+    /*
   table.calendar td {
     border: 1px dotted;
-  }
+  }*/
 
+    /*
   div.structure em {
     font-style: italic;
-  }
+  }*/
 
 
   table {
@@ -159,13 +155,13 @@ html.theme-@{cms-theme-id} {
       //background-color: @cms-inactive-background-color;
     }
 
-    tr.data:hover {
+    tr.or-data:hover {
       background-color: @cms-title-background-color;
       color: @cms-title-text-color;
     }
   }
 
-  .or-navtree div.clickable:hover {
+  .or-navtree .or-clickable:hover {
     background-color: @cms-inactive-background-color;
   }
 
@@ -179,7 +175,7 @@ html.theme-@{cms-theme-id} {
         //.box-shadow(5px,5px,5px,@cms-text-color);
         border-color: @cms-text-color;
 
-        &.open {
+        &.or-open {
           background-color: lighten(@cms-background-color, 10%);
         }
       }
@@ -210,12 +206,12 @@ html.theme-@{cms-theme-id} {
     background-image: linear-gradient(to bottom, lighten(@cms-title-background-color, 10%), @cms-title-background-color 80%, @cms-background-color);
     color: @cms-title-text-color;
 
-    div.toolbar-icon > a {
+    .or-toolbar-icon > a {
       color: @cms-title-text-color;
     }
 
-    .search {
-      .inputholder {
+    .or-search {
+      .or-inputholder {
         background-color: transparent;
         .box-shadow(0, 0, 0, transparent);
 
@@ -240,7 +236,7 @@ html.theme-@{cms-theme-id} {
 
 
 
-    .dropdown {
+    .or-dropdown {
         .border-radius(5px);
         .box-shadow(3px, 2px, 10px, @cms-title-background-color);
         opacity: 0.95;
@@ -250,34 +246,34 @@ html.theme-@{cms-theme-id} {
         color: @cms-title-background-color;
 
 
-        > div.entry,
-        > div.entry > a {
+        > .or-entry,
+        > .or-entry > a {
             background-color: @cms-title-text-color;
             color: @cms-title-background-color;
         }
 
-        > div.entry.inactive,
-        > div.entry.inactive > a {
+        > .or-entry.or-inactive,
+        > .or-entry.or-inactive > a {
             color: mix(@cms-title-background-color, @cms-title-text-color, 40%);
         }
 
-        > div.entry.active:hover,
-        > div.entry.active:hover > a {
+        > .or-entry.or-active:hover,
+        > .or-entry.or-active:hover > a {
             background-color: @cms-title-background-color;
             color: @cms-title-text-color;
         }
 
-        > div.divide {
+        > .or-divide {
             background-color: @cms-title-background-color;
         }
 
     }
 
-  div.toolbar-icon {
+  .or-toolbar-icon {
     border: 1px solid @cms-title-background-color;
     .border-radius(3px);
 
-    &.inactive {
+    &.or-inactive {
       opacity: 0.5;
     }
 
@@ -290,14 +286,11 @@ html.theme-@{cms-theme-id} {
     color: @cms-title-background-color;
   }
 
-  form {
-    input, select, textarea {
+ .or-input {
       background-color: @cms-title-background-color;
       color: @cms-title-text-color;
       border: 1px solid mix(@cms-title-text-color, @cms-title-background-color);
       .box-shadow(0px, 0px, 3px, @cms-title-text-color);
-    }
-
   }
 
   .or-table-filter {
@@ -323,14 +316,14 @@ html.theme-@{cms-theme-id} {
     border: 1px solid red ! important;
   }
 
-  input.hint {
+  input.or-hint {
     color: @cms-title-background-color;
   }
 
   fieldset {
     border-color: mix(@cms-text-color, @cms-background-color);
 
-    > div input.name, > div span.name {
+    > div input.or-name, > div span.or-name {
       font-weight: bold;
     }
 
@@ -338,28 +331,29 @@ html.theme-@{cms-theme-id} {
 
   table {
 
-    tr.diff {
+    tr.or-diff {
 
-      & > td.equal {
+      & > td.or-equal {
       }
 
-      & > td.old {
+      & > td.or-old {
         background-color: red;
       }
 
-      & > td.new {
+      & > td.or-new {
         background-color: green;
       }
 
-      & > td.notequal {
+      & > td.or-notequal {
         background-color: yellow;
       }
     }
   }
 
+    /*
   div.content a.action, div.content a.help {
     .box-shadow(3px, 2px, 5px, @cms-title-background-color);
-  }
+  }*/
 
   .or-main-area {
     background-color: @cms-inactive-background-color;
@@ -372,16 +366,16 @@ html.theme-@{cms-theme-id} {
 
 
 
-  div.or-dropzone-upload > div.input {
+  .or-dropzone-upload > .or-value {
     background-color: @cms-title-text-color;
     border: 1px dotted @cms-text-color;
   }
 
-  div.clickable.filtered > a {
+  .or-clickable.filtered > a {
     color: @cms-inactive-background-color;
   }
 
-  div.clickable.filtered.active > a {
+  .or-clickable.filtered.active > a {
     color: @cms-background-color;
   }
 

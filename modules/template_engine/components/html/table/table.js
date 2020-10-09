@@ -2,15 +2,15 @@ Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
 
 
     // Manuelles Sortieren von Tabellen per Drag and drop.
-	$(element).find('table.or-table--sortable > tbody').sortable();
+	$(element).find('.or-table--sortable > tbody').sortable();
 
 
-    $(element).find('table.or-table--sortable > tbody').closest('form').submit( function() {
+    $(element).find('.or-table--sortable > tbody').closest('form').submit( function() {
 
             // Analyse the order of the objects in this folder.
             var order = new Array();
 
-            $(this).find('table.or-table--sortable').find('tbody > tr.data').each(function () {
+            $(this).find('.or-table--sortable').find('tbody > tr.data').each(function () {
                 let objectid = $(this).data('id');
                 order.push(objectid);
             });
@@ -23,7 +23,7 @@ Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
 
 	// Alle Checkboxen setzen oder nicht setzen.
 	$(element).find('tr.headline > td > input.checkbox').click( function() {
-		$(this).closest('table').find('tr.data > td > input.checkbox').attr('checked',Boolean( $(this).attr('checked') ) );
+		$(this).closest('table').find('tr.or-data > td > input.or-checkbox').attr('checked',Boolean( $(this).attr('checked') ) );
 	});
 
     /**
@@ -56,7 +56,7 @@ Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
         table.addClass('loader');
 
         let isAscending = !column.hasClass('sort-asc');
-        table.find('tr.headline > td, tr > th').removeClass('sort-asc sort-desc');
+        table.find('tr.headline > td, tr > th').removeClass('sort-asc').removeClass('sort-desc');
         if ( isAscending ) column.addClass('sort-asc'); else column.addClass('sort-desc');
 
         setTimeout(function () {  // Sorting should be asynchronous, because we do not want to block the UI.

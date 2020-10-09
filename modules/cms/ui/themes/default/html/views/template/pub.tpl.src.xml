@@ -18,7 +18,7 @@
 			<part class="line">
 				<part class="label">
 				</part>
-				<part class="input">
+				<part class="value">
 					<checkbox name="pages" readonly="true" default="true"></checkbox>
 					<label for="files">
 						<text value="${message:publish}"></text>

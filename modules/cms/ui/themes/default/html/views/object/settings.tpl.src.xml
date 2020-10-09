@@ -9,7 +9,7 @@
                         <text value="${message:from}"></text>
                     </label>
                 </part>
-                <part class="input">
+                <part class="value">
                     <input type="date" name="valid_from_date" />
                     <input type="time" name="valid_from_time" />
                 </part>
@@ -20,7 +20,7 @@
                         <text value="${message:until}"></text>
                     </label>
                 </part>
-                <part class="input">
+                <part class="value">
                     <input type="date" name="valid_until_date" />
                     <input type="time" name="valid_until_time" />
                 </part>
@@ -35,7 +35,7 @@
                         <text value="${message:SETTINGS}"></text>
                     </label>
                 </part>
-                <part class="input">
+                <part class="value">
                     <editor name="settings" type="code" mode="yaml"></editor>
                 </part>
             </part>

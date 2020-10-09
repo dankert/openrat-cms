@@ -8,9 +8,9 @@
             <part class="label">
                 <text value="${message:NAME}"></text>
             </part>
-            <part class="input clickable">
+            <part class="value,clickable">
                 <text value="${name}"/>
-                <link class="or-btn" action="group" subaction="prop" type="edit">
+                <link class="btn" action="group" subaction="prop" type="edit">
                     <text value="${message:edit}"/>
                 </link>
             </part>
@@ -20,7 +20,7 @@
             <part class="label">
                 <text value="${message:USERS}"></text>
             </part>
-            <part class="input">
+            <part class="value">
 
                 <list list="${users}" key="id" value="name">
                     <part class="clickable">
@@ -36,9 +36,9 @@
         <part class="line">
             <part class="label">
             </part>
-            <part class="input clickable">
+            <part class="value,clickable">
 
-                <link class="or-btn" action="group" subaction="memberships" type="edit">
+                <link class="btn" action="group" subaction="memberships" type="edit">
                     <text value="${message:edit}"/>
                 </link>
             </part>

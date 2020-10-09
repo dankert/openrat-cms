@@ -6,7 +6,7 @@
 				<part class="label">
 					<text value="${message:link_target}"></text>
 				</part>
-				<part class="input">
+				<part class="value">
 					<selector id="${targetobjectid}" name="${targetobjectname}" types="page,file" param="targetobjectid" folderid="parentid"/>
 				</part>
 			</part>

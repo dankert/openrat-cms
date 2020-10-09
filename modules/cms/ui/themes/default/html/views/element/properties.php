@@ -1,5 +1,5 @@
 <?php defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
-  <form name="<?php echo O::escapeHtml('') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-target="<?php echo O::escapeHtml('view') ?>" action="<?php echo O::escapeHtml('./') ?>" data-method="<?php echo O::escapeHtml('properties') ?>" data-action="<?php echo O::escapeHtml('element') ?>" data-id="<?php echo O::escapeHtml(''.@$_id.'') ?>" method="<?php echo O::escapeHtml('POST') ?>" enctype="<?php echo O::escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo O::escapeHtml('') ?>" data-autosave="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-form element') ?>"><?php echo O::escapeHtml('') ?>
+  <form name="<?php echo O::escapeHtml('') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-target="<?php echo O::escapeHtml('view') ?>" action="<?php echo O::escapeHtml('./') ?>" data-method="<?php echo O::escapeHtml('properties') ?>" data-action="<?php echo O::escapeHtml('element') ?>" data-id="<?php echo O::escapeHtml(''.@$_id.'') ?>" method="<?php echo O::escapeHtml('POST') ?>" enctype="<?php echo O::escapeHtml('application/x-www-form-urlencoded') ?>" data-async="<?php echo O::escapeHtml('') ?>" data-autosave="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-form or-element') ?>"><?php echo O::escapeHtml('') ?>
     <div class="<?php echo O::escapeHtml('or-form-headline') ?>"><?php echo O::escapeHtml('') ?>
     </div>
     <div class="<?php echo O::escapeHtml('or-form-content') ?>"><?php echo O::escapeHtml('') ?>
@@ -170,7 +170,7 @@
             </span>
           </td>
           <td><?php echo O::escapeHtml('') ?>
-            <textarea name="<?php echo O::escapeHtml('default_longtext') ?>" class="<?php echo O::escapeHtml('inputarea') ?>"><?php echo O::escapeHtml(''.@$default_longtext.'') ?>
+            <textarea name="<?php echo O::escapeHtml('default_longtext') ?>" class="<?php echo O::escapeHtml('or-input or-inputarea') ?>"><?php echo O::escapeHtml(''.@$default_longtext.'') ?>
             </textarea>
           </td>
         </tr>
@@ -182,7 +182,7 @@
             </span>
           </td>
           <td><?php echo O::escapeHtml('') ?>
-            <textarea name="<?php echo O::escapeHtml('parameters') ?>" class="<?php echo O::escapeHtml('inputarea') ?>"><?php echo O::escapeHtml(''.@$parameters.'') ?>
+            <textarea name="<?php echo O::escapeHtml('parameters') ?>" class="<?php echo O::escapeHtml('or-input or-inputarea') ?>"><?php echo O::escapeHtml(''.@$parameters.'') ?>
             </textarea>
           </td>
         </tr>
@@ -213,7 +213,7 @@
             </span>
           </td>
           <td><?php echo O::escapeHtml('') ?>
-            <textarea name="<?php echo O::escapeHtml('select_items') ?>" class="<?php echo O::escapeHtml('inputarea') ?>"><?php echo O::escapeHtml(''.@$select_items.'') ?>
+            <textarea name="<?php echo O::escapeHtml('select_items') ?>" class="<?php echo O::escapeHtml('or-input or-inputarea') ?>"><?php echo O::escapeHtml(''.@$select_items.'') ?>
             </textarea>
           </td>
         </tr>
@@ -291,26 +291,26 @@
             </span>
           </td>
           <td><?php echo O::escapeHtml('') ?>
-            <textarea name="<?php echo O::escapeHtml('code') ?>" class="<?php echo O::escapeHtml('inputarea') ?>"><?php echo O::escapeHtml(''.@$code.'') ?>
+            <textarea name="<?php echo O::escapeHtml('code') ?>" class="<?php echo O::escapeHtml('or-input or-inputarea') ?>"><?php echo O::escapeHtml(''.@$code.'') ?>
             </textarea>
           </td>
         </tr>
        <?php } ?>
       <tr><?php echo O::escapeHtml('') ?>
-        <td colspan="<?php echo O::escapeHtml('2') ?>" class="<?php echo O::escapeHtml('act') ?>"><?php echo O::escapeHtml('') ?>
+        <td colspan="<?php echo O::escapeHtml('2') ?>" class="<?php echo O::escapeHtml('or-act') ?>"><?php echo O::escapeHtml('') ?>
           
         </td>
       </tr>
     </div>
     <div class="<?php echo O::escapeHtml('or-form-actionbar') ?>"><?php echo O::escapeHtml('') ?>
       <div class="<?php echo O::escapeHtml('or-btn or-btn--secondary or-act-form-cancel') ?>"><?php echo O::escapeHtml('') ?>
-        <i class="<?php echo O::escapeHtml('image-icon image-icon--form-cancel') ?>"><?php echo O::escapeHtml('') ?>
+        <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--form-cancel') ?>"><?php echo O::escapeHtml('') ?>
         </i>
         <span class="<?php echo O::escapeHtml('or-form-btn-label') ?>"><?php echo O::escapeHtml(''.@O::lang('CANCEL').'') ?>
         </span>
       </div>
       <div class="<?php echo O::escapeHtml('or-btn or-btn--primary or-act-form-save') ?>"><?php echo O::escapeHtml('') ?>
-        <i class="<?php echo O::escapeHtml('image-icon image-icon--form-ok') ?>"><?php echo O::escapeHtml('') ?>
+        <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--form-ok') ?>"><?php echo O::escapeHtml('') ?>
         </i>
         <span class="<?php echo O::escapeHtml('or-form-btn-label') ?>"><?php echo O::escapeHtml(''.@O::lang('button_ok').'') ?>
         </span>

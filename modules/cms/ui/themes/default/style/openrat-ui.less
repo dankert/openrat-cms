@@ -31,7 +31,7 @@
   url('../font/MaterialIcons-Regular.woff') format('woff');
 }
 
-.image-icon {
+.or-image-icon {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
@@ -139,7 +139,7 @@
   &--editor-table:after { content: "view_comfy"; }
 }
 
-.editor-toolbar {
+.or-editor-toolbar {
   font-size: 1.5em;
 }
 
@@ -162,100 +162,99 @@ iframe {
   display: block;
 }
 
-div.breadcrumb,
-div.breadcrumb a,
-div.panel > div.title {
-  font-weight: bold;
+
+.or- {
+
+    &notices {
+
+        display: block;
+        position: fixed;
+        bottom: 40px;
+        /*top: 40px;*/
+        right: 40px;
+        width: 25em;
+        z-index: 113;
+    }
+
+      &notice {
+        border: 2px solid @color-overridden-by-theme;
+        padding: 1.1em;
+        margin: 5px;
+        position: relative;
+
+        .border-radius(5px);
+        .box-shadow(3px, 2px, 5px, @color-overridden-by-theme);
+
+        &-toolbar {
+          float: right;
+          margin:0 0.2em;
+          font-size: 2em;
+          color: gray;
+          cursor: pointer;
+        }
+
+        &:hover {
+          .or-notice-toolbar {
+            color: black;
+          }
+        }
+
+        &-full {
+          display: block;
+          position: fixed;
+          bottom: 10%;
+          top: 10%;
+          right:10%;
+          left: 10%;
+          width:80%;
+          z-index: 114;
+        }
+
+
+        &-error {
+
+          div.text {
+            font-weight: bold;
+          }
+        }
+
+        &-text {
+          font-size: 1.1em;
+        }
+
+        &:after {
+          content: '';
+          position: absolute;
+          right: 0;
+          top: 50%;
+          width: 0;
+          height: 0;
+          border: 1em solid transparent;
+          border-right: 0;
+          margin-top: -1em;
+          margin-right: -1em;
+        }
+
+        &-log {
+          display:  none;
+          position: relative;
+          max-height:90%;
+          overflow: auto;
+          font-family: 'Source Code Pro',Monospace, Monospaced, Courier;
+        }
+
+        &-full {
+          &-log {
+            display:  block;
+          }
+        }
+
+      }
+
+
+
 }
 
-div#noticebar {
-
-  display: block;
-  position: fixed;
-  bottom: 40px;
-  /*top: 40px;*/
-  right: 40px;
-  width: 25em;
-  z-index: 113;
-
-
-  div.notice {
-    border: 2px solid @color-overridden-by-theme;
-    padding: 1.1em;
-    margin: 5px;
-    position: relative;
-
-    .border-radius(5px);
-    .box-shadow(3px, 2px, 5px, @color-overridden-by-theme);
-
-    .or-notice-toolbar {
-      float: right;
-      margin:0 0.2em;
-      font-size: 2em;
-      color: gray;
-      cursor: pointer;
-    }
-
-    &:hover {
-      .or-notice-toolbar {
-        color: black;
-      }
-    }
-
-    &.full {
-      display: block;
-      position: fixed;
-      bottom: 10%;
-      top: 10%;
-      right:10%;
-      left: 10%;
-      width:80%;
-      z-index: 114;
-    }
-
-
-    &.error {
-
-      div.text {
-        font-weight: bold;
-      }
-    }
-
-    div.text {
-      font-size: 1.1em;
-    }
-
-    &:after {
-      content: '';
-      position: absolute;
-      right: 0;
-      top: 50%;
-      width: 0;
-      height: 0;
-      border: 1em solid transparent;
-      border-right: 0;
-      margin-top: -1em;
-      margin-right: -1em;
-    }
-
-    div.log {
-      display:  none;
-      position: relative;
-      max-height:90%;
-      overflow: auto;
-      font-family: 'Source Code Pro',Monospace, Monospaced, Courier;
-    }
-
-    &.full {
-      div.log {
-        display:  block;
-      }
-    }
-
-
-  }
-
-}
 
 
 
@@ -266,14 +265,13 @@ div#noticebar {
 
 
 
-
-div.onrowvisible {
+div.or-onrowvisible {
   visibility: hidden;
   display: inline;
 }
 
 /* Vorschau von Text-Inhalten */
-.preview {
+.or-preview {
 }
 
 /* Verweise */
@@ -306,17 +304,17 @@ a.copyright {
 //  text-decoration: none;
 }
 
-div.logo h2 {
+div.or-logo h2 {
   font-weight: normal;
   font-size: 24px;
 }
 
-div.logo p {
+div.or-logo p {
   font-size: 13px;
 }
 
 label,
-.clickable {
+.or-clickable {
   cursor: pointer;
 }
 
@@ -340,12 +338,16 @@ label,
 
 /*   T a b s   */
 
+/*
 img.icon {
   padding: 4px;
   width: 16px;
   height: 16px;
 }
+*/
 
+
+/*
 div.panel ul.views li {
   vertical-align: middle;
   padding: 0px;
@@ -354,57 +356,74 @@ div.panel ul.views li {
 
   border-right: 1px solid @color-overridden-by-theme;
 
-  -moz-border-radius-topleft: 5px; /* Mozilla */
-  -webkit-border-radius-topleft: 5px; /* Webkit */
-  -khtml-border-top-radius-topleft: 5px; /* Konqui */
+  -moz-border-radius-topleft: 5px;
+  -webkit-border-radius-topleft: 5px;
+  -khtml-border-top-radius-topleft: 5px;
   border-top-right-radius: 5px;
-  -moz-border-radius-topright: 5px; /* Mozilla */
-  -webkit-border-radius-topright: 5px; /* Webkit */
-  -khtml-border-top-radius-topright: 5px; /* Konqui */
+  -moz-border-radius-topright: 5px;
+  -webkit-border-radius-topright: 5px;
+  -khtml-border-top-radius-topright: 5px;
   border-top-right-radius: 5px;
 
   display: inline;
   white-space: nowrap;
   float: left;
 }
+*/
 
+/*
 div.panel {
   margin: 0px;
   padding: 0px;
 }
-
+*/
 
 
 
 /*   S t a t u s z e i l e   */
+/*
 div.panel div.status {
   padding: 10px;
 }
+*/
 
+
+/*
 div.panel div.status div.error,
 div.message.error {
   background: url(../images/notice_error.png) no-repeat;
   background-position: 5px 7px;
 }
+ */
 
+
+/*
 div.panel div.status div.warn,
 div.message.warn {
   background: url(../images/notice_warning.png) no-repeat;
   background-position: 5px 7px;
 }
 
+ */
+
+
+/*
 div.panel div.status div.ok,
 div.message.ok {
   background: url(../images/notice_ok.png) no-repeat;
   background-position: 5px 7px;
 }
+ */
 
+/*
 div.panel div.status div.info,
 div.message.info {
   background: url(../images/notice_info.png) no-repeat;
   background-position: 5px 7px;
 }
+ */
 
+/*
 div.panel div.status div,
 div.message {
   border: 1px solid @color-overridden-by-theme;
@@ -416,8 +435,9 @@ div.message {
   -khtml-border-radius: 5px;
   border-radius: 5px;
 }
+*/
 
-
+/*
 #workbench {
   div.panel.fullscreen {
     display: block;
@@ -430,12 +450,19 @@ div.message {
     width: 100% ! important;
     height: 100% ! important;
   }
+*/
 
+
+/*
   div.panel.fullscreen > div.content {
     width: 100% ! important;
     height: 100% ! important;
   }
+*/
 
+
+
+/*
   div.panel {
     border: 1px solid @color-overridden-by-theme;
     margin: 0px;
@@ -445,33 +472,46 @@ div.message {
     -khtml-border-radius: 5px;
     border-radius: 5px;
   }
+*/
 
+
+/*
   div.container, div.panel, div.divider {
     display: inline;
     float: left;
     margin: 0px;
   }
+*/
 
+/*
   div.panel > div.content {
     overflow: auto;
   }
+
+ */
+
+
+.or- {
+    &-invisible {
+      visibility: hidden;
+    }
 }
 
-.invisible {
-  visibility: hidden;
-}
-
-.visible {
+.or--visible {
   visibility: visible;
 }
 
 /*
  * Formular-Button-Leiste
  */
+/*
 div.panel {
   position: relative;
 }
+*/
 
+
+/*
 div.content div.bottom {
   height: 55px;
   width: 100%;
@@ -495,7 +535,7 @@ div.content form[data-autosave='true'] div.command {
 div.content > form {
   padding-bottom: 45px;
 }
-
+*/
 
 
 
@@ -506,8 +546,11 @@ main .or-form .or-form-actionbar {
 }
 
 
-div.search > .or-input {
+.or-search > .or-input {
   padding-top: 1px;
+  .box-shadow(0,0,0, @color-overridden-by-theme) !important; // no shadow.
+    background-color: transparent !important;
+
 }
 
 .or-input {
@@ -515,36 +558,37 @@ div.search > .or-input {
   margin: 0px;
 }
 
+
+
 /* Eingabfeld fuer Namen */
-fieldset > div input.name,
-fieldset > div span.name {
+.or-input--name {
   font-weight: bold;
 }
 
 /* Eingabfelder fuer Dateiname */
-fieldset > div input.filename,
-fieldset > div input.extension,
-fieldset > div input.ansidate,
-fieldset > div span.filename,
-fieldset > div span.extension,
-fieldset > div span.ansidate {
+.or-input--filename {
   font-family: 'Source Code Pro',Monospace, Monospaced, Courier;
 }
 
-dl.notice {
+dl.or-notice {
   padding: 15px;
 }
 
-
+/*
 div.content pre,
 .dropdown {
   min-width: 150px;
   max-width: 450px;
 }
 
-img.image-icon {
+ */
+
+/*
+img.or-image-icon {
   visibility: hidden;
 }
+*/
+
 
 /* Make Codemirror Auto-Resizable */
 .CodeMirror {

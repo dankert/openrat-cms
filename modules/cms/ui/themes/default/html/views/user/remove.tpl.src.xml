@@ -7,14 +7,14 @@
                 <part class="label">
                     <label key="user_username"></label>
                 </part>
-                <part class="input">
+                <part class="value">
                     <text value="${name}" class="name"></text>
                 </part>
             </part>
             <group title="${message:options}"></group>
             <part class="line">
                 <part class="label"></part>
-                <part class="input">
+                <part class="value">
                     <checkbox name="confirm" required="true"></checkbox>
                     <label for="confirm" key="delete"></label>
                 </part>

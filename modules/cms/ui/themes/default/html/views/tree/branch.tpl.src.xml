@@ -2,9 +2,9 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 
 	<list list="${branch}" extract="true">
-		<part tag="li" class="or-navtree-node,or-navtree-node--is-closed,or-draggable,or-draggable--type-${type}" >
-			<part class="tree or-navtree-node-control">
-				<image class="tree-icon" symbol="node-closed" />
+		<part tag="li" class="navtree-node,navtree-node--is-closed,or-draggable,or-draggable--type-${type}" >
+			<part class="navtree-tree,navtree-node-control">
+				<image class="navtree-tree-icon" symbol="node-closed" />
 			</part>
 			<part class="clickable">
 				<link type="open" action="${action}" id="${id}" class="entry" title="${description}" var1="type" value1="${type}">

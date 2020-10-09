@@ -5,7 +5,7 @@
 			<part class="label">
 				<text value="${message:TEMPLATE}"></text>
 			</part>
-			<part class="input">
+			<part class="value">
 				<selectbox name="templateid" default="" list="templates"></selectbox>
 			</part>
 		</part>
@@ -15,7 +15,7 @@
 			<part class="label">
 				<text value="${message:NAME}"></text>
 			</part>
-			<part class="input">
+			<part class="value">
 				<input name="name" size="20" class="focus,name"></input>
 			</part>
 		</part>
@@ -25,7 +25,7 @@
 			<part class="label">
 				<text value="${message:DESCRIPTION}"></text>
 			</part>
-			<part class="input">
+			<part class="value">
 
 				<inputarea rows="5" name="description" default=""></inputarea>
 			</part>

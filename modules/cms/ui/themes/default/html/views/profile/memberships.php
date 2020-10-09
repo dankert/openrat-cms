@@ -5,14 +5,14 @@
     </div>
     <div class="<?php echo O::escapeHtml('or-table-area') ?>"><?php echo O::escapeHtml('') ?>
       <table width="<?php echo O::escapeHtml('100%') ?>"><?php echo O::escapeHtml('') ?>
-        <tr class="<?php echo O::escapeHtml('headline') ?>"><?php echo O::escapeHtml('') ?>
+        <tr class="<?php echo O::escapeHtml('or-headline') ?>"><?php echo O::escapeHtml('') ?>
           <td><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml(''.@O::lang('name').'') ?>
             </span>
           </td>
         </tr>
         <?php $if1=((groups)==FALSE); if($if1) {  ?>
-          <tr class="<?php echo O::escapeHtml('data') ?>"><?php echo O::escapeHtml('') ?>
+          <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
             <td><?php echo O::escapeHtml('') ?>
               <span><?php echo O::escapeHtml(''.@O::lang('NOT_FOUND').'') ?>
               </span>
@@ -20,7 +20,7 @@
           </tr>
          <?php } ?>
         <?php foreach((array)groups as $list_key=>$group) {  ?>
-          <tr class="<?php echo O::escapeHtml('data') ?>"><?php echo O::escapeHtml('') ?>
+          <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
             <td><?php echo O::escapeHtml('') ?>
               <span><?php echo O::escapeHtml(''.@$group.'') ?>
               </span>

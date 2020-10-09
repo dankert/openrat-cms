@@ -17,16 +17,16 @@ class TableComponent extends HtmlComponent
 
 	public function createElement()
 	{
-	    $tableWrapper = (new HtmlElement('div'))->addStyleClass('or-table-wrapper');
+	    $tableWrapper = (new HtmlElement('div'))->addStyleClass('table-wrapper');
 
 	    if   ( $this->filter)
 		{
-			$filterInput = (new CMSElement('input'))->addStyleClass('or-input')->addAttribute('type','search')->addAttribute('name','filter')->addAttribute('placeholder',Value::createExpression(ValueExpression::TYPE_MESSAGE,'SEARCH_FILTER'));
-			$filter = (new HtmlElement('div'))->addStyleClass('or-table-filter')->addChild( $filterInput );
+			$filterInput = (new CMSElement('input'))->addStyleClass('input')->addAttribute('type','search')->addAttribute('name','filter')->addAttribute('placeholder',Value::createExpression(ValueExpression::TYPE_MESSAGE,'SEARCH_FILTER'));
+			$filter = (new HtmlElement('div'))->addStyleClass('table-filter')->addChild( $filterInput );
 			$tableWrapper->addChild($filter);
 		}
 
-		$tableContent = (new HtmlElement('div'))->addStyleClass('or-table-area');
+		$tableContent = (new HtmlElement('div'))->addStyleClass('table-area');
 
         $table = new CMSElement('table');
 

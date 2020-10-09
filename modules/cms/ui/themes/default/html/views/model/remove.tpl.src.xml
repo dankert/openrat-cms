@@ -6,7 +6,7 @@
 				<part class="label">
 					<text value="${message:NAME}"></text>
 				</part>
-				<part class="input">
+				<part class="value">
 					<text value="${name}" class="name"></text>
 				</part>
 			</part>
@@ -15,7 +15,7 @@
 			<part class="line">
 				<part class="label">
 				</part>
-				<part class="input">
+				<part class="value">
 					<checkbox name="confirm" required="true"></checkbox>
 					<label for="confirm">
 						<text value="${message:CONFIRM_DELETE}"></text>

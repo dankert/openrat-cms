@@ -10,7 +10,7 @@
                         <text value="${message:user_new_mail}"></text>
                     </label>
                 </part>
-                <part class="input">
+                <part class="value">
                     <input name="mail"></input>
                 </part>
             </part>

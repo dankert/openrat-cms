@@ -5,7 +5,7 @@
 			<part class="label">
 				<text value="${message:DATABASE}"></text>
 			</part>
-			<part class="input">
+			<part class="value">
 				<selectbox name="dbid" list="dbids" default="actdbid"></selectbox>
 			</part>
 		</part>

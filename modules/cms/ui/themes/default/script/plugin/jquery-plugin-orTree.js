@@ -30,7 +30,7 @@ jQuery.fn.orTree = function (options)
                 $node.children('ul').slideUp('fast').remove();
 
                 // Am Knoten die Klasse wechseln.
-                $node.removeClass('or-navtree-node--is-open').addClass('or-navtree-node--is-closed').find('.tree-icon').removeClass('image-icon--node-open').addClass('image-icon--node-closed');
+                $node.removeClass('navtree-node--is-open').addClass('navtree-node--is-closed').find('.or-navtree-tree-icon').removeClass('image-icon--node-open').addClass('image-icon--node-closed');
             }
             else {
                 // Pfad ist geschlossen -> öffnen.
@@ -74,7 +74,7 @@ jQuery.fn.orTree = function (options)
 					} );*/
 					registerTreeBranchEvents($ul);
 					// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
-					$ul.find('.clickable').orLinkify( {
+					$ul.find('.or-clickable').orLinkify( {
 						'openAction':settings.openAction
 					} );
                     $ul.slideDown('fast'); // Einblenden
@@ -85,11 +85,11 @@ jQuery.fn.orTree = function (options)
                 }).always(function () {
 
                     // Die Loader-Animation entfernen.
-                    $(treeEl).closest('div.view').removeClass('loader');
+                    $(treeEl).closest('div.or-view').removeClass('loader');
                 });
 
                 // Am Knoten die Klasse wechseln.
-                $node.addClass('or-navtree-node--is-open').removeClass('or-navtree-node--is-closed').find('.tree-icon').addClass('image-icon--node-open').removeClass('image-icon--node-closed');
+                $node.addClass('navtree-node--is-open').removeClass('navtree-node--is-closed').find('.navtree-tree-icon').addClass('image-icon--node-open').removeClass('image-icon--node-closed');
             }
         });
 

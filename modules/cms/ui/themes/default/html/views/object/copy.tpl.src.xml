@@ -5,7 +5,7 @@
 			<part class="label">
 				<hidden name="sourceid" default="${sourceId}" />
 			</part>
-			<part class="input">
+			<part class="value">
 				<text value="${source.name}" />
 			</part>
 		</part>
@@ -13,7 +13,7 @@
 		<part class="line">
 			<part class="label">
 			</part>
-			<part class="input">
+			<part class="value">
 				<selectbox name="type" list="types" />
 			</part>
 		</part>
@@ -22,7 +22,7 @@
 			<part class="label">
 				<hidden name="targetid" default="${targetId}" />
 			</part>
-			<part class="input">
+			<part class="value">
 				<text value="${target.name}" />
 			</part>
 		</part>
