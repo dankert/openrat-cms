@@ -33,28 +33,49 @@ class Dav extends BaseTarget
 	/**
 	 * @var false|resource
 	 */
-	private $fp;
+	//private $socket;
 
 	public function checkConnection()
 	{
-		$content  = "HEAD / HTTP/1.1\r\n";
+		$dest = $this->url->path;
+
+		$content  = "HEAD /$dest HTTP/1.1\r\n";
 		$content .= "Host: ".$this->url->host."\r\n";
 		$content .= "Connection: Close\r\n";
 		$content .= "\r\n";
 
-		fwrite($this->fp, $content );
+		fwrite($this->createSocket(), $content );
 	}
 
 
 	public function put($source, $dest, $time)
 	{
+		$dest = $this->url->path . '/' . $dest;
+
+		$this->mkdirs( dirname($dest) ); // Try MKCOL
+
 		$content  = "PUT $dest HTTP/1.1\r\n";
 		$content .= "Host: ".$this->url->host."\r\n";
+		$content .= "Content-Length: ".filesize($source)."\r\n";
 		$content .= "Connection: Close\r\n";
 		$content .= "\r\n";
 
-		fwrite($this->fp, $content);
-		fwrite($this->fp, file_get_contents($source));
+		fwrite($this->createSocket(), $content.file_get_contents($source));
+	}
+
+
+	/**
+	 * resursive make the directory on DAV server.
+	 *
+	 * @param String path
+	 */
+	private function mkdirs($strPath)
+	{
+		$pStrPath = dirname($strPath);
+		if   ( $pStrPath && $pStrPath != '.' && $pStrPath != '/' )
+			$this->mkdirs($pStrPath);
+
+		$this->mkcol( $strPath );
 	}
 
 
@@ -63,12 +84,12 @@ class Dav extends BaseTarget
 		$content .= "Host: ".$this->url->host."\r\n";
 		$content .= "Connection: Close\r\n";
 		$content .= "\r\n";
-		fwrite($this->fp, $content);
+		fwrite($this->createSocket(), $content);
 	}
 
 	public function close()
 	{
-		fclose($this->fp);
+		//fclose($this->socket);
 	}
 
 	protected static function acceptsSchemes()
@@ -78,11 +99,20 @@ class Dav extends BaseTarget
 
 	public function open()
 	{
-		$this->fp = fsockopen($this->url->host, empty($this->url->port)?80:$this->url->port, $errno, $errstr, 5);
+		$this->checkConnection();
+	}
 
-		if(!$this->fp)
+	/**
+	 * @return false|resource
+	 */
+	protected function createSocket()
+	{
+		$socket = fsockopen($this->url->host, empty($this->url->port) ? 80 : $this->url->port, $errno, $errstr, 5);
+
+		if(!$socket)
 			throw new PublisherException("cannot connect to DAV server: $errno -> $errstr");
 
-		$this->checkConnection();
+		return $socket;
+
 	}
 }

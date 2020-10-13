@@ -36,13 +36,12 @@ class Fax extends BaseTarget
 
 	public function put($source, $dest, $time)
 	{
-		Logger::debug("düüüüüüüüüüüükrrrkkrkrkrkkrkrkrkr");
-		// very, very funny, right?
+		// here must happen some magic
 	}
 
 	public function close()
 	{
-		Logger::debug("Hanging up ...");
+		Logger::debug("Hanging up........................... NO CARRIER");
 	}
 
 	protected static function acceptsSchemes()

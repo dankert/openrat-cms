@@ -82,8 +82,18 @@ class Scp extends BaseTarget
 	{
 		$dest = $this->url->path . '/' . $dest;
 
+		// ok, lets create the necessary directories on the remote side.
+		$stream = ssh2_exec($this->sshConnection,'mkdir -p '.dirname($dest) );
+		if   ( $stream )
+			fclose($stream);
+		else
+			throw new PublisherException("Failed to mkdir ".dirname($dest).' on remote');
 
-		ssh2_scp_send($this->sshConnection, $source, $dest, 0644);
+		$success = ssh2_scp_send($this->sshConnection, $source, $dest, 0644);
+
+		if   ( !$success) {
+			throw new PublisherException( 'Failed to publish '.$source.' to '.$dest );
+		}
 	}
 
 

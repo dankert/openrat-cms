@@ -77,6 +77,8 @@ class SFtp extends Scp
 
 		$sftp = $this->sftpConnection;
 
+		ssh2_sftp_mkdir ( $sftp, dirname($dest),0755, true);
+
 		$stream = @fopen("ssh2.sftp://$sftp$dest", 'w');
 
 		if (! $stream)
