@@ -21,12 +21,14 @@ class FileGenerator extends BaseGenerator
 	protected function generate()
 	{
 		$file = new File( $this->context->sourceObjectId );
+		$file->load();
 		return $this->filterValue( $file );
 	}
 
 	public function getPublicFilename()
 	{
 		$file = new File( $this->context->sourceObjectId );
+		$file->load();
 		return $file->filename();
 	}
 
