@@ -43,7 +43,7 @@ spl_autoload_register(
 
 			$componentName = substr($className,0,-9 );
 
-			$c = __DIR__.DIRECTORY_SEPARATOR.'components'.DIRECTORY_SEPARATOR.'html'.DIRECTORY_SEPARATOR.strtolower($componentName).DIRECTORY_SEPARATOR.$componentName.'.class.php';
+			$c = __DIR__.DIRECTORY_SEPARATOR.'components'.DIRECTORY_SEPARATOR.'html'.DIRECTORY_SEPARATOR.strtolower($componentName).DIRECTORY_SEPARATOR.$componentName.'Component.class.php';
 
 			if   ( is_file($c) )
 				require($c);
