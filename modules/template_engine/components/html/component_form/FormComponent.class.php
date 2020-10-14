@@ -1,6 +1,6 @@
 <?php
 
-namespace template_engine\components;
+namespace template_engine\components\html\component_form;
 
 use cms\action\RequestParams;
 use language\Messages;

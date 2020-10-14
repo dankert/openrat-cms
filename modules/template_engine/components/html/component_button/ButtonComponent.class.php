@@ -1,6 +1,6 @@
 <?php
 
-namespace template_engine\components;
+namespace template_engine\components\html\component_button;
 
 use cms\base\Startup;
 use template_engine\components\html\Component;

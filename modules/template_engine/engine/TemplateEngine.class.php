@@ -142,7 +142,7 @@ class TemplateEngine
 		}
 
 		$className = ucfirst($tag);
-		$className = 'template_engine\components\\'.$className.'Component';
+		$className = 'template_engine\\components\\html\\component_'.$tag.'\\'.$className.'Component';
 
 		if   ( !class_exists($className ))
 			throw new LogicException("Component class ".$className.' does not exist');

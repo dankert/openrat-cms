@@ -1,6 +1,6 @@
 <?php
 
-namespace template_engine\components\html\_if;
+namespace template_engine\components\html\component_if;
 
 use template_engine\components\html\Component;
 use template_engine\element\PHPBlockElement;

@@ -1,6 +1,6 @@
 <?php
 
-namespace template_engine\components;
+namespace template_engine\components\html\component_table;
 
 use template_engine\components\html\HtmlComponent;
 use template_engine\element\CMSElement;

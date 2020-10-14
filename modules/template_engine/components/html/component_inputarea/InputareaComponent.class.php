@@ -1,6 +1,6 @@
 <?php
 
-namespace template_engine\components;
+namespace template_engine\components\html\component_inputarea;
 
 use template_engine\components\html\FieldComponent;
 use template_engine\element\CMSElement;

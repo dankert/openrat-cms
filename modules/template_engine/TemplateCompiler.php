@@ -26,32 +26,6 @@ echo "Searching in $searchDir\n";
 $count = 0;
 
 
-spl_autoload_register(
-
-/**
- * Loads component classes.
- *
- * @param $className Class name
- * @return void
- */
-	function ($className) {
-
-		if   ( substr($className,-9) == 'Component')
-		{
-			$pos = strrpos($className, '\\');
-			$className = substr($className, $pos + 1);
-
-			$componentName = substr($className,0,-9 );
-
-			$c = __DIR__.DIRECTORY_SEPARATOR.'components'.DIRECTORY_SEPARATOR.'html'.DIRECTORY_SEPARATOR.strtolower($componentName).DIRECTORY_SEPARATOR.$componentName.'Component.class.php';
-
-			if   ( is_file($c) )
-				require($c);
-		}
-	},true,true
-);
-
-
 foreach(FileUtils::readDir( $searchDir ) as $action )
 {
 	if   ( !is_dir($searchDir.'/'.$action ) )
