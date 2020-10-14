@@ -92,11 +92,6 @@ class Dav extends BaseTarget
 		//fclose($this->socket);
 	}
 
-	protected static function acceptsSchemes()
-	{
-		return ['dav'];
-	}
-
 	public function open()
 	{
 		$this->checkConnection();

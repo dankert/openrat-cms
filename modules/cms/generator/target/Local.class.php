@@ -37,11 +37,6 @@ class Local extends  BaseTarget
 	 */
 	private $localDestinationDirectory;
 
-	public static function acceptsSchemes() {
-		return ['file',''];
-	}
-
-
 	/**
 	 * @param $url Url
 	 */

@@ -38,10 +38,6 @@ class Scp extends BaseTarget
 	 */
 	protected $sshConnection;
 
-	public static function acceptsSchemes() {
-		return ['scp'];
-	}
-
 	// Aufbauen der Verbindung
 	public function open()
 	{

@@ -9,6 +9,7 @@ use cms\generator\PageContext;
 use cms\generator\PageGenerator;
 use cms\generator\Producer;
 use cms\generator\Publisher;
+use cms\generator\PublishOrder;
 use language\Messages;
 use util\ArchiveTar;
 use cms\model\Acl;
@@ -1192,7 +1193,7 @@ class FolderAction extends ObjectAction
 
 							$pageGenerator = new PageGenerator( $pageContext );
 
-							$publisher->publish( $pageGenerator->getCache()->load()->getFilename(),$pageGenerator->getPublicFilename(), 0 );
+							$publisher->addOrderForPublishing( new PublishOrder( $pageGenerator->getCache()->load()->getFilename(),$pageGenerator->getPublicFilename(), 0 ) );
 						}
 					}
 				}
@@ -1204,10 +1205,12 @@ class FolderAction extends ObjectAction
 				foreach( $folder->getFiles() as $fileid ) {
 
 					$fileGenerator = new FileGenerator( new FileContext( $fileid, Producer::SCHEME_PUBLIC));
-					$publisher->publish( $fileGenerator->getCache()->load()->getFilename(),$fileGenerator->getPublicFilename(),0 );
+					$publisher->addOrderForPublishing( new PublishOrder( $fileGenerator->getCache()->load()->getFilename(),$fileGenerator->getPublicFilename(),0 ) );
 
 				}
 			}
+
+			$publisher->publish();
 		}
 
 
@@ -1221,7 +1224,7 @@ class FolderAction extends ObjectAction
 		$this->addNoticeFor( $this->folder,
 			'PUBLISHED',
 			array(),
-			implode("\n",$publisher->publishedObjects)
+			implode("\n",$publisher->getDestinationFilenames() )
 		);
 	}
 

@@ -37,19 +37,6 @@ abstract class BaseTarget implements Target
 	}
 
 
-	public static function accepts( $scheme ) {
-		return in_array( $scheme, static::acceptsSchemes() );
-	}
-
-
-	/**
-	 * For which types this target is reponsible?
-	 *
-	 * @return array
-	 */
-	protected abstract static function acceptsSchemes();
-
-
 	public function open() {
 
 	}

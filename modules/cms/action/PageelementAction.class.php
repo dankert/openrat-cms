@@ -7,6 +7,7 @@ use cms\generator\PageContext;
 use cms\generator\PageGenerator;
 use cms\generator\Producer;
 use cms\generator\Publisher;
+use cms\generator\PublishOrder;
 use cms\generator\ValueContext;
 use cms\generator\ValueGenerator;
 use cms\model\Acl;
@@ -1333,12 +1334,13 @@ class PageelementAction extends BaseAction
 
 			$pageGenerator = new PageGenerator( $pageContext );
 
-			$publisher->publish( $pageGenerator->getCache()->load()->getFilename(),$pageGenerator->getPublicFilename(), $this->page->lastchangeDate );
+			$publisher->addOrderForPublishing( new PublishOrder( $pageGenerator->getCache()->load()->getFilename(),$pageGenerator->getPublicFilename(), $this->page->lastchangeDate ) );
 		}
 
+		$publisher->publish();
 
 		$this->addNoticeFor( $this->value,'PUBLISHED',array(),
-			implode("\n",$publisher->publishedObjects) );
+			implode("\n",$publisher->getDestinationFilenames() ) );
 
 	}
 

@@ -44,11 +44,6 @@ class Fax extends BaseTarget
 		Logger::debug("Hanging up........................... NO CARRIER");
 	}
 
-	protected static function acceptsSchemes()
-	{
-		return ['fax'];
-	}
-
 	public function __construct($targetUrl)
 	{
 	}

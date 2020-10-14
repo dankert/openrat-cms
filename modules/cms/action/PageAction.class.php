@@ -5,6 +5,7 @@ namespace cms\action;
 use cms\generator\PageGenerator;
 use cms\generator\Producer;
 use cms\generator\Publisher;
+use cms\generator\PublishOrder;
 use cms\model\Acl;
 use cms\model\Project;
 use cms\model\Value;
@@ -14,13 +15,9 @@ use cms\model\Page;
 use cms\model\Folder;
 use cms\model\BaseObject;
 use cms\model\Language;
-use cms\model\Model;
 use cms\generator\PageContext;
-use cms\generator\PublishPreview;
-use cms\generator\PublishPublic;
 use configuration\Config;
 use util\Html;
-use util\Http;
 use logger\Logger;
 use util\Session;
 
@@ -782,14 +779,16 @@ class PageAction extends ObjectAction
 
 				$pageGenerator = new PageGenerator( $pageContext );
 
-				$publisher->publish( $pageGenerator->getCache()->load()->getFilename(),$pageGenerator->getPublicFilename(), $this->page->lastchangeDate );
+				$publisher->addOrderForPublishing( new PublishOrder( $pageGenerator->getCache()->load()->getFilename(),$pageGenerator->getPublicFilename(), $this->page->lastchangeDate ) );
 			}
 		}
+
+		$publisher->publish();
 
 		$this->addNoticeFor( $this->page,
 		                  'PUBLISHED',
 		                  array(),
-		                  implode("\n",$publisher->publishedObjects)
+		                  implode("\n",$publisher->getDestinationFilenames() )
         );
 	}
 

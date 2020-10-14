@@ -6,6 +6,7 @@ use cms\generator\FileContext;
 use cms\generator\FileGenerator;
 use cms\generator\Producer;
 use cms\generator\Publisher;
+use cms\generator\PublishOrder;
 use cms\model\Folder;
 use cms\model\BaseObject;
 use cms\model\File;
@@ -545,7 +546,8 @@ class FileAction extends ObjectAction
 		$fileGenerator = new FileGenerator( new FileContext( $this->file->objectid, Producer::SCHEME_PUBLIC));
 
 		$publisher = new Publisher( $this->file->projectid );
-		$publisher->publish( $fileGenerator->getCache()->load()->getFilename(),$fileGenerator->getPublicFilename(),$this->file->lastchangeDate );
+		$publisher->addOrderForPublishing( new PublishOrder( $fileGenerator->getCache()->load()->getFilename(),$fileGenerator->getPublicFilename(),$this->file->lastchangeDate) );
+		$publisher->publish();
 
 		$this->addNoticeFor($this->file,'PUBLISHED',Action::NOTICE_OK );
 	}

@@ -19,7 +19,6 @@ class DefaultConfig {
 		[ 
 			'applications' =>
 				[ 
-					'' => 0,
 					'phpmyadmin' =>
 						[ 
 							'name' => 'PHPYourAdmin',
@@ -470,12 +469,12 @@ class DefaultConfig {
 					'ns_lookup' => false,
 					'format' =>
 						[ 
-							0 => 'time',
-							1 => 'level',
-							2 => 'host',
-							3 => 'user',
-							4 => 'action',
-							5 => 'text',
+							'time',
+							'level',
+							'host',
+							'user',
+							'action',
+							'text',
 						],
 				],
 			'mail' =>
@@ -759,7 +758,6 @@ class DefaultConfig {
 				],
 			'publish' =>
 				[
-					'targets' => ['Local','Ftp','Ftps','Fax','SFtp','Scp','Dav'],
 					'edit' => true,
 					'default' => 'index',
 					'format' => '{filename}{language_sep}{language}{type_sep}{type}',

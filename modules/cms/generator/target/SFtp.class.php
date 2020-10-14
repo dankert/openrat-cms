@@ -39,10 +39,6 @@ class SFtp extends Scp
 	protected $sftpConnection;
 
 
-	public static function acceptsSchemes() {
-		return ['sftp'];
-	}
-
 	// Aufbauen der Verbindung
 	public function open()
 	{

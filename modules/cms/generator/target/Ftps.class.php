@@ -29,10 +29,6 @@ use util\exception\UIException;
  */
 class Ftps extends Ftp
 {
-	public static function acceptsSchemes() {
-		return ['ftps'];
-	}
-
 	/**
 	 * Creates a new connection.
 	 *

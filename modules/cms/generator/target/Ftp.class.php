@@ -31,10 +31,6 @@ class Ftp extends BaseTarget
 {
 	private $connection;
 
-	public static function acceptsSchemes() {
-		return ['ftp'];
-	}
-
 	// Aufbauen der Verbindung
 	public function open()
 	{

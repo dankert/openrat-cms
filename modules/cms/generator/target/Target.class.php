@@ -12,9 +12,6 @@ interface Target
 	public function __construct( $targetUrl );
 
 
-	public static function accepts( $scheme );
-
-
 	public function open();
 
 
