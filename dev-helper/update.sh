@@ -82,6 +82,9 @@ function make_writable {
   esac
 }
 
+# Kill child processes on CTRL+C
+trap 'echo "Terminating child processes"; pkill -P $$; exit' SIGINT SIGTERM
+
 while true; do
   # Calling compiler first
   make_writable $type $theme
@@ -92,7 +95,7 @@ while true; do
     exit 0; # Exit, because watching is not enabled
   fi;
 
-  echo "waiting for changes ..."
+  echo "Enabling the watcher ..."
   case $type in
         lang ) watchfiles="../modules/language/language.yml";;
         xsd  ) watchfiles="../modules/template_engine/components/html";;
@@ -101,7 +104,9 @@ while true; do
         tpl  ) watchfiles="../modules/cms/ui/themes/$theme/html/views/";;
         * ) echo "unknown type";exit;;
   esac
-  inotifywait --event modify -r $watchfiles
+  inotifywait --event modify -r $watchfiles &
+  echo "Waiting for watcher ..."
+  wait
   echo "a file was changed. updating ..."
 done
 
