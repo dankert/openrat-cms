@@ -419,8 +419,8 @@ Openrat.Workbench = new function()
 	 */
 	this.registerOpenClose = function( $el )
 	{
-		$($el).children('.or-act-open-close').click( function() {
-			$(this).closest('.or-toggle-open-close').toggleClass('-is-open').toggleClass('-is-closed');
+		$($el).children('.or-collapsible-act-switch').click( function() {
+			$(this).closest('.or-collapsible').toggleClass('collapsible--is-open').toggleClass('collapsible--is-closed');
 		});
 	}
 

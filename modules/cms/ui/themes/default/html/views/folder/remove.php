@@ -13,15 +13,15 @@
         <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('NAME').'') ?>
         </span>
       </label>
-      <label class="<?php echo O::escapeHtml('or-form-row or-form-checkbox') ?>"><?php echo O::escapeHtml('') ?>
+      <label><?php echo O::escapeHtml('') ?>
+        <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('delete') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$delete){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
         <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('DELETE').'') ?>
         </span>
-        <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('delete') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$delete){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
       </label>
-      <label class="<?php echo O::escapeHtml('or-form-row or-form-checkbox') ?>"><?php echo O::escapeHtml('') ?>
+      <label><?php echo O::escapeHtml('') ?>
+        <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('withChildren') ?>" disabled="<?php echo O::escapeHtml('disabled') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$withChildren){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
         <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('DELETE_WITH_CHILDREN').'') ?>
         </span>
-        <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('withChildren') ?>" disabled="<?php echo O::escapeHtml('disabled') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$withChildren){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
       </label>
     </div>
     <div class="<?php echo O::escapeHtml('or-form-actionbar') ?>"><?php echo O::escapeHtml('') ?>

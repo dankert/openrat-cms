@@ -19,7 +19,9 @@ class CheckboxComponent extends Component
 
 	public function createElement()
 	{
-		$checkbox = (new CMSElement('input'))->addAttribute('type','checkbox');
+		$checkbox = (new CMSElement('input'))
+			->addAttribute('type','checkbox')
+			->addStyleClass('form-checkbox');
 
 		$checkbox->addAttribute('name',$this->name);
         if	( $this->readonly )
@@ -30,7 +32,6 @@ class CheckboxComponent extends Component
 			$condition = ''.PHPBlockElement::value($this->default);
 		else
 			$condition = '@$'.PHPBlockElement::value($this->name);
-
 		$checkbox->addConditionalAttribute('checked', $condition, 'checked');
 
 		if   ( $this->required )
@@ -42,10 +43,12 @@ class CheckboxComponent extends Component
 		}
 
 		if   ( $this->label ) {
-			$label = new CMSElement('label');
-			$label->addStyleClass('form-row')->addStyleClass('form-checkbox');
-			$label->addChild( (new CMSElement('span'))->addStyleClass('form-label')->content($this->label));
-			$label->addChild($checkbox);
+			$label = (new CMSElement('label'))
+				//->addStyleClass('form-checkbox')
+				->addChild($checkbox)
+				->addChild( (new CMSElement('span'))
+					->addStyleClass('form-label')
+					->content($this->label));
 			return $label;
 		}
 

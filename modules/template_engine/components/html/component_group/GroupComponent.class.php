@@ -5,6 +5,8 @@ namespace template_engine\components\html\component_group;
 use template_engine\components\html\Component;
 use template_engine\element\CMSElement;
 use template_engine\element\HtmlElement;
+use template_engine\element\Value;
+use template_engine\element\ValueExpression;
 
 /**
  * A group.
@@ -19,43 +21,46 @@ class GroupComponent extends Component
 	
 	public function createElement()
 	{
-		$fieldset = new HtmlElement('fieldset');
-		$fieldset->addStyleClass('group')->addStyleClass('toggle-open-close');
+		$group = (new HtmlElement('section'))->addStyleClass('group')->addStyleClass('collapsible');
+
+		$headline = (new HtmlElement('h2'))
+			->addStyleClass('collapsible-title')
+			->addStyleClass('group-title')
+			->addStyleClass('collapsible-act-switch')
+			->content( $this->title )
+			->asChildOf( $group );
 
 		if   ( $this->open )
-			$fieldset->addStyleClass('-is-open');
+			$group->addStyleClass('collapsible--is-open');
 		else
-			$fieldset->addStyleClass('-is-closed');
+			$group->addStyleClass('collapsible--is-closed');
 
 		if   ( $this->show )
-			$fieldset->addStyleClass('show' );
+			$group->addStyleClass('collapsible--show' );
 
 		if	( $this->title )
 		{
-			$legend = new HtmlElement('legend');
-			$legend->addStyleClass('act-open-close');
-			$legend->content( $this->title );
+			if	( $this->icon ) {
 
-			$image = new CMSElement('img');
-			if	( $this->icon )
-				$image->addAttribute('src','themes/default/images/icon/method/'.$this->icon.'.svg" />');
-			$legend->addChild( $image );
+				$image = new CMSElement('i');
+				$image->addStyleClass(['image-icon','image-icon--'.$this->icon]);
+				$headline->addChild( $image );
+			}
 
-			$arrowRight = (new HtmlElement('i'))->addStyleClass(['image-icon','image-icon--node-closed','group--on-closed']);
-			$legend->addChild($arrowRight );
+			$arrowRight = (new HtmlElement('i'))->addStyleClass(['image-icon','image-icon--node-closed','collapsible--on-closed']);
+			$headline->addChild($arrowRight );
 
-			$arrowDown  = (new HtmlElement('i'))->addStyleClass(['image-icon','image-icon--node-open','group--on-open']);
-			$legend->addChild($arrowDown  );
-
-			$fieldset->addChild( $legend );
+			$arrowDown  = (new HtmlElement('i'))->addStyleClass(['image-icon','image-icon--node-open','collapsible--on-open']);
+			$headline->addChild($arrowDown  );
 		}
 
-		$group = new HtmlElement('div');
-		$group->addStyleClass('closable')->asChildOf($fieldset);
+		$value = (new HtmlElement('div'))
+			->addStyleClass(['collapsible-value','group-value'])
+			->asChildOf($group);
 
-		$this->adoptiveElement = $group;
+		$this->adoptiveElement = $value;
 
-		return $fieldset;
+		return $group;
 	}
 
 }

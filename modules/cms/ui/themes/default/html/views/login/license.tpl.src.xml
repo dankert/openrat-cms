@@ -3,81 +3,49 @@
 
     <part class="form">
         <group title="${message:USER}" open="true" show="true">
-            <part class="line">
-                <part class="label">
-                    <text value="${message:USER_USERNAME}"></text>
-                </part>
-                <part class="value">
-                    <text value="${user_name}"/>
-                </part>
-            </part>
-            <part class="line">
-                <part class="label">
-                    <text value="${message:USER_FULLNAME}"></text>
-                </part>
-                <part class="value">
-                    <text value="${user_fullname}"/>
-                </part>
-            </part>
-            <part class="line">
-                <part class="label">
-                    <text value="${message:USER_LOGIN_DATE}"></text>
-                </part>
-                <part class="value">
-                    <date date="${user_login}"/>
-                </part>
-            </part>
-
+            <fieldset label="${message:USER_USERNAME}">
+                <text value="${user_name}"/>
+            </fieldset>
+            <fieldset label="${message:USER_FULLNAME}">
+				<text value="${user_fullname}"/>
+            </fieldset>
+            <fieldset label="${message:USER_LOGIN_DATE}">
+                <date date="${user_login}"/>
+            </fieldset>
         </group>
 
         <group title="${message:CMS}">
-            <part class="line">
-                <part class="label">
-                    <text value="${message:NAME}"></text>
-                </part>
-                <part class="value">
-                    <text value="${cms_name}"/>
-                    <text value="${cms_version}"/>
-                </part>
-            </part>
-            <part class="line">
-                <part class="label">
-                    <text value="${message:OPERATOR}"></text>
-                </part>
-                <part class="value">
+
+			<fieldset label="${message:NAME}">
+				<part>
+					<text value="${cms_name}"/>
+					<text value="${cms_version}"/>
+				</part>
+
+			</fieldset>
+
+            <fieldset label="${message:OPERATOR}">
                     <text value="${cms_operator}"/>
-                </part>
-            </part>
+            </fieldset>
 
         </group>
 
         <group title="${message:SYSTEM}">
-            <part class="line">
-                <part class="label">
-                    <text value="${message:DATE_TIME}"></text>
-                </part>
-                <part class="value">
-                    <text value="${time}"/>
-                </part>
-            </part>
-            <part class="line">
-                <part class="label">
-                    <text value="${message:OPERATING_SYSTEM}"></text>
-                </part>
-                <part class="value">
+            <fieldset label="${message:DATE_TIME}">
+				<text value="${time}"/>
+            </fieldset>
+
+            <fieldset label="${message:OPERATING_SYSTEM}">
+                <part>
                     <text value="${os}"/>
                     <text value="${release}"/>
                     <text value="${machine}"/>
                 </part>
-            </part>
-            <part class="line">
-                <part class="label">
-                    <text value="${message:INTERPRETER}"></text>
-                </part>
-                <part class="value">
-                    <text value="${version}"/>
-                </part>
-            </part>
+            </fieldset>
+
+			<fieldset label="${message:INTERPRETER}" >
+                <text value="${version}"/>
+			</fieldset>
 
         </group>
 
@@ -96,11 +64,11 @@
                     <row class="data">
                         <column class="clickable">
                             <link type="external" url="${url}">
-                                <text value="${name}"></text>
+								<text value="${name}"/>
                             </link>
                         </column>
                         <column>
-                            <text value="${license}"></text>
+							<text value="${license}"/>
                         </column>
                     </row>
                 </list>

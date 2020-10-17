@@ -3,5 +3,5 @@
  */
 Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
 
-    Openrat.Workbench.registerOpenClose( $(element).find('.or-group.or-toggle-open-close') );
+    Openrat.Workbench.registerOpenClose( $(element).find('.or-collapsible.or-group') );
 });

@@ -111,54 +111,7 @@ html.nojs .noscript {
     display: block;
 }
 
-.or-toggle-open-close {
 
-    display: flex;
-    flex-direction: column;
-
-    .or-act-open-close {
-        cursor: pointer;
-        font-weight: normal;
-        //flex: 1;
-    }
-
-    > .or-closable {
-        //transition: transform 0.5s ease-in-out;
-        transition: opacity 0.3s ease-out;
-        //transition: max-height 1s linear;
-        flex: 1;
-        display: block;
-        //overflow: hidden;
-    }
-
-    /* Geschlossen */
-    &.or--is-closed {
-        > * > .or-group--on-closed {
-            display: inline;
-        }
-        > * > .or-group--on-open {
-            display: none;
-        }
-        > .or-closable {
-            opacity: 0;
-            max-height: 0;
-            overflow: hidden;
-        }
-    }
-
-    /* Offen */
-    &.or--is-open {
-        > .or-closable {
-            height: auto;
-        }
-        > * > .or-group--on-closed {
-            display: none;
-        }
-        > * > .or-group--on-open {
-            display: inline;
-        }
-    }
-}
 
 @smartphones: ~"only screen and (max-width: 55rem)";
 @wide: ~"only screen and (min-width: 75rem)";

@@ -27,12 +27,14 @@ class FieldsetComponent extends Component
 	 */
 	public function createElement()
 	{
-		$fieldset = (new CMSElement('fieldset'))->addStyleClass('fieldset');
+		$fieldset = (new CMSElement('section'))->addStyleClass('fieldset');
 
-		$label = (new HtmlElement('legend'))->addStyleClass('fieldset-label')->asChildOf($fieldset);
+		// it is not possible to use 'legend' here, because 'legend' cannot be a flex element (in FF 80).
+		// A headline should semanically correct.
+		$label = (new HtmlElement('h3'))->addStyleClass('fieldset-label')->asChildOf($fieldset);
 
 		if   ( $this->label )
-			$label->content( Value::createExpression(ValueExpression::TYPE_MESSAGE,$this->label) );
+			$label->content( $this->label );
 
 		$value = (new HtmlElement('div'))->addStyleClass('fieldset-value')->asChildOf($fieldset);
 

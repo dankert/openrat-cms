@@ -1,0 +1,49 @@
+
+@small: ~"only screen and (max-width: 65rem)";
+
+.or {
+
+    &-fieldset {
+
+        border: 0;
+        display: flex;
+        flex-direction: row;
+        align-items: start;
+
+        margin-top: 1em;
+
+        &-label {
+            flex: 1;
+            font-size: 1em;
+            text-align: right;
+            padding-right: 1em;
+        }
+
+        &-value {
+            flex: 3;
+
+            > * {
+                // display direct children as blocks
+                display: block;
+                padding: 0.8em;
+            }
+        }
+
+        @media @small {
+            flex-direction: column;
+
+            &-label {
+                flex:1;
+                width: 100%;
+                text-align: left;
+            }
+            &-value {
+                flex:1;
+                width: 100%;
+            }
+
+        }
+
+    }
+
+}

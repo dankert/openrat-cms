@@ -96,12 +96,17 @@ while true; do
   fi;
 
   echo "Enabling the watcher ..."
+  language="../modules/language/language.yml"
+  components="../modules/template_engine/components/html"
+  style="../modules/cms/ui/themes/$theme/style"
+  script="../modules/cms/ui/themes/$theme/script"
+  templates="../modules/cms/ui/themes/$theme/html/views"
   case $type in
-        lang ) watchfiles="../modules/language/language.yml";;
-        xsd  ) watchfiles="../modules/template_engine/components/html";;
-        css  ) watchfiles="../modules/cms/ui/themes/$theme/style/";;
-        js   ) watchfiles="../modules/cms/ui/themes/$theme/script/";;
-        tpl  ) watchfiles="../modules/cms/ui/themes/$theme/html/views/";;
+        lang ) watchfiles="$language";;
+        xsd  ) watchfiles="$components";;
+        css  ) watchfiles="$style";;
+        js   ) watchfiles="$script";;
+        tpl  ) watchfiles="$templates";;
         * ) echo "unknown type";exit;;
   esac
   inotifywait --event modify -r $watchfiles &

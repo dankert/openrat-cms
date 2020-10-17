@@ -2,95 +2,49 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form>
 		<group title="${message:NAME}">
-			<part class="line">
-				<part class="label">
-					<label for="name" key="PROJECT_NAME"></label>
-				</part>
-				<part class="value">
-					<input name="name" class="name" maxlength="128"></input>
-				</part>
-			</part>
-			<part class="line">
-				<part class="label">
-					<label for="url" key="PROJECT_HOSTNAME"></label>
-				</part>
-				<part class="value">
-					<input name="url" maxlength="255"></input>
-				</part>
-			</part>
+			<fieldset label="${message:PROJECT_NAME}">
+				<input name="name" class="name" maxlength="128"></input>
+			</fieldset>
+			<fieldset label="${message:PROJECT_HOSTNAME}">
+				<input name="url" maxlength="255"/>
+			</fieldset>
 		</group>
+
 		<group title="${message:PUBLISH}">
-			<part class="line">
-				<part class="label">
-					<label for="target_dir" key="PROJECT_TARGET_DIR"></label>
-				</part>
-				<part class="value">
-					<input name="target_dir" class="filename" maxlength="255"></input>
-				</part>
-			</part>
+			<fieldset label="${message:PROJECT_TARGET_DIR}">
+				<input name="target_dir" class="filename" maxlength="255"></input>
+			</fieldset>
 
 			<if true="${config:publish/project/override_system_command}">
-				<part class="line">
-					<part class="label">
-						<label for="cmd_after_publish" key="PROJECT_CMD_AFTER_PUBLISH"></label>
-					</part>
-					<part class="value">
-						<input name="cmd_after_publish" class="filename"
-							maxlength="255"></input>
-
-					</part>
-				</part>
+				<fieldset label="${message:PROJECT_CMD_AFTER_PUBLISH}">
+					<input name="cmd_after_publish" class="filename" maxlength="255"/>
+				</fieldset>
 			</if>
-			<part class="line">
-				<part class="label"></part>
-				<part class="value">
-					<checkbox name="publishFileExtension"></checkbox>
-					<label for="publishFileExtension" key="PROJECT_publish_File_Extension"></label>
-				</part>
-			</part>
-			<part class="line">
-				<part class="label"></part>
-				<part class="value">
-					<checkbox name="publishPageExtension"></checkbox>
-					<label for="publishPageExtension" key="PROJECT_publish_page_Extension"></label>
-				</part>
-			</part>
 
-			<radio name="linksAbsolute" value="0" label="${message:LINKS_RELATIVE}" />
-			<radio name="linksAbsolute" value="1" label="${message:LINKS_ABSOLUTE}" />
+			<fieldset label="${message:file_extension}">
+				<checkbox name="publishFileExtension" label="${message:PROJECT_publish_File_Extension}"/>
+				<checkbox name="publishPageExtension" label="${message:PROJECT_publish_page_Extension}" />
+			</fieldset>
+
+			<fieldset label="${message:link_url}">
+				<radio name="linksAbsolute" value="0" label="${message:LINKS_RELATIVE}" />
+				<radio name="linksAbsolute" value="1" label="${message:LINKS_ABSOLUTE}" />
+			</fieldset>
 
 		</group>
-		<if value="${config:publish/ftp/enable}">
 
-			<group title="${message:project_FTP}">
-				<part class="line">
-					<part class="label">
-						<label for="ftp_url" key="PROJECT_FTP_URL"/>
-					</part>
-					<part class="value">
-						<input name="ftp_url" class="filename"/>
-						<newline/>
-						<checkbox name="ftp_passive"/>
-						<label for="ftp_passive" key="PROJECT_FTP_PASSIVE"/>
-					</part>
-				</part>
-			</group>
-		</if>
+		<group title="${message:project_FTP}">
+			<fieldset label="${message:PROJECT_FTP_URL}">
+				<input name="ftp_url" class="filename"/>
+				<checkbox name="ftp_passive" label="${message:PROJECT_FTP_PASSIVE}" />
+			</fieldset>
+		</group>
+
 		<group title="${message:options}">
-			<part class="line">
-				<part class="label"></part>
-				<part class="value">
-					<checkbox name="content_negotiation"></checkbox>
-					<label for="content_negotiation" key="PROJECT_CONTENT_NEGOTIATION"></label>
-				</part>
-			</part>
-			<part class="line">
-				<part class="label"></part>
-				<part class="value">
-					<checkbox name="cut_index"></checkbox>
-					<label for="cut_index" key="PROJECT_CUT_INDEX"></label>
-				</part>
-			</part>
+			<fieldset label="${message:OPTIONS}">
+				<checkbox name="content_negotiation" label="${message:PROJECT_CONTENT_NEGOTIATION}"/>
+				<checkbox name="cut_index" label="${message:PROJECT_CUT_INDEX}"/>
+			</fieldset>
 		</group>
 	</form>
 </output>
