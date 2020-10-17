@@ -1,47 +1,33 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-    <form readonly="true" cancel="false">
+	<group title="${message:group} ${name}">
 
-        <text class="headline" value="${name}" />
+        <fieldset label="${message:NAME}">
+              <text value="${name}"/>
 
-        <part class="line">
-            <part class="label">
-                <text value="${message:NAME}"></text>
-            </part>
-            <part class="value,clickable">
-                <text value="${name}"/>
-                <link class="btn" action="group" subaction="prop" type="edit">
-                    <text value="${message:edit}"/>
-                </link>
-            </part>
-        </part>
+			<part class="clickable">
+				  <link class="btn" action="group" subaction="prop" type="edit">
+						<text value="${message:edit}"/>
+				  </link>
+			</part>
+        </fieldset>
 
-        <part class="line">
-            <part class="label">
-                <text value="${message:USERS}"></text>
-            </part>
-            <part class="value">
+        <fieldset label="${message:USERS}">
+			<list list="${users}" key="id" value="name">
+				<part class="clickable">
+					<link type="open" action="user" id="${id}">
+						<text value="${name}"/>
+					</link>
+				</part>
+			</list>
 
-                <list list="${users}" key="id" value="name">
-                    <part class="clickable">
-                        <link type="open" action="user" id="${id}">
-                            <text value="${name}"/>
-                        </link>
-                        <newline/>
-                    </part>
-                </list>
-            </part>
-        </part>
+			<part class="clickable">
+				<link class="btn" action="group" subaction="memberships" type="edit">
+					<text value="${message:edit}"/>
+				</link>
+			</part>
 
-        <part class="line">
-            <part class="label">
-            </part>
-            <part class="value,clickable">
+        </fieldset>
 
-                <link class="btn" action="group" subaction="memberships" type="edit">
-                    <text value="${message:edit}"/>
-                </link>
-            </part>
-        </part>
-    </form>
+	</group>
 </output>
