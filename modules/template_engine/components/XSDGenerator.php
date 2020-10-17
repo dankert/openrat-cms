@@ -47,10 +47,8 @@ foreach ($folder as $componentName) {
 
     // Allowed Child-Elements (all)
     fwrite($xsdFile, '<xsd:choice maxOccurs="unbounded" minOccurs="0">');
-    foreach ($folder as $f2) {
-        $filename2 = __DIR__ . '/html/' . $f2 . '/' . ucfirst($f2) . '.class.php';
-        if (is_file($filename2))
-            fwrite($xsdFile, '<xsd:element ref="' . $f2 . '" maxOccurs="unbounded" minOccurs="0" />');
+    foreach ($folder as $cName) {
+		fwrite($xsdFile, '<xsd:element ref="' . $cName . '" maxOccurs="unbounded" minOccurs="0" />');
     }
     fwrite($xsdFile, '</xsd:choice>');
 
