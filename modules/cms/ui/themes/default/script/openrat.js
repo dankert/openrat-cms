@@ -3017,6 +3017,15 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 } );
 
 
+/* Include script: column */
+// View loaded...
+Openrat.Workbench.afterViewLoadedHandler.add( function(element ) {
+
+
+    // Clickable Columns.
+    // done by orLinkify-Plugin in link.js
+
+});
 /* Include script: editor */
 Openrat.Workbench.afterViewLoadedHandler.add( function(element ) {
 
@@ -3269,6 +3278,21 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(element ) {
 
 
 });
+/* Include script: group */
+/**
+ * open/close handler for groups.
+ */
+Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
+
+    Openrat.Workbench.registerOpenClose( $(element).find('.or-group.or-toggle-open-close') );
+});
+
+/* Include script: image */
+/*
+$(document).on('orViewLoaded',function(event, data) {
+
+});
+*/
 /* Include script: link */
 Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
 
@@ -3396,30 +3420,6 @@ Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
     }
 
 });
-/* Include script: column */
-// View loaded...
-Openrat.Workbench.afterViewLoadedHandler.add( function(element ) {
-
-
-    // Clickable Columns.
-    // done by orLinkify-Plugin in link.js
-
-});
-/* Include script: image */
-/*
-$(document).on('orViewLoaded',function(event, data) {
-
-});
-*/
-/* Include script: group */
-/**
- * open/close handler for groups.
- */
-Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
-
-    Openrat.Workbench.registerOpenClose( $(element).find('.or-group.or-toggle-open-close') );
-});
-
 /* Include script: upload */
 Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
 

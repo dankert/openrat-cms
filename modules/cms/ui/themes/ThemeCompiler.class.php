@@ -41,7 +41,7 @@ class ThemeCompiler
         // Komponentenbasiertes CSS
         foreach (TemplateEngineInfo::getComponentList() as $c)
         {
-            $componentCssFile = 'template_engine/components/html/' . $c . '/' . $c;
+            $componentCssFile = 'template_engine/components/html/component_' . $c . '/' . $c;
             if (is_file( __DIR__.'/../../../'. $componentCssFile . '.less'))
                 $css[] = __DIR__.'/../../../'.$componentCssFile;
         }
@@ -274,7 +274,7 @@ class ThemeCompiler
 		// Komponentenbasiertes Javascript
 		foreach ( TemplateEngineInfo::getComponentList() as $c)
 		{
-			$componentJsFile =  __DIR__.'/../../../template_engine/components/html/' . $c . '/' . $c;
+			$componentJsFile =  __DIR__.'/../../../template_engine/components/html/component_' . $c . '/' . $c;
 			if (is_file($componentJsFile . '.js'))
 				$js[] = $componentJsFile;
 		}
