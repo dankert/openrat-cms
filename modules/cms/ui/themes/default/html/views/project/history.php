@@ -60,7 +60,7 @@
               </span>
             </td>
             <td><?php echo O::escapeHtml('') ?>
-              <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($lastchange_date); ?>
+              <?php include_once( 'modules/template_engine/components/html/component_date/component-date.php'); { component_date($lastchange_date); ?>
                <?php } ?>
             </td>
           </tr>

@@ -82,7 +82,7 @@
                    <?php } ?>
                 </td>
                 <td><?php echo O::escapeHtml('') ?>
-                  <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($date); ?>
+                  <?php include_once( 'modules/template_engine/components/html/component_date/component-date.php'); { component_date($date); ?>
                    <?php } ?>
                 </td>
                 <td><?php echo O::escapeHtml('') ?>

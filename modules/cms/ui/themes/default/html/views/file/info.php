@@ -124,7 +124,7 @@
                 </span>
                 <br /><?php echo O::escapeHtml('') ?>
                 <img src="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/images/icon/el_date.png') ?>" /><?php echo O::escapeHtml('') ?>
-                <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($cache_filemtime); ?>
+                <?php include_once( 'modules/template_engine/components/html/component_date/component-date.php'); { component_date($cache_filemtime); ?>
                  <?php } ?>
               </div>
             </div>
@@ -182,12 +182,12 @@
             <div class="<?php echo O::escapeHtml('or-value') ?>"><?php echo O::escapeHtml('') ?>
               <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-el_date') ?>"><?php echo O::escapeHtml('') ?>
               </i>
-              <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($create_date); ?>
+              <?php include_once( 'modules/template_engine/components/html/component_date/component-date.php'); { component_date($create_date); ?>
                <?php } ?>
               <br /><?php echo O::escapeHtml('') ?>
               <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-user') ?>"><?php echo O::escapeHtml('') ?>
               </i>
-              <?php include_once( 'modules/template_engine/components/html/user/component-user.php'); { component_user($create_user); ?>
+              <?php include_once( 'modules/template_engine/components/html/component_user/component-user.php'); { component_user($create_user); ?>
                <?php } ?>
             </div>
           </div>
@@ -199,12 +199,12 @@
             <div class="<?php echo O::escapeHtml('or-value') ?>"><?php echo O::escapeHtml('') ?>
               <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-el_date') ?>"><?php echo O::escapeHtml('') ?>
               </i>
-              <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($lastchange_date); ?>
+              <?php include_once( 'modules/template_engine/components/html/component_date/component-date.php'); { component_date($lastchange_date); ?>
                <?php } ?>
               <br /><?php echo O::escapeHtml('') ?>
               <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-user') ?>"><?php echo O::escapeHtml('') ?>
               </i>
-              <?php include_once( 'modules/template_engine/components/html/user/component-user.php'); { component_user($lastchange_user); ?>
+              <?php include_once( 'modules/template_engine/components/html/component_user/component-user.php'); { component_user($lastchange_user); ?>
                <?php } ?>
             </div>
           </div>
@@ -218,12 +218,12 @@
             <div class="<?php echo O::escapeHtml('or-value') ?>"><?php echo O::escapeHtml('') ?>
               <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-el_date') ?>"><?php echo O::escapeHtml('') ?>
               </i>
-              <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($published_date); ?>
+              <?php include_once( 'modules/template_engine/components/html/component_date/component-date.php'); { component_date($published_date); ?>
                <?php } ?>
               <br /><?php echo O::escapeHtml('') ?>
               <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-user') ?>"><?php echo O::escapeHtml('') ?>
               </i>
-              <?php include_once( 'modules/template_engine/components/html/user/component-user.php'); { component_user($published_user); ?>
+              <?php include_once( 'modules/template_engine/components/html/component_user/component-user.php'); { component_user($published_user); ?>
                <?php } ?>
             </div>
           </div>

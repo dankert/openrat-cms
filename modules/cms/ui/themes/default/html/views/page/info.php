@@ -194,11 +194,11 @@
               </div>
               <div class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
                 <img src="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/images/icon/el_date.png') ?>" /><?php echo O::escapeHtml('') ?>
-                <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($create_date); ?>
+                <?php include_once( 'modules/template_engine/components/html/component_date/component-date.php'); { component_date($create_date); ?>
                  <?php } ?>
                 <br /><?php echo O::escapeHtml('') ?>
                 <img src="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/images/icon/user.png') ?>" /><?php echo O::escapeHtml('') ?>
-                <?php include_once( 'modules/template_engine/components/html/user/component-user.php'); { component_user($create_user); ?>
+                <?php include_once( 'modules/template_engine/components/html/component_user/component-user.php'); { component_user($create_user); ?>
                  <?php } ?>
               </div>
             </div>
@@ -211,11 +211,11 @@
               </div>
               <div class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
                 <img src="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/images/icon/el_date.png') ?>" /><?php echo O::escapeHtml('') ?>
-                <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($lastchange_date); ?>
+                <?php include_once( 'modules/template_engine/components/html/component_date/component-date.php'); { component_date($lastchange_date); ?>
                  <?php } ?>
                 <br /><?php echo O::escapeHtml('') ?>
                 <img src="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/images/icon/user.png') ?>" /><?php echo O::escapeHtml('') ?>
-                <?php include_once( 'modules/template_engine/components/html/user/component-user.php'); { component_user($lastchange_user); ?>
+                <?php include_once( 'modules/template_engine/components/html/component_user/component-user.php'); { component_user($lastchange_user); ?>
                  <?php } ?>
               </div>
             </div>
@@ -228,11 +228,11 @@
               </div>
               <div class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
                 <img src="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/images/icon/el_date.png') ?>" /><?php echo O::escapeHtml('') ?>
-                <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($published_date); ?>
+                <?php include_once( 'modules/template_engine/components/html/component_date/component-date.php'); { component_date($published_date); ?>
                  <?php } ?>
                 <br /><?php echo O::escapeHtml('') ?>
                 <img src="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/images/icon/user.png') ?>" /><?php echo O::escapeHtml('') ?>
-                <?php include_once( 'modules/template_engine/components/html/user/component-user.php'); { component_user($published_user); ?>
+                <?php include_once( 'modules/template_engine/components/html/component_user/component-user.php'); { component_user($published_user); ?>
                  <?php } ?>
               </div>
             </div>

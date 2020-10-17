@@ -131,12 +131,12 @@
                       <tr><?php echo O::escapeHtml('') ?>
                         <td><?php echo O::escapeHtml('') ?>
                           <img src="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/images/icon/el_date.png') ?>" /><?php echo O::escapeHtml('') ?>
-                          <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($lastchange_date); ?>
+                          <?php include_once( 'modules/template_engine/components/html/component_date/component-date.php'); { component_date($lastchange_date); ?>
                            <?php } ?>
                         </td>
                         <td><?php echo O::escapeHtml('') ?>
                           <img src="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/images/icon/user.png') ?>" /><?php echo O::escapeHtml('') ?>
-                          <?php include_once( 'modules/template_engine/components/html/user/component-user.php'); { component_user($lastchange_user); ?>
+                          <?php include_once( 'modules/template_engine/components/html/component_user/component-user.php'); { component_user($lastchange_user); ?>
                            <?php } ?>
                         </td>
                       </tr>

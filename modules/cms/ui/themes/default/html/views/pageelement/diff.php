@@ -13,7 +13,7 @@
             </em>
             <span><?php echo O::escapeHtml(' ') ?>
             </span>
-            <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($date_left); ?>
+            <?php include_once( 'modules/template_engine/components/html/component_date/component-date.php'); { component_date($date_left); ?>
              <?php } ?>
           </td>
           <td><?php echo O::escapeHtml('') ?>
@@ -23,7 +23,7 @@
             </em>
             <span><?php echo O::escapeHtml(' ') ?>
             </span>
-            <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($date_right); ?>
+            <?php include_once( 'modules/template_engine/components/html/component_date/component-date.php'); { component_date($date_right); ?>
              <?php } ?>
           </td>
         </tr>

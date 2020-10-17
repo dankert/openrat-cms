@@ -35,7 +35,7 @@
             </span>
           </div>
           <div class="<?php echo O::escapeHtml('or-value') ?>"><?php echo O::escapeHtml('') ?>
-            <?php include_once( 'modules/template_engine/components/html/date/component-date.php'); { component_date($user_login); ?>
+            <?php include_once( 'modules/template_engine/components/html/component_date/component-date.php'); { component_date($user_login); ?>
              <?php } ?>
           </div>
         </div>
