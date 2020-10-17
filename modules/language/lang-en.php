@@ -558,11 +558,49 @@ function language() { return array(
 'MAIL_SUBJECT_PASSWORD_NEW'=>'New password',
 'MAIL_SUBJECT_REGISTER_COMMIT_CODE'=>'Your registration code',
 'MAIL_SUBJECT_USER_MAIL'=>'Your password',
-'MAIL_TEXT_MAIL_CHANGE_CODE'=>'Hello ${name},;;you are receiving this mail, because you want to change your e-mail-adresse.;;Enter the following code to verify your e-mail-adress:;;Code: ${code};;Please copy this number an paste it into the input field.;;if you do not know where this mail comes from, please ignore it.',
-'MAIL_TEXT_PASSWORD_COMMIT_CODE'=>'Hello ${name};;your code for requesting a new password is: ${code};;Please insert this number into the input field.;;If you have not request a new password, please ignore this e-mail. In this case, your password will stay unchanged.;;Thank you.',
-'MAIL_TEXT_PASSWORD_NEW'=>'Hello ${name};;your new password: ${password};;Please note this password at a secure place and delete this mail.;;Thank you.',
-'MAIL_TEXT_REGISTER_COMMIT_CODE'=>'Hello,;;you (or another person) has requested a registration code.;;Your registration code: ${code}.;;Please insert this number into the input field.;;Thank you.',
-'MAIL_TEXT_USER_MAIL'=>'Hello ${name},;;Your account details for login in OpenRat Content Management System are the following.;;Login: ${username};Password: ${password};;Thank you.',
+'MAIL_TEXT_MAIL_CHANGE_CODE'=>'Hello ${name},
+
+you are receiving this mail, because you want to change your e-mail-adresse.
+
+Enter the following code to verify your e-mail-adress:
+
+Code: ${code}
+
+Please copy this number an paste it into the input field.
+
+if you do not know where this mail comes from, please ignore it.',
+'MAIL_TEXT_PASSWORD_COMMIT_CODE'=>'Hello ${name}
+
+your code for requesting a new password is: ${code}
+
+Please insert this number into the input field.
+
+If you have not request a new password, please ignore this e-mail. In this case, your password will stay unchanged.
+
+Thank you.',
+'MAIL_TEXT_PASSWORD_NEW'=>'Hello ${name}
+your new password: ${password}
+
+Please note this password at a secure place and delete this mail.
+
+Thank you.',
+'MAIL_TEXT_REGISTER_COMMIT_CODE'=>'Hello,
+
+you (or another person) has requested a registration code.
+
+Your registration code: ${code}.
+
+Please insert this number into the input field.
+
+Thank you.',
+'MAIL_TEXT_USER_MAIL'=>'Hello ${name},
+
+Your account details for login in OpenRat Content Management System are the following.
+
+Login   : ${username}
+Password: ${password}
+
+Thank you.',
 'MENU_ACLFORM'=>'Add right',
 'MENU_ADD_DESC'=>'Add new',
 'MENU_ADDEL'=>'New element',

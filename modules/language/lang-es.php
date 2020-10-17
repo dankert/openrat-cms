@@ -558,11 +558,50 @@ function language() { return array(
 'MAIL_SUBJECT_PASSWORD_NEW'=>'Nouveau mot de passe',
 'MAIL_SUBJECT_REGISTER_COMMIT_CODE'=>'Votre code d\'enregistrement',
 'MAIL_SUBJECT_USER_MAIL'=>'Votre mot de passe',
-'MAIL_TEXT_MAIL_CHANGE_CODE'=>'Hello ${name},;;you are receiving this mail, because you want to change your e-mail-adresse.;;Enter the following code to verify your e-mail-adress:;;Code: ${code};;Please copy this number an paste it into the input field.;;if you do not know where this mail comes from, please ignore it.',
-'MAIL_TEXT_PASSWORD_COMMIT_CODE'=>'Bonjour ${name},;;votre code pour demander un nouveau mot de passe est : ${code};;Veuillez insérer ce nombre dans le champ d\'entrée.;;Si vous n\'avez pas la demande un nouveau mot de passe, ignorer svp cet E-mail. Dans ce cas-ci, votre mot de passe restera sans changement. ; ; Merci.',
-'MAIL_TEXT_PASSWORD_NEW'=>'Hola ${name};;tu nueva contraseña: ${password};;Observar por favor esta contraseña en un lugar seguro y suprimir este correo.;;Gracias.',
-'MAIL_TEXT_REGISTER_COMMIT_CODE'=>'Hola,;;tú (u otra persona) has solicitado un código del registro.;;Tu código del registro: ${code}.;;Insertar por favor este número en el campo de la entrada.;;Gracias.',
-'MAIL_TEXT_USER_MAIL'=>'Hola ${name};;Tus detalles de la cuenta para la conexión en sistema de gerencia contento de OpenRat son los siguientes.;;Conexión: ${username}; Contraseña: ${password};;Gracias.',
+'MAIL_TEXT_MAIL_CHANGE_CODE'=>'Hello ${name},
+
+you are receiving this mail, because you want to change your e-mail-adresse.
+
+Enter the following code to verify your e-mail-adress:
+
+Code: ${code}
+
+Please copy this number an paste it into the input field.
+
+if you do not know where this mail comes from, please ignore it.',
+'MAIL_TEXT_PASSWORD_COMMIT_CODE'=>'Bonjour ${name},
+
+votre code pour demander un nouveau mot de passe est : ${code}
+
+Veuillez insérer ce nombre dans le champ d\'entrée.
+
+Si vous n\'avez pas la demande un nouveau mot de passe, ignorer svp cet E-mail. Dans ce cas-ci, votre mot de passe restera sans changement.
+
+Merci.',
+'MAIL_TEXT_PASSWORD_NEW'=>'Hola ${name}
+
+tu nueva contraseña: ${password}
+
+Observar por favor esta contraseña en un lugar seguro y suprimir este correo.
+
+Gracias.',
+'MAIL_TEXT_REGISTER_COMMIT_CODE'=>'Hola,
+
+tú (u otra persona) has solicitado un código del registro.
+
+Tu código del registro: ${code}.
+
+Insertar por favor este número en el campo de la entrada.
+
+Gracias.',
+'MAIL_TEXT_USER_MAIL'=>'Hola ${name}
+
+Tus detalles de la cuenta para la conexión en sistema de gerencia contento de OpenRat son los siguientes.
+
+Conexión  : ${username}
+Contraseña: ${password}
+
+Gracias.',
 'MENU_ACLFORM'=>'Add right',
 'MENU_ADD_DESC'=>'Add new',
 'MENU_ADDEL'=>'New element',

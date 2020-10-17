@@ -558,11 +558,50 @@ function language() { return array(
 'MAIL_SUBJECT_PASSWORD_NEW'=>'Новый пароль',
 'MAIL_SUBJECT_REGISTER_COMMIT_CODE'=>'Ваш регистрационный код',
 'MAIL_SUBJECT_USER_MAIL'=>'Пароль',
-'MAIL_TEXT_MAIL_CHANGE_CODE'=>'Hello ${name},;;you are receiving this mail, because you want to change your e-mail-adresse.;;Enter the following code to verify your e-mail-adress:;;Code: ${code};;Please copy this number an paste it into the input field.;;if you do not know where this mail comes from, please ignore it.',
-'MAIL_TEXT_PASSWORD_COMMIT_CODE'=>'название Hello ${name};;Ваш код для отправки запроса на получение нового пароля : ${code};;Введите это число в поле ввода.;;Если Вы еще не запрашивал новый пароль, пожалуйста, игнорируйте эту электронную почту. В этом случае Ваш пароль будет оставаться неизменным.;;Спасибо.',
-'MAIL_TEXT_PASSWORD_NEW'=>'Привет именем ${name};;Ваш новый пароль : ${password};;Обратите внимание, этот пароль на безопасное место и удалить это сообщение.;;Спасибо.',
-'MAIL_TEXT_REGISTER_COMMIT_CODE'=>'Здравствуйте,;;Ваше имя (или другое лицо) обратилось регистрационного кода.;;Ваш регистрационный код : ${code}.;;Введите это число в поле ввода.;;Спасибо.',
-'MAIL_TEXT_USER_MAIL'=>'Здравствуйте ${name},;;Ваши данные учетной записи для входа в OpenRat Система управления контентом являются следующие.;;Логин: ${username}; Пароль: ${password};;Спасибо.',
+'MAIL_TEXT_MAIL_CHANGE_CODE'=>'Hello ${name},
+
+you are receiving this mail, because you want to change your e-mail-adresse.
+
+Enter the following code to verify your e-mail-adress:
+
+Code: ${code}
+
+Please copy this number an paste it into the input field.
+
+if you do not know where this mail comes from, please ignore it.',
+'MAIL_TEXT_PASSWORD_COMMIT_CODE'=>'название Hello ${name}
+
+Ваш код для отправки запроса на получение нового пароля : ${code}
+
+Введите это число в поле ввода.
+
+Если Вы еще не запрашивал новый пароль, пожалуйста, игнорируйте эту электронную почту. В этом случае Ваш пароль будет оставаться неизменным.
+
+Спасибо.',
+'MAIL_TEXT_PASSWORD_NEW'=>'Привет именем ${name}
+
+Ваш новый пароль : ${password}
+
+Обратите внимание, этот пароль на безопасное место и удалить это сообщение.
+
+Спасибо.',
+'MAIL_TEXT_REGISTER_COMMIT_CODE'=>'Здравствуйте,
+
+Ваше имя (или другое лицо) обратилось регистрационного кода.
+
+Ваш регистрационный код : ${code}.
+
+Введите это число в поле ввода.
+
+Спасибо.',
+'MAIL_TEXT_USER_MAIL'=>'Здравствуйте ${name},
+
+Ваши данные учетной записи для входа в OpenRat Система управления контентом являются следующие.
+
+Логин : ${username}
+Пароль: ${password}
+
+Спасибо.',
 'MENU_ACLFORM'=>'Add right',
 'MENU_ADD_DESC'=>'Add new',
 'MENU_ADDEL'=>'New element',

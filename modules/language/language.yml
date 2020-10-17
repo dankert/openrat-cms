@@ -2784,10 +2784,10 @@ LOGO_LOGIN:
   de: Anmeldung
   en: Anmeldung
 LOGO_LOGIN_TEXT:
-  de: 'Zur Anmeldung benötigen Sie Benutzernamen und Kennwort. Beachten Sie bei der Eingabe Groß- und Kleinschreibung.'
+  de: Zur Anmeldung benötigen Sie Benutzernamen und Kennwort. Beachten Sie bei der Eingabe Groß- und Kleinschreibung.
   en: To login, you need an user account. Please check for case sensitives.
-  es: "À l'ouverture, vous avez besoin d'un compte d'utilisateur. Vérifier svp les sensitives de cas."
-  fr: "À l'ouverture, vous avez besoin d'un compte d'utilisateur. Vérifier svp les sensitives de cas."
+  es: À l'ouverture, vous avez besoin d'un compte d'utilisateur. Vérifier svp les sensitives de cas.
+  fr: À l'ouverture, vous avez besoin d'un compte d'utilisateur. Vérifier svp les sensitives de cas.
   it: A la conexión, necesitas una cuenta del usuario. Comprobar por favor para saber si hay sensitives del caso.
   ru: Anmeldung Чтобы войти, Вам нужно учетную запись пользователя. Пожалуйста, проверьте для самоклеящихся дело.
 LOGO_PASSWORD:
@@ -2865,36 +2865,259 @@ MAIL_SUBJECT_USER_MAIL:
   it: tu contraseña
   ru: Пароль
 MAIL_TEXT_MAIL_CHANGE_CODE:
-  de: 'Guten Tag ${name},;;Sie erhalten diese E-Mail, weil Sie eine Änderung Ihrer E-Mail-Adresse wünschen.;;Mit dem nachfolgenden Code können Sie Ihre E-Mail-Adresse ändern:;;Code: ${code};;Bitte kopieren Sie diese Zahl und fügen Sie diese in das entsprechende Eingabefeld ein.;;Wenn Sie nicht wissen, wieso Sie diese E-Mail erhalten haben, ignorieren Sie diese bitte.'
-  en: 'Hello ${name},;;you are receiving this mail, because you want to change your e-mail-adresse.;;Enter the following code to verify your e-mail-adress:;;Code: ${code};;Please copy this number an paste it into the input field.;;if you do not know where this mail comes from, please ignore it.'
+  de: |
+    Guten Tag ${name},
+
+    Sie erhalten diese E-Mail, weil Sie eine Änderung Ihrer E-Mail-Adresse wünschen.
+
+    Mit dem nachfolgenden Code können Sie Ihre E-Mail-Adresse ändern:
+
+    Code: ${code}
+
+    Bitte kopieren Sie diese Zahl und fügen Sie diese in das entsprechende Eingabefeld ein.
+
+    Wenn Sie nicht wissen, wieso Sie diese E-Mail erhalten haben, ignorieren Sie diese bitte.
+  en: |
+    Hello ${name},
+
+    you are receiving this mail, because you want to change your e-mail-adresse.
+
+    Enter the following code to verify your e-mail-adress:
+
+    Code: ${code}
+
+    Please copy this number an paste it into the input field.
+
+    if you do not know where this mail comes from, please ignore it.
 MAIL_TEXT_PASSWORD_COMMIT_CODE:
-  de: 'Guten Tag ${name},;;Ihr Code zum Anfordern eines neuen Kennwortes lautet: ${code}.;;Bitte kopieren Sie diese Zahl und fügen Sie diese in das entsprechende Eingabefeld ein;;Sollten Sie kein neues Kennwort angefordert haben, so ignorieren Sie bitte diese E-Mail.;;Vielen Dank.'
-  en: 'Hello ${name};;your code for requesting a new password is: ${code};;Please insert this number into the input field.;;If you have not request a new password, please ignore this e-mail. In this case, your password will stay unchanged.;;Thank you.'
-  es: "Bonjour ${name},;;votre code pour demander un nouveau mot de passe est : ${code};;Veuillez insérer ce nombre dans le champ d'entrée.;;Si vous n'avez pas la demande un nouveau mot de passe, ignorer svp cet E-mail. Dans ce cas-ci, votre mot de passe restera sans changement. ; ; Merci."
-  fr: "Bonjour ${name};;votre code pour demander un nouveau mot de passe est : ${code} ; ; Veuillez insérer ce nombre dans le champ d'entrée. ; ; Si vous n'avez pas la demande un nouveau mot de passe, ignorer svp cet E-mail. Dans ce cas-ci, votre mot de passe restera sans changement. ; ; Merci."
-  it: 'hola ${name}; ; tu código para solicitar una nueva contraseña es: ${code}; ; Insertar por favor este número en el campo de la entrada. ; ; Si no tienes petición una nueva contraseña, no hacer caso por favor de este E-mail. En este caso, tu contraseña permanecerá sin cambiar. ; ; Gracias.'
-  ru: 'название Hello ${name};;Ваш код для отправки запроса на получение нового пароля : ${code};;Введите это число в поле ввода.;;Если Вы еще не запрашивал новый пароль, пожалуйста, игнорируйте эту электронную почту. В этом случае Ваш пароль будет оставаться неизменным.;;Спасибо.'
+  de: |
+    Guten Tag ${name},
+
+    Ihr Code zum Anfordern eines neuen Kennwortes lautet: ${code}.
+
+    Bitte kopieren Sie diese Zahl und fügen Sie diese in das entsprechende Eingabefeld ein
+
+    Sollten Sie kein neues Kennwort angefordert haben, so ignorieren Sie bitte diese E-Mail.
+
+    Vielen Dank.
+  en: |
+    Hello ${name}
+
+    your code for requesting a new password is: ${code}
+
+    Please insert this number into the input field.
+
+    If you have not request a new password, please ignore this e-mail. In this case, your password will stay unchanged.
+
+    Thank you.
+  es: |
+    Bonjour ${name},
+
+    votre code pour demander un nouveau mot de passe est : ${code}
+
+    Veuillez insérer ce nombre dans le champ d'entrée.
+
+    Si vous n'avez pas la demande un nouveau mot de passe, ignorer svp cet E-mail. Dans ce cas-ci, votre mot de passe restera sans changement.
+ 
+    Merci.
+  fr: |
+    Bonjour ${name}
+
+    votre code pour demander un nouveau mot de passe est : ${code}
+ 
+    Veuillez insérer ce nombre dans le champ d'entrée.
+ 
+    Si vous n'avez pas la demande un nouveau mot de passe, ignorer svp cet E-mail. Dans ce cas-ci, votre mot de passe restera sans changement.
+ 
+    Merci.
+  it: |
+    Hola ${name}
+ 
+    tu código para solicitar una nueva contraseña es: ${code}
+ 
+    Insertar por favor este número en el campo de la entrada.
+ 
+    Si no tienes petición una nueva contraseña, no hacer caso por favor de este E-mail. En este caso, tu contraseña permanecerá sin cambiar.
+ 
+    Gracias.'
+  ru: |
+    название Hello ${name}
+
+    Ваш код для отправки запроса на получение нового пароля : ${code}
+
+    Введите это число в поле ввода.
+
+    Если Вы еще не запрашивал новый пароль, пожалуйста, игнорируйте эту электронную почту. В этом случае Ваш пароль будет оставаться неизменным.
+
+    Спасибо.
 MAIL_TEXT_PASSWORD_NEW:
-  de: 'Guten Tag ${name},;;Ihr neues Kennwort lautet: ${password};;Bitte notieren Sie sich dieses gut und löschen Sie anschließend diese E-Mail.;;Vielen Dank.'
-  en: 'Hello ${name};;your new password: ${password};;Please note this password at a secure place and delete this mail.;;Thank you.'
-  es: 'Hola ${name};;tu nueva contraseña: ${password};;Observar por favor esta contraseña en un lugar seguro y suprimir este correo.;;Gracias.'
-  fr: 'Bonjour ${name};;votre nouveau mot de passe : ${password};;Veuillez noter ce mot de passe à un endroit bloqué et supprimer ce courrier.;; Merci.'
-  it: 'Hola ${name}; ; tu nueva contraseña: ${password}; ; Observar por favor esta contraseña en un lugar seguro y suprimir este correo. ; ; Gracias.'
-  ru: 'Привет именем ${name};;Ваш новый пароль : ${password};;Обратите внимание, этот пароль на безопасное место и удалить это сообщение.;;Спасибо.'
+  de: |
+    Guten Tag ${name},
+
+    Ihr neues Kennwort lautet: ${password}
+
+    Bitte notieren Sie sich dieses gut und löschen Sie anschließend diese E-Mail.
+
+    Vielen Dank.
+  en: |
+    Hello ${name}
+    your new password: ${password}
+
+    Please note this password at a secure place and delete this mail.
+
+    Thank you.
+  es: |
+    Hola ${name}
+
+    tu nueva contraseña: ${password}
+
+    Observar por favor esta contraseña en un lugar seguro y suprimir este correo.
+
+    Gracias.
+  fr: |
+    Bonjour ${name}
+
+    votre nouveau mot de passe : ${password}
+
+    Veuillez noter ce mot de passe à un endroit bloqué et supprimer ce courrier.
+
+    Merci.
+  it: |
+    Hola ${name}
+ 
+    tu nueva contraseña: ${password}
+ 
+    Observar por favor esta contraseña en un lugar seguro y suprimir este correo.
+ 
+    Gracias.
+  ru: |
+    Привет именем ${name}
+
+    Ваш новый пароль : ${password}
+
+    Обратите внимание, этот пароль на безопасное место и удалить это сообщение.
+
+    Спасибо.
 MAIL_TEXT_REGISTER_COMMIT_CODE:
-  de: 'Guten Tag,;;Sie oder jemand anderes möchte sich für die Nutzung des OpenRat-CMS registrieren, hiermit erhalten Sie den notwendigen Registrierungscode.;;Ihr Registrierungs-Code: ${code};;Bitte kopieren Sie diese Zahl und fügen Sie diese in das entsprechende Eingabefeld ein.;;Falls Sie diese Registrierung nicht durchgeführt haben, so ignorieren Sie bitte diese E-Mail.;;Vielen Dank für Ihr Interesse.'
-  en: 'Hello,;;you (or another person) has requested a registration code.;;Your registration code: ${code}.;;Please insert this number into the input field.;;Thank you.'
-  es: 'Hola,;;tú (u otra persona) has solicitado un código del registro.;;Tu código del registro: ${code}.;;Insertar por favor este número en el campo de la entrada.;;Gracias.'
-  fr: "Bonjour,;; toi (ou une personne différente) a demandé un code d'enregistrement. ; ; Votre code d'enregistrement : ${code}. ; ; Veuillez insérer ce nombre dans le champ d'entrée. ; ; Merci."
-  it: 'Hola,;; tú (u otra persona) has solicitado un código del registro. ; ; Tu código del registro: ${code}. ; ; Insertar por favor este número en el campo de la entrada. ; ; Gracias.'
-  ru: 'Здравствуйте,;;Ваше имя (или другое лицо) обратилось регистрационного кода.;;Ваш регистрационный код : ${code}.;;Введите это число в поле ввода.;;Спасибо.'
+  de: |
+    Guten Tag,
+
+    Sie oder jemand anderes möchte sich für die Nutzung des OpenRat-CMS registrieren, hiermit erhalten Sie den notwendigen Registrierungscode.
+
+    Ihr Registrierungs-Code: ${code}
+
+    Bitte kopieren Sie diese Zahl und fügen Sie diese in das entsprechende Eingabefeld ein.
+
+    Falls Sie diese Registrierung nicht durchgeführt haben, so ignorieren Sie bitte diese E-Mail.
+
+    Vielen Dank für Ihr Interesse.
+  en: |
+    Hello,
+
+    you (or another person) has requested a registration code.
+
+    Your registration code: ${code}.
+
+    Please insert this number into the input field.
+
+    Thank you.
+  es: |
+    Hola,
+
+    tú (u otra persona) has solicitado un código del registro.
+
+    Tu código del registro: ${code}.
+
+    Insertar por favor este número en el campo de la entrada.
+
+    Gracias.
+  fr: |
+    Bonjour,
+
+    toi (ou une personne différente) a demandé un code d'enregistrement.
+ 
+    Votre code d'enregistrement : ${code}.
+ 
+    Veuillez insérer ce nombre dans le champ d'entrée.
+ 
+    Merci.
+  it: |
+    Hola,
+
+    tú (u otra persona) has solicitado un código del registro.
+ 
+    Tu código del registro: ${code}.
+ 
+    Insertar por favor este número en el campo de la entrada.
+ 
+    Gracias.
+  ru: |
+    Здравствуйте,
+
+    Ваше имя (или другое лицо) обратилось регистрационного кода.
+
+    Ваш регистрационный код : ${code}.
+
+    Введите это число в поле ввода.
+
+    Спасибо.
 MAIL_TEXT_USER_MAIL:
-  de: 'Guten Tag ${name},;;Ihre Zugangsdaten lauten wie folgt:;;Login: ${username};Kennwort: ${password};;Notieren Sie sich das Kennwort gut und löschen Sie anschließend diese E-Mail.;;Vielen Dank.'
-  en: 'Hello ${name},;;Your account details for login in OpenRat Content Management System are the following.;;Login: ${username};Password: ${password};;Thank you.'
-  es: 'Hola ${name};;Tus detalles de la cuenta para la conexión en sistema de gerencia contento de OpenRat son los siguientes.;;Conexión: ${username}; Contraseña: ${password};;Gracias.'
-  fr: "Bonjour ${name} ;; Vos détails de compte pour l'ouverture dans le système de gestion content d'OpenRat sont les suivants. ; ; Ouverture : ${username} ; Mot de passe : ${password} ; ; Merci."
-  it: 'Hola ${name}; ; Tus detalles de la cuenta para la conexión en sistema de gerencia contento de OpenRat son los siguientes. ; ; Conexión: ${username}; Contraseña: ${password}; ; Gracias.'
-  ru: 'Здравствуйте ${name},;;Ваши данные учетной записи для входа в OpenRat Система управления контентом являются следующие.;;Логин: ${username}; Пароль: ${password};;Спасибо.'
+  de: |
+    Guten Tag ${name},
+
+    Ihre Zugangsdaten lauten wie folgt:
+
+    Login   : ${username}
+    Kennwort: ${password}
+
+    Notieren Sie sich das Kennwort gut und löschen Sie anschließend diese E-Mail.
+
+    Vielen Dank.
+  en: |
+    Hello ${name},
+
+    Your account details for login in OpenRat Content Management System are the following.
+
+    Login   : ${username}
+    Password: ${password}
+
+    Thank you.
+  es: |
+    Hola ${name}
+
+    Tus detalles de la cuenta para la conexión en sistema de gerencia contento de OpenRat son los siguientes.
+
+    Conexión  : ${username}
+    Contraseña: ${password}
+
+    Gracias.
+  fr: |
+    Bonjour ${name}
+
+    Vos détails de compte pour l'ouverture dans le système de gestion content d'OpenRat sont les suivants.
+ 
+    Ouverture : ${username}
+    Mot de passe : ${password}
+ 
+    Merci.
+  it: |
+    Hola ${name}
+ 
+    Tus detalles de la cuenta para la conexión en sistema de gerencia contento de OpenRat son los siguientes.
+ 
+    Conexión  : ${username}
+    Contraseña: ${password}
+ 
+    Gracias.
+  ru: |
+    Здравствуйте ${name},
+
+    Ваши данные учетной записи для входа в OpenRat Система управления контентом являются следующие.
+
+    Логин : ${username}
+    Пароль: ${password}
+
+    Спасибо.
 MENU_ACLFORM:
   de: Hinzufügen
   en: Add right
