@@ -49,9 +49,15 @@ shift $((OPTIND-1))
 
 if [ -z "${type}" ]; then
   echo "Select a type"
-  select type in "tpl" "xsd" "css" "js" "lang"; do
+  select type in "tpl" "xsd" "css" "js" "lang" "all"; do
     break;
   done
+fi
+
+if [ "${type}" == "all" ]; then
+  types=(tpl xsd css js lang)
+else
+  types=($type)
 fi
 
 function update {
@@ -82,37 +88,55 @@ function make_writable {
   esac
 }
 
-# Kill child processes on CTRL+C
-trap 'echo "Terminating child processes"; pkill -P $$; exit' SIGINT SIGTERM
+
+function get_file_to_watch {
+  type=$1
+  theme=$2
+  case $type in
+        lang )
+          watchfiles+=' ../modules/language/';;
+        xsd  )
+          watchfiles+=' ../modules/template_engine/components/html';;
+        css  )
+          watchfiles+=" ../modules/cms/ui/themes/$theme/style";;
+        js   )
+          watchfiles+=" ../modules/cms/ui/themes/$theme/script";;
+        tpl  )
+          watchfiles+=" ../modules/template_engine/components/html ../modules/cms/ui/themes/$theme/html/views";;
+
+        * ) echo "unknown type";exit;;
+  esac
+}
+
+
+for type in ${types[*]}; do
+  make_writable $type $theme
+done
 
 while true; do
-  # Calling compiler first
-  make_writable $type $theme
-  update $url $type
+
+  # Calling update first
+  for type in ${types[*]}; do
+    update $url $type
+  done
+
 
   if [ -z "${watch}" ]; then
     echo "not watching, exiting."
     exit 0; # Exit, because watching is not enabled
   fi;
 
-  echo "Enabling the watcher ..."
-  language="../modules/language/language.yml"
-  components="../modules/template_engine/components/html"
-  style="../modules/cms/ui/themes/$theme/style"
-  script="../modules/cms/ui/themes/$theme/script"
-  templates="../modules/cms/ui/themes/$theme/html/views"
-  case $type in
-        lang ) watchfiles="$language";;
-        xsd  ) watchfiles="$components";;
-        css  ) watchfiles="$style";;
-        js   ) watchfiles="$script";;
-        tpl  ) watchfiles="$templates";;
-        * ) echo "unknown type";exit;;
-  esac
+  watchfiles=
+  for type in ${types[*]}; do
+    get_file_to_watch $type $theme
+  done
+
+  echo "Watching for files in $watchfiles"
   inotifywait --event modify -r $watchfiles &
-  echo "Waiting for watcher ..."
+
+  echo "Watching ..."
   wait
-  echo "a file was changed. updating ..."
+  echo "File change detected, updating ..."
 done
 
 
