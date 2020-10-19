@@ -1,5 +1,5 @@
 #!/bin/bash
-#
+# Setting a version number and commit to VCS.
 #
 VERSION=$1
 SCRIPT=`basename "$0"`
@@ -14,6 +14,8 @@ fi
 
 function set_version {
   VERSION=$1
+  DATE=$2
+  DATE_STR=$3
 
   cat << EOF > $OUTFILE
 <?php
@@ -22,17 +24,18 @@ function set_version {
 namespace cms\base;
 class Version {
     const VERSION = '${VERSION}';
+    const DATE    = ${DATE};
 }
 EOF
 }
 
-DATE=`date -R`
+DATE=`date +%s`
 
-set_version $VERSION
+set_version $VERSION $DATE
 
 #git commit -m "New version tag $VERSION" $OUTFILE
 #git tag $VERSION
 
-set_version 'dev-snapshot'
+set_version 'dev-snapshot' 'null'
 
 #git commit -m "Setting development status" $OUTFILE

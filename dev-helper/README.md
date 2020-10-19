@@ -19,6 +19,6 @@ Makes the necessary output files writable, then updates them.
 
 - `-u <url>` the current start url, where the CMS is installed.
 - `-w` do not exit, **watch**es the files for modifications 
-- `-x <type>` where `type` is one of `tpl`,`lang`,`js`,`css`,`xsd`.
+- `-x <type>` where `type` is one of `tpl`,`lang`,`js`,`css`,`xsd` or `all`.
 
 You can to the same while [invoking the update via your browser](./update.php). 

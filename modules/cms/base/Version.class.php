@@ -4,4 +4,5 @@
 namespace cms\base;
 class Version {
     const VERSION = 'dev-snapshot';
+    const DATE    = null;
 }
