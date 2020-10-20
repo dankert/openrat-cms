@@ -1,41 +1,36 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form cancel="false" label="${message:menu_login}" action="login" subaction="login" afterSuccess="reloadAll">
 		<if true="${config:login/logo/enabled}">
-				<if not="not" empty="${config:login/logo/url}">
-					<link url="${config:login/logo/url}" target="_top">
-						<image url="${config:login/logo/image}"></image>
-					</link>
-				</if>
-				<else>
-					<image url="${config:login/logo/image}"></image>
-				</else>
+			<if not="not" empty="${config:login/logo/url}">
+				<link url="${config:login/logo/url}" target="_top">
+					<image url="${config:login/logo/image}"/>
+				</link>
+			</if>
+			<else>
+				<image url="${config:login/logo/image}"/>
+			</else>
 		</if>
 		<if not="not" empty="${config:login/motd}">
 			<part class="message info">
-				<text value="${config:login/motd}"></text>
+				<text value="${config:login/motd}"/>
 			</part>
 		</if>
-
 		<if true="${config:login/nologin}">
 			<part class="message error">
-				<text value="${message:LOGIN_NOLOGIN_DESC}"></text>
+				<text value="${message:LOGIN_NOLOGIN_DESC}"/>
 			</part>
 		</if>
-
 		<if true="${config:security/readonly}">
 			<part class="message warn">
-				<text value="${message:READONLY_DESC}"></text>
+				<text value="${message:READONLY_DESC}"/>
 			</part>
 		</if>
-
 		<if false="${config:login/nologin}">
-
 			<fieldset label="${message:USER_USERNAME}">
 				<if not="true" present="force_username">
-					<input type="text" name="login_name" class="name" value=""
-						   hint="${message:USER_USERNAME}" size="20" maxlength="128" focus="true" required="true"/>
+					<input type="text" name="login_name" class="name" value="" hint="${message:USER_USERNAME}" size="20"
+						   maxlength="128" focus="true" required="true"/>
 				</if>
 				<else>
 					<hidden name="login_name"/>
@@ -43,39 +38,35 @@
 				</else>
 			</fieldset>
 			<fieldset label="${message:USER_PASSWORD}">
-				<password name="login_password" class="name" default=""
-						  size="20" hint="${message:USER_PASSWORD}" required="true" />
+				<password name="login_password" class="name" default="" size="20" hint="${message:USER_PASSWORD}"
+						  required="true"/>
 				<checkbox name="remember" default="false" label="${message:REMEMBER_ME}"/>
 			</fieldset>
 		</if>
-
-
 		<group title="${message:USER_NEW_PASSWORD}" open="false" show="false">
 			<fieldset label="${message:USER_NEW_PASSWORD}">
-				<password name="password1" default="" size="25" minlength="${config:security/password/min_length}" hint="${message:USER_NEW_PASSWORD}" />
-				<password name="password2" default="" size="25" minlength="${config:security/password/min_length}" hint="${message:USER_NEW_PASSWORD_REPEAT}" />
+				<password name="password1" default="" size="25" minlength="${config:security/password/min_length}"
+						  hint="${message:USER_NEW_PASSWORD}"/>
+				<password name="password2" default="" size="25" minlength="${config:security/password/min_length}"
+						  hint="${message:USER_NEW_PASSWORD_REPEAT}"/>
 			</fieldset>
 		</group>
-		
 		<group title="${message:USER_TOKEN}" open="false" show="false">
 			<fieldset label="${message:USER_TOKEN}">
-				<input name="user_token" default="" size="25" maxlength="30" />
+				<input name="user_token" default="" size="25" maxlength="30"/>
 			</fieldset>
 		</group>
-
 		<if value="${dbids}" greaterthan="1">
 			<!-- More than 1 database available. -->
 			<group title="${message:DATABASE}" icon="database" open="true">
 				<fieldset label="${message:DATABASE}">
-					<selectbox name="dbid" list="dbids"></selectbox>
+					<selectbox name="dbid" list="dbids"/>
 				</fieldset>
 			</group>
 		</if>
 		<else>
 			<!-- Only 1 database is available. No input necessary. -->
-			<hidden name="dbid"></hidden>
+			<hidden name="dbid"/>
 		</else>
-
 	</form>
-
 </output>

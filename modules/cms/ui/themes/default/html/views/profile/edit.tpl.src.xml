@@ -1,114 +1,53 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form label="${message:save}">
 		<group title="${message:name}">
-			<part class="line">
-				<part class="label">
-					<label for="name" key="user_username"></label>
-				</part>
-				<part class="value">
-					<text value="${name}" class="name"></text>
-				</part>
-			</part>
+			<fieldset class="line" label="${message:user_username}">
+				<text value="${name}" class="name"/>
+			</fieldset>
 		</group>
 		<group title="${message:MENU_PROFILE_MAIL}">
-			<part class="line">
-				<part class="label">
-					<label for="mail" key="user_mail"></label>
+			<fieldset class="line" label="${message:user_mail}">
+				<text value="${mail}"/>
+				<part class="clickable">
+					<link type="dialog" class="btn" action="profile" subaction="mail" name="${message:mail}">
+						<text value="${message:edit}"/>
+					</link>
 				</part>
-				<part class="value">
-					<text value="${mail}"></text>
-					<newline />
-					<newline />
-					<part class="clickable">
-						<link type="dialog" class="action" action="profile" subaction="mail" name="${message:mail}">
-							<text value="${message:edit}"></text>
-						</link>
-					</part>
-				</part>
-			</part>
+			</fieldset>
 		</group>
 		<group title="${message:PROP}">
-			<part class="line">
-				<part class="label">
-					<label for="fullname" key="user_fullname"></label>
-				</part>
-				<part class="value">
-					<input name="fullname" maxlength="128"></input>
-				</part>
-			</part>
-			<part class="line">
-				<part class="label">
-					<label for="tel" key="user_tel"></label>
-				</part>
-				<part class="value">
-					<input name="tel" size="40" maxlength="128"></input>
-				</part>
-			</part>
-			<part class="line">
-				<part class="label">
-					<label for="desc" key="user_desc"></label>
-				</part>
-				<part class="value">
-					<input name="desc" size="40" maxlength="128"></input>
-				</part>
-			</part>
-			<part class="line">
-				<part class="label">
-					<label for="style" key="user_style"></label>
-				</part>
-				<part class="value">
-					<selectbox name="style" list="allstyles"
-						class="theme-chooser"></selectbox>
-				</part>
-			</part>
-			<part class="line">
-				<part class="label">
-					<label for="timezone_offset">
-						<text value="${message:timezone}" />
-					</label>
-				</part>
-				<part class="value">
-					<selectbox name="timezone" list="timezone_list"
-						addempty="true"></selectbox>
-				</part>
-			</part>
-			<part class="line">
-				<part class="label">
-					<label for="">
-						<text value="${message:language}" />
-					</label>
-				</part>
-				<part class="value">
-					<selectbox name="language" list="language_list" addempty="true"></selectbox>
-				</part>
-			</part>
+			<fieldset class="line" label="${message:user_fullname}">
+				<input name="fullname" maxlength="128"/>
+			</fieldset>
+			<fieldset class="line" label="${message:user_tel}">
+				<input name="tel" size="40" maxlength="128"/>
+			</fieldset>
+			<fieldset class="line" label="${message:user_desc}">
+				<input name="desc" size="40" maxlength="128"/>
+			</fieldset>
+			<fieldset class="line" label="${message:user_style}">
+				<selectbox name="style" list="allstyles" class="theme-chooser"/>
+			</fieldset>
+			<fieldset class="line" label="${message:timezone}">
+				<selectbox name="timezone" list="timezone_list" addempty="true"/>
+			</fieldset>
+			<fieldset class="line" label="${message:language}">
+				<selectbox name="language" list="language_list" addempty="true"/>
+			</fieldset>
 		</group>
 		<group title="${message:security}">
-			<part class="line">
-				<part class="label">
-					<text value="${message:user_password_expires}" />
-				</part>
-				<part class="value">
-					<date date="${passwordExpires}" />
-				</part>  
-			</part>
-			<part class="line">
-				<part class="label">
-				</part>
-				<part class="value">
-					<checkbox name="totp"/><label for="totp" key="user_totp"></label>
-					<qrcode value="${totpSecretUrl}" />
-				</part>  
-			</part>
-			<part class="line">
-				<part class="label">
-				</part>
-				<part class="value">
-					<checkbox name="hotp"/><label for="hotp" key="user_hotp"></label>
-					<qrcode value="${hotpSecretUrl}" />
-				</part>
-			</part>
+			<fieldset class="line" label="${message:user_password_expires}">
+				<date date="${passwordExpires}"/>
+			</fieldset>
+			<fieldset class="line" label="">
+				<checkbox name="totp" label="${message:user_totp}"/>
+				<qrcode value="${totpSecretUrl}"/>
+			</fieldset>
+			<fieldset class="line" label="">
+				<checkbox name="hotp" label="${message:user_hotp}"/>
+				<qrcode value="${hotpSecretUrl}"/>
+			</fieldset>
 		</group>
 	</form>
 </output>

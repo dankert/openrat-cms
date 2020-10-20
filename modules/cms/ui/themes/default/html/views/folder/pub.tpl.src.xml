@@ -1,73 +1,66 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-
-    <!--
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <!--
         Falls das Veroeffentlichen deaktiviert ist, eine Warnmeldung anzeigen.
     -->
-    <if true="${config:security/nopublish}">
-        <part class="message warn">
-            <text value="${message:NOPUBLISH_DESC}" class="help"></text>
+  <if true="${config:security/nopublish}">
+    <part class="message warn">
+      <text value="${message:NOPUBLISH_DESC}" class="help"/>
+    </part>
+  </if>
+  <form label="${message:publish}" async="true">
+    <if true="${pages}">
+      <fieldset class="line" label="">
+        <part class="label">
+                </part>
+        <part class="value">
+          <checkbox name="pages"/>
+          <label for="pages">
+            <text value=" "/>
+            <text value="${message:pages}"/>
+          </label>
         </part>
+      </fieldset>
     </if>
-
-
-    <form label="${message:publish}" async="true">
-        <if true="${pages}">
-
-            <part class="line">
-                <part class="label">
+    <if true="${files}">
+      <fieldset class="line" label="">
+        <part class="label">
                 </part>
-                <part class="value">
-                    <checkbox name="pages"></checkbox>
-                    <label for="pages">
-                        <text value=" "></text>
-                        <text value="${message:pages}"></text>
-                    </label>
-                </part>
-            </part>
-        </if>
-        <if true="${files}">
-            <part class="line">
-                <part class="label">
-                </part>
-                <part class="value">
-                    <checkbox name="files"></checkbox>
-                    <label for="files">
-                        <text value=" "></text>
-                        <text value="${message:files}"></text>
-                    </label>
-                </part>
-            </part>
-
-        </if>
-        <group title="${message:options}">
-            <if present="subdirs">
-                <part class="line">
-                    <part class="label">
+        <part class="value">
+          <checkbox name="files"/>
+          <label for="files">
+            <text value=" "/>
+            <text value="${message:files}"/>
+          </label>
+        </part>
+      </fieldset>
+    </if>
+    <group title="${message:options}">
+      <if present="subdirs">
+        <fieldset class="line" label="">
+          <part class="label">
                     </part>
-                    <part class="value">
-                        <checkbox readonly="${subdirs}" name="subdirs"></checkbox>
-                        <label for="subdirs">
-                            <text value=" "></text>
-                            <text value="${message:PUBLISH_WITH_SUBDIRS}"></text>
-                        </label>
+          <part class="value">
+            <checkbox readonly="${subdirs}" name="subdirs"/>
+            <label for="subdirs">
+              <text value=" "/>
+              <text value="${message:PUBLISH_WITH_SUBDIRS}"/>
+            </label>
+          </part>
+        </fieldset>
+      </if>
+      <if present="clean">
+        <fieldset class="line" label="">
+          <part class="label">
                     </part>
-                </part>
-            </if>
-            <if present="clean">
-                <part class="line">
-                    <part class="label">
-                    </part>
-                    <part class="value">
-                        <checkbox name="clean"></checkbox>
-                        <label for="clean">
-                            <text value=" "></text>
-                            <text value="${message:CLEAN_AFTER_PUBLISH}"></text>
-                        </label>
-                    </part>
-                </part>
-            </if>
-        </group>
-
-    </form>
+          <part class="value">
+            <checkbox name="clean"/>
+            <label for="clean">
+              <text value=" "/>
+              <text value="${message:CLEAN_AFTER_PUBLISH}"/>
+            </label>
+          </part>
+        </fieldset>
+      </if>
+    </group>
+  </form>
 </output>

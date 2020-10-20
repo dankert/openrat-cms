@@ -1,31 +1,31 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<table>
 		<row class="data">
 			<column colspan="1">
-				<text value="${message:type}" />
+				<text value="${message:type}"/>
 			</column>
 			<column>
-				<image elementtype="${type}" />
-				<text value="${message:el_${type}}" />
+				<image elementtype="${type}"/>
+				<text value="${message:el_${type}}"/>
 			</column>
 		</row>
 		<row class="data">
 			<column colspan="1">
-				<text value="${message:name}" />
+				<text value="${message:name}"/>
 			</column>
 			<column class="clickable">
 				<link class="" type="edit" action="element" subaction="prop" id="${id}">
-					<text value="${name}" />
+					<text value="${name}"/>
 				</link>
 			</column>
 		</row>
 		<row class="data">
 			<column colspan="1">
-				<text value="${message:id}" />
+				<text value="${message:id}"/>
 			</column>
 			<column>
-				<text value="${id}" />
+				<text value="${id}"/>
 			</column>
 		</row>
 	</table>

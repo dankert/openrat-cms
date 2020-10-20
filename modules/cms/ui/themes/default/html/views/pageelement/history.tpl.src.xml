@@ -1,114 +1,110 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<form method="get" subaction="diff" label="${message:compare}"
-		cancel="false" visible="true">
-		<table widths="5%,5%,5%,15%,15%,35%,10%,10%">
-			<row class="headline">
-				<column class="help">
-					<text value="${message:NR}"></text>
-				</column>
-				<column class="help" colspan="2">
-					<if present="compareid">
-						<text value="${message:COMPARE}"></text>
-					</if>
-					<else>
-						<text value=" " />
-					</else>
-				</column>
-				<column class="help">
-					<text value="${message:DATE}"></text>
-				</column>
-				<column class="help">
-					<text value="${message:USER}"></text>
-				</column>
-				<column class="help">
-					<text value="${message:VALUE}"></text>
-				</column>
-				<column class="help">
-					<text value="${message:STATE}"></text>
-				</column>
-				<column class="help">
-					<text value="${message:ACTION}"></text>
-				</column>
-			</row>
-			<if empty="${el}">
-				<row>
-					<column colspan="8">
-						<text value="${message:NOT_FOUND}"></text>
-					</column>
-				</row>
-			</if>
-			<list list="${el}" extract="true">
-				<row class="data">
-					<column>
-						<text value="${lfd_nr}"></text>
-					</column>
-					<column>
-						<if present="compareid">
-							<radio name="compareid" value="${id}"></radio>
-						</if>
-						<else>
-							<text value=" " />
-						</else>
-					</column>
-					<column>
-						<if present="compareid">
-							<radio name="withid" value="${id}"></radio>
-						</if>
-						<else>
-							<text value=" " />
-						</else>
-					</column>
-					<column>
-						<date date="${date}"></date>
-					</column>
-					<column>
-						<text value="${user}"></text>
-					</column>
-					<column>
-						<text value="${value}"></text>
-					</column>
-					<if true="${public}">
-						<column>
-							<text value="${message:PUBLIC}" type="strong"></text>
-						</column>
-					</if>
-					<else>
-						<if present="releaseUrl">
-							<column class="clickable">
-								<link type="post" subaction="release" var1="valueid"
-									value1="${valueid}" id="${objectid}" title="${message:RELEASE_DESC}">
-									<text value="${message:RELEASE}" type="strong"></text>
-								</link>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <form method="get" subaction="diff" label="${message:compare}" cancel="false" visible="true">
+    <table widths="5%,5%,5%,15%,15%,35%,10%,10%">
+      <row class="headline">
+        <column class="help">
+          <text value="${message:NR}"/>
+        </column>
+        <column class="help" colspan="2">
+          <if present="compareid">
+            <text value="${message:COMPARE}"/>
+          </if>
+          <else>
+            <text value=" "/>
+          </else>
+        </column>
+        <column class="help">
+          <text value="${message:DATE}"/>
+        </column>
+        <column class="help">
+          <text value="${message:USER}"/>
+        </column>
+        <column class="help">
+          <text value="${message:VALUE}"/>
+        </column>
+        <column class="help">
+          <text value="${message:STATE}"/>
+        </column>
+        <column class="help">
+          <text value="${message:ACTION}"/>
+        </column>
+      </row>
+      <if empty="${el}">
+        <row>
+          <column colspan="8">
+            <text value="${message:NOT_FOUND}"/>
+          </column>
+        </row>
+      </if>
+      <list list="${el}" extract="true">
+        <row class="data">
+          <column>
+            <text value="${lfd_nr}"/>
+          </column>
+          <column>
+            <if present="compareid">
+              <radio name="compareid" value="${id}"/>
+            </if>
+            <else>
+              <text value=" "/>
+            </else>
+          </column>
+          <column>
+            <if present="compareid">
+              <radio name="withid" value="${id}"/>
+            </if>
+            <else>
+              <text value=" "/>
+            </else>
+          </column>
+          <column>
+            <date date="${date}"/>
+          </column>
+          <column>
+            <text value="${user}"/>
+          </column>
+          <column>
+            <text value="${value}"/>
+          </column>
+          <if true="${public}">
+            <column>
+              <text value="${message:PUBLIC}" type="strong"/>
+            </column>
+          </if>
+          <else>
+            <if present="releaseUrl">
+              <column class="clickable">
+                <link type="post" subaction="release" var1="valueid" value1="${valueid}" id="${objectid}" title="${message:RELEASE_DESC}">
+                  <text value="${message:RELEASE}" type="strong"/>
+                </link>
+              </column>
+            </if>
+            <else>
+              <column>
+                <text value="${message:INACTIVE}" type="emphatic"/>
+              </column>
+            </else>
+          </else>
+          <if true="${active}">
+            <column>
+              <text value="${message:ACTIVE}" type="emphatic"/>
+            </column>
+          </if>
+          <else>
+            <if present="useUrl">
+              <column class="clickable">
+                <link type="post" subaction="use" var1="valueid" value1="${valueid}" id="${objectid}" title="${message:USE_DESC}">
+                  <text value="${message:USE}"/>
+                </link>
+              </column>
+            </if>
+            <else>
+              <column>
 							</column>
-						</if>
-						<else>
-							<column>
-								<text value="${message:INACTIVE}" type="emphatic" />
-							</column>
-						</else>
-					</else>
-					<if true="${active}">
-						<column>
-							<text value="${message:ACTIVE}" type="emphatic"></text>
-						</column>
-					</if>
-					<else>
-						<if present="useUrl">
-							<column class="clickable">
-								<link type="post" subaction="use" var1="valueid" value1="${valueid}"
-									id="${objectid}" title="${message:USE_DESC}">
-									<text value="${message:USE}"></text>
-								</link>
-							</column>
-						</if>
-						<else>
-							<column>
-							</column>
-						</else>
-					</else>
-				</row>
-			</list>
-		</table>
-	</form>
+            </else>
+          </else>
+        </row>
+      </list>
+    </table>
+  </form>
 </output>

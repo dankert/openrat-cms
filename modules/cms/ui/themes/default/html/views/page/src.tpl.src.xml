@@ -1,19 +1,15 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form action="page" method="GET" target="self" subaction="src" autosave="true" cancel="false">
+		<selectbox name="languageid" list="languages" default="${languageid}">
 
-    <form action="page" method="GET" target="self" subaction="src" autosave="true" cancel="false" >
-        <selectbox name="languageid" list="languages" default="${languageid}">
+		</selectbox>
+		<selectbox name="modelid" list="models" default="${modelid}">
 
-        </selectbox>
+		</selectbox>
+	</form>
 
-        <selectbox name="modelid" list="models" default="${modelid}">
-
-        </selectbox>
-
-    </form>
-
-    <group title="${message:SOURCE}">
-        <editor type="code" mode="html" name="src" readonly="true" />
-    </group>
-
+	<group title="${message:SOURCE}">
+		<editor type="code" mode="html" name="src" readonly="true"/>
+	</group>
 </output>

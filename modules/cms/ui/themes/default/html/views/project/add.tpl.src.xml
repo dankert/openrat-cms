@@ -1,38 +1,36 @@
-<output xmlns="http://www.openrat.de/template"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<form method="post">
-		<row>
-			<column colspan="2">
-				<text value="${message:name}"></text>
-			</column>
-			<column>
-				<input name="name"></input>
-			</column>
-		</row>
-		<row>
-			<column colspan="3">
-				<group title="${message:options}">
-					<part>
-						<radio name="type" value="empty"></radio>
-						<label for="type_empty">
-							<text value="${message:empty}"></text>
-						</label>
-					</part>
-					<part>
-						<radio name="type" value="copy"></radio>
-						<label for="type_copy">
-							<text value="${message:copy}"></text>
-						</label>
-						<selectbox name="projectid" list="projects"></selectbox>
-					</part>
-				</group>
-			</column>
-		</row>
-		<row>
-			<column class="act" colspan="3">
-				<button type="ok"></button>
-			</column>
-		</row>
-	</form>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <form method="post">
+    <row>
+      <column colspan="2">
+        <text value="${message:name}"/>
+      </column>
+      <column>
+        <input name="name"/>
+      </column>
+    </row>
+    <row>
+      <column colspan="3">
+        <group title="${message:options}">
+          <part>
+            <radio name="type" value="empty"/>
+            <label for="type_empty">
+              <text value="${message:empty}"/>
+            </label>
+          </part>
+          <part>
+            <radio name="type" value="copy"/>
+            <label for="type_copy">
+              <text value="${message:copy}"/>
+            </label>
+            <selectbox name="projectid" list="projects"/>
+          </part>
+        </group>
+      </column>
+    </row>
+    <row>
+      <column class="act" colspan="3">
+        <button type="ok"/>
+      </column>
+    </row>
+  </form>
 </output>

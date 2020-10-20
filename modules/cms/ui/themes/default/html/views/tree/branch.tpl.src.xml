@@ -1,15 +1,15 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<list list="${branch}" extract="true">
-		<part tag="li" class="navtree-node,navtree-node--is-closed,or-draggable,or-draggable--type-${type}" >
+		<part tag="li" class="navtree-node,navtree-node--is-closed,or-draggable,or-draggable--type-${type}">
 			<part class="navtree-tree,navtree-node-control">
-				<image class="navtree-tree-icon" symbol="node-closed" />
+				<image class="navtree-tree-icon" symbol="node-closed"/>
 			</part>
 			<part class="clickable">
-				<link type="open" action="${action}" id="${id}" class="entry" title="${description}" var1="type" value1="${type}">
-					<image action="${icon}" />
-					<text value="${text}" />
+				<link type="open" action="${action}" id="${id}" class="entry" title="${description}" var1="type"
+					  value1="${type}">
+					<image action="${icon}"/>
+					<text value="${text}"/>
 				</link>
 			</part>
 		</part>

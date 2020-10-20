@@ -1,98 +1,94 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<form action="folder" subaction="edit">
-		<table>
-			<row class="headline">
-				<column class="help">
-					<!-- 
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <form action="folder" subaction="edit">
+    <table>
+      <row class="headline">
+        <column class="help">
+          <!-- 
 					<text value="${message:SELECT}"></text>
 				 -->
-					<checkbox name="checkall" />
-				</column>
-				<column class="help">
-					<text value="${message:TYPE}"></text>
-					<text value=" / "></text>
-					<text value="${message:NAME}"></text>
-				</column>
-			</row>
-			<list list="${object}" extract="true">
-				<row class="data">
-					<column width="1%">
-						<if true="${writable}">
-							<checkbox name="${id}"></checkbox>
-						</if>
-						<if false="writable">
-							<text value=" "></text>
-						</if>
-					</column>
-					<column class="clickable">
-						<label for="${id}">
-							<link type="open" name="${name}" action="${type}" id="${objectid}">
-								<image action="${icon}"></image>
-								<text value="${name}" maxlength="40"></text>
-								<text value=" "></text>
-							</link>
-						</label>
-					</column>
-				</row>
-			</list>
-			<if empty="${object}">
-				<row>
-					<column colspan="2">
-						<text value="${message:NOT_FOUND}"></text>
-					</column>
-				</row>
-			</if>
-
-			<row class="data">
-				<column>
-					<text value=" " />
-				</column>
-				<column colspan="2" class="clickable">
-					<link type="dialog" action="folder" subaction="create">
-						<image method="add"></image>
-						<text value="${message:menu_folder_create}"></text>
-					</link>
-				</column>
-			</row>
-		</table>
-					<group title="${message:options}">
-						<set var="type" value="${defaulttype}"></set>
-						<list list="${actionlist}" value="actiontype">
-							<part class="line">
-								<part class="label">
+          <checkbox name="checkall"/>
+        </column>
+        <column class="help">
+          <text value="${message:TYPE}"/>
+          <text value=" / "/>
+          <text value="${message:NAME}"/>
+        </column>
+      </row>
+      <list list="${object}" extract="true">
+        <row class="data">
+          <column width="1%">
+            <if true="${writable}">
+              <checkbox name="${id}"/>
+            </if>
+            <if false="writable">
+              <text value=" "/>
+            </if>
+          </column>
+          <column class="clickable">
+            <label for="${id}">
+              <link type="open" name="${name}" action="${type}" id="${objectid}">
+                <image action="${icon}"/>
+                <text value="${name}" maxlength="40"/>
+                <text value=" "/>
+              </link>
+            </label>
+          </column>
+        </row>
+      </list>
+      <if empty="${object}">
+        <row>
+          <column colspan="2">
+            <text value="${message:NOT_FOUND}"/>
+          </column>
+        </row>
+      </if>
+      <row class="data">
+        <column>
+          <text value=" "/>
+        </column>
+        <column colspan="2" class="clickable">
+          <link type="dialog" action="folder" subaction="create">
+            <image method="add"/>
+            <text value="${message:menu_folder_create}"/>
+          </link>
+        </column>
+      </row>
+    </table>
+    <group title="${message:options}">
+      <set var="type" value="${defaulttype}"/>
+      <list list="${actionlist}" value="actiontype">
+        <fieldset class="line" label="">
+          <part class="label">
 								</part>
-								<part class="value">
-									<radio name="type" value="${actiontype}"></radio>
-									<label for="type" value="${actiontype}">
-										<text value=" "></text>
-										<text value="${message:FOLDER_SELECT_${actiontype}}"></text>
-									</label>
+          <part class="value">
+            <radio name="type" value="${actiontype}"/>
+            <label for="type" value="${actiontype}">
+              <text value=" "/>
+              <text value="${message:FOLDER_SELECT_${actiontype}}"/>
+            </label>
+          </part>
+        </fieldset>
+      </list>
+      <fieldset class="line" label="">
+        <part class="label">
 								</part>
-							</part>
-						</list>
-							<part class="line">
-								<part class="label">
-								</part>
-								<part class="value">
-									<text value="    " />
-									<checkbox name="confirm" required="true" />
-									<label for="confirm">
-										<text value="${message:CONFIRM_DELETE}"></text>
-									</label>
-								</part>
-							</part>
-						
-						<part class="line">
-							<part class="label">
-								<text value="${message:FOLDER_SELECT_TARGET_FOLDER}" />
-							</part>
-							<part class="value">
-								<selector types="folder" param="targetobjectid" name="${rootfoldername}"
-									id="${rootfolderid}" folderid="${rootfolderid}" />
-							</part>
-						</part>
-					</group>
-	</form>
-	<!--	<insert script="mark" inline="true"></insert> -->
+        <part class="value">
+          <text value="    "/>
+          <checkbox name="confirm" required="true"/>
+          <label for="confirm">
+            <text value="${message:CONFIRM_DELETE}"/>
+          </label>
+        </part>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
+          <text value="${message:FOLDER_SELECT_TARGET_FOLDER}"/>
+        </part>
+        <part class="value">
+          <selector types="folder" param="targetobjectid" name="${rootfoldername}" id="${rootfolderid}" folderid="${rootfolderid}"/>
+        </part>
+      </fieldset>
+    </group>
+  </form>
+  <!--	<insert script="mark" inline="true"></insert> -->
 </output>

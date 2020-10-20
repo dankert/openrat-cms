@@ -1,77 +1,76 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<table>
-		<row class="headline">
-			<column class="help">
-				<text value="${message:TYPE}"></text>
-				<text value=" / "></text>
-				<text value="${message:NAME}"></text>
-			</column>
-			<column class="help">
-				<text value="${message:LASTCHANGE}"></text>
-			</column>
-		</row>
-		<if present="up_url">
-			<row class="data">
-				<column url="${up_url}">
-					<image type="folder"></image>
-					<text value=".."></text>
-				</column>
-				<column>
-					<text value=""></text>
-				</column>
-			</row>
-		</if>
-		<list list="${object}" extract="true">
-			<row class="data">
-				<column  id="${id}" name="${name}" action="${type}" title="${desc}" class="${class}">
-					<image type="${icon}"></image>
-					<text value="${name}"></text>
-					<text value=" "></text>
-				</column>
-				<column>
-					<date date="${date}"></date>
-				</column>
-			</row>
-		</list>
-		<if empty="${object}">
-			<row>
-				<column colspan="2">
-					<text value="${message:NOT_FOUND}"></text>
-				</column>
-			</row>
-		</if>
-		<row class="data">
-			<column colspan="2">
-				<link type="view" action="folder" subaction="createfolder">
-					<image file="icon/create"></image>
-					<text value="${message:menu_folder_createfolder}"></text>
-				</link>
-			</column>
-		</row>
-		<row class="data">
-			<column colspan="2">
-				<link type="view" action="folder" subaction="createpage">
-					<image file="icon/create"></image>
-					<text value="${message:menu_folder_createpage}"></text>
-				</link>
-			</column>
-		</row>
-		<row class="data">
-			<column colspan="2">
-				<link type="view" action="folder" subaction="createfile">
-					<image file="icon/create"></image>
-					<text value="${message:menu_folder_createfile}"></text>
-				</link>
-			</column>
-		</row>
-		<row class="data">
-			<column colspan="2">
-				<link type="modal" action="folder" subaction="createlink">
-					<image file="icon/create"></image>
-					<text value="${message:menu_folder_createlink}"></text>
-				</link>
-			</column>
-		</row>
-	</table>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <table>
+    <row class="headline">
+      <column class="help">
+        <text value="${message:TYPE}"/>
+        <text value=" / "/>
+        <text value="${message:NAME}"/>
+      </column>
+      <column class="help">
+        <text value="${message:LASTCHANGE}"/>
+      </column>
+    </row>
+    <if present="up_url">
+      <row class="data">
+        <column url="${up_url}">
+          <image type="folder"/>
+          <text value=".."/>
+        </column>
+        <column>
+          <text value=""/>
+        </column>
+      </row>
+    </if>
+    <list list="${object}" extract="true">
+      <row class="data">
+        <column id="${id}" name="${name}" action="${type}" title="${desc}" class="${class}">
+          <image type="${icon}"/>
+          <text value="${name}"/>
+          <text value=" "/>
+        </column>
+        <column>
+          <date date="${date}"/>
+        </column>
+      </row>
+    </list>
+    <if empty="${object}">
+      <row>
+        <column colspan="2">
+          <text value="${message:NOT_FOUND}"/>
+        </column>
+      </row>
+    </if>
+    <row class="data">
+      <column colspan="2">
+        <link type="view" action="folder" subaction="createfolder">
+          <image file="icon/create"/>
+          <text value="${message:menu_folder_createfolder}"/>
+        </link>
+      </column>
+    </row>
+    <row class="data">
+      <column colspan="2">
+        <link type="view" action="folder" subaction="createpage">
+          <image file="icon/create"/>
+          <text value="${message:menu_folder_createpage}"/>
+        </link>
+      </column>
+    </row>
+    <row class="data">
+      <column colspan="2">
+        <link type="view" action="folder" subaction="createfile">
+          <image file="icon/create"/>
+          <text value="${message:menu_folder_createfile}"/>
+        </link>
+      </column>
+    </row>
+    <row class="data">
+      <column colspan="2">
+        <link type="modal" action="folder" subaction="createlink">
+          <image file="icon/create"/>
+          <text value="${message:menu_folder_createlink}"/>
+        </link>
+      </column>
+    </row>
+  </table>
 </output>

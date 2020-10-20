@@ -1,254 +1,133 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-    <if true="${config:security/disable_dynamic_code}">
-        <if value="${type}" equals="code" false="true">
-            <part class="message warn">
-                <text value="${message:NOTICE_CODE_DISABLED}"/>
-            </part>
-        </if>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <if true="${config:security/disable_dynamic_code}">
+    <if value="${type}" equals="code" false="true">
+      <part class="message warn">
+        <text value="${message:NOTICE_CODE_DISABLED}"/>
+      </part>
     </if>
-    <form>
-        <group>
-            <if present="subtype">
-                <part class="line">
-                    <part class="label">
-                        <text value="${message:ELEMENT_SUBTYPE}"></text>
-                    </part>
-                    <part class="value">
-                        <if present="subtypes">
-                            <selectbox name="subtype" list="subtypes" addempty="true"></selectbox>
-                        </if>
-                        <if not="true" present="subtypes">
-                            <input name="subtype"></input>
-                        </if>
-                    </part>
-                </part>
+  </if>
+  <form>
+    <group>
+      <if present="subtype">
+        <fieldset class="line" label="${message:ELEMENT_SUBTYPE}">
+            <if present="subtypes">
+              <selectbox name="subtype" list="subtypes" addempty="true"/>
             </if>
-            <if present="with_icon">
-                <part class="line">
-                    <part class="label">
-                    </part>
-                    <part class="value">
-                        <checkbox name="with_icon"></checkbox>
-                        <label for="with_icon">
-                            <text value="${message:EL_PROP_WITH_ICON}"></text>
-                        </label>
-                    </part>
-                </part>
+            <if not="true" present="subtypes">
+              <input name="subtype"/>
             </if>
-            <if present="inherit">
-                <part class="line">
-                    <part class="label">
-                    </part>
-                    <part class="value">
-                        <checkbox name="inherit"></checkbox>
-                        <label for="inherit">
-                            <text value="${message:EL_PROP_INHERIT}"></text>
-                        </label>
-                    </part>
-                </part>
-            </if>
-            <if present="all_languages">
-                <part class="line">
-                    <part class="label">
-                    </part>
-                    <part class="value">
-                        <checkbox name="all_languages"></checkbox>
-                        <label for="all_languages">
-                            <text value="${message:EL_PROP_ALL_LANGUAGES}"></text>
-                        </label>
-                    </part>
-                </part>
-            </if>
-            <if present="writable">
-                <part class="line">
-                    <part class="label">
-                    </part>
-                    <part class="value">
-                        <checkbox name="writable"></checkbox>
-                        <label for="writable">
-                            <text value="${message:EL_PROP_writable}"></text>
-                        </label>
-                    </part>
-                </part>
-            </if>
-            <if present="width">
-                <part class="line">
-                    <part class="label">
-                        <text value="${message:width}"></text>
-                    </part>
-                    <part class="value">
-                        <input size="10" name="width"></input>
-                    </part>
-                </part>
-
-            </if>
-            <if present="height">
-                <part class="line">
-                    <part class="label">
-                        <text value="${message:height}"></text>
-                    </part>
-                    <part class="value">
-                        <input size="10" name="height"></input>
-                    </part>
-                </part>
-            </if>
-            <if present="dateformat">
-                <part class="line">
-                    <part class="label">
-                        <text value="${message:EL_PROP_DATEFORMAT}"></text>
-                    </part>
-                    <part class="value">
-                        <selectbox name="dateformat" list="dateformats"></selectbox>
-                    </part>
-                </part>
-            </if>
-            <if present="format">
-                <part class="line">
-                    <part class="label">
-                        <text value="${message:EL_PROP_FORMAT}"></text>
-                    </part>
-                    <part class="value">
-                        <radiobox name="format" list="formatlist"></radiobox>
-                    </part>
-                </part>
-            </if>
-            <if present="decimals">
-                <part class="line">
-                    <part class="label">
-                        <text value="${message:EL_PROP_DECIMALS}"></text>
-                    </part>
-                    <part class="value">
-                        <input size="10" maxlength="2" name="decimals"></input>
-                    </part>
-                </part>
-            </if>
-            <if present="dec_point">
-                <part class="line">
-                    <part class="label">
-                        <text value="${message:EL_PROP_DEC_POINT}"></text>
-                    </part>
-                    <part class="value">
-                        <input size="10" maxlength="5" name="dec_point"></input>
-                    </part>
-                </part>
-            </if>
-            <if present="thousand_sep">
-                <part class="line">
-                    <part class="label">
-                        <text value="${message:EL_PROP_thousand_sep}"></text>
-                    </part>
-                    <part class="value">
-                        <input size="10" maxlength="1" name="thousand_sep"></input>
-                    </part>
-                </part>
-            </if>
-            <if present="default_text">
-                <part class="line">
-                    <part class="label">
-                        <text value="${message:EL_PROP_default_text}"></text>
-                    </part>
-                    <part class="value">
-                        <input size="40" maxlength="255" name="default_text"></input>
-                    </part>
-                </part>
-            </if>
-            <if present="default_longtext">
-                <part class="line">
-                    <part class="label">
-                        <text value="${message:EL_PROP_default_longtext}"></text>
-                    </part>
-                    <part class="value">
-                        <inputarea rows="10" name="default_longtext"></inputarea>
-                    </part>
-                </part>
-            </if>
-            <if present="parameters">
-                <part class="line">
-                    <part class="label">
-                        <text value="${message:EL_PROP_DYNAMIC_PARAMETERS}"></text>
-                    </part>
-                    <part class="value">
-                        <inputarea rows="15" name="parameters"></inputarea>
-                    </part>
-                </part>
-                <part class="line">
-                    <part class="label">
-                    </part>
-                    <part class="value">
-                        <list list="${dynamic_class_parameters}" key="paramName" value="defaultValue">
-                            <text value="${paramName}"></text>
-                            <text value=" ("></text>
-                            <text value="${message:DEFAULT}"></text>
-                            <text value=") = "></text>
-                            <text value="${defaultValue}"></text>
-                            <newline></newline>
-                        </list>
-                    </part>
-                </part>
-            </if>
-            <if present="select_items">
-                <part class="line">
-                    <part class="label">
-                        <text value="${message:EL_PROP_select_items}"></text>
-                    </part>
-                    <part class="value">
-                        <inputarea rows="15" cols="40" name="select_items"></inputarea>
-                    </part>
-                </part>
-            </if>
-            <if present="linkelement">
-                <part class="line">
-                    <part class="label">
-                        <text value="${message:EL_LINK}"></text>
-                    </part>
-                    <part class="value">
-                        <selectbox name="linkelement" list="linkelements"></selectbox>
-                    </part>
-                </part>
-            </if>
-            <if present="name">
-                <part class="line">
-                    <part class="label">
-                        <text value="${message:ELEMENT_NAME}"></text>
-                    </part>
-                    <part class="value">
-                        <selectbox name="name" list="names"></selectbox>
-                    </part>
-                </part>
-            </if>
-            <if present="folderobjectid">
-                <part class="line">
-                    <part class="label">
-                        <text value="${message:EL_PROP_DEFAULT_FOLDEROBJECT}"></text>
-                    </part>
-                    <part class="value">
-                        <selectbox name="folderobjectid" list="folders"></selectbox>
-                    </part>
-                </part>
-            </if>
-            <if present="default_objectid">
-                <part class="line">
-                    <part class="label">
-                        <text value="${message:EL_PROP_DEFAULT_OBJECT}"></text>
-                    </part>
-                    <part class="value">
-                        <selectbox name="default_objectid" list="objects"
-                                   addempty="true"></selectbox>
-                    </part>
-                </part>
-            </if>
-            <if present="code">
-                <part class="line">
-                    <part class="label">
-                        <text value="${message:EL_PROP_code}"></text>
-                    </part>
-                    <part class="value">
-                        <inputarea name="code" rows="35"></inputarea>
-                    </part>
-                </part>
-            </if>
-        </group>
-    </form>
-
+        </fieldset>
+      </if>
+      <if present="with_icon">
+        <fieldset class="line" label="">
+            <checkbox name="with_icon" label="${message:EL_PROP_WITH_ICON}"/>
+        </fieldset>
+      </if>
+      <if present="inherit">
+        <fieldset class="line" label="">
+            <checkbox name="inherit" label="${message:EL_PROP_INHERIT}"/>
+        </fieldset>
+      </if>
+      <if present="all_languages">
+        <fieldset class="line" label="">
+            <checkbox name="all_languages" label="${message:EL_PROP_ALL_LANGUAGES}"/>
+        </fieldset>
+      </if>
+      <if present="writable">
+        <fieldset class="line" label="">
+            <checkbox name="writable" label="${message:EL_PROP_writable}"/>
+        </fieldset>
+      </if>
+      <if present="width">
+        <fieldset class="line" label="${message:width}">
+            <input size="10" name="width"/>
+        </fieldset>
+      </if>
+      <if present="height">
+        <fieldset class="line" label="${message:height}">
+            <input size="10" name="height"/>
+        </fieldset>
+      </if>
+      <if present="dateformat">
+        <fieldset class="line" label="${message:EL_PROP_DATEFORMAT}">
+            <selectbox name="dateformat" list="dateformats"/>
+        </fieldset>
+      </if>
+      <if present="format">
+        <fieldset class="line" label="${message:EL_PROP_FORMAT}">
+            <radiobox name="format" list="formatlist"/>
+        </fieldset>
+      </if>
+      <if present="decimals">
+        <fieldset class="line" label="${message:EL_PROP_DECIMALS}">
+            <input size="10" maxlength="2" name="decimals"/>
+        </fieldset>
+      </if>
+      <if present="dec_point">
+        <fieldset class="line" label="${message:EL_PROP_DEC_POINT}">
+            <input size="10" maxlength="5" name="dec_point"/>
+        </fieldset>
+      </if>
+      <if present="thousand_sep">
+        <fieldset class="line" label="${message:EL_PROP_thousand_sep}">
+            <input size="10" maxlength="1" name="thousand_sep"/>
+        </fieldset>
+      </if>
+      <if present="default_text">
+        <fieldset class="line" label="${message:EL_PROP_default_text}">
+            <input size="40" maxlength="255" name="default_text"/>
+        </fieldset>
+      </if>
+      <if present="default_longtext">
+        <fieldset class="line" label="${message:EL_PROP_default_longtext}">
+            <inputarea rows="10" name="default_longtext"/>
+        </fieldset>
+      </if>
+      <if present="parameters">
+        <fieldset class="line" label="${message:EL_PROP_DYNAMIC_PARAMETERS}">
+            <inputarea rows="15" name="parameters"/>
+        </fieldset>
+        <fieldset class="line" label="">
+            <list list="${dynamic_class_parameters}" key="paramName" value="defaultValue">
+              <text value="${paramName}"/>
+              <text value=" ("/>
+              <text value="${message:DEFAULT}"/>
+              <text value=") = "/>
+              <text value="${defaultValue}"/>
+              <newline/>
+            </list>
+        </fieldset>
+      </if>
+      <if present="select_items">
+        <fieldset class="line" label="${message:EL_PROP_select_items}">
+            <inputarea rows="15" cols="40" name="select_items"/>
+        </fieldset>
+      </if>
+      <if present="linkelement">
+        <fieldset class="line" label="${message:EL_LINK}">
+            <selectbox name="linkelement" list="linkelements"/>
+        </fieldset>
+      </if>
+      <if present="name">
+        <fieldset class="line" label="${message:ELEMENT_NAME}">
+            <selectbox name="name" list="names"/>
+        </fieldset>
+      </if>
+      <if present="folderobjectid">
+        <fieldset class="line" label="${message:EL_PROP_DEFAULT_FOLDEROBJECT}">
+            <selectbox name="folderobjectid" list="folders"/>
+        </fieldset>
+      </if>
+      <if present="default_objectid">
+        <fieldset class="line" label="${message:EL_PROP_DEFAULT_OBJECT}">
+            <selectbox name="default_objectid" list="objects" addempty="true"/>
+        </fieldset>
+      </if>
+      <if present="code">
+        <fieldset class="line" label="${message:EL_PROP_code}">
+            <inputarea name="code" rows="35"/>
+        </fieldset>
+      </if>
+    </group>
+  </form>
 </output>

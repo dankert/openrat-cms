@@ -7,21 +7,25 @@
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('action') ?>" value="<?php echo O::escapeHtml('file') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('subaction') ?>" value="<?php echo O::escapeHtml('advanced') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml(''.@$_id.'') ?>" /><?php echo O::escapeHtml('') ?>
-      <label class="<?php echo O::escapeHtml('or-form-row or-form-input') ?>"><?php echo O::escapeHtml('') ?>
-        <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml('file_extension') ?>
-        </span>
-        <input name="<?php echo O::escapeHtml('extension') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$extension.'') ?>" class="<?php echo O::escapeHtml('or-extension or-input') ?>" /><?php echo O::escapeHtml('') ?>
-      </label>
-      <label class="<?php echo O::escapeHtml('or-form-row or-form-input') ?>"><?php echo O::escapeHtml('') ?>
-        <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml('type') ?>
-        </span>
-        <select name="<?php echo O::escapeHtml('type') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
-          <?php foreach($types as $_key=>$_value) {  ?>
-            <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$type){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
-            </option>
-           <?php } ?>
-        </select>
-      </label>
+      <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
+        <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('file_extension').'') ?>
+        </h3>
+        <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
+          <input name="<?php echo O::escapeHtml('extension') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$extension.'') ?>" class="<?php echo O::escapeHtml('or-extension or-input') ?>" /><?php echo O::escapeHtml('') ?>
+        </div>
+      </section>
+      <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
+        <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('type').'') ?>
+        </h3>
+        <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
+          <select name="<?php echo O::escapeHtml('type') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
+            <?php foreach($types as $_key=>$_value) {  ?>
+              <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$type){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
+              </option>
+             <?php } ?>
+          </select>
+        </div>
+      </section>
     </div>
     <div class="<?php echo O::escapeHtml('or-form-actionbar') ?>"><?php echo O::escapeHtml('') ?>
       <div class="<?php echo O::escapeHtml('or-btn or-btn--secondary or-act-form-cancel') ?>"><?php echo O::escapeHtml('') ?>

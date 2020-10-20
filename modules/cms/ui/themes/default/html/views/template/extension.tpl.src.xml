@@ -1,14 +1,10 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-    <form>
-        <list list="${extension}" extract="true">
-
-            <group title="${name}">
-
-                <set var="${name}" value="${extension}"/>
-                <input name="${name}" label="template_extension" required="true" maxlength="10"/>
-            </group>
-        </list>
-
-    </form>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <form>
+    <list list="${extension}" extract="true">
+      <group title="${name}">
+        <set var="${name}" value="${extension}"/>
+        <input name="${name}" label="template_extension" required="true" maxlength="10"/>
+      </group>
+    </list>
+  </form>
 </output>

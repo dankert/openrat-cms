@@ -1,14 +1,12 @@
-<output xmlns="http://www.openrat.de/template"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<form>
-		<part class="line">
-			<part class="label">
-				<label for="name" key="name"></label>
-			</part>
-			<part class="value">
-				<input name="name" class="focus"></input>
-			</part>
-		</part>
-	</form>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <form>
+    <fieldset class="line" label="">
+      <part class="label">
+        <label for="name" key="name"/>
+      </part>
+      <part class="value">
+        <input name="name" class="focus"/>
+      </part>
+    </fieldset>
+  </form>
 </output>

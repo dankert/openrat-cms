@@ -1,53 +1,51 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<form>
-		<if present="elements">
-			<part class="line">
-				<part class="label">
-					<radio name="type" value="addelement"></radio>
-					<label for="type_addelement">
-						<text value="${message:value}"></text>
-					</label>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <form>
+    <if present="elements">
+      <fieldset class="line" label="">
+        <part class="label">
+          <radio name="type" value="addelement"/>
+          <label for="type_addelement">
+            <text value="${message:value}"/>
+          </label>
+        </part>
+        <part class="value">
+          <selectbox name="elementid" list="elements"/>
+        </part>
+      </fieldset>
+    </if>
+    <if present="writable_elements">
+      <group/>
+      <fieldset class="line" label="">
+        <part class="label">
+          <radio name="type" value="addicon"/>
+          <label for="type_addicon">
+            <text value="${message:ICON}"/>
+          </label>
+        </part>
+        <part class="value">
+          <selectbox name="writable_elementid" list="writable_elements"/>
+        </part>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
+          <radio name="type" value="addifempty"/>
+          <label for="type_addifempty">
+            <text value="${message:TEMPLATE_SRC_IFEMPTY}"/>
+          </label>
+        </part>
+        <part class="value">
 				</part>
-				<part class="value">
-					<selectbox name="elementid" list="elements"></selectbox>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
+          <radio name="type" value="addifnotempty"/>
+          <label for="type_addifnotempty">
+            <text value="${message:TEMPLATE_SRC_IFNOTEMPTY}"/>
+          </label>
+        </part>
+        <part class="value">
 				</part>
-			</part>
-		</if>
-
-		<if present="writable_elements">
-			<group></group>
-			<part class="line">
-				<part class="label">
-					<radio name="type" value="addicon"></radio>
-					<label for="type_addicon">
-						<text value="${message:ICON}"></text>
-					</label>
-				</part>
-				<part class="value">
-					<selectbox name="writable_elementid" list="writable_elements"></selectbox>
-				</part>
-			</part>
-			<part class="line">
-				<part class="label">
-					<radio name="type" value="addifempty"></radio>
-					<label for="type_addifempty">
-						<text value="${message:TEMPLATE_SRC_IFEMPTY}"></text>
-					</label>
-				</part>
-				<part class="value">
-				</part>
-			</part>
-			<part class="line">
-				<part class="label">
-					<radio name="type" value="addifnotempty"></radio>
-					<label for="type_addifnotempty">
-						<text value="${message:TEMPLATE_SRC_IFNOTEMPTY}"></text>
-					</label>
-				</part>
-				<part class="value">
-				</part>
-			</part>
-		</if>
-	</form>
+      </fieldset>
+    </if>
+  </form>
 </output>

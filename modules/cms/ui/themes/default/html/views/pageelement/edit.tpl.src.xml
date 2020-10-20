@@ -1,27 +1,24 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-
-	<table>
-		<row class="headline">
-			<column header="true">
-				<text value="${message:language}" />
-			</column>
-			<column header="true">
-				<text value="${message:value}" />
-			</column>
-		</row>
-
-		<list list="${languages}" extract="true">
-			<row class="data,clickable">
-				<column>
-					<text value="${languagename}" />
-				</column>
-				<column title="${text}">
-					<link subaction="value" var1="languageid" value1="${languageid}" type="edit" action="pageelement">
-						<text value="${text}" maxlength="120" escape="true" />
-					</link>
-				</column>
-			</row>
-		</list>
-	</table>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <table>
+    <row class="headline">
+      <column header="true">
+        <text value="${message:language}"/>
+      </column>
+      <column header="true">
+        <text value="${message:value}"/>
+      </column>
+    </row>
+    <list list="${languages}" extract="true">
+      <row class="data,clickable">
+        <column>
+          <text value="${languagename}"/>
+        </column>
+        <column title="${text}">
+          <link subaction="value" var1="languageid" value1="${languageid}" type="edit" action="pageelement">
+            <text value="${text}" maxlength="120" escape="true"/>
+          </link>
+        </column>
+      </row>
+    </list>
+  </table>
 </output>

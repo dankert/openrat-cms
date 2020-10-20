@@ -1,31 +1,24 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-
-	<!--
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <!--
 		Falls das Veroeffentlichen deaktiviert ist, eine Warnmeldung anzeigen.
 	-->
-	<if true="${config:security/nopublish}">
-		<part class="message warn">
-			<text value="${message:NOPUBLISH_DESC}" class="help"></text>
-		</part>
-	</if>
-
-
-
-	<form async="true">
-		<group title="${message:options}">
-
-			<part class="line">
-				<part class="label">
+  <if true="${config:security/nopublish}">
+    <part class="message warn">
+      <text value="${message:NOPUBLISH_DESC}" class="help"/>
+    </part>
+  </if>
+  <form async="true">
+    <group title="${message:options}">
+      <fieldset class="line" label="">
+        <part class="label">
 				</part>
-				<part class="value">
-					<checkbox name="pages" readonly="true" default="true"></checkbox>
-					<label for="files">
-						<text value="${message:publish}"></text>
-					</label>
-				</part>
-			</part>
-
-		</group>
-	</form>
+        <part class="value">
+          <checkbox name="pages" readonly="true" default="true"/>
+          <label for="files">
+            <text value="${message:publish}"/>
+          </label>
+        </part>
+      </fieldset>
+    </group>
+  </form>
 </output>

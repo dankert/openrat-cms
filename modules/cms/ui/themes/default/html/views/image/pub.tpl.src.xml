@@ -1,25 +1,13 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<!--
-		Falls das Veroeffentlichen deaktiviert ist, eine Warnmeldung anzeigen.
-	-->
+		  Falls das Veroeffentlichen deaktiviert ist, eine Warnmeldung anzeigen.
+	  -->
 	<if true="${config:security/nopublish}">
 		<part class="message warn">
-			<text value="${message:NOPUBLISH_DESC}" class="help"></text>
+			<text value="${message:NOPUBLISH_DESC}" class="help"/>
 		</part>
 	</if>
-
 	<form label="${message:publish}" async="true">
-		<row>
-			<column>
-				<newline></newline>
-			</column>
-		</row>
-		<row>
-			<column class="act">
-				<button type="ok"></button>
-			</column>
-		</row>
 	</form>
 </output>

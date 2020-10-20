@@ -1,47 +1,18 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form>
 		<group>
-			<part class="line">
-				<part class="label">
-					<text value="${message:ELEMENT_NAME}"></text>
-				</part>
-				<part class="value">
-					<text value="${name}" class="name"></text>
-				</part>
-			</part>
+			<fieldset class="line" label="${message:ELEMENT_NAME}">
+				<text value="${name}" class="name"/>
+			</fieldset>
 		</group>
 		<group title="${message:options}">
+			<fieldset class="line" label="">
+				<checkbox name="confirm" required="true" label="${message:CONFIRM_DELETE}"/>
 
-			<part class="line">
-				<part class="label">
-				</part>
-				<part class="value">
-					<checkbox name="confirm" required="true"></checkbox>
-					<label for="confirm">
-						<text value="${message:CONFIRM_DELETE}"></text>
-					</label>
-				</part>
-			</part>
-
-			<part class="line">
-				<part class="label">
-				</part>
-				<part class="value">
-					<text value="     "></text>
-					<radio name="type" value="value"></radio>
-					<label for="type_value">
-						<text value="${message:ELEMENT_DELETE_VALUES}"></text>
-					</label>
-					<newline></newline>
-					<text value="     "></text>
-					<radio name="type" value="all"></radio>
-					<label for="type_all">
-						<text value="${message:DELETE}"></text>
-					</label>
-				</part>
-			</part>
+				<radio name="type" value="value" label="${message:ELEMENT_DELETE_VALUES}"/>
+				<radio name="type" value="all" label="${message:DELETE}"/>
+			</fieldset>
 		</group>
-
 	</form>
 </output>

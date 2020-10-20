@@ -1,32 +1,28 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form>
-		<part class="line">
+		<fieldset class="line" label="">
 			<part class="label">
-				<hidden name="sourceid" default="${sourceId}" />
+				<hidden name="sourceid" default="${sourceId}"/>
 			</part>
 			<part class="value">
-				<text value="${source.name}" />
+				<text value="${source.name}"/>
 			</part>
-		</part>
-
-		<part class="line">
+		</fieldset>
+		<fieldset class="line" label="">
 			<part class="label">
 			</part>
 			<part class="value">
-				<selectbox name="type" list="types" />
+				<selectbox name="type" list="types"/>
 			</part>
-		</part>
-		
-		<part class="line">
+		</fieldset>
+		<fieldset class="line" label="">
 			<part class="label">
-				<hidden name="targetid" default="${targetId}" />
+				<hidden name="targetid" default="${targetId}"/>
 			</part>
 			<part class="value">
-				<text value="${target.name}" />
+				<text value="${target.name}"/>
 			</part>
-		</part>
-
+		</fieldset>
 	</form>
-
 </output>

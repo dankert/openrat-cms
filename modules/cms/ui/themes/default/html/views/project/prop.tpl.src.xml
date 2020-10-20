@@ -1,45 +1,38 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form>
 		<group title="${message:NAME}">
 			<fieldset label="${message:PROJECT_NAME}">
-				<input name="name" class="name" maxlength="128"></input>
+				<input name="name" class="name" maxlength="128"/>
 			</fieldset>
 			<fieldset label="${message:PROJECT_HOSTNAME}">
 				<input name="url" maxlength="255"/>
 			</fieldset>
 		</group>
-
 		<group title="${message:PUBLISH}">
 			<fieldset label="${message:PROJECT_TARGET_DIR}">
-				<input name="target_dir" class="filename" maxlength="255"></input>
+				<input name="target_dir" class="filename" maxlength="255"/>
 			</fieldset>
-
 			<if true="${config:publish/project/override_system_command}">
 				<fieldset label="${message:PROJECT_CMD_AFTER_PUBLISH}">
 					<input name="cmd_after_publish" class="filename" maxlength="255"/>
 				</fieldset>
 			</if>
-
 			<fieldset label="${message:file_extension}">
 				<checkbox name="publishFileExtension" label="${message:PROJECT_publish_File_Extension}"/>
-				<checkbox name="publishPageExtension" label="${message:PROJECT_publish_page_Extension}" />
+				<checkbox name="publishPageExtension" label="${message:PROJECT_publish_page_Extension}"/>
 			</fieldset>
-
 			<fieldset label="${message:link_url}">
-				<radio name="linksAbsolute" value="0" label="${message:LINKS_RELATIVE}" />
-				<radio name="linksAbsolute" value="1" label="${message:LINKS_ABSOLUTE}" />
+				<radio name="linksAbsolute" value="0" label="${message:LINKS_RELATIVE}"/>
+				<radio name="linksAbsolute" value="1" label="${message:LINKS_ABSOLUTE}"/>
 			</fieldset>
-
 		</group>
-
 		<group title="${message:project_FTP}">
 			<fieldset label="${message:PROJECT_FTP_URL}">
 				<input name="ftp_url" class="filename"/>
-				<checkbox name="ftp_passive" label="${message:PROJECT_FTP_PASSIVE}" />
+				<checkbox name="ftp_passive" label="${message:PROJECT_FTP_PASSIVE}"/>
 			</fieldset>
 		</group>
-
 		<group title="${message:options}">
 			<fieldset label="${message:OPTIONS}">
 				<checkbox name="content_negotiation" label="${message:PROJECT_CONTENT_NEGOTIATION}"/>

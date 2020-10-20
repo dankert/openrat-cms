@@ -3,6 +3,7 @@
 namespace cms\action;
 
 use cms\base\Configuration;
+use cms\model\Acl;
 use cms\model\Project;
 use cms\model\Folder;
 use language\Messages;
@@ -92,29 +93,24 @@ class ProjectAction extends BaseAction
 	public function editView() {
 
 
-        $list[] = array(
-            'name'=>'content',
-            'type'=>'folder',
-            'id'  => $this->project->getRootObjectId()
-        );
-        $list[] = array(
-            'name'=>'templates',
-            'type'=>'templatelist',
-            'id'  => $this->project->projectid
-        );
-        $list[] = array(
-            'name'=>'languages',
-            'type'=>'languagelist',
-            'id'  => $this->project->projectid
-        );
-        $list[] = array(
-            'name'=>'models',
-            'type'=>'modellist',
-            'id'  => $this->project->projectid
-        );
-
-        $this->setTemplateVar('content',$list);
+        $this->setTemplateVar('projectid'       ,$this->project->projectid);
+        $this->setTemplateVar('rootobjectid'    ,$this->project->getRootObjectId());
+        $this->setTemplateVar('is_project_admin',$this->userIsProjectAdmin());
     }
+
+
+
+	/**
+	 * Stellt fest, ob der angemeldete Benutzer Projekt-Admin ist.
+	 * Dies ist der Fall, wenn der Benutzer PROP-Rechte im Root-Folder hat.
+	 * @return bool|int
+	 */
+	protected function userIsProjectAdmin() {
+
+		$rootFolder = new Folder( $this->project->getRootObjectId() );
+
+		return $rootFolder->hasRight(Acl::ACL_PROP);
+	}
 
 	/**
 	 * Liste aller Projekte anzeigen.

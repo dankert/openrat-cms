@@ -16,12 +16,16 @@ class GroupComponent extends Component
 
 	public $open = true;
 	public $show = true;
+	public $collapsible = true;
 	public $title;
 	public $icon;
 	
 	public function createElement()
 	{
-		$group = (new HtmlElement('section'))->addStyleClass('group')->addStyleClass('collapsible');
+		$group = (new HtmlElement('section'))->addStyleClass('group');
+
+		if  ( $this->collapsible )
+			$group->addStyleClass('collapsible');
 
 		$headline = (new HtmlElement('h2'))
 			->addStyleClass('collapsible-title')
@@ -30,7 +34,7 @@ class GroupComponent extends Component
 			->content( $this->title )
 			->asChildOf( $group );
 
-		if   ( $this->open )
+		if   ( $this->open || !$this->collapsible )
 			$group->addStyleClass('collapsible--is-open');
 		else
 			$group->addStyleClass('collapsible--is-closed');
@@ -47,11 +51,14 @@ class GroupComponent extends Component
 				$headline->addChild( $image );
 			}
 
-			$arrowRight = (new HtmlElement('i'))->addStyleClass(['image-icon','image-icon--node-closed','collapsible--on-closed']);
-			$headline->addChild($arrowRight );
+			if   ( $this->collapsible ) {
 
-			$arrowDown  = (new HtmlElement('i'))->addStyleClass(['image-icon','image-icon--node-open','collapsible--on-open']);
-			$headline->addChild($arrowDown  );
+				$arrowRight = (new HtmlElement('i'))->addStyleClass(['image-icon','image-icon--node-closed','collapsible--on-closed']);
+				$headline->addChild($arrowRight );
+
+				$arrowDown  = (new HtmlElement('i'))->addStyleClass(['image-icon','image-icon--node-open','collapsible--on-open']);
+				$headline->addChild($arrowDown  );
+			}
 		}
 
 		$value = (new HtmlElement('div'))

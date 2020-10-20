@@ -13,16 +13,6 @@
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('action') ?>" value="<?php echo O::escapeHtml('image') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('subaction') ?>" value="<?php echo O::escapeHtml('pub') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml(''.@$_id.'') ?>" /><?php echo O::escapeHtml('') ?>
-      <tr><?php echo O::escapeHtml('') ?>
-        <td><?php echo O::escapeHtml('') ?>
-          <br /><?php echo O::escapeHtml('') ?>
-        </td>
-      </tr>
-      <tr><?php echo O::escapeHtml('') ?>
-        <td class="<?php echo O::escapeHtml('or-act') ?>"><?php echo O::escapeHtml('') ?>
-          
-        </td>
-      </tr>
     </div>
     <div class="<?php echo O::escapeHtml('or-form-actionbar') ?>"><?php echo O::escapeHtml('') ?>
       <div class="<?php echo O::escapeHtml('or-btn or-btn--secondary or-act-form-cancel') ?>"><?php echo O::escapeHtml('') ?>

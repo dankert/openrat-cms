@@ -1,18 +1,9 @@
-<output xmlns="http://www.openrat.de/template"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-
-    <logo name="changemail"></logo>
-    <form>
-
-        <part class="line">
-            <part class="label">
-                <label for="code" key="mail_code"></label>
-            </part>
-
-            <part class="value">
-                <input type="text" name="code" size="30" focus="true" required="true"></input>
-            </part>
-        </part>
-    </form>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<logo name="changemail"/>
+	<form>
+		<fieldset label="mail_code">
+			<input type="text" name="code" size="30" focus="true" required="true"/>
+		</fieldset>
+	</form>
 </output>

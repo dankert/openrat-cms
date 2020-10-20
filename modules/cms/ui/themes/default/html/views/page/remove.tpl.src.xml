@@ -1,9 +1,9 @@
-<output xmlns="http://www.openrat.de/template"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-    <form>
-        <text label="NAME" value="${name}"></text>
-
-        <checkbox label="${message:DELETE}" name="delete"></checkbox>
-    </form>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form>
+		<fieldset label="${message:name}">
+			<text value="${name}"/>
+			<checkbox label="${message:DELETE}" name="delete" required="true"/>
+		</fieldset>
+	</form>
 </output>

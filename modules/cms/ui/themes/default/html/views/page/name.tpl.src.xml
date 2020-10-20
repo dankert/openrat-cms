@@ -1,25 +1,27 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-    <form label="${message:save}">
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form label="${message:save}">
+		<hidden name="languageid"/>
+		<group title="${message:name}" open="true">
+			<fieldset label="${message:name}">
+				<input name="name" maxlength="255" required="true"/>
+			</fieldset>
+			<fieldset label="${message:description}">
+				<inputarea name="description" class="description" maxlength="255"/>
+			</fieldset>
 
-        <hidden name="languageid" />
+		</group>
 
-        <group title="${message:name}" open="true">
-
-            <input label="name" name="name" maxlength="255" required="true" />
-
-            <inputarea label="description" name="description" class="description" maxlength="255" />
-
-        </group>
-
-        <group title="${message:alias}" open="true">
-
-            <input name="alias_filename" label="alias" class="filename" maxlength="150" />
-
-            <selectbox name="alias_folderid" label="folder" list="folders"/>
-
-            <checkbox label="${message:leave_link}" name="leave_link" default="0" />
-        </group>
-
-    </form>
+		<group title="${message:alias}" open="true">
+			<fieldset label="${message:alias}">
+				<input name="alias_filename" class="filename" maxlength="150"/>
+			</fieldset>
+			<fieldset label="${message:folder}">
+				<selectbox name="alias_folderid" list="folders"/>
+			</fieldset>
+			<fieldset label="${message:leave_link}">
+				<checkbox name="leave_link" default="0"/>
+			</fieldset>
+		</group>
+	</form>
 </output>

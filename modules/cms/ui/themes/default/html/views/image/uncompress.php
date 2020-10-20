@@ -17,25 +17,29 @@
         <div class="<?php echo O::escapeHtml('or-collapsible-value or-group-value') ?>"><?php echo O::escapeHtml('') ?>
         </div>
       </section>
-      <div class="<?php echo O::escapeHtml('or-line') ?>"><?php echo O::escapeHtml('') ?>
-        <div class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
+      <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
+        <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?>
+        </h3>
+        <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
+          </div>
+          <div class="<?php echo O::escapeHtml('or-value') ?>"><?php echo O::escapeHtml('') ?>
+            <?php  { $replace= 1; ?>
+             <?php } ?>
+            <input type="<?php echo O::escapeHtml('radio') ?>" name="<?php echo O::escapeHtml('replace') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$replace=='1'){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-radio') ?>" /><?php echo O::escapeHtml('') ?>
+            <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
+              <span><?php echo O::escapeHtml(''.@O::lang('replace').'') ?>
+              </span>
+            </label>
+            <br /><?php echo O::escapeHtml('') ?>
+            <input type="<?php echo O::escapeHtml('radio') ?>" name="<?php echo O::escapeHtml('replace') ?>" value="<?php echo O::escapeHtml('') ?>" <?php if(@$replace=='0'){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-radio') ?>" /><?php echo O::escapeHtml('') ?>
+            <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
+              <span><?php echo O::escapeHtml(''.@O::lang('new').'') ?>
+              </span>
+            </label>
+          </div>
         </div>
-        <div class="<?php echo O::escapeHtml('or-value') ?>"><?php echo O::escapeHtml('') ?>
-          <?php  { $replace= 1; ?>
-           <?php } ?>
-          <input type="<?php echo O::escapeHtml('radio') ?>" name="<?php echo O::escapeHtml('replace') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$replace=='1'){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-radio') ?>" /><?php echo O::escapeHtml('') ?>
-          <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
-            <span><?php echo O::escapeHtml(''.@O::lang('replace').'') ?>
-            </span>
-          </label>
-          <br /><?php echo O::escapeHtml('') ?>
-          <input type="<?php echo O::escapeHtml('radio') ?>" name="<?php echo O::escapeHtml('replace') ?>" value="<?php echo O::escapeHtml('') ?>" <?php if(@$replace=='0'){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-radio') ?>" /><?php echo O::escapeHtml('') ?>
-          <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
-            <span><?php echo O::escapeHtml(''.@O::lang('new').'') ?>
-            </span>
-          </label>
-        </div>
-      </div>
+      </section>
     </div>
     <div class="<?php echo O::escapeHtml('or-form-actionbar') ?>"><?php echo O::escapeHtml('') ?>
       <div class="<?php echo O::escapeHtml('or-btn or-btn--secondary or-act-form-cancel') ?>"><?php echo O::escapeHtml('') ?>

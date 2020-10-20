@@ -1,23 +1,22 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<table>
-		<row class="headline">
-			<column class="help">
-				<text value="${message:NAME}"></text>
-			</column>
-			<column class="help">
-				<text value="${message:VALUE}"></text>
-			</column>
-		</row>
-		<list list="${config}" extract="true">
-			<row class="data">
-				<column> 
-					<text value="${key}"></text>
-				</column>
-				<column class="${class}">
-					<text class="${class}" value="${value}"></text>
-				</column>
-			</row>
-		</list>
-	</table>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <table>
+    <row header="true">
+      <column>
+        <text value="${message:NAME}"/>
+      </column>
+      <column>
+        <text value="${message:VALUE}"/>
+      </column>
+    </row>
+    <list list="${config}" extract="true">
+      <row class="data">
+        <column>
+          <text value="${key}"/>
+        </column>
+        <column class="${class}">
+          <text class="${class}" value="${value}"/>
+        </column>
+      </row>
+    </list>
+  </table>
 </output>

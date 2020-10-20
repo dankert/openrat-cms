@@ -1,51 +1,21 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-
-
-    <form cancel="true">
-
-        <group open="true">
-
-            <part class="line">
-                <part class="label">
-                    <text value="${message:LABEL}"></text>
-                </part>
-                <part class="value">
-                    <input name="label" focus="true" required="true" maxlength="100"/>
-                </part>
-            </part>
-
-            <part class="line">
-                <part class="label">
-                    <text value="${message:NAME}"></text>
-                </part>
-                <part class="value">
-                    <input name="name" required="true" maxlength="50"/>
-                </part>
-            </part>
-
-            <part class="line">
-                <part class="label">
-                    <text value="${message:DESCRIPTION}"></text>
-                </part>
-                <part class="value">
-                    <inputarea name="description" rows="5" maxlength="255"></inputarea>
-                </part>
-            </part>
-        </group>
-
-        <group open="true">
-            <part class="line">
-                <part class="label">
-                    <text value="${message:ELEMENT_TYPE}"></text>
-                </part>
-                <part class="value">
-                    <selectbox name="typeid" list="types" lang="true"></selectbox>
-                </part>
-            </part>
-        </group>
-
-    </form>
-
-
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form cancel="true">
+		<group open="true">
+			<fieldset class="line" label="${message:LABEL}">
+				<input name="label" focus="true" required="true" maxlength="100"/>
+			</fieldset>
+			<fieldset class="line" label="${message:NAME}">
+				<input name="name" required="true" maxlength="50"/>
+			</fieldset>
+			<fieldset class="line" label="${message:DESCRIPTION}">
+				<inputarea name="description" rows="5" maxlength="255"/>
+			</fieldset>
+		</group>
+		<group open="true">
+			<fieldset class="line" label="${message:ELEMENT_TYPE}">
+				<selectbox name="typeid" list="types" lang="true"/>
+			</fieldset>
+		</group>
+	</form>
 </output>

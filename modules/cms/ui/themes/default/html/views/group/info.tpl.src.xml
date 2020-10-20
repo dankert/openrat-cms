@@ -1,33 +1,26 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<group title="${message:group} ${name}">
-
-        <fieldset label="${message:NAME}">
-              <text value="${name}"/>
-
-			<part class="clickable">
-				  <link class="btn" action="group" subaction="prop" type="edit">
-						<text value="${message:edit}"/>
-				  </link>
-			</part>
-        </fieldset>
-
-        <fieldset label="${message:USERS}">
-			<list list="${users}" key="id" value="name">
-				<part class="clickable">
-					<link type="open" action="user" id="${id}">
-						<text value="${name}"/>
-					</link>
-				</part>
-			</list>
-
-			<part class="clickable">
-				<link class="btn" action="group" subaction="memberships" type="edit">
-					<text value="${message:edit}"/>
-				</link>
-			</part>
-
-        </fieldset>
-
-	</group>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <group title="${message:group} ${name}">
+    <fieldset label="${message:NAME}">
+      <text value="${name}"/>
+      <part class="clickable">
+        <link class="btn" action="group" subaction="prop" type="edit">
+          <text value="${message:edit}"/>
+        </link>
+      </part>
+    </fieldset>
+    <fieldset label="${message:USERS}">
+      <list list="${users}" key="id" value="name">
+        <part class="clickable">
+          <link type="open" action="user" id="${id}">
+            <text value="${name}"/>
+          </link>
+        </part>
+      </list>
+      <part class="clickable">
+        <link class="btn" action="group" subaction="memberships" type="edit">
+          <text value="${message:edit}"/>
+        </link>
+      </part>
+    </fieldset>
+  </group>
 </output>

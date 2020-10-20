@@ -1,16 +1,11 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form>
 		<group>
-			<part class="line">
-				<part class="label">
-					<text value="${message:link_target}"></text>
-				</part>
-				<part class="value">
-					<selector id="${targetobjectid}" name="${targetobjectname}" types="page,file" param="targetobjectid" folderid="parentid"/>
-				</part>
-			</part>
-
+			<fieldset class="line" label="${message:link_target}">
+				<selector id="${targetobjectid}" name="${targetobjectname}" types="page,file" param="targetobjectid"
+						  folderid="parentid"/>
+			</fieldset>
 		</group>
 	</form>
 </output>

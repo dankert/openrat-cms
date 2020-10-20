@@ -16,17 +16,25 @@
           </i>
         </h2>
         <div class="<?php echo O::escapeHtml('or-collapsible-value or-group-value') ?>"><?php echo O::escapeHtml('') ?>
-          <label class="<?php echo O::escapeHtml('or-form-row or-form-input') ?>"><?php echo O::escapeHtml('') ?>
-            <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml('name') ?>
-            </span>
-            <input name="<?php echo O::escapeHtml('name') ?>" required="<?php echo O::escapeHtml('required') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" value="<?php echo O::escapeHtml(''.@$name.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
-          </label>
-          <label class="<?php echo O::escapeHtml('or-form-row or-form-checkbox') ?>"><?php echo O::escapeHtml('') ?>
-            <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml('description') ?>
-            </span>
-            <textarea name="<?php echo O::escapeHtml('description') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" class="<?php echo O::escapeHtml('or-input or-description') ?>"><?php echo O::escapeHtml(''.@$description.'') ?>
-            </textarea>
-          </label>
+          <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
+            <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('name').'') ?>
+            </h3>
+            <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
+              <label class="<?php echo O::escapeHtml('or-form-row or-form-input') ?>"><?php echo O::escapeHtml('') ?>
+                <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml('name') ?>
+                </span>
+                <input name="<?php echo O::escapeHtml('name') ?>" required="<?php echo O::escapeHtml('required') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" value="<?php echo O::escapeHtml(''.@$name.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
+              </label>
+            </div>
+          </section>
+          <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
+            <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('description').'') ?>
+            </h3>
+            <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
+              <textarea name="<?php echo O::escapeHtml('description') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" class="<?php echo O::escapeHtml('or-input or-description') ?>"><?php echo O::escapeHtml(''.@$description.'') ?>
+              </textarea>
+            </div>
+          </section>
         </div>
       </section>
     </div>

@@ -14,34 +14,42 @@
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('subaction') ?>" value="<?php echo O::escapeHtml('pub') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml(''.@$_id.'') ?>" /><?php echo O::escapeHtml('') ?>
       <?php $if1=($pages); if($if1) {  ?>
-        <div class="<?php echo O::escapeHtml('or-line') ?>"><?php echo O::escapeHtml('') ?>
-          <div class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
+        <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
+          <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?>
+          </h3>
+          <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
+            </div>
+            <div class="<?php echo O::escapeHtml('or-value') ?>"><?php echo O::escapeHtml('') ?>
+              <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('pages') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$pages){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+              <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(' ') ?>
+                </span>
+                <span><?php echo O::escapeHtml(''.@O::lang('pages').'') ?>
+                </span>
+              </label>
+            </div>
           </div>
-          <div class="<?php echo O::escapeHtml('or-value') ?>"><?php echo O::escapeHtml('') ?>
-            <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('pages') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$pages){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
-            <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
-              <span><?php echo O::escapeHtml(' ') ?>
-              </span>
-              <span><?php echo O::escapeHtml(''.@O::lang('pages').'') ?>
-              </span>
-            </label>
-          </div>
-        </div>
+        </section>
        <?php } ?>
       <?php $if1=($files); if($if1) {  ?>
-        <div class="<?php echo O::escapeHtml('or-line') ?>"><?php echo O::escapeHtml('') ?>
-          <div class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
+        <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
+          <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?>
+          </h3>
+          <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
+            </div>
+            <div class="<?php echo O::escapeHtml('or-value') ?>"><?php echo O::escapeHtml('') ?>
+              <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('files') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$files){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+              <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(' ') ?>
+                </span>
+                <span><?php echo O::escapeHtml(''.@O::lang('files').'') ?>
+                </span>
+              </label>
+            </div>
           </div>
-          <div class="<?php echo O::escapeHtml('or-value') ?>"><?php echo O::escapeHtml('') ?>
-            <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('files') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$files){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
-            <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
-              <span><?php echo O::escapeHtml(' ') ?>
-              </span>
-              <span><?php echo O::escapeHtml(''.@O::lang('files').'') ?>
-              </span>
-            </label>
-          </div>
-        </div>
+        </section>
        <?php } ?>
       <section class="<?php echo O::escapeHtml('or-group or-collapsible or-collapsible--is-open or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>
         <h2 class="<?php echo O::escapeHtml('or-collapsible-title or-group-title or-collapsible-act-switch') ?>"><?php echo O::escapeHtml(''.@O::lang('options').'') ?>
@@ -52,34 +60,42 @@
         </h2>
         <div class="<?php echo O::escapeHtml('or-collapsible-value or-group-value') ?>"><?php echo O::escapeHtml('') ?>
           <?php $if1=(isset($subdirs)); if($if1) {  ?>
-            <div class="<?php echo O::escapeHtml('or-line') ?>"><?php echo O::escapeHtml('') ?>
-              <div class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
+            <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
+              <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?>
+              </h3>
+              <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
+                <div class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
+                </div>
+                <div class="<?php echo O::escapeHtml('or-value') ?>"><?php echo O::escapeHtml('') ?>
+                  <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('subdirs') ?>" disabled="<?php echo O::escapeHtml('disabled') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$subdirs){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+                  <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
+                    <span><?php echo O::escapeHtml(' ') ?>
+                    </span>
+                    <span><?php echo O::escapeHtml(''.@O::lang('PUBLISH_WITH_SUBDIRS').'') ?>
+                    </span>
+                  </label>
+                </div>
               </div>
-              <div class="<?php echo O::escapeHtml('or-value') ?>"><?php echo O::escapeHtml('') ?>
-                <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('subdirs') ?>" disabled="<?php echo O::escapeHtml('disabled') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$subdirs){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
-                <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
-                  <span><?php echo O::escapeHtml(' ') ?>
-                  </span>
-                  <span><?php echo O::escapeHtml(''.@O::lang('PUBLISH_WITH_SUBDIRS').'') ?>
-                  </span>
-                </label>
-              </div>
-            </div>
+            </section>
            <?php } ?>
           <?php $if1=(isset($clean)); if($if1) {  ?>
-            <div class="<?php echo O::escapeHtml('or-line') ?>"><?php echo O::escapeHtml('') ?>
-              <div class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
+            <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
+              <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?>
+              </h3>
+              <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
+                <div class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
+                </div>
+                <div class="<?php echo O::escapeHtml('or-value') ?>"><?php echo O::escapeHtml('') ?>
+                  <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('clean') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$clean){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+                  <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
+                    <span><?php echo O::escapeHtml(' ') ?>
+                    </span>
+                    <span><?php echo O::escapeHtml(''.@O::lang('CLEAN_AFTER_PUBLISH').'') ?>
+                    </span>
+                  </label>
+                </div>
               </div>
-              <div class="<?php echo O::escapeHtml('or-value') ?>"><?php echo O::escapeHtml('') ?>
-                <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('clean') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$clean){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
-                <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
-                  <span><?php echo O::escapeHtml(' ') ?>
-                  </span>
-                  <span><?php echo O::escapeHtml(''.@O::lang('CLEAN_AFTER_PUBLISH').'') ?>
-                  </span>
-                </label>
-              </div>
-            </div>
+            </section>
            <?php } ?>
         </div>
       </section>

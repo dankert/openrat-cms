@@ -1,176 +1,161 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-
-    <form cancel="false" readonly="true">
-        <text value="${fullname}" class="headline"/>
-
-        <if not="true" empty="${image}">
-            <part class="line">
-                <part class="value">
-                    <image url="${image}" size="80x80"/>
-                </part>
-            </part>
-        </if>
-
-        <part class="line">
-            <part class="label">
-                <text value="${message:user_username}" />
-            </part>
-            <part class="value">
-                <text value="${name}" class="name" />
-            </part>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <form cancel="false" readonly="true">
+    <text value="${fullname}" class="headline"/>
+    <if not="true" empty="${image}">
+      <fieldset class="line" label="">
+        <part class="value">
+          <image url="${image}" size="80x80"/>
         </part>
-
-        <group title="${message:ADDITIONAL_INFO}">
-            <part class="line">
-                <part class="label">
-                    <text value="${message:user_fullname}" />
+      </fieldset>
+    </if>
+    <fieldset class="line" label="">
+      <part class="label">
+        <text value="${message:user_username}"/>
+      </part>
+      <part class="value">
+        <text value="${name}" class="name"/>
+      </part>
+    </fieldset>
+    <group title="${message:ADDITIONAL_INFO}">
+      <fieldset class="line" label="">
+        <part class="label">
+          <text value="${message:user_fullname}"/>
+        </part>
+        <part class="value">
+          <text value="${fullname}"/>
+        </part>
+      </fieldset>
+      <if true="${config:security/user/show_admin_mail}">
+        <fieldset class="line" label="">
+          <part class="label">
+            <label for="mail" key="user_mail"/>
+          </part>
+          <part class="value">
+            <link url="mailto:${mail}" type="external">
+              <text value="${mail}"/>
+            </link>
+            <qrcode value="mailto:${mail}"/>
+          </part>
+        </fieldset>
+      </if>
+      <fieldset class="line" label="">
+        <part class="label">
+          <text value="${message:description}"/>
+        </part>
+        <part class="value">
+          <text value="${desc}"/>
+        </part>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
+          <label for="tel" key="user_tel"/>
+        </part>
+        <part class="value">
+          <text value="${tel}"/>
+          <qrcode value="tel:${tel}"/>
+        </part>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
+          <text value="${message:timezone}"/>
+        </part>
+        <part class="value">
+          <text value="${timezone}"/>
+        </part>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
+          <label for="">
+            <text value="${message:language}"/>
+          </label>
+        </part>
+        <part class="value">
+          <text value="${language}"/>
+        </part>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
                 </part>
-                <part class="value">
-                    <text value="${fullname}" />
+        <part class="value,clickable">
+          <link type="dialog" subaction="prop" class="btn">
+            <text value="${message:edit}"/>
+          </link>
+        </part>
+      </fieldset>
+    </group>
+    <group title="${message:options}" open="false">
+      <fieldset class="line" label="">
+        <part class="label">
                 </part>
-            </part>
-            <if true="${config:security/user/show_admin_mail}">
-                <part class="line">
-                    <part class="label">
-                        <label for="mail" key="user_mail"></label>
-                    </part>
-                    <part class="value">
-                        <link url="mailto:${mail}" type="external">
-                            <text value="${mail}"/>
-                        </link>
-
-                        <qrcode value="mailto:${mail}"/>
-                    </part>
+        <part class="value">
+          <checkbox name="is_admin" readonly="true"/>
+          <label for="is_admin" key="user_admin"/>
+        </part>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
+          <text value="${message::user_ldapdn}"/>
+        </part>
+        <part class="value">
+          <text value="${ldap_dn}"/>
+        </part>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
+          <text value="${message:user_style}"/>
+        </part>
+        <part class="value">
+          <text value="${style}"/>
+        </part>
+      </fieldset>
+    </group>
+    <group title="${message:security}" open="false">
+      <fieldset class="line" label="">
+        <part class="label">
+          <text value="${message:user_password_expires}"/>
+        </part>
+        <part class="value">
+          <date date="${passwordExpires}"/>
+        </part>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
                 </part>
-            </if>
-            <part class="line">
-                <part class="label">
-                    <text value="${message:description}"></text>
-                </part>
-                <part class="value">
-                    <text value="${desc}" />
-                </part>
-            </part>
-            <part class="line">
-                <part class="label">
-                    <label for="tel" key="user_tel"></label>
-                </part>
-                <part class="value">
-                    <text value="${tel}" />
-                    <qrcode value="tel:${tel}"/>
-
-                </part>
-            </part>
-            <part class="line">
-                <part class="label">
-                        <text value="${message:timezone}"/>
-                </part>
-                <part class="value">
-                    <text value="${timezone}"/>
-                </part>
-            </part>
-            <part class="line">
-                <part class="label">
-                    <label for="">
-                        <text value="${message:language}"/>
-                    </label>
-                </part>
-                <part class="value">
-                    <text value="${language}" />
-                </part>
-            </part>
-            <part class="line">
-                <part class="label">
-                </part>
-                <part class="value,clickable">
-                    <link type="dialog" subaction="prop" class="btn">
-                        <text value="${message:edit}"/>
-                    </link>
-                </part>
-            </part>
-
-
-        </group>
-
-
-        <group title="${message:options}" open="false">
-            <part class="line">
-                <part class="label">
-                </part>
-                <part class="value">
-                    <checkbox name="is_admin" readonly="true"></checkbox>
-                    <label for="is_admin" key="user_admin"></label>
-                </part>
-            </part>
-            <part class="line">
-                <part class="label">
-                    <text value="${message::user_ldapdn}"></text>
-                </part>
-                <part class="value">
-                    <text value="${ldap_dn}"></text>
-                </part>
-            </part>
-            <part class="line">
-                <part class="label">
-                    <text value="${message:user_style}"></text>
-                </part>
-                <part class="value">
-                    <text value="${style}"></text>
-                </part>
-            </part>
-        </group>
-        <group title="${message:security}" open="false">
-            <part class="line">
-                <part class="label">
-                    <text value="${message:user_password_expires}"/>
-                </part>
-                <part class="value">
-                    <date date="${passwordExpires}"/>
-                </part>
-            </part>
-            <part class="line">
-                <part class="label">
-                </part>
-                <part class="value clickable">
-                    <link type="dialog" subaction="pw" action="user" class="btn">
-                        <text value="${message:edit_password}"/>
-                    </link>
-                </part>
-            </part>
-
-            <part class="line">
-                <part class="label">
-                    <text value="${message:user_last_login}"/>
-                </part>
-                <part class="value">
-                    <date date="${lastLogin}"/>
-                </part>
-            </part>
-
-            <!-- TOTP Settings -->
-            <part class="line">
-                <part class="label">
-                    <text value="${message:token}"/>
-                </part>
-                <part class="value">
-                    <text value="${totpToken}"/>
-                </part>
-            </part>
-            <part class="line">
-                <part class="label">
-                    <label for="totp" key="user_totp"></label>
-                </part>
-                <part class="value">
-                    <checkbox name="totp"/>
-                    <label for="totp" key="user_totp"></label>
-
-                    <!--<text value="${otpSecret}"></text>-->
-                    <qrcode value="${totpSecretUrl}"/>
-                </part>
-            </part>
-
-            <!-- HOTP is not implemented -
+        <part class="value clickable">
+          <link type="dialog" subaction="pw" action="user" class="btn">
+            <text value="${message:edit_password}"/>
+          </link>
+        </part>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
+          <text value="${message:user_last_login}"/>
+        </part>
+        <part class="value">
+          <date date="${lastLogin}"/>
+        </part>
+      </fieldset>
+      <!-- TOTP Settings -->
+      <fieldset class="line" label="">
+        <part class="label">
+          <text value="${message:token}"/>
+        </part>
+        <part class="value">
+          <text value="${totpToken}"/>
+        </part>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
+          <label for="totp" key="user_totp"/>
+        </part>
+        <part class="value">
+          <checkbox name="totp"/>
+          <label for="totp" key="user_totp"/>
+          <!--<text value="${otpSecret}"></text>-->
+          <qrcode value="${totpSecretUrl}"/>
+        </part>
+      </fieldset>
+      <!-- HOTP is not implemented -
             <part class="line">
                 <part class="label">
                     <label for="otpsecret" key="user_hotp"></label>
@@ -183,6 +168,6 @@
                 </part>
             </part>
             -->
-        </group>
-    </form>
+    </group>
+  </form>
 </output>

@@ -87,49 +87,61 @@
           <?php  { $type= $defaulttype; ?>
            <?php } ?>
           <?php foreach((array)$actionlist as $list_key=>$actiontype) {  ?>
-            <div class="<?php echo O::escapeHtml('or-line') ?>"><?php echo O::escapeHtml('') ?>
+            <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
+              <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?>
+              </h3>
+              <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
+                <div class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
+                </div>
+                <div class="<?php echo O::escapeHtml('or-value') ?>"><?php echo O::escapeHtml('') ?>
+                  <input type="<?php echo O::escapeHtml('radio') ?>" name="<?php echo O::escapeHtml('type') ?>" value="<?php echo O::escapeHtml(''.@$actiontype.'') ?>" <?php if(@$type=='${actiontype}'){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-radio') ?>" /><?php echo O::escapeHtml('') ?>
+                  <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
+                    <span><?php echo O::escapeHtml(' ') ?>
+                    </span>
+                    <span><?php echo O::escapeHtml(''.@O::lang('FOLDER_SELECT_'.@$actiontype.'').'') ?>
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </section>
+           <?php } ?>
+          <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
+            <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?>
+            </h3>
+            <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
               <div class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
               </div>
               <div class="<?php echo O::escapeHtml('or-value') ?>"><?php echo O::escapeHtml('') ?>
-                <input type="<?php echo O::escapeHtml('radio') ?>" name="<?php echo O::escapeHtml('type') ?>" value="<?php echo O::escapeHtml(''.@$actiontype.'') ?>" <?php if(@$type=='${actiontype}'){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-radio') ?>" /><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml('    ') ?>
+                </span>
+                <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('confirm') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$confirm){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> required="<?php echo O::escapeHtml('required') ?>" class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
                 <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
-                  <span><?php echo O::escapeHtml(' ') ?>
-                  </span>
-                  <span><?php echo O::escapeHtml(''.@O::lang('FOLDER_SELECT_'.@$actiontype.'').'') ?>
+                  <span><?php echo O::escapeHtml(''.@O::lang('CONFIRM_DELETE').'') ?>
                   </span>
                 </label>
               </div>
             </div>
-           <?php } ?>
-          <div class="<?php echo O::escapeHtml('or-line') ?>"><?php echo O::escapeHtml('') ?>
-            <div class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
-            </div>
-            <div class="<?php echo O::escapeHtml('or-value') ?>"><?php echo O::escapeHtml('') ?>
-              <span><?php echo O::escapeHtml('    ') ?>
-              </span>
-              <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('confirm') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$confirm){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> required="<?php echo O::escapeHtml('required') ?>" class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
-              <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
-                <span><?php echo O::escapeHtml(''.@O::lang('CONFIRM_DELETE').'') ?>
+          </section>
+          <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
+            <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?>
+            </h3>
+            <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('FOLDER_SELECT_TARGET_FOLDER').'') ?>
                 </span>
-              </label>
-            </div>
-          </div>
-          <div class="<?php echo O::escapeHtml('or-line') ?>"><?php echo O::escapeHtml('') ?>
-            <div class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
-              <span><?php echo O::escapeHtml(''.@O::lang('FOLDER_SELECT_TARGET_FOLDER').'') ?>
-              </span>
-            </div>
-            <div class="<?php echo O::escapeHtml('or-value') ?>"><?php echo O::escapeHtml('') ?>
-              <div class="<?php echo O::escapeHtml('or-selector') ?>"><?php echo O::escapeHtml('') ?>
-                <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('targetobjectid') ?>" value="<?php echo O::escapeHtml(''.@$targetobjectid.'') ?>" class="<?php echo O::escapeHtml('or-selector-link-value') ?>" /><?php echo O::escapeHtml('') ?>
-                <input type="<?php echo O::escapeHtml('text') ?>" name="<?php echo O::escapeHtml('targetobjectid_text') ?>" placeholder="<?php echo O::escapeHtml(''.@$rootfoldername.'') ?>" value="<?php echo O::escapeHtml(''.@$rootfoldername.'') ?>" class="<?php echo O::escapeHtml('or-selector-link-name') ?>" /><?php echo O::escapeHtml('') ?>
-                <div class="<?php echo O::escapeHtml('or-dropdown or-act-selector-search-results') ?>"><?php echo O::escapeHtml('') ?>
-                </div>
-                <div type="<?php echo O::escapeHtml('hidden') ?>" data-types="<?php echo O::escapeHtml('folder') ?>" data-init-id="<?php echo O::escapeHtml(''.@$rootfolderid.'') ?>" data-init-folderid="<?php echo O::escapeHtml(''.@$rootfolderid.'') ?>" class="<?php echo O::escapeHtml('or-navtree or-act-load-selector-tree') ?>"><?php echo O::escapeHtml('') ?>
+              </div>
+              <div class="<?php echo O::escapeHtml('or-value') ?>"><?php echo O::escapeHtml('') ?>
+                <div class="<?php echo O::escapeHtml('or-selector') ?>"><?php echo O::escapeHtml('') ?>
+                  <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('targetobjectid') ?>" value="<?php echo O::escapeHtml(''.@$targetobjectid.'') ?>" class="<?php echo O::escapeHtml('or-selector-link-value') ?>" /><?php echo O::escapeHtml('') ?>
+                  <input type="<?php echo O::escapeHtml('text') ?>" name="<?php echo O::escapeHtml('targetobjectid_text') ?>" placeholder="<?php echo O::escapeHtml(''.@$rootfoldername.'') ?>" value="<?php echo O::escapeHtml(''.@$rootfoldername.'') ?>" class="<?php echo O::escapeHtml('or-selector-link-name') ?>" /><?php echo O::escapeHtml('') ?>
+                  <div class="<?php echo O::escapeHtml('or-dropdown or-act-selector-search-results') ?>"><?php echo O::escapeHtml('') ?>
+                  </div>
+                  <div type="<?php echo O::escapeHtml('hidden') ?>" data-types="<?php echo O::escapeHtml('folder') ?>" data-init-id="<?php echo O::escapeHtml(''.@$rootfolderid.'') ?>" data-init-folderid="<?php echo O::escapeHtml(''.@$rootfolderid.'') ?>" class="<?php echo O::escapeHtml('or-navtree or-act-load-selector-tree') ?>"><?php echo O::escapeHtml('') ?>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </section>
         </div>
       </section>
     </div>

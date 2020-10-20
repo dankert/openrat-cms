@@ -1,78 +1,66 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-
-    <part class="form">
-        <group title="${message:USER}" open="true" show="true">
-            <fieldset label="${message:USER_USERNAME}">
-                <text value="${user_name}"/>
-            </fieldset>
-            <fieldset label="${message:USER_FULLNAME}">
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<part class="form">
+		<group title="${message:USER}" open="true" show="true">
+			<fieldset label="${message:USER_USERNAME}">
+				<text value="${user_name}"/>
+			</fieldset>
+			<fieldset label="${message:USER_FULLNAME}">
 				<text value="${user_fullname}"/>
-            </fieldset>
-            <fieldset label="${message:USER_LOGIN_DATE}">
-                <date date="${user_login}"/>
-            </fieldset>
-        </group>
-
-        <group title="${message:CMS}">
-
+			</fieldset>
+			<fieldset label="${message:USER_LOGIN_DATE}">
+				<date date="${user_login}"/>
+			</fieldset>
+		</group>
+		<group title="${message:CMS}">
 			<fieldset label="${message:NAME}">
 				<part>
 					<text value="${cms_name}"/>
 					<text value="${cms_version}"/>
 				</part>
-
 			</fieldset>
-
-            <fieldset label="${message:OPERATOR}">
-                    <text value="${cms_operator}"/>
-            </fieldset>
-
-        </group>
-
-        <group title="${message:SYSTEM}">
-            <fieldset label="${message:DATE_TIME}">
+			<fieldset label="${message:OPERATOR}">
+				<text value="${cms_operator}"/>
+			</fieldset>
+		</group>
+		<group title="${message:SYSTEM}">
+			<fieldset label="${message:DATE_TIME}">
 				<text value="${time}"/>
-            </fieldset>
-
-            <fieldset label="${message:OPERATING_SYSTEM}">
-                <part>
-                    <text value="${os}"/>
-                    <text value="${release}"/>
-                    <text value="${machine}"/>
-                </part>
-            </fieldset>
-
-			<fieldset label="${message:INTERPRETER}" >
-                <text value="${version}"/>
 			</fieldset>
-
-        </group>
-
-        <group title="${message:LICENSE}">
-
-            <table filter="false">
-                <row class="headline">
-                    <column>
-                        <text value="${message:name}"/>
-                    </column>
-                    <column>
-                        <text value="${message:license}"/>
-                    </column>
-                </row>
-                <list list="${software}" extract="true">
-                    <row class="data">
-                        <column class="clickable">
-                            <link type="external" url="${url}">
+			<fieldset label="${message:OPERATING_SYSTEM}">
+				<part>
+					<text value="${os}"/>
+					<text value="${release}"/>
+					<text value="${machine}"/>
+				</part>
+			</fieldset>
+			<fieldset label="${message:INTERPRETER}">
+				<text value="${version}"/>
+			</fieldset>
+		</group>
+		<group title="${message:LICENSE}">
+			<table filter="false">
+				<row class="headline">
+					<column>
+						<text value="${message:name}"/>
+					</column>
+					<column>
+						<text value="${message:license}"/>
+					</column>
+				</row>
+				<list list="${software}" extract="true">
+					<row class="data">
+						<column class="clickable">
+							<link type="external" url="${url}">
 								<text value="${name}"/>
-                            </link>
-                        </column>
-                        <column>
+							</link>
+						</column>
+						<column>
 							<text value="${license}"/>
-                        </column>
-                    </row>
-                </list>
-            </table>
-        </group>
-    </part>
+						</column>
+					</row>
+				</list>
+			</table>
+		</group>
+	</part>
 </output>

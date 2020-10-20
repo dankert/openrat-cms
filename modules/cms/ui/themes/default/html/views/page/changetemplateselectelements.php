@@ -9,12 +9,10 @@
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml(''.@$_id.'') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('newtemplateid') ?>" value="<?php echo O::escapeHtml(''.@$newtemplateid.'') ?>" /><?php echo O::escapeHtml('') ?>
       <?php foreach((array)$elements as $list_key=>$list_value) { extract($list_value); ?>
-        <div class="<?php echo O::escapeHtml('or-line') ?>"><?php echo O::escapeHtml('') ?>
-          <div class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
-            <span><?php echo O::escapeHtml(''.@$name.'') ?>
-            </span>
-          </div>
-          <div class="<?php echo O::escapeHtml('or-value') ?>"><?php echo O::escapeHtml('') ?>
+        <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
+          <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@$name.'') ?>
+          </h3>
+          <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
             <select name="<?php echo O::escapeHtml(''.@$newElementsName.'') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
               <?php foreach($newElementsList as $_key=>$_value) {  ?>
                 <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==''){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
@@ -22,7 +20,7 @@
                <?php } ?>
             </select>
           </div>
-        </div>
+        </section>
        <?php } ?>
     </div>
     <div class="<?php echo O::escapeHtml('or-form-actionbar') ?>"><?php echo O::escapeHtml('') ?>

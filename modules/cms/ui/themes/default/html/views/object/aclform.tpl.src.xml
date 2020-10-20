@@ -1,76 +1,42 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form>
 		<group title="${message:users}">
-			<part class="line">
-				<part class="label">
-					<radio name="type" value="all"></radio>
-					<label for="type" value="all">
-						<text value="${message:ALL}"></text>
-					</label>
-				</part>
-				<part class="value">
-				</part>
-			</part>
-			<part class="line">
-				<part class="label">
-					<radio name="type" value="user"></radio>
-					<label for="type" value="user">
-						<text value="${message:USER}"></text>
-					</label>
-				</part>
-				<part class="value">
-					<selectbox name="userid" list="users" addempty="true" default=""></selectbox>
-				</part>
-			</part>
+			<fieldset class="line" label="">
+				<radio name="type" value="all" label="${message:ALL}"/>
+			</fieldset>
+
+			<fieldset class="line" label="">
+				<radio name="type" value="user" label="${message:USER}"/>
+				<selectbox name="userid" list="users" addempty="true" default=""/>
+			</fieldset>
 			<if present="groups">
-				<part class="line">
-					<part class="label">
-						<radio name="type" value="group"></radio>
-						<label for="type" value="group">
-							<text value="${message:GROUP}"></text>
-						</label>
-					</part>
-					<part class="value">
-						<selectbox name="groupid" list="groups" addempty="true" default=""></selectbox>
-					</part>
-				</part>
+				<fieldset class="line" label="">
+					<radio name="type" value="group" label="${message:GROUP}"/>
+					<selectbox name="groupid" list="groups" addempty="true" default=""/>
+				</fieldset>
 			</if>
 		</group>
-
 		<group title="${message:language}">
-			<part class="line">
-				<part class="label">
-					<label for="languageid">
-						<text value="${message:LANGUAGE}"></text>
-					</label>
-				</part>
-
-				<part class="value">
-					<selectbox name="languageid" list="languages" default=""></selectbox>
-				</part>
-			</part>
+			<fieldset class="line" label="${message:LANGUAGE}">
+				<selectbox name="languageid" list="languages" default=""/>
+			</fieldset>
 		</group>
-
 		<group title="${message:acl}">
-			<part class="line">
-				<part class="label">
-				</part>
-				<part class="value">
-					<list list="${show}" value="t" key="k">
-						<part>
-							<if value="${t}" equals="read">
-								<set var="${t}" value="true" />
-								<checkbox name="${t}" readonly="true"></checkbox>
-							</if>
-							<else>
-								<set var="${t}" value="false" />
-								<checkbox name="${t}" readonly="false" label="${message:acl_${t}}"></checkbox>
-							</else>
-						</part>
-					</list>
-				</part>
-			</part>
+			<fieldset class="line" label="">
+				<list list="${show}" value="t" key="k">
+					<part>
+						<if value="${t}" equals="read">
+							<set var="${t}" value="true"/>
+							<checkbox name="${t}" readonly="true"/>
+						</if>
+						<else>
+							<set var="${t}" value="false"/>
+							<checkbox name="${t}" readonly="false" label="${message:acl_${t}}"/>
+						</else>
+					</part>
+				</list>
+			</fieldset>
 		</group>
 	</form>
 </output>

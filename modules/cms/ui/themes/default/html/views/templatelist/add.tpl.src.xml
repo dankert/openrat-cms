@@ -1,47 +1,46 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<form>
-		<part class="line">
-			<part class="label" colspan="2">
-				<text value="${message:name}"></text>
-			</part>
-			<part class="value">
-				<input name="name" maxlength="50"></input>
-			</part>
-		</part>
-		<group title="${message:options}">
-			<part class="line">
-				<part class="label">
-					<radio name="type" value="empty"></radio>
-				</part>
-				<part class="value">
-					<label for="type_empty">
-						<text value="${message:empty}"></text>
-					</label>
-				</part>
-			</part>
-			<part class="line">
-				<part class="label">
-					<label for="type_copy">
-						<text value="${message:copy}"></text>
-					</label>
-					<radio name="type" value="copy"></radio>
-				</part>
-				<part class="value">
-					<selectbox name="templateid" list="templates"></selectbox>
-				</part>
-			</part>
-			<part class="line">
-				<part class="label">
-					<label for="type_example">
-						<text value="${message:example}"></text>
-					</label>
-					<radio name="type" value="example"></radio>
-				</part>
-				<part class="value">
-					<selectbox name="example" list="examples"></selectbox>
-				</part>
-			</part>
-		</group>
-	</form>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <form>
+    <fieldset class="line" label="">
+      <part class="label" colspan="2">
+        <text value="${message:name}"/>
+      </part>
+      <part class="value">
+        <input name="name" maxlength="50"/>
+      </part>
+    </fieldset>
+    <group title="${message:options}">
+      <fieldset class="line" label="">
+        <part class="label">
+          <radio name="type" value="empty"/>
+        </part>
+        <part class="value">
+          <label for="type_empty">
+            <text value="${message:empty}"/>
+          </label>
+        </part>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
+          <label for="type_copy">
+            <text value="${message:copy}"/>
+          </label>
+          <radio name="type" value="copy"/>
+        </part>
+        <part class="value">
+          <selectbox name="templateid" list="templates"/>
+        </part>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
+          <label for="type_example">
+            <text value="${message:example}"/>
+          </label>
+          <radio name="type" value="example"/>
+        </part>
+        <part class="value">
+          <selectbox name="example" list="examples"/>
+        </part>
+      </fieldset>
+    </group>
+  </form>
 </output>

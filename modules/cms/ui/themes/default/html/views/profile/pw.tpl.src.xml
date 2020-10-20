@@ -1,49 +1,25 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form>
-
-
 		<if true="${pwchange_enabled}">
-			<logo name="changepassword"></logo>
-
-			<group title="${message:user_act_password}">
-				<part class="line">
-					<part class="label">
-						<label for="act_password">
-							<text value="${message:user_password}"></text>
-						</label>
-					</part>
-					<part class="value">
-						<password name="act_password" class="focus"></password>
-					</part>
-				</part>
+			<logo name="changepassword"/>
+			<group title="${message:user_act_password}" collapsible="false">
+				<fieldset class="line" label="${message:user_password}">
+					<password name="act_password" class="focus" required="true"/>
+				</fieldset>
 			</group>
-			<group title="${message:user_new_password}">
-				<part class="line">
-					<part class="label">
-						<label for="password1">
-							<text value="${message:user_new_password}"></text>
-						</label>
-					</part>
-					<part class="value">
-						<password name="password1"></password>
-					</part>
-				</part>
-				<part class="line">
-					<part class="label">
-						<label for="password2">
-							<text value="${message:user_new_password_repeat}"></text>
-						</label>
-					</part>
-					<part class="value">
-						<password name="password2"></password>
-					</part>
-				</part>
+			<group title="${message:user_new_password}" collapsible="false">
+				<fieldset class="line" label="${message:user_new_password}">
+					<password name="password1" minlength="${config:security/password/min_length}"
+							  hint="${message:USER_NEW_PASSWORD}" required="true"/>
+					<password name="password2" minlength="${config:security/password/min_length}"
+							  hint="${message:USER_NEW_PASSWORD_REPEAT}" required="true"/>
+				</fieldset>
 			</group>
 		</if>
 		<else>
-			<part class="message warn">
-				<text value="${message:pwchange_not_allowed}" />
+			<part class="message message-warn">
+				<text value="${message:pwchange_not_allowed}"/>
 			</part>
 		</else>
 	</form>

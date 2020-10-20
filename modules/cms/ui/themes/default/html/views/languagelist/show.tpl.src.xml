@@ -1,34 +1,33 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<table>
-		<row class="headline">
+		<row header="true">
 			<column>
-				<text value="${message:NAME}"></text>
+				<text value="${message:NAME}"/>
 			</column>
 			<column>
-				<text value="${message:LANGUAGE_ISOCODE}"></text>
+				<text value="${message:LANGUAGE_ISOCODE}"/>
 			</column>
 			<column>
-				<text value=""></text>
+				<text value=""/>
 			</column>
 		</row>
 		<list list="${el}" extract="true">
 			<row class="data">
 				<column class="clickable">
-					<image action="language"></image>
-						<link type="open" name="${name}" action="language" id="${id}">
-							<text value="${name}" maxlength="25"></text>
-						</link>
+					<image action="language"/>
+					<link type="open" name="${name}" action="language" id="${id}">
+						<text value="${name}" maxlength="25"/>
+					</link>
 				</column>
 				<column>
-					<text value="${isocode}"></text>
+					<text value="${isocode}"/>
 				</column>
 				<if false="${is_default}">
-
 					<column class="clickable">
 						<if present="id">
 							<link type="post" action="language" subaction="setdefault" id="${id}">
-								<text value="${message:make_default}"></text>
+								<text value="${message:make_default}"/>
 							</link>
 						</if>
 						<else>
@@ -37,12 +36,12 @@
 				</if>
 				<else>
 					<column>
-						<text value="${message:is_default}" type="emphatic" />
+						<text value="${message:is_default}" type="emphatic"/>
 					</column>
 				</else>
 			</row>
-			<set var="select_url"></set>
-			<set var="default_url"></set>
+			<set var="select_url"/>
+			<set var="default_url"/>
 		</list>
 		<row class="data">
 			<column colspan="3" class="clickable">

@@ -1,40 +1,34 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<form>
-
-		<part class="line">
-			<part class="label">
-				<text value="${message:URL}"></text>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <form>
+    <fieldset class="line" label="">
+      <part class="label">
+        <text value="${message:URL}"/>
+      </part>
+      <part class="value">
+        <input name="url" size="50" default=""/>
+      </part>
+    </fieldset>
+    <fieldset class="line" label="">
+      <part class="label">
+        <text value="${message:NAME}"/>
+      </part>
+      <part class="value">
+        <input name="name" size="20" default=""/>
+      </part>
+    </fieldset>
+    <fieldset class="line" label="">
+      <part class="label">
 			</part>
-			<part class="value">
-				<input name="url" size="50" default=""></input>
+      <part class="value">
 			</part>
-		</part>
-
-		<part class="line">
-			<part class="label">
-				<text value="${message:NAME}"></text>
-			</part>
-			<part class="value">
-				<input name="name" size="20" default=""></input>
-			</part>
-		</part>
-
-		<part class="line">
-			<part class="label">
-			</part>
-			<part class="value">
-			</part>
-		</part>
-
-		<part class="line">
-			<part class="label">
-				<text value="${message:DESCRIPTION}"></text>
-			</part>
-			<part class="value">
-				<inputarea rows="5" cols="50" name="description" default=""></inputarea>
-			</part>
-		</part>
-
-	</form>
+    </fieldset>
+    <fieldset class="line" label="">
+      <part class="label">
+        <text value="${message:DESCRIPTION}"/>
+      </part>
+      <part class="value">
+        <inputarea rows="5" cols="50" name="description" default=""/>
+      </part>
+    </fieldset>
+  </form>
 </output>

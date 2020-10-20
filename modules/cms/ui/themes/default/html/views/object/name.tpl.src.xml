@@ -1,15 +1,14 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-    <form label="${message:save}">
-
-        <hidden name="languageid" />
-        <group title="${message:alias}" open="true">
-
-            <input label="name" name="name" maxlength="255" required="true" />
-
-            <inputarea label="description" name="description" class="description" maxlength="255" />
-
-        </group>
-        
-    </form>
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form label="${message:save}">
+		<hidden name="languageid"/>
+		<group title="${message:alias}" open="true">
+			<fieldset label="${message:name}">
+				<input label="name" name="name" maxlength="255" required="true"/>
+			</fieldset>
+			<fieldset label="${message:description}">
+				<inputarea name="description" class="description" maxlength="255"/>
+			</fieldset>
+		</group>
+	</form>
 </output>

@@ -1,17 +1,15 @@
-<output xmlns="http://www.openrat.de/template"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<row>
-		<column colspan="2">
-			<insert url="${preview_url}"></insert>
-			<link class="action" action="file" subaction="edit">
-				<image file="icon/edit"></image>
-				<text value="${message:menu_file_edit}"></text>
-			</link>
-			<link class="action" action="file" subaction="editvalue">
-				<image file="icon/editvalue"></image>
-				<text value="${message:menu_file_editvalue}"></text>
-			</link>
-		</column>
-	</row>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <row>
+    <column colspan="2">
+      <insert url="${preview_url}"/>
+      <link class="action" action="file" subaction="edit">
+        <image file="icon/edit"/>
+        <text value="${message:menu_file_edit}"/>
+      </link>
+      <link class="action" action="file" subaction="editvalue">
+        <image file="icon/editvalue"/>
+        <text value="${message:menu_file_editvalue}"/>
+      </link>
+    </column>
+  </row>
 </output>

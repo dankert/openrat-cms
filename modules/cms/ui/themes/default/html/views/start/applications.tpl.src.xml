@@ -1,24 +1,23 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<table>
-		<row class="data">
-			<column colspan="2">
-				<link action="index" subaction="projectmenu">
-					<text value="OpenRat"></text>
-				</link>
-			</column>
-		</row>
-		<list list="${applications}" extract="true">
-			<row class="data">
-				<column>
-					<link url="${url}">
-						<text value="${name}"></text>
-					</link>
-				</column>
-				<column>
-					<text value="${description}"></text>
-				</column>
-			</row>
-		</list>
-	</table>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <table>
+    <row class="data">
+      <column colspan="2">
+        <link action="index" subaction="projectmenu">
+          <text value="OpenRat"/>
+        </link>
+      </column>
+    </row>
+    <list list="${applications}" extract="true">
+      <row class="data">
+        <column>
+          <link url="${url}">
+            <text value="${name}"/>
+          </link>
+        </column>
+        <column>
+          <text value="${description}"/>
+        </column>
+      </row>
+    </list>
+  </table>
 </output>

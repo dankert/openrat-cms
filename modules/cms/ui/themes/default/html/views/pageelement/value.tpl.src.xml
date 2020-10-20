@@ -1,205 +1,181 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form method="post" label="${message:save}" apply="true">
-		<hidden name="languageid" />
-		<hidden name="elementid" />
-		<hidden name="value_time" />
-			<text value="${desc}" class="help"></text>
-			<if value="${type}" equals="date">
-				<group title="${message:date}">
-					<part class="line">
-							<input type="date" name="date" label="date" />
-							<input type="time" name="time" label="time" />
-					</part>
-
-				</group>
-			</if>
-			<if value="${type}" equals="text">
-				<row>
-					<column colspan="2">
-						<input size="50" maxlength="255" class="text" name="text"></input>
-					</column>
-				</row>
-			</if>
-
-			<if value="${type}" equals="longtext">
-				<hidden name="format" />
-				<if present="preview">
-					<part class="preview">
-						<group title="${message:page_preview}">
-							<text value="${preview}" escape="false"></text>
-						</group>
-					</part>
-				</if>
-
-				<if value="${editor}" equals="markdown">
-					<editor type="markdown" name="text"></editor>
-				</if>
-				<if value="${editor}" equals="html">
-					<editor type="html" name="text"></editor>
-				</if>
-				<if value="${editor}" equals="wiki">
-					<if present="languagetext">
-						<group title="${languagename}">
-							<text value="${languagetext}"></text>
-						</group>
-						<newline></newline>
-						<newline></newline>
-					</if>
-					<editor type="wiki" name="text"></editor>
-					<group title="${message:help}" open="false">
-						<table>
-							<column>
-								<text value="${config:editor/text-markup/strong-begin}"></text>
-								<text value="${message:text_markup_strong}"></text>
-								<text value="${config:editor/text-markup/strong-end}"></text>
-								<newline></newline>
-								<text value="${config:editor/text-markup/emphatic-begin}"></text>
-								<text value="${message:text_markup_emphatic}"></text>
-								<text value="${config:editor/text-markup/emphatic-end}"></text>
-							</column>
-							<column>
-								<text value="${config:editor/text-markup/list-numbered}"></text>
-								<text value="${message:text_markup_numbered_list}"></text>
-								<newline></newline>
-								<text value="${config:editor/text-markup/list-numbered}"></text>
-								<text value="..."></text>
-								<newline></newline>
-							</column>
-							<column>
-								<text value="${config:editor/text-markup/list-unnumbered}"></text>
-								<text value="${message:text_markup_unnumbered_list}"></text>
-								<newline></newline>
-								<text value="${config:editor/text-markup/list-unnumbered}"></text>
-								<text value="..."></text>
-								<newline></newline>
-							</column>
-							<column>
-								<text value="${config:editor/text-markup/table-cell-sep}"></text>
-								<text value="${message:text_markup_table}"></text>
-								<text value="${config:editor/text-markup/table-cell-sep}"></text>
-								<text value="..."></text>
-								<text value="${config:editor/text-markup/table-cell-sep}"></text>
-								<text value="..."></text>
-								<text value="${config:editor/text-markup/table-cell-sep}"></text>
-								<newline></newline>
-								<text value="${config:editor/text-markup/table-cell-sep}"></text>
-								<text value="..."></text>
-								<text value="${config:editor/text-markup/table-cell-sep}"></text>
-								<text value="..."></text>
-								<text value="${config:editor/text-markup/table-cell-sep}"></text>
-								<text value="..."></text>
-								<text value="${config:editor/text-markup/table-cell-sep}"></text>
-								<newline></newline>
-							</column>
-						</table>
-					</group>
-				</if>
-				<if value="${editor}" equals="text">
-					<inputarea class="editor raw-editor" name="text" rows="25" cols="70"></inputarea>
-				</if>
-			</if>
-			<if value="${type}" equals="link">
-				<group>
-					<part class="line">
-						<part class="label">
-							<label for="linkobjectid">
-								<text value="${message:link_target}"></text>
-							</label>
-						</part>
-						<part class="value">
-							<!-- 
-							<selectbox list="objects" name="linkobjectid" addempty="true"></selectbox>
-							 -->
-							<selector param="linkobjectid" types="${types}" name="${linkname}"
-								id="${linkobjectid}" folderid="${rootfolderid}" />
-						</part>
-
-					</part>
-					<part class="line">
-
-						<part class="label">
-							<label for="link_url">
-								<text value="${message:link_url}"></text>
-							</label>
-						</part>
-						<part class="value">
-							<input name="linkurl"></input>
-						</part>
-					</part>
-				</group>
-			</if>
-			<if value="${type}" equals="list">
-				<group>
-					<part>
-						<selectbox list="objects" name="linkobjectid"></selectbox>
-					</part>
-				</group>
-			</if>
-			<if value="${type}" equals="insert">
-				<group>
-					<part>
-						<selectbox list="objects" name="linkobjectid"></selectbox>
-					</part>
-				</group>
-			</if>
-			<if value="${type}" equals="number">
-				<group>
-					<part>
-						<hidden name="decimals" default="decimals"></hidden>
-						<input size="15" maxlength="20" name="number"></input>
-					</part>
-				</group>
-			</if>
-			<if value="${type}" equals="select">
-				<group>
-					<part>
-						<selectbox list="items" name="text"></selectbox>
-					</part>
-				</group>
-			</if>
-			<if value="${type}" equals="longtext">
-				<if value="${editor}" equals="wiki">
-					<if present="languages">
-						<group title="${message:editor_show_language}">
-							<part>
-								<list list="${languages}" key="languageid" value="languagename">
-									<radio name="otherlanguageid" value="${languageid}"></radio>
-									<label for="otherlanguageid_${languageid}">
-										<text value="${languagename}"></text>
-									</label>
-									<newline></newline>
-								</list>
-							</part>
-						</group>
-					</if>
-					<group title="${message:PAGE_PREVIEW}">
-						<part>
-							<checkbox name="preview"></checkbox>
-							<label for="preview">
-								<text value="${message:PAGE_PREVIEW}"></text>
-							</label>
-						</part>
-					</group>
-				</if>
-			</if>
-			<group title="${message:options}">
-				<if present="release">
-					<part>
-						<checkbox name="release"></checkbox>
-						<label for="release">
-							<text value="${message:RELEASE}"></text>
-						</label>
-					</part>
-				</if>
-				<if present="publish">
-					<part>
-						<checkbox name="publish"></checkbox>
-						<label for="publish">
-							<text value="${message:PAGE_PUBLISH_AFTER_SAVE}"></text>
-						</label>
-					</part>
-				</if>
+		<hidden name="languageid"/>
+		<hidden name="elementid"/>
+		<hidden name="value_time"/>
+		<text value="${desc}" class="help"/>
+		<if value="${type}" equals="date">
+			<group title="${message:date}">
+				<fieldset class="line" label="">
+					<input type="date" name="date" label="date"/>
+					<input type="time" name="time" label="time"/>
+				</fieldset>
 			</group>
+		</if>
+		<if value="${type}" equals="text">
+			<fieldset>
+				<input size="50" maxlength="255" class="text" name="text"/>
+			</fieldset>
+		</if>
+		<if value="${type}" equals="longtext">
+			<hidden name="format"/>
+			<if present="preview">
+				<part class="preview">
+					<group title="${message:page_preview}">
+						<text value="${preview}" escape="false"/>
+					</group>
+				</part>
+			</if>
+			<if value="${editor}" equals="markdown">
+				<editor type="markdown" name="text"/>
+			</if>
+			<if value="${editor}" equals="html">
+				<editor type="html" name="text"/>
+			</if>
+			<if value="${editor}" equals="wiki">
+				<if present="languagetext">
+					<group title="${languagename}">
+						<text value="${languagetext}"/>
+					</group>
+					<newline/>
+					<newline/>
+				</if>
+				<editor type="wiki" name="text"/>
+				<group title="${message:help}" open="false">
+					<table>
+						<column>
+							<text value="${config:editor/text-markup/strong-begin}"/>
+							<text value="${message:text_markup_strong}"/>
+							<text value="${config:editor/text-markup/strong-end}"/>
+							<newline/>
+							<text value="${config:editor/text-markup/emphatic-begin}"/>
+							<text value="${message:text_markup_emphatic}"/>
+							<text value="${config:editor/text-markup/emphatic-end}"/>
+						</column>
+						<column>
+							<text value="${config:editor/text-markup/list-numbered}"/>
+							<text value="${message:text_markup_numbered_list}"/>
+							<newline/>
+							<text value="${config:editor/text-markup/list-numbered}"/>
+							<text value="..."/>
+							<newline/>
+						</column>
+						<column>
+							<text value="${config:editor/text-markup/list-unnumbered}"/>
+							<text value="${message:text_markup_unnumbered_list}"/>
+							<newline/>
+							<text value="${config:editor/text-markup/list-unnumbered}"/>
+							<text value="..."/>
+							<newline/>
+						</column>
+						<column>
+							<text value="${config:editor/text-markup/table-cell-sep}"/>
+							<text value="${message:text_markup_table}"/>
+							<text value="${config:editor/text-markup/table-cell-sep}"/>
+							<text value="..."/>
+							<text value="${config:editor/text-markup/table-cell-sep}"/>
+							<text value="..."/>
+							<text value="${config:editor/text-markup/table-cell-sep}"/>
+							<newline/>
+							<text value="${config:editor/text-markup/table-cell-sep}"/>
+							<text value="..."/>
+							<text value="${config:editor/text-markup/table-cell-sep}"/>
+							<text value="..."/>
+							<text value="${config:editor/text-markup/table-cell-sep}"/>
+							<text value="..."/>
+							<text value="${config:editor/text-markup/table-cell-sep}"/>
+							<newline/>
+						</column>
+					</table>
+				</group>
+			</if>
+			<if value="${editor}" equals="text">
+				<inputarea class="editor raw-editor" name="text" rows="25" cols="70"/>
+			</if>
+		</if>
+		<if value="${type}" equals="link">
+			<group>
+				<fieldset class="line" label="${message:link_target}">
+					<selector param="linkobjectid" types="${types}" name="${linkname}" id="${linkobjectid}"
+							  folderid="${rootfolderid}"/>
+				</fieldset>
+				<fieldset class="line" label="${message:link_url}">
+					<input name="linkurl"/>
+				</fieldset>
+			</group>
+		</if>
+		<if value="${type}" equals="list">
+			<group>
+				<part>
+					<selectbox list="objects" name="linkobjectid"/>
+				</part>
+			</group>
+		</if>
+		<if value="${type}" equals="insert">
+			<group>
+				<part>
+					<selectbox list="objects" name="linkobjectid"/>
+				</part>
+			</group>
+		</if>
+		<if value="${type}" equals="number">
+			<group>
+				<part>
+					<hidden name="decimals" default="decimals"/>
+					<input size="15" maxlength="20" name="number"/>
+				</part>
+			</group>
+		</if>
+		<if value="${type}" equals="select">
+			<group>
+				<part>
+					<selectbox list="items" name="text"/>
+				</part>
+			</group>
+		</if>
+		<if value="${type}" equals="longtext">
+			<if value="${editor}" equals="wiki">
+				<if present="languages">
+					<group title="${message:editor_show_language}">
+						<part>
+							<list list="${languages}" key="languageid" value="languagename">
+								<radio name="otherlanguageid" value="${languageid}"/>
+								<label for="otherlanguageid_${languageid}">
+									<text value="${languagename}"/>
+								</label>
+								<newline/>
+							</list>
+						</part>
+					</group>
+				</if>
+				<group title="${message:PAGE_PREVIEW}">
+					<part>
+						<checkbox name="preview"/>
+						<label for="preview">
+							<text value="${message:PAGE_PREVIEW}"/>
+						</label>
+					</part>
+				</group>
+			</if>
+		</if>
+		<group title="${message:options}">
+			<if present="release">
+				<part>
+					<checkbox name="release"/>
+					<label for="release">
+						<text value="${message:RELEASE}"/>
+					</label>
+				</part>
+			</if>
+			<if present="publish">
+				<part>
+					<checkbox name="publish"/>
+					<label for="publish">
+						<text value="${message:PAGE_PUBLISH_AFTER_SAVE}"/>
+					</label>
+				</part>
+			</if>
+		</group>
 	</form>
 </output>

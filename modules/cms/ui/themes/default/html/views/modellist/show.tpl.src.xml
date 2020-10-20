@@ -1,50 +1,48 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<table>
-		<row class="headline">
+		<row header="true">
 			<column>
-				<text value="${message:name}"></text>
+				<text value="${message:name}"/>
 			</column>
 			<column>
-				<text value=""></text>
+				<text value=""/>
 			</column>
 			<column>
-				<text value=""></text>
+				<text value=""/>
 			</column>
 		</row>
 		<list list="${el}" extract="true">
 			<row class="data">
 				<column class="clickable">
-
 					<link type="open" name="${name}" action="model" id="${id}">
-						<image action="model"></image>
-						<text value="${name}" maxlength="25"></text>
+						<image action="model"/>
+						<text value="${name}" maxlength="25"/>
 					</link>
 				</column>
-
 				<if false="${is_default}">
 					<column class="clickable">
 						<if present="id">
 							<link type="post" action="model" subaction="setdefault" id="${id}">
-								<text value="${message:make_default}"></text>
+								<text value="${message:make_default}"/>
 							</link>
 						</if>
 					</column>
 				</if>
 				<else>
 					<column>
-						<text value="${message:is_default}" type="emphatic" />
+						<text value="${message:is_default}" type="emphatic"/>
 					</column>
 				</else>
 			</row>
-			<set var="select_url"></set>
-			<set var="default_url"></set>
+			<set var="select_url"/>
+			<set var="default_url"/>
 		</list>
 		<row class="data">
 			<column colspan="2" class="clickable">
 				<link type="dialog" subaction="add">
-					<image method="add" />
-					<text value="${message:new}" />
+					<image method="add"/>
+					<text value="${message:new}"/>
 				</link>
 			</column>
 		</row>

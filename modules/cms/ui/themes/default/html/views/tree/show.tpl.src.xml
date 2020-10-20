@@ -1,9 +1,7 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-
 	<!-- The tree is displayed by javascript calls -->
-	<part class="navtree,act-load-nav-tree" />
-
-	<image class="act-nav-small, btn, view-flying-button" symbol="arrow-left"  />
-	<image class="act-nav-wide , btn, view-flying-button" symbol="arrow-right" />
+	<part class="navtree,act-load-nav-tree"/>
+	<image class="act-nav-small, btn, view-flying-button" symbol="arrow-left"/>
+	<image class="act-nav-wide , btn, view-flying-button" symbol="arrow-right"/>
 </output>

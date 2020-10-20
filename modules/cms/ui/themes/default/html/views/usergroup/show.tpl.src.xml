@@ -1,28 +1,25 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-
-	<table>
-		<row class="headline">
-			<column>
-				<text value="${message:name}"></text>
-			</column>
-		</row>
-		<row class="data">
-			<column id="${id}" name="${name}" action="userlist" class="clickable">
-				<link type="open" id="" action="userlist">
-					<image action="user"></image>
-					<text value="${message:users}"></text>
-				</link>
-			</column>
-		</row>
-		<row class="data">
-			<column id="${id}" name="${name}" action="grouplist" class="clickable">
-				<link type="open" id="" action="grouplist">
-					<image action="group"></image>
-					<text value="${message:groups}"></text>
-				</link>
-			</column>
-		</row>
-
-	</table>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <table>
+    <row class="headline">
+      <column>
+        <text value="${message:name}"/>
+      </column>
+    </row>
+    <row class="data">
+      <column id="${id}" name="${name}" action="userlist" class="clickable">
+        <link type="open" id="" action="userlist">
+          <image action="user"/>
+          <text value="${message:users}"/>
+        </link>
+      </column>
+    </row>
+    <row class="data">
+      <column id="${id}" name="${name}" action="grouplist" class="clickable">
+        <link type="open" id="" action="grouplist">
+          <image action="group"/>
+          <text value="${message:groups}"/>
+        </link>
+      </column>
+    </row>
+  </table>
 </output>

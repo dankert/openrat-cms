@@ -1,7 +1,11 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-    <form>
-        <input label="file_extension" name="extension" size="10" class="extension"></input>
-        <selectbox label="type" name="type" size="1" list="types"></selectbox>
-    </form>
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form>
+		<fieldset label="${message:file_extension}">
+			<input name="extension" size="10" class="extension"/>
+		</fieldset>
+		<fieldset label="${message:type}">
+			<selectbox name="type" size="1" list="types"/>
+		</fieldset>
+	</form>
 </output>

@@ -1,60 +1,57 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<table>
-		<row class="headline">
-			<column header="true">
-				<text value="${message:TYPE}"></text>
-			</column>
-			<column header="true">
-				<text value="${message:NAME}"></text>
-			</column>
-			<column header="true">
-				<text value="${message:LASTCHANGE}"></text>
-			</column>
-		</row>
-		<if present="up_url">
-			<row class="data,clickable">
-				<column>
-					<link type="open" id="${parentid}" name="" action="folder">
-						<image action="folder"></image>
-						<text value=".." />
-					</link>
-				</column>
-				<column>
-					<text value=""></text>
-				</column>
-			</row>
-		</if>
-		<list list="${object}" extract="true">
-			<row class="data,clickable">
-				<column class="">
-					<image action="${icon}"></image>
-				</column>
-				<column class="">
-					<link type="open" id="${id}" name="${name}" action="${type}" title="${desc}">
-						<text value="${name}"></text>
-						<text value=" "></text>
-					</link>
-				</column>
-				<column>
-					<date date="${date}"></date>
-				</column>
-			</row>
-		</list>
-		<if empty="${object}">
-			<row>
-				<column colspan="2">
-					<text value="${message:NOT_FOUND}"></text>
-				</column>
-			</row>
-		</if>
-	</table>
-
-	<part class="clickable">
-
-		<link type="dialog" action="folder" subaction="create" class="btn">
-			<image action="new" />
-			<text value="${message:new}"></text>
-		</link>
-	</part>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <table>
+    <row class="headline">
+      <column header="true">
+        <text value="${message:TYPE}"/>
+      </column>
+      <column header="true">
+        <text value="${message:NAME}"/>
+      </column>
+      <column header="true">
+        <text value="${message:LASTCHANGE}"/>
+      </column>
+    </row>
+    <if present="up_url">
+      <row class="data,clickable">
+        <column>
+          <link type="open" id="${parentid}" name="" action="folder">
+            <image action="folder"/>
+            <text value=".."/>
+          </link>
+        </column>
+        <column>
+          <text value=""/>
+        </column>
+      </row>
+    </if>
+    <list list="${object}" extract="true">
+      <row class="data,clickable">
+        <column class="">
+          <image action="${icon}"/>
+        </column>
+        <column class="">
+          <link type="open" id="${id}" name="${name}" action="${type}" title="${desc}">
+            <text value="${name}"/>
+            <text value=" "/>
+          </link>
+        </column>
+        <column>
+          <date date="${date}"/>
+        </column>
+      </row>
+    </list>
+    <if empty="${object}">
+      <row>
+        <column colspan="2">
+          <text value="${message:NOT_FOUND}"/>
+        </column>
+      </row>
+    </if>
+  </table>
+  <part class="clickable">
+    <link type="dialog" action="folder" subaction="create" class="btn">
+      <image action="new"/>
+      <text value="${message:new}"/>
+    </link>
+  </part>
 </output>

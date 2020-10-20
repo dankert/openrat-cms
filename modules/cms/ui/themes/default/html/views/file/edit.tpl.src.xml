@@ -1,16 +1,12 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form languageid="${languageid}">
-
-		<part class="line">
-			<part class="label" />
-			<part class="value">
-				<newline />
-				<upload name="file"></upload>
-				<newline />
-				<newline />
-			</part>
-		</part>
+		<fieldset class="line" label="">
+			<newline/>
+			<upload name="file"/>
+			<newline/>
+			<newline/>
+		</fieldset>
 
 		<part class="line dropzone-upload">
 			<part class="label">
@@ -18,6 +14,5 @@
 			<part class="value">
 			</part>
 		</part>
-
 	</form>
 </output>

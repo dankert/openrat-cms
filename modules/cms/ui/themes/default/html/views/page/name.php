@@ -16,17 +16,21 @@
           </i>
         </h2>
         <div class="<?php echo O::escapeHtml('or-collapsible-value or-group-value') ?>"><?php echo O::escapeHtml('') ?>
-          <label class="<?php echo O::escapeHtml('or-form-row or-form-input') ?>"><?php echo O::escapeHtml('') ?>
-            <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml('name') ?>
-            </span>
-            <input name="<?php echo O::escapeHtml('name') ?>" required="<?php echo O::escapeHtml('required') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" value="<?php echo O::escapeHtml(''.@$name.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
-          </label>
-          <label class="<?php echo O::escapeHtml('or-form-row or-form-checkbox') ?>"><?php echo O::escapeHtml('') ?>
-            <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml('description') ?>
-            </span>
-            <textarea name="<?php echo O::escapeHtml('description') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" class="<?php echo O::escapeHtml('or-input or-description') ?>"><?php echo O::escapeHtml(''.@$description.'') ?>
-            </textarea>
-          </label>
+          <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
+            <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('name').'') ?>
+            </h3>
+            <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
+              <input name="<?php echo O::escapeHtml('name') ?>" required="<?php echo O::escapeHtml('required') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" value="<?php echo O::escapeHtml(''.@$name.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
+            </div>
+          </section>
+          <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
+            <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('description').'') ?>
+            </h3>
+            <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
+              <textarea name="<?php echo O::escapeHtml('description') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" class="<?php echo O::escapeHtml('or-input or-description') ?>"><?php echo O::escapeHtml(''.@$description.'') ?>
+              </textarea>
+            </div>
+          </section>
         </div>
       </section>
       <section class="<?php echo O::escapeHtml('or-group or-collapsible or-collapsible--is-open or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>
@@ -37,26 +41,32 @@
           </i>
         </h2>
         <div class="<?php echo O::escapeHtml('or-collapsible-value or-group-value') ?>"><?php echo O::escapeHtml('') ?>
-          <label class="<?php echo O::escapeHtml('or-form-row or-form-input') ?>"><?php echo O::escapeHtml('') ?>
-            <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml('alias') ?>
-            </span>
-            <input name="<?php echo O::escapeHtml('alias_filename') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('150') ?>" value="<?php echo O::escapeHtml(''.@$alias_filename.'') ?>" class="<?php echo O::escapeHtml('or-filename or-input') ?>" /><?php echo O::escapeHtml('') ?>
-          </label>
-          <label class="<?php echo O::escapeHtml('or-form-row or-form-input') ?>"><?php echo O::escapeHtml('') ?>
-            <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml('folder') ?>
-            </span>
-            <select name="<?php echo O::escapeHtml('alias_folderid') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
-              <?php foreach($folders as $_key=>$_value) {  ?>
-                <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$alias_folderid){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
-                </option>
-               <?php } ?>
-            </select>
-          </label>
-          <label><?php echo O::escapeHtml('') ?>
-            <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('leave_link') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$leave_link){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
-            <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('leave_link').'') ?>
-            </span>
-          </label>
+          <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
+            <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('alias').'') ?>
+            </h3>
+            <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
+              <input name="<?php echo O::escapeHtml('alias_filename') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('150') ?>" value="<?php echo O::escapeHtml(''.@$alias_filename.'') ?>" class="<?php echo O::escapeHtml('or-filename or-input') ?>" /><?php echo O::escapeHtml('') ?>
+            </div>
+          </section>
+          <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
+            <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('folder').'') ?>
+            </h3>
+            <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
+              <select name="<?php echo O::escapeHtml('alias_folderid') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
+                <?php foreach($folders as $_key=>$_value) {  ?>
+                  <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$alias_folderid){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
+                  </option>
+                 <?php } ?>
+              </select>
+            </div>
+          </section>
+          <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
+            <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('leave_link').'') ?>
+            </h3>
+            <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
+              <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('leave_link') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$leave_link){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+            </div>
+          </section>
         </div>
       </section>
     </div>

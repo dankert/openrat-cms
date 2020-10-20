@@ -1,20 +1,19 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form>
-
 		<if value="${type}" equals="folder">
 			<group title="${message:options}">
-				<part class="line">
+				<fieldset class="line" label="">
 					<part class="label">
 					</part>
 					<part class="value">
-						<set var="inherit" value="1"></set>
-						<checkbox name="inherit" />
+						<set var="inherit" value="1"/>
+						<checkbox name="inherit"/>
 						<label for="inherit">
-							<text value="${message:inherit_rights}"></text>
+							<text value="${message:inherit_rights}"/>
 						</label>
 					</part>
-				</part>
+				</fieldset>
 			</group>
 		</if>
 	</form>

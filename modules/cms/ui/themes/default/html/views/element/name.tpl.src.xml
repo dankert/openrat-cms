@@ -3,23 +3,23 @@
 	<form>
 		<row>
 			<column>
-				<text value="${message:ELEMENT_NAME}"></text>
+				<text value="${message:ELEMENT_NAME}"/>
 			</column>
 			<column>
-				<input name="name"></input>
+				<input name="name"/>
 			</column>
 		</row>
 		<row>
 			<column>
-				<text value="${message:DESCRIPTION}"></text>
+				<text value="${message:DESCRIPTION}"/>
 			</column>
 			<column>
-				<inputarea name="description" rows="5" cols="50"></inputarea>
+				<inputarea name="description" rows="5" cols="50"/>
 			</column>
 		</row>
 		<row>
 			<column colspan="2" class="act">
-				<button type="ok"></button>
+				<button type="ok"/>
 			</column>
 		</row>
 	</form>

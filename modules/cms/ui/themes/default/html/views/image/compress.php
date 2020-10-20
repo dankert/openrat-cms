@@ -15,35 +15,39 @@
           </i>
         </h2>
         <div class="<?php echo O::escapeHtml('or-collapsible-value or-group-value') ?>"><?php echo O::escapeHtml('') ?>
-          <div class="<?php echo O::escapeHtml('or-line') ?>"><?php echo O::escapeHtml('') ?>
-            <div class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
-              <span><?php echo O::escapeHtml(''.@O::lang('type').'') ?>
-              </span>
-            </div>
-            <div class="<?php echo O::escapeHtml('or-value') ?>"><?php echo O::escapeHtml('') ?>
-              <?php  { $gz= gz; ?>
-               <?php } ?>
-              <select name="<?php echo O::escapeHtml('format') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
-                <?php foreach($formats as $_key=>$_value) {  ?>
-                  <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==gz){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
-                  </option>
+          <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
+            <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?>
+            </h3>
+            <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@O::lang('type').'') ?>
+                </span>
+              </div>
+              <div class="<?php echo O::escapeHtml('or-value') ?>"><?php echo O::escapeHtml('') ?>
+                <?php  { $gz= gz; ?>
                  <?php } ?>
-              </select>
-              <?php  { $replace= 1; ?>
-               <?php } ?>
-              <input type="<?php echo O::escapeHtml('radio') ?>" name="<?php echo O::escapeHtml('replace') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$replace=='1'){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-radio') ?>" /><?php echo O::escapeHtml('') ?>
-              <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
-                <span><?php echo O::escapeHtml(''.@O::lang('replace').'') ?>
-                </span>
-              </label>
-              <br /><?php echo O::escapeHtml('') ?>
-              <input type="<?php echo O::escapeHtml('radio') ?>" name="<?php echo O::escapeHtml('replace') ?>" value="<?php echo O::escapeHtml('') ?>" <?php if(@$replace=='0'){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-radio') ?>" /><?php echo O::escapeHtml('') ?>
-              <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
-                <span><?php echo O::escapeHtml(''.@O::lang('new').'') ?>
-                </span>
-              </label>
+                <select name="<?php echo O::escapeHtml('format') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
+                  <?php foreach($formats as $_key=>$_value) {  ?>
+                    <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==gz){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
+                    </option>
+                   <?php } ?>
+                </select>
+                <?php  { $replace= 1; ?>
+                 <?php } ?>
+                <input type="<?php echo O::escapeHtml('radio') ?>" name="<?php echo O::escapeHtml('replace') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$replace=='1'){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-radio') ?>" /><?php echo O::escapeHtml('') ?>
+                <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
+                  <span><?php echo O::escapeHtml(''.@O::lang('replace').'') ?>
+                  </span>
+                </label>
+                <br /><?php echo O::escapeHtml('') ?>
+                <input type="<?php echo O::escapeHtml('radio') ?>" name="<?php echo O::escapeHtml('replace') ?>" value="<?php echo O::escapeHtml('') ?>" <?php if(@$replace=='0'){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-radio') ?>" /><?php echo O::escapeHtml('') ?>
+                <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
+                  <span><?php echo O::escapeHtml(''.@O::lang('new').'') ?>
+                  </span>
+                </label>
+              </div>
             </div>
-          </div>
+          </section>
         </div>
       </section>
     </div>

@@ -1,20 +1,14 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-    <form readonly="true" cancel="false">
-
-        <text class="headline" value="${name}"/>
-
-        <part class="line">
-            <part class="label">
-                <text value="${message:NAME}"></text>
-            </part>
-            <part class="value,clickable">
-                <text value="${name}"/>
-                <link class="btn" action="model" subaction="prop" type="edit">
-                    <text value="${message:edit}"/>
-                </link>
-            </part>
-        </part>
-
-    </form>
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form readonly="true" cancel="false">
+		<text class="headline" value="${name}"/>
+		<fieldset class="line" label="${message:NAME}">
+			<part class="value,clickable">
+				<text value="${name}"/>
+				<link class="btn" action="model" subaction="prop" type="edit">
+					<text value="${message:edit}"/>
+				</link>
+			</part>
+		</fieldset>
+	</form>
 </output>

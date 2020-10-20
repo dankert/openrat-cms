@@ -1,10 +1,8 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<form apply="true">
-        <hidden name="modelid" />
-        <group title="${message:source}">
-            <editor type="code" name="source" mode="htmlmixed" />
-        </group>
-
-	</form>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <form apply="true">
+    <hidden name="modelid"/>
+    <group title="${message:source}">
+      <editor type="code" name="source" mode="htmlmixed"/>
+    </group>
+  </form>
 </output>

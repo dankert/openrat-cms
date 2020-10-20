@@ -1,16 +1,12 @@
-<output xmlns="http://www.openrat.de/template"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-    <form>
-		<fieldset label="${message:name}">
-             <text value="${name}"></text>
-
-		</fieldset>
-
-        <group title="${message:options}">
-			<fieldset>
-				<checkbox name="confirm" required="true" label="${message:DELETE}"></checkbox>
-			</fieldset>
-		</group>
-    </form>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <form>
+    <fieldset label="${message:name}">
+      <text value="${name}"/>
+    </fieldset>
+    <group title="${message:options}">
+      <fieldset>
+        <checkbox name="confirm" required="true" label="${message:DELETE}"/>
+      </fieldset>
+    </group>
+  </form>
 </output>

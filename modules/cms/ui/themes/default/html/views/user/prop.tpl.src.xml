@@ -1,119 +1,116 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<form>
-		<part class="line">
-			<part class="label">
-				<label for="name" key="user_username"></label>
-			</part>
-			<part class="value">
-				<input name="name" size="20" class="name,focus" maxlength="128"></input>
-			</part>
-		</part>
-		<group title="${message:ADDITIONAL_INFO}">
-			<part class="line">
-				<part class="label">
-					<label for="fullname" key="user_fullname"></label>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <form>
+    <fieldset class="line" label="">
+      <part class="label">
+        <label for="name" key="user_username"/>
+      </part>
+      <part class="value">
+        <input name="name" size="20" class="name,focus" maxlength="128"/>
+      </part>
+    </fieldset>
+    <group title="${message:ADDITIONAL_INFO}">
+      <fieldset class="line" label="">
+        <part class="label">
+          <label for="fullname" key="user_fullname"/>
+        </part>
+        <part class="value">
+          <input name="fullname" maxlength="128"/>
+        </part>
+      </fieldset>
+      <if true="${config:security/user/show_admin_mail}">
+        <fieldset class="line" label="">
+          <part class="label">
+            <label for="mail" key="user_mail"/>
+          </part>
+          <part class="value">
+            <input name="mail" maxlength="255"/>
+            <qrcode value="mailto:${mail}"/>
+          </part>
+        </fieldset>
+      </if>
+      <fieldset class="line" label="">
+        <part class="label">
+          <label for="desc" key="user_desc"/>
+        </part>
+        <part class="value">
+          <input name="desc" maxlength="255"/>
+        </part>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
+          <label for="tel" key="user_tel"/>
+        </part>
+        <part class="value">
+          <input name="tel" maxlength="128"/>
+          <qrcode value="tel:${tel}"/>
+        </part>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
+          <label for="timezone_offset">
+            <text value="${message:timezone}"/>
+          </label>
+        </part>
+        <part class="value">
+          <selectbox name="timezone" list="timezone_list" addempty="true"/>
+        </part>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
+          <label for="">
+            <text value="${message:language}"/>
+          </label>
+        </part>
+        <part class="value">
+          <selectbox name="language" list="language_list" addempty="true"/>
+        </part>
+      </fieldset>
+    </group>
+    <group title="${message:options}">
+      <fieldset class="line" label="">
+        <part class="label"/>
+        <part class="value">
+          <checkbox name="is_admin"/>
+          <label for="is_admin" key="user_admin"/>
+        </part>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
+          <label for="ldap_dn" key="user_ldapdn"/>
+        </part>
+        <part class="value">
+          <input name="ldap_dn"/>
+        </part>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
+          <label for="style" key="user_style"/>
+        </part>
+        <part class="value">
+          <selectbox list="allstyles" name="style"/>
+        </part>
+      </fieldset>
+    </group>
+    <group title="${message:security}">
+      <fieldset class="line" label="">
+        <part class="label">
 				</part>
-				<part class="value">
-					<input name="fullname" maxlength="128"></input>
+        <part class="value">
+          <checkbox name="totp"/>
+          <label for="totp" key="user_totp"/>
+          <!--<text value="${otpSecret}"></text>-->
+          <qrcode value="${totpSecretUrl}"/>
+        </part>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
 				</part>
-			</part>
-			<if true="${config:security/user/show_admin_mail}">
-				<part class="line">
-					<part class="label">
-						<label for="mail" key="user_mail"></label>
-					</part>
-					<part class="value">
-						<input name="mail" maxlength="255"></input>
-						<qrcode value="mailto:${mail}" />
-					</part>
-				</part>
-			</if>
-			<part class="line">
-				<part class="label">
-					<label for="desc" key="user_desc"></label>
-				</part>
-				<part class="value">
-					<input name="desc" maxlength="255"></input>
-				</part>
-			</part>
-			<part class="line">
-				<part class="label">
-					<label for="tel" key="user_tel"></label>
-				</part>
-				<part class="value">
-					<input name="tel" maxlength="128"></input>
-					<qrcode value="tel:${tel}" />
-					
-				</part>
-			</part>
-			<part class="line">
-				<part class="label">
-					<label for="timezone_offset">
-						<text value="${message:timezone}" />
-					</label>
-				</part>
-				<part class="value">
-					<selectbox name="timezone" list="timezone_list"
-						addempty="true"></selectbox>
-				</part>
-			</part>
-			<part class="line">
-				<part class="label">
-					<label for="">
-						<text value="${message:language}" />
-					</label>
-				</part>
-				<part class="value">
-					<selectbox name="language" list="language_list" addempty="true"></selectbox>
-				</part>
-			</part>
-		</group>
-		<group title="${message:options}">
-			<part class="line">
-				<part class="label"></part>
-				<part class="value">
-					<checkbox name="is_admin"></checkbox>
-					<label for="is_admin" key="user_admin"></label>
-				</part>
-			</part>
-			<part class="line">
-				<part class="label">
-					<label for="ldap_dn" key="user_ldapdn"></label>
-				</part>
-				<part class="value">
-					<input name="ldap_dn"></input>
-				</part>
-			</part>
-			<part class="line">
-				<part class="label">
-					<label for="style" key="user_style"></label>
-				</part>
-				<part class="value">
-					<selectbox list="allstyles" name="style"></selectbox>
-				</part>
-			</part>
-		</group>
-		<group title="${message:security}">
-			<part class="line">
-				<part class="label">
-				</part>
-				<part class="value">
-					<checkbox name="totp"/><label for="totp" key="user_totp"></label>
-				
-					<!--<text value="${otpSecret}"></text>-->
-					<qrcode value="${totpSecretUrl}" />
-				</part>  
-			</part>
-			<part class="line">
-				<part class="label">
-				</part>
-				<part class="value">
-					<checkbox name="hotp"/><label for="hotp" key="user_hotp"></label>
-				
-					<qrcode value="${hotpSecretUrl}" />
-				</part>
-			</part>
-		</group>
-	</form>
+        <part class="value">
+          <checkbox name="hotp"/>
+          <label for="hotp" key="user_hotp"/>
+          <qrcode value="${hotpSecretUrl}"/>
+        </part>
+      </fieldset>
+    </group>
+  </form>
 </output>

@@ -1,19 +1,8 @@
-<output xmlns="http://www.openrat.de/template"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form>
-		<row>
-			<column>
-				<text value="${message:VALUE}"></text>
-			</column>
-			<column>
-				<editor name="value" type="code"></editor>
-			</column>
-		</row>
-		<row>
-			<column class="act" colspan="2">
-				<button type="ok"></button>
-			</column>
-		</row>
+		<fieldset label="${message:VALUE}">
+			<editor name="value" type="code"/>
+		</fieldset>
 	</form>
 </output>

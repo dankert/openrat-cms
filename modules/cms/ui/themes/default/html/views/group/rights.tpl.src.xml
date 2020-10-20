@@ -1,74 +1,72 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-    <table filter="false">
-        <list list="${projects}" extract="true">
-            <row>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <table filter="false">
+    <list list="${projects}" extract="true">
+      <row>
+        <column>
+          <group title="${projectname}">
+            <if empty="${rights}">
+              <row>
                 <column>
-                    <group title="${projectname}">
-                        <if empty="${rights}">
-                            <row>
-                                <column>
-                                    <text value="${message:NOT_FOUND}"></text>
-                                </column>
-                            </row>
-                        </if>
-                        <if not="true" empty="${rights}">
-                            <table>
-                                <row class="headline">
-                                    <column class="help">
-                                        <text value="${message:USER}"></text>
-                                    </column>
-                                    <column class="help">
-                                        <text value="${message:NAME}"></text>
-                                    </column>
-                                    <column class="help">
-                                        <text value="${message:LANGUAGE}"></text>
-                                    </column>
-                                    <list list="${show}" value="t">
-                                        <column class="help">
-                                            <text value="${message:acl_${t}_abbrev}"
-                                                  title="${message:acl_${t}}"></text>
-                                        </column>
-                                    </list>
-                                </row>
-                                <list list="${rights}" key="aclid" value="acl" extract="true">
-                                    <row class="data,clickable">
-                                        <column>
-                                            <if present="groupname">
-                                                <image action="group"></image>
-                                                <text value="${groupname}" maxlength="20"></text>
-                                            </if>
-                                            <if not="true" present="username">
-                                                <if not="true" present="groupname">
-                                                    <image action="group"></image>
-                                                    <text value="${message:all}"></text>
-                                                </if>
-                                            </if>
-                                            <set var="username"></set>
-                                            <set var="groupname"></set>
-                                        </column>
-                                        <column title="${objectname}">
-                                            <image action="${objecttype}"></image>
-                                            <link type="open" action="${objecttype}" subaction="" id="${objectid}">
-                                                <text value="${objectname}"></text>
-                                            </link>
-                                        </column>
-                                        <column>
-                                            <text value="${languagename}" maxlength="20"></text>
-                                        </column>
-                                        <list list="${show}">
-                                            <column>
-                                                <set var="${list_value}" value="${bits}" key="${list_value}"></set>
-                                                <checkbox name="${list_value}" readonly="true"></checkbox>
-                                            </column>
-                                        </list>
-                                    </row>
-                                </list>
-                            </table>
-                        </if>
-                    </group>
+                  <text value="${message:NOT_FOUND}"/>
                 </column>
-            </row>
-        </list>
-    </table>
+              </row>
+            </if>
+            <if not="true" empty="${rights}">
+              <table>
+                <row class="headline">
+                  <column class="help">
+                    <text value="${message:USER}"/>
+                  </column>
+                  <column class="help">
+                    <text value="${message:NAME}"/>
+                  </column>
+                  <column class="help">
+                    <text value="${message:LANGUAGE}"/>
+                  </column>
+                  <list list="${show}" value="t">
+                    <column class="help">
+                      <text value="${message:acl_${t}_abbrev}" title="${message:acl_${t}}"/>
+                    </column>
+                  </list>
+                </row>
+                <list list="${rights}" key="aclid" value="acl" extract="true">
+                  <row class="data,clickable">
+                    <column>
+                      <if present="groupname">
+                        <image action="group"/>
+                        <text value="${groupname}" maxlength="20"/>
+                      </if>
+                      <if not="true" present="username">
+                        <if not="true" present="groupname">
+                          <image action="group"/>
+                          <text value="${message:all}"/>
+                        </if>
+                      </if>
+                      <set var="username"/>
+                      <set var="groupname"/>
+                    </column>
+                    <column title="${objectname}">
+                      <image action="${objecttype}"/>
+                      <link type="open" action="${objecttype}" subaction="" id="${objectid}">
+                        <text value="${objectname}"/>
+                      </link>
+                    </column>
+                    <column>
+                      <text value="${languagename}" maxlength="20"/>
+                    </column>
+                    <list list="${show}">
+                      <column>
+                        <set var="${list_value}" value="${bits}" key="${list_value}"/>
+                        <checkbox name="${list_value}" readonly="true"/>
+                      </column>
+                    </list>
+                  </row>
+                </list>
+              </table>
+            </if>
+          </group>
+        </column>
+      </row>
+    </list>
+  </table>
 </output>

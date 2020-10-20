@@ -1,46 +1,25 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-    <form>
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form>
+		<group title="${message:validity}">
+			<fieldset class="line" label="${message:from}">
+				<part tag="span">
+					<input type="date" name="valid_from_date"/>
+					<input type="time" name="valid_from_time"/>
+				</part>
+			</fieldset>
+			<fieldset class="line" label="${message:until}">
+				<part tag="span">
+					<input type="date" name="valid_until_date"/>
+					<input type="time" name="valid_until_time"/>
+				</part>
+			</fieldset>
+		</group>
 
-        <group title="${message:validity}">
-            <part class="line">
-                <part class="label">
-                    <label for="validity_from_date">
-                        <text value="${message:from}"></text>
-                    </label>
-                </part>
-                <part class="value">
-                    <input type="date" name="valid_from_date" />
-                    <input type="time" name="valid_from_time" />
-                </part>
-            </part>
-            <part class="line">
-                <part class="label">
-                    <label for="validity_until_date">
-                        <text value="${message:until}"></text>
-                    </label>
-                </part>
-                <part class="value">
-                    <input type="date" name="valid_until_date" />
-                    <input type="time" name="valid_until_time" />
-                </part>
-            </part>
-        </group>
-
-        <group title="${message:settings}">
-
-            <part class="line">
-                <part class="label">
-                    <label for="settings">
-                        <text value="${message:SETTINGS}"></text>
-                    </label>
-                </part>
-                <part class="value">
-                    <editor name="settings" type="code" mode="yaml"></editor>
-                </part>
-            </part>
-
-        </group>
-
-    </form>
+		<group title="${message:settings}">
+			<fieldset class="line" label="${message:SETTINGS}">
+				<editor name="settings" type="code" mode="yaml"/>
+			</fieldset>
+		</group>
+	</form>
 </output>

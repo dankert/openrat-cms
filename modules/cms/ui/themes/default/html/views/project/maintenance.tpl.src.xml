@@ -1,21 +1,12 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form>
-		<group title="${message:options}">
-			<part>
-				<text value=""></text>
-				<radio name="type" value="check_limit"></radio>
-				<label for="type_check_limit">
-					<text value="${message:project_check_limit}"></text>
-				</label>
-			</part>
-			<part>
-				<text value=""></text>
-				<radio name="type" value="check_files"></radio>
-				<label for="type_check_files">
-					<text value="${message:project_check_files}"></text>
-				</label>
-			</part>
+		<group title="${message:options}" collapsible="false">
+			<fieldset>
+				<text value=""/>
+				<radio name="type" value="check_limit" label="${message:project_check_limit}"/>
+				<radio name="type" value="check_files" label="${message:project_check_files}"/>
+			</fieldset>
 		</group>
 	</form>
 </output>

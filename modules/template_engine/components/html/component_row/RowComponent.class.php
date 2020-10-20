@@ -10,6 +10,8 @@ class RowComponent extends Component
 
 	public $class = '';
 
+	public $header = false;
+
 	public $id = '';
 
 	public function createElement()
@@ -19,6 +21,9 @@ class RowComponent extends Component
 		if ($this->class)
 			$row->addStyleClass($this->class);
 		
+		if ($this->header)
+			$row->addStyleClass('table-header');
+
 		if ($this->id)
 			$row->addAttribute('data-id',$this->id);
 

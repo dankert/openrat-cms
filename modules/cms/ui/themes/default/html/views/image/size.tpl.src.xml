@@ -1,82 +1,77 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<form>
-		<part class="line">
-			<part class="label">
-				<text value="${message:IMAGE_OLD_SIZE}"></text>
-			</part>
-			<part class="value">
-				<text value="${width}"></text>
-				<text value=" * "></text>
-				<text value="${height}"></text>
-			</part>
-		</part>
-		<if not="" empty="${formats}">
-			<group title="${message:IMAGE_NEW_SIZE}">
-				<part class="line">
-					<part class="label"></part>
-
-					<part class="value">
-
-						<radio name="type" value="factor"></radio>
-						<label for="type_factor">
-							<text value="${message:FILE_IMAGE_SIZE_FACTOR}"></text>
-						</label>
-
-
-						<selectbox name="factor" list="factors"></selectbox>
-						<set var="factor" value="1"></set>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <form>
+    <fieldset class="line" label="">
+      <part class="label">
+        <text value="${message:IMAGE_OLD_SIZE}"/>
+      </part>
+      <part class="value">
+        <text value="${width}"/>
+        <text value=" * "/>
+        <text value="${height}"/>
+      </part>
+    </fieldset>
+    <if not="" empty="${formats}">
+      <group title="${message:IMAGE_NEW_SIZE}">
+        <fieldset class="line" label="">
+          <part class="label"/>
+          <part class="value">
+            <radio name="type" value="factor"/>
+            <label for="type_factor">
+              <text value="${message:FILE_IMAGE_SIZE_FACTOR}"/>
+            </label>
+            <selectbox name="factor" list="factors"/>
+            <set var="factor" value="1"/>
+          </part>
+        </fieldset>
+        <fieldset class="line" label="">
+          <part class="label"/>
+          <part class="value">
+            <radio name="type" value="input"/>
+            <label for="type_input">
+              <text value="${message:FILE_IMAGE_NEW_WIDTH_HEIGHT}"/>
+            </label>
+          </part>
+          <part class="label"/>
+          <part class="value">
+            <input name="width" size="10"/>
+            <text value=" * "/>
+            <input name="height" size="10"/>
+          </part>
+        </fieldset>
+      </group>
+      <group title="${message:options}">
+        <fieldset class="line" label="">
+          <part class="label">
+            <label for="format">
+              <text value="${message:FILE_IMAGE_FORMAT}"/>
+            </label>
+          </part>
+          <part class="value">
+            <selectbox name="format" list="formats"/>
+          </part>
+        </fieldset>
+        <fieldset class="line" label="">
+          <part class="label">
+            <label for="jpeglist_compression">
+              <text value="${message:FILE_IMAGE_JPEG_COMPRESSION}"/>
+            </label>
+          </part>
+          <part class="value">
+            <set var="jpeg_compression" value="70"/>
+            <selectbox list="jpeglist" name="jpeg_compression"/>
+          </part>
+        </fieldset>
+        <fieldset class="line" label="">
+          <part class="label">
 					</part>
-				</part>
-				<part class="line">
-					<part class="label"></part>
-					<part class="value">
-						<radio name="type" value="input"></radio>
-						<label for="type_input">
-							<text value="${message:FILE_IMAGE_NEW_WIDTH_HEIGHT}"></text>
-						</label>
-					</part>
-					<part class="label"></part>
-					<part class="value">
-						<input name="width" size="10"></input>
-						<text value=" * "></text>
-						<input name="height" size="10"></input>
-					</part>
-				</part>
-			</group>
-			<group title="${message:options}">
-				<part class="line">
-					<part class="label">
-						<label for="format">
-							<text value="${message:FILE_IMAGE_FORMAT}"></text>
-						</label>
-					</part>
-					<part class="value">
-						<selectbox name="format" list="formats"></selectbox>
-					</part>
-				</part>
-				<part class="line">
-					<part class="label">
-						<label for="jpeglist_compression">
-							<text value="${message:FILE_IMAGE_JPEG_COMPRESSION}"></text>
-						</label>
-					</part>
-					<part class="value">
-						<set var="jpeg_compression" value="70"></set>
-						<selectbox list="jpeglist" name="jpeg_compression"></selectbox>
-					</part>
-				</part>
-				<part class="line">
-					<part class="label">
-					</part>
-					<part class="value">
-						<checkbox name="copy"></checkbox>
-						<label for="copy">
-							<text value="${message:copy}"></text>
-						</label>
-					</part>
-				</part>
-			</group>
-		</if>
-	</form>
+          <part class="value">
+            <checkbox name="copy"/>
+            <label for="copy">
+              <text value="${message:copy}"/>
+            </label>
+          </part>
+        </fieldset>
+      </group>
+    </if>
+  </form>
 </output>

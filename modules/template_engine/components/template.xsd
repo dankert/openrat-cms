@@ -420,6 +420,7 @@
         </xsd:choice>
         <xsd:attribute name="open" type="xsd:boolean"/>
         <xsd:attribute name="show" type="xsd:boolean"/>
+        <xsd:attribute name="collapsible" type="xsd:boolean"/>
         <xsd:attribute name="title" type="xsd:string"/>
         <xsd:attribute name="icon" type="xsd:string"/>
         <xsd:attribute name="request" type="xsd:string"/>
@@ -1331,6 +1332,7 @@
             <xsd:element ref="user" maxOccurs="unbounded" minOccurs="0"/>
         </xsd:choice>
         <xsd:attribute name="class" type="xsd:string"/>
+        <xsd:attribute name="header" type="xsd:boolean"/>
         <xsd:attribute name="id" type="xsd:string"/>
         <xsd:attribute name="request" type="xsd:string"/>
     </xsd:complexType>

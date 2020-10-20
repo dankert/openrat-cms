@@ -1,163 +1,161 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<form readonly="true">
-		<group>
-			<part class="line">
-				<part class="label">
-					<text value="${message:name}"></text>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <form readonly="true">
+    <group>
+      <fieldset class="line" label="">
+        <part class="label">
+          <text value="${message:name}"/>
+        </part>
+        <part class="value">
+          <text value="${name}" class="name"/>
+        </part>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
+          <text value="${message:filename}"/>
+        </part>
+        <part class="value">
+          <text value="${filename}" class="filename"/>
+        </part>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
+          <text value="${message:file_extension}"/>
+        </part>
+        <part class="value">
+          <text value="${extension}" class="extension"/>
+        </part>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
+          <text value="${message:description}"/>
+        </part>
+        <part class="value">
+          <text value="${description}"/>
+        </part>
+      </fieldset>
+    </group>
+    <group title="${message:additional_info}">
+      <fieldset class="line" label="">
+        <part class="label">
+          <label for="full_filename">
+            <text value="${message:full_filename}"/>
+          </label>
+        </part>
+        <part class="value">
+          <text value="${full_filename}"/>
+        </part>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
+          <label for="size">
+            <text value="${message:FILE_SIZE}"/>
+          </label>
+        </part>
+        <part class="value">
 				</part>
-				<part class="value">
-					<text value="${name}" class="name" />
-				</part>
-			</part>
-			<part class="line">
-				<part class="label">
-					<text value="${message:filename}"></text>
-				</part>
-				<part class="value">
-					<text value="${filename}" class="filename" />
-				</part>
-			</part>
-			<part class="line">
-				<part class="label">
-					<text value="${message:file_extension}"></text>
-				</part>
-				<part class="value">
-					<text value="${extension}" class="extension" />
-				</part>
-			</part>
-			<part class="line">
-				<part class="label">
-					<text value="${message:description}"></text>
-				</part>
-				<part class="value">
-					<text value="${description}" />
-				</part>
-			</part>
-		</group>
-
-		<group title="${message:additional_info}">
-			<part class="line">
-				<part class="label">
-					<label for="full_filename">
-						<text value="${message:full_filename}"></text>
-					</label>
-				</part>
-				<part class="value">
-					<text value="${full_filename}"></text>
-				</part>
-			</part>
-			<part class="line">
-				<part class="label">
-					<label for="size">
-						<text value="${message:FILE_SIZE}"></text>
-					</label>
-				</part>
-				<part class="value">
-				</part>
-				<text value="${size}"></text>
-			</part>
-			<part class="line">
-				<part class="label">
-					<label for="mimetype">
-						<text value="${message:FILE_mimetype}"></text>
-					</label>
-				</part>
-				<part class="value">
-					<text value="${mimetype}"></text>
-					<newline></newline>
-					<link class="action" action="file" subaction="size">
-						<text value="${message:menu_file_size}"></text>
-					</link>
-				</part>
-			</part>
-			<part class="line">
-				<part class="label">
-					<text value="${message:${message:id}}"></text>
-				</part>
-				<part class="value">
-					<text value="${objectid}"></text>
-				</part>
-			</part>
-			<if present="cache_filename">
-				<part class="line">
-					<part class="label">
-						<label for="cache_filename">
-							<text value="${message:CACHE_FILENAME}"></text>
-						</label>
-					</part>
-					<part class="value">
-						<text value="${cache_filename}"></text>
-						<newline></newline>
-						<image icon="el_date"></image>
-						<date date="${cache_filemtime}"></date>
-					</part>
-				</part>
-			</if>
-			<part class="line">
-				<part class="label">
-					<label for="pages">
-						<text value="${message:FILE_PAGES}"></text>
-					</label>
-				</part>
-				<part class="value">
-					<table>
-						<list list="${pages}" extract="true">
-							<row>
-								<column>
-									<link url="${url}" target="cms_main">
-										<image type="page"></image>
-										<text value="${name}"></text>
-									</link>
-								</column>
-							</row>
-						</list>
-					</table>
-					<if empty="${pages}">
-						<text value="${message:NOT_FOUND}"></text>
-					</if>
-				</part>
-			</part>
-		</group>
-		<group title="${message:prop_userinfo}">
-			<part class="line">
-				<part class="label">
-					<text value="${message:created}"></text>
-				</part>
-				<part class="value">
-					<image elementtype="date"></image>
-					<date date="${create_date}"></date>
-					<newline></newline>
-					<image action="user"></image>
-					<user user="${create_user}"></user>
-				</part>
-			</part>
-			<part class="line">
-				<part class="label">
-					<text value="${message:lastchange}"></text>
-				</part>
-				<part class="value">
-					<image elementtype="date"></image>
-					<date date="${lastchange_date}"></date>
-					<newline></newline>
-					<image action="user"></image>
-					<user user="${lastchange_user}"></user>
-				</part>
-			</part>
-			<part class="line">
-				<part class="label">
-					<label for="published_date">
-						<text value="${message:published}"></text>
-					</label>
-				</part>
-				<part class="value">
-					<image elementtype="date"></image>
-					<date date="${published_date}"></date>
-					<newline></newline>
-					<image action="user"></image>
-					<user user="${published_user}"></user>
-				</part>
-			</part>
-		</group>
-	</form>
+        <text value="${size}"/>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
+          <label for="mimetype">
+            <text value="${message:FILE_mimetype}"/>
+          </label>
+        </part>
+        <part class="value">
+          <text value="${mimetype}"/>
+          <newline/>
+          <link class="action" action="file" subaction="size">
+            <text value="${message:menu_file_size}"/>
+          </link>
+        </part>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
+          <text value="${message:${message:id}}"/>
+        </part>
+        <part class="value">
+          <text value="${objectid}"/>
+        </part>
+      </fieldset>
+      <if present="cache_filename">
+        <fieldset class="line" label="">
+          <part class="label">
+            <label for="cache_filename">
+              <text value="${message:CACHE_FILENAME}"/>
+            </label>
+          </part>
+          <part class="value">
+            <text value="${cache_filename}"/>
+            <newline/>
+            <image icon="el_date"/>
+            <date date="${cache_filemtime}"/>
+          </part>
+        </fieldset>
+      </if>
+      <fieldset class="line" label="">
+        <part class="label">
+          <label for="pages">
+            <text value="${message:FILE_PAGES}"/>
+          </label>
+        </part>
+        <part class="value">
+          <table>
+            <list list="${pages}" extract="true">
+              <row>
+                <column>
+                  <link url="${url}" target="cms_main">
+                    <image type="page"/>
+                    <text value="${name}"/>
+                  </link>
+                </column>
+              </row>
+            </list>
+          </table>
+          <if empty="${pages}">
+            <text value="${message:NOT_FOUND}"/>
+          </if>
+        </part>
+      </fieldset>
+    </group>
+    <group title="${message:prop_userinfo}">
+      <fieldset class="line" label="">
+        <part class="label">
+          <text value="${message:created}"/>
+        </part>
+        <part class="value">
+          <image elementtype="date"/>
+          <date date="${create_date}"/>
+          <newline/>
+          <image action="user"/>
+          <user user="${create_user}"/>
+        </part>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
+          <text value="${message:lastchange}"/>
+        </part>
+        <part class="value">
+          <image elementtype="date"/>
+          <date date="${lastchange_date}"/>
+          <newline/>
+          <image action="user"/>
+          <user user="${lastchange_user}"/>
+        </part>
+      </fieldset>
+      <fieldset class="line" label="">
+        <part class="label">
+          <label for="published_date">
+            <text value="${message:published}"/>
+          </label>
+        </part>
+        <part class="value">
+          <image elementtype="date"/>
+          <date date="${published_date}"/>
+          <newline/>
+          <image action="user"/>
+          <user user="${published_user}"/>
+        </part>
+      </fieldset>
+    </group>
+  </form>
 </output>

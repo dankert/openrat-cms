@@ -1,30 +1,26 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<form method="post">
-		<group>
-			<part class="line">
-				<part class="label">
-					<text value="${message:NAME}"></text>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <form method="post">
+    <group>
+      <fieldset class="line" label="">
+        <part class="label">
+          <text value="${message:NAME}"/>
+        </part>
+        <part class="value">
+          <text value="${name}"/>
+        </part>
+      </fieldset>
+    </group>
+    <group title="${message:options}">
+      <fieldset class="line" label="">
+        <part class="label">
 				</part>
-				<part class="value">
-					<text value="${name}"></text>
-				</part>
-			</part>
-		</group>
-
-		<group title="${message:options}">
-
-			<part class="line">
-				<part class="label">
-				</part>
-				<part class="value">
-					<checkbox name="confirm" required="true"></checkbox>
-					<label for="confirm">
-						<text value="${message:CONFIRM_DELETE}"></text>
-					</label>
-				</part>
-			</part>
-		</group>
-
-	</form>
+        <part class="value">
+          <checkbox name="confirm" required="true"/>
+          <label for="confirm">
+            <text value="${message:CONFIRM_DELETE}"/>
+          </label>
+        </part>
+      </fieldset>
+    </group>
+  </form>
 </output>

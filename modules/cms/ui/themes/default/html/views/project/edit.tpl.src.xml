@@ -1,31 +1,49 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<table>
-		<row class="headline">
+	<table filter="false">
+
+		<row header="true">
 			<column>
-				<text value="${message:TYPE}"></text>
-				<text value=" / "></text>
-				<text value="${message:NAME}"></text>
+				<text value="${message:TYPE}"/>
+				<text value=" / "/>
+				<text value="${message:NAME}"/>
 			</column>
 		</row>
-		<if present="up_url">
-			<row class="data">
-				<column url="${up_url}">
-					<image type="folder_up"></image>
-					<text value=".."></text>
-				</column>
-			</row>
-		</if>
-		<list list="${content}" extract="true">
+
+		<row class="data">
+			<column class="clickable">
+				<link type="open" id="${rootobjectid}" name="" action="folder">
+					<image action="folder"/>
+					<text value="${message:content}"/>
+				</link>
+			</column>
+		</row>
+
+		<if true="${is_project_admin}">
 			<row class="data">
 				<column class="clickable">
-					<link type="open" id="${id}" name="${name}" action="${type}">
-						<image action="${type}"></image>
-						<text value="${message:${name}}"></text>
-						<text value=" "></text>
+					<link type="open" id="${projectid}" name="" action="templatelist">
+						<image action="template"/>
+						<text value="${message:templates}"/>
 					</link>
 				</column>
 			</row>
-		</list>
+			<row class="data">
+				<column class="clickable">
+					<link type="open" id="${projectid}" name="" action="languagelist">
+						<image action="language"/>
+						<text value="${message:languages}"/>
+					</link>
+				</column>
+			</row>
+			<row class="data">
+				<column class="clickable">
+					<link type="open" id="${projectid}" name="" action="modellist">
+						<image action="model"/>
+						<text value="${message:models}"/>
+					</link>
+				</column>
+			</row>
+		</if>
 	</table>
 </output>

@@ -1,37 +1,20 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <form readonly="true" cancel="false">
+    <text class="headline" value="${name}"/>
+    <fieldset label="${message:NAME}">
+        <text value="${name}" class="name"/>
+    </fieldset>
 
-    <form readonly="true" cancel="false">
+    <fieldset class="line" label="${message:LANGUAGE_ISOCODE}">
+        <text value="${isocode}"/>
+    </fieldset>
 
-        <text class="headline" value="${name}"/>
-
-        <part class="line">
-            <part class="label">
-                <text value="${message:NAME}"></text>
-            </part>
-            <part class="value,clickable">
-                <text value="${name}" class="name"/>
-            </part>
-        </part>
-        <part class="line">
-            <part class="label">
-                <text value="${message:LANGUAGE_ISOCODE}"></text>
-            </part>
-            <part class="value,clickable">
-                <text value="${isocode}"/>
-            </part>
-        </part>
-
-
-        <part class="line">
-            <part class="label">
-            </part>
-            <part class="value,clickable">
-                <link class="btn" action="language" subaction="prop" type="edit">
-                    <text value="${message:edit}"/>
-                </link>
-            </part>
-        </part>
-
-    </form>
+    <fieldset class="line" label="">
+      <part class="value,clickable">
+        <link class="btn" action="language" subaction="prop" type="edit">
+          <text value="${message:edit}"/>
+        </link>
+      </part>
+    </fieldset>
+  </form>
 </output>

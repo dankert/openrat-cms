@@ -1,48 +1,43 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<table>
-		<row class="headline">
-			<column>
-				<text value="${message:name}"></text>
-			</column>
-			<column>
-				<text value="${message:filename}"></text>
-			</column>
-			<column>
-				<text value="${message:lastchange}" />
-			</column>
-		</row>
-
-		<list list="${timeline}" extract="true">
-
-			<!-- Den Typ des Objektes ermitteln -->
-			<if value="${typeid}" equals="1">
-				<set var="type" value="folder" />
-			</if>
-			<if value="${typeid}" equals="2">
-				<set var="type" value="file" />
-			</if>
-			<if value="${typeid}" equals="4">
-				<set var="type" value="link" />
-			</if>
-			<if value="${typeid}" equals="3">
-				<set var="type" value="page" />
-			</if>
-
-			<row class="data">
-				<column class="clickable">
-					<link type="open" name="${name}" id="${objectid}" action="${type}">
-						<text value="${name}" maxlength="30"></text>
-					</link>
-				</column>
-				<column>
-					<text value="${filename}" maxlength="30"></text>
-				</column>
-				<column>
-					<date date="${lastchange_date}" />
-				</column>
-
-			</row>
-		</list>
-	</table>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <table>
+    <row class="headline">
+      <column>
+        <text value="${message:name}"/>
+      </column>
+      <column>
+        <text value="${message:filename}"/>
+      </column>
+      <column>
+        <text value="${message:lastchange}"/>
+      </column>
+    </row>
+    <list list="${timeline}" extract="true">
+      <!-- Den Typ des Objektes ermitteln -->
+      <if value="${typeid}" equals="1">
+        <set var="type" value="folder"/>
+      </if>
+      <if value="${typeid}" equals="2">
+        <set var="type" value="file"/>
+      </if>
+      <if value="${typeid}" equals="4">
+        <set var="type" value="link"/>
+      </if>
+      <if value="${typeid}" equals="3">
+        <set var="type" value="page"/>
+      </if>
+      <row class="data">
+        <column class="clickable">
+          <link type="open" name="${name}" id="${objectid}" action="${type}">
+            <text value="${name}" maxlength="30"/>
+          </link>
+        </column>
+        <column>
+          <text value="${filename}" maxlength="30"/>
+        </column>
+        <column>
+          <date date="${lastchange_date}"/>
+        </column>
+      </row>
+    </list>
+  </table>
 </output>

@@ -1,108 +1,107 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form readonly="true">
 		<group>
-			<part class="line">
+			<fieldset class="line" label="">
 				<part class="label">
-					<text value="${message:name}"></text>
+					<text value="${message:name}"/>
 				</part>
 				<part class="value">
-					<text value="${name}" class="name" />
+					<text value="${name}" class="name"/>
 				</part>
-			</part>
-			<part class="line">
+			</fieldset>
+			<fieldset class="line" label="">
 				<part class="label">
-					<text value="${message:filename}"></text>
+					<text value="${message:filename}"/>
 				</part>
 				<part class="value">
-					<text value="${filename}" class="filename" />
+					<text value="${filename}" class="filename"/>
 				</part>
-			</part>
-			<part class="line">
+			</fieldset>
+			<fieldset class="line" label="">
 				<part class="label">
-					<text value="${message:file_extension}"></text>
+					<text value="${message:file_extension}"/>
 				</part>
 				<part class="value">
-					<text value="${extension}" class="extension" />
+					<text value="${extension}" class="extension"/>
 				</part>
-			</part>
-			<part class="line">
+			</fieldset>
+			<fieldset class="line" label="">
 				<part class="label">
-					<text value="${message:description}"></text>
+					<text value="${message:description}"/>
 				</part>
 				<part class="value">
-					<text value="${description}" />
+					<text value="${description}"/>
 				</part>
-			</part>
+			</fieldset>
 		</group>
-
 		<group title="${message:additional_info}">
-			<part class="line">
+			<fieldset class="line" label="">
 				<part class="label">
 					<label for="full_filename">
-						<text value="${message:full_filename}"></text>
+						<text value="${message:full_filename}"/>
 					</label>
 				</part>
 				<part class="value">
-					<text value="${full_filename}"></text>
+					<text value="${full_filename}"/>
 				</part>
-			</part>
-			<part class="line">
+			</fieldset>
+			<fieldset class="line" label="">
 				<part class="label">
 					<label for="size">
-						<text value="${message:FILE_SIZE}"></text>
+						<text value="${message:FILE_SIZE}"/>
 					</label>
 				</part>
 				<part class="value">
 				</part>
-				<text value="${size}" />
-			</part>
-			<part class="line">
+				<text value="${size}"/>
+			</fieldset>
+			<fieldset class="line" label="">
 				<part class="label">
 					<label for="mimetype">
-						<text value="${message:FILE_mimetype}"></text>
+						<text value="${message:FILE_mimetype}"/>
 					</label>
 				</part>
 				<part class="value">
-					<text value="${mimetype}"></text>
+					<text value="${mimetype}"/>
 				</part>
-			</part>
-			<part class="line">
+			</fieldset>
+			<fieldset class="line" label="">
 				<part class="label">
 				</part>
 				<part class="value,clickable">
 					<link class="action" type="dialog" subaction="size">
-						<text value="${message:menu_file_size}"></text>
+						<text value="${message:menu_file_size}"/>
 					</link>
 				</part>
-			</part>
-			<part class="line">
+			</fieldset>
+			<fieldset class="line" label="">
 				<part class="label">
-					<text value="${message:${message:id}}"></text>
+					<text value="${message:${message:id}}"/>
 				</part>
 				<part class="value">
-					<text value="${objectid}"></text>
+					<text value="${objectid}"/>
 				</part>
-			</part>
+			</fieldset>
 			<if present="cache_filename">
-				<part class="line">
+				<fieldset class="line" label="">
 					<part class="label">
 						<label for="cache_filename">
-							<text value="${message:CACHE_FILENAME}"></text>
+							<text value="${message:CACHE_FILENAME}"/>
 						</label>
 					</part>
 					<part class="value">
-						<text value="${cache_filename}"></text>
-						<newline></newline>
-						<image icon="el_date"></image>
-						<date date="${cache_filemtime}"></date>
+						<text value="${cache_filename}"/>
+						<newline/>
+						<image icon="el_date"/>
+						<date date="${cache_filemtime}"/>
 					</part>
-				</part>
+				</fieldset>
 			</if>
-			<part class="line">
+			<fieldset class="line" label="">
 				<part class="label">
 					<label for="pages">
-						<text value="${message:FILE_PAGES}"></text>
+						<text value="${message:FILE_PAGES}"/>
 					</label>
 				</part>
 				<part class="value">
@@ -111,107 +110,109 @@
 							<row>
 								<column>
 									<link url="${url}" target="cms_main">
-										<image type="page"></image>
-										<text value="${name}"></text>
+										<image type="page"/>
+										<text value="${name}"/>
 									</link>
 								</column>
 							</row>
 						</list>
 					</table>
 					<if empty="${pages}">
-						<text value="${message:NOT_FOUND}"></text>
+						<text value="${message:NOT_FOUND}"/>
 					</if>
 				</part>
-			</part>
+			</fieldset>
 		</group>
 		<group title="${message:validity}">
 			<part class="clickable">
 				<link subaction="settings" type="dialog">
-					<part class="line">
+					<fieldset class="line" label="">
 						<part class="label">
-							<text value="${message:state}"></text>
+							<text value="${message:state}"/>
 						</part>
 						<part class="value">
-							<if true="${is_valid}"><text value="${message:is_yes}" /></if>
-							<else><text value="${message:is_no}" /></else>
+							<if true="${is_valid}">
+								<text value="${message:is_yes}"/>
+							</if>
+							<else>
+								<text value="${message:is_no}"/>
+							</else>
 						</part>
-					</part>
-					<part class="line">
+					</fieldset>
+					<fieldset class="line" label="">
 						<part class="label">
-							<text value="${message:from}"></text>
+							<text value="${message:from}"/>
 						</part>
 						<part class="value">
-							<date date="${valid_from_date}" />
+							<date date="${valid_from_date}"/>
 						</part>
-					</part>
-					<part class="line">
+					</fieldset>
+					<fieldset class="line" label="">
 						<part class="label">
-							<text value="${message:until}"></text>
+							<text value="${message:until}"/>
 						</part>
 						<part class="value">
-							<date date="${valid_to_date}" />
+							<date date="${valid_to_date}"/>
 						</part>
-					</part>
+					</fieldset>
 				</link>
 			</part>
 		</group>
 		<group title="${message:prop_userinfo}">
-			<part class="line">
+			<fieldset class="line" label="">
 				<part class="label">
-					<text value="${message:created}"></text>
+					<text value="${message:created}"/>
 				</part>
 				<part class="value">
-					<image elementtype="date"></image>
-					<date date="${create_date}"></date>
-					<newline></newline>
-					<image action="user"></image>
-					<user user="${create_user}"></user>
+					<image elementtype="date"/>
+					<date date="${create_date}"/>
+					<newline/>
+					<image action="user"/>
+					<user user="${create_user}"/>
 				</part>
-			</part>
-			<part class="line">
+			</fieldset>
+			<fieldset class="line" label="">
 				<part class="label">
-					<text value="${message:lastchange}"></text>
+					<text value="${message:lastchange}"/>
 				</part>
 				<part class="value">
-					<image elementtype="date"></image>
-					<date date="${lastchange_date}"></date>
-					<newline></newline>
-					<image action="user"></image>
-					<user user="${lastchange_user}"></user>
+					<image elementtype="date"/>
+					<date date="${lastchange_date}"/>
+					<newline/>
+					<image action="user"/>
+					<user user="${lastchange_user}"/>
 				</part>
-			</part>
-			<part class="line">
+			</fieldset>
+			<fieldset class="line" label="">
 				<part class="label">
 					<label for="published_date">
-						<text value="${message:published}"></text>
+						<text value="${message:published}"/>
 					</label>
 				</part>
 				<part class="value">
-					<image elementtype="date"></image>
-					<date date="${published_date}"></date>
-					<newline></newline>
-					<image action="user"></image>
-					<user user="${published_user}"></user>
+					<image elementtype="date"/>
+					<date date="${published_date}"/>
+					<newline/>
+					<image action="user"/>
+					<user user="${published_user}"/>
 				</part>
-			</part>
+			</fieldset>
 		</group>
-
 		<group title="${message:settings}">
 			<table filter="true">
-				<list list="${settings}" key="name" value="value" >
+				<list list="${settings}" key="name" value="value">
 					<row class="data">
 						<column>
-							<text value="${name}" />
+							<text value="${name}"/>
 						</column>
 						<column class="clickable">
 							<link subaction="settings" type="dialog">
-								<text value="${value}" />
+								<text value="${value}"/>
 							</link>
 						</column>
 					</row>
 				</list>
 			</table>
 		</group>
-
 	</form>
 </output>

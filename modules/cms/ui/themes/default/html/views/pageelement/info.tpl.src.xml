@@ -1,81 +1,80 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<table>
-		<row class="data">
-			<column>
-				<text value="${message:name}"></text>
-			</column>
-			<column class="name">
-				<text value="${name}"></text>
-			</column>
-		</row>
-		<row class="data">
-			<column>
-				<text value="${message:description}"></text>
-			</column>
-			<column>
-				<text value="${description}"></text>
-			</column>
-		</row>
-		<row class="data">
-			<column>
-				<text value="${message:type}"></text>
-			</column>
-			<column class="filename">
-				<image elementtype="${element_type}"></image>
-				<text value="${message:el_${element_type}}"></text>
-			</column>
-		</row>
-		<row class="data">
-			<column>
-				<text value="${message:template}"></text>
-			</column>
-			<column class="clickable">
-				<link type="open" action="template" id="${template_id}">
-					<image action="template"></image>
-					<text value="${template_name}"></text>
-				</link>
-			</column>
-		</row>
-		<row class="data">
-			<column>
-				<text value="${message:element}"></text>
-			</column>
-			<column class="clickable">
-				<link id="${element_id}" name="${element_name}" action="element">
-					<image elementtype="${element_type}"></image>
-					<text value="${element_name}"></text>
-				</link>
-			</column>
-		</row>
-		<row class="data">
-			<column>
-				<text value="${message:format}" />
-				<text value="${message:element}" />
-			</column>
-			<column>
-				<text value="${element_format}" />
-			</column>
-		</row>
-		<row class="data">
-			<column>
-				<text value="${message:format}" />
-			</column>
-			<column>
-				<text value="${format}" />
-			</column>
-		</row>
-		<row class="data">
-			<column>
-				<text value="${message:lastchange}"></text>
-			</column>
-			<column>
-				<image elementtype="date"></image>
-				<date date="${lastchange_date}"></date>
-				<text value=", "></text>
-				<image action="user"></image>
-				<user user="${lastchange_user}"></user>
-			</column>
-		</row>
-	</table>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <table>
+    <row class="data">
+      <column>
+        <text value="${message:name}"/>
+      </column>
+      <column class="name">
+        <text value="${name}"/>
+      </column>
+    </row>
+    <row class="data">
+      <column>
+        <text value="${message:description}"/>
+      </column>
+      <column>
+        <text value="${description}"/>
+      </column>
+    </row>
+    <row class="data">
+      <column>
+        <text value="${message:type}"/>
+      </column>
+      <column class="filename">
+        <image elementtype="${element_type}"/>
+        <text value="${message:el_${element_type}}"/>
+      </column>
+    </row>
+    <row class="data">
+      <column>
+        <text value="${message:template}"/>
+      </column>
+      <column class="clickable">
+        <link type="open" action="template" id="${template_id}">
+          <image action="template"/>
+          <text value="${template_name}"/>
+        </link>
+      </column>
+    </row>
+    <row class="data">
+      <column>
+        <text value="${message:element}"/>
+      </column>
+      <column class="clickable">
+        <link id="${element_id}" name="${element_name}" action="element">
+          <image elementtype="${element_type}"/>
+          <text value="${element_name}"/>
+        </link>
+      </column>
+    </row>
+    <row class="data">
+      <column>
+        <text value="${message:format}"/>
+        <text value="${message:element}"/>
+      </column>
+      <column>
+        <text value="${element_format}"/>
+      </column>
+    </row>
+    <row class="data">
+      <column>
+        <text value="${message:format}"/>
+      </column>
+      <column>
+        <text value="${format}"/>
+      </column>
+    </row>
+    <row class="data">
+      <column>
+        <text value="${message:lastchange}"/>
+      </column>
+      <column>
+        <image elementtype="date"/>
+        <date date="${lastchange_date}"/>
+        <text value=", "/>
+        <image action="user"/>
+        <user user="${lastchange_user}"/>
+      </column>
+    </row>
+  </table>
 </output>

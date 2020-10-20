@@ -1,44 +1,42 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <table>
+    <row header="true">
+      <column>
+        <text value="${message:language}"/>
+      </column>
+      <column>
+        <text value="${message:value}"/>
+      </column>
+      <column>
+        <text value="${message:editor}"/>
+      </column>
+    </row>
 
-	<table>
-		<row class="headline">
-			<column header="true">
-				<text value="${message:language}" />
-			</column>
-			<column header="true">
-				<text value="${message:value}" />
-			</column>
-			<column header="true">
-				<text value="${message:editor}" />
-			</column>
-		</row>
-
-		<list list="${languages}" extract="true">
-			<row class="data">
-				<column>
-					<text value="${languagename}" />
-				</column>
-				<column class="clickable" title="${text}">
-					<link subaction="value" var1="languageid" value1="${languageid}" type="edit" action="pageelement">
-						<if true="${date}">
-							<date date="${date}" />
-						</if>
-						<if true="${text}">
-							<text value="${text}" escape="true" />
-						</if>
-					</link>
-				</column>
-				<column>
-					<list list="${editors}" key="id" value="name">
-						<part class="clickable">
-							<link type="edit" action="pageelement" subaction="value" var1="languageid" value1="${languageid}" var2="format" value2="${id}">
-								<text value="${name}" />
-							</link>
-						</part>
-					</list>
-				</column>
-			</row>
-		</list>
-	</table>
+    <list list="${languages}" extract="true">
+      <row class="data">
+        <column>
+          <text value="${languagename}"/>
+        </column>
+        <column class="clickable" title="${text}">
+          <link subaction="value" var1="languageid" value1="${languageid}" type="edit" action="pageelement">
+            <if true="${date}">
+              <date date="${date}"/>
+            </if>
+            <if true="${text}">
+              <text value="${text}" escape="true"/>
+            </if>
+          </link>
+        </column>
+        <column>
+          <list list="${editors}" key="id" value="name">
+            <part class="clickable">
+              <link type="edit" action="pageelement" subaction="value" var1="languageid" value1="${languageid}" var2="format" value2="${id}">
+                <text value="${name}"/>
+              </link>
+            </part>
+          </list>
+        </column>
+      </row>
+    </list>
+  </table>
 </output>

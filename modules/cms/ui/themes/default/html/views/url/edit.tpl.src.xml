@@ -1,17 +1,14 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<form>
-		<group>
-			<part class="line">
-				<part class="label">
-					<text value="${message:link_url}"></text>
-				</part>
-				<part class="value">
-					<input name="url" maxlength="255"></input>
-				</part>
-			</part>
-
-
-		</group>
-	</form>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <form>
+    <group>
+      <fieldset class="line" label="">
+        <part class="label">
+          <text value="${message:link_url}"/>
+        </part>
+        <part class="value">
+          <input name="url" maxlength="255"/>
+        </part>
+      </fieldset>
+    </group>
+  </form>
 </output>
