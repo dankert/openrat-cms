@@ -1,7 +1,7 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 
-	<form cancel="false" label="${message:menu_login}" visible="true" action="login" subaction="login" afterSuccess="reloadAll">
+	<form cancel="false" label="${message:menu_login}" action="login" subaction="login" afterSuccess="reloadAll">
 		<if true="${config:login/logo/enabled}">
 				<if not="not" empty="${config:login/logo/url}">
 					<link url="${config:login/logo/url}" target="_top">
@@ -32,132 +32,50 @@
 
 		<if false="${config:login/nologin}">
 
-			<part class="line">
-				<part class="label">
-					<label for="login_name">
-						<text value="${message:USER_USERNAME}"></text>
-					</label>
-				</part>
-				<part class="value">
-					<if not="true" present="force_username">
-						<input type="text" name="login_name" class="name" value=""
-							hint="${message:USER_USERNAME}" size="20" maxlength="128" focus="true" required="true"></input>
-					</if>
-					<else>
-						<hidden name="login_name"></hidden>
-							<text value="${force_username}"></text>
-						</else>
-				</part>
-			</part>
-			<part class="line">
-				<part class="label">
-					<label for="login_password">
-						<text value="${message:USER_PASSWORD}"></text>
-					</label>
-				</part>
-				<part class="value">
-					<password name="login_password" class="name" default=""
-						size="20"></password>
-				</part>
-			</part>
-			
-			
-			
-			
-			
-			
-			
-			<part class="line">
-				<part class="label">
-				</part>
- 				<part class="value">
-					<checkbox name="remember" default="false"></checkbox>
-					<label for="remember">
-						<text value="${message:REMEMBER_ME}"></text>
-					</label>
-				</part>
-			</part>
-			
+			<fieldset label="${message:USER_USERNAME}">
+				<if not="true" present="force_username">
+					<input type="text" name="login_name" class="name" value=""
+						   hint="${message:USER_USERNAME}" size="20" maxlength="128" focus="true" required="true"/>
+				</if>
+				<else>
+					<hidden name="login_name"/>
+					<text value="${force_username}"/>
+				</else>
+			</fieldset>
+			<fieldset label="${message:USER_PASSWORD}">
+				<password name="login_password" class="name" default=""
+						  size="20" hint="${message:USER_PASSWORD}" required="true" />
+				<checkbox name="remember" default="false" label="${message:REMEMBER_ME}"/>
+			</fieldset>
 		</if>
 
 
-		<!-- <if true="property:mustChangePassword"> -->
 		<group title="${message:USER_NEW_PASSWORD}" open="false" show="false">
-			<part class="line">
-				<part class="label">
-					<label for="password1">
-						<text value="${message:USER_NEW_PASSWORD}"></text>
-					</label>
-				</part>
-				<part class="value">
-					<password name="password1" default="" size="25"></password>
-				</part>
-			</part>
-			<part class="line">
-				<part class="label">
-					<label for="password2">
-						<text value="${message:USER_NEW_PASSWORD_REPEAT}"></text>
-					</label>
-				</part>
-				<part class="value">
-					<password name="password2" default="" size="25"></password>
-				</part>
-			</part>
+			<fieldset label="${message:USER_NEW_PASSWORD}">
+				<password name="password1" default="" size="25" minlength="${config:security/password/min_length}" hint="${message:USER_NEW_PASSWORD}" />
+				<password name="password2" default="" size="25" minlength="${config:security/password/min_length}" hint="${message:USER_NEW_PASSWORD_REPEAT}" />
+			</fieldset>
 		</group>
 		
 		<group title="${message:USER_TOKEN}" open="false" show="false">
-			<part class="line">
-				<part class="label">
-					<label for="user_token">
-						<text value="${message:USER_TOKEN}"></text>
-					</label>
-				</part>
-				<part class="value">
-					<input name="user_token" default="" size="25" maxlength="30" />
-				</part>
-			</part>
+			<fieldset label="${message:USER_TOKEN}">
+				<input name="user_token" default="" size="25" maxlength="30" />
+			</fieldset>
 		</group>
-		<!-- </if> -->
-
-		<!--
-			<link type="view" class="action" action="login" subaction="password">
-			<text value="${message:menu_password}"></text> </link>
-		-->
-
-		<!--
-			<link type="view" class="action" action="login" subaction="register">
-			<text value="${message:menu_register}"></text> </link> <newline></newline>
-			<newline />
-		-->
 
 		<if value="${dbids}" greaterthan="1">
-			<!-- Mehr als 1 Datenbank zur Auswahl. Auswahlfeld anzeigen. -->
+			<!-- More than 1 database available. -->
 			<group title="${message:DATABASE}" icon="database" open="true">
-				<part class="line">
-					<part class="label">
-						<label for="dbid">
-							<text value="${message:DATABASE}"></text>
-						</label>
-					</part>
-					<part class="value">
-						<selectbox name="dbid" list="dbids"></selectbox>
-					</part>
-				</part>
+				<fieldset label="${message:DATABASE}">
+					<selectbox name="dbid" list="dbids"></selectbox>
+				</fieldset>
 			</group>
 		</if>
 		<else>
-			<!-- Nur 1 Datenbank zur Auswahl. Kein Auswahlfeld notwendig. -->
+			<!-- Only 1 database is available. No input necessary. -->
 			<hidden name="dbid"></hidden>
 		</else>
 
-
-		<hidden name="objectid"></hidden>
-		<hidden name="modelid"></hidden>
-		<hidden name="projectid"></hidden>
-		<hidden name="languageid"></hidden>
 	</form>
-	<!--
-		<newline /> <newline /> <link url="${config:login/gpl/url}"
-		type="external" class="copyright"> <text value="${message:GPL}"></text> </link>
-	-->
+
 </output>

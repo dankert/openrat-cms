@@ -1142,6 +1142,9 @@
         <xsd:attribute name="default" type="xsd:string"/>
         <xsd:attribute name="size" type="xsd:int"/>
         <xsd:attribute name="maxlength" type="xsd:int"/>
+        <xsd:attribute name="minlength" type="xsd:string"/>
+        <xsd:attribute name="required" type="xsd:boolean"/>
+        <xsd:attribute name="hint" type="xsd:string"/>
         <xsd:attribute name="prefix" type="xsd:string"/>
         <xsd:attribute name="name" type="xsd:string"/>
         <xsd:attribute name="readonly" type="xsd:boolean"/>

@@ -17,18 +17,28 @@ class PasswordComponent extends FieldComponent
 
 	public $maxlength = 256;
 
+	public $minlength;
+	public $required = false;
+	public $hint;
+
 	public function createElement()
 	{
 		$input = (new CMSElement('input'))->addAttribute('type','password');
 
 		$input->addAttribute('name',$this->name);
-		/*echo ' id="<?php echo REQUEST_ID ?>_' . $this->htmlvalue($this->name) . '"';
-		*/
 
 		$input->addAttribute('size',$this->size);
 		$input->addAttribute('maxlength',$this->maxlength);
 		$input->addStyleClass($this->class);
 
+		if   ( $this->required )
+			$input->addAttribute( 'required','required');
+
+		if ( $this->hint )
+			$input->addAttribute( 'placeholder',$this->hint );
+
+		if   ( $this->minlength )
+			$input->addAttribute('minlength',$this->minlength);
 
 		if ($this->default)
 			$input->addAttribute('value',$this->default);
