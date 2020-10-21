@@ -13,5 +13,10 @@ class IncludeComponent extends Component
 
 	public $file;
 
+	public function createElement()
+	{
+		// no elements required. The template compiler will do the work.
+		return null;
+	}
 }
 
