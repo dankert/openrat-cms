@@ -5,9 +5,20 @@ namespace template_engine\components\html;
 use cms\action\RequestParams;
 use template_engine\element\Element;
 
+/**
+ * Base class for all components.
+ *
+ * @package template_engine\components\html
+ */
 abstract class Component
 {
+	/**
+	 * Contains child components.
+	 * 
+	 * @var array
+	 */
 	private $childComponents = [];
+
 	private $depth;
 
 	/**
@@ -29,6 +40,10 @@ abstract class Component
     private $element;
 
 	/**
+	 * If a component is generating a tree of elements, then this element is the
+	 * element, which is getting the elements, which sub-components are creating.
+	 * Sublasses should set this element if necessary.
+	 *
 	 * @var Element
 	 */
     protected $adoptiveElement;
@@ -37,21 +52,25 @@ abstract class Component
 	{
 	}
 
-	public function getDepth()
+	final public function getDepth()
 	{
 		return $this->depth;
 	}
 
-	public function setDepth($depth)
+	final public function setDepth($depth)
 	{
 		$this->depth = $depth;
 	}
 
-	public function createElement() {
-    	return null;
-	}
+	/**
+	 * Every component must generate a single element or a tree of elements.
+	 * Sublasses must overwrite this method.
+	 *
+	 * @return Element
+	 */
+	public abstract function createElement();
 
-	public function init()
+	final public function init()
 	{
 		$this->element = $this->createElement();
 
@@ -66,7 +85,7 @@ abstract class Component
 	 *
 	 * @return Element
 	 */
-	public function getElement()
+	final public function getElement()
 	{
 		/** @var Component $childComponent */
 		foreach ($this->childComponents as $childComponent )
