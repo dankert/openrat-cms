@@ -837,7 +837,8 @@ SQL
      */
     public function load()
     {
-        return self::objectLoad();
+        self::objectLoad();
+        return $this;
     }
 
 

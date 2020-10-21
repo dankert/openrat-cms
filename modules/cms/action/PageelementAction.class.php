@@ -1253,7 +1253,7 @@ class PageelementAction extends BaseAction
 
         foreach( Text::parseOID($text) as $oid=>$t )
         {
-            $url = $linkFormat->linkToObject($this->page, new BaseObject($oid) );
+            $url = $linkFormat->linkToObject($this->page, (new BaseObject($oid))->load() );
             foreach( $t as $match)
                 $text = str_replace($match,$url,$text);
         }
