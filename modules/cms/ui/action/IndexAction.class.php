@@ -5,6 +5,7 @@ namespace cms\ui\action;
 use cms\action\Action;
 use cms\action\RequestParams;
 use cms\auth\Auth;
+use cms\base\Configuration;
 use cms\base\Startup;
 use cms\model\BaseObject;
 use cms\model\Project;
@@ -164,6 +165,14 @@ class IndexAction extends Action
 
         $vars = $this->getOutputData();
         $this->setTemplateVar( 'notices',$vars['notices'] ); // will be extracted in the included template file.
+		$this->setTemplateVar( 'charset','UTF-8' );
+
+		$app = C::subset('application');
+		$appName     = $app->get('name'    );
+		$appOperator = $app->get('operator');
+		$this->setTemplateVar( 'defaultTitle', $appName.(($appOperator!=$appName)?' - '.$appOperator:''));
+
+		$this->setTemplateVar('language',Configuration::subset('language')->get('language_code') );
 	}
 
 

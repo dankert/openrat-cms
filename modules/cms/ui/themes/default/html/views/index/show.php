@@ -1,36 +1,34 @@
 <?php
  defined('APP_STARTED') || die('Forbidden');
- use cms\base\Startup;use util\Html;
+ use cms\base\Configuration as C;
+ use cms\base\Language as L;
+ use cms\base\Startup;
+ use util\Html;
  if (!headers_sent()) header('Content-Type: text/html; charset=UTF-8')
 ?><!DOCTYPE html>
-<html class="or-theme-<?php echo strtolower($style) ?> nojs" lang="<?php echo \cms\base\Configuration::Conf()->subset('language')->get('language_code') ?>">
+<html class="or-theme-<?php echo strtolower($style) ?> nojs" lang="<?php $language ?>">
 <head>
-<?php $appName = \cms\base\Configuration::config('application','name'); $appOperator = \cms\base\Configuration::config('application','operator');
-      $title = $appName.(($appOperator!=$appName)?' - '.$appOperator:''); ?>
-  <title data-default="<?php echo htmlentities($title,ENT_QUOTES|ENT_HTML5) ?>"><?php echo htmlentities($title,ENT_COMPAT|ENT_HTML5) ?></title>
+  <title data-default="<?php echo htmlentities($defaultTitle,ENT_QUOTES|ENT_HTML5) ?>"><?php echo htmlentities($defaultTitle,ENT_COMPAT|ENT_HTML5) ?></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta charset="utf-8">
-    <?php if ( isset($refresh_url) ) { ?>
-  <meta http-equiv="refresh" content="<?php echo isset($refresh_timeout)?$refresh_timeout:0 ?>; URL=<?php echo $refresh_url; if (ini_get('session.use_trans_sid')) echo '&'.session_name().'='.session_id(); ?>">
-<?php } ?>
+  <meta charset="<?php echo $charset ?>">
   <meta name="robots" content="noindex,nofollow" >
 <?php foreach( $jsFiles  as $jsFile ) { ?>  <script src="<?php echo $jsFile ?>" defer></script>
 <?php } ?>
   <link rel="stylesheet" type="text/css" href="<?php echo Startup::HTML_MODULES_DIR . 'editor/codemirror/lib/codemirror.css' ?>" />
 <?php foreach( $cssFiles as $cssFile) { ?>  <link rel="stylesheet" type="text/css" href="<?php echo $cssFile ?>" />
 <?php } ?>
-  <link rel="stylesheet" type="text/css" href="<?php echo Html::url('index','themestyle',0,array('embed'=>'1')) ?>" />
+  <link rel="stylesheet" type="text/css" href="<?php echo Html::url('index','themestyle',0) ?>" />
   <meta id="theme-color" name="theme-color" content="<?php echo $themeColor ?>" />
-  <link rel="manifest" href="<?php echo Html::url('index','manifest',0,array('embed'=>'1')) ?>" />
+  <link rel="manifest" href="<?php echo Html::url('index','manifest',0) ?>" />
   <link rel="shortcut icon" type="image/x-icon" href="<?php echo $favicon_url ?>">
 </head>
 
 <body>
 
 
-<div id="workbench" class="or--initial-hidden">
+<div id="workbench" class="or-workbench or--initial-hidden">
 
-    <header id="title" class="or-view or-act-view-static" data-action="title" data-method="show">
+    <header id="title" class="or-workbench-title or-view or-act-view-static" data-action="title" data-method="show">
     </header>
 
 
@@ -51,27 +49,14 @@
 
                 <?php foreach( $methodList as $method ) { ?>
                 <?php if (DEVELOPMENT) echo "<!-- Section for: ".$method['name']." -->";  ?>
-                <section class="toggle-open-close <?php echo $method ['open']?'open':'closed' ?>">
+                <section class="or-collapsible or-collapsible--is-<?php echo $method ['open']?'open':'closed' ?>">
 
-                    <header class="or-view-header on-click-open-close">
-                        <!--
-                        <div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div>
-                        -->
+                    <header class="or-view-header or-collapsible-act-switch or-collapsible-title">
                         <span class="or-view-icon image-icon image-icon--method-<?php echo $method['name'] ?>" ></span>
-                        <h1 class="or-view-headline"><?php echo \cms\base\Language::lang('METHOD_'.$method['name'] ) ?></h1>
+                        <h1 class="or-view-headline"><?php echo L::lang('METHOD_'.$method['name'] ) ?><i class="or-collapsible--on-open or-image-icon or-image-icon--node-open" /><i class="or-collapsible--on-open or-image-icon or-image-icon--node-open" /></h1>
                     </header>
 
-                    <!--
-                    <div class="view-toolbar">
-                        <img src="<?php echo Startup::THEMES_DIR ?>/default/images/icon/menu/fullscreen.svg" class="image-icon on-normalscreen toolbar-action-fullscreen" />
-                        <img src="<?php echo Startup::THEMES_DIR ?>/default/images/icon/menu/fullscreen_exit.svg" class="image-icon on-fullscreen toolbar-action-exit-fullscreen"  />
-                        <img src="<?php echo Startup::THEMES_DIR ?>/default/images/icon/menu/refresh.svg" class="image-icon toolbar-action-refresh" />
-                    </div>
-                        -->
-
-
-                    <div class="or-view or-act-view-loader or-closable" data-method="<?php echo $method['name'] ?>"></div>
-
+                    <div class="or-collapsible-value or-view or-act-view-loader or-closable" data-method="<?php echo $method['name'] ?>"></div>
                 </section>
                 <?php } ?>
 
