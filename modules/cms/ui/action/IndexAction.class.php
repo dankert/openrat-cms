@@ -6,13 +6,16 @@ use cms\action\Action;
 use cms\action\RequestParams;
 use cms\auth\Auth;
 use cms\base\Configuration;
+use cms\base\Configuration as C;
 use cms\base\Startup;
 use cms\model\BaseObject;
 use cms\model\Project;
 use cms\model\User;
 use cms\model\Value;
+use cms\ui\themes\Theme;
 use Exception;
 use language\Messages;
+use util\Html;
 use util\json\JSON;
 use logger\Logger;
 use util\Less;
@@ -49,14 +52,14 @@ class IndexAction extends Action
         $user = Session::getUser();
 
         if   ( $user )
-            $this->lastModified( \cms\base\Configuration::config('config','last_modification_time') );
+            $this->lastModified( C::config('config','last_modification_time') );
         else
             $this->lastModified( time() );
 
         $style = $this->getUserStyle( $user );
 
-        $styleConfig     = \cms\base\Configuration::config('style-default'); // default style config
-        $userStyleConfig = \cms\base\Configuration::config('style', $style); // user style config
+        $styleConfig     = C::config('style-default'); // default style config
+        $userStyleConfig = C::config('style', $style); // user style config
 
         if (is_array($userStyleConfig))
             $styleConfig = array_merge($styleConfig, $userStyleConfig ); // Merging user style into default style
@@ -69,7 +72,7 @@ class IndexAction extends Action
 
 
 
-        $appName = \cms\base\Configuration::config('application','name');
+        $appName = C::config('application','name');
 
         $value = array(
             'name' => $appName,
@@ -94,8 +97,6 @@ class IndexAction extends Action
      */
 	public function showView()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
-
         $user = Session::getUser();
 
         // Is a user logged in?
@@ -108,9 +109,9 @@ class IndexAction extends Action
         }
 
         if	( $user )
-            $this->lastModified( max( $user->loginDate,\cms\base\Configuration::config('config','last_modification_time')) );
+            $this->lastModified( max( $user->loginDate, C::config('config','last_modification_time')) );
         else
-            $this->lastModified( \cms\base\Configuration::config('config','last_modification_time') );
+            $this->lastModified( C::config('config','last_modification_time') );
 
         // Theme für den angemeldeten Benuter ermitteln
         $style = $this->getUserStyle($user);
@@ -127,11 +128,13 @@ class IndexAction extends Action
         $this->setTemplateVar('action',$action);
         $this->setTemplateVar('id'    ,$id    );
 
-		$this->setTemplateVar('jsFiles' , $this->getJSFiles() );
-        $this->setTemplateVar('cssFiles',$this->getCSSFiles() );
+		$this->setTemplateVar('scriptLink', $this->getScriptLink() );
+        $this->setTemplateVar('styleLink' , $this->getStyleLink()  );
 
-        $styleConfig     = \cms\base\Configuration::config('style-default'); // default style config
-        $userStyleConfig = \cms\base\Configuration::config('style', $style); // user style config
+        $this->setTemplateVar('themeStyleLink', Html::url('index','themestyle') );
+
+        $styleConfig     = C::config('style-default'); // default style config
+        $userStyleConfig = C::config('style', $style); // user style config
 
         if (is_array($userStyleConfig))
             $styleConfig = array_merge($styleConfig,$userStyleConfig); // Merging user style into default style
@@ -141,7 +144,7 @@ class IndexAction extends Action
         // Theme base color for smartphones colorizing their status bar.
         $this->setTemplateVar('themeColor', UIUtils::getColorHexCode($styleConfig['title_background_color']));
 
-        $messageOfTheDay = \cms\base\Configuration::config('login', 'motd');
+        $messageOfTheDay = C::config('login', 'motd');
 
         if ( !empty($messageOfTheDay) )
             $this->addInfoFor( new User(),Messages::MOTD,array('motd'=>$messageOfTheDay) );
@@ -161,7 +164,7 @@ class IndexAction extends Action
             $methodList[] = array('name'=>$method,'open'=>$openByDefault);
         }
         $this->setTemplateVar('methodList', $methodList);
-		$this->setTemplateVar('favicon_url', \cms\base\Configuration::Conf()->subset('theme')->get('favicon','modules/cms/ui/themes/default/images/openrat-logo.ico') );
+		$this->setTemplateVar('favicon_url', C::subset('theme')->get('favicon','modules/cms/ui/themes/default/images/openrat-logo.ico') );
 
         $vars = $this->getOutputData();
         $this->setTemplateVar( 'notices',$vars['notices'] ); // will be extracted in the included template file.
@@ -177,13 +180,14 @@ class IndexAction extends Action
 
 
 	/**
-	 * Gets all necessary CSS files for displaying the UI.
-	 * @return string[]
+	 * Gets CSS file for displaying the UI.
+	 *
+	 * @return string
 	 */
-	private function getCSSFiles()
+	private function getStyleLink()
 	{
 		// Ok, for now there is only 1 CSS file, which contains all UI styles.
-		return [ Startup::THEMES_DIR . 'default/style/openrat'.(PRODUCTION?'.min':'').'.css' ];
+		return Startup::THEMES_DIR . 'default/'.(PRODUCTION?Theme::STYLE_MINIFIED_FILENAME:Theme::STYLE_FILENAME);
 	}
 
 	
@@ -210,7 +214,7 @@ class IndexAction extends Action
 		$css = '';
 		
 		
-		foreach (array_keys(\cms\base\Configuration::config('style')) as $styleId)
+		foreach (array_keys(C::config('style')) as $styleId)
 		{
 			try
 			{
@@ -221,7 +225,7 @@ class IndexAction extends Action
 				));
 				$parser->parseFile($lessFile,basename($lessFile));
 				
-				$styleConfig = array_merge( \cms\base\Configuration::config('style-default'), \cms\base\Configuration::config('style', $styleId) );
+				$styleConfig = array_merge( C::config('style-default'), C::config('style', $styleId) );
 				$lessVars = array(
 					'cms-theme-id' => strtolower($styleId),
 					'cms-image-path' => 'themes/default/images/'
@@ -242,27 +246,20 @@ class IndexAction extends Action
 		}
 		
 		if (PRODUCTION)
-		{
 			return $css; // Should we minify here? Bandwidth vs. cpu-load.
-		}
 		else
-		{
 			return $css;
-		}
 	}
 
 
 	/**
-	 * Gets all JS files for displaying the UI.
+	 * Gets JS file for displaying the UI.
 	 *
-	 * @return string[]
+	 * @return string
 	 */
-	private function getJSFiles()
+	private function getScriptLink()
 	{
-		return [
-			// There is only 1 JS file needed for the UI. It contains all script files.
-			Startup::THEMES_DIR . 'default/script/openrat'.(PRODUCTION?'.min':'').'.js'
-		];
+		return Startup::THEMES_DIR . 'default/'.(PRODUCTION?Theme::SCRIPT_MINIFIED_FILENAME:Theme::SCRIPT_FILENAME);
 	}
 	
 
@@ -294,7 +291,7 @@ class IndexAction extends Action
 
 
         // Das zuletzt geänderte Objekt benutzen.
-        if	( \cms\base\Configuration::config('login','start','start_lastchanged_object') )
+        if	( C::config('login','start','start_lastchanged_object') )
         {
             $objectid = Value::getLastChangedObjectByUserId($user->userid);
 
@@ -310,7 +307,7 @@ class IndexAction extends Action
         }
 
         // Das einzige Projekt benutzen
-        if	( \cms\base\Configuration::config('login','start','start_single_project') )
+        if	( C::config('login','start','start_single_project') )
         {
             $projects = Project::getAllProjects();
             if ( count($projects) == 1 ) {
@@ -326,7 +323,7 @@ class IndexAction extends Action
 
     private function tryAutoLogin()
     {
-        $modules  = \cms\base\Configuration::config('security','autologin','modules');
+        $modules  = C::config('security','autologin','modules');
         $username = null;
 
         foreach( $modules as $module)
@@ -382,10 +379,10 @@ class IndexAction extends Action
     private function getUserStyle( $user )
     {
         // Theme für den angemeldeten Benuter ermitteln
-        if  ( $user && isset(\cms\base\Configuration::config('style')[$user->style]))
+        if  ( $user && isset(C::config('style')[$user->style]))
             $style = $user->style;
         else
-            $style = \cms\base\Configuration::config('interface', 'style', 'default');
+            $style = C::config('interface', 'style', 'default');
         return $style;
     }
 

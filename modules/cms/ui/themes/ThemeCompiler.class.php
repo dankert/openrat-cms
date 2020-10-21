@@ -15,8 +15,6 @@ use util\Less;
  */
 class ThemeCompiler
 {
-	public $theme = 'default';
-
 	public function compileAll() {
 		$this->compileStyles();
 		$this->compileScripts();
@@ -25,8 +23,8 @@ class ThemeCompiler
 
 	public function compileStyles()
 	{
-		$combinedCssFile    = __DIR__.'/default/style/openrat.css';
-		$combinedCssFileMin = __DIR__.'/default/style/openrat.min.css';
+		$combinedCssFile    = __DIR__.'/default/'.Theme::STYLE_FILENAME;
+		$combinedCssFileMin = __DIR__.'/default/'.Theme::STYLE_MINIFIED_FILENAME;
 
 		file_put_contents($combinedCssFile   ,'');
 		file_put_contents($combinedCssFileMin,'');
@@ -48,6 +46,8 @@ class ThemeCompiler
 
         $css[] = __DIR__.'/../../../editor/simplemde/simplemde';
         $css[] = __DIR__.'/../../../editor/trumbowyg/ui/trumbowyg';
+
+        $css[] = __DIR__.'/../../../editor/codemirror/lib/codemirror';
 
 		foreach ($css as $cssF)
 		{
@@ -111,8 +111,8 @@ class ThemeCompiler
 
 	public function compileScripts()
 	{
-		$combinedJsFile    = __DIR__.'/default/script/openrat.js';
-		$combinedJsFileMin = __DIR__.'/default/script/openrat.min.js';
+		$combinedJsFile    = __DIR__.'/default/'.Theme::SCRIPT_FILENAME;
+		$combinedJsFileMin = __DIR__.'/default/'.Theme::SCRIPT_MINIFIED_FILENAME;
 
 		file_put_contents( $combinedJsFile   ,'');
 		file_put_contents( $combinedJsFileMin,'');
@@ -120,21 +120,17 @@ class ThemeCompiler
 		$js = [];
 		$js[] = __DIR__.'/default/script/jquery';
 		$js[] = __DIR__.'/default/script/jquery-ui';
-		//$js[] = __DIR__.'/default/script/jquery.scrollTo';
-		// $js[] = OR_THEMES_EXT_DIR default/script/jquery.mjs.nestedSortable.js"></script>
 
 		// Jquery-Plugins
 		$js[] = __DIR__.'/default/script/plugin/jquery-plugin-orSearch';
 		$js[] = __DIR__.'/default/script/plugin/jquery-plugin-orLinkify';
 		$js[] = __DIR__.'/default/script/plugin/jquery-plugin-orTree';
-		$js[] = __DIR__.'/default/script/plugin/jquery-plugin-orLoadView';
 		$js[] = __DIR__.'/default/script/plugin/jquery-plugin-orAutoheight';
 		$js[] = __DIR__.'/default/script/jquery-qrcode';
 		$js[] = __DIR__.'/default/script/jquery.hotkeys';
 
 		// Codemirror Source Editor
 
-		$js[] = __DIR__.'/../../../editor/codemirror/lib/codemirror';
 		$js[] = __DIR__.'/../../../editor/codemirror/lib/codemirror';
 		$js[] = __DIR__.'/../../../editor/codemirror/mode/handlebars/handlebars';
 		$js[] = __DIR__.'/../../../editor/codemirror/mode/smalltalk/smalltalk';
@@ -284,31 +280,28 @@ class ThemeCompiler
 			$jsFileMin    = $jsFile . '.min.js';
 			$jsFileNormal = $jsFile . '.js';
 
-
-			if (!is_file($jsFileNormal) && !is_file($jsFileMin))
+			if	( is_file($jsFileMin) )
 			{
-				Logger::warn("Missing Javascript file: $jsFileNormal");
-				continue;
-			}
-
-			file_put_contents($combinedJsFile, '/* Include script: '.basename($jsFile).' */'."\n",FILE_APPEND);
-
-			if (is_file($jsFileMin))
-			{
-				// Nur eine Min-Version existiert. Das ist ok.
+				// A minified version exists, this is ok, we take it.
+				file_put_contents($combinedJsFile, '/* Include script: '.basename($jsFileMin).' */'."\n",FILE_APPEND);
 				file_put_contents($combinedJsFile   , file_get_contents($jsFileMin)."\n",FILE_APPEND);
 				file_put_contents($combinedJsFileMin, file_get_contents($jsFileMin)."\n",FILE_APPEND);
 
 				echo 'Copied content from minified source file '.$jsFileMin."\n";
 			}
-			else
+			elseif( is_file($jsFileNormal) )
 			{
+				// A normal script file exists.
+				file_put_contents($combinedJsFile, '/* Include script: '.basename($jsFileNormal).' */'."\n",FILE_APPEND);
 				file_put_contents($combinedJsFile   , file_get_contents($jsFileNormal)."\n",FILE_APPEND);
 
+				// Minify....
 				$jz = new JSqueeze();
 				file_put_contents($combinedJsFileMin, $jz->squeeze(file_get_contents($jsFileNormal))."\n",FILE_APPEND);
 
 				echo 'Copied content from source file '.$jsFileNormal."\n";
+			} else {
+				throw new \LogicException('Missing javascript: '.$jsFile );
 			}
 		}
 		echo 'Created file '.$combinedJsFile."\n";

@@ -36,6 +36,7 @@ class Startup {
 
 	const TITLE   = 'OpenRat CMS';
 	const VERSION = Version::VERSION;
+	const DATE    = Version::DATE;
 
 	/**
 	 * Initialize.

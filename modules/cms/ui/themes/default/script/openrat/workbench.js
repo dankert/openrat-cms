@@ -19,6 +19,8 @@ Openrat.Workbench = new function()
 		this.initializeDirtyWarning();
         this.initializeState();
         this.openModalDialog();
+
+		Openrat.Workbench.registerOpenClose( $('.or-collapsible') );
     }
 
 
@@ -156,7 +158,7 @@ Openrat.Workbench = new function()
         // View in geschlossenen Sektionen löschen, damit diese nicht stehen bleiben.
         $('#workbench section.closed .or-act-view-loader').empty();
 
-        Openrat.Workbench.loadViews( $('#workbench section.open .or-act-view-loader') );
+        Openrat.Workbench.loadViews( $('.or-workbench .or-act-view-loader') );
     }
 
 

@@ -12,12 +12,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="<?php echo $charset ?>">
   <meta name="robots" content="noindex,nofollow" >
-<?php foreach( $jsFiles  as $jsFile ) { ?>  <script src="<?php echo $jsFile ?>" defer></script>
-<?php } ?>
-  <link rel="stylesheet" type="text/css" href="<?php echo Startup::HTML_MODULES_DIR . 'editor/codemirror/lib/codemirror.css' ?>" />
-<?php foreach( $cssFiles as $cssFile) { ?>  <link rel="stylesheet" type="text/css" href="<?php echo $cssFile ?>" />
-<?php } ?>
-  <link rel="stylesheet" type="text/css" href="<?php echo Html::url('index','themestyle',0) ?>" />
+  <script src="<?php echo $scriptLink ?>" defer></script>
+  <link rel="stylesheet" type="text/css" href="<?php echo $styleLink ?>" />
+  <link rel="stylesheet" type="text/css" href="<?php echo $themeStyleLink ?>" />
   <meta id="theme-color" name="theme-color" content="<?php echo $themeColor ?>" />
   <link rel="manifest" href="<?php echo Html::url('index','manifest',0) ?>" />
   <link rel="shortcut icon" type="image/x-icon" href="<?php echo $favicon_url ?>">
@@ -52,8 +49,10 @@
                 <section class="or-collapsible or-collapsible--is-<?php echo $method ['open']?'open':'closed' ?>">
 
                     <header class="or-view-header or-collapsible-act-switch or-collapsible-title">
-                        <span class="or-view-icon image-icon image-icon--method-<?php echo $method['name'] ?>" ></span>
-                        <h1 class="or-view-headline"><?php echo L::lang('METHOD_'.$method['name'] ) ?><i class="or-collapsible--on-open or-image-icon or-image-icon--node-open" /><i class="or-collapsible--on-open or-image-icon or-image-icon--node-open" /></h1>
+                        <span class="or-view-icon or-image-icon or-image-icon--method-<?php echo $method['name'] ?>" ></span>
+						<?php echo L::lang('METHOD_'.$method['name'] ) ?>
+						<i class="or-collapsible--on-open or-image-icon or-image-icon--node-open"></i>
+						<i class="or-collapsible--on-closed or-image-icon or-image-icon--node-closed"></i>
                     </header>
 
                     <div class="or-collapsible-value or-view or-act-view-loader or-closable" data-method="<?php echo $method['name'] ?>"></div>
