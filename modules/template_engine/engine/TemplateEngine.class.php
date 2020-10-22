@@ -59,7 +59,13 @@ class TemplateEngine
 			throw new LogicException("Template output file is read-only: $filename");
 
 		// The generated template should only be executable in our CMS environment (for security reasons).
-		$writtenBytes = file_put_contents( $filename,'<?php /* THIS FILE IS GENERATED from '.basename($srcXmlFilename).' - DO NOT CHANGE */ defined(\'APP_STARTED\') || die(\'Forbidden\'); use \\template_engine\Output as '.self::OUTPUT_ALIAS.'; ?>' );
+
+		$initCommands = [
+			'/* THIS FILE IS GENERATED from '.basename($srcXmlFilename).' - DO NOT CHANGE */',
+			'defined(\'APP_STARTED\') || die(\'Forbidden\');',
+			'use \\template_engine\Output as '.self::OUTPUT_ALIAS.';'
+		];
+		$writtenBytes = file_put_contents( $filename, '<?php '.implode(' ',$initCommands).' ?>' );
 
 		if ( $writtenBytes === FALSE )
 			throw new LogicException("Unable writing to output file: '$filename'");
