@@ -9,6 +9,13 @@ use template_engine\components\html\Component;
 
 class HtmlElement extends Element
 {
+	/**
+	 * HTML "void elements", these are self-closable.
+	 * see HTML5 spec https://html.spec.whatwg.org/multipage/syntax.html#void-elements
+	 * @var string[]
+	 */
+	private static $VOID_ELEMENTS = ['area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr'];
+
 	private $styleClasses = [];
 
 	/**
@@ -54,9 +61,8 @@ class HtmlElement extends Element
 	{
 		parent::__construct( $name );
 
-		// Only "void elements" are self-closable, see
-		// https://html.spec.whatwg.org/multipage/syntax.html#void-elements
-		if   ( in_array($name,['area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr']))
+		// Only "void elements" are self-closable
+		if   ( in_array($name,HtmlElement::$VOID_ELEMENTS))
 			$this->selfClosing = true;
 	}
 
