@@ -62,7 +62,7 @@
     </div>
   </div>
   <div class="<?php echo O::escapeHtml('or-clickable') ?>"><?php echo O::escapeHtml('') ?>
-    <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('view') ?>" data-action="<?php echo O::escapeHtml('folder') ?>" data-method="<?php echo O::escapeHtml('create') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('/#/folder/') ?>" class="<?php echo O::escapeHtml('or-btn') ?>"><?php echo O::escapeHtml('') ?>
+    <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('view') ?>" data-action="<?php echo O::escapeHtml('folder') ?>" data-method="<?php echo O::escapeHtml('create') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/folder') ?>" class="<?php echo O::escapeHtml('or-btn') ?>"><?php echo O::escapeHtml('') ?>
       <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-new') ?>"><?php echo O::escapeHtml('') ?>
       </i>
       <span><?php echo O::escapeHtml(''.@O::lang('new').'') ?>

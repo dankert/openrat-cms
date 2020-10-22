@@ -40,7 +40,7 @@
                <?php } ?>
             </td>
             <td><?php echo O::escapeHtml('') ?>
-              <a target="<?php echo O::escapeHtml('_self') ?>" data-action="<?php echo O::escapeHtml('index') ?>" data-method="<?php echo O::escapeHtml('switchuser') ?>" data-id="<?php echo O::escapeHtml(''.@$userid.'') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('/#/index/'.@$userid.'') ?>"><?php echo O::escapeHtml('') ?>
+              <a target="<?php echo O::escapeHtml('_self') ?>" data-action="<?php echo O::escapeHtml('index') ?>" data-method="<?php echo O::escapeHtml('switchuser') ?>" data-id="<?php echo O::escapeHtml(''.@$userid.'') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/index/'.@$userid.'') ?>"><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(''.@O::lang('LOGIN').'}') ?>
                 </span>
               </a>

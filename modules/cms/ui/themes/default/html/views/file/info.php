@@ -123,7 +123,7 @@
                 <span><?php echo O::escapeHtml(''.@$mimetype.'') ?>
                 </span>
                 <br /><?php echo O::escapeHtml('') ?>
-                <a target="<?php echo O::escapeHtml('_self') ?>" data-action="<?php echo O::escapeHtml('file') ?>" data-method="<?php echo O::escapeHtml('size') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('/#/file/') ?>" class="<?php echo O::escapeHtml('or-action') ?>"><?php echo O::escapeHtml('') ?>
+                <a target="<?php echo O::escapeHtml('_self') ?>" data-action="<?php echo O::escapeHtml('file') ?>" data-method="<?php echo O::escapeHtml('size') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/file') ?>" class="<?php echo O::escapeHtml('or-action') ?>"><?php echo O::escapeHtml('') ?>
                   <span><?php echo O::escapeHtml(''.@O::lang('menu_file_size').'') ?>
                   </span>
                 </a>
@@ -186,7 +186,7 @@
                       <?php foreach((array)$pages as $list_key=>$list_value) { extract($list_value); ?>
                         <tr><?php echo O::escapeHtml('') ?>
                           <td><?php echo O::escapeHtml('') ?>
-                            <a target="<?php echo O::escapeHtml('_self') ?>" data-url="<?php echo O::escapeHtml(''.@$url.'') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('/#//') ?>"><?php echo O::escapeHtml('') ?>
+                            <a target="<?php echo O::escapeHtml('_self') ?>" data-url="<?php echo O::escapeHtml(''.@$url.'') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/') ?>"><?php echo O::escapeHtml('') ?>
                               <img src="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/images/icon_page.png') ?>" /><?php echo O::escapeHtml('') ?>
                               <span><?php echo O::escapeHtml(''.@$name.'') ?>
                               </span>

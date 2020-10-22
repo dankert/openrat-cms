@@ -148,7 +148,7 @@ class LinkComponent extends Component
 				break;
 
 			default:
-				$link->addAttribute('href','/#/'.$this->action.'/'.$this->id);
+				$link->addAttribute('href','#/'.$this->action.($this->id?'/'.$this->id:'') );
 
 		}
 

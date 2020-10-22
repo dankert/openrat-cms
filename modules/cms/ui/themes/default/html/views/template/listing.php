@@ -26,7 +26,7 @@
     <span><?php echo O::escapeHtml(''.@O::lang('NO_TEMPLATES_AVAILABLE_DESC').'') ?>
     </span>
    <?php } ?>
-  <a target="<?php echo O::escapeHtml('_self') ?>" data-action="<?php echo O::escapeHtml('template') ?>" data-method="<?php echo O::escapeHtml('add') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('/#/template/') ?>" class="<?php echo O::escapeHtml('or-action') ?>"><?php echo O::escapeHtml('') ?>
+  <a target="<?php echo O::escapeHtml('_self') ?>" data-action="<?php echo O::escapeHtml('template') ?>" data-method="<?php echo O::escapeHtml('add') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/template') ?>" class="<?php echo O::escapeHtml('or-action') ?>"><?php echo O::escapeHtml('') ?>
     <span><?php echo O::escapeHtml(''.@O::lang('menu_template_add').'') ?>
     </span>
   </a>

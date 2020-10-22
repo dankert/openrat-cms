@@ -18,7 +18,7 @@
         <?php foreach((array)$elements as $list_key=>$list_value) { extract($list_value); ?>
           <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
             <td class="<?php echo O::escapeHtml('or-clickable') ?>"><?php echo O::escapeHtml('') ?>
-              <a target="<?php echo O::escapeHtml('_self') ?>" date-name="<?php echo O::escapeHtml(''.@$name.'') ?>" name="<?php echo O::escapeHtml(''.@$name.'') ?>" data-type="<?php echo O::escapeHtml('open') ?>" data-action="<?php echo O::escapeHtml('element') ?>" data-method="<?php echo O::escapeHtml('') ?>" data-id="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('/#/element/'.@$id.'') ?>"><?php echo O::escapeHtml('') ?>
+              <a target="<?php echo O::escapeHtml('_self') ?>" date-name="<?php echo O::escapeHtml(''.@$name.'') ?>" name="<?php echo O::escapeHtml(''.@$name.'') ?>" data-type="<?php echo O::escapeHtml('open') ?>" data-action="<?php echo O::escapeHtml('element') ?>" data-method="<?php echo O::escapeHtml('') ?>" data-id="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/element/'.@$id.'') ?>"><?php echo O::escapeHtml('') ?>
                 <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-el_'.@$type.'') ?>"><?php echo O::escapeHtml('') ?>
                 </i>
                 <span title="<?php echo O::escapeHtml(''.@$description.'') ?>"><?php echo O::escapeHtml(''.@$name.'') ?>
@@ -41,7 +41,7 @@
          <?php } ?>
         <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
           <td colspan="<?php echo O::escapeHtml('2') ?>" class="<?php echo O::escapeHtml('or-clickable') ?>"><?php echo O::escapeHtml('') ?>
-            <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('template') ?>" data-method="<?php echo O::escapeHtml('addel') ?>" data-id="<?php echo O::escapeHtml(''.@$templateid.'') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('template') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('addel') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':\'template\',\'dialogMethod\':\'addel\'}') ?>" href="<?php echo O::escapeHtml('/#/template/'.@$templateid.'') ?>"><?php echo O::escapeHtml('') ?>
+            <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('template') ?>" data-method="<?php echo O::escapeHtml('addel') ?>" data-id="<?php echo O::escapeHtml(''.@$templateid.'') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('template') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('addel') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':\'template\',\'dialogMethod\':\'addel\'}') ?>" href="<?php echo O::escapeHtml('#/template/'.@$templateid.'') ?>"><?php echo O::escapeHtml('') ?>
               <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-add') ?>"><?php echo O::escapeHtml('') ?>
               </i>
               <span><?php echo O::escapeHtml(''.@O::lang('menu_template_addel').'') ?>
@@ -65,7 +65,7 @@
           <code><?php echo O::escapeHtml(''.@$source.'') ?>
           </code>
           <br /><?php echo O::escapeHtml('') ?>
-          <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('edit') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('src') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-modelid="<?php echo O::escapeHtml(''.@$modelid.'') ?>" data-extra="<?php echo O::escapeHtml('{\'modelid\':\''.@$modelid.'\'}') ?>" href="<?php echo O::escapeHtml('/#//') ?>" class="<?php echo O::escapeHtml('or-form-button') ?>"><?php echo O::escapeHtml('') ?>
+          <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('edit') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('src') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-modelid="<?php echo O::escapeHtml(''.@$modelid.'') ?>" data-extra="<?php echo O::escapeHtml('{\'modelid\':\''.@$modelid.'\'}') ?>" href="<?php echo O::escapeHtml('#/') ?>" class="<?php echo O::escapeHtml('or-form-button') ?>"><?php echo O::escapeHtml('') ?>
             <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-template') ?>"><?php echo O::escapeHtml('') ?>
             </i>
             <span><?php echo O::escapeHtml(''.@O::lang('edit').'') ?>
