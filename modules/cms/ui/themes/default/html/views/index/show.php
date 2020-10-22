@@ -1,96 +1,77 @@
-<?php
- defined('APP_STARTED') || die('Forbidden');
- use cms\base\Configuration as C;
- use cms\base\Language as L;
- use cms\base\Startup;
- use util\Html;
- if (!headers_sent()) header('Content-Type: text/html; charset=UTF-8')
-?><!DOCTYPE html>
-<html class="or-theme-<?php echo strtolower($style) ?> nojs" lang="<?php $language ?>">
-<head>
-  <title data-default="<?php echo htmlentities($defaultTitle,ENT_QUOTES|ENT_HTML5) ?>"><?php echo htmlentities($defaultTitle,ENT_COMPAT|ENT_HTML5) ?></title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta charset="<?php echo $charset ?>">
-  <meta name="robots" content="noindex,nofollow" >
-  <script src="<?php echo $scriptLink ?>" defer></script>
-  <link rel="stylesheet" type="text/css" href="<?php echo $styleLink ?>" />
-  <link rel="stylesheet" type="text/css" href="<?php echo $themeStyleLink ?>" />
-  <meta id="theme-color" name="theme-color" content="<?php echo $themeColor ?>" />
-  <link rel="manifest" href="<?php echo Html::url('index','manifest',0) ?>" />
-  <link rel="shortcut icon" type="image/x-icon" href="<?php echo $favicon_url ?>">
-</head>
-
-<body>
-
-
-<div id="workbench" class="or-workbench or--initial-hidden">
-
-    <header id="title" class="or-workbench-title or-view or-act-view-static" data-action="title" data-method="show">
-    </header>
-
-
-    <div class="or-main-area">
-
-        <nav class="or-navigation">
-            <div class="or-view or-act-view-static" data-action="tree" data-method="show">
-            </div>
-
+<?php defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?><!DOCTYPE html><html class="<?php echo O::escapeHtml('or-theme-'.@$style.' nojs') ?>" lang="<?php echo O::escapeHtml(''.@$language.'') ?>"><?php echo '' ?>
+  <head><?php echo '' ?>
+    <title data-default="<?php echo O::escapeHtml(''.@$defaultTitle.'') ?>"><?php echo '' ?>
+      <?php echo O::escapeHtml(''.@$defaultTitle.'') ?>
+    </title>
+    <meta name="<?php echo O::escapeHtml('viewport') ?>" content="<?php echo O::escapeHtml('width=device-width, initial-scale=1.0') ?>" /><?php echo '' ?>
+    <meta charset="<?php echo O::escapeHtml(''.@$charset.'') ?>" /><?php echo '' ?>
+    <meta name="<?php echo O::escapeHtml('robots') ?>" content="<?php echo O::escapeHtml('noindex,nofollow') ?>" /><?php echo '' ?>
+    <script src="<?php echo O::escapeHtml(''.@$scriptLink.'') ?>" defer="<?php echo O::escapeHtml('defer') ?>"><?php echo '' ?>
+    </script>
+    <link rel="<?php echo O::escapeHtml('stylesheet') ?>" type="<?php echo O::escapeHtml('text/css') ?>" href="<?php echo O::escapeHtml(''.@$styleLink.'') ?>" /><?php echo '' ?>
+    <link rel="<?php echo O::escapeHtml('stylesheet') ?>" type="<?php echo O::escapeHtml('text/css') ?>" href="<?php echo O::escapeHtml(''.@$themeStyleLink.'') ?>" /><?php echo '' ?>
+    <meta id="<?php echo O::escapeHtml('theme-color') ?>" name="<?php echo O::escapeHtml('theme-color') ?>" content="<?php echo O::escapeHtml(''.@$themeColor.'') ?>" /><?php echo '' ?>
+    <link rel="<?php echo O::escapeHtml('manifest') ?>" href="<?php echo O::escapeHtml(''.@$manifestLink.'') ?>" /><?php echo '' ?>
+    <link rel="<?php echo O::escapeHtml('shortcut icon') ?>" type="<?php echo O::escapeHtml('image/x-icon') ?>" href="<?php echo O::escapeHtml(''.@$favicon_url.'') ?>" /><?php echo '' ?>
+  </head>
+  <body><?php echo '' ?>
+    <div id="<?php echo O::escapeHtml('workbench') ?>" class="<?php echo O::escapeHtml('or-workbench or--initial-hidden') ?>"><?php echo '' ?>
+      <header id="<?php echo O::escapeHtml('title') ?>" class="<?php echo O::escapeHtml('or-workbench-title or-view or-act-view-static') ?>" data-action="<?php echo O::escapeHtml('title') ?>" data-method="<?php echo O::escapeHtml('show') ?>"><?php echo '' ?>
+      </header>
+      <div class="<?php echo O::escapeHtml('or-main-area') ?>"><?php echo '' ?>
+        <nav class="<?php echo O::escapeHtml('or-navigation') ?>"><?php echo '' ?>
+          <div class="<?php echo O::escapeHtml('or-view or-act-view-static') ?>" data-action="<?php echo O::escapeHtml('tree') ?>" data-method="<?php echo O::escapeHtml('show') ?>"><?php echo '' ?>
+          </div>
         </nav>
-
-        <div class="or-workplace">
-
-            <main id="editor">
-                <header>
-                    <div class="or-breadcrumb"></div>
+        <div class="<?php echo O::escapeHtml('or-workplace') ?>"><?php echo '' ?>
+          <main id="<?php echo O::escapeHtml('editor') ?>"><?php echo '' ?>
+            <header><?php echo '' ?>
+              <div class="<?php echo O::escapeHtml('or-breadcrumb') ?>"><?php echo '' ?>
+              </div>
+            </header>
+            <?php foreach((array)$methodList as $list_key=>$method) {  ?>
+              <section class="<?php echo O::escapeHtml('or-collapsible or-collapsible--is-open') ?>"><?php echo '' ?>
+                <header class="<?php echo O::escapeHtml('or-view-header or-collapsible-act-switch or-collapsible-title') ?>"><?php echo '' ?>
+                  <span class="<?php echo O::escapeHtml('or-view-icon or-image-icon or-image-icon--method-'.@$method['name'].'') ?>"><?php echo '' ?>
+                  </span>
+                  <span><?php echo O::escapeHtml(''.@O::lang('METHOD_'.@$method['name'].'').'') ?>
+                  </span>
+                  <i class="<?php echo O::escapeHtml('or-collapsible--on-open or-image-icon or-image-icon--node-open') ?>"><?php echo '' ?>
+                  </i>
+                  <i class="<?php echo O::escapeHtml('or-collapsible--on-closed or-image-icon or-image-icon--node-closed') ?>"><?php echo '' ?>
+                  </i>
                 </header>
-
-                <?php foreach( $methodList as $method ) { ?>
-                <?php if (DEVELOPMENT) echo "<!-- Section for: ".$method['name']." -->";  ?>
-                <section class="or-collapsible or-collapsible--is-<?php echo $method ['open']?'open':'closed' ?>">
-
-                    <header class="or-view-header or-collapsible-act-switch or-collapsible-title">
-                        <span class="or-view-icon or-image-icon or-image-icon--method-<?php echo $method['name'] ?>" ></span>
-						<?php echo L::lang('METHOD_'.$method['name'] ) ?>
-						<i class="or-collapsible--on-open or-image-icon or-image-icon--node-open"></i>
-						<i class="or-collapsible--on-closed or-image-icon or-image-icon--node-closed"></i>
-                    </header>
-
-                    <div class="or-collapsible-value or-view or-act-view-loader or-closable" data-method="<?php echo $method['name'] ?>"></div>
-                </section>
-                <?php } ?>
-
-            </main>
+                <div class="<?php echo O::escapeHtml('or-collapsible-value or-view or-act-view-loader or-closable') ?>" data-method="<?php echo O::escapeHtml(''.@$method['name'].'') ?>"><?php echo '' ?>
+                </div>
+              </section>
+             <?php } ?>
+          </main>
         </div>
-
+      </div>
     </div>
-
-</div>
-
-
-<?php /* Modal dialog */ ?>
-<div id="dialog" class="or-dialog <?php echo empty($dialogAction)?'':'or-dialog--is-open' ?>" data-action="<?php echo (!empty($dialogAction)?$dialogAction:'') ?>" data-method="<?php echo (!empty($dialogMethod)?$dialogMethod:'') ?>">
-    <div class="or-view or-round-corners">
+    <div id="<?php echo O::escapeHtml('dialog') ?>" class="<?php echo O::escapeHtml('or-dialog or-dialog--is-closed') ?>" data-action="<?php echo O::escapeHtml(''.@$dialogAction.'') ?>" data-method="<?php echo O::escapeHtml(''.@$dialogMethod.'') ?>"><?php echo '' ?>
+      <div class="<?php echo O::escapeHtml('or-view or-round-corners') ?>"><?php echo '' ?>
+      </div>
+      <div class="<?php echo O::escapeHtml('or-dialog-filler') ?>"><?php echo '' ?>
+        <span class="<?php echo O::escapeHtml('or-dialog-filler-icon or-btn or-image-icon or-image-icon--menu-close') ?>"><?php echo '' ?>
+        </span>
+      </div>
     </div>
-
-    <div class="or-dialog-filler"><?php /* empty element, this is only for styling the background. */ ?>
-        <span class="or-dialog-filler-icon or-btn or-image-icon or-image-icon--menu-close"></span>
+    <div id="<?php echo O::escapeHtml('noticebar') ?>" class="<?php echo O::escapeHtml('or-notices') ?>"><?php echo '' ?>
     </div>
-</div>
-
-
-<div id="noticebar" class="or-notices">
-</div>
-
-<?php /* Inline Notices */ foreach( $notices as $notice ) { ?>
-<div class="or--invisible or-act-initial-notice"><?php echo $notice['text'] ?></div>
-<?php } ?>
-
-
-<footer class="or--initial-hidden" id="footer">
-
-</footer>
-
-<noscript><div class="noscript"><em>Javascript is required to view this site</em></div></noscript>
-
-</body>
+    <?php foreach((array)$notices as $list_key=>$notice) {  ?>
+      <div class="<?php echo O::escapeHtml('or--invisible or-act-initial-notice') ?>"><?php echo '' ?>
+        <span><?php echo O::escapeHtml(''.@$notice['text'].'') ?>
+        </span>
+      </div>
+     <?php } ?>
+    <footer class="<?php echo O::escapeHtml('or--initial-hidden') ?>" id="<?php echo O::escapeHtml('footer') ?>"><?php echo '' ?>
+    </footer>
+    <noscript><?php echo '' ?>
+      <div class="<?php echo O::escapeHtml('noscript') ?>"><?php echo '' ?>
+        <em><?php echo '' ?>
+        </em>
+      </div>
+    </noscript>
+  </body>
 </html>

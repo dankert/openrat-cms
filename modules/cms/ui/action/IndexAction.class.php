@@ -132,6 +132,7 @@ class IndexAction extends Action
         $this->setTemplateVar('styleLink' , $this->getStyleLink()  );
 
         $this->setTemplateVar('themeStyleLink', Html::url('index','themestyle') );
+        $this->setTemplateVar('manifestLink'  , Html::url('index','manifest'  ) );
 
         $styleConfig     = C::config('style-default'); // default style config
         $userStyleConfig = C::config('style', $style); // user style config

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:or="http://www.openrat.de/template"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd"
+	class="or-theme-${style} nojs"
+	lang="${language}">
+	<head>
+		<title data-default="${defaultTitle}">
+			<or:text type="none" value="${defaultTitle}"/>
+		</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta charset="${charset}"/>
+		<meta name="robots" content="noindex,nofollow"/>
+		<script src="${scriptLink}" defer="defer"/>
+		<link rel="stylesheet" type="text/css" href="${styleLink}"/>
+		<link rel="stylesheet" type="text/css" href="${themeStyleLink}"/>
+		<meta id="theme-color" name="theme-color" content="${themeColor}"/>
+		<link rel="manifest" href="${manifestLink}"/>
+		<link rel="shortcut icon" type="image/x-icon" href="${favicon_url}"/>
+	</head>
+
+	<body>
+
+		<div id="workbench" class="or-workbench or--initial-hidden">
+
+			<header id="title" class="or-workbench-title or-view or-act-view-static" data-action="title"
+					data-method="show">
+			</header>
+
+
+			<div class="or-main-area">
+
+				<nav class="or-navigation">
+					<div class="or-view or-act-view-static" data-action="tree" data-method="show">
+					</div>
+
+				</nav>
+
+				<div class="or-workplace">
+
+					<main id="editor">
+						<header>
+							<div class="or-breadcrumb"></div>
+						</header>
+
+						<or:list list="${methodList}" value="method">
+							<section class="or-collapsible or-collapsible--is-open">
+
+								<header class="or-view-header or-collapsible-act-switch or-collapsible-title">
+									<span
+										class="or-view-icon or-image-icon or-image-icon--method-${method.name}"></span>
+									<or:text value="${message:METHOD_${method.name}}"/>
+									<i class="or-collapsible--on-open or-image-icon or-image-icon--node-open"></i>
+									<i class="or-collapsible--on-closed or-image-icon or-image-icon--node-closed"></i>
+								</header>
+
+								<div class="or-collapsible-value or-view or-act-view-loader or-closable"
+									 data-method="${method.name}"/>
+							</section>
+						</or:list>
+					</main>
+				</div>
+
+			</div>
+
+		</div>
+
+
+		<!-- Modal dialog -->
+		<div id="dialog" class="or-dialog or-dialog--is-closed" data-action="${dialogAction}"
+			 data-method="${dialogMethod}">
+			<div class="or-view or-round-corners">
+			</div>
+
+			<div class="or-dialog-filler"><!-- empty element, this is only for styling the background -->
+				<span class="or-dialog-filler-icon or-btn or-image-icon or-image-icon--menu-close"></span>
+			</div>
+		</div>
+
+
+		<div id="noticebar" class="or-notices">
+		</div>
+		<or:list list="${notices}" value="notice">
+			<div class="or--invisible or-act-initial-notice">
+				<or:text value="${notice.text}"/>
+			</div>
+		</or:list>
+
+		<footer class="or--initial-hidden" id="footer">
+
+		</footer>
+
+		<noscript>
+			<div class="noscript">
+				<em>Javascript is required to view this site</em>
+			</div>
+		</noscript>
+
+	</body>
+</html>

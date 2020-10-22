@@ -13,9 +13,7 @@ use template_engine\components\html\Component;
 use template_engine\components\html\NativeHtmlComponent;
 
 /**
- * Wandelt eine Vorlage in ein PHP-Skript um.
- *
- * Die Vorlage wird gesparst, Elemente werden geladen und in die Zieldatei kopiert.
+ * Converting an XML-Template to a PHP file.
  *
  * @author Jan Dankert
  * @package openrat.services
@@ -82,13 +80,13 @@ class TemplateEngine
 			// creating a tree of components
 			$rootComponent = $this->processElement( $document->documentElement );
 
+			if   ( $document->doctype ) {
+				file_put_contents( $filename, '<!DOCTYPE '.$document->doctype->name.'>',FILE_APPEND );
+			}
+
 			// converting the component tree to a element tree
 			$rootElement = $rootComponent->getElement();
-
-			$writtenBytes = file_put_contents( $filename, $rootElement->render( new XMLFormatter('  ')),FILE_APPEND );
-
-			if ( $writtenBytes === FALSE )
-				throw new LogicException("Unable writing to output file: '$filename'");
+			file_put_contents( $filename, $rootElement->render( new XMLFormatter('  ')),FILE_APPEND );
 
 			// CHMOD ausfuehren.
 			if ( @$confCompiler['chmod'] )
@@ -185,8 +183,14 @@ class TemplateEngine
 		$component = new NativeHtmlComponent();
 
 		$component->tag = $element->localName;
+
+		$element->removeAttribute('xsi:schemaLocation');
 		$component->attributes = $element->attributes;
 		$component->init();
+
+		foreach( $element->childNodes as $child ) {
+			$component->addChildComponent( $this->processElement( $child,$depth ) );
+		}
 
 		return $component;
 	}
@@ -214,25 +218,5 @@ class TemplateEngine
 		$document->load( $filename );
 		return $document;
 	}
-
-
-	/**
-	 * Executes the required template and writes the output to standard-out..
-	 *
-	 * @param $templateFile string filename of template
-	 * @param $outputData array output data
-	 */
-    public function executeTemplate($templateFile, $outputData)
-    {
-        if ( ! is_file($templateFile) )
-            throw new LogicException("Template file '$templateFile' was not found.");
-
-		// Extracting all output data into the actual context
-        extract($outputData);
-
-        // Include the template
-        require_once($templateFile);
-    }
-
 }
 
