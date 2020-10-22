@@ -1,4 +1,4 @@
-<?php defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
+<?php /* THIS FILE IS GENERATED from show.tpl.src.xml - DO NOT CHANGE */ defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
   <div class="<?php echo O::escapeHtml('or-navtree or-act-load-nav-tree') ?>"><?php echo O::escapeHtml('') ?>
   </div>
   <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--arrow-left or-act-nav-small or-btn or-view-flying-button') ?>"><?php echo O::escapeHtml('') ?>

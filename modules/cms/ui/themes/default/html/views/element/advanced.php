@@ -1,4 +1,4 @@
-<?php defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
+<?php /* THIS FILE IS GENERATED from advanced.tpl.src.xml - DO NOT CHANGE */ defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
   <?php $if1=(O::config('security','disable_dynamic_code')); if($if1) {  ?>
     <?php $if1=(!1); if($if1) {  ?>
       <div class="<?php echo O::escapeHtml('or-message warn') ?>"><?php echo O::escapeHtml('') ?>

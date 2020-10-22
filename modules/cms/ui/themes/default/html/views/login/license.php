@@ -1,4 +1,4 @@
-<?php defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
+<?php /* THIS FILE IS GENERATED from license.tpl.src.xml - DO NOT CHANGE */ defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
   <div class="<?php echo O::escapeHtml('or-form') ?>"><?php echo O::escapeHtml('') ?>
     <section class="<?php echo O::escapeHtml('or-group or-collapsible or-collapsible--is-open or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>
       <h2 class="<?php echo O::escapeHtml('or-collapsible-title or-group-title or-collapsible-act-switch') ?>"><?php echo O::escapeHtml(''.@O::lang('USER').'') ?>

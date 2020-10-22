@@ -1,4 +1,4 @@
-<?php defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
+<?php /* THIS FILE IS GENERATED from show.tpl.src.xml - DO NOT CHANGE */ defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
   <tr><?php echo O::escapeHtml('') ?>
     <td colspan="<?php echo O::escapeHtml('2') ?>"><?php echo O::escapeHtml('') ?>
       <iframe src="<?php echo O::escapeHtml(''.@$preview_url.'') ?>"><?php echo O::escapeHtml('') ?>

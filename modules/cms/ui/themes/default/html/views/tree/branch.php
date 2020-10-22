@@ -1,4 +1,4 @@
-<?php defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
+<?php /* THIS FILE IS GENERATED from branch.tpl.src.xml - DO NOT CHANGE */ defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
   <?php foreach((array)$branch as $list_key=>$list_value) { extract($list_value); ?>
     <li class="<?php echo O::escapeHtml('or-navtree-node or-navtree-node--is-closed or-or-draggable or-or-draggable--type-'.@$type.'') ?>"><?php echo O::escapeHtml('') ?>
       <div class="<?php echo O::escapeHtml('or-navtree-tree or-navtree-node-control') ?>"><?php echo O::escapeHtml('') ?>

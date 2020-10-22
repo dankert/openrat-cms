@@ -1,4 +1,4 @@
-<?php defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?><!DOCTYPE html><html class="<?php echo O::escapeHtml('or-theme-'.@$style.' nojs') ?>" lang="<?php echo O::escapeHtml(''.@$language.'') ?>"><?php echo '' ?>
+<?php /* THIS FILE IS GENERATED from show.tpl.src.xml - DO NOT CHANGE */ defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?><!DOCTYPE html><html class="<?php echo O::escapeHtml('or-theme-'.@$style.' nojs') ?>" lang="<?php echo O::escapeHtml(''.@$language.'') ?>"><?php echo '' ?>
   <head><?php echo '' ?>
     <title data-default="<?php echo O::escapeHtml(''.@$defaultTitle.'') ?>"><?php echo '' ?>
       <?php echo O::escapeHtml(''.@$defaultTitle.'') ?>

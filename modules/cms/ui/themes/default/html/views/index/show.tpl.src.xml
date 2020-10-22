@@ -66,7 +66,7 @@
 			</div>
 
 		</div>
-
+ 
 
 		<!-- Modal dialog -->
 		<div id="dialog" class="or-dialog or-dialog--is-closed" data-action="${dialogAction}"
