@@ -532,7 +532,7 @@ class DefaultConfig {
 						[ 
 							'secure' => false,
 							'httponly' => true,
-							'samesite' => 'Strict',
+							'samesite' => 'Lax',
 							'expire' => 720,
 						],
 					'readonly' => false,

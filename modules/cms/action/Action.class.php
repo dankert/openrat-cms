@@ -403,16 +403,20 @@ class Action
 	}
 
 
+	/**
+	 * Sets a cookie.
+	 *
+	 * @param $name cookie name
+	 * @param string $value cookie value, null to delete
+	 */
 	protected function setCookie($name,$value='' ) {
 
-		if (empty($value))
+		$cookieConfig = Configuration::subset('security')->subset('cookie');
+
+		if ( ! $value )
 			$expire = time(); // Cookie wird gelöscht.
 		else
-			$expire = time() + 60 * 60 * 24 * Configuration::config('security', 'cookie', 'expire');
-
-		$secure   = Configuration::config('security', 'cookie', 'secure');
-		$httponly = Configuration::config('security', 'cookie', 'httponly');
-		$samesite = Configuration::config('security', 'cookie', 'samesite');
+			$expire = time() + 60 * 60 * 24 * $cookieConfig->get('expire',2*365); // default: 2 years
 
 		$cookieAttributes = [
 			rawurlencode($name).'='.rawurlencode($value),
@@ -420,13 +424,13 @@ class Action
 			'Path='.COOKIE_PATH
 		];
 
-		if   ( $secure )
+		if   ( $cookieConfig->is('secure',false ) )
 			$cookieAttributes[] = 'Secure';
 
-		if   ( $httponly )
+		if   ( $cookieConfig->is('httponly',true ) )
 			$cookieAttributes[] = 'HttpOnly';
 
-		$cookieAttributes[] = 'SameSite='.$samesite;
+		$cookieAttributes[] = 'SameSite='.$cookieConfig->get('samesite','Lax');
 
 		header('Set-Cookie: '.implode('; ',$cookieAttributes) );
 	}
