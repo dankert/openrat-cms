@@ -50,6 +50,12 @@ class PDODriver
     public $stmt;
 
 
+	/**
+	 * Connect to a database
+	 *
+	 * @param $conf array connection configuration
+	 * @throws DatabaseException
+	 */
     function connect( $conf )
 	{
 		if ( !defined('PDO::ATTR_DRIVER_NAME') ) {
@@ -61,6 +67,26 @@ class PDODriver
 		$url    = $conf['dsn'     ];
 		$user   = $conf['user'    ];
 		$pw     = $conf['password'];
+
+		if   ( !$url ) {
+			$driver = $conf['driver'];
+
+			if (!in_array($driver,PDO::getAvailableDrivers(),TRUE))
+				throw new DatabaseException('PDO driver '.$driver.' is not available');
+
+			$dsn = [
+				$driver.':host' => $conf['host'    ],
+				'dbname'        => $conf['database'],
+				'charset'       => $conf['charset' ]
+			];
+
+			$url = implode('; ',array_map( function($key,$value) {
+				return $key.'='.$value;
+			},array_keys($dsn),$dsn));
+		}
+
+		if   ( ! $conf['prefix'] && ! $conf['suffix'] )
+			throw new DatabaseException('database tables must have a prefix or a suffix, both are empty.');
 		
 		$options = array();
 		foreach( $conf as $c )
@@ -79,7 +105,7 @@ class PDODriver
 		// From the docs:
 		// "try to use native prepared statements (if FALSE).
 		//  It will always fall back to emulating the prepared statement if the driver cannot successfully prepare the current query"
-		$options[ PDO::ATTR_EMULATE_PREPARES ] = false;
+		$options[ PDO::ATTR_EMULATE_PREPARES  ] = false;
 		
 		// Convert numeric values to strings when fetching => NO
 		$options[ PDO::ATTR_STRINGIFY_FETCHES ] = false;
@@ -92,7 +118,7 @@ class PDODriver
 		//$options[ PDO::ATTR_AUTOCOMMIT ] = true;
 			
 		// We like Exceptions
-		$options[ PDO::ERRMODE_EXCEPTION ] = true;
+		$options[ PDO::ERRMODE_EXCEPTION       ] = true;
 		$options[ PDO::ATTR_DEFAULT_FETCH_MODE ] = PDO::FETCH_ASSOC;
 
         try
@@ -101,14 +127,12 @@ class PDODriver
         }
         catch(\PDOException $e)
         {
-            throw new DatabaseException("Could not connect to database on host $url.",$e);
+            throw new DatabaseException("Could not connect to database with DSN '$url'",$e);
         }
 
         // This should never happen, because PDO should throw an exception if the connection fails.
 		if	( !is_object($this->connection) )
-			throw new DatabaseException("Could not connect to database on host '$url', Reason: ".PDO::errorInfo() );
-				
-		return true;
+			throw new DatabaseException("Could not connect to database with DSN '$url', Reason: ".PDO::errorInfo() );
     }
 
 

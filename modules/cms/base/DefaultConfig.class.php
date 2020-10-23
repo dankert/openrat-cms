@@ -203,16 +203,17 @@ class DefaultConfig {
 				[ 
 					'defaults' =>
 						[ 
-							'prefix' => '',
+							'prefix' => 'cms_',
 							'suffix' => '',
 							'enabled' => true,
 							'name' => '',
 							'description' => '',
 							'type' => 'pdo',
-							'dsn' => 'mysql:localhost',
+							'driver' => 'mysql',
+							'dsn' => '',
 							'user' => '',
 							'password' => '',
-							'host' => '',
+							'host' => 'localhost',
 							'database' => '',
 							'base64' => false,
 							'persistent' => true,
