@@ -15,8 +15,10 @@ class LanguageCompiler
 
     public function __construct()
     {
-        $this->srcFile = __DIR__ . '/language.yml';
-        $this->keyFile = __DIR__ . '/Messages.class.php';
+		$this->languageFolder = __DIR__ . '/';
+        $this->srcFile  = __DIR__ . '/language.yml';
+        $this->listFile = __DIR__ . '/LanguageList.class.php';
+        $this->keyFile  = __DIR__ . '/Messages.class.php';
     }
 
     /**
@@ -66,6 +68,9 @@ class LanguageCompiler
     }
 
 
+
+
+
 	/**
 	 * Creates the production environment.
 	 * @param $lang
@@ -94,7 +99,7 @@ class LanguageCompiler
             else
                 throw new LogicException("File is not writable: '$outputFilename'\n");
 
-            file_put_contents($outputFilename, "function language() { return array(\n", FILE_APPEND);
+            file_put_contents($outputFilename, "namespace ".__NAMESPACE__.'; class '.$this->getOutputLanguageClass($iso)." {\npublic function get() { return [\n", FILE_APPEND);
             foreach ($lang as $key => $value) {
                 if (isset($value[$iso]))
                     $t = $value[$iso];
@@ -105,12 +110,11 @@ class LanguageCompiler
                 $t = str_replace('\'', '\\\'', $t); // escaping
                 file_put_contents($outputFilename, "'$key'=>'$t',\n", FILE_APPEND);
             }
-            file_put_contents($outputFilename, ");}", FILE_APPEND);
+            file_put_contents($outputFilename, "];}\n}", FILE_APPEND);
 
             echo 'Success: Updated file '.$outputFilename."\n";
         }
     }
-
 
     /**
      * Returns the native php language file for the selected iso code.
@@ -118,13 +122,20 @@ class LanguageCompiler
      * @param null string $fallbackiso Fallback to this ISO-Code, if the file does not exist.
      * @return string filename
      */
-    private function getOutputLanguageFile($iso )
+    private function getOutputLanguageClass( $iso )
     {
-        $langFile = __DIR__ . '/lang-' . $iso . '.php';
+        return 'Language_' . strtoupper($iso);
+    }
 
-        return $langFile;
+    /**
+     * Returns the native php language file for the selected iso code.
+     * @param $iso string ISO-Code
+     * @param null string $fallbackiso Fallback to this ISO-Code, if the file does not exist.
+     * @return string filename
+     */
+    private function getOutputLanguageFile( $iso )
+    {
+        return __DIR__.'/'.$this->getOutputLanguageClass($iso).'.class.php';
     }
 
 }
-
-?>

@@ -1,5 +1,6 @@
 <?php /* DO NOT CHANGE THIS GENERATED FILE */
-function language() { return array(
+namespace language; class Language_RU {
+public function get() { return [
 'ACCESSKEY_MAIN_ADD'=>'A',
 'ACCESSKEY_MAIN_ADMINISTRATION'=>'S',
 'ACCESSKEY_MAIN_CONTENT'=>'C',
@@ -1322,4 +1323,5 @@ if you do not know where this mail comes from, please ignore it.',
 'ALIAS'=>'Alias',
 'TEXT'=>'Text',
 'APPLY'=>'Apply',
-);}
+];}
+}

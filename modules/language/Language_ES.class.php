@@ -1,5 +1,6 @@
 <?php /* DO NOT CHANGE THIS GENERATED FILE */
-function language() { return array(
+namespace language; class Language_ES {
+public function get() { return [
 'ACCESSKEY_MAIN_ADD'=>'A',
 'ACCESSKEY_MAIN_ADMINISTRATION'=>'S',
 'ACCESSKEY_MAIN_CONTENT'=>'C',
@@ -1346,4 +1347,5 @@ MENU_INDEX_ADMINISTRATION_DESC =',
 'ALIAS'=>'Alias',
 'TEXT'=>'Text',
 'APPLY'=>'Apply',
-);}
+];}
+}

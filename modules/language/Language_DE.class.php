@@ -1,5 +1,6 @@
 <?php /* DO NOT CHANGE THIS GENERATED FILE */
-function language() { return array(
+namespace language; class Language_DE {
+public function get() { return [
 'ACCESSKEY_MAIN_ADD'=>'H',
 'ACCESSKEY_MAIN_ADMINISTRATION'=>'S',
 'ACCESSKEY_MAIN_CONTENT'=>'I',
@@ -1326,4 +1327,5 @@ Vielen Dank.',
 'ALIAS'=>'Alias',
 'TEXT'=>'Text',
 'APPLY'=>'Übernehmen',
-);}
+];}
+}

@@ -16,29 +16,28 @@ class Language
      */
     public function getLanguage($iso)
     {
-
-		$langFile = $this->getOutputLanguageFile($iso);
-		require($langFile); // Contains the function 'language()'
-		return language();
+		$language = $this->getOutputLanguage($iso);
+		return $language->get();
     }
 
 
     /**
-     * Returns the native php language file for the selected iso code.
+     * Returns an instance of the language class.
      * @param $iso string ISO-Code
-     * @return string filename
+     * @return object instance of language
      */
-    private function getOutputLanguageFile($iso)
+    private function getOutputLanguage($iso)
     {
     	$fallback = 'en';
     	$isos = [ $iso ,$fallback ]; // Using a fallback
 
 		foreach( $isos as $l ) {
-			$langFile = __DIR__ . '/lang-' . $l . '.php';
+
+			$languageClazz = __NAMESPACE__.'\Language_'.strtoupper($iso);
 
 			// Is language file available?
-			if ( file_exists($langFile) )
-				return $langFile;
+			if ( class_exists($languageClazz) )
+				return new $languageClazz();
 		}
 
         throw new \DomainException('No language file found for iso keys: '.Logger::sanitizeInput(implode(',',$isos)));
