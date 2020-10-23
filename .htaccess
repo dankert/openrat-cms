@@ -1,0 +1,3 @@
+<Files ~ "\.(yml|log|class.php)$">
+    Require all denied
+</Files>
