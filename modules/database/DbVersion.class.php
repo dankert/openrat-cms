@@ -29,20 +29,14 @@ abstract class DbVersion
 		$this->db = $db;
 
 		switch ($db->conf['type']) {
-			case 'mysql':
-			case 'mysqli':
-				$this->dbmsType = DbVersion::TYPE_MYSQL;
-				break;
-			case 'postgresql':
-				$this->dbmsType = DbVersion::TYPE_POSTGRES;
-				break;
-			case 'sqlite':
-			case 'sqlite3':
-				$this->dbmsType = DbVersion::TYPE_SQLITE;
-				break;
 			case 'pdo':
-				$dsnParts = explode(':', $db->conf['dsn']);
-				switch ($dsnParts[0]) {
+				if   ( $db->conf['dsn'] ) {
+					$dsnParts = explode(':', $db->conf['dsn']);
+					$driver = $dsnParts[0];
+				}else {
+					$driver = $db['driver'];
+				}
+				switch ($driver) {
 					case 'mysql':
 						$this->dbmsType = DbVersion::TYPE_MYSQL;
 						break;
@@ -53,10 +47,11 @@ abstract class DbVersion
 						$this->dbmsType = DbVersion::TYPE_SQLITE;
 						break;
 					default:
-						throw new \LogicException('Unknown DBMS in PDO-DSN: ' . $dsnParts[0]);
+						throw new \LogicException('Unknown PDO driver: ' . $driver);
 				}
 				break;
 			default:
+				// for now we are only supporting PDO.
 				throw new \LogicException('Unknown DBMS type: ' . $db->conf['type']);
 		}
 
