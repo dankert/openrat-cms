@@ -1,3 +1,10 @@
+#
+# Language keys
+# -------------
+#
+# These are the language keys and messages for all supported languages.
+# This file is UTF-8 encoded.
+#
 ACCESSKEY_MAIN_ADD:
   de: H
   en: A
