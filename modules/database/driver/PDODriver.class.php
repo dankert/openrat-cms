@@ -74,12 +74,20 @@ class PDODriver
 			if (!in_array($driver,PDO::getAvailableDrivers(),TRUE))
 				throw new DatabaseException('PDO driver '.$driver.' is not available');
 
-			$dsn = [
-				$driver.':host' => $conf['host'    ],
-				'dbname'        => $conf['database'],
-				'charset'       => $conf['charset' ]
-			];
+			$dsn = [];
+			if   ( $conf['host'] )
+				$dsn[ $driver.':host' ] = $conf['host']; // Hostname for RDBMS with IP-stack
+			elseif   ( $conf['file'] )
+					$dsn[ $driver.':'.$conf['file'] ] = $conf['host']; // Filename for SQLITE
 
+			if   ( $conf['database'] )
+				$dsn['dbname' ] = $conf['database'];
+			if   ( $conf['port'] )
+				$dsn['port' ] = $conf['port'];
+			if   ( $conf['charset'] )
+				$dsn['charset'] = $conf['charset' ];
+
+			// Building the DSN for PDO.
 			$url = implode('; ',array_map( function($key,$value) {
 				return $key.'='.$value;
 			},array_keys($dsn),$dsn));
