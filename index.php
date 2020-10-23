@@ -15,14 +15,14 @@ try {
 if (!headers_sent())
 {
     header('HTTP/1.0 500 Internal Server Error');
-    header('Content-Security-Policy: style-src: inline;');
+    header('Content-Type: text/html; charset=UTF-8');
+    header('Content-Security-Policy: style-src: inline; default: self');
 }
 
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Service currently unavailable</title>
     <style type="text/css">
@@ -67,7 +67,7 @@ if (!headers_sent())
 
     <p>Something went terribly wrong &#x1F61E;</p>
 
-    <?php // Display exceptions only in development mode, because the may contain sensitive internal information like passwords.
+    <?php // Display exceptions only in development mode, because they may contain sensitive internal information like passwords.
       if (!defined('DEVELOPMENT') || DEVELOPMENT ) { ?>
     <pre><?php echo $e->__toString(); ?></pre>
     <?php } ?>

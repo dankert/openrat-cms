@@ -4,6 +4,7 @@ namespace cms\ui;
 
 use BadMethodCallException;
 use cms\action\RequestParams;
+use cms\base\Language as L;
 use cms\Dispatcher;
 use Exception;
 use template_engine\engine\TemplateRunner;
@@ -60,7 +61,7 @@ class UI
             Http::noContent();
         } catch (UIException $e) {
             Logger::warn( $e->__toString() );
-            throw new LogicException(\cms\base\Language::lang($e->key),0, $e);
+            throw new LogicException(L::lang($e->key),0, $e);
         } catch (SecurityException $e) {
             Logger::info($e->getMessage());
             Http::noContent();
