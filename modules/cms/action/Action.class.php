@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use cms\base\Configuration;
 use cms\base\Language as L;
 use cms\model\BaseObject;
 use cms\model\ModelBase;
@@ -321,22 +322,23 @@ class Action
 
 
 	/**
-	 * Benutzen eines sog. "Conditional GET".
+	 * Using the HTTP-Caching, the "Conditional GET".
 	 *
-	 * Diese Funktion setzt einen "Last-Modified"-HTTP-Header.
+	 * The HTTP-header "Last-Modified" is set.
+	 *
 	 * Ist der Inhalt der Seite nicht neuer, so wird der Inhalt
 	 * der Seite nicht ausgegeben, sondern nur HTTP-Status 304
 	 * ("304 not modified") gesetzt.
 	 * Der Rest der Seite muss dann nicht mehr erzeugt werden,
 	 * wodurch die Performance stark erhoeht werden kann.
 	 *
-	 * Credits: Danke an Charles Miller
+	 * Credits: Thanks to Charles Miller
 	 * @see http://fishbowl.pastiche.org/2002/10/21/http_conditional_get_for_rss_hackers
 	 *
-	 * Gefunden auf:
+	 * Found here:
 	 * @see http://simon.incutio.com/archive/2003/04/23/conditionalGet
 	 *
-	 * @param $time int Letztes Aenderungsdatum des Objektes
+	 * @param $time int Last modification timestamp of this resource
 	 * @param $expirationDuration int Gültigkeitsdauer
 	 */
 	protected function lastModified($time, $expirationDuration = 0)
@@ -344,18 +346,18 @@ class Action
 		if   ( DEVELOPMENT )
 			return;
 
-		// Conditional-Get eingeschaltet?
-		if (!\cms\base\Configuration::config('cache', 'conditional_get'))
+		// Is HTTP-Cache enabled by config?
+		if ( ! Configuration::subset('cache')->is('conditional_get',true) )
 			return;
 
-		$expires = substr(date('r', time() + $expirationDuration - date('Z')), 0, -5) . 'GMT';
+		$expires      = substr(date('r', time() + $expirationDuration - date('Z')), 0, -5) . 'GMT';
 		$lastModified = substr(date('r', $time - date('Z')), 0, -5) . 'GMT';
-		$etag = '"' . base_convert($time, 10, 36) . '"';
+		$etag         = '"' . base_convert($time, 10, 36) . '"'; // a short representation of the unix timestamp.
 
 		// Header senden
-		header('Expires: ' . $expires);
+		header('Expires: '       . $expires);
 		header('Last-Modified: ' . $lastModified);
-		header('ETag: ' . $etag);
+		header('ETag: '          . $etag);
 
 		// Die vom Interpreter sonst automatisch gesetzten
 		// Header uebersteuern
@@ -406,11 +408,11 @@ class Action
 		if (empty($value))
 			$expire = time(); // Cookie wird gelöscht.
 		else
-			$expire = time() + 60 * 60 * 24 * \cms\base\Configuration::config('security', 'cookie', 'expire');
+			$expire = time() + 60 * 60 * 24 * Configuration::config('security', 'cookie', 'expire');
 
-		$secure   = \cms\base\Configuration::config('security', 'cookie', 'secure');
-		$httponly = \cms\base\Configuration::config('security', 'cookie', 'httponly');
-		$samesite = \cms\base\Configuration::config('security', 'cookie', 'samesite');
+		$secure   = Configuration::config('security', 'cookie', 'secure');
+		$httponly = Configuration::config('security', 'cookie', 'httponly');
+		$samesite = Configuration::config('security', 'cookie', 'samesite');
 
 		$cookieAttributes = [
 			rawurlencode($name).'='.rawurlencode($value),

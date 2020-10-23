@@ -17,6 +17,7 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 namespace database;
+use cms\base\Configuration as C;
 use database\driver\PDODriver;
 use logger\Logger;
 use util\exception\DatabaseException;
@@ -74,7 +75,39 @@ class Database
 	 * @var boolean
 	 */
 	var $transactionInProgress = false;
-	
+
+
+	/**
+	 * Default configuration.
+	 * @var array
+	 */
+	private static $DEFAULT_CONFIG = [
+		'prefix'         => 'cms_',
+		'suffix'         => '',
+		'enabled'        => true,
+		'name'           => '',
+		'description'    => '',
+		'type'           => 'pdo',
+		'driver'         => 'mysql',
+		'dsn'            => '',
+		'user'           => '',
+		'password'       => '',
+		'host'           => 'localhost',
+		'port'           => 0,
+		'database'       => '',
+		'base64'         => false,
+		'persistent'     => true,
+		'charset'        => 'UTF-8',
+		'connection_sql' => '',
+		'cmd'            => '',
+		'prepare'        => true,
+		'transaction'    => true,
+		'update'         =>
+			[
+			],
+		'auto_update'    => true,
+	];
+
 
 	/**
 	 * Kontruktor.
@@ -84,9 +117,9 @@ class Database
 	 */
 	public function __construct( $dbconf )
 	{
-		$conf = \cms\base\Configuration::rawConfig();
-
-		$this->conf = $dbconf + $conf['database-default']['defaults']; // linksstehender Operator hat Priorität!
+		$this->conf = $dbconf +
+			C::subset('database-default')->subset('defaults')->getConfig() +
+			Database::$DEFAULT_CONFIG;
 		
 		$this->connect();
 	}

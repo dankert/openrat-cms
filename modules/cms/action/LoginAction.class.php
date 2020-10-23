@@ -4,12 +4,14 @@ namespace cms\action;
 
 
 use cms\auth\Auth;
+use cms\base\Configuration;
 use cms\base\DB;
 use cms\base\Startup;
 use cms\model\User;
 use cms\model\Group;
 
 
+use configuration\Config;
 use util\FileUtils;
 use util\Http;
 use cms\auth\InternalAuth;
@@ -71,7 +73,7 @@ class LoginAction extends BaseAction
 	{
 		Logger::debug( "Login user: '$name'.'" );
 	
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 
 		Session::setUser(null);
 	
@@ -166,7 +168,7 @@ class LoginAction extends BaseAction
     {
         // Hier nie "304 not modified" setzen, da sonst keine
         // Login-Fehlermeldung erscheinen kann.
-        $conf = \cms\base\Configuration::rawConfig();
+        $conf = Configuration::rawConfig();
 
         $sso = $conf['security']['sso'];
         $ssl = $conf['security']['ssl'];
@@ -268,23 +270,23 @@ class LoginAction extends BaseAction
             $this->callSubAction('show');
         }
 
-        $dbids = array();
+        $databases = Configuration::subset('database')->subsets();
 
-        $databases = \cms\base\Configuration::Conf()->get('database');
+        // Filter all enabled databases
+        $databases = array_filter( $databases, function($dbConfig) {
+        	$dbConfig->is('enabled',true);
+		});
 
-        if   ( !is_array($databases))
-            throw new \LogicException("Corrupt configuration: Databases configuration must be an array.");
-
-
+        $dbids = [];
         foreach( $databases as $dbid => $dbconf )
         {
-            if   ( !is_array($dbconf))
-                throw new \LogicException("Corrup configuration: Database configuration '".$dbid."' must be an array.'");
-
-            $dbconf += $conf['database-default']['defaults']; // Add Default-Values
-
-            if	( is_array($dbconf) && $dbconf['enabled'] ) // Database-Connection is enabled
-                $dbids[$dbid] = !$dbconf['name'] ? $dbid : $dbconf['name'].' - '.$dbconf['description'];
+        	// Getting the first not-null information about the connection.
+	        $dbids[ $dbid ] =  array_filter( array(
+	        	$dbconf->get('description'),
+				$dbconf->get('name'),
+				$dbconf->get('host'),
+				$dbconf->get('driver'),
+				$dbid))[0];
         }
 
 
@@ -353,6 +355,39 @@ class LoginAction extends BaseAction
     }
 
 
+	/**
+	 * get all enabled databases.
+	 * @return Config[]
+	 */
+    protected function getAllEnabledDatabases() {
+
+		return array_filter( Configuration::subset('database')->subsets(), function($dbConfig) {
+			$dbConfig->is('enabled',true);
+		});
+
+	}
+
+
+	/**
+	 * Gets a list of all databases.
+	 * @return string[] list of databases.
+	 */
+	protected function getSelectableDatabases() {
+
+		return array_map( function($dbconf) {
+			// Getting the first not-null information about the connection.
+			return array_filter( array(
+				$dbconf->get('description'),
+				$dbconf->get('name'  ),
+				$dbconf->get('host'  ),
+				$dbconf->get('driver'),
+				$dbconf->get('type'  ),
+				'unknown'))[0];
+
+		}, $this->getAllEnabledDatabases() );
+
+	}
+
 
     /**
 	 * Anzeigen der Loginmaske.
@@ -363,7 +398,7 @@ class LoginAction extends BaseAction
 	 */
 	function openidView()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 
 		foreach( $conf['database'] as $dbname=>$dbconf )
 		{
@@ -375,9 +410,9 @@ class LoginAction extends BaseAction
 
 		$openid_provider = array();
 		foreach( explode(',',$conf['security']['openid']['provider']['name']) as $provider )
-			$openid_provider[$provider] = \cms\base\Configuration::config('security','openid','provider.'.$provider.'.name');
+			$openid_provider[$provider] = Configuration::config('security','openid','provider.'.$provider.'.name');
 		$this->setTemplateVar('openid_providers',$openid_provider);
-		$this->setTemplateVar('openid_user_identity',\cms\base\Configuration::config('security','openid','user_identity'));
+		$this->setTemplateVar('openid_user_identity', Configuration::config('security','openid','user_identity'));
 		//$this->setTemplateVar('openid_provider','identity');
 
 
@@ -412,7 +447,7 @@ class LoginAction extends BaseAction
 	 */
 	function applications()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 		
 		// Diese Seite gilt pro Sitzung. 
 		$user       = Session::getUser();
@@ -463,7 +498,7 @@ class LoginAction extends BaseAction
 	 */
 	public function openidloginView()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 		$openId = Session::get('openid');
 
 		if	( !$openId->checkAuthentication() )
@@ -532,7 +567,7 @@ class LoginAction extends BaseAction
 	 */
 	function openidPost()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 
 		Session::setUser('');
 		
@@ -599,7 +634,7 @@ class LoginAction extends BaseAction
 				catch (ObjectNotFoundException $e)
 				{
 					// Gruppe fehlt. Anlegen?
-					if	( \cms\base\Configuration::config('ldap','authorize','auto_add' ) )
+					if	( Configuration::config('ldap','authorize','auto_add' ) )
 					{
 						// Die Gruppe in der OpenRat-Datenbank hinzufuegen.
 						$g = new Group();
@@ -620,7 +655,7 @@ class LoginAction extends BaseAction
 	 */
 	function loginPost()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 
 		Session::setUser(''); // Altes Login entfernen.
 		
@@ -811,7 +846,7 @@ class LoginAction extends BaseAction
 			}
 				
 			// Anmeldung erfolgreich.
-            if	( \cms\base\Configuration::config()->subset('security')->is('renew_session_login',false) )
+            if	( Configuration::config()->subset('security')->is('renew_session_login',false) )
 				$this->recreateSession();
 			
 			$this->addNotice('user', 0, $user->name, 'LOGIN_OK', Action::NOTICE_OK, array('name' => $user->fullname));
@@ -831,13 +866,13 @@ class LoginAction extends BaseAction
 	 */
 	public function logoutPost()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 		
 		$user = Session::getUser();
 		if	( is_object($user) )
 			$this->setTemplateVar('login_username',$user->name);
 		
-		if	( \cms\base\Configuration::config()->subset('security')->is('renew_session_logout',false) )
+		if	( Configuration::config()->subset('security')->is('renew_session_logout',false) )
 			$this->recreateSession();
 
 		if	( @$conf['theme']['compiler']['compile_at_logout'] )
@@ -936,86 +971,6 @@ class LoginAction extends BaseAction
 	}
 	
 	
-	function project()
-	{
-		$user = Session::getUser();
-		if   ( ! is_object($user) )
-		{
-			$this->callSubAction('show');
-			return;
-		}
-
-		$this->evaluateRequestVars( array('projectid'=>$this->getRequestId()) );
-		
-		Session::setUser( $user );
-	}
-
-
-	function object()
-	{
-		$user = Session::getUser();
-		if   ( ! is_object($user) )
-		{
-			$this->callSubAction('show');
-			return;
-		}
-		
-		$this->evaluateRequestVars( array('objectid'=>$this->getRequestId()) );
-
-		Session::setUser( $user );
-	}
-
-
-	function language()
-	{
-		$user = Session::getUser();
-		if   ( ! is_object($user) )
-		{
-			$this->callSubAction('show');
-			return;
-		}
-		
-		$this->evaluateRequestVars( array(RequestParams::PARAM_LANGUAGE_ID=>$this->getRequestId()) );
-	}
-
-
-	function model()
-	{
-		$user = Session::getUser();
-		if   ( ! is_object($user) )
-		{
-			$this->callSubAction('show');
-			return;
-		}
-		
-		$this->evaluateRequestVars( array(RequestParams::PARAM_MODEL_ID=>$this->getRequestId()) );
-
-		$user     = Session::getUser();
-	}
-	
-
-	/**
-	 * Auswerten der Request-Variablen.
-	 *
-	 * @param Array $add
-	 */
-	function evaluateRequestVars( $add = array() )
-	{
-	}
-
-
-	function showtree()
-	{
-		Session::set('showtree',true );
-	}
-		
-
-	function hidetree()
-	{
-		Session::set('showtree',false );
-	}
-		
-
 	function switchuser()
 	{
 		$user = Session::getUser();
@@ -1034,7 +989,7 @@ class LoginAction extends BaseAction
 	
 	function show()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 
 		$user = Session::getUser();
 		// Gast-Login
@@ -1118,7 +1073,7 @@ class LoginAction extends BaseAction
 	 */
 	public function registercodeView()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 		foreach( $conf['database'] as $dbname=>$dbconf )
 		{
 			if	( is_array($dbconf) && $dbconf['enabled'] )
@@ -1141,7 +1096,7 @@ class LoginAction extends BaseAction
 	
 	public function registerPost()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 
 		Session::set('registerMail',$this->getRequestVar('mail') );
 		
@@ -1181,7 +1136,7 @@ class LoginAction extends BaseAction
 	 */
 	function registercodePost()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 
 		$origRegisterCode  = Session::get('registerCode');
 		$inputRegisterCode = $this->getRequestVar('code');
@@ -1235,22 +1190,15 @@ class LoginAction extends BaseAction
 	function passwordView()
 	{
 		// TODO: Attribut "Password" abfragen
-		foreach( \cms\base\Configuration::config('database') as $dbname=>$dbconf )
-		{
-		    $dbconf = $dbconf + \cms\base\Configuration::config('database-default','defaults');
-			if	( $dbconf['enabled'] )
-				$dbids[$dbname] = $dbconf['description'];
-		}
 
-		$this->setTemplateVar( 'dbids',$dbids );
-		
+		$this->setTemplateVar( 'dbids',$this->getSelectableDatabases() );
 		
 		$db = DB::get();
 		
 		if	( is_object($db) )
 			$this->setTemplateVar('actdbid',$db->id);
 		else
-			$this->setTemplateVar('actdbid',\cms\base\Configuration::config('database-default','default-id'));
+			$this->setTemplateVar('actdbid', Configuration::config('database-default','default-id'));
 	}	
 	
 	
@@ -1395,9 +1343,9 @@ class LoginAction extends BaseAction
         $this->setTemplateVar('machine'  ,php_uname('m') );
         $this->setTemplateVar('version' , phpversion()          );
 
-        $this->setTemplateVar('cms_name'    , \cms\base\Configuration::Conf()->subset('application')->get('name'    ) );
-        $this->setTemplateVar('cms_version' , \cms\base\Configuration::Conf()->subset('application')->get('version' ) );
-        $this->setTemplateVar('cms_operator', \cms\base\Configuration::Conf()->subset('application')->get('operator') );
+        $this->setTemplateVar('cms_name'    , Configuration::Conf()->subset('application')->get('name'    ) );
+        $this->setTemplateVar('cms_version' , Configuration::Conf()->subset('application')->get('version' ) );
+        $this->setTemplateVar('cms_operator', Configuration::Conf()->subset('application')->get('operator') );
 
         $user = Session::getUser();
         if   ( !empty($user) )

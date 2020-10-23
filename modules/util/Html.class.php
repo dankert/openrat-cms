@@ -19,6 +19,7 @@
 
 namespace util;
 use cms\action\RequestParams;
+use cms\base\Configuration;
 
 /**
  * Bereitstellen von Methoden fuer die Darstellung von HTML-Elementen
@@ -32,95 +33,45 @@ class Html
 
 
 	/**
-	 * Erzeugt eine relative Url innerhalb von Openrat
+	 * creates a relative url to an action.
 	 *
 	 * @param string Aktion, die aufgerufen werden soll
 	 * @param string Unteraktion, die innerhalb der Aktion aufgerufen werden soll
 	 * @param int Id fuer diesen Aufruf
 	 * @param array Weitere beliebige Parameter
-	 * @deprecated Das ist Dialog-Logik. Besser im Frontend erzeugen.
+	 * @deprecated UI logic, should not be used on the server.
 	 */
 	public static function url($action, $subaction = '', $id = '', $params = array())
 	{
 		if (intval($id) == 0)
-			$id = '-';
+			$id = '';
 
-		$conf = \cms\base\Configuration::rawConfig();
-
-		if (is_array($action)) {
-			$params = $action;
-
-			if (isset($params['callAction'])) {
-				$params['subaction'] = $params['callAction'];
-				unset($params['callAction']);
-				unset($params['callSubaction']);
-			}
-
-
-			if (!isset($params['action'])) $params['action'] = '';
-			if (!isset($params['subaction'])) $params['subaction'] = '';
-			if (!isset($params['id'])) $params['id'] = '';
-			$action = $params['action'];
-			$subaction = $params['subaction'];
-			$id = $params['id'];
-			unset($params['action']);
-			unset($params['subaction']);
-			unset($params['id']);
-			$params['old'] = 'true';
-		}
+		$conf = Configuration::Conf();
 
 		// Session-Id ergaenzen
-		if ($conf['interface']['url']['add_sessionid'])
+		if ($conf->subset('interface')->subset('url')->is('add_sessionid',false))
 			$params[session_name()] = session_id();
 
-		if (\cms\base\Configuration::config('security', 'use_post_token'))
+		if ($conf->subset('security')->is('use_post_token'.true))
 			$params['token'] = Session::token();
-
-		$fake_urls = $conf['interface']['url']['fake_url'];
-		$url_format = $conf['interface']['url']['url_format'];
 
 		if (isset($params['objectid']) && !isset($params['id']))
 			$params['id'] = $params['objectid'];
 
-		if ($fake_urls) {
-//			if	( $id != '' )
-//				$id = '.'.$id;
-		} else {
-			$params[RequestParams::PARAM_ACTION] = $action;
+		$params[RequestParams::PARAM_ACTION   ] = $action;
+
+		if	( $subaction )
 			$params[RequestParams::PARAM_SUBACTION] = $subaction;
+
+		if	( $id )
 			$params[RequestParams::PARAM_ID] = $id;
-		}
 
-		if (count($params) > 0) {
-			$urlParameterList = array();
-			foreach ($params as $var => $value) {
-				$urlParameterList[] = urlencode($var) . '=' . urlencode($value);
-			}
+		$urlParameterList = array_map( function($name,$value) {
+			return urlencode($name) . '=' . urlencode($value);
+		},array_keys($params),$params);
 
-			$urlParameterList['_'] = @$urlParameterList[RequestParams::PARAM_ACTION] . '-' . @$urlParameterList[RequestParams::PARAM_ID];
-			unset($urlParameterList[RequestParams::PARAM_ACTION], $urlParameterList[RequestParams::PARAM_ID]);
-
-			// We do not escape '&' as '&amp;' here, as it would brake things like Ajax-Urls.
-			// Maybe the escaping should be controled by a parameter.
-			$urlParameter = '?' . implode('&', $urlParameterList);
-		} else {
-			$urlParameter = '';
-		}
-
-		if (@$conf['interface']['url']['index'])
-			$controller_file_name = '';
-		else
-			$controller_file_name = '';
-
-		$prefix = './';
-
-		if ($fake_urls)
-			$src = sprintf($url_format, $action, $subaction, $id, session_id()) . $urlParameter;
-		else
-			$src = $prefix . $controller_file_name . $urlParameter;
-
-		return $src;
+		// We do not escape '&' as '&amp;' here, as it would brake things like Ajax-Urls.
+		// Maybe the escaping should be controlled by a parameter.
+		return './?'.implode('&', $urlParameterList);
 	}
 }
-
-?>

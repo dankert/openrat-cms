@@ -173,9 +173,6 @@ class FileAction extends ObjectAction
 
 		if	( $this->file->extension == 'gz' )
 		{
-			$conf = \cms\base\Configuration::rawConfig();
-			$mime_types = $conf['mime-types'];
-
 			$pos = strrpos($this->file->filename,'.');
 			if	( $pos === false )
 				$ext = '';
@@ -184,11 +181,7 @@ class FileAction extends ObjectAction
 
 			$ext = strtolower($ext);
 
-			if	( !empty($mime_types[$ext]) )
-				$mime_type = $mime_types[$ext];
-			else
-				// Wenn kein Mime-Type gefunden, dann Standardwert setzen
-				$mime_type = File::DEFAULT_MIMETYPE;
+			$mime_type = File:: $mime_types[$ext];
 
 			header('Content-Type: '.$mime_type );
 			header('Content-Encoding: gzip' );

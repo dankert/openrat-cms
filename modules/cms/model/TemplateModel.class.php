@@ -156,20 +156,13 @@ class TemplateModel extends ModelBase
 	 */
 	public function mimeType()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
-		$mime_types = $conf['mime-types'];
-
 		// Nur den letzten Teil der Extension auswerten:
 		// Aus 'mobile.html' wird nur 'html' verwendet.
 		$parts = explode('.',$this->extension);
 		$extension = strtolower(array_pop($parts));
 
-		if	( !empty($mime_types[$extension]) )
-			$this->mime_type = $mime_types[$extension];
-		else
-			// Wenn kein Mime-Type gefunden, dann Standardwert setzen
-			$this->mime_type = 'application/octet-stream';
-			
+		$this->mime_type = File::getMimeType($extension);
+
 		return( $this->mime_type );
 	}
 

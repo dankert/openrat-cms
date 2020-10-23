@@ -8,6 +8,7 @@ namespace cms;
 use BadMethodCallException;
 use cms\action\Action;
 use cms\action\RequestParams;
+use cms\base\Configuration;
 use cms\base\DB;
 use cms\base\DefaultConfig;
 use cms\base\Startup;
@@ -54,9 +55,9 @@ class Dispatcher
         $this->checkConfiguration();
 
         // Vorhandene Konfiguration aus der Sitzung lesen.
-        $conf = \cms\base\Configuration::rawConfig();
+        $conf = Configuration::rawConfig();
 
-		define('PRODUCTION', \cms\base\Configuration::Conf()->is('production',true));
+		define('PRODUCTION', Configuration::Conf()->is('production',true));
         define('DEVELOPMENT', !PRODUCTION);
 
         if( DEVELOPMENT)
@@ -160,7 +161,7 @@ class Dispatcher
 
     private function checkPostToken()
     {
-        if (\cms\base\Configuration::config('security', 'use_post_token') && $this->request->isAction && $this->request->getToken() != Session::token()) {
+        if (Configuration::config('security', 'use_post_token') && $this->request->isAction && $this->request->getToken() != Session::token()) {
             Logger::error('Token mismatch: Needed ' . Session::token() . ' but got ' . Logger::sanitizeInput($this->request->getToken()) . '. Maybe an attacker?');
             throw new SecurityException("Token mismatch");
         }
@@ -172,7 +173,7 @@ class Dispatcher
     private function initializeLogger()
     {
 
-        $logConfig = \cms\base\Configuration::config('log');
+        $logConfig = Configuration::config('log');
 
         $logFile = $logConfig['file'];
 
@@ -347,25 +348,17 @@ class Dispatcher
         elseif   ( isset($_COOKIE['or_dbid']) )
             $dbid = $_COOKIE['or_dbid'];
         else {
-            $dbids = array();
+            $databases = Configuration::subset('database')->subsets();
 
-            $databases = \cms\base\Configuration::Conf()->get('database');
+            // Filter all enabled databases
+            $databases = array_filter($databases, function ($dbConfig) {
+            	$dbConfig->is('enabled',true);
+			});
 
-            if   ( !is_array($databases))
-                throw new \RuntimeException('Corrupt configuration: Database configuration must be a list');
+            $dbids = array_keys( $databases );
 
-            foreach( $databases as $key => $dbconf )
-            {
-                if   ( !is_array($dbconf))
-                    throw new \LogicException("Corrupt configuration: Database configuration '".$key."' must be an array.'");
+            $defaultDbId = Configuration::config('database-default','default-id');
 
-                $dbconf += \cms\base\Configuration::config('database-default','defaults'); // Add Default-Values
-
-                if	( is_array($dbconf) && $dbconf['enabled'] ) // Database-Connection is enabled
-                    $dbids[] = $key;
-            }
-
-            $defaultDbId = \cms\base\Configuration::config('database-default','default-id');
             if  ( $defaultDbId && in_array($defaultDbId,$dbids) )
                 // Default-Datenbankverbindung ist konfiguriert und vorhanden.
                 $dbid = $defaultDbId;
@@ -378,7 +371,7 @@ class Dispatcher
         }
 
 
-        $dbConfig = \cms\base\Configuration::config()->subset('database');
+        $dbConfig = Configuration::config()->subset('database');
 
         if	( ! $dbConfig->has( $dbid ) )
             throw new \LogicException( 'unknown DB-Id: '.$dbid );
@@ -404,7 +397,7 @@ class Dispatcher
 
 
         if   ( $firstDbContact )
-            // Test, if we should update the database schema.
+            // Test, if we should update the database scheme.
             $this->updateDatabase( $dbid );
     }
 
@@ -418,7 +411,7 @@ class Dispatcher
      */
     private function updateDatabase($dbid)
     {
-        $dbConfig = \cms\base\Configuration::Conf()->subset('database')->subset($dbid);
+        $dbConfig = Configuration::Conf()->subset('database')->subset($dbid);
 
         if   ( ! $dbConfig->is('check_version',true))
             return; // Check for DB version is disabled.
@@ -507,7 +500,7 @@ class Dispatcher
      */
     private function setContentLanguageHeader()
     {
-        header('Content-Language: ' . \cms\base\Configuration::Conf()->subset('language')->get('language_code') );
+        header('Content-Language: ' . Configuration::Conf()->subset('language')->get('language_code') );
     }
 
 
@@ -518,7 +511,7 @@ class Dispatcher
         if   ( ! $this->request->isAction )
             return;
 
-        $auditConfig = \cms\base\Configuration::config()->subset('audit-log');
+        $auditConfig = Configuration::config()->subset('audit-log');
 
         if   ( $auditConfig->is('enabled',false))
         {

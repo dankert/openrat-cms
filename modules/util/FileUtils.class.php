@@ -1,6 +1,7 @@
 <?php
 
 namespace util;
+use cms\base\Configuration;
 use Pfad;
 use RuntimeException;
 
@@ -30,8 +31,7 @@ class FileUtils
 	 */
 	public static function createTempFile()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
-		$tmpdir = @$conf['cache']['tmp_dir'];
+		$tmpdir  = Configuration::subset('cache')->get('tmp_dir','');
 		$tmpfile = @tempnam($tmpdir, 'openrat_tmp');
 
 		// 2. Versuch: Temp-Dir aus "upload_tmp_dir".

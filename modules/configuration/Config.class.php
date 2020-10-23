@@ -7,12 +7,16 @@ namespace configuration;
  */
 class Config
 {
+	/**
+	 * The actual configuraton values.
+	 * @var array
+	 */
     private $config;
 
 
     /**
      * Config constructor.
-     * @param $config
+     * @param array $config
      */
     public function __construct($config)
     {
@@ -20,10 +24,30 @@ class Config
     }
 
 
-    /**
+	/**
+	 * Returns a list of all subsets.
+	 *
+	 * @return Config[] subsets
+	 */
+    public function subsets() {
+
+    	return array_map( function( $value ) {
+			if (is_array($value))
+				return new Config($value);
+			else
+				return new Config(array());
+		}, array_filter($this->config, function($value) {
+			// All non-arrays are removed.
+			return is_array($value);
+		}) );
+
+	}
+
+
+	/**
      * Giving the child configuration with a fluent interface.
      *
-     * @param $name
+     * @param $name string
      * @return Config
      */
     public function subset($name)
