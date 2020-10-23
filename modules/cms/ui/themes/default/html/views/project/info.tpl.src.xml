@@ -1,7 +1,8 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-  <form readonly="true">
-    <list list="${info}">
-      <text label="${list_key}" value="${list_value}"/>
-    </list>
-  </form>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<list list="${info}">
+		<fieldset label="${message:${list_key}}">
+			<text value="${list_value}"/>
+		</fieldset>
+	</list>
 </output>
