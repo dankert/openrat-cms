@@ -214,6 +214,7 @@ class DefaultConfig {
 							'user' => '',
 							'password' => '',
 							'host' => 'localhost',
+							'port' => 0,
 							'database' => '',
 							'base64' => false,
 							'persistent' => true,
