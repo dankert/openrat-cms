@@ -20,8 +20,8 @@ class UIException extends Exception
 	// maßgeschneiderte Stringdarstellung des Objektes
 	public function __toString()
 	{
-		return __CLASS__ . ": " . $this->key . " [{$this->code}]: '{$this->message}' in {$this->file}({$this->line})\n"
-			. "{$this->getTraceAsString()}\n";
+		return __CLASS__ . ": " . $this->key . ": '{$this->message}' in {$this->file}({$this->line})\n"
+			. "{$this->getTraceAsString()}\n".($this->getPrevious()?'Caused by: '.$this->getPrevious()->__toString():'');
 	}
 
 }
