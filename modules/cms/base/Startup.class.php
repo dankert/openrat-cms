@@ -47,30 +47,48 @@ class Startup {
 		self::securityCheck();
 		self::setErrorHandler();
 		self::setStartTime();
+		self::checkDatabaseDriver();
+		self::checkMultibyteSupport();
 
 		// in some situations we want to know, if the CMS is really started up.
 		define('APP_STARTED','1');
 	}
 
-	public static function checkPHPVersion()
+	protected static function checkPHPVersion()
 	{
 		if (version_compare(phpversion(), self::MIN_VERSION, "<"))
 			throw new ErrorException('This version of PHP ' . phpversion() . ' is not supported any more. Minimum required: ' . self::MIN_VERSION);
 	}
 
 
+	protected static function checkDatabaseDriver() {
+		if (!defined('PDO::ATTR_DRIVER_NAME')) {
+			throw new ErrorException('PDO is not available');
+		}
+	}
+
+
+	protected static function checkMultibyteSupport() {
+
+		if   ( function_exists('mb_substr'          ) &&
+			   function_exists('mb_convert_encoding')    )
+			; // ok, Multibyte is available
+		else
+			throw new ErrorException('Multibyte functions are not available');
+	}
+
 	public static function getStartTime() {
 		return self::$START_TIME;
 	}
 
 
-	public static function setStartTime() {
+	protected static function setStartTime() {
 
 		self::$START_TIME = time();
 	}
 
 
-	public static function setErrorHandler() {
+	protected static function setErrorHandler() {
 
 		/**
 		 * Wandelt jeden Fehler in eine ErrorException um.
@@ -124,7 +142,7 @@ class Startup {
 	/**
 	 * Check for some stupid security impacts.
 	 */
-	public static function securityCheck()
+	protected static function securityCheck()
 	{
 		// REGISTER_GLOBALS
 		// This feature has been DEPRECATED as of PHP 5.3.0 and REMOVED as of PHP 5.4.0.
