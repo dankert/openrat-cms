@@ -34,8 +34,20 @@ class Startup {
 	const THEMES_DIR       = './modules/cms/ui/themes/';
 	const CSS_PREFIX       = 'or-';
 
+	/**
+	 * This is the application name.
+	 * It can be overwritten in the configuration.
+	 */
 	const TITLE   = 'OpenRat CMS';
+
+	/**
+	 * Version number.
+	 */
 	const VERSION = Version::VERSION;
+
+	/**
+	 * Build date.
+	 */
 	const DATE    = Version::DATE;
 
 	/**
