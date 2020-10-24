@@ -43,41 +43,6 @@ class ArrayUtils
 	}
 
 
-	public static function flattenArray($prefix, $arr, $split = '.')
-	{
-		$new = array();
-		foreach ($arr as $key => $val) {
-			if (is_array($val)) {
-				$new[$prefix . $key] = '';
-
-				$new += self::flattenArray($prefix . $key . $split, $val, $split);
-			} else
-				$new[$prefix . $key] = $val;
-		}
-		return $new;
-	}
-
-
-	/**
-	 * Make a dry flat array.
-	 *
-	 * @param $arr
-	 * @param int $depth
-	 * @return array
-	 */
-	public static function indentedFlattenArray($arr, $padChar = '', $depth = 0)
-	{
-		$new = array();
-		foreach ($arr as $key => $val) {
-			if (is_array($val)) {
-
-				$new[] = array('depth' => $depth, 'key' => $key, 'val' => '');
-				$new += self::indentedFlattenArray($val, $padChar, $depth + 1);
-			} else
-				$new[] = array('depth' => $depth, 'key' => $key, 'val' => $val);
-		}
-		return $new;
-	}
 
 
 	/**
@@ -88,15 +53,22 @@ class ArrayUtils
 	 * @param int $depth
 	 * @return array
 	 */
-	public static function dryFlattenArray($arr, $padChar = '', $depth = 0)
+	public static function dryFlattenArray($arr, $padChar = '  ', $depth = 0)
 	{
 		$new = array();
+
 		foreach ($arr as $key => $val) {
 			if (is_array($val)) {
-				$new[str_repeat($padChar, $depth) . $key] = '';
-				$new += self::dryFlattenArray($val, $padChar, $depth + 1);
+				$new[] = [
+					'key'  => str_repeat($padChar, $depth).$key,
+					'value'=> ''
+				];
+				$new = array_merge($new,self::dryFlattenArray($val, $padChar, $depth + 1));
 			} else
-				$new[str_repeat($padChar, $depth) . $key] = $val;
+				$new[] = [
+					'key'  => str_repeat($padChar, $depth).$key,
+					'value'=> $val
+				];
 		}
 		return $new;
 	}

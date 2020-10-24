@@ -200,14 +200,14 @@
 		</group>
 		<group title="${message:settings}">
 			<table filter="true">
-				<list list="${settings}" key="name" value="value">
+				<list list="${settings}" value="entry">
 					<row class="data">
 						<column>
-							<text value="${name}"/>
+							<text value="${entry.key}"/>
 						</column>
 						<column class="clickable">
 							<link subaction="settings" type="dialog">
-								<text value="${value}"/>
+								<text value="${entry.value}"/>
 							</link>
 						</column>
 					</row>

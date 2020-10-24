@@ -51,31 +51,28 @@ class ConfigurationAction extends BaseAction
 	 */
 	public function showView()
 	{
-        $conf = DefaultConfig::get();
-        $conf_default = $conf;
-		
-		$conf_cms = Session::getConfig();
+        $defaultConfig = DefaultConfig::get();;
+		$currentConfig = Session::getConfig();
+
+		$currentConfig['system'] = $this->getSystemConfiguration();
 
         // Language are to much entries
-        unset($conf_cms['language']);
-
-
-		$conf_cms['system'] = $this->getSystemConfiguration();
-
-		//$split = "\xC2\xA0"."\xC2\xA0"."\xC2\xBB"."\xC2\xA0"."\xC2\xA0";
-		//$flatDefaultConfig = \ArrayUtils::flattenArray('', $conf_default       , $split );
-		//$flatCMSConfig     = \ArrayUtils::flattenArray('', Session::getConfig(), $split );
-		//$flatConfig        = \ArrayUtils::flattenArray('', $conf_cms           , $split );
+        unset($currentConfig['language']);
 
 		$pad = str_repeat("\xC2\xA0",10); // Hard spaces
 
-		$flatDefaultConfig = \util\ArrayUtils::dryFlattenArray( $conf_default       , $pad );
+		$flatDefaultConfig = \util\ArrayUtils::dryFlattenArray( $defaultConfig      , $pad );
 		$flatCMSConfig     = \util\ArrayUtils::dryFlattenArray( Session::getConfig(), $pad );
-		$flatConfig        = \util\ArrayUtils::dryFlattenArray( $conf_cms           , $pad );
+		$flatConfig        = \util\ArrayUtils::dryFlattenArray( $currentConfig      , $pad );
 
-		$config = array();
-		foreach( $flatConfig as $key=>$val )
-			$config[] = array( 'key'=>$key,'value'=>substr($key,-8)=='password'?'*******************':$val,'class'=>(empty($flatCMSConfig[$key])?'readonly':(isset($flatDefaultConfig[$key]) && $flatDefaultConfig[$key]==$flatConfig[$key]?'default':'changed')));
+		$config = array_map( function($key,$value) use ($flatConfig,$flatCMSConfig,$flatDefaultConfig) {
+
+			if   ( strpos($key,'password') !== false )
+				$value = '*';
+
+			return ['key'=>$key,'value'=>$value,'class'=>(empty($flatCMSConfig[$key])?'readonly':(isset($flatDefaultConfig[$key]) && $flatDefaultConfig[$key]==$flatConfig[$key]?'default':'changed'))];
+
+		},array_keys($flatConfig),$flatConfig);
 
 		$this->setTemplateVar('config',$config );
 	}

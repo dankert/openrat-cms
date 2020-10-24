@@ -8,13 +8,13 @@
         <text value="${message:VALUE}"/>
       </column>
     </row>
-    <list list="${config}" extract="true">
+    <list list="${config}" value="entry">
       <row class="data">
         <column>
-          <text value="${key}"/>
+          <text value="${entry.value.key}"/>
         </column>
         <column class="${class}">
-          <text class="${class}" value="${value}"/>
+          <text class="${class}" value="${entry.value.value}"/>
         </column>
       </row>
     </list>
