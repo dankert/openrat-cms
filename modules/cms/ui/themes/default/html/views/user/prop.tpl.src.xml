@@ -8,7 +8,7 @@
           <input name="fullname" maxlength="128"/>
       </fieldset>
       <if true="${config:security/user/show_admin_mail}">
-        <fieldset label="${message:user_mail">
+        <fieldset label="${message:user_mail}">
           <part class="label">
             <label for="mail" key=""/>
           </part>
