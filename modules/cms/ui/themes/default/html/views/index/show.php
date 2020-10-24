@@ -18,35 +18,33 @@
     <div id="<?php echo O::escapeHtml('workbench') ?>" class="<?php echo O::escapeHtml('or-workbench or--initial-hidden') ?>"><?php echo O::escapeHtml('') ?>
       <header id="<?php echo O::escapeHtml('title') ?>" class="<?php echo O::escapeHtml('or-workbench-title or-view or-act-view-static') ?>" data-action="<?php echo O::escapeHtml('title') ?>" data-method="<?php echo O::escapeHtml('show') ?>"><?php echo O::escapeHtml('') ?>
       </header>
-      <div class="<?php echo O::escapeHtml('or-main-area') ?>"><?php echo O::escapeHtml('') ?>
-        <nav class="<?php echo O::escapeHtml('or-navigation') ?>"><?php echo O::escapeHtml('') ?>
+      <div class="<?php echo O::escapeHtml('or-workbench-main') ?>"><?php echo O::escapeHtml('') ?>
+        <nav class="<?php echo O::escapeHtml('or-workbench-navigation') ?>"><?php echo O::escapeHtml('') ?>
           <div class="<?php echo O::escapeHtml('or-view or-act-view-static') ?>" data-action="<?php echo O::escapeHtml('tree') ?>" data-method="<?php echo O::escapeHtml('show') ?>"><?php echo O::escapeHtml('') ?>
           </div>
         </nav>
-        <div class="<?php echo O::escapeHtml('or-workplace') ?>"><?php echo O::escapeHtml('') ?>
-          <main id="<?php echo O::escapeHtml('editor') ?>"><?php echo O::escapeHtml('') ?>
-            <header><?php echo O::escapeHtml('') ?>
-              <div class="<?php echo O::escapeHtml('or-breadcrumb') ?>"><?php echo O::escapeHtml('') ?>
+        <main class="<?php echo O::escapeHtml('or-workbench-workplace') ?>"><?php echo O::escapeHtml('') ?>
+          <header><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('or-breadcrumb') ?>"><?php echo O::escapeHtml('') ?>
+            </div>
+          </header>
+          <?php foreach((array)$methodList as $list_key=>$method) {  ?>
+            <section class="<?php echo O::escapeHtml('or-workbench-section or-collapsible or-collapsible--is-open') ?>"><?php echo O::escapeHtml('') ?>
+              <header class="<?php echo O::escapeHtml('or-view-header or-collapsible-act-switch or-collapsible-title') ?>"><?php echo O::escapeHtml('') ?>
+                <span class="<?php echo O::escapeHtml('or-view-icon or-image-icon or-image-icon--method-'.@$method['name'].'') ?>"><?php echo O::escapeHtml('') ?>
+                </span>
+                <span><?php echo O::escapeHtml(''.@O::lang('METHOD_'.@$method['name'].'').'') ?>
+                </span>
+                <i class="<?php echo O::escapeHtml('or-collapsible--on-open or-image-icon or-image-icon--node-open') ?>"><?php echo O::escapeHtml('') ?>
+                </i>
+                <i class="<?php echo O::escapeHtml('or-collapsible--on-closed or-image-icon or-image-icon--node-closed') ?>"><?php echo O::escapeHtml('') ?>
+                </i>
+              </header>
+              <div class="<?php echo O::escapeHtml('or-collapsible-value or-view or-act-view-loader or-closable') ?>" data-method="<?php echo O::escapeHtml(''.@$method['name'].'') ?>"><?php echo O::escapeHtml('') ?>
               </div>
-            </header>
-            <?php foreach((array)$methodList as $list_key=>$method) {  ?>
-              <section class="<?php echo O::escapeHtml('or-collapsible or-collapsible--is-open') ?>"><?php echo O::escapeHtml('') ?>
-                <header class="<?php echo O::escapeHtml('or-view-header or-collapsible-act-switch or-collapsible-title') ?>"><?php echo O::escapeHtml('') ?>
-                  <span class="<?php echo O::escapeHtml('or-view-icon or-image-icon or-image-icon--method-'.@$method['name'].'') ?>"><?php echo O::escapeHtml('') ?>
-                  </span>
-                  <span><?php echo O::escapeHtml(''.@O::lang('METHOD_'.@$method['name'].'').'') ?>
-                  </span>
-                  <i class="<?php echo O::escapeHtml('or-collapsible--on-open or-image-icon or-image-icon--node-open') ?>"><?php echo O::escapeHtml('') ?>
-                  </i>
-                  <i class="<?php echo O::escapeHtml('or-collapsible--on-closed or-image-icon or-image-icon--node-closed') ?>"><?php echo O::escapeHtml('') ?>
-                  </i>
-                </header>
-                <div class="<?php echo O::escapeHtml('or-collapsible-value or-view or-act-view-loader or-closable') ?>" data-method="<?php echo O::escapeHtml(''.@$method['name'].'') ?>"><?php echo O::escapeHtml('') ?>
-                </div>
-              </section>
-             <?php } ?>
-          </main>
-        </div>
+            </section>
+           <?php } ?>
+        </main>
       </div>
     </div>
     <div id="<?php echo O::escapeHtml('dialog') ?>" class="<?php echo O::escapeHtml('or-dialog or-dialog--is-closed') ?>" data-action="<?php echo O::escapeHtml(''.@$dialogAction.'') ?>" data-method="<?php echo O::escapeHtml(''.@$dialogMethod.'') ?>"><?php echo O::escapeHtml('') ?>

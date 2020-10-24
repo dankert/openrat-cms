@@ -72,6 +72,8 @@ class LinkComponent extends Component
 	{
 
 		$link = new CMSElement('a');
+		$link->addStyleClass('link');
+
 		if ( $this->afterSuccess )
 			$link->addAttribute('data-after-success',$this->afterSuccess);
 		

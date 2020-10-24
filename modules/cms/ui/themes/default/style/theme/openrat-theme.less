@@ -101,19 +101,6 @@ html.or-theme-@{cms-theme-id} {
       }
     }
 
-    /*
-    dl.notice {
-      border-left: 10px @cms-inactive-background-color solid;
-      border-right: 1px @cms-inactive-background-color solid;
-
-      & > dt {
-        border-top: 1px @cms-inactive-background-color solid;
-      }
-
-      & > dd {
-        border-bottom: 1px @cms-inactive-background-color solid;
-      }
-    }*/
 
   .or-preview {
     a:link, a:visited, a:active, a:hover {
@@ -128,16 +115,6 @@ html.or-theme-@{cms-theme-id} {
   textarea.longtext {
     border: 1px solid @cms-text-color;
   }
-
-    /*
-  table.calendar td {
-    border: 1px dotted;
-  }*/
-
-    /*
-  div.structure em {
-    font-style: italic;
-  }*/
 
 
   table {
@@ -165,22 +142,20 @@ html.or-theme-@{cms-theme-id} {
     background-color: @cms-inactive-background-color;
   }
 
-  #workbench  {
+  .or-workbench  {
 
-    & > div {
-      background-color: @cms-background-color;
-      background-image: linear-gradient(to bottom, @cms-background-color 0%, lighten(@cms-background-color, 20%) 100%);
-
-      main section {
-        //.box-shadow(5px,5px,5px,@cms-text-color);
-        border-color: @cms-text-color;
-
-        &.or-open {
-          background-color: lighten(@cms-background-color, 10%);
-        }
-      }
+    &-main {
+        background-color: @cms-background-color;
+        background-image: linear-gradient(to bottom, @cms-background-color 0%, lighten(@cms-background-color, 20%) 100%);
     }
 
+      &-section {
+          border-color: @cms-text-color;
+
+          &.or-open {
+              background-color: lighten(@cms-background-color, 10%);
+          }
+    }
   }
 
 
@@ -200,7 +175,7 @@ html.or-theme-@{cms-theme-id} {
     }
   }
 
-  #title {
+  .or-workbench-title {
 
     background-color: @cms-title-background-color;
     background-image: linear-gradient(to bottom, lighten(@cms-title-background-color, 10%), @cms-title-background-color 80%, @cms-background-color);
@@ -235,8 +210,13 @@ html.or-theme-@{cms-theme-id} {
   }
 
 
+    .or {
 
-    .or-dropdown {
+    &-dropdown {
+        .or-link {
+            color: inherit;
+        }
+
         .border-radius(5px);
         .box-shadow(3px, 2px, 10px, @cms-title-background-color);
         opacity: 0.95;
@@ -245,37 +225,32 @@ html.or-theme-@{cms-theme-id} {
         background-color: @cms-title-text-color;
         color: @cms-title-background-color;
 
+        &-entry {
 
-        > .or-entry,
-        > .or-entry > a {
             background-color: @cms-title-text-color;
             color: @cms-title-background-color;
+
+            &--inactive {
+                color: mix(@cms-title-background-color, @cms-title-text-color, 40%);
+            }
+
+            &--active:hover {
+                background-color: @cms-title-background-color;
+                color: @cms-title-text-color;
+            }
         }
 
-        > .or-entry.or-inactive,
-        > .or-entry.or-inactive > a {
-            color: mix(@cms-title-background-color, @cms-title-text-color, 40%);
-        }
 
-        > .or-entry.or-active:hover,
-        > .or-entry.or-active:hover > a {
+        &-divide {
             background-color: @cms-title-background-color;
-            color: @cms-title-text-color;
         }
-
-        > .or-divide {
-            background-color: @cms-title-background-color;
-        }
+    }
 
     }
 
   .or-toolbar-icon {
     border: 1px solid @cms-title-background-color;
     .border-radius(3px);
-
-    &.or-inactive {
-      opacity: 0.5;
-    }
 
     &:hover {
       border: 1px solid @cms-title-text-color;
@@ -350,20 +325,9 @@ html.or-theme-@{cms-theme-id} {
     }
   }
 
-    /*
-  div.content a.action, div.content a.help {
-    .box-shadow(3px, 2px, 5px, @cms-title-background-color);
-  }*/
-
-  .or-main-area {
-    background-color: @cms-inactive-background-color;
-    background-image: linear-gradient(@cms-inactive-background-color, lighten(@cms-inactive-background-color, 10%));
-  }
-
   body, a {
     color: @cms-text-color;
   }
-
 
 
   .or-dropzone-upload > .or-value {
@@ -392,7 +356,7 @@ html.or-theme-@{cms-theme-id} {
     color: @cms-title-text-color;
   }
 
-  .or-navigation {
+  .or-workbench-navigation {
     background-color: inherit;
     background-image: inherit;
     border-right-color: @cms-text-color;

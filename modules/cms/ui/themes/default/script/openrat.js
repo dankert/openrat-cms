@@ -149,18 +149,18 @@ jQuery.fn.orSearch = function( options )
 						
 						// Suchergebnis-Zeile in das Ergebnis schreiben.
 
-						let div = $('<div class="or-entry or-search-result or-active" title="'+result.desc+'"></div>');
+						let div = $('<div class="or-dropdown-entry or-search-result or-dropdown-entry--active" title="'+result.desc+'"></div>');
 						div.data('object',{
 							'name':result.name,
 						    'action':result.type,
 							'id':result.id
 						} );
-						let link = $('<a />').attr('href',Openrat.Navigator.createShortUrl(result.type, result.id));
+						let link = $('<a class="or-link"/>').attr('href',Openrat.Navigator.createShortUrl(result.type, result.id));
 						link.click( function(e) {
 							e.preventDefault();
 						});
 						$(link).append('<i class="or-image-icon or-image-icon--action-'+result.type+'" />');
-						$(link).append('<span>'+result.name+'</span>');
+						$(link).append('<span class="or-dropdown-text">'+result.name+'</span>');
 
 						$(div).append(link);
 						$(dropdownEl).append(div);
@@ -221,7 +221,7 @@ jQuery.fn.orLinkify = function( options )
 			let type = $(this).attr('data-type');
 			
 			// Inaktive Menüpunkte sind natürlich nicht anklickbar.
-			if	( $(this).parent().hasClass('inactive') )
+			if	( $(this).parent().hasClass('dropdown-entry--inactive') )
 				return;
 
 			switch( type )
@@ -2016,7 +2016,11 @@ Openrat.Workbench = new function()
     'use strict'; // Strict mode
 
 
-    this.state = {};
+    this.state = {
+    	action: '',
+    	id: 0,
+		extra: {}
+	};
 
     this.popupWindow = null;
 
@@ -2086,11 +2090,6 @@ Openrat.Workbench = new function()
 
         Openrat.Workbench.state = state;
 
-        // TODO: Remove this sometimes.... only state.
-        $('#editor').attr('data-action',state.action);
-        $('#editor').attr('data-id'    ,state.id    );
-        $('#editor').attr('data-extra' ,'{}'  );
-
         Openrat.Navigator.toActualHistory( state );
 
     }
@@ -2151,10 +2150,6 @@ Openrat.Workbench = new function()
 
     this.loadNewAction = function(action, id, params ) {
 
-    	$('#editor').attr('data-action',action);
-    	$('#editor').attr('data-id'    ,id    );
-    	$('#editor').attr('data-extra' ,JSON.stringify(params));
-
         this.reloadViews();
     }
 
@@ -2167,7 +2162,7 @@ Openrat.Workbench = new function()
     this.reloadViews = function() {
 
         // View in geschlossenen Sektionen löschen, damit diese nicht stehen bleiben.
-        $('#workbench section.closed .or-act-view-loader').empty();
+        $('.or-workbench-section--is-closed .or-act-view-loader').empty();
 
         Openrat.Workbench.loadViews( $('.or-workbench .or-act-view-loader') );
     }
@@ -2248,10 +2243,10 @@ Openrat.Workbench = new function()
             // Static views have always the same action.
             action = $viewElement.attr('data-action');
         else
-            action = $('#editor').attr('data-action');
+            action = Openrat.Workbench.state.action;
 
-        let id     = $('#editor').attr('data-id'    );
-        let params = $('#editor').attr('data-extra' );
+        let id     = Openrat.Workbench.state.id;
+        let params =  Openrat.Workbench.state.extra;
 
         let method = $viewElement.data('method');
 
@@ -2470,10 +2465,10 @@ Openrat.Workbench = new function()
 	{
 		// Attribute aus dem aktuellen Editor holen, falls die Daten beim Aufrufer nicht angegeben sind.
 		if (!action)
-			action = $('#editor').attr('data-action');
+			action =  Openrat.Workbench.state.action;
 
 		if  (!id)
-			id = $('#editor').attr('data-id');
+			id =  Openrat.Workbench.state.id;
 
 		let view = new Openrat.View( action,method,id,params );
 
@@ -2758,10 +2753,10 @@ let filterMenus = function ()
 {
     let action = Openrat.Workbench.state.action;
     let id     = Openrat.Workbench.state.id;
-    $('.or-clickable').addClass('active');
-    $('.or-clickable.or-filtered').removeClass('active').addClass('inactive');
+    $('.or-clickable').addClass('dropdown-entry--active');
+    $('.or-clickable.or-filtered').removeClass('dropdown-entry--active').addClass('dropdown-entry--inactive');
 
-    $('.or-clickable.or-filtered.or-on-action-'+action).addClass('active').removeClass('inactive');
+    $('.or-clickable.or-filtered.or-on-action-'+action).addClass('dropdown-entry--active').removeClass('dropdown-entry--inactive');
 
     // Jeder Menüeintrag bekommt die Id und Parameter.
     $('.or-clickable.or-filtered a').attr('data-id'    ,id    );
@@ -2848,19 +2843,19 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 
 	// Handler for mobile navigation
 	$(viewEl).find('.or-act-nav-open-close').click( function() {
-		$('nav').toggleClass('nav--is-open');
+		$('nav').toggleClass('workbench-navigation--is-open');
 	});
 	// Handler for desktop navigation
 	$(viewEl).find('.or-act-nav-toggle-small').click( function() {
-		$('nav').toggleClass('nav--is-small');
+		$('nav').toggleClass('workbench-navigation--is-small');
 	});
 
 	// Handler for desktop navigation
 	$(viewEl).find('.or-act-nav-small').click( function() {
-		$('nav').addClass('nav--is-small');
+		$('nav').addClass('workbench-navigation--is-small');
 	});
 	$(viewEl).find('.or-act-nav-wide').click( function() {
-		$('nav').removeClass('nav--is-small');
+		$('nav').removeClass('workbench-navigation--is-small');
 	});
 
 	//$(viewEl).find('div.headermenu > a').each( function(idx,el)

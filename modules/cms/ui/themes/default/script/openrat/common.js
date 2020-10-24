@@ -146,10 +146,10 @@ let filterMenus = function ()
 {
     let action = Openrat.Workbench.state.action;
     let id     = Openrat.Workbench.state.id;
-    $('.or-clickable').addClass('active');
-    $('.or-clickable.or-filtered').removeClass('active').addClass('inactive');
+    $('.or-clickable').addClass('dropdown-entry--active');
+    $('.or-clickable.or-filtered').removeClass('dropdown-entry--active').addClass('dropdown-entry--inactive');
 
-    $('.or-clickable.or-filtered.or-on-action-'+action).addClass('active').removeClass('inactive');
+    $('.or-clickable.or-filtered.or-on-action-'+action).addClass('dropdown-entry--active').removeClass('dropdown-entry--inactive');
 
     // Jeder Menüeintrag bekommt die Id und Parameter.
     $('.or-clickable.or-filtered a').attr('data-id'    ,id    );
@@ -236,19 +236,19 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 
 	// Handler for mobile navigation
 	$(viewEl).find('.or-act-nav-open-close').click( function() {
-		$('nav').toggleClass('nav--is-open');
+		$('nav').toggleClass('workbench-navigation--is-open');
 	});
 	// Handler for desktop navigation
 	$(viewEl).find('.or-act-nav-toggle-small').click( function() {
-		$('nav').toggleClass('nav--is-small');
+		$('nav').toggleClass('workbench-navigation--is-small');
 	});
 
 	// Handler for desktop navigation
 	$(viewEl).find('.or-act-nav-small').click( function() {
-		$('nav').addClass('nav--is-small');
+		$('nav').addClass('workbench-navigation--is-small');
 	});
 	$(viewEl).find('.or-act-nav-wide').click( function() {
-		$('nav').removeClass('nav--is-small');
+		$('nav').removeClass('workbench-navigation--is-small');
 	});
 
 	//$(viewEl).find('div.headermenu > a').each( function(idx,el)

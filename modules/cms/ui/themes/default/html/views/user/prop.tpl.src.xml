@@ -1,26 +1,16 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
   <form>
-    <fieldset class="line" label="">
-      <part class="label">
-        <label for="name" key="user_username"/>
-      </part>
-      <part class="value">
+    <fieldset label="${message:user_username}">
         <input name="name" size="20" class="name,focus" maxlength="128"/>
-      </part>
     </fieldset>
     <group title="${message:ADDITIONAL_INFO}">
-      <fieldset class="line" label="">
-        <part class="label">
-          <label for="fullname" key="user_fullname"/>
-        </part>
-        <part class="value">
+      <fieldset label="${message:user_fullname}">
           <input name="fullname" maxlength="128"/>
-        </part>
       </fieldset>
       <if true="${config:security/user/show_admin_mail}">
-        <fieldset class="line" label="">
+        <fieldset label="${message:user_mail">
           <part class="label">
-            <label for="mail" key="user_mail"/>
+            <label for="mail" key=""/>
           </part>
           <part class="value">
             <input name="mail" maxlength="255"/>
@@ -28,88 +18,42 @@
           </part>
         </fieldset>
       </if>
-      <fieldset class="line" label="">
-        <part class="label">
-          <label for="desc" key="user_desc"/>
-        </part>
-        <part class="value">
+      <fieldset class="line" label="${message:user_desc}">
           <input name="desc" maxlength="255"/>
-        </part>
       </fieldset>
-      <fieldset class="line" label="">
-        <part class="label">
-          <label for="tel" key="user_tel"/>
-        </part>
-        <part class="value">
+      <fieldset class="line" label="${message:user_tel}">
           <input name="tel" maxlength="128"/>
           <qrcode value="tel:${tel}"/>
-        </part>
       </fieldset>
-      <fieldset class="line" label="">
-        <part class="label">
-          <label for="timezone_offset">
-            <text value="${message:timezone}"/>
-          </label>
-        </part>
-        <part class="value">
+      <fieldset class="line" label="${message:timezone}">
           <selectbox name="timezone" list="timezone_list" addempty="true"/>
-        </part>
       </fieldset>
-      <fieldset class="line" label="">
-        <part class="label">
-          <label for="">
-            <text value="${message:language}"/>
-          </label>
-        </part>
-        <part class="value">
+      <fieldset class="line" label="${message:language}">
           <selectbox name="language" list="language_list" addempty="true"/>
-        </part>
       </fieldset>
     </group>
     <group title="${message:options}">
+
       <fieldset class="line" label="">
-        <part class="label"/>
-        <part class="value">
-          <checkbox name="is_admin"/>
-          <label for="is_admin" key="user_admin"/>
-        </part>
+          <checkbox name="is_admin" label="${message:user_admin}"/>
       </fieldset>
-      <fieldset class="line" label="">
-        <part class="label">
-          <label for="ldap_dn" key="user_ldapdn"/>
-        </part>
-        <part class="value">
+
+      <fieldset class="line" label="${message:user_ldapdn}">
           <input name="ldap_dn"/>
-        </part>
       </fieldset>
-      <fieldset class="line" label="">
-        <part class="label">
-          <label for="style" key="user_style"/>
-        </part>
-        <part class="value">
+
+      <fieldset class="line" label="${message:user_style}">
           <selectbox list="allstyles" name="style"/>
-        </part>
       </fieldset>
     </group>
     <group title="${message:security}">
       <fieldset class="line" label="">
-        <part class="label">
-				</part>
-        <part class="value">
-          <checkbox name="totp"/>
-          <label for="totp" key="user_totp"/>
-          <!--<text value="${otpSecret}"></text>-->
+          <checkbox name="totp" label="${message:user_totp}"/>
           <qrcode value="${totpSecretUrl}"/>
-        </part>
       </fieldset>
-      <fieldset class="line" label="">
-        <part class="label">
-				</part>
-        <part class="value">
-          <checkbox name="hotp"/>
-          <label for="hotp" key="user_hotp"/>
+      <fieldset>
+          <checkbox name="hotp" label="${message:user_hotp}"/>
           <qrcode value="${hotpSecretUrl}"/>
-        </part>
       </fieldset>
     </group>
   </form>

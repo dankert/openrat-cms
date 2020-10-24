@@ -1,0 +1,130 @@
+/*
+OpenRat Content Management System
+Copyright (C) 2002-2010 Jan Dankert
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+*/
+
+/*
+Basis-Style for Openrat.
+*/
+
+
+/* Usage to this variable is safe to be removed */
+@color-overridden-by-theme: black;
+
+.border-radius (@radius) {
+    border-radius: @radius;
+    -moz-border-radius: @radius;
+    -webkit-border-radius: @radius;
+    -khtml-border-radius: @radius;
+}
+.box-shadow (@x, @y, @radius, @color) {
+    -webkit-box-shadow: @x @y @radius @color;
+    -moz-box-shadow: @x @y @radius @color;
+    box-shadow: @x @y @radius @color;
+}
+
+@smartphones: ~"only screen and (max-width: 55rem)";
+
+
+
+.or- {
+    &menu {
+
+
+        display: flex;
+        justify-content: space-between;
+
+        &-category {
+
+        }
+
+        &-label, &-dropdown-icon {
+            @media @smartphones {
+                display: none;
+            }
+        }
+
+        .or-menu-group {
+            display: flex;
+
+            // Menüeinträge auf der rechten Seite rechtsbündig anzeigen.
+            &:nth-last-child(1) {
+                div.dropdown {
+                    right: 10px;
+                }
+            }
+            .or-image-icon
+            {
+                width: 1.1em;
+            }
+
+            .or-toolbar-icon {
+                padding: 2px;
+
+                margin-left: 10px;
+                float: left;
+
+                /* Bestimmte Menüs sind nach rechts ausgerichet */
+                &.or-user,
+                &.or-search,
+                &.or-history {
+                    float: right;
+                    margin-right: 10px;
+                    margin-left: 10px;
+                }
+
+                &.or-menu-category {
+                    cursor: default;
+                }
+                &.or-search {
+                    input {
+                        border: 0;
+                        margin: 0;
+                        padding: 0;
+                        width: 3em;
+                        display: inline;
+                        transition: width 0.3s ease-in-out;
+                        &:focus {
+                            width: 8em;
+
+                        }
+                    }
+                }
+
+            }
+
+        }
+
+        /* Dropdown anzeigen, wenn Titel geöffnet und wenn mit Maus überstrichen */
+        &--is-open {
+            .or-menu-category--is-open {
+                > .or-dropdown {
+                    display: block;
+                }
+            }
+        }
+    }
+
+    &dropdown {
+        display: none;
+
+        &--is-open {
+            display: block;
+        }
+    }
+
+}

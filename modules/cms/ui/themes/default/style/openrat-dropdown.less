@@ -1,0 +1,48 @@
+.or- {
+    &dropdown {
+        z-index: 120;
+        min-width: 17em;
+        position: absolute;
+        padding: 0.5em 0;
+
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+
+        &-entry {
+            padding: 0;
+
+            > .or-link {
+                display: flex;
+                align-items: center;
+                padding: 0 0.5em;
+
+                * {
+                    margin: 0.25em;
+                }
+
+                .or-dropdown-text {
+                    flex: 1; /* Consumes all available space */
+                }
+            }
+
+            &--inactive {
+                    opacity: 0.5;
+            }
+            &--active {
+            }
+        }
+
+        > &-text {
+            display: block;
+            margin: 1em;
+        }
+
+        &-divide {
+            height: 1px;
+            width: 100%;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+    }
+}

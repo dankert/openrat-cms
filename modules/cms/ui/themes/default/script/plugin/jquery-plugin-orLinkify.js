@@ -27,7 +27,7 @@ jQuery.fn.orLinkify = function( options )
 			let type = $(this).attr('data-type');
 			
 			// Inaktive Menüpunkte sind natürlich nicht anklickbar.
-			if	( $(this).parent().hasClass('inactive') )
+			if	( $(this).parent().hasClass('dropdown-entry--inactive') )
 				return;
 
 			switch( type )

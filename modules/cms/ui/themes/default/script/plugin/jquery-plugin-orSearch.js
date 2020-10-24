@@ -31,18 +31,18 @@ jQuery.fn.orSearch = function( options )
 						
 						// Suchergebnis-Zeile in das Ergebnis schreiben.
 
-						let div = $('<div class="or-entry or-search-result or-active" title="'+result.desc+'"></div>');
+						let div = $('<div class="or-dropdown-entry or-search-result or-dropdown-entry--active" title="'+result.desc+'"></div>');
 						div.data('object',{
 							'name':result.name,
 						    'action':result.type,
 							'id':result.id
 						} );
-						let link = $('<a />').attr('href',Openrat.Navigator.createShortUrl(result.type, result.id));
+						let link = $('<a class="or-link"/>').attr('href',Openrat.Navigator.createShortUrl(result.type, result.id));
 						link.click( function(e) {
 							e.preventDefault();
 						});
 						$(link).append('<i class="or-image-icon or-image-icon--action-'+result.type+'" />');
-						$(link).append('<span>'+result.name+'</span>');
+						$(link).append('<span class="or-dropdown-text">'+result.name+'</span>');
 
 						$(div).append(link);
 						$(dropdownEl).append(div);

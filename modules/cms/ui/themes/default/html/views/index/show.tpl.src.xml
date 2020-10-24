@@ -30,38 +30,36 @@
 			</header>
 
 
-			<div class="or-main-area">
+			<div class="or-workbench-main">
 
-				<nav class="or-navigation">
+				<nav class="or-workbench-navigation">
 					<div class="or-view or-act-view-static" data-action="tree" data-method="show">
 					</div>
 
 				</nav>
 
-				<div class="or-workplace">
+				<main class="or-workbench-workplace">
 
-					<main id="editor">
-						<header>
-							<div class="or-breadcrumb"></div>
-						</header>
+					<header>
+						<div class="or-breadcrumb"></div>
+					</header>
 
-						<or:list list="${methodList}" value="method">
-							<section class="or-collapsible or-collapsible--is-open">
+					<or:list list="${methodList}" value="method">
+						<section class="or-workbench-section or-collapsible or-collapsible--is-open">
 
-								<header class="or-view-header or-collapsible-act-switch or-collapsible-title">
-									<span
-										class="or-view-icon or-image-icon or-image-icon--method-${method.name}"></span>
-									<or:text value="${message:METHOD_${method.name}}"/>
-									<i class="or-collapsible--on-open or-image-icon or-image-icon--node-open"></i>
-									<i class="or-collapsible--on-closed or-image-icon or-image-icon--node-closed"></i>
-								</header>
+							<header class="or-view-header or-collapsible-act-switch or-collapsible-title">
+								<span
+									class="or-view-icon or-image-icon or-image-icon--method-${method.name}"></span>
+								<or:text value="${message:METHOD_${method.name}}"/>
+								<i class="or-collapsible--on-open or-image-icon or-image-icon--node-open"></i>
+								<i class="or-collapsible--on-closed or-image-icon or-image-icon--node-closed"></i>
+							</header>
 
-								<div class="or-collapsible-value or-view or-act-view-loader or-closable"
-									 data-method="${method.name}"/>
-							</section>
-						</or:list>
-					</main>
-				</div>
+							<div class="or-collapsible-value or-view or-act-view-loader or-closable"
+								 data-method="${method.name}"/>
+						</section>
+					</or:list>
+				</main>
 
 			</div>
 

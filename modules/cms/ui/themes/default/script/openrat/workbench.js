@@ -5,7 +5,11 @@ Openrat.Workbench = new function()
     'use strict'; // Strict mode
 
 
-    this.state = {};
+    this.state = {
+    	action: '',
+    	id: 0,
+		extra: {}
+	};
 
     this.popupWindow = null;
 
@@ -75,11 +79,6 @@ Openrat.Workbench = new function()
 
         Openrat.Workbench.state = state;
 
-        // TODO: Remove this sometimes.... only state.
-        $('#editor').attr('data-action',state.action);
-        $('#editor').attr('data-id'    ,state.id    );
-        $('#editor').attr('data-extra' ,'{}'  );
-
         Openrat.Navigator.toActualHistory( state );
 
     }
@@ -140,10 +139,6 @@ Openrat.Workbench = new function()
 
     this.loadNewAction = function(action, id, params ) {
 
-    	$('#editor').attr('data-action',action);
-    	$('#editor').attr('data-id'    ,id    );
-    	$('#editor').attr('data-extra' ,JSON.stringify(params));
-
         this.reloadViews();
     }
 
@@ -156,7 +151,7 @@ Openrat.Workbench = new function()
     this.reloadViews = function() {
 
         // View in geschlossenen Sektionen löschen, damit diese nicht stehen bleiben.
-        $('#workbench section.closed .or-act-view-loader').empty();
+        $('.or-workbench-section--is-closed .or-act-view-loader').empty();
 
         Openrat.Workbench.loadViews( $('.or-workbench .or-act-view-loader') );
     }
@@ -237,10 +232,10 @@ Openrat.Workbench = new function()
             // Static views have always the same action.
             action = $viewElement.attr('data-action');
         else
-            action = $('#editor').attr('data-action');
+            action = Openrat.Workbench.state.action;
 
-        let id     = $('#editor').attr('data-id'    );
-        let params = $('#editor').attr('data-extra' );
+        let id     = Openrat.Workbench.state.id;
+        let params =  Openrat.Workbench.state.extra;
 
         let method = $viewElement.data('method');
 
@@ -459,10 +454,10 @@ Openrat.Workbench = new function()
 	{
 		// Attribute aus dem aktuellen Editor holen, falls die Daten beim Aufrufer nicht angegeben sind.
 		if (!action)
-			action = $('#editor').attr('data-action');
+			action =  Openrat.Workbench.state.action;
 
 		if  (!id)
-			id = $('#editor').attr('data-id');
+			id =  Openrat.Workbench.state.id;
 
 		let view = new Openrat.View( action,method,id,params );
 
