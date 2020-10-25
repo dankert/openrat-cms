@@ -2443,7 +2443,7 @@ Openrat.Workbench = new function()
 	this.openNewAction = function( name,action,id )
 	{
 		// Im Mobilmodus soll das Menü verschwinden, wenn eine neue Action geoeffnet wird.
-		$('nav').removeClass('nav--is-open');
+		$('.or-workbench-navigation').removeClass('workbench-navigation--is-open');
 
 		Openrat.Workbench.setApplicationTitle( name ); // Sets the title.
 
