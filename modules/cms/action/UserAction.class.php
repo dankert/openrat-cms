@@ -11,6 +11,7 @@ use cms\model\Language;
 
 
 use language\Messages;
+use util\exception\ValidationException;
 use util\Http;
 use security\Base2n;
 use \security\Password;
@@ -165,41 +166,16 @@ class UserAction extends BaseAction
 	{
 		$conf = \cms\base\Configuration::rawConfig();
 
-		$pw1 = $this->getRequestVar('password1');
-		$pw2 = $this->getRequestVar('password2');
+		$password = $this->getRequestVar('password');
 
-		$type = $this->getRequestVar('type');
+		if   ( !$password )
+			$password = $this->getRequestVar('password_proposal');
 
-		switch( $type )
-		{
-			case 'input':
-				if ( strlen($pw1)<intval($conf['security']['password']['min_length']) )
-				{
-					$this->addValidationError('password1');
-					return;
-				}
-				elseif	( $pw1 != $pw2 )
-				{
-					$this->addValidationError('password2');
-					return;
-				}
-				else
-				{
-					$newPassword = $pw1;
-				}
-				break;
-			case 'proposal';
-				$newPassword = $this->getRequestVar('password_proposal');
-				break;
-			case 'random';
-				$newPassword = $this->user->createPassword();
-				break;
-			default:
-				throw new \LogicException('Type unknown: '.$type);
-		}
+		if ( strlen($password) < intval($conf['security']['password']['min_length']) )
+			throw new ValidationException('password' );
 
 		// Kennwoerter identisch und lang genug
-		$this->user->setPassword($newPassword,!$this->hasRequestVar('timeout') ); // Kennwort setzen
+		$this->user->setPassword($password,!$this->hasRequestVar('timeout') ); // Kennwort setzen
 		
 		// E-Mail mit dem neuen Kennwort an Benutzer senden
 		if	( $this->hasRequestVar('email') && !empty($this->user->mail) && $conf['mail']['enabled'] )

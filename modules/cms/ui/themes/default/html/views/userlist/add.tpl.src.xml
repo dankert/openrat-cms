@@ -1,12 +1,8 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-  <form method="post">
-    <fieldset class="line" label="">
-      <part class="label">
-        <label for="name" key="user_username"/>
-      </part>
-      <part class="value">
-        <input name="name" class="focus" maxlength="128"/>
-      </part>
-    </fieldset>
-  </form>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form method="post">
+		<fieldset label="${message:user_username}">
+			<input name="name" class="focus" maxlength="128"/>
+		</fieldset>
+	</form>
 </output>

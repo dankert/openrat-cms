@@ -572,24 +572,20 @@ SQL
 	/**
 	 * Setzt ein neues Kennwort fuer diesen Benutzer.
 	 * 
-	 * @param password Kennwortt
-	 * @param always true, wenn Kennwort dauerhaft.
+	 * @param password new password
+	 * @param forever int true, wenn Kennwort dauerhaft.
 	 */
-	function setPassword( $password, $always=true )
+	public function setPassword($password, $forever = true )
 	{
-		$db = \cms\base\DB::get();
-
-		$sql = $db->sql( 'UPDATE {{user}} SET password_hash={password},password_algo={algo},password_expires={expires} '.
+		$sql = DB::sql( 'UPDATE {{user}} SET password_hash={password},password_algo={algo},password_expires={expires} '.
 		                'WHERE id={userid}' );
 		                
-		if	( $always )
-		{
+		if	( $forever ) {
 			$algo   = Password::bestAlgoAvailable();
 			$expire = null;
 		}
-		else
-		{
-			// Klartext-Kennwort, der Benutzer muss das Kennwort beim nä. Login ändern.
+		else {
+			// cleartext-password, the user must change the password on the next login.
 			$algo   = Password::ALGO_PLAIN;
 			$expire = time();
 		}
@@ -921,25 +917,23 @@ SQL
 	 * 
 	 * @return String Zuf�lliges Kennwort
 	 */
-	function createPassword()
+	public function createPassword()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$passwordConfig = \cms\base\Configuration::subset('security')->subset('password');
 		
 		$pw = '';
-		$c  = 'bcdfghjklmnprstvwz'; //consonants except hard to speak ones
-		$v  = 'aeiou';              //vowels
-		$a  = $c.$v;                //both
-		 
+		$c  = 'bcdfghjklmnprstvwz'; // consonants except hard to speak ones
+		$v  = 'aeiou';              // vowels
+		$a  = $c.$v.'123456789';    // both (plus numbers except zero)
+
 		//use two syllables...
-		for ( $i=0; $i < intval($conf['security']['password']['min_length'])/3; $i++ )
+		for ( $i=0; $i < intval($passwordConfig->get('generated_length',16))/3; $i++ )
 		{
 			$pw .= $c[rand(0, strlen($c)-1)];
 			$pw .= $v[rand(0, strlen($v)-1)];
 			$pw .= $a[rand(0, strlen($a)-1)];
 		}
-		//... and add a nice number
-		$pw .= rand(10,99);
-		 
+
 		return $pw;
 	}
 

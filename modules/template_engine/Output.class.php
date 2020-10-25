@@ -39,6 +39,6 @@ class Output
 
 
 	public static function config($part1 = null, $part2 = null, $part3 = null, $part4 = null) {
-		Configuration::config($part1,$part2,$part3,$part4);
+		return Configuration::config($part1,$part2,$part3,$part4);
 	}
 }

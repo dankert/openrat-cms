@@ -1,68 +1,23 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-  <form>
-    <fieldset class="line" label="">
-      <part class="label"/>
-      <part class="value">
-        <radio name="type" value="proposal"/>
-        <label for="type" value="proposal" text="${password_proposal}">
-          <text value="${message:USER_new_password}"/>
-          <text value=" "/>
-          <text value="${password_proposal}"/>
-        </label>
-        <hidden name="password_proposal"/>
-      </part>
-    </fieldset>
-    <if true="${config:mail/enabled}">
-      <fieldset class="line" label="">
-        <part class="label"/>
-        <part class="value">
-          <radio name="type" value="random"/>
-          <label for="type" value="random" key="user_random_password"/>
-        </part>
-      </fieldset>
-    </if>
-    <fieldset class="line" label="">
-      <part class="label"/>
-      <part class="value">
-        <radio name="type" value="input" checked="true"/>
-        <label for="type" value="input" key="USER_NEW_PASSWORD_INPUT">
-				</label>
-      </part>
-    </fieldset>
-    <fieldset class="line" label="">
-      <part class="label">
-        <label for="password1" key="USER_new_password"/>
-      </part>
-      <part class="value">
-        <password name="password1"/>
-      </part>
-    </fieldset>
-    <fieldset class="line" label="">
-      <part class="label">
-        <label for="password2" key="USER_new_password_repeat"/>
-      </part>
-      <part class="value">
-        <password name="password2"/>
-      </part>
-    </fieldset>
-    <group title="${message:options}"/>
-    <if true="${config:mail/enabled}">
-      <if present="mail">
-        <fieldset class="line" label="">
-          <part class="label"/>
-          <part class="value">
-            <checkbox name="email"/>
-            <label for="email" key="user_mail_new_password"/>
-          </part>
-        </fieldset>
-        <fieldset class="line" label="">
-          <part class="label"/>
-          <part class="value">
-            <checkbox name="timeout"/>
-            <label for="timeout" key="user_password_timeout"/>
-          </part>
-        </fieldset>
-      </if>
-    </if>
-  </form>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form>
+		<fieldset label="${message:USER_new_password}">
+			<password name="password" hint="${password_proposal}"/>
+			<hidden name="password_proposal"/>
+		</fieldset>
+
+		<if true="${config:mail/enabled}">
+			<group title="${message:options}">
+				<if present="mail">
+					<fieldset>
+						<checkbox name="email" label="${message:user_mail_new_password}"/>
+					</fieldset>
+
+					<fieldset>
+						<checkbox name="timeout" label="${message:user_password_timeout}"/>
+					</fieldset>
+				</if>
+			</group>
+		</if>
+	</form>
 </output>

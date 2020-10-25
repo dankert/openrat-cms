@@ -1,7 +1,7 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
   <form method="post">
     <fieldset label="${message:NAME}">
-      <input name="name" class="name focus" maxlength="100"/>
+      <input hint="${message:NAME}" name="name" class="name,focus" maxlength="100"/>
     </fieldset>
   </form>
 </output>

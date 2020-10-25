@@ -11,7 +11,7 @@
         <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('NAME').'') ?>
         </h3>
         <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
-          <input name="<?php echo O::escapeHtml('name') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('100') ?>" value="<?php echo O::escapeHtml(''.@$name.'') ?>" class="<?php echo O::escapeHtml('or-name focus or-input') ?>" /><?php echo O::escapeHtml('') ?>
+          <input name="<?php echo O::escapeHtml('name') ?>" placeholder="<?php echo O::escapeHtml(''.@O::lang('NAME').'') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('100') ?>" value="<?php echo O::escapeHtml(''.@$name.'') ?>" class="<?php echo O::escapeHtml('or-name or-focus or-input') ?>" /><?php echo O::escapeHtml('') ?>
         </div>
       </section>
     </div>
