@@ -57,7 +57,7 @@ class Configuration {
 
 	/**
 	 * Gives the subset with this key.
-	 * @param $key string subset key
+	 * @param $key string|array subset key
 	 * @return Config
 	 */
 	public static function subset( $key ) {

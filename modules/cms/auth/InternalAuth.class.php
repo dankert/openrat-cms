@@ -2,6 +2,7 @@
 
 namespace cms\auth;
 
+use cms\base\Configuration;
 use cms\base\DB as Db;
 use cms\model\User;
 use LogicException;
@@ -48,7 +49,7 @@ SQL
 
 		// Behandeln von Klartext-Kennwoertern (Igittigitt).
 		if ($row_user['password_algo'] == Password::ALGO_PLAIN) {
-			if (\cms\base\Configuration::config('security', 'password', 'force_change_if_cleartext'))
+			if (Configuration::subset(['security', 'password'] )->is('force_change_if_cleartext',true))
 				// Kennwort steht in der Datenbank im Klartext.
 				// Das Kennwort muss geaendert werden
 				return Auth::STATUS_PW_EXPIRED;
@@ -62,7 +63,7 @@ SQL
 
 			// Wenn das kennwort abgelaufen ist, kann es eine bestimmte Dauer noch benutzt und geändert werden.
 			// Nach Ablauf dieser Dauer wird das Login abgelehnt.
-			if ($row_user['password_expires'] + (\cms\base\Configuration::config('security', 'deny_after_expiration_duration') * 60 * 60) < time())
+			if ($row_user['password_expires'] + (Configuration::config('security', 'deny_after_expiration_duration') * 60 * 60) < time())
 				return false; // Abgelaufenes Kennwort wird nicht mehr akzeptiert.
 			else
 				return Auth::STATUS_PW_EXPIRED; // Kennwort ist abgelaufen, kann aber noch geändert werden.
@@ -90,5 +91,3 @@ SQL
 		return null;
 	}
 }
-
-?>

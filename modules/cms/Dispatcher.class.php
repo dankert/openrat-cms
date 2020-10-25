@@ -161,7 +161,9 @@ class Dispatcher
 
     private function checkPostToken()
     {
-        if (Configuration::config('security', 'use_post_token') && $this->request->isAction && $this->request->getToken() != Session::token()) {
+        if ( Configuration::subset('security')->is('use_post_token',true) &&
+			 $this->request->isAction &&
+			 $this->request->getToken() != Session::token() ) {
             Logger::error('Token mismatch: Needed ' . Session::token() . ' but got ' . Logger::sanitizeInput($this->request->getToken()) . '. Maybe an attacker?');
             throw new SecurityException("Token mismatch");
         }
@@ -173,21 +175,21 @@ class Dispatcher
     private function initializeLogger()
     {
 
-        $logConfig = Configuration::config('log');
+        $logConfig = Configuration::subset('log');
 
-        $logFile = $logConfig['file'];
+        $logFile = $logConfig->get('file','');
 
         // Wenn Logfile relativ angegeben wurde, dann muss dies relativ zum Root der Anwendung sein.
-        if   ( !empty($logFile) && $logFile[0] != '/' )
+        if   ( $logFile && $logFile[0] != '/' )
             $logFile = __DIR__ . '/../../' . $logFile;
 
-        Logger::$messageFormat = $logConfig['format'];
+        Logger::$messageFormat = $logConfig->get('format',['time','level','host','text']);
         Logger::$filename   = $logFile;
-        Logger::$dateFormat = $logConfig['date_format'];
-        Logger::$nsLookup   = $logConfig['ns_lookup'];
+        Logger::$dateFormat = $logConfig->get('date_format','r');
+        Logger::$nsLookup   = $logConfig->is('ns_lookup',false);
 
-		Logger::$outputType = (int) @constant('\\logger\\Logger::OUTPUT_' . strtoupper($logConfig['output']));
-		Logger::$level      = (int) @constant('\\logger\\Logger::LEVEL_'  . strtoupper($logConfig['level' ]));
+		Logger::$outputType = (int) @constant('\\logger\\Logger::OUTPUT_' . strtoupper($logConfig->get('output','PLAIN')));
+		Logger::$level      = (int) @constant('\\logger\\Logger::LEVEL_'  . strtoupper($logConfig->get('level' ,'WARN' )));
 
         Logger::$messageCallback = function ( $key ) {
 
@@ -357,7 +359,7 @@ class Dispatcher
 
             $dbids = array_keys( $databases );
 
-            $defaultDbId = Configuration::config('database-default','default-id');
+            $defaultDbId = Configuration::subset('database-default')->get('default-id' );
 
             if  ( $defaultDbId && in_array($defaultDbId,$dbids) )
                 // Default-Datenbankverbindung ist konfiguriert und vorhanden.

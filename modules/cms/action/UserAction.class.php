@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use cms\base\Configuration;
 use cms\model\Acl;
 use cms\model\User;
 use cms\model\Project;
@@ -160,31 +161,30 @@ class UserAction extends BaseAction
 
 
 	/**
-	 * Aendern des Kennwortes
+	 * Change password for user.
 	 */
 	public function pwPost()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
-
 		$password = $this->getRequestVar('password');
 
 		if   ( !$password )
 			$password = $this->getRequestVar('password_proposal');
 
-		if ( strlen($password) < intval($conf['security']['password']['min_length']) )
-			throw new ValidationException('password' );
+		if ( strlen($password) < Configuration::subset(['security','password'])->get('min_length',8) )
+			throw new ValidationException('password',Messages::PASSWORD_MINLENGTH );
 
-		// Kennwoerter identisch und lang genug
 		$this->user->setPassword($password,!$this->hasRequestVar('timeout') ); // Kennwort setzen
 		
 		// E-Mail mit dem neuen Kennwort an Benutzer senden
-		if	( $this->hasRequestVar('email') && !empty($this->user->mail) && $conf['mail']['enabled'] )
-		{
-		    $this->mailPw( $newPassword );
-			$this->addNotice('user', 0, $this->user->name, 'MAIL_SENT', 'ok');
+		if	( $this->hasRequestVar('email') &&
+			  $this->user->mail                      && // user has an e-mail.
+			  Configuration::subset('mail')->is('enabled',true)
+			) {
+		    $this->mailPw( $password );
+			$this->addNoticeFor( $this->user, Messages::MAIL_SENT);
 		}
 
-		$this->addNotice('user', 0, $this->user->name, 'SAVED', 'ok');
+		$this->addNoticeFor($this->user, Messages::SAVED);
 
 	}
 

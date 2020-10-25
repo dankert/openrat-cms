@@ -47,15 +47,22 @@ class Config
 	/**
      * Giving the child configuration with a fluent interface.
      *
-     * @param $name string
+     * @param $names string|array
      * @return Config
      */
-    public function subset($name)
+    public function subset($names)
     {
-        if (isset($this->config[$name]) && is_array($this->config[$name]))
-            return new Config($this->config[$name]);
-        else
-            return new Config(array());
+    	if   ( !is_array($names) )
+    		$names = [$names];
+
+    	$config = $this->config;
+    	foreach($names as $key )
+			if (isset($this->config[$key]) && is_array($this->config[$key]))
+	    		$config = $config[$key];
+			else
+				return new Config( [] );
+
+        return new Config( $config );
     }
 
 
