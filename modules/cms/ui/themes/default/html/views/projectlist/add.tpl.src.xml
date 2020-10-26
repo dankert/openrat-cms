@@ -1,30 +1,17 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-  <form>
-    <fieldset class="line" label="">
-      <part class="label">
-        <text value="${message:name}"/>
-      </part>
-      <part class="value">
-        <input name="name" class="focus" maxlength="128"/>
-      </part>
-    </fieldset>
-    <group title="${message:options}">
-      <fieldset class="line" label="">
-        <part class="label">
-				</part>
-        <part class="value">
-          <radio name="type" value="empty" checked="true"/>
-          <label for="type_empty">
-            <text value="${message:empty}"/>
-          </label>
-          <newline/>
-          <radio name="type" value="copy"/>
-          <label for="type_copy">
-            <text value="${message:copy}"/>
-          </label>
-          <selectbox name="projectid" list="projects" default=""/>
-        </part>
-      </fieldset>
-    </group>
-  </form>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form>
+		<fieldset class="line" label="${message:name}">
+			<input name="name" class="focus" maxlength="128"/>
+		</fieldset>
+
+		<!--
+		Project copy/export is not available
+		<group title="${message:options}">
+			<fieldset class="line" label="">
+				<selectbox name="projectid" list="projects" default="" addempty="true"/>
+			</fieldset>
+		</group>
+		-->
+	</form>
 </output>

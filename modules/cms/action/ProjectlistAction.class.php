@@ -5,6 +5,8 @@ namespace cms\action;
 use cms\model\Acl;
 use cms\model\Folder;
 use cms\model\Project;
+use language\Messages;
+use util\exception\SecurityException;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -77,7 +79,7 @@ class ProjectlistAction extends BaseAction
 	function addView()
 	{
 	    if( ! $this->userIsAdmin() )
-	        throw new \util\exception\SecurityException('user is not allowed to add a project');
+	        throw new SecurityException('user is not allowed to add a project');
 
 		$this->setTemplateVar( 'projects',Project::getAllProjects() );
 	}
@@ -90,30 +92,30 @@ class ProjectlistAction extends BaseAction
 	function addPost()
 	{
 	    if( !$this->userIsAdmin())
-	        throw new \util\exception\SecurityException("user is not allowed to add a project");
+	        throw new SecurityException();
 
-        switch( $this->getRequestVar('type') )
-        {
-            case 'empty':
-            case '':
-                if	( !$this->hasRequestVar('name') )
-                    throw new \util\exception\ValidationException('name');
+		$projectid = $this->getRequestVar('projectid');
 
-                $project = new Project();
-                $project->name = $this->getRequestVar('name');
-                $project->add();
-                $this->addNotice('project', 0, $project->name, 'ADDED');
-                break;
-            case 'copy':
-                $db = \cms\base\DB::get();
-                $project = new Project($this->getRequestVar('projectid'));
-                $project->load();
-                $project->export($db->id);
-                $this->addNotice('project', 0, $project->name, 'DONE');
-                break;
-            default:
-                throw new \LogicException('Unknown type while adding project '.$this->getRequestVar('type') );
-        }
+		if   ( $projectid ) {
+
+			$db = \cms\base\DB::get();
+			$project = Project::create($projectid);
+			$project->load();
+			$project->export($db->id);
+			$this->addNoticeFor($project,Messages::DONE);
+
+		} else {
+			$name = $this->hasRequestVar('name');
+
+			if	( !$name )
+				throw new \util\exception\ValidationException('name');
+
+			$project = new Project();
+			$project->name = $name;
+			$project->add();
+			$this->addNoticeFor($project,Messages::ADDED);
+
+		}
 
 	}
 	

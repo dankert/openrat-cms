@@ -279,9 +279,7 @@ SQL
 	 */
 	function save()
 	{
-		$db = \cms\base\DB::get();
-
-		$sql = $db->sql( 'UPDATE {{element}}'.
+		$sql = Db::sql( 'UPDATE {{element}}'.
 		                ' SET templateid      = {templateid},'.
 		                '     name            = {name},'.
 		                '     label           = {label},'.

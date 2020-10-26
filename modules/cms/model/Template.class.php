@@ -18,6 +18,7 @@ namespace cms\model;
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 use cms\base\DB;
 use language\Messages;
+use util\exception\ObjectNotFoundException;
 
 
 /**
@@ -67,7 +68,7 @@ class Template extends ModelBase
 		$row = $stmt->getRow();
 		
 		if	( empty($row) )
-			throw new \util\exception\ObjectNotFoundException("Template not found: ".$this->templateid);
+			throw new ObjectNotFoundException("Template not found: ".$this->templateid);
 
 		$this->name      = $row['name'     ];
 		$this->projectid = $row['projectid'];
@@ -241,11 +242,8 @@ SQL
  	 * Hinzufuegen eines Templates
  	 * @param String Name des Templates (optional)
  	 */
-	function add( $name='' )
+	function add()
 	{
-		if	( !empty($name) )
-			$this->name = $name;
-
 		$db = \cms\base\DB::get();
 
 		$sql = $db->sql('SELECT MAX(id) FROM {{template}}');
@@ -255,7 +253,7 @@ SQL
 		                ' (id,name,projectid)'.
 		                ' VALUES({templateid},{name},{projectid})' );
 		$sql->setInt   ('templateid',$this->templateid   );
-		$sql->setString('name'      ,$name               );
+		$sql->setString('name'      ,$this->name         );
 
 		$sql->setInt   ('projectid' ,$this->projectid );
 

@@ -6,6 +6,7 @@ use cms\model\Element;
 use cms\model\Project;
 use cms\model\Template;
 use cms\model\TemplateModel;
+use language\Messages;
 use util\exception\ValidationException;
 use util\Session;
 
@@ -86,12 +87,14 @@ class TemplatelistAction extends BaseAction
 	
 	
 	/**
-	 * Vorlage hinzuf�gen.
+	 * Add a template.
 	 */
-	function addView()
+	public function addView()
 	{
-		$this->setTemplateVar( 'templates',array() /*Template::getAll()*/ );
+		$this->setTemplateVar( 'templates',$this->project->getTemplates() );
+		$this->setTemplateVar( 'copytemplateid','' );
 
+		/*
 		$examples = array();
 		$dir = opendir( 'examples/templates');
 		while( $file = readdir($dir) )
@@ -103,85 +106,57 @@ class TemplatelistAction extends BaseAction
 		}
 		
 		$this->setTemplateVar( 'examples',$examples );
-		$this->setTemplateVar( 'templateid','' );
 		$this->setTemplateVar( 'example','' );
+		*/
+
 	}
 	
 	
 	
-	public function addPost()
+	public function addPost( $name )
 	{
-		// Hinzufuegen eines Templates
-		if   ( $this->getRequestVar('name') == '' )
-			throw new \util\exception\ValidationException('name');
+		// create a new template.
+		$template = new Template();
+		$template->projectid = $this->project->projectid;
+		$template->name = $name;
+		$template->add();
 
-		// Hinzufuegen eines Templates
-		switch( $this->getRequestVar('type') )
-		{
-			case 'empty':
+		$this->addNoticeFor($template, Messages::ADDED);
 
-				// Neues Template anlegen.
-				$template = new Template();
-				$template->projectid = $this->project->projectid;
-				$template->add( $this->getRequestVar('name') );
-				$this->addNotice('template', 0, $template->name, 'ADDED', 'ok');
-				break;
-				
-			case 'copy':
-				
-				$copy_templateid = intval($this->getRequestVar('templateid') );
-				
-				if	( $copy_templateid == 0 )
-				{
-					$this->addValidationError('templateid');
-					return;
-				}
+		$copytemplateid = $this->getRequestId('copytemplateid');
+		if   ( $copytemplateid ) {
 
-				// Neues Template anlegen.
-				$template = new Template();
-                $template->projectid = $this->project->projectid;
-				$template->add( $this->getRequestVar('name') );
-				$this->addNotice('template', 0, $template->name, 'ADDED', 'ok');
+			// Template kopieren.
+			$copyTemplate = new Template( $copytemplateid );
+			$copyTemplate->load();
 
-				// Template kopieren.
-				$copy_template = new Template( $copy_templateid );
-				$copy_template->load();
-				$elementMapping = array();
-				foreach( $copy_template->getElements() as $element )
-				{
-				    /* @type $element Element */
-					$element->load();
-					$oldelementId = $element->elementid;
-					$element->templateid = $template->templateid;
-					$element->add();
-					$element->save();
-					
-					$elementMapping[$oldelementId] = $element->elementid;
-				}
-				
-				$project = new Project( $this->getRequestId('projectid') );
-				foreach( $project->getModelIds() as $modelid )
-				{
-					// Template laden
-					$copy_template->load();
+			// Copy all elements
+			foreach( $copyTemplate->getElements() as $element )
+			{
+				/* @type $element Element */
+				$element->load();
+				$element->templateid = $template->templateid;
+				$element->add();
+				$element->save();
+			}
 
-					$copyTemplateModel = $copy_template->loadTemplateModelFor( $modelid );
-					$src = $copyTemplateModel->src;
+			// copy all template models
+			foreach( $this->project->getModelIds() as $modelid )
+			{
+				// Template laden
+				$copyTemplate->load();
 
-					// Elemente im Quelltext an die geänderten Element-Idn anpassen.
-					foreach( $elementMapping as $oldId=>$newId)
-						$src = str_replace('{{'.$oldId.'}}','{{'.$newId.'}}',$src);
-						
-					$newTemplateModel = $template->loadTemplateModelFor( $modelid );
-					$newTemplateModel->src       = $src;
-					$newTemplateModel->extension = $copyTemplateModel->extension;
-					$newTemplateModel->save();
-				}
-				
-				$this->addNotice('template', 0, $copy_template->name, 'COPIED', 'ok');
+				$copyTemplateModel = $copyTemplate->loadTemplateModelFor( $modelid );
 
-				break;
+				$newTemplateModel = $template->loadTemplateModelFor( $modelid );
+				$newTemplateModel->src       = $copyTemplateModel->src;
+				$newTemplateModel->extension = $copyTemplateModel->extension;
+				$newTemplateModel->save();
+			}
 
+			$this->addNoticeFor( $copyTemplate, Messages::COPIED);
+
+				/*
 			case 'example':
 
 				// Neues Template anlegen.
@@ -231,9 +206,7 @@ class TemplatelistAction extends BaseAction
 				$this->addNotice('template', 0, $template->name, 'ADDED', 'ok');
 
 				break;
-
-			default:
-				throw new ValidationException('type');
+*/
 		}
 
 	}

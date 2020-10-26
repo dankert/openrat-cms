@@ -9,13 +9,7 @@
       </fieldset>
       <if true="${config:security/user/show_admin_mail}">
         <fieldset label="${message:user_mail}">
-          <part class="label">
-            <label for="mail" key=""/>
-          </part>
-          <part class="value">
             <input name="mail" maxlength="255"/>
-            <qrcode value="mailto:${mail}"/>
-          </part>
         </fieldset>
       </if>
       <fieldset class="line" label="${message:user_desc}">
@@ -23,7 +17,6 @@
       </fieldset>
       <fieldset class="line" label="${message:user_tel}">
           <input name="tel" maxlength="128"/>
-          <qrcode value="tel:${tel}"/>
       </fieldset>
       <fieldset class="line" label="${message:timezone}">
           <selectbox name="timezone" list="timezone_list" addempty="true"/>
@@ -49,11 +42,9 @@
     <group title="${message:security}">
       <fieldset class="line" label="">
           <checkbox name="totp" label="${message:user_totp}"/>
-          <qrcode value="${totpSecretUrl}"/>
       </fieldset>
       <fieldset>
           <checkbox name="hotp" label="${message:user_hotp}"/>
-          <qrcode value="${hotpSecretUrl}"/>
       </fieldset>
     </group>
   </form>

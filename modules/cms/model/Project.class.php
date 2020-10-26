@@ -197,9 +197,7 @@ class Project extends ModelBase
 
     public function  getTemplates()
 	{
-		$db = \cms\base\DB::get();
-
-		$sql = $db->sql( 'SELECT id,name FROM {{template}}'.
+		$sql = Db::sql( 'SELECT id,name FROM {{template}}'.
 		                '  WHERE projectid= {projectid} ' );
 		$sql->setInt   ('projectid',$this->projectid);
 
@@ -366,7 +364,7 @@ SQL
 		// Template anlegen
 		$template = new Template();
 		$template->projectid  = $this->projectid;
-		$template->name       = '';
+		$template->name       = '#1';
 		$template->add();
 		$template->save();
 
