@@ -18,6 +18,7 @@ use database\Database;
 use cms\update\Update;
 use language\Messages;
 use modules\cms\base\HttpRequest;
+use util\exception\ValidationException;
 use util\Http;
 use logger\Logger;
 use LogicException;
@@ -119,7 +120,7 @@ class Dispatcher
         // Weitere Variablen anreichern.
         $result['session'] = array('name' => session_name(), 'id' => session_id(), 'token' => Session::token());
         $result['version'] = Startup::VERSION;
-        $result['api'] = '2';
+        $result['api']     = Startup::API_LEVEL;
         $result['output']['_token'] = Session::token();
         $result['output']['_id'   ] = $this->request->id;
 
@@ -318,8 +319,9 @@ class Dispatcher
 
             $method->invokeArgs($do,$params); // <== Executing the Action
         }
-        catch (\util\exception\ValidationException $ve)
+        catch (ValidationException $ve)
         {
+        	// The validation exception is catched here
             $do->addValidationError( $ve->fieldName,$ve->key );
         }
         catch (\ReflectionException $re)

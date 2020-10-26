@@ -32,6 +32,24 @@ class API
      */
     public static function execute()
     {
+    	$createDataWithError = function( $status, $message, $cause ) {
+
+			Logger::warn($cause);
+			API::sendHTTPStatus($status, $message);
+
+			$data = [
+				'status'  => $status,
+				'message' => $message
+			];
+
+			// Traces only in DEVELOPMENT mode
+			// for security reasons, because traces may contain sensitive information.
+			if (!defined('DEVELOPMENT') || DEVELOPMENT)
+				$data['cause'] = API::exceptionToArray($cause);
+
+			return $data;
+		};
+
         try {
             $request = new RequestParams();
 
@@ -42,29 +60,15 @@ class API
             $data = $dispatcher->doAction();
 
         } catch (BadMethodCallException $e) {
-            Logger::warn($e);
-
-            API::sendHTTPStatus(204, 'Method not found');
-            $data = array('status' => 204) + API::exceptionToArray( $e );
+            $data = $createDataWithError( 204, 'Method not found'  , $e );
         } catch (ObjectNotFoundException $e) {
-            Logger::warn($e);
-
-            API::sendHTTPStatus(204, 'Object not found');
-            $data = array('status' => 204)+ API::exceptionToArray( $e );
+			$data = $createDataWithError( 204, 'Object not found'  , $e );
         } catch (UIException $e) {
-            Logger::warn($e);
-
-            API::sendHTTPStatus(500, 'Internal CMS Error');
-            $data = array('status' => 500)+ API::exceptionToArray( $e );
+			$data = $createDataWithError( 500, 'Internal CMS Error', $e );
         } catch (SecurityException $e) {
-            Logger::warn($e);
-            //Logger::info('API request not allowed: ' . $e->getMessage());
-            API::sendHTTPStatus(403, 'Forbidden');
-            $data = array('status' => 403)+ API::exceptionToArray( $e );
+			$data = $createDataWithError( 403, 'Forbidden'          , $e );
         } catch (Exception $e) {
-            Logger::warn($e);
-            API::sendHTTPStatus(500, 'Internal Server Error');
-            $data = array('status' => 500)+ API::exceptionToArray( $e );
+			$data = $createDataWithError( 500, 'Internal Server Error', $e );
         }
 
 
@@ -72,7 +76,7 @@ class API
             Logger::trace('Output' . "\n" . print_r($data, true));
 
         // Weitere Variablen anreichern.
-        $data['session'] = array('name' => session_name(), 'id' => session_id(), 'token' => Session::token());
+        $data['session'] = ['name' => session_name(), 'id' => session_id(), 'token' => Session::token()];
         $data['version'] = Startup::VERSION;
         $data['api'] = '2';
 
@@ -209,8 +213,8 @@ class API
         );
 
         // the cause of the exception is another exception.
-        if   ( $e->getPrevious() != null )
-            $data['previous'] = API::exceptionToArray($e->getPrevious() );
+        if   ( $e->getPrevious() )
+            $data['cause'] = API::exceptionToArray($e->getPrevious() );
 
         return $data;
     }

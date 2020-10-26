@@ -23,9 +23,10 @@ use util\exception\ValidationException;
 
 class Startup {
 
-	private static $START_TIME;
+    private static $START_TIME;
 
 	const MIN_VERSION = '5.4'; // minimum required PHP version.
+	const API_LEVEL   = '2';   // public API version.
 
 	const IMG_EXT      = '.gif';
 	const IMG_ICON_EXT = '.png';
