@@ -14,6 +14,7 @@ use logger\Logger;
 use cms\generator\target\TargetFactory;
 use util\exception\PublisherException;
 use util\Session;
+use util\text\TextMessage;
 use util\text\variables\VariableResolver;
 
 /**
@@ -136,7 +137,7 @@ class Publisher
 		if ( $systemCommand ) {
 			$ausgabe = array();
 			$rc = false;
-			Logger::debug('Executing system command: ' . Logger::sanitizeInput($systemCommand));
+			Logger::debug( TextMessage::create('Executing system command: ${0}',[$systemCommand]) );
 
 			/** @var ModelBase $baseObjectToEnv */
 			foreach (['user' => Session::getUser(),

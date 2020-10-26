@@ -22,6 +22,7 @@ use \security\Password;
 use util\Session;
 use util\Mail;
 use util\Text;
+use util\text\TextMessage;
 
 
 // OpenRat Content Management System
@@ -151,7 +152,12 @@ class LoginAction extends BaseAction
 		}
 		else
 		{
-			Logger::info( "login failed for user ".Logger::sanitizeInput($user->name)." from IP $ip" );
+			Logger::info( TextMessage::create('login failed for user ${name} from IP ${ip}',
+				[
+					'name' => $user->name,
+					'ip'   => $ip
+				]
+			) );
 
 			return false;
 		}
@@ -806,8 +812,13 @@ class LoginAction extends BaseAction
 		{
 			// Anmeldung nicht erfolgreich
 			
-			Logger::debug("Login failed for user ".Logger::sanitizeInput($loginName)." from IP $ip");
-			
+			Logger::debug( TextMessage::create('login failed for user ${name} from IP ${ip}',
+				[
+					'name' => $loginName,
+					'ip'   => $ip
+				]
+			) );
+
 			if	( $tokenFailed )
 			{
 				// Token falsch.

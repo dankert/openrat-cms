@@ -43,7 +43,7 @@ class Logger
 	/**
 	 * Writes a trace message to log
 	 *
-	 * @param string message text
+	 * @param string|Exception message text
 	 */
 	public static function trace($message)
 	{
@@ -62,7 +62,7 @@ class Logger
 	/**
 	 * Writes a debug message to log
 	 *
-	 * @param string message text
+	 * @param string|Exception message text
 	 */
 	public static function debug($message)
 	{
@@ -73,7 +73,7 @@ class Logger
 	/**
 	 * Writes a information message to log
 	 *
-	 * @param string message text
+	 * @param string|Exception message text
 	 */
 	public static function info($message)
 	{
@@ -84,7 +84,7 @@ class Logger
 	/**
 	 * Writes a warning message to log
 	 *
-	 * @param string message text
+	 * @param string|Exception message text
 	 */
 	public static function warn($message)
 	{
@@ -95,7 +95,7 @@ class Logger
 	/**
 	 * Writes an error message to log
 	 *
-	 * @param string message text
+	 * @param string|Exception message text
 	 */
 	public static function error($message)
 	{
@@ -107,7 +107,7 @@ class Logger
 	 * Writes a mesage into the log file
 	 *
 	 * @param string facility of log entry
-	 * @param string message text
+	 * @param string|Throwable message text
 	 */
 	private static function doLog($facility, $message)
 	{
@@ -128,7 +128,7 @@ class Logger
 			$levelName = '';
 
 		if ($message instanceof Exception)
-			$message = $message->getTraceAsString();
+			$message = $message->getMessage()."\n".$message->__toString();
 
 		$values = array_map( function($key) use ($message, $levelName) {
 			switch( $key ) {
@@ -198,18 +198,4 @@ class Logger
 			error_log($text . "\n");
 	}
 
-
-	/**
-	 * Sanitize user input.
-	 * Cutting out unsafe characters.
-	 *
-	 * @param $input string  potentially dangerous user input
-	 * @return string a safe representaton of the user input.
-	 */
-	public static function sanitizeInput( $input ) {
-		$length = strlen($input);
-		$white = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,_-';
-		$clean = Text::clean($input,$white);
-		return '"'.$input.'"/'.$length.'/'.strlen($clean);
-	}
 }

@@ -2,7 +2,9 @@
 
 namespace language;
 
+use DomainException;
 use logger\Logger;
+use util\text\TextMessage;
 
 class Language
 {
@@ -40,7 +42,7 @@ class Language
 				return new $languageClazz();
 		}
 
-        throw new \DomainException('No language file found for iso keys: '.Logger::sanitizeInput(implode(',',$isos)));
+        throw new DomainException( TextMessage::create('No language class found for iso keys ${0}',[implode(',',$isos)]) );
     }
 
 }

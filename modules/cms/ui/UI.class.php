@@ -15,6 +15,7 @@ use \util\exception\ObjectNotFoundException;
 use util\exception\UIException;
 use util\exception\SecurityException;
 use template_engine\engine\TemplateEngine;
+use util\text\TextMessage;
 
 
 /**
@@ -57,22 +58,22 @@ class UI
 
         } catch (BadMethodCallException $e) {
             // Action-Method does not exist.
-            Logger::debug( 'Method does not exist',$request->action,$request->method,$e->__toString() );
+            Logger::debug( $e );
             Http::noContent();
         } catch (ObjectNotFoundException $e) {
-            Logger::debug("Object not found: " . $e->__toString()); // Nur Debug, da dies bei gelöschten Objekten vorkommen kann.
+            Logger::debug( $e ); // only debug, because this may happen on links to deleted objects.
             Http::noContent();
         } catch (UIException $e) {
-            Logger::warn( $e->__toString() );
+            Logger::warn( $e );
             throw new LogicException(L::lang($e->key),0, $e);
         } catch (SecurityException $e) {
-            Logger::info($e->getMessage());
+            Logger::info($e);
             Http::noContent();
 
             // this is not good at all, because the user may have signed off.
             //Http::notAuthorized("You are not allowed to execute this action.");
         } catch (Exception $e) {
-            Logger::warn( $e->__toString() );
+            Logger::warn( $e );
             throw new LogicException("Internal CMS error",0, $e);
         }
     }

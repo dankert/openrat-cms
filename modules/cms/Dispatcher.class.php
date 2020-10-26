@@ -27,6 +27,7 @@ use util\exception\SecurityException;
 use util\json\JSON;
 use util\Session;
 use util\Text;
+use util\text\TextMessage;
 
 
 /**
@@ -165,7 +166,13 @@ class Dispatcher
         if ( Configuration::subset('security')->is('use_post_token',true) &&
 			 $this->request->isAction &&
 			 $this->request->getToken() != Session::token() ) {
-            Logger::error('Token mismatch: Needed ' . Session::token() . ' but got ' . Logger::sanitizeInput($this->request->getToken()) . '. Maybe an attacker?');
+            Logger::error( TextMessage::create(
+            	'Token mismatch: Needed ${expected}), but got ${actual} Maybe an attacker?',
+				[
+					'expected' => Session::token(),
+					'actual'   => $this->request->getToken()
+				])
+			);
             throw new SecurityException("Token mismatch");
         }
     }
@@ -175,7 +182,6 @@ class Dispatcher
      */
     private function initializeLogger()
     {
-
         $logConfig = Configuration::subset('log');
 
         $logFile = $logConfig->get('file','');

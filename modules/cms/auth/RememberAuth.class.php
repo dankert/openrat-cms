@@ -3,10 +3,13 @@
 namespace cms\auth;
 
 use cms\auth\Auth;
+use cms\base\Configuration;
+use cms\model\Text;
 use database\Database;
 use cms\model\User;
 use logger\Logger;
 use \util\exception\ObjectNotFoundException;
+use util\text\TextMessage;
 
 /**
  * Authentifizierung mit einem Login-Token.
@@ -27,11 +30,11 @@ class RememberAuth implements Auth
 				list($selector, $token) = array_pad(explode('.', $_COOKIE['or_token']), 2, '');
 				$dbid = $_COOKIE['or_dbid'];
 
-				$dbConfig = \cms\base\Configuration::config()->subset('database');
+				$dbConfig = Configuration::config()->subset('database');
 
 				if (!$dbConfig->has($dbid)) {
 
-					Logger::info('unknown DB-Id for token-login: ' . Logger::sanitizeInput($dbid));
+					Logger::info( TextMessage::create('Unknown DB-Id for token-login: ${0}',[$dbid]) );
 					return null;
 				}
 

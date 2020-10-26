@@ -16,6 +16,7 @@ use cms\model\Value;
 use logger\Logger;
 use util\exception\GeneratorException;
 use util\Mustache;
+use util\text\TextMessage;
 
 
 class PageGenerator extends BaseGenerator
@@ -147,7 +148,7 @@ class PageGenerator extends BaseGenerator
 			$templateid    = array_search($name,$project->getTemplates() );
 
 			if   ( ! $templateid )
-				throw new \InvalidArgumentException('template '.Logger::sanitizeInput($name).' not found');
+				throw new \InvalidArgumentException( TextMessage::create('template ${name} not found',['name'=>$name]) );
 
 			if   ( $templateid == $template->templateid )
 				throw new \InvalidArgumentException('Template recursion detected on template-id '.$templateid);
