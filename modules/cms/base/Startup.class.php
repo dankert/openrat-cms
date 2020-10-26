@@ -125,20 +125,18 @@ class Startup {
 
 			$error = error_get_last();
 
-			if( !is_null($error) )
+			if( $error )
 			{
-				$errno   = $error["type"];
-				$errfile = $error["file"];
-				$errline = $error["line"];
-				$errstr  = $error["message"];
+				$errno   = @$error["type"];
+				$errfile = @$error["file"];
+				$errline = @$error["line"];
+				$errstr  = @$error["message"];
 
 				$message = 'Error '.$errno .' '. $errstr.' in '. $errfile.':'. $errline;
 				if(class_exists('logger\Logger'))
 					Logger::error( $message);
-				else
-				{
-					error_log($message);
-				}
+
+				error_log($message);
 
 				// It is not possibile to throw an exception out of a shutdown function!
 				// PHP will exit the request directly after executing this method, so a
