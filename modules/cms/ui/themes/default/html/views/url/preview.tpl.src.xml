@@ -3,7 +3,7 @@
     <image menu="refresh"/>
   </part>
   <!--
-    <part class="toolbar-icon,clickable">
+    <part class="toolbar-icon,act-clickable">
         <link type="popup" class="action" url="${preview_url}">
             <image menu="open_in_new"></image>
 

@@ -73,7 +73,7 @@
           </if>
           <else>
             <if present="releaseUrl">
-              <column class="clickable">
+              <column class="act-clickable">
                 <link type="post" subaction="release" var1="valueid" value1="${valueid}" id="${objectid}" title="${message:RELEASE_DESC}">
                   <text value="${message:RELEASE}" type="strong"/>
                 </link>
@@ -92,7 +92,7 @@
           </if>
           <else>
             <if present="useUrl">
-              <column class="clickable">
+              <column class="act-clickable">
                 <link type="post" subaction="use" var1="valueid" value1="${valueid}" id="${objectid}" title="${message:USE_DESC}">
                   <text value="${message:USE}"/>
                 </link>

@@ -6,7 +6,7 @@
       </column>
     </row>
     <row class="data">
-      <column id="${id}" name="${name}" action="userlist" class="clickable">
+      <column id="${id}" name="${name}" action="userlist" class="act-clickable">
         <link type="open" id="" action="userlist">
           <image action="user"/>
           <text value="${message:users}"/>
@@ -14,7 +14,7 @@
       </column>
     </row>
     <row class="data">
-      <column id="${id}" name="${name}" action="grouplist" class="clickable">
+      <column id="${id}" name="${name}" action="grouplist" class="act-clickable">
         <link type="open" id="" action="grouplist">
           <image action="group"/>
           <text value="${message:groups}"/>

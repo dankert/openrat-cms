@@ -24,7 +24,7 @@
               <text value=" "/>
             </if>
           </column>
-          <column class="clickable">
+          <column class="act-clickable">
             <label for="${id}">
               <link type="open" name="${name}" action="${type}" id="${objectid}">
                 <image action="${icon}"/>
@@ -46,7 +46,7 @@
         <column>
           <text value=" "/>
         </column>
-        <column colspan="2" class="clickable">
+        <column colspan="2" class="act-clickable">
           <link type="dialog" action="folder" subaction="create">
             <image method="add"/>
             <text value="${message:menu_folder_create}"/>

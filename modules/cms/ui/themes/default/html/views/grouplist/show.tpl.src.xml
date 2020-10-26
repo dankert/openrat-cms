@@ -7,7 +7,7 @@
     </row>
     <list list="${el}" extract="true">
       <row class="data">
-        <column id="${id}" name="${name}" action="group" class="clickable">
+        <column id="${id}" name="${name}" action="group" class="act-clickable">
           <link type="open" id="${id}" name="${name}" action="group">
             <image action="group"/>
             <text value="${name}" maxlength="30"/>
@@ -16,7 +16,7 @@
       </row>
     </list>
     <row class="data">
-      <column colspan="2" class="clickable">
+      <column colspan="2" class="act-clickable">
         <link type="dialog" subaction="add" name="${message:menu_add}">
           <image method="add"/>
           <text value="${message:new}"/>

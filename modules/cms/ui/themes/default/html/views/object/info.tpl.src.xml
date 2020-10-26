@@ -69,7 +69,7 @@
 			<fieldset class="line" label="">
 				<part class="label">
 				</part>
-				<part class="value,clickable">
+				<part class="value,act-clickable">
 					<link class="action" type="dialog" subaction="size">
 						<text value="${message:menu_file_size}"/>
 					</link>
@@ -124,7 +124,7 @@
 			</fieldset>
 		</group>
 		<group title="${message:validity}">
-			<part class="clickable">
+			<part class="act-clickable">
 				<link subaction="settings" type="dialog">
 					<fieldset class="line" label="">
 						<part class="label">
@@ -205,7 +205,7 @@
 						<column>
 							<text value="${entry.key}"/>
 						</column>
-						<column class="clickable">
+						<column class="act-clickable">
 							<link subaction="settings" type="dialog">
 								<text value="${entry.value}"/>
 							</link>

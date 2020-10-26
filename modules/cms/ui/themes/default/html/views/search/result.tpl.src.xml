@@ -10,7 +10,7 @@
     </row>
     <list list="${result}" extract="true">
       <row class="data">
-        <column class="clickable">
+        <column class="act-clickable">
           <link type="open" action="${type}" name="${name}" id="${id}">
             <image type="${type}"/>
             <text value="${name}" title="${desc}"/>

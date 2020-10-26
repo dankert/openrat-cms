@@ -54,7 +54,7 @@
 						</if>
 					</column>
 				</list>
-				<column class="clickable">
+				<column class="act-clickable">
 					<link type="post" subaction="delacl" var1="aclid" value1="${aclid}">
 						<text value="${message:DELETE}"/>
 					</link>
@@ -62,7 +62,7 @@
 			</row>
 		</list>
 		<row class="data">
-			<column colspan="99" class="clickable">
+			<column colspan="99" class="act-clickable">
 				<link type="dialog" name="${message:menu_aclform}" subaction="aclform">
 					<image method="add"/>
 					<text value="${message:new}"/>

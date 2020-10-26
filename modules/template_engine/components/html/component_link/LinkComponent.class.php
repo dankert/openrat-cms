@@ -66,6 +66,7 @@ class LinkComponent extends Component
 
 	public $afterSuccess;
 
+	public $clickable = false;
 
 
 	public function createElement()
@@ -79,6 +80,9 @@ class LinkComponent extends Component
 		
 		if ( $this->class )
 			$link->addStyleClass($this->class);
+
+		if ( $this->clickable )
+			$link->addStyleClass('act-clickable');
 
 		if ( $this->title )
 			$link->addAttribute('title',$this->title);

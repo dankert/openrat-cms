@@ -20,7 +20,7 @@
 			</row>
 		</if>
 		<list list="${elements}" extract="true">
-			<row class="data,clickable">
+			<row class="data,act-clickable">
 				<column>
 					<link type="open" title="${desc}" name="${name}" action="pageelement" id="${pageelementid}">
 						<image action="pageelement"/>

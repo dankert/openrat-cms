@@ -30,7 +30,7 @@
 			<fieldset class="line" label="">
 				<part class="label">
 				</part>
-				<part class="value,clickable">
+				<part class="value,act-clickable">
 					<link subaction="prop" class="btn" type="dialog">
 						<text value="${message:edit}"/>
 					</link>
@@ -42,7 +42,7 @@
 				<text label="name" value="${name}"/>
 				<text label="description" value="${description}"/>
 				<text label="alias" value="${alias}"/>
-				<part class="clickable">
+				<part class="act-clickable">
 					<link class="btn" type="edit" action="page" subaction="name" var1="languageid"
 						  value1="${languageid}">
 						<text value="${message:edit}"/>
@@ -79,7 +79,7 @@
 				</part>
 				<part class="value">
 					<if present="templateid">
-						<part class="clickable">
+						<part class="act-clickable">
 							<link action="template" id="${templateid}" type="open">
 								<image action="template"/>
 								<text value="${template_name}"/>

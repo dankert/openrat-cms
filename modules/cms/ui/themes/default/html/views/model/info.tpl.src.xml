@@ -3,7 +3,7 @@
 	<form readonly="true" cancel="false">
 		<text class="headline" value="${name}"/>
 		<fieldset class="line" label="${message:NAME}">
-			<part class="value,clickable">
+			<part class="value,act-clickable">
 				<text value="${name}"/>
 				<link class="btn" action="model" subaction="prop" type="edit">
 					<text value="${message:edit}"/>

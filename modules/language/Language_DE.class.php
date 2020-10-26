@@ -1327,5 +1327,7 @@ Vielen Dank.',
 'ALIAS'=>'Alias',
 'TEXT'=>'Text',
 'APPLY'=>'Übernehmen',
+'URL'=>'Url',
+'NEW'=>'Neu',
 ];}
 }

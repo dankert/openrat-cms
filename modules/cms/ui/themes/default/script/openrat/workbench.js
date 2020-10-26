@@ -333,7 +333,7 @@ Openrat.Workbench = new function()
         $(notice).append(toolbar);
 
         if	(name)
-            $(notice).append('<div class="or-notice-name or-clickable"><a href="'+Openrat.Navigator.createShortUrl(type,id)+'" data-type="open" data-action="'+type+'" data-id="'+id+'"><i class="or-notice-action-full or-image-icon or-image-icon--action-'+type+'"></i> '+name+'</a></div>');
+            $(notice).append('<div class="or-notice-name or-act-clickable"><a href="'+Openrat.Navigator.createShortUrl(type,id)+'" data-type="open" data-action="'+type+'" data-id="'+id+'"><i class="or-notice-action-full or-image-icon or-image-icon--action-'+type+'"></i> '+name+'</a></div>');
 
         $(notice).append( '<div class="or-notice-text">'+htmlEntities(msg)+'</div>');
 

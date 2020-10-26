@@ -350,9 +350,23 @@ class ProjectAction extends BaseAction
 	
 	
 	
-	function infoView()
+	public function infoView()
 	{
 		$this->setTemplateVar( 'info', $this->project->info() );
+		$this->setTemplateVar( 'name', $this->project->name   );
+		$this->setTemplateVar( 'url' , $this->makeAbsoluteHostnameLink($this->project->url)  );
+	}
+
+	/**
+	 * Make a linkable hostname
+	 *
+	 * @param $hostname
+	 * @return string
+	 */
+	protected function makeAbsoluteHostnameLink( $hostname ) {
+		if    ( strpos($hostname,'//') === false )
+			return 'http://'.$hostname;
+		return $hostname;
 	}
 	
 	

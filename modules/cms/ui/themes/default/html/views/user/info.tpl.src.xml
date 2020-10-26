@@ -76,7 +76,7 @@
       <fieldset class="line" label="">
         <part class="label">
                 </part>
-        <part class="value,clickable">
+        <part class="value,act-clickable">
           <link type="dialog" subaction="prop" action="user" id="${userid}" class="btn">
             <text value="${message:edit}"/>
           </link>
@@ -121,7 +121,7 @@
       <fieldset class="line" label="">
         <part class="label">
                 </part>
-        <part class="value,clickable">
+        <part class="value,act-clickable">
           <link type="dialog" subaction="pw" action="user" id="${userid}" class="btn">
             <text value="${message:edit_password}"/>
           </link>

@@ -33,7 +33,7 @@
 			<if true="${isLoggedIn}">
 				<!--
 								<part
-										class="toolbar-icon,clickable,filtered,on-action-folder,on-action-file,on-action-page,on-action-link,on-action-template,on-action-element">
+										class="toolbar-icon,act-clickable,filtered,on-action-folder,on-action-file,on-action-page,on-action-link,on-action-template,on-action-element">
 									<link type="dialog" subaction="prop" title="${message:menu_prop_desc}">
 										<image method="prop"></image>
 										<text class="menu-label" key="menu_prop"></text>
@@ -41,7 +41,7 @@
 								</part>
 						-->
 				<part
-					class="toolbar-icon,clickable,filtered,on-action-folder,on-action-page,on-action-file,on-action-projectlist,on-action-templatelist,on-action-userlist,on-action-grouplist,on-action-languagelist,on-action-modellist">
+					class="toolbar-icon,act-clickable,filtered,on-action-folder,on-action-page,on-action-file,on-action-projectlist,on-action-templatelist,on-action-userlist,on-action-grouplist,on-action-languagelist,on-action-modellist">
 					<link type="dialog" title="${message:menu_new_desc}" subaction="add">
 						<image method="add"/>
 						<!--
@@ -54,7 +54,7 @@
 			<if true="${isLoggedIn}">
 				<!--
 								<part
-											class="toolbar-icon,clickable,filtered,on-action-folder,on-action-file,on-action-page,on-action-link,on-action-template,on-action-element">
+											class="toolbar-icon,act-clickable,filtered,on-action-folder,on-action-file,on-action-page,on-action-link,on-action-template,on-action-element">
 									<link type="dialog" subaction="prop" title="${message:menu_prop_desc}">
 										<image method="prop"></image>
 										<text class="menu-label" key="menu_prop"></text>
@@ -62,7 +62,7 @@
 								</part>
 						-->
 				<part
-					class="toolbar-icon,clickable,filtered,on-action-folder,on-action-page,on-action-file,on-action-image,on-action-text,on-action-pageelement,on-action-template">
+					class="toolbar-icon,act-clickable,filtered,on-action-folder,on-action-page,on-action-file,on-action-image,on-action-text,on-action-pageelement,on-action-template">
 					<link type="dialog" subaction="pub" title="${message:menu_pub_desc}">
 						<image method="publish"/>
 						<!--
@@ -79,7 +79,7 @@
 					<image class="menu-dropdown-icon" symbol="dropdown"/>
 					<part class="dropdown">
 						<part
-							class="dropdown-entry,clickable,filtered,on-action-folder,on-action-page,on-action-file,on-action-projectlist,on-action-templatelist,on-action-userlist,on-action-grouplist,on-action-languagelist,on-action-modellist">
+							class="dropdown-entry,act-clickable,filtered,on-action-folder,on-action-page,on-action-file,on-action-projectlist,on-action-templatelist,on-action-userlist,on-action-grouplist,on-action-languagelist,on-action-modellist">
 							<link type="dialog" title="${message:menu_new_desc}" subaction="add">
 								<image method="add"/>
 								<text value="${message:menu_new}"/>
@@ -87,43 +87,43 @@
 							</link>
 						</part>
 						<part class="dropdown-divide"/>
-						<part class="dropdown-entry,clickable,filtered,on-action-folder">
+						<part class="dropdown-entry,act-clickable,filtered,on-action-folder">
 							<link type="dialog" title="${message:menu_createfolder_desc}" subaction="createfolder">
 								<image method="add"/>
 								<text class="dropdown-text" value="${message:menu_createfolder}"/>
 							</link>
 						</part>
-						<part class="dropdown-entry,clickable,filtered,on-action-folder">
+						<part class="dropdown-entry,act-clickable,filtered,on-action-folder">
 							<link type="dialog" title="${message:menu_createpage_desc}" subaction="createpage">
 								<image method="add"/>
 								<text class="dropdown-text" value="${message:menu_createpage}"/>
 							</link>
 						</part>
-						<part class="dropdown-entry,clickable,filtered,on-action-folder">
+						<part class="dropdown-entry,act-clickable,filtered,on-action-folder">
 							<link type="dialog" title="${message:menu_createfile_desc}" subaction="createfile">
 								<image method="add"/>
 								<text class="dropdown-text" value="${message:menu_createfile}"/>
 							</link>
 						</part>
-						<part class="dropdown-entry,clickable,filtered,on-action-folder">
+						<part class="dropdown-entry,act-clickable,filtered,on-action-folder">
 							<link type="dialog" title="${message:menu_createimage_desc}" subaction="createimage">
 								<image method="add"/>
 								<text class="dropdown-text" value="${message:menu_createimage}"/>
 							</link>
 						</part>
-						<part class="dropdown-entry,clickable,filtered,on-action-folder">
+						<part class="dropdown-entry,act-clickable,filtered,on-action-folder">
 							<link type="dialog" title="${message:menu_createtext_desc}" subaction="createtext">
 								<image method="add"/>
 								<text class="dropdown-text" value="${message:menu_createtext}"/>
 							</link>
 						</part>
-						<part class="dropdown-entry,clickable,filtered,on-action-folder">
+						<part class="dropdown-entry,act-clickable,filtered,on-action-folder">
 							<link type="dialog" title="${message:menu_createlink_desc}" subaction="createlink">
 								<image method="add"/>
 								<text class="dropdown-text" value="${message:menu_createlink}"/>
 							</link>
 						</part>
-						<part class="dropdown-entry,clickable,filtered,on-action-folder">
+						<part class="dropdown-entry,act-clickable,filtered,on-action-folder">
 							<link type="dialog" title="${message:menu_createurl_desc}" subaction="createurl">
 								<image method="add"/>
 								<text class="dropdown-text" value="${message:menu_createurl}"/>
@@ -132,13 +132,13 @@
 						<!--
 									<part class="dropdown-divide"/>
 
-									<part class="dropdown-entry,clickable">
+									<part class="dropdown-entry,act-clickable">
 										<link type="post" title="${message:menu_save_desc}" subaction="save">
 											<image method="save"></image>
 											<text value="${message:menu_save}"></text>
 										</link>
 									</part>
-									<part class="dropdown-entry,clickable">
+									<part class="dropdown-entry,act-clickable">
 										<link type="post" title="${message:menu_saveall_desc}" subaction="saveall">
 											<image method="save"></image>
 											<text value="${message:menu_saveall}"></text>
@@ -147,7 +147,7 @@
 									-->
 						<!--
 									<part
-											class="dropdown-entry,clickable,filtered,on-action-page,on-action-file,on-action-image,on-action-template,on-action-pageelement">
+											class="dropdown-entry,act-clickable,filtered,on-action-page,on-action-file,on-action-image,on-action-template,on-action-pageelement">
 										<link type="dialog" title="${message:menu_preview_desc}"
 											  subaction="preview">
 											<image method="preview"></image>
@@ -156,26 +156,26 @@
 									</part>
 					-->
 						<part class="dropdown-divide"/>
-						<part class="dropdown-entry,clickable,filtered,on-action-file">
+						<part class="dropdown-entry,act-clickable,filtered,on-action-file">
 							<link type="dialog" title="${message:menu_compress_desc}" subaction="compress">
 								<image method="compress"/>
 								<text value="${message:menu_compress}"/>
 							</link>
 						</part>
-						<part class="dropdown-entry,clickable,filtered,on-action-file">
+						<part class="dropdown-entry,act-clickable,filtered,on-action-file">
 							<link type="dialog" title="${message:menu_decompress_desc}" subaction="decompress">
 								<image method="decompress"/>
 								<text value="${message:menu_decompress}"/>
 							</link>
 						</part>
-						<part class="dropdown-entry,clickable,filtered,on-action-file">
+						<part class="dropdown-entry,act-clickable,filtered,on-action-file">
 							<link type="dialog" title="${message:menu_extract_desc}" subaction="extract">
 								<image method="extract"/>
 								<text value="${message:menu_extract}"/>
 							</link>
 						</part>
 						<part class="dropdown-divide"/>
-						<part class="dropdown-entry,clickable">
+						<part class="dropdown-entry,act-clickable">
 							<link type="post" class="dropdown-entry" title="${message:USER_LOGOUT_DESC}" action="login"
 								  subaction="logout">
 								<image method="logout"/>
@@ -193,7 +193,7 @@
 					<image class="menu-dropdown-icon" symbol="dropdown"/>
 					<part class="dropdown">
 						<part
-							class="dropdown-entry,clickable,filtered,on-action-user,on-action-project,on-action-link,on-action-folder,on-action-page,on-action-template,on-action-element,on-action-file,on-action-url,on-action-image,on-action-text,on-action-language,on-action-model">
+							class="dropdown-entry,act-clickable,filtered,on-action-user,on-action-project,on-action-link,on-action-folder,on-action-page,on-action-template,on-action-element,on-action-file,on-action-url,on-action-image,on-action-text,on-action-language,on-action-model">
 							<link type="dialog" title="${message:menu_prop_desc}" subaction="prop">
 								<image method="prop"/>
 								<text class="dropdown-text" value="${message:menu_prop}"/>
@@ -201,21 +201,21 @@
 							</link>
 						</part>
 						<part
-							class="dropdown-entry,clickable,filtered,on-action-link,on-action-folder,on-action-page,on-action-file,on-action-text,on-action-url,on-action-image">
+							class="dropdown-entry,act-clickable,filtered,on-action-link,on-action-folder,on-action-page,on-action-file,on-action-text,on-action-url,on-action-image">
 							<link type="dialog" title="${message:menu_settings_desc}" subaction="settings">
 								<image method="settings"/>
 								<text class="dropdown-text" value="${message:menu_settings}"/>
 							</link>
 						</part>
 						<part
-							class="dropdown-entry,clickable,filtered,on-action-page,on-action-file,on-action-folder,on-action-text,on-action-image,on-action-pageelement,on-action-template">
+							class="dropdown-entry,act-clickable,filtered,on-action-page,on-action-file,on-action-folder,on-action-text,on-action-image,on-action-pageelement,on-action-template">
 							<link type="dialog" title="${message:menu_pub_desc}" subaction="pub">
 								<image method="publish"/>
 								<text class="dropdown-text" value="${message:menu_pub}"/>
 								<text class="dropdown-key,link-keystroke" value="${config:ui/keybinding/method/pub}"/>
 							</link>
 						</part>
-						<part class="dropdown-entry,clickable,filtered,on-action-pageelement">
+						<part class="dropdown-entry,act-clickable,filtered,on-action-pageelement">
 							<link type="dialog" class="dropdown-entry" subaction="archive" title="${message:menu_archive_desc}">
 								<image method="archive"/>
 								<text class="dropdown-text" value="${message:menu_archive}"/>
@@ -223,7 +223,7 @@
 							</link>
 						</part>
 						<part
-							class="dropdown-entry,clickable,filtered,on-action-project,on-action-folder,on-action-link,on-action-user,on-action-group,on-action-page,on-action-file,on-action-image,on-action-text,on-action-url">
+							class="dropdown-entry,act-clickable,filtered,on-action-project,on-action-folder,on-action-link,on-action-user,on-action-group,on-action-page,on-action-file,on-action-image,on-action-text,on-action-url">
 							<link type="dialog" title="${message:menu_rights_desc}" subaction="rights">
 								<image method="rights"/>
 								<text class="dropdown-text" value="${message:menu_rights}"/>
@@ -231,7 +231,7 @@
 							</link>
 						</part>
 						<part
-							class="dropdown-entry,clickable,filtered,on-action-pageelement,on-action-user,on-action-group,on-action-page,on-action-project,on-action-projectlist">
+							class="dropdown-entry,act-clickable,filtered,on-action-pageelement,on-action-user,on-action-group,on-action-page,on-action-project,on-action-projectlist">
 							<link type="dialog" title="${message:menu_history_desc}" subaction="history">
 								<image method="history"/>
 								<text class="dropdown-text" value="${message:menu_history}"/>
@@ -239,7 +239,7 @@
 						</part>
 						<part class="dropdown-divide"/>
 						<part
-							class="dropdown-entry,clickable,filtered,on-action-project,on-action-template,on-action-page,on-action-element,on-action-image,on-action-file,on-action-folder,on-action-url,on-action-image,on-action-text,on-action-link,on-action-language,on-action-model,on-action-user,on-action-group">
+							class="dropdown-entry,act-clickable,filtered,on-action-project,on-action-template,on-action-page,on-action-element,on-action-image,on-action-file,on-action-folder,on-action-url,on-action-image,on-action-text,on-action-link,on-action-language,on-action-model,on-action-user,on-action-group">
 							<link type="dialog" title="${message:menu_delete_desc}" subaction="remove">
 								<image method="delete"/>
 								<text class="dropdown-text" value="${message:menu_delete}"/>
@@ -247,7 +247,7 @@
 						</part>
 						<part class="dropdown-divide"/>
 						<part
-							class="dropdown-entry,clickable,filtered,on-action-page,on-action-file,on-action-image,on-action-template,on-action-pageelement">
+							class="dropdown-entry,act-clickable,filtered,on-action-page,on-action-file,on-action-image,on-action-template,on-action-pageelement">
 							<link type="dialog" title="${message:menu_preview_desc}" subaction="preview">
 								<image method="preview"/>
 								<text class="dropdown-text" value="${message:menu_preview}"/>
@@ -263,74 +263,74 @@
 					<text class="menu-label" value="${message:extras}"/>
 					<image class="menu-dropdown-icon" symbol="dropdown"/>
 					<part class="dropdown">
-						<part class="dropdown-entry,clickable,filtered,on-action-user">
+						<part class="dropdown-entry,act-clickable,filtered,on-action-user">
 							<link type="dialog" title="${message:menu_password_desc}" subaction="pw">
 								<image method="password"/>
 								<text class="dropdown-text" value="${message:menu_password}"/>
 							</link>
 						</part>
-						<part class="dropdown-entry,clickable,filtered,on-action-user,on-action-group">
+						<part class="dropdown-entry,act-clickable,filtered,on-action-user,on-action-group">
 							<link type="dialog" title="${message:menu_memberships_desc}" subaction="memberships">
 								<image method="membership"/>
 								<text class="dropdown-text" value="${message:menu_memberships}"/>
 							</link>
 						</part>
 						<part
-							class="dropdown-entry,clickable,filtered,on-action-folder,on-action-element,on-action-file,on-action-image,on-action-text,on-action-pageelement">
+							class="dropdown-entry,act-clickable,filtered,on-action-folder,on-action-element,on-action-file,on-action-image,on-action-text,on-action-pageelement">
 							<link type="dialog" title="${message:menu_advanced_desc}" subaction="advanced">
 								<image method="advanced"/>
 								<text class="dropdown-text" value="${message:menu_advanced}"/>
 							</link>
 						</part>
 						<part class="dropdown-divide"/>
-						<part class="dropdown-entry,clickable,filtered,on-action-page">
+						<part class="dropdown-entry,act-clickable,filtered,on-action-page">
 							<link type="dialog" title="${message:menu_changetemplate_desc}" subaction="changetemplate">
 								<image method="changetemplate"/>
 								<text class="dropdown-text" value="${message:menu_changetemplate}"/>
 							</link>
 						</part>
 						<part
-							class="dropdown-entry,clickable,filtered,on-action-template,on-action-configuration,on-action-page">
+							class="dropdown-entry,act-clickable,filtered,on-action-template,on-action-configuration,on-action-page">
 							<link type="dialog" title="${message:menu_src_desc}" subaction="src">
 								<image method="code"/>
 								<text class="dropdown-text" value="${message:menu_src}"/>
 							</link>
 						</part>
-						<part class="dropdown-entry,clickable,filtered,on-action-template">
+						<part class="dropdown-entry,act-clickable,filtered,on-action-template">
 							<link type="dialog" title="${message:menu_extension_desc}" subaction="extension">
 								<image method="extension"/>
 								<text class="dropdown-text" value="${message:menu_extension}"/>
 							</link>
 						</part>
 						<part class="dropdown-divide"/>
-						<part class="dropdown-entry,clickable,filtered,on-action-text">
+						<part class="dropdown-entry,act-clickable,filtered,on-action-text">
 							<link type="dialog" title="${message:menu_value_desc}" subaction="value">
 								<image method="value"/>
 								<text class="dropdown-text" value="${message:menu_value}"/>
 							</link>
 						</part>
-						<part class="dropdown-entry,clickable,filtered,on-action-folder">
+						<part class="dropdown-entry,act-clickable,filtered,on-action-folder">
 							<link type="dialog" title="${message:menu_order_desc}" subaction="order">
 								<image method="order"/>
 								<text class="dropdown-text" value="${message:menu_order}"/>
 							</link>
 						</part>
 						<part class="dropdown-divide"/>
-						<part class="dropdown-entry,clickable,filtered,on-action-image">
+						<part class="dropdown-entry,act-clickable,filtered,on-action-image">
 							<link type="dialog" title="${message:menu_size_desc}" subaction="size">
 								<image method="size"/>
 								<text class="dropdown-text" value="${message:menu_size}"/>
 							</link>
 						</part>
 						<part class="dropdown-divide"/>
-						<part class="dropdown-entry,clickable,filtered,on-action-project">
+						<part class="dropdown-entry,act-clickable,filtered,on-action-project">
 							<link type="dialog" title="${message:menu_maintenance_desc}" subaction="maintenance">
 								<image method="maintenance"/>
 								<text class="dropdown-text" value="${message:menu_maintenance}"/>
 							</link>
 						</part>
 						<!--
-													<part class="dropdown-entry,clickable,filtered,on-action-project">
+													<part class="dropdown-entry,act-clickable,filtered,on-action-project">
 														<link type="dialog" title="${message:menu_export_desc}"
 															  subaction="export">
 															<image method="export"></image>
@@ -351,7 +351,7 @@
 						  <part class="dropdown">
 
 							  <if true="${isAdmin}">
-								  <part class="dropdown-entry,clickable">
+								  <part class="dropdown-entry,act-clickable">
 									  <link type="post" class="dropdown-entry" action="start" subaction="administration"
 										  target="tree" id="-1">
 										  <image method="settings"></image>
@@ -363,7 +363,7 @@
 
 							  <if value="size:languages" greaterthan="00">
 								  <list list="${languages" key="id" value="name}">
-									  <part class="dropdown-entry,clickable">
+									  <part class="dropdown-entry,act-clickable">
 										  <image action="language"></image>
 										  <link type="post" action="tree" subaction="language" id="${id}"
 											  title="${message:select_language}">
@@ -376,7 +376,7 @@
 
 							  <if value="size:models" greaterthan="0">
 								  <list list="${models" key="id" value="name}">
-									  <part class="dropdown-entry,clickable">
+									  <part class="dropdown-entry,act-clickable">
 										  <image action="model"></image>
 										  <link type="post" action="tree" subaction="model" id="${id}"
 											  title="${message:select_model}">
@@ -389,7 +389,7 @@
 
 
 							  <list list="${projects" key="id" value="name}">
-								  <part class="dropdown-entry,clickable">
+								  <part class="dropdown-entry,act-clickable">
 									  <image action="project"></image>
 									  <link type="post" action="start" subaction="projectmenu" id="${id}"
 										  title="${message:select_project}">
@@ -427,7 +427,7 @@
 					  <text class="menu-label" key="menu_help"></text>
 					  <image symbol="dropdown"/>
 					  <part class="dropdown">
-						  <part class="dropdown-entry,clickable">
+						  <part class="dropdown-entry,act-clickable">
 							  <link type="dialog" title="${message:menu_license_DESC}" action="login" subaction="license">
 								  <image method="license"></image>
 								  <text value="${message:menu_license}"></text>
@@ -443,34 +443,34 @@
 				<!-- <image symbol="dropdown" />-->
 				<part class="dropdown">
 					<if true="${isLoggedIn}">
-						<part class="dropdown-entry,clickable">
+						<part class="dropdown-entry,act-clickable">
 							<link type="dialog" title="${message:menu_PROFILE_DESC}" action="profile" subaction="edit">
 								<image action="user"/>
 								<text class="dropdown-text" value="${message:menu_profile}"/>
 								<text class="dropdown-key,link-keystroke" value="${config:ui/keybinding/action/profile}"/>
 							</link>
 						</part>
-						<part class="dropdown-entry,clickable">
+						<part class="dropdown-entry,act-clickable">
 							<link type="dialog" title="${message:menu_password_DESC}" action="profile" subaction="pw">
 								<image method="password"/>
 								<text class="dropdown-text" value="${message:menu_password}"/>
 							</link>
 						</part>
-						<part class="dropdown-entry,clickable">
+						<part class="dropdown-entry,act-clickable">
 							<link type="dialog" title="${message:menu_mail_DESC}" action="profile" subaction="mail">
 								<image method="mail"/>
 								<text class="dropdown-text" value="${message:menu_mail}"/>
 							</link>
 						</part>
 						<!-- Lizenzhinweise -->
-						<part class="dropdown-entry,clickable">
+						<part class="dropdown-entry,act-clickable">
 							<link type="dialog" title="${message:menu_license_DESC}" action="login" subaction="license">
 								<image method="info"/>
 								<text class="dropdown-text" value="${message:menu_info}"/>
 							</link>
 						</part>
 						<part class="dropdown-divide"/>
-						<part class="dropdown-entry,clickable">
+						<part class="dropdown-entry,act-clickable">
 							<link type="dialog" title="${message:menu_history_desc}" action="profile"
 								  subaction="history">
 								<image method="history"/>
@@ -478,7 +478,7 @@
 							</link>
 						</part>
 						<part class="dropdown-divide"/>
-						<part class="dropdown-entry,clickable">
+						<part class="dropdown-entry,act-clickable">
 							<link type="post" title="${message:USER_LOGOUT_DESC}" action="login"
 								  subaction="logout" afterSuccess="reloadAll">
 								<image method="logout"/>
@@ -487,7 +487,7 @@
 						</part>
 					</if>
 					<else>
-						<part class="dropdown-entry,clickable">
+						<part class="dropdown-entry,act-clickable">
 							<link type="dialog" title="${message:USER_LOGIN_DESC}" action="login" subaction="login">
 								<image method="user"/>
 								<text class="dropdown-text" value="${message:USER_LOGIN}"/>

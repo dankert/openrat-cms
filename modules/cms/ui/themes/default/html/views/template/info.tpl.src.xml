@@ -15,7 +15,7 @@
     </row>
     <list list="${pages}" value="name" key="pageid">
       <row class="data">
-        <column colspan="2" class="clickable">
+        <column colspan="2" class="act-clickable">
           <link type="open" action="page" id="${pageid}">
             <image action="page"/>
             <text value="${name}"/>

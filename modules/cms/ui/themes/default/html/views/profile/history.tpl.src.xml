@@ -13,12 +13,12 @@
     </row>
     <list list="${timeline}" extract="true">
       <row class="data">
-        <column class="clickable">
+        <column class="act-clickable">
           <link type="open" action="project" id="${projectid}">
             <text value="${projectname}"/>
           </link>
         </column>
-        <column title="${filename}" class="clickable">
+        <column title="${filename}" class="act-clickable">
           <link type="open" action="${type}" id="${objectid}">
             <text value="${filename}" maxlength="30"/>
           </link>

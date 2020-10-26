@@ -1347,5 +1347,7 @@ MENU_INDEX_ADMINISTRATION_DESC =',
 'ALIAS'=>'Alias',
 'TEXT'=>'Text',
 'APPLY'=>'Apply',
+'URL'=>'URL',
+'NEW'=>'New',
 ];}
 }

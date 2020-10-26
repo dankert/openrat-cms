@@ -1,8 +1,25 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+
+	<fieldset label="${message:name}">
+		<link clickable="true" type="dialog" subaction="prop">
+			<text value="${name}" />
+		</link>
+	</fieldset>
+
+	<fieldset label="${message:url}">
+		<link type="external" url="${url}">
+			<text value="${url}" />
+		</link>
+	</fieldset>
+
 	<list list="${info}">
 		<fieldset label="${message:${list_key}}">
-			<text value="${list_value}"/>
+			<part class="act-clickable">
+				<link subaction="maintenance" type="dialog">
+					<text value="${list_value}"/>
+				</link>
+			</part>
 		</fieldset>
 	</list>
 </output>

@@ -26,7 +26,7 @@
         <set var="type" value="page"/>
       </if>
       <row class="data">
-        <column class="clickable">
+        <column class="act-clickable">
           <link type="open" name="${name}" id="${objectid}" action="${type}">
             <text value="${name}" maxlength="30"/>
           </link>

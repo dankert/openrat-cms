@@ -14,7 +14,7 @@
     </row>
     <list list="${el}" extract="true">
       <row class="data">
-        <column id="${id}" name="${name}" action="user" class="clickable">
+        <column id="${id}" name="${name}" action="user" class="act-clickable">
           <link type="open" id="${id}" name="${name}" action="user">
             <image action="user"/>
             <text value="${name}"/>
@@ -28,7 +28,7 @@
             <text value=")"/>
           </if>
         </column>
-        <column class="clickable">
+        <column class="act-clickable">
           <link type="post" action="user" subaction="switch" id="${userid}">
             <text value="${message:LOGIN}"/>
           </link>
@@ -36,7 +36,7 @@
       </row>
     </list>
     <row class="data">
-      <column colspan="3" class="clickable">
+      <column colspan="3" class="act-clickable">
         <link type="dialog" subaction="add" name="${message:add}">
           <image method="add"/>
           <text value="${message:new}"/>

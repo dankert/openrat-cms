@@ -49,7 +49,7 @@
                              <?php } ?>
                           </tr>
                           <?php foreach((array)$rights as $aclid=>$acl) { extract($acl); ?>
-                            <tr class="<?php echo O::escapeHtml('or-data or-clickable') ?>"><?php echo O::escapeHtml('') ?>
+                            <tr class="<?php echo O::escapeHtml('or-data or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
                               <td><?php echo O::escapeHtml('') ?>
                                 <?php $if1=(isset($groupname)); if($if1) {  ?>
                                   <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-group') ?>"><?php echo O::escapeHtml('') ?>

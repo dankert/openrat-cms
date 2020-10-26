@@ -10,7 +10,7 @@
     </row>
     <list list="${elements}" extract="true">
       <row class="data">
-        <column class="clickable">
+        <column class="act-clickable">
           <link type="open" id="${id}" name="${name}" action="element">
             <image elementtype="${type}"/>
             <text value="${name}" title="${description}"/>
@@ -29,7 +29,7 @@
       </row>
     </if>
     <row class="data">
-      <column colspan="2" class="clickable">
+      <column colspan="2" class="act-clickable">
         <link type="dialog" subaction="addel" action="template" id="${templateid}">
           <image method="add"/>
           <text value="${message:menu_template_addel}"/>
@@ -39,7 +39,7 @@
   </table>
   <list list="${models}" extract="true">
     <group title="${name}">
-      <part class="clickable">
+      <part class="act-clickable">
         <text value="${source}" escape="true" type="code" maxlength="200"/>
         <newline/>
         <link type="edit" subaction="src" var1="modelid" value1="${modelid}" class="form-button">

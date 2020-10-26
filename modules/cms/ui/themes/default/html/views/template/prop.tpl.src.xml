@@ -19,7 +19,7 @@
             <text value="${extension}"/>
           </part>
         </link>
-        <part class="clickable">
+        <part class="act-clickable">
           <link class="action" type="view" subaction="extension">
             <text value="${message:edit}"/>
           </link>

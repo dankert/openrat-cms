@@ -5,7 +5,7 @@
 		<hidden name="templateid"/>
 		<hidden name="modelid"/>
 		<fieldset class="line" label="${message:page_template_old}">
-			<part class="clickable">
+			<part class="act-clickable">
 				<link url="${template_url}" action="template" id="${templateid}">
 					<text value="${template_name}"/>
 				</link>

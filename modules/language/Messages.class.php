@@ -1283,4 +1283,6 @@ class Messages {
   const ALIAS = 'ALIAS';
   const TEXT = 'TEXT';
   const APPLY = 'APPLY';
+  const URL = 'URL';
+  const NEW = 'NEW';
 }

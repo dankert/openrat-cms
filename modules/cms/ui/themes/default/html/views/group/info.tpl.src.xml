@@ -4,7 +4,7 @@
 		<fieldset label="${message:NAME}">
 			<text value="${name}"/>
 
-			<part class="clickable">
+			<part class="act-clickable">
 				<link class="btn" subaction="prop" type="edit">
 					<text value="${message:edit}"/>
 				</link>
@@ -13,13 +13,13 @@
 
 		<fieldset label="${message:USERS}">
 			<list list="${users}" key="id" value="name">
-				<part class="clickable">
+				<part class="act-clickable">
 					<link type="open" action="user" id="${id}">
 						<text value="${name}"/>
 					</link>
 				</part>
 			</list>
-			<part class="clickable">
+			<part class="act-clickable">
 				<link class="btn" subaction="memberships" type="edit">
 					<text value="${message:edit}"/>
 				</link>

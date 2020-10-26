@@ -14,14 +14,14 @@
 		</row>
 		<list list="${el}" extract="true">
 			<row class="data">
-				<column class="clickable">
+				<column class="act-clickable">
 					<link type="open" name="${name}" action="model" id="${id}">
 						<image action="model"/>
 						<text value="${name}" maxlength="25"/>
 					</link>
 				</column>
 				<if false="${is_default}">
-					<column class="clickable">
+					<column class="act-clickable">
 						<if present="id">
 							<link type="post" action="model" subaction="setdefault" id="${id}">
 								<text value="${message:make_default}"/>
@@ -39,7 +39,7 @@
 			<set var="default_url"/>
 		</list>
 		<row class="data">
-			<column colspan="2" class="clickable">
+			<column colspan="2" class="act-clickable">
 				<link type="dialog" subaction="add">
 					<image method="add"/>
 					<text value="${message:new}"/>

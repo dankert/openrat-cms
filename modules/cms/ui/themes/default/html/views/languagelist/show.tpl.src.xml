@@ -14,7 +14,7 @@
 		</row>
 		<list list="${el}" extract="true">
 			<row class="data">
-				<column class="clickable">
+				<column class="act-clickable">
 					<image action="language"/>
 					<link type="open" name="${name}" action="language" id="${id}">
 						<text value="${name}" maxlength="25"/>
@@ -24,7 +24,7 @@
 					<text value="${isocode}"/>
 				</column>
 				<if false="${is_default}">
-					<column class="clickable">
+					<column class="act-clickable">
 						<if present="id">
 							<link type="post" action="language" subaction="setdefault" id="${id}">
 								<text value="${message:make_default}"/>
@@ -44,7 +44,7 @@
 			<set var="default_url"/>
 		</list>
 		<row class="data">
-			<column colspan="3" class="clickable">
+			<column colspan="3" class="act-clickable">
 				<link type="dialog" subaction="add">
 					<image method="add"/>
 					<text value="${message:new}"/>

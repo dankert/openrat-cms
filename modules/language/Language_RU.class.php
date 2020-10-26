@@ -1323,5 +1323,7 @@ if you do not know where this mail comes from, please ignore it.',
 'ALIAS'=>'Alias',
 'TEXT'=>'Text',
 'APPLY'=>'Apply',
+'URL'=>'URL',
+'NEW'=>'New',
 ];}
 }

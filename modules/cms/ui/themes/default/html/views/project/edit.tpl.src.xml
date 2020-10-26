@@ -11,7 +11,7 @@
 		</row>
 
 		<row class="data">
-			<column class="clickable">
+			<column class="act-clickable">
 				<link type="open" id="${rootobjectid}" name="" action="folder">
 					<image action="folder"/>
 					<text value="${message:content}"/>
@@ -21,7 +21,7 @@
 
 		<if true="${is_project_admin}">
 			<row class="data">
-				<column class="clickable">
+				<column class="act-clickable">
 					<link type="open" id="${projectid}" name="" action="templatelist">
 						<image action="template"/>
 						<text value="${message:templates}"/>
@@ -29,7 +29,7 @@
 				</column>
 			</row>
 			<row class="data">
-				<column class="clickable">
+				<column class="act-clickable">
 					<link type="open" id="${projectid}" name="" action="languagelist">
 						<image action="language"/>
 						<text value="${message:languages}"/>
@@ -37,7 +37,7 @@
 				</column>
 			</row>
 			<row class="data">
-				<column class="clickable">
+				<column class="act-clickable">
 					<link type="open" id="${projectid}" name="" action="modellist">
 						<image action="model"/>
 						<text value="${message:models}"/>

@@ -14,7 +14,7 @@
 			<column colspan="1">
 				<text value="${message:name}"/>
 			</column>
-			<column class="clickable">
+			<column class="act-clickable">
 				<link class="" type="edit" action="element" subaction="prop" id="${id}">
 					<text value="${name}"/>
 				</link>

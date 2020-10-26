@@ -30,7 +30,7 @@
                   </list>
                 </row>
                 <list list="${rights}" key="aclid" value="acl" extract="true">
-                  <row class="data,clickable">
+                  <row class="data,act-clickable">
                     <column>
                       <if present="groupname">
                         <image action="group"/>

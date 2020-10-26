@@ -16,7 +16,7 @@
     </row>
     <list list="${timeline}" extract="true">
       <row class="data">
-        <column class="clickable">
+        <column class="act-clickable">
           <link type="post" action="start" subaction="projectmenu" id="${projectid}">
             <text value="${projectname}"/>
           </link>

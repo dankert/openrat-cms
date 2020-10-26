@@ -50,7 +50,7 @@
 				</row>
 				<list list="${software}" extract="true">
 					<row class="data">
-						<column class="clickable">
+						<column class="act-clickable">
 							<link type="external" url="${url}">
 								<text value="${name}"/>
 							</link>

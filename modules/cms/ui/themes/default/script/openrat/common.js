@@ -116,7 +116,7 @@ $( function() {
 
         loadPromise.done( function(data) {
 
-			$('.or-breadcrumb').empty().append( data ).find('.or-clickable').orLinkify();
+			$('.or-breadcrumb').empty().append( data ).find('.or-act-clickable').orLinkify();
 
 			// Open the path in the navigator tree
 			$('nav .or-navtree-node').removeClass('or-navtree-node--selected');
@@ -146,13 +146,13 @@ let filterMenus = function ()
 {
     let action = Openrat.Workbench.state.action;
     let id     = Openrat.Workbench.state.id;
-    $('.or-clickable').addClass('dropdown-entry--active');
-    $('.or-clickable.or-filtered').removeClass('dropdown-entry--active').addClass('dropdown-entry--inactive');
+    $('.or-act-clickable').addClass('dropdown-entry--active');
+    $('.or-act-clickable.or-filtered').removeClass('dropdown-entry--active').addClass('dropdown-entry--inactive');
 
-    $('.or-clickable.or-filtered.or-on-action-'+action).addClass('dropdown-entry--active').removeClass('dropdown-entry--inactive');
+    $('.or-act-clickable.or-filtered.or-on-action-'+action).addClass('dropdown-entry--active').removeClass('dropdown-entry--inactive');
 
     // Jeder Menüeintrag bekommt die Id und Parameter.
-    $('.or-clickable.or-filtered a').attr('data-id'    ,id    );
+    $('.or-act-clickable.or-filtered a').attr('data-id'    ,id    );
 
 }
 
@@ -200,7 +200,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function($element) {
 			} ); // All subnodes are getting event listener for open/close
 
 			// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
-			$ul.find('.or-clickable').orLinkify();
+			$ul.find('.or-act-clickable').orLinkify();
 
 			// Open the first node.
 			$ul.find('.or-navtree-node-control').first().click();
@@ -256,7 +256,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 		// Jeden Untermenüpunkt zum Fenstermenü hinzufügen.
 		
 		// Nein, Untermenüs erscheinen jetzt in der View selbst.
-		// $(el).wrap('<div class="entry clickable modal perview" />').parent().appendTo( $(viewEl).closest('div.panel').find('div.header div.dropdown').first() );
+		// $(el).wrap('<div class="entry act-clickable modal perview" />').parent().appendTo( $(viewEl).closest('div.panel').find('div.header div.dropdown').first() );
 	//} );
 	
 	//$(viewEl).find('div.header > a.back').each( function(idx,el)
@@ -307,7 +307,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 			); // All subnodes are getting event listener for open/close
 
 			// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
-			$ul.find('.or-clickable').orLinkify();
+			$ul.find('.or-act-clickable').orLinkify();
 
 			// Open the first node.
 			$ul.find('.or-navtree-node-control').first().click();

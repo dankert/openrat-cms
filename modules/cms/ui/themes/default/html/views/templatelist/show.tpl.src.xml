@@ -7,7 +7,7 @@
     </row>
     <list list="${templates}" extract="true">
       <row class="data">
-        <column class="clickable">
+        <column class="act-clickable">
           <image action="template"/>
           <link type="open" id="${id}" name="${name}" action="template">
             <text value="${name}"/>
@@ -21,7 +21,7 @@
       </row>
     </if>
     <row class="data">
-      <column colspan="1" class="clickable">
+      <column colspan="1" class="act-clickable">
         <link type="dialog" subaction="add">
           <image method="add"/>
           <text value="${message:new}"/>

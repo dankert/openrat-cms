@@ -69,12 +69,12 @@ jQuery.fn.orTree = function (options)
                     $ul.find('li').orTree(settings); // All subnodes are getting event listener for open/close
 
 					/* macht linkify schon
-					$(new_li).find('.clickable a').click( function(event) {
+					$(new_li).find('.act-clickable a').click( function(event) {
 						event.preventDefault(); // Links werden per Javascript geöffnet. Beim Öffnen im neuen Tab hat das aber keine Bedeutung.
 					} );*/
 					registerTreeBranchEvents($ul);
 					// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
-					$ul.find('.or-clickable').orLinkify( {
+					$ul.find('.or-act-clickable').orLinkify( {
 						'openAction':settings.openAction
 					} );
                     $ul.slideDown('fast'); // Einblenden

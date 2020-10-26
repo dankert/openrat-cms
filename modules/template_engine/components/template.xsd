@@ -886,6 +886,7 @@
         <xsd:attribute name="frame" type="xsd:string"/>
         <xsd:attribute name="modal" type="xsd:boolean"/>
         <xsd:attribute name="afterSuccess" type="xsd:string"/>
+        <xsd:attribute name="clickable" type="xsd:boolean"/>
         <xsd:attribute name="request" type="xsd:string"/>
     </xsd:complexType>
     <xsd:element name="list" type="listType"/>

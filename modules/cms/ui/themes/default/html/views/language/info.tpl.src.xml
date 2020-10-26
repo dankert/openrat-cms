@@ -10,7 +10,7 @@
     </fieldset>
 
     <fieldset class="line" label="">
-      <part class="value,clickable">
+      <part class="value,act-clickable">
         <link class="btn" action="language" subaction="prop" type="edit">
           <text value="${message:edit}"/>
         </link>

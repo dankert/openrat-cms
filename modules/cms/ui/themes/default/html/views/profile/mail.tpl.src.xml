@@ -13,7 +13,7 @@
         </part>
       </fieldset>
     </group>
-    <part class="clickable">
+    <part class="act-clickable">
       <link action="profile" subaction="confirmmail" type="dialog">
         <text value="${mail_code}"/>
       </link>

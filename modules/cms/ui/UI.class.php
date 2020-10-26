@@ -57,7 +57,7 @@ class UI
 
         } catch (BadMethodCallException $e) {
             // Action-Method does not exist.
-            Logger::warn( $e->__toString() );
+            Logger::debug( 'Method does not exist',$request->action,$request->method,$e->__toString() );
             Http::noContent();
         } catch (ObjectNotFoundException $e) {
             Logger::debug("Object not found: " . $e->__toString()); // Nur Debug, da dies bei gelöschten Objekten vorkommen kann.

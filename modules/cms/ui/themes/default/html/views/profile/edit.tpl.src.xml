@@ -9,7 +9,7 @@
 		<group title="${message:MENU_PROFILE_MAIL}">
 			<fieldset class="line" label="${message:user_mail}">
 				<text value="${mail}"/>
-				<part class="clickable">
+				<part class="act-clickable">
 					<link type="dialog" class="btn" action="profile" subaction="mail" name="${message:mail}">
 						<text value="${message:edit}"/>
 					</link>

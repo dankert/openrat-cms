@@ -681,7 +681,7 @@ div.or-logo p {
 	font-size: 13px;
 }
 label,
-.or-clickable {
+.or-act-clickable {
 	cursor: pointer;
 }
 /* Drag and Drop */

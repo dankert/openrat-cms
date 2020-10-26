@@ -209,76 +209,85 @@ jQuery.fn.orLinkify = function( options )
 
     // Disable all links in this linkified area.
     // The user is already able to open the link in a new tab.
-    $(this).find('a').click( function(event) {
-        event.preventDefault();
-    } );
-
-    return $(this).click(function()
-	{
-		// Searching for the first link in all children.
-		$(this).find('a').first().each( function() {
-
-			let type = $(this).attr('data-type');
-			
-			// Inaktive Menüpunkte sind natürlich nicht anklickbar.
-			if	( $(this).parent().hasClass('dropdown-entry--inactive') )
-				return;
-
-			switch( type )
-			{
-				/**
-				 * Creating a temporary form element for submitting a POST request.
-				 */
-				case 'post':
-
-					// Create a temporary form element.
-					$form = $('<form />').attr('method','POST').addClass('invisible');
-					$form.data('afterSuccess', $(this).data('afterSuccess'));
-					let params = jQuery.parseJSON( $(this).attr('data-data')  );
-					params.output = 'json';
-
-					// Add input elements...
-					$.each( params, function(key,value) {
-						let $input = $('<input />').attr('type','hidden').attr('name',key).attr('value',value);
-						$form.append( $input );
-					} );
-
-					// Submit the form.
-					let form = new Openrat.Form();
-					form.initOnElement( $form );
-					form.submit();
-
-					break;
-
-				case 'edit':
-				case 'dialog':
-					Openrat.Workbench.startDialog($(this).attr('data-name'),$(this).attr('data-action'),$(this).attr('data-method'),$(this).attr('data-id'),$(this).attr('data-extra') );
-					break;
-
-				case 'external':
-					window.open( $(this).attr('data-url'),' _blank' );
-					break;
-
-				case 'popup':
-					Openrat.Workbench.popupWindow = window.open( $(this).attr('data-url'), 'Popup', 'location=no,menubar=no,scrollbars=yes,toolbar=no,resizable=yes');
-					break;
-
-				case 'help':
-					help(this,$(this).attr('data-url'),$(this).attr('data-suffix') );
-					break;
-
-				case 'fullscreen':
-					fullscreen(this);
-					break;
-
-				case 'open':
-					settings.openAction( $(this).text().trim(),$(this).attr('data-action'),$(this).attr('data-id') );
-					break;
-
-				default:
-					throw "UI error: Unknown link type: "+type+" in link "+$(this).html();
-            }
+	if  ( $(this).is('a') )
+		$(this).click( function(event) {
+			event.preventDefault();
 		} );
+	else
+		$(this).find('a').click( function(event) {
+			event.preventDefault();
+		} );
+
+    return $(this).click(function(event)
+	{
+
+		// Searching for the first link in all children.
+		$el = $(this);
+		if   ( $el.is('a') )
+			$link = $el;
+		else
+			$link = $el.find('a').first();
+
+		let type = $link.attr('data-type');
+
+		// Inaktive Menüpunkte sind natürlich nicht anklickbar.
+		if	( $link.parent().hasClass('dropdown-entry--inactive') )
+			return;
+
+		switch( type )
+		{
+			/**
+			 * Creating a temporary form element for submitting a POST request.
+			 */
+			case 'post':
+
+				// Create a temporary form element.
+				$form = $('<form />').attr('method','POST').addClass('invisible');
+				$form.data('afterSuccess', $link.data('afterSuccess'));
+				let params = jQuery.parseJSON( $link.attr('data-data')  );
+				params.output = 'json';
+
+				// Add input elements...
+				$.each( params, function(key,value) {
+					let $input = $('<input />').attr('type','hidden').attr('name',key).attr('value',value);
+					$form.append( $input );
+				} );
+
+				// Submit the form.
+				let form = new Openrat.Form();
+				form.initOnElement( $form );
+				form.submit();
+
+				break;
+
+			case 'edit':
+			case 'dialog':
+				Openrat.Workbench.startDialog($link.attr('data-name'),$link.attr('data-action'),$link.attr('data-method'),$link.attr('data-id'),$link.attr('data-extra') );
+				break;
+
+			case 'external':
+				window.open( $link.attr('data-url'),' _blank' );
+				break;
+
+			case 'popup':
+				Openrat.Workbench.popupWindow = window.open( $link.attr('data-url'), 'Popup', 'location=no,menubar=no,scrollbars=yes,toolbar=no,resizable=yes');
+				break;
+
+			case 'help':
+				help($link,$link.attr('data-url'),$link.attr('data-suffix') );
+				break;
+
+			case 'fullscreen':
+				fullscreen($link);
+				break;
+
+			case 'open':
+				settings.openAction( $link.text().trim(),$link.attr('data-action'),$link.attr('data-id') );
+				break;
+
+			default:
+				throw "UI error: Unknown link type: "+type+" in link "+$link.html();
+		}
 	});
 };
 
@@ -357,12 +366,12 @@ jQuery.fn.orTree = function (options)
                     $ul.find('li').orTree(settings); // All subnodes are getting event listener for open/close
 
 					/* macht linkify schon
-					$(new_li).find('.clickable a').click( function(event) {
+					$(new_li).find('.act-clickable a').click( function(event) {
 						event.preventDefault(); // Links werden per Javascript geöffnet. Beim Öffnen im neuen Tab hat das aber keine Bedeutung.
 					} );*/
 					registerTreeBranchEvents($ul);
 					// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
-					$ul.find('.or-clickable').orLinkify( {
+					$ul.find('.or-act-clickable').orLinkify( {
 						'openAction':settings.openAction
 					} );
                     $ul.slideDown('fast'); // Einblenden
@@ -2344,7 +2353,7 @@ Openrat.Workbench = new function()
         $(notice).append(toolbar);
 
         if	(name)
-            $(notice).append('<div class="or-notice-name or-clickable"><a href="'+Openrat.Navigator.createShortUrl(type,id)+'" data-type="open" data-action="'+type+'" data-id="'+id+'"><i class="or-notice-action-full or-image-icon or-image-icon--action-'+type+'"></i> '+name+'</a></div>');
+            $(notice).append('<div class="or-notice-name or-act-clickable"><a href="'+Openrat.Navigator.createShortUrl(type,id)+'" data-type="open" data-action="'+type+'" data-id="'+id+'"><i class="or-notice-action-full or-image-icon or-image-icon--action-'+type+'"></i> '+name+'</a></div>');
 
         $(notice).append( '<div class="or-notice-text">'+htmlEntities(msg)+'</div>');
 
@@ -2723,7 +2732,7 @@ $( function() {
 
         loadPromise.done( function(data) {
 
-			$('.or-breadcrumb').empty().append( data ).find('.or-clickable').orLinkify();
+			$('.or-breadcrumb').empty().append( data ).find('.or-act-clickable').orLinkify();
 
 			// Open the path in the navigator tree
 			$('nav .or-navtree-node').removeClass('or-navtree-node--selected');
@@ -2753,13 +2762,13 @@ let filterMenus = function ()
 {
     let action = Openrat.Workbench.state.action;
     let id     = Openrat.Workbench.state.id;
-    $('.or-clickable').addClass('dropdown-entry--active');
-    $('.or-clickable.or-filtered').removeClass('dropdown-entry--active').addClass('dropdown-entry--inactive');
+    $('.or-act-clickable').addClass('dropdown-entry--active');
+    $('.or-act-clickable.or-filtered').removeClass('dropdown-entry--active').addClass('dropdown-entry--inactive');
 
-    $('.or-clickable.or-filtered.or-on-action-'+action).addClass('dropdown-entry--active').removeClass('dropdown-entry--inactive');
+    $('.or-act-clickable.or-filtered.or-on-action-'+action).addClass('dropdown-entry--active').removeClass('dropdown-entry--inactive');
 
     // Jeder Menüeintrag bekommt die Id und Parameter.
-    $('.or-clickable.or-filtered a').attr('data-id'    ,id    );
+    $('.or-act-clickable.or-filtered a').attr('data-id'    ,id    );
 
 }
 
@@ -2807,7 +2816,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function($element) {
 			} ); // All subnodes are getting event listener for open/close
 
 			// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
-			$ul.find('.or-clickable').orLinkify();
+			$ul.find('.or-act-clickable').orLinkify();
 
 			// Open the first node.
 			$ul.find('.or-navtree-node-control').first().click();
@@ -2863,7 +2872,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 		// Jeden Untermenüpunkt zum Fenstermenü hinzufügen.
 		
 		// Nein, Untermenüs erscheinen jetzt in der View selbst.
-		// $(el).wrap('<div class="entry clickable modal perview" />').parent().appendTo( $(viewEl).closest('div.panel').find('div.header div.dropdown').first() );
+		// $(el).wrap('<div class="entry act-clickable modal perview" />').parent().appendTo( $(viewEl).closest('div.panel').find('div.header div.dropdown').first() );
 	//} );
 	
 	//$(viewEl).find('div.header > a.back').each( function(idx,el)
@@ -2914,7 +2923,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 			); // All subnodes are getting event listener for open/close
 
 			// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
-			$ul.find('.or-clickable').orLinkify();
+			$ul.find('.or-act-clickable').orLinkify();
 
 			// Open the first node.
 			$ul.find('.or-navtree-node-control').first().click();
@@ -3292,7 +3301,7 @@ $(document).on('orViewLoaded',function(event, data) {
 Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
 
 	// Links aktivieren...
-	$(element).find('.or-clickable').orLinkify();
+	$(element).find('.or-act-clickable').orLinkify();
 
 });
 
