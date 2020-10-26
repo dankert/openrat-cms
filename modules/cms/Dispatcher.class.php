@@ -354,10 +354,11 @@ class Dispatcher
 
             // Filter all enabled databases
             $databases = array_filter($databases, function ($dbConfig) {
-            	$dbConfig->is('enabled',true);
+            	return $dbConfig->is('enabled',true);
 			});
 
-            $dbids = array_keys( $databases );
+
+			$dbids = array_keys( $databases );
 
             $defaultDbId = Configuration::subset('database-default')->get('default-id' );
 
