@@ -47,6 +47,9 @@ class UI
                 $request->method = 'show';
 			}
 
+            if   ( $request->isAction )
+            	throw new \RuntimeException('The UI does not accept POST requests');
+
             if   ( in_array( $request->action,['index','tree','title']) )
 				$request->isUIAction = true;
 
