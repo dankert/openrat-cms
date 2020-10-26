@@ -64,33 +64,34 @@ class PDODriver
 			throw new DatabaseException('PDO unavailable');
 		}
 
-		$url    = $conf['dsn'     ];
+		$dsn    = $conf['dsn'     ]; // Optional a pre-configured DSN.
 		$user   = $conf['user'    ];
 		$pw     = $conf['password'];
 
-		if   ( !$url ) {
+		if   ( ! $dsn ) {
+			// No DSN is configured, so we are building a DSN.
 			$driver = $conf['driver'];
 
 			if (!in_array($driver,PDO::getAvailableDrivers(),TRUE))
 				throw new DatabaseException('PDO driver '.$driver.' is not available');
 
-			$dsn = [];
+			$dsnParts = [];
 			if   ( $conf['host'] )
-				$dsn[ $driver.':host' ] = $conf['host']; // Hostname for RDBMS with IP-stack
+				$dsnParts[ $driver.':host' ] = $conf['host']; // Hostname for RDBMS with IP-stack
 			elseif   ( $conf['file'] )
-					$dsn[ $driver.':'.$conf['file'] ] = $conf['host']; // Filename for SQLITE
+					$dsnParts[ $driver.':'.$conf['file'] ] = $conf['host']; // Filename for SQLITE
 
 			if   ( $conf['database'] )
-				$dsn['dbname' ] = $conf['database'];
+				$dsnParts['dbname' ] = $conf['database'];
 			if   ( $conf['port'] )
-				$dsn['port' ] = $conf['port'];
+				$dsnParts['port' ] = $conf['port'];
 			if   ( $conf['charset'] )
-				$dsn['charset'] = $conf['charset' ];
+				$dsnParts['charset'] = $conf['charset' ];
 
 			// Building the DSN for PDO.
-			$url = implode('; ',array_map( function($key,$value) {
+			$dsn = implode('; ',array_map( function($key,$value) {
 				return $key.'='.$value;
-			},array_keys($dsn),$dsn));
+			},array_keys($dsnParts),$dsnParts));
 		}
 
 		if   ( ! $conf['prefix'] && ! $conf['suffix'] )
@@ -131,16 +132,16 @@ class PDODriver
 
         try
         {
-            $this->connection = new PDO($url, $user, $pw, $options);
+            $this->connection = new PDO($dsn, $user, $pw, $options);
         }
         catch(\PDOException $e)
         {
-            throw new DatabaseException("Could not connect to database with DSN '$url'",$e);
+            throw new DatabaseException("Could not connect to database with DSN '$dsn'",$e);
         }
 
         // This should never happen, because PDO should throw an exception if the connection fails.
 		if	( !is_object($this->connection) )
-			throw new DatabaseException("Could not connect to database with DSN '$url', Reason: ".PDO::errorInfo() );
+			throw new DatabaseException("Could not connect to database with DSN '$dsn', Reason: ".PDO::errorInfo() );
     }
 
 
