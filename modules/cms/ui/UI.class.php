@@ -70,7 +70,7 @@ class UI
             //Http::notAuthorized("You are not allowed to execute this action.");
         } catch (Exception $e) {
             Logger::warn( $e->__toString() );
-            throw new LogicException("Internal CMS error: ".$e->__toString(),0, $e);
+            throw new LogicException("Internal CMS error",0, $e);
         }
     }
 

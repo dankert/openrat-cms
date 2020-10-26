@@ -67,10 +67,10 @@ if (!headers_sent())
 
     <p>Something went terribly wrong &#x1F61E;</p>
 
-    <?php // Display exceptions only in development mode, because they may contain sensitive internal information like passwords.
-      if (!defined('DEVELOPMENT') || DEVELOPMENT ) { ?>
-    <pre><?php echo $e->__toString(); ?></pre>
-    <?php } ?>
+    <pre><?php // Display exceptions only in development mode, because they may contain sensitive internal information like passwords.
+      if (!defined('DEVELOPMENT') || DEVELOPMENT ) {
+      	echo $e->__toString(); }
+    ?></pre>
 </main>
 
 </body>
