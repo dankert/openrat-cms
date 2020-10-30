@@ -27,7 +27,7 @@
 			<if true="${enableOpenIdConnect}">
 				<group title="${message:login}">
 					<list list="${provider}" key="name" value="label">
-						<link class="btn" type="window" action="login" subaction="oidc" id="${name}">
+						<link class="btn" type="window" clickable="true" action="login" subaction="oidc" id="${name}">
 							<text value="${label}"/>
 						</link>
 					</list>

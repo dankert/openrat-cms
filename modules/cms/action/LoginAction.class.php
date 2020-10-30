@@ -171,7 +171,7 @@ class LoginAction extends BaseAction
 
     	$providerName = $this->request->getRequiredRequestVar('id',RequestParams::FILTER_ALPHANUM);
 
-    	$providerConfig = Configuration::subset(['security']['oidc']['provider'][$providerName]);
+    	$providerConfig = Configuration::subset(['security','oidc','provider',$providerName]);
 
     	$oidc = new OpenIDConnectClient();
     	$oidc->setProviderURL ( $providerConfig->get('url'          ));

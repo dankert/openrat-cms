@@ -40,7 +40,7 @@
             </h2>
             <div class="<?php echo O::escapeHtml('or-collapsible-value or-group-value') ?>"><?php echo O::escapeHtml('') ?>
               <?php foreach((array)$provider as $name=>$label) {  ?>
-                <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('window') ?>" data-action="<?php echo O::escapeHtml('login') ?>" data-method="<?php echo O::escapeHtml('oidc') ?>" data-id="<?php echo O::escapeHtml(''.@$name.'') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/login/'.@$name.'') ?>" class="<?php echo O::escapeHtml('or-link or-btn') ?>"><?php echo O::escapeHtml('') ?>
+                <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('window') ?>" data-action="<?php echo O::escapeHtml('login') ?>" data-method="<?php echo O::escapeHtml('oidc') ?>" data-id="<?php echo O::escapeHtml(''.@$name.'') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/login/'.@$name.'') ?>" class="<?php echo O::escapeHtml('or-link or-btn or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
                   <span><?php echo O::escapeHtml(''.@$label.'') ?>
                   </span>
                 </a>
