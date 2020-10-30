@@ -12,6 +12,9 @@ use cms\model\Group;
 
 
 use configuration\Config;
+use Exception;
+use http\Env\Request;
+use openid_connect\OpenIDConnectClient;
 use util\FileUtils;
 use util\Http;
 use cms\auth\InternalAuth;
@@ -164,6 +167,44 @@ class LoginAction extends BaseAction
 	}
 
 
+	public function oidcView() {
+
+    	$providerName = $this->request->getRequiredRequestVar('id',RequestParams::FILTER_ALPHANUM);
+
+    	$providerConfig = Configuration::subset(['security']['oidc']['provider'][$providerName]);
+
+    	$oidc = new OpenIDConnectClient();
+    	$oidc->setProviderURL ( $providerConfig->get('url'          ));
+    	$oidc->setClientID    ( $providerConfig->get('client_id'    ));
+    	$oidc->setClientSecret( $providerConfig->get('client_secret'));
+
+    	try {
+			$oidc->authenticate();
+			$subjectIdentifier = $oidc->requestUserInfo('sub');
+
+			$user = User::loadWithName( $subjectIdentifier,User::AUTH_TYPE_OIDC,$providerName );
+
+			if   ( ! $user ) {
+				// Create user
+				$user = new User();
+				$user->name   = $subjectIdentifier;
+				$user->type   = User::AUTH_TYPE_OIDC;
+				$user->issuer = $providerName;
+				$user->add();
+
+			}
+
+			Session::setUser( $user );
+
+		} catch( Exception $e) {
+    		throw new \RuntimeException('OpenId-Connect authentication failed',0,$e);
+		}
+
+    	header( 'Location: ./');
+	}
+
+
+
     /**
      * Anzeigen der Loginmaske.
      *
@@ -172,8 +213,6 @@ class LoginAction extends BaseAction
      */
     function loginView()
     {
-        // Hier nie "304 not modified" setzen, da sonst keine
-        // Login-Fehlermeldung erscheinen kann.
         $conf = Configuration::rawConfig();
 
         $sso = $conf['security']['sso'];
@@ -182,6 +221,27 @@ class LoginAction extends BaseAction
         $ssl_trust    = false;
         $ssl_user_var = '';
         extract( $ssl, EXTR_PREFIX_ALL, 'ssl' );
+
+        $oidcList = [];
+
+        $authenticateConfig  = Configuration::subset('authenticate');
+        $authenticateEnabled = $authenticateConfig->is('enable',true);
+
+
+
+        $oidcConfig = Configuration::subset(['security','oidc']);
+
+        if   ( $oidcConfig->is('enabled',true) ) {
+        	foreach ( $oidcConfig->subset('provider')->subsets() as $name=>$providerConfig ) {
+        		if   ( $providerConfig->is('enabled',true)) {
+        			$oidcList[ $name ] = $providerConfig->get('label',$name );
+				}
+			}
+		}
+
+        $this->setTemplateVar('enableUserPasswordLogin',$authenticateEnabled);
+        $this->setTemplateVar('enableOpenIdConnect'    ,(boolean)$oidcList  );
+        $this->setTemplateVar('provider'               ,$oidcList           );
 
         if	( $sso['enable'] )
         {
@@ -245,7 +305,7 @@ class LoginAction extends BaseAction
 
                 $username = $treffer[1];
 
-                $user = User::loadWithName( $username );
+                $user = User::loadWithName( $username,User::AUTH_TYPE_INTERNAL );
 
                 if	( ! $user->isValid( ))
                     throw new \util\exception\SecurityException('authorization failed: user not found: '.$username);
@@ -266,7 +326,7 @@ class LoginAction extends BaseAction
             if	( empty($username) )
                 throw new \util\exception\SecurityException( 'no username in client certificate ('.$ssl_user_var.') (or there is no client certificate...?)' );
 
-            $user = User::loadWithName( $username );
+            $user = User::loadWithName( $username,User::AUTH_TYPE_INTERNAL );
 
             if	( !$user->isValid() )
                 throw new \LogicException( 'unknown username: '.$username );
@@ -395,55 +455,6 @@ class LoginAction extends BaseAction
 	}
 
 
-    /**
-	 * Anzeigen der Loginmaske.
-	 *
-	 * Es wird nur die Loginmaske angezeigt.
-	 * Hier nie "304 not modified" setzen, da sonst keine
-	 * Login-Fehlermeldung erscheinen kann
-	 */
-	function openidView()
-	{
-		$conf = Configuration::rawConfig();
-
-		foreach( $conf['database'] as $dbname=>$dbconf )
-		{
-			if	( is_array($dbconf) && $dbconf['enabled'] )
-				$dbids[$dbname] = array('key'  =>$dbname,
-				                        'value'=>Text::maxLength($dbconf['description']),
-				                        'title'=>$dbconf['description'].(isset($dbconf['host'])?' ('.$dbconf['host'].')':'') );
-		}
-
-		$openid_provider = array();
-		foreach( explode(',',$conf['security']['openid']['provider']['name']) as $provider )
-			$openid_provider[$provider] = Configuration::config('security','openid','provider.'.$provider.'.name');
-		$this->setTemplateVar('openid_providers',$openid_provider);
-		$this->setTemplateVar('openid_user_identity', Configuration::config('security','openid','user_identity'));
-		//$this->setTemplateVar('openid_provider','identity');
-
-
-		if	( empty($dbids) )
-			$this->addNotice('', 0, '', 'no_database_configuration', Action::NOTICE_WARN);
-
-		if	( !isset($_COOKIE['or_username']) )
-			$this->setTemplateVar('login_name',$_COOKIE['or_username']);
-		else
-			$this->setTemplateVar('login_name',$conf['security']['default']['username']);
-
-		$this->setTemplateVar( 'dbids',$dbids );
-
-		$db = DB::get();
-		if	( is_object($db) )
-			$this->setTemplateVar('actdbid',$db->id);
-		else
-			$this->setTemplateVar('actdbid',$conf['database']['default']);
-
-		$this->setTemplateVar('objectid'  ,$this->getRequestVar('objectid'  ,RequestParams::FILTER_NUMBER) );
-		$this->setTemplateVar('projectid' ,$this->getRequestVar('projectid' ,RequestParams::FILTER_NUMBER) );
-		$this->setTemplateVar('modelid'   ,$this->getRequestVar('modelid'   ,RequestParams::FILTER_NUMBER) );
-		$this->setTemplateVar('languageid',$this->getRequestVar('languageid',RequestParams::FILTER_NUMBER) );
-
-	}
 
 
 
@@ -490,171 +501,6 @@ class LoginAction extends BaseAction
 
 	
 
-
-	/**
-	 * Open-Id Login, ?berpr?fen der Anmeldung.<br>
-	 * Spezifikation: http://openid.net/specs/openid-authentication-1_1.html<br>
-	 * Kapitel "4.4. check_authentication"<br>
-	 * <br>
-	 * Im 2. Schritt (Mode "id_res") erfolgte ein Redirect vom Open-Id Provider an OpenRat zur?ck.<br>
-	 * Wir befinden uns nun im darauf folgenden Request des Browsers.<br>
-	 * <br>
-	 * Es muss noch beim OpenId-Provider die Best?tigung eingeholt werden, danach ist der
-	 * Benutzer angemeldet.<br>
-	 */
-	public function openidloginView()
-	{
-		$conf = Configuration::rawConfig();
-		$openId = Session::get('openid');
-
-		if	( !$openId->checkAuthentication() )
-		{
-			throw new \util\exception\SecurityException('OpenId-Login failed' );
-		}
-		
-		//Html::debug($openId);
-		
-		// Anmeldung wurde mit "is_valid:true" best?tigt.
-		// Der Benutzer ist jetzt eingeloggt.
-		$username = $openId->getUserFromIdentiy();
-		
-		Logger::debug("OpenId-Login successful for $username");
-		
-		if	( empty($username) )
-		{
-			// Es konnte kein Benutzername ermittelt werden.
-			throw new \util\exception\SecurityException('no username supplied by openid provider' );
-		}
-		
-		$user = User::loadWithName( $username );
-		
-		if	( $user->userid <=0)
-		{
-			// Benutzer ist (noch) nicht vorhanden.
-			if	( $conf['security']['openid']['add'])  // Anlegen?
-			{
-				$user->name     = $username;
-				$user->add();
-
-				$user->mail     = @$openId->info['email'];
-				$user->fullname = @$openId->info['fullname'];
-				$user->save();  // Um E-Mail zu speichern (wird bei add() nicht gemacht)
-			}
-			else
-			{
-				Logger::debug("OpenId-Login failed for $username");
-				// Benutzer ist nicht in Benutzertabelle vorhanden (und angelegt werden soll er auch nicht).
-				throw new \util\exception\SecurityException('user',$username,'LOGIN_OPENID_FAILED','error',array('name'=>$username) );
-			}
-		}
-		else
-		{
-			// Benutzer ist bereits vorhanden.
-			if	( @$conf['security']['openid']['update_user'])
-			{
-				$user->fullname = @$openId->info['fullname'];
-				$user->mail     = @$openId->info['email'];
-				$user->save();
-			}
-		}
-
-		Logger::info("User login successful: ".$username);
-		$user->setCurrent();  // Benutzer ist jetzt in der Sitzung.
-		
-		$server = Http::getServer();
-		Logger::debug("Redirecting to $server");
-		header('Location: '.FileUtils::slashify($server) );
-		exit();
-	}
-	
-
-	/**
-	 * Login.
-	 */
-	function openidPost()
-	{
-		$conf = Configuration::rawConfig();
-
-		Session::setUser('');
-		
-		if	( $conf['login']['nologin'] )
-			throw new \util\exception\SecurityException('login disabled');
-
-		$openid_user   = $this->getRequestVar('openid_url'    );
-		$loginName     = $this->getRequestVar('login_name'    ,RequestParams::FILTER_ALPHANUM);
-		$loginPassword = $this->getRequestVar('login_password',RequestParams::FILTER_ALPHANUM);
-		$newPassword1  = $this->getRequestVar('password1'     ,RequestParams::FILTER_ALPHANUM);
-		$newPassword2  = $this->getRequestVar('password2'     ,RequestParams::FILTER_ALPHANUM);
-		
-		// Cookie setzen
-		$this->setCookie('or_username',$loginName );
-		
-		// Login mit Open-Id.
-		if	( $this->hasRequestVar('openid_provider') && ($this->getRequestVar('openid_provider') != 'identity' || !empty($openid_user)) )
-		{
-			$openId = new OpenId($this->getRequestVar('openid_provider'),$openid_user);
-			
-			if	( ! $openId->login() )
-			{
-				$this->addNotice('user', 0, $openid_user, 'LOGIN_OPENID_FAILED', 'error', array('name' => $openid_user), array($openId->error));
-				$this->addValidationError('openid_url','');
-				$this->callSubAction('showlogin');
-				return;
-			}
-			
-			Session::set('openid',$openId);
-			//$this->redirect( $openId->getRedirectUrl() );
-			return;
-		}
-	}
-
-
-    /**
-     * Synchronisiert die bisherigen Gruppen des Benutzers mit den Gruppen, die sich aus der Authentifzierung ergeben haben.
-     *
-     * @param $user User Benutzerobjekt
-     * @param $groups array $groups Einfaches Array von Gruppennamen.
-     */
-	private function checkGroups($user, $groups)
-	{
-		if	( $groups == null )
-			return;
-
-		$oldGroups = $user->getGroups();
-		
-		foreach( $oldGroups as $id=>$name)
-		{
-			if	( !in_array($name,$groups) )
-				$user->delGroup($id);
-		}
-		
-		foreach( $groups as $name)
-		{
-			if	( ! in_array($name,$oldGroups))
-			{
-				try
-				{
-					$group = Group::loadWithName( $name );
-					$user->addGroup($group->groupid);
-				}
-				catch (ObjectNotFoundException $e)
-				{
-					// Gruppe fehlt. Anlegen?
-					if	( Configuration::config('ldap','authorize','auto_add' ) )
-					{
-						// Die Gruppe in der OpenRat-Datenbank hinzufuegen.
-						$g = new Group();
-						$g->name = $group;
-						$g->add(); // Gruppe hinzufuegen
-						$user->addGroup($g->groupid); // Und Gruppe dem Benutzer hinzufuegen.
-					}
-					
-				}
-			}
-		}
-	}
-
-	
 	/**
 	 * Login.
 	 * Zuerst wird die Datenbankverbindung aufgebaut und falls notwendig, aktualisiert.
@@ -702,7 +548,7 @@ class LoginAction extends BaseAction
 				else
 				{
 					// Kennwoerter identisch und lang genug.
-					$user = User::loadWithName($loginName);
+					$user = User::loadWithName($loginName,User::AUTH_TYPE_INTERNAL);
 					$user->setPassword( $newPassword1,true );
 					
 					// Das neue gesetzte Kennwort für die weitere Authentifizierung benutzen.
@@ -729,7 +575,6 @@ class LoginAction extends BaseAction
 		$loginOk            = false;
 		$mustChangePassword = false;
 		$tokenFailed        = false;
-		$groups             = null;
 		$lastModule         = null;
 		
 		// Jedes Authentifizierungsmodul durchlaufen, bis ein Login erfolgreich ist.
@@ -751,9 +596,6 @@ class LoginAction extends BaseAction
 				Logger::info('Login successful for '.$loginName);
 				$lastModule = $module;
 				
-				if	( isset($auth->groups ) )
-					$groups = $auth->groups;
-					
 				break; // Login erfolgreich, erstes Modul gewinnt.
 			}
 		}
@@ -772,7 +614,7 @@ class LoginAction extends BaseAction
 			try
 			{
 				// Benutzer über den Benutzernamen laden.
-				$user = User::loadWithName($loginName);
+				$user = User::loadWithName($loginName,User::AUTH_TYPE_INTERNAL,null);
 				$user->loginModuleName = $lastModule;
                 $user->setCurrent();
                 $user->updateLoginTimestamp();
@@ -846,8 +688,6 @@ class LoginAction extends BaseAction
 		{
 		    
 			Logger::debug("Login successful for user '$loginName' from IP $ip");
-
-			$this->checkGroups( $user, $groups );	
 
 			if	( $this->hasRequestVar('remember') )
 			{
@@ -944,41 +784,21 @@ class LoginAction extends BaseAction
 	 * die Benutzerinformationen des angemeldeten Benutzers aus dieser
 	 * Anwendung auslesen k?nnen.
 	 */
-	function userinfo()
+	function userinfoView()
 	{
 		$user = Session::getUser();
+
 		$info = array('username'   => $user->name,
 		              'fullname'   => $user->fullname,
 		              'mail'       => $user->mail,
 		              'telephone'  => $user->tel,
 		              'style'      => $user->style,
-		              'admin'      => $user->isAdmin?'true':'false',
-		              'ldap'       => $user->ldap_dn,
+		              'admin'      => $user->isAdmin,
 		              'groups'     => implode(',',$user->getGroups()),
 		              'description'=> $user->desc
 		             );
 		        
-		// Wenn der HTTP-Parameter "xml" vorhanden ist, dann geben wir die
-		// Informationen per XML aus.     
-		if	( $this->hasRequestVar('xml') )
-		{
-			header('Content-Type: text/xml');
-			echo '<userinfo>';
-			foreach( $info as $n=>$i )
-				echo '<'.$n.'>'.$i.'</'.$n.'>'."\n";
-			echo '</userinfo>';
-			
-		}
-		
-		// Sonst normale Textausgabe im INI-Datei-Format.
-		else
-		{
-			header('Content-Type: text/plain');
-			foreach( $info as $n=>$i )
-				echo $n.'="'.$i."\"\n";
-		}
-		
-		exit; // Fertig.
+		$this->setTemplateVar('userinfo',$info);
 	}
 	
 	
@@ -1009,7 +829,7 @@ class LoginAction extends BaseAction
 			if	( $conf['security']['guest']['enable'] )
 			{
 				$username = $conf['security']['guest']['user'];
-				$user = User::loadWithName($username);
+				$user = User::loadWithName($username,User::AUTH_TYPE_INTERNAL);
 				if	( $user->userid > 0 )
 					$user->setCurrent();
 				else
@@ -1168,7 +988,7 @@ class LoginAction extends BaseAction
 			return;
 		}
 		
-		$user = User::loadWithName( $this->getRequestVar('username') );
+		$user = User::loadWithName( $this->getRequestVar('username'),User::AUTH_TYPE_INTERNAL );
 		if	( $user->isValid() )
 		{
 			$this->addValidationError('username','USER_ALREADY_IN_DATABASE');
@@ -1225,7 +1045,7 @@ class LoginAction extends BaseAction
 			return;
 		}
 		
-		$user = User::loadWithName( $this->getRequestVar("username") );
+		$user = User::loadWithName( $this->getRequestVar("username"),User::AUTH_TYPE_INTERNAL );
 		//		Html::debug($user);
 		Password::delay();
 		if	( $user->isValid() )
@@ -1282,7 +1102,7 @@ class LoginAction extends BaseAction
 		  	return;
 		}
 		
-		$user  = User::loadWithName( $username );
+		$user  = User::loadWithName( $username,User::AUTH_TYPE_INTERNAL );
 			
 		if	( !$user->isValid() )
 		{

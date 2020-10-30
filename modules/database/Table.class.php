@@ -151,15 +151,20 @@ class Table
 		$ddl->query();
 	}
 
-	function dropIndex($indexName, $unique = false)
+	function dropIndex($columnNames)
 	{
-		$ddl = $this->db->sql('DROP' . ($unique ? ' UNIQUE' : '') . ' INDEX ' . $indexName . ';');
+		if (!is_array($columnNames))
+			$columnNames = [$columnNames];
+
+		$indexName = $this->tablePrefix . self::INDEX_PREFIX . '_' . $this->name . '_' . implode('_', $columnNames) . $this->tableSuffix;
+
+		$ddl = $this->db->sql('DROP INDEX ' . $indexName . ' ON ' . $this->getSqlName() . ';');
 		$ddl->query();
 	}
 
 	public function dropUniqueIndex($indexName)
 	{
-		$this->dropIndex($indexName, true);
+		$this->dropIndex($indexName);
 	}
 
 	public function dropPrimaryKey( $columnNames)

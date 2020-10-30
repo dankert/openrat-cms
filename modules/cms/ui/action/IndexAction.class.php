@@ -353,7 +353,7 @@ class IndexAction extends Action
         {
             try
             {
-                $user = User::loadWithName( $username );
+                $user = User::loadWithName( $username,User::AUTH_TYPE_INTERNAL );
                 $user->setCurrent();
                 // Do not update the login timestamp, because this is a readonly request.
                 Logger::info('auto-login for user '.$username);

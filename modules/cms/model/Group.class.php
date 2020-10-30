@@ -81,27 +81,27 @@ class Group extends ModelBase
     /**
      * Read a group.
      * @param $name string name of the group
-     * @return Group
-     * @throws \util\exception\ObjectNotFoundException
+     * @return Group|null
      */
 	public static function loadWithName( $name )
 	{
-		$sql = Db::sql( 'SELECT * FROM {{group}}'.
-		                ' WHERE name={name}' );
+		$sql = Db::sql( <<<SQL
+	SELECT id FROM {{group}}
+	 WHERE name={name}
+SQL
+		);
 		$sql->setString('name',$name );
 
 		$row = $sql->getRow();
-		if	( count($row) > 0 )
-		{
-			$group = new Group( $row['id'] );
+
+		if	( $row ) {
+			$group = new Group($row['id']);
 			$group->load();
-			
+
 			return $group;
 		}
-		else
-		{
-			throw new \util\exception\ObjectNotFoundException( "Group does not exist: ".$name);
-		}
+
+		return null;
 	}
 
 

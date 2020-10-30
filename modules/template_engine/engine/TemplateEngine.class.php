@@ -172,7 +172,7 @@ class TemplateEngine
 		$component->init();
 
 		foreach( $element->childNodes as $child ) {
-			$component->addChildComponent( $this->processElement( $child,$depth ) );
+			$component->addChildComponent( $this->processElement( $child,$depth+1 ) );
 		}
 		return $component;
 	}
@@ -195,7 +195,7 @@ class TemplateEngine
 		$component->init();
 
 		foreach( $element->childNodes as $child ) {
-			$component->addChildComponent( $this->processElement( $child,$depth ) );
+			$component->addChildComponent( $this->processElement( $child,$depth+1 ) );
 		}
 
 		return $component;

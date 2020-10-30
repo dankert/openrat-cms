@@ -45,7 +45,7 @@
               </select>
             </div>
           </section>
-          <?php $if1=(isset($groups)); if($if1) {  ?>
+          <?php $if4=(isset($groups)); if($if4) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?>
               </h3>
@@ -104,12 +104,12 @@
             <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
               <?php foreach((array)$show as $k=>$t) {  ?>
                 <div class="<?php echo O::escapeHtml('or-') ?>"><?php echo O::escapeHtml('') ?>
-                  <?php $if1=($t=='read'); if($if1) {  ?>
+                  <?php $if7=($t=='read'); if($if7) {  ?>
                     <?php  { $$t= 1; ?>
                      <?php } ?>
                     <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml(''.@$t.'') ?>" disabled="<?php echo O::escapeHtml('disabled') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$$t){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
                    <?php } ?>
-                  <?php if(!$if1) {  ?>
+                  <?php if(!$if7) {  ?>
                     <?php  { unset($$t) ?>
                      <?php } ?>
                     <label><?php echo O::escapeHtml('') ?>

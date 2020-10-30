@@ -18,8 +18,10 @@ namespace cms\model;
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+use cms\base\Configuration;
 use cms\base\DB as Db;
 use security\Password;
+use util\exception\ObjectNotFoundException;
 
 
 /**
@@ -29,12 +31,21 @@ use security\Password;
  */
 class User extends ModelBase
 {
+	/**
+	 * Local user database
+	 */
+	const AUTH_TYPE_INTERNAL = 1;
+
+	/**
+	 * OpenId Connect
+	 */
+	const AUTH_TYPE_OIDC = 2;
+
 	var $userid   = 0;
 	var $error    = '';
 
 	var $name     = '';
 	var $fullname = '';
-	var $ldap_dn;
 	var $tel;
 	var $mail;
 	var $desc;
@@ -59,6 +70,9 @@ class User extends ModelBase
 	var $mustChangePassword = false;
 	var $groups = null;
 	var $loginModuleName = null;
+
+	public $issuer = null;
+	public $type = User::AUTH_TYPE_INTERNAL;
 
 	// Konstruktor
 	public function __construct( $userid='' )
@@ -284,15 +298,25 @@ SQL
 	 * Liefert ein neues Benutzerobjekt zur�ck.
 	 * 
 	 * @static 
-	 * @param name Benutzername
+	 * @param $name string Benutzername
+	 * @param $authType int authentication type
+	 * @param $issuer string issuer who created this user
 	 */
-	public static function loadWithName( $name )
+	public static function loadWithName( $name,$authType,$issuer = null )
 	{
-		// Benutzer �ber Namen suchen
-		$sql = Db::sql( 'SELECT id FROM {{user}}'.
-		                ' WHERE name={name}' );
-		//Html::debug($sql);
-		$sql->setString( 'name',$name );
+		// Search user with name
+		$sql = Db::sql( <<<SQL
+			SELECT id FROM {{user}}
+		                WHERE name={name}
+		                  AND auth_type={type}
+		                  AND ( issuer={issuer}
+		                        OR (auth_type=1 AND issuer IS NULL)
+		                      )
+SQL
+		);
+		$sql->setString( 'name'  ,$name     );
+		$sql->setString( 'type'  ,$authType );
+		$sql->setString( 'issuer',$issuer   );
 
 		$userId = $sql->getOne();
 
@@ -330,7 +354,6 @@ SQL
 		$this->name      = $row['name'    ];
 		$this->style     = $row['style'   ];
 		$this->isAdmin   = ( $row['is_admin'] == '1');
-		$this->ldap_dn   = $row['ldap_dn' ];
 		$this->fullname  = $row['fullname'];
 		$this->tel       = $row['tel'     ];
 		$this->mail      = $row['mail'    ];
@@ -401,7 +424,6 @@ SQL
                          UPDATE {{user}}
 		                 SET name={name},
 		                     fullname={fullname},
-		                     ldap_dn ={ldap_dn} ,
 		                     tel     ={tel}     ,
 		                     descr   ={desc}    ,
 		                     mail    ={mail}    ,
@@ -416,7 +438,6 @@ SQL
  );
 		$sql->setString ( 'name'    ,$this->name    );
 		$sql->setString ( 'fullname',$this->fullname);
-		$sql->setString ( 'ldap_dn' ,$this->ldap_dn );
 		$sql->setString ( 'tel'     ,$this->tel     );
 		$sql->setString ( 'desc'    ,$this->desc    );
 		$sql->setString ( 'mail'    ,$this->mail    );
@@ -438,21 +459,24 @@ SQL
 	 *
 	 * @param String $name Benutzername
 	 */
-	function add( $name = '' )
+	public function add()
 	{
-		if	( $name != '' )
-			$this->name = $name;
-
-		$db = \cms\base\DB::get();
-
-		$sql = $db->sql('SELECT MAX(id) FROM {{user}}');
+		$sql = Db::sql( <<<SQL
+	SELECT MAX(id) FROM {{user}}
+SQL
+		);
 		$this->userid = intval($sql->getOne())+1;
 
-		$sql = $db->sql('INSERT INTO {{user}}'.
-		               ' (id,name,password_hash,ldap_dn,fullname,tel,mail,descr,style,is_admin,password_salt)'.
-		               " VALUES( {userid},{name},'','','','','','','default',0,'' )" );
-		$sql->setInt   ('userid',$this->userid);
-		$sql->setString('name'  ,$this->name  );
+		$sql = Db::sql( <<<SQL
+	INSERT INTO {{user}}
+		(id,name,password_hash,fullname,tel,mail,descr,style,is_admin,password_salt,auth_type,issuer)
+		VALUES( {userid},{name},'','','','','','default',0,'',{type},{issuer} )
+SQL
+		);
+		$sql->setInt         ('userid',$this->userid );
+		$sql->setString      ('name'  ,$this->name   );
+		$sql->setStringOrNull('issuer',$this->issuer );
+		$sql->setString      ('type'  ,$this->type   );
 
 		// Datenbankbefehl ausfuehren
 		$sql->query();
@@ -465,30 +489,59 @@ SQL
 	
 
 	/**
-	 * Zu einem neuen Benutzer automatisch Gruppen hinzufuegen.
-	 * Diese Methode wird automatisch in "add()" aufgerufen.
+	 * Enrich a new user with groups.
+	 *
+	 * Called from add()
 	 */
-	function addNewUserGroups()
+	protected function addNewUserGroups()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
-		$groupNames = explode(',',@$conf['security']['newuser']['groups']);
-		
-		if	( count($groupNames) == 0 )
-			return; // Nichts zu tun.
-			
-		$db = \cms\base\DB::get();
+		$newUserConfig = Configuration::subset( ['security','newuser'] );
+		$templateUser = $newUserConfig->get('copy_user');
 
-		$groupNames = "'".implode("','",$groupNames)."'";
-		$sql = $db->sql("SELECT id FROM {{group}} WHERE name IN($groupNames)");
-		$groupIds = array_unique( $sql->getCol() );
-		
-		// Wir brauchen hier nicht weiter pr�fen, ob der Benutzer eine Gruppe schon hat, denn
-		// - passiert dies nur bei der Neuanlage eines Benutzers
-		// - Enth�lt die Group-Id-Liste eine ID nur 1x.
+		$userToCopy = null;
 
-		// Gruppen diesem Benutzer zuordnen.
-		foreach( $groupIds as $groupId )
-			$this->addGroup( $groupId );
+		if   ( is_int($templateUser)) {
+			$userToCopy = new User( $templateUser );
+			try {
+				$userToCopy->load();
+			} catch( ObjectNotFoundException $onfe) {
+				$userToCopy = null;
+			}
+		}elseif ( is_string($templateUser)) {
+			$userToCopy = User::loadWithName( $templateUser,User::AUTH_TYPE_INTERNAL );
+		}
+
+		if   ( $userToCopy ) {
+			foreach( $userToCopy->getGroupIds() as $groupId ) {
+				$this->addGroup( $groupId );
+			}
+
+			$this->fullname = $userToCopy->fullname;
+			$this->desc     = $userToCopy->desc;
+			$this->style    = $userToCopy->style;
+			$this->mail     = $userToCopy->mail;
+			$this->tel      = $userToCopy->tel;
+			$this->language = $userToCopy->language;
+			$this->timezone = $userToCopy->timezone;
+		}
+
+
+		foreach ( $newUserConfig->get('groups',[]) as $group) {
+
+			if   ( is_int($group)) {
+				$groupToAdd = new Group( $group );
+				$groupToAdd->load();
+				if   ( ! $groupToAdd->groupid )
+					$groupToAdd = null;
+			}
+			elseif ( is_string($group)) {
+				$groupToAdd = Group::loadWithName($group);
+			}
+
+			if   ( $groupToAdd )
+				$this->addGroup( $groupToAdd->groupid );
+		}
+		
 	}
 
 
@@ -564,7 +617,11 @@ SQL
 	 */
 	public function getProperties()
 	{
-	    return parent::getProperties() + array('id'=>$this->userid,'is_admin'=> $this->isAdmin);
+	    return parent::getProperties() + [
+	    	'id'        => $this->userid,
+			'is_admin'  => $this->isAdmin,
+			'auth_type' => ($this->type==User::AUTH_TYPE_INTERNAL?'local':'remote')
+		];
 	}
 
 

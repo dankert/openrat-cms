@@ -19,7 +19,7 @@
             </span>
           </th>
         </tr>
-        <?php $if1=(isset($up_url)); if($if1) {  ?>
+        <?php $if3=(isset($up_url)); if($if3) {  ?>
           <tr class="<?php echo O::escapeHtml('or-data or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
             <td><?php echo O::escapeHtml('') ?>
               <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('open') ?>" data-action="<?php echo O::escapeHtml('folder') ?>" data-method="<?php echo O::escapeHtml('') ?>" data-id="<?php echo O::escapeHtml(''.@$parentid.'') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/folder/'.@$parentid.'') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
@@ -55,7 +55,7 @@
             </td>
           </tr>
          <?php } ?>
-        <?php $if1=(($object)==FALSE); if($if1) {  ?>
+        <?php $if3=(($object)==FALSE); if($if3) {  ?>
           <tr><?php echo O::escapeHtml('') ?>
             <td colspan="<?php echo O::escapeHtml('2') ?>"><?php echo O::escapeHtml('') ?>
               <span><?php echo O::escapeHtml(''.@O::lang('NOT_FOUND').'') ?>

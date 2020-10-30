@@ -16,57 +16,81 @@
 				<text value="${config:login/motd}"/>
 			</part>
 		</if>
-		<if true="${config:login/nologin}">
-			<part class="message error">
-				<text value="${message:LOGIN_NOLOGIN_DESC}"/>
-			</part>
-		</if>
 		<if true="${config:security/readonly}">
 			<part class="message warn">
 				<text value="${message:READONLY_DESC}"/>
 			</part>
 		</if>
+
 		<if false="${config:login/nologin}">
-			<fieldset label="${message:USER_USERNAME}">
-				<if not="true" present="force_username">
-					<input type="text" name="login_name" class="name" value="" hint="${message:USER_USERNAME}" size="20"
-						   maxlength="128" focus="true" required="true"/>
+
+			<if true="${enableOpenIdConnect}">
+				<group title="${message:login}">
+					<list list="${provider}" key="name" value="label">
+						<link class="btn" type="window" action="login" subaction="oidc" id="${name}">
+							<text value="${label}"/>
+						</link>
+					</list>
+				</group>
+			</if>
+
+			<if true="${enableUserPasswordLogin}">
+				<group title="${message:USER_USERNAME}">
+					<fieldset label="${message:USER_USERNAME}">
+						<if not="true" present="force_username">
+							<input type="text" name="login_name" class="name" value="" hint="${message:USER_USERNAME}"
+								   size="20"
+								   maxlength="128" focus="true" required="true"/>
+						</if>
+						<else>
+							<hidden name="login_name"/>
+							<text value="${force_username}"/>
+						</else>
+					</fieldset>
+					<fieldset label="${message:USER_PASSWORD}">
+						<password name="login_password" class="name" default="" size="20"
+								  hint="${message:USER_PASSWORD}"
+								  required="true"/>
+						<checkbox name="remember" default="false" label="${message:REMEMBER_ME}"/>
+					</fieldset>
+				</group>
+
+				<group title="${message:USER_NEW_PASSWORD}" open="false" show="false">
+					<fieldset label="${message:USER_NEW_PASSWORD}">
+						<password name="password1" default="" size="25"
+								  minlength="${config:security/password/min_length}"
+								  hint="${message:USER_NEW_PASSWORD}"/>
+						<password name="password2" default="" size="25"
+								  minlength="${config:security/password/min_length}"
+								  hint="${message:USER_NEW_PASSWORD_REPEAT}"/>
+					</fieldset>
+				</group>
+
+				<group title="${message:USER_TOKEN}" open="false" show="false">
+					<fieldset label="${message:USER_TOKEN}">
+						<input name="user_token" default="" size="25" maxlength="30"/>
+					</fieldset>
+				</group>
+
+				<if value="${dbids}" greaterthan="1">
+					<!-- More than 1 database available. -->
+					<group title="${message:DATABASE}" icon="database" open="true">
+						<fieldset label="${message:DATABASE}">
+							<selectbox name="dbid" list="dbids"/>
+						</fieldset>
+					</group>
 				</if>
 				<else>
-					<hidden name="login_name"/>
-					<text value="${force_username}"/>
+					<!-- Only 1 database is available. No input necessary. -->
+					<hidden name="dbid"/>
 				</else>
-			</fieldset>
-			<fieldset label="${message:USER_PASSWORD}">
-				<password name="login_password" class="name" default="" size="20" hint="${message:USER_PASSWORD}"
-						  required="true"/>
-				<checkbox name="remember" default="false" label="${message:REMEMBER_ME}"/>
-			</fieldset>
-		</if>
-		<group title="${message:USER_NEW_PASSWORD}" open="false" show="false">
-			<fieldset label="${message:USER_NEW_PASSWORD}">
-				<password name="password1" default="" size="25" minlength="${config:security/password/min_length}"
-						  hint="${message:USER_NEW_PASSWORD}"/>
-				<password name="password2" default="" size="25" minlength="${config:security/password/min_length}"
-						  hint="${message:USER_NEW_PASSWORD_REPEAT}"/>
-			</fieldset>
-		</group>
-		<group title="${message:USER_TOKEN}" open="false" show="false">
-			<fieldset label="${message:USER_TOKEN}">
-				<input name="user_token" default="" size="25" maxlength="30"/>
-			</fieldset>
-		</group>
-		<if value="${dbids}" greaterthan="1">
-			<!-- More than 1 database available. -->
-			<group title="${message:DATABASE}" icon="database" open="true">
-				<fieldset label="${message:DATABASE}">
-					<selectbox name="dbid" list="dbids"/>
-				</fieldset>
-			</group>
+			</if>
+
 		</if>
 		<else>
-			<!-- Only 1 database is available. No input necessary. -->
-			<hidden name="dbid"/>
+			<part class="message error">
+				<text value="${message:LOGIN_NOLOGIN_DESC}"/>
+			</part>
 		</else>
 	</form>
 </output>

@@ -9,7 +9,7 @@ abstract class DbVersion
 	const TYPE_MYSQL    = 1;
 	const TYPE_POSTGRES = 2;
 	const TYPE_SQLITE   = 3;
-	const TYPE_ORACLE   = 4;
+	const TYPE_ORACLE   = 4; // Attention: ORACLE is NOT really supported.
 
 	private $db;
 	private $tablePrefix;
@@ -34,7 +34,7 @@ abstract class DbVersion
 					$dsnParts = explode(':', $db->conf['dsn']);
 					$driver = $dsnParts[0];
 				}else {
-					$driver = $db['driver'];
+					$driver = $db->conf['driver'];
 				}
 				switch ($driver) {
 					case 'mysql':

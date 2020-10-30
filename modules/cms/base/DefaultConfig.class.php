@@ -374,30 +374,6 @@ class DefaultConfig {
 							'auto_extend' => true,
 						],
 				],
-			'ldap' =>
-				[ 
-					'host' => 'localhost',
-					'port' => '389',
-					'protocol' => '2',
-					'dn' => '',
-					'search' =>
-						[ 
-							'anonymous' => true,
-							'user' => 'uid=openrat,ou=users,dc=example,dc=com',
-							'password' => 'verysecret',
-							'basedn' => 'dc=example,dc=com',
-							'filter' => '(uid={user})',
-							'aliases' => true,
-							'timeout' => 30,
-							'add' => true,
-						],
-					'authorize' =>
-						[ 
-							'group_filter' => '(memberUid={dn})',
-							'group_name' => 'cn',
-							'auto_add' => true,
-						],
-				],
 			'login' =>
 				[ 
 					'motd' => '',
@@ -589,9 +565,8 @@ class DefaultConfig {
 						[ 
 							'modules' =>
 								[ 
-									0 => 'LdapUserDN',
-									1 => 'Database',
-									2 => 'Internal',
+									'Database',
+									'Internal'
 								],
 						],
 					'newuser' =>
@@ -631,31 +606,24 @@ class DefaultConfig {
 							'client_cert_dn_env' => 'SSL_CLIENT_S_DN_CN',
 						],
 					'openid' =>
-						[ 
-							'enable' => false,
-							'add' => false,
-							'logo_url' => 'http://openid.net/login-bg.gif',
-							'trust_root' => '0',
-							'trusted_server' => '0',
-							'update_user' => true,
-							'user_identity' => true,
-							'provider' =>
-								[ 
-									'name' => 'google',
-									'google' =>
-										[ 
-											'xrds_uri' => 'http://google.com/accounts/o8/id',
-											'map_attribute' => 'email',
-											'name' => 'Google',
-											'map_internal' => 'mail',
-										],
-									'yahoo' =>
-										[ 
-											'xrds_uri' => 'http://??????',
-											'map_attribute' => 'usename',
-											'map_internal' => 'mail',
-										],
-								],
+						[
+							// Google has discontinued OpenID support as of July 22nd 2015
+						],
+					'oidc' =>
+						[
+							// OpenID connect
+							'enabled' => true,
+							'provider' => [
+								'google' => [
+									'enabled' => false,
+									'label' => 'Google',
+									'url' => 'https://acounts.google.com',
+									'client_id' => 'xyz',
+									'client_secret' => 'mysecret'
+								]
+
+							],
+							'add'=>true
 						],
 					'sso' =>
 						[ 

@@ -74,6 +74,9 @@ jQuery.fn.orLinkify = function( options )
 			case 'external':
 				window.open( $link.attr('data-url'),' _blank' );
 				break;
+			case 'window':
+				window.location.href = Openrat.Workbench.createUrl($link.attr('data-action'),$link.attr('data-method'),$link.attr('data-id'));
+				break;
 
 			case 'popup':
 				Openrat.Workbench.popupWindow = window.open( $link.attr('data-url'), 'Popup', 'location=no,menubar=no,scrollbars=yes,toolbar=no,resizable=yes');

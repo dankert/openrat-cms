@@ -9,7 +9,7 @@
         <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-menu') ?>"><?php echo O::escapeHtml('') ?>
         </i>
       </div>
-      <?php $if1=(isset($dbname)); if($if1) {  ?>
+      <?php $if4=(isset($dbname)); if($if4) {  ?>
         <div class="<?php echo O::escapeHtml('or-toolbar-icon or-menu-category') ?>"><?php echo O::escapeHtml('') ?>
           <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--database') ?>"><?php echo O::escapeHtml('') ?>
           </i>
@@ -27,7 +27,7 @@
           </div>
         </div>
        <?php } ?>
-      <?php $if1=($isLoggedIn); if($if1) {  ?>
+      <?php $if4=($isLoggedIn); if($if4) {  ?>
         <div class="<?php echo O::escapeHtml('or-toolbar-icon or-act-clickable or-filtered or-on-action-folder or-on-action-page or-on-action-file or-on-action-projectlist or-on-action-templatelist or-on-action-userlist or-on-action-grouplist or-on-action-languagelist or-on-action-modellist') ?>"><?php echo O::escapeHtml('') ?>
           <a title="<?php echo O::escapeHtml(''.@O::lang('menu_new_desc').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('add') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('add') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'add\'}') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
             <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-add') ?>"><?php echo O::escapeHtml('') ?>
@@ -35,7 +35,7 @@
           </a>
         </div>
        <?php } ?>
-      <?php $if1=($isLoggedIn); if($if1) {  ?>
+      <?php $if4=($isLoggedIn); if($if4) {  ?>
         <div class="<?php echo O::escapeHtml('or-toolbar-icon or-act-clickable or-filtered or-on-action-folder or-on-action-page or-on-action-file or-on-action-image or-on-action-text or-on-action-pageelement or-on-action-template') ?>"><?php echo O::escapeHtml('') ?>
           <a title="<?php echo O::escapeHtml(''.@O::lang('menu_pub_desc').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('pub') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('pub') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'pub\'}') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
             <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-publish') ?>"><?php echo O::escapeHtml('') ?>
@@ -43,7 +43,7 @@
           </a>
         </div>
        <?php } ?>
-      <?php $if1=($isLoggedIn); if($if1) {  ?>
+      <?php $if4=($isLoggedIn); if($if4) {  ?>
         <div class="<?php echo O::escapeHtml('or-toolbar-icon or-menu-category') ?>"><?php echo O::escapeHtml('') ?>
           <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-file') ?>"><?php echo O::escapeHtml('') ?>
           </i>
@@ -159,7 +159,7 @@
           </div>
         </div>
        <?php } ?>
-      <?php $if1=($isLoggedIn); if($if1) {  ?>
+      <?php $if4=($isLoggedIn); if($if4) {  ?>
         <div class="<?php echo O::escapeHtml('or-toolbar-icon or-menu-category') ?>"><?php echo O::escapeHtml('') ?>
           <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-edit or-menu-icon') ?>"><?php echo O::escapeHtml('') ?>
           </i>
@@ -247,7 +247,7 @@
           </div>
         </div>
        <?php } ?>
-      <?php $if1=($isLoggedIn); if($if1) {  ?>
+      <?php $if4=($isLoggedIn); if($if4) {  ?>
         <div class="<?php echo O::escapeHtml('or-toolbar-icon or-menu-category') ?>"><?php echo O::escapeHtml('') ?>
           <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-extra') ?>"><?php echo O::escapeHtml('') ?>
           </i>
@@ -357,7 +357,7 @@
         <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--dropdown or-menu-dropdown-icon') ?>"><?php echo O::escapeHtml('') ?>
         </i>
         <div class="<?php echo O::escapeHtml('or-dropdown') ?>"><?php echo O::escapeHtml('') ?>
-          <?php $if1=($isLoggedIn); if($if1) {  ?>
+          <?php $if6=($isLoggedIn); if($if6) {  ?>
             <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
               <a title="<?php echo O::escapeHtml(''.@O::lang('menu_PROFILE_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('profile') ?>" data-method="<?php echo O::escapeHtml('edit') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('profile') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('edit') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':\'profile\',\'dialogMethod\':\'edit\'}') ?>" href="<?php echo O::escapeHtml('#/profile') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
                 <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-user') ?>"><?php echo O::escapeHtml('') ?>
@@ -413,7 +413,7 @@
               </a>
             </div>
            <?php } ?>
-          <?php if(!$if1) {  ?>
+          <?php if(!$if6) {  ?>
             <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
               <a title="<?php echo O::escapeHtml(''.@O::lang('USER_LOGIN_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('login') ?>" data-method="<?php echo O::escapeHtml('login') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('login') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('login') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':\'login\',\'dialogMethod\':\'login\'}') ?>" href="<?php echo O::escapeHtml('#/login') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
                 <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-user') ?>"><?php echo O::escapeHtml('') ?>
@@ -425,7 +425,7 @@
            <?php } ?>
         </div>
       </div>
-      <?php $if1=($isLoggedIn); if($if1) {  ?>
+      <?php $if4=($isLoggedIn); if($if4) {  ?>
         <div class="<?php echo O::escapeHtml('or-toolbar-icon or-menu-category or-search') ?>"><?php echo O::escapeHtml('') ?>
           <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-search') ?>"><?php echo O::escapeHtml('') ?>
           </i>

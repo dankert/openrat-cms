@@ -33,7 +33,7 @@
         </tr>
         <?php foreach((array)$diff as $list_key=>$list_value) { extract($list_value); ?>
           <tr class="<?php echo O::escapeHtml('or-diff') ?>"><?php echo O::escapeHtml('') ?>
-            <?php $if1=(isset($left)); if($if1) {  ?>
+            <?php $if5=(isset($left)); if($if5) {  ?>
               <td width="<?php echo O::escapeHtml('5%') ?>" class="<?php echo O::escapeHtml('or-line') ?>"><?php echo O::escapeHtml('') ?>
                 <tt><?php echo O::escapeHtml(''.@$left['line'].'') ?>
                 </tt>
@@ -43,13 +43,13 @@
                 </span>
               </td>
              <?php } ?>
-            <?php if(!$if1) {  ?>
+            <?php if(!$if5) {  ?>
               <td width="<?php echo O::escapeHtml('50%') ?>" colspan="<?php echo O::escapeHtml('2') ?>" class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(' ') ?>
                 </span>
               </td>
              <?php } ?>
-            <?php $if1=(isset($right)); if($if1) {  ?>
+            <?php $if5=(isset($right)); if($if5) {  ?>
               <td width="<?php echo O::escapeHtml('5%') ?>" class="<?php echo O::escapeHtml('or-line') ?>"><?php echo O::escapeHtml('') ?>
                 <tt><?php echo O::escapeHtml(''.@$right['line'].'') ?>
                 </tt>
@@ -59,7 +59,7 @@
                 </span>
               </td>
              <?php } ?>
-            <?php if(!$if1) {  ?>
+            <?php if(!$if5) {  ?>
               <td width="<?php echo O::escapeHtml('50%') ?>" colspan="<?php echo O::escapeHtml('2') ?>" class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(' ') ?>
                 </span>

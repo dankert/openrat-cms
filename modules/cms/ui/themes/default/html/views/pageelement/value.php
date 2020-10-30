@@ -12,7 +12,7 @@
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('value_time') ?>" value="<?php echo O::escapeHtml(''.@$value_time.'') ?>" /><?php echo O::escapeHtml('') ?>
       <span class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml(''.@$desc.'') ?>
       </span>
-      <?php $if1=($type=='date'); if($if1) {  ?>
+      <?php $if3=($type=='date'); if($if3) {  ?>
         <section class="<?php echo O::escapeHtml('or-group or-collapsible or-collapsible--is-open or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>
           <h2 class="<?php echo O::escapeHtml('or-collapsible-title or-group-title or-collapsible-act-switch') ?>"><?php echo O::escapeHtml(''.@O::lang('date').'') ?>
             <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-closed or-collapsible--on-closed') ?>"><?php echo O::escapeHtml('') ?>
@@ -40,7 +40,7 @@
           </div>
         </section>
        <?php } ?>
-      <?php $if1=($type=='text'); if($if1) {  ?>
+      <?php $if3=($type=='text'); if($if3) {  ?>
         <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
           <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?>
           </h3>
@@ -49,9 +49,9 @@
           </div>
         </section>
        <?php } ?>
-      <?php $if1=($type=='longtext'); if($if1) {  ?>
+      <?php $if3=($type=='longtext'); if($if3) {  ?>
         <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('format') ?>" value="<?php echo O::escapeHtml(''.@$format.'') ?>" /><?php echo O::escapeHtml('') ?>
-        <?php $if1=(isset($preview)); if($if1) {  ?>
+        <?php $if4=(isset($preview)); if($if4) {  ?>
           <div class="<?php echo O::escapeHtml('or-preview') ?>"><?php echo O::escapeHtml('') ?>
             <section class="<?php echo O::escapeHtml('or-group or-collapsible or-collapsible--is-open or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>
               <h2 class="<?php echo O::escapeHtml('or-collapsible-title or-group-title or-collapsible-act-switch') ?>"><?php echo O::escapeHtml(''.@O::lang('page_preview').'') ?>
@@ -67,16 +67,16 @@
             </section>
           </div>
          <?php } ?>
-        <?php $if1=($editor=='markdown'); if($if1) {  ?>
+        <?php $if4=($editor=='markdown'); if($if4) {  ?>
           <textarea name="<?php echo O::escapeHtml('text') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-markdown-editor') ?>"><?php echo O::escapeHtml(''.@$text.'') ?>
           </textarea>
          <?php } ?>
-        <?php $if1=($editor=='html'); if($if1) {  ?>
+        <?php $if4=($editor=='html'); if($if4) {  ?>
           <textarea name="<?php echo O::escapeHtml('text') ?>" id="<?php echo O::escapeHtml('pageelement_edit_editor') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-html-editor') ?>"><?php echo ''.@$text.'' ?>
           </textarea>
          <?php } ?>
-        <?php $if1=($editor=='wiki'); if($if1) {  ?>
-          <?php $if1=(isset($languagetext)); if($if1) {  ?>
+        <?php $if4=($editor=='wiki'); if($if4) {  ?>
+          <?php $if5=(isset($languagetext)); if($if5) {  ?>
             <section class="<?php echo O::escapeHtml('or-group or-collapsible or-collapsible--is-open or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>
               <h2 class="<?php echo O::escapeHtml('or-collapsible-title or-group-title or-collapsible-act-switch') ?>"><?php echo O::escapeHtml(''.@$languagename.'') ?>
                 <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-closed or-collapsible--on-closed') ?>"><?php echo O::escapeHtml('') ?>
@@ -185,12 +185,12 @@
             </div>
           </section>
          <?php } ?>
-        <?php $if1=($editor=='text'); if($if1) {  ?>
+        <?php $if4=($editor=='text'); if($if4) {  ?>
           <textarea name="<?php echo O::escapeHtml('text') ?>" class="<?php echo O::escapeHtml('or-input or-editor raw-editor') ?>"><?php echo O::escapeHtml(''.@$text.'') ?>
           </textarea>
          <?php } ?>
        <?php } ?>
-      <?php $if1=($type=='link'); if($if1) {  ?>
+      <?php $if3=($type=='link'); if($if3) {  ?>
         <section class="<?php echo O::escapeHtml('or-group or-collapsible or-collapsible--is-open or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>
           <h2 class="<?php echo O::escapeHtml('or-collapsible-title or-group-title or-collapsible-act-switch') ?>"><?php echo O::escapeHtml('') ?>
           </h2>
@@ -219,7 +219,7 @@
           </div>
         </section>
        <?php } ?>
-      <?php $if1=($type=='list'); if($if1) {  ?>
+      <?php $if3=($type=='list'); if($if3) {  ?>
         <section class="<?php echo O::escapeHtml('or-group or-collapsible or-collapsible--is-open or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>
           <h2 class="<?php echo O::escapeHtml('or-collapsible-title or-group-title or-collapsible-act-switch') ?>"><?php echo O::escapeHtml('') ?>
           </h2>
@@ -235,7 +235,7 @@
           </div>
         </section>
        <?php } ?>
-      <?php $if1=($type=='insert'); if($if1) {  ?>
+      <?php $if3=($type=='insert'); if($if3) {  ?>
         <section class="<?php echo O::escapeHtml('or-group or-collapsible or-collapsible--is-open or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>
           <h2 class="<?php echo O::escapeHtml('or-collapsible-title or-group-title or-collapsible-act-switch') ?>"><?php echo O::escapeHtml('') ?>
           </h2>
@@ -251,7 +251,7 @@
           </div>
         </section>
        <?php } ?>
-      <?php $if1=($type=='number'); if($if1) {  ?>
+      <?php $if3=($type=='number'); if($if3) {  ?>
         <section class="<?php echo O::escapeHtml('or-group or-collapsible or-collapsible--is-open or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>
           <h2 class="<?php echo O::escapeHtml('or-collapsible-title or-group-title or-collapsible-act-switch') ?>"><?php echo O::escapeHtml('') ?>
           </h2>
@@ -263,7 +263,7 @@
           </div>
         </section>
        <?php } ?>
-      <?php $if1=($type=='select'); if($if1) {  ?>
+      <?php $if3=($type=='select'); if($if3) {  ?>
         <section class="<?php echo O::escapeHtml('or-group or-collapsible or-collapsible--is-open or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>
           <h2 class="<?php echo O::escapeHtml('or-collapsible-title or-group-title or-collapsible-act-switch') ?>"><?php echo O::escapeHtml('') ?>
           </h2>
@@ -279,9 +279,9 @@
           </div>
         </section>
        <?php } ?>
-      <?php $if1=($type=='longtext'); if($if1) {  ?>
-        <?php $if1=($editor=='wiki'); if($if1) {  ?>
-          <?php $if1=(isset($languages)); if($if1) {  ?>
+      <?php $if3=($type=='longtext'); if($if3) {  ?>
+        <?php $if4=($editor=='wiki'); if($if4) {  ?>
+          <?php $if5=(isset($languages)); if($if5) {  ?>
             <section class="<?php echo O::escapeHtml('or-group or-collapsible or-collapsible--is-open or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>
               <h2 class="<?php echo O::escapeHtml('or-collapsible-title or-group-title or-collapsible-act-switch') ?>"><?php echo O::escapeHtml(''.@O::lang('editor_show_language').'') ?>
                 <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-closed or-collapsible--on-closed') ?>"><?php echo O::escapeHtml('') ?>
@@ -330,7 +330,7 @@
           </i>
         </h2>
         <div class="<?php echo O::escapeHtml('or-collapsible-value or-group-value') ?>"><?php echo O::escapeHtml('') ?>
-          <?php $if1=(isset($release)); if($if1) {  ?>
+          <?php $if4=(isset($release)); if($if4) {  ?>
             <div class="<?php echo O::escapeHtml('or-') ?>"><?php echo O::escapeHtml('') ?>
               <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('release') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$release){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
               <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
@@ -339,7 +339,7 @@
               </label>
             </div>
            <?php } ?>
-          <?php $if1=(isset($publish)); if($if1) {  ?>
+          <?php $if4=(isset($publish)); if($if4) {  ?>
             <div class="<?php echo O::escapeHtml('or-') ?>"><?php echo O::escapeHtml('') ?>
               <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('publish') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$publish){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
               <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>

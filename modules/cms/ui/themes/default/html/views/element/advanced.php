@@ -1,6 +1,6 @@
 <?php /* THIS FILE IS GENERATED from advanced.tpl.src.xml - DO NOT CHANGE */ defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
-  <?php $if1=(O::config('security','disable_dynamic_code')); if($if1) {  ?>
-    <?php $if1=(!1); if($if1) {  ?>
+  <?php $if2=(O::config('security','disable_dynamic_code')); if($if2) {  ?>
+    <?php $if3=(!1); if($if3) {  ?>
       <div class="<?php echo O::escapeHtml('or-message warn') ?>"><?php echo O::escapeHtml('') ?>
         <span><?php echo O::escapeHtml(''.@O::lang('NOTICE_CODE_DISABLED').'') ?>
         </span>
@@ -19,12 +19,12 @@
         <h2 class="<?php echo O::escapeHtml('or-collapsible-title or-group-title or-collapsible-act-switch') ?>"><?php echo O::escapeHtml('') ?>
         </h2>
         <div class="<?php echo O::escapeHtml('or-collapsible-value or-group-value') ?>"><?php echo O::escapeHtml('') ?>
-          <?php $if1=(isset($subtype)); if($if1) {  ?>
+          <?php $if4=(isset($subtype)); if($if4) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('ELEMENT_SUBTYPE').'') ?>
               </h3>
               <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
-                <?php $if1=(isset($subtypes)); if($if1) {  ?>
+                <?php $if6=(isset($subtypes)); if($if6) {  ?>
                   <select name="<?php echo O::escapeHtml('subtype') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
                     <option value="<?php echo O::escapeHtml('') ?>"><?php echo O::escapeHtml(''.@O::lang('LIST_ENTRY_EMPTY').'') ?>
                     </option>
@@ -34,13 +34,13 @@
                      <?php } ?>
                   </select>
                  <?php } ?>
-                <?php $if1=!(isset($subtypes)); if($if1) {  ?>
+                <?php $if6=!(isset($subtypes)); if($if6) {  ?>
                   <input name="<?php echo O::escapeHtml('subtype') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$subtype.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
                  <?php } ?>
               </div>
             </section>
            <?php } ?>
-          <?php $if1=(isset($with_icon)); if($if1) {  ?>
+          <?php $if4=(isset($with_icon)); if($if4) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?>
               </h3>
@@ -53,7 +53,7 @@
               </div>
             </section>
            <?php } ?>
-          <?php $if1=(isset($inherit)); if($if1) {  ?>
+          <?php $if4=(isset($inherit)); if($if4) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?>
               </h3>
@@ -66,7 +66,7 @@
               </div>
             </section>
            <?php } ?>
-          <?php $if1=(isset($all_languages)); if($if1) {  ?>
+          <?php $if4=(isset($all_languages)); if($if4) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?>
               </h3>
@@ -79,7 +79,7 @@
               </div>
             </section>
            <?php } ?>
-          <?php $if1=(isset($writable)); if($if1) {  ?>
+          <?php $if4=(isset($writable)); if($if4) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?>
               </h3>
@@ -92,7 +92,7 @@
               </div>
             </section>
            <?php } ?>
-          <?php $if1=(isset($width)); if($if1) {  ?>
+          <?php $if4=(isset($width)); if($if4) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('width').'') ?>
               </h3>
@@ -101,7 +101,7 @@
               </div>
             </section>
            <?php } ?>
-          <?php $if1=(isset($height)); if($if1) {  ?>
+          <?php $if4=(isset($height)); if($if4) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('height').'') ?>
               </h3>
@@ -110,7 +110,7 @@
               </div>
             </section>
            <?php } ?>
-          <?php $if1=(isset($dateformat)); if($if1) {  ?>
+          <?php $if4=(isset($dateformat)); if($if4) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('EL_PROP_DATEFORMAT').'') ?>
               </h3>
@@ -124,7 +124,7 @@
               </div>
             </section>
            <?php } ?>
-          <?php $if1=(isset($format)); if($if1) {  ?>
+          <?php $if4=(isset($format)); if($if4) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('EL_PROP_FORMAT').'') ?>
               </h3>
@@ -140,7 +140,7 @@
               </div>
             </section>
            <?php } ?>
-          <?php $if1=(isset($decimals)); if($if1) {  ?>
+          <?php $if4=(isset($decimals)); if($if4) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('EL_PROP_DECIMALS').'') ?>
               </h3>
@@ -149,7 +149,7 @@
               </div>
             </section>
            <?php } ?>
-          <?php $if1=(isset($dec_point)); if($if1) {  ?>
+          <?php $if4=(isset($dec_point)); if($if4) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('EL_PROP_DEC_POINT').'') ?>
               </h3>
@@ -158,7 +158,7 @@
               </div>
             </section>
            <?php } ?>
-          <?php $if1=(isset($thousand_sep)); if($if1) {  ?>
+          <?php $if4=(isset($thousand_sep)); if($if4) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('EL_PROP_thousand_sep').'') ?>
               </h3>
@@ -167,7 +167,7 @@
               </div>
             </section>
            <?php } ?>
-          <?php $if1=(isset($default_text)); if($if1) {  ?>
+          <?php $if4=(isset($default_text)); if($if4) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('EL_PROP_default_text').'') ?>
               </h3>
@@ -176,7 +176,7 @@
               </div>
             </section>
            <?php } ?>
-          <?php $if1=(isset($default_longtext)); if($if1) {  ?>
+          <?php $if4=(isset($default_longtext)); if($if4) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('EL_PROP_default_longtext').'') ?>
               </h3>
@@ -186,7 +186,7 @@
               </div>
             </section>
            <?php } ?>
-          <?php $if1=(isset($parameters)); if($if1) {  ?>
+          <?php $if4=(isset($parameters)); if($if4) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('EL_PROP_DYNAMIC_PARAMETERS').'') ?>
               </h3>
@@ -215,7 +215,7 @@
               </div>
             </section>
            <?php } ?>
-          <?php $if1=(isset($select_items)); if($if1) {  ?>
+          <?php $if4=(isset($select_items)); if($if4) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('EL_PROP_select_items').'') ?>
               </h3>
@@ -225,7 +225,7 @@
               </div>
             </section>
            <?php } ?>
-          <?php $if1=(isset($linkelement)); if($if1) {  ?>
+          <?php $if4=(isset($linkelement)); if($if4) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('EL_LINK').'') ?>
               </h3>
@@ -239,7 +239,7 @@
               </div>
             </section>
            <?php } ?>
-          <?php $if1=(isset($name)); if($if1) {  ?>
+          <?php $if4=(isset($name)); if($if4) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('ELEMENT_NAME').'') ?>
               </h3>
@@ -253,7 +253,7 @@
               </div>
             </section>
            <?php } ?>
-          <?php $if1=(isset($folderobjectid)); if($if1) {  ?>
+          <?php $if4=(isset($folderobjectid)); if($if4) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('EL_PROP_DEFAULT_FOLDEROBJECT').'') ?>
               </h3>
@@ -267,7 +267,7 @@
               </div>
             </section>
            <?php } ?>
-          <?php $if1=(isset($default_objectid)); if($if1) {  ?>
+          <?php $if4=(isset($default_objectid)); if($if4) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('EL_PROP_DEFAULT_OBJECT').'') ?>
               </h3>
@@ -283,7 +283,7 @@
               </div>
             </section>
            <?php } ?>
-          <?php $if1=(isset($code)); if($if1) {  ?>
+          <?php $if4=(isset($code)); if($if4) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('EL_PROP_code').'') ?>
               </h3>

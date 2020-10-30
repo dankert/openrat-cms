@@ -175,7 +175,7 @@ class SearchAction extends BaseAction
         {
             if  ( $this->userIsAdmin() ) {
 
-                $user = User::loadWithName($searchText);
+                $user = User::loadWithName($searchText,User::AUTH_TYPE_INTERNAL);
                 if (is_object($user)) {
                     $userResult = array('url' => '',
                         'type' => 'user',

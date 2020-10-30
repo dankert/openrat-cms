@@ -25,7 +25,7 @@
             </span>
           </td>
         </tr>
-        <?php $if1=(($acls)==FALSE); if($if1) {  ?>
+        <?php $if3=(($acls)==FALSE); if($if3) {  ?>
           <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
             <td colspan="<?php echo O::escapeHtml('99') ?>"><?php echo O::escapeHtml('') ?>
               <span><?php echo O::escapeHtml(''.@O::lang('NOT_FOUND').'') ?>
@@ -33,25 +33,25 @@
             </td>
           </tr>
          <?php } ?>
-        <?php $if1=!(($acls)==FALSE); if($if1) {  ?>
+        <?php $if3=!(($acls)==FALSE); if($if3) {  ?>
          <?php } ?>
         <?php foreach((array)$acls as $aclid=>$acl) { extract($acl); ?>
           <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
             <td><?php echo O::escapeHtml('') ?>
-              <?php $if1=(isset($username)); if($if1) {  ?>
+              <?php $if6=(isset($username)); if($if6) {  ?>
                 <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-user') ?>"><?php echo O::escapeHtml('') ?>
                 </i>
                 <span><?php echo O::escapeHtml(''.@$username.'') ?>
                 </span>
                <?php } ?>
-              <?php $if1=(isset($groupname)); if($if1) {  ?>
+              <?php $if6=(isset($groupname)); if($if6) {  ?>
                 <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-group') ?>"><?php echo O::escapeHtml('') ?>
                 </i>
                 <span><?php echo O::escapeHtml(''.@$groupname.'') ?>
                 </span>
                <?php } ?>
-              <?php $if1=!(isset($username)); if($if1) {  ?>
-                <?php $if1=!(isset($groupname)); if($if1) {  ?>
+              <?php $if6=!(isset($username)); if($if6) {  ?>
+                <?php $if7=!(isset($groupname)); if($if7) {  ?>
                   <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-group') ?>"><?php echo O::escapeHtml('') ?>
                   </i>
                   <span><?php echo O::escapeHtml(''.@O::lang('all').'') ?>
@@ -67,7 +67,7 @@
               <td><?php echo O::escapeHtml('') ?>
                 <?php  { $bit= $acl[''.@$t.'']; ?>
                  <?php } ?>
-                <?php $if1=($bit); if($if1) {  ?>
+                <?php $if7=($bit); if($if7) {  ?>
                   <span><?php echo '&check;' ?>
                   </span>
                  <?php } ?>

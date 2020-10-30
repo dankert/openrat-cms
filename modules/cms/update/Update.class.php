@@ -12,11 +12,11 @@ use logger\Logger;
 class Update
 {
 	// This is the required DB version:
-	const SUPPORTED_VERSION = 21;
-	// ----------------------------^^-----------------------------
+	const SUPPORTED_VERSION = 22;
+	// -----------------------^^-----------------------------
 
 	const STATUS_UPDATE_PROGRESS = 0;
-	const STATUS_UPDATE_SUCCESS = 1;
+	const STATUS_UPDATE_SUCCESS  = 1;
 
 	public function isUpdateRequired(Database $db)
 	{
@@ -58,7 +58,7 @@ class Update
 				$db->commit();
 			}
 
-			$updaterClassName = 'cms\update\version\DBVersion' . str_pad($installVersion, 6, '0', STR_PAD_LEFT);
+			$updaterClassName = __NAMESPACE__.'\version\DBVersion' . str_pad($installVersion, 6, '0', STR_PAD_LEFT);
 
 			$db->start();
 			/** @var \database\DbVersion $updater */

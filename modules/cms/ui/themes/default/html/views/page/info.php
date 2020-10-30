@@ -158,7 +158,7 @@
                 </label>
               </div>
               <div class="<?php echo O::escapeHtml('or-value') ?>"><?php echo O::escapeHtml('') ?>
-                <?php $if1=(isset($templateid)); if($if1) {  ?>
+                <?php $if6=(isset($templateid)); if($if6) {  ?>
                   <div class="<?php echo O::escapeHtml('or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
                     <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('open') ?>" data-action="<?php echo O::escapeHtml('template') ?>" data-method="<?php echo O::escapeHtml('') ?>" data-id="<?php echo O::escapeHtml(''.@$templateid.'') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/template/'.@$templateid.'') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
                       <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-template') ?>"><?php echo O::escapeHtml('') ?>
@@ -168,7 +168,7 @@
                     </a>
                   </div>
                  <?php } ?>
-                <?php if(!$if1) {  ?>
+                <?php if(!$if6) {  ?>
                   <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-template') ?>"><?php echo O::escapeHtml('') ?>
                   </i>
                   <span><?php echo O::escapeHtml(''.@$template_name.'') ?>

@@ -13,7 +13,7 @@
                   </i>
                 </h2>
                 <div class="<?php echo O::escapeHtml('or-collapsible-value or-group-value') ?>"><?php echo O::escapeHtml('') ?>
-                  <?php $if1=(($rights)==FALSE); if($if1) {  ?>
+                  <?php $if7=(($rights)==FALSE); if($if7) {  ?>
                     <tr><?php echo O::escapeHtml('') ?>
                       <td><?php echo O::escapeHtml('') ?>
                         <span><?php echo O::escapeHtml(''.@O::lang('NOT_FOUND').'') ?>
@@ -21,7 +21,7 @@
                       </td>
                     </tr>
                    <?php } ?>
-                  <?php $if1=!(($rights)==FALSE); if($if1) {  ?>
+                  <?php $if7=!(($rights)==FALSE); if($if7) {  ?>
                     <div class="<?php echo O::escapeHtml('or-table-wrapper') ?>"><?php echo O::escapeHtml('') ?>
                       <div class="<?php echo O::escapeHtml('or-table-filter') ?>"><?php echo O::escapeHtml('') ?>
                         <input type="<?php echo O::escapeHtml('search') ?>" name="<?php echo O::escapeHtml('filter') ?>" placeholder="<?php echo O::escapeHtml(''.@O::lang('SEARCH_FILTER').'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
@@ -51,14 +51,14 @@
                           <?php foreach((array)$rights as $aclid=>$acl) { extract($acl); ?>
                             <tr class="<?php echo O::escapeHtml('or-data or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
                               <td><?php echo O::escapeHtml('') ?>
-                                <?php $if1=(isset($groupname)); if($if1) {  ?>
+                                <?php $if12=(isset($groupname)); if($if12) {  ?>
                                   <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-group') ?>"><?php echo O::escapeHtml('') ?>
                                   </i>
                                   <span><?php echo O::escapeHtml(''.@$groupname.'') ?>
                                   </span>
                                  <?php } ?>
-                                <?php $if1=!(isset($username)); if($if1) {  ?>
-                                  <?php $if1=!(isset($groupname)); if($if1) {  ?>
+                                <?php $if12=!(isset($username)); if($if12) {  ?>
+                                  <?php $if13=!(isset($groupname)); if($if13) {  ?>
                                     <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-group') ?>"><?php echo O::escapeHtml('') ?>
                                     </i>
                                     <span><?php echo O::escapeHtml(''.@O::lang('all').'') ?>

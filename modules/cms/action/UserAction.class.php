@@ -82,7 +82,6 @@ class UserAction extends BaseAction
         $this->user->name     = $this->getRequestVar('name'    );
         $this->user->fullname = $this->getRequestVar('fullname');
         $this->user->isAdmin  = $this->hasRequestVar('is_admin');
-        $this->user->ldap_dn  = $this->getRequestVar('ldap_dn' );
         $this->user->tel      = $this->getRequestVar('tel'     );
         $this->user->desc     = $this->getRequestVar('desc'    );
         $this->user->language = $this->getRequestVar('language');
@@ -313,10 +312,6 @@ class UserAction extends BaseAction
 			$this->setTemplateVar($varName,$hasGroup);
 		}
 		$this->setTemplateVar('memberships',$gruppenListe);
-		
-		$conf = \cms\base\Configuration::rawConfig();
-		if	($conf['security']['authorize']['type']=='ldap')
-			$this->addNotice('user', 0, $this->user->name, 'GROUPS_MAY_CONFLICT_WITH_LDAP', Action::NOTICE_WARN);
 	}
 
 

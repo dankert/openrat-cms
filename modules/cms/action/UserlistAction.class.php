@@ -50,7 +50,7 @@ class UserlistAction extends BaseAction
 			$list[$user->userid]['id' ] = $user->userid;
 		}
 		$this->setTemplateVar('el',$list);
-	}	
+	}
 		
 
 	/**
@@ -61,9 +61,8 @@ class UserlistAction extends BaseAction
 		$this->nextSubAction('show');
 	}
 
-
 	
-		function addView()
+	public function addView()
 	{
 	}
 
@@ -75,17 +74,16 @@ class UserlistAction extends BaseAction
 	{
 		$name = $this->request->cleanText($name,RequestParams::FILTER_ALPHANUM);
 
-		$user = User::loadWithName($name);
+		$user = User::loadWithName($name,User::AUTH_TYPE_INTERNAL);
 
 		if   ( !empty($user) )
 			throw new ValidationException( 'name',Messages::USER_ALREADY_IN_DATABASE);
 
 		$user = new User();
-		$user->add( $name );
+		$user->name = $name;
+		$user->add();
 		$this->addNoticeFor($user, Messages::ADDED);
 	}
 
-
-	
 				
 }

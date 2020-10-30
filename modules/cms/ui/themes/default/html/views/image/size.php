@@ -25,7 +25,7 @@
           </div>
         </div>
       </section>
-      <?php $if1=!(($formats)==FALSE); if($if1) {  ?>
+      <?php $if3=!(($formats)==FALSE); if($if3) {  ?>
         <section class="<?php echo O::escapeHtml('or-group or-collapsible or-collapsible--is-open or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>
           <h2 class="<?php echo O::escapeHtml('or-collapsible-title or-group-title or-collapsible-act-switch') ?>"><?php echo O::escapeHtml(''.@O::lang('IMAGE_NEW_SIZE').'') ?>
             <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-closed or-collapsible--on-closed') ?>"><?php echo O::escapeHtml('') ?>

@@ -19,7 +19,7 @@
             </span>
           </th>
         </tr>
-        <?php $if1=(($elements)==FALSE); if($if1) {  ?>
+        <?php $if3=(($elements)==FALSE); if($if3) {  ?>
           <tr><?php echo O::escapeHtml('') ?>
             <td><?php echo O::escapeHtml('') ?>
               <span><?php echo O::escapeHtml(''.@O::lang('NOT_FOUND').'') ?>

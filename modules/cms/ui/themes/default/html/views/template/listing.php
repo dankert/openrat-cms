@@ -22,7 +22,7 @@
       </table>
     </div>
   </div>
-  <?php $if1=(($templates)==FALSE); if($if1) {  ?>
+  <?php $if2=(($templates)==FALSE); if($if2) {  ?>
     <span><?php echo O::escapeHtml(''.@O::lang('NO_TEMPLATES_AVAILABLE_DESC').'') ?>
     </span>
    <?php } ?>

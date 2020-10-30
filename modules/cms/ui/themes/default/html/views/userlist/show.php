@@ -33,7 +33,7 @@
             <td data-name="<?php echo O::escapeHtml(''.@$name.'') ?>" data-action="<?php echo O::escapeHtml('user') ?>" data-id="<?php echo O::escapeHtml(''.@$id.'') ?>" class="<?php echo O::escapeHtml('or-clickable') ?>"><?php echo O::escapeHtml('') ?>
               <span><?php echo O::escapeHtml(''.@$fullname.'') ?>
               </span>
-              <?php $if1=($isAdmin); if($if1) {  ?>
+              <?php $if6=($isAdmin); if($if6) {  ?>
                 <span><?php echo O::escapeHtml('_(') ?>
                 </span>
                 <span><?php echo O::escapeHtml(''.@O::lang('USER_ADMIN').'') ?>

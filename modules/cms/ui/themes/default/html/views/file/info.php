@@ -144,7 +144,7 @@
               </div>
             </div>
           </section>
-          <?php $if1=(isset($cache_filename)); if($if1) {  ?>
+          <?php $if4=(isset($cache_filename)); if($if4) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?>
               </h3>
@@ -197,7 +197,7 @@
                     </table>
                   </div>
                 </div>
-                <?php $if1=(($pages)==FALSE); if($if1) {  ?>
+                <?php $if6=(($pages)==FALSE); if($if6) {  ?>
                   <span><?php echo O::escapeHtml(''.@O::lang('NOT_FOUND').'') ?>
                   </span>
                  <?php } ?>

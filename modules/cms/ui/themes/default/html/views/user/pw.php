@@ -15,7 +15,7 @@
           <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('password_proposal') ?>" value="<?php echo O::escapeHtml(''.@$password_proposal.'') ?>" /><?php echo O::escapeHtml('') ?>
         </div>
       </section>
-      <?php $if1=(O::config('mail','enabled')); if($if1) {  ?>
+      <?php $if3=(O::config('mail','enabled')); if($if3) {  ?>
         <section class="<?php echo O::escapeHtml('or-group or-collapsible or-collapsible--is-open or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>
           <h2 class="<?php echo O::escapeHtml('or-collapsible-title or-group-title or-collapsible-act-switch') ?>"><?php echo O::escapeHtml(''.@O::lang('options').'') ?>
             <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-closed or-collapsible--on-closed') ?>"><?php echo O::escapeHtml('') ?>
@@ -24,7 +24,7 @@
             </i>
           </h2>
           <div class="<?php echo O::escapeHtml('or-collapsible-value or-group-value') ?>"><?php echo O::escapeHtml('') ?>
-            <?php $if1=(isset($mail)); if($if1) {  ?>
+            <?php $if5=(isset($mail)); if($if5) {  ?>
               <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
                 <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?>
                 </h3>

@@ -13,7 +13,7 @@
         </div>
         <div class="<?php echo O::escapeHtml('or-table-area') ?>"><?php echo O::escapeHtml('') ?>
           <table width="<?php echo O::escapeHtml('100%') ?>"><?php echo O::escapeHtml('') ?>
-            <?php $if1=(($el)==FALSE); if($if1) {  ?>
+            <?php $if4=(($el)==FALSE); if($if4) {  ?>
               <tr><?php echo O::escapeHtml('') ?>
                 <td colspan="<?php echo O::escapeHtml('4') ?>"><?php echo O::escapeHtml('') ?>
                   <span><?php echo O::escapeHtml(''.@O::lang('NOT_FOUND').'') ?>
@@ -21,7 +21,7 @@
                 </td>
               </tr>
              <?php } ?>
-            <?php $if1=!(($el)==FALSE); if($if1) {  ?>
+            <?php $if4=!(($el)==FALSE); if($if4) {  ?>
               <tr><?php echo O::escapeHtml('') ?>
                 <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
                   <span><?php echo O::escapeHtml(''.@O::lang('PAGE_ELEMENT_NAME').'') ?>
@@ -50,14 +50,14 @@
                     <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml(''.@$saveid.'') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$$saveid){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
                   </td>
                   <td><?php echo O::escapeHtml('') ?>
-                    <?php $if1=(in_array($type,explode(",",text,date,number)); if($if1) {  ?>
+                    <?php $if8=(in_array($type,explode(",",text,date,number)); if($if8) {  ?>
                       <input name="<?php echo O::escapeHtml(''.@$id.'') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" value="<?php echo O::escapeHtml(''.@$value.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
                      <?php } ?>
-                    <?php $if1=($type=='longtext'); if($if1) {  ?>
+                    <?php $if8=($type=='longtext'); if($if8) {  ?>
                       <textarea name="<?php echo O::escapeHtml(''.@$id.'') ?>" class="<?php echo O::escapeHtml('or-input or-inputarea') ?>"><?php echo O::escapeHtml(''.@$value.'') ?>
                       </textarea>
                      <?php } ?>
-                    <?php $if1=(in_array($type,explode(",",select,link,list)); if($if1) {  ?>
+                    <?php $if8=(in_array($type,explode(",",select,link,list)); if($if8) {  ?>
                       <select name="<?php echo O::escapeHtml(''.@$id.'') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
                         <?php foreach($list as $_key=>$_value) {  ?>
                           <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$value){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?>
@@ -80,7 +80,7 @@
           </i>
         </h2>
         <div class="<?php echo O::escapeHtml('or-collapsible-value or-group-value') ?>"><?php echo O::escapeHtml('') ?>
-          <?php $if1=(isset($release)); if($if1) {  ?>
+          <?php $if4=(isset($release)); if($if4) {  ?>
             <div class="<?php echo O::escapeHtml('or-') ?>"><?php echo O::escapeHtml('') ?>
               <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('release') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$release){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
               <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
@@ -91,7 +91,7 @@
               </label>
             </div>
            <?php } ?>
-          <?php $if1=(isset($publish)); if($if1) {  ?>
+          <?php $if4=(isset($publish)); if($if4) {  ?>
             <div class="<?php echo O::escapeHtml('or-') ?>"><?php echo O::escapeHtml('') ?>
               <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('publish') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$publish){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
               <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>

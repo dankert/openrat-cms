@@ -11,7 +11,7 @@
             </span>
           </td>
         </tr>
-        <?php $if1=((groups)==FALSE); if($if1) {  ?>
+        <?php $if3=((groups)==FALSE); if($if3) {  ?>
           <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
             <td><?php echo O::escapeHtml('') ?>
               <span><?php echo O::escapeHtml(''.@O::lang('NOT_FOUND').'') ?>

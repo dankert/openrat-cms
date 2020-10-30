@@ -29,10 +29,10 @@
             <?php foreach((array)$object as $list_key=>$list_value) { extract($list_value); ?>
               <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
                 <td width="<?php echo O::escapeHtml('1%') ?>"><?php echo O::escapeHtml('') ?>
-                  <?php $if1=($writable); if($if1) {  ?>
+                  <?php $if7=($writable); if($if7) {  ?>
                     <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml(''.@$id.'') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$$id){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
                    <?php } ?>
-                  <?php $if1=(!writable); if($if1) {  ?>
+                  <?php $if7=(!writable); if($if7) {  ?>
                     <span><?php echo O::escapeHtml(' ') ?>
                     </span>
                    <?php } ?>
@@ -51,7 +51,7 @@
                 </td>
               </tr>
              <?php } ?>
-            <?php $if1=(($object)==FALSE); if($if1) {  ?>
+            <?php $if4=(($object)==FALSE); if($if4) {  ?>
               <tr><?php echo O::escapeHtml('') ?>
                 <td colspan="<?php echo O::escapeHtml('2') ?>"><?php echo O::escapeHtml('') ?>
                   <span><?php echo O::escapeHtml(''.@O::lang('NOT_FOUND').'') ?>

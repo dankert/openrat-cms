@@ -253,7 +253,24 @@ class Statement
      */
 	function setIntOrNull( $name,$value )
 	{
-		$this->client->bind( $this->stmt, $name, $value );
+		if   ( is_int($value))
+			$this->setInt( $name,$value);
+		else
+			$this->setNull( $name );
+	}
+
+
+    /**
+     * Setzt eine Ganzzahl als Parameter.<br>
+     * @param $name string
+     * @param $value integer
+     */
+	function setStringOrNull( $name,$value )
+	{
+		if   ( is_string($value))
+			$this->setString( $name,$value);
+		else
+			$this->setNull( $name );
 	}
 
 

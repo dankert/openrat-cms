@@ -61,9 +61,9 @@ class Column
 
 
 	/**
-	 * Creating a new column.
+	 * Creating the column definition.
 	 */
-	function add()
+	protected function getColumnDefinition()
 	{
 		$table = $this->table->getSqlName();
 
@@ -145,16 +145,27 @@ class Column
 
 		}
 
-		$ddl = $this->db->sql('ALTER TABLE ' . $table .
-			' ADD COLUMN ' . $this->name . ' ' . $dbmsInternalType . ($this->size != null ? '(' . $this->size . ')' : '') .
+		return $dbmsInternalType . ($this->size != null ? '(' . $this->size . ')' : '') .
 			($this->default !== null ? ' DEFAULT ' . (is_string($this->default) ? "'" : '') . $this->default . (is_string($this->default) ? "'" : '') : '') .
-			' ' . ($this->nullable ? 'NULL' : 'NOT NULL') . ';'
-		);
-		$ddl->query();
-
-		return $this;
+			' ' . ($this->nullable ? 'NULL' : 'NOT NULL');
 	}
 
+
+	public function add() {
+		$table = $this->table->getSqlName();
+		$ddl = $this->db->sql('ALTER TABLE ' . $table .
+			' ADD COLUMN ' . $this->name . ' ' . $this->getColumnDefinition(). ';'
+		);
+		$ddl->query();
+	}
+
+	public function modify() {
+		$table = $this->table->getSqlName();
+		$ddl = $this->db->sql('ALTER TABLE ' . $table .
+			' MODIFY COLUMN ' . $this->name . ' ' . $this->getColumnDefinition() . ';'
+		);
+		$ddl->query();
+	}
 
 	function drop()
 	{

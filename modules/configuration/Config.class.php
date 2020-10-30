@@ -57,7 +57,7 @@ class Config
 
     	$config = $this->config;
     	foreach($names as $key )
-			if (isset($this->config[$key]) && is_array($this->config[$key]))
+			if (isset($config[$key]) && is_array($config[$key]))
 	    		$config = $config[$key];
 			else
 				return new Config( [] );

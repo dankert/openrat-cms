@@ -725,51 +725,6 @@ class StartAction extends BaseAction
 	
 	
 	
-	/**
-	 * Ausgeben von maschinenlesbaren Benutzerinformationen.
-	 * 
-	 * Diese Funktion dient dem Single-Signon f�r fremde Anwendungen, welche
-	 * die Benutzerinformationen des angemeldeten Benutzers aus dieser
-	 * Anwendung auslesen k�nnen.
-	 */
-	function userinfo()
-	{
-		$user = Session::getUser();
-		$info = array('username'   => $user->name,
-		              'fullname'   => $user->fullname,
-		              'mail'       => $user->mail,
-		              'telephone'  => $user->tel,
-		              'style'      => $user->style,
-		              'admin'      => $user->isAdmin?'true':'false',
-		              'ldap'       => $user->ldap_dn,
-		              'groups'     => implode(',',$user->getGroups()),
-		              'description'=> $user->desc
-		             );
-		        
-		// Wenn der HTTP-Parameter "xml" vorhanden ist, dann geben wir die
-		// Informationen per XML aus.     
-		if	( $this->hasRequestVar('xml') )
-		{
-			header('Content-Type: text/xml');
-			echo '<userinfo>';
-			foreach( $info as $n=>$i )
-				echo '<'.$n.'>'.$i.'</'.$n.'>'."\n";
-			echo '</userinfo>';
-			
-		}
-		
-		// Sonst normale Textausgabe im INI-Datei-Format.
-		else
-		{
-			header('Content-Type: text/plain');
-			foreach( $info as $n=>$i )
-				echo $n.'="'.$i."\"\n";
-		}
-		
-		exit; // Fertig.
-	}
-	
-	
 	function project()
 	{
 		$user = Session::getUser();

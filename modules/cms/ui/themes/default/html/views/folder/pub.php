@@ -1,5 +1,5 @@
 <?php /* THIS FILE IS GENERATED from pub.tpl.src.xml - DO NOT CHANGE */ defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
-  <?php $if1=(O::config('security','nopublish')); if($if1) {  ?>
+  <?php $if2=(O::config('security','nopublish')); if($if2) {  ?>
     <div class="<?php echo O::escapeHtml('or-message warn') ?>"><?php echo O::escapeHtml('') ?>
       <span class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml(''.@O::lang('NOPUBLISH_DESC').'') ?>
       </span>
@@ -13,7 +13,7 @@
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('action') ?>" value="<?php echo O::escapeHtml('folder') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('subaction') ?>" value="<?php echo O::escapeHtml('pub') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml(''.@$_id.'') ?>" /><?php echo O::escapeHtml('') ?>
-      <?php $if1=($pages); if($if1) {  ?>
+      <?php $if3=($pages); if($if3) {  ?>
         <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
           <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?>
           </h3>
@@ -32,7 +32,7 @@
           </div>
         </section>
        <?php } ?>
-      <?php $if1=($files); if($if1) {  ?>
+      <?php $if3=($files); if($if3) {  ?>
         <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
           <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?>
           </h3>
@@ -59,7 +59,7 @@
           </i>
         </h2>
         <div class="<?php echo O::escapeHtml('or-collapsible-value or-group-value') ?>"><?php echo O::escapeHtml('') ?>
-          <?php $if1=(isset($subdirs)); if($if1) {  ?>
+          <?php $if4=(isset($subdirs)); if($if4) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?>
               </h3>
@@ -78,7 +78,7 @@
               </div>
             </section>
            <?php } ?>
-          <?php $if1=(isset($clean)); if($if1) {  ?>
+          <?php $if4=(isset($clean)); if($if4) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?>
               </h3>

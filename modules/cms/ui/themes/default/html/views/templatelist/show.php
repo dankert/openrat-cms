@@ -23,7 +23,7 @@
             </td>
           </tr>
          <?php } ?>
-        <?php $if1=(($templates)==FALSE); if($if1) {  ?>
+        <?php $if3=(($templates)==FALSE); if($if3) {  ?>
           <tr><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml(''.@O::lang('NO_TEMPLATES_AVAILABLE_DESC').'') ?>
             </span>

@@ -7,7 +7,7 @@
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('action') ?>" value="<?php echo O::escapeHtml('profile') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('subaction') ?>" value="<?php echo O::escapeHtml('pw') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml(''.@$_id.'') ?>" /><?php echo O::escapeHtml('') ?>
-      <?php $if1=($pwchange_enabled); if($if1) {  ?>
+      <?php $if3=($pwchange_enabled); if($if3) {  ?>
         <div class="<?php echo O::escapeHtml('or-line logo') ?>"><?php echo O::escapeHtml('') ?>
           <div class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
             <img src="<?php echo O::escapeHtml('themes/default/images/logo_changepassword.png') ?>" border="<?php echo O::escapeHtml('') ?>" /><?php echo O::escapeHtml('') ?>
@@ -47,7 +47,7 @@
           </div>
         </section>
        <?php } ?>
-      <?php if(!$if1) {  ?>
+      <?php if(!$if3) {  ?>
         <div class="<?php echo O::escapeHtml('or-message message-warn') ?>"><?php echo O::escapeHtml('') ?>
           <span><?php echo O::escapeHtml(''.@O::lang('pwchange_not_allowed').'') ?>
           </span>

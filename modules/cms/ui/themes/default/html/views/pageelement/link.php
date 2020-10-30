@@ -23,8 +23,8 @@
           </select>
         </td>
       </tr>
-      <?php $if1=(isset($release)); if($if1) {  ?>
-        <?php $if1=(isset($publish)); if($if1) {  ?>
+      <?php $if3=(isset($release)); if($if3) {  ?>
+        <?php $if4=(isset($publish)); if($if4) {  ?>
           <tr><?php echo O::escapeHtml('') ?>
             <td colspan="<?php echo O::escapeHtml('2') ?>"><?php echo O::escapeHtml('') ?>
               <section class="<?php echo O::escapeHtml('or-group or-collapsible or-collapsible--is-open or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>
@@ -41,7 +41,7 @@
           </tr>
          <?php } ?>
        <?php } ?>
-      <?php $if1=(isset($release)); if($if1) {  ?>
+      <?php $if3=(isset($release)); if($if3) {  ?>
         <tr><?php echo O::escapeHtml('') ?>
           <td colspan="<?php echo O::escapeHtml('2') ?>"><?php echo O::escapeHtml('') ?>
             <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('release') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$release){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
@@ -54,7 +54,7 @@
           </td>
         </tr>
        <?php } ?>
-      <?php $if1=(isset($publish)); if($if1) {  ?>
+      <?php $if3=(isset($publish)); if($if3) {  ?>
         <tr><?php echo O::escapeHtml('') ?>
           <td colspan="<?php echo O::escapeHtml('2') ?>"><?php echo O::escapeHtml('') ?>
             <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('publish') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$publish){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>

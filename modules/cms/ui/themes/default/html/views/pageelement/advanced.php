@@ -27,11 +27,11 @@
             </td>
             <td title="<?php echo O::escapeHtml(''.@$text.'') ?>" class="<?php echo O::escapeHtml('or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
               <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('edit') ?>" data-action="<?php echo O::escapeHtml('pageelement') ?>" data-method="<?php echo O::escapeHtml('value') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-languageid="<?php echo O::escapeHtml(''.@$languageid.'') ?>" data-extra="<?php echo O::escapeHtml('{\'languageid\':\''.@$languageid.'\'}') ?>" href="<?php echo O::escapeHtml('#/pageelement') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
-                <?php $if1=($date); if($if1) {  ?>
+                <?php $if7=($date); if($if7) {  ?>
                   <?php include_once( 'modules/template_engine/components/html/component_date/component-date.php'); { component_date($date); ?>
                    <?php } ?>
                  <?php } ?>
-                <?php $if1=($text); if($if1) {  ?>
+                <?php $if7=($text); if($if7) {  ?>
                   <span><?php echo O::escapeHtml(''.@$text.'') ?>
                   </span>
                  <?php } ?>

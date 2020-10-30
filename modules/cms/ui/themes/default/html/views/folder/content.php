@@ -19,7 +19,7 @@
             </span>
           </td>
         </tr>
-        <?php $if1=(isset($up_url)); if($if1) {  ?>
+        <?php $if3=(isset($up_url)); if($if3) {  ?>
           <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
             <td><?php echo O::escapeHtml('') ?>
               <img src="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/images/icon_folder.png') ?>" /><?php echo O::escapeHtml('') ?>
@@ -47,7 +47,7 @@
             </td>
           </tr>
          <?php } ?>
-        <?php $if1=(($object)==FALSE); if($if1) {  ?>
+        <?php $if3=(($object)==FALSE); if($if3) {  ?>
           <tr><?php echo O::escapeHtml('') ?>
             <td colspan="<?php echo O::escapeHtml('2') ?>"><?php echo O::escapeHtml('') ?>
               <span><?php echo O::escapeHtml(''.@O::lang('NOT_FOUND').'') ?>
