@@ -69,7 +69,6 @@ class User extends ModelBase
 	
 	var $mustChangePassword = false;
 	var $groups = null;
-	var $loginModuleName = null;
 
 	public $issuer = null;
 	public $type = User::AUTH_TYPE_INTERNAL;

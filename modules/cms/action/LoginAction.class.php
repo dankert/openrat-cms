@@ -622,7 +622,6 @@ class LoginAction extends BaseAction
 			{
 				// Benutzer über den Benutzernamen laden.
 				$user = User::loadWithName($loginName,User::AUTH_TYPE_INTERNAL,null);
-				$user->loginModuleName = $lastModule;
                 $user->setCurrent();
                 $user->updateLoginTimestamp();
 
