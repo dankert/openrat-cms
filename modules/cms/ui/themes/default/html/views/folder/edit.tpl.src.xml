@@ -51,7 +51,7 @@
   <part class="act-clickable">
     <link type="dialog" action="folder" subaction="create" class="btn">
       <image action="new"/>
-      <text value="${message:new}"/>
+      <text value="${message:add}"/>
     </link>
   </part>
 </output>

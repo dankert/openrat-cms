@@ -1324,6 +1324,5 @@ if you do not know where this mail comes from, please ignore it.',
 'TEXT'=>'Text',
 'APPLY'=>'Apply',
 'URL'=>'URL',
-'NEW'=>'New',
 ];}
 }

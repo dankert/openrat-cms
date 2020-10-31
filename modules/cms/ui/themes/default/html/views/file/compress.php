@@ -42,7 +42,7 @@
                 <br /><?php echo O::escapeHtml('') ?>
                 <input type="<?php echo O::escapeHtml('radio') ?>" name="<?php echo O::escapeHtml('replace') ?>" value="<?php echo O::escapeHtml('') ?>" <?php if(@$replace=='0'){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-radio') ?>" /><?php echo O::escapeHtml('') ?>
                 <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
-                  <span><?php echo O::escapeHtml(''.@O::lang('new').'') ?>
+                  <span><?php echo O::escapeHtml(''.@O::lang('add').'') ?>
                   </span>
                 </label>
               </div>

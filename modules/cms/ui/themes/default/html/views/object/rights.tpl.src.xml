@@ -65,7 +65,7 @@
 			<column colspan="99" class="act-clickable">
 				<link type="dialog" name="${message:menu_aclform}" subaction="aclform">
 					<image method="add"/>
-					<text value="${message:new}"/>
+					<text value="${message:add}"/>
 				</link>
 			</column>
 		</row>

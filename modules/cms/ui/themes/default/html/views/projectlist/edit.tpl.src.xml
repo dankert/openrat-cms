@@ -17,9 +17,9 @@
     </list>
     <row class="data">
       <column class="act-clickable">
-        <link type="dialog" subaction="add" name="${message:new}">
+        <link type="dialog" subaction="add" name="${message:add}">
           <image method="add"/>
-          <text value="${message:new}"/>
+          <text value="${message:add}"/>
         </link>
       </column>
     </row>

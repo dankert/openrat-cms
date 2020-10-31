@@ -1324,6 +1324,5 @@ Merci.',
 'TEXT'=>'Text',
 'APPLY'=>'Apply',
 'URL'=>'URL',
-'NEW'=>'New',
 ];}
 }

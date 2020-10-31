@@ -1348,6 +1348,5 @@ MENU_INDEX_ADMINISTRATION_DESC =',
 'TEXT'=>'Text',
 'APPLY'=>'Apply',
 'URL'=>'URL',
-'NEW'=>'New',
 ];}
 }

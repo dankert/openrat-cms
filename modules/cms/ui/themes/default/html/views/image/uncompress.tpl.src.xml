@@ -13,7 +13,7 @@
         <newline/>
         <radio name="replace" value="0"/>
         <label for="replace_0">
-          <text value="${message:new}"/>
+          <text value="${message:add}"/>
         </label>
       </part>
     </fieldset>

@@ -1284,5 +1284,4 @@ class Messages {
   const TEXT = 'TEXT';
   const APPLY = 'APPLY';
   const URL = 'URL';
-  const NEW = 'NEW';
 }

@@ -42,7 +42,7 @@
 			<column colspan="2" class="act-clickable">
 				<link type="dialog" subaction="add">
 					<image method="add"/>
-					<text value="${message:new}"/>
+					<text value="${message:add}"/>
 				</link>
 			</column>
 		</row>
