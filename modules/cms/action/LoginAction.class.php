@@ -1058,7 +1058,7 @@ class LoginAction extends BaseAction
 		{
 			srand ((double)microtime()*1000003);
 			$code = rand();
-			$this->setSessionVar("password_commit_code",$code);
+			$this->setSessionVar(Session::KEY_PASSWORD_COMMIT_CODE,$code);
 			
 			$eMail = new Mail( $user->mail,'password_commit_code' );
 			$eMail->setVar('name',$user->getName());
@@ -1079,7 +1079,7 @@ class LoginAction extends BaseAction
 
 		}
 		
-		$this->setSessionVar("password_commit_name",$user->name);
+		$this->setSessionVar(Session::KEY_PASSWORD_COMMIT_NAME,$user->name);
 	}
 
 	
@@ -1099,10 +1099,10 @@ class LoginAction extends BaseAction
 	 */
 	function passwordcodePost()
 	{
-		$username = $this->getSessionVar("password_commit_name");
+		$username = $this->getSessionVar(Session::KEY_PASSWORD_COMMIT_NAME);
 
 		if	( $this->getRequestVar("code")=='' ||
-			  $this->getSessionVar("password_commit_code") != $this->getRequestVar("code") )
+			  $this->getSessionVar(Session::KEY_PASSWORD_COMMIT_CODE) != $this->getRequestVar("code") )
 		{
 			$this->addValidationError('code','PASSWORDCODE_NOT_MATCH');
 		  	return;

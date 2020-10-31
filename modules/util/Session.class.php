@@ -25,6 +25,9 @@ class Session
 	const KEY_DB = 'database';
 	const KEY_USER = 'userObject';
 	const KEY_CONFIG = 'config';
+	const KEY_PASSWORD_COMMIT_CODE = 'password_commit_code';
+	const KEY_PASSWORD_COMMIT_NAME = 'password_commit_name';
+
 	const PRAEFIX = 'ors_';
 
 	public static function get($var)

@@ -41,7 +41,11 @@ class Action
 
 	public $security = self::SECURITY_USER; // Default.
 
-	protected $templateVars = array( 'output'=>array() );
+	protected $templateVars = [
+		'errors'  => [],
+		'notices' => [],
+		'output'  => []
+	];
 
 	/**
 	 * Aktuell angemeldeter Benutzer.<br>
@@ -58,7 +62,7 @@ class Action
 
 
 	/**
-	 * Will be called by the Dispatcher right after the contruction of this class instance.
+	 * Will be called by the Dispatcher right after the conStruction of this class instance.
 	 */
 	public function init()
 	{
@@ -69,10 +73,6 @@ class Action
 	public function __construct()
 	{
 		$this->currentUser = Session::getUser();
-
-		$this->templateVars['errors'] = array();
-		$this->templateVars['notices'] = array();
-		$this->templateVars['output'] = array();
 	}
 
 	/**

@@ -414,11 +414,6 @@ class PageelementAction extends BaseAction
 		$this->setTemplateVar('linkname'    ,$name);
 
 		$this->setTemplateVar('types',implode(',',$types));
-
-		if	( $this->getSessionVar('pageaction') != '' )
-    		$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
-		else
-	    	$this->setTemplateVar('old_pageaction','show'                            );
 	}
 
 
@@ -472,10 +467,6 @@ class PageelementAction extends BaseAction
         $this->setTemplateVar('objects'         ,$objects);
         $this->setTemplateVar('linkobjectid',$this->value->linkToObjectId);
 
-        if	( $this->getSessionVar('pageaction') != '' )
-        $this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
-        else	$this->setTemplateVar('old_pageaction','show'                            );
-
         $this->value->page             = new Page( $this->page->objectid );
         $this->value->page->languageid = $this->value->languageid;
         $this->value->page->load();
@@ -497,10 +488,6 @@ class PageelementAction extends BaseAction
         $this->setTemplateVar( 'items',$this->value->element->getSelectItems() );
         $this->setTemplateVar( 'text' ,$this->value->text                      );
 
-
-        if	( $this->getSessionVar('pageaction') != '' )
-        $this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
-        else	$this->setTemplateVar('old_pageaction','show'                            );
     }
 
 
@@ -571,10 +558,6 @@ class PageelementAction extends BaseAction
     private function editnumber()
     {
         $this->setTemplateVar('number',$this->value->number / pow(10,$this->value->element->decimals) );
-
-        if	( $this->getSessionVar('pageaction') != '' )
-        $this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
-        else	$this->setTemplateVar('old_pageaction','show'                            );
     }
 
 
@@ -602,12 +585,6 @@ class PageelementAction extends BaseAction
             // Möglicherweise ist die Ausgabevariable bereits gesetzt, wenn man bereits
             // einen Text eingegeben hat (Vorschaufunktion).
             $this->setTemplateVar( 'text',$this->linkifyOIDs( $this->value->text ) );
-
-
-        if	( $this->getSessionVar('pageaction') != '' )
-        $this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
-        else	$this->setTemplateVar('old_pageaction','show'                            );
-
 
 
         if	( $this->element->wiki && false /* OLD */ )
@@ -655,9 +632,6 @@ class PageelementAction extends BaseAction
     {
         $this->setTemplateVar( 'text',$this->value->text );
 
-        if	( $this->getSessionVar('pageaction') != '' )
-        $this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
-        else	$this->setTemplateVar('old_pageaction','show'                            );
     }
 
 

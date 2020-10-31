@@ -158,7 +158,7 @@ class PageAction extends ObjectAction
 				else
 				{
 					// sonst nur 1x speichern (fuer die aktuelle Sprache)
-					$value->languageid = $this->getSessionVar(RequestParams::PARAM_LANGUAGE_ID);
+					$value->languageid = $this->getRequestVar(RequestParams::PARAM_LANGUAGE_ID);
 					$value->save();
 				}
 			}
