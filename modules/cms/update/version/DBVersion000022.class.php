@@ -24,7 +24,7 @@ class DBVersion000022 extends DbVersion
         $table->column('ldap_dn'    )->drop();
 
         $table->column('auth_type'  )->type(Column::TYPE_INT )->size(2)->defaultValue(1 )->add();
-        $table->column('issuer'     )->type(Column::TYPE_VARCHAR )->size(255)->nullable()->add();
+        $table->column('issuer'     )->type(Column::TYPE_VARCHAR )->size(50)->nullable()->add();
 		$table->dropUniqueIndex( ['name'] );
 		$table->addUniqueIndex ( ['name','auth_type','issuer'] );
 
