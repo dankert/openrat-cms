@@ -129,4 +129,22 @@ class Config
     }
 
 
+	/**
+	 * Merges another Configuration
+	 * @param $otherConfig Config
+	 */
+    public function merge( $otherConfig ) {
+    	$this->config = array_merge( $this->config, $otherConfig->config );
+    	return $this;
+	}
+
+	public function isEmpty()
+	{
+		return (boolean) $this->config;
+	}
+
+	public function hasContent()
+	{
+		return !$this->isEmpty();
+	}
 }

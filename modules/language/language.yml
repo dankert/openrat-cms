@@ -6427,3 +6427,11 @@ APPLY:
 URL:
   en: URL
   de: Url
+SELF_NAME:
+  en: english
+  de: deutsch
+  fr: francais
+  cn: "中文"
+  ru: "русский"
+  es: espanol
+  it: italiano

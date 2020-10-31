@@ -1,5 +1,5 @@
 <?php /* THIS FILE IS GENERATED from advanced.tpl.src.xml - DO NOT CHANGE */ defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
-  <?php $if2=(O::config('security','disable_dynamic_code')); if($if2) {  ?>
+  <?php $if2=(O::config(['security','disable_dynamic_code'])); if($if2) {  ?>
     <?php $if3=(!1); if($if3) {  ?>
       <div class="<?php echo O::escapeHtml('or-message warn') ?>"><?php echo O::escapeHtml('') ?>
         <span><?php echo O::escapeHtml(''.@O::lang('NOTICE_CODE_DISABLED').'') ?>

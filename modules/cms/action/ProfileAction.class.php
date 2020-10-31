@@ -20,6 +20,7 @@ namespace cms\action;
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 use cms\base\Configuration;
+use cms\base\Startup;
 use cms\model\BaseObject;
 use cms\model\User;
 use language\Language;
@@ -88,7 +89,8 @@ class ProfileAction extends BaseAction
 		// Ausgewählte Sprache sofort verwenden.
 		$l = $this->getRequestVar('language');
 
-        $this->setLanguage($l);
+		if   ( $l )
+        	$this->setLanguage($l);
 	}
 
 	
@@ -198,6 +200,8 @@ class ProfileAction extends BaseAction
 	
 	public function pwPost()
 	{
+		$pwMinLength = Configuration::subset(['security','password'])->get('min_length',10);
+
 		if	( ! $this->user->checkPassword( $this->getRequestVar('act_password') ) )
 		{
 			$this->addValidationError('act_password');
@@ -210,9 +214,9 @@ class ProfileAction extends BaseAction
 		{
 			$this->addValidationError('password2','PASSWORDS_DO_NOT_MATCH');
 		}
-		elseif ( strlen($this->getRequestVar('password1'))<intval(\cms\base\Configuration::config('security','password','min_length')) )
+		elseif ( strlen($this->getRequestVar('password1'))<$pwMinLength )
 		{
-			$this->addValidationError('password1','PASSWORD_MINLENGTH',array('minlength'=>\cms\base\Configuration::config('security','password','min_length')));
+			$this->addValidationError('password1','PASSWORD_MINLENGTH',array('minlength'=> $pwMinLength));
 		}
 		else
 		{
@@ -228,7 +232,7 @@ class ProfileAction extends BaseAction
 	 */
 	function editView()
 	{
-	    $issuer  = urlencode(\cms\base\Configuration::config('application','operator'));
+	    $issuer  = urlencode(Configuration::subset('application')->get('operator',Startup::TITLE));
 	    $account = $this->user->name.'@'.$_SERVER['SERVER_NAME'];
 	    
 	    $base32 = new Base2n(5, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567', FALSE, TRUE, TRUE);
@@ -241,13 +245,15 @@ class ProfileAction extends BaseAction
 		
 		$this->setTemplateVar('timezone_list',timezone_identifiers_list() );
 		
-		$languages = explode(',',\cms\base\Configuration::config('i18n','available'));
-		foreach($languages as $id=>$name)
+		$languageList = [];
+
+		foreach( Messages::$AVAILABLE_LANGUAGES as $languageIsoCode)
 		{
-		    unset($languages[$id]);
-		    $languages[$name] = $name;
+			$language = (new Language)->getLanguage($languageIsoCode);
+			$label    = $language[ Messages::SELF_NAME ];
+		    $languageList[ $languageIsoCode ] = $label;
 		}
-		$this->setTemplateVar('language_list',$languages);
+		$this->setTemplateVar('language_list',$languageList );
 		
 		$this->setTemplateVars(
 		    $this->user->getProperties() +
@@ -280,7 +286,7 @@ class ProfileAction extends BaseAction
     public function setLanguage($l)
     {
         $conf = Session::getConfig();
-        $language = new \language\Language();
+        $language = new Language();
         $conf['language'] = $language->getLanguage($l,PRODUCTION);
         $conf['language']['language_code'] = $l;
         Session::setConfig($conf);
@@ -319,16 +325,16 @@ class ProfileAction extends BaseAction
 		$this->setTemplateVar('style',$currentStyle);
 
 
-		$styleConfig     = \cms\base\Configuration::config('style-default'); // default style config
-		$userStyleConfig = \cms\base\Configuration::config('style', $currentStyle); // user style config
+		$defaultStyleConfig     = Configuration::Conf()->get('style-default',[]); // default style config
+		$userStyleConfig = Configuration::subset('style')->get($currentStyle,[]); // user style config
 
-		if (is_array($userStyleConfig))
-			$styleConfig = array_merge($styleConfig, $userStyleConfig ); // Merging user style into default style
+		if ( $userStyleConfig )
+			$defaultStyleConfig = array_merge($defaultStyleConfig, $userStyleConfig ); // Merging user style into default style
 		else
 			; // Unknown style name, we are ignoring this.
 
 		// Theme base color for smartphones colorizing their status bar.
-		$this->setTemplateVar('theme-color', UIUtils::getColorHexCode($styleConfig['title_background_color']));
+		$this->setTemplateVar('theme-color', UIUtils::getColorHexCode($defaultStyleConfig['title_background_color']));
 	}
 
 
@@ -365,10 +371,10 @@ class ProfileAction extends BaseAction
 	private function getUserStyle( $user )
 	{
 		// Theme für den angemeldeten Benuter ermitteln
-		if  ( $user && isset(\cms\base\Configuration::config('style')[$user->style]))
+		if  ( $user && Configuration::subset('style')->has($user->style))
 			$style = $user->style;
 		else
-			$style = \cms\base\Configuration::config('interface', 'style', 'default');
+			$style = Configuration::subset(['interface','style'])->get('default','');
 
 		return $style;
 	}

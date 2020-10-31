@@ -8,7 +8,7 @@ function component_user( $user )
 	if	( empty($fullname) )
 		$fullname = \cms\base\Language::lang('NO_DESCRIPTION_AVAILABLE');
 
-	if	( !empty($mail) && \cms\base\Configuration::config('security','user','show_mail' ) )
+	if	( isset($mail) && $mail && \cms\base\Configuration::subset(['security','user'])->is('show_mail',false ) )
 		echo "<a href=\"mailto:$mail\" title=\"$fullname\">$name</a>";
 	else
 		echo "<span title=\"$fullname\">$name</span>";

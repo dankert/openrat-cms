@@ -13,9 +13,11 @@ use cms\base\DB;
 use cms\base\DefaultConfig;
 use cms\base\Startup;
 use cms\base\Version;
+use configuration\Config;
 use configuration\ConfigurationLoader;
 use database\Database;
 use cms\update\Update;
+use language\Language;
 use language\Messages;
 use modules\cms\base\HttpRequest;
 use util\exception\ValidationException;
@@ -56,9 +58,6 @@ class Dispatcher
 
         $this->checkConfiguration();
 
-        // Vorhandene Konfiguration aus der Sitzung lesen.
-        $conf = Configuration::rawConfig();
-
 		define('PRODUCTION', Configuration::Conf()->is('production',true));
         define('DEVELOPMENT', !PRODUCTION);
 
@@ -82,11 +81,13 @@ class Dispatcher
         //if ( DEVELOPMENT )
         //    Logger::debug( "Effective configuration:\n".YAML::YAMLDump($conf) );
 
-        if (!empty($conf['security']['umask']))
-            umask(octdec($conf['security']['umask']));
+		$umask = Configuration::subset('security')->get('umask','');
+		if   ( $umask )
+            umask(octdec($umask));
 
-        if (!empty($conf['interface']['timeout']))
-            set_time_limit(intval($conf['interface']['timeout']));
+		$timeout = Configuration::subset('interface')->get('timeout',0);
+		if   ( $timeout )
+            set_time_limit($timeout);
 
         $this->checkPostToken();
 
@@ -230,7 +231,7 @@ class Dispatcher
         // dann die Konfiguration neu einlesen.
         $configLoader = new ConfigurationLoader(__DIR__ . '/../../config/config.yml');
 
-        if (!is_array($conf) || $conf['config']['auto_reload'] && $configLoader->lastModificationTime() > $conf['config']['last_modification_time']) {
+        if (!is_array($conf) || @$conf['config']['auto_reload'] && $configLoader->lastModificationTime() > @$conf['config']['last_modification_time']) {
 
             // Da die Konfiguration neu eingelesen wird, sollten wir auch die Sitzung komplett leeren.
             if (is_array($conf) && $conf['config']['session_destroy_on_config_reload'])
@@ -243,28 +244,27 @@ class Dispatcher
             $conf = array_replace_recursive($conf, $customConfig);
 
             // Sprache lesen
+			$languages = [];
+			if (isset($_COOKIE['or_language']))
+				$languages[] = $_COOKIE['or_language'];
 
-            if ($conf['i18n']['use_http'])
+			$i18nConfig = (new Config($conf))->subset('i18n');
+
+			if	( $i18nConfig->is('use_http',true ) )
                 // Die vom Browser angeforderten Sprachen ermitteln
-                $languages = Http::getLanguages();
-            else
-                // Nur Default-Sprache erlauben
-                $languages = array();
-
-            if (isset($_COOKIE['or_language']))
-                $languages = array($_COOKIE['or_language']) + $languages;
+                $languages = array_merge( $languages,Http::getLanguages() );
 
             // Default-Sprache hinzufuegen.
             // Wird dann verwendet, wenn die vom Browser angeforderten Sprachen
             // nicht vorhanden sind
-            $languages[] = $conf['i18n']['default'];
-            $available = explode(',', $conf['i18n']['available']);
+            $languages[] = $i18nConfig->get('default','en');
+            $languages[] = 'en'; // last fallback.
 
             foreach ($languages as $l) {
-                if (!in_array($l, $available))
-                    continue; // language is not configured as available.
+                if (!in_array($l, Messages::$AVAILABLE_LANGUAGES))
+                    continue; // language is not available.
 
-                $language = new \language\Language();
+                $language = new Language();
                 $lang = $language->getLanguage( $l );
                 $conf['language'] = $lang;
                 $conf['language']['language_code'] = $l;
@@ -389,7 +389,7 @@ class Dispatcher
         }
 
 
-        $dbConfig = Configuration::config()->subset('database');
+        $dbConfig = Configuration::subset('database');
 
         if	( ! $dbConfig->has( $dbid ) )
             throw new \LogicException( 'unknown DB-Id: '.$dbid );
@@ -529,7 +529,7 @@ class Dispatcher
         if   ( ! $this->request->isAction )
             return;
 
-        $auditConfig = Configuration::config()->subset('audit-log');
+        $auditConfig = Configuration::subset('audit-log');
 
         if   ( $auditConfig->is('enabled',false))
         {

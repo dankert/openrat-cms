@@ -18,6 +18,7 @@ namespace cms\model;
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 use cms\base\Configuration;
 use cms\base\DB as Db;
+use logger\Logger;
 
 
 /**
@@ -46,7 +47,7 @@ class Language extends ModelBase
 
     public static function setLocale( $isoCode )
     {
-        $localeConf = \cms\base\Configuration::config()->subset('i18n')->subset('locale');
+        $localeConf = Configuration::subset('i18n')->subset('locale');
 
         if	( $localeConf->has(strtolower($isoCode)) )
         {
@@ -55,7 +56,7 @@ class Language extends ModelBase
             if	( !$locale_ok )
                 // Hat nicht geklappt. Entweder ist das Mapping falsch oder die locale ist
                 // nicht korrekt installiert.
-                \logger\Logger::warn("Could not set locale '$locale', please check with 'locale -a' if it is installaled correctly");
+                Logger::warn("Could not set locale '$locale', please check with 'locale -a' if it is installaled correctly");
         }
         else
         {

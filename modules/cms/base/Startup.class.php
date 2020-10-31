@@ -172,7 +172,7 @@ class Startup {
 	public static function readonly() {
 
 		// Gesamtes CMS ist readonly.
-		if (Configuration::config('security', 'readonly'))
+		if (Configuration::subset( ['security'] )->is('readonly',false))
 			return true;
 
 		// Aktuelle Datenbankverbindung ist readonly.

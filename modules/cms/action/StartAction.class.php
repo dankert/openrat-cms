@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use cms\base\Configuration;
 use cms\base\Startup;
 use cms\model\User;
 use cms\model\Project;
@@ -54,7 +55,7 @@ class StartAction extends BaseAction
 	
 	function setDb( $dbid )
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 
 		if	( !isset($conf['database'][$dbid] ))
 			throw new \LogicException( 'unknown DB-Id: '.$dbid );
@@ -75,7 +76,7 @@ class StartAction extends BaseAction
 
 	function checkForDb()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 		$dbid = $this->getRequestVar('dbid'); 
 
 		if	( $dbid != '' )
@@ -92,7 +93,7 @@ class StartAction extends BaseAction
 		}
 		else
 		{
-			$conf = \cms\base\Configuration::rawConfig();
+			$conf = Configuration::rawConfig();
 	
 			if	( !isset($conf['database']['default']) )
 				throw new \LogicException('default-database not set');
@@ -109,7 +110,7 @@ class StartAction extends BaseAction
 	{
 		Logger::debug( "login user $name" );
 	
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 		global $SESS;
 	
 		unset( $SESS['user'] );	
@@ -191,7 +192,7 @@ class StartAction extends BaseAction
 	 */
 	function loginView()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 		$sso = $conf['security']['sso'];
 		$ssl = $conf['security']['ssl'];
 		
@@ -309,9 +310,9 @@ class StartAction extends BaseAction
 		
 		$openid_provider = array();
 		foreach( explode(',',$conf['security']['openid']['provider']) as $provider )
-			$openid_provider[$provider] = \cms\base\Configuration::config('security','openid','provider.'.$provider.'.name');
+			$openid_provider[$provider] = Configuration::config('security','openid','provider.'.$provider.'.name');
 		$this->setTemplateVar('openid_providers',$openid_provider);
-		$this->setTemplateVar('openid_user_identity',\cms\base\Configuration::config('security','openid','user_identity'));
+		$this->setTemplateVar('openid_user_identity', Configuration::config('security','openid','user_identity'));
 		//$this->setTemplateVar('openid_provider','identity');
 
 		
@@ -438,7 +439,7 @@ class StartAction extends BaseAction
 	 */
 	public function applicationsView()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 		
 		// Diese Seite gilt pro Sitzung. 
 		$user       = Session::getUser();
@@ -488,7 +489,7 @@ class StartAction extends BaseAction
 	 */
 	function openid()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 		$openId = Session::get('openid');
 
 		if	( !$openId->checkAuthentication() )
@@ -557,7 +558,7 @@ class StartAction extends BaseAction
 	 */
 	function loginPost()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 
 		$this->checkForDb();
 		Session::setUser('');
@@ -631,7 +632,7 @@ class StartAction extends BaseAction
 			Logger::debug("Login successful for user '$loginName'");
 			
 			// Anmeldung erfolgreich.
-			if	( \cms\base\Configuration::config('security','renew_session_login') )
+			if	( Configuration::config('security','renew_session_login') )
 				$this->recreateSession();
 			
 			$user = Session::getUser();
@@ -647,13 +648,13 @@ class StartAction extends BaseAction
 	 */
 	function logoutPost()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 		
 		$user = Session::getUser();
 		if	( is_object($user) )
 			$this->setTemplateVar('login_username',$user->name);
 		
-		if	( \cms\base\Configuration::config('security','renew_session_logout') )
+		if	( Configuration::subset('security')->is('renew_session_logout',false) )
 			$this->recreateSession();
 
 		session_unset();
@@ -807,7 +808,7 @@ class StartAction extends BaseAction
 	
 	function showView()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 		global $PHP_AUTH_USER;
 		global $PHP_AUTH_PW;
 
@@ -933,7 +934,7 @@ class StartAction extends BaseAction
 	
 	public function registeruserdata()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 
 		Session::set('registerMail',$this->getRequestVar('mail') );
 		// TODO: Attribut "Password" abfragen
@@ -959,7 +960,7 @@ class StartAction extends BaseAction
 	 */
 	public function registercommit()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 		$this->checkForDb();
 
 		$origRegisterCode  = Session::get('registerCode');
@@ -1017,7 +1018,7 @@ class StartAction extends BaseAction
 	 */
 	public function password()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 		
 		// TODO: Attribut "Password" abfragen
 		foreach( $conf['database'] as $dbname=>$dbconf )

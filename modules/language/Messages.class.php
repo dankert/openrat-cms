@@ -1,5 +1,6 @@
 <?php namespace language; /* DO NOT CHANGE THIS GENERATED FILE */
 class Messages {
+  public static $AVAILABLE_LANGUAGES = ['de','en','es','fr','it','ru','cn'];
   const ACCESSKEY_MAIN_ADD = 'ACCESSKEY_MAIN_ADD';
   const ACCESSKEY_MAIN_ADMINISTRATION = 'ACCESSKEY_MAIN_ADMINISTRATION';
   const ACCESSKEY_MAIN_CONTENT = 'ACCESSKEY_MAIN_CONTENT';
@@ -1284,4 +1285,5 @@ class Messages {
   const TEXT = 'TEXT';
   const APPLY = 'APPLY';
   const URL = 'URL';
+  const SELF_NAME = 'SELF_NAME';
 }

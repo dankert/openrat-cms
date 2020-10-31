@@ -14,7 +14,9 @@ use cms\model\Group;
 use configuration\Config;
 use Exception;
 use http\Env\Request;
+use language\Messages;
 use openid_connect\OpenIDConnectClient;
+use util\exception\SecurityException;
 use util\FileUtils;
 use util\Http;
 use cms\auth\InternalAuth;
@@ -77,8 +79,6 @@ class LoginAction extends BaseAction
 	{
 		Logger::debug( "Login user: '$name'.'" );
 	
-		$conf = Configuration::rawConfig();
-
 		Session::setUser(null);
 	
 		
@@ -106,6 +106,8 @@ class LoginAction extends BaseAction
 		$ok = $user->checkPassword( $pw );
 		
 		$mustChangePassword = $user->mustChangePassword;
+
+		$passwordConfig = Configuration::subset(['security','password']);
 		
 		if	( $mustChangePassword )
 		{
@@ -116,12 +118,14 @@ class LoginAction extends BaseAction
 			}
 			elseif	( $pw1 != $pw2 )
 			{
-				$this->addValidationError('password1','PASSWORDS_DO_NOT_MATCH');
+				$this->addValidationError('password1',Messages::PASSWORDS_DO_NOT_MATCH);
 				$this->addValidationError('password2','');
 			}
-			elseif	( strlen($pw2) < $conf['security']['password']['min_length'] )
+			elseif	( strlen($pw2) < $passwordConfig->get('min_length',10) )
 			{
-				$this->addValidationError('password1','PASSWORD_MINLENGTH',array('minlength'=>$conf['security']['password']['min_length']));
+				$this->addValidationError('password1',Messages::PASSWORD_MINLENGTH,[
+					'minlength'=>$passwordConfig->get('min_length',10)
+				]);
 				$this->addValidationError('password2','');
 			}
 			else
@@ -255,7 +259,7 @@ class LoginAction extends BaseAction
             $authid = $this->getRequestVar( $sso['auth_param_name']);
 
             if	( empty( $authid) )
-                throw new \util\exception\SecurityException( 'no authorization data (no auth-id)');
+                throw new SecurityException( 'no authorization data (no auth-id)');
 
             if	( $sso['auth_param_serialized'] )
                 $authid = unserialize( $authid );
@@ -303,19 +307,19 @@ class LoginAction extends BaseAction
 
                 $html = implode('',$inhalt);
                 if	( !preg_match($sso['expect_regexp'],$html) )
-                    throw new \util\exception\SecurityException('auth failed');
+                    throw new SecurityException('auth failed');
                 $treffer=0;
                 if	( !preg_match($sso['username_regexp'],$html,$treffer) )
-                    throw new \util\exception\SecurityException('auth failed');
+                    throw new SecurityException('auth failed');
                 if	( !isset($treffer[1]) )
-                    throw new \util\exception\SecurityException('authorization failed');
+                    throw new SecurityException('authorization failed');
 
                 $username = $treffer[1];
 
                 $user = User::loadWithName( $username,User::AUTH_TYPE_INTERNAL );
 
                 if	( ! $user->isValid( ))
-                    throw new \util\exception\SecurityException('authorization failed: user not found: '.$username);
+                    throw new SecurityException('authorization failed: user not found: '.$username);
 
                 $user->setCurrent();
 
@@ -331,7 +335,7 @@ class LoginAction extends BaseAction
             $username = getenv( $ssl_user_var );
 
             if	( empty($username) )
-                throw new \util\exception\SecurityException( 'no username in client certificate ('.$ssl_user_var.') (or there is no client certificate...?)' );
+                throw new SecurityException( 'no username in client certificate ('.$ssl_user_var.') (or there is no client certificate...?)' );
 
             $user = User::loadWithName( $username,User::AUTH_TYPE_INTERNAL );
 
@@ -514,12 +518,10 @@ class LoginAction extends BaseAction
 	 */
 	function loginPost()
 	{
-		$conf = Configuration::rawConfig();
-
 		Session::setUser(''); // Altes Login entfernen.
 		
-		if	( $conf['login']['nologin'] )
-			throw new \util\exception\SecurityException('login disabled');
+		if	( Configuration::subset('login')->is('nologin',false ) )
+			throw new SecurityException('login disabled');
 
 		$loginName     = $this->getRequestVar('login_name'    ,RequestParams::FILTER_ALPHANUM);
 		$loginPassword = $this->getRequestVar('login_password',RequestParams::FILTER_ALPHANUM);
@@ -537,18 +539,20 @@ class LoginAction extends BaseAction
 		else
 		{
 			$auth = new InternalAuth();
-			
+
+			$passwordConfig = Configuration::subset(['security','password']);
+
 			if	( $auth->login($loginName, $loginPassword,$token) || $auth->mustChangePassword )
 			{
 				if	( $newPassword1 != $newPassword2 )
 				{
-					$this->addValidationError('password1','PASSWORDS_DO_NOT_MATCH');
+					$this->addValidationError('password1',Messages::PASSWORDS_DO_NOT_MATCH);
 					$this->addValidationError('password2','');
 					return;
 				}
-				elseif	( strlen($newPassword1) < $conf['security']['password']['min_length'] )
+				elseif	( strlen($newPassword1) < $passwordConfig->get('min_length',10) )
 				{
-					$this->addValidationError('password1','PASSWORD_MINLENGTH',array('minlength'=>$conf['security']['password']['min_length']));
+					$this->addValidationError('password1',Messages::PASSWORD_MINLENGTH,array('minlength'=>$passwordConfig->get('min_length',10)));
 					$this->addValidationError('password2','');
 					return;
 				}
@@ -577,7 +581,7 @@ class LoginAction extends BaseAction
 		$this->setCookie('or_dbid'    ,$this->getRequestVar('dbid'));
 
 		// Authentifizierungs-Module.
-		$modules = $conf['security']['authenticate']['modules'];
+		$modules = Configuration::subset(['security','authenticate'])->get('modules',[] );
 		
 		$loginOk            = false;
 		$mustChangePassword = false;
@@ -634,7 +638,7 @@ class LoginAction extends BaseAction
 			{
 				// Benutzer wurde zwar authentifiziert, ist aber in der
 				// internen Datenbank nicht vorhanden
-				if	( $conf['security']['newuser']['autoadd'] )
+				if	( Configuration::subset(['security','newuser'])->is('autoadd',true ) )
 				{
 					// Neue Benutzer in die interne Datenbank uebernehmen.
 					$user = new User();
@@ -703,7 +707,7 @@ class LoginAction extends BaseAction
 			}
 				
 			// Anmeldung erfolgreich.
-            if	( Configuration::config()->subset('security')->is('renew_session_login',false) )
+            if	( Configuration::subset('security')->is('renew_session_login',false) )
 				$this->recreateSession();
 			
 			$this->addNotice('user', 0, $user->name, 'LOGIN_OK', Action::NOTICE_OK, array('name' => $user->fullname));
@@ -729,7 +733,7 @@ class LoginAction extends BaseAction
 		if	( is_object($user) )
 			$this->setTemplateVar('login_username',$user->name);
 		
-		if	( Configuration::config()->subset('security')->is('renew_session_logout',false) )
+		if	( Configuration::subset('security')->is('renew_session_logout',false) )
 			$this->recreateSession();
 
 		if	( @$conf['theme']['compiler']['compile_at_logout'] )
@@ -813,7 +817,7 @@ class LoginAction extends BaseAction
 		$user = Session::getUser();
 		
 		if	( ! $user->isAdmin )
-			throw new \util\exception\SecurityException("Switching the user is only possible for admins.");
+			throw new SecurityException("Switching the user is only possible for admins.");
 		
 		$this->recreateSession();
 		
@@ -1035,7 +1039,7 @@ class LoginAction extends BaseAction
 		if	( is_object($db) )
 			$this->setTemplateVar('actdbid',$db->id);
 		else
-			$this->setTemplateVar('actdbid', Configuration::config('database-default','default-id'));
+			$this->setTemplateVar('actdbid', Configuration::subset('database-default')->get('default-id',''));
 	}	
 	
 	

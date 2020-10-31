@@ -1323,5 +1323,6 @@ Thank you.',
 'TEXT'=>'Text',
 'APPLY'=>'Apply',
 'URL'=>'URL',
+'SELF_NAME'=>'中文',
 ];}
 }

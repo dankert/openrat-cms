@@ -34,7 +34,7 @@ class Language
 	 */
 	public static function lang($textVar, $vars = array())
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 		$lang = $conf['language'];
 
 		$text = strtoupper($textVar);
@@ -58,8 +58,12 @@ class Language
 			return $text;
 		}
 
+		if   ( DEVELOPMENT ) {
+			Logger::warn('Message-Key not found: ' . $textVar);
+			return '??' . $textVar . '??';
+		}
+
 		// Wenn Textvariable nicht vorhanden ist, dann als letzten Ausweg nur den Variablennamen zurueckgeben
-		Logger::warn('Message-Key not found: ' . $textVar);
-		return ('?' . $textVar . '?');
+		return $textVar;
 	}
 }

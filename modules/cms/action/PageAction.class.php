@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use cms\base\Configuration;
 use cms\generator\PageGenerator;
 use cms\generator\Producer;
 use cms\generator\Publisher;
@@ -671,8 +672,9 @@ class PageAction extends ObjectAction
 		$templateModel->load();
 
 		// Executing PHP in Pages.
-		if	( ( \cms\base\Configuration::config('publish','enable_php_in_page_content')=='auto' && $templateModel->extension == 'php') ||
-		        \cms\base\Configuration::config('publish','enable_php_in_page_content')===true )
+		$enablePHP = Configuration::subset('publish')->get('enable_php_in_page_content');
+		if	( ( $enablePHP=='auto' && $templateModel->extension == 'php') ||
+		        $enablePHP===true )
         {
             ob_start();
             require( $generator->getCache()->load()->getFilename() );

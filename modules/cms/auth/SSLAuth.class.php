@@ -3,6 +3,7 @@
 namespace cms\auth;
 
 use cms\auth\Auth;
+use cms\base\Configuration;
 
 /**
  * Authentifizierung ueber ein SSL-Zertifikat.
@@ -13,9 +14,14 @@ class SSLAuth implements Auth
 {
 	public function username()
 	{
-		$conf = \cms\base\Configuration::config('security', 'ssl');
-		if (isset($_SERVER[\cms\base\Configuration::config('security', 'ssl', 'client_cert_dn_env')]))
-			return $_SERVER[\cms\base\Configuration::config('security', 'ssl', 'client_cert_dn_env')];
+		$envName = Configuration::subset(['security', 'ssl'] )->get('client_cert_dn_env','SSL_CLIENT_S_DN_CN');
+
+		$dn = @$_SERVER[ $envName ];
+
+		if   ( $dn )
+			return $dn;
+
+		return null;
 	}
 
 
@@ -28,4 +34,3 @@ class SSLAuth implements Auth
 	}
 }
 
-?>

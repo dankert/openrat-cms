@@ -7,6 +7,7 @@ use cms\model\Language;
 
 
 use cms\model\Project;
+use language\Messages;
 use util\Session;
 use util\Html;
 
@@ -64,8 +65,7 @@ class LanguagelistAction extends BaseAction
 
 	public function showView()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
-		$countryList = $conf['countries'];
+		$countryList = Configuration::Conf()->get('countries',[]);
 
 		$list = array();
 
@@ -124,22 +124,23 @@ class LanguagelistAction extends BaseAction
 		$this->setTemplateVar('isocodes'  ,$countryList );
 		$this->setTemplateVar('isocode'  ,'' );
 	}
-	
-	
-	function addPost()
+
+
+	/**
+	 * Adding a language.
+	 */
+	public function addPost()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
-		$countryList = $conf['countries'];
+		$countryList = Configuration::Conf()->get('countries',[]);
 		
-		// Hinzufuegen einer Sprache
 		$iso = 	$this->getRequestVar('isocode');
 		$language = new Language();
 		$language->projectid = $this->project->projectid;
 		$language->isoCode   = $iso;
-		$language->name      = $countryList[$iso];
+		$language->name      = @$countryList[$iso];
 		$language->add();
 		
-		$this->addNotice('language', 0, $language->name, 'ADDED', 'ok');
+		$this->addNoticeFor($language, Messages::ADDED);
 	}
 
 	

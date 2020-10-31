@@ -17,6 +17,7 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 namespace cms\generator\target;
 
+use cms\base\Configuration;
 use logger\Logger;
 use util\exception\PublisherException;
 use util\exception\UIException;
@@ -100,7 +101,7 @@ class Ftp extends BaseTarget
 		if ($p !== false) // Wennn letzten Punkt gefunden, dann dort aufteilen
 		{
 			$extension = substr(basename($dest), $p + 1);
-			$type = \cms\base\Configuration::config('mime-types', $extension);
+			$type = Configuration::subset('mime-types')->get( $extension,'application/download');
 			if (substr($type, 0, 5) == 'text/')
 				$mode = FTP_ASCII;
 		}

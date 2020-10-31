@@ -1348,5 +1348,6 @@ MENU_INDEX_ADMINISTRATION_DESC =',
 'TEXT'=>'Text',
 'APPLY'=>'Apply',
 'URL'=>'URL',
+'SELF_NAME'=>'espanol',
 ];}
 }

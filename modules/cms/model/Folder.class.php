@@ -2,6 +2,7 @@
 
 namespace cms\model;
 
+use cms\base\Configuration;
 use cms\base\DB as Db;
 use cms\generator\Publish;
 use Exception;
@@ -426,9 +427,9 @@ class Folder extends BaseObject
      */
     public function filename()
     {
-        $filenameConfig = \cms\base\Configuration::config('filename');
+        $filenameConfig = Configuration::subset('filename');
 
-        if	( $filenameConfig['edit'] )
+        if	( $filenameConfig->is('edit',true ) )
         {
             if   ( $this->filename == '' )
                 // Filename ist eigentlich ein Pflichtfeld, daher kann dies nahezu nie auftreten.
@@ -440,7 +441,7 @@ class Folder extends BaseObject
         else
         {
             // Filename is not edited, so we are generating a pleasant filename.
-            switch( $filenameConfig['style'] )
+            switch( $filenameConfig->get('style','short') )
             {
                 case 'longid':
                     // Eine etwas laengere ID als Dateinamen benutzen

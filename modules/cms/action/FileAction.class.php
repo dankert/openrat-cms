@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use cms\base\Configuration;
 use cms\generator\FileContext;
 use cms\generator\FileGenerator;
 use cms\generator\Producer;
@@ -225,8 +226,9 @@ class FileAction extends ObjectAction
 
 
 		// Unterscheidung, ob PHP-Code in der Datei ausgefuehrt werden soll.
-        $phpActive = ( \cms\base\Configuration::config('publish','enable_php_in_file_content')=='auto' && $this->file->getRealExtension()=='php') ||
-            \cms\base\Configuration::config('publish','enable_php_in_file_content')===true;
+		$publishConfig = Configuration::subset('publish');
+        $phpActive = ( $publishConfig->get('enable_php_in_file_content')=='auto' && $this->file->getRealExtension()=='php') ||
+            $publishConfig->get('enable_php_in_file_content' )===true;
 
         if	(  $phpActive ) {
 
@@ -264,7 +266,6 @@ class FileAction extends ObjectAction
 	 */
 	function editView()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
 		// MIME-Types aus Datei lesen
 		$this->setTemplateVars( $this->file->getProperties() );
 	}
@@ -283,7 +284,6 @@ class FileAction extends ObjectAction
 	 */
 	function valueView()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
 		// MIME-Types aus Datei lesen
 		$this->setTemplateVars( $this->file->getProperties() );
 		$this->setTemplateVar('value',$this->file->loadValue());

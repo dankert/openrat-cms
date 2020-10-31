@@ -52,17 +52,17 @@ class IndexAction extends Action
         $user = Session::getUser();
 
         if   ( $user )
-            $this->lastModified( C::config('config','last_modification_time') );
+            $this->lastModified( C::subset('config')->get('last_modification_time',time() ) );
         else
             $this->lastModified( time() );
 
         $style = $this->getUserStyle( $user );
 
-        $styleConfig     = C::config('style-default'); // default style config
-        $userStyleConfig = C::config('style', $style); // user style config
+        $styleConfig     = C::Conf()->subset('style-default' ); // default style config
+        $userStyleConfig = C::subset('style')->subset( $style ); // user style config
 
-        if (is_array($userStyleConfig))
-            $styleConfig = array_merge($styleConfig, $userStyleConfig ); // Merging user style into default style
+        if ( $userStyleConfig->hasContent() )
+            $styleConfig->merge( $userStyleConfig ); // Merging user style into default style
         else
             ; // Unknown style name, we are ignoring this.
 
@@ -70,22 +70,18 @@ class IndexAction extends Action
         $themeColor = UIUtils::getColorHexCode($styleConfig['title_background_color']);
 
 
-
-
-        $appName = C::config('application','name');
+        $appName = C::subset(['application'])->get('name',Startup::TITLE);
 
         $value = array(
-            'name' => $appName,
+            'name'        => $appName,
             'description' => $appName,
-            'short_name' => 'CMS',
-            'display' => 'standalone',
+            'short_name'  => 'CMS',
+            'display'     => 'standalone',
             'orientation' => 'landscape',
-            "background_color" => $themeColor,
+            'background_color' => $themeColor,
         );
 
         header("Content-Type: application/manifest+json");
-
-		header('Content-Type: application/json');
 		$json = new JSON();
 		$this->setTemplateVar( 'manifest',$json->encode($value) );
 	}
@@ -108,10 +104,12 @@ class IndexAction extends Action
             $user = Session::getUser();
         }
 
+		$configLastModificationTime = C::subset('config')->get('last_modification_time', 0);
+
         if	( $user )
-            $this->lastModified( max( $user->loginDate, C::config('config','last_modification_time')) );
+			$this->lastModified( max( $user->loginDate, $configLastModificationTime) );
         else
-            $this->lastModified( C::config('config','last_modification_time') );
+            $this->lastModified( $configLastModificationTime );
 
         // Theme für den angemeldeten Benuter ermitteln
         $style = $this->getUserStyle($user);
@@ -134,10 +132,10 @@ class IndexAction extends Action
         $this->setTemplateVar('themeStyleLink', Html::url('index','themestyle') );
         $this->setTemplateVar('manifestLink'  , Html::url('index','manifest'  ) );
 
-        $styleConfig     = C::config('style-default'); // default style config
-        $userStyleConfig = C::config('style', $style); // user style config
+        $styleConfig     = C::Conf()->get('style-default',[]); // default style config
+        $userStyleConfig = C::subset('style')->get( $style,[]); // user style config
 
-        if (is_array($userStyleConfig))
+        if ( $userStyleConfig )
             $styleConfig = array_merge($styleConfig,$userStyleConfig); // Merging user style into default style
         else
             ; // Unknown style name, we are ignoring this.
@@ -145,10 +143,10 @@ class IndexAction extends Action
         // Theme base color for smartphones colorizing their status bar.
         $this->setTemplateVar('themeColor', UIUtils::getColorHexCode($styleConfig['title_background_color']));
 
-        $messageOfTheDay = C::config('login', 'motd');
+        $messageOfTheDay = C::subset('login')->get('motd','');
 
-        if ( !empty($messageOfTheDay) )
-            $this->addInfoFor( new User(),Messages::MOTD,array('motd'=>$messageOfTheDay) );
+        if ( $messageOfTheDay )
+            $this->addInfoFor( new User(),Messages::MOTD,array('motd' => $messageOfTheDay) );
 
         if ( DEVELOPMENT )
             $this->addInfoFor( new User(),Messages::DEVELOPMENT_MODE );
@@ -212,44 +210,46 @@ class IndexAction extends Action
 	{
 		// Je Theme die Theme-CSS-Datei ausgeben.
 		$lessFile = Startup::THEMES_DIR . 'default/style/theme/openrat-theme.less';
-		$css = '';
-		
-		
-		foreach (array_keys(C::config('style')) as $styleId)
+		$css      = '';
+
+		$parser = new Less(array(
+			'sourceMap'         => DEVELOPMENT,
+			'indentation'       => DEVELOPMENT?"\t":'',
+			'outputSourceFiles' => false,
+			'compress'          => PRODUCTION
+		));
+
+		foreach ( C::subset('style')->subsets() as $styleId => $styleConfig)
 		{
 			try
 			{
-				$parser = new Less(array(
-					'sourceMap' => DEVELOPMENT,
-					'indentation' => '	',
-					'outputSourceFiles' => false
-				));
-				$parser->parseFile($lessFile,basename($lessFile));
-				
-				$styleConfig = array_merge( C::config('style-default'), C::config('style', $styleId) );
+				$styleConfig = C::Conf()->subset('style-default')->merge( $styleConfig );
+
+				if   ( DEVELOPMENT )
+					$css .= "\n".'/* Theme: '.$styleId.' */'."\n";
+
 				$lessVars = array(
-					'cms-theme-id' => strtolower($styleId),
+					'cms-theme-id'   => strtolower($styleId),
 					'cms-image-path' => 'themes/default/images/'
 				);
 				
-				foreach ($styleConfig as $styleSetting => $value)
+				foreach ($styleConfig->getConfig() as $styleSetting => $value)
 					$lessVars['cms-' . strtolower(strtr($styleSetting, '_', '-'))] = $value;
+				$parser->parseFile($lessFile,basename($lessFile));
 				$parser->modifyVars($lessVars);
 				$css .= $parser->getCss();
 			}
 			catch (Exception $e)
 			{
-				Logger::warn("LESS Parser failed on file '$lessFile'. Reason: " . $e->__toString() . " */\n\n");
+				Logger::warn( new \RuntimeException("LESS Parser failed on file '$lessFile'.", 0,$e) );
 
 				// For not confusing the browser we are displaying a CSS with a comment.
-				$css .= "\n\n/* WARNING!\n   LESS Parser failed on file '$lessFile'. Reason: " . $e->__toString() . " */\n\n";
+				if   ( DEVELOPMENT )
+					$css .= "\n\n/* ERROR!\n   LESS Parser failed on file '$lessFile'. Reason: " . $e->__toString() . " */\n\n";
 			}
 		}
 		
-		if (PRODUCTION)
-			return $css; // Should we minify here? Bandwidth vs. cpu-load.
-		else
-			return $css;
+		return $css;
 	}
 
 
@@ -291,8 +291,9 @@ class IndexAction extends Action
         }
 
 
+        $startConfig = Configuration::subset( ['login','start'] );
         // Das zuletzt geänderte Objekt benutzen.
-        if	( C::config('login','start','start_lastchanged_object') )
+        if	( $startConfig->is('start_lastchanged_object',true) )
         {
             $objectid = Value::getLastChangedObjectByUserId($user->userid);
 
@@ -308,7 +309,7 @@ class IndexAction extends Action
         }
 
         // Das einzige Projekt benutzen
-        if	( C::config('login','start','start_single_project') )
+        if	( $startConfig->is('start_single_project',true) )
         {
             $projects = Project::getAllProjects();
             if ( count($projects) == 1 ) {
@@ -324,17 +325,16 @@ class IndexAction extends Action
 
     private function tryAutoLogin()
     {
-        $modules  = C::config('security','autologin','modules');
+        $modules  = C::subset( ['security','autologin'] )->get('modules',[] );
         $username = null;
 
         foreach( $modules as $module)
         {
             Logger::debug( 'Auto-Login module: '.$module );
-            $moduleClass = 'cms\auth\\'.$module.'Auth';
-            $auth = new $moduleClass;
+            $moduleClass = Auth::NS. '\\'.$module.'Auth';
+            $auth        = new $moduleClass;
             /* @type $auth Auth */
             try {
-
                 $username = $auth->username();
             }
             catch( Exception $e ) {
@@ -380,10 +380,10 @@ class IndexAction extends Action
     private function getUserStyle( $user )
     {
         // Theme für den angemeldeten Benuter ermitteln
-        if  ( $user && isset(C::config('style')[$user->style]))
+        if  ( $user && C::subset('style')->has($user->style) )
             $style = $user->style;
         else
-            $style = C::config('interface', 'style', 'default');
+            $style = C::subset( ['interface', 'style'])->get('default','default');
         return $style;
     }
 

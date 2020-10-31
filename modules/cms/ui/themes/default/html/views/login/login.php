@@ -7,29 +7,29 @@
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('action') ?>" value="<?php echo O::escapeHtml('login') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('subaction') ?>" value="<?php echo O::escapeHtml('login') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml(''.@$_id.'') ?>" /><?php echo O::escapeHtml('') ?>
-      <?php $if3=(O::config('login','logo','enabled')); if($if3) {  ?>
-        <?php $if4=!((O::config('login','logo','url'))==FALSE); if($if4) {  ?>
-          <a target="<?php echo O::escapeHtml('_self') ?>" data-url="<?php echo O::escapeHtml(''.O::config('login','logo','url').'') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
-            <img src="<?php echo O::escapeHtml(''.O::config('login','logo','image').'') ?>" /><?php echo O::escapeHtml('') ?>
+      <?php $if3=(O::config(['login','logo','enabled'])); if($if3) {  ?>
+        <?php $if4=!((O::config(['login','logo','url']))==FALSE); if($if4) {  ?>
+          <a target="<?php echo O::escapeHtml('_self') ?>" data-url="<?php echo O::escapeHtml(''.O::config(['login','logo','url']).'') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
+            <img src="<?php echo O::escapeHtml(''.O::config(['login','logo','image']).'') ?>" /><?php echo O::escapeHtml('') ?>
           </a>
          <?php } ?>
         <?php if(!$if4) {  ?>
-          <img src="<?php echo O::escapeHtml(''.O::config('login','logo','image').'') ?>" /><?php echo O::escapeHtml('') ?>
+          <img src="<?php echo O::escapeHtml(''.O::config(['login','logo','image']).'') ?>" /><?php echo O::escapeHtml('') ?>
          <?php } ?>
        <?php } ?>
-      <?php $if3=!((O::config('login','motd'))==FALSE); if($if3) {  ?>
+      <?php $if3=!((O::config(['login','motd']))==FALSE); if($if3) {  ?>
         <div class="<?php echo O::escapeHtml('or-message info') ?>"><?php echo O::escapeHtml('') ?>
-          <span><?php echo O::escapeHtml(''.O::config('login','motd').'') ?>
+          <span><?php echo O::escapeHtml(''.O::config(['login','motd']).'') ?>
           </span>
         </div>
        <?php } ?>
-      <?php $if3=(O::config('security','readonly')); if($if3) {  ?>
+      <?php $if3=(O::config(['security','readonly'])); if($if3) {  ?>
         <div class="<?php echo O::escapeHtml('or-message warn') ?>"><?php echo O::escapeHtml('') ?>
           <span><?php echo O::escapeHtml(''.@O::lang('READONLY_DESC').'') ?>
           </span>
         </div>
        <?php } ?>
-      <?php $if3=(!O::config('login','nologin')); if($if3) {  ?>
+      <?php $if3=(!O::config(['login','nologin'])); if($if3) {  ?>
         <?php $if4=($enableOpenIdConnect); if($if4) {  ?>
           <section class="<?php echo O::escapeHtml('or-group or-collapsible or-collapsible--is-open or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>
             <h2 class="<?php echo O::escapeHtml('or-collapsible-title or-group-title or-collapsible-act-switch') ?>"><?php echo O::escapeHtml(''.@O::lang('login').'') ?>
@@ -97,8 +97,8 @@
                 <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('USER_NEW_PASSWORD').'') ?>
                 </h3>
                 <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
-                  <input type="<?php echo O::escapeHtml('password') ?>" name="<?php echo O::escapeHtml('password1') ?>" size="<?php echo O::escapeHtml('25') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" placeholder="<?php echo O::escapeHtml(''.@O::lang('USER_NEW_PASSWORD').'') ?>" minlength="<?php echo O::escapeHtml(''.O::config('security','password','min_length').'') ?>" value="<?php echo O::escapeHtml(''.@$password1.'') ?>" class="<?php echo O::escapeHtml('or- or-input') ?>" /><?php echo O::escapeHtml('') ?>
-                  <input type="<?php echo O::escapeHtml('password') ?>" name="<?php echo O::escapeHtml('password2') ?>" size="<?php echo O::escapeHtml('25') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" placeholder="<?php echo O::escapeHtml(''.@O::lang('USER_NEW_PASSWORD_REPEAT').'') ?>" minlength="<?php echo O::escapeHtml(''.O::config('security','password','min_length').'') ?>" value="<?php echo O::escapeHtml(''.@$password2.'') ?>" class="<?php echo O::escapeHtml('or- or-input') ?>" /><?php echo O::escapeHtml('') ?>
+                  <input type="<?php echo O::escapeHtml('password') ?>" name="<?php echo O::escapeHtml('password1') ?>" size="<?php echo O::escapeHtml('25') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" placeholder="<?php echo O::escapeHtml(''.@O::lang('USER_NEW_PASSWORD').'') ?>" minlength="<?php echo O::escapeHtml(''.O::config(['security','password','min_length']).'') ?>" value="<?php echo O::escapeHtml(''.@$password1.'') ?>" class="<?php echo O::escapeHtml('or- or-input') ?>" /><?php echo O::escapeHtml('') ?>
+                  <input type="<?php echo O::escapeHtml('password') ?>" name="<?php echo O::escapeHtml('password2') ?>" size="<?php echo O::escapeHtml('25') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" placeholder="<?php echo O::escapeHtml(''.@O::lang('USER_NEW_PASSWORD_REPEAT').'') ?>" minlength="<?php echo O::escapeHtml(''.O::config(['security','password','min_length']).'') ?>" value="<?php echo O::escapeHtml(''.@$password2.'') ?>" class="<?php echo O::escapeHtml('or- or-input') ?>" /><?php echo O::escapeHtml('') ?>
                 </div>
               </section>
             </div>

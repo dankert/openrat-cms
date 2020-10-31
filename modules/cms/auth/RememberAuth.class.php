@@ -30,7 +30,7 @@ class RememberAuth implements Auth
 				list($selector, $token) = array_pad(explode('.', $_COOKIE['or_token']), 2, '');
 				$dbid = $_COOKIE['or_dbid'];
 
-				$dbConfig = Configuration::config()->subset('database');
+				$dbConfig = Configuration::subset('database');
 
 				if (!$dbConfig->has($dbid)) {
 

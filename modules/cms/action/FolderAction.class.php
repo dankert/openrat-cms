@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use cms\base\Configuration;
 use cms\base\Startup;
 use cms\generator\FileContext;
 use cms\generator\FileGenerator;
@@ -736,28 +737,29 @@ class FolderAction extends ObjectAction
 	 */
 	private function maxFileSize()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
-
 		// When querying memory size values:
 		// Many ini memory size values, such as upload_max_filesize,
 		// are stored in the php.ini file in shorthand notation.
 		// ini_get() will return the exact string stored in the php.ini file
 		// and NOT its integer equivalent.
-		$sizes = array(10*1024*1024*1024); // Init with 10GB enough? :)
 
-		foreach( array('upload_max_filesize','post_max_size','memory_limit') as $var )
+		$_10GB = 10 * 1024 * 1024 * 1024; // 10GB
+		$sizes = [];
+
+		foreach( ['upload_max_filesize','post_max_size','memory_limit'] as $setting )
 		{
-			$v = $this->stringToBytes(ini_get($var));
+			$memLimit = $this->stringToBytes(ini_get($setting));
 
-			if	($v > 0 )
-				$sizes[] = $v;
+			if	($memLimit )
+				$sizes[] = $memLimit;
 		}
 
-		$confMaxSize = intval($conf['content']['file']['max_file_size'])*1024;
-		if	( $confMaxSize > 0 )
+		$confMaxSize = Configuration::subset(['content','file'])->get('max_file_size',$_10GB) * 1024;
+
+		if	( $confMaxSize )
 			$sizes[] = $confMaxSize;
 
-		return min($sizes);
+		return min($sizes); // Using the minimum of all sizes.
 	}
 
 

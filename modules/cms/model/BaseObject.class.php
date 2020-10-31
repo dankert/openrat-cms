@@ -3,6 +3,7 @@
 
 namespace cms\model;
 
+use cms\base\Configuration;
 use cms\base\DB as Db;
 use cms\base\Startup;
 use util\ArrayUtils;
@@ -294,7 +295,7 @@ SQL
                 }
 
                 $guestMask = 0;
-                switch( \cms\base\Configuration::Conf()->subset('security')->get('guest-access','read') )
+                switch( Configuration::Conf()->subset('security')->get('guest-access','read') )
                 {
                     case 'read':
                     case 'readonly':
@@ -524,7 +525,7 @@ SQL
         $slug = str_replace(array_keys($replacements), array_values($replacements), $slug);
 
         // 2nd try is to use iconv with the current locale.
-        Language::setLocale( \cms\base\Configuration::config('language','language_code' ) );
+        Language::setLocale( Configuration::subset('language')->get('language_code','en' ) );
         $slug = iconv('utf-8', 'ascii//TRANSLIT', $slug);
 
         // now replace every unpleasant char with a hyphen.
@@ -555,7 +556,7 @@ SQL
      */
     public function filename()
     {
-        $conf = \cms\base\Configuration::rawConfig();
+        $conf = Configuration::rawConfig();
 
         $filename = $this->filename;
 
@@ -1348,7 +1349,7 @@ SQL
 
         // Resolve config variables.
 		$resolver->addResolver('config', function ($var) {
-                $conf = \cms\base\Configuration::rawConfig();
+                $conf = Configuration::rawConfig();
                 return ArrayUtils::getSubValue($conf,explode('.',$var) );
 		});
 

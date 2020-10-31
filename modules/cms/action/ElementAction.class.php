@@ -3,6 +3,7 @@
 namespace cms\action;
 
 
+use cms\base\Configuration;
 use cms\model\Element;
 use cms\model\Project;
 use cms\model\Template;
@@ -93,16 +94,14 @@ class ElementAction extends BaseAction
 	 */
 	public function advancedPost()
 	{
-        $conf = \cms\base\Configuration::rawConfig();
-        $ini_date_format = \cms\base\Configuration::config('date','format');
-
+        $ini_date_format = Configuration::subset('date')->get('format',[] );
 
         if	( $this->hasRequestVar('format'))
             $this->element->format = $this->getRequestId('format');
 
 
         if	( $this->hasRequestVar('dateformat'))
-            $this->element->dateformat  = $ini_date_format[$this->getRequestVar('dateformat')];
+            $this->element->dateformat  = @$ini_date_format[$this->getRequestVar('dateformat')];
 
 
         if	( $this->hasRequestVar('default_longtext'))
@@ -146,7 +145,6 @@ class ElementAction extends BaseAction
 
 	public function advancedView()
 	{
-        $conf = \cms\base\Configuration::rawConfig();
         $this->setTemplateVar('type',$this->element->getTypeName() );
 
         // Abhaengig vom aktuellen Element-Typ die Eigenschaften anzeigen
@@ -302,9 +300,7 @@ class ElementAction extends BaseAction
 
                 case 'dateformat':
 
-                    //$ini_date_format = \cms\base\Configuration::config('date','format');
-                    //$ini_date_format = \cms\base\Configuration::Conf()->subset('date')->get('format');
-                    $ini_date_format = \cms\base\Configuration::config()->subset('date')->get('format');
+                    $ini_date_format = Configuration::subset('date')->get('format',[]);
                     $dateformat = array();
 
                     $this->setTemplateVar('dateformat','');
@@ -455,7 +451,7 @@ class ElementAction extends BaseAction
                             break;
 
                         case Element::ELEMENT_TYPE_CODE:
-                            if	( $conf['security']['disable_dynamic_code'] )
+                            if	( Configuration::subset('security')->is('disable_dynamic_code',true ) )
                                 $this->addNotice('element', 0, $this->element->name, 'CODE_DISABLED', Action::NOTICE_WARN);
 
                             $this->setTemplateVar('code',$this->element->code);

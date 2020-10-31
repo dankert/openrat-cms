@@ -46,7 +46,7 @@
               <input name="<?php echo O::escapeHtml('target_dir') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" value="<?php echo O::escapeHtml(''.@$target_dir.'') ?>" class="<?php echo O::escapeHtml('or-filename or-input') ?>" /><?php echo O::escapeHtml('') ?>
             </div>
           </section>
-          <?php $if4=(O::config('publish','project','override_system_command')); if($if4) {  ?>
+          <?php $if4=(O::config(['publish','project','override_system_command'])); if($if4) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('PROJECT_CMD_AFTER_PUBLISH').'') ?>
               </h3>

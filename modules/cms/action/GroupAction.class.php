@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use cms\base\Configuration;
 use cms\model\Acl;
 use cms\model\User;
 use cms\model\Project;
@@ -206,10 +207,6 @@ class GroupAction extends BaseAction
 			$this->setTemplateVar($varName,$hasUser);
 		}
 		$this->setTemplateVar('memberships',$userliste);
-
-		$conf = \cms\base\Configuration::rawConfig();
-		if	($conf['security']['authorize']['type']=='ldap')
-			$this->addNotice('group', 0, $this->group->name, 'GROUPS_MAY_CONFLICT_WITH_LDAP', Action::NOTICE_WARN);
 	}
 	
 	

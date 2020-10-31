@@ -49,7 +49,7 @@ class FileCache implements Cache
         $this->filename = $filename;
         $this->loader   = $loader;
 
-        if   ( C::config()->subset('publishing')->is('cache_enabled',false) )
+        if   ( C::subset('publishing')->is('cache_enabled',false) )
             $this->invalidateIfOlderThan( $lastModified );
         else
             $this->invalidateIfOlderThan( Startup::getStartTime() ); // Invalidate all before this request.

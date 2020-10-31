@@ -1328,5 +1328,6 @@ Vielen Dank.',
 'TEXT'=>'Text',
 'APPLY'=>'Übernehmen',
 'URL'=>'Url',
+'SELF_NAME'=>'deutsch',
 ];}
 }

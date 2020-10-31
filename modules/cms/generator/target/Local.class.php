@@ -17,6 +17,7 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 namespace cms\generator\target;
 
+use cms\base\Configuration;
 use cms\base\Startup;
 use logger\Logger;
 use util\exception\PublisherException;
@@ -42,18 +43,18 @@ class Local extends  BaseTarget
 	 */
 	public function open()
 	{
-		$confPublish = \cms\base\Configuration::config('publish');
+		$fileSystemConfig = Configuration::subset(['publish','filesystem']);
 
 		$targetDir = rtrim( $this->url->path,'/' );
 
-		if	( FileUtils::isAbsolutePath($targetDir) && $confPublish['filesystem']['per_project'] )
+		if	( FileUtils::isAbsolutePath($targetDir) && $fileSystemConfig->is('per_project',true ))
 		{
 			$this->localDestinationDirectory = FileUtils::toAbsolutePath([$targetDir]); // Projekteinstellung verwenden.
 		}
 		else
 		{
 			// Konfiguriertes Verzeichnis verwenden.
-			$this->localDestinationDirectory = FileUtils::toAbsolutePath([$confPublish['filesystem']['directory'],$targetDir]);
+			$this->localDestinationDirectory = FileUtils::toAbsolutePath([$fileSystemConfig->get('directory','/var/www'),$targetDir]);
 		}
 
 
@@ -71,7 +72,7 @@ class Local extends  BaseTarget
 	 */
 	public function put($source, $dest, $lastChangeDate)
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 
 		// Is the output directory writable?
 		if   ( !is_writeable( $this->localDestinationDirectory ) )
@@ -124,7 +125,7 @@ class Local extends  BaseTarget
 	 */
 	private function mkdirs($path )
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 
 		if	( is_dir($path) )
 			return;  // Path exists

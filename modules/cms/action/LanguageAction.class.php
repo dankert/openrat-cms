@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use cms\base\Configuration;
 use cms\model\Language;
 use cms\model\Project;
 use util\Session;
@@ -103,9 +104,9 @@ class LanguageAction extends BaseAction
 		}
 		else
 		{
-			$countryList = \cms\base\Configuration::config()['countries'];
+			$countries = Configuration::subset('countries');
 			$iso = $this->getRequestVar('isocode');
-			$this->language->name    = $countryList[$iso];
+			$this->language->name    = $countries->get($iso,$iso);
 			$this->language->isoCode = strtolower( $iso );
 		}
 

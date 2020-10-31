@@ -2,6 +2,7 @@
 
 namespace cms\generator\link;
 
+use cms\base\Configuration;
 use cms\generator\PageContext;
 use cms\model\BaseObject;
 use cms\model\File;
@@ -61,6 +62,8 @@ class PublicLink implements LinkFormat
      */
     public function linkToObject( BaseObject $from, BaseObject $to ) {
 
+    	$publishConfig = Configuration::subset('publish');
+
 		$from->load();
     	$fromProject = $from->getProject()->load();
 
@@ -97,7 +100,7 @@ class PublicLink implements LinkFormat
 
 			case BaseObject::TYPEID_PAGE:
 
-				if ($fromProject->cut_index && $to->filename == \cms\base\Configuration::config('publish', 'default')) {
+				if ($fromProject->cut_index && $to->filename == $publishConfig->get('default','index')) {
 					$filename = ''; // Link auf Index-Datei, der Dateiname bleibt leer.
 				} else {
 
@@ -107,7 +110,7 @@ class PublicLink implements LinkFormat
 					$parentFolder = new Folder($page->parentid);
 					$parentFolder->load();
 
-					$format = \cms\base\Configuration::config('publish', 'format');
+					$format = $publishConfig->get('format','{filename}{language_sep}{language}{type_sep}{type}');
 					$format = str_replace('{filename}', $page->filename(), $format);
 
 					$allLanguages = $fromProject->getLanguageIds();
@@ -116,12 +119,12 @@ class PublicLink implements LinkFormat
 					$withLanguage =
 						!$fromProject->content_negotiation  &&
 						$fromProject->publishPageExtension  &&
-						(count($allLanguages) > 1 || \cms\base\Configuration::config('publish', 'filename_language') == 'always');
+						(count($allLanguages) > 1 || $publishConfig->get('filename_language','auto') == 'always');
 
 					$withModel    =
 						! $fromProject->content_negotiation   &&
 						! $fromProject->publishPageExtension  &&
-						(count($allModels) > 1    || \cms\base\Configuration::config('publish', 'filename_type') == 'always');
+						(count($allModels) > 1    || $publishConfig->get('filename_type','always') == 'always');
 
 					$languagePart = '';
 					$typePart     = '';
@@ -139,8 +142,8 @@ class PublicLink implements LinkFormat
 						$typePart = $templateModel->extension;
 					}
 
-					$languageSep = $languagePart?\cms\base\Configuration::config('publish','language_sep') :'';
-					$typeSep     = $typePart    ?\cms\base\Configuration::config('publish','type_sep'    ) :'';
+					$languageSep = $languagePart? $publishConfig->get('language_sep','.') :'';
+					$typeSep     = $typePart    ? $publishConfig->get('type_sep'    ,'.') :'';
 
 					$format = str_replace('{language}'    ,$languagePart ,$format );
 					$format = str_replace('{language_sep}',$languageSep  ,$format );

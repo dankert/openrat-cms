@@ -3,6 +3,7 @@
 namespace cms\action;
 
 use cms\base\Configuration;
+use cms\base\Startup;
 use cms\model\Acl;
 use cms\model\User;
 use cms\model\Project;
@@ -89,7 +90,7 @@ class UserAction extends BaseAction
         $this->user->hotp     = $this->hasRequestVar('hotp'    );
         $this->user->totp     = $this->hasRequestVar('totp'    );
 
-        $conf = \cms\base\Configuration::rawConfig();
+        $conf = Configuration::rawConfig();
         if	( @$conf['security']['user']['show_admin_mail'] )
             $this->user->mail = $this->getRequestVar('mail'    );
 
@@ -207,9 +208,9 @@ class UserAction extends BaseAction
 	 */
 	public function propView()
 	{
-	    $conf = \cms\base\Configuration::rawConfig();
+	    $conf = Configuration::rawConfig();
 	    
-	    $issuer  = urlencode(\cms\base\Configuration::config('application','operator'));
+	    $issuer  = urlencode(Configuration::subset('application')->get('operator',Startup::TITLE));
 	    $account = $this->user->name.'@'.$_SERVER['SERVER_NAME'];
 
 	    $base32 = new Base2n(5, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567', FALSE, TRUE, TRUE);
@@ -249,31 +250,26 @@ class UserAction extends BaseAction
 	{
 		$this->setTemplateVars( $this->user->getProperties() );
 
-		$gravatarConfig = \cms\base\Configuration::config('interface','gravatar');
+		$gravatarConfig = Configuration::subset(['interface','gravatar'] );
 		
-		$this->setTemplateVar( 'image', 'about:blank' );
-		if	( is_array($gravatarConfig) )
+
+		if	( $gravatarConfig->is('enabled',true) &&  $this->user->mail )
 		{
-			extract($gravatarConfig);
-			
-			if	( isset($enable) && $enable && !empty($this->user->mail) )
-			{
-				$url = 'http://www.gravatar.com/avatar/'.md5($this->user->mail).'?';
-				if	( isset($size))
-					$url .= '&s='.$size;
-				if	( isset($default))
-					$url .= '&d='.$default;
-				if	( isset($rating))
-					$url .= '&r='.$rating;
-					
-				$this->setTemplateVar( 'image', $url );
-			}
+			$url = 'http://www.gravatar.com/avatar/'.md5($this->user->mail).'?';
+
+			$url .= '&s='.$gravatarConfig->get('size'   ,80 );
+			$url .= '&d='.$gravatarConfig->get('default',404);
+			$url .= '&r='.$gravatarConfig->get('rating' ,'g');
+
+			$this->setTemplateVar( 'image', $url );
+		} else {
+			$this->setTemplateVar( 'image', 'about:blank' );
 		}
 
 
 
 
-        $issuer  = urlencode(\cms\base\Configuration::config('application','operator'));
+        $issuer  = urlencode(Configuration::subset('application')->get('operator',Startup::TITLE));
         $account = $this->user->name.'@'.$_SERVER['SERVER_NAME'];
 
         $base32 = new Base2n(5, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567', FALSE, TRUE, TRUE);

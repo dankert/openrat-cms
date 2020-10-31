@@ -3,6 +3,7 @@
 namespace cms\ui\action;
 
 use cms\action\Action;
+use cms\base\Configuration;
 use cms\base\DB;
 use cms\base\Startup;
 use cms\model\BaseObject;
@@ -42,7 +43,7 @@ class TitleAction extends Action
 	 */
 	public function showView()
 	{
-		$this->setTemplateVar('buildinfo',Startup::TITLE.' '.Startup::VERSION.' - build '.\cms\base\Configuration::config('build','build') );
+		$this->setTemplateVar('buildinfo',Startup::TITLE.' '.Startup::VERSION.' - build date '.Startup::DATE );
 
 		$user = Session::getUser();
 
@@ -69,7 +70,7 @@ class TitleAction extends Action
 		//$this->setTemplateVar('logout_url' ,Html::url( 'index','logout'  ));
 		$this->setTemplateVar('isAdmin',$this->userIsAdmin() );
 
-		if	( \cms\base\Configuration::config('interface','session','auto_extend') )
+		if	( Configuration::subset(['interface','session'])->is('auto_extend',true) )
 		{
 			$this->setTemplateVar('ping_url'    ,Html::url('title','ping')            );			
 			$this->setTemplateVar('ping_timeout',ini_get('session.gc_maxlifetime')-60 );

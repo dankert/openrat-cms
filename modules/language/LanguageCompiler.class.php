@@ -60,6 +60,11 @@ class LanguageCompiler
 		else
 			throw new LogicException("File is not writable: '$this->keyFile'\n");
 
+		file_put_contents($this->keyFile, '  public static $AVAILABLE_LANGUAGES = ['.implode(',',array_map(function ($language) {
+			return '\''.$language.'\'';
+			},$this->getIsoList($lang))).'];'."\n",FILE_APPEND);
+
+
 		foreach ($lang as $key => $values)
 			file_put_contents($this->keyFile, '  const '.strtoupper($key).' = \''.strtoupper($key).'\';'."\n",FILE_APPEND);
 
@@ -70,26 +75,33 @@ class LanguageCompiler
 
 
 
+    private function getIsoList( $lang )
+	{
+		$isoList = array();
 
-	/**
+		foreach ($lang as $key => $values) {
+			foreach ($values as $isocode => $value) {
+				if (!in_array($isocode, $isoList))
+					$isoList[] = $isocode;
+			}
+
+		}
+
+		return $isoList;
+	}
+
+
+
+
+/**
 	 * Creates the production environment.
 	 * @param $lang
 	 */
     private function updateLanguageFiles( $lang )
     {
         // creating a list of all language iso codes.
-        $isoList = array();
-        foreach ($lang as $key => $values)
-        {
-            foreach ($values as $isocode => $value)
-            {
-                if ( !in_array($isocode, $isoList) )
-                    $isoList[] = $isocode;
-            }
 
-        }
-
-		foreach ($isoList as $iso) {
+		foreach ($this->getIsoList($lang) as $iso) {
             $outputFilename = $this->getOutputLanguageFile($iso);
 
             $success = file_put_contents($outputFilename, "<?php ".self::DO_NOT_CHANGE."\n");

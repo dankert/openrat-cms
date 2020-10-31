@@ -4,6 +4,7 @@
 namespace cms\generator;
 
 
+use cms\base\Configuration;
 use cms\generator\PageContext;
 use cms\model\File;
 use cms\model\Folder;
@@ -73,7 +74,7 @@ class PageGenerator extends BaseGenerator
 	 */
 	private function generatePageValue()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$conf = Configuration::rawConfig();
 
 		// Setzen der 'locale', damit sprachabhängige Systemausgaben (wie z.B. die
 		// Ausgabe von strftime()) in der korrekten Sprache dargestellt werden.
@@ -174,7 +175,7 @@ class PageGenerator extends BaseGenerator
 
 		// should we do a UTF-8-escaping here?
 		// Default should be off, because if you are fully using utf-8 (you should do), this is unnecessary.
-		if	( \cms\base\Configuration::config('publish','escape_8bit_characters') )
+		if	( Configuration::subset('publish' )->is('escape_8bit_characters') )
 			if	( substr($this->mimeType(),-4) == 'html' )
 			{
 				/*
@@ -213,14 +214,15 @@ class PageGenerator extends BaseGenerator
 		$project = $page->getProject();
 		$project->load();
 
-		$format = \cms\base\Configuration::config('publish','format');
+		$publishConfig = Configuration::subset('publish');
+		$format = $publishConfig->get('format','{filename}{language_sep}{language}{type_sep}{type}');
 		$format = str_replace('{filename}',$page->filename,$format );
 
 		$allLanguages = $project->getLanguageIds();
 		$allModels    = $project->getModelIds();
 
-		$withLanguage = count($allLanguages) > 1 || \cms\base\Configuration::config('publish','filename_language') == 'always';
-		$withModel    = count($allModels   ) > 1 || \cms\base\Configuration::config('publish','filename_type'    ) == 'always';
+		$withLanguage = count($allLanguages) > 1 || $publishConfig->get('filename_language','auto'   ) == 'always';
+		$withModel    = count($allModels   ) > 1 || $publishConfig->get('filename_type'    ,'always' ) == 'always';
 
 		$languagePart = '';
 		$typePart     = '';
@@ -239,8 +241,8 @@ class PageGenerator extends BaseGenerator
 			$typePart = $templateModel->extension;
 		}
 
-		$languageSep = $languagePart?\cms\base\Configuration::config('publish','language_sep') :'';
-		$typeSep     = $typePart    ?\cms\base\Configuration::config('publish','type_sep'    ) :'';
+		$languageSep = $languagePart? $publishConfig->get('language_sep','.') :'';
+		$typeSep     = $typePart    ? $publishConfig->get('type_sep'    ,'.') :'';
 
 		$format = str_replace('{language}'    ,$languagePart ,$format );
 		$format = str_replace('{language_sep}',$languageSep  ,$format );

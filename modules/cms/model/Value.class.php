@@ -1,5 +1,6 @@
 <?php
 namespace cms\model;
+use cms\base\Configuration;
 use cms\base\DB;
 use cms\base\Startup;
 use util\ArrayUtils;
@@ -498,8 +499,8 @@ SQL
 		$sql->query();
 		
 		// Nur ausfuehren, wenn in Konfiguration aktiviert.
-		$limit = \cms\base\Configuration::config('content','revision-limit');
-		if	( isset($limit['enabled']) && $limit['enabled'] )
+		$limit = Configuration::subset(['content','revision-limit'] );
+		if	( $limit->is('enabled',false) )
 			$this->checkLimit();
 	}
 
@@ -510,11 +511,9 @@ SQL
 	 */
 	function checkLimit()
 	{
-		$limit = \cms\base\Configuration::config('content','revision-limit');
+		$limitConfig = Configuration::subset(['content','revision-limit']);
 
-		$db = \cms\base\DB::get();
-
-		$sql = $db->sql( <<<SQL
+		$sql = DB::sql( <<<SQL
 		SELECT id FROM {{value}}
 			                  WHERE elementid  = {elementid}
 			                    AND pageid     = {pageid}
@@ -529,9 +528,9 @@ SQL
 		$sql->setInt( 'languageid',$this->languageid         );
 		$values = $sql->getCol();
 		
-		if	( count($values) > $limit['min-revisions'] )
+		if	( count($values) > $limitConfig->get('min-revisions',3) )
 		{
-			$sql = $db->sql( <<<SQL
+			$sql = DB::sql( <<<SQL
 			DELETE FROM {{value}}
 				                  WHERE elementid  = {elementid}
 				                    AND pageid     = {pageid}
@@ -545,14 +544,14 @@ SQL
 			$sql->setInt( 'elementid' ,$this->element->elementid );
 			$sql->setInt( 'pageid'    ,$this->pageid             );
 			$sql->setInt( 'languageid',$this->languageid         );
-			$sql->setInt( 'min_date'  ,$limit['max-age']*24*60*60);
-			$sql->setInt( 'min_id'    ,$values[count($values)-$limit['min-revisions']]);
+			$sql->setInt( 'min_date'  ,$limitConfig['max-age']*24*60*60);
+			$sql->setInt( 'min_id'    ,$values[count($values)-$limitConfig['min-revisions']]);
 			$sql->query();
 		}
 		
-		if	( count($values) > $limit['max-revisions'] )
+		if	( count($values) > $limitConfig->get('max-revisions',100 ) )
 		{
-			$sql = $db->sql( <<<SQL
+			$sql = Db::sql( <<<SQL
 			DELETE FROM {{value}}
 				                  WHERE elementid  = {elementid}
 				                    AND pageid     = {pageid}
@@ -566,8 +565,8 @@ SQL
 			$sql->setInt( 'elementid' ,$this->element->elementid );
 			$sql->setInt( 'pageid'    ,$this->pageid             );
 			$sql->setInt( 'languageid',$this->languageid         );
-			$sql->setInt( 'min_date'  ,$limit['min-age']*24*60*60);
-			$sql->setInt( 'min_id'    ,$values[count($values)-$limit['max-revisions']]);
+			$sql->setInt( 'min_date'  ,$limitConfig['min-age']*24*60*60);
+			$sql->setInt( 'min_id'    ,$values[count($values)-$limitConfig['max-revisions']]);
 			$sql->query();
 		}
 	}

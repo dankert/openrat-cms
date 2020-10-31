@@ -1,5 +1,5 @@
 <?php /* THIS FILE IS GENERATED from pub.tpl.src.xml - DO NOT CHANGE */ defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
-  <?php $if2=(O::config('security','nopublish')); if($if2) {  ?>
+  <?php $if2=(O::config(['security','nopublish'])); if($if2) {  ?>
     <div class="<?php echo O::escapeHtml('or-message warn') ?>"><?php echo O::escapeHtml('') ?>
       <span class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml(''.@O::lang('NOPUBLISH_DESC').'') ?>
       </span>

@@ -31,14 +31,22 @@ class Output
 	/**
 	 * Gets a localized message
 	 * @param $key message key
-	 * @return mixed|string
+	 * @return string
 	 */
 	public static function lang($key) {
 		return Language::lang($key);
 	}
 
 
-	public static function config($part1 = null, $part2 = null, $part3 = null, $part4 = null) {
-		return Configuration::config($part1,$part2,$part3,$part4);
+	/**
+	 * Gets a configuraton value.
+	 *
+	 * Delegating to the Configuration.
+	 *
+	 * @param $keys array
+	 * @return mixed
+	 */
+	public static function config( $keys ) {
+		return Configuration::get( $keys );
 	}
 }

@@ -334,7 +334,7 @@ class DefaultConfig {
 				[ 
 					'use_http' => true,
 					'default' => 'de',
-					'available' => 'de,en,es,fr,it,ru,cn',
+					'available' => ['de','en','es','fr','it','ru','cn'],
 					'locale' =>
 						[ 
 							'de' => 'de_DE.utf8',
