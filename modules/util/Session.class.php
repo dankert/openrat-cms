@@ -20,6 +20,7 @@ use cms\model\User;
  */
 class Session
 {
+	const KEY_OIDC_PROVIDER = 'oidc_provider';
 	const KEY_DBID = 'dbid';
 	const KEY_DB = 'database';
 	const KEY_USER = 'userObject';

@@ -1124,7 +1124,8 @@ class OpenIDConnectClient
 		curl_setopt($ch, CURLOPT_HEADER, 0);
 
 		// Allows to follow redirect
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+		// FIXME not possible in openbasedir-restrictions
+		//curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 
 		/**
 		 * Set cert

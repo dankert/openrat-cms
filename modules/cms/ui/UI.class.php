@@ -43,7 +43,11 @@ class UI
             // Sending the Content-Security-Policy.
             self::setContentSecurityPolicy();
 
-            if (empty($request->action)) {
+			if   ( @$_REQUEST['scope']=='openid' ) {
+			    $request->action = 'login';
+			    $request->method = 'oidc';
+			}
+			elseif (empty($request->action)) {
                 $request->action = 'index';
                 $request->method = 'show';
 			}

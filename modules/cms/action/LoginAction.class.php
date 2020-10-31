@@ -169,12 +169,19 @@ class LoginAction extends BaseAction
 
 	public function oidcView() {
 
-    	$providerName = $this->request->getRequiredRequestVar('id',RequestParams::FILTER_ALPHANUM);
+    	if   ( $this->hasRequestVar("id")) {
+			$providerName = $this->request->getRequestVar('id',RequestParams::FILTER_ALPHANUM);
+			Session::set(Session::KEY_OIDC_PROVIDER,$providerName);
+		}else {
+			$providerName = Session::get( Session::KEY_OIDC_PROVIDER);
+		}
+
 
     	$providerConfig = Configuration::subset(['security','oidc','provider',$providerName]);
 
     	$oidc = new OpenIDConnectClient();
     	$oidc->setProviderURL ( $providerConfig->get('url'          ));
+    	$oidc->setIssuer      ( $providerConfig->get('url'          ));
     	$oidc->setClientID    ( $providerConfig->get('client_id'    ));
     	$oidc->setClientSecret( $providerConfig->get('client_secret'));
 

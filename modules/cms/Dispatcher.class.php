@@ -311,7 +311,7 @@ class Dispatcher
 
         // Daten werden nur angezeigt, die Sitzung kann also schon geschlossen werden.
         // Halt! In Index-Action können Benutzer-Logins gesetzt werden.
-        if   ( ! $this->request->isAction && $this->request->action != 'index' )
+        if   ( ! $this->request->isAction && $this->request->action != 'index' && $this->request->method != 'oidc' )
             Session::close();
 
         Logger::debug("Dispatcher executing {$this->request->action}/{$this->request->method}/" . $this->request->getRequestId().' -> '.$actionClassName.'#'.$subactionMethodName.'()');
@@ -332,6 +332,10 @@ class Dispatcher
         {
         	// The validation exception is catched here
             $do->addValidationError( $ve->fieldName,$ve->key );
+
+            if   ( !$this->request->isAction )
+            	// Validation exceptions should only be thrown in POST requests.
+            	throw new BadMethodCallException("Validation error in GET request",0,$ve);
         }
         catch (\ReflectionException $re)
         {
