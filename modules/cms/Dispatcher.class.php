@@ -150,11 +150,14 @@ class Dispatcher
                 break;
             case Action::SECURITY_USER:
                 if (!is_object($do->currentUser))
-                    throw new SecurityException('No user logged in, but this action requires a valid user');
+                    throw new SecurityException( TextMessage::create('No user logged in, but this action ${0} requires a valid user',[$this->request->__toString()]));
                 break;
             case Action::SECURITY_ADMIN:
                 if (!is_object($do->currentUser) || !$do->currentUser->isAdmin)
-                    throw new SecurityException('This action requires administration privileges, but user ' . @$do->currentUser->name . ' is not an admin');
+                    throw new SecurityException(TextMessage::create('This action ${0} requires administration privileges, but user ${1} is not an admin',[
+                    	$this->request->__toString(),
+						@$do->currentUser->name
+					]));
                 break;
             default:
         }

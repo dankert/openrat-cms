@@ -197,4 +197,9 @@ class RequestParams
 	{
 		return $this->getRequestVar(self::PARAM_TOKEN,self::FILTER_ALPHANUM);
 	}
+
+
+	public function __toString() {
+		return 'Request '.$this->action.'/'.$this->method.'/'.$this->id;
+	}
 }
