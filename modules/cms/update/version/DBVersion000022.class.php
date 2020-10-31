@@ -21,17 +21,16 @@ class DBVersion000022 extends DbVersion
     {
         $table = $this->table('user');
 
-        $table->column('ldap_dn'    )->drop();
-
+		$table->column('issuer'     )->type(Column::TYPE_VARCHAR )->charset('ascii')->size(50)->nullable()->add();
         $table->column('auth_type'  )->type(Column::TYPE_INT )->size(2)->defaultValue(1 )->add();
-        $table->column('issuer'     )->type(Column::TYPE_VARCHAR )->size(50)->nullable()->add();
-		$table->dropUniqueIndex( ['name'] );
-		$table->addUniqueIndex ( ['name','auth_type','issuer'] );
+		$table->column('ldap_dn'    )->drop();
 
 		// OpenId subject identifiers may have up to 255 chars, so we have to increase the length
-        $table->column('name'       )->type(Column::TYPE_VARCHAR )->size(255)->modify();
-        $table->column('fullname'   )->type(Column::TYPE_VARCHAR )->size(255)->modify();
+        $table->column('name'       )->type(Column::TYPE_VARCHAR )->charset('ascii')->size(255)->modify();
+		$table->column('fullname'   )->type(Column::TYPE_VARCHAR )->size(255)->modify();
 
-    }
+		$table->dropUniqueIndex( ['name'] );
+		$table->addUniqueIndex ( ['name','auth_type','issuer'] );
+	}
 }
 

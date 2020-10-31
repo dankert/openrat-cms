@@ -17,12 +17,19 @@ class Column
 	private $table;
 
 	private $type     = self::TYPE_INT;
+	private $charset  = null;
 	private $size     = null;
 	private $default  = null;
 	private $nullable = false;
 
 	public function type( $type ) {
 		$this->type = $type;
+		return $this;
+	}
+
+
+	public function charset( $charset ) {
+		$this->charset = $charset;
 		return $this;
 	}
 
@@ -145,7 +152,9 @@ class Column
 
 		}
 
-		return $dbmsInternalType . ($this->size != null ? '(' . $this->size . ')' : '') .
+		return $dbmsInternalType .
+			($this->size    !== null ? '(' . $this->size . ')' : '') .
+			($this->charset !== null ? ' CHARACTER SET ' . $this->charset : '') .
 			($this->default !== null ? ' DEFAULT ' . (is_string($this->default) ? "'" : '') . $this->default . (is_string($this->default) ? "'" : '') : '') .
 			' ' . ($this->nullable ? 'NULL' : 'NOT NULL');
 	}
