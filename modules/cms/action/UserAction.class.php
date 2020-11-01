@@ -90,8 +90,7 @@ class UserAction extends BaseAction
         $this->user->hotp     = $this->hasRequestVar('hotp'    );
         $this->user->totp     = $this->hasRequestVar('totp'    );
 
-        $conf = Configuration::rawConfig();
-        if	( @$conf['security']['user']['show_admin_mail'] )
+        if	( Configuration::get(['security','user','show_admin_mail']) )
             $this->user->mail = $this->getRequestVar('mail'    );
 
         $this->user->style    = $this->getRequestVar('style'   );
@@ -208,8 +207,6 @@ class UserAction extends BaseAction
 	 */
 	public function propView()
 	{
-	    $conf = Configuration::rawConfig();
-	    
 	    $issuer  = urlencode(Configuration::subset('application')->get('operator',Startup::TITLE));
 	    $account = $this->user->name.'@'.$_SERVER['SERVER_NAME'];
 
@@ -230,7 +227,7 @@ class UserAction extends BaseAction
 		
 	    $this->setTemplateVar('timezone_list',timezone_identifiers_list() );
 	    
-        $languages = explode(',',$conf['i18n']['available']);
+        $languages = Messages::$AVAILABLE_LANGUAGES;
         foreach($languages as $id=>$name)
         {
             unset($languages[$id]);

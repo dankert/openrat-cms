@@ -3,6 +3,7 @@
 namespace cms\auth;
 
 use cms\auth\Auth;
+use cms\base\Configuration;
 
 /**
  * Authentifizierung als Gast-User.
@@ -15,11 +16,10 @@ class GuestAuth implements Auth
 {
 	public function username()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
-		$guestConf = $conf['security']['guest'];
+		$guestConf = Configuration::subset(['security','guest']);
 
-		if ($guestConf['enable'])
-			return $guestConf['user'];
+		if ($guestConf->is('enable',true))
+			return $guestConf->get('user');
 		else
 			return null;
 	}

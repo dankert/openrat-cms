@@ -74,8 +74,6 @@ class PageGenerator extends BaseGenerator
 	 */
 	private function generatePageValue()
 	{
-		$conf = Configuration::rawConfig();
-
 		// Setzen der 'locale', damit sprachabhängige Systemausgaben (wie z.B. die
 		// Ausgabe von strftime()) in der korrekten Sprache dargestellt werden.
 		$language = new Language($this->context->languageId);

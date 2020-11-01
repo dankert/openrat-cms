@@ -118,7 +118,7 @@ class Config
 
 
     /**
-     * The configuration entries as an array.
+     * Gets the underlying configuration settings as a bare array.
      *
      * @return array
      */

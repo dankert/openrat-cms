@@ -224,21 +224,12 @@ class LoginAction extends BaseAction
      */
     function loginView()
     {
-        $conf = Configuration::rawConfig();
-
-        $sso = $conf['security']['sso'];
-        $ssl = $conf['security']['ssl'];
-
-        $ssl_trust    = false;
-        $ssl_user_var = '';
-        extract( $ssl, EXTR_PREFIX_ALL, 'ssl' );
-
-        $oidcList = [];
-
+        $loginConfig    = Configuration::subset('security');
+        $securityConfig = Configuration::subset('security');
         $authenticateConfig  = Configuration::subset('authenticate');
+
         $authenticateEnabled = $authenticateConfig->is('enable',true);
-
-
+		$oidcList = [];
 
         $oidcConfig = Configuration::subset(['security','oidc']);
 
@@ -253,99 +244,6 @@ class LoginAction extends BaseAction
         $this->setTemplateVar('enableUserPasswordLogin',$authenticateEnabled);
         $this->setTemplateVar('enableOpenIdConnect'    ,(boolean)$oidcList  );
         $this->setTemplateVar('provider'               ,$oidcList           );
-
-        if	( $sso['enable'] )
-        {
-            $authid = $this->getRequestVar( $sso['auth_param_name']);
-
-            if	( empty( $authid) )
-                throw new SecurityException( 'no authorization data (no auth-id)');
-
-            if	( $sso['auth_param_serialized'] )
-                $authid = unserialize( $authid );
-
-            $purl = parse_url($sso['url']);
-            // Verbindung zu URL herstellen.
-            $errno=0; $errstr='';
-            $fp = fsockopen ($purl['host'],80, $errno, $errstr, 30);
-            if	( !$fp )
-            {
-                echo "Connection failed: $errstr ($errno)";
-            }
-            else
-            {
-                $http_get = $purl['path'];
-                if	( !empty($purl['query']) )
-                    $http_get .= '?'.$purl['query'];
-
-                $header = array();
-
-                $header[] = "GET $http_get HTTP/1.0";
-                $header[]  ="Host: ".$purl['host'];
-                $header[] = "User-Agent: Mozilla/5.0 (OpenRat CMS Single Sign-on Check)";
-                $header[] = "Connection: Close";
-
-                if	( $sso['cookie'] )
-                {
-                    $cookie = 'Cookie: ';
-                    if	( is_array($authid))
-                        foreach( $authid as $cookiename=>$cookievalue)
-                            $cookie .= $cookiename.'='.$cookievalue."; ";
-                    else
-                        $cookie .= $sso['cookie_name'].'='.$authid;
-
-                    $header[] = $cookie;
-                }
-
-                fputs ($fp, implode("\r\n",$header)."\r\n\r\n");
-
-                $inhalt=array();
-                while (!feof($fp)) {
-                    $inhalt[] = fgets($fp,128);
-                }
-                fclose($fp);
-
-                $html = implode('',$inhalt);
-                if	( !preg_match($sso['expect_regexp'],$html) )
-                    throw new SecurityException('auth failed');
-                $treffer=0;
-                if	( !preg_match($sso['username_regexp'],$html,$treffer) )
-                    throw new SecurityException('auth failed');
-                if	( !isset($treffer[1]) )
-                    throw new SecurityException('authorization failed');
-
-                $username = $treffer[1];
-
-                $user = User::loadWithName( $username,User::AUTH_TYPE_INTERNAL );
-
-                if	( ! $user->isValid( ))
-                    throw new SecurityException('authorization failed: user not found: '.$username);
-
-                $user->setCurrent();
-
-                $this->callSubAction('show');
-            }
-        }
-
-        elseif	( $ssl_trust )
-        {
-            if	( empty($ssl_user_var) )
-                throw new \LogicException( 'please set environment variable name in ssl-configuration.' );
-
-            $username = getenv( $ssl_user_var );
-
-            if	( empty($username) )
-                throw new SecurityException( 'no username in client certificate ('.$ssl_user_var.') (or there is no client certificate...?)' );
-
-            $user = User::loadWithName( $username,User::AUTH_TYPE_INTERNAL );
-
-            if	( !$user->isValid() )
-                throw new \LogicException( 'unknown username: '.$username );
-
-            $user->setCurrent();
-
-            $this->callSubAction('show');
-        }
 
         $databases = Configuration::subset('database')->subsets();
 
@@ -370,66 +268,46 @@ class LoginAction extends BaseAction
         if	( empty($dbids) )
             $this->addNotice('', 0, '', 'no_database_configuration', Action::NOTICE_WARN);
 
-        if	( !isset($this->templateVars['login_name']) && isset($_COOKIE['or_username']) )
-            $this->setTemplateVar('login_name',$_COOKIE['or_username']);
-
-        if	( !isset($this->templateVars['login_name']) )
-            $this->setTemplateVar('login_name',@$conf['security']['default']['username']);
-
-        if	( @$this->templateVars['login_name']== @$conf['security']['default']['username'])
-            $this->setTemplateVar('login_password',@$conf['security']['default']['password']);
-
         $this->setTemplateVar( 'dbids',$dbids );
 
         // Database was already connected in the Dispatcher. So we MUST have a db connection here.
         $db = Session::getDatabase();
         $this->setTemplateVar('dbid',$db->id);
 
-
-        // Den Benutzernamen aus dem Client-Zertifikat lesen und in die Loginmaske eintragen.
-        $ssl_user_var = $conf['security']['ssl']['client_cert_dn_env'];
-        if	( !empty($ssl_user_var) )
-        {
-            $username = getenv( $ssl_user_var );
-
-            if	( empty($username) )
-            {
-                // Nothing to do.
-                // if user has no valid client cert he could not access this form.
-            }
-            else {
-
-                // Benutzername ist in Eingabemaske unver�nderlich
-                $this->setTemplateVar('force_username',true);
-                $this->setTemplateVar('login_name'    ,$username);
-            }
-
-        }
-
-        $this->setTemplateVar('register'     ,$conf['login'   ]['register' ]);
-        $this->setTemplateVar('send_password',$conf['login'   ]['send_password']);
+        $this->setTemplateVar('register'     ,$loginConfig->get('register' ));
+        $this->setTemplateVar('send_password',$loginConfig->get('send_password'));
 
         // Versuchen, einen Benutzernamen zu ermitteln, der im Eingabeformular vorausgewählt wird.
-        $modules = $conf['security']['preselect']['modules'];
+        $modules = $securityConfig->subset('preselect')->get('modules',[]);
 
         $username = '';
+
         foreach( $modules as $module)
         {
-            Logger::debug('Preselecting module: '.$module);
             $moduleClass = Auth::NS.'\\'.$module.'Auth';
+
+			if   ( ! class_exists($moduleClass)) {
+				Logger::warn("module is not availble: ".$moduleClass );
+				continue;
+			}
+
             /** @var \cms\auth\Auth $auth */
             $auth = new $moduleClass;
             $username = $auth->username();
 
-            if	( !empty($username) )
+            if	( $username )
             {
-                Logger::debug('Preselecting User '.$username);
+                Logger::debug('Preselecting User '.$username.' from '.$module.'Auth');
                 break; // Benutzername gefunden.
             }
         }
 
         $this->setTemplateVar('login_name',$username);
-    }
+
+        // If the preselected user is the default user, we have a password.
+		if   ( $username == $securityConfig->subset('default')->get('username') )
+			$this->setTemplateVar('login_password',  $securityConfig->subset('default')->get('password') );
+	}
 
 
 	/**
@@ -472,6 +350,7 @@ class LoginAction extends BaseAction
 	/**
 	 * Erzeugt eine Anwendungsliste.
      * TODO: unused at the moment
+	 * @deprecated
 	 */
 	function applications()
 	{
@@ -727,8 +606,6 @@ class LoginAction extends BaseAction
 	 */
 	public function logoutPost()
 	{
-		$conf = Configuration::rawConfig();
-		
 		$user = Session::getUser();
 		if	( is_object($user) )
 			$this->setTemplateVar('login_username',$user->name);
@@ -736,27 +613,6 @@ class LoginAction extends BaseAction
 		if	( Configuration::subset('security')->is('renew_session_logout',false) )
 			$this->recreateSession();
 
-		if	( @$conf['theme']['compiler']['compile_at_logout'] )
-		{
-			foreach( $conf['action'] as $actionName => $actionConfig )
-			{
-				foreach( $actionConfig as $subActionName=>$subaction )
-				{
-					if	( is_array($subaction) &&
-						  !isset($subaction['goto'  ]) && 
-						  !isset($subaction['direct']) &&
-						  !isset($subaction['action']) &&
-						  !isset($subaction['async' ]) &&
-						  !isset($subaction['alias' ]) &&
-						  $subActionName != 'menu'            )
-					{
-						$engine = new template_engine\TemplateEngine();
-						$engine->compile( strtolower(str_replace('Action','',$actionName)).'/'.$subActionName);
-					}
-				}
-			}
-		}
-		
 		// Login-Token löschen:
 		// Wenn der Benutzer sich abmelden will, dann soll auch die automatische
 		// Anmeldung deaktiviert werden.
@@ -826,8 +682,12 @@ class LoginAction extends BaseAction
 		
 		$newUser->setCurrent();
 	}
-	
-	
+
+
+	/**
+	 * @throws ObjectNotFoundException
+	 * @deprecated not in use
+	 */
 	function show()
 	{
 		$conf = Configuration::rawConfig();
@@ -937,8 +797,6 @@ class LoginAction extends BaseAction
 	
 	public function registerPost()
 	{
-		$conf = Configuration::rawConfig();
-
 		Session::set('registerMail',$this->getRequestVar('mail') );
 		
 			srand ((double)microtime()*1000003);

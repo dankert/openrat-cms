@@ -19,6 +19,8 @@
 
 namespace util;
 
+use cms\base\Configuration;
+
 /**
  * Nuetzliche Funktionen fuer das Bearbeiten von Texten/Zeichenketten
  * @author $Author$
@@ -131,9 +133,9 @@ class Text
 	 */
 	public static function replaceHtmlChars($text)
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$htmlConfig = Configuration::subset(['editor','html']);
 
-		foreach (explode(' ', $conf['editor']['html']['replace']) as $repl) {
+		foreach ( $htmlConfig->get('replace',[]) as $repl) {
 			list($ersetze, $mit) = explode(':', $repl . ':');
 			$text = str_replace($ersetze, $mit, $text);
 		}

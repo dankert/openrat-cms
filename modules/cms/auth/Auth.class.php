@@ -32,4 +32,3 @@ interface Auth
 	function username();
 }
 
-?>

@@ -2,21 +2,18 @@
 
 namespace cms\auth;
 
-use cms\auth\Auth;
+use cms\base\Configuration;
 
 /**
- * Using the username from a cookie.
- *
+ * Gets the default user.
+ * 
  * @author dankert
  */
 class CookieAuth implements Auth
 {
 	public function username()
 	{
-		if (isset($_COOKIE['or_username']))
-			return $_COOKIE['or_username'];
-		else
-			return null;
+		return Configuration::subset( ['security','default'])->get('username');
 	}
 
 
@@ -29,5 +26,3 @@ class CookieAuth implements Auth
 	}
 
 }
-
-?>

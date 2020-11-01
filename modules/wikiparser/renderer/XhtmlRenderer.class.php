@@ -1,6 +1,7 @@
 <?php
 
 namespace wikiparser\renderer;
+use cms\base\Configuration;
 use wikiparser\model\DefinitionItemElement;
 use DefinitionListEntryElement;
 use DefinitionListItemElement;
@@ -44,8 +45,6 @@ class XhtmlRenderer
 	 */
 	function renderElement($child)
 	{
-		$conf = \cms\base\Configuration::rawConfig();
-
 		$attr = array();
 		$val = '';
 		$praefix = '';
@@ -112,9 +111,10 @@ class XhtmlRenderer
 						$nr++;
 
 				$val = $nr;
-				if (@$conf['editor']['footnote']['bracket'])
+				$footnoteConfig = Configuration::subset(['editor','footnote']);
+				if ($footnoteConfig->is('bracket'))
 					$val = '(' . $nr . ')';
-				if (@$conf['editor']['footnote']['sup'])
+				if ($footnoteConfig->is('sup'))
 					$val = '<sup><small>' . $nr . '</small></sup>';
 
 
@@ -183,9 +183,10 @@ class XhtmlRenderer
 						$suffix = '&rdquo;';
 				}
 
-				if ($conf['editor']['html']['override_speech']) {
-					$praefix = $conf['editor']['html']['override_speech_open'];
-					$suffix = $conf['editor']['html']['override_speech_close'];
+				$htmlConfig = Configuration::subset(['editor', 'html']);
+				if ($htmlConfig->is('override_speech')) {
+					$praefix = $htmlConfig->get('override_speech_open');
+					$suffix  = $htmlConfig->get('override_speech_close');
 				}
 				break;
 
@@ -407,7 +408,6 @@ class XhtmlRenderer
 	 */
 	function renderHtmlElement($tag, $value, $empty, $attr = array())
 	{
-		$conf = \cms\base\Configuration::rawConfig();
 		if ($tag == '')
 			return $value;
 
@@ -421,7 +421,7 @@ class XhtmlRenderer
 			// Die Kurzform ist abh�ngig vom Rendermode.
 			// SGML=<tag>
 			// XML=<tag />
-			if ($conf['editor']['html']['rendermode'] == 'xml') {
+			if (Configuration::get(['editor','html','rendermode']) == 'xml') {
 				$val .= ' />';
 				return $val;
 			} else {

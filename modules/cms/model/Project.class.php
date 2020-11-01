@@ -544,22 +544,8 @@ EOF
 		}
 
 	}
-	
-	
-	/**
-	 * Synchronisation des Projektinhaltes mit dem Dateisystem.
-	 */
-	public function  sync()
-	{
-		$conf = \cms\base\Configuration::rawConfig();
-		$syncConf = $conf['sync'];
-		
-		if	( ! $syncConf['enabled'] )
-			return;
-		
-		$syncDir = FileUtils::slashify($syncConf['directory']).$this->name;
-		
-	}
+
+
 
     /**
      * Kopiert ein Projekt von einer Datenbank zu einer anderen.<br>

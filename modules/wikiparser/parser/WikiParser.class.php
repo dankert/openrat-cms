@@ -1,6 +1,7 @@
 <?php
 
 namespace wikiparser\parser;
+use cms\base\Configuration;
 use wikiparser\model\CodeElement;
 use wikiparser\model\DefinitionItemElement;
 use wikiparser\model\DefinitionListElement;
@@ -74,8 +75,6 @@ class WikiParser
 	 */
 	function parseMultiLineText($zeilen)
 	{
-		$conf = \cms\base\Configuration::rawConfig();
-
 		$children = array();           // Initiales Anlegen der Unterobjektliste.
 		$anzahlZeilen = count($zeilen);  // Anzahl Zeilen
 
@@ -186,7 +185,7 @@ class WikiParser
 				$zeilenAuszug = $this->getListenAuszug($zeilen, $zeileNr, $bisZeileNr);
 //				Html::debug($zeilenAuszug,"Auszug");
 				foreach ($zeilenAuszug as $zeile) {
-					$sep = $conf['editor']['text-markup']['definition-sep'];
+					$sep = Configuration::subset(['editor','text-markup'])->get('definition-sep');
 					list($defKey, $defValue) = explode($sep, $zeile->value);
 
 					$defEntry = new DefinitionItemElement();
@@ -413,10 +412,9 @@ class WikiParser
 
 	function parseLinks($text)
 	{
-		$conf = Session::getConfig();
-		$text_markup = $conf['editor']['text-markup'];
+		$text_markup = Configuration::subset(['editor','text-markup']);
 
-		$posM = strpos($text, '"' . $text_markup['linkto'] . '"');
+		$posM = strpos($text, '"' . $text_markup->get('linkto','->') . '"');
 
 		if ($posM === false)
 			return false;
@@ -590,8 +588,7 @@ class WikiParser
 	 */
 	function parseSimple($text)
 	{
-		$conf = Session::getConfig();
-		$text_markup = $conf['editor']['text-markup'];
+		$text_markup = Configuration::subset(['editor','text-markup']);
 
 		$text = $this->fixLinks($text);
 		$elements = array();
@@ -623,7 +620,7 @@ class WikiParser
 		}
 
 
-		$erg = $this->parseSimpleParts($text, $text_markup['image-begin'], $text_markup['image-end']);
+		$erg = $this->parseSimpleParts($text, $text_markup->get('image-begin'), $text_markup->get('image-end'));
 		if (is_array($erg)) {
 			$idx = -1;
 
@@ -648,7 +645,7 @@ class WikiParser
 			return $elements;
 		}
 
-		$erg = $this->parseSimpleParts($text, $text_markup['macro-begin'], $text_markup['macro-end']);
+		$erg = $this->parseSimpleParts($text, $text_markup->get('macro-begin'), $text_markup->get('macro-end'));
 		if (is_array($erg)) {
 			$idx = -1;
 
@@ -663,8 +660,8 @@ class WikiParser
 			foreach ($inh as $attr) {
 				if (empty($attr)) continue;
 
-				list($attr_name, $attr_val) = explode($text_markup['macro-attribute-value-seperator'], $attr);
-				$attr_val = trim($attr_val, $text_markup['macro-attribute-quote']);
+				list($attr_name, $attr_val) = explode($text_markup->get('macro-attribute-value-seperator'), $attr);
+				$attr_val = trim($attr_val, $text_markup->get('macro-attribute-quote'));
 				$macro->attributes[$attr_name] = $attr_val;
 			}
 
@@ -696,31 +693,31 @@ class WikiParser
 			return $elements;
 		}
 
-		$erg = $this->parseSimpleElement($text, $text_markup['footnote-begin'], $text_markup['footnote-end'], 'FootnoteElement');
+		$erg = $this->parseSimpleElement($text, $text_markup->get('footnote-begin'), $text_markup->get('footnote-end'), 'FootnoteElement');
 		if (is_array($erg))
 			return $erg;
 
-		$erg = $this->parseSimpleElement($text, $text_markup['strong-begin'], $text_markup['strong-end'], 'StrongElement');
+		$erg = $this->parseSimpleElement($text, $text_markup->get('strong-begin'), $text_markup->get('strong-end'), 'StrongElement');
 		if (is_array($erg))
 			return $erg;
 
-		$erg = $this->parseSimpleElement($text, $text_markup['emphatic-begin'], $text_markup['emphatic-end'], 'EmphaticElement');
+		$erg = $this->parseSimpleElement($text, $text_markup->get('emphatic-begin'), $text_markup->get('emphatic-end'), 'EmphaticElement');
 		if (is_array($erg))
 			return $erg;
 
-		$erg = $this->parseSimpleElement($text, $text_markup['code-begin'], $text_markup['code-end'], 'TeletypeElement');
+		$erg = $this->parseSimpleElement($text, $text_markup->get('code-begin'), $text_markup->get('code-end'), 'TeletypeElement');
 		if (is_array($erg))
 			return $erg;
 
-		$erg = $this->parseSimpleElement($text, $text_markup['insert-begin'], $text_markup['insert-end'], 'InsertedElement');
+		$erg = $this->parseSimpleElement($text, $text_markup->get('insert-begin'), $text_markup->get('insert-end'), 'InsertedElement');
 		if (is_array($erg))
 			return $erg;
 
-		$erg = $this->parseSimpleElement($text, $text_markup['remove-begin'], $text_markup['remove-end'], 'RemovedElement');
+		$erg = $this->parseSimpleElement($text, $text_markup->get('remove-begin'), $text_markup->get('remove-end'), 'RemovedElement');
 		if (is_array($erg))
 			return $erg;
 
-		$erg = $this->parseSimpleElement($text, $text_markup['speech-begin'], $text_markup['speech-end'], 'SpeechElement');
+		$erg = $this->parseSimpleElement($text, $text_markup->get('speech-begin'), $text_markup->get('speech-end'), 'SpeechElement');
 		if (is_array($erg))
 			return $erg;
 

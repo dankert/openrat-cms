@@ -3,6 +3,7 @@
 namespace cms\auth;
 
 use cms\auth\Auth;
+use cms\base\Configuration;
 use database\Database;
 
 /**
@@ -18,17 +19,15 @@ class DatabaseAuth implements Auth
 	 */
 	public function login($user, $password, $token)
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$authDbConf = Configuration::subset(['security','authdb']);
 
-		$authDbConf = $conf['security']['authdb'];
-
-		if (!$authDbConf['enable'])
+		if (!$authDbConf->is('enable',true))
 			return false;
 
 		$authdb = new Database($authDbConf);
 
-		$sql = $authdb->sql($conf['security']['authdb']['sql']);
-		$algo = $authdb->sql($conf['security']['authdb']['hash_algo']);
+		$sql  = $authdb->sql($authDbConf->get('sql'));
+		$algo = $authDbConf->get('hash_algo' );
 		$sql->setString('username', $user);
 		$sql->setString('password', hash($algo, $password));
 		$row = $sql->getRow();

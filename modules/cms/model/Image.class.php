@@ -16,7 +16,7 @@ namespace cms\model;
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
+use cms\base\Configuration;
 
 
 /**
@@ -92,8 +92,6 @@ class Image extends File
 	 */
 	function imageResize( $newWidth,$newHeight,$factor,$oldformat,$newformat,$jpegquality )
 	{
-		$conf = \cms\base\Configuration::rawConfig();
-
 		$this->write(); // Datei schreiben
 		
 		// Bildinformationen ermitteln
@@ -156,8 +154,7 @@ class Image extends File
 		}
 
 		// Ab Version 2 der GD-Bibliothek sind TrueColor-Umwandlungen moeglich.
-		$conf = \cms\base\Configuration::rawConfig();
- 		$hasTrueColor = $conf['image']['truecolor'];
+ 		$hasTrueColor = Configuration::get(['image','truecolor']);
 
 		switch( $newformat )
 		{

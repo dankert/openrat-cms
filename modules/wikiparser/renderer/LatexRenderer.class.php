@@ -24,8 +24,6 @@ class LatexRenderer
 	 */
 	function renderElement($child)
 	{
-		$conf = \cms\base\Configuration::rawConfig();
-
 		$val = '';
 		$before = '';
 		$after = '';

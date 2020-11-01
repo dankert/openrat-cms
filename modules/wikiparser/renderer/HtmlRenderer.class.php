@@ -2,6 +2,7 @@
 
 namespace wikiparser\renderer;
 
+use cms\base\Configuration;
 use cms\generator\PageContext;
 use cms\model\File;
 use cms\model\Image;
@@ -71,7 +72,8 @@ class HtmlRenderer
 	 */
 	function renderElement($child)
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$footnoteConfig = Configuration::subset('editor')->subset('footnote');
+		$htmlConfig     = Configuration::subset(['editor','html']);
 
 		$attr = array();
 		$val = '';
@@ -139,9 +141,9 @@ class HtmlRenderer
 						$nr++;
 
 				$val = $nr;
-				if (@$conf['editor']['footnote']['bracket'])
+				if ($footnoteConfig->is('bracket') )
 					$val = '(' . $nr . ')';
-				if (@$conf['editor']['footnote']['sup'])
+				if ($footnoteConfig->is('sup'))
 					$val = '<sup><small>' . $nr . '</small></sup>';
 
 
@@ -191,8 +193,8 @@ class HtmlRenderer
 				break;
 
 			case 'speechelement':
-				if (isset($conf['editor']['html']['tag_speech']))
-					$tag = $conf['editor']['html']['tag_speech'];
+				if ($htmlConfig->has('tag_speech'))
+					$tag = $htmlConfig->get('tag_speech');
 				else
 					$tag = 'cite';
 
@@ -213,9 +215,9 @@ class HtmlRenderer
 						$suffix = '&rdquo;';
 				}
 
-				if ($conf['editor']['html']['override_speech']) {
-					$praefix = $conf['editor']['html']['override_speech_open'];
-					$suffix = $conf['editor']['html']['override_speech_close'];
+				if ($htmlConfig->is('override_speech')) {
+					$praefix = $htmlConfig->get('override_speech_open');
+					$suffix = $htmlConfig->get('override_speech_close');
 				}
 				break;
 
@@ -296,15 +298,15 @@ class HtmlRenderer
 				break;
 
 			case 'strongelement':
-				if (isset($conf['editor']['html']['tag_strong']))
-					$tag = $conf['editor']['html']['tag_strong'];
+				if ($htmlConfig->has('tag_strong'))
+					$tag = $htmlConfig->get('tag_strong');
 				else
 					$tag = 'strong';
 				break;
 
 			case 'emphaticelement':
-				if (isset($conf['editor']['html']['tag_emphatic']))
-					$tag = $conf['editor']['html']['tag_emphatic'];
+				if ($htmlConfig->has('tag_emphatic'))
+					$tag = $htmlConfig->get('tag_emphatic');
 				else
 					$tag = 'em';
 				break;
@@ -373,8 +375,8 @@ class HtmlRenderer
 				break;
 
 			case 'teletypeelement':
-				if (isset($conf['editor']['html']['tag_teletype']))
-					$tag = $conf['editor']['html']['tag_teletype'];
+				if ($htmlConfig->has('tag_teletype'))
+					$tag = $htmlConfig->get('tag_teletype');
 				else
 					$tag = 'code';
 				break;
@@ -416,7 +418,7 @@ class HtmlRenderer
 	 */
 	function renderHtmlElement($tag, $value, $empty, $attr = array())
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$htmlConfig = Configuration::subset(['editor','html']);
 		if ($tag == '')
 			return $value;
 
@@ -430,7 +432,7 @@ class HtmlRenderer
 			// Die Kurzform ist abh�ngig vom Rendermode.
 			// SGML=<tag>
 			// XML=<tag />
-			if ($conf['editor']['html']['rendermode'] == 'xml') {
+			if ($htmlConfig->get('rendermode') == 'xml') {
 				$val .= ' />';
 				return $val;
 			} else {

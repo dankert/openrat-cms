@@ -1,6 +1,8 @@
 <?php
 
 namespace wikiparser\util;
+use cms\base\Configuration;
+
 /**
  * Darstellung einer Zeile in einem Freitext.<br>
  * <br>
@@ -43,9 +45,7 @@ class Line
 	 */
 	function __construct($s)
 	{
-		$conf = \cms\base\Configuration::rawConfig();
-		$text_markup = $conf['editor']['text-markup'];
-//		Html::debug($text_markup); 
+		$text_markup = Configuration::subset(['editor','text-markup'])->getConfig();
 
 		$list_numbered = $text_markup['list-numbered'];
 		$list_unnumbered = $text_markup['list-unnumbered'];

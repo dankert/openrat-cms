@@ -1,6 +1,7 @@
 <?php
 
 namespace wikiparser\renderer;
+use cms\base\Configuration;
 use wikiparser\model\LineBreakElement;
 use wikiparser\model\RawElement;
 
@@ -34,14 +35,10 @@ class TextRenderer
 	 */
 	function renderElement($child)
 	{
-		$conf = \cms\base\Configuration::rawConfig();
-
 		$className = strtolower(get_class($child));
 		$val = '';
 
-		$length = @$conf['editor']['text']['linelength'];
-		if (intval($length) == 0)
-			$length = 70;
+		$length = Configuration::subset(['editor','text'])->get('linelength',70);
 
 		switch ($className) {
 			case 'footnoteelement':
@@ -52,7 +49,7 @@ class TextRenderer
 						$nr++;
 
 				$val = $nr;
-				if (@$conf['editor']['footnote']['bracket'])
+				if (Configuration::subset(['editor','footnote'])->is('bracket'))
 					$val = '(' . $nr . ')';
 
 				if ($nr == 1) {
@@ -88,9 +85,7 @@ class TextRenderer
 				break;
 
 			case 'textelement':
-				$length = @$conf['editor']['text']['linelength'];
-				if (intval($length) == 0)
-					$length = 70;
+				$length = Configuration::subset(['editor','text'])->get('linelength',70);
 				$val .= wordwrap($child->text, $length);
 				break;
 

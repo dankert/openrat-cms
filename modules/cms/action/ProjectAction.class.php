@@ -234,68 +234,6 @@ class ProjectAction extends BaseAction
 	
 
 	/**
-	 * Synchronisation mit dem Dateisystem. 
-	 */
-	public function syncPost()
-	{
-		
-	}
-
-
-	/**
-	 * Synchronisation mit dem Dateisystem. 
-	 */
-	public function syncView()
-	{
-		$conf = Configuration::rawConfig();
-		$syncConf = $conf['sync'];
-		
-		if	( ! $syncConf['enabled'] )
-			return;
-		
-		$syncDir = FileUtils::slashify($syncConf['directory']).$this->project->name;
-		
-		
-	}
-
-
-	/**
-	 * Import aus dem Dateisystem. 
-	 */
-	public function importView()
-	{
-		
-	}
-
-
-	/**
-	 * Import aus dem Dateisystem. 
-	 */
-	public function importPost()
-	{
-		
-	}
-
-
-	/**
-	 * Export in Dateisystem.
-	 */
-	public function exportView()
-	{
-		
-	}
-
-
-	/**
-	 * Export in Dateisystem.
-	 */
-	public function exportPost()
-	{
-		
-	}
-
-
-	/**
 	 * Projekt exportieren.
 	 */
 	public function copyView()
@@ -331,22 +269,6 @@ class ProjectAction extends BaseAction
 			$this->setTemplateVar('done',true);
 		}
 	}
-	
-	
-	
-	/**
-	 * Ausgabe PHPINFO.
-	 *
-	 */
-	function phpinfo()
-	{
-		$conf = Configuration::rawConfig();
-		if	( !@$conf['security']['show_system_info'] )
-			Http::sendStatus(403,'Forbidden','Display of system information is disabled by configuration');
-			
-		phpinfo();
-	}
-
 	
 	
 	

@@ -4,6 +4,7 @@
 namespace cms\generator;
 
 
+use cms\base\Configuration;
 use cms\base\Configuration as C;
 use cms\base\DB;
 use cms\base\Startup;
@@ -74,8 +75,6 @@ class ValueGenerator extends BaseGenerator
 		$value->load();
 
 		$inhalt = '';
-
-		$conf = \cms\base\Configuration::rawConfig();
 
 		// Inhalt ist mit anderer Seite verkn�pft.
 		if	( in_array($element->typeid,[Element::ELEMENT_TYPE_TEXT,Element::ELEMENT_TYPE_LONGTEXT,Element::ELEMENT_TYPE_DATE,Element::ELEMENT_TYPE_NUMBER]) && intval($value->linkToObjectId) != 0 && !$value->isLink )
@@ -588,7 +587,7 @@ class ValueGenerator extends BaseGenerator
 				$format = $value->format;
 
 				// Wenn Inhalt leer, dann versuchen, den Inhalt der Default-Sprache zu laden.
-				if   ( $inhalt == '' && $conf['content']['language']['use_default_language'] )
+				if   ( $inhalt == '' && Configuration::subset('content')->subset('language')->is('use_default_language',true) )
 				{
 					$project = new Project($page->projectid);
 					$value->languageid = $project->getDefaultLanguageId();
@@ -623,10 +622,12 @@ class ValueGenerator extends BaseGenerator
 
 					case Element::ELEMENT_FORMAT_WIKI:
 
-						if   ( $conf['editor']['wiki']['convert_bbcode'] )
+						$wikiConfig = C::subset('editor')->subset('wiki');
+
+						if   ( $wikiConfig->is('convert_bbcode',false ) )
 							$inhalt = Text::bbCode2Wiki( $inhalt );
 
-						if   ( !$element->html && $conf['editor']['wiki']['convert_html'] && $pageIsHtml)
+						if   ( !$element->html && $wikiConfig->is('convert_html',true) && $pageIsHtml)
 							$inhalt = Text::html2Wiki( $inhalt );
 
 						$transformer = new Transformer();
@@ -718,12 +719,9 @@ class ValueGenerator extends BaseGenerator
 			// Programmcode (PHP)
 			case Element::ELEMENT_TYPE_CODE:
 
-				/*if   ( $value->publisher->isSimplePreview() )
-					break;*/
-
 				// Die Ausführung von benutzer-erzeugtem PHP-Code kann in der
 				// Konfiguration aus Sicherheitsgründen deaktiviert sein.
-				if	( $conf['security']['disable_dynamic_code'] )
+				if	( Configuration::subset('security')->is('disable_dynamic_code',false) )
 				{
 					Logger::warn("Execution of dynamic code elements is disabled by configuration. Set security/disable_dynamic_code to true to allow this");
 					break;
@@ -828,7 +826,7 @@ class ValueGenerator extends BaseGenerator
 						$inhalt = DB::get()->id;
 						break;
 					case 'db_name':
-						$inhalt = $conf['database_'.DB::get()->id]['description'];
+						$inhalt = @DB::get()->conf['label'];
 						break;
 					case 'project_id':
 						$inhalt = $page->projectid;
@@ -993,7 +991,7 @@ class ValueGenerator extends BaseGenerator
 			case 'text':
 			case 'select':
 
-				if	( $conf['publish']['encode_utf8_in_html'] )
+				if	( Configuration::subset('publish')->is('encode_utf8_in_html') )
 					// Wenn HTML-Ausgabe, dann UTF-8-Zeichen als HTML-Code uebersetzen
 					if   ( $page->isHtml() )
 						$inhalt = Text::translateutf8tohtml($inhalt);
@@ -1007,7 +1005,7 @@ class ValueGenerator extends BaseGenerator
 		if   ( $this->context->pageContext->scheme == Producer::SCHEME_PREVIEW && $element->withIcon && $page->isHtml() )
 		{
 			// Anklickbaren Link voranstellen.
-			$iconLink = '<a href="javascript:parent.openNewAction(\''.$element->name.'\',\'pageelement\',\''.$page->objectid.'_'.$element->elementid.'\');" title="'.$element->desc.'"><img src="'.Startup::THEMES_DIR.$conf['interface']['theme'].'/images/icon_el_'.$element->type.Startup::IMG_ICON_EXT.'" border="0" align="left"></a>';
+			$iconLink = '<a href="javascript:parent.openNewAction(\''.$element->name.'\',\'pageelement\',\''.$page->objectid.'_'.$element->elementid.'\');" title="'.$element->desc.'"><i class="or-image-icon or-image-icon--el-'.$element->getTypeName().'"></i></a>';
 			$inhalt   = $iconLink.$inhalt;
 		}
 

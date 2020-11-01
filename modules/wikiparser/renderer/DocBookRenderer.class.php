@@ -30,8 +30,6 @@ class DocBookRenderer
 	 */
 	function renderElement($child)
 	{
-		$conf = \cms\base\Configuration::rawConfig();
-
 		$attr = array();
 		$val = '';
 		$praefix = '';
@@ -201,7 +199,6 @@ class DocBookRenderer
 	 */
 	function renderXmlElement($tag, $value, $empty, $attr = array())
 	{
-		$conf = \cms\base\Configuration::rawConfig();
 		if ($tag == '')
 			return $value;
 

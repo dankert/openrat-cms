@@ -20,6 +20,7 @@ namespace cms\model;
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 use cms\base\Configuration;
 use cms\base\DB as Db;
+use cms\base\Startup;
 use security\Password;
 use util\exception\ObjectNotFoundException;
 
@@ -347,8 +348,6 @@ SQL
 	 */
 	protected function setDatabaseRow( $row )
 	{
-		$conf = \cms\base\Configuration::rawConfig();
-		
 		$this->userid    = $row['id'      ];
 		$this->name      = $row['name'    ];
 		$this->style     = $row['style'   ];
@@ -367,11 +366,11 @@ SQL
 		$this->passwordExpires = $row['password_expires'];
 		$this->passwordAlgo    = $row['password_algo'];
 		
-		if	( $this->fullname == '' )
+		if	( ! $this->fullname )
 			$this->fullname = $this->name;
 			
-		if	( empty($this->style) )
-				$this->style = $conf['interface']['style']['default'];
+		if	( ! $this->style )
+			$this->style = Configuration::get(['interface','style','default']);
 	}
 
 
@@ -886,15 +885,14 @@ SQL
 	 * @param $objectid Objekt-Id zu dem Objekt, dessen Rechte untersucht werden sollen
 	 * @param $type Typ des Rechts (Lesen,Schreiben,...) als Konstante Acl::ACL_*
 	 */ 
-	function hasRight( $objectid,$type )
+	public function hasRight( $objectid,$type )
 	{
-		$conf = \cms\base\Configuration::rawConfig();
-		if	( $this->isAdmin && !$conf['security']['readonly'] )
+		if   ( Startup::readonly() && ! $type & Acl::ACL_READ )
+			return false; // Nothing is writable in Readonly-Mode.
+
+		if	( $this->isAdmin )
 			return true;
 
-		if	( $this->isAdmin && $type & Acl::ACL_READ )
-			return true;
-			
 		if	( !isset($this->rights[$objectid]) )
 			return false;
 
@@ -910,15 +908,15 @@ SQL
 	 */
 	function addRight( $objectid,$type )
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$securityconfig = Configuration::subset('security');
 		
-		if	( $conf['security']['readonly'] )
+		if	( $securityconfig->is('readonly') )
 			if	( $type & Acl::ACL_READ )
 				$type = Acl::ACL_READ;
 			else
 				$type = 0;
 
-		if	( $type & Acl::ACL_PUBLISH && $conf['security']['nopublish'] )
+		if	( $type & Acl::ACL_PUBLISH && $securityconfig->is('nopublish') )
 			$type -= Acl::ACL_PUBLISH;
 
 
@@ -931,16 +929,13 @@ SQL
 
 	/**
 	 * Ermitteln aller zur Verfuegung stehenden Stylesheets
+	 * @return array
 	 */
 	public function getAvailableStyles()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
-		$styles = array();
-		
-		foreach( $conf['style'] as $key=>$values)
-			$styles[$key] = $values['name'];
-
-		return $styles;	
+		return array_map( function($styleConfig) {
+			return $styleConfig->get('name','');
+		},Configuration::subset('style')->subsets());
 	}
 	
 	/**

@@ -3,6 +3,7 @@
 namespace cms\auth;
 
 use cms\auth\Auth;
+use cms\base\Configuration;
 use util\Http;
 
 /**
@@ -32,9 +33,7 @@ class HttpAuth implements Auth
 	 */
 	public function login($user, $password, $token)
 	{
-		$conf = \cms\base\Configuration::rawConfig();
-
-		$http = new Http($conf['security']['http']['url']);
+		$http = new Http( Configuration::get(['security','http','url']));
 		$http->method = 'HEAD';
 		$http->setBasicAuthentication($this->name, $password);
 
@@ -43,5 +42,3 @@ class HttpAuth implements Auth
 		return $ok;
 	}
 }
-
-?>

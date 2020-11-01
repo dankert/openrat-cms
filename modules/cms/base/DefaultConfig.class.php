@@ -284,7 +284,7 @@ class DefaultConfig {
 							'override_speech_open' => '&laquo;',
 							'override_speech_close' => '&raquo;',
 							'rendermode' => 'xml',
-							'replace' => 'EUR:&euro;',
+							'replace' => ['EUR:&euro;'],
 						],
 					'wiki' =>
 						[ 
@@ -483,9 +483,8 @@ class DefaultConfig {
 				],
 			'replace' =>
 				[ 
-					'' => '0',
 					'euro' => 'EUR,&euro;',
-					'copy' => '(c],&copy;',
+					'copy' => '(c),&copy;',
 				],
 			'search' =>
 				[ 
@@ -547,18 +546,19 @@ class DefaultConfig {
 						[ 
 							'modules' =>
 								[ 
-									0 => 'Remember',
-									1 => 'Guest',
-									2 => 'SingleSignon',
+									'Remember',
+									'Guest',
+									'SingleSignon',
 								],
 						],
 					'preselect' =>
 						[ 
 							'modules' =>
 								[ 
-									0 => 'Ident',
-									1 => 'SSL',
-									2 => 'Cookie',
+									'Ident',
+									'SSL',
+									'Cookie',
+									'DefaultUser'
 								],
 						],
 					'authenticate' =>

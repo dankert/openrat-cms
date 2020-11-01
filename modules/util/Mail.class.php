@@ -19,6 +19,7 @@
 namespace util;
 
 use Adresse;
+use cms\base\Configuration;
 use cms\base\Startup;
 use cms\base\Version;
 use LogicException;
@@ -82,17 +83,18 @@ class Mail
 	 */
 	function __construct($to, $text)
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$mailConfig = Configuration::subset('mail');
+
 
 		// Zeilenumbruch CR/LF gem. RFC 822.
 		$this->nl = chr(13) . chr(10);
 
-		if (!empty($conf['mail']['from']))
-			$this->from = $this->header_encode($conf['mail']['from']);
+		if ( $mailConfig->has('from'))
+			$this->from = $this->header_encode($mailConfig->get('from'));
 
 		// Priorit�t definieren (sofern konfiguriert)
-		if (!empty($conf['mail']['priority']))
-			$this->header[] = 'X-Priority: ' . $conf['mail']['priority'];
+		if ($mailConfig->has('priority'))
+			$this->header[] = 'X-Priority: ' . $mailConfig->get('priority');
 
 		$this->header[] = 'X-Mailer: ' . $this->header_encode(Startup::TITLE . ' ' . Startup::VERSION);
 		$this->header[] = 'Content-Type: text/plain; charset=UTF-8';
@@ -102,23 +104,23 @@ class Mail
 		$this->text = $this->nl . wordwrap(\cms\base\Language::lang('mail_text_' . $text), 70, $this->nl) . $this->nl;
 
 		// Signatur anhaengen (sofern konfiguriert)
-		$signature = $conf['mail']['signature'];
-		if (empty($signature))
-			$signature = $conf['application']['name'];
+		$signature = $mailConfig->get('signature','');
+		if ( ! $signature)
+			$signature = Configuration::get(['application','name']);
 
-		if (!empty($signature)) {
+		if ( $signature ) {
 			$this->text .= $this->nl . '-- ' . $this->nl;
-			$this->text .= str_replace(';', $this->nl, $signature);
+			$this->text .= $this->nl . $signature;
 			$this->text .= $this->nl;
 		}
 
 		// Kopie-Empf�nger
-		if (!empty($conf['mail']['cc']))
-			$this->cc = $this->header_encode($conf['mail']['cc']);
+		if ( $mailConfig->has('cc'))
+			$this->cc = $this->header_encode($mailConfig->get('cc'));
 
 		// Blindkopie-Empf�nger
-		if (!empty($conf['mail']['bcc']))
-			$this->bcc = $this->header_encode($conf['mail']['bcc']);
+		if ( $mailConfig->has('bcc'))
+			$this->bcc = $this->header_encode($mailConfig->get('bcc'));
 	}
 
 
@@ -157,7 +159,7 @@ class Mail
 	 */
 	public function send()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$mailConfig = Configuration::subset('mail');
 
 		if (strpos($this->to, '@') === FALSE)
 			throw new LogicException("E-Mail-Adress does not contain a domain name: " . $this->to);
@@ -165,9 +167,9 @@ class Mail
 		$to_domain = explode('@', $this->to)[1];
 
 		// Prüfen gegen die Whitelist
-		$white = @$conf['mail']['whitelist'];
+		$white = $mailConfig->get('whitelist',[]);
 
-		if (!empty($white)) {
+		if ($white) {
 			if (!$this->containsDomain($to_domain, $white)) {
 				// Wenn Domain nicht in Whitelist gefunden, dann Mail nicht verschicken.
 				$this->error[] = 'Mail-Domain is not whitelisted';
@@ -176,9 +178,9 @@ class Mail
 		}
 
 		// Prüfen gegen die Blacklist
-		$black = @$conf['mail']['blacklist'];
+		$black = $mailConfig->get('blacklist',[]);
 
-		if (!empty($black)) {
+		if ($black) {
 			if ($this->containsDomain($to_domain, $black)) {
 				// Wenn Domain in Blacklist gefunden, dann Mail nicht verschicken.
 				$this->error[] = 'Mail-Domain is blacklisted';
@@ -204,7 +206,7 @@ class Mail
 		$text = $resolver->resolveVariables( $this->text );
 
 		// Mail versenden
-		if (strtolower(@$conf['mail']['client']) == 'php') {
+		if (strtolower($mailConfig->get('client','php')) == 'php') {
 			// PHP-interne Mailfunktion verwenden.
 			$result = @mail($this->to,                 // Empf�nger
 				$this->subject,            // Betreff
@@ -221,12 +223,12 @@ class Mail
 			return $result;
 		} else {
 			// eigenen SMTP-Dialog verwenden.
-			$smtpConf = $conf['mail']['smtp'];
+			$smtpConf = $mailConfig->subset('smtp');
 
-			if (!empty($smtpConf['host'])) {
+			if ( $smtpConf->has('host')) {
 				// Eigenen Relay-Host verwenden.
-				$mxHost = $smtpConf['host'];
-				$mxPort = intval($smtpConf['port']);
+				$mxHost = $smtpConf->get('host');
+				$mxPort = $smtpConf->get('port',25);
 			} else {
 				// Mail direkt zustellen.
 				$mxHost = $this->getMxHost($this->to);
@@ -236,20 +238,20 @@ class Mail
 					return false;
 				}
 
-				if ($smtpConf['ssl'])
+				if ($smtpConf->is('ssl',false))
 					$mxPort = 465;
 				else
 					$mxPort = 25;
 			}
 
 
-			if (!empty($smtpConf['localhost'])) {
-				$myHost = $smtpConf['localhost'];
+			if ($smtpConf->has('localhost')) {
+				$myHost = $smtpConf->get('localhost');
 			} else {
 				$myHost = gethostbyaddr(getenv('REMOTE_ADDR'));
 			}
 
-			if ($smtpConf['ssl'])
+			if ($smtpConf->is('ssl',false))
 				$proto = 'ssl';
 			else
 				$proto = 'tcp';
@@ -303,7 +305,7 @@ class Mail
 			}
 
 			// request for auth login
-			if (isset($smtpConf['auth_username']) && !empty($smtpConf['host']) && !empty($smtpConf['auth_username'])) {
+			if ( $smtpConf->has('auth_username') && $smtpConf->has('host') ) {
 				$smtpResponse = $this->sendSmtpCommand($smtpSocket, "AUTH LOGIN");
 				if (substr($smtpResponse, 0, 3) != '334') {
 					$this->error[] = "No 334 after AUTH_LOGIN, server says: " . $smtpResponse;
@@ -312,10 +314,10 @@ class Mail
 				}
 
 				if ($this->debug)
-					$this->error[] = 'Login for ' . $smtpConf['auth_username'];
+					$this->error[] = 'Login for ' . $smtpConf->get('auth_username');
 
 				//send the username
-				$smtpResponse = $this->sendSmtpCommand($smtpSocket, base64_encode($smtpConf['auth_username']));
+				$smtpResponse = $this->sendSmtpCommand($smtpSocket, base64_encode($smtpConf->get('auth_username')));
 				if (substr($smtpResponse, 0, 3) != '334') {
 					$this->error[] = "No 3xx after setting username, server says: " . $smtpResponse;
 					$this->sendSmtpQuit($smtpSocket);
@@ -323,7 +325,7 @@ class Mail
 				}
 
 				//send the password
-				$smtpResponse = $this->sendSmtpCommand($smtpSocket, base64_encode($smtpConf['auth_password']));
+				$smtpResponse = $this->sendSmtpCommand($smtpSocket, base64_encode($smtpConf->get('auth_password')));
 				if (substr($smtpResponse, 0, 3) != '235') {
 					$this->error[] = "No 235 after sending password, server says: " . $smtpResponse;
 					$this->sendSmtpQuit($smtpSocket);
@@ -332,7 +334,7 @@ class Mail
 			}
 
 			//email from
-			$smtpResponse = $this->sendSmtpCommand($smtpSocket, 'MAIL FROM: <' . $conf['mail']['from'] . '>');
+			$smtpResponse = $this->sendSmtpCommand($smtpSocket, 'MAIL FROM: <' . $mailConfig->get('from') . '>');
 			if (substr($smtpResponse, 0, 3) != '250') {
 				$this->error[] = "No 2xx after MAIL_FROM, server says: " . $smtpResponse;
 				$this->sendSmtpQuit($smtpSocket);
@@ -380,7 +382,7 @@ class Mail
 	 *
 	 * @access private
 	 * @param Resource $socket TCP/IP-Socket zum SMTP-Server
-	 * @param unknown_type $cmd SMTP-Kommando
+	 * @param string $cmd SMTP-Kommando
 	 * @return Server-Antwort
 	 */
 	private function sendSmtpCommand($socket, $cmd)
@@ -442,9 +444,9 @@ class Mail
 	 */
 	private function header_encode($text)
 	{
-		$conf = \cms\base\Configuration::rawConfig();
+		$mailConfig = Configuration::subset('mail');
 
-		if (empty($conf['mail']['header_encoding']))
+		if (! $mailConfig->has('header_encoding'))
 			return $text;
 
 		$woerter = explode(' ', $text);
@@ -452,7 +454,7 @@ class Mail
 
 
 		foreach ($woerter as $wort) {
-			$type = strtolower(substr($conf['mail']['header_encoding'], 0, 1));
+			$type = strtolower(substr($mailConfig->get('header_encoding','Quoted-printable'), 0, 1));
 			$neu_wort = '';
 
 			if ($type == 'b')

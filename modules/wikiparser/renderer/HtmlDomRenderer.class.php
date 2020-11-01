@@ -44,8 +44,6 @@ class HtmlDomRenderer
 	 */
 	function renderElement($child)
 	{
-		$conf = \cms\base\Configuration::rawConfig();
-
 		$this->path[] = $child;
 
 		$val = '';

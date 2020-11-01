@@ -72,8 +72,6 @@ class Local extends  BaseTarget
 	 */
 	public function put($source, $dest, $lastChangeDate)
 	{
-		$conf = Configuration::rawConfig();
-
 		// Is the output directory writable?
 		if   ( !is_writeable( $this->localDestinationDirectory ) )
 			throw new PublisherException('directory not writable: ' . $this->localDestinationDirectory);
@@ -96,17 +94,19 @@ class Local extends  BaseTarget
 					'destination: ' . $dest);
 
 			// Das Änderungsdatum der Datei auch in der Zieldatei setzen.
-			if  ( $conf['publish']['set_modification_date'] )
+			if  ( Configuration::subset('publish')->is('set_modification_date',false ) )
 				if	( ! is_null($lastChangeDate) )
 					@touch( $dest,$lastChangeDate );
 
 			Logger::debug("published: $dest");
 		}
 
-		if	(!empty($conf['security']['chmod']))
+		$chmod = Configuration::subset('security')->get('chmod','');
+
+		if	( $chmod  )
 		{
 			// CHMOD auf der Datei ausfuehren.
-			if	( ! @chmod($dest,octdec($conf['security']['chmod'])) )
+			if	( ! @chmod($dest,octdec($chmod) ) )
 				throw new PublisherException('Unable to CHMOD file ' . $dest);
 		}
 
@@ -125,8 +125,6 @@ class Local extends  BaseTarget
 	 */
 	private function mkdirs($path )
 	{
-		$conf = Configuration::rawConfig();
-
 		if	( is_dir($path) )
 			return;  // Path exists
 
@@ -139,10 +137,12 @@ class Local extends  BaseTarget
 			throw new PublisherException( 'Cannot create directory: ' . $path);
 
 		// CHMOD auf dem Verzeichnis ausgef�hren.
-		if	(!empty($conf['security']['chmod_dir']))
+		$chmod = Configuration::subset('security')->get('chmod_dir','');
+
+		if	( $chmod  )
 		{
-			if	( ! @chmod($path,octdec($conf['security']['chmod_dir'])) )
-				throw new PublisherException('Unable to CHMOD directory: ' . $path);
+			if	( ! @chmod($path,octdec($chmod) ) )
+				throw new PublisherException('Unable to CHMOD directory ' . $path);
 		}
 	}
 

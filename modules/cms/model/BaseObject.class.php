@@ -556,7 +556,7 @@ SQL
      */
     public function filename()
     {
-        $conf = Configuration::rawConfig();
+        $filenameConfig = Configuration::subset('filename');
 
         $filename = $this->filename;
 
@@ -565,7 +565,7 @@ SQL
         if ( $alias )
             $filename = $alias->filename;
 
-        if	( $conf['filename']['edit'] && $filename != '' && $filename != $this->objectid )
+        if	( $filenameConfig->is('edit',true) && $filename != '' && $filename != $this->objectid )
         {
             // do not change the filename here - otherwise there is a danger of filename collisions.
             //$filename = self::urlify($filename);
@@ -578,15 +578,15 @@ SQL
             $filename = $this->objectid;
         }
         elseif	( isset($this->orderId) && intval($this->orderId ) == 1   &&
-            !empty($conf['filename']['default']) &&
-            !$conf['filename']['edit']              )
+            $filenameConfig->has('default') &&
+            !$filenameConfig->is('edit')              )
         {
-            $filename = $conf['filename']['default'];
+            $filename = $filenameConfig->get('default');
         }
         else
         {
             // Filename is not edited, so we are generating a pleasant filename.
-            switch( $conf['filename']['style'] )
+            switch( $filenameConfig->get('style','short' ) )
             {
                 case 'longid':
                     // Eine etwas laengere ID als Dateinamen benutzen
@@ -1349,7 +1349,7 @@ SQL
 
         // Resolve config variables.
 		$resolver->addResolver('config', function ($var) {
-                $conf = Configuration::rawConfig();
+                $conf = Configuration::Conf()->getConfig();
                 return ArrayUtils::getSubValue($conf,explode('.',$var) );
 		});
 

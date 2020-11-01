@@ -45,8 +45,6 @@ class PdfRenderer
 	 */
 	function renderElement($child)
 	{
-		$conf = \cms\base\Configuration::rawConfig();
-
 		switch (strtolower(get_class($child))) {
 			case 'tableofcontentelement':
 				break;

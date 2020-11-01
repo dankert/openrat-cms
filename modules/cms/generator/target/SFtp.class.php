@@ -42,14 +42,6 @@ class SFtp extends Scp
 	// Aufbauen der Verbindung
 	public function open()
 	{
-		$conf = \cms\base\Configuration::rawConfig();
-
-		//$conf_ftp = $conf['publish']['sftp'];
-
-		// Die projektspezifischen Werte gewinnen bei �berschneidungen mit den Default-Werten
-		//$sftp = array_merge($conf_ftp, $sftp);
-
-
 		$this->createConnection();
 
 		$this->sftpConnection = @ssh2_sftp($this->sshConnection);
