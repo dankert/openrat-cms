@@ -13,6 +13,7 @@ use cms\model\Language;
 
 
 use language\Messages;
+use util\exception\ObjectNotFoundException;
 use util\exception\ValidationException;
 use util\Http;
 use security\Base2n;
@@ -429,17 +430,20 @@ class UserAction extends BaseAction
 	
 	
     /**
-     * Wechselt zu einem ausgewählten User.
-     * @throws \util\exception\ObjectNotFoundException
+     * Switch to this user
      */
 	public function switchPost()
 	{
-		// User laden...
-		$user = new User( $this->getRequestId() );
-		$user->load();
-		
+		$this->addNoticeFor( $this->user,Messages::USER_LOGIN );
+
 		// Und in der Sitzung speichern.
-		Session::setUser( $user );
+		Session::setUser( $this->user );
+	}
+
+
+
+	public function switchView() {
+		$this->setTemplateVar('username',$this->user->getName() );
 	}
 	
 	

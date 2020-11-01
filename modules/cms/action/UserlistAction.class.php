@@ -49,7 +49,7 @@ class UserlistAction extends BaseAction
 			$list[$user->userid]        = $user->getProperties();
 			$list[$user->userid]['id' ] = $user->userid;
 		}
-		$this->setTemplateVar('el',$list);
+		$this->setTemplateVar('list',$list);
 	}
 		
 

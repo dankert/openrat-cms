@@ -282,6 +282,13 @@
 								<text class="dropdown-text" value="${message:menu_advanced}"/>
 							</link>
 						</part>
+						<part
+							class="dropdown-entry,act-clickable,filtered,on-action-folder,on-action-element,on-action-file,on-action-image,on-action-text,on-action-pageelement">
+							<link type="dialog" title="${message:menu_switch_desc}" subaction="switch">
+								<image method="switch"/>
+								<text class="dropdown-text" value="${message:menu_switch}"/>
+							</link>
+						</part>
 						<part class="dropdown-divide"/>
 						<part class="dropdown-entry,act-clickable,filtered,on-action-page">
 							<link type="dialog" title="${message:menu_changetemplate_desc}" subaction="changetemplate">

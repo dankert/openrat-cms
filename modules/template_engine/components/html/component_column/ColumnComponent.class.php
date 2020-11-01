@@ -45,7 +45,6 @@ class ColumnComponent extends Component
 			$column->addAttribute('data-name'  ,$this->name  );
 			$column->addAttribute('data-action',$this->action);
 			$column->addAttribute('data-id'    ,$this->id    );
-			$column->addStyleClass('clickable');
         }
         if	( $this->class )
 			$column->addStyleClass( Component::splitByComma($this->class) );

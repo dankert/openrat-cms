@@ -3138,8 +3138,14 @@ MENU_ADVANCED:
   de: Erweitert
   en: Advanced
 MENU_ADVANCED_DESC:
-  de: Erweitert
-  en: Advanced
+  de: Erweiterte Informationen bearbeiten
+  en: Edit advanced data
+MENU_SWITCH:
+  de: Wechseln zu
+  en: Change to
+MENU_SWITCH_DESC:
+  de: Wechseln zu
+  en: Change to
 MENU_ADD:
   de: Neu
   en: New
@@ -6302,6 +6308,9 @@ USER_MAIL_TEXT_SUFFIX:
   fr: Noter ce mot de passe à un endroit bloqué et enlever cet E-mail. Votre pouvoir changer votre mot de passe après avoir entré.
   it: "Notare questa parola d'accesso ad un posto sicuro e rimuovere questo E-mail. Vostro potere cambiare la vostra parola d'accesso dopo avere entrato."
   ru: Примечание пароль на этом безопасном месте и удалить это письмо. Ваш сможете изменить пароль после регистрации. Членства
+USER_SWITCH:
+  en: Switch to user
+  de: Zum Benutzer wechseln
 CHARSET:
   en: UTF-8
 MENU_TITLE_SEARCH_CONTENT:

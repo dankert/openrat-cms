@@ -383,7 +383,7 @@ SQL
 	 */
 	function getName()
 	{
-		if	( empty($this->fullname))
+		if	( ! $this->fullname )
 			return $this->name;
 		else
 			return $this->fullname;

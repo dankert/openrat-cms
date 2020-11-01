@@ -148,11 +148,22 @@ let filterMenus = function ()
     let id     = Openrat.Workbench.state.id;
     $('.or-act-clickable').addClass('dropdown-entry--active');
     $('.or-act-clickable.or-filtered').removeClass('dropdown-entry--active').addClass('dropdown-entry--inactive');
+	// Jeder Menüeintrag bekommt die Id und Parameter.
+	$('.or-act-clickable.or-filtered a').attr('data-id'    ,id    );
 
-    $('.or-act-clickable.or-filtered.or-on-action-'+action).addClass('dropdown-entry--active').removeClass('dropdown-entry--inactive');
+	let url = Openrat.View.createUrl(action,'available',id, {},true );
 
-    // Jeder Menüeintrag bekommt die Id und Parameter.
-    $('.or-act-clickable.or-filtered a').attr('data-id'    ,id    );
+	// Die Inhalte des Zweiges laden.
+	let promise = $.getJSON(url);
+
+	promise.done( function (data) {
+
+		jQuery.each(data.output.views, function(i, method) {
+			$('.or-act-clickable.or-filtered > .or-link[data-method=\'' + method + '\']' ).parent()
+				.addClass('dropdown-entry--active').removeClass('dropdown-entry--inactive');
+		});
+	});
+
 
 }
 

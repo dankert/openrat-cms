@@ -589,7 +589,7 @@ class LoginAction extends BaseAction
             if	( Configuration::subset('security')->is('renew_session_login',false) )
 				$this->recreateSession();
 			
-			$this->addNotice('user', 0, $user->name, 'LOGIN_OK', Action::NOTICE_OK, array('name' => $user->fullname));
+			$this->addNoticeFor( $user,Messages::LOGIN_OK, array('name' => $user->getName() ));
 			
             $config = Session::getConfig();
             $language = new \language\Language();
