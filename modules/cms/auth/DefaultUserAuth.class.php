@@ -9,7 +9,7 @@ use cms\base\Configuration;
  * 
  * @author dankert
  */
-class CookieAuth implements Auth
+class DefaultUserAuth implements Auth
 {
 	public function username()
 	{
