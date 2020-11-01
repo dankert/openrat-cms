@@ -365,7 +365,9 @@ SQL
 		$this->totp      = ($row['totp']==1);
 		$this->passwordExpires = $row['password_expires'];
 		$this->passwordAlgo    = $row['password_algo'];
-		
+		$this->type      = $row['auth_type'];
+		$this->issuer    = $row['issuer'];
+
 		if	( ! $this->fullname )
 			$this->fullname = $this->name;
 			
@@ -416,9 +418,7 @@ SQL
 	 */
 	function save()
 	{
-		$db = \cms\base\DB::get();
-
-		$sql = $db->sql( <<<SQL
+		$sql = Db::sql( <<<SQL
                          UPDATE {{user}}
 		                 SET name={name},
 		                     fullname={fullname},

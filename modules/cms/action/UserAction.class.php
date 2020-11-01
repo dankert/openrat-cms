@@ -343,8 +343,8 @@ class UserAction extends BaseAction
 	 */
 	function pwView()
 	{
-		$this->setTemplateVars( $this->user->getProperties() );
-		
+		$this->setTemplateVar('enabled',$this->user->type == User::AUTH_TYPE_INTERNAL );
+
 		$this->setTemplateVar('password_proposal', $this->user->createPassword() );
 	}
 

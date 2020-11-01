@@ -1,23 +1,30 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<form>
-		<fieldset label="${message:USER_new_password}">
-			<password name="password" hint="${password_proposal}"/>
-			<hidden name="password_proposal"/>
-		</fieldset>
 
-		<if true="${config:mail/enabled}">
-			<group title="${message:options}">
-				<if present="mail">
-					<fieldset>
-						<checkbox name="email" label="${message:user_mail_new_password}"/>
-					</fieldset>
+	<if true="${enabled}">
 
-					<fieldset>
-						<checkbox name="timeout" label="${message:user_password_timeout}"/>
-					</fieldset>
-				</if>
-			</group>
-		</if>
-	</form>
+		<form>
+			<fieldset label="${message:USER_new_password}">
+				<password name="password" hint="${password_proposal}"/>
+				<hidden name="password_proposal"/>
+			</fieldset>
+
+			<if true="${config:mail/enabled}">
+				<group title="${message:options}">
+					<if present="mail">
+						<fieldset>
+							<checkbox name="email" label="${message:user_mail_new_password}"/>
+						</fieldset>
+
+						<fieldset>
+							<checkbox name="timeout" label="${message:user_password_timeout}"/>
+						</fieldset>
+					</if>
+				</group>
+			</if>
+		</form>
+	</if>
+	<else>
+		<text class="message" value="${message:PWCHANGE_NOT_ALLOWED}" />
+	</else>
 </output>
