@@ -2756,6 +2756,9 @@ $( function() {
         });
     } );
 
+    window.setTimeout( function() {
+		Openrat.Workbench.afterNewActionHandler.fire();
+	},1000 ); // Bad bad bad,we should have a "afterAllViewsLoaded" callback.
 });
 
 
