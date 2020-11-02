@@ -1639,10 +1639,14 @@ Openrat.View = function( action,method,id,params ) {
 
     this.before = function() {};
 
-    this.start = function( element ) {
+	/**
+	 * @param element
+	 * @returns {Promise}
+	 */
+	this.start = function( element ) {
         this.before();
         this.element = element;
-        this.loadView();
+        return this.loadView();
     }
 
     this.afterLoad = function() {
@@ -1659,7 +1663,11 @@ Openrat.View = function( action,method,id,params ) {
     }
 
 
-    this.loadView = function() {
+	/**
+	 * Loads the content of this view
+	 * @returns Promise
+	 */
+	this.loadView = function() {
 
         let url = Openrat.View.createUrl( this.action,this.method,this.id,this.params,false); // URL für das Laden erzeugen.
         let element = this.element;
@@ -1696,18 +1704,8 @@ Openrat.View = function( action,method,id,params ) {
 
 		// Load the data for this view.
 		let apiUrl = Openrat.View.createUrl( this.action,this.method,this.id,this.params,true);
-		//let loadViewApiPromise = $.getJSON( apiUrl );
 
-		loadViewHtmlPromise.done( function() {
-
-			//loadViewApiPromise.done( function(data,status){
-				// Data binding.
-			//} );
-		} );
-
-		//loadViewApiPromise.fail( function(jqxhr,status,cause) {
-		//	Openrat.Workbench.notify('','','error','Server Error',['Server Error while requesting url '+apiUrl, status]);
-		//});
+		return loadViewHtmlPromise;
 	}
 
 
@@ -2154,6 +2152,7 @@ Openrat.Workbench = new function()
 
 
     this.afterNewActionHandler = $.Callbacks();
+    this.afterAllViewsLoaded   = $.Callbacks();
 
 
     /**
@@ -2176,18 +2175,31 @@ Openrat.Workbench = new function()
         // View in geschlossenen Sektionen löschen, damit diese nicht stehen bleiben.
         $('.or-workbench-section--is-closed .or-act-view-loader').empty();
 
-        Openrat.Workbench.loadViews( $('.or-workbench .or-act-view-loader') );
+        let promise = Openrat.Workbench.loadViews( $('.or-workbench .or-act-view-loader') );
+		promise.done( function() {
+				Openrat.Workbench.afterAllViewsLoaded.fire();
+			}
+		);
+
+		return promise;
     }
 
 
     this.reloadAll = function() {
 
     	// View in geschlossenen Sektionen löschen, damit diese nicht stehen bleiben.
-        Openrat.Workbench.loadViews( $('.or-act-view-loader,.or-act-view-static').empty() );
+        let promise = Openrat.Workbench.loadViews( $('.or-act-view-loader,.or-act-view-static').empty() );
+
+        promise.done( function() {
+				Openrat.Workbench.afterAllViewsLoaded.fire();
+			}
+		);
 
         this.loadUserStyle();
         this.loadLanguage();
         this.loadUISettings();
+
+        return promise;
     }
 
 
@@ -2234,21 +2246,30 @@ Openrat.Workbench = new function()
     }
 
 
-
-    this.loadViews = function( $views )
+	/**
+	 *
+	 * @param $views
+	 * @returns Promise for all views
+	 */
+	this.loadViews = function( $views )
     {
-
+    	let promises = [];
         $views.each(function (idx) {
 
             let $targetDOMElement = $(this);
 
-            Openrat.Workbench.loadNewActionIntoElement( $targetDOMElement )
+            promises.push( Openrat.Workbench.loadNewActionIntoElement( $targetDOMElement ) );
         });
+
+        return $.when.apply( $, promises );
     }
 
 
-
-    this.loadNewActionIntoElement = function( $viewElement )
+	/**
+	 * @param $viewElement
+	 * @returns {Promise}
+	 */
+	this.loadNewActionIntoElement = function( $viewElement )
     {
         let action;
         if   ( $viewElement.is('.or-act-view-static') )
@@ -2263,7 +2284,7 @@ Openrat.Workbench = new function()
         let method = $viewElement.data('method');
 
         let view = new Openrat.View( action,method,id,params );
-        view.start( $viewElement );
+        return view.start( $viewElement );
     }
 
 
@@ -2523,7 +2544,7 @@ Openrat.Workbench = new function()
 			$(document).unbind('keyup',this.escapeKeyClosingHandler); // Cleanup ESC-Key-Listener
 		}
 
-		view.start( $('.or-dialog > .or-view') );
+		return view.start( $('.or-dialog > .or-view') );
 	}
 
 
@@ -2756,9 +2777,7 @@ $( function() {
         });
     } );
 
-    window.setTimeout( function() {
-		Openrat.Workbench.afterNewActionHandler.fire();
-	},1000 ); // Bad bad bad,we should have a "afterAllViewsLoaded" callback.
+	Openrat.Workbench.afterNewActionHandler.fire();
 });
 
 
@@ -2790,7 +2809,7 @@ let filterMenus = function ()
 }
 
 
-Openrat.Workbench.afterNewActionHandler.add( function() {
+Openrat.Workbench.afterAllViewsLoaded.add( function() {
     filterMenus();
 } );
 

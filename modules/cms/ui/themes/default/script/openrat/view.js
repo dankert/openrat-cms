@@ -17,10 +17,14 @@ Openrat.View = function( action,method,id,params ) {
 
     this.before = function() {};
 
-    this.start = function( element ) {
+	/**
+	 * @param element
+	 * @returns {Promise}
+	 */
+	this.start = function( element ) {
         this.before();
         this.element = element;
-        this.loadView();
+        return this.loadView();
     }
 
     this.afterLoad = function() {
@@ -37,7 +41,11 @@ Openrat.View = function( action,method,id,params ) {
     }
 
 
-    this.loadView = function() {
+	/**
+	 * Loads the content of this view
+	 * @returns Promise
+	 */
+	this.loadView = function() {
 
         let url = Openrat.View.createUrl( this.action,this.method,this.id,this.params,false); // URL für das Laden erzeugen.
         let element = this.element;
@@ -74,18 +82,8 @@ Openrat.View = function( action,method,id,params ) {
 
 		// Load the data for this view.
 		let apiUrl = Openrat.View.createUrl( this.action,this.method,this.id,this.params,true);
-		//let loadViewApiPromise = $.getJSON( apiUrl );
 
-		loadViewHtmlPromise.done( function() {
-
-			//loadViewApiPromise.done( function(data,status){
-				// Data binding.
-			//} );
-		} );
-
-		//loadViewApiPromise.fail( function(jqxhr,status,cause) {
-		//	Openrat.Workbench.notify('','','error','Server Error',['Server Error while requesting url '+apiUrl, status]);
-		//});
+		return loadViewHtmlPromise;
 	}
 
 
