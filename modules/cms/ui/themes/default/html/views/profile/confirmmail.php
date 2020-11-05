@@ -1,12 +1,13 @@
 <?php /* THIS FILE IS GENERATED from confirmmail.tpl.src.xml - DO NOT CHANGE */ defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
-  <div class="<?php echo O::escapeHtml('or-line logo') ?>"><?php echo O::escapeHtml('') ?>
-    <div class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
-      <img src="<?php echo O::escapeHtml('themes/default/images/logo_changemail.png') ?>" border="<?php echo O::escapeHtml('') ?>" /><?php echo O::escapeHtml('') ?>
+  <div class="<?php echo O::escapeHtml('or-logo') ?>"><?php echo O::escapeHtml('') ?>
+    <div class="<?php echo O::escapeHtml('or-logo-icon') ?>"><?php echo O::escapeHtml('') ?>
+      <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-changemail') ?>"><?php echo O::escapeHtml('') ?>
+      </i>
     </div>
-    <div class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
-      <h2><?php echo O::escapeHtml(''.@O::lang('logo_changemail').'') ?>
+    <div class="<?php echo O::escapeHtml('or-logo-description') ?>"><?php echo O::escapeHtml('') ?>
+      <h2 class="<?php echo O::escapeHtml('or-logo-headline') ?>"><?php echo O::escapeHtml(''.@O::lang('logo_changemail').'') ?>
       </h2>
-      <p><?php echo O::escapeHtml(''.@O::lang('logo_changemail_text').'') ?>
+      <p class="<?php echo O::escapeHtml('or-logo-text') ?>"><?php echo O::escapeHtml(''.@O::lang('logo_changemail_text').'') ?>
       </p>
     </div>
   </div>

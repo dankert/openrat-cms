@@ -1,0 +1,105 @@
+/* Usage to this variable is safe to be removed */
+@color-overridden-by-theme: black;
+
+.border-radius (@radius) {
+    border-radius: @radius;
+    -moz-border-radius: @radius;
+    -webkit-border-radius: @radius;
+    -khtml-border-radius: @radius;
+}
+.box-shadow (@x, @y, @radius, @color) {
+    -webkit-box-shadow: @x @y @radius @color;
+    -moz-box-shadow: @x @y @radius @color;
+    box-shadow: @x @y @radius @color;
+}
+.or- {
+
+    &notices {
+
+        display: block;
+        position: fixed;
+        bottom: 40px;
+        right: 40px;
+        width: 25em;
+        z-index: 113;
+    }
+
+    &notice {
+        border: 2px solid @color-overridden-by-theme;
+        padding: 1.1em;
+        margin: 5px;
+        position: relative;
+
+        .border-radius(5px);
+        .box-shadow(3px, 2px, 5px, @color-overridden-by-theme);
+
+        &-toolbar {
+            float: right;
+            margin: 0 0.2em;
+            font-size: 2em;
+            color: gray;
+            cursor: pointer;
+        }
+
+        &:hover {
+            .or-notice-toolbar {
+                color: black;
+            }
+        }
+
+        &-full {
+            display: block;
+            position: fixed;
+            bottom: 10%;
+            top: 10%;
+            right: 10%;
+            left: 10%;
+            width: 80%;
+            z-index: 114;
+        }
+
+
+        &-error {
+
+            div.text {
+                font-weight: bold;
+            }
+        }
+
+        &-text {
+            font-size: 1.1em;
+        }
+
+        &:after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            width: 0;
+            height: 0;
+            border: 1em solid transparent;
+            border-right: 0;
+            margin-top: -1em;
+            margin-right: -1em;
+        }
+
+        &-log {
+            display: none;
+            position: relative;
+            max-height: 90%;
+            overflow: auto;
+            font-family: 'Source Code Pro', Monospace, Monospaced, Courier;
+        }
+
+        &-full {
+            &-log {
+                display: block;
+            }
+        }
+
+    }
+
+
+}
+
+

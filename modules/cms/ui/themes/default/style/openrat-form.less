@@ -14,189 +14,120 @@
 
 @small: ~"only screen and (max-width: 65rem)";
 
-/* R e s p o n s i v e   f o r m s */
-.or-form {
-    display: flex;
-    height: 100%;
-    flex-direction: column;
+.or {
 
-    .or-form-headline {
-        height:2em;
-    }
-    .or-form-content {
-        flex-grow: 1;
-        overflow-y: auto;
+    &-form {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        padding: 1em;
 
-    }
-
-  input[type=checkbox] + label,
-  input[type=radio] + label {
-    width: 80%;
-  }
-
-  .or-headline {
-    font-size: 1.8em;
-  }
-
-  label div.description {
-    //font-size: 0.75em;
-  }
-
-  div.or-inputholder > div.or-dropdown {
-    width: 70%;
-  }
-
-  input.or-submit {
-    padding: 7px;
-    border: 0px;
-    -moz-border-radius: 7px; /* Mozilla */
-    -webkit-border-radius: 7px; /* Webkit */
-    -khtml-border-radius: 7px; /* Konqui */
-    border-radius: 7px;
-    margin-left: 20px;
-    cursor: pointer;
-  }
-
-
-
-  padding: 1em;
-
-  /* Style inputs, select elements and textareas */
-  .or-input {
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    resize: vertical;
-  }
-
-  .or-form-checkbox,
-  .or-form-radiobox
-  {
-      //transform: scale(2);
-  }
-
-  /* Style the label to display next to the inputs */
-  label {
-    //padding: 12px 12px 12px 0;
-    //display: inline-block;
-  }
-
-  /* Style the submit button *
-  input[type=submit] {
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    float: right;
-  }*/
-
-  /* Floating column for labels: 25% width */
-  .or-label {
-    float: left;
-    width: 25%;
-    margin-top: 6px;
-  }
-
-  /* Floating column for inputs: 75% width */
-  .or-value {
-    float: left;
-    width: 75%;
-    margin-top: 6px;
-  }
-
-  /* Clear floats after the columns */
-  .or-line:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-
-  .or-form-row {
-    display: flex;
-    align-items: center;
-
-    .or-form-label {
-      width:25%;
-    }
-    .or-form-input {
-      width: 75%;
-    }
-  }
-
-
-  .or-form-actionbar {
-
-    height:3em;
-    position: sticky;
-    bottom: 0;
-    left: 0;
-    right: 0;
-
-    display: flex;
-    justify-content: end;
-    padding: 1em;
-    height: auto;
-
-      .or-btn {
-          padding: 1em 2em;
-          margin-left: 1.5em;
-          min-width: 14em;
-      }
-  }
-
-
-
-
-    /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
-  @media @small {
-
-    div.or-label, div.or-value {
-      width: 100%;
-      margin-top: 0;
-    }
-
-    .or-form-row {
-     flex-direction: column;
-      .or-form-label,
-      .or-form-input {
-        width: 100%;
-      }
-    }
-
-    .or-form-actionbar {
-
-      .or-btn {
-          padding: 1em 1em;
-          min-width: 5em;
-      }
-        .or-act-form-apply {
-            display: none;
+        &-headline {
+            height: 2em;
         }
-        .or-btn--secondary {
-            min-width: 0;
-            .or-form-btn-label {
-                //display: none;
+
+        &-content {
+            flex-grow: 1;
+            overflow-y: auto;
+
+        }
+
+        &-row {
+            display: flex;
+            align-items: center;
+
+            .or-form-label {
+                width: 25%;
+            }
+
+            .or-form-input {
+                width: 75%;
+            }
+
+
+            @media @small {
+                flex-direction: column;
+
+                .or-form-label,
+                .or-form-input {
+                    width: 100%;
+                }
             }
         }
+
+
+        &-actionbar {
+
+            height: 3em;
+            position: sticky;
+            bottom: 0;
+            left: 0;
+            right: 0;
+
+            display: flex;
+            justify-content: end;
+            padding: 1em;
+            height: auto;
+
+        }
+
+
+
+        @media @small {
+            .or-act-form-apply {
+                display: none;
+            }
+
+        }
+
     }
-  }
-}
 
 
+    &-input {
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        resize: vertical;
+        padding: 2px;
+        margin: 0;
 
-/* Buttons  */
-.or- {
-    &btn {
-        padding: 0.5em 0.5em;
+        &--name {
+            font-weight: bold;
+        }
+
+        &--filename {
+            font-family: 'Source Code Pro', Monospace, Monospaced, Courier;
+        }
+
+
+    }
+
+
+    /* Buttons  */
+    &-btn {
+        padding: 1em 2em;
+        margin-left: 1.5em;
+        min-width: 14em;
         border: 1px solid @color-overridden-by-theme;
 
-        .border-radius(0.5em);
-        cursor: pointer;
+        @media @small {
+            padding: 1em 1em;
+            min-width: 5em;
+        }
 
         &--primary {
             font-weight: bold;
         }
+
+        &--secondary {
+            @media @small {
+                min-width: 0;
+            }
+        }
+
+        .border-radius(0.5em);
+        cursor: pointer;
+
     }
 }

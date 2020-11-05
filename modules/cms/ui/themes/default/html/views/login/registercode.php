@@ -7,14 +7,15 @@
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('action') ?>" value="<?php echo O::escapeHtml('login') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('subaction') ?>" value="<?php echo O::escapeHtml('registercode') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml(''.@$_id.'') ?>" /><?php echo O::escapeHtml('') ?>
-      <div class="<?php echo O::escapeHtml('or-line logo') ?>"><?php echo O::escapeHtml('') ?>
-        <div class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
-          <img src="<?php echo O::escapeHtml('themes/default/images/logo_register.png') ?>" border="<?php echo O::escapeHtml('') ?>" /><?php echo O::escapeHtml('') ?>
+      <div class="<?php echo O::escapeHtml('or-logo') ?>"><?php echo O::escapeHtml('') ?>
+        <div class="<?php echo O::escapeHtml('or-logo-icon') ?>"><?php echo O::escapeHtml('') ?>
+          <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-register') ?>"><?php echo O::escapeHtml('') ?>
+          </i>
         </div>
-        <div class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
-          <h2><?php echo O::escapeHtml(''.@O::lang('logo_register').'') ?>
+        <div class="<?php echo O::escapeHtml('or-logo-description') ?>"><?php echo O::escapeHtml('') ?>
+          <h2 class="<?php echo O::escapeHtml('or-logo-headline') ?>"><?php echo O::escapeHtml(''.@O::lang('logo_register').'') ?>
           </h2>
-          <p><?php echo O::escapeHtml(''.@O::lang('logo_register_text').'') ?>
+          <p class="<?php echo O::escapeHtml('or-logo-text') ?>"><?php echo O::escapeHtml(''.@O::lang('logo_register_text').'') ?>
           </p>
         </div>
       </div>

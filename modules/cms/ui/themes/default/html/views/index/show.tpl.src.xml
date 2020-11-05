@@ -4,7 +4,7 @@
 	xmlns:or="http://www.openrat.de/template"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd"
-	class="or-theme-${style} nojs"
+	class="or-theme-${style} or-nojs"
 	lang="${language}">
 	<head>
 		<title data-default="${defaultTitle}">
@@ -91,9 +91,7 @@
 		</footer>
 
 		<noscript>
-			<div class="noscript">
-				<em>Javascript is required to view this site</em>
-			</div>
+			<div class="or-nojs-text">Javascript is required to view this site</div>
 		</noscript>
 
 	</body>

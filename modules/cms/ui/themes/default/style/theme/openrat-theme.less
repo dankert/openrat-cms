@@ -12,360 +12,333 @@
 @cms-background-color: silver;
 @cms-inactive-background-color: gray;
 
+@notice-ok-color: #00d95a;
+@notice-info-color: #86caff;
+@notice-warning-color: #FBDE2D;
+@notice-error-color: #f54b07;
+
+
 html.or-theme-@{cms-theme-id} {
 
-  .border-radius (@radius) {
-    border-radius: @radius;
-    -moz-border-radius: @radius;
-    -webkit-border-radius: @radius;
-    -khtml-border-radius: @radius;
-  }
-  .box-shadow (@x, @y, @radius, @color) {
-    -webkit-box-shadow: @x @y @radius @color;
-    -moz-box-shadow: @x @y @radius @color;
-    box-shadow: @x @y @radius @color;
-  }
+    .box-shadow (@x, @y, @radius, @color) {
+        -webkit-box-shadow: @x @y @radius @color;
+        -moz-box-shadow: @x @y @radius @color;
+        box-shadow: @x @y @radius @color;
+    }
 
-  scrollbar-face-color: @cms-title-background-color;
-  scrollbar-arrow-color: @cms-title-background-color;
-  scrollbar-base-color: @cms-title-text-color;
+    scrollbar-face-color: @cms-title-background-color;
+    scrollbar-arrow-color: @cms-title-background-color;
+    scrollbar-base-color: @cms-title-text-color;
 
-  scrollbar-color: @cms-title-text-color @cms-background-color;
-  scrollbar-width: thin;
+    scrollbar-color: @cms-title-text-color @cms-background-color;
+    scrollbar-width: thin;
 
     .or-dialog {
-    > .or-view {
-      background-color: @cms-background-color;
-      color: @cms-text-color;
-      border-color: @cms-text-color ! important;
-      .box-shadow(0px, 0px, 40px, @cms-text-color);
-    }
-
-    .or-dialog-filler {
-      background-color: @cms-background-color;
-    }
-  }
-
-    @notice-ok-color: #00d95a;
-    @notice-info-color: #86caff;
-    @notice-warning-color: #FBDE2D;
-    @notice-error-color: #f54b07;
-
-    .or-notice {
-      color: black;
-      line-height: 1.5em;
-
-      &--ok {
-        background-color: @notice-ok-color;
-        border-color: darken(@notice-ok-color, 10%);
-
-        &:after {
-          border-left-color: darken(@notice-ok-color, 10%);
+        > .or-view {
+            background-color: @cms-background-color;
+            color: @cms-text-color;
+            border-color: @cms-text-color ! important;
+            .box-shadow(0px, 0px, 40px, @cms-text-color);
         }
 
-        .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @notice-ok-color, 20%));
-      }
-
-      &--warning {
-        background-color: @notice-warning-color;
-        border-color: darken(@notice-warning-color, 10%);
-
-        &:after {
-          border-left-color: darken(@notice-warning-color, 10%);
+        .or-dialog-filler {
+            background-color: @cms-background-color;
         }
-
-        .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @notice-warning-color, 20%));
-      }
-
-      &--info {
-        background-color: @notice-info-color;
-        border-color: darken(@notice-info-color, 10%);
-
-        &:after {
-          border-left-color: darken(@notice-info-color, 10%);
-        }
-
-        .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @notice-info-color, 20%));
-      }
-
-      &--error {
-        background-color: @notice-error-color;
-        border-color: darken(@notice-error-color, 10%);
-
-        &:after {
-          border-left-color: darken(@notice-error-color, 10%);
-        }
-
-        .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @notice-error-color, 20%));
-
-      }
     }
-
-
-  .or-preview {
-    a:link, a:visited, a:active, a:hover {
-    }
-    color: blue;
-  }
-
-  small {
-    color: @cms-title-background-color;
-  }
-
-  textarea.longtext {
-    border: 1px solid @cms-text-color;
-  }
-
-
-  table {
-
-    tr.headline > td,
-    tr.headline > th {
-      border-bottom: 1px solid @cms-title-background-color;
-    }
-
-    tr > td {
-      border-bottom: 1px solid @cms-title-background-color;
-    }
-
-    tr:nth-child(2n) {
-      //background-color: @cms-inactive-background-color;
-    }
-
-    tr.or-data:hover {
-      background-color: @cms-title-background-color;
-      color: @cms-title-text-color;
-    }
-  }
-
-  .or-navtree .or-act-clickable:hover {
-    background-color: @cms-inactive-background-color;
-  }
-
-  .or-workbench  {
-
-    &-main {
-        background-color: @cms-background-color;
-        background-image: linear-gradient(to bottom, @cms-background-color 0%, lighten(@cms-background-color, 20%) 100%);
-    }
-
-      &-section {
-          border-color: @cms-text-color;
-
-          &.or-open {
-              background-color: lighten(@cms-background-color, 10%);
-          }
-    }
-  }
-
-
-  input.submit,
-  .or-btn,
-  .or-link-btn {
-    background-color: @cms-inactive-background-color;
-    color: @cms-title-text-color;
-    .box-shadow(0px, 0px, 15px, @cms-background-color);
-      border-color: @cms-background-color;
-
-      &:hover {
-          border-color: @cms-title-text-color;
-      }
-    &--primary {
-      background-color: @cms-title-background-color;
-    }
-  }
-
-  .or-workbench-title {
-
-    background-color: @cms-title-background-color;
-    background-image: linear-gradient(to bottom, lighten(@cms-title-background-color, 10%), @cms-title-background-color 80%, @cms-background-color);
-    color: @cms-title-text-color;
-
-    .or-toolbar-icon > a {
-      color: @cms-title-text-color;
-    }
-
-    .or-search {
-      .or-inputholder {
-        background-color: transparent;
-        .box-shadow(0, 0, 0, transparent);
-
-        input {
-          background-color: transparent;
-          color: @cms-title-text-color;
-
-          &::placeholder {
-            opacity: 1;
-            color: @cms-title-text-color;
-          }
-
-          &:focus {
-            &::placeholder {
-              color: fadeout(@cms-title-text-color, 50%);
-            }
-          }
-        }
-      }
-    }
-  }
-
 
     .or {
 
-    &-dropdown {
-        .or-link {
-            color: inherit;
+        &-notice {
+            color: black;
+            line-height: 1.5em;
+
+            &--ok {
+                background-color: @notice-ok-color;
+                border-color: darken(@notice-ok-color, 10%);
+
+                &:after {
+                    border-left-color: darken(@notice-ok-color, 10%);
+                }
+
+                .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @notice-ok-color, 20%));
+            }
+
+            &--warning {
+                background-color: @notice-warning-color;
+                border-color: darken(@notice-warning-color, 10%);
+
+                &:after {
+                    border-left-color: darken(@notice-warning-color, 10%);
+                }
+
+                .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @notice-warning-color, 20%));
+            }
+
+            &--info {
+                background-color: @notice-info-color;
+                border-color: darken(@notice-info-color, 10%);
+
+                &:after {
+                    border-left-color: darken(@notice-info-color, 10%);
+                }
+
+                .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @notice-info-color, 20%));
+            }
+
+            &--error {
+                background-color: @notice-error-color;
+                border-color: darken(@notice-error-color, 10%);
+
+                &:after {
+                    border-left-color: darken(@notice-error-color, 10%);
+                }
+
+                .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @notice-error-color, 20%));
+
+            }
         }
 
-        .border-radius(5px);
-        .box-shadow(3px, 2px, 10px, @cms-title-background-color);
-        opacity: 0.95;
-        border: 2px solid @cms-title-background-color;
 
-        background-color: @cms-title-text-color;
-        color: @cms-title-background-color;
+        &-preview {
+            a:link, a:visited, a:active, a:hover {
+            }
 
-        &-entry {
+            color: @cms-background-color;
+        }
+
+
+        &-table {
+
+            tr.headline > td,
+            tr.headline > th {
+                border-bottom: 1px solid @cms-title-background-color;
+            }
+
+            tr > td {
+                border-bottom: 1px solid @cms-title-background-color;
+            }
+
+            tr:nth-child(2n) {
+                //background-color: @cms-inactive-background-color;
+            }
+
+            tr.or-data:hover {
+                background-color: @cms-title-background-color;
+                color: @cms-title-text-color;
+            }
+
+            tr.or-diff {
+
+                & > td.or-equal {
+                }
+
+                & > td.or-old {
+                    background-color: red;
+                }
+
+                & > td.or-new {
+                    background-color: green;
+                }
+
+                & > td.or-notequal {
+                    background-color: yellow;
+                }
+            }
+        }
+
+
+        &-workbench {
+
+            &-main {
+                background-color: @cms-background-color;
+                background-image: linear-gradient(to bottom, @cms-background-color 0%, lighten(@cms-background-color, 20%) 100%);
+            }
+
+            &-section {
+                border-color: @cms-text-color;
+
+                &.or-open {
+                    background-color: lighten(@cms-background-color, 10%);
+                }
+            }
+
+
+            &-title {
+
+                background-color: @cms-title-background-color;
+                background-image: linear-gradient(to bottom, lighten(@cms-title-background-color, 10%), @cms-title-background-color 80%, @cms-background-color);
+                color: @cms-title-text-color;
+
+                .or-toolbar-icon > a {
+                    color: @cms-title-text-color;
+                }
+
+                .or-search {
+                    .or-inputholder {
+                        background-color: transparent;
+                        .box-shadow(0, 0, 0, transparent);
+
+                        input {
+                            background-color: transparent;
+                            color: @cms-title-text-color;
+
+                            &::placeholder {
+                                opacity: 1;
+                                color: @cms-title-text-color;
+                            }
+
+                            &:focus {
+                                &::placeholder {
+                                    color: fadeout(@cms-title-text-color, 50%);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &-input {
+            background-color: @cms-title-background-color;
+            color: @cms-title-text-color;
+            border: 1px solid mix(@cms-title-text-color, @cms-title-background-color);
+            .box-shadow(0px, 0px, 3px, @cms-title-text-color);
+            border-bottom: 1px solid @cms-text-color;
+
+            &:focus {
+            }
+
+            border-color: @cms-title-text-color;
+
+            &.error {
+                border-bottom: 1px dotted @cms-text-color ! important;
+                border: 1px solid red ! important;
+            }
+
+
+            &.or-hint {
+                color: @cms-title-background-color;
+            }
+
+        }
+
+
+        &-group {
+            border-color: mix(@cms-text-color, @cms-background-color);
+
+        }
+
+        &-act-clickable {
+            //&:hover {
+            //    background-color: @cms-inactive-background-color;
+            //}
+
+            &.or-filtered > a {
+                color: @cms-inactive-background-color;
+            }
+
+            &.or-filtered.or-active > a {
+                color: @cms-background-color;
+            }
+        }
+
+        &-dropdown {
+            .or-link {
+                color: inherit;
+            }
+
+            .box-shadow(3px, 2px, 10px, @cms-title-background-color);
+            opacity: 0.95;
+            border: 2px solid @cms-title-background-color;
 
             background-color: @cms-title-text-color;
             color: @cms-title-background-color;
 
-            &--inactive {
-                color: mix(@cms-title-background-color, @cms-title-text-color, 40%);
+            &-entry {
+
+                background-color: @cms-title-text-color;
+                color: @cms-title-background-color;
+
+                &--inactive {
+                    color: mix(@cms-title-background-color, @cms-title-text-color, 40%);
+                }
+
+                &--active:hover {
+                    background-color: @cms-title-background-color;
+                    color: @cms-title-text-color;
+                }
             }
 
-            &--active:hover {
+
+            &-divide {
                 background-color: @cms-title-background-color;
-                color: @cms-title-text-color;
+            }
+        }
+
+        &-toolbar-icon {
+            border: 1px solid @cms-title-background-color;
+
+            &:hover {
+                border: 1px solid @cms-title-text-color;
             }
         }
 
 
-        &-divide {
-            background-color: @cms-title-background-color;
+        &-dropzone-upload > .or-value {
+            background-color: @cms-title-text-color;
+            border: 1px dotted @cms-text-color;
         }
-    }
+
+        &-hover-effect:hover {
+            background-color: darken(@cms-background-color, 10%);;
+        }
+
+        &-info-popup {
+            background-color: @cms-title-background-color;
+            color: @cms-title-text-color;
+        }
+
+        &-workbench-navigation {
+            background-color: inherit;
+            background-image: inherit;
+            border-right-color: @cms-text-color;
+            .box-shadow(10px, 0px, 25px, @cms-background-color);
+        }
+
+
+        &-collapsible-title {
+            border-color: @cms-title-text-color;
+        }
+
+        &-btn,
+        &-link-btn {
+            background-color: @cms-inactive-background-color;
+            color: @cms-title-text-color;
+            .box-shadow(0px, 0px, 15px, @cms-background-color);
+            border-color: @cms-background-color;
+
+            &:hover {
+                border-color: @cms-title-text-color;
+            }
+
+            &--primary {
+                background-color: @cms-title-background-color;
+            }
+        }
 
     }
 
-  .or-toolbar-icon {
-    border: 1px solid @cms-title-background-color;
-    .border-radius(3px);
-
-    &:hover {
-      border: 1px solid @cms-title-text-color;
-    }
-  }
-
-  label div.description {
-    color: @cms-title-background-color;
-  }
-
- .or-input {
-      background-color: @cms-title-background-color;
-      color: @cms-title-text-color;
-      border: 1px solid mix(@cms-title-text-color, @cms-title-background-color);
-      .box-shadow(0px, 0px, 3px, @cms-title-text-color);
-  }
-
-  .or-table-filter {
-    inputx {
-      background-color: inherit;
-      color: inherit;
-      border-color: mix(@cms-text-color, @cms-background-color);
-    }
-  }
-
-  .or-input {
-    background-color: @cms-title-background-color;
-    .border-radius(3px);
-    border-bottom: 1px solid @cms-text-color;
-  }
-
-  .or-input:focus {
-    border-color: @cms-title-text-color;
-  }
-
-  .or-input.error {
-    border-bottom: 1px dotted @cms-text-color ! important;
-    border: 1px solid red ! important;
-  }
-
-  input.or-hint {
-    color: @cms-title-background-color;
-  }
-
-  fieldset {
-    border-color: mix(@cms-text-color, @cms-background-color);
-
-    > div input.or-name, > div span.or-name {
-      font-weight: bold;
+    small {
+        color: @cms-title-background-color;
     }
 
-  }
-
-  table {
-
-    tr.or-diff {
-
-      & > td.or-equal {
-      }
-
-      & > td.or-old {
-        background-color: red;
-      }
-
-      & > td.or-new {
-        background-color: green;
-      }
-
-      & > td.or-notequal {
-        background-color: yellow;
-      }
+    textarea.longtext {
+        border-color: @cms-text-color;
     }
-  }
 
-  body, a {
-    color: @cms-text-color;
-  }
-
-
-  .or-dropzone-upload > .or-value {
-    background-color: @cms-title-text-color;
-    border: 1px dotted @cms-text-color;
-  }
-
-  .or-act-clickable.filtered > a {
-    color: @cms-inactive-background-color;
-  }
-
-  .or-act-clickable.filtered.active > a {
-    color: @cms-background-color;
-  }
-
-  .or-round-corners {
-    .border-radius(1em);
-  }
-
-  .or-hover-effect:hover {
-    background-color: darken(@cms-background-color, 10%);;
-  }
-
-  .or-info-popup {
-    background-color: @cms-title-background-color;
-    color: @cms-title-text-color;
-  }
-
-  .or-workbench-navigation {
-    background-color: inherit;
-    background-image: inherit;
-    border-right-color: @cms-text-color;
-    .box-shadow(10px, 0px, 25px, @cms-background-color);
-  }
-
-
-  .or-collapsible-title {
-        border-color: @cms-title-text-color;
+    body, a {
+        color: @cms-text-color;
     }
 }
+
 /* Theme Ende */

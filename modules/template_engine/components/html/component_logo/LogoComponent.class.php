@@ -13,21 +13,20 @@ class LogoComponent extends Component
 
 	public function createElement()
 	{
-		$logo = new CMSElement('div');
-		$logo->addStyleClass('line logo');
+		$logo = (new CMSElement('div'))->addStyleClass('logo');
 
-		$label = (new HtmlElement('div'))->addStyleClass('label');
+		$label = (new HtmlElement('div'))->addStyleClass('logo-icon');
 
-		$image = (new CMSElement('img'))->addAttribute('src','themes/default/images/logo_'.$this->name.'.png')->addAttribute('border','0');
+		$image = (new CMSElement('i'))->addStyleClass(['image-icon','image-icon--method-'.$this->name]);
 		$label->addChild($image);
 
 		$logo->addChild($label);
 
-		$holder = (new HtmlElement('div'))->addStyleClass('input');
+		$holder = (new HtmlElement('div'))->addStyleClass('logo-description');
 		$logo->addChild($holder);
 
-		$holder->addChild( (new CMSElement('h2'))->content(Value::createExpression( ValueExpression::TYPE_MESSAGE,'logo_'.$this->name        )));
-		$holder->addChild( (new CMSElement('p') )->content(Value::createExpression( ValueExpression::TYPE_MESSAGE,'logo_'.$this->name.'_text')));
+		$holder->addChild( (new CMSElement('h2'))->addStyleClass('logo-headline')->content(Value::createExpression( ValueExpression::TYPE_MESSAGE,'logo_'.$this->name        )));
+		$holder->addChild( (new CMSElement('p') )->addStyleClass('logo-text'    )->content(Value::createExpression( ValueExpression::TYPE_MESSAGE,'logo_'.$this->name.'_text')));
 
 		return $logo;
 	}

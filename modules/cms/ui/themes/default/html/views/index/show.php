@@ -1,4 +1,4 @@
-<?php /* THIS FILE IS GENERATED from show.tpl.src.xml - DO NOT CHANGE */ defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?><!DOCTYPE html><html class="<?php echo O::escapeHtml('or-theme-'.@$style.' nojs') ?>" lang="<?php echo O::escapeHtml(''.@$language.'') ?>"><?php echo O::escapeHtml('') ?>
+<?php /* THIS FILE IS GENERATED from show.tpl.src.xml - DO NOT CHANGE */ defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?><!DOCTYPE html><html class="<?php echo O::escapeHtml('or-theme-'.@$style.' or-nojs') ?>" lang="<?php echo O::escapeHtml(''.@$language.'') ?>"><?php echo O::escapeHtml('') ?>
   <head><?php echo O::escapeHtml('') ?>
     <title data-default="<?php echo O::escapeHtml(''.@$defaultTitle.'') ?>"><?php echo O::escapeHtml('') ?>
       <?php echo O::escapeHtml(''.@$defaultTitle.'') ?>
@@ -66,9 +66,7 @@
     <footer class="<?php echo O::escapeHtml('or--initial-hidden') ?>" id="<?php echo O::escapeHtml('footer') ?>"><?php echo O::escapeHtml('') ?>
     </footer>
     <noscript><?php echo O::escapeHtml('') ?>
-      <div class="<?php echo O::escapeHtml('noscript') ?>"><?php echo O::escapeHtml('') ?>
-        <em><?php echo O::escapeHtml('') ?>
-        </em>
+      <div class="<?php echo O::escapeHtml('or-nojs-text') ?>"><?php echo O::escapeHtml('') ?>
       </div>
     </noscript>
   </body>

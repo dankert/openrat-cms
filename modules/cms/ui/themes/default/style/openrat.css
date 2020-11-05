@@ -1,4 +1,76 @@
-/* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-base */
+/* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-notices */
+/* Usage to this variable is safe to be removed */
+.or-notices {
+	display: block;
+	position: fixed;
+	bottom: 40px;
+	right: 40px;
+	width: 25em;
+	z-index: 113;
+}
+.or-notice {
+	border: 2px solid #000000;
+	padding: 1.1em;
+	margin: 5px;
+	position: relative;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	-webkit-box-shadow: 3px 2px 5px #000000;
+	-moz-box-shadow: 3px 2px 5px #000000;
+	box-shadow: 3px 2px 5px #000000;
+}
+.or-notice-toolbar {
+	float: right;
+	margin: 0 0.2em;
+	font-size: 2em;
+	color: gray;
+	cursor: pointer;
+}
+.or-notice:hover .or-notice-toolbar {
+	color: black;
+}
+.or-notice-full {
+	display: block;
+	position: fixed;
+	bottom: 10%;
+	top: 10%;
+	right: 10%;
+	left: 10%;
+	width: 80%;
+	z-index: 114;
+}
+.or-notice-error div.text {
+	font-weight: bold;
+}
+.or-notice-text {
+	font-size: 1.1em;
+}
+.or-notice:after {
+	content: '';
+	position: absolute;
+	right: 0;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 1em solid transparent;
+	border-right: 0;
+	margin-top: -1em;
+	margin-right: -1em;
+}
+.or-notice-log {
+	display: none;
+	position: relative;
+	max-height: 90%;
+	overflow: auto;
+	font-family: 'Source Code Pro', Monospace, Monospaced, Courier;
+}
+.or-notice-full-log {
+	display: block;
+}
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-notices.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3BAAgBI%2CIAAC%3BCAEG%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAGJ%2CIAAC%3BCACG%2CyBAAA%3BCACA%3BCACA%3BCACA%3BCA1BJ%2CkBAAA%3BCACA%2CuBAAA%3BCACA%2C0BAAA%3BCACA%2CyBAAA%3BCAGA%2CuCAAA%3BCACA%2CoCAAA%3BCACA%2C%2BBAAA%3B%3BAAuBI%2CIATH%2CMASI%3BCACG%3BCACA%2CeAAA%3BCACA%3BCACA%3BCACA%3B%3BAAGJ%2CIAjBH%2CMAiBI%2CMACG%3BCACI%3B%3BAAIR%2CIAvBH%2CMAuBI%3BCACG%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAIJ%2CIAnCH%2CMAmCI%2CMAEG%2CIAAG%3BCACC%3B%3BAAIR%2CIA1CH%2CMA0CI%3BCACG%3B%3BAAGJ%2CIA9CH%2CMA8CI%3BCACG%2CSAAS%2CEAAT%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%2C6BAAA%3BCACA%3BCACA%3BCACA%3B%3BAAGJ%2CIA3DH%2CMA2DI%3BCACG%3BCACA%3BCACA%3BCACA%3BCACA%2CaAAa%2CiDAAb%3B%3BAAIA%2CIApEP%2CMAmEI%2CKACI%3BCACG%22%7D */
+/* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-normalize */
 /*! normalize.css v3.0.1 | MIT License | git.io/normalize */
 /* Customized for OR-CMS */
 html {
@@ -191,117 +263,8 @@ th {
 ::after {
 	box-sizing: border-box;
 }
-.or- {
-	/* After page loading, all elements are hidden. This class will be removed by javascript. */
-}
-.or-initial-hidden {
-	display: none;
-}
-.or-table-sort-value {
-	display: none;
-}
-legend {
-	font-size: 1.1em;
-	font-weight: bold;
-	padding: 0 0.5em;
-}
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-base.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3BAAKA%3BCACE%2CaAAa%2CUAAU%2C6CAA6C%2CYAAY%2CaAAa%2CUAAU%2CaACvG%2CaAAa%2CcAAc%2C4BAD3B%3BCAEA%3BCACA%3BCACA%3B%3BAAIF%3BCAAO%3B%3BAAMP%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BCACE%3B%3BAAKF%3BAACA%3BAACA%3BAACA%3BCACE%3BCACA%3B%3BAAKF%2CKAAK%2CIAAI%3BCACP%3BCACA%3B%3BAAKF%3BAACA%3BCACE%3B%3BAAKF%3BCACE%3B%3BAAEA%2CCAAC%3BAACD%2CCAAC%3BCACC%3B%3BAAOJ%2CIAAI%3BCAAU%2CyBAAA%3B%3BAAGd%3BAACA%3BCACE%3B%3BAAIF%3BCAAM%3B%3BAAGN%3BCACE%3BCACA%2CgBAAA%3B%3BAAIF%3BCACE%3BCACA%3B%3BAAIF%3BCAAQ%3B%3BAAGR%3BAACA%3BCACE%3BCACA%3BCACA%3BCACA%3B%3BAAGF%3BCAAM%3B%3BAACN%3BCAAM%3B%3BAAIN%3BCAAM%3B%3BAAGN%2CGAAG%2CIAAI%3BCAAU%3B%3BAAIjB%3BCAAS%2CgBAAA%3B%3BAAGT%3BCACE%3BCACA%3BCACA%3B%3BAAIF%3BCAAM%3B%3BAAGN%3BAACA%3BAACA%3BAACA%3BCACE%2CaAAa%2CuCAAb%3BCACA%3B%3BAAWF%3BAACA%3BAACA%3BAACA%3BAACA%3BCACE%3BCACA%3BCACA%3BCACA%3B%3BAAIF%3BCAAS%3B%3BAAMT%3BAACA%3BCACE%3B%3BAAMF%3BAACA%2CIAAK%2CMAAK%3BCACR%3BCACA%3B%3BAAIF%2CMAAM%3BAACN%2CIAAK%2CMAAK%3BCACR%3B%3BAAMA%2CMADF%2CMACG%3BCACC%3BCACA%3B%3BAAKJ%3BCACE%3B%3BAACA%2CKAAC%3BAACD%2CKAAC%3BCACC%3BCACA%3B%3BAAOF%2CKAAC%3BAACD%2CKAAC%3BCACC%3BCACA%3B%3BAAOA%2CKADD%2CeACE%3BAACD%2CKAFD%2CeAEE%3BCACC%3B%3BAAMJ%2CKAAC%3BCACC%3BCACA%3BCACA%3BCACA%3B%3BAAKA%2CKATD%2CeASE%3BAACD%2CKAVD%2CeAUE%3BCACC%3B%3BAAON%3BCACE%2CyBAAA%3BCACA%2CaAAA%3BCACA%2C8BAAA%3B%3BAAKF%3BCACE%3BCACA%3B%3BAAIF%3BCAAW%3B%3BAAIX%3BCAAW%3B%3BAAIX%3BCACE%3BCACA%3B%3BAAGF%3BAACA%3BCACE%3BCACA%3B%3B%3BAAUF%3BAAAG%3BAAAU%3BCACX%3B%3BAAKF%3B%3B%3BAAEI%2CIAAC%3BCACG%3B%3BAAQA%2CGAFH%2CMAEI%3BCACG%3B%3BAAOZ%3BCACI%3BCACA%3BCACA%2CgBAAA%22%7D */
-/* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-dialog */
-/*
-OpenRat Content Management System
-Copyright (C) 2002-2010 Jan Dankert
-
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-*/
-/*
-Basis-Style for Openrat.
-*/
-/* Usage to this variable is safe to be removed */
-.or-dialog {
-	/* Modale Dialoge */
-}
-.or-dialog .or-view {
-	overflow: auto;
-	/*width:60%;*/
-	position: absolute;
-	top: 5%;
-	left: 10%;
-	display: none;
-	width: 80%;
-	height: 80%;
-	z-index: 110;
-	border: 1px solid !important;
-}
-@media only screen and (max-width: 55rem) {
-	.or-dialog .or-view {
-		top: 2.5%;
-		left: 2.5%;
-		width: 95%;
-		height: 95%;
-	}
-}
-.or-dialog--is-open .or-view {
-	display: block;
-}
-.or-dialog--is-open .or-dialog-filler {
-	display: block;
-}
-.or-dialog-filler {
-	position: absolute;
-	display: none;
-	z-index: 100;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 100%;
-	opacity: 0.5;
-}
-.or-dialog-filler-icon {
-	opacity: 1;
-	font-size: 3em;
-	position: absolute;
-	right: 20px;
-	top: 20px;
-}
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-dialog.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAA%2BBA%3B%3B%3BAAAA%2CUAEI%3BCACI%3B%3BCAGA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCAUA%3BCAEA%2C4BAAA%3B%3BAAFA%3BCAAA%2CUAnBJ%3BEAYQ%3BEACA%3BEACA%3BEACA%3B%3B%3BAASR%2CUAAC%2CSACG%3BCACI%3B%3BAAFR%2CUAAC%2CSAKG%3BCACI%3B%3BAAKR%2CUAAC%3BCACG%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAEA%2CUAVH%2COAUI%3BCACG%3BCACA%3BCACA%3BCACA%3BCACA%22%7D */
-/* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-ui */
-/* Usage to this variable is safe to be removed */
-/* oxygen-regular - latin */
-@font-face {
-	font-family: 'Oxygen';
-	font-style: normal;
-	font-weight: 400;
-	src: local('Oxygen Regular'), local('Oxygen-Regular'), url('../font/oxygen-v7-latin-regular.woff') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */ url('../font/oxygen-v7-latin-regular.woff') format('woff');
-	
-	/* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
-/* source-code-pro-regular - latin */
-@font-face {
-	font-family: 'Source Code Pro';
-	font-style: normal;
-	font-weight: 400;
-	src: local('Source Code Pro'), local('SourceCodePro-Regular'), url('../font/source-code-pro-v8-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */ url('../font/source-code-pro-v8-latin-regular.woff') format('woff');
-	
-	/* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
-@font-face {
-	font-family: 'Material Icons';
-	font-style: normal;
-	font-weight: 400;
-	src: local('Material Icons'), local('MaterialIcons-Regular'), url('../font/MaterialIcons-Regular.woff2') format('woff2'), url('../font/MaterialIcons-Regular.woff') format('woff');
-}
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-normalize.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3BAAKA%3BCACE%2CaAAa%2CUAAU%2C6CAA6C%2CYAAY%2CaAAa%2CUAAU%2CaACvG%2CaAAa%2CcAAc%2C4BAD3B%3BCAEA%3BCACA%3BCACA%3B%3BAAIF%3BCAAO%3B%3BAAMP%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BCACE%3B%3BAAKF%3BAACA%3BAACA%3BAACA%3BCACE%3BCACA%3B%3BAAKF%2CKAAK%2CIAAI%3BCACP%3BCACA%3B%3BAAKF%3BAACA%3BCACE%3B%3BAAKF%3BCACE%3B%3BAAEA%2CCAAC%3BAACD%2CCAAC%3BCACC%3B%3BAAOJ%2CIAAI%3BCAAU%2CyBAAA%3B%3BAAGd%3BAACA%3BCACE%3B%3BAAIF%3BCAAM%3B%3BAAGN%3BCACE%3BCACA%2CgBAAA%3B%3BAAIF%3BCACE%3BCACA%3B%3BAAIF%3BCAAQ%3B%3BAAGR%3BAACA%3BCACE%3BCACA%3BCACA%3BCACA%3B%3BAAGF%3BCAAM%3B%3BAACN%3BCAAM%3B%3BAAIN%3BCAAM%3B%3BAAGN%2CGAAG%2CIAAI%3BCAAU%3B%3BAAIjB%3BCAAS%2CgBAAA%3B%3BAAGT%3BCACE%3BCACA%3BCACA%3B%3BAAIF%3BCAAM%3B%3BAAGN%3BAACA%3BAACA%3BAACA%3BCACE%2CaAAa%2CuCAAb%3BCACA%3B%3BAAWF%3BAACA%3BAACA%3BAACA%3BAACA%3BCACE%3BCACA%3BCACA%3BCACA%3B%3BAAIF%3BCAAS%3B%3BAAMT%3BAACA%3BCACE%3B%3BAAMF%3BAACA%2CIAAK%2CMAAK%3BCACR%3BCACA%3B%3BAAIF%2CMAAM%3BAACN%2CIAAK%2CMAAK%3BCACR%3B%3BAAMA%2CMADF%2CMACG%3BCACC%3BCACA%3B%3BAAKJ%3BCACE%3B%3BAACA%2CKAAC%3BAACD%2CKAAC%3BCACC%3BCACA%3B%3BAAOF%2CKAAC%3BAACD%2CKAAC%3BCACC%3BCACA%3B%3BAAOA%2CKADD%2CeACE%3BAACD%2CKAFD%2CeAEE%3BCACC%3B%3BAAMJ%2CKAAC%3BCACC%3BCACA%3BCACA%3BCACA%3B%3BAAKA%2CKATD%2CeASE%3BAACD%2CKAVD%2CeAUE%3BCACC%3B%3BAAON%3BCACE%2CyBAAA%3BCACA%2CaAAA%3BCACA%2C8BAAA%3B%3BAAKF%3BCACE%3BCACA%3B%3BAAIF%3BCAAW%3B%3BAAIX%3BCAAW%3B%3BAAIX%3BCACE%3BCACA%3B%3BAAGF%3BAACA%3BCACE%3BCACA%3B%3B%3BAAKF%3BAAAG%3BAAAU%3BCACX%22%7D */
+/* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-image */
 .or-image-icon {
 	font-family: 'Material Icons';
 	font-weight: normal;
@@ -417,7 +380,7 @@ Basis-Style for Openrat.
 .or-image-icon--action-profile:after {
 	content: "person_pin";
 }
-.or-image-icon--method-settings:after {
+.or-image-icon--action--method-settings:after {
 	content: "settings";
 }
 .or-image-icon--action-configuration:after {
@@ -573,6 +536,110 @@ Basis-Style for Openrat.
 .or-image-icon--editor-table:after {
 	content: "view_comfy";
 }
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-image.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AAGQ%2CGADH%2CMACI%3BCAEG%2CaAAa%2CgBAAb%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BCAGA%3B%3BAAII%2CGAlBX%2CMACI%2CKAeI%2CQAEI%2CQAAQ%3BCAAS%3B%3BAAClB%2CGAnBX%2CMACI%2CKAeI%2CQAGI%2CYAAY%3BCAAS%2CSAAS%2CeAAT%3B%3BAACtB%2CGApBX%2CMACI%2CKAeI%2CQAII%2CUAAU%3BCAAS%3B%3BAACpB%2CGArBX%2CMACI%2CKAeI%2CQAKI%2CUAAU%3BCAAS%2CSAAS%2CWAAT%3B%3BAACpB%2CGAtBX%2CMACI%2CKAeI%2CQAMI%2CQAAQ%3BCAAS%2CSAAS%2CWAAT%3B%3BAAClB%2CGAvBX%2CMACI%2CKAeI%2CQAOI%2CQAAQ%3BCAAS%2CSAAS%2CYAAT%3B%3BAAClB%2CGAxBX%2CMACI%2CKAeI%2CQAQI%2CUAAU%3BCAAS%2CSAAS%2CiBAAT%3B%3BAACpB%2CGAzBX%2CMACI%2CKAeI%2CQASI%2CQAAQ%3BCAAS%2CSAAS%2CcAAT%3B%3BAAClB%2CGA1BX%2CMACI%2CKAeI%2CQAUI%2CYAAY%3BCAAS%3B%3BAACtB%2CGA3BX%2CMACI%2CKAeI%2CQAWI%2CYAAY%3BCAAS%3B%3BAACtB%2CGA5BX%2CMACI%2CKAeI%2CQAYI%2CQAAQ%3BCAAS%3B%3BAAClB%2CGA7BX%2CMACI%2CKAeI%2CQAaI%2CWAAW%3BCAAS%2CSAAS%2CqBAAT%3B%3BAACrB%2CGA9BX%2CMACI%2CKAeI%2CQAcI%2CQAAQ%3BCAAS%3B%3BAAClB%2CGA%5C%2FBX%2CMACI%2CKAeI%2CQAeI%2CYAAY%3BCAAS%3B%3BAACtB%2CGAhCX%2CMACI%2CKAeI%2CQAgBI%2CYAAY%3BCAAS%2CSAAS%2CWAAT%3B%3BAAEtB%2CGAlCX%2CMACI%2CKAeI%2CQAkBI%2CMAAM%3BCAAS%3B%3BAAChB%2CGAnCX%2CMACI%2CKAeI%2CQAmBI%2CKAAK%3BCAAS%2CSAAS%2CWAAT%3B%3BAACf%2CGApCX%2CMACI%2CKAeI%2CQAoBI%2CIAAI%3BCAAS%3B%3BAACd%2CGArCX%2CMACI%2CKAeI%2CQAqBI%2CMAAM%3BCAAS%2CSAAS%2CiBAAT%3B%3BAAChB%2CGAtCX%2CMACI%2CKAeI%2CQAsBI%2CKAAK%3BCAAS%2CSAAS%2CaAAT%3B%3BAACf%2CGAvCX%2CMACI%2CKAeI%2CQAuBI%2CKAAK%3BCAAS%2CSAAS%2CmBAAT%3B%3BAACf%2CGAxCX%2CMACI%2CKAeI%2CQAwBI%2CKAAK%3BCAAS%3B%3BAACf%2CGAzCX%2CMACI%2CKAeI%2CQAyBI%2CUAAU%3BCAAS%2CSAAS%2CYAAT%3B%3BAACpB%2CGA1CX%2CMACI%2CKAeI%2CQA0BI%2CMAAM%3BCAAS%2CSAAS%2CYAAT%3B%3BAAChB%2CGA3CX%2CMACI%2CKAeI%2CQA2BI%2COAAO%3BCAAS%2CSAAS%2CaAAT%3B%3BAACjB%2CGA5CX%2CMACI%2CKAeI%2CQA4BI%2CaAAa%3BCAAS%3B%3BAACvB%2CGA7CX%2CMACI%2CKAeI%2CQA6BI%2CSAAS%3BCAAS%3B%3BAACnB%2CGA9CX%2CMACI%2CKAeI%2CQA8BI%2CSAAS%3BCAAS%3B%3BAACnB%2CGA%5C%2FCX%2CMACI%2CKAeI%2CQA%2BBI%2CaAAa%3BCAAS%3B%3BAACvB%2CGAhDX%2CMACI%2CKAeI%2CQAgCI%2CWAAW%3BCAAS%3B%3BAACrB%2CGAjDX%2CMACI%2CKAeI%2CQAiCI%2CMAAM%3BCAAS%3B%3BAAChB%2CGAlDX%2CMACI%2CKAeI%2CQAkCI%2CSAAS%3BCAAS%3B%3BAACnB%2CGAnDX%2CMACI%2CKAeI%2CQAmCI%2CKAAK%3BCAAS%3B%3BAACf%2CGApDX%2CMACI%2CKAeI%2CQAoCI%2CQAAQ%3BCAAS%2CSAAS%2CYAAT%3B%3BAAClB%2CGArDX%2CMACI%2CKAeI%2CQAqCI%2CiBAAiB%3BCAAS%3B%3BAAC3B%2CGAtDX%2CMACI%2CKAeI%2CQAsCI%2CcAAc%3BCAAS%3B%3BAACxB%2CGAvDX%2CMACI%2CKAeI%2CQAuCI%2CYAAY%3BCAAS%3B%3BAACtB%2CGAxDX%2CMACI%2CKAeI%2CQAwCI%2CQAAQ%3BCAAS%2CSAAS%2CiBAAT%3B%3BAAElB%2CGA1DX%2CMACI%2CKAeI%2CQA0CI%2CMAAM%3BCAAS%2CSAAS%2CYAAT%3B%3BAAEhB%2CGA5DX%2CMACI%2CKAeI%2CQA4CI%3BCAAc%2CSAAS%2CiBAAT%3B%3BAAMf%2CGAlEX%2CMACI%2CKA%2BDI%2CQAEI%2CSAAS%3BCAAS%3B%3BAACnB%2CGAnEX%2CMACI%2CKA%2BDI%2CQAGI%2CQAAQ%3BCAAS%2CSAAS%2CcAAT%3B%3BAAClB%2CGApEX%2CMACI%2CKA%2BDI%2CQAII%2CKAAK%3BCAAS%3B%3BAACf%2CGArEX%2CMACI%2CKA%2BDI%2CQAKI%2CIAAI%3BCAAS%3B%3BAACd%2CGAtEX%2CMACI%2CKA%2BDI%2CQAMI%2CIAAI%3BCAAS%3B%3BAACd%2CGAvEX%2CMACI%2CKA%2BDI%2CQAOI%2COAAO%3BCAAS%3B%3BAACjB%2CGAxEX%2CMACI%2CKA%2BDI%2CQAQI%2CQAAQ%3BCAAS%3B%3BAAClB%2CGAzEX%2CMACI%2CKA%2BDI%2CQASI%2CKAAK%3BCAAS%3B%3BAACf%2CGA1EX%2CMACI%2CKA%2BDI%2CQAUI%2COAAO%3BCAAS%3B%3BAACjB%2CGA3EX%2CMACI%2CKA%2BDI%2CQAWI%2CIAAI%3BCAAS%2CSAAS%2CSAAT%3B%3BAACd%2CGA5EX%2CMACI%2CKA%2BDI%2CQAYI%2CQAAQ%3BCAAS%2CSAAS%2CiBAAT%3B%3BAAClB%2CGA7EX%2CMACI%2CKA%2BDI%2CQAaI%2CKAAK%3BCAAS%3B%3BAACf%2CGA9EX%2CMACI%2CKA%2BDI%2CQAcI%2CKAAK%3BCAAS%3B%3BAAIf%2CGAlFX%2CMACI%2CKAgFI%2CMACI%2CMAAM%3BCAAS%3B%3BAAChB%2CGAnFX%2CMACI%2CKAgFI%2CMAEI%2CWAAW%3BCAAS%3B%3BAACrB%2CGApFX%2CMACI%2CKAgFI%2CMAGI%2CKAAK%3BCAAS%3B%3BAACf%2CGArFX%2CMACI%2CKAgFI%2CMAII%2CMAAM%3BCAAS%3B%3BAAChB%2CGAtFX%2CMACI%2CKAgFI%2CMAKI%2CKAAK%3BCAAS%3B%3BAACf%2CGAvFX%2CMACI%2CKAgFI%2CMAMI%2CSAAS%3BCAAS%2CSAAS%2CgBAAT%3B%3BAACnB%2CGAxFX%2CMACI%2CKAgFI%2CMAOI%2COAAO%3BCAAS%2CSAAS%2CeAAT%3B%3BAAGrB%2CGA3FP%2CMACI%2CKA0FI%2CWAAW%3BCAAS%2CSAAS%2CaAAT%3B%3BAACrB%2CGA5FP%2CMACI%2CKA2FI%2CaAAa%3BCAAS%2CSAAS%2CeAAT%3B%3BAAEvB%2CGA9FP%2CMACI%2CKA6FI%2CUAAU%3BCAAS%2CSAAS%2CiBAAT%3B%3BAACpB%2CGA%5C%2FFP%2CMACI%2CKA8FI%2CUAAU%3BCAAS%3B%3BAAEpB%2CGAjGP%2CMACI%2CKAgGI%2CYAAY%3BCAAS%2CSAAS%2CcAAT%3B%3BAACtB%2CGAlGP%2CMACI%2CKAiGI%2CaAAa%3BCAAS%2CSAAS%2CeAAT%3B%3BAAGnB%2CGArGX%2CMACI%2CKAmGI%2CMACI%2CGAAG%3BCAAa%3B%3BAACjB%2CGAtGX%2CMACI%2CKAmGI%2CMAEI%2CMAAM%3BCAAU%3B%3BAACjB%2CGAvGX%2CMACI%2CKAmGI%2CMAGI%2COAAO%3BCAAS%3B%3BAAIjB%2CGA3GX%2CMACI%2CKAyGI%2CQACI%2CKAAK%3BCAAS%2CSAAS%2CaAAT%3B%3BAACf%2CGA5GX%2CMACI%2CKAyGI%2CQAEI%2COAAO%3BCAAS%2CSAAS%2CeAAT%3B%3BAACjB%2CGA7GX%2CMACI%2CKAyGI%2CQAGI%2CSAAS%3BCAAS%2CSAAS%2CaAAT%3B%3BAACnB%2CGA9GX%2CMACI%2CKAyGI%2CQAII%2CKAAK%3BCAAS%2CSAAS%2CcAAT%3B%3BAACf%2CGA%5C%2FGX%2CMACI%2CKAyGI%2CQAKI%2CWAAW%3BCAAS%3B%3BAACrB%2CGAhHX%2CMACI%2CKAyGI%2CQAMI%2CMAAM%3BCAAS%2CSAAS%2CcAAT%3B%3BAAChB%2CGAjHX%2CMACI%2CKAyGI%2CQAOI%2CeAAe%3BCAAS%2CSAAS%2CsBAAT%3B%3BAACzB%2CGAlHX%2CMACI%2CKAyGI%2CQAQI%2CaAAa%3BCAAS%2CSAAS%2CsBAAT%3B%3BAACvB%2CGAnHX%2CMACI%2CKAyGI%2CQASI%2CQAAQ%3BCAAS%2CSAAS%2CiBAAT%3B%3BAAClB%2CGApHX%2CMACI%2CKAyGI%2CQAUI%2CWAAW%3BCAAS%3B%3BAACrB%2CGArHX%2CMACI%2CKAyGI%2CQAWI%2CKAAK%3BCAAS%3B%3BAACf%2CGAtHX%2CMACI%2CKAyGI%2CQAYI%2CMAAM%3BCAAS%3B%3BAAChB%2CGAvHX%2CMACI%2CKAyGI%2CQAaI%2CKAAK%3BCAAS%3B%3BAACf%2CGAxHX%2CMACI%2CKAyGI%2CQAcI%2CKAAK%3BCAAS%3B%3BAACf%2CGAzHX%2CMACI%2CKAyGI%2CQAeI%2CKAAK%3BCAAS%3B%3BAACf%2CGA1HX%2CMACI%2CKAyGI%2CQAgBI%2CeAAe%3BCAAS%3B%3BAACzB%2CGA3HX%2CMACI%2CKAyGI%2CQAiBI%2CMAAM%3BCAAS%2CSAAS%2CYAAT%22%7D */
+/* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-font */
+/* oxygen-regular - latin */
+@font-face {
+	font-family: 'Oxygen';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Oxygen Regular'), local('Oxygen-Regular'), url('../font/oxygen-v7-latin-regular.woff') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */ url('../font/oxygen-v7-latin-regular.woff') format('woff');
+	
+	/* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* source-code-pro-regular - latin */
+@font-face {
+	font-family: 'Source Code Pro';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Source Code Pro'), local('SourceCodePro-Regular'), url('../font/source-code-pro-v8-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */ url('../font/source-code-pro-v8-latin-regular.woff') format('woff');
+	
+	/* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+@font-face {
+	font-family: 'Material Icons';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Material Icons'), local('MaterialIcons-Regular'), url('../font/MaterialIcons-Regular.woff2') format('woff2'), url('../font/MaterialIcons-Regular.woff') format('woff');
+}
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-font.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3BAAEA%3BCACE%3BCACA%3BCACA%3BCACA%2CKAAK%2CMAAM%2CmBAAmB%2CMAAM%2CuBAChC%2CwCAAwC%2COAAO%2CuDAC%5C%2FC%2CwCAAwC%2COAAO%2COAFnD%3B%3B%3B%3B%3BAAMF%3BCACE%2CaAAa%2CiBAAb%3BCACA%3BCACA%3BCACA%2CKAAK%2CMAAM%2CoBAAoB%2CMAAM%2C8BACjC%2CkDAAkD%2COAAO%2CuDACzD%2CiDAAiD%2COAAO%2COAF5D%3B%3B%3B%3BAAKF%3BCACE%2CaAAa%2CgBAAb%3BCACA%3BCACA%3BCACA%2CKAAK%2CMAAM%2CmBACX%2CMAAM%2C8BACF%2CuCAAuC%2COAAO%2CcAC9C%2CsCAAsC%2COAAO%2COAHjD%22%7D */
+/* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-dialog */
+/*
+OpenRat Content Management System
+Copyright (C) 2002-2010 Jan Dankert
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+*/
+/*
+Basis-Style for Openrat.
+*/
+/* Usage to this variable is safe to be removed */
+.or-dialog {
+	/* Modale Dialoge */
+}
+.or-dialog .or-view {
+	overflow: auto;
+	/*width:60%;*/
+	position: absolute;
+	top: 5%;
+	left: 10%;
+	display: none;
+	width: 80%;
+	height: 80%;
+	z-index: 110;
+	border: 1px solid !important;
+}
+@media only screen and (max-width: 55rem) {
+	.or-dialog .or-view {
+		top: 2.5%;
+		left: 2.5%;
+		width: 95%;
+		height: 95%;
+	}
+}
+.or-dialog--is-open .or-view {
+	display: block;
+}
+.or-dialog--is-open .or-dialog-filler {
+	display: block;
+}
+.or-dialog-filler {
+	position: absolute;
+	display: none;
+	z-index: 100;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	opacity: 0.5;
+}
+.or-dialog-filler-icon {
+	opacity: 1;
+	font-size: 3em;
+	position: absolute;
+	right: 20px;
+	top: 20px;
+}
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-dialog.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAA%2BBA%3B%3B%3BAAAA%2CUAEI%3BCACI%3B%3BCAGA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCAUA%3BCAEA%2C4BAAA%3B%3BAAFA%3BCAAA%2CUAnBJ%3BEAYQ%3BEACA%3BEACA%3BEACA%3B%3B%3BAASR%2CUAAC%2CSACG%3BCACI%3B%3BAAFR%2CUAAC%2CSAKG%3BCACI%3B%3BAAKR%2CUAAC%3BCACG%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAEA%2CUAVH%2COAUI%3BCACG%3BCACA%3BCACA%3BCACA%3BCACA%22%7D */
+/* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-ui */
+/* Usage to this variable is safe to be removed */
+html,
+body {
+	width: 100%;
+	height: 100%;
+}
 .or-editor-toolbar {
 	font-size: 1.5em;
 }
@@ -581,81 +648,6 @@ iframe {
 	height: 500px;
 	display: block;
 }
-.or-notices {
-	display: block;
-	position: fixed;
-	bottom: 40px;
-	/*top: 40px;*/
-	right: 40px;
-	width: 25em;
-	z-index: 113;
-}
-.or-notice {
-	border: 2px solid #000000;
-	padding: 1.1em;
-	margin: 5px;
-	position: relative;
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-khtml-border-radius: 5px;
-	-webkit-box-shadow: 3px 2px 5px #000000;
-	-moz-box-shadow: 3px 2px 5px #000000;
-	box-shadow: 3px 2px 5px #000000;
-}
-.or-notice-toolbar {
-	float: right;
-	margin: 0 0.2em;
-	font-size: 2em;
-	color: gray;
-	cursor: pointer;
-}
-.or-notice:hover .or-notice-toolbar {
-	color: black;
-}
-.or-notice-full {
-	display: block;
-	position: fixed;
-	bottom: 10%;
-	top: 10%;
-	right: 10%;
-	left: 10%;
-	width: 80%;
-	z-index: 114;
-}
-.or-notice-error div.text {
-	font-weight: bold;
-}
-.or-notice-text {
-	font-size: 1.1em;
-}
-.or-notice:after {
-	content: '';
-	position: absolute;
-	right: 0;
-	top: 50%;
-	width: 0;
-	height: 0;
-	border: 1em solid transparent;
-	border-right: 0;
-	margin-top: -1em;
-	margin-right: -1em;
-}
-.or-notice-log {
-	display: none;
-	position: relative;
-	max-height: 90%;
-	overflow: auto;
-	font-family: 'Source Code Pro', Monospace, Monospaced, Courier;
-}
-.or-notice-full-log {
-	display: block;
-}
-div.or-onrowvisible {
-	visibility: hidden;
-	display: inline;
-}
-/* Vorschau von Text-Inhalten */
 /* Verweise */
 a:link,
 a:visited {
@@ -667,37 +659,8 @@ a:hover {
 	font-weight: normal;
 	text-decoration: none;
 }
-/* Icon-Innenabstand */
-img[align=left],
-img[align=right] {
-	padding-right: 1px;
-	padding-left: 1px;
-}
-div.or-logo h2 {
-	font-weight: normal;
-	font-size: 24px;
-}
-div.or-logo p {
-	font-size: 13px;
-}
-label,
 .or-act-clickable {
 	cursor: pointer;
-}
-/* Drag and Drop */
-.or-droppable--active {
-	background-color: #2E8B57 !important;
-	cursor: move;
-}
-.or-droppable--hover {
-	background-color: #00d95a !important;
-	cursor: move;
-}
-.or--invisible {
-	visibility: hidden;
-}
-.or--visible {
-	visibility: visible;
 }
 .or-search > .or-input {
 	padding-top: 1px;
@@ -706,24 +669,52 @@ label,
 	box-shadow: 0 0 0 #000000 !important;
 	background-color: transparent !important;
 }
-.or-input {
-	padding: 2px;
-	margin: 0px;
-}
-/* Eingabfeld fuer Namen */
-.or-input--name {
-	font-weight: bold;
-}
-/* Eingabfelder fuer Dateiname */
-.or-input--filename {
-	font-family: 'Source Code Pro', Monospace, Monospaced, Courier;
-}
-dl.or-notice {
-	padding: 15px;
-}
 /* Make Codemirror Auto-Resizable */
 .CodeMirror {
 	height: auto;
+}
+/*
+.or-info {
+
+  position: relative;
+
+  &:hover {
+    .or-info-popup {
+      display: block;
+    }
+  }
+
+  &-popup {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    overflow: visible;
+    //width: 100%;
+    border: 0.5em;
+    font-size: 2em;
+    .border-radius(0.3em);
+    padding: 1.0em;
+    //text-align: center;
+    z-index: 105;
+
+    > div {
+      display: inline-block;
+    }
+  }
+}
+*/
+.or {
+	/* After page loading, all elements are hidden. This class will be removed by javascript. */
+}
+.or-initial-hidden {
+	display: none;
+}
+.or-view-flying-button {
+	display: block;
+	bottom: 1em;
+	right: 1em;
+	position: absolute;
 }
 .or-linklist {
 	display: flex;
@@ -739,37 +730,29 @@ dl.or-notice {
 	-webkit-border-radius: 0.5em;
 	-khtml-border-radius: 0.5em;
 }
-.or-info {
-	position: relative;
+.or-dirty {
+	font-weight: bold;
 }
-.or-info:hover .or-info-popup {
-	display: block;
+.or-droppable--active {
+	background-color: #2E8B57 !important;
+	cursor: move;
 }
-.or-info .or-info-popup {
-	display: none;
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	overflow: visible;
-	border: 0.5em;
-	font-size: 2em;
-	border-radius: 0.3em;
-	-moz-border-radius: 0.3em;
-	-webkit-border-radius: 0.3em;
-	-khtml-border-radius: 0.3em;
-	padding: 1.0em;
-	z-index: 105;
+.or-droppable--hover {
+	background-color: #00d95a !important;
+	cursor: move;
 }
-.or-info .or-info-popup > div {
-	display: inline-block;
+.or--invisible {
+	visibility: hidden;
 }
-.or-view-flying-button {
-	display: block;
-	bottom: 1em;
-	right: 1em;
-	position: absolute;
+.or--visible {
+	visibility: visible;
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-ui.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3BAAIA%3BCACE%3BCACA%3BCACA%3BCACA%2CKAAK%2CMAAM%2CmBAAmB%2CMAAM%2CuBAChC%2CwCAAwC%2COAAO%2CuDAC%5C%2FC%2CwCAAwC%2COAAO%2COAFnD%3B%3B%3B%3B%3BAAMF%3BCACE%2CaAAa%2CiBAAb%3BCACA%3BCACA%3BCACA%2CKAAK%2CMAAM%2CoBAAoB%2CMAAM%2C8BACjC%2CkDAAkD%2COAAO%2CuDACzD%2CiDAAiD%2COAAO%2COAF5D%3B%3B%3B%3BAAKF%3BCACE%2CaAAa%2CgBAAb%3BCACA%3BCACA%3BCACA%2CKAAK%2CMAAM%2CmBACX%2CMAAM%2C8BACF%2CuCAAuC%2COAAO%2CcAC9C%2CsCAAsC%2COAAO%2COAHjD%3B%3BAAMF%3BCACE%2CaAAa%2CgBAAb%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BCAGA%3B%3BAAGA%2CcAAC%2CgBAAgB%3BCAAS%3B%3BAAC1B%2CcAAC%2CoBAAoB%3BCAAS%2CSAAS%2CeAAT%3B%3BAAC9B%2CcAAC%2CkBAAkB%3BCAAS%3B%3BAAC5B%2CcAAC%2CkBAAkB%3BCAAS%2CSAAS%2CWAAT%3B%3BAAC5B%2CcAAC%2CgBAAgB%3BCAAS%2CSAAS%2CWAAT%3B%3BAAC1B%2CcAAC%2CgBAAgB%3BCAAS%2CSAAS%2CYAAT%3B%3BAAC1B%2CcAAC%2CkBAAkB%3BCAAS%2CSAAS%2CiBAAT%3B%3BAAC5B%2CcAAC%2CgBAAgB%3BCAAS%2CSAAS%2CcAAT%3B%3BAAC1B%2CcAAC%2CoBAAoB%3BCAAS%3B%3BAAC9B%2CcAAC%2CoBAAoB%3BCAAS%3B%3BAAC9B%2CcAAC%2CgBAAgB%3BCAAS%3B%3BAAC1B%2CcAAC%2CmBAAmB%3BCAAS%2CSAAS%2CqBAAT%3B%3BAAC7B%2CcAAC%2CgBAAgB%3BCAAS%3B%3BAAC1B%2CcAAC%2CoBAAoB%3BCAAS%3B%3BAAC9B%2CcAAC%2CoBAAoB%3BCAAS%2CSAAS%2CWAAT%3B%3BAAE9B%2CcAAC%2CcAAc%3BCAAS%3B%3BAACxB%2CcAAC%2CaAAa%3BCAAS%2CSAAS%2CWAAT%3B%3BAACvB%2CcAAC%2CYAAY%3BCAAS%3B%3BAACtB%2CcAAC%2CcAAc%3BCAAS%2CSAAS%2CiBAAT%3B%3BAACxB%2CcAAC%2CaAAa%3BCAAS%2CSAAS%2CaAAT%3B%3BAACvB%2CcAAC%2CaAAa%3BCAAS%2CSAAS%2CmBAAT%3B%3BAACvB%2CcAAC%2CaAAa%3BCAAS%3B%3BAACvB%2CcAAC%2CkBAAkB%3BCAAS%2CSAAS%2CYAAT%3B%3BAAC5B%2CcAAC%2CcAAc%3BCAAS%2CSAAS%2CYAAT%3B%3BAACxB%2CcAAC%2CeAAe%3BCAAS%2CSAAS%2CaAAT%3B%3BAACzB%2CcAAC%2CqBAAqB%3BCAAS%3B%3BAAC%5C%2FB%2CcAAC%2CiBAAiB%3BCAAS%3B%3BAAC3B%2CcAAC%2CiBAAiB%3BCAAS%3B%3BAAC3B%2CcAAC%2CqBAAqB%3BCAAS%3B%3BAAC%5C%2FB%2CcAAC%2CmBAAmB%3BCAAS%3B%3BAAC7B%2CcAAC%2CcAAc%3BCAAS%3B%3BAACxB%2CcAAC%2CiBAAiB%3BCAAS%3B%3BAAC3B%2CcAAC%2CaAAa%3BCAAS%3B%3BAACvB%2CcAAC%2CgBAAgB%3BCAAS%2CSAAS%2CYAAT%3B%3BAAC1B%2CcAAC%2CiBAAiB%3BCAAS%3B%3BAAC3B%2CcAAC%2CsBAAsB%3BCAAS%3B%3BAAChC%2CcAAC%2CoBAAoB%3BCAAS%3B%3BAAC9B%2CcAAC%2CgBAAgB%3BCAAS%2CSAAS%2CiBAAT%3B%3BAAE1B%2CcAAC%2CcAAc%3BCAAS%2CSAAS%2CYAAT%3B%3BAAExB%2CcAAC%3BCAAsB%2CSAAS%2CiBAAT%3B%3BAACvB%2CcAAC%2CiBAAiB%3BCAAS%3B%3BAAC3B%2CcAAC%2CgBAAgB%3BCAAS%2CSAAS%2CcAAT%3B%3BAAC1B%2CcAAC%2CaAAa%3BCAAS%3B%3BAACvB%2CcAAC%2CYAAY%3BCAAS%3B%3BAACtB%2CcAAC%2CYAAY%3BCAAS%3B%3BAACtB%2CcAAC%2CeAAe%3BCAAS%3B%3BAACzB%2CcAAC%2CgBAAgB%3BCAAS%3B%3BAAC1B%2CcAAC%2CaAAa%3BCAAS%3B%3BAACvB%2CcAAC%2CeAAe%3BCAAS%3B%3BAACzB%2CcAAC%2CYAAY%3BCAAS%2CSAAS%2CSAAT%3B%3BAACtB%2CcAAC%2CgBAAgB%3BCAAS%2CSAAS%2CiBAAT%3B%3BAAC1B%2CcAAC%2CaAAa%3BCAAS%3B%3BAACvB%2CcAAC%2CaAAa%3BCAAS%3B%3BAACvB%2CcAAC%2CYAAY%3BCAAS%3B%3BAACtB%2CcAAC%2CiBAAiB%3BCAAS%3B%3BAAC3B%2CcAAC%2CWAAW%3BCAAS%3B%3BAACrB%2CcAAC%2CYAAY%3BCAAS%3B%3BAAEtB%2CcAAC%2CWAAW%3BCAAS%3B%3BAACrB%2CcAAC%2CeAAe%3BCAAS%2CSAAS%2CgBAAT%3B%3BAACzB%2CcAAC%2CaAAa%3BCAAS%2CSAAS%2CeAAT%3B%3BAAEvB%2CcAAC%2CWAAW%3BCAAS%2CSAAS%2CaAAT%3B%3BAACrB%2CcAAC%2CaAAa%3BCAAS%2CSAAS%2CeAAT%3B%3BAACvB%2CcAAC%2CUAAU%3BCAAS%2CSAAS%2CiBAAT%3B%3BAACpB%2CcAAC%2CUAAU%3BCAAS%3B%3BAAEpB%2CcAAC%2CYAAY%3BCAAS%2CSAAS%2CcAAT%3B%3BAACtB%2CcAAC%2CaAAa%3BCAAS%2CSAAS%2CeAAT%3B%3BAAEvB%2CcAAC%2CSAAS%3BCAAS%3B%3BAACnB%2CcAAC%2CYAAY%3BCAAS%3B%3BAACtB%2CcAAC%2CaAAa%3BCAAS%3B%3BAAEvB%2CcAAC%2CaAAa%3BCAAS%2CSAAS%2CaAAT%3B%3BAACvB%2CcAAC%2CeAAe%3BCAAS%2CSAAS%2CeAAT%3B%3BAACzB%2CcAAC%2CiBAAiB%3BCAAS%2CSAAS%2CaAAT%3B%3BAAC3B%2CcAAC%2CaAAa%3BCAAS%2CSAAS%2CcAAT%3B%3BAACvB%2CcAAC%2CmBAAmB%3BCAAS%3B%3BAAC7B%2CcAAC%2CcAAc%3BCAAS%2CSAAS%2CcAAT%3B%3BAACxB%2CcAAC%2CuBAAuB%3BCAAS%2CSAAS%2CsBAAT%3B%3BAACjC%2CcAAC%2CqBAAqB%3BCAAS%2CSAAS%2CsBAAT%3B%3BAAC%5C%2FB%2CcAAC%2CgBAAgB%3BCAAS%2CSAAS%2CiBAAT%3B%3BAAC1B%2CcAAC%2CmBAAmB%3BCAAS%3B%3BAAC7B%2CcAAC%2CaAAa%3BCAAS%3B%3BAACvB%2CcAAC%2CcAAc%3BCAAS%3B%3BAACxB%2CcAAC%2CaAAa%3BCAAS%3B%3BAACvB%2CcAAC%2CaAAa%3BCAAS%3B%3BAACvB%2CcAAC%2CaAAa%3BCAAS%3B%3BAACvB%2CcAAC%2CuBAAuB%3BCAAS%3B%3BAACjC%2CcAAC%2CcAAc%3BCAAS%2CSAAS%2CYAAT%3B%3BAAG1B%3BCACE%3B%3BAAgBF%3BCACE%3BCACA%3BCACA%3B%3BAAME%2CIAAC%3BCAEG%3BCACA%3BCACA%3B%3BCAEA%3BCACA%3BCACA%3B%3BAAGF%2CIAAC%3BCACC%2CyBAAA%3BCACA%3BCACA%3BCACA%3BCApCN%2CkBAAA%3BCACA%2CuBAAA%3BCACA%2C0BAAA%3BCACA%2CyBAAA%3BCAGA%2CuCAAA%3BCACA%2CoCAAA%3BCACA%2C%2BBAAA%3B%3BAAiCM%2CIATD%2CMASE%3BCACC%3BCACA%2CeAAA%3BCACA%3BCACA%3BCACA%3B%3BAAGF%2CIAjBD%2CMAiBE%2CMACC%3BCACE%3B%3BAAIJ%2CIAvBD%2CMAuBE%3BCACC%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAIF%2CIAnCD%2CMAmCE%2CMAEC%2CIAAG%3BCACD%3B%3BAAIJ%2CIA1CD%2CMA0CE%3BCACC%3B%3BAAGF%2CIA9CD%2CMA8CE%3BCACC%2CSAAS%2CEAAT%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%2C6BAAA%3BCACA%3BCACA%3BCACA%3B%3BAAGF%2CIA3DD%2CMA2DE%3BCACC%3BCACA%3BCACA%3BCACA%3BCACA%2CaAAa%2CiDAAb%3B%3BAAIA%2CIApEH%2CMAmEE%2CKACE%3BCACC%3B%3BAAoBZ%2CGAAG%3BCACD%3BCACA%3B%3B%3B%3BAAQF%2CCAAC%3BAACD%2CCAAC%3BCACC%3BCACA%3B%3BAAGF%2CCAAC%3BAACD%2CCAAC%3BCACC%3BCACA%3B%3B%3BAAIF%2CGAAG%3BAACH%2CGAAG%3BCACD%3BCACA%3B%3BAAGF%2CGAAG%2CQAAS%3BCACV%3BCACA%3B%3BAAGF%2CGAAG%2CQAAS%3BCACV%3B%3BAAGF%3BAACA%3BCACE%3B%3B%3BAAQA%2CaAAC%3BCAEC%3BCACA%3B%3BAAGF%2CaAAC%3BCACC%3BCACA%3B%3BAAOA%2CIAAC%3BCACC%3B%3BAAIN%3BCACE%3B%3BAAQF%2CUAAa%3BCACX%3BCAjMA%2CiCAAA%3BCACA%2C8BAAA%3BCACA%2CyBAAA%3BCAiME%3B%3BAAIJ%3BCACE%3BCACA%3B%3B%3BAAMF%3BCACE%3B%3B%3BAAIF%3BCACE%2CaAAa%2CiDAAb%3B%3BAAGF%2CEAAE%3BCACA%3B%3B%3BAAKF%3BCACE%3B%3BAAGF%3BCACE%3BCACA%3BCACA%2CgBAAA%3B%3BAAHF%2CYAKI%3BCACA%2CiBAAA%3BCACA%3BCACA%3BCAhPF%2CoBAAA%3BCACA%2CyBAAA%3BCACA%2C4BAAA%3BCACA%2C2BAAA%3B%3BAAmPF%3BCAEE%3B%3BAAEA%2CQAAC%2CMACC%3BCACE%3B%3BAANN%2CQAUE%3BCACE%3BCACA%3BCACA%3BCACA%3BCACA%3BCAEA%3BCACA%3BCAxQF%2CoBAAA%3BCACA%2CyBAAA%3BCACA%2C4BAAA%3BCACA%2C2BAAA%3BCAuQE%3BCAEA%3B%3BAAtBJ%2CQAUE%2CeAcI%3BCACA%3B%3BAAMN%3BCACI%3BCACA%3BCACA%3BCACA%22%7D */
+legend {
+	font-size: 1.1em;
+	font-weight: bold;
+	padding: 0 0.5em;
+}
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-ui.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3BAAIA%3BAAAM%3BCAAO%3BCAAY%3B%3BAAEzB%3BCACE%3B%3BAAgBF%3BCACE%3BCACA%3BCACA%3B%3B%3BAAKF%2CCAAC%3BAACD%2CCAAC%3BCACC%3BCACA%3B%3BAAGF%2CCAAC%3BAACD%2CCAAC%3BCACC%3BCACA%3B%3BAAIF%3BCACE%3B%3BAAKF%2CUAAa%3BCACX%3BCAlCA%2CiCAAA%3BCACA%2C8BAAA%3BCACA%2CyBAAA%3BCAkCE%3B%3B%3BAAMJ%3BCACE%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAqCF%3B%3B%3BAAEI%2CGAAC%3BCACG%3B%3BAAGJ%2CGAAC%3BCACG%3BCACA%3BCACA%3BCACA%3B%3BAAGJ%2CGAAC%3BCACG%3BCACA%3BCACA%2CgBAAA%3B%3BAAHJ%2CGAAC%2CSAKK%3BCACE%2CiBAAA%3BCACA%3BCACA%3BCA3GV%2CoBAAA%3BCACA%2CyBAAA%3BCACA%2C4BAAA%3BCACA%2C2BAAA%3B%3BAA8GE%2CGAAC%3BCACG%3B%3BAAKA%2CGAFH%2CUAEI%3BCAEG%3BCACA%3B%3BAAGJ%2CGARH%2CUAQI%3BCACG%3BCACA%3B%3BAAKR%2CGAAC%3BCACG%3B%3BAAGJ%2CGAAC%3BCACG%3B%3BAASR%3BCACI%3BCACA%3BCACA%2CgBAAA%22%7D */
 /* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-menu */
 /*
 OpenRat Content Management System
@@ -804,32 +787,32 @@ Basis-Style for Openrat.
 		display: none;
 	}
 }
-.or-menu .or-menu-group {
+.or-menu-group {
 	display: flex;
 }
-.or-menu .or-menu-group:nth-last-child(1) div.dropdown {
+.or-menu-group:nth-last-child(1) div.dropdown {
 	right: 10px;
 }
-.or-menu .or-menu-group .or-image-icon {
+.or-menu-group .or-image-icon {
 	width: 1.1em;
 }
-.or-menu .or-menu-group .or-toolbar-icon {
+.or-menu-group .or-toolbar-icon {
 	padding: 2px;
 	margin-left: 10px;
 	float: left;
 	/* Bestimmte Menüs sind nach rechts ausgerichet */
 }
-.or-menu .or-menu-group .or-toolbar-icon.or-user,
-.or-menu .or-menu-group .or-toolbar-icon.or-search,
-.or-menu .or-menu-group .or-toolbar-icon.or-history {
+.or-menu-group .or-toolbar-icon.or-user,
+.or-menu-group .or-toolbar-icon.or-search,
+.or-menu-group .or-toolbar-icon.or-history {
 	float: right;
 	margin-right: 10px;
 	margin-left: 10px;
 }
-.or-menu .or-menu-group .or-toolbar-icon.or-menu-category {
+.or-menu-group .or-toolbar-icon.or-menu-category {
 	cursor: default;
 }
-.or-menu .or-menu-group .or-toolbar-icon.or-search input {
+.or-menu-group .or-toolbar-icon.or-search input {
 	border: 0;
 	margin: 0;
 	padding: 0;
@@ -837,21 +820,16 @@ Basis-Style for Openrat.
 	display: inline;
 	transition: width 0.3s ease-in-out;
 }
-.or-menu .or-menu-group .or-toolbar-icon.or-search input:focus {
+.or-menu-group .or-toolbar-icon.or-search input:focus {
 	width: 8em;
 }
 .or-menu--is-open .or-menu-category--is-open > .or-dropdown {
 	display: block;
 }
-.or-dropdown {
-	display: none;
-}
-.or-dropdown--is-open {
-	display: block;
-}
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-menu.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAA4CI%2CIAAC%3BCAGG%3BCACA%3B%3B%3BAAUA%3BCAAA%2CIAdH%2CIAUI%3BCAID%2CIAdH%2CIAUa%3BEAEF%3B%3B%3BAAZZ%2CIAAC%2CIAgBG%3BCACI%3B%3BAAGA%2CIApBP%2CIAgBG%2CeAIK%2CeAAe%2CGACZ%2CIAAG%3BCACC%3B%3BAAtBhB%2CIAAC%2CIAgBG%2CeASI%3BCAEI%3B%3BAA3BZ%2CIAAC%2CIAgBG%2CeAcI%3BCACI%3BCAEA%3BCACA%3B%3B%3BAAGA%2CIArCX%2CIAgBG%2CeAcI%2CiBAOK%3BAACD%2CIAtCX%2CIAgBG%2CeAcI%2CiBAQK%3BAACD%2CIAvCX%2CIAgBG%2CeAcI%2CiBASK%3BCACG%3BCACA%3BCACA%3B%3BAAGJ%2CIA7CX%2CIAgBG%2CeAcI%2CiBAeK%3BCACG%3B%3BAAEJ%2CIAhDX%2CIAgBG%2CeAcI%2CiBAkBK%2CUACG%3BCACI%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%2CkCAAA%3B%3BAACA%2CIAxDnB%2CIAgBG%2CeAcI%2CiBAkBK%2CUACG%2CMAOK%3BCACG%3B%3BAAWpB%2CIApEH%2CIAoEI%2CSACG%2C2BACM%3BCACE%3B%3BAAMhB%2CIAAC%3BCACG%3B%3BAAEA%2CIAHH%2CQAGI%3BCACG%22%7D */
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-menu.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAA4CI%2CIAAC%3BCAGG%3BCACA%3B%3B%3BAAUA%3BCAAA%2CIAdH%2CIAUI%3BCAID%2CIAdH%2CIAUa%3BEAEF%3B%3B%3BAAIR%2CIAhBH%2CIAgBI%3BCACG%3B%3BAAGA%2CIApBP%2CIAgBI%2CMAII%2CeAAe%2CGACZ%2CIAAG%3BCACC%3B%3BAANZ%2CIAhBH%2CIAgBI%2CMASG%3BCAEI%3B%3BAAXR%2CIAhBH%2CIAgBI%2CMAcG%3BCACI%3BCAEA%3BCACA%3B%3B%3BAAGA%2CIArCX%2CIAgBI%2CMAcG%2CiBAOK%3BAACD%2CIAtCX%2CIAgBI%2CMAcG%2CiBAQK%3BAACD%2CIAvCX%2CIAgBI%2CMAcG%2CiBASK%3BCACG%3BCACA%3BCACA%3B%3BAAGJ%2CIA7CX%2CIAgBI%2CMAcG%2CiBAeK%3BCACG%3B%3BAAEJ%2CIAhDX%2CIAgBI%2CMAcG%2CiBAkBK%2CUACG%3BCACI%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%2CkCAAA%3B%3BAACA%2CIAxDnB%2CIAgBI%2CMAcG%2CiBAkBK%2CUACG%2CMAOK%3BCACG%3B%3BAAWpB%2CIApEH%2CIAoEI%2CSACG%2C2BACM%3BCACE%22%7D */
 /* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-dropdown */
 .or-dropdown {
+	display: none;
 	z-index: 120;
 	min-width: 17em;
 	position: absolute;
@@ -859,6 +837,9 @@ Basis-Style for Openrat.
 	font-style: normal;
 	font-weight: normal;
 	text-decoration: none;
+}
+.or-dropdown--is-open {
+	display: block;
 }
 .or-dropdown-entry {
 	padding: 0;
@@ -888,10 +869,7 @@ Basis-Style for Openrat.
 	margin-top: 0.5em;
 	margin-bottom: 0.5em;
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-dropdown.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AACI%2CIAAC%3BCACG%3BCACA%3BCACA%3BCACA%2CgBAAA%3BCAEA%3BCACA%3BCACA%3B%3BAAEA%2CIAVH%2CQAUI%3BCACG%3B%3BAADJ%2CIAVH%2CQAUI%2CMAGK%3BCACE%3BCACA%3BCACA%2CgBAAA%3B%3BAANR%2CIAVH%2CQAUI%2CMAGK%2CWAKE%3BCACI%3B%3BAATZ%2CIAVH%2CQAUI%2CMAGK%2CWASE%3BCACI%3B%3B%3BAAIR%2CIA3BP%2CQAUI%2CMAiBI%3BCACO%3B%3BAAMV%2COAlCL%2CQAkCM%3BCACC%3BCACA%3B%3BAAGJ%2CIAvCH%2CQAuCI%3BCACG%3BCACA%3BCACA%3BCACA%22%7D */
-/* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-header */
-/*   H e a d e r   */
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%22%7D */
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-dropdown.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AACI%2CIAAC%3BCAEG%3BCAMA%3BCACA%3BCACA%3BCACA%2CgBAAA%3BCAEA%3BCACA%3BCACA%3B%3BAAXA%2CIAJH%2CQAII%3BCACG%3B%3BAAYJ%2CIAjBH%2CQAiBI%3BCACG%3B%3BAADJ%2CIAjBH%2CQAiBI%2CMAGK%3BCACE%3BCACA%3BCACA%2CgBAAA%3B%3BAANR%2CIAjBH%2CQAiBI%2CMAGK%2CWAKE%3BCACI%3B%3BAATZ%2CIAjBH%2CQAiBI%2CMAGK%2CWASE%3BCACI%3B%3B%3BAAIR%2CIAlCP%2CQAiBI%2CMAiBI%3BCACO%3B%3BAAMV%2COAzCL%2CQAyCM%3BCACC%3BCACA%3B%3BAAGJ%2CIA9CH%2CQA8CI%3BCACG%3BCACA%3BCACA%3BCACA%22%7D */
 /* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-collapsible */
 .or-collapsible {
 	display: flex;
@@ -935,91 +913,42 @@ Basis-Style for Openrat.
 }
 /*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-collapsible.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AAGI%2CGAAC%3BCAEG%3BCACA%3B%3B%3B%3BAAHJ%2CGAAC%2CYAKG%3BCACI%3B%3BAANR%2CGAAC%2CYAUK%3BCAEE%2CiCAAA%3BCAEA%3BCACA%3B%3BAAfR%2CGAAC%2CYAmBK%3BCACE%3B%3BAAIJ%2CGAxBH%2CYAwBI%2CWACK%2CIAAI%3BCACF%3B%3BAAFR%2CGAxBH%2CYAwBI%2CWAIK%2CIAAI%3BCACF%3B%3BAALR%2CGAxBH%2CYAwBI%2CWAOK%3BCACE%3BCACA%3BCACA%3B%3BAAKR%2CGAvCH%2CYAuCI%2CSACK%3BCACE%2CwBAAA%3B%3BAAFR%2CGAvCH%2CYAuCI%2CSAIK%3BCACE%3B%3BAALR%2CGAvCH%2CYAuCI%2CSAOK%2CIAAI%3BCACF%3B%3BAARR%2CGAvCH%2CYAuCI%2CSAUK%2CIAAI%3BCACF%22%7D */
 /* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-form */
-/* R e s p o n s i v e   f o r m s */
+.or {
+	/* Buttons  */
+}
 .or-form {
 	display: flex;
 	height: 100%;
 	flex-direction: column;
 	padding: 1em;
-	/* Style inputs, select elements and textareas */
-	/* Style the label to display next to the inputs */
-	/* Style the submit button *
-  input[type=submit] {
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    float: right;
-  }*/
-	/* Floating column for labels: 25% width */
-	/* Floating column for inputs: 75% width */
-	/* Clear floats after the columns */
-	/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
 }
-.or-form .or-form-headline {
+.or-form-headline {
 	height: 2em;
 }
-.or-form .or-form-content {
+.or-form-content {
 	flex-grow: 1;
 	overflow-y: auto;
 }
-.or-form input[type=checkbox] + label,
-.or-form input[type=radio] + label {
-	width: 80%;
-}
-.or-form .or-headline {
-	font-size: 1.8em;
-}
-.or-form div.or-inputholder > div.or-dropdown {
-	width: 70%;
-}
-.or-form input.or-submit {
-	padding: 7px;
-	border: 0px;
-	-moz-border-radius: 7px;
-	/* Mozilla */
-	-webkit-border-radius: 7px;
-	/* Webkit */
-	-khtml-border-radius: 7px;
-	/* Konqui */
-	border-radius: 7px;
-	margin-left: 20px;
-	cursor: pointer;
-}
-.or-form .or-input {
-	width: 100%;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	box-sizing: border-box;
-	resize: vertical;
-}
-.or-form .or-label {
-	float: left;
-	width: 25%;
-	margin-top: 6px;
-}
-.or-form .or-value {
-	float: left;
-	width: 75%;
-	margin-top: 6px;
-}
-.or-form .or-line:after {
-	content: "";
-	display: table;
-	clear: both;
-}
-.or-form .or-form-row {
+.or-form-row {
 	display: flex;
 	align-items: center;
 }
-.or-form .or-form-row .or-form-label {
+.or-form-row .or-form-label {
 	width: 25%;
 }
-.or-form .or-form-row .or-form-input {
+.or-form-row .or-form-input {
 	width: 75%;
 }
-.or-form .or-form-actionbar {
+@media only screen and (max-width: 65rem) {
+	.or-form-row {
+		flex-direction: column;
+	}
+	.or-form-row .or-form-label,
+	.or-form-row .or-form-input {
+		width: 100%;
+	}
+}
+.or-form-actionbar {
 	height: 3em;
 	position: sticky;
 	bottom: 0;
@@ -1030,38 +959,30 @@ Basis-Style for Openrat.
 	padding: 1em;
 	height: auto;
 }
-.or-form .or-form-actionbar .or-btn {
+@media only screen and (max-width: 65rem) {
+	.or-form .or-act-form-apply {
+		display: none;
+	}
+}
+.or-input {
+	width: 100%;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	resize: vertical;
+	padding: 2px;
+	margin: 0;
+}
+.or-input--name {
+	font-weight: bold;
+}
+.or-input--filename {
+	font-family: 'Source Code Pro', Monospace, Monospaced, Courier;
+}
+.or-btn {
 	padding: 1em 2em;
 	margin-left: 1.5em;
 	min-width: 14em;
-}
-@media only screen and (max-width: 65rem) {
-	.or-form div.or-label,
-	.or-form div.or-value {
-		width: 100%;
-		margin-top: 0;
-	}
-	.or-form .or-form-row {
-		flex-direction: column;
-	}
-	.or-form .or-form-row .or-form-label,
-	.or-form .or-form-row .or-form-input {
-		width: 100%;
-	}
-	.or-form .or-form-actionbar .or-btn {
-		padding: 1em 1em;
-		min-width: 5em;
-	}
-	.or-form .or-form-actionbar .or-act-form-apply {
-		display: none;
-	}
-	.or-form .or-form-actionbar .or-btn--secondary {
-		min-width: 0;
-	}
-}
-/* Buttons  */
-.or-btn {
-	padding: 0.5em 0.5em;
 	border: 1px solid #000000;
 	border-radius: 0.5em;
 	-moz-border-radius: 0.5em;
@@ -1069,12 +990,51 @@ Basis-Style for Openrat.
 	-khtml-border-radius: 0.5em;
 	cursor: pointer;
 }
+@media only screen and (max-width: 65rem) {
+	.or-btn {
+		padding: 1em 1em;
+		min-width: 5em;
+	}
+}
 .or-btn--primary {
 	font-weight: bold;
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-form.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3BAAiBA%3BCACI%3BCACA%3BCACA%3BCAyCF%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAA5CF%2CQAKI%3BCACI%3B%3BAANR%2CQAQI%3BCACI%3BCACA%3B%3BAAVR%2CQAcE%2CMAAK%2CeAAkB%3BAAdzB%2CQAeE%2CMAAK%2CYAAe%3BCAClB%3B%3BAAhBJ%2CQAmBE%3BCACE%3B%3BAApBJ%2CQA2BE%2CIAAG%2CeAAkB%2CMAAG%3BCACtB%3B%3BAA5BJ%2CQA%2BBE%2CMAAK%3BCACH%3BCACA%3BCACA%3B%3BCACA%3B%3BCACA%3B%3BCACA%3BCACA%3BCACA%3B%3BAAvCJ%2CQA%2BCE%3BCACE%3BCACA%2CsBAAA%3BCACA%3BCACA%3BCACA%3B%3BAApDJ%2CQA8EE%3BCACE%3BCACA%3BCACA%3B%3BAAjFJ%2CQAqFE%3BCACE%3BCACA%3BCACA%3B%3BAAxFJ%2CQA4FE%2CSAAQ%3BCACN%2CSAAS%2CEAAT%3BCACA%3BCACA%3B%3BAA%5C%2FFJ%2CQAkGE%3BCACE%3BCACA%3B%3BAApGJ%2CQAkGE%2CaAIE%3BCACE%3B%3BAAvGN%2CQAkGE%2CaAOE%3BCACE%3B%3BAA1GN%2CQA%2BGE%3BCAEE%3BCACA%3BCACA%3BCACA%3BCACA%3BCAEA%3BCACA%3BCACA%3BCACA%3B%3BAA1HJ%2CQA%2BGE%2CmBAaI%3BCACI%2CgBAAA%3BCACA%3BCACA%3B%3BAAwCV%3BCAAA%2CQA9BI%2CIAAG%3BCA8BP%2CQA9BkB%2CIAAG%3BEACf%3BEACA%3B%3BCA4BN%2CQAzBI%3BEACC%3B%3BCAwBL%2CQAzBI%2CaAEE%3BCAuBN%2CQAzBI%2CaAGE%3BEACE%3B%3BCAqBR%2CQAjBI%2CmBAEE%3BEACI%2CgBAAA%3BEACA%3B%3BCAaV%2CQAjBI%2CmBAMI%3BEACI%3B%3BCAUZ%2CQAjBI%2CmBASI%3BEACI%3B%3B%3B%3BAAaR%2CIAAC%3BCACG%2CoBAAA%3BCACA%2CyBAAA%3BCA7LJ%2CoBAAA%3BCACA%2CyBAAA%3BCACA%2C4BAAA%3BCACA%2C2BAAA%3BCA6LI%3B%3BAAEA%2CIAPH%2CGAOI%3BCACG%22%7D */
+@media only screen and (max-width: 65rem) {
+	.or-btn--secondary {
+		min-width: 0;
+	}
+}
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-form.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AAgBA%3B%3B%3BAAEI%2CGAAC%3BCACG%3BCACA%3BCACA%3BCACA%3B%3BAAEA%2CGANH%2CKAMI%3BCACG%3B%3BAAGJ%2CGAVH%2CKAUI%3BCACG%3BCACA%3B%3BAAIJ%2CGAhBH%2CKAgBI%3BCACG%3BCACA%3B%3BAAFJ%2CGAhBH%2CKAgBI%2CIAIG%3BCACI%3B%3BAALR%2CGAhBH%2CKAgBI%2CIAQG%3BCACI%3B%3BAAYR%3BCAAA%2CGArCH%2CKAgBI%3BEAcO%3B%3BCAOR%2CGArCH%2CKAgBI%2CIAgBO%3BCAKR%2CGArCH%2CKAgBI%2CIAiBO%3BEACI%3B%3B%3BAAMZ%2CGAxCH%2CKAwCI%3BCAEG%3BCACA%3BCACA%3BCACA%3BCACA%3BCAEA%3BCACA%3BCACA%3BCACA%3B%3BAAaR%3BCAAA%2CGAhEC%2CKA0DO%3BEACI%3B%3B%3BAAQZ%2CGAAC%3BCACG%3BCACA%2CsBAAA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAEA%2CGATH%2CMASI%3BCACG%3B%3BAAGJ%2CGAbH%2CMAaI%3BCACG%2CaAAa%2CiDAAb%3B%3BAAQR%2CGAAC%3BCACG%2CgBAAA%3BCACA%3BCACA%3BCACA%2CyBAAA%3BCA5GJ%2CoBAAA%3BCACA%2CyBAAA%3BCACA%2C4BAAA%3BCACA%2C2BAAA%3BCA2HI%3B%3BAAXA%3BCAAA%2CGAXH%3BEAOO%2CgBAAA%3BEACA%3B%3B%3BAAGJ%2CGAXH%2CIAWI%3BCACG%3B%3BAAOJ%3BCAAA%2CGAnBH%2CIAeI%3BEAEO%22%7D */
+/* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-nojs */
+.or-nojs -text {
+	display: block;
+}
+.visible-for-nojs {
+	display: none;
+}
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-nojs.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AAEI%2CGAAC%2CKAEG%3BCACI%3B%3BAAQZ%3BCACI%22%7D */
 /* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-navigation */
 /*   N a v i g a t i o n   */
+.or-navtree-node {
+	margin: 0;
+	padding: 0;
+	line-height: 18px;
+	font-weight: normal;
+	white-space: nowrap;
+}
+.or-navtree-node--selected {
+	font-weight: bold;
+}
+.or-navtree-node--selected > div > a {
+	font-weight: bold;
+}
+.or-navtree-node-control {
+	width: 18px;
+	min-width: 18px;
+	height: 18px;
+	float: left;
+	cursor: pointer;
+}
 .or-navtree-list {
 	list-style-type: none;
 	margin: 0;
@@ -1083,27 +1043,7 @@ Basis-Style for Openrat.
 .or-navtree-list ul {
 	margin-left: 18px;
 }
-.or-navtree-list .or-navtree-node-control {
-	width: 18px;
-	min-width: 18px;
-	height: 18px;
-	float: left;
-	cursor: pointer;
-}
-.or-navtree-list .or-navtree-node {
-	margin: 0;
-	padding: 0;
-	line-height: 18px;
-	font-weight: normal;
-	white-space: nowrap;
-}
-.or-navtree-list .or-navtree-node--selected {
-	font-weight: bold;
-}
-.or-navtree-list .or-navtree-node--selected > div > a {
-	font-weight: bold;
-}
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-navigation.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3BAAKQ%2CIAFH%2COAEI%3BCAEG%3BCACA%3BCACA%3B%3BAAJJ%2CIAFH%2COAEI%2CKAMG%3BCACI%3B%3BAAPR%2CIAFH%2COAEI%2CKAUG%3BCACI%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAfR%2CIAFH%2COAEI%2CKAkBG%3BCACI%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAEA%2CIA3BX%2COAEI%2CKAkBG%2CiBAOK%3BCACG%3B%3BAAEA%2CIA9Bf%2COAEI%2CKAkBG%2CiBAOK%2CUAGO%2CMAAM%3BCACN%22%7D */
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-navigation.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3BAAKQ%2CGAFH%2CQAEI%3BCACG%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAEA%2CGATP%2CQAEI%2CKAOI%3BCACG%3B%3BAAEA%2CGAZX%2CQAEI%2CKAOI%2CUAGO%2CMAAM%3BCACN%3B%3BAAIR%2CGAjBP%2CQAEI%2CKAeI%3BCACG%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAKR%2CGA3BH%2CQA2BI%3BCAEG%3BCACA%3BCACA%3B%3BAAJJ%2CGA3BH%2CQA2BI%2CKAMG%3BCACI%22%7D */
 /* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-fieldset */
 .or-fieldset {
 	border: 0;
@@ -1163,20 +1103,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 Basis-Style for Openrat.
 */
 /* Usage to this variable is safe to be removed */
-#editor .dirty {
-	font-weight: bold;
-}
-.visible-for-nojs {
-	display: none;
-}
-html.nojs .noscript {
-	display: block;
-}
-html,
-body {
-	width: 100%;
-	height: 100%;
-}
 .or {
 	/* Fortschrittsbalken, fuer alle Elemente verfuegbar. */
 }
@@ -1395,7 +1321,7 @@ body {
 		font-size: 1em;
 	}
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-workbench.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAA2CA%2COAAQ%3BCACJ%3B%3BAAGJ%3BCACI%3B%3BAAGJ%2CIAAI%2CKAAM%3BCACN%3B%3BAASJ%3BAAAM%3BCAAO%3BCAAY%3B%3BAAEzB%3B%3B%3BAAEI%2CGAAC%3BCAEG%3BCACA%3BCACA%3BCACA%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAiBA%2CGAtBH%2CUAsBI%3BCACG%3BCACA%3BCACA%3B%3BAAHJ%2CGAtBH%2CUAsBI%2CMAKG%2CcAEI%3BCACI%3B%3BAAOJ%3BCAAA%2CGArCX%2CUAsBI%2CMAKG%2CcAMI%2CKAAI%3BCAIJ%2CGArCX%2CUAsBI%2CMAKG%2CcAMgB%3BEAEJ%3B%3B%3BAAMhB%2CGAzCH%2CUAyCI%3BCACG%3B%3B%3B%3B%3B%3BCAWA%3BCAEA%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAdJ%2CGAzCH%2CUAyCI%2CKAgBK%3BCACE%3BCACA%3BCACA%3BCACA%3BCAEA%3B%3BAAqBR%2CGApFH%2CUAoFI%3BCAEG%3BCACA%2CyCAAA%3BCAMA%2C6BAAA%3BCACA%3BCACA%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAFA%3BCAAA%2CGA7FP%2CUAoFI%3BEAMO%3B%3B%3BAAwBR%2CGAlHH%2CUAkHI%3BCACG%3BCAKA%2CiBAAA%3BCA7JR%2CkBAAA%3BCACA%2CuBAAA%3BCACA%2C0BAAA%3BCACA%2CyBAAA%3B%3BAA0JQ%3BCAAA%2CGAxHP%2CUAkHI%3BEAGO%3B%3B%3BAAHR%2CGAlHH%2CUAkHI%2CQAWG%3BCACI%3B%3BAAIJ%2CGAlIP%2CUAkHI%2CQAgBI%2CcACG%3BCACI%3B%3BAAmBZ%2CGAvJH%2CUAuJI%3BCAEG%3BCACA%2CmCAAA%3BCACA%3BCACA%2CmCAAA%3B%3BAALJ%2CGAvJH%2CUAuJI%2CWAOG%3BCACI%3B%3BAARR%2CGAvJH%2CUAuJI%2CWAWG%3BCACI%3B%3BAAGJ%2CGAtKP%2CUAuJI%2CWAeI%3BCACG%3B%3BAACA%2CGAxKX%2CUAuJI%2CWAeI%2CUAEO%3BCACA%3B%3BAAHR%2CGAtKP%2CUAuJI%2CWAeI%2CUAMG%3BCACI%3B%3BAAPR%2CGAtKP%2CUAuJI%2CWAeI%2CUAUG%3BCACI%3B%3BAAQR%3BCAAA%2CGAzLP%2CUAuJI%3BEA%2BBO%3B%3B%3BAAYJ%3BCAAA%2CGAlMP%2CUAuJI%2CWAkCI%3BEAGO%3BEACA%3BEACA%2CuBAAA%3BEA7NhB%2CuCAAA%3BEACA%2CoCAAA%3BEACA%2C%2BBAAA%3BEA6NgB%3B%3B%3BAASR%3BCAAA%2CGAzMP%2CUAuJI%3BEA8CO%3B%3B%3BAA9CR%2CGAvJH%2CUAuJI%2CWAkDG%3BCACI%3B%3BAAOZ%2CGAAC%3BCACG%3B%3BAAKJ%3BCAAA%2CGANC%3BEAGO%3B%3B%3BAAIR%2CGAAC%3BCACG%3B%3BAAIJ%3BCAAA%2CGALC%3BEAGO%3B%3B%3BAAIR%2CGAAC%3BCACG%3B%3BAAIJ%3BCAAA%2CGALC%3BEAGO%3B%3B%3BAAIR%2CGAAC%3BCACG%3B%3BAAIJ%3BCAAA%2CGALC%3BEAGO%3B%3B%3BAAcJ%3BCAAA%2CGAVH%2CaAAa%2CUAMV%3BEAEQ%3B%3B%3BAAOZ%2CGAAC%3BCAEG%2C%2BCAAA%3BCACA%2CgCAAA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAGJ%2CGAAC%3BCACG%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAALJ%2CGAAC%2CWAOG%3BCACI%3BCACA%3B%3BAAGJ%2CGAZH%2CWAYI%2CKAAM%3BCACH%3B%3BAAiBZ%3BCALI%3BEACI%22%7D */
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-workbench.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAA%2BCA%3B%3B%3BAAEI%2CGAAC%3BCAEG%3BCACA%3BCACA%3BCACA%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAiBA%2CGAtBH%2CUAsBI%3BCACG%3BCACA%3BCACA%3B%3BAAHJ%2CGAtBH%2CUAsBI%2CMAKG%2CcAEI%3BCACI%3B%3BAAOJ%3BCAAA%2CGArCX%2CUAsBI%2CMAKG%2CcAMI%2CKAAI%3BCAIJ%2CGArCX%2CUAsBI%2CMAKG%2CcAMgB%3BEAEJ%3B%3B%3BAAMhB%2CGAzCH%2CUAyCI%3BCACG%3B%3B%3B%3B%3B%3BCAWA%3BCAEA%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAdJ%2CGAzCH%2CUAyCI%2CKAgBK%3BCACE%3BCACA%3BCACA%3BCACA%3BCAEA%3B%3BAAqBR%2CGApFH%2CUAoFI%3BCAEG%3BCACA%2CyCAAA%3BCAMA%2C6BAAA%3BCACA%3BCACA%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAFA%3BCAAA%2CGA7FP%2CUAoFI%3BEAMO%3B%3B%3BAAwBR%2CGAlHH%2CUAkHI%3BCACG%3BCAKA%2CiBAAA%3BCA7IR%2CkBAAA%3BCACA%2CuBAAA%3BCACA%2C0BAAA%3BCACA%2CyBAAA%3B%3BAA0IQ%3BCAAA%2CGAxHP%2CUAkHI%3BEAGO%3B%3B%3BAAHR%2CGAlHH%2CUAkHI%2CQAWG%3BCACI%3B%3BAAIJ%2CGAlIP%2CUAkHI%2CQAgBI%2CcACG%3BCACI%3B%3BAAmBZ%2CGAvJH%2CUAuJI%3BCAEG%3BCACA%2CmCAAA%3BCACA%3BCACA%2CmCAAA%3B%3BAALJ%2CGAvJH%2CUAuJI%2CWAOG%3BCACI%3B%3BAARR%2CGAvJH%2CUAuJI%2CWAWG%3BCACI%3B%3BAAGJ%2CGAtKP%2CUAuJI%2CWAeI%3BCACG%3B%3BAACA%2CGAxKX%2CUAuJI%2CWAeI%2CUAEO%3BCACA%3B%3BAAHR%2CGAtKP%2CUAuJI%2CWAeI%2CUAMG%3BCACI%3B%3BAAPR%2CGAtKP%2CUAuJI%2CWAeI%2CUAUG%3BCACI%3B%3BAAQR%3BCAAA%2CGAzLP%2CUAuJI%3BEA%2BBO%3B%3B%3BAAYJ%3BCAAA%2CGAlMP%2CUAuJI%2CWAkCI%3BEAGO%3BEACA%3BEACA%2CuBAAA%3BEA7MhB%2CuCAAA%3BEACA%2CoCAAA%3BEACA%2C%2BBAAA%3BEA6MgB%3B%3B%3BAASR%3BCAAA%2CGAzMP%2CUAuJI%3BEA8CO%3B%3B%3BAA9CR%2CGAvJH%2CUAuJI%2CWAkDG%3BCACI%3B%3BAAOZ%2CGAAC%3BCACG%3B%3BAAKJ%3BCAAA%2CGANC%3BEAGO%3B%3B%3BAAIR%2CGAAC%3BCACG%3B%3BAAIJ%3BCAAA%2CGALC%3BEAGO%3B%3B%3BAAIR%2CGAAC%3BCACG%3B%3BAAIJ%3BCAAA%2CGALC%3BEAGO%3B%3B%3BAAIR%2CGAAC%3BCACG%3B%3BAAIJ%3BCAAA%2CGALC%3BEAGO%3B%3B%3BAAcJ%3BCAAA%2CGAVH%2CaAAa%2CUAMV%3BEAEQ%3B%3B%3BAAOZ%2CGAAC%3BCAEG%2C%2BCAAA%3BCACA%2CgCAAA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAGJ%2CGAAC%3BCACG%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAALJ%2CGAAC%2CWAOG%3BCACI%3BCACA%3B%3BAAGJ%2CGAZH%2CWAYI%2CKAAM%3BCACH%3B%3BAAiBZ%3BCALI%3BEACI%22%7D */
 /* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/../../../template_engine/components/html/component_editor/editor */
 .editor__text-editor {
 	width: 100%;
@@ -1440,17 +1366,29 @@ a.editorlink:visited {
 /* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/../../../template_engine/components/html/component_image/image */
 
 /*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%22%7D */
+/* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/../../../template_engine/components/html/component_logo/logo */
+.or-logo {
+	display: flex;
+}
+.or-logo-icon {
+	width: 1em;
+	height: 1em;
+	font-size: 4.8em;
+	padding-top: 0.3em;
+}
+.or-logo-description {
+	flex: 1;
+}
+.or-logo-headline {
+	font-weight: normal;
+	font-size: 2em;
+}
+.or-logo-text {
+	font-size: 1.3em;
+}
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Ftemplate_engine%5C%2Fcomponents%5C%2Fhtml%5C%2Fcomponent_logo%5C%2Flogo.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AAEI%2CGAAC%3BCACG%3B%3BAAEA%2CGAHH%2CKAGI%3BCACG%3BCACA%3BCACA%3BCACA%3B%3BAAGJ%2CGAVH%2CKAUI%3BCACG%3B%3BAAGJ%2CGAdH%2CKAcI%3BCACG%3BCACA%3B%3BAAGL%2CGAnBF%2CKAmBG%3BCACI%22%7D */
 /* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/../../../template_engine/components/html/component_table/table */
-.or-table-wrapper .or-table-area {
-	/* Responsive Tables */
-	/* T a b l e s */
-}
-@media screen and (max-width: 40em) {
-	.or-table-wrapper .or-table-area {
-		overflow-x: auto;
-	}
-}
-.or-table-wrapper .or-table-area table {
+.or-table {
 	overflow: auto;
 	border: 2px;
 	width: 100%;
@@ -1463,148 +1401,19 @@ a.editorlink:visited {
 	/* Hilfe-Texte */
 	/* Logo */
 }
-.or-table-wrapper .or-table-area table tr.or-headline > td,
-.or-table-wrapper .or-table-area table tr > th {
-	padding: 3px;
-	font-weight: bold;
+.or-table-area {
+	/* Responsive Tables */
 }
-.or-table-wrapper .or-table-area table tr.or-headline > td.or-sort-asc > span:last-child:after,
-.or-table-wrapper .or-table-area table tr > th.or-sort-asc > span:last-child:after {
-	content: " \2193";
+@media screen and (max-width: 40em) {
+	.or-table-area {
+		overflow-x: auto;
+	}
 }
-.or-table-wrapper .or-table-area table tr.or-headline > td.or-sort-desc > span:last-child:after,
-.or-table-wrapper .or-table-area table tr > th.or-sort-desc > span:last-child:after {
-	content: " \2191";
-}
-.or-table-wrapper .or-table-area table tr.or-data > td {
-	padding: 3px;
-}
-.or-table-wrapper .or-table-area table tr > td {
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	max-width: 0;
-}
-.or-table-wrapper .or-table-area table td.or-readonly {
-	font-style: italic;
-	font-weight: normal;
-}
-.or-table-wrapper .or-table-area table td.or-default {
-	font-style: normal;
-	font-weight: normal;
-}
-.or-table-wrapper .or-table-area table td.or-changed {
-	font-style: normal;
-	font-weight: bold;
-}
-.or-table-wrapper .or-table-area table td.or-notice {
-	margin: 0px;
-	padding: 5%;
-	text-align: center;
-}
-.or-table-wrapper .or-table-area table.or-notice {
-	width: 100%;
-	border: 1px solid;
-	border-spacing: 0px;
-}
-.or-table-wrapper .or-table-area table.or-notice th {
-	padding: 2px;
-	white-space: nowrap;
-	border-bottom: 1px solid #000000;
-	font-weight: normal;
-	text-align: left;
-}
-.or-table-wrapper .or-table-area table.or-notice tr.or-warning {
-	margin: 0px;
-	padding: 0px;
-}
-.or-table-wrapper .or-table-area table.or-calendar {
-	table-layout: fixed;
-	border-collapse: collapse;
-	text-align: center;
-}
-.or-table-wrapper .or-table-area table.or-calendar td {
-	border: 1px dotted;
-}
-.or-table-wrapper .or-table-area table td.or-notice {
-	margin: 0px;
-	padding: 5%;
-	text-align: center;
-}
-.or-table-wrapper .or-table-area table.or-notice {
-	width: 100%;
-	border: 1px solid;
-	border-spacing: 0px;
-}
-.or-table-wrapper .or-table-area table.or-notice th {
-	padding: 2px;
-	white-space: nowrap;
-	border-bottom: 1px solid #000000;
-	font-weight: normal;
-	text-align: left;
-}
-.or-table-wrapper .or-table-area table.or-notice tr.warning {
-	margin: 0px;
-	padding: 0px;
-}
-.or-table-wrapper .or-table-area table.or-calendar {
-	table-layout: fixed;
-	border-collapse: collapse;
-	text-align: center;
-}
-.or-table-wrapper .or-table-area table.or-calendar td {
-	border: 1px dotted;
-}
-.or-table-wrapper .or-table-area table td.or-motd {
-	border-left: 3px solid red;
-	border-right: 3px solid red;
-	font-weight: bold;
-	padding: 10px;
-	margin: 10px;
-}
-.or-table-wrapper .or-table-area table td:hover > div.or-onrowvisible {
-	visibility: visible;
-}
-.or-table-wrapper .or-table-area table tr.or-diff {
-	/* Unveränderter Text */
-	/* Entfernter Text */
-	/* Hinzugefuegter Text */
-	/* Geaenderter Text */
-}
-.or-table-wrapper .or-table-area table tr.or-diff > td.or-line {
-	background-color: #000000;
-	padding-right: 2px;
-	border-right: 3px solid #000000;
-	text-align: right;
-	margin-right: 2px;
-}
-.or-table-wrapper .or-table-area table tr.or-diff > td.or-old {
-	background-color: red;
-}
-.or-table-wrapper .or-table-area table tr.or-diff td.or-new {
-	background-color: green;
-}
-.or-table-wrapper .or-table-area table tr.or-diff td.or-notequal {
-	background-color: yellow;
-}
-.or-table-wrapper .or-table-area table tr td.or-help {
-	font-style: italic;
-}
-.or-table-wrapper .or-table-area table tr.or-headline td.or-help {
-	/*
-                border-bottom:1px solid @color-overridden-by-theme;
-                */
-	font-style: normal;
-}
-.or-table-wrapper .or-table-area table td.or-logo {
-	padding: 10px;
-	margin: 0px;
-}
-.or-table-wrapper .or-table-filter {
+.or-table-filter {
 	width: 100%;
 	text-align: right;
 }
-.or-table-wrapper .or-table-filter input {
+.or-table-filter input {
 	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -1615,7 +1424,147 @@ a.editorlink:visited {
 	color: #000000;
 	border: 1px solid #000000;
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Ftemplate_engine%5C%2Fcomponents%5C%2Fhtml%5C%2Fcomponent_table%5C%2Ftable.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AASA%2CiBAEI%3B%3B%3B%3BAAQI%2CmBALoC%3BCAKpC%2CiBARJ%3BEAKQ%3B%3B%3BAAPZ%2CiBAEI%2CeASI%3BCACI%3BCACA%3BCACA%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAdZ%2CiBAEI%2CeASI%2CMAKI%2CGAAE%2CYAAe%3BAAhB7B%2CiBAEI%2CeASI%2CMAMI%2CGAAK%3BCAED%3BCACA%3B%3BAAEA%2CiBApBZ%2CeASI%2CMAKI%2CGAAE%2CYAAe%2CKAMZ%2CYAAe%2COAAI%2CWAAW%3BAAA%5C%2FB%2CiBApBZ%2CeASI%2CMAMI%2CGAAK%2CKAKA%2CYAAe%2COAAI%2CWAAW%3BCAC3B%2CSAAS%2CQAAT%3B%3BAAEJ%2CiBAvBZ%2CeASI%2CMAKI%2CGAAE%2CYAAe%2CKASZ%2CaAAgB%2COAAI%2CWAAW%3BAAAhC%2CiBAvBZ%2CeASI%2CMAMI%2CGAAK%2CKAQA%2CaAAgB%2COAAI%2CWAAW%3BCAC5B%2CSAAS%2CQAAT%3B%3BAA1BpB%2CiBAEI%2CeASI%2CMAmBI%2CGAAE%2CQAAW%3BCACT%3B%3BAA%5C%2FBhB%2CiBAEI%2CeASI%2CMAuBI%2CGAAK%3BCACD%3BCACA%3BCACA%3BCACA%3B%3BAAtChB%2CiBAEI%2CeASI%2CMA8BI%2CGAAE%3BCACE%3BCACA%3B%3BAA3ChB%2CiBAEI%2CeASI%2CMAkCI%2CGAAE%3BCACE%3BCACA%3B%3BAA%5C%2FChB%2CiBAEI%2CeASI%2CMAsCI%2CGAAE%3BCACE%3BCACA%3B%3BAAnDhB%2CiBAEI%2CeASI%2CMA2CI%2CGAAE%3BCACE%3BCACA%3BCACA%3B%3BAAGJ%2CiBA1DR%2CeASI%2CMAiDK%3BCACG%3BCACA%2CiBAAA%3BCACA%3B%3BAAHJ%2CiBA1DR%2CeASI%2CMAiDK%2CUAIG%3BCACI%3BCACA%3BCACA%2CgCAAA%3BCACA%3BCACA%3B%3BAATR%2CiBA1DR%2CeASI%2CMAiDK%2CUAeG%2CGAAE%3BCACE%3BCACA%3B%3BAAKR%2CiBAhFR%2CeASI%2CMAuEK%3BCACG%3BCACA%3BCACA%3B%3BAAHJ%2CiBAhFR%2CeASI%2CMAuEK%2CYAKG%3BCACI%2CkBAAA%3B%3BAAxFpB%2CiBAEI%2CeASI%2CMAkFI%2CGAAE%3BCACE%3BCACA%3BCACA%3B%3BAAGJ%2CiBAjGR%2CeASI%2CMAwFK%3BCACG%3BCACA%2CiBAAA%3BCACA%3B%3BAAGJ%2CiBAvGR%2CeASI%2CMA8FK%2CUAAW%3BCACR%3BCACA%3BCACA%2CgCAAA%3BCACA%3BCACA%3B%3BAAMJ%2CiBAlHR%2CeASI%2CMAyGK%2CUAAW%2CGAAE%3BCACV%3BCACA%3B%3BAAIJ%2CiBAxHR%2CeASI%2CMA%2BGK%3BCACG%3BCACA%3BCACA%3B%3BAAGJ%2CiBA9HR%2CeASI%2CMAqHK%2CYAAa%3BCACV%2CkBAAA%3B%3BAAjIhB%2CiBAEI%2CeASI%2CMAyHI%2CGAAE%3BCACE%2C0BAAA%3BCACA%2C2BAAA%3BCACA%3BCACA%3BCACA%3B%3BAAzIhB%2CiBAEI%2CeASI%2CMAgII%2CGAAE%2CMAAS%2CMAAG%3BCACV%3B%3BAA5IhB%2CiBAEI%2CeASI%2CMAqII%2CGAAE%3B%3B%3B%3B%3B%3BAAhJd%2CiBAEI%2CeASI%2CMAqII%2CGAAE%2CQACI%2CKAAE%3BCACA%2CyBAAA%3BCACA%3BCACA%2C%2BBAAA%3BCACA%3BCACA%3B%3BAAtJpB%2CiBAEI%2CeASI%2CMAqII%2CGAAE%2CQAcI%2CKAAE%3BCACA%3B%3BAA%5C%2FJpB%2CiBAEI%2CeASI%2CMAqII%2CGAAE%2CQAmBE%2CGAAE%3BCACE%3B%3BAApKpB%2CiBAEI%2CeASI%2CMAqII%2CGAAE%2CQAwBE%2CGAAE%3BCACE%3B%3BAAzKpB%2CiBAEI%2CeASI%2CMAmKI%2CGAAG%2CGAAE%3BCACD%3B%3BAA%5C%2FKhB%2CiBAEI%2CeASI%2CMAuKI%2CGAAE%2CYAAa%2CGAAE%3B%3B%3B%3BCAIb%3B%3BAAtLhB%2CiBAEI%2CeASI%2CMAgLI%2CGAAE%3BCACE%3BCACA%3B%3BAA7LhB%2CiBAsMI%3BCACI%3BCACA%3B%3BAAxMR%2CiBAsMI%2CiBAII%3BCAhNJ%2CkBAAA%3BCACA%2CuBAAA%3BCACA%2C0BAAA%3BCACA%2CyBAAA%3BCA%2BMQ%3BCACA%3BCACA%2CyBAAA%3BCACA%2CcAAA%3BCACA%2CyBAAA%22%7D */
+.or-table tr.or-headline > td,
+.or-table tr > th {
+	padding: 3px;
+	font-weight: bold;
+}
+.or-table tr.or-headline > td.or-sort-asc > span:last-child:after,
+.or-table tr > th.or-sort-asc > span:last-child:after {
+	content: " \2193";
+}
+.or-table tr.or-headline > td.or-sort-desc > span:last-child:after,
+.or-table tr > th.or-sort-desc > span:last-child:after {
+	content: " \2191";
+}
+.or-table tr.or-data > td {
+	padding: 3px;
+}
+.or-table tr > td {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	max-width: 0;
+}
+.or-table td.or-readonly {
+	font-style: italic;
+	font-weight: normal;
+}
+.or-table td.or-default {
+	font-style: normal;
+	font-weight: normal;
+}
+.or-table td.or-changed {
+	font-style: normal;
+	font-weight: bold;
+}
+.or-table td.or-notice {
+	margin: 0px;
+	padding: 5%;
+	text-align: center;
+}
+.or-table.or-notice {
+	width: 100%;
+	border: 1px solid;
+	border-spacing: 0px;
+}
+.or-table.or-notice th {
+	padding: 2px;
+	white-space: nowrap;
+	border-bottom: 1px solid #000000;
+	font-weight: normal;
+	text-align: left;
+}
+.or-table.or-notice tr.or-warning {
+	margin: 0px;
+	padding: 0px;
+}
+.or-table.or-calendar {
+	table-layout: fixed;
+	border-collapse: collapse;
+	text-align: center;
+}
+.or-table.or-calendar td {
+	border: 1px dotted;
+}
+.or-table td.or-notice {
+	margin: 0px;
+	padding: 5%;
+	text-align: center;
+}
+.or-table.or-notice {
+	width: 100%;
+	border: 1px solid;
+	border-spacing: 0px;
+}
+.or-table.or-notice th {
+	padding: 2px;
+	white-space: nowrap;
+	border-bottom: 1px solid #000000;
+	font-weight: normal;
+	text-align: left;
+}
+.or-table.or-notice tr.warning {
+	margin: 0px;
+	padding: 0px;
+}
+.or-table.or-calendar {
+	table-layout: fixed;
+	border-collapse: collapse;
+	text-align: center;
+}
+.or-table.or-calendar td {
+	border: 1px dotted;
+}
+.or-table td.or-motd {
+	border-left: 3px solid red;
+	border-right: 3px solid red;
+	font-weight: bold;
+	padding: 10px;
+	margin: 10px;
+}
+.or-table td:hover > div.or-onrowvisible {
+	visibility: visible;
+}
+.or-table tr.or-diff {
+	/* Unveränderter Text */
+	/* Entfernter Text */
+	/* Hinzugefuegter Text */
+	/* Geaenderter Text */
+}
+.or-table tr.or-diff > td.or-line {
+	background-color: #000000;
+	padding-right: 2px;
+	border-right: 3px solid #000000;
+	text-align: right;
+	margin-right: 2px;
+}
+.or-table tr.or-diff > td.or-old {
+	background-color: red;
+}
+.or-table tr.or-diff td.or-new {
+	background-color: green;
+}
+.or-table tr.or-diff td.or-notequal {
+	background-color: yellow;
+}
+.or-table tr td.or-help {
+	font-style: italic;
+}
+.or-table tr.or-headline td.or-help {
+	/*
+            border-bottom:1px solid @color-overridden-by-theme;
+            */
+	font-style: normal;
+}
+.or-table td.or-logo {
+	padding: 10px;
+	margin: 0px;
+}
+.or-table-sort-value {
+	display: none;
+}
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Ftemplate_engine%5C%2Fcomponents%5C%2Fhtml%5C%2Fcomponent_table%5C%2Ftable.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AAWI%2CGAAC%3BCAEG%3BCACA%3BCACA%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAEA%2CGANH%2CMAMI%3B%3B%3BAAQD%2CmBALwC%3BCAKxC%2CGAdH%2CMAMI%3BEAKO%3B%3B%3BAAKR%2CGAhBH%2CMAgBI%3BCACG%3BCACA%3B%3BAAFJ%2CGAhBH%2CMAgBI%2COAIG%3BCA5BR%2CkBAAA%3BCACA%2CuBAAA%3BCACA%2C0BAAA%3BCACA%2CyBAAA%3BCA2BY%3BCACA%3BCACA%2CyBAAA%3BCACA%2CcAAA%3BCACA%2CyBAAA%3B%3BAA1BZ%2CGAAC%2CMA8BG%2CGAAE%2CYAAe%3BAA9BrB%2CGAAC%2CMA%2BBG%2CGAAK%3BCAED%3BCACA%3B%3BAAEA%2CGApCP%2CMA8BG%2CGAAE%2CYAAe%2CKAMZ%2CYAAe%2COAAI%2CWAAW%3BAAA%5C%2FB%2CGApCP%2CMA%2BBG%2CGAAK%2CKAKA%2CYAAe%2COAAI%2CWAAW%3BCAC3B%2CSAAS%2CQAAT%3B%3BAAEJ%2CGAvCP%2CMA8BG%2CGAAE%2CYAAe%2CKASZ%2CaAAgB%2COAAI%2CWAAW%3BAAAhC%2CGAvCP%2CMA%2BBG%2CGAAK%2CKAQA%2CaAAgB%2COAAI%2CWAAW%3BCAC5B%2CSAAS%2CQAAT%3B%3BAAxCZ%2CGAAC%2CMA4CG%2CGAAE%2CQAAW%3BCACT%3B%3BAA7CR%2CGAAC%2CMAgDG%2CGAAK%3BCACD%3BCACA%3BCACA%3BCACA%3B%3BAApDR%2CGAAC%2CMAuDG%2CGAAE%3BCACE%3BCACA%3B%3BAAzDR%2CGAAC%2CMA2DG%2CGAAE%3BCACE%3BCACA%3B%3BAA7DR%2CGAAC%2CMA%2BDG%2CGAAE%3BCACE%3BCACA%3B%3BAAjER%2CGAAC%2CMAoEG%2CGAAE%3BCACE%3BCACA%3BCACA%3B%3BAAGJ%2CGA1EH%2CMA0EI%3BCACG%3BCACA%2CiBAAA%3BCACA%3B%3BAAHJ%2CGA1EH%2CMA0EI%2CUAIG%3BCACI%3BCACA%3BCACA%2CgCAAA%3BCACA%3BCACA%3B%3BAATR%2CGA1EH%2CMA0EI%2CUAeG%2CGAAE%3BCACE%3BCACA%3B%3BAAKR%2CGAhGH%2CMAgGI%3BCACG%3BCACA%3BCACA%3B%3BAAHJ%2CGAhGH%2CMAgGI%2CYAKG%3BCACI%2CkBAAA%3B%3BAAtGZ%2CGAAC%2CMA2GG%2CGAAE%3BCACE%3BCACA%3BCACA%3B%3BAAGJ%2CGAjHH%2CMAiHI%3BCACG%3BCACA%2CiBAAA%3BCACA%3B%3BAAGJ%2CGAvHH%2CMAuHI%2CUAAW%3BCACR%3BCACA%3BCACA%2CgCAAA%3BCACA%3BCACA%3B%3BAAMJ%2CGAlIH%2CMAkII%2CUAAW%2CGAAE%3BCACV%3BCACA%3B%3BAAIJ%2CGAxIH%2CMAwII%3BCACG%3BCACA%3BCACA%3B%3BAAGJ%2CGA9IH%2CMA8II%2CYAAa%3BCACV%2CkBAAA%3B%3BAA%5C%2FIR%2CGAAC%2CMAmJG%2CGAAE%3BCACE%2C0BAAA%3BCACA%2C2BAAA%3BCACA%3BCACA%3BCACA%3B%3BAAxJR%2CGAAC%2CMA0JG%2CGAAE%2CMAAS%2CMAAG%3BCACV%3B%3BAA3JR%2CGAAC%2CMA%2BJG%2CGAAE%3B%3B%3B%3B%3B%3BAA%5C%2FJN%2CGAAC%2CMA%2BJG%2CGAAE%2CQACI%2CKAAE%3BCACA%2CyBAAA%3BCACA%3BCACA%2C%2BBAAA%3BCACA%3BCACA%3B%3BAArKZ%2CGAAC%2CMA%2BJG%2CGAAE%2CQAcI%2CKAAE%3BCACA%3B%3BAA9KZ%2CGAAC%2CMA%2BJG%2CGAAE%2CQAmBE%2CGAAE%3BCACE%3B%3BAAnLZ%2CGAAC%2CMA%2BJG%2CGAAE%2CQAwBE%2CGAAE%3BCACE%3B%3BAAxLZ%2CGAAC%2CMA6LG%2CGAAG%2CGAAE%3BCACD%3B%3BAA9LR%2CGAAC%2CMAiMG%2CGAAE%2CYAAa%2CGAAE%3B%3B%3B%3BCAIb%3B%3BAArMR%2CGAAC%2CMA0MG%2CGAAE%3BCACE%3BCACA%3B%3BAAMJ%2CGAlNH%2CMAkNI%3BCACG%22%7D */
 /* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/../../../template_engine/components/html/component_upload/upload */
 div.or-dropzone-upload > div.input {
 	width: 100%;

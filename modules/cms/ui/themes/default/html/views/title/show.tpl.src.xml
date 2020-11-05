@@ -176,7 +176,7 @@
 						</part>
 						<part class="dropdown-divide"/>
 						<part class="dropdown-entry,act-clickable">
-							<link type="post" class="dropdown-entry" title="${message:USER_LOGOUT_DESC}" action="login"
+							<link type="post" class="" title="${message:USER_LOGOUT_DESC}" action="login"
 								  subaction="logout">
 								<image method="logout"/>
 								<text value="${message:USER_LOGOUT}"/>
