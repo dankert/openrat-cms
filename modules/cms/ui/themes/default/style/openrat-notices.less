@@ -7,11 +7,6 @@
     -webkit-border-radius: @radius;
     -khtml-border-radius: @radius;
 }
-.box-shadow (@x, @y, @radius, @color) {
-    -webkit-box-shadow: @x @y @radius @color;
-    -moz-box-shadow: @x @y @radius @color;
-    box-shadow: @x @y @radius @color;
-}
 .or- {
 
     &notices {
@@ -31,7 +26,6 @@
         position: relative;
 
         .border-radius(5px);
-        .box-shadow(3px, 2px, 5px, @color-overridden-by-theme);
 
         &-toolbar {
             float: right;

@@ -14,11 +14,6 @@ html, body { width:100%; height:100%;}
   -webkit-border-radius: @radius;
   -khtml-border-radius: @radius;
 }
-.box-shadow (@x, @y, @radius, @color) {
-  -webkit-box-shadow: @x @y @radius @color;
-  -moz-box-shadow: @x @y @radius @color;
-  box-shadow: @x @y @radius @color;
-}
 
 
 iframe {
@@ -50,8 +45,6 @@ a:hover {
 
 .or-search > .or-input {
   padding-top: 1px;
-  .box-shadow(0,0,0, @color-overridden-by-theme) !important; // no shadow.
-    background-color: transparent !important;
 
 }
 

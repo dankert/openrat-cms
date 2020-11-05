@@ -31,13 +31,6 @@ Basis-Style for Openrat.
     -webkit-border-radius: @radius;
     -khtml-border-radius: @radius;
 }
-.box-shadow (@x, @y, @radius, @color) {
-    -webkit-box-shadow: @x @y @radius @color;
-    -moz-box-shadow: @x @y @radius @color;
-    box-shadow: @x @y @radius @color;
-}
-
-
 
 
 @smartphones: ~"only screen and (max-width: 55rem)";
@@ -238,7 +231,6 @@ Basis-Style for Openrat.
                     overflow-y: auto;
                     width: 95%;
                     border-right: 1px solid;
-                    .box-shadow(3px, 2px, 2px, @color-overridden-by-theme);
                     opacity: 0.95;
                 }
             }
