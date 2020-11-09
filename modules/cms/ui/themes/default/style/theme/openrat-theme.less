@@ -178,19 +178,19 @@ html.or-theme-@{cms-theme-id} {
             &-navigation {
                 //background-color: @cms-title-background-color;
                 //color: @cms-title-text-color;
-                background-color: @cms-title-text-color;
-                .box-shadow(10px, 0px, 25px, @cms-title-text-color);
-                background-image: linear-gradient(to right, lighten(@cms-title-text-color, 10%), @cms-title-text-color);
+                background-color: @cms-background-color;
+                .box-shadow(10px, 0px, 25px, @cms-background-color);
+                background-image: linear-gradient(to right, lighten(@cms-background-color, 10%), @cms-background-color);
             }
             &-navigation,
             &-navigation .or-link {
-                color: @cms-title-background-color;
+                color: @cms-text-color;
             }
 
             &-title {
 
                 background-color: @cms-title-background-color;
-                background-image: linear-gradient(to bottom, lighten(@cms-title-background-color, 10%), @cms-title-background-color 90%, @cms-background-color);
+                background-image: linear-gradient(to bottom, lighten(@cms-title-background-color, 10%), @cms-title-background-color 90%, @cms-inactive-background-color);
                 color: @cms-title-text-color;
 
                 .or-toolbar-icon > a {

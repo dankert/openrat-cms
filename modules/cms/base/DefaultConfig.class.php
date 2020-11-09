@@ -690,8 +690,8 @@ class DefaultConfig {
 							'title_background_color' => '#edf7f2',
 							'title_text_color' => '#005f52',
 							'text_color' => 'black',
-							'background_color' => 'white',
-							'inactive_background_color' => '#edf7f2',
+							'background_color' => '#edf7f2',
+							'inactive_background_color' => 'white',
 						],
 					'dark' =>
 						[ 
