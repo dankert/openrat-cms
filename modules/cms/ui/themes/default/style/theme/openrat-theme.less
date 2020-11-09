@@ -149,6 +149,8 @@ html.or-theme-@{cms-theme-id} {
 
         &-workbench {
 
+            background-color: @cms-title-background-color;
+
             &-main {
                 background-color: @cms-background-color;
                 background-image: linear-gradient(to bottom, @cms-background-color 0%, lighten(@cms-background-color, 20%) 100%);
@@ -163,10 +165,22 @@ html.or-theme-@{cms-theme-id} {
             }
 
 
+            &-navigation {
+                //background-color: @cms-title-background-color;
+                //color: @cms-title-text-color;
+                background-color: @cms-title-text-color;
+                .box-shadow(10px, 0px, 25px, @cms-title-text-color);
+                background-image: linear-gradient(to right, lighten(@cms-title-text-color, 10%), @cms-title-text-color);
+            }
+            &-navigation,
+            &-navigation .or-link {
+                color: @cms-title-background-color;
+            }
+
             &-title {
 
                 background-color: @cms-title-background-color;
-                background-image: linear-gradient(to bottom, lighten(@cms-title-background-color, 10%), @cms-title-background-color 80%, @cms-background-color);
+                background-image: linear-gradient(to bottom, lighten(@cms-title-background-color, 10%), @cms-title-background-color 90%, @cms-background-color);
                 color: @cms-title-text-color;
 
                 .or-toolbar-icon > a {
@@ -298,13 +312,6 @@ html.or-theme-@{cms-theme-id} {
             color: @cms-title-text-color;
         }
 
-        &-workbench-navigation {
-            background-color: inherit;
-            background-image: inherit;
-            border-right-color: @cms-text-color;
-            .box-shadow(10px, 0px, 25px, @cms-background-color);
-        }
-
 
         &-collapsible-title {
             border-color: @cms-title-text-color;
@@ -325,6 +332,16 @@ html.or-theme-@{cms-theme-id} {
                 background-color: @cms-title-background-color;
             }
         }
+
+        /*
+        &-navtree-node:hover > .or-act-clickable {
+            background-color: @cms-title-background-color;
+            color: @cms-title-text-color;
+
+            & > .or-link {
+                color: @cms-title-text-color;
+            }
+        }*/
 
 
         &-search > .or-input {

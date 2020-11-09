@@ -90,8 +90,9 @@ a:hover {
 
 .or {
     /* After page loading, all elements are hidden. This class will be removed by javascript. */
-    &-initial-hidden {
-        display: none;
+    &--initial-hidden {
+        opacity: 0;
+        transition: opacity ease-in-out;
     }
 
     &-view-flying-button {

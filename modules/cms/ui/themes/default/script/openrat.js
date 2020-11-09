@@ -2645,7 +2645,7 @@ $( function() {
     $('html').removeClass('nojs');
 
     /* Fade in all elements. */
-    $('.initial-hidden').removeClass('initial-hidden');
+    $('.or--initial-hidden').removeClass('-initial-hidden');
 
 
     /**
@@ -2888,19 +2888,18 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 
 	// Handler for mobile navigation
 	$(viewEl).find('.or-act-nav-open-close').click( function() {
-		$('nav').toggleClass('workbench-navigation--is-open');
-	});
-	// Handler for desktop navigation
-	$(viewEl).find('.or-act-nav-toggle-small').click( function() {
-		$('nav').toggleClass('workbench-navigation--is-small');
+		$('.or-workbench').toggleClass('workbench--navigation-is-open');
+		$('.or-workbench-navigation').toggleClass('workbench-navigation--is-open');
 	});
 
 	// Handler for desktop navigation
 	$(viewEl).find('.or-act-nav-small').click( function() {
-		$('nav').addClass('workbench-navigation--is-small');
+		$('.or-workbench').addClass('workbench--navigation-is-small');
+		$('.or-workbench-navigation').addClass('workbench-navigation--is-small');
 	});
 	$(viewEl).find('.or-act-nav-wide').click( function() {
-		$('nav').removeClass('workbench-navigation--is-small');
+		$('.or-workbench').removeClass('workbench--navigation-is-small');
+		$('.or-workbench-navigation').removeClass('workbench-navigation--is-small');
 	});
 
 	//$(viewEl).find('div.headermenu > a').each( function(idx,el)
