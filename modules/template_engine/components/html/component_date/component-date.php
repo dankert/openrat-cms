@@ -14,7 +14,7 @@ function component_date( $time )
 	
 		echo '<span class="or-table-sort-value">'.str_pad($time, 20, "0", STR_PAD_LEFT).'</span>'; // For sorting a table.
 
-		echo '<span title="';
+		echo '<time title="';
 		$dl = \cms\base\Language::lang('DATE_FORMAT_LONG');
 		$dl = str_replace('{weekday}',addcslashes(\cms\base\Language::lang('DATE_WEEKDAY'.strval(date('w',$time))),'A..z'),$dl);
 		$dl = str_replace('{month}'  ,addcslashes(\cms\base\Language::lang('DATE_MONTH'  .strval(date('n',$time))),'A..z'),$dl);
@@ -63,12 +63,13 @@ function component_date( $time )
 		else
 			echo $jahre.' '.\cms\base\Language::lang('YEARS');
 			
-		echo ')';
-						
-		
-		echo '">';
+		echo ')"';
+
+		echo ' datetime="'.date('c',$time).'"';
+
+		echo '>';
 		echo date(\cms\base\Language::lang('DATE_FORMAT'),$time);
-		echo '</span>';
+		echo '</time>';
 	}
 }
 ?>
