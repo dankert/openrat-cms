@@ -29,17 +29,21 @@
             width: 100%;
             text-align: right;
 
-            input {
+            &-input {
                 .border-radius(3px);
                 padding: 0.5em;
                 margin: 1em;
-                background-color: @color-overridden-by-theme;
-                color: @color-overridden-by-theme;
                 border: 1px solid @color-overridden-by-theme;
+                width:7.5em;
             }
         }
 
         tr.or-headline > td,
+
+        tr {
+            padding:0.3em;
+        }
+
         tr > th {
 
             padding: 3px;
@@ -115,54 +119,6 @@
             }
         }
 
-        /* Notizen */
-        td.or-notice {
-            margin: 0px;
-            padding: 5%;
-            text-align: center;
-        }
-
-        &.or-notice {
-            width: 100%;
-            border: 1px solid;
-            border-spacing: 0px;
-        }
-
-        &.or-notice th {
-            padding: 2px;
-            white-space: nowrap;
-            border-bottom: 1px solid @color-overridden-by-theme;
-            font-weight: normal;
-            text-align: left;
-        }
-
-        &.or-notice tr.error {
-        }
-
-        &.or-notice tr.warning {
-            margin: 0px;
-            padding: 0px;
-        }
-
-        /* Kalender */
-        &.or-calendar {
-            table-layout: fixed;
-            border-collapse: collapse;
-            text-align: center;
-        }
-
-        &.or-calendar td {
-            border: 1px dotted;
-        }
-
-        /* Message of the day */
-        td.or-motd {
-            border-left: 3px solid red;
-            border-right: 3px solid red;
-            font-weight: bold;
-            padding: 10px;
-            margin: 10px;
-        }
         td:hover > div.or-onrowvisible {
             visibility: visible;
         }

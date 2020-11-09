@@ -1,7 +1,7 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<list list="${path}" extract="true">
-		<part class="act-clickable,breadcrumb-item">
+		<part class="act-clickable,breadcrumb-item,breadcrumb-item--path">
 			<link type="open" action="${action}" id="${id}">
 				<image action="${action}"/>
 				<!--<text value="${name}" />-->
@@ -10,7 +10,7 @@
 		</part>
 		<image symbol="node-closed"/>
 	</list>
-	<part class="act-clickable,breadcrumb-item">
+	<part class="act-clickable,breadcrumb-item,breadcrumb-item--actual">
 		<link type="open" action="${actual.action}" id="${actual.id}">
 			<image action="${actual.action}"/>
 			<text value="${actual.name}"/>

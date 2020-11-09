@@ -5,28 +5,14 @@
         <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-menu') ?>"><?php echo O::escapeHtml('') ?>
         </i>
       </div>
-      <div class="<?php echo O::escapeHtml('or-toolbar-icon or-act-nav-toggle-small or--visible-on-desktop') ?>"><?php echo O::escapeHtml('') ?>
-        <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-menu') ?>"><?php echo O::escapeHtml('') ?>
+      <div class="<?php echo O::escapeHtml('or-toolbar-icon or-workbench--visible-on-wide or- or-act-nav-small or--visible-on-desktop') ?>"><?php echo O::escapeHtml('') ?>
+        <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--arrow-left') ?>"><?php echo O::escapeHtml('') ?>
         </i>
       </div>
-      <?php $if4=(isset($dbname)); if($if4) {  ?>
-        <div class="<?php echo O::escapeHtml('or-toolbar-icon or-menu-category') ?>"><?php echo O::escapeHtml('') ?>
-          <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--database') ?>"><?php echo O::escapeHtml('') ?>
-          </i>
-          <span class="<?php echo O::escapeHtml('or-menu-label') ?>"><?php echo O::escapeHtml(''.@O::lang('database').'') ?>
-          </span>
-          <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--dropdown or-menu-dropdown-icon') ?>"><?php echo O::escapeHtml('') ?>
-          </i>
-          <div class="<?php echo O::escapeHtml('or-dropdown') ?>"><?php echo O::escapeHtml('') ?>
-            <div class="<?php echo O::escapeHtml('or-dropdown-entry or-dropdown-entry--inactive') ?>"><?php echo O::escapeHtml('') ?>
-              <a target="<?php echo O::escapeHtml('_self') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
-                <span title="<?php echo O::escapeHtml(''.@$dbid.'') ?>" class="<?php echo O::escapeHtml('or-dropdown-text') ?>"><?php echo O::escapeHtml(''.@$dbname.'') ?>
-                </span>
-              </a>
-            </div>
-          </div>
-        </div>
-       <?php } ?>
+      <div class="<?php echo O::escapeHtml('or-toolbar-icon or-workbench--visible-on-small or-act-nav-wide or--visible-on-desktop') ?>"><?php echo O::escapeHtml('') ?>
+        <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--arrow-right') ?>"><?php echo O::escapeHtml('') ?>
+        </i>
+      </div>
       <?php $if4=($isLoggedIn); if($if4) {  ?>
         <div class="<?php echo O::escapeHtml('or-toolbar-icon or-act-clickable or-filtered') ?>"><?php echo O::escapeHtml('') ?>
           <a title="<?php echo O::escapeHtml(''.@O::lang('menu_new_desc').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('add') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('add') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'add\'}') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
@@ -45,10 +31,8 @@
        <?php } ?>
       <?php $if4=($isLoggedIn); if($if4) {  ?>
         <div class="<?php echo O::escapeHtml('or-toolbar-icon or-menu-category') ?>"><?php echo O::escapeHtml('') ?>
-          <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-file') ?>"><?php echo O::escapeHtml('') ?>
+          <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-add') ?>"><?php echo O::escapeHtml('') ?>
           </i>
-          <span class="<?php echo O::escapeHtml('or-menu-label') ?>"><?php echo O::escapeHtml(''.@O::lang('file').'') ?>
-          </span>
           <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--dropdown or-menu-dropdown-icon') ?>"><?php echo O::escapeHtml('') ?>
           </i>
           <div class="<?php echo O::escapeHtml('or-dropdown') ?>"><?php echo O::escapeHtml('') ?>
@@ -117,42 +101,6 @@
                 <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-add') ?>"><?php echo O::escapeHtml('') ?>
                 </i>
                 <span class="<?php echo O::escapeHtml('or-dropdown-text') ?>"><?php echo O::escapeHtml(''.@O::lang('menu_createurl').'') ?>
-                </span>
-              </a>
-            </div>
-            <div class="<?php echo O::escapeHtml('or-dropdown-divide') ?>"><?php echo O::escapeHtml('') ?>
-            </div>
-            <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable or-filtered') ?>"><?php echo O::escapeHtml('') ?>
-              <a title="<?php echo O::escapeHtml(''.@O::lang('menu_compress_desc').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('compress') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('compress') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'compress\'}') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
-                <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-compress') ?>"><?php echo O::escapeHtml('') ?>
-                </i>
-                <span><?php echo O::escapeHtml(''.@O::lang('menu_compress').'') ?>
-                </span>
-              </a>
-            </div>
-            <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable or-filtered') ?>"><?php echo O::escapeHtml('') ?>
-              <a title="<?php echo O::escapeHtml(''.@O::lang('menu_decompress_desc').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('decompress') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('decompress') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'decompress\'}') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
-                <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-decompress') ?>"><?php echo O::escapeHtml('') ?>
-                </i>
-                <span><?php echo O::escapeHtml(''.@O::lang('menu_decompress').'') ?>
-                </span>
-              </a>
-            </div>
-            <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable or-filtered') ?>"><?php echo O::escapeHtml('') ?>
-              <a title="<?php echo O::escapeHtml(''.@O::lang('menu_extract_desc').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('extract') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('extract') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'extract\'}') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
-                <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-extract') ?>"><?php echo O::escapeHtml('') ?>
-                </i>
-                <span><?php echo O::escapeHtml(''.@O::lang('menu_extract').'') ?>
-                </span>
-              </a>
-            </div>
-            <div class="<?php echo O::escapeHtml('or-dropdown-divide') ?>"><?php echo O::escapeHtml('') ?>
-            </div>
-            <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
-              <a title="<?php echo O::escapeHtml(''.@O::lang('USER_LOGOUT_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('post') ?>" data-action="<?php echo O::escapeHtml('login') ?>" data-method="<?php echo O::escapeHtml('logout') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" data-data="<?php echo O::escapeHtml('{"action":"login","subaction":"logout","id":"","token":"'.@$_token.'","none":"0"}') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
-                <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-logout') ?>"><?php echo O::escapeHtml('') ?>
-                </i>
-                <span><?php echo O::escapeHtml(''.@O::lang('USER_LOGOUT').'') ?>
                 </span>
               </a>
             </div>

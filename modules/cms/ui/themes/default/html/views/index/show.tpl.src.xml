@@ -25,18 +25,16 @@
 
 		<div id="workbench" class="or-workbench or--initial-hidden">
 
-			<header id="title" class="or-workbench-title or-view or-act-view-static" data-action="title"
-					data-method="show">
-			</header>
-
+			<nav class="or-workbench-navigation">
+				<div class="or-view or-act-view-static" data-action="tree" data-method="show" />
+			</nav>
 
 			<div class="or-workbench-main">
 
-				<nav class="or-workbench-navigation">
-					<div class="or-view or-act-view-static" data-action="tree" data-method="show">
-					</div>
+				<header id="title" class="or-workbench-title or-view or-act-view-static" data-action="title"
+						data-method="show">
+				</header>
 
-				</nav>
 
 				<main class="or-workbench-workplace">
 
@@ -48,11 +46,11 @@
 						<section class="or-workbench-section or-collapsible or-collapsible--is-open">
 
 							<header class="or-view-header or-collapsible-act-switch or-collapsible-title">
+								<i class="or-collapsible--on-open or-image-icon or-image-icon--node-open"></i>
+								<i class="or-collapsible--on-closed or-image-icon or-image-icon--node-closed"></i>
 								<span
 									class="or-view-icon or-image-icon or-image-icon--method-${method.name}"></span>
 								<or:text value="${message:METHOD_${method.name}}"/>
-								<i class="or-collapsible--on-open or-image-icon or-image-icon--node-open"></i>
-								<i class="or-collapsible--on-closed or-image-icon or-image-icon--node-closed"></i>
 							</header>
 
 							<div class="or-collapsible-value or-view or-act-view-loader or-closable"
@@ -79,16 +77,12 @@
 
 
 		<div id="noticebar" class="or-notices">
+			<or:list list="${notices}" value="notice">
+				<div class="or--invisible or-act-initial-notice">
+					<or:text value="${notice.text}"/>
+				</div>
+			</or:list>
 		</div>
-		<or:list list="${notices}" value="notice">
-			<div class="or--invisible or-act-initial-notice">
-				<or:text value="${notice.text}"/>
-			</div>
-		</or:list>
-
-		<footer class="or--initial-hidden" id="footer">
-
-		</footer>
 
 		<noscript>
 			<div class="or-nojs-text">Javascript is required to view this site</div>

@@ -31,7 +31,6 @@ class GroupComponent extends Component
 			->addStyleClass('collapsible-title')
 			->addStyleClass('group-title')
 			->addStyleClass('collapsible-act-switch')
-			->content( $this->title )
 			->asChildOf( $group );
 
 		if   ( $this->open || !$this->collapsible )
@@ -44,12 +43,6 @@ class GroupComponent extends Component
 
 		if	( $this->title )
 		{
-			if	( $this->icon ) {
-
-				$image = new CMSElement('i');
-				$image->addStyleClass(['image-icon','image-icon--'.$this->icon]);
-				$headline->addChild( $image );
-			}
 
 			if   ( $this->collapsible ) {
 
@@ -59,6 +52,15 @@ class GroupComponent extends Component
 				$arrowDown  = (new HtmlElement('i'))->addStyleClass(['image-icon','image-icon--node-open','collapsible--on-open']);
 				$headline->addChild($arrowDown  );
 			}
+
+			if	( $this->icon ) {
+
+				$image = new CMSElement('i');
+				$image->addStyleClass(['image-icon','image-icon--'.$this->icon]);
+				$headline->addChild( $image );
+			}
+
+			(new HtmlElement('span'))->content( $this->title )->asChildOf($headline);
 		}
 
 		$value = (new HtmlElement('div'))

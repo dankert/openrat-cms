@@ -6,30 +6,37 @@
 				<image menu="menu"/>
 				<!--<text class="menu-label" key="menu"></text>-->
 			</part>
-			<part class="toolbar-icon,act-nav-toggle-small,-visible-on-desktop">
-				<image menu="menu"/>
-				<!--<text class="menu-label" key="menu"></text>-->
+
+			<part class="toolbar-icon,workbench--visible-on-wide,,act-nav-small,-visible-on-desktop">
+				<image class="" symbol="arrow-left"/>
 			</part>
+			<part class="toolbar-icon,workbench--visible-on-small,act-nav-wide,-visible-on-desktop">
+				<image class="" symbol="arrow-right"/>
+			</part>
+
 			<!--
 				  <part class="toolbar-icon,toggle-nav-small">
 					  <image menu="minimize"/>
 					  <text class="menu-label" key="menu"></text>
 				  </part>-->
 			<!-- Info-Meldung anzeigen (sofern vorhanden) -->
+
+			<!--
 			<if present="dbname">
 				<part class="toolbar-icon,menu-category">
 					<image symbol="database"/>
 					<text class="menu-label" value="${message:database}"/>
 					<image class="menu-dropdown-icon" symbol="dropdown"/>
 					<part class="dropdown">
-						<part class="dropdown-entry,dropdown-entry--inactive">
+						<part class="dropdown-entry,dropdown-entry-inactive">
 							<link>
 								<text class="dropdown-text" title="${dbid}" value="${dbname}"/>
 							</link>
 						</part>
 					</part>
 				</part>
-			</if>
+			</if>-->
+
 			<if true="${isLoggedIn}">
 				<!--
 								<part
@@ -50,6 +57,7 @@
 					</link>
 				</part>
 			</if>
+
 			<!-- Falls eingeloggt: Weitere Aktionsbuttons -->
 			<if true="${isLoggedIn}">
 				<!--
@@ -71,11 +79,13 @@
 					</link>
 				</part>
 			</if>
+
 			<!-- Menü: Datei -->
 			<if true="${isLoggedIn}">
 				<part class="toolbar-icon,menu-category">
-					<image action="file"/>
-					<text class="menu-label" value="${message:file}"/>
+					<image method="add"/>
+					<!--
+					<text class="menu-label" value="${message:file}"/>-->
 					<image class="menu-dropdown-icon" symbol="dropdown"/>
 					<part class="dropdown">
 						<part
@@ -155,6 +165,9 @@
 										</link>
 									</part>
 					-->
+
+
+						<!--
 						<part class="dropdown-divide"/>
 						<part class="dropdown-entry,act-clickable,filtered">
 							<link type="dialog" title="${message:menu_compress_desc}" subaction="compress">
@@ -174,6 +187,11 @@
 								<text value="${message:menu_extract}"/>
 							</link>
 						</part>
+
+						-->
+
+
+						<!--
 						<part class="dropdown-divide"/>
 						<part class="dropdown-entry,act-clickable">
 							<link type="post" class="" title="${message:USER_LOGOUT_DESC}" action="login"
@@ -182,6 +200,8 @@
 								<text value="${message:USER_LOGOUT}"/>
 							</link>
 						</part>
+
+						-->
 					</part>
 				</part>
 			</if>

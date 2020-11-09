@@ -9,7 +9,7 @@
 				<link type="open" action="${action}" id="${id}" class="entry" title="${description}" var1="type"
 					  value1="${type}">
 					<image action="${icon}"/>
-					<text value="${text}"/>
+					<text class="navtree-text" value="${text}"/>
 				</link>
 			</part>
 		</part>

@@ -21,14 +21,14 @@ class TableComponent extends HtmlComponent
 
 	    if   ( $this->filter)
 		{
-			$filterInput = (new CMSElement('input'))->addStyleClass('input')->addAttribute('type','search')->addAttribute('name','filter')->addAttribute('placeholder',Value::createExpression(ValueExpression::TYPE_MESSAGE,'SEARCH_FILTER'));
+			$filterInput = (new CMSElement('input'))->addStyleClass(['input','table-filter-input'])->addAttribute('type','search')->addAttribute('name','filter')->addAttribute('placeholder',Value::createExpression(ValueExpression::TYPE_MESSAGE,'SEARCH_FILTER'));
 			$filter = (new HtmlElement('div'))->addStyleClass('table-filter')->addChild( $filterInput );
 			$tableWrapper->addChild($filter);
 		}
 
 		$tableContent = (new HtmlElement('div'))->addStyleClass('table-area');
 
-        $table = new CMSElement('table');
+        $table = (new CMSElement('table'))->addStyleClass('table');
 
 		$tableWrapper->addChild( $tableContent->addChild( $table) );
 
