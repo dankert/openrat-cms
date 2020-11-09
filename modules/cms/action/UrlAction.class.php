@@ -7,6 +7,7 @@ use cms\model\Folder;
 use cms\model\Url;
 
 
+use language\Messages;
 use util\Html;
 use util\Session;
 
@@ -110,15 +111,24 @@ class UrlAction extends ObjectAction
 	/**
 	 * Abspeichern der Eigenschaften
 	 */
-	function editPost()
+	public function valuePost()
 	{
-        $this->url->url            = $this->getRequestVar('url');
+        $this->url->url = $this->getRequestVar('url');
         $this->url->save();
-        $this->url->setTimestamp();
 
-        $this->addNotice('url', 0, $this->url->name, 'SAVED', Action::NOTICE_OK);
+        $this->addNoticeFor( $this->url,Messages::SAVED );
 	}
 
+
+
+	public function valueView()
+	{
+		$this->setTemplateVars( $this->url->getProperties() );
+
+		// Typ der Verknuepfung
+		$this->setTemplateVar('type'            ,$this->url->getType()     );
+		$this->setTemplateVar('url'             ,$this->url->url           );
+	}
 
 
 	public function editView()

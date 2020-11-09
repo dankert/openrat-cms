@@ -1,8 +1,10 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<group>
-		<fieldset label="${message:link_url}">
-			<text value="${url}"/>
-		</fieldset>
-	</group>
+	<form>
+		<group>
+			<fieldset label="${message:link_url}">
+				<input name="url" maxlength="255"/>
+			</fieldset>
+		</group>
+	</form>
 </output>
