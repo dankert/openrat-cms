@@ -212,12 +212,6 @@ class IndexAction extends Action
 		$lessFile = Startup::THEMES_DIR . 'default/style/theme/openrat-theme.less';
 		$css      = '';
 
-		$parser = new Less(array(
-			'sourceMap'         => DEVELOPMENT,
-			'indentation'       => DEVELOPMENT?"\t":'',
-			'outputSourceFiles' => false,
-			'compress'          => PRODUCTION
-		));
 
 		foreach ( C::subset('style')->subsets() as $styleId => $styleConfig)
 		{
@@ -235,6 +229,14 @@ class IndexAction extends Action
 				
 				foreach ($styleConfig->getConfig() as $styleSetting => $value)
 					$lessVars['cms-' . strtolower(strtr($styleSetting, '_', '-'))] = $value;
+
+				// we must create a new instance here, because the less parser is buggy when changing vars.
+				$parser = new Less(array(
+					'sourceMap'         => DEVELOPMENT,
+					'indentation'       => DEVELOPMENT?"\t":'',
+					'outputSourceFiles' => false,
+					'compress'          => PRODUCTION
+				));
 				$parser->parseFile($lessFile,basename($lessFile));
 				$parser->modifyVars($lessVars);
 				$css .= $parser->getCss();
