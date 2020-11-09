@@ -30,7 +30,7 @@ class Output
 
 	/**
 	 * Gets a localized message
-	 * @param $key message key
+	 * @param $key string message key
 	 * @return string
 	 */
 	public static function lang($key) {
