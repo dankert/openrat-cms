@@ -48,6 +48,16 @@ html.or-theme-@{cms-theme-id} {
 
     .or {
 
+        &-view {
+            &-header {
+                color: @cms-title-background-color;
+            }
+        }
+
+        &-act-view-loader {
+            background-color: @cms-background-color;
+        }
+
         &-notice {
             color: black;
             line-height: 1.5em;
@@ -152,8 +162,8 @@ html.or-theme-@{cms-theme-id} {
             background-color: @cms-title-background-color;
 
             &-main {
-                background-color: @cms-background-color;
-                background-image: linear-gradient(to bottom, @cms-background-color 0%, lighten(@cms-background-color, 20%) 100%);
+                background-color: @cms-inactive-background-color;
+                background-image: linear-gradient(to bottom, @cms-inactive-background-color 0%, lighten(@cms-inactive-background-color, 10%) 100%);
             }
 
             &-section {

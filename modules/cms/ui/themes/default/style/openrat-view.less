@@ -21,12 +21,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* Usage to this variable is safe to be removed */
 @color-overridden-by-theme: black;
 
+.border-radius (@radius) {
+    border-radius: @radius;
+    -moz-border-radius: @radius;
+    -webkit-border-radius: @radius;
+    -khtml-border-radius: @radius;
+}
+
 .or {
 
     &-view {
         &-header {
             font-size: 1.2em;
         }
+    }
+
+    &-act-view-loader {
+        padding: 0.5em;
+        .border-radius(0.5em)
     }
 
 }
