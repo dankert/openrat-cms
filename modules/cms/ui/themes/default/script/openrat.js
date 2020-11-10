@@ -2745,6 +2745,14 @@ $( function() {
     };
     closeMenu();
 
+    let closeMobileNavigation = function() {
+        // Mobile navigation must close on a click on the workbench
+        $('.or-workbench-workplace').click( function() {
+            $('.or-workbench-navigation').removeClass('workbench-navigation--is-open');
+        });
+    };
+    closeMobileNavigation();
+
 
 
     Openrat.Workbench.afterNewActionHandler.add( function() {
