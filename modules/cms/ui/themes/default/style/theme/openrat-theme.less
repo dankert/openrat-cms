@@ -159,11 +159,11 @@ html.or-theme-@{cms-theme-id} {
 
         &-workbench {
 
-            background-color: @cms-title-background-color;
+            //background-color: @cms-title-background-color;
 
             &-main {
-                background-color: @cms-inactive-background-color;
-                background-image: linear-gradient(to bottom, @cms-inactive-background-color 0%, lighten(@cms-inactive-background-color, 10%) 100%);
+                //background-color: @cms-inactive-background-color;
+                //background-image: linear-gradient(to bottom, @cms-inactive-background-color 0%, lighten(@cms-inactive-background-color, 10%) 100%);
             }
 
             &-section {
@@ -258,11 +258,11 @@ html.or-theme-@{cms-theme-id} {
             //}
 
             &.or-filtered > a {
-                color: @cms-inactive-background-color;
+                color: @cms-text-color;
             }
 
             &.or-filtered.or-active > a {
-                color: @cms-background-color;
+                color: @cms-text-color;
             }
         }
 
@@ -271,31 +271,31 @@ html.or-theme-@{cms-theme-id} {
                 color: inherit;
             }
 
-            .box-shadow(3px, 2px, 10px, @cms-title-background-color);
+            .box-shadow(3px, 2px, 5px, @cms-background-color);
             opacity: 0.95;
-            border: 2px solid @cms-title-background-color;
+            border: 1px solid mix(@cms-background-color,@cms-inactive-background-color);
 
-            background-color: @cms-title-text-color;
-            color: @cms-title-background-color;
+            background-color: @cms-background-color;
+            color: @cms-text-color;
 
             &-entry {
 
-                background-color: @cms-title-text-color;
-                color: @cms-title-background-color;
+                background-color: @cms-background-color;
+                color: @cms-text-color;
 
                 &--inactive {
-                    color: mix(@cms-title-background-color, @cms-title-text-color, 40%);
+                    color: mix(@cms-background-color, @cms-text-color, 40%);
                 }
 
                 &--active:hover {
-                    background-color: @cms-title-background-color;
-                    color: @cms-title-text-color;
+                    background-color: @cms-text-color;
+                    color: @cms-background-color;
                 }
             }
 
 
             &-divide {
-                background-color: @cms-title-background-color;
+                background-color: @cms-background-color;
             }
         }
 

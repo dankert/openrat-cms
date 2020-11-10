@@ -4,6 +4,19 @@
 
 html, body { width:100%; height:100%;}
 
+@wide: ~"only screen and (min-width: 56rem)";
+
+body {
+
+    @media @wide {
+        background-image: url("../images/background/fog-colorize.jpeg") ;
+        //filter: opacity(0.95);
+        //background-size: 100% auto;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+}
 .or-editor-toolbar {
   font-size: 1.5em;
 }
