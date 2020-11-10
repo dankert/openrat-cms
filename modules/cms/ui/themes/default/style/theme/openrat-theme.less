@@ -254,16 +254,21 @@ html.or-theme-@{cms-theme-id} {
         }
 
         &-act-clickable {
-            //&:hover {
-            //    background-color: @cms-inactive-background-color;
-            //}
 
             &.or-filtered > a {
                 color: @cms-text-color;
+
+                &.or-dropdown-entry--active:hover {
+                    color: @cms-background-color;
+                }
             }
 
-            &.or-filtered.or-active > a {
+            &.or-filtered.or-dropdown-entry--active > a {
                 color: @cms-text-color;
+
+                &:hover {
+                    color: @cms-background-color;
+                }
             }
         }
 
