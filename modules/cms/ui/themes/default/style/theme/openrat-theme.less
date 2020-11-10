@@ -255,6 +255,8 @@ html.or-theme-@{cms-theme-id} {
 
         &-act-clickable {
 
+            //color: inherit;
+            /*
             &.or-filtered > a {
                 color: @cms-text-color;
 
@@ -269,7 +271,7 @@ html.or-theme-@{cms-theme-id} {
                 &:hover {
                     color: @cms-background-color;
                 }
-            }
+            }*/
         }
 
         &-dropdown {
@@ -376,8 +378,11 @@ html.or-theme-@{cms-theme-id} {
         border-color: @cms-text-color;
     }
 
-    body, a {
+    body {
         color: @cms-text-color;
+    }
+    a {
+        color: inherit;
     }
 
     body {
