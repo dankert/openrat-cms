@@ -9,12 +9,21 @@ html, body { width:100%; height:100%;}
 body {
 
     @media @wide {
-        background-image: url("../images/background/fog-colorize.jpeg") ;
-        //filter: opacity(0.95);
-        //background-size: 100% auto;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
+
+        &:before {
+            content: "";
+            position: fixed;
+            left: 0;
+            right: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100%;
+            display: block;
+            background-image: url("../images/background/fog.jpeg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
     }
 }
 .or-editor-toolbar {

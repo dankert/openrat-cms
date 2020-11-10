@@ -295,7 +295,7 @@ html.or-theme-@{cms-theme-id} {
 
 
             &-divide {
-                background-color: @cms-background-color;
+                background-color: mix(@cms-background-color,@cms-inactive-background-color);
             }
         }
 
@@ -372,6 +372,12 @@ html.or-theme-@{cms-theme-id} {
 
     body, a {
         color: @cms-text-color;
+    }
+
+    body {
+        &:before {
+            filter: hue-rotate(unit(hue(@cms-inactive-background-color),deg)) saturate(saturation(@cms-inactive-background-color)) brightness(lightness(@cms-inactive-background-color)  );
+        }
     }
 }
 
