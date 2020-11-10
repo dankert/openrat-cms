@@ -224,7 +224,7 @@ class IndexAction extends Action
 
 				$lessVars = array(
 					'cms-theme-id'   => strtolower($styleId),
-					'cms-image-path' => 'themes/default/images/'
+					'cms-image-path' => '"'.Startup::THEMES_DIR.'default/images/'.'"',
 				);
 				
 				foreach ($styleConfig->getConfig() as $styleSetting => $value)

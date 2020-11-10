@@ -11,6 +11,7 @@
 @cms-text-color: black;
 @cms-background-color: silver;
 @cms-inactive-background-color: gray;
+@cms-background-image: "@{cms-image-path}background/fog.jpeg";
 
 @notice-ok-color: #00d95a;
 @notice-info-color: #86caff;
@@ -377,6 +378,7 @@ html.or-theme-@{cms-theme-id} {
     body {
         &:before {
             filter: hue-rotate(unit(hue(@cms-inactive-background-color),deg)) saturate(saturation(@cms-inactive-background-color)) brightness(lightness(@cms-inactive-background-color)  );
+            background-image: url(@cms-background-image);
         }
     }
 }
