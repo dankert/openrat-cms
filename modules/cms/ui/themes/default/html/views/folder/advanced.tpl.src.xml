@@ -1,94 +1,57 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-  <form action="folder" subaction="edit">
-    <table>
-      <row class="headline">
-        <column class="help">
-          <!-- 
-					<text value="${message:SELECT}"></text>
-				 -->
-          <checkbox name="checkall"/>
-        </column>
-        <column class="help">
-          <text value="${message:TYPE}"/>
-          <text value=" / "/>
-          <text value="${message:NAME}"/>
-        </column>
-      </row>
-      <list list="${object}" extract="true">
-        <row class="data">
-          <column width="1%">
-            <if true="${writable}">
-              <checkbox name="${id}"/>
-            </if>
-            <if false="writable">
-              <text value=" "/>
-            </if>
-          </column>
-          <column class="act-clickable">
-            <label for="${id}">
-              <link type="open" name="${name}" action="${type}" id="${objectid}">
-                <image action="${icon}"/>
-                <text value="${name}" maxlength="40"/>
-                <text value=" "/>
-              </link>
-            </label>
-          </column>
-        </row>
-      </list>
-      <if empty="${object}">
-        <row>
-          <column colspan="2">
-            <text value="${message:NOT_FOUND}"/>
-          </column>
-        </row>
-      </if>
-      <row class="data">
-        <column>
-          <text value=" "/>
-        </column>
-        <column colspan="2" class="act-clickable">
-          <link type="dialog" action="folder" subaction="create">
-            <image method="add"/>
-            <text value="${message:menu_folder_create}"/>
-          </link>
-        </column>
-      </row>
-    </table>
-    <group title="${message:options}">
-      <set var="type" value="${defaulttype}"/>
-      <list list="${actionlist}" value="actiontype">
-        <fieldset class="line" label="">
-          <part class="label">
-								</part>
-          <part class="value">
-            <radio name="type" value="${actiontype}"/>
-            <label for="type" value="${actiontype}">
-              <text value=" "/>
-              <text value="${message:FOLDER_SELECT_${actiontype}}"/>
-            </label>
-          </part>
-        </fieldset>
-      </list>
-      <fieldset class="line" label="">
-        <part class="label">
-								</part>
-        <part class="value">
-          <text value="    "/>
-          <checkbox name="confirm" required="true"/>
-          <label for="confirm">
-            <text value="${message:CONFIRM_DELETE}"/>
-          </label>
-        </part>
-      </fieldset>
-      <fieldset class="line" label="">
-        <part class="label">
-          <text value="${message:FOLDER_SELECT_TARGET_FOLDER}"/>
-        </part>
-        <part class="value">
-          <selector types="folder" param="targetobjectid" name="${rootfoldername}" id="${rootfolderid}" folderid="${rootfolderid}"/>
-        </part>
-      </fieldset>
-    </group>
-  </form>
-  <!--	<insert script="mark" inline="true"></insert> -->
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form action="folder" subaction="edit">
+		<table>
+			<row class="headline">
+				<column class="help">
+					<!--
+							  <text value="${message:SELECT}"></text>
+						   -->
+					<text value="${message:TYPE}"/>
+					<!-- <checkbox name="checkall" /> -->
+				</column>
+				<column class="help">
+					<!-- <text value=" / "/> -->
+					<text value="${message:NAME}"/>
+				</column>
+			</row>
+			<list list="${object}" extract="true">
+				<row class="data">
+					<column>
+						<image action="${icon}"/>
+					</column>
+					<column>
+						<if true="${writable}">
+							<checkbox name="${id}" label="${name}"/>
+						</if>
+						<else>
+							<text value="${name}"/>
+						</else>
+					</column>
+				</row>
+			</list>
+			<if empty="${object}">
+				<row>
+					<column colspan="2">
+						<text value="${message:NOT_FOUND}"/>
+					</column>
+				</row>
+			</if>
+		</table>
+		<group title="${message:options}">
+			<set var="type" value="${defaulttype}"/>
+			<list list="${actionlist}" value="actiontype">
+				<fieldset label="">
+					<radio name="type" value="${actiontype}" label="${message:FOLDER_SELECT_${actiontype}}"/>
+				</fieldset>
+			</list>
+			<fieldset label="">
+				<checkbox name="confirm" label="${message:CONFIRM_DELETE}"/>
+			</fieldset>
+			<fieldset label="${message:FOLDER_SELECT_TARGET_FOLDER}">
+				<selector types="folder" param="targetobjectid" name="${rootfoldername}" id="${rootfolderid}"
+						  folderid="${rootfolderid}"/>
+			</fieldset>
+		</group>
+	</form>
 </output>

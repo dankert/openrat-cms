@@ -1035,7 +1035,7 @@ class FolderAction extends ObjectAction
 			{
 				$f = new Folder( $id );
 				if	( $f->hasRight( Acl::ACL_WRITE ) )
-					$otherfolder[$id] = FILE_SEP.implode( FILE_SEP,$f->parentObjectNames(false,true) );
+					$otherfolder[$id] = Startup::FILE_SEP.implode( Startup::FILE_SEP,$f->parentObjectNames(false,true) );
 			}
 			asort( $otherfolder );
 

@@ -30,6 +30,7 @@ class Startup {
 
 	const IMG_EXT      = '.gif';
 	const IMG_ICON_EXT = '.png';
+	const FILE_SEP     = '/';
 
 	const HTML_MODULES_DIR = './modules/';
 	const THEMES_DIR       = './modules/cms/ui/themes/';
