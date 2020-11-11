@@ -2,13 +2,13 @@
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form>
 		<group title="${message:validity}">
-			<fieldset class="line" label="${message:from}">
+			<fieldset label="${message:from}">
 				<part tag="span">
 					<input type="date" name="valid_from_date"/>
 					<input type="time" name="valid_from_time"/>
 				</part>
 			</fieldset>
-			<fieldset class="line" label="${message:until}">
+			<fieldset label="${message:until}">
 				<part tag="span">
 					<input type="date" name="valid_until_date"/>
 					<input type="time" name="valid_until_time"/>
@@ -17,7 +17,7 @@
 		</group>
 
 		<group title="${message:settings}">
-			<fieldset class="line" label="${message:SETTINGS}">
+			<fieldset label="${message:SETTINGS}">
 				<editor name="settings" type="code" mode="yaml"/>
 			</fieldset>
 		</group>

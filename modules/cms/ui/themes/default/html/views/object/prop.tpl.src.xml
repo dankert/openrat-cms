@@ -1,9 +1,18 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-  <form label="${message:save}">
-    <group title="${message:prop}">
-      <input name="filename" label="${message:filename}" class="filename" maxlength="150" focus="true"/>
-      <input name="alias_filename" label="${message:alias}" class="filename" maxlength="150"/>
-      <selectbox name="alias_folderid" label="${message:folder}" list="folders"/>
-    </group>
-  </form>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form>
+		<group title="${message:prop}">
+			<fieldset label="${message:filename}">
+				<input name="filename" class="filename" maxlength="150" focus="true"/>
+			</fieldset>
+
+			<fieldset label="${message:alias}">
+				<input name="alias_filename" class="filename" maxlength="150"/>
+			</fieldset>
+
+			<fieldset label="${message:folder}">
+				<selectbox name="alias_folderid" list="folders"/>
+			</fieldset>
+		</group>
+	</form>
 </output>

@@ -1,7 +1,16 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-  <form>
-    <text label="NAME" value="${name}"/>
-    <checkbox label="${message:DELETE}" name="delete"/>
-    <checkbox label="${message:DELETE_WITH_CHILDREN}" name="withChildren" readonly="not:var:hasChildren"/>
-  </form>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form>
+		<group title="${message:delete}" collapsible="false">
+
+			<fieldset label="${message:name}">
+				<text value="${name}"/>
+			</fieldset>
+
+			<fieldset>
+				<checkbox label="${message:DELETE}" name="delete"/>
+				<checkbox label="${message:DELETE_WITH_CHILDREN}" name="withChildren" readonly="${hasChildren}"/>
+			</fieldset>
+		</group>
+	</form>
 </output>

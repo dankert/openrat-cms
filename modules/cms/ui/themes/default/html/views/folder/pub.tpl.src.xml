@@ -1,66 +1,37 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-  <!--
-        Falls das Veroeffentlichen deaktiviert ist, eine Warnmeldung anzeigen.
-    -->
-  <if true="${config:security/nopublish}">
-    <part class="message warn">
-      <text value="${message:NOPUBLISH_DESC}" class="help"/>
-    </part>
-  </if>
-  <form label="${message:publish}" async="true">
-    <if true="${pages}">
-      <fieldset class="line" label="">
-        <part class="label">
-                </part>
-        <part class="value">
-          <checkbox name="pages"/>
-          <label for="pages">
-            <text value=" "/>
-            <text value="${message:pages}"/>
-          </label>
-        </part>
-      </fieldset>
-    </if>
-    <if true="${files}">
-      <fieldset class="line" label="">
-        <part class="label">
-                </part>
-        <part class="value">
-          <checkbox name="files"/>
-          <label for="files">
-            <text value=" "/>
-            <text value="${message:files}"/>
-          </label>
-        </part>
-      </fieldset>
-    </if>
-    <group title="${message:options}">
-      <if present="subdirs">
-        <fieldset class="line" label="">
-          <part class="label">
-                    </part>
-          <part class="value">
-            <checkbox readonly="${subdirs}" name="subdirs"/>
-            <label for="subdirs">
-              <text value=" "/>
-              <text value="${message:PUBLISH_WITH_SUBDIRS}"/>
-            </label>
-          </part>
-        </fieldset>
-      </if>
-      <if present="clean">
-        <fieldset class="line" label="">
-          <part class="label">
-                    </part>
-          <part class="value">
-            <checkbox name="clean"/>
-            <label for="clean">
-              <text value=" "/>
-              <text value="${message:CLEAN_AFTER_PUBLISH}"/>
-            </label>
-          </part>
-        </fieldset>
-      </if>
-    </group>
-  </form>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+
+	<if true="${config:security/nopublish}">
+		<!-- Publishing is disabled -->
+		<part class="message warn">
+			<text value="${message:NOPUBLISH_DESC}" class="help"/>
+		</part>
+	</if>
+
+	<form label="${message:publish}" async="true">
+		<group title="${message:publish}">
+			<if true="${pages}">
+				<fieldset label="">
+					<checkbox name="pages" label="${message:pages}"/>
+				</fieldset>
+			</if>
+			<if true="${files}">
+				<fieldset>
+					<checkbox name="files" label="${message:files}"/>
+				</fieldset>
+			</if>
+		</group>
+		<group title="${message:options}">
+			<if present="subdirs">
+				<fieldset label="">
+					<checkbox name="subdirs" label="${message:PUBLISH_WITH_SUBDIRS}"/>
+				</fieldset>
+			</if>
+			<if present="clean">
+				<fieldset label="">
+					<checkbox name="clean" label="${message:CLEAN_AFTER_PUBLISH}"/>
+				</fieldset>
+			</if>
+		</group>
+	</form>
 </output>

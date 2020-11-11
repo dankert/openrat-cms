@@ -641,7 +641,7 @@ class DefaultConfig {
 					'user' =>
 						[ 
 							'show_admin_mail' => true,
-							'show_mail' => true,
+							'show_mail'    => false,
 							'send_message' => true,
 						],
 					'content-security-policy' => true,
