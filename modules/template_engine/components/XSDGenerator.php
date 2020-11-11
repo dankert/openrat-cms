@@ -43,13 +43,22 @@ foreach ($folder as $componentName) {
     echo 'Working on component: ' . $componentName . "\n";
     fwrite($componentsFile, $componentName . " = \n");
 
-    fwrite($xsdFile, '<xsd:element name="' . $componentName . '" type="' . $componentName . 'Type" /><xsd:complexType name="' . $componentName . 'Type">');
+    fwrite($xsdFile, '<xsd:element name="' . $componentName . '" type="' . $componentName . 'Type" />'
+		.'<xsd:complexType name="' . $componentName . 'Type">');
+
+    // Allow HTML children
+	//fwrite($xsdFile, '<xsd:openContent mode="interleave">'.
+    //	'<xsd:any namespace="http://www.w3.org/1999/xhtml" />'.
+	//	'</xsd:openContent>');
 
     // Allowed Child-Elements (all)
     fwrite($xsdFile, '<xsd:choice maxOccurs="unbounded" minOccurs="0">');
     foreach ($folder as $cName) {
 		fwrite($xsdFile, '<xsd:element ref="' . $cName . '" maxOccurs="unbounded" minOccurs="0" />');
     }
+
+	fwrite($xsdFile,'<xsd:any namespace="http://www.w3.org/1999/xhtml" />' );
+
     fwrite($xsdFile, '</xsd:choice>');
 
 
