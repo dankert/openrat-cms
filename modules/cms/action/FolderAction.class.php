@@ -58,7 +58,7 @@ class FolderAction extends ObjectAction
     public function init()
     {
 		$folder = new Folder( $this->getRequestId() );
-		$folder->languageid = $this->request->getLanguageId();
+		$folder->languageid = $this->request->getLanguageId(); // FIXME
 		$folder->load();
 
 		$this->lastModified( $folder->lastchangeDate);
@@ -253,6 +253,8 @@ class FolderAction extends ObjectAction
 		$description = $this->getRequestVar('description');
 
 		$text   = new Text();
+		$text->parentid  = $this->folder->objectid;
+		$text->projectid = $this->folder->projectid;
 
 		// Die neue Datei wird über eine URL geladen und dann im CMS gespeichert.
 		if	( $this->hasRequestVar('url') )
@@ -265,45 +267,48 @@ class FolderAction extends ObjectAction
 
 			if	( !$ok )
 			{
-				$this->addValidationError('url','COMMON_VALIDATION_ERROR',array(),$http->error);
-				$this->callSubAction('createfile');
-				return;
+				//$this->addNotice($http->error);
+				// TODO: What to do with $http->error ?
+				throw new ValidationException('url',Messages::COMMON_VALIDATION_ERROR);
 			}
 
-			$text->desc      = $description;
 			$text->filename  = BaseObject::urlify( basename($url) );
-			$text->name      = !empty($name)?$name:basename($url);
 			$text->size      = strlen($http->body);
 			$text->value     = $http->body;
-			$text->parentid  = $this->folder->objectid;
-            $text->projectid = $this->folder->projectid;
 		}
 		else
 		{
 			$upload = new Upload();
 
-            try
-            {
-                $upload->processUpload();
-            }
-            catch( \Exception $e )
-            {
-                throw $e;
-            }
+			if   ( $upload->isAvailable() ) {
 
-            $text->desc      = $description;
-            $text->filename  = BaseObject::urlify( $upload->filename );
-            $text->name      = !empty($name)?$name:$upload->filename;
-            $text->extension = $upload->extension;
-            $text->size      = $upload->size;
-            $text->parentid  = $this->folder->objectid;
-            $text->projectid = $this->folder->projectid;
+				try
+				{
+					$upload->processUpload();
+				}
+				catch( \Exception $e )
+				{
+					// TODO: make a UIException?
+					throw $e;
+				}
 
-            $text->value     = $upload->value;
+				$text->filename  = BaseObject::urlify( $upload->filename );
+				$text->extension = $upload->extension;
+				$text->size      = $upload->size;
+
+				$text->value     = $upload->value;
+			}
+			else {
+				$text->filename  = $this->getRequestVar('filename');
+				$text->extension = $this->getRequestVar('extension');
+				$text->value     = $this->getRequestVar('text');
+				$text->size      = strlen( $text->value );
+			}
 		}
 
 		$text->add(); // Datei hinzufuegen
         $text->setNameForAllLanguages( $name,$description );
+
 		$this->addNoticeFor($text, Messages::ADDED);
 		$this->setTemplateVar('objectid',$text->objectid);
 

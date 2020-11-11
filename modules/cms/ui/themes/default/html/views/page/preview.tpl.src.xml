@@ -10,12 +10,10 @@
 	</form>
 
 	<group title="${message:PREVIEW}">
-		<part class="toolbar-icon,act-clickable">
-			<link type="popup" class="action" url="${preview_url}">
+			<link clickable="true" type="popup" class="action" url="${preview_url}">
 				<image menu="open_in_new"/>
 				<text value="${message:link_open_in_new_window}"/>
 			</link>
-		</part>
 
 		<insert url="${preview_url}" name="preview"/>
 	</group>

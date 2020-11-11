@@ -1,3 +1,14 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-  <insert url="${preview_url}"/>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+
+	<text value="${text}" escape="true" type="code" maxlength="200"/>
+
+	<newline />
+	<newline />
+
+	<link clickable="true" type="popup" class="action" url="${preview_url}">
+		<image menu="open_in_new"/>
+		<text value="${message:link_open_in_new_window}"/>
+	</link>
+
 </output>

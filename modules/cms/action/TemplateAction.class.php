@@ -193,13 +193,53 @@ class TemplateAction extends BaseAction
 		{
 			$page = new Page($pageid);
 			$page->load();
-			
-			$pages[$pageid] = $page->name;
+
+			$pages[$pageid] = $page->filename;
 		}
 		
 		$this->setTemplateVar('pages',$pages);
-		$this->setTemplateVar('id'   ,$this->template->templateid);
+		$this->setTemplateVar('id'   ,$this->template->getId()   );
+		$this->setTemplateVar('name' ,$this->template->getName() );
 	}
+
+
+	/**
+     * Speichern der Dateiendung
+     */
+	public function extensionPost()
+	{
+        $project = new Project( $this->template->projectid );
+        $models = $project->getModels();
+
+        $extensions = array();
+        foreach( $models as $modelId => $modelName ) {
+
+            $input = $this->getRequestVar( $modelName );
+
+            // Validierung: Werte dürfen nicht doppelt vorkommen.
+            if ( in_array($input, $extensions) )
+            {
+                $this->addNotice('template', 0, $this->template->name, 'DUPLICATE_INPUT', 'error');
+                throw new \util\exception\ValidationException( $modelName );
+            }
+
+            $extensions[ $modelId ] = $input;
+        }
+
+        foreach( $models as $modelId => $modelName ) {
+
+            $templatemodel = new TemplateModel($this->template->templateid, $modelId);
+            $templatemodel->load();
+
+            $templatemodel->extension = $extensions[ $modelId ];
+
+            $templatemodel->save();
+        }
+
+		$this->addNotice('template', 0, $this->template->name, 'SAVED', 'ok');
+	}
+
+
 
 	function addelView()
 	{

@@ -1,8 +1,15 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form>
-		<fieldset label="${message:VALUE}">
-			<editor name="value" type="code"/>
+		<fieldset >
+			<upload name="file"/>
 		</fieldset>
+
+		<part class="dropzone-upload">
+			<newline />
+			<newline />
+			<newline />
+			<newline />
+		</part>
 	</form>
 </output>

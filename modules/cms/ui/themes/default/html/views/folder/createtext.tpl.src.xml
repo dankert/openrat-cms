@@ -1,53 +1,35 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-  <form>
-    <fieldset class="line" label="">
-      <part class="label">
-        <label for="name">
-          <text value="${message:FILE}"/>
-        </label>
-      </part>
-      <part class="value">
-        <upload name="file" maxlength="${maxlength}" multiple="true"/>
-      </part>
-    </fieldset>
-    <part class="line dropzone-upload">
-      <part class="label">
-			</part>
-      <part class="value">
-			</part>
-    </part>
-    <fieldset class="line" label="">
-      <part class="label">
-        <text class="help" value="${message:file_max_size}"/>
-      </part>
-      <part class="value">
-        <text value="${max_size}"/>
-      </part>
-    </fieldset>
-    <fieldset class="line" label="">
-      <part class="label">
-        <text value="${message:HTTP_URL}"/>
-      </part>
-      <part class="value">
-        <input name="url" size="50"/>
-      </part>
-    </fieldset>
-    <group title="${message:description}"/>
-    <fieldset class="line" label="">
-      <part class="label">
-        <text value="${message:NAME}"/>
-      </part>
-      <part class="value">
-        <input name="name" size="50"/>
-      </part>
-    </fieldset>
-    <fieldset class="line" label="">
-      <part class="label">
-        <text value="${message:DESCRIPTION}"/>
-      </part>
-      <part class="value">
-        <inputarea rows="5" cols="50" name="description" default=""/>
-      </part>
-    </fieldset>
-  </form>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form>
+		<group title="${message:upload}">
+			<fieldset label="${message:FILE}">
+				<upload name="file" maxlength="${maxlength}" multiple="true" />
+				<part class="dropzone-upload"/>
+				<text value="${message:file_max_size} ${max_size}"/>
+			</fieldset>
+
+			<fieldset label="${message:HTTP_URL}">
+				<input name="url" size="50"/>
+			</fieldset>
+		</group>
+
+		<group title="${message:description}">
+			<fieldset label="${message:FILENAME}">
+				<input name="filename" size="50"/>
+			</fieldset>
+			<fieldset label="${message:FILE_EXTENSION}">
+				<input name="extension" size="50"/>
+			</fieldset>
+			<fieldset label="${message:NAME}">
+				<input name="name" size="50"/>
+			</fieldset>
+			<fieldset label="${message:DESCRIPTION}">
+				<inputarea rows="5" cols="50" name="description" default=""/>
+			</fieldset>
+		</group>
+
+		<group title="${message:content}">
+			<inputarea name="text"/>
+		</group>
+	</form>
 </output>

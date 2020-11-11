@@ -6,6 +6,7 @@ namespace cms\action;
 use cms\model\BaseObject;
 
 use cms\model\Text;
+use language\Messages;
 use util\Html;
 
 // OpenRat Content Management System
@@ -34,6 +35,9 @@ class TextAction extends FileAction
 {
 	public $security = Action::SECURITY_USER;
 
+	/**
+	 * @var Text
+	 */
 	private $text;
 
 	/**
@@ -66,10 +70,10 @@ class TextAction extends FileAction
 
 	public function valuePost()
 	{
-		$this->text->value = $this->getRequestVar('value', RequestParams::FILTER_RAW);
+		$this->text->value = $this->getRequestVar('text', RequestParams::FILTER_RAW);
 		$this->text->saveValue();
 
-		$this->addNotice($this->text->getType(), 0, $this->text->name, 'VALUE_SAVED', 'ok');
+		$this->addNoticeFor($this->text,Messages::VALUE_SAVED);
 		$this->text->setTimestamp();
 	}
 
@@ -79,6 +83,8 @@ class TextAction extends FileAction
 	 */
 	public function valueView()
 	{
+		$this->setTemplateVar( 'text', $this->text->loadValue() );
+
 		parent::valueView();
 	}
 
@@ -92,10 +98,12 @@ class TextAction extends FileAction
 	}
 
 	/**
-	 * Only needed because there is a special template for text nodes.
+	 * Displaying the text content.
 	 */
 	public function previewView()
 	{
+		$this->setTemplateVar( 'text', $this->text->loadValue() );
+
 		parent::previewView();
 	}
 }

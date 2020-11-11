@@ -155,7 +155,7 @@ class FileAction extends ObjectAction
 	 */
 	function previewView()
 	{
-		$url = Html::url($this->file->getType(),'show',$this->file->objectid,array('target'=>'none') );
+		$url = Html::url($this->file->getType(),'show',$this->file->objectid );
 		$this->setTemplateVar('preview_url',$url );
 	}
 
@@ -285,8 +285,8 @@ class FileAction extends ObjectAction
 	function valueView()
 	{
 		// MIME-Types aus Datei lesen
-		$this->setTemplateVars( $this->file->getProperties() );
-		$this->setTemplateVar('value',$this->file->loadValue());
+		//$this->setTemplateVars( $this->file->getProperties() );
+		//$this->setTemplateVar('value',$this->file->loadValue());
 	}
 
 

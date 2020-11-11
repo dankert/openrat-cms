@@ -115,5 +115,3 @@ class Upload
 		return isset($_FILES[$name]) && is_array($_FILES[$name]);
 	}
 }
-
-?>

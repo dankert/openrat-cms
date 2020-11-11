@@ -41,7 +41,7 @@
         <text value="${message:element}"/>
       </column>
       <column class="act-clickable">
-        <link id="${element_id}" name="${element_name}" action="element">
+        <link id="${element_id}" name="${element_name}" action="element" type="open">
           <image elementtype="${element_type}"/>
           <text value="${element_name}"/>
         </link>
