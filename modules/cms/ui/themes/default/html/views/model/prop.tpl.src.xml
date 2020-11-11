@@ -1,20 +1,12 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-  <form method="post">
-    <fieldset class="line" label="">
-      <part class="label">
-        <text value="${message:NAME}"/>
-      </part>
-      <part class="value">
-        <input name="name" focus="true" maxlength="50"/>
-      </part>
-    </fieldset>
-    <fieldset class="line" label="">
-      <part class="label">
-			</part>
-      <part class="value">
-        <checkbox name="is_default" readonly="${is_default}"/>
-        <label key="is_default" for="is_default"/>
-      </part>
-    </fieldset>
-  </form>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form method="post">
+		<fieldset label="${message:NAME}">
+			<input name="name" focus="true" maxlength="50"/>
+		</fieldset>
+
+		<fieldset label="">
+			<checkbox name="is_default" label="${message:is_default}"/>
+		</fieldset>
+	</form>
 </output>

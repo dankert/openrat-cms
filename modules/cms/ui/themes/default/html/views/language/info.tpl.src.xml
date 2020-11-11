@@ -1,20 +1,19 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-  <form readonly="true" cancel="false">
-    <text class="headline" value="${name}"/>
-    <fieldset label="${message:NAME}">
-        <text value="${name}" class="name"/>
-    </fieldset>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<group title="${message:language} ${name}">
 
-    <fieldset class="line" label="${message:LANGUAGE_ISOCODE}">
-        <text value="${isocode}"/>
-    </fieldset>
+		<fieldset label="${message:NAME}">
+			<text value="${name}" class="name"/>
+		</fieldset>
 
-    <fieldset class="line" label="">
-      <part class="value,act-clickable">
-        <link class="btn" action="language" subaction="prop" type="edit">
-          <text value="${message:edit}"/>
-        </link>
-      </part>
-    </fieldset>
-  </form>
+		<fieldset label="${message:LANGUAGE_ISOCODE}">
+			<text value="${isocode}"/>
+		</fieldset>
+
+		<fieldset label="">
+			<link clickable="true" class="btn" action="language" subaction="prop" type="edit">
+				<text value="${message:edit}"/>
+			</link>
+		</fieldset>
+	</group>
 </output>

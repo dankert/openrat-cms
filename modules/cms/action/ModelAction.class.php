@@ -5,7 +5,7 @@ namespace cms\action;
 use cms\model\Model;
 
 
-
+use language\Messages;
 use util\Session;
 use util\Html;
 
@@ -79,7 +79,7 @@ class ModelAction extends BaseAction
         if  ( $this->hasRequestVar('is_default') )
             $this->model->setDefault();
 
-        $this->addNotice('model', 0, $this->model->name, 'DONE', Action::NOTICE_OK);
+        $this->addNoticeFor( $this->model, Messages::DONE );
     }
 
 
@@ -103,11 +103,11 @@ class ModelAction extends BaseAction
 		if   ( $this->hasRequestVar('confirm') )
 		{
 			$this->model->delete();
-			$this->addNotice('model', 0, $this->model->name, 'DONE', Action::NOTICE_OK);
+			$this->addNoticeFor( $this->model, Messages::DONE );
 		}
 		else
 		{
-			$this->addNotice('model', 0, $this->model->name, 'NOTHING_DONE', Action::NOTICE_WARN);
+			$this->addWarningFor( $this->model, Messages::NOTHING_DONE);
 		}
 	}
 	
@@ -118,8 +118,8 @@ class ModelAction extends BaseAction
 		if	( !$this->userIsAdmin() ) exit();
 
 		$this->model->setDefault();
-	
-        $this->addNotice('model', 0, $this->model->name, 'DONE', Action::NOTICE_OK);
+
+		$this->addNoticeFor( $this->model, Messages::DONE );
 	}
 
 
