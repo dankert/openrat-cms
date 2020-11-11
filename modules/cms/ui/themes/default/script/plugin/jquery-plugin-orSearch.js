@@ -8,6 +8,7 @@ jQuery.fn.orSearch = function( options )
       'dropdown': $(), // empty element
       'select'  : function( obj ) {},
       'afterSelect' : function() {},
+	  'openDropdown' : true,
 	  'action': 'search',
 	  'method': 'quicksearch'
     }, options);
@@ -48,9 +49,9 @@ jQuery.fn.orSearch = function( options )
 						$(dropdownEl).append(div);
 					}
 
-					if   ( data.output.result ) {
+					if   ( data.output.result && settings.openDropdown ) {
 						// Open the menu
-						$(dropdownEl).closest('.or-menu').addClass('menu--is-open');
+						//$(dropdownEl).closest('.or-menu').addClass('menu--is-open');
 						$(dropdownEl).addClass('dropdown--is-open');
 					}else {
 						$(dropdownEl).removeClass('dropdown--is-open');

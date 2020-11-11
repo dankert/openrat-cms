@@ -468,7 +468,7 @@
 				<text class="menu-label" value="${userfullname}"/>
 				<image class="menu-dropdown-icon" symbol="dropdown"/>
 				<!-- <image symbol="dropdown" />-->
-				<part class="dropdown">
+				<part class="dropdown,dropdown--on-right">
 					<if true="${isLoggedIn}">
 						<part class="dropdown-entry,act-clickable">
 							<link type="dialog" title="${message:menu_PROFILE_DESC}" action="profile" subaction="edit">
@@ -529,7 +529,7 @@
 					<image method="search"/>
 					<input name="text" hint="${message:search}"/>
 					<image class="menu-dropdown-icon" symbol="dropdown"/>
-					<part class="dropdown,act-global-search-results">
+					<part class="dropdown,dropdown--on-right,act-global-search-results">
 						<text class="dropdown-entry" value=""/>
 					</part>
 				</part>

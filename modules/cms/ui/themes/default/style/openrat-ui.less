@@ -65,12 +65,6 @@ a:hover {
 
 
 
-.or-search > .or-input {
-  padding-top: 1px;
-
-}
-
-
 /* Make Codemirror Auto-Resizable */
 .CodeMirror {
   height: auto;
@@ -111,6 +105,13 @@ a:hover {
 
 
 .or {
+    &-search > .or-input {
+        //padding-top: 1px;
+        box-shadow: none !important;
+        background-color: transparent !important;
+
+    }
+
     /* After page loading, all elements are hidden. This class will be removed by javascript. */
     &--initial-hidden {
         opacity: 0;

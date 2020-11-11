@@ -312,7 +312,7 @@
         </span>
         <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--dropdown or-menu-dropdown-icon') ?>"><?php echo O::escapeHtml('') ?>
         </i>
-        <div class="<?php echo O::escapeHtml('or-dropdown') ?>"><?php echo O::escapeHtml('') ?>
+        <div class="<?php echo O::escapeHtml('or-dropdown or-dropdown--on-right') ?>"><?php echo O::escapeHtml('') ?>
           <?php $if6=($isLoggedIn); if($if6) {  ?>
             <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
               <a title="<?php echo O::escapeHtml(''.@O::lang('menu_PROFILE_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('profile') ?>" data-method="<?php echo O::escapeHtml('edit') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('profile') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('edit') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':\'profile\',\'dialogMethod\':\'edit\'}') ?>" href="<?php echo O::escapeHtml('#/profile') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
@@ -388,7 +388,7 @@
           <input name="<?php echo O::escapeHtml('text') ?>" placeholder="<?php echo O::escapeHtml(''.@O::lang('search').'') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$text.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
           <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--dropdown or-menu-dropdown-icon') ?>"><?php echo O::escapeHtml('') ?>
           </i>
-          <div class="<?php echo O::escapeHtml('or-dropdown or-act-global-search-results') ?>"><?php echo O::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('or-dropdown or-dropdown--on-right or-act-global-search-results') ?>"><?php echo O::escapeHtml('') ?>
             <span class="<?php echo O::escapeHtml('or-dropdown-entry') ?>"><?php echo O::escapeHtml('') ?>
             </span>
           </div>

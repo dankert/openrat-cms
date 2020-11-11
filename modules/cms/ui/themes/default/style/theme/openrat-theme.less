@@ -198,28 +198,6 @@ html.or-theme-@{cms-theme-id} {
                     color: @cms-title-text-color;
                 }
 
-                .or-search {
-                    .or-inputholder {
-                        background-color: transparent;
-                        .box-shadow(0, 0, 0, transparent);
-
-                        input {
-                            background-color: transparent;
-                            color: @cms-title-text-color;
-
-                            &::placeholder {
-                                opacity: 1;
-                                color: @cms-title-text-color;
-                            }
-
-                            &:focus {
-                                &::placeholder {
-                                    color: fadeout(@cms-title-text-color, 50%);
-                                }
-                            }
-                        }
-                    }
-                }
             }
         }
 
@@ -349,24 +327,6 @@ html.or-theme-@{cms-theme-id} {
             &--primary {
                 background-color: @cms-title-background-color;
             }
-        }
-
-        /*
-        &-navtree-node:hover > .or-act-clickable {
-            background-color: @cms-title-background-color;
-            color: @cms-title-text-color;
-
-            & > .or-link {
-                color: @cms-title-text-color;
-            }
-        }*/
-
-
-        &-search > .or-input {
-            padding-top: 1px;
-            .box-shadow(0,0,0, black) !important; // no shadow.
-            background-color: transparent !important;
-
         }
     }
 

@@ -2,12 +2,17 @@
     &dropdown {
 
         display: none;
+        overflow: hidden;
 
         &--is-open {
             display: block;
         }
 
-        z-index: 120;
+        //top:2.7em;
+        &--on-right {
+            right:1em;
+        }
+        z-index: 1;
         min-width: 17em;
         position: absolute;
         padding: 0.5em 0;

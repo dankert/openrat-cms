@@ -270,25 +270,6 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 		$('.or-workbench-navigation').removeClass('workbench-navigation--is-small');
 	});
 
-	//$(viewEl).find('div.headermenu > a').each( function(idx,el)
-	//{
-		// Jeden Untermenüpunkt zum Fenstermenü hinzufügen.
-		
-		// Nein, Untermenüs erscheinen jetzt in der View selbst.
-		// $(el).wrap('<div class="entry act-clickable modal perview" />').parent().appendTo( $(viewEl).closest('div.panel').find('div.header div.dropdown').first() );
-	//} );
-	
-	//$(viewEl).find('div.header > a.back').each( function(idx,el)
-	//{
-		// Zurück-Knopf zum Fenstermenü hinzufügen.
-	//	$(el).removeClass('button').wrap('<div class="entry perview" />').parent().appendTo( $(viewEl).closest('div.panel').find('div.header div.dropdown').first() );
-	//} );
-	//$(viewEl).find('div.header').html('<!-- moved to window-menu -->');
-	
-//	$(viewEl).find('input,select,textarea').focus( function() {
-//		$(this).closest('div.panel').find('div.command').css('visibility','visible').fadeIn('slow');
-//	});
-
 
 	// Selectors (Einzel-Ausahl für Dateien) initialisieren
 	// Wurzel des Baums laden
@@ -373,8 +354,10 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
     function registerGlobalSearch($element )
     {
         $($element).find('.or-search .or-input').orSearch( {
-            dropdown:'.or-dropdown.or-act-global-search-results',
-            select: function(obj) {
+            dropdown    : '.or-dropdown.or-act-global-search-results',
+			openDropdown: false, // the dropdown is automatically opened by the menu.
+            select      : function(obj) {
+            	// open the search result
                 Openrat.Workbench.openNewAction( obj.name, obj.action, obj.id );
             }
         } );
