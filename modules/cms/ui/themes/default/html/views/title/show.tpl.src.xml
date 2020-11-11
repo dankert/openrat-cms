@@ -323,12 +323,6 @@
 								<text class="dropdown-text" value="${message:menu_src}"/>
 							</link>
 						</part>
-						<part class="dropdown-entry,act-clickable,filtered">
-							<link type="dialog" title="${message:menu_extension_desc}" subaction="extension">
-								<image method="extension"/>
-								<text class="dropdown-text" value="${message:menu_extension}"/>
-							</link>
-						</part>
 						<part class="dropdown-divide"/>
 						<part class="dropdown-entry,act-clickable,filtered">
 							<link type="dialog" title="${message:menu_value_desc}" subaction="value">

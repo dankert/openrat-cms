@@ -4,5 +4,10 @@
     <group title="${message:source}">
       <editor type="code" name="source" mode="htmlmixed"/>
     </group>
+    <group title="${message:options}" open="false">
+      <fieldset label="${message:file_extension}">
+		  <input name="extension" maxlength="10" required="true" />
+	  </fieldset>
+    </group>
   </form>
 </output>

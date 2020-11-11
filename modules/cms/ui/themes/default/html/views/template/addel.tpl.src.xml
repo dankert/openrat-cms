@@ -1,32 +1,17 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-  <form>
-    <fieldset class="line" label="">
-      <part class="label">
-        <text value="${message:name}"/>
-      </part>
-      <part class="value">
-        <input name="name" maxlength="50" required="true" focus="true"/>
-      </part>
-    </fieldset>
-    <fieldset class="line" label="">
-      <part class="label">
-        <text value="${message:element_type}"/>
-      </part>
-      <part class="value">
-        <set var="text" value="'text'"/>
-        <selectbox list="types" name="typeid" lang="true"/>
-      </part>
-    </fieldset>
-    <group title="${message:options}"/>
-    <fieldset class="line" label="">
-      <part class="label">
-			</part>
-      <part class="value">
-        <label for="addtotemplate">
-          <checkbox name="addtotemplate" default="true"/>
-          <text value="${message:menu_template_srcelement}"/>
-        </label>
-      </part>
-    </fieldset>
-  </form>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form>
+		<fieldset label="${message:name}">
+			<input name="name" maxlength="50" required="true" focus="true"/>
+		</fieldset>
+		<fieldset label="${message:element_type}">
+			<set var="text" value="'text'"/>
+			<selectbox list="types" name="typeid" lang="true"/>
+		</fieldset>
+		<group title="${message:options}">
+			<fieldset>
+				<checkbox name="addtotemplate" default="true" label="${message:menu_template_srcelement}"/>
+			</fieldset>
+		</group>
+	</form>
 </output>

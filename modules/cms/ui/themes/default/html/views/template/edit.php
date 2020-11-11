@@ -59,7 +59,7 @@
         </i>
         <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-open or-collapsible--on-open') ?>"><?php echo O::escapeHtml('') ?>
         </i>
-        <span><?php echo O::escapeHtml(''.@$name.'') ?>
+        <span><?php echo O::escapeHtml(''.@O::lang('model').' '.@$name.'') ?>
         </span>
       </h2>
       <div class="<?php echo O::escapeHtml('or-collapsible-value or-group-value') ?>"><?php echo O::escapeHtml('') ?>
