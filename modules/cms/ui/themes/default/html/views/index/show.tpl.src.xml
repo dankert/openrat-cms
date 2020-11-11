@@ -22,34 +22,42 @@
 	</head>
 
 	<body>
-
+		<!-- This is the CMS workbench which contains the whole application -->
 		<div id="workbench" class="or-workbench or--initial-hidden">
 
+			<!-- Navigation -->
 			<nav class="or-workbench-navigation">
-				<div class="or-view or-act-view-static" data-action="tree" data-method="show" />
+				<div class="or-workbench-navigation-container">
+					<div class="or-view or-act-view-static" data-action="tree" data-method="show" />
+				</div>
 			</nav>
 
+			<!-- Main area -->
 			<div class="or-workbench-main">
 
+				<!-- Header menu -->
 				<header id="title" class="or-workbench-title or-view or-act-view-static" data-action="title"
 						data-method="show">
 				</header>
 
 
+				<!-- The workplace with some views -->
 				<main class="or-workbench-workplace">
 
 					<header>
-						<div class="or-breadcrumb"></div>
+						<div class="or-breadcrumb"/>
 					</header>
 
 					<or:list list="${methodList}" value="method">
+
+						<!--  A section containing the view -->
 						<section class="or-workbench-section or-collapsible or-collapsible--is-open">
 
 							<header class="or-view-header or-collapsible-act-switch or-collapsible-title">
-								<i class="or-collapsible--on-open or-image-icon or-image-icon--node-open"></i>
-								<i class="or-collapsible--on-closed or-image-icon or-image-icon--node-closed"></i>
+								<i class="or-collapsible--on-open or-image-icon or-image-icon--node-open"/>
+								<i class="or-collapsible--on-closed or-image-icon or-image-icon--node-closed"/>
 								<span
-									class="or-view-icon or-image-icon or-image-icon--method-${method.name}"></span>
+									class="or-view-icon or-image-icon or-image-icon--method-${method.name}"/>
 								<or:text value="${message:METHOD_${method.name}}"/>
 							</header>
 

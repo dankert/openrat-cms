@@ -183,60 +183,75 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
         &-navigation {
 
+
+            &-container {
+
+                width: 30em;
+
+                position: fixed;
+                z-index: 1;
+                opacity: 0.9;
+                transition: width 0.15s ease-in-out;
+                height: 100%;
+                padding:0.7em;
+                overflow-x:hidden; // no horizontal scrolling
+
+            }
+
             width: 30em;
-            transition: width 0.15s ease-in-out;
-            //position: fixed;
-            height: 100%;
-            padding:0.7em;
-            overflow-x:hidden; // no horizontal scrolling
-            opacity: 0.9;
 
             &--is-small {
                 width: 6em;
-                overflow-y: hidden;
-                & ~ .or-workbench-workplace {
-                    margin-left: 0;
-                }
 
-                opacity: 0.2;
+                //& ~ .or-workbench-workplace {
+                //    margin-left: 0;
+                //}
+
+                .or-workbench-navigation-container {
+                    opacity: 0.2;
+                    width: 6em;
+                    overflow-y: hidden;
+
+                    &:hover {
+                        overflow-y: auto;
+                        width: 33%;
+                        opacity: 0.9;
+
+                        .or-navtree-text {
+                            opacity: 1;
+                        }
+                    }
+                }
 
                 .or-navtree-text {
                     opacity: 0;
                     transition: opacity ease-in-out;
                 }
-
-
-                &:hover {
-                    overflow-y: auto;
-                    width: 33%;
-                    z-index: 1;
-                    opacity: 0.9;
-                    position: fixed;
-
-                    .or-navtree-text {
-                        opacity: 1;
-                    }
-                }
-
             }
 
             @media @smartphones {
+
                 width: 0;
-                padding: 0;
-            }
 
-            &--is-open {
+                .or-workbench-navigation-container {
 
-                @media @smartphones {
-                    padding: 0.8em;
-                    position: fixed;
-                    overflow-y: auto;
-                    width: 90%;
-                    border-right: 1px solid;
-                    opacity: 0.98;
-                    z-index: 1;
+                    width: 0;
+                    padding: 0;
+                }
+
+                &--is-open {
+
+                    .or-workbench-navigation-container {
+
+                        padding: 0.8em;
+                        overflow-y: auto;
+                        width: 90%;
+                        //border-right: 1px solid;
+                        opacity: 0.98;
+                    }
                 }
             }
+
 
             @media @wide {
                 overflow-y: auto;
