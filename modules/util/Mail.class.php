@@ -525,13 +525,11 @@ class Mail
 	 * Prüft, ob eine Domain in einer List von Domains enthalten ist.
 	 *
 	 * @param $checkDomain string zu prüfende Domain
-	 * @param $domain_list string Liste von Domains als kommaseparierte Liste
+	 * @param $domains string Liste von Domains als kommaseparierte Liste
 	 * @return true, falls vorhanden, sonst false
 	 */
-	private static function containsDomain($checkDomain, $domain_list)
+	private static function containsDomain($checkDomain, $domains)
 	{
-		$domains = explode(',', $domain_list);
-
 		foreach ($domains as $domain) {
 			$domain = trim($domain);
 
@@ -545,6 +543,3 @@ class Mail
 		return false;
 	}
 }
-
-
-?>

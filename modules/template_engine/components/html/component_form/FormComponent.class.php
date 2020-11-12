@@ -20,6 +20,7 @@ class FormComponent extends Component
 	public $action = null;
 
 	public $subaction = null;
+	public $forwardTo = null;
 
 	public $id = '${_id}';
 
@@ -72,6 +73,8 @@ class FormComponent extends Component
 		$form->addAttribute('target', '_self');
 		$form->addAttribute('data-target', $this->target);
 		$form->addAttribute('action', './');
+		if   ( $this->forwardTo )
+			$form->addAttribute('data-forward-to', $this->forwardTo);
 		$form->addAttribute('data-method', $this->subaction);
 		$form->addAttribute('data-action', $this->action);
 		$form->addAttribute('data-id', $this->id);

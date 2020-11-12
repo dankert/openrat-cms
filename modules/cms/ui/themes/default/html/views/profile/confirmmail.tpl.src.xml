@@ -2,7 +2,7 @@
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<logo name="changemail"/>
 	<form>
-		<fieldset label="mail_code">
+		<fieldset label="${message:mail_code}">
 			<input type="text" name="code" size="30" focus="true" required="true"/>
 		</fieldset>
 	</form>

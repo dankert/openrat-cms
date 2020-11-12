@@ -25,7 +25,10 @@ use cms\model\BaseObject;
 use cms\model\User;
 use language\Language;
 use language\Messages;
+use logger\Logger;
 use LogicException;
+use security\Password;
+use util\exception\ValidationException;
 use util\Mail;
 use util\UIUtils;
 use security\Base2n;
@@ -132,14 +135,13 @@ class ProfileAction extends BaseAction
 		if	( empty($newMail) )
 		{
 			// Keine E-Mail-Adresse eingegeben.
-			$this->addValidationError('mail');
-			return;
+			throw new ValidationException('mail');
 		}
 		else
 		{
 			// Der Freischaltcode wird in der Sitzung gespeichert.
-			Session::set('mailChangeCode',$code   );
-			Session::set('mailChangeMail',$newMail);
+			Session::set( Session::KEY_MAIL_CHANGE_CODE,$code   );
+			Session::set( Session::KEY_MAIL_CHANGE_MAIL,$newMail);
 			
 			// E-Mail an die neue Adresse senden.
 			$mail = new Mail( $newMail,'mail_change_code' );
@@ -148,12 +150,12 @@ class ProfileAction extends BaseAction
 			
 			if	( $mail->send() )
 			{
-				$this->addNotice('user', 0, $this->user->name, 'mail_sent', Action::NOTICE_OK); // Meldung
+				$this->addNoticeFor( $this->user, Messages::MAIL_SENT);
 			}
 			else
 			{
-				$this->addNotice('user', 0, $this->user->name, 'mail_not_sent', Action::NOTICE_ERROR, array(), $mail->error); // Meldung
-				return;
+				Logger::warn('Mail could not be sent: '.$mail->error);
+				$this->addNoticeFor($this->user, Messages::MAIL_NOT_SENT,[],$mail->error); // Meldung
 			}
 		}
 	}
@@ -175,8 +177,8 @@ class ProfileAction extends BaseAction
 	 */
 	function confirmmailPost()
 	{
-		$sessionCode       = Session::get('mailChangeCode');
-		$newMail           = Session::get('mailChangeMail');
+		$sessionCode       = Session::get( Session::KEY_MAIL_CHANGE_CODE );
+		$newMail           = Session::get( Session::KEY_MAIL_CHANGE_MAIL );
 		$inputRegisterCode = $this->getRequestVar('code');
 		
 		if	( $sessionCode == $inputRegisterCode )
@@ -186,12 +188,12 @@ class ProfileAction extends BaseAction
 			$this->user->mail = $newMail;
 			$this->user->save();
 			
-			$this->addNotice('user', 0, $this->user->name, 'SAVED', Action::NOTICE_OK);
+			$this->addNoticeFor( $this->user,Messages::SAVED );
 		}
 		else
 		{
-			// Best�tigungscode stimmt nicht.
-			$this->addValidationError('code','code_not_match');
+			// Validation code does not match
+			throw new ValidationException('code',Messages::CODE_NOT_MATCH );
 		}
 		
 	}

@@ -63,12 +63,22 @@ Openrat.View = function( action,method,id,params ) {
         	$(element).html(data).removeClass("loader");
 
 			$(element).find('form').each( function() {
+
 				let form = new Openrat.Form();
+
 				form.close = function() {
 					view.close();
 				}
-				form.initOnElement(this);
 
+				form.forwardTo = function (action, subaction, id, data) {
+					view.action = action;
+					view.method = subaction;
+					view.id     = id;
+					view.params = data;
+					view.loadView();
+				}
+
+				form.initOnElement(this);
 			});
 
 			fireViewLoadedEvents( element );

@@ -372,6 +372,7 @@
         <xsd:attribute name="name" type="xsd:string"/>
         <xsd:attribute name="action" type="xsd:string"/>
         <xsd:attribute name="subaction" type="xsd:string"/>
+        <xsd:attribute name="forwardTo" type="xsd:string"/>
         <xsd:attribute name="id" type="xsd:string"/>
         <xsd:attribute name="languageid" type="xsd:string"/>
         <xsd:attribute name="modelid" type="xsd:string"/>

@@ -423,8 +423,8 @@ class DefaultConfig {
 					'priority' => '3',
 					'header_encoding' => 'Quoted-printable',
 					'client' => 'php',
-					'whitelist' => '',
-					'blacklist' => '',
+					'whitelist' => [],
+					'blacklist' => [],
 					'smtp' =>
 						[ 
 							'host' => 'locahost',

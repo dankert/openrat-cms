@@ -1,22 +1,19 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-  <form method="post">
-    <logo name="changemail"/>
-    <group title="${message:user_mail}">
-      <fieldset class="line" label="">
-        <part class="label">
-          <label for="mail">
-            <text value="${message:user_new_mail}"/>
-          </label>
-        </part>
-        <part class="value">
-          <input name="mail"/>
-        </part>
-      </fieldset>
-    </group>
-    <part class="act-clickable">
-      <link action="profile" subaction="confirmmail" type="dialog">
-        <text value="${mail_code}"/>
-      </link>
-    </part>
-  </form>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form method="post" forwardTo="confirmmail" afterSuccess="forward">
+		<logo name="changemail"/>
+
+		<group title="${message:user_mail}">
+			<fieldset label="${message:user_new_mail}">
+					<input name="mail" focus="true"/>
+			</fieldset>
+		</group>
+
+		<!--
+		<part class="act-clickable">
+			<link action="profile" subaction="confirmmail" type="dialog">
+				<text value="${mail_code}"/>
+			</link>
+		</part>-->
+	</form>
 </output>

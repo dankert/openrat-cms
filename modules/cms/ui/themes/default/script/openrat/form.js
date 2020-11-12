@@ -81,13 +81,9 @@ Openrat.Form = function() {
     }
 
     this.close = function() {
-
     }
 
     this.forwardTo = function (action, subaction, id, data) {
-
-        let view = new Openrat.View( action, subaction, id, data );
-        view.start( $(this.element).closest('.view') );
     }
 
     this.submit = function( mode ) {
@@ -100,13 +96,13 @@ Openrat.Form = function() {
 
 
 		// Show progress
-        let status = $('<div class="notice info"><div class="text loader"></div></div>');
-        $('#noticebar').prepend(status); // Notice anhängen.
+        let status = $('<div class="or-notice or-notice--info"><div class="or-text or-loader"></div></div>');
+        $('.or-notices').prepend(status); // Notice anhängen.
         $(status).show();
 
         // Alle vorhandenen Error-Marker entfernen.
         // Falls wieder ein Fehler auftritt, werden diese erneut gesetzt.
-        $(this.element).find('.or-input.error').removeClass('error');
+        $(this.element).find('.or-input.or-error').removeClass('error');
 
         let params = $(this.element).serializeArray();
         let data = {};
@@ -145,12 +141,19 @@ Openrat.Form = function() {
                 // Async: Window is closed, but the action will be startet now.
 
             let form = this;
-            $.ajax( { 'type':'POST',url:url, data:data, success:function(data, textStatus, jqXHR)
+            $.ajax( { 'type':'POST',url:url, data:data, success:function(responseData, textStatus, jqXHR)
                 {
                     form.setLoadStatus(false);
                     $(status).remove();
 
-                    form.doResponse(data,textStatus,form.element, function() {
+                    form.doResponse(responseData,textStatus,form.element, function() {
+
+						let afterSuccess = $(form.element).data('afterSuccess');
+						let forwardTo    = $(form.element).data('forwardTo'   );
+						let async        = $(form.element).data('async'       );
+
+						if   ( afterSuccess == 'forward' )
+							mode = modes.keepOpen;
 
 						// The data was successful saved.
 						// Now we can close the form.
@@ -162,13 +165,17 @@ Openrat.Form = function() {
 							$(form.element).closest('div.panel').find('div.header ul.views li.action.active').removeClass('dirty');
 						}
 
-						let afterSuccess = $(form.element).data('afterSuccess');
-						let async        = $(form.element).data('async'       );
 						if	( afterSuccess )
 						{
 							if   ( afterSuccess == 'reloadAll' )
 							{
 								Openrat.Workbench.reloadAll();
+							}
+							else if   ( afterSuccess == 'forward' )
+							{
+								// Forwarding to next subaction.
+								if   ( forwardTo )
+									form.forwardTo( data.action, forwardTo, data.id,[] );
 							}
 						} else {
 							if   ( async )
