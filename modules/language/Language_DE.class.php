@@ -1331,5 +1331,7 @@ Vielen Dank.',
 'APPLY'=>'Übernehmen',
 'URL'=>'Url',
 'SELF_NAME'=>'deutsch',
+'USE'=>'Verwenden',
+'PUBLIC'=>'öffentlich',
 ];}
 }

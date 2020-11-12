@@ -4,107 +4,94 @@
 		<hidden name="languageid"/>
 		<hidden name="elementid"/>
 		<hidden name="value_time"/>
-		<text value="${desc}" class="help"/>
-		<if value="${type}" equals="date">
-			<group title="${message:date}">
-				<fieldset class="line" label="">
-					<input type="date" name="date" label="date"/>
-					<input type="time" name="time" label="time"/>
-				</fieldset>
-			</group>
-		</if>
-		<if value="${type}" equals="text">
-			<fieldset>
-				<input size="50" maxlength="255" class="text" name="text"/>
-			</fieldset>
-		</if>
-		<if value="${type}" equals="longtext">
-			<hidden name="format"/>
-			<if present="preview">
-				<part class="preview">
-					<group title="${message:page_preview}">
-						<text value="${preview}" escape="false"/>
-					</group>
-				</part>
-			</if>
-			<if value="${editor}" equals="markdown">
-				<editor type="markdown" name="text"/>
-			</if>
-			<if value="${editor}" equals="html">
-				<editor type="html" name="text"/>
-			</if>
-			<if value="${editor}" equals="wiki">
-				<if present="languagetext">
-					<group title="${languagename}">
-						<text value="${languagetext}"/>
-					</group>
-					<newline/>
-					<newline/>
-				</if>
-				<editor type="wiki" name="text"/>
-				<group title="${message:help}" open="false">
-					<table>
-						<column>
-							<text value="${config:editor/text-markup/strong-begin}"/>
-							<text value="${message:text_markup_strong}"/>
-							<text value="${config:editor/text-markup/strong-end}"/>
-							<newline/>
-							<text value="${config:editor/text-markup/emphatic-begin}"/>
-							<text value="${message:text_markup_emphatic}"/>
-							<text value="${config:editor/text-markup/emphatic-end}"/>
-						</column>
-						<column>
-							<text value="${config:editor/text-markup/list-numbered}"/>
-							<text value="${message:text_markup_numbered_list}"/>
-							<newline/>
-							<text value="${config:editor/text-markup/list-numbered}"/>
-							<text value="..."/>
-							<newline/>
-						</column>
-						<column>
-							<text value="${config:editor/text-markup/list-unnumbered}"/>
-							<text value="${message:text_markup_unnumbered_list}"/>
-							<newline/>
-							<text value="${config:editor/text-markup/list-unnumbered}"/>
-							<text value="..."/>
-							<newline/>
-						</column>
-						<column>
-							<text value="${config:editor/text-markup/table-cell-sep}"/>
-							<text value="${message:text_markup_table}"/>
-							<text value="${config:editor/text-markup/table-cell-sep}"/>
-							<text value="..."/>
-							<text value="${config:editor/text-markup/table-cell-sep}"/>
-							<text value="..."/>
-							<text value="${config:editor/text-markup/table-cell-sep}"/>
-							<newline/>
-							<text value="${config:editor/text-markup/table-cell-sep}"/>
-							<text value="..."/>
-							<text value="${config:editor/text-markup/table-cell-sep}"/>
-							<text value="..."/>
-							<text value="${config:editor/text-markup/table-cell-sep}"/>
-							<text value="..."/>
-							<text value="${config:editor/text-markup/table-cell-sep}"/>
-							<newline/>
-						</column>
-					</table>
+		<group title="${desc}" collapsible="false">
+			<if value="${type}" equals="date">
+				<group title="${message:date}">
+					<fieldset label="">
+						<input type="date" name="date" label="date"/>
+						<input type="time" name="time" label="time"/>
+					</fieldset>
 				</group>
 			</if>
-			<if value="${editor}" equals="text">
-				<inputarea class="editor raw-editor" name="text" rows="25" cols="70"/>
+			<if value="${type}" equals="text">
+				<fieldset>
+					<input size="50" maxlength="255" class="text" name="text"/>
+				</fieldset>
 			</if>
-		</if>
-		<if value="${type}" equals="link">
-			<group>
-				<fieldset class="line" label="${message:link_target}">
-					<selector param="linkobjectid" types="${types}" name="${linkname}" id="${linkobjectid}"
-							  folderid="${rootfolderid}"/>
-				</fieldset>
-				<fieldset class="line" label="${message:link_url}">
-					<input name="linkurl"/>
-				</fieldset>
-			</group>
-		</if>
+			<if value="${type}" equals="longtext">
+				<hidden name="format"/>
+				<if value="${editor}" equals="markdown">
+					<editor type="markdown" name="text"/>
+				</if>
+				<if value="${editor}" equals="html">
+					<editor type="html" name="text"/>
+				</if>
+				<if value="${editor}" equals="wiki">
+					<editor type="wiki" name="text"/>
+					<group title="${message:help}" open="false">
+						<table filter="false">
+							<column>
+								<text value="${config:editor/text-markup/strong-begin}"/>
+								<text value="${message:text_markup_strong}"/>
+								<text value="${config:editor/text-markup/strong-end}"/>
+								<newline/>
+								<text value="${config:editor/text-markup/emphatic-begin}"/>
+								<text value="${message:text_markup_emphatic}"/>
+								<text value="${config:editor/text-markup/emphatic-end}"/>
+							</column>
+							<column>
+								<text value="${config:editor/text-markup/list-numbered}"/>
+								<text value="${message:text_markup_numbered_list}"/>
+								<newline/>
+								<text value="${config:editor/text-markup/list-numbered}"/>
+								<text value="..."/>
+								<newline/>
+							</column>
+							<column>
+								<text value="${config:editor/text-markup/list-unnumbered}"/>
+								<text value="${message:text_markup_unnumbered_list}"/>
+								<newline/>
+								<text value="${config:editor/text-markup/list-unnumbered}"/>
+								<text value="..."/>
+								<newline/>
+							</column>
+							<column>
+								<text value="${config:editor/text-markup/table-cell-sep}"/>
+								<text value="${message:text_markup_table}"/>
+								<text value="${config:editor/text-markup/table-cell-sep}"/>
+								<text value="..."/>
+								<text value="${config:editor/text-markup/table-cell-sep}"/>
+								<text value="..."/>
+								<text value="${config:editor/text-markup/table-cell-sep}"/>
+								<newline/>
+								<text value="${config:editor/text-markup/table-cell-sep}"/>
+								<text value="..."/>
+								<text value="${config:editor/text-markup/table-cell-sep}"/>
+								<text value="..."/>
+								<text value="${config:editor/text-markup/table-cell-sep}"/>
+								<text value="..."/>
+								<text value="${config:editor/text-markup/table-cell-sep}"/>
+								<newline/>
+							</column>
+						</table>
+					</group>
+				</if>
+				<if value="${editor}" equals="text">
+					<inputarea class="editor raw-editor" name="text" rows="25" cols="70"/>
+				</if>
+			</if>
+			<if value="${type}" equals="link">
+				<group>
+					<fieldset class="line" label="${message:link_target}">
+						<selector param="linkobjectid" types="${types}" name="${linkname}" id="${linkobjectid}"
+								  folderid="${rootfolderid}"/>
+					</fieldset>
+					<fieldset class="line" label="${message:link_url}">
+						<input name="linkurl"/>
+					</fieldset>
+				</group>
+			</if>
+		</group>
 		<if value="${type}" equals="list">
 			<group>
 				<part>
@@ -149,33 +136,22 @@
 						</part>
 					</group>
 				</if>
-				<group title="${message:PAGE_PREVIEW}">
-					<part>
-						<checkbox name="preview"/>
-						<label for="preview">
-							<text value="${message:PAGE_PREVIEW}"/>
-						</label>
-					</part>
-				</group>
 			</if>
 		</if>
+
 		<group title="${message:options}">
-			<if present="release">
-				<part>
-					<checkbox name="release"/>
-					<label for="release">
-						<text value="${message:RELEASE}"/>
-					</label>
-				</part>
-			</if>
-			<if present="publish">
-				<part>
-					<checkbox name="publish"/>
-					<label for="publish">
-						<text value="${message:PAGE_PUBLISH_AFTER_SAVE}"/>
-					</label>
-				</part>
-			</if>
+			<fieldset>
+				<if present="release">
+					<part>
+						<checkbox name="release" label="${message:RELEASE}"/>
+					</part>
+				</if>
+				<if present="publish">
+					<part>
+						<checkbox name="publish" label="${message:PAGE_PUBLISH_AFTER_SAVE}"/>
+					</part>
+				</if>
+			</fieldset>
 		</group>
 	</form>
 </output>

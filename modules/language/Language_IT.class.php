@@ -1327,5 +1327,7 @@ Gracias.',
 'APPLY'=>'Apply',
 'URL'=>'URL',
 'SELF_NAME'=>'italiano',
+'USE'=>'Use',
+'PUBLIC'=>'public',
 ];}
 }

@@ -94,7 +94,6 @@ class PageelementAction extends BaseAction
     {
 
         $this->value = new Value();
-        //$this->value->publisher = new PublishPreview();
 
 		$id = $this->request->id;
 		$ids = explode('_',$id);
@@ -151,8 +150,9 @@ class PageelementAction extends BaseAction
 
 	/**
 	 * Anzeigen des Element-Inhaltes.
+	 * @deprecated
 	 */
-	public function propView()
+	public function propView_Unused()
 	{
 		$this->value->languageid = $this->page->languageid;
 		$this->value->objectid   = $this->page->objectid;
@@ -586,39 +586,6 @@ class PageelementAction extends BaseAction
             // einen Text eingegeben hat (Vorschaufunktion).
             $this->setTemplateVar( 'text',$this->linkifyOIDs( $this->value->text ) );
 
-
-        if	( $this->element->wiki && false /* OLD */ )
-        {
-            $project = new Project( $this->page->projectid );
-            $languages = $project->getLanguages();
-
-            if	( count($languages) > 1 )
-            {
-                $languages[$this->value->languageid] = $languages[$this->value->languageid].' *';
-                $this->setTemplateVar('languages',$languages);
-            }
-
-            if	( $this->hasRequestVar('otherlanguageid') )
-            {
-                $lid = $this->getRequestVar('otherlanguageid');
-                $otherValue = new Value();
-                $otherValue->languageid = $lid;
-                $otherValue->pageid     = $this->value->pageid;
-                $otherValue->element    = $this->value->element;
-                $otherValue->elementid  = $this->value->elementid;
-                $otherValue->publisher    = $this->value->publisher;
-                $otherValue->load();
-                $this->setTemplateVar('languagetext'   ,wordwrap($otherValue->text,100)  );
-                $this->setTemplateVar('languagename'   ,$languages[$lid]   );
-                $this->setTemplateVar('otherlanguageid',$lid               );
-            }
-
-            if ( !isset($this->templateVars['text']))
-            // Möglicherweise ist die Ausgabevariable bereits gesetzt, wenn man bereits
-            // einen Text eingegeben hat (Vorschaufunktion).
-            $this->setTemplateVar( 'text',$this->value->text          );
-        }
-
     }
 
 
@@ -665,6 +632,13 @@ class PageelementAction extends BaseAction
      */
     public function releasePost()
     {
+		$this->value->objectid   = $this->page->objectid;
+		$this->value->pageid     = $this->page->pageid;
+		$this->value->page       = $this->page;
+		$this->value->element    = &$this->element;
+		$this->value->elementid  = $this->element->elementid;
+		$this->value->element->load();
+
         $this->value->valueid = intval($this->getRequestVar('valueid'));
         $this->value->loadWithId();
 
@@ -673,12 +647,12 @@ class PageelementAction extends BaseAction
 
         // Pruefen, ob Berechtigung zum Freigeben besteht
         if	( !$this->page->hasRight(Acl::ACL_RELEASE) )
-            throw new \util\exception\SecurityException( 'Cannot release','no right' );
+            throw new SecurityException( 'Cannot release','no right' );
 
         // Inhalt freigeben
         $this->value->release();
 
-        $this->addNotice('pageelement', 0, $this->value->element->name, 'PAGEELEMENT_RELEASED', Action::NOTICE_OK);
+        $this->addNoticeFor($this->value, Messages::PAGEELEMENT_RELEASED );
     }
 
 
@@ -688,67 +662,48 @@ class PageelementAction extends BaseAction
     public function historyView()
     {
         $this->page->load();
-        $this->value->page = &$this->page;
 
-        $this->value->publisher  = $this->page->publisher;
-        $this->value->languageid = $this->page->languageid;
-        $this->value->objectid   = $this->page->objectid;
-        $this->value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
-        $this->value->element    = &$this->element;
-        $this->value->element->load();
+		$this->value->objectid   = $this->page->objectid;
+		$this->value->pageid     = $this->page->pageid;
+		$this->value->page       = $this->page;
+		$this->value->element    = &$this->element;
+		$this->value->elementid  = $this->element->elementid;
+		$this->value->element->load();
 
-        $list         = array();
-        //		$version_list = array();
-        $lfd_nr       = 0;
+		$languages = array();
 
-        foreach( $this->value->getVersionList() as $value )
-        {
-            $lfd_nr++;
-            $value->element = &$this->element;
-            $value->page    = &$this->page;
-            $value->publisher = &$this->page->publisher;
-            $value->generate();
+		foreach ( $this->page->getProject()->getLanguages() as $languageId=>$languageName )
+		{
+			$language = [
+				'id'     => $languageId,
+				'name'   => $languageName,
+				'values' => [],
+			];
 
+			$value = clone $this->value; // do not overwrite the value
+			$value->languageid = $languageId;
 
-            //			$date = date( \cms\base\Language::lang('DATE_FORMAT'),$value->lastchangeTimeStamp);
+			/** @var Value $value */
+			foreach($value->getVersionList() as $value) {
 
-            //			if	( in_array(	$this->element->type,array('text','longtext') ) )
-            //				$version_list[ $value->valueid ] = '('.$lfd_nr.') '.$date;
+				$language['values'][] = [
+					'text'       => $this->calculateValue( $value ),
+					'active'     => $value->active,
+					'publish'    => $value->publish,
+					'user'       => $value->lastchangeUserName,
+					'date'       => $value->lastchangeTimeStamp,
+					'id'         => $value->getId(),
+					'usable'     => ! $value->active,
+					'releasable' => $value->active && ! $value->publish,
+					'comparable' => in_array($this->element->typeid,[Element::ELEMENT_TYPE_LONGTEXT]),
+				];
+			}
 
-            $zeile = array(  'value'     => Text::maxLength($value->value, 50),
-                         'objectid'  => $this->page->objectid,
-                         'date'      => $value->lastchangeTimeStamp,
-                         'lfd_nr'    => $lfd_nr,
-                         'id'        => $value->valueid,
-                         'valueid'   => $value->valueid,
-                         'user'      => $value->lastchangeUserName );
+			$languages[$languageId] = $language;
+		}
 
-            // Nicht aktive Inhalte k�nnen direkt bearbeitet werden und sind
-            // nach dem Speichern dann wieder aktiv (nat�rlich als n�chster/neuer Inhalt)
-            if	( ! $value->active )
-            $zeile['useUrl'] = Html::url('pageelement','usevalue',$this->page->objectid,array('valueid'  =>$value->valueid,'mode'=>'edit'));
-
-            // Freigeben des Inhaltes.
-            // Nur das aktive Inhaltselement kann freigegeben werden. Nat�rlich auch nur,
-            // wenn es nicht schon freigegeben ist.
-            if	( ! $value->publish && $value->active )
-            $zeile['releaseUrl'] = Html::url('pageelement','release',$this->page->objectid,array('valueid'  =>$value->valueid ));
-
-            $zeile['public'] = $value->publish;
-            $zeile['active'] = $value->active;
-
-            $list[$lfd_nr] = $zeile;
-
-        }
-
-        if	( in_array( $this->value->element->type, array('longtext') ) && $lfd_nr >= 2 )
-        {
-            $this->setTemplateVar('compareid',$list[$lfd_nr-1]['id']);
-            $this->setTemplateVar('withid'   ,$list[$lfd_nr  ]['id']);
-        }
-
-        $this->setTemplateVar('name'     ,$this->element->name);
-        $this->setTemplateVar('el'       ,$list                );
+        $this->setTemplateVar('name'     ,$this->element->label );
+        $this->setTemplateVar('languages',$languages );
     }
 
 
@@ -953,39 +908,7 @@ class PageelementAction extends BaseAction
 
         $value->text           = $this->compactOIDs( $this->getRequestVar('text','raw') );
 
-        // Vorschau anzeigen
-        if	( $this->hasRequestVar('preview'  ) ||
-        $this->hasRequestVar('addmarkup')    )
-        {
-            $inputText = $this->getRequestVar('text','raw');
-
-            /*
-            if	( $this->hasRequestVar('preview') )
-            {
-                $value->page             = $this->page;
-                $value->simple           = false;
-                $value->page->languageid = $value->languageid;
-                $value->page->load();
-                $value->generate();
-                $this->setTemplateVar('preview',$value->value );
-            }*/
-
-
-            $this->setTemplateVar( 'release' ,$this->page->hasRight(Acl::ACL_RELEASE) );
-            $this->setTemplateVar( 'publish' ,$this->page->hasRight(Acl::ACL_PUBLISH) );
-            $this->setTemplateVar( 'html'    ,$value->element->html );
-            $this->setTemplateVar( 'wiki'    ,$value->element->wiki );
-            $this->setTemplateVar( 'text'    ,$inputText );
-            $this->setTemplateVar( 'name'    ,$value->element->name );
-            $this->setTemplateVar( 'desc'    ,$value->element->desc );
-            $this->setTemplateVar( 'objectid',$this->page->objectid );
-
-            $this->setTemplateVar( 'mode'    ,'edit' );
-        }
-        else
-        {
-            $this->afterSave($value);
-        }
+        $this->afterSave($value);
 
     }
 

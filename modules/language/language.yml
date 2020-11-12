@@ -6441,3 +6441,9 @@ SELF_NAME:
   ru: "русский"
   es: espanol
   it: italiano
+USE:
+  en: Use
+  de: Verwenden
+PUBLIC:
+  en: public
+  de: öffentlich

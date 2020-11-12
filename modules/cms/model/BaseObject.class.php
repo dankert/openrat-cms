@@ -189,6 +189,7 @@ class BaseObject extends ModelBase
     /** Sprach-ID
      * @see Language
      * @type Integer
+	 * @deprecated 
      */
     var $languageid;
 
@@ -196,6 +197,7 @@ class BaseObject extends ModelBase
      * Projektmodell-ID
      * @see Projectmodel
      * @type Integer
+	 * @deprecated
      */
     var $modelid;
 

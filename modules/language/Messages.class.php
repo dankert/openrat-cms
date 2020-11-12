@@ -1288,4 +1288,6 @@ class Messages {
   const APPLY = 'APPLY';
   const URL = 'URL';
   const SELF_NAME = 'SELF_NAME';
+  const USE = 'USE';
+  const PUBLIC = 'PUBLIC';
 }

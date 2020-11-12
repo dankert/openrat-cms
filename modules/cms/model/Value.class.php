@@ -285,21 +285,22 @@ class Value extends ModelBase
 	 */
 	function getVersionList()
 	{
-		$db = \cms\base\DB::get();
-
-		$sql = $db->sql( 'SELECT {{value}}.*,{{user}}.name as lastchange_username'.
-		                '  FROM {{value}}'.
-		                '  LEFT JOIN {{user}} ON {{user}}.id={{value}}.lastchange_userid'.
-		                '  WHERE elementid ={elementid}'.
-		                '    AND pageid    ={pageid}'.
-		                '    AND languageid={languageid}'.
-		                '  ORDER BY lastchange_date' );
-		$sql->setInt( 'elementid' ,$this->element->elementid );
-		$sql->setInt( 'pageid'    ,$this->pageid    );
-		$sql->setInt( 'languageid',$this->languageid);
+		$stmt = DB::sql( <<<SQL
+		   SELECT {{value}}.*,{{user}}.name as lastchange_username
+		                  FROM {{value}}
+		                  LEFT JOIN {{user}} ON {{user}}.id={{value}}.lastchange_userid
+		                  WHERE elementid ={elementid}
+		                    AND pageid    ={pageid}
+		                    AND languageid={languageid}
+		                  ORDER BY lastchange_date
+SQL
+		);
+		$stmt->setInt( 'elementid' ,$this->element->elementid );
+		$stmt->setInt( 'pageid'    ,$this->pageid    );
+		$stmt->setInt( 'languageid',$this->languageid);
 
 		$list = array();
-		foreach($sql->getAll() as $row )
+		foreach($stmt->getAll() as $row )
 		{
 			$val = new Value();
 			$val->valueid = $row['id'];
@@ -310,13 +311,17 @@ class Value extends ModelBase
 			$val->linkToObjectId = intval($row['linkobjectid']);
 			$val->number         = intval($row['number'      ]);
 			$val->date           = intval($row['date'        ]);
-	
+			$val->element        = $this->element;
+			$val->elementid      = $this->elementid;
+			$val->languageid     = $this->languageid;
+
 			$val->active         = ( $row['active' ]=='1' );
 			$val->publish        = ( $row['publish']=='1' );
 	
 			$val->lastchangeTimeStamp = intval($row['lastchange_date'    ]);
 			$val->lastchangeUserId    = intval($row['lastchange_userid'  ]);
 			$val->lastchangeUserName  = $row['lastchange_username'];
+
 			$list[] = $val;
 		}
 		return $list;

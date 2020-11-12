@@ -1351,5 +1351,7 @@ MENU_INDEX_ADMINISTRATION_DESC =',
 'APPLY'=>'Apply',
 'URL'=>'URL',
 'SELF_NAME'=>'espanol',
+'USE'=>'Use',
+'PUBLIC'=>'public',
 ];}
 }

@@ -1326,5 +1326,7 @@ Thank you.',
 'APPLY'=>'Apply',
 'URL'=>'URL',
 'SELF_NAME'=>'english',
+'USE'=>'Use',
+'PUBLIC'=>'public',
 ];}
 }

@@ -1,54 +1,56 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-  <table>
-    <row>
-      <column/>
-      <column>
-        <text type="emphatic" value="${message:COMPARE}"/>
-        <text value=" "/>
-        <date date="${date_left}"/>
-      </column>
-      <column/>
-      <column>
-        <text type="emphatic" value="${message:WITH}"/>
-        <text value=" "/>
-        <date date="${date_right}"/>
-      </column>
-    </row>
-    <row>
-      <column colspan="4"/>
-    </row>
-    <list list="${diff}" extract="true">
-      <row class="diff">
-        <if present="left">
-          <column width="5%" class="line">
-            <text value="${left.line}" type="tt"/>
-          </column>
-          <column width="45%" class="${left.type}">
-            <text value="${left.text}"/>
-          </column>
-        </if>
-        <else>
-          <column colspan="2" class="help" width="50%">
-            <text value=" "/>
-          </column>
-        </else>
-        <if present="right">
-          <column width="5%" class="line">
-            <text value="${right.line}" type="tt"/>
-          </column>
-          <column width="45%" class="${right.type}">
-            <text value="${right.text}"/>
-          </column>
-        </if>
-        <else>
-          <column colspan="2" class="help" width="50%">
-            <text value=" "/>
-          </column>
-        </else>
-      </row>
-      <set var="left"/>
-      <set var="right"/>
-    </list>
-  </table>
-  <button text="BUTTON_BACK"/>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<table>
+		<row>
+			<column/>
+			<column>
+				<text type="emphatic" value="${message:COMPARE}"/>
+				<text value=" "/>
+				<date date="${date_left}"/>
+			</column>
+			<column/>
+			<column>
+				<text type="emphatic" value="${message:WITH}"/>
+				<text value=" "/>
+				<date date="${date_right}"/>
+			</column>
+		</row>
+		<row>
+			<column colspan="4"/>
+		</row>
+		<list list="${diff}" extract="true">
+			<row class="diff">
+				<if present="left">
+					<column width="5%" class="diff-line">
+						<text value="${left.line}" type="tt"/>
+					</column>
+					<column width="45%" class="diff-text--${left.type}">
+						<text value="${left.text}"/>
+					</column>
+				</if>
+				<else>
+					<column colspan="2" class="help" width="50%">
+						<text value=" "/>
+					</column>
+				</else>
+				<if present="right">
+					<column width="5%" class="diff-line">
+						<text value="${right.line}" type="tt"/>
+					</column>
+					<column width="45%" class="diff-text--${right.type}">
+						<text value="${right.text}"/>
+					</column>
+				</if>
+				<else>
+					<column colspan="2" class="help" width="50%">
+						<text value=" "/>
+					</column>
+				</else>
+			</row>
+			<!--
+			<set var="left"/>
+			<set var="right"/>
+			-->
+		</list>
+	</table>
 </output>

@@ -1,0 +1,32 @@
+.or {
+    &-diff {
+        &-line {
+            text-align: right;
+        }
+
+        &-text {
+
+            /* unchanged */
+            &--equal {
+            }
+
+            /* removed */
+            &--old {
+                background-color: #f88989;
+                color: black;
+            }
+
+            /* new */
+            &--new {
+                background-color: #7bad7b;
+                color: black;
+            }
+
+            /* changed */
+            &--notequal {
+                background-color: #cbcb16;
+                color: black;
+            }
+        }
+    }
+}

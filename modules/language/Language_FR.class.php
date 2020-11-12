@@ -1327,5 +1327,7 @@ Merci.',
 'APPLY'=>'Apply',
 'URL'=>'URL',
 'SELF_NAME'=>'francais',
+'USE'=>'Use',
+'PUBLIC'=>'public',
 ];}
 }

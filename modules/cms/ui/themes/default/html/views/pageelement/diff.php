@@ -34,11 +34,11 @@
         <?php foreach((array)$diff as $list_key=>$list_value) { extract($list_value); ?>
           <tr class="<?php echo O::escapeHtml('or-diff') ?>"><?php echo O::escapeHtml('') ?>
             <?php $if5=(isset($left)); if($if5) {  ?>
-              <td width="<?php echo O::escapeHtml('5%') ?>" class="<?php echo O::escapeHtml('or-line') ?>"><?php echo O::escapeHtml('') ?>
+              <td width="<?php echo O::escapeHtml('5%') ?>" class="<?php echo O::escapeHtml('or-diff-line') ?>"><?php echo O::escapeHtml('') ?>
                 <tt><?php echo O::escapeHtml(''.@$left['line'].'') ?>
                 </tt>
               </td>
-              <td width="<?php echo O::escapeHtml('45%') ?>" class="<?php echo O::escapeHtml('or-'.@$left['type'].'') ?>"><?php echo O::escapeHtml('') ?>
+              <td width="<?php echo O::escapeHtml('45%') ?>" class="<?php echo O::escapeHtml('or-diff-text--'.@$left['type'].'') ?>"><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(''.@$left['text'].'') ?>
                 </span>
               </td>
@@ -50,11 +50,11 @@
               </td>
              <?php } ?>
             <?php $if5=(isset($right)); if($if5) {  ?>
-              <td width="<?php echo O::escapeHtml('5%') ?>" class="<?php echo O::escapeHtml('or-line') ?>"><?php echo O::escapeHtml('') ?>
+              <td width="<?php echo O::escapeHtml('5%') ?>" class="<?php echo O::escapeHtml('or-diff-line') ?>"><?php echo O::escapeHtml('') ?>
                 <tt><?php echo O::escapeHtml(''.@$right['line'].'') ?>
                 </tt>
               </td>
-              <td width="<?php echo O::escapeHtml('45%') ?>" class="<?php echo O::escapeHtml('or-'.@$right['type'].'') ?>"><?php echo O::escapeHtml('') ?>
+              <td width="<?php echo O::escapeHtml('45%') ?>" class="<?php echo O::escapeHtml('or-diff-text--'.@$right['type'].'') ?>"><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(''.@$right['text'].'') ?>
                 </span>
               </td>
@@ -66,12 +66,7 @@
               </td>
              <?php } ?>
           </tr>
-          <?php  { unset($left) ?>
-           <?php } ?>
-          <?php  { unset($right) ?>
-           <?php } ?>
          <?php } ?>
       </table>
     </div>
   </div>
-  
