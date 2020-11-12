@@ -4993,9 +4993,6 @@ CODE_DISABLED:
 CODE_NOT_MATCH:
   de: Der Bestätigungs-Code ist ungültig.
   en: Confirmation code is not valid.
-COMMON_VALIDATION_EROR:
-  de: Bitte korrigieren Sie Ihre Eingabefehler.
-  en: Please correct your input data
 COMMON_VALIDATION_ERROR:
   de: Bitte korrigieren Sie Ihre Eingabefehler.
   en: Please correct your input data.
