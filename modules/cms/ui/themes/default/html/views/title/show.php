@@ -370,6 +370,26 @@
                 </span>
               </a>
             </div>
+            <?php $if7=(O::config(['login','register'])); if($if7) {  ?>
+              <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
+                <a title="<?php echo O::escapeHtml(''.@O::lang('REGISTER_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('login') ?>" data-method="<?php echo O::escapeHtml('register') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('login') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('register') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':\'login\',\'dialogMethod\':\'register\'}') ?>" href="<?php echo O::escapeHtml('#/login') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
+                  <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-register') ?>"><?php echo O::escapeHtml('') ?>
+                  </i>
+                  <span class="<?php echo O::escapeHtml('or-dropdown-text') ?>"><?php echo O::escapeHtml(''.@O::lang('REGISTER').'') ?>
+                  </span>
+                </a>
+              </div>
+             <?php } ?>
+            <?php $if7=(O::config(['login','send_password'])); if($if7) {  ?>
+              <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
+                <a title="<?php echo O::escapeHtml(''.@O::lang('SEND_PASSWORD_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('login') ?>" data-method="<?php echo O::escapeHtml('password') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('login') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('password') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':\'login\',\'dialogMethod\':\'password\'}') ?>" href="<?php echo O::escapeHtml('#/login') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
+                  <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-password') ?>"><?php echo O::escapeHtml('') ?>
+                  </i>
+                  <span class="<?php echo O::escapeHtml('or-dropdown-text') ?>"><?php echo O::escapeHtml(''.@O::lang('SEND_PASSWORD').'') ?>
+                  </span>
+                </a>
+              </div>
+             <?php } ?>
            <?php } ?>
         </div>
       </div>

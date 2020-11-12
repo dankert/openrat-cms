@@ -514,6 +514,24 @@
 								<text class="dropdown-text" value="${message:USER_LOGIN}"/>
 							</link>
 						</part>
+						<if value="${config:login/register}">
+							<part class="dropdown-entry,act-clickable">
+								<link type="dialog" title="${message:REGISTER_DESC}" action="login" subaction="register">
+									<image method="register"/>
+									<text class="dropdown-text" value="${message:REGISTER}"/>
+								</link>
+							</part>
+
+						</if>
+						<if value="${config:login/send_password}">
+							<part class="dropdown-entry,act-clickable">
+								<link type="dialog" title="${message:SEND_PASSWORD_DESC}" action="login" subaction="password">
+									<image method="password"/>
+									<text class="dropdown-text" value="${message:SEND_PASSWORD}"/>
+								</link>
+							</part>
+
+						</if>
 					</else>
 				</part>
 			</part>

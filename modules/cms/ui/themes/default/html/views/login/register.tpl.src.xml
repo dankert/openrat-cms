@@ -1,28 +1,16 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-  <if true="${config:login/register}">
-    <form>
-      <logo name="register"/>
-      <fieldset class="line" label="">
-        <part class="label">
-          <label for="mail">
-            <text value="${message:USER_MAIL}"/>
-          </label>
-        </part>
-        <part class="value">
-          <input name="mail" default="" class="focus"/>
-        </part>
-      </fieldset>
-      <fieldset class="line" label="">
-        <part class="label">
-				</part>
-        <part class="value">
-				</part>
-      </fieldset>
-    </form>
-  </if>
-  <else>
-    <part class="message error">
-      <text value="${message:REGISTER_NOT_ENABLED}"/>
-    </part>
-  </else>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<if true="${config:login/register}">
+		<form afterSuccess="forward" forwardTo="registercode">
+			<logo name="register"/>
+			<fieldset label="${message:USER_MAIL}">
+				<input name="mail" default="" class="focus"/>
+			</fieldset>
+		</form>
+	</if>
+	<else>
+		<part class="message,error">
+			<text value="${message:REGISTER_NOT_ENABLED}"/>
+		</part>
+	</else>
 </output>

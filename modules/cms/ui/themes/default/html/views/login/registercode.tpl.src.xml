@@ -1,37 +1,19 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-  <form>
-    <logo name="register"/>
-    <fieldset class="line" label="">
-      <part class="label">
-        <text value="${message:USER_REGISTER_CODE}"/>
-      </part>
-      <part class="value">
-        <input name="code" default="" size="25" class="focus"/>
-      </part>
-    </fieldset>
-    <fieldset class="line" label="">
-      <part class="label">
-        <text value="${message:USER_USERNAME}"/>
-      </part>
-      <part class="value">
-        <input type="text" name="username" value="" size="25"/>
-      </part>
-    </fieldset>
-    <fieldset class="line" label="">
-      <part class="label">
-        <text value="${message:USER_PASSWORD}"/>
-      </part>
-      <part class="value">
-        <password name="password" default="" size="25"/>
-      </part>
-    </fieldset>
-    <fieldset class="line" label="">
-      <part class="label">
-        <text value="${message:DATABASE}"/>
-      </part>
-      <part class="value">
-        <selectbox name="dbid" list="dbids" default="actdbid"/>
-      </part>
-    </fieldset>
-  </form>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form>
+		<logo name="register"/>
+
+		<fieldset label="${message:USER_REGISTER_CODE}">
+			<input name="code" default="" size="25" class="focus"/>
+		</fieldset>
+		<fieldset label="${message:USER_USERNAME}">
+			<input type="text" name="username" value="" size="25"/>
+		</fieldset>
+		<fieldset label="${message:USER_PASSWORD}">
+			<password name="password" default="" size="25"/>
+		</fieldset>
+		<fieldset label="${message:DATABASE}">
+			<selectbox name="dbid" list="dbids" default="actdbid"/>
+		</fieldset>
+	</form>
 </output>

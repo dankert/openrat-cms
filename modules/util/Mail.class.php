@@ -514,10 +514,10 @@ class Mail
 	 * @param $email_address Adresse
 	 * @return true, falls Adresse OK, sonst false
 	 */
-	function checkAddress($email_address)
+	public static function checkAddress($email_address)
 	{
 		// Source: de.php.net/ereg
-		return ereg("^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{2,5}$", $email_address);
+		return \preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i", $email_address);
 	}
 
 

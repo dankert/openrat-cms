@@ -17,6 +17,7 @@ use http\Env\Request;
 use language\Messages;
 use openid_connect\OpenIDConnectClient;
 use util\exception\SecurityException;
+use util\exception\ValidationException;
 use util\FileUtils;
 use util\Http;
 use cms\auth\InternalAuth;
@@ -775,16 +776,11 @@ class LoginAction extends BaseAction
 	public function registercodeView()
 	{
 		$conf = Configuration::rawConfig();
-		foreach( $conf['database'] as $dbname=>$dbconf )
-		{
-			if	( is_array($dbconf) && $dbconf['enabled'] )
-				$dbids[$dbname] = $dbconf['description'];
-		}
 
-		$this->setTemplateVar( 'dbids',$dbids );
+		$this->setTemplateVar( 'dbids',$this->getSelectableDatabases() );
 		
 		$db = DB::get();
-		if	( is_object($db) )
+		if	( $db )
 			$this->setTemplateVar('actdbid',$db->id);
 		else
 			$this->setTemplateVar('actdbid',$conf['database-defaults']['default-id']);
@@ -797,21 +793,22 @@ class LoginAction extends BaseAction
 	
 	public function registerPost()
 	{
-		Session::set('registerMail',$this->getRequestVar('mail') );
-		
-			srand ((double)microtime()*1000003);
-		$registerCode = rand();
-		
-		Session::set('registerCode',$registerCode                );
-
 		$email_address = $this->getRequestVar('mail',RequestParams::FILTER_MAIL);
-		
+
 		if	( ! Mail::checkAddress($email_address) )
 		{
 			$this->addValidationError('mail');
 			return;
 		}
+
+		Session::set( Session::KEY_REGISTER_MAIL,$email_address );
 		
+		srand ((double)microtime()*1000003);
+		$registerCode = rand();
+		
+		Session::set( Session::KEY_REGISTER_CODE,$registerCode  );
+
+
 		// E-Mail and die eingegebene Adresse verschicken
 		$mail = new Mail($email_address,
 		                 'register_commit_code');
@@ -819,12 +816,11 @@ class LoginAction extends BaseAction
 		
 		if	( $mail->send() )
 		{
-			$this->addNotice('', 0, '', 'mail_sent', Action::NOTICE_OK);
+			$this->addNoticeFor( new User(), Messages::MAIL_SENT);
 		}
 		else
 		{
-			$this->addNotice('', 0, '', 'mail_not_sent', Action::NOTICE_ERROR, array(), $mail->error);
-			return;
+			$this->addErrorFor( new User(),Messages::MAIL_NOT_SENT, [], $mail->error);
 		}
 	}
 
@@ -837,15 +833,11 @@ class LoginAction extends BaseAction
 	{
 		$conf = Configuration::rawConfig();
 
-		$origRegisterCode  = Session::get('registerCode');
+		$origRegisterCode  = Session::get( Session::KEY_REGISTER_CODE );
 		$inputRegisterCode = $this->getRequestVar('code');
 		
 		if	( $origRegisterCode != $inputRegisterCode )
-		{
-			// Best?tigungscode stimmt nicht.
-			$this->addValidationError('code','code_not_match');
-			return;
-		}
+			throw new ValidationException('code', Messages::CODE_NOT_MATCH ); // Validation code does not match.
 
 		// Best?tigungscode stimmt ?berein.
 		// Neuen Benutzer anlegen.
@@ -857,23 +849,20 @@ class LoginAction extends BaseAction
 		}
 		
 		$user = User::loadWithName( $this->getRequestVar('username'),User::AUTH_TYPE_INTERNAL );
-		if	( $user->isValid() )
-		{
-			$this->addValidationError('username','USER_ALREADY_IN_DATABASE');
-			return;
-		}
-		
+		if	( $user )
+			throw new ValidationException('username',Messages::USER_ALREADY_IN_DATABASE );
+
 		if	( strlen($this->getRequestVar('password')) < $conf['security']['password']['min_length'] )
-		{
-			$this->addValidationError('password','password_minlength',array('minlength'=>$conf['security']['password']['min_length']));
-			return;
-		}
-		
+			throw new ValidationException('password', Messages::PASSWORD_MINLENGTH/*,[
+				'minlength'=>$conf['security']['password']['min_length']
+			]*/);
+
 		$newUser = new User();
 		$newUser->name = $this->getRequestVar('username');
+		$newUser->fullname = $newUser->name;
 		$newUser->add();
 			
-		$newUser->mail     = Session::get('registerMail');
+		$newUser->mail = Session::get( Session::KEY_REGISTER_MAIL );
 		$newUser->save();
 			
 		$newUser->setPassword( $this->getRequestVar('password'),true );
@@ -907,16 +896,15 @@ class LoginAction extends BaseAction
 	 */
 	function passwordPost()
 	{
-		if	( !$this->hasRequestVar('username') )
-		{
-			$this->addValidationError('username');
-			return;
-		}
-		
-		$user = User::loadWithName( $this->getRequestVar("username"),User::AUTH_TYPE_INTERNAL );
-		//		Html::debug($user);
-		Password::delay();
-		if	( $user->isValid() )
+		$username = $this->getRequestVar('username');
+		if	( ! $username  )
+			throw new ValidationException('username');
+
+		$user = User::loadWithName( $username,User::AUTH_TYPE_INTERNAL );
+
+		Password::delay(); // Crypto-Wait
+
+		if	( $user )
 		{
 			srand ((double)microtime()*1000003);
 			$code = rand();
@@ -926,22 +914,21 @@ class LoginAction extends BaseAction
 			$eMail->setVar('name',$user->getName());
 			$eMail->setVar('code',$code);
 			if	( $eMail->send() )
-				$this->addNotice('user', 0, $user->getName(), 'mail_sent', Action::NOTICE_OK);
+				$this->addNoticeFor( new User(), Messages::MAIL_SENT);
 			else
-				$this->addNotice('user', 0, $user->getName(), 'mail_not_sent', Action::NOTICE_ERROR, array(), $eMail->error);
-			
+				// Yes, the mail is not sent but we are faking a sent mail.
+				// so no one is able to check if the username exists (if the mail system is down)
+				$this->addNoticeFor( new User(), Messages::MAIL_SENT);
+
+			$this->setSessionVar(Session::KEY_PASSWORD_COMMIT_NAME,$user->name);
 		}
 		else
 		{
-			//$this->addNotice('','user','username_not_found');
-			// Trotzdem vort?uschen, eine E-Mail zu senden, damit die G?ltigkeit
-			// eines Benutzernamens nicht von au?en gepr?ft werden kann.
-			// 
-			$this->addNotice('user', 0, $this->getRequestVar("username"), 'mail_sent');
-
+			// There is no user with this name.
+			// We are faking a sending mail, so no one is able to check if this username exists.
+			sleep(1);
+			$this->addNoticeFor( new User(), Messages::MAIL_SENT);
 		}
-		
-		$this->setSessionVar(Session::KEY_PASSWORD_COMMIT_NAME,$user->name);
 	}
 
 	
@@ -979,7 +966,7 @@ class LoginAction extends BaseAction
 			return;
 		}
 		
-		$newPw = User::createPassword(); // Neues Kennwort erzeugen.
+		$newPw = $user->createPassword(); // Neues Kennwort erzeugen.
 		
 		$eMail = new Mail( $user->mail,'password_new' );
 		$eMail->setVar('name'    ,$user->getName());

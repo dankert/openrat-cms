@@ -27,6 +27,8 @@ class Session
 	const KEY_CONFIG = 'config';
 	const KEY_PASSWORD_COMMIT_CODE = 'password_commit_code';
 	const KEY_PASSWORD_COMMIT_NAME = 'password_commit_name';
+	const KEY_REGISTER_CODE = 'register_code';
+	const KEY_REGISTER_MAIL = 'register_mail';
 	const KEY_MAIL_CHANGE_CODE = 'mail_change_code';
 	const KEY_MAIL_CHANGE_MAIL = 'mail_change_mail';
 
