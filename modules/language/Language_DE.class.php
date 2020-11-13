@@ -1329,8 +1329,8 @@ Vielen Dank.',
 'APPLY'=>'Übernehmen',
 'URL'=>'Url',
 'SELF_NAME'=>'deutsch',
-'VALUE_USE'=>'Benutzen',
-'VALUE_USE_DESC'=>'Diesen Inhalt zur Bearbeitung verwenden.',
+'RESTORE'=>'Wiederherstellen',
+'RESTORE_DESC'=>'Diesen Inhalt wieder herstellen',
 'VALUE_PUBLIC'=>'öffentlich',
 ];}
 }

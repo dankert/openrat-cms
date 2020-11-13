@@ -59,7 +59,6 @@
                 &-userlist:after { content: "person"; }
                 &-user:after { content: "person"; }
                 &-profile:after { content: "person_pin"; }
-                &--method-settings:after { content: "settings"; }
                 &-configuration:after { content: "settings"; }
                 &-projectlist:after { content: "account_balance"; }
                 &-project:after { content: "account_balance"; }
@@ -72,6 +71,7 @@
 
             &--method {
 
+                &-settings:after { content: "settings"; }
                 &-password:after { content: "lock"; }
                 &-publish:after { content: "cloud_upload"; }
                 &-show:after { content: "slideshow"; }
@@ -85,6 +85,14 @@
                 &-preview:after { content: "desktop_windows"; }
                 &-edit:after { content: "spellcheck"; }
                 &-info:after { content: "info"; }
+                &-restore:after { content: "restore"; }
+                &-release:after { content: "check_circle"; }
+            }
+
+            &--status {
+
+                &-released:after { content: "verified_user"; }
+                &-active:after { content: "grade"; }
             }
 
             &--menu {

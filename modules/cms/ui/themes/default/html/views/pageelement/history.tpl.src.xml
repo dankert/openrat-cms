@@ -27,7 +27,7 @@
 						<column class="help">
 							<text value="${message:STATE}"/>
 						</column>
-						<column class="help">
+						<column class="help" colspan="2">
 							<text value="${message:ACTION}"/>
 						</column>
 					</row>
@@ -71,47 +71,37 @@
 							<column>
 								<text value="${user}"/>
 							</column>
-							<if true="${publish}">
-								<column>
-									<text value="${message:VALUE_PUBLIC}" type="strong"/>
-								</column>
-							</if>
-							<else>
+
+							<!-- State -->
+							<column width="5%">
+								<if true="${publish}">
+									<image symbol="status-released" title="${message:PAGEELEMENT_RELEASED}"/>
+								</if>
+								<if true="${active}">
+									<image symbol="status-active" title="${message:active}"/>
+								</if>
+							</column>
+
+							<!-- Actions -->
+							<column width="5%">
 								<if true="${releasable}">
-									<column class="act-clickable">
-										<link type="post" subaction="release" var1="valueid" value1="${id}"
-											  id="${objectid}" title="${message:RELEASE_DESC}">
-											<text value="${message:RELEASE}" type="strong"/>
-										</link>
-									</column>
+									<link type="post" subaction="release" var1="valueid" value1="${id}"
+										  id="${objectid}" title="${message:RELEASE_DESC}">
+										<image method="release"/>
+									</link>
 								</if>
-								<else>
-									<column>
-										<text value="${message:INACTIVE}" type="emphatic"/>
-									</column>
-								</else>
-							</else>
-							<if true="${active}">
-								<column>
-									<text value="${message:ACTIVE}" type="emphatic"/>
-								</column>
-							</if>
-							<else>
 								<if true="${usable}">
-									<column class="act-clickable">
-										<link type="post" subaction="use" var1="valueid" value1="${valueid}"
-											  id="${objectid}"
-											  title="${message:VALUE_USE_DESC}">
-											title="${message:USE_DESC}">
-											<text value="${message:VALUE_USE}"/>
-										</link>
-									</column>
+									<link clickable="true" type="post" subaction="restore" var1="valueid" value1="${id}"
+										  id="${objectid}" title="${message:RESTORE_DESC}">
+										<image method="restore"/>
+									</link>
+
+									<link clickable="true" type="dialog" subaction="value" var1="valueid" value1="${id}"
+										  id="${objectid}" title="${message:edit}">
+										<image method="edit"/>
+									</link>
 								</if>
-								<else>
-									<column>
-									</column>
-								</else>
-							</else>
+							</column>
 						</row>
 					</list>
 				</table>

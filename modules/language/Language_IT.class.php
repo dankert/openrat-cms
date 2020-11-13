@@ -1325,8 +1325,8 @@ Gracias.',
 'APPLY'=>'Apply',
 'URL'=>'URL',
 'SELF_NAME'=>'italiano',
-'VALUE_USE'=>'Utilizar',
-'VALUE_USE_DESC'=>'Use this value for editing.',
+'RESTORE'=>'Restore',
+'RESTORE_DESC'=>'Restore this value',
 'VALUE_PUBLIC'=>'public',
 ];}
 }

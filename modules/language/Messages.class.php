@@ -1286,7 +1286,7 @@ class Messages {
   const APPLY = 'APPLY';
   const URL = 'URL';
   const SELF_NAME = 'SELF_NAME';
-  const VALUE_USE = 'VALUE_USE';
-  const VALUE_USE_DESC = 'VALUE_USE_DESC';
+  const RESTORE = 'RESTORE';
+  const RESTORE_DESC = 'RESTORE_DESC';
   const VALUE_PUBLIC = 'VALUE_PUBLIC';
 }

@@ -183,11 +183,14 @@ class Value extends ModelBase
 	 */
 	function loadForPublic()
 	{
-		$stmt = Db::sql( 'SELECT * FROM {{value}}'.
-			                '  WHERE elementid ={elementid}'.
-			                '    AND pageid    ={pageid}'.
-			                '    AND languageid={languageid}'.
-			                '    AND publish=1' );
+		$stmt = Db::sql( <<<SQL
+			SELECT * FROM {{value}}
+			 WHERE elementid ={elementid}
+			   AND pageid    ={pageid}
+			   AND languageid={languageid}
+			   AND publish   =1
+SQL
+		);
 		$stmt->setInt( 'elementid' ,$this->elementid );
 		$stmt->setInt( 'pageid'    ,$this->pageid    );
 		$stmt->setInt( 'languageid',$this->languageid);
@@ -215,11 +218,14 @@ class Value extends ModelBase
 	 */
 	function load()
 	{
-		$stmt = Db::sql( 'SELECT * FROM {{value}}'.
-			             '  WHERE elementid ={elementid}'.
-			             '    AND pageid    ={pageid}'.
-			             '    AND languageid={languageid}'.
-			             '    AND active=1' );
+		$stmt = Db::sql( <<<SQL
+			SELECT * FROM {{value}}
+			 WHERE elementid ={elementid}
+			   AND pageid    ={pageid}
+			   AND languageid={languageid}
+			   AND active=1
+SQL
+		);
 		$stmt->setInt( 'elementid' ,$this->elementid );
 		$stmt->setInt( 'pageid'    ,$this->pageid    );
 		$stmt->setInt( 'languageid',$this->languageid);
@@ -246,17 +252,18 @@ class Value extends ModelBase
 	/**
 	 * Laden eines bestimmten Inhaltes aus der Datenbank
 	 */
-	function loadWithId( $valueid=0 )
+	function loadWithId( $valueid = null )
 	{
-		if	( $valueid != 0 )
+		if	( $valueid )
 			$this->valueid = $valueid;
 
-		$db = \cms\base\DB::get();
-
-		$sql = $db->sql( 'SELECT {{value}}.*,{{user}}.name as lastchange_username'.
-		                ' FROM {{value}}'.
-		                ' LEFT JOIN {{user}} ON {{user}}.id={{value}}.lastchange_userid'.
-		                '  WHERE {{value}}.id={valueid}' );
+		$sql = DB::sql( <<<SQL
+ 	SELECT {{value}}.*,{{user}}.name as lastchange_username
+	  FROM {{value}}
+	    LEFT JOIN {{user}} ON {{user}}.id={{value}}.lastchange_userid
+	        WHERE {{value}}.id={valueid}
+SQL
+		);
 		$sql->setInt( 'valueid',$this->valueid);
 		$row = $sql->getRow();
 		
@@ -352,13 +359,12 @@ SQL
 	{
 		$db = \cms\base\DB::get();
 
-		$sql = $db->sql( 
-<<<SQL
-	SELECT lastchange_date FROM {{value}}
-		WHERE elementid ={elementid}
-		  AND pageid    ={pageid}
-		  AND languageid={languageid}
-		  ORDER BY id DESC
+		$sql = $db->sql( <<<SQL
+			SELECT lastchange_date FROM {{value}}
+		     WHERE elementid ={elementid}
+		       AND pageid    ={pageid}
+		       AND languageid={languageid}
+		     ORDER BY id DESC
 SQL
 		);
 		$sql->setInt( 'elementid' ,$this->element->elementid );
@@ -377,8 +383,7 @@ SQL
 	 */
 	public function getLastChangeSinceByAnotherUser( $date, $userid )
 	{
-		$sql = Db::sql(
-<<<SQL
+		$sql = Db::sql( <<<SQL
 	SELECT lastchange_date FROM {{value}}
 		WHERE elementid ={elementid}
 		  AND pageid    ={pageid}

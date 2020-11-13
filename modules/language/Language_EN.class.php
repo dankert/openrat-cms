@@ -1324,8 +1324,8 @@ Thank you.',
 'APPLY'=>'Apply',
 'URL'=>'URL',
 'SELF_NAME'=>'english',
-'VALUE_USE'=>'Use',
-'VALUE_USE_DESC'=>'Use this value for editing.',
+'RESTORE'=>'Restore',
+'RESTORE_DESC'=>'Restore this value',
 'VALUE_PUBLIC'=>'public',
 ];}
 }

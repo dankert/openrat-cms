@@ -323,10 +323,15 @@ class PageelementAction extends BaseAction
 		$this->value->element->load();
 		$this->value->publish = false;
 
-		if	( intval($this->value->valueid)!=0 )
-		$this->value->loadWithId();
-		else
-		$this->value->load();
+
+		$valueId =$this->getRequestId('valueid');
+		if   ( $valueId ) {
+			$this->value->valueid = $valueId;
+			$this->value->loadWithId();
+		}
+		else {
+			$this->value->load();
+		}
 
 		$this->setTemplateVar('name'     ,$this->value->element->name     );
 		$this->setTemplateVar('desc'     ,$this->value->element->desc     );
@@ -568,7 +573,6 @@ class PageelementAction extends BaseAction
      */
     private function editlongtext()
     {
-
         if   ( $this->hasRequestVar('format') )
             // Individual format from request.
             $format = $this->getRequestId('format');
@@ -581,11 +585,7 @@ class PageelementAction extends BaseAction
         $this->setTemplateVar('format'   ,$format );
         $this->setTemplateVar( 'editor',Element::getAvailableFormats()[ $format ] );
 
-        if ( !isset($this->templateVars['text']))
-            // Möglicherweise ist die Ausgabevariable bereits gesetzt, wenn man bereits
-            // einen Text eingegeben hat (Vorschaufunktion).
-            $this->setTemplateVar( 'text',$this->linkifyOIDs( $this->value->text ) );
-
+        $this->setTemplateVar( 'text',$this->linkifyOIDs( $this->value->text ) );
     }
 
 
@@ -598,7 +598,6 @@ class PageelementAction extends BaseAction
     private function edittext()
     {
         $this->setTemplateVar( 'text',$this->value->text );
-
     }
 
 
@@ -606,7 +605,7 @@ class PageelementAction extends BaseAction
     /**
      * Wiederherstellung eines alten Inhaltes.
      */
-    public function usePost()
+    public function restorePost()
     {
         $this->value->valueid = $this->getRequestVar('valueid');
         $this->value->loadWithId();

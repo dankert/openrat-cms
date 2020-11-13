@@ -1325,8 +1325,8 @@ Merci.',
 'APPLY'=>'Apply',
 'URL'=>'URL',
 'SELF_NAME'=>'francais',
-'VALUE_USE'=>'Employer',
-'VALUE_USE_DESC'=>'Use this value for editing.',
+'RESTORE'=>'Restore',
+'RESTORE_DESC'=>'Restore this value',
 'VALUE_PUBLIC'=>'public',
 ];}
 }

@@ -1349,8 +1349,8 @@ MENU_INDEX_ADMINISTRATION_DESC =',
 'APPLY'=>'Apply',
 'URL'=>'URL',
 'SELF_NAME'=>'espanol',
-'VALUE_USE'=>'Employer',
-'VALUE_USE_DESC'=>'Use this value for editing.',
+'RESTORE'=>'Restore',
+'RESTORE_DESC'=>'Restore this value',
 'VALUE_PUBLIC'=>'public',
 ];}
 }

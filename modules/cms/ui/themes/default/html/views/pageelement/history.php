@@ -45,7 +45,7 @@
                       <span><?php echo O::escapeHtml(''.@O::lang('STATE').'') ?>
                       </span>
                     </td>
-                    <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
+                    <td colspan="<?php echo O::escapeHtml('2') ?>" class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
                       <span><?php echo O::escapeHtml(''.@O::lang('ACTION').'') ?>
                       </span>
                     </td>
@@ -92,48 +92,34 @@
                         <span><?php echo O::escapeHtml(''.@$user.'') ?>
                         </span>
                       </td>
-                      <?php $if8=($publish); if($if8) {  ?>
-                        <td><?php echo O::escapeHtml('') ?>
-                          <strong><?php echo O::escapeHtml(''.@O::lang('VALUE_PUBLIC').'') ?>
-                          </strong>
-                        </td>
-                       <?php } ?>
-                      <?php if(!$if8) {  ?>
+                      <td width="<?php echo O::escapeHtml('5%') ?>"><?php echo O::escapeHtml('') ?>
+                        <?php $if9=($publish); if($if9) {  ?>
+                          <i title="<?php echo O::escapeHtml(''.@O::lang('PAGEELEMENT_RELEASED').'') ?>" class="<?php echo O::escapeHtml('or-image-icon or-image-icon--status-released') ?>"><?php echo O::escapeHtml('') ?>
+                          </i>
+                         <?php } ?>
+                        <?php $if9=($active); if($if9) {  ?>
+                          <i title="<?php echo O::escapeHtml(''.@O::lang('active').'') ?>" class="<?php echo O::escapeHtml('or-image-icon or-image-icon--status-active') ?>"><?php echo O::escapeHtml('') ?>
+                          </i>
+                         <?php } ?>
+                      </td>
+                      <td width="<?php echo O::escapeHtml('5%') ?>"><?php echo O::escapeHtml('') ?>
                         <?php $if9=($releasable); if($if9) {  ?>
-                          <td class="<?php echo O::escapeHtml('or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
-                            <a title="<?php echo O::escapeHtml(''.@O::lang('RELEASE_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('post') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('release') ?>" data-id="<?php echo O::escapeHtml(''.@$objectid.'') ?>" data-extra-valueid="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('{\'valueid\':\''.@$id.'\'}') ?>" data-data="<?php echo O::escapeHtml('{"action":"pageelement","subaction":"release","id":"'.@$objectid.'","token":"'.@$_token.'","valueid":"'.@$id.'","none":"0"}') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
-                              <strong><?php echo O::escapeHtml(''.@O::lang('RELEASE').'') ?>
-                              </strong>
-                            </a>
-                          </td>
+                          <a title="<?php echo O::escapeHtml(''.@O::lang('RELEASE_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('post') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('release') ?>" data-id="<?php echo O::escapeHtml(''.@$objectid.'') ?>" data-extra-valueid="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('{\'valueid\':\''.@$id.'\'}') ?>" data-data="<?php echo O::escapeHtml('{"action":"pageelement","subaction":"release","id":"'.@$objectid.'","token":"'.@$_token.'","valueid":"'.@$id.'","none":"0"}') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
+                            <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-release') ?>"><?php echo O::escapeHtml('') ?>
+                            </i>
+                          </a>
                          <?php } ?>
-                        <?php if(!$if9) {  ?>
-                          <td><?php echo O::escapeHtml('') ?>
-                            <em><?php echo O::escapeHtml(''.@O::lang('INACTIVE').'') ?>
-                            </em>
-                          </td>
-                         <?php } ?>
-                       <?php } ?>
-                      <?php $if8=($active); if($if8) {  ?>
-                        <td><?php echo O::escapeHtml('') ?>
-                          <em><?php echo O::escapeHtml(''.@O::lang('ACTIVE').'') ?>
-                          </em>
-                        </td>
-                       <?php } ?>
-                      <?php if(!$if8) {  ?>
                         <?php $if9=($usable); if($if9) {  ?>
-                          <td class="<?php echo O::escapeHtml('or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
-                            <a title="<?php echo O::escapeHtml(''.@O::lang('VALUE_USE_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('post') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('use') ?>" data-id="<?php echo O::escapeHtml(''.@$objectid.'') ?>" data-extra-valueid="<?php echo O::escapeHtml(''.@$valueid.'') ?>" data-extra="<?php echo O::escapeHtml('{\'valueid\':\''.@$valueid.'\'}') ?>" data-data="<?php echo O::escapeHtml('{"action":"pageelement","subaction":"use","id":"'.@$objectid.'","token":"'.@$_token.'","valueid":"'.@$valueid.'","none":"0"}') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
-                              <span><?php echo O::escapeHtml(''.@O::lang('VALUE_USE').'') ?>
-                              </span>
-                            </a>
-                          </td>
+                          <a title="<?php echo O::escapeHtml(''.@O::lang('RESTORE_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('post') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('restore') ?>" data-id="<?php echo O::escapeHtml(''.@$objectid.'') ?>" data-extra-valueid="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('{\'valueid\':\''.@$id.'\'}') ?>" data-data="<?php echo O::escapeHtml('{"action":"pageelement","subaction":"restore","id":"'.@$objectid.'","token":"'.@$_token.'","valueid":"'.@$id.'","none":"0"}') ?>" class="<?php echo O::escapeHtml('or-link or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
+                            <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-restore') ?>"><?php echo O::escapeHtml('') ?>
+                            </i>
+                          </a>
+                          <a title="<?php echo O::escapeHtml(''.@O::lang('edit').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('value') ?>" data-id="<?php echo O::escapeHtml(''.@$objectid.'') ?>" data-extra-valueid="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('value') ?>" data-extra="<?php echo O::escapeHtml('{\'valueid\':\''.@$id.'\',\'dialogAction\':null,\'dialogMethod\':\'value\'}') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
+                            <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-edit') ?>"><?php echo O::escapeHtml('') ?>
+                            </i>
+                          </a>
                          <?php } ?>
-                        <?php if(!$if9) {  ?>
-                          <td><?php echo O::escapeHtml('') ?>
-                          </td>
-                         <?php } ?>
-                       <?php } ?>
+                      </td>
                     </tr>
                    <?php } ?>
                 </table>

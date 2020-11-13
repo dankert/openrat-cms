@@ -6431,16 +6431,12 @@ SELF_NAME:
   ru: "русский"
   es: espanol
   it: italiano
-VALUE_USE:
-  de: Benutzen
-  en: Use
-  es: Employer
-  fr: Employer
-  it: Utilizar
-  ru: Загрузить Используйте
-VALUE_USE_DESC:
-  de: Diesen Inhalt zur Bearbeitung verwenden.
-  en: Use this value for editing.
+RESTORE:
+  de: Wiederherstellen
+  en: Restore
+RESTORE_DESC:
+  de: Diesen Inhalt wieder herstellen
+  en: Restore this value
 VALUE_PUBLIC:
   en: public
   de: öffentlich

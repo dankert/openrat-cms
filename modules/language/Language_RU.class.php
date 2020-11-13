@@ -1325,8 +1325,8 @@ if you do not know where this mail comes from, please ignore it.',
 'APPLY'=>'Apply',
 'URL'=>'URL',
 'SELF_NAME'=>'русский',
-'VALUE_USE'=>'Загрузить Используйте',
-'VALUE_USE_DESC'=>'Use this value for editing.',
+'RESTORE'=>'Restore',
+'RESTORE_DESC'=>'Restore this value',
 'VALUE_PUBLIC'=>'public',
 ];}
 }
