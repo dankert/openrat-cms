@@ -341,12 +341,13 @@ SQL
 	 */
 	function getCountVersions()
 	{
-		$db = \cms\base\DB::get();
-
-		$sql = $db->sql( 'SELECT COUNT(*) FROM {{value}}'.
-		                '  WHERE elementid ={elementid}'.
-		                '    AND pageid    ={pageid}'.
-		                '    AND languageid={languageid}' );
+		$sql = DB::sql( <<<SQL
+SELECT COUNT(*) FROM {{value}}
+		                  WHERE elementid ={elementid}
+		                    AND pageid    ={pageid}
+		                    AND languageid={languageid}
+SQL
+		);
 		$sql->setInt( 'elementid' ,$this->element->elementid );
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
@@ -357,9 +358,7 @@ SQL
 
 	function getLastChangeTime()
 	{
-		$db = \cms\base\DB::get();
-
-		$sql = $db->sql( <<<SQL
+		$sql = DB::sql( <<<SQL
 			SELECT lastchange_date FROM {{value}}
 		     WHERE elementid ={elementid}
 		       AND pageid    ={pageid}
@@ -409,25 +408,29 @@ SQL
 	 */
 	function release()
 	{
-		$db = \cms\base\DB::get();
-
-		$sql = $db->sql( 'UPDATE {{value}}'.
-		                '  SET publish=0'.
-		                '  WHERE elementid ={elementid}'.
-		                '    AND pageid    ={pageid}'.
-		                '    AND languageid={languageid}' );
+		$sql = DB::sql( <<<SQL
+			UPDATE {{value}}
+		                  SET publish = 0
+		                  WHERE elementid ={elementid}
+		                    AND pageid    ={pageid}
+		                    AND languageid={languageid}
+SQL
+		);
 		$sql->setInt( 'elementid' ,$this->elementid );
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
 
 		$sql->query();
 
-		$sql = $db->sql( 'UPDATE {{value}}'.
-		                '  SET publish=1'.
-		                '  WHERE active    = 1'.
-		                '    AND elementid ={elementid}'.
-		                '    AND pageid    ={pageid}'.
-		                '    AND languageid={languageid}' );
+		$sql = Db::sql( <<<SQL
+			UPDATE {{value}}
+		                  SET publish = 1
+		                  WHERE active    = 1
+		                    AND elementid ={elementid}
+		                    AND pageid    ={pageid}
+		                    AND languageid={languageid}
+SQL
+		);
 		$sql->setInt( 'elementid' ,$this->elementid );
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
@@ -440,73 +443,77 @@ SQL
 	 */
 	function save()
 	{
-		$db = \cms\base\DB::get();
+		$stmt = Db::sql( <<<SQL
+			UPDATE {{value}}
+		                  SET active=0
+		                  WHERE elementid ={elementid}
+		                    AND pageid    ={pageid}
+		                    AND languageid={languageid}
+SQL
+		);
+		$stmt->setInt( 'elementid' ,$this->element->elementid );
+		$stmt->setInt( 'pageid'    ,$this->pageid    );
+		$stmt->setInt( 'languageid',$this->languageid);
 
-		$sql = $db->sql( 'UPDATE {{value}}'.
-		                '  SET active=0'.
-		                '  WHERE elementid ={elementid}'.
-		                '    AND pageid    ={pageid}'.
-		                '    AND languageid={languageid}' );
-		$sql->setInt( 'elementid' ,$this->element->elementid );
-		$sql->setInt( 'pageid'    ,$this->pageid    );
-		$sql->setInt( 'languageid',$this->languageid);
-
-		$sql->query();
+		$stmt->query();
 
 		if	( $this->publish )
 		{
 			// Wenn Inhalt sofort veroeffentlicht werden kann, dann
 			// alle anderen Inhalte auf nicht-veroeffentlichen stellen 
-			$sql = $db->sql( 'UPDATE {{value}}'.
-			                '  SET publish=0'.
-			                '  WHERE elementid ={elementid}'.
-			                '    AND pageid    ={pageid}'.
-			                '    AND languageid={languageid}' );
-			$sql->setInt( 'elementid' ,$this->element->elementid );
-			$sql->setInt( 'pageid'    ,$this->pageid    );
-			$sql->setInt( 'languageid',$this->languageid);
+			$stmt = DB::sql( <<<SQL
+ 					UPDATE {{value}}
+			                  SET publish=0
+			                  WHERE elementid ={elementid}
+			                    AND pageid    ={pageid}
+			                    AND languageid={languageid}
+SQL
+			);
+			$stmt->setInt( 'elementid' ,$this->element->elementid );
+			$stmt->setInt( 'pageid'    ,$this->pageid    );
+			$stmt->setInt( 'languageid',$this->languageid);
 
-			$sql->query();
+			$stmt->query();
 		}
 
 		// Naechste ID aus Datenbank besorgen
-		$sql = $db->sql('SELECT MAX(id) FROM {{value}}');
-		$this->valueid = intval($sql->getOne())+1;
+		$stmt = DB::sql('SELECT MAX(id) FROM {{value}}');
+		$this->valueid = intval($stmt->getOne())+1;
 
-		$sql = $db->sql( <<<SQL
+		$stmt = DB::sql( <<<SQL
 INSERT INTO {{value}}
             (id       ,linkobjectid  ,text  ,number  ,date  ,elementid  ,format  ,pageid  ,languageid  ,active,publish  ,lastchange_date  ,lastchange_userid  )
      VALUES ({valueid},{linkobjectid},{text},{number},{date},{elementid},{format},{pageid},{languageid},1     ,{publish},{lastchange_date},{lastchange_userid})
 SQL
 		);
-		$sql->setInt( 'valueid'   ,$this->valueid            );
-		$sql->setInt( 'format'    ,$this->format             );
-		$sql->setInt( 'elementid' ,$this->element->elementid );
-		$sql->setInt( 'pageid'    ,$this->pageid             );
-		$sql->setInt( 'languageid',$this->languageid         );
+		$stmt->setInt( 'valueid'   ,$this->valueid            );
+		$stmt->setInt( 'format'    ,$this->format             );
+		$stmt->setInt( 'elementid' ,$this->element->elementid );
+		$stmt->setInt( 'pageid'    ,$this->pageid             );
+		$stmt->setInt( 'languageid',$this->languageid         );
 
 		if	( intval($this->linkToObjectId)==0)
-			$sql->setNull  ( 'linkobjectid' );
-		else	$sql->setInt   ( 'linkobjectid',$this->linkToObjectId   );
+			$stmt->setNull  ( 'linkobjectid' );
+		else	$stmt->setInt   ( 'linkobjectid',$this->linkToObjectId   );
 
 		if	( $this->text == '' )
-			$sql->setNull  ( 'text' );
-		else	$sql->setString( 'text',$this->text );
+			$stmt->setNull  ( 'text' );
+		else	$stmt->setString( 'text',$this->text );
 
 		if	( intval($this->number)==0)
-			$sql->setNull  ( 'number' );
-		else	$sql->setInt   ( 'number',$this->number );
+			$stmt->setNull  ( 'number' );
+		else	$stmt->setInt   ( 'number',$this->number );
 
 		if	( intval($this->date)==0)
-			$sql->setNull  ( 'date' );
-		else	$sql->setInt   ( 'date',$this->date );
+			$stmt->setNull  ( 'date' );
+		else	$stmt->setInt   ( 'date',$this->date );
 
-		$sql->setBoolean( 'publish'          ,$this->publish );
-		$sql->setInt    ( 'lastchange_date'  ,Startup::now()         );
+		$stmt->setBoolean( 'publish'          ,$this->publish );
+		$stmt->setInt    ( 'lastchange_date'  ,Startup::now()         );
 		$user = \util\Session::getUser();
-		$sql->setInt    ( 'lastchange_userid',$user->userid  );
+		$stmt->setInt    ( 'lastchange_userid',$user->userid  );
 
-		$sql->query();
+		$stmt->query();
 		
 		// Nur ausfuehren, wenn in Konfiguration aktiviert.
 		$limit = Configuration::subset(['content','revision-limit'] );
@@ -524,7 +531,7 @@ SQL
 		$limitConfig = Configuration::subset(['content','revision-limit']);
 
 		$sql = DB::sql( <<<SQL
-		SELECT id FROM {{value}}
+		             SELECT id FROM {{value}}
 			                  WHERE elementid  = {elementid}
 			                    AND pageid     = {pageid}
 			                    AND languageid = {languageid}
@@ -588,15 +595,18 @@ SQL
 	 */
 	function delete()
 	{
-		$db = \cms\base\DB::get();
-		$sql = $db->sql( 'DELETE * FROM {{value}}'.
-		                '  WHERE elementid ={elementid}'.
-		                '    AND pageid    ={pageid}'.
-		                '    AND languageid={languageid}' );
-		$sql->setInt( 'elementid' ,$this->element->elementid );
-		$sql->setInt( 'pageid'    ,$this->pageid    );
-		$sql->setInt( 'languageid',$this->languageid);
-		$row = $sql->getRow();
+		$stmt = DB::sql( <<<SQL
+		               DELETE * FROM {{value}}
+		                  WHERE elementid ={elementid}
+		                    AND pageid    ={pageid}
+		                    AND languageid={languageid}
+SQL
+		);
+		$stmt->setInt( 'elementid' ,$this->element->elementid );
+		$stmt->setInt( 'pageid'    ,$this->pageid    );
+		$stmt->setInt( 'languageid',$this->languageid);
+
+		$stmt->execute();
 	}
 
 
@@ -608,19 +618,21 @@ SQL
 	  */
 	function getObjectIdsByValue( $text )
 	{
-		$db = \cms\base\DB::get();
-		
-		$sql = $db->sql( 'SELECT {{object}}.id FROM {{value}} '.
-		                ' LEFT JOIN {{page}} '.
-		                '   ON {{page}}.id={{value}}.pageid '.
-		                ' LEFT JOIN {{object}} '.
-		                '   ON {{object}}.id={{page}}.objectid '.
-		                ' WHERE {{value}}.text LIKE {text}'.
-		                '   AND {{value}}.languageid={languageid}'.
-		                '  ORDER BY {{object}}.lastchange_date DESC' );
+		$sql = DB::sql( <<<SQL
+                 SELECT {{object}}.id FROM {{value}}
+		                 LEFT JOIN {{page}}
+		                   ON {{page}}.id={{value}}.pageid
+		                 LEFT JOIN {{object}}
+		                   ON {{object}}.id={{page}}.objectid
+		                 WHERE {{value}}.text LIKE {text}
+		                   AND {{value}}.languageid={languageid}
+		                  ORDER BY {{object}}.lastchange_date DESC
+SQL
+	    );
 		                
 		$sql->setInt   ( 'languageid',$this->languageid );
 		$sql->setString( 'text'      ,'%'.$text.'%'     );
+
 		return $sql->getCol();
 	}
 
@@ -632,17 +644,17 @@ SQL
 	  */
 	function getObjectIdsByLastChangeUserId( $userid )
 	{
-
-		$db = \cms\base\DB::get();
-		
-		$sql = $db->sql( 'SELECT {{object}}.id FROM {{value}} '.
-		                ' LEFT JOIN {{page}} '.
-		                '   ON {{page}}.id={{value}}.pageid '.
-		                ' LEFT JOIN {{object}} '.
-		                '   ON {{object}}.id={{page}}.objectid '.
-		                ' WHERE {{value}}.lastchange_userid={userid}'.
-		                '   AND {{value}}.languageid={languageid}'.
-		                '  ORDER BY {{object}}.lastchange_date DESC' );
+		$sql = DB::sql( <<<SQL
+                  SELECT {{object}}.id FROM {{value}}
+		                 LEFT JOIN {{page}}
+		                   ON {{page}}.id={{value}}.pageid
+		                 LEFT JOIN {{object}}
+		                   ON {{object}}.id={{page}}.objectid
+		                 WHERE {{value}}.lastchange_userid={userid}
+		                   AND {{value}}.languageid={languageid}
+		                  ORDER BY {{object}}.lastchange_date DESC
+SQL
+		);
 		$sql->setInt   ( 'languageid',$this->languageid );
 		$sql->setInt   ( 'userid'    ,$userid           );
 
@@ -658,9 +670,7 @@ SQL
 	  */
 	public static function getLastChangedObjectByUserId( $userid )
 	{
-		$db = \cms\base\DB::get();
-		
-		$sql = $db->sql( <<<SQL
+		$sql = DB::sql( <<<SQL
 SELECT {{object}}.id
   FROM {{value}} 
   LEFT JOIN {{page}} 
@@ -683,9 +693,7 @@ SQL
 	  */
 	public static function getLastChangedObjectInProjectByUserId( $projectid, $userid )
 	{
-		$db = \cms\base\DB::get();
-		
-		$sql = $db->sql( <<<SQL
+		$sql = DB::sql( <<<SQL
 SELECT {{object}}.id
   FROM {{value}} 
   LEFT JOIN {{page}} 
@@ -708,7 +716,6 @@ SQL
 	 */
 	function tmpfile()
 	{
-		$db = \cms\base\DB::get();
 		$filename = \util\FileUtils::getTempFileName(  );
 		return $filename;
 	}
