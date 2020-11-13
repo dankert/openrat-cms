@@ -93,6 +93,8 @@ class IndexAction extends Action
      */
 	public function showView()
 	{
+		$this->setContentSecurityPolicy();
+
         $user = Session::getUser();
 
         // Is a user logged in?
@@ -388,5 +390,23 @@ class IndexAction extends Action
             $style = C::subset( ['interface', 'style'])->get('default','default');
         return $style;
     }
+
+
+
+
+	/**
+	 * Content-Security-Policy.
+	 */
+	private function setContentSecurityPolicy()
+	{
+		$csp = Configuration::subset('security' )->get('csp', [
+			'default-src' =>'\'self\'', // Default for all is 'self' (CSS, styles, etc)
+			'frame-src'   => '*'        // For preview of urls we need to show every url in an iframe.
+		] );
+
+		header('Content-Security-Policy: ' . implode(';', array_map( function($value,$key) {
+				return $key.' '.$value;
+			},$csp,array_keys($csp) )));
+	}
 
 }

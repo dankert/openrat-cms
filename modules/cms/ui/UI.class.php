@@ -125,12 +125,10 @@ class UI
      */
     private static function setContentSecurityPolicy()
     {
-        // config is not loaded yet.
-        $contentSecurityPolicyEntries = [
-            'default-src \'self\'', // Default for all is 'self'
-            'frame-src *'           // For preview of urls we need to show every url in an iframe.
-		];
-        header('Content-Security-Policy: ' . implode(';', $contentSecurityPolicyEntries));
+        // config is not loaded yet. Allow nothing...
+        header('Content-Security-Policy: default-src \'none\'' );
+
+        // This will be overwritten by the index action
     }
     
     
