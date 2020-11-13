@@ -5,7 +5,7 @@
 
 			<group collapsible="true" title="${message:language}: ${language.name}">
 
-				<table widths="5%,5%,15%,15%,35%,10%,10%">
+				<table>
 					<row class="headline">
 
 						<!--
@@ -16,13 +16,13 @@
 							<text value="${message:COMPARE}"/>
 						</column>
 						<column class="help">
+							<text value="${message:VALUE}"/>
+						</column>
+						<column class="help">
 							<text value="${message:DATE}"/>
 						</column>
 						<column class="help">
 							<text value="${message:USER}"/>
-						</column>
-						<column class="help">
-							<text value="${message:VALUE}"/>
 						</column>
 						<column class="help">
 							<text value="${message:STATE}"/>
@@ -46,7 +46,7 @@
 							<column>
 								<text value="${lfd_nr}"/>
 							</column>-->
-							<column>
+							<column width="5%">
 								<if true="${comparable}">
 									<radio name="compareid" value="${id}"/>
 								</if>
@@ -54,7 +54,7 @@
 									<text value=" "/>
 								</else>
 							</column>
-							<column>
+							<column width="5%">
 								<if true="${comparable}">
 									<radio name="withid" value="${id}"/>
 								</if>
@@ -62,14 +62,14 @@
 									<text value=" "/>
 								</else>
 							</column>
+							<column width="50%">
+								<text value="${text}" title="${text}"/>
+							</column>
 							<column>
 								<date date="${date}"/>
 							</column>
 							<column>
 								<text value="${user}"/>
-							</column>
-							<column>
-								<text value="${text}" title="${text}"/>
 							</column>
 							<if true="${publish}">
 								<column>

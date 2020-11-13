@@ -744,26 +744,16 @@ class PageelementAction extends BaseAction
         $text2 = explode("\n",$value2->text);
 
         // Unterschiede feststellen.
-        $res_diff = Text::diff($text1,$text2);
+        $diffResult = Text::diff($text1,$text2);
 
-        list( $text1,$text2 ) = $res_diff;
+        $outputResult = array_map( function( $left,$right) {
+        	return [
+        		'left' => $left,
+				'right'=> $right
+			];
+		},$diffResult[0],$diffResult[1] );
 
-        $diff = array();
-        $i = 0;
-        while( isset($text1[$i]) || isset($text2[$i]) )
-        {
-            $line = array();
-
-            if	( isset($text1[$i]['text']) )
-            $line['left'] = $text1[$i];
-
-            if	( isset($text2[$i]['text']) )
-            $line['right'] = $text2[$i];
-
-            $i++;
-            $diff[] = $line;
-        }
-        $this->setTemplateVar('diff',$diff );
+        $this->setTemplateVar('diff',$outputResult );
     }
 
 

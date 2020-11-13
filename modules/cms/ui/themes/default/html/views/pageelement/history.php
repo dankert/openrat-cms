@@ -30,15 +30,15 @@
                       </span>
                     </td>
                     <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
+                      <span><?php echo O::escapeHtml(''.@O::lang('VALUE').'') ?>
+                      </span>
+                    </td>
+                    <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
                       <span><?php echo O::escapeHtml(''.@O::lang('DATE').'') ?>
                       </span>
                     </td>
                     <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
                       <span><?php echo O::escapeHtml(''.@O::lang('USER').'') ?>
-                      </span>
-                    </td>
-                    <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
-                      <span><?php echo O::escapeHtml(''.@O::lang('VALUE').'') ?>
                       </span>
                     </td>
                     <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
@@ -62,7 +62,7 @@
                    <?php } ?>
                   <?php foreach((array)$values as $list_key=>$list_value) { extract($list_value); ?>
                     <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
-                      <td><?php echo O::escapeHtml('') ?>
+                      <td width="<?php echo O::escapeHtml('5%') ?>"><?php echo O::escapeHtml('') ?>
                         <?php $if9=($comparable); if($if9) {  ?>
                           <input type="<?php echo O::escapeHtml('radio') ?>" name="<?php echo O::escapeHtml('compareid') ?>" value="<?php echo O::escapeHtml(''.@$id.'') ?>" <?php if(@$compareid=='${id}'){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-radio') ?>" /><?php echo O::escapeHtml('') ?>
                          <?php } ?>
@@ -71,7 +71,7 @@
                           </span>
                          <?php } ?>
                       </td>
-                      <td><?php echo O::escapeHtml('') ?>
+                      <td width="<?php echo O::escapeHtml('5%') ?>"><?php echo O::escapeHtml('') ?>
                         <?php $if9=($comparable); if($if9) {  ?>
                           <input type="<?php echo O::escapeHtml('radio') ?>" name="<?php echo O::escapeHtml('withid') ?>" value="<?php echo O::escapeHtml(''.@$id.'') ?>" <?php if(@$withid=='${id}'){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-radio') ?>" /><?php echo O::escapeHtml('') ?>
                          <?php } ?>
@@ -80,16 +80,16 @@
                           </span>
                          <?php } ?>
                       </td>
+                      <td width="<?php echo O::escapeHtml('50%') ?>"><?php echo O::escapeHtml('') ?>
+                        <span title="<?php echo O::escapeHtml(''.@$text.'') ?>"><?php echo O::escapeHtml(''.@$text.'') ?>
+                        </span>
+                      </td>
                       <td><?php echo O::escapeHtml('') ?>
                         <?php include_once( 'modules/template_engine/components/html/component_date/component-date.php'); { component_date($date); ?>
                          <?php } ?>
                       </td>
                       <td><?php echo O::escapeHtml('') ?>
                         <span><?php echo O::escapeHtml(''.@$user.'') ?>
-                        </span>
-                      </td>
-                      <td><?php echo O::escapeHtml('') ?>
-                        <span title="<?php echo O::escapeHtml(''.@$text.'') ?>"><?php echo O::escapeHtml(''.@$text.'') ?>
                         </span>
                       </td>
                       <?php $if8=($publish); if($if8) {  ?>

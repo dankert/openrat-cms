@@ -156,19 +156,43 @@ class Text
 	}
 
 
+	const DIFF_NEW     = 'new';
+	const DIFF_OLD     = 'old';
+	const DIFF_EQUAL   = 'equal';
+	const DIFF_CHANGED = 'notequal';
+	const DIFF_EMPTY   = 'empty';
+
 	/**
 	 * Vergleicht 2 Text-Arrays und ermittelt eine Darstellung der Unterschiede
-	 *
+	 * @param $from_text array text lines
+	 * @param $to_text   array text lines
+	 * @return array[] an array containing 2 arrays with the same length
 	 */
 	public static function diff($from_text, $to_text)
 	{
+		/**
+		 * Creating a diff entry
+		 * @param $text
+		 * @param $line
+		 * @param $type
+		 * @return array
+		 */
+		$createEntry = function($text, $line, $type) {
+			return [
+				'text' => $text,
+				'line' => $line,
+				'type' => $type,
+			];
+		};
+		$emptyEntry = $createEntry(null,null,self::DIFF_EMPTY);
+
 		// Zaehler pro Textarray
 		$pos_from = -1;
-		$pos_to = -1;
+		$pos_to   = -1;
 
 		// Ergebnis-Arrays
-		$from_out = array();
-		$to_out = array();
+		$from_out = [];
+		$to_out   = [];
 
 		while (true) {
 			$pos_from++;
@@ -183,8 +207,8 @@ class Text
 				!isset($to_text  [$pos_to])) {
 				// Text in 'neu' ist zuende, die Restzeilen von 'alt' werden ausgegeben
 				while (isset($from_text[$pos_from])) {
-					$from_out[] = array('text' => $from_text[$pos_from], 'line' => $pos_from + 1, 'type' => 'old');
-					$to_out  [] = array();
+					$from_out[] = $createEntry( $from_text[$pos_from],$pos_from + 1, self::DIFF_OLD);
+					$to_out  [] = $emptyEntry;
 					$pos_from++;
 				}
 				break;
@@ -193,8 +217,8 @@ class Text
 				isset($to_text  [$pos_to])) {
 				// Umgekehrter Fall: Text in 'alt' ist zuende, Restzeilen aus 'neu' werden ausgegeben
 				while (isset($to_text[$pos_to])) {
-					$from_out[] = array();
-					$to_out  [] = array('text' => $to_text[$pos_to], 'line' => $pos_to + 1, 'type' => 'new');
+					$from_out[] = $emptyEntry;
+					$to_out  [] = $createEntry($to_text[$pos_to], $pos_to + 1, self::DIFF_NEW);
 					$pos_to++;
 				}
 				break;
@@ -204,12 +228,8 @@ class Text
 				// Wir suchen jetzt die naechsten beiden Zeilen, die gleich sind.
 				$max_entf = min(count($from_text) - $pos_from - 1, count($to_text) - $pos_to - 1);
 
-				#echo "suche start, max_entf=$max_entf, pos_from=$pos_from, pos_to=$pos_to<br/>";
-
 				for ($a = 0; $a <= $max_entf; $a++) {
-					#echo "a ist $a<br/>";
 					for ($b = 0; $b <= $max_entf; $b++) {
-						#echo "b ist $b<br/>";
 						if (trim($from_text[$pos_from + $b]) != '' &&
 							$from_text[$pos_from + $b] == $to_text[$pos_to + $a]) {
 							$pos_gef_from = $pos_from + $b;
@@ -232,59 +252,57 @@ class Text
 
 				if ($a <= $max_entf) {
 					// Gleiche Zeile gefunden
-					#echo "gefunden, pos_gef_from=$pos_gef_from, pos_gef_to=$pos_gef_to<br/>";
 
 					if ($pos_gef_from - $pos_from == 0)
-						$type = 'new';
+						$type = self::DIFF_NEW;
 					elseif
 					($pos_gef_to - $pos_to == 0)
-						$type = 'old';
+						$type = self::DIFF_OLD;
 					else
-						$type = 'notequal';
+						$type = self::DIFF_CHANGED;
 
 					while ($pos_gef_from - $pos_from > 0 &&
 						$pos_gef_to - $pos_to > 0) {
-						$from_out[] = array('text' => $from_text[$pos_from], 'line' => $pos_from + 1, 'type' => $type);
-						$to_out  [] = array('text' => $to_text  [$pos_to], 'line' => $pos_to + 1, 'type' => $type);
+						$from_out[] = $createEntry($from_text[$pos_from], $pos_from + 1, $type);
+						$to_out  [] = $createEntry($to_text  [$pos_to  ], $pos_to + 1, $type);
 
 						$pos_from++;
 						$pos_to++;
 					}
 
 					while ($pos_gef_from - $pos_from > 0) {
-						$from_out[] = array('text' => $from_text[$pos_from], 'line' => $pos_from + 1, 'type' => $type);
-						$to_out  [] = array();
+						$from_out[] = $createEntry($from_text[$pos_from], $pos_from + 1, $type);
+						$to_out  [] = $emptyEntry;
 						$pos_from++;
 					}
 
 					while ($pos_gef_to - $pos_to > 0) {
-						$from_out[] = array();
-						$to_out  [] = array('text' => $to_text  [$pos_to], 'line' => $pos_to + 1, 'type' => $type);
+						$from_out[] = $emptyEntry;
+						$to_out  [] = $createEntry($to_text  [$pos_to], $pos_to + 1, $type);
 						$pos_to++;
 					}
 					$pos_from--;
 					$pos_to--;
 				} else {
 					// Keine gleichen Zeilen gefunden
-					#echo "nicht gefunden, i=$i, j=$j, pos_from war $pos_from, pos_to war $pos_to<br/>";
 
 					while (true) {
 						if (!isset($from_text[$pos_from]) &&
-							!isset($to_text  [$pos_to])) {
+							!isset($to_text  [$pos_to  ])) {
 							break;
 						} elseif
 						(isset($from_text[$pos_from]) &&
 							!isset($to_text  [$pos_to])) {
-							$from_out[] = array('text' => $from_text[$pos_from], 'line' => $pos_from + 1, 'type' => 'notequal');
-							$to_out  [] = array();
+							$from_out[] = array($from_text[$pos_from], $pos_from + 1, self::DIFF_CHANGED);
+							$to_out  [] = $emptyEntry;
 						} elseif
 						(!isset($from_text[$pos_from]) &&
 							isset($to_text  [$pos_to])) {
-							$from_out[] = array();
-							$to_out  [] = array('text' => $to_text  [$pos_to], 'line' => $pos_to + 1, 'type' => 'notequal');
+							$from_out[] = $emptyEntry;
+							$to_out  [] = $createEntry($to_text  [$pos_to]  , $pos_to   + 1, self::DIFF_CHANGED);
 						} else {
-							$from_out[] = array('text' => $from_text[$pos_from], 'line' => $pos_from + 1, 'type' => 'notequal');
-							$to_out  [] = array('text' => $to_text  [$pos_to], 'line' => $pos_to + 1, 'type' => 'notequal');
+							$from_out[] = $createEntry($from_text[$pos_from], $pos_from + 1, self::DIFF_CHANGED);
+							$to_out  [] = $createEntry($to_text  [$pos_to]  , $pos_to   + 1, self::DIFF_CHANGED);
 						}
 						$pos_from++;
 						$pos_to++;
@@ -292,12 +310,12 @@ class Text
 				}
 			} else {
 				// Zeilen sind gleich
-				$from_out[] = array('text' => $from_text[$pos_from], 'line' => $pos_from + 1, 'type' => 'equal');
-				$to_out  [] = array('text' => $to_text  [$pos_to], 'line' => $pos_to + 1, 'type' => 'equal');
+				$from_out[] = $createEntry($from_text[$pos_from], $pos_from + 1, self::DIFF_EQUAL);
+				$to_out  [] = $createEntry($to_text  [$pos_to]  , $pos_to   + 1, self::DIFF_EQUAL);
 			}
 		}
 
-		return (array($from_out, $to_out));
+		return ( [$from_out, $to_out] );
 	}
 
 
