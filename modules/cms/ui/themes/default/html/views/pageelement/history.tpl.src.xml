@@ -73,7 +73,7 @@
 							</column>
 							<if true="${publish}">
 								<column>
-									<text value="${message:PUBLIC}" type="strong"/>
+									<text value="${message:VALUE_PUBLIC}" type="strong"/>
 								</column>
 							</if>
 							<else>
@@ -101,9 +101,9 @@
 									<column class="act-clickable">
 										<link type="post" subaction="use" var1="valueid" value1="${valueid}"
 											  id="${objectid}"
-											  title="${message:USE_DESC}">
+											  title="${message:VALUE_USE_DESC}">
 											title="${message:USE_DESC}">
-											<text value="${message:USE}"/>
+											<text value="${message:VALUE_USE}"/>
 										</link>
 									</column>
 								</if>

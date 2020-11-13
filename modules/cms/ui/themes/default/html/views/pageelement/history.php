@@ -94,7 +94,7 @@
                       </td>
                       <?php $if8=($publish); if($if8) {  ?>
                         <td><?php echo O::escapeHtml('') ?>
-                          <strong><?php echo O::escapeHtml(''.@O::lang('PUBLIC').'') ?>
+                          <strong><?php echo O::escapeHtml(''.@O::lang('VALUE_PUBLIC').'') ?>
                           </strong>
                         </td>
                        <?php } ?>
@@ -123,8 +123,8 @@
                       <?php if(!$if8) {  ?>
                         <?php $if9=($usable); if($if9) {  ?>
                           <td class="<?php echo O::escapeHtml('or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
-                            <a title="<?php echo O::escapeHtml(''.@O::lang('USE_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('post') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('use') ?>" data-id="<?php echo O::escapeHtml(''.@$objectid.'') ?>" data-extra-valueid="<?php echo O::escapeHtml(''.@$valueid.'') ?>" data-extra="<?php echo O::escapeHtml('{\'valueid\':\''.@$valueid.'\'}') ?>" data-data="<?php echo O::escapeHtml('{"action":"pageelement","subaction":"use","id":"'.@$objectid.'","token":"'.@$_token.'","valueid":"'.@$valueid.'","none":"0"}') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
-                              <span><?php echo O::escapeHtml(''.@O::lang('USE').'') ?>
+                            <a title="<?php echo O::escapeHtml(''.@O::lang('VALUE_USE_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('post') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('use') ?>" data-id="<?php echo O::escapeHtml(''.@$objectid.'') ?>" data-extra-valueid="<?php echo O::escapeHtml(''.@$valueid.'') ?>" data-extra="<?php echo O::escapeHtml('{\'valueid\':\''.@$valueid.'\'}') ?>" data-data="<?php echo O::escapeHtml('{"action":"pageelement","subaction":"use","id":"'.@$objectid.'","token":"'.@$_token.'","valueid":"'.@$valueid.'","none":"0"}') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
+                              <span><?php echo O::escapeHtml(''.@O::lang('VALUE_USE').'') ?>
                               </span>
                             </a>
                           </td>

@@ -2618,16 +2618,6 @@ UPLOAD:
   en: Upload
   es: Téléchargement
   fr: Téléchargement
-_USE:
-  de: Benutzen
-  en: Use
-  es: Employer
-  fr: Employer
-  it: Utilizar
-  ru: Загрузить Используйте
-USE_DESC:
-  de: Diesen Inhalt zur Bearbeitung verwenden.
-  en: Use this value for editing.
 USER:
   de: Benutzer
   en: User
@@ -6441,9 +6431,16 @@ SELF_NAME:
   ru: "русский"
   es: espanol
   it: italiano
-USE:
+VALUE_USE:
+  de: Benutzen
   en: Use
-  de: Verwenden
-PUBLIC:
+  es: Employer
+  fr: Employer
+  it: Utilizar
+  ru: Загрузить Используйте
+VALUE_USE_DESC:
+  de: Diesen Inhalt zur Bearbeitung verwenden.
+  en: Use this value for editing.
+VALUE_PUBLIC:
   en: public
   de: öffentlich

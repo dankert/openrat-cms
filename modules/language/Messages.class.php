@@ -509,8 +509,6 @@ class Messages {
   const UNKNOWN = 'UNKNOWN';
   const UP = 'UP';
   const UPLOAD = 'UPLOAD';
-  const _USE = '_USE';
-  const USE_DESC = 'USE_DESC';
   const USER = 'USER';
   const USERS = 'USERS';
   const VALUE = 'VALUE';
@@ -1288,6 +1286,7 @@ class Messages {
   const APPLY = 'APPLY';
   const URL = 'URL';
   const SELF_NAME = 'SELF_NAME';
-  const USE = 'USE';
-  const PUBLIC = 'PUBLIC';
+  const VALUE_USE = 'VALUE_USE';
+  const VALUE_USE_DESC = 'VALUE_USE_DESC';
+  const VALUE_PUBLIC = 'VALUE_PUBLIC';
 }
