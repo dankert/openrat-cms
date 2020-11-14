@@ -1,0 +1,33 @@
+
+.or {
+    &-info {
+
+        position: relative;
+
+        &:hover,
+        &--open {
+            .or-info-popup {
+                display: block;
+            }
+        }
+
+        &-popup {
+            display: none;
+            position: absolute;
+            top: 1.2em;
+            left: -2em;
+            overflow: visible;
+            border: 0.5em;
+            font-size: 2em;
+
+            border-radius: 0.3em;
+            padding: 1.0em;
+            //text-align: center;
+            z-index: 6;
+
+            > div {
+                display: inline-block;
+            }
+        }
+    }
+}
