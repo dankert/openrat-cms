@@ -29,7 +29,13 @@ class FileGenerator extends BaseGenerator
 	{
 		$file = new File( $this->context->sourceObjectId );
 		$file->load();
-		return $file->filename();
+
+		$filename = $file->filename();
+
+		if   ( $file->extension )
+			$filename .= '.'.$file->extension;
+
+		return $filename;
 	}
 
 
