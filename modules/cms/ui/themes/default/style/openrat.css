@@ -726,37 +726,6 @@ a:hover {
 .CodeMirror {
 	height: auto;
 }
-/*
-.or-info {
-
-  position: relative;
-
-  &:hover {
-    .or-info-popup {
-      display: block;
-    }
-  }
-
-  &-popup {
-    display: none;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    overflow: visible;
-    //width: 100%;
-    border: 0.5em;
-    font-size: 2em;
-    .border-radius(0.3em);
-    padding: 1.0em;
-    //text-align: center;
-    z-index: 105;
-
-    > div {
-      display: inline-block;
-    }
-  }
-}
-*/
 .or {
 	/* After page loading, all elements are hidden. This class will be removed by javascript. */
 }
@@ -810,7 +779,7 @@ legend {
 	font-weight: bold;
 	padding: 0 0.5em;
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-ui.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3BAAIA%3BAAAM%3BCAAO%3BCAAY%3B%3BAAuBzB%3BCAfQ%2CIAAC%3BEACG%2CSAAS%2CEAAT%3BEACA%3BEACA%3BEACA%3BEACA%3BEACA%3BEACA%3BEACA%3BEAEA%3BEACA%3BEACA%3B%3B%3BAAIZ%3BCACE%3B%3BAAWF%3BCACE%3BCACA%3BCACA%3B%3B%3BAAKF%2CCAAC%3BAACD%2CCAAC%3BCACC%3BCACA%3B%3BAAGF%2CCAAC%3BAACD%2CCAAC%3BCACC%3BCACA%3B%3BAAIF%3BCACE%3B%3B%3BAAMF%3BCACE%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAqCF%3B%3B%3BAACI%2CGAAC%2COAAU%3BCAEP%3BCACA%3B%3BAAKJ%2CGAAC%3BCACG%3BCACA%2C%2BBAAA%3B%3BAAGJ%2CGAAC%3BCACG%3BCACA%3BCACA%3BCACA%3B%3BAAGJ%2CGAAC%3BCACG%3BCACA%3BCACA%2CgBAAA%3B%3BAAHJ%2CGAAC%2CSAKK%3BCACE%2CiBAAA%3BCACA%3BCACA%3BCAtGV%2CoBAAA%3BCACA%2CyBAAA%3BCACA%2C4BAAA%3BCACA%2C2BAAA%3B%3BAAyGE%2CGAAC%3BCACG%3B%3BAAKA%2CGAFH%2CUAEI%3BCAEG%3BCACA%3B%3BAAGJ%2CGARH%2CUAQI%3BCACG%3BCACA%3B%3BAAKR%2CGAAC%3BCACG%3B%3BAAGJ%2CGAAC%3BCACG%3B%3BAASR%3BCACI%3BCACA%3BCACA%2CgBAAA%22%7D */
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-ui.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3BAAIA%3BAAAM%3BCAAO%3BCAAY%3B%3BAAuBzB%3BCAfQ%2CIAAC%3BEACG%2CSAAS%2CEAAT%3BEACA%3BEACA%3BEACA%3BEACA%3BEACA%3BEACA%3BEACA%3BEAEA%3BEACA%3BEACA%3B%3B%3BAAIZ%3BCACE%3B%3BAAWF%3BCACE%3BCACA%3BCACA%3B%3B%3BAAKF%2CCAAC%3BAACD%2CCAAC%3BCACC%3BCACA%3B%3BAAGF%2CCAAC%3BAACD%2CCAAC%3BCACC%3BCACA%3B%3BAAIF%3BCACE%3B%3B%3BAAMF%3BCACE%3B%3BAAMF%3B%3B%3BAACI%2CGAAC%2COAAU%3BCAEP%3BCACA%3B%3BAAKJ%2CGAAC%3BCACG%3BCACA%2C%2BBAAA%3B%3BAAGJ%2CGAAC%3BCACG%3BCACA%3BCACA%3BCACA%3B%3BAAGJ%2CGAAC%3BCACG%3BCACA%3BCACA%2CgBAAA%3B%3BAAHJ%2CGAAC%2CSAKK%3BCACE%2CiBAAA%3BCACA%3BCACA%3BCAvEV%2CoBAAA%3BCACA%2CyBAAA%3BCACA%2C4BAAA%3BCACA%2C2BAAA%3B%3BAA0EE%2CGAAC%3BCACG%3B%3BAAKA%2CGAFH%2CUAEI%3BCAEG%3BCACA%3B%3BAAGJ%2CGARH%2CUAQI%3BCACG%3BCACA%3B%3BAAKR%2CGAAC%3BCACG%3B%3BAAGJ%2CGAAC%3BCACG%3B%3BAASR%3BCACI%3BCACA%3BCACA%2CgBAAA%22%7D */
 /* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-menu */
 /*
 OpenRat Content Management System
@@ -875,6 +844,30 @@ Basis-Style for Openrat.
 	display: block;
 }
 /*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-menu.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAuCI%2CIAAC%3BCAGG%3BCACA%3B%3B%3BAAUA%3BCAAA%2CIAdH%2CIAUI%3BCAID%2CIAdH%2CIAUa%3BEAEF%3B%3B%3BAAIR%2CIAhBH%2CIAgBI%3BCACG%3B%3BAAGA%2CIApBP%2CIAgBI%2CMAII%2CeAAe%2CGACZ%2CIAAG%3BCACC%3B%3BAANZ%2CIAhBH%2CIAgBI%2CMASG%3BCAEI%3B%3BAAXR%2CIAhBH%2CIAgBI%2CMAcG%3BCACI%3BCAEA%3BCACA%3B%3B%3BAAWA%2CIA7CX%2CIAgBI%2CMAcG%2CiBAeK%3BCACG%3B%3BAAEJ%2CIAhDX%2CIAgBI%2CMAcG%2CiBAkBK%2CUACG%3BCACI%3BCAGA%3BCACA%2CkCAAA%3B%3BAACA%2CIAvDnB%2CIAgBI%2CMAcG%2CiBAkBK%2CUACG%2CMAMK%3BCAEG%3B%3BAAWpB%2CIApEH%2CIAoEI%2CSACG%2C2BACM%3BCACE%22%7D */
+/* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-info */
+.or-info {
+	position: relative;
+}
+.or-info:hover .or-info-popup,
+.or-info--open .or-info-popup {
+	display: block;
+}
+.or-info-popup {
+	display: none;
+	position: absolute;
+	top: 1.2em;
+	left: -2em;
+	overflow: visible;
+	border: 0.5em;
+	font-size: 2em;
+	border-radius: 0.3em;
+	padding: 1.0em;
+	z-index: 6;
+}
+.or-info-popup > div {
+	display: inline-block;
+}
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-info.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AAEI%2CGAAC%3BCAEG%3B%3BAAEA%2CGAJH%2CKAII%2CMAEG%3BAADJ%2CGALH%2CKAKI%2CMACG%3BCACI%3B%3BAAIR%2CGAXH%2CKAWI%3BCACG%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCAEA%3BCACA%3BCAEA%3B%3BAAZJ%2CGAXH%2CKAWI%2CMAcK%3BCACE%22%7D */
 /* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-dropdown */
 .or-dropdown {
 	display: none;

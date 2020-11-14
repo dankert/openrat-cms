@@ -3361,17 +3361,21 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(element ) {
 
         $(element).append(wrapper);
 
-        var qrcodetext = $(element).attr('data-qrcode');
+        let qrcodetext = $(element).attr('data-qrcode');
 
         $(wrapper).qrcode( { render : 'div',
 			text   : qrcodetext,
 			fill   : 'currentColor' } );
 
-
         // Title is disturbing the qr-code. Do not inherit it.
         wrapper.attr('title','');
+        //wrapper.append('<small>'+qrcodetext+'</small>'); is very wide.
 
     } );
+
+	$(element).find('.or-info').click( function() {
+    	$(this).toggleClass('info--open');
+	});
 
 } );
 /* Include script: table.js */
