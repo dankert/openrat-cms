@@ -6,10 +6,10 @@
 			<text value="${name}" class="name"/>
 		</fieldset>
 		<fieldset label="${message:filename}">
-			<text value="${filename}" class="filename"/>
+			<text value="${filename}" class="input--filename"/>
 		</fieldset>
 		<fieldset label="${message:file_extension}">
-			<text value="${extension}" class="extension"/>
+			<text value="${extension}" class="input--extension"/>
 		</fieldset>
 		<fieldset label="${message:description}">
 			<text value="${description}"/>

@@ -637,6 +637,9 @@ class ObjectAction extends BaseAction
 		$this->setTemplateVar( 'extension'    , '' );
 		$this->setTemplateVar( 'mimetype'     , $this->baseObject->mimeType() );
 
+		$this->setTemplateVar( 'name'         , $this->baseObject->getDefaultName()->name        );
+		$this->setTemplateVar( 'description'  , $this->baseObject->getDefaultName()->description );
+
 		// Read all objects linking to us.
 		$pages = $this->baseObject->getDependentObjectIds();
 

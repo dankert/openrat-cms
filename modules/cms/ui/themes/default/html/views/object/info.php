@@ -15,7 +15,7 @@
         <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('filename').'') ?>
         </h3>
         <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
-          <span class="<?php echo O::escapeHtml('or-filename') ?>"><?php echo O::escapeHtml(''.@$filename.'') ?>
+          <span class="<?php echo O::escapeHtml('or-input--filename') ?>"><?php echo O::escapeHtml(''.@$filename.'') ?>
           </span>
         </div>
       </section>
@@ -23,7 +23,7 @@
         <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('file_extension').'') ?>
         </h3>
         <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
-          <span class="<?php echo O::escapeHtml('or-extension') ?>"><?php echo O::escapeHtml(''.@$extension.'') ?>
+          <span class="<?php echo O::escapeHtml('or-input--extension') ?>"><?php echo O::escapeHtml(''.@$extension.'') ?>
           </span>
         </div>
       </section>
