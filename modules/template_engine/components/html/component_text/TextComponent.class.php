@@ -48,6 +48,9 @@ class TextComponent extends HtmlComponent
 			case 'code':
 				$tag = 'code';
 				break;
+			case 'small':
+				$tag = 'small';
+				break;
 			default:
 				$tag = 'span';
 		}

@@ -2,12 +2,12 @@
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form label="${message:save}">
 		<hidden name="languageid"/>
-		<group title="${message:alias}" open="true">
+		<group title="${message:language} ${languagename}" collapsible="false">
 			<fieldset label="${message:name}">
-				<input label="name" name="name" maxlength="255" required="true"/>
+				<input name="name" maxlength="255" required="true"/>
 			</fieldset>
 			<fieldset label="${message:description}">
-				<inputarea name="description" class="description" maxlength="255"/>
+				<inputarea name="description" class="input--description" maxlength="255"/>
 			</fieldset>
 		</group>
 	</form>

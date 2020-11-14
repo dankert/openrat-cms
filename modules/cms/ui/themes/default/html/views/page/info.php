@@ -82,30 +82,30 @@
             </span>
           </h2>
           <div class="<?php echo O::escapeHtml('or-collapsible-value or-group-value') ?>"><?php echo O::escapeHtml('') ?>
-            <label class="<?php echo O::escapeHtml('or-form-row') ?>"><?php echo O::escapeHtml('') ?>
-              <span class="<?php echo O::escapeHtml('or-form-input') ?>"><?php echo O::escapeHtml('') ?>
-              </span>
-              <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('name').'') ?>
-              </span>
-            </label>
-            <label class="<?php echo O::escapeHtml('or-form-row') ?>"><?php echo O::escapeHtml('') ?>
-              <span class="<?php echo O::escapeHtml('or-form-input') ?>"><?php echo O::escapeHtml('') ?>
-              </span>
-              <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('description').'') ?>
-              </span>
-            </label>
-            <label class="<?php echo O::escapeHtml('or-form-row') ?>"><?php echo O::escapeHtml('') ?>
-              <span class="<?php echo O::escapeHtml('or-form-input') ?>"><?php echo O::escapeHtml('') ?>
-              </span>
-              <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('alias').'') ?>
-              </span>
-            </label>
-            <div class="<?php echo O::escapeHtml('or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
-              <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('edit') ?>" data-action="<?php echo O::escapeHtml('page') ?>" data-method="<?php echo O::escapeHtml('name') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-languageid="<?php echo O::escapeHtml(''.@$languageid.'') ?>" data-extra="<?php echo O::escapeHtml('{\'languageid\':\''.@$languageid.'\'}') ?>" href="<?php echo O::escapeHtml('#/page') ?>" class="<?php echo O::escapeHtml('or-link or-btn') ?>"><?php echo O::escapeHtml('') ?>
-                <span><?php echo O::escapeHtml(''.@O::lang('edit').'') ?>
+            <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
+              <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('name').'') ?>
+              </h3>
+              <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@$name.'') ?>
                 </span>
-              </a>
-            </div>
+                <small><?php echo O::escapeHtml(''.@$description.'') ?>
+                </small>
+              </div>
+            </section>
+            <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
+              <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('alias').'') ?>
+              </h3>
+              <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
+                <span><?php echo O::escapeHtml(''.@$alias.'') ?>
+                </span>
+                <div class="<?php echo O::escapeHtml('or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
+                  <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('edit') ?>" data-action="<?php echo O::escapeHtml('page') ?>" data-method="<?php echo O::escapeHtml('name') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-languageid="<?php echo O::escapeHtml(''.@$languageid.'') ?>" data-extra="<?php echo O::escapeHtml('{\'languageid\':\''.@$languageid.'\'}') ?>" href="<?php echo O::escapeHtml('#/page') ?>" class="<?php echo O::escapeHtml('or-link or-btn') ?>"><?php echo O::escapeHtml('') ?>
+                    <span><?php echo O::escapeHtml(''.@O::lang('edit').'') ?>
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </section>
           </div>
         </section>
        <?php } ?>

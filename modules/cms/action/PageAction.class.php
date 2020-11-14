@@ -387,12 +387,13 @@ class PageAction extends ObjectAction
 	 */
 	function nameView()
 	{
-        $this->page->load();
+		$languageId = $this->getRequestVar('languageid');
 
-        $this->setTemplateVars( $this->page->getProperties() );
-        $this->setTemplateVar( 'languageid', $this->page->languageid );
+		$name = $this->page->getNameForLanguage($languageId);
 
-        $alias = $this->page->getAliasForLanguage( $this->page->languageid );
+        $this->setTemplateVars( $name->getProperties() );
+
+        $alias = $this->page->getAliasForLanguage( $languageId );
 
         $this->setTemplateVar( 'alias_filename', $alias->filename );
         $this->setTemplateVar( 'alias_folderid', $alias->parentid );

@@ -15,6 +15,22 @@
 			<text value="${description}"/>
 		</fieldset>
 	</group>
+
+	<list list="${languages}" extract="true">
+		<group title="${languagename}">
+			<fieldset label="${message:name}">
+				<text value="${name}"/>
+				<text type="small" value="${description}"/>
+				<part class="act-clickable">
+					<link class="btn" type="edit" action="object" subaction="name" var1="languageid"
+						  value1="${languageid}">
+						<text value="${message:edit}"/>
+					</link>
+				</part>
+			</fieldset>
+		</group>
+	</list>
+
 	<group title="${message:additional_info}">
 		<fieldset label="${message:full_filename}">
 			<text value="${full_filename}"/>

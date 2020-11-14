@@ -39,15 +39,19 @@
 		</group>
 		<list list="${languages}" extract="true">
 			<group title="${languagename}">
-				<text label="name" value="${name}"/>
-				<text label="description" value="${description}"/>
-				<text label="alias" value="${alias}"/>
-				<part class="act-clickable">
-					<link class="btn" type="edit" action="page" subaction="name" var1="languageid"
-						  value1="${languageid}">
-						<text value="${message:edit}"/>
-					</link>
-				</part>
+				<fieldset label="${message:name}">
+					<text value="${name}"/>
+					<text type="small" value="${description}"/>
+				</fieldset>
+				<fieldset label="${message:alias}">
+					<text value="${alias}"/>
+					<part class="act-clickable">
+						<link class="btn" type="edit" action="page" subaction="name" var1="languageid"
+							  value1="${languageid}">
+							<text value="${message:edit}"/>
+						</link>
+					</part>
+				</fieldset>
 			</group>
 		</list>
 		<group title="${message:additional_info}" open="false">

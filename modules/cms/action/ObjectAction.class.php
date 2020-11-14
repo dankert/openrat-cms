@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use language\Messages;
 use util\ArrayUtils;
 use cms\model\Acl;
 use cms\model\Project;
@@ -13,6 +14,7 @@ use cms\model\BaseObject;
 use cms\model\Language;
 use cms\model\File;
 use cms\model\Link;
+use util\exception\ValidationException;
 use util\Html;
 use util\Http;
 use util\Session;
@@ -485,7 +487,7 @@ class ObjectAction extends BaseAction
     public function propPost()
     {
         if   ( ! $this->hasRequestVar('filename' ) )
-            throw new \util\exception\ValidationException('filename');
+            throw new ValidationException('filename');
 
         $this->baseObject->filename = BaseObject::urlify( $this->getRequestVar('filename') );
         $this->baseObject->save();
@@ -517,19 +519,16 @@ class ObjectAction extends BaseAction
     public function namePost()
     {
         if   ( ! $this->hasRequestVar('name' ) )
-            throw new \util\exception\ValidationException('name');
+            throw new ValidationException('name');
 
         $name = $this->baseObject->getNameForLanguage( $this->getRequestId('languageid'));
 
-        $language = new Language( $name->languageid );
-        $language->load();
-
-        $name->name = $this->getRequestVar( 'name' );
+        $name->name        = $this->getRequestVar( 'name' );
         $name->description = $this->getRequestVar( 'description' );
 
         $name->save();
 
-        $this->addNotice($this->baseObject->getType(), 0, $this->baseObject->filename, 'SAVED', 'ok');
+        $this->addNoticeFor($this->baseObject, Messages::SAVED);
     }
 
 
@@ -559,14 +558,12 @@ class ObjectAction extends BaseAction
     {
         $name = $this->baseObject->getNameForLanguage( $this->getRequestId('languageid') );
 
-        $nameProps = get_object_vars( $name );
+        $nameProps = $name->getProperties();
 
         $language = new Language( $name->languageid );
         $language->load();
-        $nameProps[ 'languageName'     ] = $language->name;
-        $this->setTemplateVars($nameProps);
-
-
+        $nameProps[ 'languageName' ] = $language->name;
+        $this->setTemplateVars( $nameProps );
     }
 
 
@@ -590,7 +587,7 @@ class ObjectAction extends BaseAction
         }
         catch( \Exception $e )
         {
-            throw new \util\exception\ValidationException( 'settings' );
+            throw new ValidationException( 'settings' );
         }
 
         // Gültigkeitszeiträume speichern.
@@ -640,17 +637,37 @@ class ObjectAction extends BaseAction
 		$this->setTemplateVar( 'name'         , $this->baseObject->getDefaultName()->name        );
 		$this->setTemplateVar( 'description'  , $this->baseObject->getDefaultName()->description );
 
+		$languages = $this->baseObject->getProject()->getLanguages();
+		$languagesVars = array();
+
+		foreach( $languages as $languageId => $languageName )
+		{
+			$name = $this->baseObject->getNameForLanguage( $languageId );
+
+
+			$languagesVar = [
+				'name'         => $name->name,
+				'description'  => $name->description,
+				'languagename' => $languageName,
+				'languageid'   => $languageId,
+			];
+
+			$languagesVars[] = $languagesVar;
+		}
+
+		$this->setTemplateVar('languages',$languagesVars );
+
 		// Read all objects linking to us.
 		$pages = $this->baseObject->getDependentObjectIds();
 
 		$list = array();
-		foreach( $pages as $id )
+		foreach( $pages as $languageid )
 		{
-			$o = new BaseObject( $id );
+			$o = new BaseObject( $languageid );
 			$o->load();
-			$list[$id] = array();
-			$list[$id]['name'] = $o->filename;
-			$list[$id]['type'] = $o->getType();
+			$list[$languageid] = array();
+			$list[$languageid]['name'] = $o->filename;
+			$list[$languageid]['type'] = $o->getType();
 		}
 
 		asort( $list );
@@ -664,5 +681,6 @@ class ObjectAction extends BaseAction
 		$this->setTemplateVar('total_settings', $totalSettings,$pad );
 		$this->setTemplateVar('settings', ArrayUtils::dryFlattenArray( $totalSettings,$pad ) );
 	}
+
 
 }
