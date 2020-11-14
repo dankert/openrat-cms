@@ -1,122 +1,62 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<form readonly="true" cancel="false">
-		<text value="${name}" class="headline"/>
-		<group>
-			<fieldset class="line" label="">
-				<part class="label">
-					<text value="${message:type}"/>
-				</part>
-				<part class="value">
-					<text value="${message:${type}}"/>
-				</part>
+	<group>
+		<fieldset label="${message:type}">
+			<text value="${message:${type}}"/>
+		</fieldset>
+		<fieldset label="${message:filename}">
+			<text value="${filename}"/>
+		</fieldset>
+		<fieldset label="">
+			<link clickable="true" subaction="prop" class="btn" type="dialog">
+				<text value="${message:edit}"/>
+			</link>
+		</fieldset>
+	</group>
+	<list list="${languages}" extract="true">
+		<group title="${languagename}">
+			<fieldset label="${message:name}">
+				<text value="${name}"/>
+				<text type="small" value="${description}"/>
 			</fieldset>
-			<fieldset class="line" label="">
-				<part class="label">
-					<text value="${message:filename}"/>
-				</part>
-				<part class="value">
-					<text value="${filename}"/>
-				</part>
-			</fieldset>
-			<fieldset class="line" label="">
-				<part class="label">
-					<text value="${message:description}"/>
-				</part>
-				<part class="value">
-					<text value="${description}" class="description"/>
-				</part>
-			</fieldset>
-			<fieldset class="line" label="">
-				<part class="label">
-				</part>
-				<part class="value,act-clickable">
-					<link subaction="prop" class="btn" type="dialog">
+			<fieldset label="${message:alias}">
+				<text value="${alias}"/>
+				<part class="act-clickable">
+					<link class="btn" type="edit" action="page" subaction="name" var1="languageid"
+						  value1="${languageid}">
 						<text value="${message:edit}"/>
 					</link>
 				</part>
 			</fieldset>
 		</group>
-		<list list="${languages}" extract="true">
-			<group title="${languagename}">
-				<fieldset label="${message:name}">
-					<text value="${name}"/>
-					<text type="small" value="${description}"/>
-				</fieldset>
-				<fieldset label="${message:alias}">
-					<text value="${alias}"/>
-					<part class="act-clickable">
-						<link class="btn" type="edit" action="page" subaction="name" var1="languageid"
-							  value1="${languageid}">
-							<text value="${message:edit}"/>
-						</link>
-					</part>
-				</fieldset>
-			</group>
-		</list>
-		<group title="${message:additional_info}" open="false">
-			<fieldset class="line" label="">
-				<part class="label">
-					<label for="full_filename">
-						<text value="${message:full_filename}"/>
-					</label>
-				</part>
-				<part class="value">
-					<text value="${full_filename}" class="filename"/>
-				</part>
-			</fieldset>
-			<fieldset class="line" label="">
-				<part class="label">
-					<label for="full_filename">
-						<text value="${message:full_filename}"/>
-					</label>
-				</part>
-				<part class="value">
-					<text value="${tmp_filename}" class="filename"/>
-				</part>
-			</fieldset>
-			<fieldset class="line" label="">
-				<part class="label">
-					<label for="template_name">
-						<text value="${message:template}"/>
-					</label>
-				</part>
-				<part class="value">
-					<if present="templateid">
-						<part class="act-clickable">
-							<link action="template" id="${templateid}" type="open">
-								<image action="template"/>
-								<text value="${template_name}"/>
-							</link>
-						</part>
-					</if>
-					<else>
+	</list>
+	<group title="${message:additional_info}" open="false">
+		<fieldset label="${message:full_filename}">
+			<text value="${full_filename}" class="filename"/>
+		</fieldset>
+		<fieldset label="${message:full_filename}">
+			<text value="${tmp_filename}" class="filename"/>
+		</fieldset>
+		<fieldset label="${message:template}">
+			<if present="templateid">
+				<part class="act-clickable">
+					<link action="template" id="${templateid}" type="open">
 						<image action="template"/>
 						<text value="${template_name}"/>
-					</else>
+					</link>
 				</part>
-			</fieldset>
-			<fieldset class="line" label="">
-				<part class="label">
-					<label for="mime_type">
-						<text value="${message:FILE_MIMETYPE}"/>
-					</label>
-				</part>
-				<part class="value">
-					<text value="${mime_type}" class="filename"/>
-				</part>
-			</fieldset>
-			<fieldset class="line" label="">
-				<part class="label">
-					<label for="objectid">
-						<text value="${message:id}"/>
-					</label>
-				</part>
-				<part class="value">
-					<text value="${objectid}"/>
-				</part>
-			</fieldset>
-		</group>
-		<include file="../include/timestamps"/>
-	</form>
+			</if>
+			<else>
+				<image action="template"/>
+				<text value="${template_name}"/>
+			</else>
+		</fieldset>
+		<fieldset label="${message:FILE_MIMETYPE}">
+			<text value="${mime_type}" class="filename"/>
+		</fieldset>
+		<fieldset label="${message:id}">
+			<text value="${objectid}"/>
+		</fieldset>
+	</group>
+	<include file="../include/timestamps"/>
 </output>

@@ -3,33 +3,33 @@
 	<group title="${message:prop_userinfo}" open="false">
 		<fieldset label="${message:created}">
 			<part tag="span">
-				<image icon="el_date"/>
+				<image action="el_date"/>
 				<date date="${create_date}"/>
 			</part>
 			<part tag="span">
-				<image icon="user"/>
+				<image action="user"/>
 				<user user="${create_user}"/>
 			</part>
 		</fieldset>
 
 		<fieldset label="${message:lastchange}">
 			<part tag="span">
-				<image icon="el_date"/>
+				<image action="el_date"/>
 				<date date="${lastchange_date}"/>
 			</part>
 			<part tag="span">
-				<image icon="user"/>
+				<image action="user"/>
 				<user user="${lastchange_user}"/>
 			</part>
 		</fieldset>
 
 		<fieldset label="${message:published}">
 			<part tag="span">
-				<image icon="el_date"/>
+				<image action="el_date"/>
 				<date date="${published_date}"/>
 			</part>
 			<part tag="span">
-				<image icon="user"/>
+				<image action="user"/>
 				<user user="${published_user}"/>
 			</part>
 		</fieldset>
