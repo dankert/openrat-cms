@@ -16,7 +16,7 @@
         bottom: 40px;
         right: 40px;
         width: 25em;
-        z-index: 113;
+        z-index: 5;
     }
 
     &notice {
@@ -41,7 +41,7 @@
             }
         }
 
-        &-full {
+        &--is-full {
             display: block;
             position: fixed;
             bottom: 10%;
@@ -49,7 +49,11 @@
             right: 10%;
             left: 10%;
             width: 80%;
-            z-index: 114;
+            z-index: 6;
+
+            .or-notice-log {
+                display: block;
+            }
         }
 
 
@@ -84,13 +88,6 @@
             overflow: auto;
             font-family: 'Source Code Pro', Monospace, Monospaced, Courier;
         }
-
-        &-full {
-            &-log {
-                display: block;
-            }
-        }
-
     }
 
 

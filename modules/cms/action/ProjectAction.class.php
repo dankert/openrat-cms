@@ -213,21 +213,19 @@ class ProjectAction extends BaseAction
 		{
 			case 'check_files':
 				// Konsistenzprüfungen
-				$this->project->checkLostFiles();
-				$status = empty($this->project->log) ? Action::NOTICE_OK : Action::NOTICE_ERROR;
-					
-				$this->addNotice('project', 0, $this->project->name, 'DONE', $status, array(), $this->project->log);
+				$log = $this->project->checkLostFiles();
+
+				$this->addNoticeFor($this->project,Messages::DONE, [], implode("\n",$log) );
 				break;
 				
 			case 'check_limit':
 				// Alte Versionen löschen.
 				$this->project->checkLimit();
-				$this->addNotice('project', 0, $this->project->name, 'DONE');
+				$this->addNoticeFor($this->project,Messages::DONE);
 				break;
 				
 			default:
 				$this->addValidationError('type');
-				return;
 		}
 	}
 

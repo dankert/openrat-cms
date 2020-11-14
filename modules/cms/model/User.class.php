@@ -615,11 +615,11 @@ SQL
 	 */
 	public function getProperties()
 	{
-	    return parent::getProperties() + [
+	    return array_merge( parent::getProperties(), [
 	    	'id'        => $this->userid,
 			'is_admin'  => $this->isAdmin,
 			'auth_type' => ($this->type==User::AUTH_TYPE_INTERNAL?'local':'remote')
-		];
+		] );
 	}
 
 

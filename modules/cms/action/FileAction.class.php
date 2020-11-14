@@ -542,7 +542,7 @@ class FileAction extends ObjectAction
 		$publisher->addOrderForPublishing( new PublishOrder( $fileGenerator->getCache()->load()->getFilename(),$fileGenerator->getPublicFilename(),$this->file->lastchangeDate) );
 		$publisher->publish();
 
-		$this->addNoticeFor($this->file,'PUBLISHED',Action::NOTICE_OK );
+		$this->addNoticeFor($this->file,'PUBLISHED',[],'Published items:'."\n".implode("\n",$publisher->getDestinationFilenames())  );
 	}
 
 

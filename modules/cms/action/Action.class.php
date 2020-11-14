@@ -191,10 +191,10 @@ class Action
 	 * @param $baseObject ModelBase
 	 * @param $key String
 	 * @param array $vars
-	 * @param string $message
+	 * @param string|array $message
 	 */
 	protected function addNoticeFor($baseObject,$key,$vars = array(), $message='') {
-		$this->addNotice(strtolower(ClassUtils::getSimpleClassName($baseObject)), $baseObject->getId(), $baseObject->getName(), $key, Action::NOTICE_OK, $vars, array($message));
+		$this->addNotice(strtolower(ClassUtils::getSimpleClassName($baseObject)), $baseObject->getId(), $baseObject->getName(), $key, Action::NOTICE_OK, $vars, $message);
 	}
 
 	/**
@@ -204,7 +204,7 @@ class Action
 	 * @param string $message
 	 */
 	protected function addInfoFor($baseObject,$key,$vars = array(), $message='') {
-		$this->addNotice(strtolower(ClassUtils::getSimpleClassName($baseObject)), $baseObject->getId(), $baseObject->getName(), $key, Action::NOTICE_INFO, $vars, array($message));
+		$this->addNotice(strtolower(ClassUtils::getSimpleClassName($baseObject)), $baseObject->getId(), $baseObject->getName(), $key, Action::NOTICE_INFO, $vars, $message);
 	}
 
 	/**
@@ -214,7 +214,7 @@ class Action
 	 * @param string $message
 	 */
 	protected function addWarningFor($baseObject,$key,$vars = array(), $message='') {
-		$this->addNotice(strtolower(ClassUtils::getSimpleClassName($baseObject)), $baseObject->getId(), $baseObject->getName(), $key, Action::NOTICE_WARN, $vars, array($message));
+		$this->addNotice(strtolower(ClassUtils::getSimpleClassName($baseObject)), $baseObject->getId(), $baseObject->getName(), $key, Action::NOTICE_WARN, $vars, $message);
 	}
 
 	/**
@@ -224,7 +224,7 @@ class Action
 	 * @param string $message
 	 */
 	protected function addErrorFor($baseObject,$key,$vars = array(), $message='') {
-		$this->addNotice(strtolower(ClassUtils::getSimpleClassName($baseObject)), $baseObject->getId(), $baseObject->getName(), $key, Action::NOTICE_ERROR, $vars, array($message));
+		$this->addNotice(strtolower(ClassUtils::getSimpleClassName($baseObject)), $baseObject->getId(), $baseObject->getName(), $key, Action::NOTICE_ERROR, $vars, $message);
 	}
 
 	/**
@@ -236,7 +236,7 @@ class Action
 	 * @param String $text Textschl�ssel der Fehlermeldung (optional)
 	 * @param String $status Einer der Werte Action::NOTICE_(OK|WARN|ERROR)
 	 * @param array $vars Variablen f�r den Textschl�ssel
-	 * @param array $log Weitere Hinweistexte f�r diese Meldung.
+	 * @param string|array $log Weitere Hinweistexte f�r diese Meldung.
 	 */
 	protected function addNotice($type, $id, $name, $text, $status = Action::NOTICE_OK, $vars = array(), $log = array())
 	{
@@ -249,8 +249,8 @@ class Action
 		$this->templateVars['status'] = $status;
 		$this->templateVars['success'] = ($status == Action::NOTICE_ERROR ? 'false' : 'true');
 
-		if (!is_array($log))
-			$log = array($log);
+		if ( is_array($log) )
+			$log = implode("\n",$log);
 
 		if (!is_array($vars))
 			$vars = array($vars);

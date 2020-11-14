@@ -4,6 +4,7 @@ namespace cms\model;
 
 use cms\base\DB;
 use database\Database;
+use logger\Logger;
 use util\FileUtils;
 use util\Session;
 
@@ -58,8 +59,6 @@ class Project extends ModelBase
      * @var boolean
      */
     public $publishPageExtension = true;
-
-	public $log = array();
 
 	public $linkAbsolute;
 
@@ -305,7 +304,7 @@ SQL
 		}
 		catch( \Exception $e )
 		{
-			\logger\Logger::warn('Project '.$this->projectid.' has not a root folder'."\n".$e->getTraceAsString());
+			Logger::warn('Project '.$this->projectid.' has not a root folder'."\n".$e->getTraceAsString());
 		}
 	}
 
@@ -492,10 +491,12 @@ SQL
 
 	/**
 	 * Testet die Integrität der Datenbank.
+	 *
+	 * @return array activities (empty if nothing bad found)
 	 */
 	public function checkLostFiles()
 	{
-		$this->log = array();
+		$log = array();
 		
 		// Ordnerstruktur prüfen.
 		$stmt = \cms\base\Db::sql( <<<EOF
@@ -521,7 +522,7 @@ EOF
 			
 			foreach( $idList as $id )
 			{
-				$this->log[] = 'Lost file! Moving '.$id.' to lost+found.';
+				$log[] = 'Lost file! Moving '.$id.' to lost+found.';
 				$obj = new BaseObject( $id );
 				$obj->setParentId( $lostAndFoundFolder->objectid );
 			}
@@ -539,10 +540,11 @@ EOF
 		
 		if	( count( $idList ) > 1 )
 		{
-			\logger\Logger::warn('Inconsistence found: Reference circle project<->template<->templatemodel<->projectmodel<->project is not consistent.');
-			$this->log[] = 'Inconsistence found: Reference circle project<->template<->templatemodel<->projectmodel<->project is not consistent.';
+			Logger::warn('Inconsistence found: Reference circle project<->template<->templatemodel<->projectmodel<->project is not consistent.');
+			$log[] = 'Inconsistence found: Reference circle project<->template<->templatemodel<->projectmodel<->project is not consistent.';
 		}
 
+		return $log;
 	}
 
 
@@ -560,7 +562,7 @@ EOF
      */
 	public function copy( $dbid_destination,$name='' )
 	{
-		\logger\Logger::debug( 'Copying project '.$this->name.' to database '.$dbid_destination );
+		Logger::debug( 'Copying project '.$this->name.' to database '.$dbid_destination );
 		
 		$conf = \cms\base\Configuration::rawConfig();
 		$zeit = date('Y-m-d\TH:i:sO');
@@ -641,7 +643,7 @@ EOF
 			 
 		foreach( $ids as $tabelle=>$data )
 		{
-			\logger\Logger::debug( 'Copying table '.$tabelle.' ...' );
+			Logger::debug( 'Copying table '.$tabelle.' ...' );
 			$mapping[$tabelle] = array();
 			$idcolumn = $data['primary_key'];
 
@@ -667,7 +669,7 @@ EOF
 
 			foreach( $stmt->getCol() as $srcid )
 			{
-				\logger\Logger::debug('Id '.$srcid.' of table '.$tabelle);
+				Logger::debug('Id '.$srcid.' of table '.$tabelle);
 				$mapping[$tabelle][$srcid] = ++$nextid;
 
 				$stmt = $db_src->sql( 'SELECT * FROM {t_'.$tabelle.'} WHERE id={id}');
@@ -680,7 +682,7 @@ EOF
 				// Fremdschl�sselbeziehungen auf neue IDn korrigieren.
 				foreach( $data['foreign_keys'] as $fkey_column=>$target_tabelle)
 				{
-					\logger\Logger::debug($fkey_column.' '.$target_tabelle.' '.$row[$fkey_column]);
+					Logger::debug($fkey_column.' '.$target_tabelle.' '.$row[$fkey_column]);
 					
 					if	( intval($row[$fkey_column]) != 0 )
 						$row[$fkey_column] = $mapping[$target_tabelle][$row[$fkey_column]];
@@ -754,7 +756,7 @@ EOF
 			}
 		}
 		
-		\logger\Logger::debug( 'Finished copying project' );
+		Logger::debug( 'Finished copying project' );
 		
 		$db_dest->commit();
 	}

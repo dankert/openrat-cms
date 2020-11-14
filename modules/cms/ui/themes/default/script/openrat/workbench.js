@@ -340,7 +340,7 @@ Openrat.Workbench = new function()
      * @param msg
      * @param log
      */
-    this.notify = function (type, id, name, status, msg, log = [], notifyTheBrowser = false)
+    this.notify = function (type, id, name, status, msg, log = null, notifyTheBrowser = false)
     {
         // Notice-Bar mit dieser Meldung erweitern.
 
@@ -350,36 +350,30 @@ Openrat.Workbench = new function()
         let notice = $('<div class="or-notice or-notice--'+status+'"></div>');
 
         let toolbar = $('<div class="or-notice-toolbar"></div>');
-        if   ( log.length )
-            $(toolbar).append('<i class="or-notice-action--full or-image-icon or-image-icon--menu-fullscreen"></i>');
-        $(toolbar).append('<i class="or-image-icon or-image-icon--menu-close or-notice-act-close"></i>');
+        if   ( log )
+            $(toolbar).append('<i class="or-act-notice-full or-image-icon or-image-icon--menu-fullscreen"></i>');
+        $(toolbar).append('<i class="or-image-icon or-image-icon--menu-close or-act-notice-close"></i>');
         $(notice).append(toolbar);
 
         if	(name)
-            $(notice).append('<div class="or-notice-name or-act-clickable"><a href="'+Openrat.Navigator.createShortUrl(type,id)+'" data-type="open" data-action="'+type+'" data-id="'+id+'"><i class="or-notice-action-full or-image-icon or-image-icon--action-'+type+'"></i> '+name+'</a></div>');
+            $(notice).append('<div class="or-notice-name"><a class="or-act-clickable" href="'+Openrat.Navigator.createShortUrl(type,id)+'" data-type="open" data-action="'+type+'" data-id="'+id+'"><i class="or-notice-action-full or-image-icon or-image-icon--action-'+type+'"></i> '+name+'</a></div>');
 
         $(notice).append( '<div class="or-notice-text">'+htmlEntities(msg)+'</div>');
 
-        if (log.length) {
-
-            let logLi = log.reduce((result, item) => {
-                result += '<li><pre>'+htmlEntities(item)+'</pre></li>';
-                return result;
-            }, '');
-            $(notice).append('<div class="or-notice-log"><ul>'+logLi+'</ul></div>');
-        }
+        if (log)
+            $(notice).append('<div class="or-notice-log"><pre>'+htmlEntities(log)+'</pre></div>');
 
         $('#noticebar').prepend(notice); // Notice anhängen.
         $(notice).orLinkify(); // Enable links
 
 
         // Toogle Fullscreen for notice
-        $(notice).find('.or-notice-action-full').click( function() {
-            $(notice).toggleClass('or-notice--is-full');
+        $(notice).find('.or-act-notice-full').click( function() {
+            $(notice).toggleClass('notice--is-full');
         });
 
         // Close the notice on click
-        $(notice).find('.or-notice-act-close').click( function() {
+        $(notice).find('.or-act-notice-close').click( function() {
             $(notice).fadeOut('fast',function() { $(notice).remove(); } );
         });
 

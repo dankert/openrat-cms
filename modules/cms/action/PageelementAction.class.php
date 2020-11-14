@@ -1225,7 +1225,7 @@ class PageelementAction extends BaseAction
 
 		$publisher->publish();
 
-		$this->addNoticeFor( $this->value,'PUBLISHED',array(),
+		$this->addNoticeFor( $this->value,Messages::PUBLISHED,[],
 			implode("\n",$publisher->getDestinationFilenames() ) );
 
 	}
