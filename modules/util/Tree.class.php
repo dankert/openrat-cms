@@ -5,6 +5,7 @@ namespace util;
 use cms\action\RequestParams;
 use cms\base\Language as L;
 use cms\model\Acl;
+use cms\model\Alias;
 use cms\model\Element;
 use cms\model\File;
 use cms\model\Link;
@@ -436,7 +437,7 @@ class Tree
 		$treeElement = new TreeElement();
 		$treeElement->id = $o->objectid;
 		$treeElement->internalId = $o->objectid;
-		$treeElement->text = $o->name;
+		$treeElement->text = $o->getName();
 		$treeElement->description = L::lang('' . $o->getType()) . ' ' . $id;
 
 		if ($o->desc != '')
@@ -462,7 +463,7 @@ class Tree
 
 	public function alias($id)
 	{
-		$alias = new \cms\model\Alias($id);
+		$alias = new Alias($id);
 		$alias->load();
 
 		$o = new BaseObject($alias->linkedObjectId);
@@ -471,17 +472,11 @@ class Tree
 		$treeElement = new TreeElement();
 		$treeElement->id = $o->objectid;
 		$treeElement->internalId = $o->objectid;
-		$treeElement->text = $o->name;
+		$treeElement->text = $o->getName();
 		$treeElement->description = L::lang('' . $o->getType()) . ' ' . $id;
 
-		if ($o->desc != '')
-			$treeElement->description .= ': ' . $o->desc;
-		else
-			$treeElement->description .= ' - ' . L::lang('NO_DESCRIPTION_AVAILABLE');
-
 		$treeElement->action = $o->getType();
-		$treeElement->icon = $o->getType();
-		$treeElement->extraId = array(RequestParams::PARAM_LANGUAGE_ID => $_REQUEST[RequestParams::PARAM_LANGUAGE_ID], RequestParams::PARAM_MODEL_ID => $_REQUEST[RequestParams::PARAM_MODEL_ID]);
+		$treeElement->icon   = $o->getType();
 
 		// Besonderheiten fuer bestimmte Objekttypen
 		if ($o->isPage) {

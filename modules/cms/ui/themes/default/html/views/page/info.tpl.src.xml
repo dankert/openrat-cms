@@ -8,9 +8,11 @@
 			<text value="${filename}"/>
 		</fieldset>
 		<fieldset label="">
-			<link clickable="true" subaction="prop" class="btn" type="dialog">
-				<text value="${message:edit}"/>
-			</link>
+			<part>
+				<link clickable="true" subaction="prop" class="btn" type="dialog">
+					<text value="${message:edit}"/>
+				</link>
+			</part>
 		</fieldset>
 	</group>
 	<list list="${languages}" extract="true">

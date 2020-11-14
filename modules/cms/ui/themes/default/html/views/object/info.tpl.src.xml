@@ -13,6 +13,11 @@
 		</fieldset>
 		<fieldset label="${message:description}">
 			<text value="${description}"/>
+			<part class="act-clickable">
+				<link class="btn" type="edit" action="object" subaction="prop">
+					<text value="${message:edit}"/>
+				</link>
+			</part>
 		</fieldset>
 	</group>
 
