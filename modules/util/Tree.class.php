@@ -248,7 +248,7 @@ class Tree
 			$treeElement->internalId = $user->userid;
 			$treeElement->text = $user->name;
 			$treeElement->action = 'user';
-			$treeElement->type = 'user';
+			//$treeElement->type = 'user';
 			$treeElement->icon = 'user';
 
 			$desc = $user->fullname;
@@ -335,7 +335,10 @@ class Tree
 				$treeElement->internalId = $id . '_' . $elementid;
 				$treeElement->text = $element->label;
 				$treeElement->action = 'pageelement';
-				$treeElement->type = 'pageelement';
+
+				if   ( in_array($element->typeid,[Element::ELEMENT_TYPE_LINK,Element::ELEMENT_TYPE_INSERT]))
+					$treeElement->type = 'pageelement';
+
 				$treeElement->icon = 'el_' . $element->getTypeName();
 				$treeElement->extraId = array('elementid' => $elementid);
 
@@ -527,7 +530,9 @@ class Tree
 
 			$treeElement->action = $o->getType();
 			$treeElement->icon = $o->getType();
-			$treeElement->type = $o->getType();
+
+			if   ( in_array($o->getType(),['folder','link','page','alias'])) // openable?
+				$treeElement->type = $o->getType();
 
 			$this->addTreeElement($treeElement);
 		}

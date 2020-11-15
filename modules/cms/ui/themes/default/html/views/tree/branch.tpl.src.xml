@@ -3,7 +3,9 @@
 	<list list="${branch}" extract="true">
 		<part tag="li" class="navtree-node,navtree-node--is-closed,or-draggable,or-draggable--type-${type}">
 			<part class="navtree-tree,navtree-node-control">
-				<image class="navtree-tree-icon" symbol="node-closed"/>
+				<if true="${type}">
+					<image class="navtree-tree-icon" symbol="node-closed"/>
+				</if>
 			</part>
 			<part class="act-clickable">
 				<link type="open" action="${action}" id="${id}" class="entry" title="${description}" var1="type"
