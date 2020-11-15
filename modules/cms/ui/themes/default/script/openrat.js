@@ -390,7 +390,7 @@ jQuery.fn.orTree = function (options)
                 });
 
                 // Am Knoten die Klasse wechseln.
-                $node.addClass('navtree-node--is-open').removeClass('navtree-node--is-closed').find('.navtree-tree-icon').addClass('image-icon--node-open').removeClass('image-icon--node-closed');
+                $node.addClass('navtree-node--is-open').removeClass('navtree-node--is-closed').find('.or-navtree-tree-icon').addClass('image-icon--node-open').removeClass('image-icon--node-closed');
             }
         });
 
