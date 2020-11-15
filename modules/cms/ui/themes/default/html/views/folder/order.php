@@ -15,10 +15,6 @@
           <table width="<?php echo O::escapeHtml('100%') ?>" class="<?php echo O::escapeHtml('or-table or-table--sortable') ?>"><?php echo O::escapeHtml('') ?>
             <tr class="<?php echo O::escapeHtml('or-headline') ?>"><?php echo O::escapeHtml('') ?>
               <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
-                <span><?php echo O::escapeHtml(''.@O::lang('FOLDER_ORDER').'') ?>
-                </span>
-              </td>
-              <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(''.@O::lang('TYPE').'') ?>
                 </span>
               </td>
@@ -38,14 +34,10 @@
             <?php foreach((array)$object as $list_key=>$list_value) { extract($list_value); ?>
               <tr data-id="<?php echo O::escapeHtml(''.@$id.'') ?>" class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
                 <td><?php echo O::escapeHtml('') ?>
-                  <span><?php echo O::escapeHtml(' ') ?>
-                  </span>
-                </td>
-                <td><?php echo O::escapeHtml('') ?>
-                  <span class="<?php echo O::escapeHtml('or-sort-value') ?>"><?php echo O::escapeHtml(''.@$icon.'') ?>
-                  </span>
                   <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-'.@$icon.'') ?>"><?php echo O::escapeHtml('') ?>
                   </i>
+                  <span class="<?php echo O::escapeHtml('or-sort-value') ?>"><?php echo O::escapeHtml(''.@O::lang(''.@$icon.'').'') ?>
+                  </span>
                 </td>
                 <td><?php echo O::escapeHtml('') ?>
                   <span><?php echo O::escapeHtml(''.@$name.'') ?>

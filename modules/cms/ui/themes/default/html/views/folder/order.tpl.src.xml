@@ -1,44 +1,46 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-  <form>
-    <table class="table--sortable">
-      <row class="headline">
-        <column class="help">
-          <text value="${message:FOLDER_ORDER}"/>
-        </column>
-        <column class="help">
-          <text value="${message:TYPE}"/>
-        </column>
-        <column class="help">
-          <text value="${message:NAME}"/>
-        </column>
-        <column class="help">
-          <text value="${message:FILENAME}"/>
-        </column>
-        <column class="help">
-          <text value="${message:LASTCHANGE}"/>
-        </column>
-      </row>
-      <list list="${object}" extract="true">
-        <row class="data" id="${id}">
-          <column>
-            <text value=" "/>
-          </column>
-          <column>
-            <text class="sort-value" value="${icon}"/>
-            <image action="${icon}"/>
-          </column>
-          <column>
-            <text value="${name}"/>
-          </column>
-          <column>
-            <text value="${filename}"/>
-          </column>
-          <column>
-            <date date="${date}"/>
-          </column>
-        </row>
-      </list>
-    </table>
-    <hidden name="order" default=""/>
-  </form>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form>
+		<table class="table--sortable">
+			<row class="headline">
+				<!--
+			  <column class="help">
+				<text value="${message:FOLDER_ORDER}"/>
+			  </column>-->
+				<column class="help">
+					<text value="${message:TYPE}"/>
+				</column>
+				<column class="help">
+					<text value="${message:NAME}"/>
+				</column>
+				<column class="help">
+					<text value="${message:FILENAME}"/>
+				</column>
+				<column class="help">
+					<text value="${message:LASTCHANGE}"/>
+				</column>
+			</row>
+			<list list="${object}" extract="true">
+				<row class="data" id="${id}">
+					<!--<column>
+					  <text value=" "/>
+					</column>-->
+					<column>
+						<image action="${icon}"/>
+						<text class="sort-value" value="${message:${icon}}"/>
+					</column>
+					<column>
+						<text value="${name}"/>
+					</column>
+					<column>
+						<text value="${filename}"/>
+					</column>
+					<column>
+						<date date="${date}"/>
+					</column>
+				</row>
+			</list>
+		</table>
+		<hidden name="order" default=""/>
+	</form>
 </output>

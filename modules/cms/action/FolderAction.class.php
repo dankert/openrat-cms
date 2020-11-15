@@ -1097,39 +1097,24 @@ class FolderAction extends ObjectAction
     public function orderView()
 	{
 		$list = array();
-		$last_objectid = 0;
 
 		// Schleife ueber alle Objekte in diesem Ordner
 		foreach( $this->folder->getObjects() as $o )
 		{
             /* @var $o BaseObject */
 			$id = $o->objectid;
+			$name = $o->getDefaultName();
 
 			if   ( $o->hasRight(Acl::ACL_READ) )
 			{
 				$list[$id]['id'  ]     = $id;
-				$list[$id]['name']     = \util\Text::maxLength( $o->name     ,30);
-				$list[$id]['filename'] = \util\Text::maxLength( $o->filename ,20);
-				$list[$id]['desc']     = \util\Text::maxLength( $o->desc     ,30);
-				if	( $list[$id]['desc'] == '' )
-					$list[$id]['desc'] = \cms\base\Language::lang('NO_DESCRIPTION_AVAILABLE');
-				$list[$id]['desc'] = 'ID '.$id.' - '.$list[$id]['desc'];
+				$list[$id]['name']     = $name->name;
+				$list[$id]['filename'] = $o->filename;
+				$list[$id]['desc']     = 'ID '.$id.' - '.$name->description;
 
-				$list[$id]['type'] = $o->getType();
+				$list[$id]['type']     = $o->getType();
+				$list[$id]['icon']     = $o->getType();
 
-				$list[$id]['icon'] = $o->getType();
-
-				if	( $o->getType() == 'file' )
-				{
-					$file = new File( $id );
-					$file->load();
-					$list[$id]['desc'] .= ' - '.intval($file->size/1000).'kB';
-
-					if	( $file->isImage() )
-						$list[$id]['icon'] = 'image';
-				}
-
-				$list[$id]['url' ] = Html::url($o->getType(),'',$id);
 				$list[$id]['date'] = $o->lastchangeDate;
 				$list[$id]['user'] = $o->lastchangeUser;
 

@@ -1,25 +1,24 @@
 Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
 
 
+	let calculateOrderList = function() {
+
+		// Analyse the order of the objects in this folder.
+		let order = new Array();
+
+		$(element).find('.or-table--sortable').find('tbody > tr.or-data').each(function () {
+			let objectid = $(this).data('id');
+			order.push(objectid);
+		});
+
+		// Set the comma-separated list of objects into a input field.
+		$(element).find('input[name=order]').val(order.join(','));
+	};
+
+	calculateOrderList();
+
     // Manuelles Sortieren von Tabellen per Drag and drop.
-	$(element).find('.or-table--sortable > tbody').sortable();
-
-
-    $(element).find('.or-table--sortable > tbody').closest('form').submit( function() {
-
-            // Analyse the order of the objects in this folder.
-            var order = new Array();
-
-            $(this).find('.or-table--sortable').find('tbody > tr.data').each(function () {
-                let objectid = $(this).data('id');
-                order.push(objectid);
-            });
-
-            // Set the comma-separated list of objects into a input field.
-            $(this).find('input[name=order]').val(order.join(','));
-        }
-    );
-
+	$(element).find('.or-table--sortable > tbody').sortable( { update: calculateOrderList } );
 
 	// Alle Checkboxen setzen oder nicht setzen.
 	$(element).find('tr.headline > td > input.checkbox').click( function() {
