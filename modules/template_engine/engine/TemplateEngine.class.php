@@ -92,6 +92,8 @@ class TemplateEngine
 
 			// converting the component tree to a element tree
 			$rootElement = $rootComponent->getElement();
+
+			// Rendering the complete element tree into a file.
 			file_put_contents( $filename, $rootElement->render( new XMLFormatter('  ')),FILE_APPEND );
 
 			// CHMOD ausfuehren.

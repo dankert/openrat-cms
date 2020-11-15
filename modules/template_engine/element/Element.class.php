@@ -85,7 +85,11 @@ class Element
 			;
 		else
 			if   ( $this->name ) {
-				$content .= $format->getIndentationOnClose();
+				if   ( $this->children )
+					// Elements with children are closed on the next line
+					$content .= $format->getIndentationOnClose();
+
+				// Closing element
 				$content .= '</'.$this->name.'>';
 			}
 

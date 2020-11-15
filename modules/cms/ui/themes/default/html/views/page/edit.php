@@ -7,23 +7,19 @@
       <table width="<?php echo O::escapeHtml('100%') ?>" class="<?php echo O::escapeHtml('or-table') ?>"><?php echo O::escapeHtml('') ?>
         <tr class="<?php echo O::escapeHtml('or-table-header') ?>"><?php echo O::escapeHtml('') ?>
           <th><?php echo O::escapeHtml('') ?>
-            <span><?php echo O::escapeHtml(''.@O::lang('NAME').'') ?>
-            </span>
+            <span><?php echo O::escapeHtml(''.@O::lang('NAME').'') ?></span>
           </th>
           <th><?php echo O::escapeHtml('') ?>
-            <span><?php echo O::escapeHtml(''.@O::lang('DESCRIPTION').'') ?>
-            </span>
+            <span><?php echo O::escapeHtml(''.@O::lang('DESCRIPTION').'') ?></span>
           </th>
           <th><?php echo O::escapeHtml('') ?>
-            <span><?php echo O::escapeHtml(''.@O::lang('TYPE').'') ?>
-            </span>
+            <span><?php echo O::escapeHtml(''.@O::lang('TYPE').'') ?></span>
           </th>
         </tr>
         <?php $if3=(($elements)==FALSE); if($if3) {  ?>
           <tr><?php echo O::escapeHtml('') ?>
             <td><?php echo O::escapeHtml('') ?>
-              <span><?php echo O::escapeHtml(''.@O::lang('NOT_FOUND').'') ?>
-              </span>
+              <span><?php echo O::escapeHtml(''.@O::lang('NOT_FOUND').'') ?></span>
             </td>
           </tr>
          <?php } ?>
@@ -31,21 +27,16 @@
           <tr class="<?php echo O::escapeHtml('or-data or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
             <td><?php echo O::escapeHtml('') ?>
               <a title="<?php echo O::escapeHtml(''.@$desc.'') ?>" target="<?php echo O::escapeHtml('_self') ?>" date-name="<?php echo O::escapeHtml(''.@$name.'') ?>" name="<?php echo O::escapeHtml(''.@$name.'') ?>" data-type="<?php echo O::escapeHtml('open') ?>" data-action="<?php echo O::escapeHtml('pageelement') ?>" data-method="<?php echo O::escapeHtml('') ?>" data-id="<?php echo O::escapeHtml(''.@$pageelementid.'') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/pageelement/'.@$pageelementid.'') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
-                <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-pageelement') ?>"><?php echo O::escapeHtml('') ?>
-                </i>
-                <span><?php echo O::escapeHtml(''.@$label.'') ?>
-                </span>
+                <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-pageelement') ?>"><?php echo O::escapeHtml('') ?></i>
+                <span><?php echo O::escapeHtml(''.@$label.'') ?></span>
               </a>
             </td>
             <td title="<?php echo O::escapeHtml(''.@$desc.'') ?>"><?php echo O::escapeHtml('') ?>
-              <span><?php echo O::escapeHtml(''.@$desc.'') ?>
-              </span>
+              <span><?php echo O::escapeHtml(''.@$desc.'') ?></span>
             </td>
             <td><?php echo O::escapeHtml('') ?>
-              <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-el_'.@$typename.'') ?>"><?php echo O::escapeHtml('') ?>
-              </i>
-              <span><?php echo O::escapeHtml(''.@O::lang('el_'.@$typename.'').'') ?>
-              </span>
+              <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-el_'.@$typename.'') ?>"><?php echo O::escapeHtml('') ?></i>
+              <span><?php echo O::escapeHtml(''.@O::lang('el_'.@$typename.'').'') ?></span>
             </td>
           </tr>
          <?php } ?>

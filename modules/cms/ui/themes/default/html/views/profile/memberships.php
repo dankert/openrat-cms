@@ -7,23 +7,20 @@
       <table width="<?php echo O::escapeHtml('100%') ?>" class="<?php echo O::escapeHtml('or-table') ?>"><?php echo O::escapeHtml('') ?>
         <tr class="<?php echo O::escapeHtml('or-headline') ?>"><?php echo O::escapeHtml('') ?>
           <td><?php echo O::escapeHtml('') ?>
-            <span><?php echo O::escapeHtml(''.@O::lang('name').'') ?>
-            </span>
+            <span><?php echo O::escapeHtml(''.@O::lang('name').'') ?></span>
           </td>
         </tr>
         <?php $if3=((groups)==FALSE); if($if3) {  ?>
           <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
             <td><?php echo O::escapeHtml('') ?>
-              <span><?php echo O::escapeHtml(''.@O::lang('NOT_FOUND').'') ?>
-              </span>
+              <span><?php echo O::escapeHtml(''.@O::lang('NOT_FOUND').'') ?></span>
             </td>
           </tr>
          <?php } ?>
         <?php foreach((array)groups as $list_key=>$group) {  ?>
           <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
             <td><?php echo O::escapeHtml('') ?>
-              <span><?php echo O::escapeHtml(''.@$group.'') ?>
-              </span>
+              <span><?php echo O::escapeHtml(''.@$group.'') ?></span>
             </td>
           </tr>
          <?php } ?>

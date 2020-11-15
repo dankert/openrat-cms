@@ -7,42 +7,35 @@
       <table width="<?php echo O::escapeHtml('100%') ?>" class="<?php echo O::escapeHtml('or-table') ?>"><?php echo O::escapeHtml('') ?>
         <tr class="<?php echo O::escapeHtml('or-table-header') ?>"><?php echo O::escapeHtml('') ?>
           <td><?php echo O::escapeHtml('') ?>
-            <span><?php echo O::escapeHtml(''.@O::lang('name').'') ?>
-            </span>
+            <span><?php echo O::escapeHtml(''.@O::lang('name').'') ?></span>
           </td>
           <td><?php echo O::escapeHtml('') ?>
-            <span><?php echo O::escapeHtml('') ?>
-            </span>
+            <span><?php echo O::escapeHtml('') ?></span>
           </td>
           <td><?php echo O::escapeHtml('') ?>
-            <span><?php echo O::escapeHtml('') ?>
-            </span>
+            <span><?php echo O::escapeHtml('') ?></span>
           </td>
         </tr>
         <?php foreach((array)$el as $list_key=>$list_value) { extract($list_value); ?>
           <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
             <td class="<?php echo O::escapeHtml('or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
               <a target="<?php echo O::escapeHtml('_self') ?>" date-name="<?php echo O::escapeHtml(''.@$name.'') ?>" name="<?php echo O::escapeHtml(''.@$name.'') ?>" data-type="<?php echo O::escapeHtml('open') ?>" data-action="<?php echo O::escapeHtml('model') ?>" data-method="<?php echo O::escapeHtml('') ?>" data-id="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/model/'.@$id.'') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
-                <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-model') ?>"><?php echo O::escapeHtml('') ?>
-                </i>
-                <span><?php echo O::escapeHtml(''.@$name.'') ?>
-                </span>
+                <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-model') ?>"><?php echo O::escapeHtml('') ?></i>
+                <span><?php echo O::escapeHtml(''.@$name.'') ?></span>
               </a>
             </td>
             <?php $if5=(!$is_default); if($if5) {  ?>
               <td class="<?php echo O::escapeHtml('or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
                 <?php $if7=(isset($id)); if($if7) {  ?>
                   <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('post') ?>" data-action="<?php echo O::escapeHtml('model') ?>" data-method="<?php echo O::escapeHtml('setdefault') ?>" data-id="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" data-data="<?php echo O::escapeHtml('{"action":"model","subaction":"setdefault","id":"'.@$id.'","token":"'.@$_token.'","none":"0"}') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
-                    <span><?php echo O::escapeHtml(''.@O::lang('make_default').'') ?>
-                    </span>
+                    <span><?php echo O::escapeHtml(''.@O::lang('make_default').'') ?></span>
                   </a>
                  <?php } ?>
               </td>
              <?php } ?>
             <?php if(!$if5) {  ?>
               <td><?php echo O::escapeHtml('') ?>
-                <em><?php echo O::escapeHtml(''.@O::lang('is_default').'') ?>
-                </em>
+                <em><?php echo O::escapeHtml(''.@O::lang('is_default').'') ?></em>
               </td>
              <?php } ?>
           </tr>
@@ -54,10 +47,8 @@
         <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
           <td colspan="<?php echo O::escapeHtml('2') ?>" class="<?php echo O::escapeHtml('or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
             <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('add') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('add') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'add\'}') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
-              <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-add') ?>"><?php echo O::escapeHtml('') ?>
-              </i>
-              <span><?php echo O::escapeHtml(''.@O::lang('add').'') ?>
-              </span>
+              <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-add') ?>"><?php echo O::escapeHtml('') ?></i>
+              <span><?php echo O::escapeHtml(''.@O::lang('add').'') ?></span>
             </a>
           </td>
         </tr>

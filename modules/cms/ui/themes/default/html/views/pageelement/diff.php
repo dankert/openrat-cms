@@ -6,63 +6,50 @@
     <div class="<?php echo O::escapeHtml('or-table-area') ?>"><?php echo O::escapeHtml('') ?>
       <table width="<?php echo O::escapeHtml('100%') ?>" class="<?php echo O::escapeHtml('or-table') ?>"><?php echo O::escapeHtml('') ?>
         <tr><?php echo O::escapeHtml('') ?>
+          <td><?php echo O::escapeHtml('') ?></td>
           <td><?php echo O::escapeHtml('') ?>
-          </td>
-          <td><?php echo O::escapeHtml('') ?>
-            <em><?php echo O::escapeHtml(''.@O::lang('COMPARE').'') ?>
-            </em>
-            <span><?php echo O::escapeHtml(' ') ?>
-            </span>
+            <em><?php echo O::escapeHtml(''.@O::lang('COMPARE').'') ?></em>
+            <span><?php echo O::escapeHtml(' ') ?></span>
             <?php include_once( 'modules/template_engine/components/html/component_date/component-date.php'); { component_date($date_left); ?>
              <?php } ?>
           </td>
+          <td><?php echo O::escapeHtml('') ?></td>
           <td><?php echo O::escapeHtml('') ?>
-          </td>
-          <td><?php echo O::escapeHtml('') ?>
-            <em><?php echo O::escapeHtml(''.@O::lang('WITH').'') ?>
-            </em>
-            <span><?php echo O::escapeHtml(' ') ?>
-            </span>
+            <em><?php echo O::escapeHtml(''.@O::lang('WITH').'') ?></em>
+            <span><?php echo O::escapeHtml(' ') ?></span>
             <?php include_once( 'modules/template_engine/components/html/component_date/component-date.php'); { component_date($date_right); ?>
              <?php } ?>
           </td>
         </tr>
         <tr><?php echo O::escapeHtml('') ?>
-          <td colspan="<?php echo O::escapeHtml('4') ?>"><?php echo O::escapeHtml('') ?>
-          </td>
+          <td colspan="<?php echo O::escapeHtml('4') ?>"><?php echo O::escapeHtml('') ?></td>
         </tr>
         <?php foreach((array)$diff as $list_key=>$list_value) { extract($list_value); ?>
           <tr class="<?php echo O::escapeHtml('or-diff') ?>"><?php echo O::escapeHtml('') ?>
             <?php $if5=(isset($left)); if($if5) {  ?>
               <td width="<?php echo O::escapeHtml('5%') ?>" class="<?php echo O::escapeHtml('or-diff-line') ?>"><?php echo O::escapeHtml('') ?>
-                <tt><?php echo O::escapeHtml(''.@$left['line'].'') ?>
-                </tt>
+                <tt><?php echo O::escapeHtml(''.@$left['line'].'') ?></tt>
               </td>
               <td width="<?php echo O::escapeHtml('45%') ?>" class="<?php echo O::escapeHtml('or-diff-text--'.@$left['type'].'') ?>"><?php echo O::escapeHtml('') ?>
-                <span><?php echo O::escapeHtml(''.@$left['text'].'') ?>
-                </span>
+                <span><?php echo O::escapeHtml(''.@$left['text'].'') ?></span>
               </td>
              <?php } ?>
             <?php if(!$if5) {  ?>
               <td width="<?php echo O::escapeHtml('50%') ?>" colspan="<?php echo O::escapeHtml('2') ?>" class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
-                <span><?php echo O::escapeHtml(' ') ?>
-                </span>
+                <span><?php echo O::escapeHtml(' ') ?></span>
               </td>
              <?php } ?>
             <?php $if5=(isset($right)); if($if5) {  ?>
               <td width="<?php echo O::escapeHtml('5%') ?>" class="<?php echo O::escapeHtml('or-diff-line') ?>"><?php echo O::escapeHtml('') ?>
-                <tt><?php echo O::escapeHtml(''.@$right['line'].'') ?>
-                </tt>
+                <tt><?php echo O::escapeHtml(''.@$right['line'].'') ?></tt>
               </td>
               <td width="<?php echo O::escapeHtml('45%') ?>" class="<?php echo O::escapeHtml('or-diff-text--'.@$right['type'].'') ?>"><?php echo O::escapeHtml('') ?>
-                <span><?php echo O::escapeHtml(''.@$right['text'].'') ?>
-                </span>
+                <span><?php echo O::escapeHtml(''.@$right['text'].'') ?></span>
               </td>
              <?php } ?>
             <?php if(!$if5) {  ?>
               <td width="<?php echo O::escapeHtml('50%') ?>" colspan="<?php echo O::escapeHtml('2') ?>" class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
-                <span><?php echo O::escapeHtml(' ') ?>
-                </span>
+                <span><?php echo O::escapeHtml(' ') ?></span>
               </td>
              <?php } ?>
           </tr>

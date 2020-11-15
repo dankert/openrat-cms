@@ -7,23 +7,19 @@
       <table width="<?php echo O::escapeHtml('100%') ?>" class="<?php echo O::escapeHtml('or-table') ?>"><?php echo O::escapeHtml('') ?>
         <tr class="<?php echo O::escapeHtml('or-table-header') ?>"><?php echo O::escapeHtml('') ?>
           <td><?php echo O::escapeHtml('') ?>
-            <span><?php echo O::escapeHtml(''.@O::lang('language').'') ?>
-            </span>
+            <span><?php echo O::escapeHtml(''.@O::lang('language').'') ?></span>
           </td>
           <td><?php echo O::escapeHtml('') ?>
-            <span><?php echo O::escapeHtml(''.@O::lang('value').'') ?>
-            </span>
+            <span><?php echo O::escapeHtml(''.@O::lang('value').'') ?></span>
           </td>
           <td><?php echo O::escapeHtml('') ?>
-            <span><?php echo O::escapeHtml(''.@O::lang('editor').'') ?>
-            </span>
+            <span><?php echo O::escapeHtml(''.@O::lang('editor').'') ?></span>
           </td>
         </tr>
         <?php foreach((array)$languages as $list_key=>$list_value) { extract($list_value); ?>
           <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
             <td><?php echo O::escapeHtml('') ?>
-              <span><?php echo O::escapeHtml(''.@$languagename.'') ?>
-              </span>
+              <span><?php echo O::escapeHtml(''.@$languagename.'') ?></span>
             </td>
             <td title="<?php echo O::escapeHtml(''.@$text.'') ?>" class="<?php echo O::escapeHtml('or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
               <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('edit') ?>" data-action="<?php echo O::escapeHtml('pageelement') ?>" data-method="<?php echo O::escapeHtml('value') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-languageid="<?php echo O::escapeHtml(''.@$languageid.'') ?>" data-extra="<?php echo O::escapeHtml('{\'languageid\':\''.@$languageid.'\'}') ?>" href="<?php echo O::escapeHtml('#/pageelement') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
@@ -32,8 +28,7 @@
                    <?php } ?>
                  <?php } ?>
                 <?php $if7=($text); if($if7) {  ?>
-                  <span><?php echo O::escapeHtml(''.@$text.'') ?>
-                  </span>
+                  <span><?php echo O::escapeHtml(''.@$text.'') ?></span>
                  <?php } ?>
               </a>
             </td>
@@ -41,8 +36,7 @@
               <?php foreach((array)$editors as $id=>$name) {  ?>
                 <div class="<?php echo O::escapeHtml('or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
                   <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('edit') ?>" data-action="<?php echo O::escapeHtml('pageelement') ?>" data-method="<?php echo O::escapeHtml('value') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-languageid="<?php echo O::escapeHtml(''.@$languageid.'') ?>" data-extra-format="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('{\'languageid\':\''.@$languageid.'\',\'format\':\''.@$id.'\'}') ?>" href="<?php echo O::escapeHtml('#/pageelement') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
-                    <span><?php echo O::escapeHtml(''.@$name.'') ?>
-                    </span>
+                    <span><?php echo O::escapeHtml(''.@$name.'') ?></span>
                   </a>
                 </div>
                <?php } ?>
