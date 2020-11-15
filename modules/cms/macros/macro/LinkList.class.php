@@ -50,15 +50,17 @@ class LinkList extends Macro
 	public $description = 'Creates a list of links';
 
 	public $folderid;
+	public $listStyleClassName   = 'actual';
+	public $actualStyleClassName = 'actual';
 
 
 	function execute()
 	{
-		echo '<ul>';
+		echo '<ul class="'.$this->listStyleClassName.'">';
 
 		//
 		if   ( ! $this->folderid )
-		$this->folderid = $this->getRootObjectId();
+			$this->folderid = $this->getRootObjectId();
 
 		$folder = new Folder( $this->folderid );
 
@@ -66,17 +68,17 @@ class LinkList extends Macro
 		foreach( $folder->getObjectIds() as $id )
 		{
 			$o = new BaseObject( $id );
-			$o->languageid = $this->page->languageid;
 			$o->load();
+			$name = $o->getNameForLanguage( $this->pageContext->languageId );
 
-			// Nur Seiten und Verknuepfungen anzeigen
+			// Only show pages, urls, links.
 			if (!$o->isPage && !$o->isLink && !$o->isUrl )
 				continue;
 
-			// Wenn aktuelle Seite, dann markieren, sonst Link
-			$class = ($this->getObjectId() == $id )?'actual':'';
+			// Mark the current object with a css class.
+			$class = ($this->getObjectId() == $id )?$this->actualStyleClassName:'';
 
-			echo '<li class="'.$class.'"><a href="'.$this->pathToObject($id).'">'.$o->name.'</a></li>';
+			echo '<li class="'.$class.'"><a title="'.$name->description.'" href="'.$this->pathToObject($id).'">'.$name->name.'</a></li>';
 		}
 
 		echo '</ul>';
