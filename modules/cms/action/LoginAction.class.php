@@ -4,6 +4,7 @@ namespace cms\action;
 
 
 use cms\auth\Auth;
+use cms\auth\AuthRunner;
 use cms\base\Configuration;
 use cms\base\DB;
 use cms\base\Startup;
@@ -279,29 +280,7 @@ class LoginAction extends BaseAction
         $this->setTemplateVar('send_password',$loginConfig->get('send_password'));
 
         // Versuchen, einen Benutzernamen zu ermitteln, der im Eingabeformular vorausgewählt wird.
-        $modules = $securityConfig->subset('preselect')->get('modules',[]);
-
-        $username = '';
-
-        foreach( $modules as $module)
-        {
-            $moduleClass = Auth::NS.'\\'.$module.'Auth';
-
-			if   ( ! class_exists($moduleClass)) {
-				Logger::warn("module is not availble: ".$moduleClass );
-				continue;
-			}
-
-            /** @var \cms\auth\Auth $auth */
-            $auth = new $moduleClass;
-            $username = $auth->username();
-
-            if	( $username )
-            {
-                Logger::debug('Preselecting User '.$username.' from '.$module.'Auth');
-                break; // Benutzername gefunden.
-            }
-        }
+        $username = AuthRunner::getUsername('preselect');
 
         $this->setTemplateVar('login_name',$username);
 
@@ -398,7 +377,7 @@ class LoginAction extends BaseAction
 	 */
 	function loginPost()
 	{
-		Session::setUser(''); // Altes Login entfernen.
+		Session::setUser(null); // Altes Login entfernen.
 		
 		if	( Configuration::subset('login')->is('nologin',false ) )
 			throw new SecurityException('login disabled');
@@ -460,48 +439,17 @@ class LoginAction extends BaseAction
 		$this->setCookie('or_username',$loginName );
 		$this->setCookie('or_dbid'    ,$this->getRequestVar('dbid'));
 
-		// Authentifizierungs-Module.
-		$modules = Configuration::subset(['security','authenticate'])->get('modules',[] );
-		
-		$loginOk            = false;
-		$mustChangePassword = false;
-		$tokenFailed        = false;
-		$lastModule         = null;
-		
 		// Jedes Authentifizierungsmodul durchlaufen, bis ein Login erfolgreich ist.
-		foreach( $modules as $module)
-		{
-            $moduleClass = Auth::NS.'\\' . $module . 'Auth';
-			$auth        = new $moduleClass;
-			Logger::info('Trying to login with module '.$moduleClass);
-			$loginStatus = $auth->login( $loginName,$loginPassword, $token );
-			$loginOk     = $loginStatus === true || $loginStatus === Auth::STATUS_SUCCESS;
-			
-			if   ( $loginStatus === Auth::STATUS_PW_EXPIRED )
-				$mustChangePassword = true;
-			if   ( $loginStatus === Auth::STATUS_TOKEN_NEEDED )
-				$tokenFailed = true;
-				
-			if	( $loginOk )
-			{
-				Logger::info('Login successful for '.$loginName);
-				$lastModule = $module;
-				
-				break; // Login erfolgreich, erstes Modul gewinnt.
-			}
-		}
-		
-		/*
-		$loginOk = $this->checkLogin( $loginName,
-		                              $loginPassword,
-		                              $newPassword1,
-		                              $newPassword2 );
-		*/
-		
-		
+		$result = AuthRunner::checkLogin('authenticate',$loginName,$loginPassword, $token );
+
+		$mustChangePassword = ( $result === Auth::STATUS_PW_EXPIRED   );
+		$tokenFailed        = ( $result === Auth::STATUS_TOKEN_NEEDED );
+		$loginOk            = ( $result === Auth::STATUS_SUCCESS      );
+
 		if	( $loginOk )
 		{
-			
+			Logger::info('Login successful for '.$loginName);
+
 			try
 			{
 				// Benutzer über den Benutzernamen laden.
@@ -603,35 +551,26 @@ class LoginAction extends BaseAction
 
 
 	/**
-	 * Benutzer meldet sich ab.
+	 * Logout current user.
 	 */
 	public function logoutPost()
 	{
-		$user = Session::getUser();
-		if	( is_object($user) )
-			$this->setTemplateVar('login_username',$user->name);
-		
 		if	( Configuration::subset('security')->is('renew_session_logout',false) )
 			$this->recreateSession();
 
-		// Login-Token löschen:
-		// Wenn der Benutzer sich abmelden will, dann soll auch die automatische
-		// Anmeldung deaktiviert werden.
-
-        // Bestehendes Login-Token aus dem Cookie lesen und aus der Datenbank löschen.
+        // Reading the login token cookie
         list( $selector,$token ) = array_pad( explode('.',@$_COOKIE['or_token']),2,'');
 
+        // Logout forces the removal of all login tokens
 		if   ( $selector )
 		    $this->currentUser->deleteLoginToken( $selector );
 
 		// Cookie mit Logintoken löschen.
         $this->setCookie('or_token'   ,null );
 
-        //session_unset();
         Session::setUser(null);
 
-        $this->addNotice('user', 0, $user->name, 'LOGOUT_OK', Action::NOTICE_OK);
-
+        $this->addNoticeFor( $this->currentUser, Messages::LOGOUT_OK );
     }
 
 	
@@ -641,6 +580,7 @@ class LoginAction extends BaseAction
 	 */
 	function logoutView()
 	{
+		// There is no view for this action.
 	}
 	
 

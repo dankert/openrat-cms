@@ -31,11 +31,10 @@ class DatabaseAuth implements Auth
 		$sql->setString('username', $user);
 		$sql->setString('password', hash($algo, $password));
 		$row = $sql->getRow();
-		$ok = !empty($row);
 
 		// noch nicht implementiert: $authdb->close();
 
-		return $ok ? Auth::STATUS_SUCCESS : Auth::STATUS_FAILED;
+		return $row ? Auth::STATUS_SUCCESS : Auth::STATUS_FAILED;
 	}
 
 	public function username()
@@ -44,5 +43,3 @@ class DatabaseAuth implements Auth
 	}
 
 }
-
-?>

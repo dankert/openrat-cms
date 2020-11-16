@@ -35,7 +35,7 @@ class HttpAuth implements Auth
 	{
 		$http = new Http( Configuration::get(['security','http','url']));
 		$http->method = 'HEAD';
-		$http->setBasicAuthentication($this->name, $password);
+		$http->setBasicAuthentication($user, $password);
 
 		$ok = $http->request();
 

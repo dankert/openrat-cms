@@ -77,7 +77,7 @@ SQL
 	 */
 	public function login($user, $password, $token)
 	{
-		return false;
+		return null;
 	}
 }
 

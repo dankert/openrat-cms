@@ -5,6 +5,7 @@ namespace cms\ui\action;
 use cms\action\Action;
 use cms\action\RequestParams;
 use cms\auth\Auth;
+use cms\auth\AuthRunner;
 use cms\base\Configuration;
 use cms\base\Configuration as C;
 use cms\base\Startup;
@@ -329,29 +330,7 @@ class IndexAction extends Action
 
     private function tryAutoLogin()
     {
-        $modules  = C::subset( ['security','autologin'] )->get('modules',[] );
-        $username = null;
-
-        foreach( $modules as $module)
-        {
-            Logger::debug( 'Auto-Login module: '.$module );
-            $moduleClass = Auth::NS. '\\'.$module.'Auth';
-            $auth        = new $moduleClass;
-            /* @type $auth Auth */
-            try {
-                $username = $auth->username();
-            }
-            catch( Exception $e ) {
-                Logger::warn( 'Error in auth-module '.$module.":\n".$e->__toString() );
-                // Ignore this and continue with next module.
-            }
-
-            if	( $username )
-            {
-                Logger::debug('Auto-Login for User '.$username.' with auth-module '.$module);
-                break; // Benutzername gefunden.
-            }
-        }
+        $username = AuthRunner::getUsername('autologin');
 
         if	( $username )
         {

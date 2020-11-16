@@ -30,4 +30,3 @@ class CookieAuth implements Auth
 
 }
 
-?>

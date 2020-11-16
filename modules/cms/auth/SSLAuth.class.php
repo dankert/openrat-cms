@@ -30,7 +30,7 @@ class SSLAuth implements Auth
 	 */
 	public function login($user, $password, $token)
 	{
-		return false;
+		return ( $this->username() == $user ) ? Auth::STATUS_SUCCESS : null;
 	}
 }
 

@@ -39,12 +39,12 @@ SQL
 			// Benutzer ist nicht vorhanden.
 			// Trotzdem das Kennwort hashen, um Timingattacken zu verhindern.
 			$unusedHash = Password::hash(User::pepperPassword($password), Password::bestAlgoAvailable());
-			return false;
+			return null;
 		}
 
 		// Pruefen ob Kennwort mit Datenbank uebereinstimmt.
 		if (!Password::check(User::pepperPassword($password), $row_user['password_hash'], $row_user['password_algo'])) {
-			return false;
+			return Auth::STATUS_FAILED;
 		}
 
 		// Behandeln von Klartext-Kennwoertern (Igittigitt).
@@ -64,7 +64,7 @@ SQL
 			// Wenn das kennwort abgelaufen ist, kann es eine bestimmte Dauer noch benutzt und geändert werden.
 			// Nach Ablauf dieser Dauer wird das Login abgelehnt.
 			if ($row_user['password_expires'] + (Configuration::subset('security')->get('deny_after_expiration_duration',72) * 60 * 60) < time())
-				return false; // Abgelaufenes Kennwort wird nicht mehr akzeptiert.
+				return Auth::STATUS_FAILED; // Abgelaufenes Kennwort wird nicht mehr akzeptiert.
 			else
 				return Auth::STATUS_PW_EXPIRED; // Kennwort ist abgelaufen, kann aber noch geändert werden.
 		}
@@ -73,7 +73,7 @@ SQL
 			$user = new User($row_user['id']);
 			$user->load();
 			if (Password::getTOTPCode($user->otpSecret) == $token)
-				return true;
+				return Auth::STATUS_SUCCESS;
 			else
 				return Auth::STATUS_TOKEN_NEEDED;
 		}
@@ -83,7 +83,7 @@ SQL
 		}
 
 		// Benutzer wurde erfolgreich authentifiziert.
-		return true;
+		return Auth::STATUS_SUCCESS;
 	}
 
 	public function username()
