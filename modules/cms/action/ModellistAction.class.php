@@ -53,58 +53,5 @@ class ModellistAction extends BaseAction
     }
 
 
-	function showView()
-	{
-		$project = new Project( $this->project->projectid );
 
-		$list = array();
-		foreach( $project->getModelIds() as $id )
-		{
-			$m = new Model( $id );
-			$m->load();
-
-            $list[$id]['id'  ] = $id;
-            $list[$id]['name'] = $m->name;
-
-            $list[$id]['is_default'] = $m->isDefault;
-			$list[$id]['select_url'] = Html::url('index','model',$id);
-		}
-		$this->setTemplateVar( 'el',$list );
-		$this->setTemplateVar( 'add',$this->userIsAdmin() );
-	}
-
-
-	/**
-	 * Bearbeiten der Variante.
-	 * Ermitteln aller Eigenschaften der Variante.
-	 */
-	function editView()
-	{
-		$this->nextSubAction('show');
-	}
-	
-	
-	
-	
-	function addView()
-	{
-	}
-
-
-	function addPost()
-	{
-		$model = new Model();
-		$model->projectid = $this->getRequestVar('projectid');
-		$model->name      = $this->getRequestVar('name');
-		$model->add();
-		
-		// Wenn kein Namen eingegeben, dann einen setzen.
-		if	( empty($model->name) )
-		{
-			// Name ist "Variante <id>"
-			$model->name = \cms\base\Language::lang('MODEL').' '.$model->modelid;
-			$model->save();
-		}
-	}
-	
 }

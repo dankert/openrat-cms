@@ -4,6 +4,9 @@ use cms\action\Method;
 use cms\action\UserlistAction;
 use cms\model\User;
 
+/**
+ * Shows all users.
+ */
 class UserlistEditAction extends UserlistAction implements Method {
 
     public function view() {

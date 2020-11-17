@@ -7,6 +7,11 @@ use cms\model\User;
 use language\Messages;
 use util\exception\ValidationException;
 
+/**
+ * Adding a new user.
+ *
+ * @package cms\action\userlist
+ */
 class UserlistAddAction extends UserlistAction implements Method {
     public function view() {
     }

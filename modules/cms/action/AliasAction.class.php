@@ -62,8 +62,4 @@ class AliasAction extends ObjectAction
 		parent::init();
 	}
 
-
-
-	
-	
 }

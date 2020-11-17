@@ -10,17 +10,18 @@ Their mission is to
 
 ### View and Post
 
-Every HTTP-Request contains 2 parameters: 
-- `action`: The action class is instantiated with this value. Example: The action "example" will instantiate a class "ExampleAction".
-- `method`: The method which should be called in this action (see above)
+Every HTTP-Request contains 3 parameters: 
+- `action`: The action pointing to an model object
+- `method`: The method
+- `id`    : The id of the model object. This is optional in some cases
 
 ### View and Post
 
 The parameter `method` and the HTTP method are deciding, which method is called.
 
 Example:
-`GET  /?action=example&method=foo` will call _ExampleAction::fooView()_.
-`POST /?action=example&method=foo` will call _ExampleAction::fooPost()_.
+`GET  /?action=example&method=foo` will call _ExampleFooAction::view()_.
+`POST /?action=example&method=foo` will call _ExampleFooAction::post()_.
 
 ### Contracts:
 - **no database requests are done here!** Database requests are only done by the model classes.

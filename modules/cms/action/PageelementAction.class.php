@@ -148,248 +148,12 @@ class PageelementAction extends BaseAction
 	}
 
 
-	/**
-	 * Anzeigen des Element-Inhaltes.
-	 * @deprecated
-	 */
-	public function propView_Unused()
-	{
-		$this->value->languageid = $this->page->languageid;
-		$this->value->objectid   = $this->page->objectid;
-		$this->value->pageid     = $this->page->pageid;
-		$this->value->page       = $this->page;
-		$this->value->simple = false;
-		$this->value->element = &$this->element;
-		$this->value->element->load();
-		$this->value->load();
-
-		$this->setTemplateVar('name'        ,$this->value->element->name     );
-		$this->setTemplateVar('description' ,$this->value->element->desc     );
-		$this->setTemplateVar('elementid'   ,$this->value->element->elementid);
-		$this->setTemplateVar('element_type',$this->value->element->type     );
-
-		$user = new User( $this->value->lastchangeUserId );
-		$user->load();
-		$this->setTemplateVar('lastchange_user',$user->getProperties());
-		$this->setTemplateVar('lastchange_date',$this->value->lastchangeTimeStamp);
-
-		$t = new Template( $this->page->templateid );
-		$t->load();
-		$this->setTemplateVar('template_name',$t->name );
-		$this->setTemplateVar('template_url' ,Html::url('template','prop',$t->templateid) );
-
-		$this->setTemplateVar('element_name' ,$this->value->element->name );
-		$this->setTemplateVar('element_url'  ,Html::url('element','name',$this->value->element->elementid) );
-
-	}
-
-
-
-	/**
-	 * Anzeigen des Element-Inhaltes.
-	 */
-	public function infoView()
-	{
-		$this->value->languageid = $this->page->languageid;
-		$this->value->objectid   = $this->page->objectid;
-		$this->value->pageid     = $this->page->pageid;
-		$this->value->page       = $this->page;
-		$this->value->simple = false;
-		$this->value->element = &$this->element;
-		$this->value->element->load();
-		$this->value->load();
-
-		$this->setTemplateVar('name'          ,$this->value->element->name     );
-		$this->setTemplateVar('description'   ,$this->value->element->desc     );
-		$this->setTemplateVar('elementid'     ,$this->value->element->elementid);
-        $this->setTemplateVar('element_id'    ,$this->value->element->elementid );
-        $this->setTemplateVar('element_name'  ,$this->value->element->name );
-		$this->setTemplateVar('element_type'  ,$this->value->element->getTypeName() );
-		$this->setTemplateVar('element_format',Element::getAvailableFormats()[ $this->value->element->format] );
-		$this->setTemplateVar('format'        ,@Element::getAvailableFormats()[ $this->value->format         ] );
-
-		$user = new User( $this->value->lastchangeUserId );
-
-		try{
-            $user->load();
-        }catch (\util\exception\ObjectNotFoundException $e) {
-		    $user = new User(); // Empty User.
-        }
-
-        $this->setTemplateVar('lastchange_user',$user->getProperties());
-        $this->setTemplateVar('lastchange_date',$this->value->lastchangeTimeStamp);
-
-		$t = new Template( $this->page->templateid );
-		$t->load();
-		$this->setTemplateVar('template_name',$t->name );
-		$this->setTemplateVar('template_id'  ,$t->templateid );
-
-
-	}
-
-
-	/**
-	 * Normaler Editiermodus.
-	 *
-	 * Es wird ein Formular erzeugt, mit dem der Benutzer den Inhalt bearbeiten kann.
-	 */
-	public function editView()
-	{
-		$this->value->objectid   = $this->page->objectid;
-		$this->value->pageid     = $this->page->pageid;
-		$this->value->page       = $this->page;
-		$this->value->element    = &$this->element;
-		$this->value->elementid  = $this->element->elementid;
-		$this->value->element->load();
-
-		$this->setTemplateVar('name'       ,$this->value->element->label    );
-		$this->setTemplateVar('description',$this->value->element->desc     );
-		$this->setTemplateVar('elementid'  ,$this->value->element->elementid);
-		$this->setTemplateVar('type'       ,$this->value->element->getTypeName() );
-
-		$languages = array();
-
-		foreach ( $this->page->getProject()->getLanguages() as $languageId=>$languageName )
-        {
-        	$value = clone $this->value; // do not overwrite the value
-            $value->languageid = $languageId;
-            $value->load();
-
-            $languages[$languageId] = array(
-                'languageid'   => $languageId,
-                'languagename' => $languageName,
-                'text'         => $this->calculateValue( $value ),
-                'number'       => $value->number,
-                'date'         => $value->date,
-                'linkObjectId' => $value->linkToObjectId,
-        );
-        }
-
-        $this->setTemplateVar('languages',$languages);
-	}
-
-
-
-
-
-
-	/**
-	 * Erweiterter Modus.
-	 */
-	public function advancedView()
-	{
-		$this->value->objectid   = $this->page->objectid;
-		$this->value->pageid     = $this->page->pageid;
-		$this->value->page       = $this->page;
-		$this->value->element = &$this->element;
-		$this->value->elementid  = $this->element->elementid;
-		$this->value->element->load();
-
-		$this->setTemplateVar('name'       ,$this->value->element->label    );
-		$this->setTemplateVar('description',$this->value->element->desc     );
-		$this->setTemplateVar('elementid'  ,$this->value->element->elementid);
-		$this->setTemplateVar('type'       ,$this->value->element->getTypeName() );
-
-		$languages = array();
-
-		foreach ( $this->page->getProject()->getLanguages() as $languageId=>$languageName )
-        {
-            $this->value->languageid = $languageId;
-            $this->value->load();
-
-            $languages[$languageId] = array(
-                'languageid'   => $languageId,
-                'languagename' => $languageName,
-				'text'         => $this->calculateValue( $this->value ),
-                'number'       => $this->value->number,
-                'date'         => $this->value->date,
-                'linkObjectId' => $this->value->linkToObjectId,
-                'editors'      => Element::getAvailableFormats()
-            );
-        }
-
-        $this->setTemplateVar('languages',$languages);
-	}
-
-
-
-	public function valueView()
-	{
-		$this->value->languageid = $this->page->languageid;
-		$this->value->objectid   = $this->page->objectid;
-		$this->value->pageid     = $this->page->pageid;
-		$this->value->element = &$this->element;
-		$this->value->elementid = &$this->element->elementid;
-		$this->value->element->load();
-		$this->value->publish = false;
-
-
-		$valueId =$this->getRequestId('valueid');
-		if   ( $valueId ) {
-			$this->value->valueid = $valueId;
-			$this->value->loadWithId();
-		}
-		else {
-			$this->value->load();
-		}
-
-		$this->setTemplateVar('name'     ,$this->value->element->name     );
-		$this->setTemplateVar('desc'     ,$this->value->element->desc     );
-		$this->setTemplateVar('elementid',$this->value->element->elementid);
-		$this->setTemplateVar('languageid',$this->value->languageid       );
-		$this->setTemplateVar('type'     ,$this->value->element->getTypeName() );
-		$this->setTemplateVar('value_time',time() );
-
-
-		$this->value->page             = new Page( $this->page->objectid );
-		$this->value->page->languageid = $this->value->languageid;
-		$this->value->page->load();
-
-		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
-
-		if	( $this->value->page->hasRight(Acl::ACL_RELEASE) )
-		$this->setTemplateVar( 'release',true  );
-		if	( $this->value->page->hasRight(Acl::ACL_PUBLISH) )
-		$this->setTemplateVar( 'publish',false );
-
-		$funktionName = 'edit'.$this->value->element->type;
-
-		if	( ! method_exists($this,$funktionName) )
-		throw new \LogicException('Method does not exist: PageElementAction#'.$funktionName );
-
-		$this->$funktionName(); // Aufruf der Funktion "edit<Elementtyp>()".
-	}
-
-
-
-	/**
-	 * Vorschau.
-	 */
-	public function previewView()
-	{
-		$valueGenerator = new ValueGenerator( $this->createValueContext( Producer::SCHEME_PREVIEW) );
-		$this->setTemplateVar('preview' ,$valueGenerator->getCache()->get() );
-	}
-
-
-
-	/**
-	 * Datum bearbeiten.
-	 *
-	 */
-	private function editdate()
-	{
-        $this->setTemplateVar( 'date' ,$this->value->date==null?'':date('Y-m-d',$this->value->date) );
-        $this->setTemplateVar( 'time' ,$this->value->date==null?'':date('H:i'  ,$this->value->date) );
-    }
-
-
 
 	/**
 	 * Verkn�pfung bearbeiten.
 	 *
 	 */
-	private function editlink()
+	protected function editlink()
 	{
         $project = new Project($this->page->projectid);
 		$this->setTemplateVar('rootfolderid',$project->getRootObjectId() );
@@ -422,73 +186,11 @@ class PageelementAction extends BaseAction
 	}
 
 
-
-	function linkView()
-	{
-		$this->value->languageid = $this->page->languageid;
-		$this->value->objectid   = $this->page->objectid;
-		$this->value->pageid     = $this->page->pageid;
-		$this->value->element = &$this->element;
-		$this->value->element->load();
-		$this->value->load();
-
-		$this->setTemplateVar('name'     ,$this->value->element->name     );
-		$this->setTemplateVar('desc'     ,$this->value->element->desc     );
-
-        $project = new Project($this->page->projectid);
-        $this->setTemplateVar('rootfolderid'     ,$project->getRootObjectId() );
-		
-		// Ermitteln, welche Objekttypen verlinkt werden d�rfen.
-		if	( empty($this->value->element->subtype) )
-		$types = array('page','file','link'); // Fallback: Alle erlauben :)
-		else
-		$types = explode(',',$this->value->element->subtype );
-
-		$objects = array();
-			
-		$objects[ 0 ] = \cms\base\Language::lang('LIST_ENTRY_EMPTY'); // Wert "nicht ausgewählt"
-
-		
-		$t = new Template( $this->page->templateid );
-
-		foreach( $t->getDependentObjectIds() as $id )
-		{
-			$o = new BaseObject( $id );
-			$o->load();
-				
-			//			if	( in_array( $o->getType(),$types ))
-			//			{
-			$f = new Folder( $o->parentid );
-			//					$f->load();
-
-			$objects[ $id ]  = \cms\base\Language::lang( $o->getType() ).': ';
-			$objects[ $id ] .=  implode( \util\Text::FILE_SEP,$f->parentObjectNames(false,true) );
-			$objects[ $id ] .= \util\Text::FILE_SEP.$o->name;
-			//			}
-		}
-
-        asort( $objects ); // Sortieren
-
-        $this->setTemplateVar('objects'         ,$objects);
-        $this->setTemplateVar('linkobjectid',$this->value->linkToObjectId);
-
-        $this->value->page             = new Page( $this->page->objectid );
-        $this->value->page->languageid = $this->value->languageid;
-        $this->value->page->load();
-
-        $this->setTemplateVar( 'release',$this->value->page->hasRight(Acl::ACL_RELEASE) );
-        $this->setTemplateVar( 'publish',$this->value->page->hasRight(Acl::ACL_PUBLISH) );
-
-        $this->setTemplateVar( 'objectid',$this->value->page->objectid );
-    }
-
-
-
     /**
      * Auswahlbox.
      *
      */
-    private function editselect()
+    protected function editselect()
     {
         $this->setTemplateVar( 'items',$this->value->element->getSelectItems() );
         $this->setTemplateVar( 'text' ,$this->value->text                      );
@@ -501,7 +203,7 @@ class PageelementAction extends BaseAction
      * Einf�gen-Element.
      *
      */
-    private function editlist()
+    protected function editlist()
     {
         $this->editinsert();
     }
@@ -512,7 +214,7 @@ class PageelementAction extends BaseAction
      * Einf�gen-Element.
      *
      */
-    private function editinsert()
+    protected function editinsert()
     {
         // Auswahl ueber alle Elementtypen
         $objects = array();
@@ -560,7 +262,7 @@ class PageelementAction extends BaseAction
      * Zahl bearbeiten.
      *
      */
-    private function editnumber()
+    protected function editnumber()
     {
         $this->setTemplateVar('number',$this->value->number / pow(10,$this->value->element->decimals) );
     }
@@ -571,7 +273,7 @@ class PageelementAction extends BaseAction
      *
      * Es wird ein Formular erzeugt, mit dem der Benutzer den Inhalt bearbeiten kann.
      */
-    private function editlongtext()
+    protected function editlongtext()
     {
         if   ( $this->hasRequestVar('format') )
             // Individual format from request.
@@ -595,195 +297,17 @@ class PageelementAction extends BaseAction
      *
      * Es wird ein Formular erzeugt, mit dem der Benutzer den Inhalt bearbeiten kann.
      */
-    private function edittext()
+    protected function edittext()
     {
         $this->setTemplateVar( 'text',$this->value->text );
     }
-
-
-
-    /**
-     * Wiederherstellung eines alten Inhaltes.
-     */
-    public function restorePost()
-    {
-        $this->value->valueid = $this->getRequestVar('valueid');
-        $this->value->loadWithId();
-        $this->value->element = new Element( $this->value->elementid );
-
-        if	( $this->value->pageid != $this->page->pageid )
-            throw new \LogicException( 'Cannot find value','page-id does not match' );
-
-        // Pruefen, ob Berechtigung zum Freigeben besteht
-        //$this->value->release = $this->page->hasRight(Acl::ACL_RELEASE);
-        $this->value->release = false;
-
-        // Inhalt wieder herstellen, in dem er neu gespeichert wird.
-        $this->value->save();
-
-        $this->addNotice('pageelement', 0, $this->value->element->name, 'PAGEELEMENT_USE_FROM_ARCHIVE', Action::NOTICE_OK);
-    }
-
-
-
-    /**
-     * Freigeben eines Inhaltes
-     */
-    public function releasePost()
-    {
-		$this->value->objectid   = $this->page->objectid;
-		$this->value->pageid     = $this->page->pageid;
-		$this->value->page       = $this->page;
-		$this->value->element    = &$this->element;
-		$this->value->elementid  = $this->element->elementid;
-		$this->value->element->load();
-
-        $this->value->valueid = intval($this->getRequestVar('valueid'));
-        $this->value->loadWithId();
-
-        if	( $this->value->pageid != $this->page->pageid )
-            throw new LogicException( 'cannot release, bad page' );
-
-        // Pruefen, ob Berechtigung zum Freigeben besteht
-        if	( !$this->page->hasRight(Acl::ACL_RELEASE) )
-            throw new SecurityException( 'Cannot release','no right' );
-
-        // Inhalt freigeben
-        $this->value->release();
-
-        $this->addNoticeFor($this->value, Messages::PAGEELEMENT_RELEASED );
-    }
-
-
-    /**
-     * Erzeugt eine Liste aller Versionsst?nde zu diesem Inhalt
-     */
-    public function historyView()
-    {
-        $this->page->load();
-
-		$this->value->objectid   = $this->page->objectid;
-		$this->value->pageid     = $this->page->pageid;
-		$this->value->page       = $this->page;
-		$this->value->element    = &$this->element;
-		$this->value->elementid  = $this->element->elementid;
-		$this->value->element->load();
-
-		$languages = array();
-
-		foreach ( $this->page->getProject()->getLanguages() as $languageId=>$languageName )
-		{
-			$language = [
-				'id'     => $languageId,
-				'name'   => $languageName,
-				'values' => [],
-			];
-
-			$value = clone $this->value; // do not overwrite the value
-			$value->languageid = $languageId;
-
-			/** @var Value $value */
-			foreach($value->getVersionList() as $value) {
-
-				$language['values'][] = [
-					'text'       => $this->calculateValue( $value ),
-					'active'     => $value->active,
-					'publish'    => $value->publish,
-					'user'       => $value->lastchangeUserName,
-					'date'       => $value->lastchangeTimeStamp,
-					'id'         => $value->getId(),
-					'usable'     => ! $value->active,
-					'releasable' => $value->active && ! $value->publish,
-					'comparable' => in_array($this->element->typeid,[Element::ELEMENT_TYPE_LONGTEXT]),
-				];
-			}
-
-			$languages[$languageId] = $language;
-		}
-
-        $this->setTemplateVar('name'     ,$this->element->label );
-        $this->setTemplateVar('languages',$languages );
-    }
-
-
-    /**
-     * Vergleicht 2 Versionen eines Inhaltes
-     */
-    function diffView()
-    {
-        $value1id = $this->getRequestVar('compareid');
-        $value2id = $this->getRequestVar('withid'   );
-
-        // Wenn Value1-Id groesser als Value2-Id, dann Variablen tauschen
-        if	( $value1id == $value2id )
-        {
-            $this->addValidationError('compareid'   );
-            $this->addValidationError('withid'   ,'');
-            $this->callSubAction('archive');
-            return;
-        }
-
-        // Wenn Value1-Id groesser als Value2-Id, dann Variablen tauschen
-        if	( $value1id > $value2id )
-        list($value1id,$value2id) = array( $value2id,$value1id );
-
-
-        $value1 = new Value( $value1id );
-        $value2 = new Value( $value2id );
-        $value1->valueid = $value1id;
-        $value2->valueid = $value2id;
-
-        $value1->loadWithId();
-        $value2->loadWithId();
-
-        $this->setTemplateVar('date_left' ,$value1->lastchangeTimeStamp);
-        $this->setTemplateVar('date_right',$value2->lastchangeTimeStamp);
-
-        $text1 = explode("\n",$value1->text);
-        $text2 = explode("\n",$value2->text);
-
-        // Unterschiede feststellen.
-        $diffResult = Text::diff($text1,$text2);
-
-        $outputResult = array_map( function( $left,$right) {
-        	return [
-        		'left' => $left,
-				'right'=> $right
-			];
-		},$diffResult[0],$diffResult[1] );
-
-        $this->setTemplateVar('diff',$outputResult );
-    }
-
-
-
-    /**
-     * Ein Element der Seite speichern.
-     */
-    public function valuePost()
-    {
-        $this->element->load();
-        $type = $this->element->type;
-
-        if	( empty($type))
-            throw new \InvalidArgumentException('No element type available');
-
-        $funktionName = 'save'.$type;
-
-        if  ( !method_exists($this,$funktionName))
-            throw new \InvalidArgumentException('Function not available: '.$funktionName);
-
-        $this->$funktionName(); // Aufruf Methode "save<ElementTyp>()"
-    }
-
-
 
     /**
      * Element speichern
      *
      * Der Inhalt eines Elementes wird abgespeichert
      */
-    private function savetext()
+    protected function savetext()
     {
         $value = new Value();
         $value->publisher  = $this->page->publisher;
@@ -819,7 +343,7 @@ class PageelementAction extends BaseAction
      * @param $value Value
      * @throws \util\exception\ObjectNotFoundException
      */
-    private function afterSave( $value )
+    protected function afterSave( $value )
     {
         $value->page = new Page( $value->objectid );
         $value->page->load();
@@ -873,7 +397,7 @@ class PageelementAction extends BaseAction
      *
      * Der Inhalt eines Elementes wird abgespeichert
      */
-    private function savelongtext()
+    protected function savelongtext()
     {
         $value = new Value();
         $value->languageid = $this->page->languageid;
@@ -907,7 +431,7 @@ class PageelementAction extends BaseAction
      *
      * Der Inhalt eines Elementes wird abgespeichert
      */
-    private function savedate()
+    protected function savedate()
     {
         $value = new Value();
         $value->languageid = $this->page->languageid;
@@ -939,7 +463,7 @@ class PageelementAction extends BaseAction
      *
      * Der Inhalt eines Elementes wird abgespeichert
      */
-    private function saveselect()
+    protected function saveselect()
     {
         $value = new Value();
         $value->languageid = $this->page->languageid;
@@ -966,7 +490,7 @@ class PageelementAction extends BaseAction
      *
      * Der Inhalt eines Elementes wird abgespeichert
      */
-    private function savelink()
+    protected function savelink()
     {
         $value = new Value();
         $value->publisher  = $this->page->publisher;
@@ -996,7 +520,7 @@ class PageelementAction extends BaseAction
      *
      * Der Inhalt eines Elementes wird abgespeichert
      */
-    private function savelist()
+    protected function savelist()
     {
         $this->saveinsert();
     }
@@ -1008,7 +532,7 @@ class PageelementAction extends BaseAction
      *
      * Der Inhalt eines Elementes wird abgespeichert
      */
-    private function saveinsert()
+    protected function saveinsert()
     {
         $value = new Value();
         $value->publisher = $this->page->publisher;
@@ -1035,7 +559,7 @@ class PageelementAction extends BaseAction
      *
      * Der Inhalt eines Elementes wird abgespeichert
      */
-    private function savenumber()
+    protected function savenumber()
     {
         $value = new Value();
         $value->publisher  = $this->page->publisher;
@@ -1059,77 +583,8 @@ class PageelementAction extends BaseAction
     }
 
 
-    function exportlongtext()
-    {
-        $types = array();
 
-        foreach( array('odf','plaintext') as $type )
-        {
-            $types[$type] = \cms\base\Language::lang('FILETYPE_'.$type);
-        }
-
-        $this->setTemplateVar('types',$types);
-    }
-
-
-    function importlongtext()
-    {
-        $types = array();
-
-        foreach( array('odf','plaintext') as $type )
-        {
-            $types[$type] = \cms\base\Language::lang('FILETYPE_'.$type);
-        }
-        $this->setTemplateVar('types',$types);
-    }
-
-
-    function doexportlongtext()
-    {
-        $type = $this->getRequestVar('type');
-        switch($type)
-        {
-            case 'odf':
-
-                // Angabe Content-Type
-                //				header('Content-Type: '.$this->file->mimeType());
-                //				header('X-File-Id: '.$this->file->fileid);
-
-                //				header('Content-Disposition: inline; filename='.$this->id.'.odt');
-                header('Content-Transfer-Encoding: binary');
-                //				header('Content-Description: '.$this->file->name);
-
-                echo $this->createOdfDocument();
-
-                exit;
-
-            default:
-        }
-
-        exit;
-    }
-
-
-    /**
-     * ODF erzeugen.<br>
-     * vorerst ZURUECKGESTELLT!
-     *
-     * @return unknown
-     */
-    private function createOdfDocument()
-    {
-        // TODO: ODF ist nicht ganz ohne.
-        $transformer = new Transformer();
-        $transformer->text = $this->value->text;
-        $transformer->type = 'odf';
-        $transformer->transform();
-        return $transformer->text;
-    }
-
-
-
-
-    private function linkifyOIDs( $text )
+    protected function linkifyOIDs( $text )
     {
 		$pageContext = new PageContext( $this->page->objectid, Producer::SCHEME_PREVIEW );
 		$pageContext->modelId    = 0;
@@ -1148,7 +603,7 @@ class PageelementAction extends BaseAction
     }
 
 
-    private function compactOIDs( $text )
+    protected function compactOIDs( $text )
     {
         foreach( Text::parseOID($text) as $oid=>$t )
         {
@@ -1166,7 +621,7 @@ class PageelementAction extends BaseAction
      * @param $text
      * @return int
      */
-    private function parseSimpleOID($text )
+    protected function parseSimpleOID($text )
     {
         $treffer = Text::parseOID( $text );
 
@@ -1176,31 +631,6 @@ class PageelementAction extends BaseAction
         else
             return intval($text);
     }
-
-	/**
-	 * Seite veroeffentlichen
-	 *
-	 * Es wird ein Formular angzeigt, mit dem die Seite veroeffentlicht
-	 * werden kann 
-	 */
-	public function pubView()
-	{
-	}
-
-
-
-	/**
-	 * Seite veroeffentlichen
-	 *
-	 * Die Seite wird generiert.
-	 */
-	function pubPost()
-	{
-		if	( !$this->page->hasRight( Acl::ACL_PUBLISH ) )
-            throw new SecurityException( 'no right for publish' );
-
-		$this->publishPage();
-	}
 
 
 	protected function publishPage() {
@@ -1274,5 +704,3 @@ class PageelementAction extends BaseAction
 		}
 	}
 }
-	
-?>

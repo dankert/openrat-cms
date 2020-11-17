@@ -68,66 +68,6 @@ class SearchAction extends BaseAction
 	}
 	
 	/**
-	 * Durchf?hren der Suche
-	 * und Anzeige der Ergebnisse
-	 */
-	public function resultView()
-	{
-		$suchText    = $this->getRequestVar('text');
-		$searchFlags = 0;
-		
-		if	( $this->hasRequestVar('id'         ) ) $searchFlags |= self::FLAG_ID;
-		if	( $this->hasRequestVar('filename'   ) ) $searchFlags |= self::FLAG_FILENAME;
-		if	( $this->hasRequestVar('name'       ) ) $searchFlags |= self::FLAG_NAME;
-		if	( $this->hasRequestVar('description') ) $searchFlags |= self::FLAG_DESCRIPTION;
-		if	( $this->hasRequestVar('content'    ) ) $searchFlags |= self::FLAG_VALUE;
-			
-		$this->performSearch($suchText, $searchFlags);
-
-				/*
-			case 'lastchange_user':
-				$e = new Value();
-				
-				$language = Session::getProjectLanguage();
-				$e->languageid = $language->languageid;
-				
-				$listObjectIds = $e->getObjectIdsByLastChangeUserId( $this->getRequestVar('userid') );
-				break;
-		}*/
-	}
-	
-	
-	
-	/**
-	 * Durchf?hren der Suche
-	 * und Anzeige der Ergebnisse
-	 */
-	public function quicksearchView()
-	{
-		$searchConfig = C::subset('search')->subset('quicksearch');
-
-		$text = $this->getRequestVar('search');
-		
-		$flag = $searchConfig->subset('flag');
-
-		$searchFlags = 0;
-
-		// Always search for the id without a max length
-		if	( $flag->is('id'         ) ) $searchFlags |= self::FLAG_ID;
-
-		if   ( strlen($text) >= $searchConfig->get('maxlength',3 ) ) {
-
-			if	( $flag->is('name'       ) ) $searchFlags |= self::FLAG_NAME;
-			if	( $flag->is('filename'   ) ) $searchFlags |= self::FLAG_FILENAME;
-			if	( $flag->is('description') ) $searchFlags |= self::FLAG_DESCRIPTION;
-			if	( $flag->is('content'    ) ) $searchFlags |= self::FLAG_VALUE;
-		}
-
-		$this->performSearch($text, $searchFlags);
-	}
-
-
-	/**
 	 * Query the search
 	 *
 	 * @param $searchText string search query text
@@ -254,5 +194,3 @@ class SearchAction extends BaseAction
 	}
 	
 }
-
-?>

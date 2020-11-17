@@ -63,44 +63,4 @@ class TextAction extends FileAction
 
 		parent::setBaseObject( $text );
 	}
-
-
-	public function valuePost()
-	{
-		$this->text->value = $this->getRequestVar('text', RequestParams::FILTER_RAW);
-		$this->text->saveValue();
-
-		$this->addNoticeFor($this->text,Messages::VALUE_SAVED);
-		$this->text->setTimestamp();
-	}
-
-
-	/**
-	 * Only needed because there is a special template for text nodes.
-	 */
-	public function valueView()
-	{
-		$this->setTemplateVar( 'text', $this->text->loadValue() );
-
-		parent::valueView();
-	}
-
-
-	/**
-	 * Only needed because there is a special template for text nodes.
-	 */
-	public function showView() {
-
-		parent::showView();
-	}
-
-	/**
-	 * Displaying the text content.
-	 */
-	public function previewView()
-	{
-		$this->setTemplateVar( 'text', $this->text->loadValue() );
-
-		parent::previewView();
-	}
 }
