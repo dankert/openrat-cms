@@ -3,6 +3,7 @@
 namespace cms\action;
 
 use cms\model\Group;
+
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //

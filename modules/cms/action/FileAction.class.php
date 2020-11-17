@@ -8,16 +8,12 @@ use cms\generator\FileGenerator;
 use cms\generator\Producer;
 use cms\generator\Publisher;
 use cms\generator\PublishOrder;
-use cms\model\Folder;
 use cms\model\BaseObject;
 use cms\model\File;
-
-use cms\generator\PublishPreview;
-use cms\generator\PublishPublic;
-use util\Http;
+use cms\model\Folder;
+use util\exception\ValidationException;
 use util\Html;
 use util\Upload;
-use util\exception\ValidationException;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -49,7 +45,7 @@ class FileAction extends ObjectAction
     /**
      * @var File
      */
-	private $file;
+	protected $file;
 
 	/**
 	 * Konstruktor

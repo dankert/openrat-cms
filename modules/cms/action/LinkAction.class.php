@@ -3,12 +3,9 @@
 namespace cms\action;
 
 use cms\model\BaseObject;
-use cms\model\Folder;
 use cms\model\Link;
-
-
 use util\Html;
-use util\Session;
+
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -41,7 +38,7 @@ class LinkAction extends ObjectAction
     /**
      * @var Link
      */
-	private $link;
+	protected $link;
 
 	/**
 	 * Konstruktor

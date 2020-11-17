@@ -80,7 +80,7 @@ class TreeAction extends BaseAction
 
 
 
-	private function loadTreeBranch( $type )
+	protected function loadTreeBranch($type )
     {
         $tree = new Tree();
 
@@ -128,7 +128,7 @@ class TreeAction extends BaseAction
 		/**
      * The path to an object.
      */
-    private function calculatePath($type, $id) {
+    protected function calculatePath($type, $id) {
 
         switch( $type ) {
 
@@ -268,7 +268,7 @@ class TreeAction extends BaseAction
 
 
 
-    private function pathItem( $action, $id = 0, $name = '' ) {
+    protected function pathItem($action, $id = 0, $name = '' ) {
         return array('type'=>$this->typeToInternal($action),'action'=>$action ,'id'=>$id,'name'=>$name  );
     }
 

@@ -3,20 +3,18 @@
 namespace cms\action;
 
 namespace cms\action;
+use cms\generator\PublishPublic;
 use cms\model\Acl;
 use cms\model\Element;
+use cms\model\Page;
 use cms\model\Project;
 use cms\model\Template;
-use cms\model\Page;
-
-
 use cms\model\TemplateModel;
-use cms\generator\PublishPublic;
 use language\Messages;
 use util\exception\ValidationException;
-use util\Session;
 use util\Html;
-use util\Text;
+use util\Session;
+
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2009 Jan Dankert
@@ -51,7 +49,7 @@ class TemplateAction extends BaseAction
     /**
      * @var Template
      */
-	private $template;
+	protected $template;
 	private $element;
 
 

@@ -4,15 +4,14 @@ namespace cms\action;
 
 
 use cms\base\Configuration;
+use cms\model\BaseObject;
 use cms\model\Element;
+use cms\model\Folder;
 use cms\model\Project;
 use cms\model\Template;
-use cms\model\Folder;
-use cms\model\BaseObject;
 use ReflectionClass;
 use ReflectionProperty;
 use util\Text;
-
 
 
 /**
@@ -27,7 +26,7 @@ class ElementAction extends BaseAction
     /**
      * @var Element
      */
-	private $element;
+	protected $element;
 
     private $template;
 

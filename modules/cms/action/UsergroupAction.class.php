@@ -2,8 +2,6 @@
 
 namespace cms\action;
 
-use cms\model\User;
-
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -34,19 +32,4 @@ class UsergroupAction extends BaseAction
 	{
         parent::__construct();
 	}
-
-
-	function showView()
-	{
-	}
-		
-
-	/**
-	 *
-	 */
-	function editView()
-	{
-		$this->nextSubAction('show');
-	}
-
 }

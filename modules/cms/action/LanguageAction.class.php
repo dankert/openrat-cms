@@ -4,9 +4,7 @@ namespace cms\action;
 
 use cms\base\Configuration;
 use cms\model\Language;
-use cms\model\Project;
-use util\Session;
-use util\Html;
+
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -39,7 +37,7 @@ class LanguageAction extends BaseAction
 	 * Zu bearbeitende Sprache, wird im Kontruktor instanziiert
 	 * @type Language
 	 */
-	private $language;
+	protected $language;
 
 
 	/**

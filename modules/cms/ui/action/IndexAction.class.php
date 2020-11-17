@@ -186,7 +186,7 @@ class IndexAction extends Action
 	 *
 	 * @return string
 	 */
-	private function getStyleLink()
+	protected function getStyleLink()
 	{
 		// Ok, for now there is only 1 CSS file, which contains all UI styles.
 		return Startup::THEMES_DIR . 'default/'.(PRODUCTION?Theme::STYLE_MINIFIED_FILENAME:Theme::STYLE_FILENAME);
@@ -209,7 +209,7 @@ class IndexAction extends Action
 	 *
 	 * @return string
 	 */
-	private function getThemeCSS()
+	protected function getThemeCSS()
 	{
 		// Je Theme die Theme-CSS-Datei ausgeben.
 		$lessFile = Startup::THEMES_DIR . 'default/style/theme/openrat-theme.less';
@@ -263,7 +263,7 @@ class IndexAction extends Action
 	 *
 	 * @return string
 	 */
-	private function getScriptLink()
+	protected function getScriptLink()
 	{
 		return Startup::THEMES_DIR . 'default/'.(PRODUCTION?Theme::SCRIPT_MINIFIED_FILENAME:Theme::SCRIPT_FILENAME);
 	}
@@ -274,7 +274,7 @@ class IndexAction extends Action
      * @param $action
      * @param $id
      */
-    private function updateStartAction( &$action, &$id )
+    protected function updateStartAction(&$action, &$id )
     {
         $user = Session::getUser();
 
@@ -328,7 +328,7 @@ class IndexAction extends Action
         $id     = 0;
     }
 
-    private function tryAutoLogin()
+    protected function tryAutoLogin()
     {
         $username = AuthRunner::getUsername('autologin');
 
@@ -360,7 +360,7 @@ class IndexAction extends Action
      * @param User $user
      * @return \configuration\Config|string
      */
-    private function getUserStyle( $user )
+    protected function getUserStyle($user )
     {
         // Theme für den angemeldeten Benuter ermitteln
         if  ( $user && C::subset('style')->has($user->style) )
@@ -376,7 +376,7 @@ class IndexAction extends Action
 	/**
 	 * Content-Security-Policy.
 	 */
-	private function setContentSecurityPolicy()
+	protected function setContentSecurityPolicy()
 	{
 		$csp = Configuration::subset('security' )->get('csp', [
 			'default-src' =>'\'self\'', // Default for all is 'self' (CSS, styles, etc)

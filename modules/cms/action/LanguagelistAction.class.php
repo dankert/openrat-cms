@@ -4,12 +4,10 @@ namespace cms\action;
 
 use cms\base\Configuration;
 use cms\model\Language;
-
-
 use cms\model\Project;
 use language\Messages;
-use util\Session;
 use util\Html;
+
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -42,7 +40,7 @@ class LanguagelistAction extends BaseAction
     /**
      * @var Project
      */
-    private $project;
+    protected $project;
 
 
     /**

@@ -17,9 +17,12 @@ use configuration\Config;
 use configuration\ConfigurationLoader;
 use database\Database;
 use cms\update\Update;
+use Exception;
 use language\Language;
 use language\Messages;
-use modules\cms\base\HttpRequest;
+use util\ClassName;
+use util\ClassUtils;
+use util\exception\ObjectNotFoundException;
 use util\exception\ValidationException;
 use util\Http;
 use logger\Logger;
@@ -289,15 +292,33 @@ class Dispatcher
      */
     private function callActionMethod()
     {
-        $actionClassName = ucfirst($this->request->action) . 'Action';
-        $actionClassNameWithNamespace = 'cms\\'.($this->request->isUIAction?'ui\\':'').'action\\' . $actionClassName;
+    	$action = $this->request->action;
+    	$method = $this->request->method;
 
-        if ( !class_exists($actionClassNameWithNamespace) )
-            throw new LogicException('Action \''.$this->request->action.'\' is not available, class not found: '.$actionClassNameWithNamespace);
+    	while( true ) {
+			$actionClassName = new ClassName( ucfirst($action) . ucfirst($method) . 'Action');
+			$actionClassName->addNamespace( 'cms\\' . ($this->request->isUIAction ? 'ui\\' : '') . 'action\\' . $action );
+
+			if ( $actionClassName->exists() )
+				break;
+
+			$baseActionClassName = new ClassName( ucfirst($action) . 'Action' );
+			$baseActionClassName->addNamespace( 'cms\\' . ($this->request->isUIAction ? 'ui\\' : '') . 'action' );
+
+			if ( ! $baseActionClassName->exists() )
+				throw new LogicException('Action \''.$action.'\' is not available, class not found: '.$baseActionClassName->get() );
+
+			if   ( ! $baseActionClassName->getParent()->exists() )
+				throw new BadMethodCallException($baseActionClassName->get().' does not exist.');
+
+			$action = strtolower( $baseActionClassName->dropNamespace()->dropSuffix('Action')->get() );
+		}
+
 
         // Erzeugen der Action-Klasse
-        /* @type $do \cms\action\Action */
-        $do = new $actionClassNameWithNamespace;
+		$class = $actionClassName->get();
+        /* @type $do Action */
+        $do = new $class;
 
         $do->request         = $this->request;
         $do->init();
@@ -306,22 +327,19 @@ class Dispatcher
 
         // POST-Request => ...Post() wird aufgerufen.
         // GET-Request  => ...View() wird aufgerufen.
-        $methodSuffix = $this->request->isAction ? 'Post' :  'View';
-        $subactionMethodName = $this->request->method . $methodSuffix;
+        $subactionMethodName = $this->request->isAction ? 'post' :  'view';;
 
         // Daten werden nur angezeigt, die Sitzung kann also schon geschlossen werden.
         // Halt! In Index-Action können Benutzer-Logins gesetzt werden.
         if   ( ! $this->request->isAction && $this->request->action != 'index' && $this->request->method != 'oidc' )
             Session::close();
 
-        Logger::debug("Dispatcher executing {$this->request->action}/{$this->request->method}/" . $this->request->getRequestId().' -> '.$actionClassName.'#'.$subactionMethodName.'()');
+        Logger::debug("Dispatcher executing {$action}/{$method}/" . $this->request->getRequestId().' -> '.$actionClassName->get().'#'.$subactionMethodName.'()');
 
 
         try {
-			$method             = new \ReflectionMethod($do,$subactionMethodName);
-            $declaredClassName  = $method->getDeclaringClass()->getShortName();
-            $declaredActionName = strtolower(substr($declaredClassName,0,strpos($declaredClassName,'Action')));
-			$params             = [];
+			$method = new \ReflectionMethod($do,$subactionMethodName);
+			$params = [];
 			foreach( $method->getParameters() as $parameter ) {
 				$params[ $parameter->getName() ] = $this->request->getRequiredRequestVar($parameter->getName(),RequestParams::FILTER_RAW);
 			}
@@ -344,11 +362,9 @@ class Dispatcher
 
         // The action is able to change its method name.
         $this->request   = $do->request;
-        $this->request->action = $declaredActionName;
+        $this->request->action = $action;
 
-        $result = $do->getOutputData();
-
-        return $result;
+		return $do->getOutputData();
     }
 
     /**

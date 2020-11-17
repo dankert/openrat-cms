@@ -12,7 +12,8 @@ $tests = [
 	new \util\text\variables\VariablesTest(),
 	new \util\test\YAMLTest(),
 	new \util\test\MustacheTest(),
-	new \security\test\PasswordTest()
+	new \security\test\PasswordTest(),
+	new \util\test\ClassNameTest(),
 ];
 
 echo '<h1>Running Tests</h1>';

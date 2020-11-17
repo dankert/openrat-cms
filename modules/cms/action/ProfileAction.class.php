@@ -26,13 +26,11 @@ use cms\model\User;
 use language\Language;
 use language\Messages;
 use logger\Logger;
-use LogicException;
-use security\Password;
+use security\Base2n;
 use util\exception\ValidationException;
 use util\Mail;
-use util\UIUtils;
-use security\Base2n;
 use util\Session;
+use util\UIUtils;
 
 
 /**
@@ -46,7 +44,7 @@ class ProfileAction extends BaseAction
 {
 	public $security = Action::SECURITY_USER;
 	
-	private $user;
+	protected $user;
 	var $defaultSubAction = 'edit';
 
 	/**
@@ -370,7 +368,7 @@ class ProfileAction extends BaseAction
 	 * @param User $user
 	 * @return string
 	 */
-	private function getUserStyle( $user )
+	protected function getUserStyle($user )
 	{
 		// Theme für den angemeldeten Benuter ermitteln
 		if  ( $user && Configuration::subset('style')->has($user->style))

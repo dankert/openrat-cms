@@ -1,0 +1,375 @@
+<?php
+namespace cms\action\folder;
+use cms\action\Action;
+use cms\action\FolderAction;
+use cms\action\Method;
+use cms\base\Startup;
+use cms\model\Acl;
+use cms\model\BaseObject;
+use cms\model\File;
+use cms\model\Folder;
+use cms\model\Link;
+use cms\model\Page;
+use cms\model\Project;
+use cms\model\Url;
+use util\ArchiveTar;
+use util\Html;
+
+
+class FolderAdvancedAction extends FolderAction implements Method {
+
+    public function view() {
+		$this->setTemplateVar('writable',$this->folder->hasRight(Acl::ACL_WRITE) );
+
+		$list = array();
+
+		// Schleife ueber alle Objekte in diesem Ordner
+		foreach( $this->folder->getObjects() as $o )
+		{
+		    /* @var $o BaseObject */
+			$id = $o->objectid;
+
+			if   ( $o->hasRight(Acl::ACL_READ) )
+			{
+				$list[$id]['objectid'] = $id;
+				$list[$id]['id'      ] = 'obj'.$id;
+				$list[$id]['name'    ] = $o->name;
+				$list[$id]['filename'] = $o->filename;
+				$list[$id]['desc'    ] = $o->desc;
+				if	( $list[$id]['desc'] == '' )
+					$list[$id]['desc'] = \cms\base\Language::lang('NO_DESCRIPTION_AVAILABLE');
+				$list[$id]['desc'] = 'ID '.$id.' - '.$list[$id]['desc'];
+
+				$list[$id]['type'] = $o->getType();
+
+				$list[$id]['icon'] = $o->getType();
+
+				$list[$id]['url' ] = Html::url($o->getType(),'',$id);
+				$list[$id]['date'] = date( \cms\base\Language::lang('DATE_FORMAT'),$o->lastchangeDate );
+				$list[$id]['user'] = $o->lastchangeUser;
+
+				if	( $this->hasRequestVar("markall") || $this->hasRequestVar('obj'.$id) )
+					$this->setTemplateVar('obj'.$id,'1');
+			}
+		}
+
+		if   ( $this->folder->hasRight(Acl::ACL_WRITE) )
+		{
+			// Alle anderen Ordner ermitteln
+			$otherfolder = array();
+			$project = new Project( $this->folder->projectid );
+			foreach( $project->getAllFolders() as $id )
+			{
+				$f = new Folder( $id );
+				if	( $f->hasRight( Acl::ACL_WRITE ) )
+					$otherfolder[$id] = Startup::FILE_SEP.implode( Startup::FILE_SEP,$f->parentObjectNames(false,true) );
+			}
+			asort( $otherfolder );
+
+			$this->setTemplateVar('folder',$otherfolder);
+
+			// URLs zum Umsortieren der Eintraege
+			$this->setTemplateVar('order_url'      ,Html::url('folder','order',$this->folder->id) );
+		}
+
+		$actionList = array();
+		$actionList[] = 'copy';
+		$actionList[] = 'link';
+		$actionList[] = 'archive';
+
+		if	( $this->folder->hasRight(Acl::ACL_WRITE) )
+		{
+			$actionList[] = 'move';
+			$actionList[] = 'delete';
+		}
+
+		$this->setTemplateVar('actionlist',$actionList );
+		$this->setTemplateVar('defaulttype',$this->getRequestVar('type','alpha'));
+
+		$this->setTemplateVar('object'      ,$list            );
+		$this->setTemplateVar('act_objectid',$this->folder->id);
+
+		$project = new Project($this->folder->projectid);
+		$rootFolder = new Folder( $project->getRootObjectId() );
+		$rootFolder->load();
+
+		$this->setTemplateVar('properties'    ,$this->folder->getProperties() );
+		$this->setTemplateVar('rootfolderid'  ,$rootFolder->id  );
+		$this->setTemplateVar('rootfoldername',$rootFolder->name);
+    }
+
+
+    public function post() {
+		$type           = $this->getRequestVar('type');
+		$ids            = explode(',',$this->getRequestVar('ids'));
+		$targetObjectId = $this->getRequestVar('targetobjectid');
+
+		// Prüfen, ob Schreibrechte im Zielordner bestehen.
+		switch( $type )
+		{
+			case 'move':
+			case 'copy':
+			case 'link':
+				$f = new Folder( $targetObjectId );
+
+				// Beim Verkn�pfen muss im Zielordner die Berechtigung zum Erstellen
+				// von Verkn�pfungen vorhanden sein.
+				//
+				// Beim Verschieben und Kopieren muss im Zielordner die Berechtigung
+				// zum Erstellen von Ordner, Dateien oder Seiten vorhanden sein.
+				if	( ( $type=='link' && $f->hasRight( Acl::ACL_CREATE_LINK ) ) ||
+					  ( ( $type=='move' || $type == 'copy' ) &&
+					    ( $f->hasRight(Acl::ACL_CREATE_FOLDER) || $f->hasRight(Acl::ACL_CREATE_FILE) || $f->hasRight(Acl::ACL_CREATE_PAGE) ) ) )
+				{
+					// OK
+				}
+				else
+				{
+					$this->addValidationError('targetobjectid','no_rights');
+					return;
+				}
+
+				break;
+			default:
+		}
+
+
+		$ids        = $this->folder->getObjectIds();
+		$objectList = array();
+
+		foreach( $ids as $id )
+		{
+			// Nur, wenn Objekt ausgewaehlt wurde
+			if	( !$this->hasRequestVar('obj'.$id) )
+				continue;
+
+			$o = new BaseObject( $id );
+			$o->load();
+
+			// Fuer die gewuenschte Aktion muessen pro Objekt die entsprechenden Rechte
+			// vorhanden sein.
+			if	( $type == 'copy'    && $o->hasRight( Acl::ACL_READ   ) ||
+				  $type == 'move'    && $o->hasRight( Acl::ACL_WRITE  ) ||
+				  $type == 'link'    && $o->hasRight( Acl::ACL_READ   ) ||
+				  $type == 'archive' && $o->hasRight( Acl::ACL_READ   ) ||
+				  $type == 'delete'  && $o->hasRight( Acl::ACL_DELETE )    )
+				$objectList[ $id ] = $o->getProperties();
+			else
+				$this->addNotice($o->getType(), 0, $o->name, 'no_rights', Action::NOTICE_WARN);
+		}
+
+		$ids = array_keys($objectList);
+
+		if	( $type == 'archive' )
+		{
+			require_once('serviceClasses/ArchiveTar.class.php');
+			$tar = new ArchiveTar();
+			$tar->files = array();
+
+			foreach( $ids as $id )
+			{
+				$o = new BaseObject( $id );
+				$o->load();
+
+				if	( $o->isFile )
+				{
+					$file = new File($id);
+					$file->load();
+
+					// Datei dem Archiv hinzufügen.
+					$info = array();
+					$info['name'] = $file->filename();
+					$info['file'] = $file->loadValue();
+					$info['mode'] = 0600;
+					$info['size'] = $file->size;
+					$info['time'] = $file->lastchangeDate;
+					$info['user_id' ] = 1000;
+					$info['group_id'] = 1000;
+					$info['user_name' ] = 'nobody';
+					$info['group_name'] = 'nobody';
+
+					$tar->numFiles++;
+					$tar->files[]= $info;
+				}
+				else
+				{
+					// Was anderes als Dateien ignorieren.
+					$this->addNotice($o->getType(), 0, $o->name, 'NOTHING_DONE', Action::NOTICE_WARN);
+				}
+
+			}
+
+			// TAR speichern.
+			$tarFile = new File();
+			$tarFile->name     = \cms\base\Language::lang('ARCHIVE').' '.$this->getRequestVar('filename');
+			$tarFile->filename = $this->getRequestVar('filename');
+			$tarFile->extension = 'tar';
+			$tarFile->parentid = $this->folder->objectid;
+
+			$tar->__generateTAR();
+			$tarFile->value = $tar->tar_file;
+			$tarFile->add();
+		}
+		else
+		{
+			foreach( $ids as $id )
+			{
+				$o = new BaseObject( $id );
+				$o->load();
+
+				switch( $type )
+				{
+					case 'move':
+						if	( $o->isFolder )
+						{
+							$f = new Folder( $id );
+							$allsubfolders = $f->getAllSubFolderIds();
+
+							// Plausibilisierungsprüfung:
+							//
+							// Wenn
+							// - Das Zielverzeichnis sich nicht in einem Unterverzeichnis des zu verschiebenen Ordners liegt
+							// und
+							// - Das Zielverzeichnis nicht der zu verschiebene Ordner ist
+							// dann verschieben
+							if	( !in_array($targetObjectId,$allsubfolders) && $id != $targetObjectId )
+							{
+								$this->addNotice($o->getType(), 0, $o->name, 'MOVED', 'ok');
+								$o->setParentId( $targetObjectId );
+							}
+							else
+							{
+								$this->addNotice($o->getType(), 0, $o->name, 'ERROR', 'error');
+							}
+						}
+						else
+						{
+							$o->setParentId( $targetObjectId );
+							$this->addNotice($o->getType(), 0, $o->name, 'MOVED', 'ok');
+						}
+						break;
+
+					case 'copy':
+						switch( $o->getType() )
+						{
+							case 'folder':
+								// Ordner zur Zeit nicht kopieren
+								// Funktion waere zu verwirrend
+								$this->addNotice($o->getType(), 0, $o->name, 'CANNOT_COPY_FOLDER', 'error');
+								break;
+
+							case 'file':
+								$f = new File( $id );
+								$f->load();
+								$f->filename = '';
+								$f->name     = \cms\base\Language::lang('COPY_OF').' '.$f->name;
+								$f->parentid = $targetObjectId;
+								$f->add();
+								$f->copyValueFromFile( $id );
+
+								$this->addNotice($o->getType(), 0, $o->name, 'COPIED', 'ok');
+								break;
+
+							case 'page':
+								$p = new Page( $id );
+								$p->load();
+								$p->filename = '';
+								$p->name     = \cms\base\Language::lang('COPY_OF').' '.$p->name;
+								$p->parentid = $targetObjectId;
+								$p->add();
+								$p->copyValuesFromPage( $id );
+								$this->addNotice($o->getType(), 0, $o->name, 'COPIED', 'ok');
+								break;
+
+							case 'link':
+								$l = new Link( $id );
+								$l->load();
+								$l->filename = '';
+								$l->name     = \cms\base\Language::lang('COPY_OF').' '.$l->name;
+								$l->parentid = $targetObjectId;
+								$l->add();
+								$this->addNotice($o->getType(), 0, $o->name, 'COPIED', 'ok');
+								break;
+
+							default:
+								throw new \LogicException('fatal: what type to delete?');
+						}
+						$notices[] = \cms\base\Language::lang('COPIED');
+						break;
+
+					case 'link':
+
+						if	( $o->isFile  ||
+                              $o->isImage ||
+                              $o->isText  ||
+							  $o->isPage  )  // Nur Seiten oder Dateien sind verknuepfbar
+						{
+							$link = new Link();
+							$link->parentid       = $targetObjectId;
+
+							$link->linkedObjectId = $id;
+							$link->isLinkToObject = true;
+							$link->name           = \cms\base\Language::lang('LINK_TO').' '.$o->name;
+							$link->add();
+							$this->addNotice($o->getType(), 0, $o->name, 'LINKED', 'ok');
+						}
+						else
+						{
+							$this->addNotice($o->getType(), 0, $o->name, 'ERROR', 'error');
+						}
+						break;
+
+					case 'delete':
+
+						if	( $this->hasRequestVar('confirm') )
+						{
+							switch( $o->getType() )
+							{
+								case 'folder':
+									$f = new Folder( $id );
+									$f->deleteAll();
+									break;
+
+								case 'file':
+									$f = new File( $id );
+									$f->delete();
+									break;
+
+								case 'page':
+									$p = new Page( $id );
+									$p->load();
+									$p->delete();
+									break;
+
+								case 'link':
+									$l = new Link( $id );
+									$l->delete();
+									break;
+
+								case 'url':
+									$u = new Url( $id );
+									$u->delete();
+									break;
+
+								default:
+									throw new \LogicException("Error while deleting: Unknown type: {$o->getType()}");
+							}
+							$this->addNotice($o->getType(), 0, $o->name, 'DELETED', Action::NOTICE_OK);
+						}
+						else
+						{
+							$this->addNotice($o->getType(), 0, $o->name, 'NOTHING_DONE', Action::NOTICE_WARN);
+						}
+
+						break;
+
+					default:
+						$this->addNotice($o->getType(), 0, $o->name, 'ERROR', 'error');
+				}
+
+			}
+		}
+
+		$this->folder->setTimestamp();
+    }
+}

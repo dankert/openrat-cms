@@ -160,7 +160,7 @@ let filterMenus = function ()
 	// Jeder Menüeintrag bekommt die Id und Parameter.
 	$('.or-workbench-title .or-dropdown-entry.or-act-clickable.or-filtered .or-link').attr('data-id'    ,id    );
 
-	let url = Openrat.View.createUrl(action,'available',id, {},true );
+	let url = Openrat.View.createUrl('profile','available',id, {'queryaction':action},true );
 
 	// Die Inhalte des Zweiges laden.
 	let promise = $.getJSON(url);

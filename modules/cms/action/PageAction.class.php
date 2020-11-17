@@ -3,23 +3,23 @@
 namespace cms\action;
 
 use cms\base\Configuration;
+use cms\generator\PageContext;
 use cms\generator\PageGenerator;
 use cms\generator\Producer;
 use cms\generator\Publisher;
 use cms\generator\PublishOrder;
 use cms\model\Acl;
-use cms\model\Project;
-use cms\model\Value;
-use cms\model\Element;
-use cms\model\Template;
-use cms\model\Page;
-use cms\model\Folder;
 use cms\model\BaseObject;
+use cms\model\Element;
+use cms\model\Folder;
 use cms\model\Language;
-use cms\generator\PageContext;
+use cms\model\Page;
+use cms\model\Project;
+use cms\model\Template;
+use cms\model\Value;
 use configuration\Config;
-use util\Html;
 use logger\Logger;
+use util\Html;
 use util\Session;
 
 
@@ -37,7 +37,7 @@ class PageAction extends ObjectAction
     /**
      * @var Page
      */
-	private $page;
+	protected $page;
 
 
 	function __construct()

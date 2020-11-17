@@ -20,6 +20,7 @@ namespace cms\action;
 
 use cms\base\DefaultConfig;
 use util\Session;
+
 /**
  * Action-Klasse fuer die Bearbeitung eines Template-Elementes.
  * 
@@ -103,7 +104,7 @@ class ConfigurationAction extends BaseAction
      * Reads system configuration.
      * @return array
      */
-    private function getSystemConfiguration()
+    protected function getSystemConfiguration()
     {
         $conf['server'] = array('time' => date('r'),
             'name' => php_uname(),

@@ -2,15 +2,13 @@
 
 namespace cms\action;
 
-use cms\base\Configuration;
 use cms\model\Acl;
-use cms\model\User;
-use cms\model\Project;
-use cms\model\Group;
 use cms\model\BaseObject;
+use cms\model\Group;
 use cms\model\Language;
+use cms\model\Project;
+use cms\model\User;
 
-use util\Html;
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -42,7 +40,7 @@ class GroupAction extends BaseAction
     /**
      * @var Group
      */
-	private $group;
+	protected $group;
 
 
 	function __construct()

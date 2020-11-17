@@ -2,10 +2,6 @@
 
 namespace cms\action;
 
-use cms\model\User;
-use language\Messages;
-use util\exception\ValidationException;
-
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -39,51 +35,4 @@ class UserlistAction extends BaseAction
         parent::__construct();
 	}
 
-
-	function showView()
-	{
-		$list = array();
-
-		foreach( User::getAllUsers() as $user )
-		{
-			$list[$user->userid]        = $user->getProperties();
-			$list[$user->userid]['id' ] = $user->userid;
-		}
-		$this->setTemplateVar('list',$list);
-	}
-		
-
-	/**
-	 * Eigenschaften des Benutzers anzeigen
-	 */
-	function editView()
-	{
-		$this->nextSubAction('show');
-	}
-
-	
-	public function addView()
-	{
-	}
-
-
-	/**
-	 * @param $name name of the new user.
-	 */
-	public function addPost( $name )
-	{
-		$name = $this->request->cleanText($name,RequestParams::FILTER_ALPHANUM);
-
-		$user = User::loadWithName($name,User::AUTH_TYPE_INTERNAL);
-
-		if   ( !empty($user) )
-			throw new ValidationException( 'name',Messages::USER_ALREADY_IN_DATABASE);
-
-		$user = new User();
-		$user->name = $name;
-		$user->add();
-		$this->addNoticeFor($user, Messages::ADDED);
-	}
-
-				
 }

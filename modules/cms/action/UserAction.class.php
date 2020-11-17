@@ -5,22 +5,18 @@ namespace cms\action;
 use cms\base\Configuration;
 use cms\base\Startup;
 use cms\model\Acl;
-use cms\model\User;
-use cms\model\Project;
-use cms\model\Group;
 use cms\model\BaseObject;
+use cms\model\Group;
 use cms\model\Language;
-
-
+use cms\model\Project;
+use cms\model\User;
 use language\Messages;
-use util\exception\ObjectNotFoundException;
-use util\exception\ValidationException;
-use util\Http;
 use security\Base2n;
-use \security\Password;
-use util\Session;
-use util\Html;
+use security\Password;
+use util\exception\ValidationException;
 use util\Mail;
+use util\Session;
+
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -53,7 +49,7 @@ class UserAction extends BaseAction
     /**
      * @var User
      */
-	private $user;
+	protected $user;
 
 
     /**

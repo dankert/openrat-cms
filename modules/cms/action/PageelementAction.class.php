@@ -6,29 +6,29 @@ use cms\base\Language as L;
 use cms\generator\PageContext;
 use cms\generator\PageGenerator;
 use cms\generator\Producer;
+use cms\generator\PublishEdit;
 use cms\generator\Publisher;
 use cms\generator\PublishOrder;
+use cms\generator\PublishPreview;
 use cms\generator\ValueContext;
 use cms\generator\ValueGenerator;
 use cms\model\Acl;
+use cms\model\BaseObject;
+use cms\model\Element;
+use cms\model\Folder;
+use cms\model\Page;
 use cms\model\Project;
+use cms\model\Template;
 use cms\model\User;
 use cms\model\Value;
-use cms\model\Element;
-use cms\model\Template;
-use cms\model\Page;
-use cms\model\Folder;
-use cms\model\BaseObject;
-use cms\generator\PublishEdit;
-use cms\generator\PublishPreview;
 use language\Messages;
-use util\exception\SecurityException;
-use util\Html;
 use LogicException;
-use util\Session;
-use util\Transformer;
-use util\Text;
+use util\exception\SecurityException;
 use util\exception\ValidationException;
+use util\Html;
+use util\Session;
+use util\Text;
+use util\Transformer;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -1203,7 +1203,7 @@ class PageelementAction extends BaseAction
 	}
 
 
-	private function publishPage() {
+	protected function publishPage() {
 
 		$project = $this->page->getProject();
 
@@ -1238,7 +1238,7 @@ class PageelementAction extends BaseAction
 	 * @param Value $value
 	 * @return string
 	 */
-	private function calculateValue(Value $value)
+	protected function calculateValue(Value $value)
 	{
 		switch( $value->element->typeid ) {
 			case Element::ELEMENT_TYPE_DATE:

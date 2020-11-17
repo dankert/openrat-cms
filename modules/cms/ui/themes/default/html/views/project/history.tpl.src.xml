@@ -17,19 +17,19 @@
     <list list="${timeline}" extract="true">
       <!-- Den Typ des Objektes ermitteln -->
       <if value="${typeid}" equals="1">
-        <set var="type" value="folder"/>
+        <set var="type" value="'folder'"/>
       </if>
       <if value="${typeid}" equals="2">
-        <set var="type" value="file"/>
+        <set var="type" value="'file'"/>
       </if>
       <if value="${typeid}" equals="3">
-        <set var="type" value="page"/>
+        <set var="type" value="'page'"/>
       </if>
       <if value="${typeid}" equals="4">
-        <set var="type" value="link"/>
+        <set var="type" value="'link'"/>
       </if>
       <if value="${typeid}" equals="5">
-        <set var="type" value="url"/>
+        <set var="type" value="'url'"/>
       </if>
       <row class="data">
         <column class="act-clickable">

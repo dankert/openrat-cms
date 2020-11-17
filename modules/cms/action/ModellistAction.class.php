@@ -5,7 +5,6 @@ namespace cms\action;
 use cms\model\Model;
 use cms\model\Project;
 use util\Html;
-use util\Session;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -36,7 +35,7 @@ class ModellistAction extends BaseAction
     /**
      * @var Project
      */
-    public $project;
+    protected $project;
 
 	public $security = Action::SECURITY_USER;
 

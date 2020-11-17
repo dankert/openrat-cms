@@ -3,11 +3,8 @@
 namespace cms\action;
 
 use cms\model\Model;
-
-
 use language\Messages;
-use util\Session;
-use util\Html;
+
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -40,7 +37,7 @@ class ModelAction extends BaseAction
     /**
      * @var Model
      */
-	private $model;
+	protected $model;
 
 
 	function __construct()

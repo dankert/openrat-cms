@@ -11,27 +11,22 @@ use cms\generator\PageGenerator;
 use cms\generator\Producer;
 use cms\generator\Publisher;
 use cms\generator\PublishOrder;
-use language\Messages;
-use util\ArchiveTar;
 use cms\model\Acl;
-use cms\model\Image;
-use cms\model\Language;
-use cms\model\Project;
-use cms\model\Template;
-use cms\model\Page;
-use cms\model\Folder;
 use cms\model\BaseObject;
 use cms\model\File;
+use cms\model\Folder;
+use cms\model\Image;
 use cms\model\Link;
-
+use cms\model\Page;
+use cms\model\Project;
 use cms\model\Text;
 use cms\model\Url;
-use cms\generator\PublishPublic;
+use language\Messages;
+use util\ArchiveTar;
 use util\exception\ValidationException;
-use util\Http;
-use Publish;
-use util\Session;
 use util\Html;
+use util\Http;
+use util\Session;
 use util\Upload;
 
 /**
@@ -47,7 +42,7 @@ class FolderAction extends ObjectAction
     /**
      * @var Folder
      */
-	private $folder;
+	protected $folder;
 
     public function __construct()
 	{
@@ -740,7 +735,7 @@ class FolderAction extends ObjectAction
 	 *
 	 * @return Integer maximale Dateigroesse in Bytes
 	 */
-	private function maxFileSize()
+	protected function maxFileSize()
 	{
 		// When querying memory size values:
 		// Many ini memory size values, such as upload_max_filesize,

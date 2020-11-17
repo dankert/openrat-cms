@@ -3,11 +3,8 @@
 
 namespace cms\action;
 
-use cms\model\BaseObject;
-
 use cms\model\Text;
 use language\Messages;
-use util\Html;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -38,7 +35,7 @@ class TextAction extends FileAction
 	/**
 	 * @var Text
 	 */
-	private $text;
+	protected $text;
 
 	/**
 	 * Konstruktor

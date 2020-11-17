@@ -2,14 +2,9 @@
 
 namespace cms\action;
 
-use cms\model\BaseObject;
-use cms\model\Folder;
 use cms\model\Url;
-
-
 use language\Messages;
-use util\Html;
-use util\Session;
+
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -42,7 +37,7 @@ class UrlAction extends ObjectAction
     /**
      * @var Url
      */
-	private $url;
+	protected $url;
 
 	/**
 	 * Konstruktor

@@ -4,11 +4,9 @@ namespace cms\action;
 
 use cms\base\Configuration;
 use cms\model\Acl;
-use cms\model\Project;
 use cms\model\Folder;
+use cms\model\Project;
 use language\Messages;
-use logger\Logger;
-use util\FileUtils;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -41,7 +39,7 @@ class ProjectAction extends BaseAction
     /**
      * @var Project
      */
-	private $project;
+	protected $project;
 	var $defaultSubAction = 'listing';
 
 

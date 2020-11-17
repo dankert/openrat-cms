@@ -21,23 +21,23 @@
         </tr>
         <?php foreach((array)$timeline as $list_key=>$list_value) { extract($list_value); ?>
           <?php $if4=($typeid=='1'); if($if4) {  ?>
-            <?php  { $type= folder; ?>
+            <?php  { $type= 'folder'; ?>
              <?php } ?>
            <?php } ?>
           <?php $if4=($typeid=='2'); if($if4) {  ?>
-            <?php  { $type= file; ?>
+            <?php  { $type= 'file'; ?>
              <?php } ?>
            <?php } ?>
           <?php $if4=($typeid=='3'); if($if4) {  ?>
-            <?php  { $type= page; ?>
+            <?php  { $type= 'page'; ?>
              <?php } ?>
            <?php } ?>
           <?php $if4=($typeid=='4'); if($if4) {  ?>
-            <?php  { $type= link; ?>
+            <?php  { $type= 'link'; ?>
              <?php } ?>
            <?php } ?>
           <?php $if4=($typeid=='5'); if($if4) {  ?>
-            <?php  { $type= url; ?>
+            <?php  { $type= 'url'; ?>
              <?php } ?>
            <?php } ?>
           <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>

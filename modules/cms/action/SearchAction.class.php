@@ -4,17 +4,13 @@ namespace cms\action;
 
 use cms\base\Configuration as C;
 use cms\model\Acl;
-use cms\model\Project;
-use cms\model\User;
-use cms\model\Value;
-use cms\model\Template;
 use cms\model\BaseObject;
 use cms\model\File;
-
-
-
+use cms\model\Project;
+use cms\model\Template;
+use cms\model\User;
+use cms\model\Value;
 use util\Session;
-
 
 
 // OpenRat Content Management System
@@ -137,7 +133,7 @@ class SearchAction extends BaseAction
 	 * @param $searchText string search query text
 	 * @param $searchFlag int field selector
 	 */
-	private function performSearch($searchText, $searchFlag)
+	protected function performSearch($searchText, $searchFlag)
 	{
 		$listObjectIds   = array();
 		$listTemplateIds = array();

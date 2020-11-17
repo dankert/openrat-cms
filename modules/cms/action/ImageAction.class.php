@@ -2,14 +2,8 @@
 
 namespace cms\action;
 
-use cms\model\Folder;
 use cms\model\Image;
-use cms\model\BaseObject;
-use cms\model\File;
-
-use util\Http;
 use util\Html;
-use util\Upload;
 
 
 /**
@@ -22,7 +16,7 @@ class ImageAction extends FileAction
 {
 	public $security = Action::SECURITY_USER;
 
-	var $image;
+	protected $image;
 
 	/**
 	 * Konstruktor
@@ -152,7 +146,7 @@ class ImageAction extends FileAction
 
 
 
-    private function imageFormat()
+    protected function imageFormat()
     {
         if	( ! function_exists( 'imagetypes' ) )
             return 0;
@@ -190,7 +184,7 @@ class ImageAction extends FileAction
 
 
 
-    private function imageFormats()
+    protected function imageFormats()
     {
         if	( ! function_exists( 'imagetypes' ) )
             return array();

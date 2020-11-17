@@ -49,7 +49,7 @@ class File extends BaseObject
 	public $tmpfile;
 
 
-	protected static $MIME_TYPES = [
+	public static $MIME_TYPES = [
 		'ez' => 'application/andrew-inset',
 		'csm' => 'application/cu-seeme',
 		'cu' => 'application/cu-seeme',

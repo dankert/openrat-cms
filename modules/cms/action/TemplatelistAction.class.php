@@ -5,10 +5,7 @@ namespace cms\action;
 use cms\model\Element;
 use cms\model\Project;
 use cms\model\Template;
-use cms\model\TemplateModel;
 use language\Messages;
-use util\exception\ValidationException;
-use util\Session;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2009 Jan Dankert
@@ -41,7 +38,7 @@ class TemplatelistAction extends BaseAction
     /**
      * @var Project
      */
-    private $project;
+    protected $project;
 
 
     function __construct()
