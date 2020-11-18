@@ -180,8 +180,7 @@ class LoginLoginAction extends LoginAction implements Method {
 					$user = new User();
 					$user->name     = $loginName;
 					$user->fullname = $loginName;
-					$user->add();
-					$user->save();
+					$user->persist();
 				}
 				else
 				{

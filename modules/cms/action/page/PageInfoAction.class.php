@@ -1,6 +1,7 @@
 <?php
 namespace cms\action\page;
 use cms\action\Method;
+use cms\action\object\ObjectInfoAction;
 use cms\action\PageAction;
 use cms\generator\PageGenerator;
 use cms\generator\Producer;
@@ -10,7 +11,11 @@ class PageInfoAction extends PageAction implements Method {
     public function view() {
 		$this->setTemplateVar('id',$this->page->objectid);
 
-		parent::infoView();
+		$parentAction = new ObjectInfoAction();
+		$parentAction->request = $this->request;
+		$parentAction->init();
+		$parentAction->view();
+
 		$this->page->load();
 
 		$this->setTemplateVars( $this->page->getProperties() );

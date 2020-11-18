@@ -22,7 +22,7 @@ class FileExtractAction extends FileAction implements Method {
 				$folder->parentid = $this->file->parentid;
 				$folder->name     = $this->file->name;
 				$folder->filename = $this->file->filename;
-				$folder->add();
+				$folder->persist();
 				
 				$tar = new ArchiveTar();
 				$tar->openTAR( $this->file->loadValue() );
@@ -35,7 +35,7 @@ class FileExtractAction extends FileAction implements Method {
 					$newFile->value    = $file['file'];
 					$newFile->parse_filename( $file['name'] );
 					$newFile->lastchangeDate = $file['time'];
-					$newFile->add();
+					$newFile->persist();
 					
 					$this->addNotice('file', 0, $newFile->name, 'ADDED');
 				}
@@ -51,7 +51,7 @@ class FileExtractAction extends FileAction implements Method {
 				$folder->name        = $this->file->name;
 				$folder->filename    = $this->file->filename;
 				$folder->description = $this->file->fullFilename;
-				$folder->add();
+				$folder->persist();
 				
 				$zip = new ArchiveUnzip();
 				$zip->open( $this->file->loadValue() );
@@ -68,7 +68,7 @@ class FileExtractAction extends FileAction implements Method {
 					$newFile->parse_filename( basename($fileName) );
 
 					$newFile->value       = $zip->unzip($fileName);
-					$newFile->add();
+					$newFile->persist();
 					
 					$this->addNotice('file', 0, $newFile->name, 'ADDED');
 					unset($newFile);

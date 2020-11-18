@@ -49,7 +49,7 @@ class TemplateAddelAction extends TemplateAction implements Method {
                 $templateModel = $template->loadTemplateModelFor( $modelId );
                 $templateModel->load();
                 $templateModel->src .= "\n".'{{'.$newElement->name.'}}';
-                $templateModel->save();
+                $templateModel->persist();
             }
 
 		}

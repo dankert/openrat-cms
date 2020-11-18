@@ -3,6 +3,8 @@
 
 namespace cms\model;
 
+use cms\base\DB;
+
 /**
  * Darstellung von Name und Beschreibung eines Objektes.
  *
@@ -54,7 +56,7 @@ class Name extends ModelBase
 	 */
 	public function load()
 	{
-		$db = \cms\base\DB::get();
+		$db = DB::get();
 
 		$stmt = $db->sql( <<<SQL
 SELECT id,objectid,name,descr,languageid
@@ -91,6 +93,21 @@ SQL
 	}
 
 
+	protected function add()
+	{
+		$db = DB::get();
+
+		$sql = $db->sql('SELECT MAX(id) FROM {{name}}');
+		$this->nameid = intval($sql->getOne())+1;
+
+		$sql = $db->sql('INSERT INTO {{name}}'.'  (id,objectid,languageid,name,descr)'.' VALUES( {nameid},{objectid},{languageid},{name},{desc} )');
+		$sql->setInt   ('nameid'    , $this->nameid    );
+		$sql->setInt   ('objectid'  , $this->objectid    );
+		$sql->setInt   ('languageid', $this->languageid  );
+		$sql->setString('name'      , $this->name);
+		$sql->setString('desc'      , $this->description);
+		$sql->query();
+	}
 
 	/**
 	 * Logischen Namen und Beschreibung des Objektes in Datenbank speichern
@@ -98,37 +115,21 @@ SQL
 	 */
 	public function save()
 	{
-		$db = \cms\base\DB::get();
+		$db = DB::get();
 
-		if ( intval($this->nameid)  > 0)
-		{
-			$sql = $db->sql( <<<SQL
-		UPDATE {{name}} SET 
-						 name  = {name},
-						 descr = {desc}
-						WHERE objectid  ={objectid}
-						  AND languageid={languageid}
+		$sql = $db->sql( <<<SQL
+	UPDATE {{name}} SET 
+					 name  = {name},
+					 descr = {desc}
+					WHERE objectid  ={objectid}
+					  AND languageid={languageid}
 SQL
-			);
-			$sql->setString('name', $this->name);
-			$sql->setString('desc', $this->description);
-			$sql->setInt( 'objectid'  , $this->objectid   );
-			$sql->setInt( 'languageid', $this->languageid );
-			$sql->query();
-		}
-		else
-		{
-			$sql = $db->sql('SELECT MAX(id) FROM {{name}}');
-			$this->nameid = intval($sql->getOne())+1;
-
-			$sql = $db->sql('INSERT INTO {{name}}'.'  (id,objectid,languageid,name,descr)'.' VALUES( {nameid},{objectid},{languageid},{name},{desc} )');
-			$sql->setInt   ('nameid'    , $this->nameid    );
-			$sql->setInt   ('objectid'  , $this->objectid    );
-			$sql->setInt   ('languageid', $this->languageid  );
-			$sql->setString('name'      , $this->name);
-			$sql->setString('desc'      , $this->description);
-			$sql->query();
-		}
+		);
+		$sql->setString('name', $this->name);
+		$sql->setString('desc', $this->description);
+		$sql->setInt( 'objectid'  , $this->objectid   );
+		$sql->setInt( 'languageid', $this->languageid );
+		$sql->query();
 	}
 
 

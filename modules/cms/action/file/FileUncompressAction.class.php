@@ -38,7 +38,7 @@ class FileUncompressAction extends FileAction implements Method {
 					$newFile->parentid = $this->file->parentid;
 					$newFile->value    = gzinflate( substr($this->file->loadValue(),10));
 					$newFile->parse_filename( $this->file->filename );
-					$newFile->add();
+					$newFile->persist();
 				}
 				
 				break;
@@ -58,7 +58,7 @@ class FileUncompressAction extends FileAction implements Method {
 					$newFile->parentid = $this->file->parentid;
 					$newFile->value    = bzdecompress( $this->file->loadValue() );
 					$newFile->parse_filename( $this->file->filename );
-					$newFile->add();
+					$newFile->persist();
 				}
 				
 				break;

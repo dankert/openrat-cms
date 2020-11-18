@@ -288,7 +288,7 @@ SQL
 
 	/**
 	 * Alle Versionen des aktuellen Inhaltes werden ermittelt
-	 * @return Array
+	 * @return array
 	 */
 	function getVersionList()
 	{
@@ -337,7 +337,7 @@ SQL
 
 	/**
 	 * Die Anzahl der Versionen des aktuellen Inhaltes wird ermittelt
-	 * @return Array
+	 * @return array
 	 */
 	function getCountVersions()
 	{
@@ -438,10 +438,20 @@ SQL
 		$sql->query();
 	}
 
+
+	/**
+	 * No function, values are NOT updated, values are only added.
+	 * @return name|void
+	 */
+	protected function save()
+	{
+		// not implemented, values are only added ("copy on write")
+	}
+
 	/**
 	 * Inhalt speichern
 	 */
-	function save()
+	public function add()
 	{
 		$stmt = Db::sql( <<<SQL
 			UPDATE {{value}}
@@ -614,7 +624,7 @@ SQL
 	/**
 	  * Es werden Objekte mit einem Inhalt gesucht.
 	  * @param String Suchbegriff
-	  * @return Array Liste der gefundenen Objekt-IDs
+	  * @return array Liste der gefundenen Objekt-IDs
 	  */
 	function getObjectIdsByValue( $text )
 	{
@@ -640,7 +650,7 @@ SQL
 	/**
 	  * Es werden Objekte mit einer UserId ermittelt
 	  * @param Integer Benutzer-Id der letzten ?nderung
-	  * @return Array Liste der gefundenen Objekt-IDs
+	  * @return array Liste der gefundenen Objekt-IDs
 	  */
 	function getObjectIdsByLastChangeUserId( $userid )
 	{

@@ -26,7 +26,7 @@ class FolderCreatefolderAction extends FolderAction implements Method {
 		$f->desc       = $description;
 		$f->parentid   = $this->folder->objectid;
 
-		$f->add();
+		$f->persist();
 		$f->setNameForAllLanguages( $name,$description );
 
 		$this->addNoticeFor($f, Messages::ADDED);

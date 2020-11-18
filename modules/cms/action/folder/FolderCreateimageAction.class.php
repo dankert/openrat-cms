@@ -77,7 +77,7 @@ class FolderCreateimageAction extends FolderAction implements Method {
             $image->value     = $upload->value;
 		}
 
-		$image->add(); // Datei hinzufuegen
+		$image->persist(); // Datei hinzufuegen
 		$this->addNoticeFor( $image, Messages::ADDED );
         $image->setNameForAllLanguages( $name,$description );
 		$this->setTemplateVar('objectid',$image->objectid);

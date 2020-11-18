@@ -159,14 +159,14 @@ class PageFormAction extends PageAction implements Method {
 					foreach( $p->getLanguageIds() as $languageid )
 					{
 						$value->languageid = $languageid;
-						$value->save();
+						$value->add();
 					}
 				}
 				else
 				{
 					// sonst nur 1x speichern (fuer die aktuelle Sprache)
 					$value->languageid = $this->getRequestVar(RequestParams::PARAM_LANGUAGE_ID);
-					$value->save();
+					$value->add();
 				}
 			}
 		}

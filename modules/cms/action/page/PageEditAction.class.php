@@ -165,13 +165,13 @@ class PageEditAction extends PageAction implements Method {
 			foreach( $project->getLanguageIds() as $languageid )
 			{
 				$value->languageid = $languageid;
-				$value->save();
+				$value->add();
 			}
 		}
 		else
 		{
 			// sonst nur 1x speichern (fuer die aktuelle Sprache)
-			$value->save();
+			$value->add();
 		}
 
 		$this->page->setTimestamp(); // "Letzte Aenderung" setzen

@@ -35,7 +35,7 @@ class TemplateExtensionAction extends TemplateAction implements Method {
 
             $templatemodel->extension = $extensions[ $modelId ];
 
-            $templatemodel->save();
+            $templatemodel->persist();
         }
 
 		$this->addNotice('template', 0, $this->template->name, 'SAVED', 'ok');

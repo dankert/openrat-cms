@@ -247,7 +247,7 @@ class Acl extends ModelBase
 	/**
 	 * Setzt die Eigenschaften des Objektes mit einer Datenbank-Ergebniszeile.
 	 *
-	 * @param row Ergebniszeile aus ACL-Datenbanktabelle
+	 * @param array row Ergebniszeile aus ACL-Datenbanktabelle
 	 */
 	public function setDatabaseRow( $row )
 	{
@@ -275,7 +275,7 @@ class Acl extends ModelBase
 	/**
 	 * Erzeugt eine Liste aller Berechtigungsbits dieser ACL.
 	 * 
-	 * @return Array (Schluessel=Berechtigungstyp, Wert=boolean)
+	 * @return array (Schluessel=Berechtigungstyp, Wert=boolean)
 	 */
 	public function getProperties()
 	{
@@ -395,6 +395,10 @@ class Acl extends ModelBase
 		$this->aclid = 0;
 	}
 
+
+	public function save() {
+		// TODO updating the ACL is not implemented.
+	}
 
 	/**
 	 * ACL der Datenbank hinzufügen.

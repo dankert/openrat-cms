@@ -232,7 +232,7 @@ SQL
 		$element->templateid = $this->templateid;
 		$element->format     = Element::ELEMENT_FORMAT_TEXT;
 		$element->writable   = true;
-		$element->add();
+		$element->persist();
 
 		return $element;
 	}

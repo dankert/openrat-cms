@@ -40,7 +40,7 @@ class LoginOidcAction extends LoginAction implements Method {
 				$user->name   = $subjectIdentifier;
 				$user->type   = User::AUTH_TYPE_OIDC;
 				$user->issuer = $providerName;
-				$user->add();
+				$user->persist();
 
 			}
 

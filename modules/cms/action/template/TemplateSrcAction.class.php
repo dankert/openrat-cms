@@ -75,7 +75,7 @@ class TemplateSrcAction extends TemplateAction implements Method {
 
 		$templatemodel->src = $newSource;
 		$templatemodel->extension = $this->getRequestVar('extension');
-		$templatemodel->save();
+		$templatemodel->persist();
 
 		$this->addNotice('template', 0, $this->template->name, 'SAVED', Action::NOTICE_OK);
     }

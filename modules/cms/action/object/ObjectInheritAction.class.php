@@ -69,7 +69,7 @@ class ObjectInheritAction extends ObjectAction implements Method {
 			foreach( $newAclList as $newAcl )
 			{
 				$newAcl->objectid = $oid;
-				$newAcl->add();
+				$newAcl->persist();
 				Logger::debug('adding new acl '.$newAcl->aclid.' for object '.$oid);
 			}
 		}

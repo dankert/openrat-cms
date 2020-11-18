@@ -36,7 +36,7 @@ class FolderCreatepageAction extends FolderAction implements Method {
 		$page->projectid  = $this->folder->projectid;
 
 
-		$page->add();
+		$page->persist();
 		$page->setNameForAllLanguages( $name,$description );
 
 		$this->addNoticeFor( $page, Messages::ADDED );

@@ -416,7 +416,7 @@ SQL
 	/**
 	 * Speichern Benutzer in der Datenbank.
 	 */
-	function save()
+	protected function save()
 	{
 		$sql = Db::sql( <<<SQL
                          UPDATE {{user}}

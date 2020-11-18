@@ -39,7 +39,7 @@ class ProjectlistAddAction extends ProjectlistAction implements Method {
 
 			$project = new Project();
 			$project->name = $name;
-			$project->add();
+			$project->persist();
 			$this->addNoticeFor($project,Messages::ADDED);
 
 		}

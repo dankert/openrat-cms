@@ -13,7 +13,7 @@ class ModellistAddAction extends ModellistAction implements Method {
 		$model = new Model();
 		$model->projectid = $this->getRequestVar('projectid');
 		$model->name      = $this->getRequestVar('name');
-		$model->add();
+		$model->persist();
 		
 		// Wenn kein Namen eingegeben, dann einen setzen.
 		if	( empty($model->name) )

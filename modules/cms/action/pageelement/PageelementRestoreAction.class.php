@@ -21,7 +21,7 @@ class PageelementRestoreAction extends PageelementAction implements Method {
         $this->value->release = false;
 
         // Inhalt wieder herstellen, in dem er neu gespeichert wird.
-        $this->value->save();
+        $this->value->add();
 
         $this->addNotice('pageelement', 0, $this->value->element->name, 'PAGEELEMENT_USE_FROM_ARCHIVE', Action::NOTICE_OK);
     }

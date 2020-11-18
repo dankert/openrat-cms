@@ -4,7 +4,6 @@ namespace cms\model;
 
 use cms\base\Configuration;
 use cms\base\DB as Db;
-use cms\generator\Publish;
 use Exception;
 
 
@@ -84,7 +83,7 @@ class Folder extends BaseObject
 
 	function save()
 	{
-		$this->objectSave();
+		parent::save();
 	}
 
 
@@ -331,7 +330,7 @@ class Folder extends BaseObject
 	/**
 	 * Liefert eine Liste von allen Dateien in diesem Ordner.
 	 *
-	 * @return Array Schl�ssel=Objekt-Id, Wert=Dateiname
+	 * @return array Schl�ssel=Objekt-Id, Wert=Dateiname
 	 */
 	function getFileFilenames()
 	{
@@ -570,8 +569,8 @@ SQL
 			                '  WHERE objectid={objectid}' );
 			$sql->setInt('objectid',$this->objectid);
 			$sql->query();
-	
-			$this->objectDelete();
+
+			parent::delete();
 		}
 		else {
 		    throw new \RuntimeException('There are children in the folder '.$this->objectid.'.');
@@ -662,14 +661,11 @@ SQL
 	
 	/**
 	 * Ermittelt die letzten Änderung in diesem Ordner.
-	 * @return Array[Objektid]=Array())
+	 * @return array[Objektid]=Array())
 	 */
 	public function getLastChanges()
 	{
-	
-		$db = \cms\base\DB::get();
-	
-		$sql = $db->sql( <<<SQL
+		$sql = DB::sql( <<<SQL
 		SELECT {{object}}.id       as objectid,
 		       {{object}}.lastchange_date as lastchange_date,
 		       {{object}}.filename as filename,

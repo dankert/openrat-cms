@@ -87,9 +87,6 @@ class TemplateModel extends ModelBase
  	 */
 	public function save()
 	{
-		if   ( ! $this->isPersistent() )
-			$this->add();
-
         // Vorlagen-Quelltext existiert für diese Varianten schon.
         $stmt = Db::sql( 'UPDATE {{templatemodel}}'.
                         '  SET extension={extension},'.

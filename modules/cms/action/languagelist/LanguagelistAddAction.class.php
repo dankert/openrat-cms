@@ -34,7 +34,7 @@ class LanguagelistAddAction extends LanguagelistAction implements Method {
 		$language->projectid = $this->project->projectid;
 		$language->isoCode   = $iso;
 		$language->name      = @$countryList[$iso];
-		$language->add();
+		$language->persist();
 		
 		$this->addNoticeFor($language, Messages::ADDED);
     }

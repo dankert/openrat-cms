@@ -27,7 +27,7 @@ class ObjectNameAction extends ObjectAction implements Method {
         $name->name        = $this->getRequestVar( 'name' );
         $name->description = $this->getRequestVar( 'description' );
 
-        $name->save();
+        $name->persist();
 
         $this->addNoticeFor($this->baseObject, Messages::SAVED);
     }

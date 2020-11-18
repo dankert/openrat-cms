@@ -88,7 +88,7 @@ class FolderCreatefileAction extends FolderAction implements Method {
             $file->value     = $upload->value;
 		}
 
-		$file->add(); // Datei hinzufuegen
+		$file->persist(); // Datei hinzufuegen
         $file->setNameForAllLanguages( $name,$description );
 
 		$this->addNoticeFor( $file, Messages::ADDED );

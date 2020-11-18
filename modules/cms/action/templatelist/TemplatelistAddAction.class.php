@@ -39,7 +39,7 @@ class TemplatelistAddAction extends TemplatelistAction implements Method {
 		$template = new Template();
 		$template->projectid = $this->project->projectid;
 		$template->name = $name;
-		$template->add();
+		$template->persist();
 
 		$this->addNoticeFor($template, Messages::ADDED);
 
@@ -56,7 +56,7 @@ class TemplatelistAddAction extends TemplatelistAction implements Method {
 				/* @type $element Element */
 				$element->load();
 				$element->templateid = $template->templateid;
-				$element->add();
+				$element->persist();
 				$element->save();
 			}
 
@@ -71,7 +71,7 @@ class TemplatelistAddAction extends TemplatelistAction implements Method {
 				$newTemplateModel = $template->loadTemplateModelFor( $modelid );
 				$newTemplateModel->src       = $copyTemplateModel->src;
 				$newTemplateModel->extension = $copyTemplateModel->extension;
-				$newTemplateModel->save();
+				$newTemplateModel->persist();
 			}
 
 			$this->addNoticeFor( $copyTemplate, Messages::COPIED);

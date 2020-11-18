@@ -341,14 +341,14 @@ SQL
 		$model = new Model();
 		$model->projectid = $this->projectid;
 		$model->name = 'html';
-		$model->add();
+		$model->persist();;
 		
 		// Sprache anlegen
 		$language = new Language();
 		$language->projectid = $this->projectid;
 		$language->isoCode = 'en';
 		$language->name    = 'english';
-		$language->add();
+		$language->persist();
 		
 		// Haupt-Ordner anlegen
 		$folder = new Folder();
@@ -358,20 +358,19 @@ SQL
 		$folder->filename   = $this->name;
 		$folder->name       = $this->name;
 		$folder->isRoot     = true;
-		$folder->add();
+		$folder->persist();
 
 		// Template anlegen
 		$template = new Template();
 		$template->projectid  = $this->projectid;
 		$template->name       = '#1';
-		$template->add();
-		$template->save();
+		$template->persist();
 
 		// Template anlegen
 		$templateModel = $template->loadTemplateModelFor( $model->modelid );
 		$templateModel->extension  = 'html';
 		$templateModel->src        = '<html><body><h1>Hello world</h1><hr><p>Hello, World.</p></body></html>';
-		$templateModel->save();
+		$templateModel->persist();
 
 		// Beispiel-Seite anlegen
 		$page = new Page();
@@ -381,7 +380,7 @@ SQL
 		$page->templateid = $template->templateid;
 		$page->filename   = '';
 		$page->name       = 'OpenRat';
-		$page->add();
+		$page->persist();
 	}
 
 
@@ -518,7 +517,7 @@ EOF
 			$lostAndFoundFolder->filename = "lostandfound";
 			$lostAndFoundFolder->name     = 'Lost+found';
 			$lostAndFoundFolder->parentid = $this->getRootObjectId();
-			$lostAndFoundFolder->add();
+			$lostAndFoundFolder->persist();
 			
 			foreach( $idList as $id )
 			{
@@ -938,8 +937,8 @@ SQL
      * diesem Projekt befinden.
      *
      * @see objectClasses/Object#getAllObjectIds()
-     * @param types Array
-     * @return Liste von Object-Ids
+     * @param array types Array
+     * @return array Liste von Object-Ids
      */
     public function getAllObjectIds( $types=array('folder','page','link','file','image','url','text') )
     {

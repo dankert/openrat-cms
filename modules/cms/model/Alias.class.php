@@ -76,16 +76,13 @@ class Alias extends BaseObject
      */
     public function delete()
 	{
-	    if   ( ! $this->isPersistent() )
-	        return;
-
 		$sql = Db::sql( 'DELETE FROM {{alias}} '.
 		                ' WHERE id={aliasid}' );
 		$sql->setInt( 'aliasid',$this->aliasid );
 
 		$sql->query();
 
-		$this->objectDelete();
+		parent::delete();
 	}
 
 
@@ -94,9 +91,6 @@ class Alias extends BaseObject
      */
     public function save()
 	{
-	    if   ( ! $this->isPersistent() )
-	        $this->add();
-
 		$sql = Db::sql('UPDATE {{alias}} SET '.
 		               '  link_objectid = {linkobjectid},'.
 		               '  languageid    = {languageid}'.

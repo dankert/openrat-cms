@@ -18,13 +18,6 @@ namespace cms\model;
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 use cms\base\DB as Db;
 use cms\generator\PageContext;
-use Exception;
-use util\exception\GeneratorException;
-use util\Mustache;
-use cms\generator\PublishPreview;use cms\generator\PublishPublic;
-use http\Exception\RuntimeException;
-use logger\Logger;
-use util\cache\FileCache;
 
 
 /**
@@ -197,8 +190,8 @@ SQL
 		                '  WHERE objectid={objectid}' );
 		$sql->setInt('objectid',$this->objectid);
 		$sql->query();
-		
-		$this->objectDelete();
+
+		parent::delete();
 	}
 
 
@@ -224,11 +217,11 @@ SQL
 				$val->load();
 
 				// Inhalt nur speichern, wenn vorher vorhanden	
-				if	( $val->valueid != 0 )
+				if	( $val->isPersistent() )
 				{
 					$val->objectid   = $this->objectid;
 					$val->pageid     = Page::getPageIdFromObjectId( $this->objectid );
-					$val->save();
+					$val->add();
 				}
 			}
 		}
@@ -248,7 +241,7 @@ SQL
 		$sql->setInt('objectid'   ,$this->objectid  );
 		$sql->query();
 
-		$this->objectSave();
+		parent::save();
 	}
 
 
@@ -308,7 +301,7 @@ SQL
 
 	/**
 	  * Get all elements from this page.
-	 * @return Array
+	 * @return array
 	 */
 	public function getElementIds()
 	{

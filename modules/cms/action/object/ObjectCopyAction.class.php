@@ -91,7 +91,7 @@ class ObjectCopyAction extends ObjectAction implements Method {
 				$link->name     = \cms\base\Language::lang('LINK_TO').' '.$sourceObject->name;
 				$link->filename = $sourceObject->filename;
 				$link->linkedObjectId = $sourceObjectId;
-				$link->add();
+				$link->persist();
 				$this->addNotice('link', 0, $link->name, 'added');
 				
 				break;
@@ -112,7 +112,7 @@ class ObjectCopyAction extends ObjectAction implements Method {
 						$f->filename = '';
 						$f->name     = \cms\base\Language::lang('COPY_OF').' '.$f->name;
 						$f->parentid = $targetObjectId;
-						$f->add();
+						$f->persist();
 						$f->copyValueFromFile( $sourceObjectId );
 				
 						$this->addNotice($sourceObject->getType(), 0, $sourceObject->name, 'COPIED', 'ok');
@@ -124,7 +124,7 @@ class ObjectCopyAction extends ObjectAction implements Method {
 						$p->filename = '';
 						$p->name     = \cms\base\Language::lang('COPY_OF').' '.$p->name;
 						$p->parentid = $targetObjectId;
-						$p->add();
+						$p->persist();
 						$p->copyValuesFromPage( $sourceObjectId );
 						$this->addNotice($sourceObject->getType(), 0, $sourceObject->name, 'COPIED', 'ok');
 						break;
@@ -135,7 +135,7 @@ class ObjectCopyAction extends ObjectAction implements Method {
 						$l->filename = '';
 						$l->name     = \cms\base\Language::lang('COPY_OF').' '.$l->name;
 						$l->parentid = $targetObjectId;
-						$l->add();
+						$l->persist();
 						$this->addNotice($sourceObject->getType(), 0, $sourceObject->name, 'COPIED', 'ok');
 						break;
 							
@@ -160,7 +160,7 @@ class ObjectCopyAction extends ObjectAction implements Method {
 				$link->filename = $sourceObject->filename;
 				$link->linkedObjectId = $sourceObjectId;
 				$link->isLinkToObject = true;
-				$link->add();
+				$link->persist();
 				$this->addNotice('link', 0, $link->name, 'added');
 				// OK
 				break;

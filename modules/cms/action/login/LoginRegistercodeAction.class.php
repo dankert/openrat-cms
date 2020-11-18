@@ -58,11 +58,10 @@ class LoginRegistercodeAction extends LoginAction implements Method {
 		$newUser = new User();
 		$newUser->name = $this->getRequestVar('username');
 		$newUser->fullname = $newUser->name;
-		$newUser->add();
-			
 		$newUser->mail = Session::get( Session::KEY_REGISTER_MAIL );
-		$newUser->save();
-			
+
+		$newUser->persist();
+
 		$newUser->setPassword( $this->getRequestVar('password'),true );
 			
 		$this->addNotice('user', 0, $newUser->name, 'user_added', 'ok');

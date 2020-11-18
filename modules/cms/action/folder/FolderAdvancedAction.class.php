@@ -208,7 +208,7 @@ class FolderAdvancedAction extends FolderAction implements Method {
 
 			$tar->__generateTAR();
 			$tarFile->value = $tar->tar_file;
-			$tarFile->add();
+			$tarFile->persist();
 		}
 		else
 		{
@@ -264,7 +264,7 @@ class FolderAdvancedAction extends FolderAction implements Method {
 								$f->filename = '';
 								$f->name     = \cms\base\Language::lang('COPY_OF').' '.$f->name;
 								$f->parentid = $targetObjectId;
-								$f->add();
+								$f->persist();
 								$f->copyValueFromFile( $id );
 
 								$this->addNotice($o->getType(), 0, $o->name, 'COPIED', 'ok');
@@ -276,7 +276,7 @@ class FolderAdvancedAction extends FolderAction implements Method {
 								$p->filename = '';
 								$p->name     = \cms\base\Language::lang('COPY_OF').' '.$p->name;
 								$p->parentid = $targetObjectId;
-								$p->add();
+								$p->persist();
 								$p->copyValuesFromPage( $id );
 								$this->addNotice($o->getType(), 0, $o->name, 'COPIED', 'ok');
 								break;
@@ -287,7 +287,7 @@ class FolderAdvancedAction extends FolderAction implements Method {
 								$l->filename = '';
 								$l->name     = \cms\base\Language::lang('COPY_OF').' '.$l->name;
 								$l->parentid = $targetObjectId;
-								$l->add();
+								$l->persist();
 								$this->addNotice($o->getType(), 0, $o->name, 'COPIED', 'ok');
 								break;
 
@@ -310,7 +310,7 @@ class FolderAdvancedAction extends FolderAction implements Method {
 							$link->linkedObjectId = $id;
 							$link->isLinkToObject = true;
 							$link->name           = \cms\base\Language::lang('LINK_TO').' '.$o->name;
-							$link->add();
+							$link->persist();
 							$this->addNotice($o->getType(), 0, $o->name, 'LINKED', 'ok');
 						}
 						else

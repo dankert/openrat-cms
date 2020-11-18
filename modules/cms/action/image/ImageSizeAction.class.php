@@ -67,7 +67,7 @@ class ImageSizeAction extends ImageAction implements Method {
 			$imageFile->name       = \cms\base\Language::lang('copy_of').' '.$imageFile->name;
 			$imageFile->desription = \cms\base\Language::lang('copy_of').' '.$imageFile->description;
 			$imageFile->filename   = $imageFile->filename.'_resized_'.time();
-			$imageFile->add();
+			$imageFile->persist();
 			$imageFile->copyValueFromFile( $this->image->objectid );
 		}
 		else

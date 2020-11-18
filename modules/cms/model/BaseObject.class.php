@@ -6,12 +6,11 @@ namespace cms\model;
 use cms\base\Configuration;
 use cms\base\DB as Db;
 use cms\base\Startup;
+use cms\generator\Publisher;
 use util\ArrayUtils;
-use cms\generator\Publish;
 use phpseclib\Math\BigInteger;
 use util\text\variables\VariableResolver;
 use util\YAML;
-use template_engine\components\ElseComponent;
 
 /**
  * Base class for all objects in the content tree.
@@ -227,7 +226,7 @@ class BaseObject extends ModelBase
 
     /**
      * Strategy for publishing objects.
-     * @var Publish
+     * @var Publisher
      */
     public $publisher;
 
@@ -847,15 +846,6 @@ SQL
 
     /**
      * Eigenschaften des Objektes in Datenbank speichern
-     * @deprecated
-     */
-    public function objectSave( $ignored = true )
-    {
-        self::save();
-    }
-
-    /**
-     * Eigenschaften des Objektes in Datenbank speichern
      */
     public function save()
     {
@@ -961,62 +951,6 @@ SQL
     }
 
 
-    /**
-     * Logischen Namen und Beschreibung des Objektes in Datenbank speichern
-     * (wird von objectSave() automatisch aufgerufen)
-     *
-     * @access private
-     */
-    public function ObjectSaveName()
-    {
-        $db = \cms\base\DB::get();
-
-        $sql = $db->sql(<<<SQL
-SELECT COUNT(*) FROM {{name}}  WHERE objectid  ={objectid} AND languageid={languageid}
-SQL
-        );
-        $sql->setInt( 'objectid'  , $this->objectid   );
-        $sql->setInt( 'languageid', $this->languageid );
-        $count = $sql->getOne();
-
-        if ($count > 0)
-        {
-            $sql = $db->sql( <<<SQL
-        UPDATE {{name}} SET 
-                         name  = {name},
-                         descr = {desc}
-                        WHERE objectid  ={objectid}
-                          AND languageid={languageid}
-SQL
-            );
-            $sql->setString('name', $this->name);
-            $sql->setString('desc', $this->desc);
-            $sql->setInt( 'objectid'  , $this->objectid   );
-            $sql->setInt( 'languageid', $this->languageid );
-            $sql->query();
-        }
-        else
-        {
-            $sql = $db->sql('SELECT MAX(id) FROM {{name}}');
-            $nameid = intval($sql->getOne())+1;
-
-            $sql = $db->sql('INSERT INTO {{name}}'.'  (id,objectid,languageid,name,descr)'.' VALUES( {nameid},{objectid},{languageid},{name},{desc} )');
-            $sql->setInt   ('objectid'  , $this->objectid    );
-            $sql->setInt   ('languageid', $this->languageid  );
-            $sql->setInt   ('nameid', $nameid    );
-            $sql->setString('name'  , $this->name);
-            $sql->setString('desc'  , $this->desc);
-            $sql->query();
-        }
-    }
-
-
-
-    public function objectDelete() {
-    	self::delete();
-	}
-
-
 
     /**
      * Objekt loeschen. Es muss sichergestellt sein, dass auch das Unterobjekt geloeschet wird.
@@ -1073,17 +1007,7 @@ SQL
      *
      * Standardrechte und vom Elternobjekt vererbbare Berechtigungen werden gesetzt.
      */
-    function objectAdd()
-    {
-        self::add();
-    }
-
-    /**
-     * Objekt hinzufuegen.
-     *
-     * Standardrechte und vom Elternobjekt vererbbare Berechtigungen werden gesetzt.
-     */
-    function add()
+    protected function add()
     {
         // Neue Objekt-Id bestimmen
         $sql = Db::sql('SELECT MAX(id) FROM {{object}}');
@@ -1131,7 +1055,7 @@ SQL
         $acl->create_folder = true;
         $acl->create_link   = true;
 
-        $acl->add();
+        $acl->persist();
 
         // Aus dem Eltern-Ordner vererbbare Berechtigungen uebernehmen.
         $parent = new BaseObject( $this->parentid );
@@ -1142,8 +1066,9 @@ SQL
 
             if	( $acl->transmit ) // ACL is vererbbar, also kopieren.
             {
+            	$acl->aclid = null;
                 $acl->objectid = $this->objectid;
-                $acl->add(); // ... und hinzufuegen.
+                $acl->persist(); // ... und hinzufuegen.
             }
         }
     }
@@ -1713,7 +1638,7 @@ SQL
             $name->name        = $nam;
             $name->description = $description;
 
-            $name->save();
+            $name->persist();
         }
 
     }
@@ -1756,7 +1681,7 @@ SQL
 
     /**
      * Creates an Alias for a specific language.
-     * @param $languageid could be null for the default alias.
+     * @param int $languageid could be null for the default alias.
      * @return Alias
      * @throws \util\exception\ObjectNotFoundException
      */

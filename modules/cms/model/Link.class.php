@@ -64,7 +64,7 @@ class Link extends BaseObject
 
 		$sql->query();
 
-		$this->objectDelete();
+		parent::delete();
 	}
 
 
@@ -83,7 +83,7 @@ class Link extends BaseObject
 
 		$sql->query();
 
-		$this->objectSave();
+		parent::save();
 	}
 
 

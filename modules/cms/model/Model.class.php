@@ -112,7 +112,7 @@ class Model extends ModelBase
 	 * Alle notwendigen Eigenschaften dieses Projektmodells
 	 * werden als Array zurueckgegeben
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	function getProperties()
 	{

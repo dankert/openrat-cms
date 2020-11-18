@@ -36,7 +36,7 @@ class ObjectPropAction extends ObjectAction implements Method {
         if   ( ! $alias->filename )
                 $alias->delete();
         else
-                $alias->save();
+                $alias->persist();
 
 
         // Should we do this?

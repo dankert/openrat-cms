@@ -79,7 +79,7 @@ class FolderCreatetextAction extends FolderAction implements Method {
 			}
 		}
 
-		$text->add(); // Datei hinzufuegen
+		$text->persist(); // Datei hinzufuegen
         $text->setNameForAllLanguages( $name,$description );
 
 		$this->addNoticeFor($text, Messages::ADDED);

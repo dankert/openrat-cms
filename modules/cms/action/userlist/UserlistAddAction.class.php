@@ -26,7 +26,7 @@ class UserlistAddAction extends UserlistAction implements Method {
 
 		$user = new User();
 		$user->name = $name;
-		$user->add();
+		$user->persist();
 		$this->addNoticeFor($user, Messages::ADDED);
     }
 }

@@ -128,7 +128,7 @@ class Language extends ModelBase
 
 	/**
 	 * Ermitteln aller Eigenschaften dieser Sprache
-	 * @return Array
+	 * @return array
 	 */
 	function getProperties()
 	{

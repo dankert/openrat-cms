@@ -372,13 +372,13 @@ class PageelementAction extends BaseAction
             foreach( $project->getLanguageIds() as $languageid )
             {
                 $value->languageid = $languageid;
-                $value->save();
+                $value->add();
             }
         }
         else
         {
             // sonst nur 1x speichern (fuer die aktuelle Sprache)
-            $value->save();
+            $value->add();
         }
 
         $this->addNotice('pageelement', 0, $value->element->label, 'SAVED', Action::NOTICE_OK);

@@ -83,12 +83,12 @@ class Image extends File
 	 *
 	 * Diese Methode sollte natuerlich nur bei Bildern ausgefuehrt werden.
 	 *
-	 * @param Neue Breite
-	 * @param Neue Hoehe
-	 * @param Bildgr��enfaktor
-	 * @param Altes Format als Integer-Konstante IMG_xxx
-	 * @param Neues Format als Integer-Konstante IMG_xxx
-	 * @param Jpeg-Qualitaet (sofern neues Format = Jpeg)
+	 * @param int Neue Breite
+	 * @param int Neue Hoehe
+	 * @param float Bildgr��enfaktor
+	 * @param int Altes Format als Integer-Konstante IMG_xxx
+	 * @param int Neues Format als Integer-Konstante IMG_xxx
+	 * @param int Jpeg-Qualitaet (sofern neues Format = Jpeg)
 	 */
 	function imageResize( $newWidth,$newHeight,$factor,$oldformat,$newformat,$jpegquality )
 	{

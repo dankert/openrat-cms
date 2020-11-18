@@ -22,6 +22,8 @@ namespace cms\model;
 /**
  * Pageelement.
  *
+ * FIXME: Unused?
+ *
  * @author Jan Dankert
  */
 
@@ -64,5 +66,12 @@ class Pageelement extends ModelBase
 	}
 
 
+	public function save()
+	{
+	}
+
+	protected function add()
+	{
+	}
 }
 

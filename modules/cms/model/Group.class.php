@@ -127,7 +127,7 @@ SQL
 
 	/**
 	 * Rueckgabe aller Eigenschaften
-	 * @return Array
+	 * @return array
 	 */
 	function getProperties()
 	{
@@ -310,7 +310,7 @@ SQL
 	 * Ermitteln aller Berechtigungen dieser Gruppe.<br>
 	 * Diese Daten werden auf der Gruppenseite in der Administration angezeigt.
 	 *
-	 * @return unknown
+	 * @return mixed
 	 */
 	function getAllAcls()
 	{
@@ -341,17 +341,6 @@ SQL
 		return $aclList;
 	}
 	
-
-
-	// Berechtigung entfernen
-	function delRight( $aclid )
-	{
-		$sql = $db->sql('DELETE FROM {{acl}} WHERE id={aclid}');
-		$sql->setInt( 'aclid',$aclid );
-	
-		// Datenbankabfrage ausf?hren
-		$sql->query( $sql );
-	}
 
     public function getName()
     {

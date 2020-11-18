@@ -89,7 +89,7 @@ class ObjectAclformAction extends ObjectAction implements Method {
 		$acl->grant         = ( $this->hasRequestVar('grant'        ) );
 		$acl->transmit      = ( $this->hasRequestVar('transmit'     ) );
 
-		$acl->add();
+		$acl->persist();
 
 		// Falls die Berechtigung vererbbar ist, dann diese sofort an
 		// Unterobjekte vererben.
@@ -105,8 +105,9 @@ class ObjectAclformAction extends ObjectAction implements Method {
 			
 			foreach( $oids as $oid )
 			{
+				$acl->aclid = null;
 				$acl->objectid = $oid;
-				$acl->add();
+				$acl->persist();
 			}
 		}
 		

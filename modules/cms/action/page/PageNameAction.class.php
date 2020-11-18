@@ -1,12 +1,17 @@
 <?php
 namespace cms\action\page;
 use cms\action\Method;
+use cms\action\object\ObjectInfoAction;
+use cms\action\object\ObjectNameAction;
 use cms\action\PageAction;
 use cms\model\BaseObject;
 use cms\model\Project;
 
 class PageNameAction extends PageAction implements Method {
+
+
     public function view() {
+
 		$languageId = $this->getRequestVar('languageid');
 
 		$name = $this->page->getNameForLanguage($languageId);
@@ -21,9 +26,14 @@ class PageNameAction extends PageAction implements Method {
         $project = Project::create( $this->page->projectid );
         $this->setTemplateVar( 'folders' , $project->getAllFlatFolders() );
     }
+
+
     public function post() {
 
-	    parent::namePost(); // Save name and description
+		$parentAction = new ObjectNameAction();
+		$parentAction->request = $this->request;
+		$parentAction->init();
+		$parentAction->post(); // Save name and description
 
         $alias = $this->page->getAliasForLanguage( $this->getRequestId('languageid'));
 
@@ -38,7 +48,7 @@ class PageNameAction extends PageAction implements Method {
         }
         else
         {
-            $alias->save();
+            $alias->persist();
             $this->addNotice($alias->getType(), 0, $alias->filename, 'SAVED', 'ok');
         }
 

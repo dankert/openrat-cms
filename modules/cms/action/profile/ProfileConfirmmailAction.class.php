@@ -19,7 +19,7 @@ class ProfileConfirmmailAction extends ProfileAction implements Method {
 			// Best�tigungscode stimmt �berein.
 			// E-Mail-Adresse �ndern.	
 			$this->user->mail = $newMail;
-			$this->user->save();
+			$this->user->persist();
 			
 			$this->addNoticeFor( $this->user,Messages::SAVED );
 		}

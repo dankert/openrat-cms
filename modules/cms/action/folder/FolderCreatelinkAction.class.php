@@ -26,7 +26,7 @@ class FolderCreatelinkAction extends FolderAction implements Method {
 		$link->linkedObjectId = $this->getRequestVar('targetobjectid');
 		$link->projectid      = $this->folder->projectid;
 
-		$link->add();
+		$link->persist();
 		$link->setNameForAllLanguages( $name,$description );
 
 		$this->addNoticeFor( $link, Messages::ADDED);

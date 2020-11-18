@@ -22,7 +22,7 @@ class FolderCreateurlAction extends FolderAction implements Method {
 
 		$url->url            = $this->getRequestVar('url');
 
-		$url->add();
+		$url->persist();
 		$url->setNameForAllLanguages( $name,$description );
 
 		$this->addNoticeFor( $url, Messages::ADDED );

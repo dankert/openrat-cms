@@ -25,7 +25,7 @@ class Url extends BaseObject
 	// Lesen der Verkn�pfung aus der Datenbank
 	function load()
 	{
-		$db = \cms\base\DB::get();
+		$db = Db::get();
 
 		$sql = $db->sql( 'SELECT *'.
 		                ' FROM {{url}}'.
@@ -47,7 +47,7 @@ class Url extends BaseObject
      */
     function delete()
 	{
-		$db = \cms\base\DB::get();
+		$db = Db::get();
 
 		$sql = $db->sql( 'DELETE FROM {{url}} '.
 		                ' WHERE objectid={objectid}' );
@@ -55,14 +55,14 @@ class Url extends BaseObject
 		
 		$sql->query();
 
-		$this->objectDelete();
+		parent::delete();
 	}
 
 
 
 	public function save()
 	{
-		$db = \cms\base\DB::get();
+		$db = Db::get();
 		
 		$sql = $db->sql('UPDATE {{url}} SET '.
 		               '  url           = {url}'.
@@ -72,7 +72,7 @@ class Url extends BaseObject
 
 		$sql->query();
 
-		$this->objectSave();
+		parent::save();
 	}
 
 

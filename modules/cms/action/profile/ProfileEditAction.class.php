@@ -58,7 +58,7 @@ class ProfileEditAction extends ProfileAction implements Method {
 		
 		if	( !empty($this->user->fullname) )
 		{
-			$this->user->save();
+			$this->user->persist();
 			$this->addNoticeFor( $this->user,Messages::SAVED);
 		}
 		else

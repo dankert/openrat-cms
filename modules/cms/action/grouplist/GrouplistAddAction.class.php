@@ -12,7 +12,7 @@ class GrouplistAddAction extends GrouplistAction implements Method {
 		{
 			$this->group = new Group();
 			$this->group->name = $this->getRequestVar('name');
-			$this->group->add();
+			$this->group->persist();
 			$this->addNotice('group', 0, $this->group->name, 'ADDED', 'ok');
 			$this->callSubAction('listing');
 		}

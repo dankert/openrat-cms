@@ -46,7 +46,7 @@ class TemplateSrcelementAction extends TemplateAction implements Method {
 				throw new ValidationException('type');
 		}
 		
-		$tplModel->save();
+		$tplModel->persist();
 
 		$this->addNoticeFor($this->template,Messages::SAVED);
     }

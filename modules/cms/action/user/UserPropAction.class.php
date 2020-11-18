@@ -61,7 +61,7 @@ class UserPropAction extends UserAction implements Method {
 
         $this->user->style    = $this->getRequestVar('style'   );
 
-        $this->user->save();
+        $this->user->persist();
         $this->addNotice('user', 0, $this->user->name, 'SAVED', 'ok');
     }
 }

@@ -22,7 +22,6 @@ namespace cms\model;
 use cms\base\Configuration;
 use cms\base\DB as Db;
 use cms\generator\filter\AbstractFilter;
-use cms\generator\PublishPublic;
 use logger\Logger;
 use util\cache\FileCache;
 
@@ -456,7 +455,7 @@ class File extends BaseObject
 		$sql->setInt( 'objectid',$this->objectid );
 		$sql->query();
 
-		$this->objectDelete();
+		parent::delete();
 	}
 
 
@@ -488,7 +487,7 @@ class File extends BaseObject
 
 	/**
 	 * Einen Dateinamen in Dateiname und Extension aufteilen.
-	 * @param filename Dateiname
+	 * @param string filename Dateiname
 	 */
 	function parse_filename($filename)
 	{
@@ -529,13 +528,13 @@ EOF
 		$sql->setInt   ('filterid' ,$this->filterid  );
 		$sql->query();
 
-		$this->objectSave();
+		parent::save();
 	}
 
 
 	/**
 	 * Kopieren des Inhaltes von einer anderen Datei
-	 * @param ID der Datei, von der der Inhalt kopiert werden soll
+	 * @param int ID der Datei, von der der Inhalt kopiert werden soll
 	 */
 	function copyValueFromFile( $otherfileid )
 	{
