@@ -9,7 +9,9 @@ use util\Html;
 use util\Session;
 
 class TitleShowAction extends TitleAction implements Method {
+
     public function view() {
+
 		$this->setTemplateVar('buildinfo',Startup::TITLE.' '.Startup::VERSION.' - build date '.Startup::DATE );
 
 		$user = Session::getUser();
@@ -43,6 +45,8 @@ class TitleShowAction extends TitleAction implements Method {
 			$this->setTemplateVar('ping_timeout',ini_get('session.gc_maxlifetime')-60 );
 		}
     }
+
+
     public function post() {
     }
 }

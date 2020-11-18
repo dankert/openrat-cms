@@ -24,7 +24,13 @@ use util\UIUtils;
 use \util\exception\ObjectNotFoundException;
 
 
+/**
+ * Creating the website manifest.
+ *
+ * See https://developer.mozilla.org/de/docs/Web/Manifest
+ */
 class IndexManifestAction extends IndexAction implements Method {
+
     public function view() {
         $user = Session::getUser();
 
@@ -44,7 +50,7 @@ class IndexManifestAction extends IndexAction implements Method {
             ; // Unknown style name, we are ignoring this.
 
         // Theme base color for smartphones colorizing their status bar.
-        $themeColor = UIUtils::getColorHexCode($styleConfig['title_background_color']);
+        $themeColor = UIUtils::getColorHexCode($styleConfig->get('title_background_color','white'));
 
 
         $appName = C::subset(['application'])->get('name',Startup::TITLE);
@@ -56,12 +62,16 @@ class IndexManifestAction extends IndexAction implements Method {
             'display'     => 'standalone',
             'orientation' => 'landscape',
             'background_color' => $themeColor,
+            'theme_color' => $themeColor,
+			'start_url'   => './',
         );
 
         header("Content-Type: application/manifest+json");
 		$json = new JSON();
 		$this->setTemplateVar( 'manifest',$json->encode($value) );
     }
+
+
     public function post() {
     }
 }

@@ -23,7 +23,9 @@ use logger\Logger;
 use util\Less;
 use \util\exception\ObjectNotFoundException;
 class IndexShowAction extends IndexAction implements Method {
+
     public function view() {
+
 		$this->setContentSecurityPolicy();
 
         $user = Session::getUser();
@@ -109,6 +111,122 @@ class IndexShowAction extends IndexAction implements Method {
 
 		$this->setTemplateVar('language',C::subset('language')->get('language_code') );
     }
+
+
     public function post() {
     }
+
+
+	/**
+	 * Gets CSS file for displaying the UI.
+	 *
+	 * @return string
+	 */
+	protected function getStyleLink()
+	{
+		// Ok, for now there is only 1 CSS file, which contains all UI styles.
+		return Startup::THEMES_DIR . 'default/'.(PRODUCTION?Theme::STYLE_MINIFIED_FILENAME:Theme::STYLE_FILENAME);
+	}
+
+
+
+	/**
+	 * Gets JS file for displaying the UI.
+	 *
+	 * @return string
+	 */
+	protected function getScriptLink()
+	{
+		return Startup::THEMES_DIR . 'default/'.(PRODUCTION?Theme::SCRIPT_MINIFIED_FILENAME:Theme::SCRIPT_FILENAME);
+	}
+
+
+	/**
+	 * Ermittelt die erste zu startende Aktion.
+	 * @param $action
+	 * @param $id
+	 */
+	protected function updateStartAction(&$action, &$id )
+	{
+		$user = Session::getUser();
+
+		if  ( !is_object($user) )
+		{
+			$action = 'login';
+			$id     = 0;
+			return;
+		}
+
+
+		// Die Action im originalen Request hat Priorität.
+		$params = new RequestParams();
+		if   ( !empty( $params->action ) )
+		{
+			$action = $params->action;
+			$id     = $params->id;
+			return;
+		}
+
+
+		$startConfig = Configuration::subset( ['login','start'] );
+		// Das zuletzt geänderte Objekt benutzen.
+		if	( $startConfig->is('start_lastchanged_object',true) )
+		{
+			$objectid = Value::getLastChangedObjectByUserId($user->userid);
+
+			if	( BaseObject::available($objectid))
+			{
+				$object = new BaseObject($objectid);
+				$object->objectLoad();
+
+				$action = $object->getType();
+				$id     = $objectid;
+				return;
+			}
+		}
+
+		// Das einzige Projekt benutzen
+		if	( $startConfig->is('start_single_project',true) )
+		{
+			$projects = Project::getAllProjects();
+			if ( count($projects) == 1 ) {
+				// Das einzige Projekt sofort starten.
+				$action = 'project';
+				$id     = array_keys($projects)[0];
+			}
+		}
+
+		$action = 'projectlist';
+		$id     = 0;
+	}
+
+	protected function tryAutoLogin()
+	{
+		$username = AuthRunner::getUsername('autologin');
+
+		if	( $username )
+		{
+			try
+			{
+				$user = User::loadWithName( $username,User::AUTH_TYPE_INTERNAL );
+				$user->setCurrent();
+				// Do not update the login timestamp, because this is a readonly request.
+				Logger::info('auto-login for user '.$username);
+			}
+			catch( ObjectNotFoundException $e )
+			{
+				Logger::warn('Username for autologin does not exist: '.$username);
+
+				// Kein Auto-Login moeglich, die Anmeldemaske anzeigen.
+				$this->setTemplateVars( array('dialogAction'=>'login','dialogMethod'=>'login'));
+			}
+		}
+		else
+		{
+			// Kein Auto-Login moeglich, die Anmeldemaske anzeigen.
+			$this->setTemplateVars( array('dialogAction'=>'login','dialogMethod'=>'login'));
+		}
+	}
+
+
 }
