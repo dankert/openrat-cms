@@ -28,7 +28,7 @@ use util\exception\UIException;
  *
  * @author Jan Dankert
  */
-class Ftp extends BaseTarget
+class FtpTarget extends BaseTarget
 {
 	private $connection;
 

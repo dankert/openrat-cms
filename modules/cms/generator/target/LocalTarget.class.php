@@ -31,7 +31,7 @@ use util\Url;
  *
  * @author Jan Dankert
  */
-class Local extends  BaseTarget
+class LocalTarget extends  BaseTarget
 {
 	/**
 	 * @var string

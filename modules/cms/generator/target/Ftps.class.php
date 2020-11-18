@@ -27,7 +27,7 @@ use util\exception\UIException;
  *
  * @author Jan Dankert
  */
-class Ftps extends Ftp
+class FtpsTarget extends FtpTarget
 {
 	/**
 	 * Creates a new connection.

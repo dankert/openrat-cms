@@ -29,27 +29,27 @@ class TargetFactory
 			case '':
 			case 'file':
 			case 'local':
-				$target = new Local($url);
+				$target = new LocalTarget($url);
 				break;
 
 			case 'dav':
-				$target = new Dav($url);
+				$target = new DavTarget($url);
 				break;
 
 			case 'ftp':
-				$target = new Ftp($url);
+				$target = new FtpTarget($url);
 				break;
 
 			case 'ftps':
-				$target = new Ftps($url);
+				$target = new FtpsTarget($url);
 				break;
 
 			case 'scp':
-				$target = new Scp($url);
+				$target = new ScpTarget($url);
 				break;
 
 			case 'sftp':
-				$target = new SFtp($url);
+				$target = new SFtpTarget($url);
 				break;
 
 			default:

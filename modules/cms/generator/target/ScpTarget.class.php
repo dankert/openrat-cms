@@ -31,56 +31,65 @@ use util\exception\UIException;
  * @version $Revision$
  * @package openrat.services
  */
-class SFtp extends Scp
+class ScpTarget extends BaseTarget
 {
 	/**
 	 * @var resource
 	 */
-	protected $sftpConnection;
-
+	protected $sshConnection;
 
 	// Aufbauen der Verbindung
 	public function open()
 	{
-		$this->createConnection();
-
-		$this->sftpConnection = @ssh2_sftp($this->sshConnection);
-
-		if (! $this->sftpConnection)
-			throw new PublisherException("Could not initialize SFTP subsystem.");
-
+		$this->sshConnection = $this->createConnection();
 	}
 
 
+
+	protected function createConnection() {
+
+		if   ( empty($this->url->port) )
+			$this->url->port = 22; // Default-SSH-port
+
+		$sshConnection = @ssh2_connect($this->url->host,$this->url->port );
+
+		if (! $sshConnection)
+			throw new PublisherException("Could not connect to ".$this->url->host.':'.$this->url->port );
+
+
+		if (! @ssh2_auth_password($sshConnection, $this->url->user,$this->url->pass) )
+			throw new PublisherException("Could not authenticate with user ".$this->url->user);
+
+		$this->sshConnection = $sshConnection;
+
+		return $sshConnection;
+	}
+
+
+
 	/**
-	 * Kopieren einer Datei vom lokalen System auf den SFTP-Server.
+	 * Kopieren einer Datei vom lokalen System auf den FTP-Server.
 	 *
 	 * @param String Quelle
 	 * @param String Ziel
-	 * @param int time)
+	 * @param int FTP-Mode (BINARY oder ASCII)
 	 */
 	public function put($source, $dest, $lastChangeDate)
 	{
 		$dest = $this->url->path . '/' . $dest;
 
-		$sftp = $this->sftpConnection;
+		// ok, lets create the necessary directories on the remote side.
+		$stream = ssh2_exec($this->sshConnection,'mkdir -p '.dirname($dest) );
+		if   ( $stream )
+			fclose($stream);
+		else
+			throw new PublisherException("Failed to mkdir ".dirname($dest).' on remote');
 
-		ssh2_sftp_mkdir ( $sftp, dirname($dest),0755, true);
+		$success = ssh2_scp_send($this->sshConnection, $source, $dest, 0644);
 
-		$stream = @fopen("ssh2.sftp://$sftp$dest", 'w');
-
-		if (! $stream)
-			throw new PublisherException("Could not create SFTP-Stream on file: $dest");
-
-		$data_to_send = @file_get_contents($source);
-
-		if ($data_to_send === false)
-			throw new PublisherException("Could not open local file: $source");
-
-		if (@fwrite($stream, $data_to_send) === false)
-			throw new PublisherException("Could not send data from file: $source.");
-
-		@fclose($stream);
+		if   ( !$success) {
+			throw new PublisherException( 'Failed to publish '.$source.' to '.$dest );
+		}
 	}
 
 
@@ -90,13 +99,15 @@ class SFtp extends Scp
 	 */
 	public function close()
 	{
-		parent::close();
+		ssh2_disconnect($this->sshConnection);
 	}
 
 
 	public static function isAvailable()
 	{
-		return parent::isAvailable() && function_exists('ssh2_sftp');
+		return function_exists('ssh2_connect');
 	}
 }
 
+
+?>
