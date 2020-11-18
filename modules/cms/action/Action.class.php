@@ -7,6 +7,7 @@ use cms\base\Language as L;
 use cms\model\ModelBase;
 use cms\model\User;
 use logger\Logger;
+use util\Cookie;
 use util\ClassUtils;
 use util\Session;
 
@@ -423,7 +424,6 @@ class Action
 	const COOKIE_TIMEZONE_OFFSET = 'or_timezone_offset';
 
 
-
 	/**
 	 * Sets a cookie.
 	 *
@@ -432,27 +432,6 @@ class Action
 	 */
 	protected function setCookie($name, $value = '' ) {
 
-		$cookieConfig = Configuration::subset('security')->subset('cookie');
-
-		if ( ! $value )
-			$expire = time(); // Cookie wird gelöscht.
-		else
-			$expire = time() + 60 * 60 * 24 * $cookieConfig->get('expire',2*365); // default: 2 years
-
-		$cookieAttributes = [
-			rawurlencode($name).'='.rawurlencode($value),
-			'Expires='.date('r',$expire),
-			'Path='.COOKIE_PATH
-		];
-
-		if   ( $cookieConfig->is('secure',false ) )
-			$cookieAttributes[] = 'Secure';
-
-		if   ( $cookieConfig->is('httponly',true ) )
-			$cookieAttributes[] = 'HttpOnly';
-
-		$cookieAttributes[] = 'SameSite='.$cookieConfig->get('samesite','Lax');
-
-		header('Set-Cookie: '.implode('; ',$cookieAttributes) );
+		Cookie::set( $name, $value );
 	}
 }

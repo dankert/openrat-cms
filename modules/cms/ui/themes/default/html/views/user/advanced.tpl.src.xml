@@ -1,0 +1,38 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<group title="${message:token}">
+		<table>
+			<row>
+				<column header="true">
+					<text value="${message:created}"/>
+				</column>
+				<column header="true">
+					<text value="${message:until}"/>
+				</column>
+				<column header="true">
+					<text value="${message:name}"/>
+				</column>
+				<column header="true">
+					<text value="${message:OPERATING_SYSTEM}"/>
+				</column>
+			</row>
+			<list list="${token}" extract="true">
+				<row>
+					<column>
+						<date date="${create_date}"/>
+					</column>
+					<column>
+						<date date="${expires}"/>
+					</column>
+					<column>
+						<text value="${name}"/>
+					</column>
+					<column>
+						<text value="${platform}"/>
+					</column>
+				</row>
+			</list>
+		</table>
+	</group>
+
+</output>

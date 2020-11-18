@@ -2,6 +2,7 @@
 
 use cms\action\Action;
 use language\Messages;
+use util\Cookie;
 use template_engine\Output;
 
 function component_date($time )
@@ -11,10 +12,10 @@ function component_date($time )
 	else
 	{
 		// Benutzereinstellung 'Zeitzonen-Offset' auswerten.
-		if	( isset($_COOKIE[Action::COOKIE_TIMEZONE_OFFSET]) )
+		if	( Cookie::has(Action::COOKIE_TIMEZONE_OFFSET) )
 		{
 			$time -= (int)date('Z');
-			$time += ((int)$_COOKIE[Action::COOKIE_TIMEZONE_OFFSET]*60);
+			$time += ( ((int)Cookie::get(Action::COOKIE_TIMEZONE_OFFSET))*60);
 		}
 	
 		echo '<span class="or-table-sort-value">'.str_pad($time, 20, "0", STR_PAD_LEFT).'</span>'; // For sorting a table.
@@ -28,7 +29,7 @@ function component_date($time )
 		unset($dl);
 		
 		
-		$past = time()-$time;
+		$past = abs(time()-$time );
 
 		$units = [
 			[  60, Messages::SECOND, Messages::SECONDS ],

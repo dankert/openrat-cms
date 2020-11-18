@@ -4,6 +4,7 @@ namespace cms\auth;
 
 use cms\action\Action;
 use cms\auth\Auth;
+use util\Cookie;
 
 /**
  * Using the username from a cookie.
@@ -14,10 +15,7 @@ class CookieAuth implements Auth
 {
 	public function username()
 	{
-		if (isset($_COOKIE[ Action::COOKIE_USERNAME ]))
-			return $_COOKIE[ Action::COOKIE_USERNAME ];
-		else
-			return null;
+		return Cookie::get( Action::COOKIE_USERNAME,null );
 	}
 
 

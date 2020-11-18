@@ -20,6 +20,7 @@ use cms\update\Update;
 use Exception;
 use language\Language;
 use language\Messages;
+use util\Cookie;
 use util\ClassName;
 use util\ClassUtils;
 use util\exception\ObjectNotFoundException;
@@ -248,8 +249,8 @@ class Dispatcher
 
             // Sprache lesen
 			$languages = [];
-			if (isset($_COOKIE[ Action::COOKIE_LANGUAGE]))
-				$languages[] = $_COOKIE[Action::COOKIE_LANGUAGE];
+			if ( Cookie::has( Action::COOKIE_LANGUAGE))
+				$languages[] = Cookie::get(Action::COOKIE_LANGUAGE);
 
 			$i18nConfig = (new Config($conf))->subset('i18n');
 
@@ -376,67 +377,64 @@ class Dispatcher
      */
     private function connectToDatabase()
     {
-        $firstDbContact = ! Session::getDatabaseId() || $this->request->hasRequestVar('dbid');
+		$dbConfig = Configuration::subset('database');
+
+		// Filter all enabled databases
+		$databases = array_filter($dbConfig->subsets(), function ($dbConfig) {
+			return $dbConfig->is('enabled',true);
+		});
+
+		$dbids     = array_keys( $databases );
+
+		if   ( ! $dbids )
+			throw new \RuntimeException('No database configured.');
+
+		$firstDbContact = ! Session::getDatabaseId();
+
+        $possibleDbIds = [];
 
         if   ( $this->request->hasRequestVar('dbid') )
-            $dbid = $this->request->getRequestVar('dbid',RequestParams::FILTER_ALPHANUM);
-        elseif   ( Session::getDatabaseId() )
-            $dbid = Session::getDatabaseId();
-        elseif   ( isset($_COOKIE[Action::COOKIE_DB_ID]) )
-            $dbid = $_COOKIE[Action::COOKIE_DB_ID];
-        else {
-            $databases = Configuration::subset('database')->subsets();
+            $possibleDbIds[] = $this->request->getRequestVar('dbid',RequestParams::FILTER_ALPHANUM);
 
-            // Filter all enabled databases
-            $databases = array_filter($databases, function ($dbConfig) {
-            	return $dbConfig->is('enabled',true);
-			});
+        if   ( Session::getDatabaseId() )
+            $possibleDbIds[] = Session::getDatabaseId();
 
+        if   ( Cookie::has(Action::COOKIE_DB_ID) )
+            $possibleDbIds[] = Cookie::get(Action::COOKIE_DB_ID);
 
-			$dbids = array_keys( $databases );
+		$possibleDbIds[] = Configuration::subset('database-default')->get('default-id' );
 
-            $defaultDbId = Configuration::subset('database-default')->get('default-id' );
+		$possibleDbIds[] = $dbids[0];
 
-            if  ( $defaultDbId && in_array($defaultDbId,$dbids) )
-                // Default-Datenbankverbindung ist konfiguriert und vorhanden.
-                $dbid = $defaultDbId;
-            elseif  ( count($dbids) > 0)
-                // Datenbankverbindungen sind vorhanden, wir nehmen die erste.
-                $dbid = $dbids[0];
-            else
-                // Keine Datenbankverbindung vorhanden. Fallback:
-                throw new \RuntimeException('No database configured');
-        }
+		foreach( $possibleDbIds as $dbid ) {
+			if	( $dbConfig->has( $dbid ) ) {
 
+				$dbConfig = $dbConfig->subset($dbid );
 
-        $dbConfig = Configuration::subset('database');
+				try
+				{
+					$key = $this->request->isAction?'write':'read';
 
-        if	( ! $dbConfig->has( $dbid ) )
-            throw new \LogicException( 'unknown DB-Id: '.$dbid );
+					$db = new Database( $dbConfig->merge( $dbConfig->subset($key))->getConfig() );
+					$db->id = $dbid;
 
-        $dbConfig = $dbConfig->subset($dbid );
-
-        if   ( ! $dbConfig->is('enabled',true ) )
-            throw new \RuntimeException('Database connection \''.$dbid.'\' is not enabled');
-
-        try
-        {
-            $key = $this->request->isAction?'write':'read';
-
-            $db = new Database( $dbConfig->subset($key)->getConfig() + $dbConfig->getConfig() );
-            $db->id = $dbid;
-
-            Session::setDatabaseId( $dbid );
-            Session::setDatabase( $db );
-        }catch(\Exception $e)
-        {
-            throw new UIException(Messages::DATABASE_CONNECTION_ERROR, $e->getMessage(),$e);
-        }
+					Session::setDatabaseId( $dbid );
+					Session::setDatabase  ( $db           );
+				}
+				catch(\Exception $e) {
+					throw new UIException(Messages::DATABASE_CONNECTION_ERROR, $e->getMessage(),$e);
+				}
 
 
-        if   ( $firstDbContact )
-            // Test, if we should update the database scheme.
-            $this->updateDatabase( $dbid );
+				if   ( $firstDbContact )
+					// Test, if we should update the database scheme.
+					$this->updateDatabase( $dbid );
+
+				return;
+			}
+		}
+
+		throw new LogicException('Unreachable code'); // at least the first db connection should be found
     }
 
 

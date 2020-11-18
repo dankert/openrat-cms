@@ -35,7 +35,7 @@ class UI
 
         try
         {
-            define('COOKIE_PATH',dirname($_SERVER['SCRIPT_NAME']));
+            define('COOKIE_PATH',dirname($_SERVER['SCRIPT_NAME']).'/');
 
             // Everything is UTF-8.
             header('Content-Type: text/html; charset=UTF-8');

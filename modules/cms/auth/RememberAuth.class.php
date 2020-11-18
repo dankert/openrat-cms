@@ -5,11 +5,16 @@ namespace cms\auth;
 use cms\action\Action;
 use cms\auth\Auth;
 use cms\base\Configuration;
+use cms\base\DB;
+use cms\base\Startup;
 use cms\model\Text;
 use database\Database;
 use cms\model\User;
 use logger\Logger;
+use util\Cookie;
+use security\Password;
 use \util\exception\ObjectNotFoundException;
+use util\Session;
 use util\text\TextMessage;
 
 /**
@@ -25,11 +30,11 @@ class RememberAuth implements Auth
 	public function username()
 	{
 		// Ermittelt den Benutzernamen aus den Login-Cookies.
-		if (isset($_COOKIE[Action::COOKIE_TOKEN]) &&
-			isset($_COOKIE[Action::COOKIE_DB_ID])) {
+		if ( Cookie::has(Action::COOKIE_TOKEN) &&
+			 Cookie::has(Action::COOKIE_DB_ID)    ) {
 			try {
-				list($selector, $token) = array_pad(explode('.', $_COOKIE[Action::COOKIE_TOKEN]), 2, '');
-				$dbid = $_COOKIE[Action::COOKIE_DB_ID];
+				list($selector, $token) = array_pad(explode('.', Cookie::get(Action::COOKIE_TOKEN)), 2, '');
+				$dbid = Cookie::get( Action::COOKIE_DB_ID );
 
 				$dbConfig = Configuration::subset('database');
 
@@ -44,7 +49,7 @@ class RememberAuth implements Auth
 
 				$key = 'read'; // Only reading in database.
 
-				$db = new Database($dbConfig->subset($key)->getConfig() + $dbConfig->getConfig());
+				$db = new Database($dbConfig->merge( $dbConfig->subset($key) )->getConfig());
 				$db->id = $dbid;
 				$db->start();
 
@@ -55,14 +60,40 @@ class RememberAuth implements Auth
 SQL
 				);
 				$stmt->setString('selector', $selector);
-				$stmt->setInt('now', time());
+				$stmt->setInt   ('now'     , Startup::getStartTime() );
 
 				$auth = $stmt->getRow();
+				$db->disconnect();
+
 
 				if ($auth) {
-					if (\security\Password::check($token, $auth['token'], $auth['token_algo']))
-						return $auth['username'];
+					$this->makeDBWritable( $dbid ); // FIXME: This is a hack, how to do this better?
+					// serial was found.
+					$username = $auth['username'];
+					$userid   = $auth['userid'  ];
+					$user     = new User( $userid );
+
+					if (Password::check($token, $auth['token'], $auth['token_algo'])) {
+						Cookie::set(Action::COOKIE_TOKEN   ,$user->createNewLoginTokenForSerial($selector) );
+						DB::get()->commit();
+						return $username;
+					}
+					else {
+						// serial match but token mismatched.
+						// this means, the token was used on another device before, probably stolen.
+						Logger::warn( TextMessage::create('Possible breakin-attempt detected for user ${0}',[$username]));
+						$user->deleteAllLoginTokens(); // Disable all token logins for this user.
+						Cookie::set(Action::COOKIE_TOKEN ); // Delete token cookie
+
+						// we must not reset the password here, because the thief might not have it.
+
+						return null;
+					}
+				} else {
+					// The serial is not found, maybe expired.
+					// There is nothing we should do here.
 				}
+
 
 			} catch (ObjectNotFoundException $e) {
 				// Benutzer nicht gefunden.
@@ -80,6 +111,16 @@ SQL
 	{
 		return null;
 	}
-}
 
-?>
+	protected function makeDBWritable( $dbid ) {
+
+		$dbConfig = Configuration::subset(['database',$dbid]);
+
+		$key = 'write';
+		$db = new Database($dbConfig->merge( $dbConfig->subset($key) )->getConfig());
+		$db->id = $dbid;
+		$db->start();
+
+		Session::setDatabase( $db );
+	}
+}

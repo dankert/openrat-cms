@@ -8,7 +8,9 @@ use cms\auth\Auth;
 use cms\auth\AuthRunner;
 use cms\auth\InternalAuth;
 use cms\base\Configuration;
+use cms\base\DB;
 use cms\model\User;
+use language\Language;
 use language\Messages;
 use logger\Logger;
 use security\Password;
@@ -85,6 +87,7 @@ class LoginLoginAction extends LoginAction implements Method {
 
 
     public function post() {
+
 		Session::setUser(null); // Altes Login entfernen.
 		
 		if	( Configuration::subset('login')->is('nologin',false ) )
@@ -96,21 +99,23 @@ class LoginLoginAction extends LoginAction implements Method {
 		$newPassword2  = $this->getRequestVar('password2'     ,RequestParams::FILTER_ALPHANUM);
 		$token         = $this->getRequestVar('user_token'    ,RequestParams::FILTER_ALPHANUM);
 
-		// Der Benutzer hat zwar ein richtiges Kennwort eingegeben, aber dieses ist abgelaufen.
-		// Wir versuchen hier, das neue zu setzen (sofern eingegeben).
-		if	( empty($newPassword1) )
-		{
-			// Kein neues Kennwort,
-			// nichts zu tun...
-		}
-		else
-		{
-			$auth = new InternalAuth();
 
-			$passwordConfig = Configuration::subset(['security','password']);
+		// Jedes Authentifizierungsmodul durchlaufen, bis ein Login erfolgreich ist.
+		$authResult = AuthRunner::checkLogin('authenticate',$loginName,$loginPassword, $token );
+		Password::delay();
 
-			if	( $auth->login($loginName, $loginPassword,$token) || $auth->mustChangePassword )
+		$mustChangePassword = ( $authResult === Auth::STATUS_PW_EXPIRED   );
+		$tokenFailed        = ( $authResult === Auth::STATUS_TOKEN_NEEDED );
+		$loginOk            = ( $authResult === Auth::STATUS_SUCCESS      );
+
+		if  ( $mustChangePassword ) {
+
+			// Der Benutzer hat zwar ein richtiges Kennwort eingegeben, aber dieses ist abgelaufen.
+			// Wir versuchen hier, das neue zu setzen (sofern eingegeben).
+			if	( $newPassword1 )
 			{
+				$passwordConfig = Configuration::subset(['security','password']);
+
 				if	( $newPassword1 != $newPassword2 )
 				{
 					$this->addValidationError('password1',Messages::PASSWORDS_DO_NOT_MATCH);
@@ -128,131 +133,106 @@ class LoginLoginAction extends LoginAction implements Method {
 					// Kennwoerter identisch und lang genug.
 					$user = User::loadWithName($loginName,User::AUTH_TYPE_INTERNAL);
 					$user->setPassword( $newPassword1,true );
-					
-					// Das neue gesetzte Kennwort für die weitere Authentifizierung benutzen.
 					$loginPassword = $newPassword1;
+
+					$loginOk            = true;
+					$mustChangePassword = false;
 				}
 			}
-			else
-			{
+		}
+
+		if	( $tokenFailed ) {
+			// Token falsch.
+			$this->addNotice('user', 0, $loginName, 'LOGIN_FAILED_TOKEN_FAILED', 'error');
+			$this->addValidationError('user_token','');
+			return;
+		}
+
+		if	( $mustChangePassword ) {
+			// Anmeldung gescheitert, Benutzer muss Kennwort ?ndern.
+			$this->addNotice('user', 0, $loginName, 'LOGIN_FAILED_MUSTCHANGEPASSWORD', 'error');
+			$this->addValidationError('password1','');
+			$this->addValidationError('password2','');
+			return;
+		}
+
+		$ip = getenv("REMOTE_ADDR");
+
+		if	( ! $loginOk ) {
+			Logger::debug(TextMessage::create('login failed for user ${name} from IP ${ip}',
+				[
+					'name' => $loginName,
+					'ip' => $ip
+				]
+			));
+
+			// Anmeldung gescheitert.
+			$this->addNotice('user', 0, $loginName, 'LOGIN_FAILED', 'error', array('name' => $loginName));
+			$this->addValidationError('login_name', '');
+			$this->addValidationError('login_password', '');
+			return;
+		}
+
+		Logger::info(TextMessage::create('Login successful for user ${0}', [$loginName]));
+		Logger::debug("Login successful for user '$loginName' from IP $ip");
+
+		try {
+			// Benutzer über den Benutzernamen laden.
+			$user = User::loadWithName($loginName, User::AUTH_TYPE_INTERNAL, null);
+			$user->setCurrent();
+			$user->updateLoginTimestamp();
+
+			if ($user->passwordAlgo != Password::bestAlgoAvailable())
+				// Re-Hash the password with a better hash algo.
+				$user->setPassword($loginPassword);
+
+		} catch (ObjectNotFoundException $ex) {
+			// Benutzer wurde zwar authentifiziert, ist aber in der
+			// internen Datenbank nicht vorhanden
+			if (Configuration::subset(['security', 'newuser'])->is('autoadd', true)) {
+
+				// Neue Benutzer in die interne Datenbank uebernehmen.
+				$user = new User();
+				$user->name = $loginName;
+				$user->fullname = $loginName;
+				$user->persist();
+				Logger::debug( TextMessage::create('user ${0} authenticated successful and added to internal user table',[$loginName]) );
+				$user->updateLoginTimestamp();
+			} else {
+				// Benutzer soll nicht angelegt werden.
+				// Daher ist die Anmeldung hier gescheitert.
 				// Anmeldung gescheitert.
+				Logger::warn( TextMessage::create('user ${0} authenticated successful, but not found in internal user table',[$loginName]) );
+
 				$this->addNotice('user', 0, $loginName, 'LOGIN_FAILED', 'error', array('name' => $loginName));
-				$this->addValidationError('login_name'    ,'');
-				$this->addValidationError('login_password','');
+				$this->addValidationError('login_name', '');
+				$this->addValidationError('login_password', '');
+
 				return;
 			}
 		}
-		
+
 		// Cookie setzen
-		$this->setCookie(Action::COOKIE_USERNAME,$loginName );
-		$this->setCookie(Action::COOKIE_DB_ID   ,$this->getRequestVar('dbid'));
+		$this->setCookie(Action::COOKIE_DB_ID   ,DB::get()->id );
+		$this->setCookie(Action::COOKIE_USERNAME,$user->name   );
 
-		// Jedes Authentifizierungsmodul durchlaufen, bis ein Login erfolgreich ist.
-		$result = AuthRunner::checkLogin('authenticate',$loginName,$loginPassword, $token );
-
-		$mustChangePassword = ( $result === Auth::STATUS_PW_EXPIRED   );
-		$tokenFailed        = ( $result === Auth::STATUS_TOKEN_NEEDED );
-		$loginOk            = ( $result === Auth::STATUS_SUCCESS      );
-
-		if	( $loginOk )
-		{
-			Logger::info('Login successful for '.$loginName);
-
-			try
-			{
-				// Benutzer über den Benutzernamen laden.
-				$user = User::loadWithName($loginName,User::AUTH_TYPE_INTERNAL,null);
-                $user->setCurrent();
-                $user->updateLoginTimestamp();
-
-                if ($user->passwordAlgo != Password::bestAlgoAvailable() )
-                    // Re-Hash the password with a better hash algo.
-                    $user->setPassword($loginPassword);
-                
-			}
-			catch( ObjectNotFoundException $ex )
-			{
-				// Benutzer wurde zwar authentifiziert, ist aber in der
-				// internen Datenbank nicht vorhanden
-				if	( Configuration::subset(['security','newuser'])->is('autoadd',true ) )
-				{
-					// Neue Benutzer in die interne Datenbank uebernehmen.
-					$user = new User();
-					$user->name     = $loginName;
-					$user->fullname = $loginName;
-					$user->persist();
-				}
-				else
-				{
-	 				// Benutzer soll nicht angelegt werden.
-					// Daher ist die Anmeldung hier gescheitert.
-					$loginOk = false;
-				}				
-			}			
+		if	( $this->hasRequestVar('remember') ) {
+			// Sets the login token cookie
+			$this->setCookie(Action::COOKIE_TOKEN   ,$user->createNewLoginToken() );
 		}
-		
-		Password::delay();
-		
-	    $ip = getenv("REMOTE_ADDR");
-		
-		if	( !$loginOk )
-		{
-			// Anmeldung nicht erfolgreich
-			
-			Logger::debug( TextMessage::create('login failed for user ${name} from IP ${ip}',
-				[
-					'name' => $loginName,
-					'ip'   => $ip
-				]
-			) );
 
-			if	( $tokenFailed )
-			{
-				// Token falsch.
-				$this->addNotice('user', 0, $loginName, 'LOGIN_FAILED_TOKEN_FAILED', 'error');
-				$this->addValidationError('user_token','');
-			}
-			elseif	( $mustChangePassword )
-			{
-				// Anmeldung gescheitert, Benutzer muss Kennwort ?ndern.
-				$this->addNotice('user', 0, $loginName, 'LOGIN_FAILED_MUSTCHANGEPASSWORD', 'error');
-				$this->addValidationError('password1','');
-				$this->addValidationError('password2','');
-			}
-			else
-			{
-				// Anmeldung gescheitert.
-				$this->addNotice('user', 0, $loginName, 'LOGIN_FAILED', 'error', array('name' => $loginName));
-				$this->addValidationError('login_name'    ,'');
-				$this->addValidationError('login_password','');
-			}
+		// Anmeldung erfolgreich.
+		if	( Configuration::subset('security')->is('renew_session_login',false) )
+			$this->recreateSession();
 
-			return;
-		}
-		else
-		{
-		    
-			Logger::debug("Login successful for user '$loginName' from IP $ip");
+		$this->addNoticeFor( $user,Messages::LOGIN_OK, array('name' => $user->getName() ));
 
-			if	( $this->hasRequestVar('remember') )
-			{
-				// Cookie setzen
-				$this->setCookie(Action::COOKIE_USERNAME,$user->name                  );
-                $this->setCookie(Action::COOKIE_TOKEN   ,$user->createNewLoginToken() );
-			}
-				
-			// Anmeldung erfolgreich.
-            if	( Configuration::subset('security')->is('renew_session_login',false) )
-				$this->recreateSession();
-			
-			$this->addNoticeFor( $user,Messages::LOGIN_OK, array('name' => $user->getName() ));
-			
-            $config = Session::getConfig();
-            $language = new \language\Language();
-            $config['language'] = $language->getLanguage($user->language);
-            $config['language']['language_code'] = $user->language;
-            Session::setConfig( $config );
-		}
-		
+		// Setting the user-defined language
+		$config = Session::getConfig();
+		$language = new Language();
+		$config['language'] = $language->getLanguage($user->language);
+		$config['language']['language_code'] = $user->language;
+
+		Session::setConfig( $config );
     }
 }

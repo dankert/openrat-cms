@@ -5,6 +5,7 @@ use cms\action\LoginAction;
 use cms\action\Method;
 use cms\base\Configuration;
 use language\Messages;
+use util\Cookie;
 use util\Session;
 
 
@@ -17,9 +18,9 @@ class LoginLogoutAction extends LoginAction implements Method {
 			$this->recreateSession();
 
         // Reading the login token cookie
-        list( $selector,$token ) = array_pad( explode('.',@$_COOKIE[Action::COOKIE_TOKEN]),2,'');
+        list( $selector,$token ) = array_pad( explode('.',Cookie::get(Action::COOKIE_TOKEN)),2,'');
 
-        // Logout forces the removal of all login tokens
+        // Logout forces the removal of the login token for this device
 		if   ( $selector )
 		    $this->currentUser->deleteLoginToken( $selector );
 

@@ -21,6 +21,8 @@ namespace cms\model;
 use cms\base\Configuration;
 use cms\base\DB as Db;
 use cms\base\Startup;
+use cms\base\Language;
+use language\Messages;
 use security\Password;
 use util\exception\ObjectNotFoundException;
 
@@ -174,11 +176,11 @@ SQL
 	/**
 	 * Lesen aller Projekte, fuer die der Benutzer berechtigt ist.
 	 *
-	 * @return Array [Projekt-Id] = Projekt-Name
+	 * @return array [Projekt-Id] = Projekt-Name
 	 */
 	public function getReadableProjects()
 	{
-		$db = \cms\base\DB::get();
+		$db = Db::get();
 
 		if	( $this->isAdmin )
 		{
@@ -212,7 +214,7 @@ SQL
 
 	/**
 	 * Ermittelt alls Projekte, fuer die der Benutzer berechtigt ist.
-	 * @return Array [0..n] = Projekt-Id
+	 * @return array [0..n] = Projekt-Id
 	 */
 	function getReadableProjectIds()
 	{
@@ -220,10 +222,30 @@ SQL
 	}
 
 
+	/**
+	 * Gets all login tokens for this user.
+	 *
+	 * @return array
+	 */
+	public function getLoginTokens() {
+
+		$stmt = Db::sql( <<<SQL
+              SELECT selector,expires,create_date,platform,name
+                FROM {{auth}} 
+               WHERE userid={userid}
+SQL
+		);
+
+		$stmt->setInt('userid',$this->getId() );
+
+		return $stmt->getAll();
+	}
 
 	/**
-	 * Ermittelt zu diesem Benutzer den Login-Token.
-	 */ 
+	 * Creates a completly new login token.
+	 *
+	 * @return string new login token
+	 */
 	function createNewLoginToken()
 	{
 	    $selector = Password::randomHexString(24);
@@ -239,7 +261,7 @@ SQL
                  VALUES( {id},{userid},{selector},{token},{token_algo},{expires},{create_date},{platform},{name} )
 SQL
         );
-		$expirationPeriodDays = \cms\base\Configuration::Conf()->subset('user')->subset('security')->get('token_expires_after_days',730);
+		$expirationPeriodDays = Configuration::Conf()->subset('user')->subset('security')->get('token_expires_after_days',730);
 
 		$stmt->setInt( 'id'         ,++$count      );
 		$stmt->setInt( 'userid'     ,$this->userid );
@@ -261,8 +283,42 @@ SQL
 	}
 
 
-    /**
-     * Ermittelt zu diesem Benutzer den Login-Token.
+
+	/**
+	 * Creates a new login token for a serial.
+	 *
+	 * @param $selector string selector
+	 * @return string new login token
+	 */
+	public function createNewLoginTokenForSerial( $selector )
+	{
+		$algo      = Password::ALGO_SHA1;
+		$token     = Password::randomHexString(24);
+
+		$tokenHash = Password::hash($token,$algo);
+
+		$stmt = Db::sql( <<<SQL
+              UPDATE {{auth}}
+                 SET token={token},token_algo={token_algo}
+                 WHERE selector={selector}
+SQL
+		);
+
+		$stmt->setString( 'selector'   ,$selector     );
+		$stmt->setString( 'token'      ,$tokenHash    );
+		$stmt->setInt   ( 'token_algo' ,$algo         );
+		$stmt->execute();
+
+		// Zusammensetzen des Tokens
+		return $selector.'.'.$token;
+	}
+
+
+
+
+	/**
+     * Deletes a login token.
+	 * @param $selector string selector
      */
     function deleteLoginToken( $selector )
     {
@@ -324,7 +380,7 @@ SQL
 		    return null; // no user found.
 
 		// Benutzer �ber Id instanziieren
-		$neuerUser = new \cms\model\User( $userId );
+		$neuerUser = new User( $userId );
 		
 		$neuerUser->load();
 		
@@ -397,9 +453,9 @@ SQL
 	 * @param int Benutzer-Id
 	 * @return String Benutzername
 	 */
-	function getUserName( $userid )
+	public static function getUserName( $userid )
 	{
-		$db = \cms\base\DB::get();
+		$db = Db::get();
 
 		$sql = $db->sql( 'SELECT name FROM {{user}}'.
 		                ' WHERE id={userid}' );
@@ -408,7 +464,7 @@ SQL
 		$name = $sql->getOne();
 		
 		if	( $name == '' )
-			return \cms\base\Language::lang('UNKNOWN');
+			return Language::lang(Messages::UNKNOWN);
 		else return $name;
 	}
 
@@ -555,7 +611,7 @@ SQL
 	 */
 	public function delete()
 	{
-		$db = \cms\base\DB::get();
+		$db = Db::get();
 
 		// "Erzeugt von" f�r diesen Benutzer entfernen.
 		$sql = $db->sql( 'UPDATE {{object}} '.
@@ -590,14 +646,7 @@ SQL
 		$sql->setInt   ('userid',$this->userid );
 		$sql->query();
 
-        $stmt = Db::sql( <<<SQL
-              DELETE FROM {{auth}}
-               WHERE userid={userid}
-SQL
-        );
-        $stmt->setInt   ('userid',$this->userid );
-        $stmt->execute();
-
+		$this->deleteAllLoginTokens();
         // Benutzer loeschen
 		$sql = $db->sql( 'DELETE FROM {{user}} '.
 		                'WHERE id={userid}' );
@@ -605,6 +654,23 @@ SQL
 		$sql->query();
 
 		$this->userid = null;
+	}
+
+
+	/**
+	 * Delete all Login tokens for this user.
+	 *
+	 * @throws \util\exception\DatabaseException
+	 */
+	public function deleteAllLoginTokens() {
+
+		$stmt = Db::sql( <<<SQL
+              DELETE FROM {{auth}}
+               WHERE userid={userid}
+SQL
+		);
+		$stmt->setInt   ('userid',$this->userid );
+		$stmt->execute();
 	}
 
 
@@ -627,8 +693,8 @@ SQL
 	/**
 	 * Setzt ein neues Kennwort fuer diesen Benutzer.
 	 * 
-	 * @param password new password
-	 * @param forever int true, wenn Kennwort dauerhaft.
+	 * @param $password string new password
+	 * @param $forever int true, wenn Kennwort dauerhaft.
 	 */
 	public function setPassword($password, $forever = true )
 	{
@@ -655,7 +721,11 @@ SQL
 		$sql->setString('password',Password::hash(User::pepperPassword($password),$algo) );
 		$sql->setInt   ('userid'  ,$this->userid  );
 
-		$sql->query();
+		$sql->query(); // Updating the password
+
+		// Delete all login tokens, because the user should
+		// use the new password on all devices
+		$this->deleteAllLoginTokens();
 	}
 
 
@@ -668,7 +738,7 @@ SQL
 	{
 		if	( !is_array($this->groups) )
 		{
-			$db = \cms\base\DB::get();
+			$db = Db::get();
 	
 			$sql = $db->sql( 'SELECT {{group}}.id,{{group}}.name FROM {{group}} '.
 			                'LEFT JOIN {{usergroup}} ON {{usergroup}}.groupid={{group}}.id '.
@@ -701,7 +771,7 @@ SQL
 	// Gruppen ermitteln, in denen der Benutzer *nicht* Mitglied ist
 	function getOtherGroups()
 	{
-		$db = \cms\base\DB::get();
+		$db = Db::get();
 
 		$sql = $db->sql( 'SELECT {{group}}.id,{{group}}.name FROM {{group}}'.
 		                '   LEFT JOIN {{usergroup}} ON {{usergroup}}.groupid={{group}}.id AND {{usergroup}}.userid={userid}'.
@@ -716,11 +786,11 @@ SQL
 	/**
 	 * Benutzer zu einer Gruppe hinzufuegen.
 	 * 
-	 * @param groupid die Gruppen-Id
+	 * @param $groupid int die Gruppen-Id
 	 */
 	function addGroup( $groupid )
 	{
-		$db = \cms\base\DB::get();
+		$db = Db::get();
 
 		$sql = $db->sql('SELECT MAX(id) FROM {{usergroup}}');
 		$usergroupid = intval($sql->getOne())+1;
@@ -741,11 +811,11 @@ SQL
 	/**
 	 * Benutzer aus Gruppe entfernen.
 	 * 
-	 * @param groupid die Gruppen-Id
+	 * @param $groupid int die Gruppen-Id
 	 */
 	function delGroup( $groupid )
 	{
-		$db = \cms\base\DB::get();
+		$db = Db::get();
 
 		$sql = $db->sql( 'DELETE FROM {{usergroup}} '.
 		                '  WHERE userid={userid} AND groupid={groupid}' );
@@ -755,17 +825,6 @@ SQL
 		$sql->query();
 	}
 	
-
-	/**
-	 * Ermitteln aller Rechte des Benutzers im aktuellen Projekt.
-	 *
-	 * @param Integer $projectid  Projekt-Id
-	 * @param Integer $languageid Sprache-Id
-	 */
-	function loadRights( $projectid,$languageid )
-	{
-	}
-
 
 	/**
 	 * Ermitteln aller Berechtigungen des Benutzers.<br>
@@ -798,7 +857,7 @@ SQL
 			$acl->setDatabaseRow( $row );
 			$acl->projectid    = $row['projectid'   ];
 			if	( intval($acl->languageid) == 0 )
-				$acl->languagename = \cms\base\Language::lang('ALL_LANGUAGES');
+				$acl->languagename = Language::lang( Messages::ALL_LANGUAGES);
 			else
 				$acl->languagename = $row['languagename'];
 			$aclList[] = $acl;
@@ -882,8 +941,8 @@ SQL
 	/**
 	 * Ueberpruft, ob der Benutzer ein bestimmtes Recht hat
 	 *
-	 * @param $objectid Objekt-Id zu dem Objekt, dessen Rechte untersucht werden sollen
-	 * @param $type Typ des Rechts (Lesen,Schreiben,...) als Konstante Acl::ACL_*
+	 * @param $objectid int Objekt-Id zu dem Objekt, dessen Rechte untersucht werden sollen
+	 * @param $type int Typ des Rechts (Lesen,Schreiben,...) als Konstante Acl::ACL_*
 	 */ 
 	public function hasRight( $objectid,$type )
 	{
@@ -903,8 +962,8 @@ SQL
 	/**
 	 * Berechtigung dem Benutzer hinzufuegen.
 	 * 
-	 * @param objectid Objekt-Id, zu dem eine Berechtigung hinzugefuegt werden soll
-	 * @param Art des Rechtes, welches hinzugefuegt werden soll
+	 * @param $objectid int Objekt-Id, zu dem eine Berechtigung hinzugefuegt werden soll
+	 * @param $type int Art des Rechtes, welches hinzugefuegt werden soll
 	 */
 	function addRight( $objectid,$type )
 	{
@@ -949,7 +1008,7 @@ SQL
 	 */
 	function checkPassword( $password )
 	{
-		$db = \cms\base\DB::get();
+		$db = Db::get();
 		// Laden des Benutzers aus der Datenbank, um Password-Hash zu ermitteln.
 		$sql = $db->sql( 'SELECT * FROM {{user}}'.
 			' WHERE id={userid}' );
@@ -970,7 +1029,7 @@ SQL
 	 */
 	public function createPassword()
 	{
-		$passwordConfig = \cms\base\Configuration::subset('security')->subset('password');
+		$passwordConfig = Configuration::subset('security')->subset('password');
 		
 		$pw = '';
 		$c  = 'bcdfghjklmnprstvwz'; // consonants except hard to speak ones
@@ -990,17 +1049,17 @@ SQL
 
 	
 	/**
-	 * Das Kennwort "pfeffern".
+	 * Pepper the password.
 	 * 
 	 * Siehe http://de.wikipedia.org/wiki/Salt_%28Kryptologie%29#Pfeffer
 	 * für weitere Informationen.
 	 * 
-	 * @param Kennwort
-	 * @return Das gepfefferte Kennwort
+	 * @param $pass string password
+	 * @return string peppered password
 	 */
 	public static function pepperPassword( $pass )
 	{
-		$salt = \cms\base\Configuration::Conf()->subset('security')->subset('password')->get('pepper');
+		$salt = Configuration::Conf()->subset('security')->subset('password')->get('pepper');
 
 		return $salt.$pass;
 	}
@@ -1013,7 +1072,7 @@ SQL
 	 */
 	public function getLastChanges()
 	{
-		$db = \cms\base\DB::get();
+		$db = Db::get();
 	
 		$sql = $db->sql( <<<SQL
 		SELECT {{object}}.id       as objectid,
@@ -1075,9 +1134,7 @@ SQL
 	    
 	    $secret = Password::randomHexString(64);
 	    
-	    $db = \cms\base\DB::get();
-	    
-	    $stmt = $db->sql('UPDATE {{user}} SET otp_secret={secret} WHERE id={id}');
+	    $stmt = DB::sql('UPDATE {{user}} SET otp_secret={secret} WHERE id={id}');
 	    
 	    $stmt->setString( 'secret', $secret       );
 	    $stmt->setInt   ( 'id'    , $this->userid );

@@ -175,7 +175,6 @@ class Database
 
 	/**
 	 * Startet eine Transaktion.
-	 * Falls der Schalter 'transaction' nicht gesetzt ist, passiert nichts.
 	 */
 	public function start()
 	{

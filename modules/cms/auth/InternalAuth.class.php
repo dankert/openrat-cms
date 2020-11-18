@@ -16,8 +16,6 @@ use security\Password;
  */
 class InternalAuth implements Auth
 {
-	var $mustChangePassword = false;
-
 	/**
 	 * Ueberpruefen des Kennwortes
 	 * ueber die Benutzertabelle in der Datenbank.
