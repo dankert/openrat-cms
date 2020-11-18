@@ -15,8 +15,11 @@ use util\exception\SecurityException;
 use util\json\JSON;
 use util\Session;
 use util\XML;
+use util\YAML;
 
-
+/**
+ * Entrypoint for all API requests.
+ */
 class API
 {
 	const OUTPUT_PHPARRAY     = 1;
@@ -78,7 +81,7 @@ class API
         // Weitere Variablen anreichern.
         $data['session'] = ['name' => session_name(), 'id' => session_id(), 'token' => Session::token()];
         $data['version'] = Startup::VERSION;
-        $data['api'] = '2';
+        $data['api'    ] = Startup::API_LEVEL;
 
 
         switch (API::discoverOutputType()) {
@@ -129,7 +132,7 @@ class API
 
             case self::OUTPUT_YAML:
                 header('Content-Type: application/yaml; charset=UTF-8');
-                $output = \util\YAML::dump($data);
+                $output = YAML::dump($data);
                 break;
         }
 
@@ -155,25 +158,42 @@ class API
 
         $reqOutput = strtolower(@$_REQUEST['output']);
 
-        if (in_array('application/php-array', $types) || $reqOutput == 'php-array')
+        // First check: The output parameter has precedence over HTTP headers
+        if ( $reqOutput == 'php-array')
             return self::OUTPUT_PHPARRAY;
 
-        if (in_array('application/php-serialized', $types) || $reqOutput == 'php')
+        if ( $reqOutput == 'php')
             return self::OUTPUT_PHPSERIALIZE;
 
-        if (in_array('application/json', $types) || $reqOutput == 'json')
+        if ( $reqOutput == 'json')
             return self::OUTPUT_JSON;
 
-        if (in_array('application/xml', $types) || $reqOutput == 'xml')
+        if ( $reqOutput == 'xml')
             return self::OUTPUT_XML;
 
-        if (in_array('application/yaml', $types) || $reqOutput == 'yaml')
+        if ( $reqOutput == 'yaml')
+            return self::OUTPUT_YAML;
+
+        // Lets check the HTTP request headers
+        if (in_array('application/php-array', $types) )
+            return self::OUTPUT_PHPARRAY;
+
+        if (in_array('application/php-serialized', $types) )
+            return self::OUTPUT_PHPSERIALIZE;
+
+        if (in_array('application/json', $types) )
+            return self::OUTPUT_JSON;
+
+        if (in_array('application/xml', $types) )
+            return self::OUTPUT_XML;
+
+        if (in_array('application/yaml', $types) )
             return self::OUTPUT_YAML;
 
         if (in_array('text/html', $types))
             return self::OUTPUT_HTML;  // normally an ordinary browser.
 
-        return self::OUTPUT_YAML;
+        return self::OUTPUT_YAML; // Fallback
     }
 
     /**
