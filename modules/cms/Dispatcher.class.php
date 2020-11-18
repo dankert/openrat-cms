@@ -312,6 +312,10 @@ class Dispatcher
 				throw new BadMethodCallException($baseActionClassName->get().' does not exist.');
 
 			$action = strtolower( $baseActionClassName->dropNamespace()->dropSuffix('Action')->get() );
+
+			if   ( ! $action ) {
+				throw new BadMethodCallException( 'Action not found' );
+			}
 		}
 
 
