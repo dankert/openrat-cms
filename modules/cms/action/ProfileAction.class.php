@@ -34,18 +34,13 @@ use util\UIUtils;
 
 
 /**
- * Action-Klasse zum Bearbeiten des Benutzerprofiles
- *
- * @author $Author$
- * @version $Revision$
- * @package openrat.actions
+ * profile data of current user.
  */
 class ProfileAction extends BaseAction
 {
 	public $security = Action::SECURITY_USER;
 
 	protected $user;
-	var $defaultSubAction = 'edit';
 
 	/**
 	 * Konstruktor.
@@ -60,18 +55,19 @@ class ProfileAction extends BaseAction
 
 
     /**
-     * Setzt eine Sprache für den Benutzer.
+     * Setting new language for current session.
      *
-     * @param $l string Sprache
+     * @param $languageISOcode string ISO coded language
      */
-    protected function setLanguage($l)
+    protected function setLanguage($languageISOcode )
     {
         $conf = Session::getConfig();
         $language = new Language();
-        $conf['language'] = $language->getLanguage($l,PRODUCTION);
-        $conf['language']['language_code'] = $l;
+        $conf['language'] = $language->getLanguage($languageISOcode);
+        $conf['language']['language_code'] = $languageISOcode;
+
         Session::setConfig($conf);
-        $this->setCookie('or_language',$l);
+        $this->setCookie( Action::COOKIE_LANGUAGE,$languageISOcode);
     }
 
 

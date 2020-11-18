@@ -7,20 +7,40 @@ use util\ClassName;
 
 class ProfileAvailableAction extends ProfileAction implements Method {
 
-	public $security = Action::SECURITY_GUEST;
+	public $security = Action::SECURITY_GUEST; // Available for all
 
     public function view() {
 
 		$action = $this->getRequestVar('queryaction');
 
-		$viewMethods = array_filter( ['pub','prop','history','rights','add','pw','memberships','advanced','switch','changetemplate','src','size','maintenance','settings','archive','rights','remove','preview','order'],
+		$viewMethods = array_filter( [
+			// All UI-related methods (reachable via dropdown menus)
+			'pub',
+			'prop',
+			'history',
+			'rights',
+			'add',
+			'pw',
+			'memberships',
+			'advanced',
+			'switch',
+			'changetemplate',
+			'src',
+			'size',
+			'maintenance',
+			'settings',
+			'archive',
+			'rights',
+			'remove',
+			'preview',
+			'order'
+			],
 			function ($methodName) use ($action) {
 
 				// Filter existent methods
 				while( true ) {
 					$actionClassName = new ClassName( ucfirst($action) . ucfirst($methodName) . 'Action');
 					$actionClassName->addNamespace( ['cms','action',$action] );
-					//echo "check: "; print_r($actionClassName->get() ); echo "\n";
 
 					if ( $actionClassName->exists() )
 						return true;
@@ -40,6 +60,8 @@ class ProfileAvailableAction extends ProfileAction implements Method {
 
 		$this->setTemplateVar('views', $viewMethods);
     }
+
+
     public function post() {
     }
 }

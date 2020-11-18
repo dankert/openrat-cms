@@ -144,8 +144,8 @@ class LoginLoginAction extends LoginAction implements Method {
 		}
 		
 		// Cookie setzen
-		$this->setCookie('or_username',$loginName );
-		$this->setCookie('or_dbid'    ,$this->getRequestVar('dbid'));
+		$this->setCookie(Action::COOKIE_USERNAME,$loginName );
+		$this->setCookie(Action::COOKIE_DB_ID   ,$this->getRequestVar('dbid'));
 
 		// Jedes Authentifizierungsmodul durchlaufen, bis ein Login erfolgreich ist.
 		$result = AuthRunner::checkLogin('authenticate',$loginName,$loginPassword, $token );
@@ -237,8 +237,8 @@ class LoginLoginAction extends LoginAction implements Method {
 			if	( $this->hasRequestVar('remember') )
 			{
 				// Cookie setzen
-				$this->setCookie('or_username',$user->name         );
-                $this->setCookie('or_token'   ,$user->createNewLoginToken() );
+				$this->setCookie(Action::COOKIE_USERNAME,$user->name                  );
+                $this->setCookie(Action::COOKIE_TOKEN   ,$user->createNewLoginToken() );
 			}
 				
 			// Anmeldung erfolgreich.

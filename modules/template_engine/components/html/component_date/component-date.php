@@ -1,5 +1,6 @@
 <?php
 
+use cms\action\Action;
 use language\Messages;
 use template_engine\Output;
 
@@ -10,10 +11,10 @@ function component_date($time )
 	else
 	{
 		// Benutzereinstellung 'Zeitzonen-Offset' auswerten.
-		if	( isset($_COOKIE['or_timezone_offset']) )
+		if	( isset($_COOKIE[Action::COOKIE_TIMEZONE_OFFSET]) )
 		{
 			$time -= (int)date('Z');
-			$time += ((int)$_COOKIE['or_timezone_offset']*60);
+			$time += ((int)$_COOKIE[Action::COOKIE_TIMEZONE_OFFSET]*60);
 		}
 	
 		echo '<span class="or-table-sort-value">'.str_pad($time, 20, "0", STR_PAD_LEFT).'</span>'; // For sorting a table.

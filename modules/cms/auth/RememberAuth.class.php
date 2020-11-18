@@ -2,6 +2,7 @@
 
 namespace cms\auth;
 
+use cms\action\Action;
 use cms\auth\Auth;
 use cms\base\Configuration;
 use cms\model\Text;
@@ -24,11 +25,11 @@ class RememberAuth implements Auth
 	public function username()
 	{
 		// Ermittelt den Benutzernamen aus den Login-Cookies.
-		if (isset($_COOKIE['or_token']) &&
-			isset($_COOKIE['or_dbid'])) {
+		if (isset($_COOKIE[Action::COOKIE_TOKEN]) &&
+			isset($_COOKIE[Action::COOKIE_DB_ID])) {
 			try {
-				list($selector, $token) = array_pad(explode('.', $_COOKIE['or_token']), 2, '');
-				$dbid = $_COOKIE['or_dbid'];
+				list($selector, $token) = array_pad(explode('.', $_COOKIE[Action::COOKIE_TOKEN]), 2, '');
+				$dbid = $_COOKIE[Action::COOKIE_DB_ID];
 
 				$dbConfig = Configuration::subset('database');
 

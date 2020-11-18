@@ -2,6 +2,7 @@
 
 namespace cms\auth;
 
+use cms\action\Action;
 use cms\auth\Auth;
 
 /**
@@ -13,8 +14,8 @@ class CookieAuth implements Auth
 {
 	public function username()
 	{
-		if (isset($_COOKIE['or_username']))
-			return $_COOKIE['or_username'];
+		if (isset($_COOKIE[ Action::COOKIE_USERNAME ]))
+			return $_COOKIE[ Action::COOKIE_USERNAME ];
 		else
 			return null;
 	}

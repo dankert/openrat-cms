@@ -399,12 +399,38 @@ class Action
 
 
 	/**
+	 * Language ISO code.
+	 */
+	const COOKIE_LANGUAGE = 'or_language';
+
+	/**
+	 * Last used username.
+	 */
+	const COOKIE_USERNAME = 'or_username';
+	/**
+	 * Login token.
+	 */
+	const COOKIE_TOKEN    = 'or_token';
+
+	/**
+	 * Database id.
+	 */
+	const COOKIE_DB_ID    = 'or_dbid';
+
+	/**
+	 * Timezone offset
+	 */
+	const COOKIE_TIMEZONE_OFFSET = 'or_timezone_offset';
+
+
+
+	/**
 	 * Sets a cookie.
 	 *
-	 * @param $name cookie name
-	 * @param string $value cookie value, null to delete
+	 * @param $name string cookie name
+	 * @param $value string cookie value, null or empty to delete
 	 */
-	protected function setCookie($name,$value='' ) {
+	protected function setCookie($name, $value = '' ) {
 
 		$cookieConfig = Configuration::subset('security')->subset('cookie');
 

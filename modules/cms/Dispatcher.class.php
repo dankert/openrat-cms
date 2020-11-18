@@ -248,8 +248,8 @@ class Dispatcher
 
             // Sprache lesen
 			$languages = [];
-			if (isset($_COOKIE['or_language']))
-				$languages[] = $_COOKIE['or_language'];
+			if (isset($_COOKIE[ Action::COOKIE_LANGUAGE]))
+				$languages[] = $_COOKIE[Action::COOKIE_LANGUAGE];
 
 			$i18nConfig = (new Config($conf))->subset('i18n');
 
@@ -382,8 +382,8 @@ class Dispatcher
             $dbid = $this->request->getRequestVar('dbid',RequestParams::FILTER_ALPHANUM);
         elseif   ( Session::getDatabaseId() )
             $dbid = Session::getDatabaseId();
-        elseif   ( isset($_COOKIE['or_dbid']) )
-            $dbid = $_COOKIE['or_dbid'];
+        elseif   ( isset($_COOKIE[Action::COOKIE_DB_ID]) )
+            $dbid = $_COOKIE[Action::COOKIE_DB_ID];
         else {
             $databases = Configuration::subset('database')->subsets();
 
