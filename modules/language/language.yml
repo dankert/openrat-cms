@@ -651,9 +651,6 @@ DATE_WEEKDAY6:
   es: Sábado
   fr: Samedi
   it: sabato
-DESCRIPTION:
-  de: Beschreibung
-  en: Description
 DOCUMENT_TREE:
   de: Dokument-Baum
   en: Document tree
@@ -1208,6 +1205,9 @@ EL_NUMBER:
   es: Número
   fr: Nombre
   it: numero
+EL_PROP_INHERIT:
+  de: Vererben
+  en: Inherit
 EL_PROP_ALL_LANGUAGES:
   de: Alle Sprachen
   en: All languages
@@ -1566,10 +1566,6 @@ ERROR_NOT_A_FOLDER:
   fr: "l'objet n'est pas un annuaire"
   it: el objeto no es un directorio
   ru: Объекта не справочник
-ERROR:
-  de: Technischer Fehler
-  en: Technischer Fehler
-  it: accesso di Technischer Fehler
 ERROR_USER_PW_DESC:
   de: 'Das Kennwort konnte nicht geändert werden, beachten Sie:<ul><li>Das Kennwort darf nicht leer sein</li><li>Das neue Kennwort muss zweimal identisch eingegeben werden</li></ul>Versuchen Sie es noch einmal.'
   en: The password could not be changed
@@ -1928,9 +1924,9 @@ DAY:
   es: Jour
   fr: Jour
   it: Día
-_DEFAULT:
-  de: Standard
-  en: Standard
+DEFAULT_VALUE:
+  de: Standardwert
+  en: Default value
   es: Norme
   fr: Norme
   it: Estándar
@@ -1940,12 +1936,6 @@ DEFAULT_TEXT:
   es: Texte de défaut
   fr: Texte de défaut
   it: Texto del defecto
-DELETED:
-  de: Objekt wurde gelöscht
-  en: Object was deleted
-  es: "L'objet a été supprimé"
-  fr: "L'objet a été supprimé"
-  it: El objeto fue suprimido
 DELETE:
   de: Löschen
   en: Delete
@@ -2918,27 +2908,27 @@ MAIL_TEXT_PASSWORD_COMMIT_CODE:
     Veuillez insérer ce nombre dans le champ d'entrée.
 
     Si vous n'avez pas la demande un nouveau mot de passe, ignorer svp cet E-mail. Dans ce cas-ci, votre mot de passe restera sans changement.
- 
+
     Merci.
   fr: |
     Bonjour ${name}
 
     votre code pour demander un nouveau mot de passe est : ${code}
- 
+
     Veuillez insérer ce nombre dans le champ d'entrée.
- 
+
     Si vous n'avez pas la demande un nouveau mot de passe, ignorer svp cet E-mail. Dans ce cas-ci, votre mot de passe restera sans changement.
- 
+
     Merci.
   it: |
     Hola ${name}
- 
+
     tu código para solicitar una nueva contraseña es: ${code}
- 
+
     Insertar por favor este número en el campo de la entrada.
- 
+
     Si no tienes petición una nueva contraseña, no hacer caso por favor de este E-mail. En este caso, tu contraseña permanecerá sin cambiar.
- 
+
     Gracias.'
   ru: |
     название Hello ${name}
@@ -2984,11 +2974,11 @@ MAIL_TEXT_PASSWORD_NEW:
     Merci.
   it: |
     Hola ${name}
- 
+
     tu nueva contraseña: ${password}
- 
+
     Observar por favor esta contraseña en un lugar seguro y suprimir este correo.
- 
+
     Gracias.
   ru: |
     Привет именем ${name}
@@ -3035,21 +3025,21 @@ MAIL_TEXT_REGISTER_COMMIT_CODE:
     Bonjour,
 
     toi (ou une personne différente) a demandé un code d'enregistrement.
- 
+
     Votre code d'enregistrement : ${code}.
- 
+
     Veuillez insérer ce nombre dans le champ d'entrée.
- 
+
     Merci.
   it: |
     Hola,
 
     tú (u otra persona) has solicitado un código del registro.
- 
+
     Tu código del registro: ${code}.
- 
+
     Insertar por favor este número en el campo de la entrada.
- 
+
     Gracias.
   ru: |
     Здравствуйте,
@@ -3095,19 +3085,19 @@ MAIL_TEXT_USER_MAIL:
     Bonjour ${name}
 
     Vos détails de compte pour l'ouverture dans le système de gestion content d'OpenRat sont les suivants.
- 
+
     Ouverture : ${username}
     Mot de passe : ${password}
- 
+
     Merci.
   it: |
     Hola ${name}
- 
+
     Tus detalles de la cuenta para la conexión en sistema de gerencia contento de OpenRat son los siguientes.
- 
+
     Conexión  : ${username}
     Contraseña: ${password}
- 
+
     Gracias.
   ru: |
     Здравствуйте ${name},
@@ -3160,6 +3150,9 @@ MENU_HISTORY_DESC:
 MENU_CHANGETEMPLATE:
   de: Vorlage wechseln
   en: Change template
+MENU_CHANGETEMPLATE_DESC:
+  de: Seitenvorlage austauschen
+  en: Replace page template
 MENU_CLIPBOARD:
   de: Zwischenablage
   en: Clipboard
@@ -3201,7 +3194,7 @@ MENU_CREATEFILE_DESC:
 MENU_CREATEFOLDER:
   de: Neuer Ordner
   en: New folder
-MENU_CREATEFOLDER:
+MENU_CREATEFOLDER_DESC:
   de: Neuen Ordner anlegen
   en: Create a new folder
 MENU_CREATEIMAGE:
@@ -3228,6 +3221,9 @@ MENU_CREATE_KEY:
 MENU_CREATELINK:
   de: Neue Verknüpfung
   en: New link
+MENU_CREATELINK_DESC:
+  de: Neue Verknüpfung anlegen
+  en: Create a new link
 MENU_CREATE:
   de: Neu
   en: New
@@ -3908,6 +3904,9 @@ MENU_LANGUAGE_REMOVE:
 MENU_LICENSE:
   de: Lizenz
   en: License
+MENU_LICENSE_DESC:
+  de: Informationen und Lizenzhinweise
+  en: Information and licenses
 MENU_LINK_ACLFORM_DESC:
   de: Ein Recht zu dieser Verknüpfung hinzufügen
   en: Add a right to this link
@@ -5851,6 +5850,9 @@ USER_LDAPDN:
   it: LDAP giù
 USER_LOGIN:
   de: Anmelden
+  en: Sign in
+USER_LOGIN_DESC:
+  de: Benutzeranmeldung
   en: Sign in
 USER_LOGINAS:
   de: Angemeldet als

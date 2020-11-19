@@ -91,7 +91,7 @@
             <list list="${dynamic_class_parameters}" key="paramName" value="defaultValue">
               <text value="${paramName}"/>
               <text value=" ("/>
-              <text value="${message:DEFAULT}"/>
+              <text value="${message:DEFAULT_VALUE}"/>
               <text value=") = "/>
               <text value="${defaultValue}"/>
               <newline/>

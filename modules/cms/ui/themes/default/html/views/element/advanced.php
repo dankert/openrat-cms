@@ -173,7 +173,7 @@
                 <?php foreach((array)$dynamic_class_parameters as $paramName=>$defaultValue) {  ?>
                   <span><?php echo O::escapeHtml(''.@$paramName.'') ?></span>
                   <span><?php echo O::escapeHtml(' (') ?></span>
-                  <span><?php echo O::escapeHtml(''.@O::lang('DEFAULT').'') ?></span>
+                  <span><?php echo O::escapeHtml(''.@O::lang('DEFAULT_VALUE').'') ?></span>
                   <span><?php echo O::escapeHtml(') = ') ?></span>
                   <span><?php echo O::escapeHtml(''.@$defaultValue.'') ?></span>
                   <br /><?php echo O::escapeHtml('') ?>
