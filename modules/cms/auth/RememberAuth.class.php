@@ -36,16 +36,21 @@ class RememberAuth implements Auth
 				list($selector, $token) = array_pad(explode('.', Cookie::get(Action::COOKIE_TOKEN)), 2, '');
 				$dbid = Cookie::get( Action::COOKIE_DB_ID );
 
-				$dbConfig = Configuration::subset('database');
+				$allDbConfig = Configuration::subset('database');
 
-				if (!$dbConfig->has($dbid)) {
+				if (!$allDbConfig->has($dbid)) {
 
-					Logger::info( TextMessage::create('Unknown DB-Id for token-login: ${0}',[$dbid]) );
+					Logger::warn( TextMessage::create('Unknown DB-Id ${0}, no login with token possible',[$dbid]) );
 					return null;
 				}
 
-				$dbConfig = $dbConfig->subset($dbid);
+				$dbConfig = $allDbConfig->subset($dbid);
 
+				if (! $dbConfig->is('enabled',true)) {
+
+					Logger::warn( TextMessage::create('DB-Id ${0} is disabled, no login with login token possible',[$dbid]) );
+					return null;
+				}
 
 				$key = 'read'; // Only reading in database.
 
