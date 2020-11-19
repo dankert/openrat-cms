@@ -94,6 +94,8 @@ class PDODriver
 			},array_keys($dsnParts),$dsnParts));
 		}
 
+		// we must have a prefix or suffix
+		// this is because some table names are reserved words in some RDBMS
 		if   ( ! $conf['prefix'] && ! $conf['suffix'] )
 			throw new DatabaseException('database tables must have a prefix or a suffix, both are empty.');
 		

@@ -23,6 +23,7 @@ use language\Messages;
 use util\Cookie;
 use util\ClassName;
 use util\ClassUtils;
+use util\exception\DatabaseException;
 use util\exception\ObjectNotFoundException;
 use util\exception\ValidationException;
 use util\Http;
@@ -377,17 +378,17 @@ class Dispatcher
      */
     private function connectToDatabase()
     {
-		$dbConfig = Configuration::subset('database');
+		$allDbConfig = Configuration::subset('database');
 
 		// Filter all enabled databases
-		$databases = array_filter($dbConfig->subsets(), function ($dbConfig) {
+		$enabledDatabases = array_filter($allDbConfig->subsets(), function ($dbConfig) {
 			return $dbConfig->is('enabled',true);
 		});
 
-		$dbids     = array_keys( $databases );
+		$enabledDbids     = array_keys( $enabledDatabases );
 
-		if   ( ! $dbids )
-			throw new \RuntimeException('No database configured.');
+		if   ( ! $enabledDbids )
+			throw new UIException(Messages::DATABASE_CONNECTION_ERROR, 'No database configured.',new DatabaseException('No database configured' ) );
 
 		$firstDbContact = ! Session::getDatabaseId();
 
@@ -404,12 +405,12 @@ class Dispatcher
 
 		$possibleDbIds[] = Configuration::subset('database-default')->get('default-id' );
 
-		$possibleDbIds[] = $dbids[0];
+		$possibleDbIds[] = $enabledDbids[0];
 
 		foreach( $possibleDbIds as $dbid ) {
-			if	( $dbConfig->has( $dbid ) ) {
+			if	( $allDbConfig->has( $dbid ) ) {
 
-				$dbConfig = $dbConfig->subset($dbid );
+				$dbConfig = $allDbConfig->subset( $dbid );
 
 				try
 				{
@@ -422,7 +423,7 @@ class Dispatcher
 					Session::setDatabase  ( $db           );
 				}
 				catch(\Exception $e) {
-					throw new UIException(Messages::DATABASE_CONNECTION_ERROR, $e->getMessage(),$e);
+					throw new UIException(Messages::DATABASE_CONNECTION_ERROR, "Could not connect to DB ".$dbid, $e);
 				}
 
 

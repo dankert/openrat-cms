@@ -117,10 +117,12 @@ class Database
 	 */
 	public function __construct( $dbconf )
 	{
-		$this->conf = $dbconf +
-			C::subset('database-default')->subset('defaults')->getConfig() +
-			Database::$DEFAULT_CONFIG;
-		
+		$this->conf = array_merge(
+			Database::$DEFAULT_CONFIG, // internal defaults
+			C::subset('database-default')->subset('defaults')->getConfig(), // defaults from config
+			$dbconf  // per-connection DB configuration
+		);
+
 		$this->connect();
 	}
 	
@@ -133,7 +135,7 @@ class Database
 	public function connect()
 	{
         // Ausfuehren des Systemkommandos vor Verbindungsaufbau
-        if (!empty($this->conf['cmd']))
+        if ( $this->conf['cmd'] )
             $this->executeSystemCommand( $this->conf['cmd'] );
 
 		// Client instanziieren
@@ -236,9 +238,9 @@ class Database
     private function executeSystemCommand( $cmd )
     {
         $ausgabe = array();
-        $rc = false;
+        $rc      = false;
 
-        Logger::debug("Database command executing: " . $this->conf['cmd']);
+        Logger::debug("Database command executing: " . $cmd );
         exec($cmd, $ausgabe, $rc);
 
         foreach ($ausgabe as $zeile)
@@ -250,6 +252,3 @@ class Database
     }
 
 }
-
-
-?>
