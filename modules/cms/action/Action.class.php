@@ -184,7 +184,7 @@ class Action
 	 * @param string|array $message
 	 */
 	protected function addNoticeFor($baseObject,$key,$vars = array(), $message='') {
-		$this->addNotice(strtolower(ClassUtils::getSimpleClassName($baseObject)), $baseObject->getId(), $baseObject->getName(), $key, Action::NOTICE_OK, $vars, $message);
+		$this->addNoticeInternal($baseObject, $key, Action::NOTICE_OK, $vars, $message);
 	}
 
 	/**
@@ -194,7 +194,7 @@ class Action
 	 * @param string $message
 	 */
 	protected function addInfoFor($baseObject,$key,$vars = array(), $message='') {
-		$this->addNotice(strtolower(ClassUtils::getSimpleClassName($baseObject)), $baseObject->getId(), $baseObject->getName(), $key, Action::NOTICE_INFO, $vars, $message);
+		$this->addNoticeInternal($baseObject, $key, Action::NOTICE_INFO, $vars, $message);
 	}
 
 	/**
@@ -204,7 +204,7 @@ class Action
 	 * @param string $message
 	 */
 	protected function addWarningFor($baseObject,$key,$vars = array(), $message='') {
-		$this->addNotice(strtolower(ClassUtils::getSimpleClassName($baseObject)), $baseObject->getId(), $baseObject->getName(), $key, Action::NOTICE_WARN, $vars, $message);
+		$this->addNoticeInternal($baseObject, $key, Action::NOTICE_WARN, $vars, $message);
 	}
 
 	/**
@@ -214,6 +214,14 @@ class Action
 	 * @param string $message
 	 */
 	protected function addErrorFor($baseObject,$key,$vars = array(), $message='') {
+
+		$this->addNoticeInternal( $baseObject, $key, Action::NOTICE_ERROR, $vars, $message);
+	}
+
+
+
+	private function addNoticeInternal($baseObject,$key,$noticeType,$vars, $message) {
+
 		if	( is_object($baseObject) ) {
 			$type = strtolower(ClassUtils::getSimpleClassName($baseObject));
 			$id   = $baseObject->getId();
@@ -224,8 +232,9 @@ class Action
 			$name = '';
 		}
 
-		$this->addNotice($type,$id,$name, $key, Action::NOTICE_ERROR, $vars, $message);
+		$this->addNotice($type,$id,$name, $key, $noticeType, $vars, $message);
 	}
+
 
 	/**
 	 * F�gt ein Meldung hinzu.
