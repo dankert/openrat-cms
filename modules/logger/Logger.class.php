@@ -22,9 +22,15 @@ class Logger
 	const OUTPUT_PLAIN = 1;
 	const OUTPUT_JSON  = 2;
 
+	const LOG_TO_FILE      = 1;
+	const LOG_TO_STDOUT    = 2;
+	const LOG_TO_STDERR    = 4;
+	const LOG_TO_ERROR_LOG = 8;
+
 
 	public static $level = self::LEVEL_ERROR;
 	public static $filename = null;
+	public static $logto    = self::LOG_TO_ERROR_LOG;
 
 	public static $messageFormat = ['time','level','host','text'];
 	public static $dateFormat = 'r';
@@ -181,26 +187,33 @@ class Logger
 				break;
 		}
 
-		if ( Logger::$filename ) {
+		$text .= "\n";
+
+		if ( Logger::$logto & self::LOG_TO_FILE ) {
 
 			// Is the file writable?
 			// Exception: Streams (like php://stdout) are never 'writable' :/
-			if ( is_writable( Logger::$filename ) || strpos(Logger::$filename,'://')!==FALSE ) {
+			if ( Logger::$filename && is_writable( Logger::$filename ) ) {
 				// Writing to the logfile
-				// It's not a good idea to user error_log here because it failed on symlinked files.
-				$result = file_put_contents( Logger::$filename,$text . "\n", FILE_APPEND );
+				$result = file_put_contents( Logger::$filename,$text, FILE_APPEND );
 
 				if   ( $result === FALSE )
-					error_log('logfile ' . Logger::$filename . ' is not available for writing');
+					error_log('could not write to logfile ' . Logger::$filename );
 			} else {
 				error_log('logfile ' . Logger::$filename . ' is not writable');
-				error_log($text . "\n");
 			}
 		}
 
-		// Errors and warnings are written to the common error log.
-		if (Logger::$level <= self::LEVEL_WARN)
-			error_log($text . "\n");
+		if ( Logger::$logto & self::LOG_TO_ERROR_LOG ) {
+			error_log( $text );
+		}
+		if ( Logger::$logto & self::LOG_TO_STDERR ) {
+			file_put_contents( 'php://stderr', $text, FILE_APPEND );
+		}
+		if ( Logger::$logto & self::LOG_TO_STDOUT ) {
+			file_put_contents( 'php://stdout', $text, FILE_APPEND );
+		}
+
 	}
 
 }

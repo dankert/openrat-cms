@@ -194,14 +194,25 @@ class Dispatcher
     {
         $logConfig = Configuration::subset('log');
 
-        $logFile = $logConfig->get('file','');
-
-        // Wenn Logfile relativ angegeben wurde, dann muss dies relativ zum Root der Anwendung sein.
-        if   ( $logFile && FileUtils::isRelativePath($logFile) )
-            $logFile = __DIR__ . '/../../' . $logFile;
-
         Logger::$messageFormat = $logConfig->get('format',['time','level','host','text']);
-        Logger::$filename   = $logFile;
+
+        Logger::$logto = 0; // initially disable all logging endpoints.
+
+		$logFile = $logConfig->get('file','');
+        if    ( $logFile ) {
+        	// Write to a logfile
+        	if   ( FileUtils::isRelativePath($logFile) )
+				$logFile = __DIR__ . '/../../' . $logFile; // prepend relativ path to app root
+			Logger::$filename = $logFile;
+			Logger::$logto    = Logger::$logto |= Logger::LOG_TO_FILE;
+		}
+        if   ( $logConfig->is('syslog')) // write to syslog
+			Logger::$logto    = Logger::$logto |= Logger::LOG_TO_ERROR_LOG;
+        if   ( $logConfig->is('stdout')) // write to standard out
+			Logger::$logto    = Logger::$logto |= Logger::LOG_TO_STDOUT;
+        if   ( $logConfig->is('stderr')) // write to standard error
+			Logger::$logto    = Logger::$logto |= Logger::LOG_TO_STDERR;
+
         Logger::$dateFormat = $logConfig->get('date_format','r');
         Logger::$nsLookup   = $logConfig->is('ns_lookup',false);
 

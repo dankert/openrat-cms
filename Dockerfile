@@ -69,8 +69,9 @@ database:\n\
     suffix     :  _or\n\
 \n\
 log:\n\
-  file :  "log/cms.log"\n\
-  level :  "${env:CMS_LOG_LEVEL}"\n\
+  file :  ""\n\
+  level:  "${env:CMS_LOG_LEVEL}"\n\
+  stdout: true\n\
 \n\
 production: ${env:CMS_PRODUCTION}\n\
 \n\
