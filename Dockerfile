@@ -15,10 +15,14 @@ ENV DB_TYPE="mysql"     \
     DB_PASS=""          \
     CMS_MOTD="Welcome to dockerized CMS" \
     CMS_NAME="OpenRat CMS (Docker)"      \
-    CMS_OPERATOR="Docker-Host"           \
+    CMS_OPERATOR=""                      \
+    CMS_LOG_LEVEL="info"                 \
+    CMS_PRODUCTION="true"                \
     DOCROOT="/var/www/localhost/htdocs"
 
 # Configuring apache webserver
+# - disable access log
+# - enable HTTP/2
 RUN sed -i '/CustomLog/s/^/#/g'               /etc/apache2/httpd.conf && \
     sed -i '/LoadModule http2_module/s/^#//g' /etc/apache2/httpd.conf && \
     sed -i 's/^Listen 80/Listen 8080/g'       /etc/apache2/httpd.conf && \
@@ -58,23 +62,17 @@ database:\n\
     dsn        :  "${env:DB_TYPE}:host=${env:DB_HOST}; dbname=${env:DB_NAME}"\n\
     description:  "PDO"\n\
     name       :  "PRO"\n\
-    type       :  pdo\n\
     user       :  ${env:DB_USER}\n\
     password   :  ${env:DB_PASS}\n\
     base64     :  true                 #  store binary as BASE64 (should be true for postgresql)\n\
     prefix     :  cms_\n\
     suffix     :  _or\n\
-    persistent :  yes                   #  use persistent connections (faster)\n\
-    charset    :  UTF-8\n\
-    cmd        :  ""\n\
-    prepare    :  true\n\
-    transaction:  true\n\
 \n\
 log:\n\
   file :  "log/cms.log"\n\
-  level :  "info"\n\
+  level :  "${env:CMS_LOG_LEVEL}"\n\
 \n\
-production: true\n\
+production: ${env:CMS_PRODUCTION}\n\
 \n\
 publish:\n\
   filesystem:\n\

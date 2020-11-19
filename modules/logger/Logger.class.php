@@ -188,12 +188,13 @@ class Logger
 				error_log('logfile ' . Logger::$filename . ' is not writable');
 				error_log($text . "\n");
 			} else {
-				// Schreiben in Logdatei
-				error_log($text . "\n", 3, Logger::$filename);
+				// Writing to the logfile
+				// It's not a good idea to user error_log here because it failed on symlinked files.
+				file_put_contents( Logger::$filename,$text . "\n", FILE_APPEND );
 			}
 		}
 
-		// ERROR- und WARN-Meldungen immer zusätzlich in das Error-Log schreiben.
+		// Errors and warnings are written to the common error log.
 		if (Logger::$level <= self::LEVEL_WARN)
 			error_log($text . "\n");
 	}
