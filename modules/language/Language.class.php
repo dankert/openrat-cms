@@ -35,7 +35,7 @@ class Language
 
 		foreach( $isos as $l ) {
 
-			$languageClazz = __NAMESPACE__.'\Language_'.strtoupper($iso);
+			$languageClazz = __NAMESPACE__.'\Language_'.strtoupper($l);
 
 			// Is language file available?
 			if ( class_exists($languageClazz) )
