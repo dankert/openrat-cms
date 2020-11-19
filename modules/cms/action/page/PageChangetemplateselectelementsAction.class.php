@@ -49,10 +49,6 @@ class PageChangetemplateselectelementsAction extends PageAction implements Metho
 			}
 			$this->setTemplateVar('elements',$oldElements );
 		}
-		else
-		{
-			$this->callSubAction('prop');
-		}
     }
 
 

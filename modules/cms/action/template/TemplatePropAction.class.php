@@ -17,7 +17,6 @@ class TemplatePropAction extends TemplateAction implements Method {
 		if	($this->getRequestVar('name') == "")
 		{
 			$this->addValidationError('name');
-			$this->callSubAction('name');
 			return;
 		}
 		else

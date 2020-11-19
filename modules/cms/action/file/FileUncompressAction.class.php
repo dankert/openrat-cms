@@ -68,6 +68,5 @@ class FileUncompressAction extends FileAction implements Method {
 		}
 
 		$this->addNotice('file', 0, $this->file->name, 'DONE', Action::NOTICE_OK);
-		$this->callSubAction('edit');
     }
 }

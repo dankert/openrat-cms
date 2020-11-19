@@ -18,7 +18,6 @@ class PageelementDiffAction extends PageelementAction implements Method {
         {
             $this->addValidationError('compareid'   );
             $this->addValidationError('withid'   ,'');
-            $this->callSubAction('archive');
             return;
         }
 

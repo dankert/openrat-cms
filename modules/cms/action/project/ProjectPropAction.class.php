@@ -40,7 +40,6 @@ class ProjectPropAction extends ProjectAction implements Method {
 		else
 		{
 			$this->addValidationError('name');
-			$this->callSubAction('edit');
 		}
     }
 }

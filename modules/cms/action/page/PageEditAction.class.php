@@ -175,11 +175,5 @@ class PageEditAction extends PageAction implements Method {
 		}
 
 		$this->page->setTimestamp(); // "Letzte Aenderung" setzen
-
-		// Falls ausgewaehlt die Seite sofort veroeffentlichen
-		if	( $this->hasRequestVar('publish') )
-			$this->callSubAction( 'pubnow' ); // Weiter zum veroeffentlichen
-		else
-			$this->callSubAction( 'el' ); // Element-Liste anzeigen
     }
 }

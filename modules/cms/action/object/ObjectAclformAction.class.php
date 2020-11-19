@@ -53,7 +53,6 @@ class ObjectAclformAction extends ObjectAction implements Method {
 				{
 					$this->addValidationError('type'     );
 					$this->addValidationError('userid','');
-					$this->callSubAction('aclform');
 					return;
 				}
 				break;
@@ -63,7 +62,6 @@ class ObjectAclformAction extends ObjectAction implements Method {
 				{
 					$this->addValidationError('type'      );
 					$this->addValidationError('groupid','');
-					$this->callSubAction('aclform');
 					return;
 				}
 				break;
@@ -71,7 +69,6 @@ class ObjectAclformAction extends ObjectAction implements Method {
 				break;
 			default:
 				$this->addValidationError('type');
-				$this->callSubAction('aclform');
 				return;
 		}
 

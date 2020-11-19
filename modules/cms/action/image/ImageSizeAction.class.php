@@ -55,7 +55,6 @@ class ImageSizeAction extends ImageAction implements Method {
 		{
 			$this->addValidationError('width','INPUT_NEW_IMAGE_SIZE' );
 			$this->addValidationError('height','');
-			$this->callSubAction('size');
 			return;
 		}
 		

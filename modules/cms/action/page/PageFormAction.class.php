@@ -172,9 +172,5 @@ class PageFormAction extends PageAction implements Method {
 		}
 		$this->page->setTimestamp(); // "Letzte Aenderung" setzen
 
-		if	( $this->hasRequestVar('publish') )
-			$this->callSubAction( 'pubnow' );
-		else
-			$this->callSubAction( 'el' );
     }
 }

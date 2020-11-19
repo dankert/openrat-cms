@@ -268,33 +268,6 @@ class Action
 		return $this->templateVars;
 	}
 
-	/**
-	 * Ruft eine weitere Subaction auf.
-	 *
-	 * @param String $subActionName Name der n�chsten Subaction. Es muss eine Methode mit diesem Namen geben.
-	 * @deprecated
-	 */
-	protected function callSubAction($subActionName)
-	{
-		return;
-	}
-
-
-	/**
-	 * Calling another action method.
-	 *
-	 * @param String $method Name of next method to call.
-	 */
-	protected function nextSubAction($method)
-	{
-		Logger::trace("next subaction is '$method'");
-
-		$this->request->method = $method;
-
-		$methodName = $method . ($_SERVER['REQUEST_METHOD'] == 'POST' ? 'Post' : 'View');
-		$this->$methodName();
-	}
-
 
 	/**
 	 * Ermitteln, ob Benutzer Administratorrechte besitzt
