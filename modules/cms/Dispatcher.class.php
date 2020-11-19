@@ -402,8 +402,6 @@ class Dispatcher
 		if   ( ! $enabledDbids )
 			throw new UIException(Messages::DATABASE_CONNECTION_ERROR, 'No database configured.',new DatabaseException('No database configured' ) );
 
-		$firstDbContact = ! Session::getDatabaseId();
-
         $possibleDbIds = [];
 
         if   ( $this->request->hasRequestVar('dbid') )
@@ -431,16 +429,19 @@ class Dispatcher
 					$db = new Database( $dbConfig->merge( $dbConfig->subset($key))->getConfig() );
 					$db->id = $dbid;
 
-					Session::setDatabaseId( $dbid );
-					Session::setDatabase  ( $db           );
 				}
 				catch(\Exception $e) {
 					throw new UIException(Messages::DATABASE_CONNECTION_ERROR, "Could not connect to DB ".$dbid, $e);
 				}
 
+				// Is this the first time we are connected to this database in this session?
+				$firstDbContact = Session::getDatabaseId() != $dbid;
+
+				Session::setDatabaseId( $dbid );
+				Session::setDatabase  ( $db           );
 
 				if   ( $firstDbContact )
-					// Test, if we should update the database scheme.
+					// Test, if we must install/update the database scheme.
 					$this->updateDatabase( $dbid );
 
 				return;
