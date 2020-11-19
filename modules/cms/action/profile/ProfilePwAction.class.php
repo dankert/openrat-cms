@@ -4,6 +4,7 @@ use cms\action\Method;
 use cms\action\ProfileAction;
 use cms\base\Configuration;
 use cms\model\User;
+use language\Messages;
 
 class ProfilePwAction extends ProfileAction implements Method {
     public function view() {
@@ -40,7 +41,7 @@ class ProfilePwAction extends ProfileAction implements Method {
 		else
 		{
 			$this->user->setPassword( $this->getRequestVar('password1') );
-			$this->addNotice('user', 0, $this->user->name, 'SAVED', 'ok');
+			$this->addNoticeFor( $this->user,Messages::SAVED);
 		}
     }
 }

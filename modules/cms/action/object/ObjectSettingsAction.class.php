@@ -3,6 +3,7 @@ namespace cms\action\object;
 use cms\action\Action;
 use cms\action\Method;
 use cms\action\ObjectAction;
+use language\Messages;
 use util\exception\ValidationException;
 
 
@@ -43,6 +44,6 @@ class ObjectSettingsAction extends ObjectAction implements Method {
 
         $this->baseObject->save();
 
-        $this->addNotice($this->baseObject->getType(), 0, $this->baseObject->filename, 'SAVED', Action::NOTICE_OK);
+		$this->addNoticeFor( $this->baseObject,Messages::SAVED);
     }
 }

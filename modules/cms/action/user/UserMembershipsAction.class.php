@@ -3,6 +3,7 @@ namespace cms\action\user;
 use cms\action\Method;
 use cms\action\UserAction;
 use cms\model\Group;
+use language\Messages;
 
 
 class UserMembershipsAction extends UserAction implements Method {
@@ -37,21 +38,12 @@ class UserMembershipsAction extends UserAction implements Method {
 			$hasGroup = array_key_exists($id,$userGroups);
 			
 			if	( !$hasGroup && $this->hasRequestVar('group'.$id) )
-			{
 				$this->user->addGroup($id);
-				$this->addNotice('group', 0, $name, 'ADDED');
-				$aenderung = true;
-			}
 
 			if	( $hasGroup && !$this->hasRequestVar('group'.$id) )
-			{
 				$this->user->delGroup($id);
-				$this->addNotice('group', 0, $name, 'DELETED');
-				$aenderung = true;
-			}
 		}
 		
-		if	( ! $aenderung )
-				$this->addNotice('group', 0, $name, 'NOTHING_DONE');
+		$this->addNoticeFor($this->user,Messages::GROUP_MEMBERSHIPS_UPDATED);
     }
 }

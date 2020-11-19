@@ -6,6 +6,7 @@ use cms\action\object\ObjectNameAction;
 use cms\action\PageAction;
 use cms\model\BaseObject;
 use cms\model\Project;
+use language\Messages;
 
 class PageNameAction extends PageAction implements Method {
 
@@ -44,12 +45,12 @@ class PageNameAction extends PageAction implements Method {
         if   ( ! $alias->filename ) {
 
             $alias->delete();
-            $this->addNotice($alias->getType(), 0, '', 'DELETED', 'ok');
+			$this->addNoticeFor( $alias,Messages::DELETED);
         }
         else
         {
             $alias->persist();
-            $this->addNotice($alias->getType(), 0, $alias->filename, 'SAVED', 'ok');
+			$this->addNoticeFor( $alias,Messages::SAVED);
         }
 
     }

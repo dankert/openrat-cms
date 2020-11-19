@@ -64,6 +64,6 @@ class LoginRegistercodeAction extends LoginAction implements Method {
 
 		$newUser->setPassword( $this->getRequestVar('password'),true );
 			
-		$this->addNotice('user', 0, $newUser->name, 'user_added', 'ok');
+		$this->addNoticeFor( $newUser,Messages::USER_ADDED);
     }
 }

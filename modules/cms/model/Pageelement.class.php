@@ -47,6 +47,11 @@ class Pageelement extends ModelBase
     }
 
 
+	/**
+	 * Gets the label of the element
+	 * @see Element
+	 * @return string
+	 */
 	public function getName()
 	{
 		$e = new Element( $this->elementid );

@@ -5,6 +5,7 @@ use cms\action\Method;
 use cms\action\ObjectAction;
 use cms\model\Acl;
 use cms\model\BaseObject;
+use language\Messages;
 use util\Http;
 
 class ObjectDelaclAction extends ObjectAction implements Method {
@@ -23,6 +24,6 @@ class ObjectDelaclAction extends ObjectAction implements Method {
 
 		$acl->delete(); // Weg mit der ACL
 		
-		$this->addNotice('', 0, '', 'DELETED', Action::NOTICE_OK);
+		$this->addNoticeFor( $o,Messages::DELETED );
     }
 }

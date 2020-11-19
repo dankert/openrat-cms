@@ -3,8 +3,10 @@ namespace cms\action\group;
 use cms\action\GroupAction;
 use cms\action\Method;
 use cms\model\User;
+use language\Messages;
 
 class GroupMembershipsAction extends GroupAction implements Method {
+
     public function view() {
 		// Mitgliedschaften ermitteln
 		//
@@ -27,7 +29,9 @@ class GroupMembershipsAction extends GroupAction implements Method {
 		}
 		$this->setTemplateVar('memberships',$userliste);
     }
+
     public function post() {
+
 		$allUsers  = User::listAll();
 		$groupUsers = $this->group->getUsers();
 		
@@ -36,16 +40,12 @@ class GroupMembershipsAction extends GroupAction implements Method {
 			$hasUser = array_key_exists($id,$groupUsers);
 			
 			if	( !$hasUser && $this->hasRequestVar('user'.$id) )
-			{
 				$this->group->addUser($id);
-				$this->addNotice('user', 0, $name, 'ADDED');
-			}
 
 			if	( $hasUser && !$this->hasRequestVar('user'.$id) )
-			{
 				$this->group->delUser($id);
-				$this->addNotice('user', 0, $name, 'DELETED');
-			}
 		}
+
+		$this->addNoticeFor($this->group, Messages::USER_ADDED_TO_GROUP);
     }
 }

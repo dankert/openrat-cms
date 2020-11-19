@@ -5,6 +5,7 @@ use cms\action\Method;
 use cms\action\PageAction;
 use cms\model\Element;
 use cms\model\Template;
+use language\Messages;
 
 class PageChangetemplateselectelementsAction extends PageAction implements Method {
 
@@ -63,9 +64,9 @@ class PageChangetemplateselectelementsAction extends PageAction implements Metho
 		if	( $newTemplateId != 0  )
 		{
 			$this->page->replaceTemplate( $newTemplateId,$replaceElementMap );
-			$this->addNotice('page', 0, $this->page->name, 'SAVED', Action::NOTICE_OK);
+			$this->addNoticeFor( $this->page,Messages::SAVED);
 		}
 		else
-			$this->addNotice('page', 0, $this->page->name, 'NOT_SAVED', Action::NOTICE_WARN);
+			$this->addWarningFor( $this->page,Messages::NOT_SAVED);
     }
 }

@@ -4,6 +4,7 @@ use cms\action\Method;
 use cms\action\TemplateAction;
 use cms\model\Acl;
 use cms\model\Page;
+use language\Messages;
 use util\Session;
 
 
@@ -31,7 +32,7 @@ class TemplatePubAction extends TemplateAction implements Method {
 			$page->publish();
         }
 
-        $this->addNotice('template', 0, $this->template->name, 'PUBLISHED', Action::NOTICE_OK, array(), array_map(function ($obj) {
+		$this->addNoticeFor($this->template,Messages::PUBLISHED, array_map(function ($obj) {
 			return $obj['full_filename'];
 		}, $publisher->publishedObjects));
 

@@ -7,6 +7,7 @@ use cms\action\TemplateAction;
 use cms\model\Element;
 use cms\model\Project;
 use cms\model\Template;
+use language\Messages;
 
 
 class TemplateAddelAction extends TemplateAction implements Method {
@@ -54,6 +55,6 @@ class TemplateAddelAction extends TemplateAction implements Method {
 
 		}
 
-		$this->addNotice('template', 0, $this->template->name, 'SAVED', Action::NOTICE_OK);
+		$this->addNoticeFor($this->template,Messages::SAVED);
     }
 }

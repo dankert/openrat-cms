@@ -17,6 +17,7 @@ use cms\model\BaseObject;
 use cms\model\Element;
 use cms\model\Folder;
 use cms\model\Page;
+use cms\model\Pageelement;
 use cms\model\Project;
 use cms\model\Template;
 use cms\model\User;
@@ -73,6 +74,12 @@ class PageelementAction extends BaseAction
 
 
 	/**
+	 * @type Pageelement
+	 */
+	protected $pageelement;
+
+
+	/**
 	 * Enth�lt den Inhalt
 	 *
 	 * @var Value
@@ -122,6 +129,8 @@ class PageelementAction extends BaseAction
 			$this->elementid = $elementid;
 			$this->element   = new Element( $elementid );
 		}
+
+		$this->pageelement = new Pageelement($id);
 	}
 
 
@@ -381,7 +390,8 @@ class PageelementAction extends BaseAction
             $value->add();
         }
 
-        $this->addNotice('pageelement', 0, $value->element->label, 'SAVED', Action::NOTICE_OK);
+        $this->addNoticeFor( $this->pageelement, Messages::SAVED);
+        
         $this->page->setTimestamp(); // "Letzte Aenderung" setzen
 
         // Falls ausgewaehlt die Seite sofort veroeffentlichen

@@ -5,6 +5,7 @@ use cms\action\FileAction;
 use cms\action\Method;
 use cms\action\RequestParams;
 use cms\model\File;
+use language\Messages;
 
 
 class FileCompressAction extends FileAction implements Method {
@@ -65,6 +66,6 @@ class FileCompressAction extends FileAction implements Method {
 				throw new \util\exception\UIException('unknown compress type: ' . $format );
 		}
 
-		$this->addNotice('file', 0, $this->file->name, 'DONE', Action::NOTICE_OK);
+		$this->addNoticeFor( $this->file, Messages::DONE);
     }
 }

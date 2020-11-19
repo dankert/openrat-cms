@@ -6,6 +6,7 @@ use cms\action\ObjectAction;
 use cms\model\Acl;
 use cms\model\BaseObject;
 use cms\model\Folder;
+use language\Messages;
 use logger\Logger;
 use util\Session;
 
@@ -26,7 +27,7 @@ class ObjectInheritAction extends ObjectAction implements Method {
 		
 		if	( ! $this->hasRequestVar('inherit') )
 		{
-			$this->addNotice('folder', 0, $folder->name, 'NOTHING_DONE', Action::NOTICE_WARN);
+			$this->addWarningFor( $folder,Messages::NOTHING_DONE);
 			return;
 		}
 		
@@ -74,6 +75,6 @@ class ObjectInheritAction extends ObjectAction implements Method {
 			}
 		}
 		
-		$this->addNotice('folder', 0, $folder->name, 'SAVED', Action::NOTICE_OK);
+		$this->addNoticeFor($folder,Messages::SAVED);
     }
 }

@@ -2,6 +2,7 @@
 namespace cms\action\group;
 use cms\action\GroupAction;
 use cms\action\Method;
+use language\Messages;
 
 
 class GroupPropAction extends GroupAction implements Method {
@@ -15,6 +16,6 @@ class GroupPropAction extends GroupAction implements Method {
         $this->group->name = $this->getRequestVar('name');
         $this->group->save();
 
-        $this->addNotice('group', 0, $this->group->name, 'SAVED', 'ok');
+        $this->addNoticeFor($this->group,Messages::SAVED);
     }
 }

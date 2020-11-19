@@ -5,6 +5,7 @@ use cms\action\ElementAction;
 use cms\action\Method;
 use cms\action\RequestParams;
 use cms\model\Element;
+use language\Messages;
 
 
 class ElementPropAction extends ElementAction implements Method {
@@ -46,6 +47,6 @@ class ElementPropAction extends ElementAction implements Method {
 
         $this->element->save();
 
-        $this->addNotice('element', 0, $this->element->name, 'SAVED', Action::NOTICE_OK);
+        $this->addNoticeFor( $this->element, Messages::SAVED);
     }
 }

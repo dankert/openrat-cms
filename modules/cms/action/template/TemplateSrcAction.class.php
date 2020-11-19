@@ -7,6 +7,7 @@ use cms\action\TemplateAction;
 use cms\model\Element;
 use cms\model\Project;
 use cms\model\TemplateModel;
+use language\Messages;
 
 
 class TemplateSrcAction extends TemplateAction implements Method {
@@ -77,6 +78,6 @@ class TemplateSrcAction extends TemplateAction implements Method {
 		$templatemodel->extension = $this->getRequestVar('extension');
 		$templatemodel->persist();
 
-		$this->addNotice('template', 0, $this->template->name, 'SAVED', Action::NOTICE_OK);
+		$this->addNoticeFor($this->template,Messages::SAVED);
     }
 }

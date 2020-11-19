@@ -4,6 +4,7 @@ use cms\action\Action;
 use cms\action\ImageAction;
 use cms\action\Method;
 use cms\model\Image;
+use language\Messages;
 
 class ImageSizeAction extends ImageAction implements Method {
     public function view() {
@@ -13,13 +14,13 @@ class ImageSizeAction extends ImageAction implements Method {
 
 		if	( $format == 0 )
 		{
-			$this->addNotice('image', 0, '', 'IMAGE_RESIZING_UNKNOWN_TYPE', Action::NOTICE_WARN);
+			$this->addWarningFor( $this->image,Messages::IMAGE_RESIZING_UNKNOWN_TYPE);
 		}
 			
 		$formats = $this->imageFormats();
 			
 		if	( empty($formats) )
-			$this->addNotice('image', 0, '', 'IMAGE_RESIZING_NOT_AVAILABLE', Action::NOTICE_WARN);
+			$this->addWarningFor($this->image,Messages::IMAGE_RESIZING_NOT_AVAILABLE);
 		
 		$sizes = array();
 		foreach( array(10,25,50,75,100,125,150,175,200,250,300,350,400,500,600,800) as $s )
@@ -91,6 +92,6 @@ class ImageSizeAction extends ImageAction implements Method {
 		$imageFile->save();      // Um z.B. Groesse abzuspeichern
 		$imageFile->saveValue();
 
-		$this->addNotice($imageFile->getType(), 0, $imageFile->name, 'IMAGE_RESIZED', 'ok');
+		$this->addNoticeFor($imageFile,Messages::IMAGE_RESIZED);
     }
 }

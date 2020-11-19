@@ -4,11 +4,12 @@ use cms\action\Method;
 use cms\action\ProjectAction;
 use cms\base\Configuration;
 use cms\base\DB;
+use language\Messages;
 
 class ProjectCopyAction extends ProjectAction implements Method {
     public function view() {
-
     }
+
     public function post() {
 		$db = DB::get();
 		$this->setTemplateVar( 'dbid',$db->id );
@@ -28,8 +29,7 @@ class ProjectCopyAction extends ProjectAction implements Method {
 		{
 			$this->project->export( $this->getRequestVar('dbid') );
 			
-			$this->addNotice('project', 0, $this->project->name, 'DONE');
-			$this->setTemplateVar('done',true);
+			$this->addNoticeFor($this->project,Messages::DONE);
 		}
     }
 }

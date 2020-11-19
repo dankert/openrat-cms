@@ -9,6 +9,7 @@ use cms\model\Group;
 use cms\model\Language;
 use cms\model\Project;
 use cms\model\User;
+use language\Messages;
 
 
 class UserRightsAction extends UserAction implements Method {
@@ -82,7 +83,7 @@ class UserRightsAction extends UserAction implements Method {
 		$this->setTemplateVar('show',Acl::getAvailableRights() );
 		
 		if	( $this->user->isAdmin )
-			$this->addNotice('user', 0, $this->user->name, 'ADMIN_NEEDS_NO_RIGHTS', Action::NOTICE_WARN);
+			$this->addWarningFor($this->user,Messages::ADMIN_NEEDS_NO_RIGHTS);
     }
     public function post() {
     }

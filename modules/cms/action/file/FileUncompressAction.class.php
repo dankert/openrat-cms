@@ -4,6 +4,7 @@ use cms\action\Action;
 use cms\action\FileAction;
 use cms\action\Method;
 use cms\model\File;
+use language\Messages;
 
 
 class FileUncompressAction extends FileAction implements Method {
@@ -67,6 +68,6 @@ class FileUncompressAction extends FileAction implements Method {
 				throw new \util\exception\UIException('','cannot uncompress file with extension: ' . $this->file->extension );
 		}
 
-		$this->addNotice('file', 0, $this->file->name, 'DONE', Action::NOTICE_OK);
+		$this->addNoticeFor( $this->file, Messages::DONE );
     }
 }

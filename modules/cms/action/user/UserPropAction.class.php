@@ -42,6 +42,7 @@ class UserPropAction extends UserAction implements Method {
     }
 
     public function post() {
+
 		if	( ! $this->getRequestVar('name') )
             throw new \util\exception\ValidationException( 'name');
 
@@ -62,6 +63,6 @@ class UserPropAction extends UserAction implements Method {
         $this->user->style    = $this->getRequestVar('style'   );
 
         $this->user->persist();
-        $this->addNotice('user', 0, $this->user->name, 'SAVED', 'ok');
+        $this->addNoticeFor($this->user,Messages::SAVED);
     }
 }

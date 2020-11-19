@@ -4,6 +4,7 @@ use cms\action\Method;
 use cms\action\TemplateAction;
 use cms\model\Project;
 use cms\model\TemplateModel;
+use language\Messages;
 
 
 class TemplateExtensionAction extends TemplateAction implements Method {
@@ -21,7 +22,7 @@ class TemplateExtensionAction extends TemplateAction implements Method {
             // Validierung: Werte dürfen nicht doppelt vorkommen.
             if ( in_array($input, $extensions) )
             {
-                $this->addNotice('template', 0, $this->template->name, 'DUPLICATE_INPUT', 'error');
+				$this->addErrorFor($this->template,Messages::DUPLICATE_INPUT);
                 throw new \util\exception\ValidationException( $modelName );
             }
 
@@ -38,6 +39,6 @@ class TemplateExtensionAction extends TemplateAction implements Method {
             $templatemodel->persist();
         }
 
-		$this->addNotice('template', 0, $this->template->name, 'SAVED', 'ok');
+		$this->addNoticeFor($this->template,Messages::SAVED);
     }
 }

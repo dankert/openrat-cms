@@ -2,6 +2,7 @@
 namespace cms\action\file;
 use cms\action\FileAction;
 use cms\action\Method;
+use language\Messages;
 use util\exception\ValidationException;
 use util\Upload;
 
@@ -53,6 +54,6 @@ class FileEditAction extends FileAction implements Method {
 
         $this->file->setTimestamp();
 
-		$this->addNotice($this->file->getType(), 0, $this->file->filename, 'VALUE_SAVED', 'ok');
+		$this->addNoticeFor( $this->file, Messages::VALUE_SAVED );
     }
 }

@@ -12,6 +12,7 @@ use cms\model\Link;
 use cms\model\Page;
 use cms\model\Project;
 use cms\model\Url;
+use language\Messages;
 use util\ArchiveTar;
 use util\Html;
 
@@ -155,7 +156,7 @@ class FolderAdvancedAction extends FolderAction implements Method {
 				  $type == 'delete'  && $o->hasRight( Acl::ACL_DELETE )    )
 				$objectList[ $id ] = $o->getProperties();
 			else
-				$this->addNotice($o->getType(), 0, $o->name, 'no_rights', Action::NOTICE_WARN);
+				$this->addNoticeFor($o,Messages::NO_RIGHTS );
 		}
 
 		$ids = array_keys($objectList);
@@ -194,7 +195,7 @@ class FolderAdvancedAction extends FolderAction implements Method {
 				else
 				{
 					// Was anderes als Dateien ignorieren.
-					$this->addNotice($o->getType(), 0, $o->name, 'NOTHING_DONE', Action::NOTICE_WARN);
+					$this->addNoticeFor($o,Messages::NOTHING_DONE);
 				}
 
 			}
@@ -234,18 +235,18 @@ class FolderAdvancedAction extends FolderAction implements Method {
 							// dann verschieben
 							if	( !in_array($targetObjectId,$allsubfolders) && $id != $targetObjectId )
 							{
-								$this->addNotice($o->getType(), 0, $o->name, 'MOVED', 'ok');
+								$this->addNoticeFor($o,Messages::MOVED);
 								$o->setParentId( $targetObjectId );
 							}
 							else
 							{
-								$this->addNotice($o->getType(), 0, $o->name, 'ERROR', 'error');
+								$this->addErrorFor($o,Messages::ERROR);
 							}
 						}
 						else
 						{
 							$o->setParentId( $targetObjectId );
-							$this->addNotice($o->getType(), 0, $o->name, 'MOVED', 'ok');
+							$this->addNoticeFor($o,Messages::MOVED);
 						}
 						break;
 
@@ -255,7 +256,7 @@ class FolderAdvancedAction extends FolderAction implements Method {
 							case 'folder':
 								// Ordner zur Zeit nicht kopieren
 								// Funktion waere zu verwirrend
-								$this->addNotice($o->getType(), 0, $o->name, 'CANNOT_COPY_FOLDER', 'error');
+								$this->addErrorFor($o,Messages::CANNOT_COPY_FOLDER);
 								break;
 
 							case 'file':
@@ -267,7 +268,7 @@ class FolderAdvancedAction extends FolderAction implements Method {
 								$f->persist();
 								$f->copyValueFromFile( $id );
 
-								$this->addNotice($o->getType(), 0, $o->name, 'COPIED', 'ok');
+								$this->addNoticeFor($o,Messages::COPIED);
 								break;
 
 							case 'page':
@@ -278,7 +279,7 @@ class FolderAdvancedAction extends FolderAction implements Method {
 								$p->parentid = $targetObjectId;
 								$p->persist();
 								$p->copyValuesFromPage( $id );
-								$this->addNotice($o->getType(), 0, $o->name, 'COPIED', 'ok');
+								$this->addNoticeFor($o,Messages::COPIED);
 								break;
 
 							case 'link':
@@ -288,7 +289,7 @@ class FolderAdvancedAction extends FolderAction implements Method {
 								$l->name     = \cms\base\Language::lang('COPY_OF').' '.$l->name;
 								$l->parentid = $targetObjectId;
 								$l->persist();
-								$this->addNotice($o->getType(), 0, $o->name, 'COPIED', 'ok');
+								$this->addNoticeFor($o,Messages::COPIED);
 								break;
 
 							default:
@@ -311,11 +312,11 @@ class FolderAdvancedAction extends FolderAction implements Method {
 							$link->isLinkToObject = true;
 							$link->name           = \cms\base\Language::lang('LINK_TO').' '.$o->name;
 							$link->persist();
-							$this->addNotice($o->getType(), 0, $o->name, 'LINKED', 'ok');
+							$this->addNoticeFor($o,Messages::LINKED);
 						}
 						else
 						{
-							$this->addNotice($o->getType(), 0, $o->name, 'ERROR', 'error');
+							$this->addErrorFor($o,Messages::ERROR);
 						}
 						break;
 
@@ -354,17 +355,17 @@ class FolderAdvancedAction extends FolderAction implements Method {
 								default:
 									throw new \LogicException("Error while deleting: Unknown type: {$o->getType()}");
 							}
-							$this->addNotice($o->getType(), 0, $o->name, 'DELETED', Action::NOTICE_OK);
+							$this->addNoticeFor($o,Messages::DELETED);
 						}
 						else
 						{
-							$this->addNotice($o->getType(), 0, $o->name, 'NOTHING_DONE', Action::NOTICE_WARN);
+							$this->addNoticeFor($o,Messages::NOTHING_DONE);
 						}
 
 						break;
 
 					default:
-						$this->addNotice($o->getType(), 0, $o->name, 'ERROR', 'error');
+						$this->addErrorFor($o,Messages::ERROR);
 				}
 
 			}

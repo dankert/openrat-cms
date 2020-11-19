@@ -10,6 +10,7 @@ use cms\model\File;
 use cms\model\Folder;
 use cms\model\Link;
 use cms\model\Page;
+use language\Messages;
 
 
 class ObjectCopyAction extends ObjectAction implements Method {
@@ -28,7 +29,7 @@ class ObjectCopyAction extends ObjectAction implements Method {
 		
 		if   ( ! $targetFolder->hasRight(Acl::ACL_WRITE) )
 		{
-			$this->addNotice('folder', 0, $targetFolder->name, 'NOT_WRITABLE', Action::NOTICE_ERROR);
+			$this->addErrorFor( $this->baseObject,Messages::FOLDER_NOT_WRITABLE );
 		}
     }
     public function post() {
@@ -45,7 +46,7 @@ class ObjectCopyAction extends ObjectAction implements Method {
 		// Prüfen, ob Schreibrechte im Zielordner bestehen.
 		if   ( ! $targetFolder->hasRight(Acl::ACL_WRITE) )
 		{
-			$this->addNotice('folder', 0, $targetFolder->name, 'NOT_WRITABLE', Action::NOTICE_ERROR);
+			$this->addErrorFor( $targetFolder,Messages::FOLDER_NOT_WRITABLE );
 			return;
 		}
 		
@@ -67,7 +68,7 @@ class ObjectCopyAction extends ObjectAction implements Method {
 					// dann verschieben
 					if	( in_array($targetObjectId,$allsubfolders) || $sourceObjectId == $targetObjectId )
 					{
-						$this->addNotice('folder', 0, $sourceObject->name, 'ERROR', Action::NOTICE_ERROR);
+						$this->addErrorFor( $sourceObject,Messages::ERROR);
 						return;
 					}
 				}
@@ -76,7 +77,7 @@ class ObjectCopyAction extends ObjectAction implements Method {
 				// Beim Verschieben und Kopieren muss im Zielordner die Berechtigung
 				// zum Erstellen von Ordner, Dateien oder Seiten vorhanden sein.
 				$sourceObject->setParentId( $targetObjectId );
-				$this->addNotice($sourceObject->type, 0, $sourceObject->name, 'moved');
+				$this->addNoticeFor( $sourceObject,Messages::MOVED);
 				break;
 				
 			case 'moveandlink':
@@ -84,7 +85,7 @@ class ObjectCopyAction extends ObjectAction implements Method {
 				$oldParentId = $sourceObject->parentid;
 				
 				$sourceObject->setParentId( $targetObjectId );
-				$this->addNotice($sourceObject->type, 0, $sourceObject->name, 'moved');
+				$this->addNoticeFor($sourceObject,Messages::MOVED);
 				
 				$link = new Link();
 				$link->parentid = $oldParentId;
@@ -92,7 +93,7 @@ class ObjectCopyAction extends ObjectAction implements Method {
 				$link->filename = $sourceObject->filename;
 				$link->linkedObjectId = $sourceObjectId;
 				$link->persist();
-				$this->addNotice('link', 0, $link->name, 'added');
+				$this->addNoticeFor($link,Messages::ADDED);
 				
 				break;
 				
@@ -103,7 +104,7 @@ class ObjectCopyAction extends ObjectAction implements Method {
 					case 'folder':
 						// Ordner zur Zeit nicht kopieren
 						// Funktion waere zu verwirrend
-						$this->addNotice($sourceObject->getType(), 0, $sourceObject->name, 'CANNOT_COPY_FOLDER', 'error');
+						$this->addErrorFor($sourceObject,Messages::CANNOT_COPY_FOLDER);
 						break;
 							
 					case 'file':
@@ -114,8 +115,8 @@ class ObjectCopyAction extends ObjectAction implements Method {
 						$f->parentid = $targetObjectId;
 						$f->persist();
 						$f->copyValueFromFile( $sourceObjectId );
-				
-						$this->addNotice($sourceObject->getType(), 0, $sourceObject->name, 'COPIED', 'ok');
+
+						$this->addNoticeFor($sourceObject,Messages::COPIED);
 						break;
 				
 					case 'page':
@@ -126,7 +127,7 @@ class ObjectCopyAction extends ObjectAction implements Method {
 						$p->parentid = $targetObjectId;
 						$p->persist();
 						$p->copyValuesFromPage( $sourceObjectId );
-						$this->addNotice($sourceObject->getType(), 0, $sourceObject->name, 'COPIED', 'ok');
+						$this->addNoticeFor($sourceObject,Messages::COPIED);
 						break;
 							
 					case 'link':
@@ -136,7 +137,7 @@ class ObjectCopyAction extends ObjectAction implements Method {
 						$l->name     = \cms\base\Language::lang('COPY_OF').' '.$l->name;
 						$l->parentid = $targetObjectId;
 						$l->persist();
-						$this->addNotice($sourceObject->getType(), 0, $sourceObject->name, 'COPIED', 'ok');
+						$this->addNoticeFor($sourceObject,Messages::COPIED);
 						break;
 							
 					default:
@@ -150,7 +151,7 @@ class ObjectCopyAction extends ObjectAction implements Method {
 				// von Verkn�pfungen vorhanden sein.
 				if   ( ! $targetFolder->hasRight(Acl::ACL_CREATE_LINK) )
 				{
-					$this->addNotice('folder', 0, $targetFolder->name, 'NOT_WRITABLE', Action::NOTICE_ERROR);
+					$this->addErrorFor($targetFolder,Messages::FOLDER_NOT_WRITABLE);
 					return;
 				}
 				
@@ -161,7 +162,7 @@ class ObjectCopyAction extends ObjectAction implements Method {
 				$link->linkedObjectId = $sourceObjectId;
 				$link->isLinkToObject = true;
 				$link->persist();
-				$this->addNotice('link', 0, $link->name, 'added');
+				$this->addNoticeFor($link,Messages::ADDED);
 				// OK
 				break;
 				

@@ -10,6 +10,7 @@ use cms\model\Element;
 use cms\model\Folder;
 use cms\model\Project;
 use cms\model\Template;
+use language\Messages;
 use ReflectionClass;
 use ReflectionProperty;
 use util\Text;
@@ -324,7 +325,7 @@ class ElementAdvancedAction extends ElementAction implements Method {
 
                         case Element::ELEMENT_TYPE_CODE:
                             if	( Configuration::subset('security')->is('disable_dynamic_code',true ) )
-                                $this->addNotice('element', 0, $this->element->name, 'CODE_DISABLED', Action::NOTICE_WARN);
+                                $this->addWarningFor( $this->element, Messages::CODE_DISABLED);
 
                             $this->setTemplateVar('code',$this->element->code);
                             break;
@@ -467,7 +468,7 @@ class ElementAdvancedAction extends ElementAction implements Method {
             $this->element->code = $this->getRequestVar('parameters',RequestParams::FILTER_RAW);
 
         $this->element->save();
-        $this->addNotice('element', 0, $this->element->name, 'SAVED');
+        $this->addNoticeFor( $this->element, Messages::SAVED);
 
     }
 }

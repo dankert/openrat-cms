@@ -2665,6 +2665,9 @@ GROUP_DELETE_DESC:
 GROUP_MEMBERSHIPS:
   de: Mitgliedschaften
   en: Membershipss
+GROUP_MEMBERSHIPS_UPDATED:
+  de: Die Gruppenmitgliedschaften wurden aktualisiert
+  en: Memberships updated
 HELP_DATE_ANSIDATE:
   de: Alternativ können Sie Datum/Zeit im ANSI-Format eingeben
   en: you can input the date in ANSI-format
@@ -5183,8 +5186,8 @@ USER_ADDED:
   it: "L'utente era"
   ru: Пользователь был добавлен
 USER_ADDED_TO_GROUP:
-  de: 'Die Mitgliedschaften in der Gruppe wurden aktualisiert, ${count} Benutzer hinzugefügt.'
-  en: 'The memberships of this group are updated, ${count} users were added.'
+  de: 'Die Mitgliedschaften in der Gruppe wurden aktualisiert.'
+  en: 'The memberships of this group are updated.'
 USER_ALREADY_IN_DATABASE:
   de: Der Benutzer ist bereits vorhanden. Bitte wählen Sie einen anderen Benutzernamen.
   en: The user is already there, please select another username.
@@ -6440,3 +6443,9 @@ RESTORE_DESC:
 VALUE_PUBLIC:
   en: public
   de: öffentlich
+NO_RIGHTS:
+  de: Keine Berechtigung
+  en: No rights
+FOLDER_NOT_WRITABLE:
+  de: Keine Schreibrechte im Verzeichnis
+  en: Directory not writable

@@ -4,6 +4,7 @@ use cms\action\FileAction;
 use cms\action\Method;
 use cms\action\RequestParams;
 use cms\model\BaseObject;
+use language\Messages;
 use util\exception\ValidationException;
 
 
@@ -35,6 +36,6 @@ class FileAdvancedAction extends FileAction implements Method {
         $this->file->updateType();
         $this->file->save();
 
-        $this->addNotice($this->file->getType(), 0, $this->file->filename, 'PROP_SAVED', 'ok');
+		$this->addNoticeFor( $this->file, Messages::PROP_SAVED);
     }
 }

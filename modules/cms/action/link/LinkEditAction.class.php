@@ -3,6 +3,7 @@ namespace cms\action\link;
 use cms\action\Action;
 use cms\action\LinkAction;
 use cms\action\Method;
+use language\Messages;
 
 
 class LinkEditAction extends LinkAction implements Method {
@@ -18,6 +19,6 @@ class LinkEditAction extends LinkAction implements Method {
         $this->link->linkedObjectId = $this->getRequestVar('targetobjectid');
         $this->link->save();
 
-        $this->addNotice('link', 0, $this->link->name, 'SAVED', Action::NOTICE_OK);
+        $this->addNoticeFor( $this->link, Messages::SAVED);
     }
 }

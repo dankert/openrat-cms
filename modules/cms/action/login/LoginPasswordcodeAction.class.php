@@ -3,6 +3,9 @@ namespace cms\action\login;
 use cms\action\LoginAction;
 use cms\action\Method;
 use cms\model\User;
+use language\Messages;
+use logger\Logger;
+use security\Password;
 use util\Mail;
 use util\Session;
 
@@ -12,6 +15,7 @@ class LoginPasswordcodeAction extends LoginAction implements Method {
 
     }
     public function post() {
+
 		$username = $this->getSessionVar(Session::KEY_PASSWORD_COMMIT_NAME);
 
 		if	( $this->getRequestVar("code")=='' ||
@@ -23,29 +27,29 @@ class LoginPasswordcodeAction extends LoginAction implements Method {
 		
 		$user  = User::loadWithName( $username,User::AUTH_TYPE_INTERNAL );
 			
-		if	( !$user->isValid() )
+		if	( $user && $user->isValid() )
 		{
-			// Benutzer konnte nicht geladen werden.
-			$this->addNotice('user', 0, $username, 'error', Action::NOTICE_ERROR);
-			return;
-		}
-		
-		$newPw = $user->createPassword(); // Neues Kennwort erzeugen.
-		
-		$eMail = new Mail( $user->mail,'password_new' );
-		$eMail->setVar('name'    ,$user->getName());
-		$eMail->setVar('password',$newPw          );
+			$newPw = $user->createPassword(); // Neues Kennwort erzeugen.
 
-		if	( $eMail->send() )
-		{
-			$user->setPassword( $newPw, false ); // Kennwort muss beim n?. Login ge?ndert werden.
-			$this->addNotice('user', 0, $username, 'mail_sent', Action::NOTICE_OK);
+			$eMail = new Mail( $user->mail,'password_new' );
+			$eMail->setVar('name'    ,$user->getName());
+			$eMail->setVar('password',$newPw          );
+
+			try {
+				if	( $eMail->send() )
+					$user->setPassword( $newPw, false ); // Kennwort muss beim n?. Login ge?ndert werden.
+				else
+					Logger::warn('Mail could not be sent: '.$eMail->error);
+			} catch( \Exception $e ) {
+				Logger::warn( $e );
+			}
 		}
-		else
-		{
-			// Sollte eigentlich nicht vorkommen, da der Benutzer ja auch schon den
-			// Code per E-Mail erhalten hat.
-			$this->addNotice('user', 0, $username, 'error', Action::NOTICE_ERROR, array(), $eMail->error);
-		}
+
+		sleep(1);
+		Password::delay();
+
+		// For security reasons:
+		// Always display this message, so no one is able to find out if a username exists.
+		$this->addNoticeFor( null,Messages::MAIL_SENT );
     }
 }

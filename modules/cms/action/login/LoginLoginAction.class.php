@@ -64,7 +64,7 @@ class LoginLoginAction extends LoginAction implements Method {
 
 
         if	( empty($dbids) )
-            $this->addNotice('', 0, '', 'no_database_configuration', Action::NOTICE_WARN);
+            $this->addWarningFor( null,Messages::NO_DATABASE_CONFIGURATION );
 
         $this->setTemplateVar( 'dbids',$dbids );
 
@@ -143,14 +143,14 @@ class LoginLoginAction extends LoginAction implements Method {
 
 		if	( $tokenFailed ) {
 			// Token falsch.
-			$this->addNotice('user', 0, $loginName, 'LOGIN_FAILED_TOKEN_FAILED', 'error');
+			$this->addErrorFor(null,Messages::LOGIN_FAILED_TOKEN_FAILED );
 			$this->addValidationError('user_token','');
 			return;
 		}
 
 		if	( $mustChangePassword ) {
 			// Anmeldung gescheitert, Benutzer muss Kennwort ?ndern.
-			$this->addNotice('user', 0, $loginName, 'LOGIN_FAILED_MUSTCHANGEPASSWORD', 'error');
+			$this->addErrorFor( null,Messages::LOGIN_FAILED_MUSTCHANGEPASSWORD);
 			$this->addValidationError('password1','');
 			$this->addValidationError('password2','');
 			return;
@@ -167,8 +167,8 @@ class LoginLoginAction extends LoginAction implements Method {
 			));
 
 			// Anmeldung gescheitert.
-			$this->addNotice('user', 0, $loginName, 'LOGIN_FAILED', 'error', array('name' => $loginName));
-			$this->addValidationError('login_name', '');
+			$this->addErrorFor( null,Messages::LOGIN_FAILED, ['name' => $loginName] );
+			$this->addValidationError('login_name'    , '');
 			$this->addValidationError('login_password', '');
 			return;
 		}
@@ -204,7 +204,7 @@ class LoginLoginAction extends LoginAction implements Method {
 				// Anmeldung gescheitert.
 				Logger::warn( TextMessage::create('user ${0} authenticated successful, but not found in internal user table',[$loginName]) );
 
-				$this->addNotice('user', 0, $loginName, 'LOGIN_FAILED', 'error', array('name' => $loginName));
+				$this->addErrorFor(null,Messages::LOGIN_FAILED, ['name' => $loginName ]);
 				$this->addValidationError('login_name', '');
 				$this->addValidationError('login_password', '');
 

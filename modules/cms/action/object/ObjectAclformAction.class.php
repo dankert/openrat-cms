@@ -10,6 +10,7 @@ use cms\model\Folder;
 use cms\model\Group;
 use cms\model\Project;
 use cms\model\User;
+use language\Messages;
 
 class ObjectAclformAction extends ObjectAction implements Method {
     public function view() {
@@ -111,7 +112,7 @@ class ObjectAclformAction extends ObjectAction implements Method {
 		
 		
 		
-		$this->addNotice('', 0, '', 'ADDED', Action::NOTICE_OK);
+		$this->addNoticeFor( $this->baseObject,Messages::ADDED);
 		
 		$o->setTimestamp();
     }

@@ -5,6 +5,7 @@ use cms\action\ObjectAction;
 use cms\action\RequestParams;
 use cms\model\BaseObject;
 use cms\model\Project;
+use language\Messages;
 use util\exception\ValidationException;
 
 
@@ -45,6 +46,6 @@ class ObjectPropAction extends ObjectAction implements Method {
         $this->baseObject->setCreationTimestamp();
 
 
-        $this->addNotice($this->baseObject->getType(), 0, $this->baseObject->filename, 'PROP_SAVED', 'ok');
+		$this->addNoticeFor( $this->baseObject,Messages::PROP_SAVED);
     }
 }

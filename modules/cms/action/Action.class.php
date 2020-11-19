@@ -177,12 +177,6 @@ class Action
 	}
 
 
-	public function handleResult($result)
-	{
-		// TODO -
-	}
-
-
 	/**
 	 * @param $baseObject ModelBase
 	 * @param $key String
@@ -220,7 +214,17 @@ class Action
 	 * @param string $message
 	 */
 	protected function addErrorFor($baseObject,$key,$vars = array(), $message='') {
-		$this->addNotice(strtolower(ClassUtils::getSimpleClassName($baseObject)), $baseObject->getId(), $baseObject->getName(), $key, Action::NOTICE_ERROR, $vars, $message);
+		if	( is_object($baseObject) ) {
+			$type = strtolower(ClassUtils::getSimpleClassName($baseObject));
+			$id   = $baseObject->getId();
+			$name = $baseObject->getName();
+		} else {
+			$type = '';
+			$id   = '';
+			$name = '';
+		}
+
+		$this->addNotice($type,$id,$name, $key, Action::NOTICE_ERROR, $vars, $message);
 	}
 
 	/**
@@ -234,7 +238,7 @@ class Action
 	 * @param array $vars Variablen f�r den Textschl�ssel
 	 * @param string|array $log Weitere Hinweistexte f�r diese Meldung.
 	 */
-	protected function addNotice($type, $id, $name, $text, $status = Action::NOTICE_OK, $vars = array(), $log = array())
+	private function addNotice($type, $id, $name, $text, $status = Action::NOTICE_OK, $vars = array(), $log = array())
 	{
 		if ($status === true)
 			$status = Action::NOTICE_OK;
@@ -263,6 +267,11 @@ class Action
 	}
 
 
+	/**
+	 * Getting the output data.
+	 *
+	 * @return array[]
+	 */
 	public function getOutputData()
 	{
 		return $this->templateVars;
@@ -270,12 +279,14 @@ class Action
 
 
 	/**
-	 * Ermitteln, ob Benutzer Administratorrechte besitzt
-	 * @return Boolean TRUE, falls der Benutzer ein Administrator ist.
+	 * Has the current user administration rights?
+	 *
+	 * @return boolean true, if current user is an administrator
 	 */
 	protected function userIsAdmin()
 	{
 		$user = $this->getUserFromSession();
+
 		return is_object($user) && $user->isAdmin;
 	}
 

@@ -20,7 +20,7 @@ class FolderCreatepageAction extends FolderAction implements Method {
 		$this->setTemplateVar('objectid'  ,$this->folder->objectid );
 
 		if	( count($all_templates) == 0 )
-			$this->addNotice('folder', 0, $this->folder->name, 'NO_TEMPLATES_AVAILABLE', Action::NOTICE_WARN);
+			$this->addWarningFor($this->folder,Messages::NO_TEMPLATES_AVAILABLE );
     }
 
 

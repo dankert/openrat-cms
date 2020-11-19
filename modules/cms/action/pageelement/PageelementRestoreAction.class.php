@@ -4,10 +4,13 @@ use cms\action\Action;
 use cms\action\Method;
 use cms\action\PageelementAction;
 use cms\model\Element;
+use language\Messages;
 
 class PageelementRestoreAction extends PageelementAction implements Method {
+
     public function view() {
     }
+
     public function post() {
         $this->value->valueid = $this->getRequestVar('valueid');
         $this->value->loadWithId();
@@ -23,6 +26,6 @@ class PageelementRestoreAction extends PageelementAction implements Method {
         // Inhalt wieder herstellen, in dem er neu gespeichert wird.
         $this->value->add();
 
-        $this->addNotice('pageelement', 0, $this->value->element->name, 'PAGEELEMENT_USE_FROM_ARCHIVE', Action::NOTICE_OK);
+		$this->addNoticeFor( $this->pageelement,Messages::PAGEELEMENT_USE_FROM_ARCHIVE );
     }
 }

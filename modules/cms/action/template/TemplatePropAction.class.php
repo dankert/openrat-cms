@@ -3,6 +3,7 @@ namespace cms\action\template;
 use cms\action\Action;
 use cms\action\Method;
 use cms\action\TemplateAction;
+use language\Messages;
 
 
 class TemplatePropAction extends TemplateAction implements Method {
@@ -23,7 +24,7 @@ class TemplatePropAction extends TemplateAction implements Method {
 		{
 			$this->template->name = $this->getRequestVar('name');
 			$this->template->save();
-			$this->addNotice('template', 0, $this->template->name, 'SAVED', Action::NOTICE_OK);
+			$this->addNoticeFor($this->template,Messages::SAVED);
 		}
     }
 }

@@ -3,6 +3,7 @@ namespace cms\action\element;
 use cms\action\Action;
 use cms\action\ElementAction;
 use cms\action\Method;
+use language\Messages;
 
 
 class ElementRemoveAction extends ElementAction implements Method {
@@ -20,13 +21,13 @@ class ElementRemoveAction extends ElementAction implements Method {
 		{
 		    // Nur Inhalte löschen
 			$this->element->deleteValues();
-			$this->addNotice('element', 0, $this->element->name, 'DELETED', Action::NOTICE_OK);
+			$this->addNoticeFor( $this->element, Messages::DELETED);
 		}
 		elseif ( $type == 'all' )
 		{
 		    // Element löschen
 			$this->element->delete();
-			$this->addNotice('element', 0, $this->element->name, 'DELETED', Action::NOTICE_OK);
+			$this->addNoticeFor( $this->element, Messages::DELETED);
 		}
     }
 }

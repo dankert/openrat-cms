@@ -4,6 +4,7 @@ use cms\action\FileAction;
 use cms\action\Method;
 use cms\model\File;
 use cms\model\Folder;
+use language\Messages;
 use util\ArchiveTar;
 use util\ArchiveUnzip;
 
@@ -36,8 +37,8 @@ class FileExtractAction extends FileAction implements Method {
 					$newFile->parse_filename( $file['name'] );
 					$newFile->lastchangeDate = $file['time'];
 					$newFile->persist();
-					
-					$this->addNotice('file', 0, $newFile->name, 'ADDED');
+
+					$this->addNoticeFor( $newFile, Messages::ADDED );
 				}
 				
 				unset($tar);
@@ -69,8 +70,8 @@ class FileExtractAction extends FileAction implements Method {
 
 					$newFile->value       = $zip->unzip($fileName);
 					$newFile->persist();
-					
-					$this->addNotice('file', 0, $newFile->name, 'ADDED');
+
+					$this->addNoticeFor( $newFile, Messages::ADDED);
 					unset($newFile);
 				}
 

@@ -4,14 +4,17 @@ use cms\action\Action;
 use cms\action\LanguageAction;
 use cms\action\Method;
 use cms\base\Configuration;
+use language\Messages;
 
 
 class LanguagePropAction extends LanguageAction implements Method {
+
     public function view() {
 		$this->setTemplateVar('isocode'   ,$this->language->isoCode   );
 		$this->setTemplateVar('name'      ,$this->language->name      );
 		$this->setTemplateVar('is_default',$this->language->isDefault );
     }
+
     public function post() {
 		if	( $this->hasRequestVar('name') )
 		{
@@ -31,6 +34,6 @@ class LanguagePropAction extends LanguageAction implements Method {
 		
 		$this->language->save();
 
-        $this->addNotice('language', 0, $this->language->name, 'DONE', Action::NOTICE_OK);
+        $this->addNoticeFor($this->language,Messages::DONE);
     }
 }
