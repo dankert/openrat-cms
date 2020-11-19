@@ -26,6 +26,7 @@ use util\ClassUtils;
 use util\exception\DatabaseException;
 use util\exception\ObjectNotFoundException;
 use util\exception\ValidationException;
+use util\FileUtils;
 use util\Http;
 use logger\Logger;
 use LogicException;
@@ -196,7 +197,7 @@ class Dispatcher
         $logFile = $logConfig->get('file','');
 
         // Wenn Logfile relativ angegeben wurde, dann muss dies relativ zum Root der Anwendung sein.
-        if   ( $logFile && $logFile[0] != '/' )
+        if   ( $logFile && FileUtils::isRelativePath($logFile) )
             $logFile = __DIR__ . '/../../' . $logFile;
 
         Logger::$messageFormat = $logConfig->get('format',['time','level','host','text']);

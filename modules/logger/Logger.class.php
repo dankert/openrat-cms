@@ -183,14 +183,18 @@ class Logger
 
 		if ( Logger::$filename ) {
 
-			if (!is_writable( Logger::$filename )) {
-
-				error_log('logfile ' . Logger::$filename . ' is not writable');
-				error_log($text . "\n");
-			} else {
+			// Is the file writable?
+			// Exception: Streams (like php://stdout) are never 'writable' :/
+			if ( is_writable( Logger::$filename ) || strpos(Logger::$filename,'://')!==FALSE ) {
 				// Writing to the logfile
 				// It's not a good idea to user error_log here because it failed on symlinked files.
-				file_put_contents( Logger::$filename,$text . "\n", FILE_APPEND );
+				$result = file_put_contents( Logger::$filename,$text . "\n", FILE_APPEND );
+
+				if   ( $result === FALSE )
+					error_log('logfile ' . Logger::$filename . ' is not available for writing');
+			} else {
+				error_log('logfile ' . Logger::$filename . ' is not writable');
+				error_log($text . "\n");
 			}
 		}
 

@@ -110,9 +110,18 @@ class FileUtils
 	}
 
 
+	/**
+	 * Is the given path an absolute path?
+	 *
+	 * @param $path
+	 * @return bool
+	 */
 	public static function isAbsolutePath($path)
 	{
-		return @$path[0] == '/';
+		return $path &&
+			@$path[0] == '/'                        || // beginning with '/' (absolute file path)
+			substr($path,0,4)=='php:' || // beginning with 'php:' (PHP-Streams)
+			strpos($path,'://') !== FALSE;     // containing '://' (URLs)
 	}
 
 
@@ -121,6 +130,7 @@ class FileUtils
 		$pathElements = array_map(function ($path) {
 			return trim($path, '/');
 		}, $pathElements);
+
 		return array_reduce($pathElements, function ($path, $item) {
 			return $path . ($item ? '/' . $item : '');
 		}, '');
@@ -130,5 +140,14 @@ class FileUtils
 	public static function toRelativePath($pathElements)
 	{
 		return '.' . self::toAbsolutePath($pathElements);
+	}
+
+
+	/**
+	 * @param $path
+	 * @return bool
+	 */
+	public static function isRelativePath($path ) {
+		return ! self::isAbsolutePath($path);
 	}
 }
