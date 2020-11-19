@@ -2,14 +2,19 @@
 namespace cms\action\login;
 use cms\action\LoginAction;
 use cms\action\Method;
+use cms\action\RequestParams;
 use cms\base\Configuration;
 use cms\model\User;
 use Exception;
 use openid_connect\OpenIDConnectClient;
 use util\Session;
 
-
+/**
+ * Authentication via OpenID-Connect.
+ */
 class LoginOidcAction extends LoginAction implements Method {
+
+
     public function view() {
 
     	if   ( $this->hasRequestVar("id")) {
