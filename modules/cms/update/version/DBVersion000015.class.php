@@ -19,8 +19,6 @@ class DBVersion000015 extends DbVersion
      */
     public function update()
     {
-    	$this->table('object')->column('settings')->type(Column::TYPE_TEXT)->size(0)->add();
+    	$this->table('object')->column('settings')->type(Column::TYPE_TEXT)->add();
    }
 }
-
-?>
