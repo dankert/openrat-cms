@@ -36,7 +36,7 @@ class VariableResolver
 
 	/**
 	 * Adding a default variable resolver.
-	 * @param $resolver callable
+	 * @param $resolver callable|array
 	 */
 	public function addDefaultResolver( $resolver ) {
 		$this->resolvers[''] = $resolver;
@@ -45,8 +45,8 @@ class VariableResolver
 	/**
 	 * Adding a variable resolver for a key.
 	 *
-	 * @param $key key
-	 * @param $resolver callable
+	 * @param $key string key
+	 * @param $resolver callable|array
 	 */
 	public function addResolver( $key, $resolver ) {
 		$this->resolvers[$key] = $resolver;
@@ -117,7 +117,10 @@ class VariableResolver
 				if   ( is_callable($resolver) ) {
 					$v = $resolver( $this->render($expression->name) );
 				}
-				if   ( ! $v )
+				elseif   ( is_array($resolver) ) {
+					$v = @$resolver[ $this->render($expression->name ) ];
+				}
+				if   ( strlen($v)==0 )
 					$v = $this->render($expression->default);
 
 				if   ( $this->filterValue ) {
@@ -166,7 +169,7 @@ class VariableResolver
 
 		while (true) {
 
-			if	( ! $inputText )
+			if	( strlen($inputText)==0 ) // Do not compare to "false" here, as '0' is false ;)
 				break;
 
 			// Search the next variable marker '$'

@@ -34,7 +34,7 @@ class TextMessage
 	public static function sanitizeInput( $input ) {
 		$white = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,_-';
 		$clean = Text::clean($input,$white);
-		return "'".$input."'".(strlen($input)>strlen($clean)?'(!)':'');
+		return "'".$clean."'".(strlen($input)>strlen($clean)?'(!)':'');
 	}
 
 }

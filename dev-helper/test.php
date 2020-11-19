@@ -14,6 +14,7 @@ $tests = [
 	new \util\test\MustacheTest(),
 	new \security\test\PasswordTest(),
 	new \util\test\ClassNameTest(),
+	new \util\test\TextMessageTest(),
 ];
 
 echo '<h1>Running Tests</h1>';
