@@ -68,7 +68,7 @@ class LoginAction extends BaseAction
     protected function getAllEnabledDatabases() {
 
 		return array_filter( Configuration::subset('database')->subsets(), function($dbConfig) {
-			$dbConfig->is('enabled',true);
+			return $dbConfig->is('enabled',true);
 		});
 
 	}

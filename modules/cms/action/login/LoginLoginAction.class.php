@@ -43,27 +43,9 @@ class LoginLoginAction extends LoginAction implements Method {
         $this->setTemplateVar('enableOpenIdConnect'    ,(boolean)$oidcList  );
         $this->setTemplateVar('provider'               ,$oidcList           );
 
-        $databases = Configuration::subset('database')->subsets();
+		$dbids = $this->getSelectableDatabases();
 
-        // Filter all enabled databases
-        $databases = array_filter( $databases, function($dbConfig) {
-        	$dbConfig->is('enabled',true);
-		});
-
-        $dbids = [];
-        foreach( $databases as $dbid => $dbconf )
-        {
-        	// Getting the first not-null information about the connection.
-	        $dbids[ $dbid ] =  array_filter( array(
-	        	$dbconf->get('description'),
-				$dbconf->get('name'),
-				$dbconf->get('host'),
-				$dbconf->get('driver'),
-				$dbid))[0];
-        }
-
-
-        if	( empty($dbids) )
+        if	( ! $dbids )
             $this->addWarningFor( null,Messages::NO_DATABASE_CONFIGURATION );
 
         $this->setTemplateVar( 'dbids',$dbids );
