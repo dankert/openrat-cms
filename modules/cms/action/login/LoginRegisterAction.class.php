@@ -2,10 +2,13 @@
 namespace cms\action\login;
 use cms\action\LoginAction;
 use cms\action\Method;
+use cms\action\RequestParams;
 use cms\model\User;
 use language\Messages;
+use logger\Logger;
 use util\Mail;
 use util\Session;
+use util\text\TextMessage;
 
 
 class LoginRegisterAction extends LoginAction implements Method {
@@ -13,6 +16,7 @@ class LoginRegisterAction extends LoginAction implements Method {
 
     }
     public function post() {
+
 		$email_address = $this->getRequestVar('mail',RequestParams::FILTER_MAIL);
 
 		if	( ! Mail::checkAddress($email_address) )
@@ -30,17 +34,15 @@ class LoginRegisterAction extends LoginAction implements Method {
 
 
 		// E-Mail and die eingegebene Adresse verschicken
-		$mail = new Mail($email_address,
-		                 'register_commit_code');
+		$mail = new Mail($email_address, Messages::MAIL_SUBJECT_REGISTER_COMMIT_CODE,Messages::MAIL_TEXT_REGISTER_COMMIT_CODE);
 		$mail->setVar('code',$registerCode); // Registrierungscode als Text-Variable
-		
-		if	( $mail->send() )
-		{
+
+		try {
+			$mail->send();
 			$this->addNoticeFor( new User(), Messages::MAIL_SENT);
-		}
-		else
-		{
-			$this->addErrorFor( new User(),Messages::MAIL_NOT_SENT, [], $mail->error);
+		} catch( \Exception $e ) {
+			Logger::warn( new \Exception(TextMessage::create('Mail could not be sent for unregistered user with adress ${0}', [$email_address]), $e) );
+			$this->addErrorFor( new User(),Messages::MAIL_NOT_SENT);
 		}
     }
 }

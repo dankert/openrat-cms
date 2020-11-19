@@ -18,13 +18,11 @@
 
 namespace util;
 
-use Adresse;
 use cms\base\Configuration;
+use cms\base\Language;
 use cms\base\Startup;
-use cms\base\Version;
 use LogicException;
-use util\Text;
-use unknown_type;
+use util\text\TextMessage;
 use util\text\variables\VariableResolver;
 
 /**
@@ -63,7 +61,7 @@ class Mail
 	 *
 	 * @var array Fehler
 	 */
-	var $error = array();
+	public $debugLog = array();
 
 	/**
 	 * Set to true for debugging.
@@ -71,17 +69,21 @@ class Mail
 	 *
 	 * @var bool
 	 */
-	var $debug = true;
+	public $debug = true;
+	/**
+	 * @var string|string
+	 */
+	private $mailKey;
 
 
 	/**
 	 * Konstruktor.
 	 * Es werden folgende Parameter erwartet
 	 * @param String $to Empf�nger
-	 * @param String der Textschl�ssel
-	 * @return Mail
+	 * @param string $subjectKey
+	 * @param string $mailKey
 	 */
-	function __construct($to, $text)
+	function __construct($to, $subjectKey, $mailKey)
 	{
 		$mailConfig = Configuration::subset('mail');
 
@@ -98,10 +100,10 @@ class Mail
 
 		$this->header[] = 'X-Mailer: ' . $this->header_encode(Startup::TITLE . ' ' . Startup::VERSION);
 		$this->header[] = 'Content-Type: text/plain; charset=UTF-8';
-		$this->subject = $this->header_encode(\cms\base\Language::lang('mail_subject_' . $text));
+		$this->subject = $this->header_encode(Language::lang($subjectKey));
 		$this->to = $this->header_encode($to);
 
-		$this->text = $this->nl . wordwrap(\cms\base\Language::lang('mail_text_' . $text), 70, $this->nl) . $this->nl;
+		$this->text = $this->nl . wordwrap(Language::lang($mailKey), 70, $this->nl) . $this->nl;
 
 		// Signatur anhaengen (sofern konfiguriert)
 		$signature = $mailConfig->get('signature','');
@@ -116,19 +118,21 @@ class Mail
 
 		// Kopie-Empf�nger
 		if ( $mailConfig->has('cc'))
-			$this->cc = $this->header_encode($mailConfig->get('cc'));
+			$this->cc = $this->header_encode( implode(', ',$mailConfig->get('cc',[])));
 
 		// Blindkopie-Empf�nger
 		if ( $mailConfig->has('bcc'))
-			$this->bcc = $this->header_encode($mailConfig->get('bcc'));
+			$this->bcc = $this->header_encode( implode(', ',$mailConfig->get('bcc',[])));
+
+		$this->mailKey = $mailKey;
 	}
 
 
 	/**
 	 * Kodiert einen Text in das Format "Quoted-printable".<br>
 	 * See RFC 2045.
-	 * @param String $text Eingabe
-	 * @return Text im quoted-printable-Format
+	 * @param string $text Eingabe
+	 * @return string Text im quoted-printable-Format
 	 */
 	private function quoted_printable_encode($text)
 	{
@@ -154,8 +158,6 @@ class Mail
 	/**
 	 * Mail absenden.
 	 * Die E-Mail wird versendet.
-	 *
-	 * @return boolean Erfolg
 	 */
 	public function send()
 	{
@@ -172,8 +174,7 @@ class Mail
 		if ($white) {
 			if (!$this->containsDomain($to_domain, $white)) {
 				// Wenn Domain nicht in Whitelist gefunden, dann Mail nicht verschicken.
-				$this->error[] = 'Mail-Domain is not whitelisted';
-				return false;
+				throw new LogicException( TextMessage::create('Mail-Domain ${0} is not whitelisted',[$to_domain]));
 			}
 		}
 
@@ -183,8 +184,7 @@ class Mail
 		if ($black) {
 			if ($this->containsDomain($to_domain, $black)) {
 				// Wenn Domain in Blacklist gefunden, dann Mail nicht verschicken.
-				$this->error[] = 'Mail-Domain is blacklisted';
-				return false;
+				throw new LogicException( TextMessage::create('Mail-Domain ${0} is blacklisted',[$to_domain]));
 			}
 		}
 
@@ -218,9 +218,8 @@ class Mail
 				// Die E-Mail wurde nicht akzeptiert.
 				// Genauer geht es leider nicht, da mail() nur einen boolean-Wert
 				// zur�ck liefert.
-				$this->error[] = 'Mail was NOT accepted by mail()';
+				throw new LogicException('Mail was NOT accepted by mail(), no further information available. Please look into your system logs.');
 
-			return $result;
 		} else {
 			// eigenen SMTP-Dialog verwenden.
 			$smtpConf = $mailConfig->subset('smtp');
@@ -233,10 +232,8 @@ class Mail
 				// Mail direkt zustellen.
 				$mxHost = $this->getMxHost($this->to);
 
-				if (empty($mxHost)) {
-					$this->error[] = "No MX-Entry found. Mail could not be sent.";
-					return false;
-				}
+				if (empty($mxHost))
+					throw new LogicException( TextMessage::create('No MX-Entry found for ${0}',[$this->to]));
 
 				if ($smtpConf->is('ssl',false))
 					$mxPort = 465;
@@ -260,31 +257,27 @@ class Mail
 			$smtpSocket = fsockopen($proto . '://' . $mxHost, $mxPort, $errno, $errstr, intval($smtpConf['timeout']));
 
 			if (!is_resource($smtpSocket)) {
-				$this->error[] = 'Connection failed to: ' . $proto . '://' . $mxHost . ':' . $mxPort . ' (' . $errstr . '/' . $errno . ')';
-				return false;
+				throw new LogicException('Connection failed to: ' . $proto . '://' . $mxHost . ':' . $mxPort . ' (' . $errstr . '/' . $errno . ')');
 			}
 
 			$smtpResponse = fgets($smtpSocket, 4096);
 			if ($this->debug)
-				$this->error[] = trim($smtpResponse);
+				$this->debugLog[] = trim($smtpResponse);
 
 			if (substr($smtpResponse, 0, 3) != '220') {
-				$this->error[] = 'No 220: ' . trim($smtpResponse);
-				return false;
+				throw new LogicException('No 220: ' . trim($smtpResponse) );
 			}
 
 			if (!is_resource($smtpSocket)) {
-				$this->error[] = 'Connection failed to: ' . $smtpConf['host'] . ':' . $smtpConf['port'] . ' (' . $smtpResponse . ')';
-				return false;
+				throw new LogicException('Connection failed to: ' . $smtpConf['host'] . ':' . $smtpConf['port'] . ' (' . $smtpResponse . ')' );
 			}
 
 			//you have to say HELO again after TLS is started
 			$smtpResponse = $this->sendSmtpCommand($smtpSocket, 'HELO ' . $myHost);
 
 			if (substr($smtpResponse, 0, 3) != '250') {
-				$this->error[] = "No 2xx after HELO, server says: " . $smtpResponse;
 				$this->sendSmtpQuit($smtpSocket);
-				return false;
+				throw new LogicException("No 2xx after HELO, server says: " . $smtpResponse);
 			}
 
 			if ($smtpConf['tls']) {
@@ -295,9 +288,8 @@ class Mail
 					$smtpResponse = $this->sendSmtpCommand($smtpSocket, 'HELO ' . $myHost);
 
 					if (substr($smtpResponse, 0, 3) != '250') {
-						$this->error[] = "No 2xx after HELO, server says: " . $smtpResponse;
 						$this->sendSmtpQuit($smtpSocket);
-						return false;
+						throw new LogicException("No 2xx after HELO, server says: " . $smtpResponse );
 					}
 				} else {
 					// STARTTLS ging in die Hose. Einfach weitermachen.
@@ -308,53 +300,47 @@ class Mail
 			if ( $smtpConf->has('auth_username') && $smtpConf->has('host') ) {
 				$smtpResponse = $this->sendSmtpCommand($smtpSocket, "AUTH LOGIN");
 				if (substr($smtpResponse, 0, 3) != '334') {
-					$this->error[] = "No 334 after AUTH_LOGIN, server says: " . $smtpResponse;
 					$this->sendSmtpQuit($smtpSocket);
-					return false;
+					throw new LogicException("No 334 after AUTH_LOGIN, server says: " . $smtpResponse);
 				}
 
 				if ($this->debug)
-					$this->error[] = 'Login for ' . $smtpConf->get('auth_username');
+					$this->debugLog[] = 'Login for ' . $smtpConf->get('auth_username');
 
 				//send the username
 				$smtpResponse = $this->sendSmtpCommand($smtpSocket, base64_encode($smtpConf->get('auth_username')));
 				if (substr($smtpResponse, 0, 3) != '334') {
-					$this->error[] = "No 3xx after setting username, server says: " . $smtpResponse;
 					$this->sendSmtpQuit($smtpSocket);
-					return false;
+					throw new LogicException("No 3xx after setting username, server says: " . $smtpResponse);
 				}
 
 				//send the password
 				$smtpResponse = $this->sendSmtpCommand($smtpSocket, base64_encode($smtpConf->get('auth_password')));
 				if (substr($smtpResponse, 0, 3) != '235') {
-					$this->error[] = "No 235 after sending password, server says: " . $smtpResponse;
 					$this->sendSmtpQuit($smtpSocket);
-					return false;
+					throw new LogicException("No 235 after sending password, server says: " . $smtpResponse );
 				}
 			}
 
 			//email from
 			$smtpResponse = $this->sendSmtpCommand($smtpSocket, 'MAIL FROM: <' . $mailConfig->get('from') . '>');
 			if (substr($smtpResponse, 0, 3) != '250') {
-				$this->error[] = "No 2xx after MAIL_FROM, server says: " . $smtpResponse;
 				$this->sendSmtpQuit($smtpSocket);
-				return false;
+				throw new LogicException("No 2xx after MAIL_FROM, server says: " . $smtpResponse);
 			}
 
 			//email to
 			$smtpResponse = $this->sendSmtpCommand($smtpSocket, 'RCPT TO: <' . $this->to . '>');
 			if (substr($smtpResponse, 0, 3) != '250') {
-				$this->error[] = "No 2xx after RCPT_TO, server says: " . $smtpResponse;
 				$this->sendSmtpQuit($smtpSocket);
-				return false;
+				throw new LogicException("No 2xx after RCPT_TO, server says: " . $smtpResponse);
 			}
 
 			//the email
 			$smtpResponse = $this->sendSmtpCommand($smtpSocket, "DATA");
 			if (substr($smtpResponse, 0, 3) != '354') {
-				$this->error[] = "No 354 after DATA, server says: " . $smtpResponse;
 				$this->sendSmtpQuit($smtpSocket);
-				return false;
+				throw new LogicException("No 354 after DATA, server says: " . $smtpResponse);
 			}
 
 			$this->header[] = 'To: ' . $this->to;
@@ -365,14 +351,12 @@ class Mail
 			//observe the . after the newline, it signals the end of message
 			$smtpResponse = $this->sendSmtpCommand($smtpSocket, implode($this->nl, $this->header) . $this->nl . $this->nl . $text . $this->nl . '.');
 			if (substr($smtpResponse, 0, 3) != '250') {
-				$this->error[] = "No 2xx after putting DATA, server says: " . $smtpResponse;
 				$this->sendSmtpQuit($smtpSocket);
-				return false;
+				throw new LogicException("No 2xx after putting DATA, server says: " . $smtpResponse);
 			}
 
 			// say goodbye
 			$this->sendSmtpQuit($smtpSocket);
-			return true;
 		}
 	}
 
@@ -388,20 +372,20 @@ class Mail
 	private function sendSmtpCommand($socket, $cmd)
 	{
 		if ($this->debug)
-			$this->error[] = 'CLIENT: >>> ' . trim($cmd);
+			$this->debugLog[] = 'CLIENT: >>> ' . trim($cmd);
 		if (!is_resource($socket)) {
 			// Die Verbindung ist geschlossen. Dies kann bei dieser
 			// Implementierung eigentlich nur dann passieren, wenn
 			// der Server die Verbindung schlie�t.
 			// Dieser Client trennt die Verbindung nur nach einem "QUIT".
-			$this->error[] = "Connection lost";
+			$this->debugLog[] = "Connection lost";
 			return;
 		}
 
 		fputs($socket, $cmd . $this->nl);
 		$response = trim(fgets($socket, 4096));
 		if ($this->debug)
-			$this->error[] = 'SERVER: <<< ' . $response;
+			$this->debugLog[] = 'SERVER: <<< ' . $response;
 		return $response;
 	}
 
@@ -416,7 +400,7 @@ class Mail
 	{
 
 		if ($this->debug)
-			$this->error[] = "CLIENT: >>> QUIT";
+			$this->debugLog[] = "CLIENT: >>> QUIT";
 		if (!is_resource($socket))
 			return;
 		// Wenn die Verbindung nicht mehr da ist, brauchen wir
@@ -426,10 +410,10 @@ class Mail
 		fputs($socket, 'QUIT' . $this->nl);
 		$response = trim(fgets($socket, 4096));
 		if ($this->debug)
-			$this->error[] = 'SERVER: <<< ' . $response;
+			$this->debugLog[] = 'SERVER: <<< ' . $response;
 
 		if (substr($response, 0, 3) != '221')
-			$this->error[] = 'QUIT FAILED: ' . $response;
+			$this->debugLog[] = 'QUIT FAILED: ' . $response;
 
 		fclose($socket);
 	}
@@ -486,8 +470,7 @@ class Mail
 		list($user, $host) = explode('@', $to . '@');
 
 		if (empty($host)) {
-			$this->error[] = 'Illegal mail address - No hostname found.';
-			return "";
+			throw new LogicException( TextMessage::create('Illegal mail address ${0}: No hostname found',[$to]) );
 		}
 
 		list($host) = explode('>', $host);
@@ -511,7 +494,7 @@ class Mail
 	 * Es wird nur die Syntax geprüft. Ob die Adresse wirklich existiert, steht dadurch noch lange
 	 * nicht fest. Dazu müsste man die MX-Records auflösen und einen Zustellversuch unternehmen.
 	 *
-	 * @param $email_address Adresse
+	 * @param $email_address string Adresse
 	 * @return true, falls Adresse OK, sonst false
 	 */
 	public static function checkAddress($email_address)
@@ -541,5 +524,10 @@ class Mail
 			}
 		}
 		return false;
+	}
+
+	public function __toString()
+	{
+		return TextMessage::create('Mail to ${0} with subject key ${1}',[$this->to,$this->mailKey]);
 	}
 }

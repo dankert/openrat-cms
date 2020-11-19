@@ -6,6 +6,7 @@ use cms\base\Configuration;
 use cms\base\DB;
 use cms\model\User;
 use language\Messages;
+use logger\Logger;
 use security\Password;
 use util\exception\ValidationException;
 use util\Mail;
@@ -45,24 +46,23 @@ class LoginPasswordAction extends LoginAction implements Method {
 			$code = rand();
 			$this->setSessionVar(Session::KEY_PASSWORD_COMMIT_CODE,$code);
 			
-			$eMail = new Mail( $user->mail,'password_commit_code' );
+			$eMail = new Mail($user->mail,Messages::MAIL_SUBJECT_PASSWORD_COMMIT_CODE,Messages::MAIL_TEXT_PASSWORD_COMMIT_CODE);
 			$eMail->setVar('name',$user->getName());
 			$eMail->setVar('code',$code);
-			if	( $eMail->send() )
-				$this->addNoticeFor( new User(), Messages::MAIL_SENT);
-			else
-				// Yes, the mail is not sent but we are faking a sent mail.
-				// so no one is able to check if the username exists (if the mail system is down)
-				$this->addNoticeFor( new User(), Messages::MAIL_SENT);
 
-			$this->setSessionVar(Session::KEY_PASSWORD_COMMIT_NAME,$user->name);
+			try {
+				$eMail->send();
+				$this->setSessionVar(Session::KEY_PASSWORD_COMMIT_NAME,$user->name);
+			}
+			catch( \Exception $e ) {
+				Logger::warn( $e );
+			}
 		}
-		else
-		{
-			// There is no user with this name.
-			// We are faking a sending mail, so no one is able to check if this username exists.
-			sleep(1);
-			$this->addNoticeFor( new User(), Messages::MAIL_SENT);
-		}
-    }
+
+		// For security reasons:
+		// Always display a message that a mail is sent.
+		// So no one is able to check if this username exists.
+		sleep(1);
+		$this->addNoticeFor( new User(), Messages::MAIL_SENT);
+	}
 }

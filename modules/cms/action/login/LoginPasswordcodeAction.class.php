@@ -31,17 +31,16 @@ class LoginPasswordcodeAction extends LoginAction implements Method {
 		{
 			$newPw = $user->createPassword(); // Neues Kennwort erzeugen.
 
-			$eMail = new Mail( $user->mail,'password_new' );
+			$eMail = new Mail($user->mail, Messages::MAIL_SUBJECT_PASSWORD_NEW,Messages::MAIL_TEXT_PASSWORD_NEW);
 			$eMail->setVar('name'    ,$user->getName());
 			$eMail->setVar('password',$newPw          );
 
 			try {
-				if	( $eMail->send() )
-					$user->setPassword( $newPw, false ); // Kennwort muss beim n?. Login ge?ndert werden.
-				else
-					Logger::warn('Mail could not be sent: '.$eMail->error);
+				$eMail->send();
+				$user->setPassword( $newPw, false ); // Kennwort muss beim n?. Login ge?ndert werden.
 			} catch( \Exception $e ) {
 				Logger::warn( $e );
+				Logger::warn('Mail could not be sent: '.$user->mail);
 			}
 		}
 

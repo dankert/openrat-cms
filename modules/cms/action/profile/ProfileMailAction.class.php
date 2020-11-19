@@ -7,16 +7,19 @@ use logger\Logger;
 use util\exception\ValidationException;
 use util\Mail;
 use util\Session;
+use util\text\TextMessage;
 
 class ProfileMailAction extends ProfileAction implements Method {
+
     public function view() {
     }
+
     public function post() {
 		srand ((double)microtime()*1000003);
 		$code = rand(); // Zufalls-Freischaltcode erzeugen
 		$newMail = $this->getRequestVar('mail');
 
-		if	( empty($newMail) )
+		if	( !$newMail )
 		{
 			// Keine E-Mail-Adresse eingegeben.
 			throw new ValidationException('mail');
@@ -28,18 +31,16 @@ class ProfileMailAction extends ProfileAction implements Method {
 			Session::set( Session::KEY_MAIL_CHANGE_MAIL,$newMail);
 			
 			// E-Mail an die neue Adresse senden.
-			$mail = new Mail( $newMail,'mail_change_code' );
+			$mail = new Mail($newMail, Messages::MAIL_SUBJECT_MAIL_CHANGE_CODE,Messages::MAIL_TEXT_MAIL_CHANGE_CODE);
 			$mail->setVar('code',$code                 );
 			$mail->setVar('name',$this->user->getName());
-			
-			if	( $mail->send() )
-			{
+
+			try {
+				$mail->send();
 				$this->addNoticeFor( $this->user, Messages::MAIL_SENT);
-			}
-			else
-			{
-				Logger::warn('Mail could not be sent: '.$mail->error);
-				$this->addNoticeFor($this->user, Messages::MAIL_NOT_SENT,[],$mail->error); // Meldung
+			} catch( \Exception $e ) {
+				Logger::warn( new \Exception( TextMessage::create('Mail could not be sent for user ${name} with the new email adress {mail} ',['name'=>$this->user->name,'mail'=>$newMail]),$e) );
+				$this->addNoticeFor($this->user, Messages::MAIL_NOT_SENT );
 			}
 		}
     }
