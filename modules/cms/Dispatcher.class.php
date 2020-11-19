@@ -408,7 +408,7 @@ class Dispatcher
 		$possibleDbIds[] = $enabledDbids[0];
 
 		foreach( $possibleDbIds as $dbid ) {
-			if	( $allDbConfig->has( $dbid ) ) {
+			if	( isset($enabledDbids[$dbid]) ) {
 
 				$dbConfig = $allDbConfig->subset( $dbid );
 
