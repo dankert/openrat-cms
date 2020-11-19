@@ -514,7 +514,7 @@ class ValueGenerator extends BaseGenerator
 
 					default:
 						$inhalt = '';
-						Logger::error('subtype for linkinfo not implemented:'.$element->subtype);
+						Logger::warn('subtype for linkinfo not implemented:'.$element->subtype);
 				}
 
 				break;

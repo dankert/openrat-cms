@@ -45,7 +45,7 @@ class FtpTarget extends BaseTarget
 		$this->connection = $this->createConnection();
 
 		if (!$this->connection) {
-			Logger::error('Cannot connect to ' . $this->url->host . ':' . $this->url->port);
+			Logger::warn('Cannot connect to ' . $this->url->host . ':' . $this->url->port);
 			throw new PublisherException('Cannot connect to ' . $this->url->scheme . '-server: ' . $this->url->host . ':' . $this->url->port);
 		}
 

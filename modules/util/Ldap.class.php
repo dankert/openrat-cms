@@ -26,6 +26,7 @@ use RuntimeException;
  * @author $Author$
  * @version $Revision$
  * @package openrat.services
+ * @deprecated
  */
 class Ldap
 {
@@ -68,7 +69,7 @@ class Ldap
 		// zurueck gegeben. Dann erscheint zwar keine Fehlermeldung, aber zumindestens misslingt
 		// der nachfolgende Bind-Befehl.
 		if (!is_resource($this->connection) || $this->connection === false) {
-			Logger::error("connect to ldap server '$ldapHost:$ldapPort' failed");
+			Logger::warn("connect to ldap server '$ldapHost:$ldapPort' failed");
 			// Abbruch, wenn LDAP-Server nicht erreichbar
 			throw new RuntimeException("Connection failed to $ldapHost:$ldapPort (" . ldap_errno() . '/' . ldap_error() . '). Please contact your administrator.');
 		}

@@ -175,7 +175,7 @@ class Dispatcher
         if ( Configuration::subset('security')->is('use_post_token',true) &&
 			 $this->request->isAction &&
 			 $this->request->getToken() != Session::token() ) {
-            Logger::error( TextMessage::create(
+            Logger::warn( TextMessage::create(
             	'Token mismatch: Needed ${expected}), but got ${actual} Maybe an attacker?',
 				[
 					'expected' => Session::token(),
