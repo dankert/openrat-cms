@@ -82,13 +82,13 @@ class LoginAction extends BaseAction
 
 		return array_map( function($dbconf) {
 			// Getting the first not-null information about the connection.
-			return array_filter( array(
+			return array_values(array_filter( array(
 				$dbconf->get('description'),
 				$dbconf->get('name'  ),
 				$dbconf->get('host'  ),
 				$dbconf->get('driver'),
 				$dbconf->get('type'  ),
-				'unknown'))[0];
+				'unknown')))[0];
 
 		}, $this->getAllEnabledDatabases() );
 
