@@ -321,7 +321,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 	
 	// Bei Änderungen in der View das Tab als 'dirty' markieren
 	$(viewEl).find('.or-input').change( function() {
-		$(this).closest('.view').addClass('dirty');
+		$(this).closest('.or-view').addClass('view--is-dirty');
 	});
 
 	// Theme-Auswahl mit Preview

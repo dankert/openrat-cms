@@ -510,7 +510,8 @@ Openrat.Workbench = new function()
 			if	( $('.or-dialog').hasClass('or-dialog--modal') )
 				return;
 
-			$('.or-view.or-view--is-dirty').removeClass('or-view--is-dirty');
+			// Remove dirty-flag from view
+			$('.or-view.or-view--is-dirty').removeClass('view--is-dirty');
 			$('#dialog .or-view').html('');
 			$('#dialog').removeClass('dialog--is-open').addClass('dialog--is-closed'); // Dialog schließen
 

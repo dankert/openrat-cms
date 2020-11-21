@@ -148,6 +148,9 @@ Openrat.Form = function() {
 
                     form.doResponse(responseData,textStatus,form.element, function() {
 
+						// Remove dirty-flag from view
+						$(form.element).closest('.or-view.or-view--is-dirty').removeClass('view--is-dirty');
+
 						let afterSuccess = $(form.element).data('afterSuccess');
 						let forwardTo    = $(form.element).data('forwardTo'   );
 						let async        = $(form.element).data('async'       );

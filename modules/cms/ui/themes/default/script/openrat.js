@@ -1921,6 +1921,9 @@ Openrat.Form = function() {
 
                     form.doResponse(responseData,textStatus,form.element, function() {
 
+						// Remove dirty-flag from view
+						$(form.element).closest('.or-view.or-view--is-dirty').removeClass('view--is-dirty');
+
 						let afterSuccess = $(form.element).data('afterSuccess');
 						let forwardTo    = $(form.element).data('forwardTo'   );
 						let async        = $(form.element).data('async'       );
@@ -2549,7 +2552,8 @@ Openrat.Workbench = new function()
 			if	( $('.or-dialog').hasClass('or-dialog--modal') )
 				return;
 
-			$('.or-view.or-view--is-dirty').removeClass('or-view--is-dirty');
+			// Remove dirty-flag from view
+			$('.or-view.or-view--is-dirty').removeClass('view--is-dirty');
 			$('#dialog .or-view').html('');
 			$('#dialog').removeClass('dialog--is-open').addClass('dialog--is-closed'); // Dialog schließen
 
@@ -2973,7 +2977,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 	
 	// Bei Änderungen in der View das Tab als 'dirty' markieren
 	$(viewEl).find('.or-input').change( function() {
-		$(this).closest('.view').addClass('dirty');
+		$(this).closest('.or-view').addClass('view--is-dirty');
 	});
 
 	// Theme-Auswahl mit Preview
