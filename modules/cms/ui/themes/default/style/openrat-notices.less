@@ -9,23 +9,23 @@
 }
 .or- {
 
-    &notices {
-
-        display: block;
-        position: fixed;
-        bottom: 40px;
-        right: 40px;
-        width: 25em;
-        z-index: 5;
-    }
 
     &notice {
         border: 2px solid @color-overridden-by-theme;
         padding: 1.1em;
-        margin: 5px;
+        margin: 0.5em;
         position: relative;
 
-        .border-radius(5px);
+        .border-radius(1em);
+
+        &s {
+            display: block;
+            position: fixed;
+            bottom: 4em;
+            right: 4em;
+            width: 25em;
+            z-index: 5;
+        }
 
         &-toolbar {
             float: right;

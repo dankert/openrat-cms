@@ -1875,7 +1875,7 @@ Openrat.Form = function() {
 
         // Alle vorhandenen Error-Marker entfernen.
         // Falls wieder ein Fehler auftritt, werden diese erneut gesetzt.
-        $(this.element).find('.or-input.or-error').removeClass('error');
+        $(this.element).find('.or-input--error').removeClass('input--error');
 
         let params = $(this.element).serializeArray();
         let data = {};
@@ -2027,7 +2027,7 @@ Openrat.Form = function() {
 
         // Validation error should mark the input field.
         $.each(data['errors'], function(idx,value) {
-            $('.or-input[name='+value+']').addClass('error').parent().addClass('error').parents('fieldset').removeClass('closed').addClass('show').addClass('open');
+            $('.or-input[name='+value+']').addClass('input--error').parent().addClass('input--error').parents('.or-group').removeClass('closed').addClass('show').addClass('open');
         });
 
         // Jetzt das erhaltene Dokument auswerten.
