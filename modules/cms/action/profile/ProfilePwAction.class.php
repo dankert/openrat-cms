@@ -5,6 +5,7 @@ use cms\action\ProfileAction;
 use cms\base\Configuration;
 use cms\model\User;
 use language\Messages;
+use util\Mail;
 
 class ProfilePwAction extends ProfileAction implements Method {
     public function view() {
@@ -21,6 +22,9 @@ class ProfilePwAction extends ProfileAction implements Method {
 
     public function post() {
 		$pwMinLength = Configuration::subset(['security','password'])->get('min_length',10);
+
+		if	( $this->user->type != User::AUTH_TYPE_INTERNAL )
+			throw new \LogicException('password change only possible for internal users.');
 
 		if	( ! $this->user->checkPassword( $this->getRequestVar('act_password') ) )
 		{
@@ -42,6 +46,12 @@ class ProfilePwAction extends ProfileAction implements Method {
 		{
 			$this->user->setPassword( $this->getRequestVar('password1') );
 			$this->addNoticeFor( $this->user,Messages::SAVED);
+
+			// Send mail to user to inform about the new password.
+			if   ( $this->user->mail ) {
+				$mail = new Mail( $this->user->mail,Messages::MAIL_PASSWORD_CHANGE_SUCCESS_SUBJECT,Messages::MAIL_PASSWORD_CHANGE_SUCCESS);
+				$mail->send();
+			}
 		}
     }
 }

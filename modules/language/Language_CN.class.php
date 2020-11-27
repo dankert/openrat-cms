@@ -552,6 +552,14 @@ public function get() { return [
 'LOGO_REGISTER'=>'Registration',
 'LOGO_REGISTER_TEXT'=>'If you do not have an user account, then feel free to register now. You need an E-Mail account, to which a registration code is sent.',
 'MAIL_CODE'=>'Confirmation code',
+'MAIL_PASSWORD_CHANGE_SUCCESS_SUBJECT'=>'Your password was successfully changed',
+'MAIL_PASSWORD_CHANGE_SUCCESS'=>'Your password was successfully changed',
+'MAIL_NEW_LOGIN_SUBJECT'=>'New login',
+'MAIL_NEW_LOGIN_TEXT'=>'Hello ${name},
+
+We want to inform you that you just logged in with your username ${username} on the device ${browser} (${platform}).
+
+If you did not do this, please change your password.',
 'MAIL_SUBJECT_MAIL_CHANGE_CODE'=>'Change of your E-Mail adress',
 'MAIL_SUBJECT_PASSWORD_COMMIT_CODE'=>'Password change request',
 'MAIL_SUBJECT_PASSWORD_NEW'=>'New password',

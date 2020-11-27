@@ -552,6 +552,14 @@ public function get() { return [
 'LOGO_REGISTER'=>'Registrierung',
 'LOGO_REGISTER_TEXT'=>'Wenn sich noch nicht als Benutzer eingetragen sind, dann können Sie sich hier registrieren. Sie benötigen dazu ein gültigen E-Mail-Konto, an das ein Registrierungscode gesendet wird.',
 'MAIL_CODE'=>'Bestätigungscode',
+'MAIL_PASSWORD_CHANGE_SUCCESS_SUBJECT'=>'Kennwortänderung erfolgreich',
+'MAIL_PASSWORD_CHANGE_SUCCESS'=>'Ihr Kennwort wurde erfolgreich geändert.',
+'MAIL_NEW_LOGIN_SUBJECT'=>'Neues Login',
+'MAIL_NEW_LOGIN_TEXT'=>'Guten Tag ${name},
+
+Sie haben sich mit Ihrem Benutzernamen ${username} auf dem Gerät ${browser} (${platform}) neu angemeldet. Dies dient rein zu Ihrer Information.
+
+Sofern Sie dieses nicht waren, ändern Sie bitte umgehend Ihr Kennwort.',
 'MAIL_SUBJECT_MAIL_CHANGE_CODE'=>'Änderung Ihrer E-Mail-Adresse',
 'MAIL_SUBJECT_PASSWORD_COMMIT_CODE'=>'Bestaetigung fuer Kennwortänderung',
 'MAIL_SUBJECT_PASSWORD_NEW'=>'Neues Kennwort',

@@ -16,6 +16,7 @@ use logger\Logger;
 use security\Password;
 use util\exception\ObjectNotFoundException;
 use util\exception\SecurityException;
+use util\Mail;
 use util\Session;
 use util\text\TextMessage;
 
@@ -206,6 +207,17 @@ class LoginLoginAction extends LoginAction implements Method {
 		// Anmeldung erfolgreich.
 		if	( Configuration::subset('security')->is('renew_session_login',false) )
 			$this->recreateSession();
+
+		// Send mail to user to inform about the new login.
+		if   ( $user->mail && Configuration::subset('security')->is('inform_user_about_new_login',true) ) {
+			$mail = new Mail( $user->mail, Messages::MAIL_NEW_LOGIN_SUBJECT, Messages::MAIL_NEW_LOGIN_TEXT );
+			$browser = new \util\Browser();
+			$mail->setVar( 'platform',$browser->platform );
+			$mail->setVar( 'browser' ,$browser->name     );
+			$mail->setVar( 'username',$user->name        );
+			$mail->setVar( 'name'    ,$user->getName()   );
+			$mail->send();
+		}
 
 		$this->addNoticeFor( $user,Messages::LOGIN_OK, array('name' => $user->getName() ));
 

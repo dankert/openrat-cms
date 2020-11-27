@@ -2824,6 +2824,28 @@ LOGO_REGISTER_TEXT:
 MAIL_CODE:
   de: Bestätigungscode
   en: Confirmation code
+MAIL_PASSWORD_CHANGE_SUCCESS_SUBJECT:
+  de: Kennwortänderung erfolgreich
+  en: Your password was successfully changed
+MAIL_PASSWORD_CHANGE_SUCCESS:
+  de: Ihr Kennwort wurde erfolgreich geändert.
+  en: Your password was successfully changed
+MAIL_NEW_LOGIN_SUBJECT:
+  de: Neues Login
+  en: New login
+MAIL_NEW_LOGIN_TEXT:
+  de: |
+    Guten Tag ${name},
+
+    Sie haben sich mit Ihrem Benutzernamen ${username} auf dem Gerät ${browser} (${platform}) neu angemeldet. Dies dient rein zu Ihrer Information.
+
+    Sofern Sie dieses nicht waren, ändern Sie bitte umgehend Ihr Kennwort.
+  en: |
+    Hello ${name},
+
+    We want to inform you that you just logged in with your username ${username} on the device ${browser} (${platform}).
+
+    If you did not do this, please change your password.
 MAIL_SUBJECT_MAIL_CHANGE_CODE:
   de: Änderung Ihrer E-Mail-Adresse
   en: Change of your E-Mail adress
