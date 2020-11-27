@@ -6,9 +6,9 @@ use cms\action\Method;
 use cms\action\RequestParams;
 use cms\auth\Auth;
 use cms\auth\AuthRunner;
-use cms\auth\InternalAuth;
 use cms\base\Configuration;
 use cms\base\DB;
+use cms\base\Startup;
 use cms\model\User;
 use language\Language;
 use language\Messages;
@@ -153,6 +153,35 @@ class LoginLoginAction extends LoginAction implements Method {
 			$this->addErrorFor( null,Messages::LOGIN_FAILED, ['name' => $loginName] );
 			$this->addValidationError('login_name'    , '');
 			$this->addValidationError('login_password', '');
+
+			// Increase fail counter
+			$user = User::loadWithName($loginName,User::AUTH_TYPE_INTERNAL);
+
+			$isLocked = $user->passwordLockedUntil && $user->passwordLockedUntil > Startup::getStartTime();
+
+			if   ( ! $isLocked ) {
+
+				$user->increaseFailedPasswordCounter();
+
+				$lockAfter = Configuration::subset(['security','password'])->get('lock_after_fail_count',10);
+				if   ( $lockAfter && $user->passwordFailedCount % $lockAfter == 0 ) {
+					$factor         = pow(2, intval($user->passwordFailedCount/$lockAfter) - 1 ) ;
+					$lockedDuration = Configuration::subset(['security','password'])->get('lock_duration',120) * $factor * 60;
+
+					$lockedUntil = Startup::getStartTime() + $lockedDuration;
+					$user->passwordLockedUntil = $lockedUntil;
+					$user->persist();
+
+					if   ( $user->mail ) {
+						$mail = new Mail( $user->mail,Messages::MAIL_PASSWORD_LOCKED_SUBJECT,Messages::MAIL_PASSWORD_LOCKED);
+						$mail->setVar('username',$user->name);
+						$mail->setVar('name',$user->getName() );
+						$mail->setVar('until',date( \cms\base\Language::lang(Messages::DATE_FORMAT ), $lockedUntil ) );
+						$mail->send();
+					}
+				}
+			}
+
 			return;
 		}
 

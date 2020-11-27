@@ -76,6 +76,10 @@ class User extends ModelBase
 	public $issuer = null;
 	public $type = User::AUTH_TYPE_INTERNAL;
 
+	public $passwordFailedCount = 0;
+	public $passwordLockedUntil = 0;
+
+
 	// Konstruktor
 	public function __construct( $userid='' )
 	{
@@ -421,6 +425,8 @@ SQL
 		$this->totp      = ($row['totp']==1);
 		$this->passwordExpires = $row['password_expires'];
 		$this->passwordAlgo    = $row['password_algo'];
+		$this->passwordLockedUntil = $row['password_locked_until'];
+		$this->passwordFailedCount = $row['password_fail_count'  ];
 		$this->type      = $row['auth_type'];
 		$this->issuer    = $row['issuer'];
 
@@ -486,7 +492,9 @@ SQL
 		                     timezone = {timezone},
 		                     is_admin = {isAdmin},
 		                     totp     = {totp},
-		                     hotp     = {hotp}
+		                     hotp     = {hotp},
+		                     password_fail_count   = {fail_count},
+		                     password_locked_until = {locked_until}
 		                 WHERE id={userid}
 SQL
  );
@@ -502,7 +510,9 @@ SQL
 		$sql->setBoolean( 'totp'    ,$this->totp    );
 		$sql->setBoolean( 'hotp'    ,$this->hotp    );
 		$sql->setInt    ( 'userid'  ,$this->userid  );
-		
+		$sql->setInt    ( 'fail_count'  ,$this->passwordFailedCount  );
+		$sql->setInt    ( 'locked_until',$this->passwordLockedUntil  );
+
 		// Datenbankabfrage ausfuehren
 		$sql->query();
 	}
@@ -1141,6 +1151,12 @@ SQL
 	    
 	    $stmt->execute();
 	    
+	}
+
+
+	public function increaseFailedPasswordCounter() {
+		$this->passwordFailedCount++;
+		$this->save();
 	}
 
 

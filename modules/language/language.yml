@@ -2846,6 +2846,22 @@ MAIL_NEW_LOGIN_TEXT:
     We want to inform you that you just logged in with your username ${username} on the device ${browser} (${platform}).
 
     If you did not do this, please change your password.
+MAIL_PASSWORD_LOCKED_SUBJECT:
+  de: Kennwort gesperrt
+  en: Your password is locked
+MAIL_PASSWORD_LOCKED:
+  de: |
+    Guten Tag ${name},
+
+    Sie haben mehrfach vergeblich versucht, sich mit Ihrem Benutzernamen ${username} anzumelden.
+
+    Aus Sicherheitsgründen ist Ihre Kennung bis ${until} gesperrt.
+  en: |
+    Hello ${name},
+
+    you have tried to login a few times with your user account ${username}.
+
+    Due to security resons your account is locked until ${until}.
 MAIL_SUBJECT_MAIL_CHANGE_CODE:
   de: Änderung Ihrer E-Mail-Adresse
   en: Change of your E-Mail adress

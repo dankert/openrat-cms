@@ -4,6 +4,7 @@ namespace cms\auth;
 
 use cms\base\Configuration;
 use cms\base\DB as Db;
+use cms\base\Startup;
 use cms\model\User;
 use LogicException;
 use security\Password;
@@ -38,6 +39,11 @@ SQL
 			// Trotzdem das Kennwort hashen, um Timingattacken zu verhindern.
 			$unusedHash = Password::hash(User::pepperPassword($password), Password::bestAlgoAvailable());
 			return null;
+		}
+
+		$lockedUntil = $row_user['password_locked_until'];
+		if ( $lockedUntil && $lockedUntil > Startup::getStartTime() ) {
+			return Auth::STATUS_FAILED; // Password is locked
 		}
 
 		// Pruefen ob Kennwort mit Datenbank uebereinstimmt.

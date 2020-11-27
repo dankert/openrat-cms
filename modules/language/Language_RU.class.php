@@ -560,6 +560,12 @@ public function get() { return [
 We want to inform you that you just logged in with your username ${username} on the device ${browser} (${platform}).
 
 If you did not do this, please change your password.',
+'MAIL_PASSWORD_LOCKED_SUBJECT'=>'Your password is locked',
+'MAIL_PASSWORD_LOCKED'=>'Hello ${name},
+
+you have tried to login a few times with your user account ${username}.
+
+Due to security resons your account is locked until ${until}.',
 'MAIL_SUBJECT_MAIL_CHANGE_CODE'=>'Change of your E-Mail adress',
 'MAIL_SUBJECT_PASSWORD_COMMIT_CODE'=>'Запрос на изменение пароля',
 'MAIL_SUBJECT_PASSWORD_NEW'=>'Новый пароль',

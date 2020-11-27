@@ -560,6 +560,12 @@ public function get() { return [
 Sie haben sich mit Ihrem Benutzernamen ${username} auf dem Gerät ${browser} (${platform}) neu angemeldet. Dies dient rein zu Ihrer Information.
 
 Sofern Sie dieses nicht waren, ändern Sie bitte umgehend Ihr Kennwort.',
+'MAIL_PASSWORD_LOCKED_SUBJECT'=>'Kennwort gesperrt',
+'MAIL_PASSWORD_LOCKED'=>'Guten Tag ${name},
+
+Sie haben mehrfach vergeblich versucht, sich mit Ihrem Benutzernamen ${username} anzumelden.
+
+Aus Sicherheitsgründen ist Ihre Kennung bis ${until} gesperrt.',
 'MAIL_SUBJECT_MAIL_CHANGE_CODE'=>'Änderung Ihrer E-Mail-Adresse',
 'MAIL_SUBJECT_PASSWORD_COMMIT_CODE'=>'Bestaetigung fuer Kennwortänderung',
 'MAIL_SUBJECT_PASSWORD_NEW'=>'Neues Kennwort',
