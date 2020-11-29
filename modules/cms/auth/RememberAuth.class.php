@@ -3,11 +3,9 @@
 namespace cms\auth;
 
 use cms\action\Action;
-use cms\auth\Auth;
 use cms\base\Configuration;
 use cms\base\DB;
 use cms\base\Startup;
-use cms\model\Text;
 use database\Database;
 use cms\model\User;
 use logger\Logger;
@@ -114,7 +112,7 @@ SQL
 	 */
 	public function login($user, $password, $token)
 	{
-		return null;
+		return Auth::STATUS_FAILED;
 	}
 
 	protected function makeDBWritable( $dbid ) {

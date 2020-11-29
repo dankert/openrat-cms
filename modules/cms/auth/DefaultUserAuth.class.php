@@ -22,7 +22,7 @@ class DefaultUserAuth implements Auth
 	 */
 	public function login($user, $password, $token)
 	{
-		return false;
+		return Auth::STATUS_FAILED;
 	}
 
 }

@@ -2,7 +2,6 @@
 
 namespace cms\auth;
 
-use cms\auth\Auth;
 use logger\Logger;
 use util\Http;
 
@@ -50,8 +49,6 @@ class IdentAuth implements Auth
 	 */
 	public function login($user, $password, $token)
 	{
-		return null;
+		return Auth::STATUS_FAILED;
 	}
 }
-
-?>

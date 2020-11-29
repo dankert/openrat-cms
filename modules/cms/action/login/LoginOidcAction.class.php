@@ -4,6 +4,7 @@ use cms\action\LoginAction;
 use cms\action\Method;
 use cms\action\RequestParams;
 use cms\base\Configuration;
+use cms\base\Startup;
 use cms\model\User;
 use Exception;
 use openid_connect\OpenIDConnectClient;
@@ -40,12 +41,22 @@ class LoginOidcAction extends LoginAction implements Method {
 			$user = User::loadWithName( $subjectIdentifier,User::AUTH_TYPE_OIDC,$providerName );
 
 			if   ( ! $user ) {
-				// Create user
-				$user = new User();
-				$user->name   = $subjectIdentifier;
-				$user->type   = User::AUTH_TYPE_OIDC;
-				$user->issuer = $providerName;
-				$user->persist();
+
+				if ( Startup::readonly() ) {
+					throw new \LogicException('Cannot add authenticated user to database, because the system is readonly');
+				}
+				elseif (Configuration::subset(['security', 'newuser'])->is('autoadd', true)) {
+
+					// Create user
+					$user = new User();
+					$user->name = $subjectIdentifier;
+					$user->type = User::AUTH_TYPE_OIDC;
+					$user->issuer = $providerName;
+					$user->persist();
+				}
+				else {
+					throw new \LogicException('Cannot add authenticated user to database, because auto adding is disabled.');
+				}
 
 			}
 

@@ -39,6 +39,6 @@ class HttpAuth implements Auth
 
 		$ok = $http->request();
 
-		return $ok;
+		return $ok ? Auth::STATUS_SUCCESS : Auth::STATUS_FAILED;
 	}
 }

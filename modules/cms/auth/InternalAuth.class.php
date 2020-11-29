@@ -38,12 +38,12 @@ SQL
 			// Benutzer ist nicht vorhanden.
 			// Trotzdem das Kennwort hashen, um Timingattacken zu verhindern.
 			$unusedHash = Password::hash(User::pepperPassword($password), Password::bestAlgoAvailable());
-			return null;
+			return Auth::STATUS_FAILED ;
 		}
 
 		$lockedUntil = $row_user['password_locked_until'];
 		if ( $lockedUntil && $lockedUntil > Startup::getStartTime() ) {
-			return Auth::STATUS_FAILED; // Password is locked
+			return Auth::STATUS_FAILED & Auth::STATUS_ACCOUNT_LOCKED; // Password is locked
 		}
 
 		// Pruefen ob Kennwort mit Datenbank uebereinstimmt.
@@ -68,9 +68,9 @@ SQL
 			// Wenn das kennwort abgelaufen ist, kann es eine bestimmte Dauer noch benutzt und geändert werden.
 			// Nach Ablauf dieser Dauer wird das Login abgelehnt.
 			if ($row_user['password_expires'] + (Configuration::subset('security')->get('deny_after_expiration_duration',72) * 60 * 60) < time())
-				return Auth::STATUS_FAILED; // Abgelaufenes Kennwort wird nicht mehr akzeptiert.
+				return Auth::STATUS_FAILED & Auth::STATUS_PW_EXPIRED; // Abgelaufenes Kennwort wird nicht mehr akzeptiert.
 			else
-				return Auth::STATUS_PW_EXPIRED; // Kennwort ist abgelaufen, kann aber noch geändert werden.
+				return Auth::STATUS_SUCCESS & Auth::STATUS_PW_EXPIRED; // Kennwort ist abgelaufen, kann aber noch geändert werden.
 		}
 
 		if ($row_user['totp'] == 1) {
@@ -79,7 +79,7 @@ SQL
 			if (Password::getTOTPCode($user->otpSecret) == $token)
 				return Auth::STATUS_SUCCESS;
 			else
-				return Auth::STATUS_TOKEN_NEEDED;
+				return Auth::STATUS_FAILED & Auth::STATUS_TOKEN_NEEDED;
 		}
 
 		if ($row_user['hotp'] == 1) {

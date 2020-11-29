@@ -2,8 +2,6 @@
 
 namespace cms\auth;
 
-use cms\auth\Auth;
-
 /**
  * Single-Signon-Authentifizierung.
  *
@@ -13,6 +11,7 @@ class SingleSignonAuth implements Auth
 {
 	public function username()
 	{
+		return null;
 	}
 
 
@@ -21,7 +20,7 @@ class SingleSignonAuth implements Auth
 	 */
 	public function login($user, $password, $token)
 	{
-		return false;
+		return Auth::STATUS_FAILED;;
 	}
 }
 

@@ -2,7 +2,6 @@
 
 namespace cms\auth;
 
-use cms\auth\Auth;
 use cms\base\Configuration;
 
 /**
@@ -30,7 +29,7 @@ class SSLAuth implements Auth
 	 */
 	public function login($user, $password, $token)
 	{
-		return ( $this->username() == $user ) ? Auth::STATUS_SUCCESS : null;
+		return ( $this->username() == $user ) ? Auth::STATUS_SUCCESS : Auth::STATUS_FAILED;;
 	}
 }
 

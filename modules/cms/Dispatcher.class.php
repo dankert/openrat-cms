@@ -424,7 +424,7 @@ class Dispatcher
 
 				try
 				{
-					$key = $this->request->isAction?'write':'read';
+					$key = $this->request->isAction && !Startup::readonly() ?'write':'read';
 
 					$db = new Database( $dbConfig->merge( $dbConfig->subset($key))->getConfig() );
 					$db->id = $dbid;
