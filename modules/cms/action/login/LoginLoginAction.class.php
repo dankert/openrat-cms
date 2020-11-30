@@ -204,6 +204,7 @@ class LoginLoginAction extends LoginAction implements Method {
 				$user = User::loadWithName($loginName, User::AUTH_TYPE_INTERNAL, null);
 				$user->setCurrent();
 				$user->updateLoginTimestamp();
+				$user->resetFailedPasswordCounter();
 
 				if ($user->passwordAlgo != Password::bestAlgoAvailable())
 					// Re-Hash the password with a better hash algo.
@@ -273,7 +274,7 @@ class LoginLoginAction extends LoginAction implements Method {
 			Session::setConfig( $config );
 		}
 		else {
-			throw new \LogicException('unreachable code: Auth module must return either SUCCESS or FAIL');
+			throw new \LogicException('Auth module must return either SUCCESS or FAIL, but got '.$authResult);
 		}
 
 	}
