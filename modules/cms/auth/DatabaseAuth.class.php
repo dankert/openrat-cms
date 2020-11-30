@@ -2,7 +2,6 @@
 
 namespace cms\auth;
 
-use cms\auth\Auth;
 use cms\base\Configuration;
 use database\Database;
 
@@ -22,7 +21,7 @@ class DatabaseAuth implements Auth
 		$authDbConf = Configuration::subset(['security','authdb']);
 
 		if (!$authDbConf->is('enable',true))
-			return false;
+			return Auth::STATUS_FAILED;
 
 		$authdb = new Database($authDbConf);
 
@@ -32,7 +31,7 @@ class DatabaseAuth implements Auth
 		$sql->setString('password', hash($algo, $password));
 		$row = $sql->getRow();
 
-		// noch nicht implementiert: $authdb->close();
+		$authdb->disconnect();
 
 		return $row ? Auth::STATUS_SUCCESS : Auth::STATUS_FAILED;
 	}
