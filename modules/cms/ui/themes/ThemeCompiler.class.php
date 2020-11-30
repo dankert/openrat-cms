@@ -122,6 +122,7 @@ class ThemeCompiler
 		$js[] = __DIR__.'/default/script/jquery-ui';
 
 		// Jquery-Plugins
+		$js[] = __DIR__.'/default/script/plugin/jquery-plugin-toggleAttr';
 		$js[] = __DIR__.'/default/script/plugin/jquery-plugin-orSearch';
 		$js[] = __DIR__.'/default/script/plugin/jquery-plugin-orLinkify';
 		$js[] = __DIR__.'/default/script/plugin/jquery-plugin-orTree';

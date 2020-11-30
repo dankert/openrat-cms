@@ -71,7 +71,7 @@ $( function() {
         } );
 
 
-
+/*
         $('section.toggle-open-close .on-click-open-close').click(function () {
             var section = $(this).closest('section');
 
@@ -84,7 +84,7 @@ $( function() {
             if (view.children().length == 0)
                 Openrat.Workbench.loadNewActionIntoElement(view);
         });
-
+*/
     }
 
     // Initial Notices
@@ -194,6 +194,15 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(element) {
 			Openrat.Workbench.popupWindow.location.href = $(this).attr('data-url');
         });
 
+});
+
+
+Openrat.Workbench.afterViewLoadedHandler.add( function(element) {
+
+        $(element).find(".or-act-make-visible").click( function() {
+			$(this).toggleClass('btn--is-active' );
+			$(this).parent().children('input').toggleAttr('type','text','password');
+        });
 });
 
 

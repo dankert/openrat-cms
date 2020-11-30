@@ -45,6 +45,10 @@ class PasswordComponent extends FieldComponent
 		else
 			$input->addAttribute('value',Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->name));
 
-		return $input->addStyleClass('input');
+		$input->addStyleClass('input');
+
+		$makeVisible = (new CMSElement('i'))->addStyleClass(['image-icon','image-icon--visible','act-make-visible','btn']);
+
+		return (new CMSElement('span'))->addStyleClass([])->addChild($input)->addChild($makeVisible);
 	}
 }

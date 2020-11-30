@@ -115,6 +115,16 @@ else{if(this.containers[s].containerCache.over){this.containers[s]._trigger("out
 else{c=10000;n=null;h=r.floating||this._isFloating(this.currentItem);p=h?"left":"top";u=h?"width":"height";l=h?"pageX":"pageY";for(o=this.items.length-1;o>=0;o--){if(!t.contains(this.containers[i].element[0],this.items[o].item[0])){continue};if(this.items[o].item[0]===this.currentItem[0]){continue};a=this.items[o].item.offset()[p];f=!1;if(e[l]-a>this.items[o][u]/2){f=!0};if(Math.abs(e[l]-a)<c){c=Math.abs(e[l]-a);n=this.items[o];this.direction=f?"up":"down"}};if(!n&&!this.options.dropOnEmpty){return};if(this.currentContainer===this.containers[i]){if(!this.currentContainer.containerCache.over){this.containers[i]._trigger("over",e,this._uiHash());this.currentContainer.containerCache.over=1};return};n?this._rearrange(e,n,null,!0):this._rearrange(e,null,this.containers[i].element,!0);this._trigger("change",e,this._uiHash());this.containers[i]._trigger("change",e,this._uiHash(this));this.currentContainer=this.containers[i];this.options.placeholder.update(this.currentContainer,this.placeholder);this.containers[i]._trigger("over",e,this._uiHash(this));this.containers[i].containerCache.over=1}},_createHelper:function(e){var s=this.options,i=t.isFunction(s.helper)?t(s.helper.apply(this.element[0],[e,this.currentItem])):(s.helper==="clone"?this.currentItem.clone():this.currentItem);if(!i.parents("body").length){t(s.appendTo!=="parent"?s.appendTo:this.currentItem[0].parentNode)[0].appendChild(i[0])};if(i[0]===this.currentItem[0]){this._storedCSS={width:this.currentItem[0].style.width,height:this.currentItem[0].style.height,position:this.currentItem.css("position"),top:this.currentItem.css("top"),left:this.currentItem.css("left")}};if(!i[0].style.width||s.forceHelperSize){i.width(this.currentItem.width())};if(!i[0].style.height||s.forceHelperSize){i.height(this.currentItem.height())};return i},_adjustOffsetFromHelper:function(e){if(typeof e==="string"){e=e.split(" ")};if(t.isArray(e)){e={left:+e[0],top:+e[1]||0}};if("left" in e){this.offset.click.left=e.left+this.margins.left};if("right" in e){this.offset.click.left=this.helperProportions.width-e.right+this.margins.left};if("top" in e){this.offset.click.top=e.top+this.margins.top};if("bottom" in e){this.offset.click.top=this.helperProportions.height-e.bottom+this.margins.top}},_getParentOffset:function(){this.offsetParent=this.helper.offsetParent();var e=this.offsetParent.offset();if(this.cssPosition==="absolute"&&this.scrollParent[0]!==this.document[0]&&t.contains(this.scrollParent[0],this.offsetParent[0])){e.left+=this.scrollParent.scrollLeft();e.top+=this.scrollParent.scrollTop()};if(this.offsetParent[0]===this.document[0].body||(this.offsetParent[0].tagName&&this.offsetParent[0].tagName.toLowerCase()==="html"&&t.ui.ie)){e={top:0,left:0}};return{top:e.top+(parseInt(this.offsetParent.css("borderTopWidth"),10)||0),left:e.left+(parseInt(this.offsetParent.css("borderLeftWidth"),10)||0)}},_getRelativeOffset:function(){if(this.cssPosition==="relative"){var t=this.currentItem.position();return{top:t.top-(parseInt(this.helper.css("top"),10)||0)+this.scrollParent.scrollTop(),left:t.left-(parseInt(this.helper.css("left"),10)||0)+this.scrollParent.scrollLeft()}}
 else{return{top:0,left:0}}},_cacheMargins:function(){this.margins={left:(parseInt(this.currentItem.css("marginLeft"),10)||0),top:(parseInt(this.currentItem.css("marginTop"),10)||0)}},_cacheHelperProportions:function(){this.helperProportions={width:this.helper.outerWidth(),height:this.helper.outerHeight()}},_setContainment:function(){var e,s,o,i=this.options;if(i.containment==="parent"){i.containment=this.helper[0].parentNode};if(i.containment==="document"||i.containment==="window"){this.containment=[0-this.offset.relative.left-this.offset.parent.left,0-this.offset.relative.top-this.offset.parent.top,i.containment==="document"?this.document.width():this.window.width()-this.helperProportions.width-this.margins.left,(i.containment==="document"?(this.document.height()||document.body.parentNode.scrollHeight):this.window.height()||this.document[0].body.parentNode.scrollHeight)-this.helperProportions.height-this.margins.top]};if(!(/^(document|window|parent)$/).test(i.containment)){e=t(i.containment)[0];s=t(i.containment).offset();o=(t(e).css("overflow")!=="hidden");this.containment=[s.left+(parseInt(t(e).css("borderLeftWidth"),10)||0)+(parseInt(t(e).css("paddingLeft"),10)||0)-this.margins.left,s.top+(parseInt(t(e).css("borderTopWidth"),10)||0)+(parseInt(t(e).css("paddingTop"),10)||0)-this.margins.top,s.left+(o?Math.max(e.scrollWidth,e.offsetWidth):e.offsetWidth)-(parseInt(t(e).css("borderLeftWidth"),10)||0)-(parseInt(t(e).css("paddingRight"),10)||0)-this.helperProportions.width-this.margins.left,s.top+(o?Math.max(e.scrollHeight,e.offsetHeight):e.offsetHeight)-(parseInt(t(e).css("borderTopWidth"),10)||0)-(parseInt(t(e).css("paddingBottom"),10)||0)-this.helperProportions.height-this.margins.top]}},_convertPositionTo:function(e,i){if(!i){i=this.position};var s=e==="absolute"?1:-1,o=this.cssPosition==="absolute"&&!(this.scrollParent[0]!==this.document[0]&&t.contains(this.scrollParent[0],this.offsetParent[0]))?this.offsetParent:this.scrollParent,n=(/(html|body)/i).test(o[0].tagName);return{top:(i.top+this.offset.relative.top*s+this.offset.parent.top*s-((this.cssPosition==="fixed"?-this.scrollParent.scrollTop():(n?0:o.scrollTop()))*s)),left:(i.left+this.offset.relative.left*s+this.offset.parent.left*s-((this.cssPosition==="fixed"?-this.scrollParent.scrollLeft():n?0:o.scrollLeft())*s))}},_generatePosition:function(e){var s,o,i=this.options,n=e.pageX,r=e.pageY,a=this.cssPosition==="absolute"&&!(this.scrollParent[0]!==this.document[0]&&t.contains(this.scrollParent[0],this.offsetParent[0]))?this.offsetParent:this.scrollParent,h=(/(html|body)/i).test(a[0].tagName);if(this.cssPosition==="relative"&&!(this.scrollParent[0]!==this.document[0]&&this.scrollParent[0]!==this.offsetParent[0])){this.offset.relative=this._getRelativeOffset()};if(this.originalPosition){if(this.containment){if(e.pageX-this.offset.click.left<this.containment[0]){n=this.containment[0]+this.offset.click.left};if(e.pageY-this.offset.click.top<this.containment[1]){r=this.containment[1]+this.offset.click.top};if(e.pageX-this.offset.click.left>this.containment[2]){n=this.containment[2]+this.offset.click.left};if(e.pageY-this.offset.click.top>this.containment[3]){r=this.containment[3]+this.offset.click.top}};if(i.grid){s=this.originalPageY+Math.round((r-this.originalPageY)/i.grid[1])*i.grid[1];r=this.containment?((s-this.offset.click.top>=this.containment[1]&&s-this.offset.click.top<=this.containment[3])?s:((s-this.offset.click.top>=this.containment[1])?s-i.grid[1]:s+i.grid[1])):s;o=this.originalPageX+Math.round((n-this.originalPageX)/i.grid[0])*i.grid[0];n=this.containment?((o-this.offset.click.left>=this.containment[0]&&o-this.offset.click.left<=this.containment[2])?o:((o-this.offset.click.left>=this.containment[0])?o-i.grid[0]:o+i.grid[0])):o}};return{top:(r-this.offset.click.top-this.offset.relative.top-this.offset.parent.top+((this.cssPosition==="fixed"?-this.scrollParent.scrollTop():(h?0:a.scrollTop())))),left:(n-this.offset.click.left-this.offset.relative.left-this.offset.parent.left+((this.cssPosition==="fixed"?-this.scrollParent.scrollLeft():h?0:a.scrollLeft())))}},_rearrange:function(t,e,i,s){i?i[0].appendChild(this.placeholder[0]):e.item[0].parentNode.insertBefore(this.placeholder[0],(this.direction==="down"?e.item[0]:e.item[0].nextSibling));this.counter=this.counter?++this.counter:1;var o=this.counter;this._delay(function(){if(o===this.counter){this.refreshPositions(!s)}})},_clear:function(t,e){this.reverting=!1;var i,s=[];if(!this._noFinalSort&&this.currentItem.parent().length){this.placeholder.before(this.currentItem)};this._noFinalSort=null;if(this.helper[0]===this.currentItem[0]){for(i in this._storedCSS){if(this._storedCSS[i]==="auto"||this._storedCSS[i]==="static"){this._storedCSS[i]=""}};this.currentItem.css(this._storedCSS);this._removeClass(this.currentItem,"ui-sortable-helper")}
 else{this.currentItem.show()};if(this.fromOutside&&!e){s.push(function(t){this._trigger("receive",t,this._uiHash(this.fromOutside))})};if((this.fromOutside||this.domPosition.prev!==this.currentItem.prev().not(".ui-sortable-helper")[0]||this.domPosition.parent!==this.currentItem.parent()[0])&&!e){s.push(function(t){this._trigger("update",t,this._uiHash())})};if(this!==this.currentContainer){if(!e){s.push(function(t){this._trigger("remove",t,this._uiHash())});s.push((function(t){return function(e){t._trigger("receive",e,this._uiHash(this))}}).call(this,this.currentContainer));s.push((function(t){return function(e){t._trigger("update",e,this._uiHash(this))}}).call(this,this.currentContainer))}};function o(t,e,i){return function(s){i._trigger(t,s,e._uiHash(e))}};for(i=this.containers.length-1;i>=0;i--){if(!e){s.push(o("deactivate",this,this.containers[i]))};if(this.containers[i].containerCache.over){s.push(o("out",this,this.containers[i]));this.containers[i].containerCache.over=0}};if(this.storedCursor){this.document.find("body").css("cursor",this.storedCursor);this.storedStylesheet.remove()};if(this._storedOpacity){this.helper.css("opacity",this._storedOpacity)};if(this._storedZIndex){this.helper.css("zIndex",this._storedZIndex==="auto"?"":this._storedZIndex)};this.dragging=!1;if(!e){this._trigger("beforeStop",t,this._uiHash())};this.placeholder[0].parentNode.removeChild(this.placeholder[0]);if(!this.cancelHelperRemoval){if(this.helper[0]!==this.currentItem[0]){this.helper.remove()};this.helper=null};if(!e){for(i=0;i<s.length;i++){s[i].call(this,t)};this._trigger("stop",t,this._uiHash())};this.fromOutside=!1;return!this.cancelHelperRemoval},_trigger:function(){if(t.Widget.prototype._trigger.apply(this,arguments)===!1){this.cancel()}},_uiHash:function(e){var i=e||this;return{helper:i.helper,placeholder:i.placeholder||t([]),position:i.position,originalPosition:i.originalPosition,offset:i.positionAbs,item:i.currentItem,sender:e?e.element:null}}})}));
+/* Include script: jquery-plugin-toggleAttr.js */
+jQuery.fn.toggleAttr = function(attr, attr1, attr2) {
+	return this.each(function() {
+		let self = $(this);
+		if (self.attr(attr) == attr1)
+			self.attr(attr, attr2);
+		else
+			self.attr(attr, attr1);
+	});
+};
 /* Include script: jquery-plugin-orSearch.js */
 /**
  * Suche mit Dropdown
@@ -2727,7 +2737,7 @@ $( function() {
         } );
 
 
-
+/*
         $('section.toggle-open-close .on-click-open-close').click(function () {
             var section = $(this).closest('section');
 
@@ -2740,7 +2750,7 @@ $( function() {
             if (view.children().length == 0)
                 Openrat.Workbench.loadNewActionIntoElement(view);
         });
-
+*/
     }
 
     // Initial Notices
@@ -2850,6 +2860,15 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(element) {
 			Openrat.Workbench.popupWindow.location.href = $(this).attr('data-url');
         });
 
+});
+
+
+Openrat.Workbench.afterViewLoadedHandler.add( function(element) {
+
+        $(element).find(".or-act-make-visible").click( function() {
+			$(this).toggleClass('btn--is-active' );
+			$(this).parent().children('input').toggleAttr('type','text','password');
+        });
 });
 
 
@@ -3353,32 +3372,41 @@ Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
 
 Openrat.Workbench.afterViewLoadedHandler.add( function(element ) {
 
-	
-    // Show QR-Code
-	$(element).find('.or-qrcode').mouseover( function() {
+	let createQRCode = function( value,text) {
+		let wrapper = $('<div class="or-info-popup or-qrcode-value"></div>');
 
-	    let element = this;
-	    if   ( $(element).children().length > 0 )
-	        return;
-
-		let wrapper = $('<div class="or-info-popup"></div>');
-
-        $(element).append(wrapper);
-
-        let qrcodetext = $(element).attr('data-qrcode');
-
-        $(wrapper).qrcode( { render : 'div',
-			text   : qrcodetext,
+		$(wrapper).qrcode( { render : 'div',
+			text   : text,
 			fill   : 'currentColor' } );
 
-        // Title is disturbing the qr-code. Do not inherit it.
-        wrapper.attr('title','');
-        //wrapper.append('<small>'+qrcodetext+'</small>'); is very wide.
+		// Title is disturbing the qr-code. Do not inherit it.
+		wrapper.attr('title','');
 
-    } );
+		if   ( text )
+			wrapper.append('<small class="or-qrcode-text">' + text + '</small>');
 
-	$(element).find('.or-info').click( function() {
-    	$(this).toggleClass('info--open');
+		return wrapper;
+	}
+
+
+	$(element).find('.or-qrcode').click( function() {
+
+		let $element = $(this);
+
+		// Create QRCode on first click.
+		if   ( ! $element.children().length ) {
+
+			let qrcodeValue = $(element).attr('data-qrcode');
+			let qrcodeText  = $(element).attr('data-qrcode-text');
+
+			if   ( $element.children().length > 0 )
+				return;
+
+			$element.append( createQRCode(qrcodeValue,qrcodeText) );
+		}
+
+		$element.toggleClass('info--open');
+    	$element.toggleClass('btn--is-active');
 	});
 
 } );

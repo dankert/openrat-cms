@@ -79,7 +79,7 @@
 
 
     &-input {
-        width: 100%;
+        width: 85%;
         border: 1px solid #ccc;
         border-radius: 4px;
         box-sizing: border-box;
@@ -101,14 +101,21 @@
 
     /* Buttons  */
     &-btn {
-        padding: 1em 2em;
-        margin-left: 1.5em;
-        min-width: 14em;
+        padding: 0.2em;
         border: 1px solid @color-overridden-by-theme;
+        .border-radius(0.1em);
+        cursor: pointer;
 
-        @media @small {
-            padding: 1em 1em;
-            min-width: 5em;
+        &--control {
+            padding: 1em 2em;
+            margin-left: 1.5em;
+            min-width: 14em;
+            .border-radius(0.5em);
+
+            @media @small {
+                padding: 1em 1em;
+                min-width: 5em;
+            }
         }
 
         &--primary {
@@ -120,9 +127,5 @@
                 min-width: 0;
             }
         }
-
-        .border-radius(0.5em);
-        cursor: pointer;
-
     }
 }

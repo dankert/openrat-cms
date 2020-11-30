@@ -18,7 +18,7 @@ use template_engine\element\ValueExpression;
 class FieldsetComponent extends Component
 {
 	public $label;
-
+	public $qrcode;
 
 	/**
 	 * Creates all elements for a fieldset.
@@ -39,7 +39,18 @@ class FieldsetComponent extends Component
 		$value = (new HtmlElement('div'))->addStyleClass('fieldset-value')->asChildOf($fieldset);
 
 		$this->adoptiveElement = $value;
-
+/*
+		$action = (new HtmlElement('div'))->addStyleClass('fieldset-action')->asChildOf($fieldset);
+		$action->addChild(
+			(new CMSElement('i'))
+				->addStyleClass('image-icon')
+				->addStyleClass('image-icon--menu-qrcode')
+				->addStyleClass('qrcode')
+				->addStyleClass('info')
+				->addAttribute('data-qrcode', $this->qrcode)
+				->addAttribute('title', Value::createExpression(ValueExpression::TYPE_MESSAGE, 'QRCODE_SHOW'))
+		);
+*/
 		return $fieldset;
 	}
 }

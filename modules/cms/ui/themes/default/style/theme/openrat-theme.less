@@ -297,10 +297,13 @@ html.or-theme-@{cms-theme-id} {
 
         &-btn,
         &-link-btn {
-            background-color: @cms-inactive-background-color;
-            color: @cms-title-text-color;
-            .box-shadow(0px, 0px, 15px, @cms-background-color);
             border-color: @cms-background-color;
+            &--is-active {
+                background-color: @cms-inactive-background-color;
+                border-color: @cms-background-color;
+            }
+            color: @cms-title-text-color;
+            .box-shadow(0, 0, 0.5em, @cms-background-color);
 
             &:hover {
                 border-color: @cms-title-text-color;

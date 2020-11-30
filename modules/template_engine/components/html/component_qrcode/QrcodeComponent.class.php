@@ -16,6 +16,7 @@ class QrcodeComponent extends Component
 	public function createElement()
 	{
 		$qrcode = (new CMSElement('i'))
+			->addStyleClass('btn')
 			->addStyleClass('image-icon')
 			->addStyleClass('image-icon--menu-qrcode')
 			->addStyleClass('qrcode')

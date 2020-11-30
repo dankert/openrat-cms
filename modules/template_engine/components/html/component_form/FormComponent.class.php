@@ -99,6 +99,7 @@ class FormComponent extends Component
 			$actionBar->addChild(
 				(new CMSElement('div'))
 					->addStyleClass('btn')
+					->addStyleClass('btn--control')
 					->addStyleClass('btn--secondary')
 					->addStyleClass('act-form-cancel')
 					->addChild(
@@ -114,6 +115,7 @@ class FormComponent extends Component
 			$actionBar->addChild(
 				(new CMSElement('div'))
 					->addStyleClass('btn')
+					->addStyleClass('btn--control')
 					->addStyleClass('btn--primary')
 					->addStyleClass('act-form-apply')
 					->addChild(
@@ -129,6 +131,7 @@ class FormComponent extends Component
 			$actionBar->addChild(
 				(new CMSElement('div'))
 					->addStyleClass('btn')
+					->addStyleClass('btn--control')
 					->addStyleClass('btn--primary')
 					->addStyleClass('act-form-save')
 					->addChild(

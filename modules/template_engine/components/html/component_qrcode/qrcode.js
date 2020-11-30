@@ -1,32 +1,41 @@
 
 Openrat.Workbench.afterViewLoadedHandler.add( function(element ) {
 
-	
-    // Show QR-Code
-	$(element).find('.or-qrcode').mouseover( function() {
+	let createQRCode = function( value,text) {
+		let wrapper = $('<div class="or-info-popup or-qrcode-value"></div>');
 
-	    let element = this;
-	    if   ( $(element).children().length > 0 )
-	        return;
-
-		let wrapper = $('<div class="or-info-popup"></div>');
-
-        $(element).append(wrapper);
-
-        let qrcodetext = $(element).attr('data-qrcode');
-
-        $(wrapper).qrcode( { render : 'div',
-			text   : qrcodetext,
+		$(wrapper).qrcode( { render : 'div',
+			text   : text,
 			fill   : 'currentColor' } );
 
-        // Title is disturbing the qr-code. Do not inherit it.
-        wrapper.attr('title','');
-        //wrapper.append('<small>'+qrcodetext+'</small>'); is very wide.
+		// Title is disturbing the qr-code. Do not inherit it.
+		wrapper.attr('title','');
 
-    } );
+		if   ( text )
+			wrapper.append('<small class="or-qrcode-text">' + text + '</small>');
 
-	$(element).find('.or-info').click( function() {
-    	$(this).toggleClass('info--open');
+		return wrapper;
+	}
+
+
+	$(element).find('.or-qrcode').click( function() {
+
+		let $element = $(this);
+
+		// Create QRCode on first click.
+		if   ( ! $element.children().length ) {
+
+			let qrcodeValue = $(element).attr('data-qrcode');
+			let qrcodeText  = $(element).attr('data-qrcode-text');
+
+			if   ( $element.children().length > 0 )
+				return;
+
+			$element.append( createQRCode(qrcodeValue,qrcodeText) );
+		}
+
+		$element.toggleClass('info--open');
+    	$element.toggleClass('btn--is-active');
 	});
 
 } );

@@ -22,18 +22,23 @@
 			</fieldset>
 			<if true="${config:security/user/show_admin_mail}">
 				<fieldset class="line" label="${message:user_mail}">
-					<link url="mailto:${mail}" type="external">
-						<text value="${mail}"/>
-					</link>
-					<qrcode value="mailto:${mail}"/>
+					<part tag="span">
+						<link url="mailto:${mail}" type="external">
+							<text value="${mail}"/>
+						</link>
+						<qrcode value="mailto:${mail}"/>
+					</part>
+
 				</fieldset>
 			</if>
 			<fieldset class="line" label="${message:description}">
 				<text value="${desc}"/>
 			</fieldset>
 			<fieldset class="line" label="${message:user_tel}">
-				<text value="${tel}"/>
-				<qrcode value="tel:${tel}"/>
+				<part tag="span">
+					<text value="${tel}"/>
+					<qrcode value="tel:${tel}"/>
+				</part>>
 			</fieldset>
 			<fieldset class="line" label="${message:timezone}">
 				<text value="${timezone}"/>
