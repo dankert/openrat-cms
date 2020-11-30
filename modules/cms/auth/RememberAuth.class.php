@@ -117,13 +117,19 @@ SQL
 
 	protected function makeDBWritable( $dbid ) {
 
+		$oldDB = Session::getDatabase();
+		if   ( $oldDB ) {
+			$oldDB->rollback();
+			$oldDB->disconnect();
+		}
+
 		$dbConfig = Configuration::subset(['database',$dbid]);
 
 		$key = 'write';
-		$db = new Database($dbConfig->merge( $dbConfig->subset($key) )->getConfig());
-		$db->id = $dbid;
-		$db->start();
+		$writableDB = new Database($dbConfig->merge( $dbConfig->subset($key) )->getConfig());
+		$writableDB->id = $dbid;
+		$writableDB->start();
 
-		Session::setDatabase( $db );
+		Session::setDatabase( $writableDB );
 	}
 }

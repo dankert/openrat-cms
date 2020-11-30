@@ -172,10 +172,8 @@ class PDODriver
 		$erg = $stmt->execute();
 
 		if	( $erg === false )
-		{
 			throw new DatabaseException( 'Could not execute prepared statement "'.$query->query.'": '.implode('/',$stmt->errorInfo()) );
-		}
-		
+
 		return $stmt;
 	}
 

@@ -826,7 +826,7 @@ class ValueGenerator extends BaseGenerator
 						$inhalt = DB::get()->id;
 						break;
 					case 'db_name':
-						$inhalt = @DB::get()->conf['label'];
+						$inhalt = @DB::get()->getLabel();
 						break;
 					case 'project_id':
 						$inhalt = $page->projectid;

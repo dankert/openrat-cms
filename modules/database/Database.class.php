@@ -40,41 +40,27 @@ class Database
 	 *
 	 * @var String
 	 */
-	var $id;
+	public $id;
 	
 	/**
 	 * Konfiguration der Datenbank-Verbindung
 	 *
 	 * @var array
 	 */
-	var $conf;
+	public $conf;
 	
-	/**
-	 * Kennzeichen, ob die Datenbank verf�gbar ist.
-	 *
-	 * @var Boolean
-	 */
-	var $available;
-	
-	/**
-	 * Enth�lt eine Fehlermeldung (sofern verf�gbar).
-	 *
-	 * @var String
-	 */
-	var $error;
-
 	/**
 	 * Client.
 	 *
 	 * @var PDODriver
 	 */
-	var $client;
+	private $client;
 	
 	/**
 	 * Schalter, ob eine Transaktion begonnen wurde.
 	 * @var boolean
 	 */
-	var $transactionInProgress = false;
+	private $transactionInProgress = false;
 
 
 	/**
@@ -82,30 +68,31 @@ class Database
 	 * @var array
 	 */
 	private static $DEFAULT_CONFIG = [
+		// we need at least 1 prefix or suffix, because the raw table names are partially keywords in ANSI SQL.
 		'prefix'         => 'cms_',
 		'suffix'         => '',
 		'enabled'        => true,
 		'name'           => '',
 		'description'    => '',
-		'type'           => 'pdo',
+		'type'           => 'pdo', // we are only supporting PDO
 		'driver'         => 'mysql',
-		'dsn'            => '',
+		'dsn'            => '',    // if no DSN is given, it will be created from user,host,port.
 		'user'           => '',
 		'password'       => '',
 		'host'           => 'localhost',
 		'port'           => 0,
 		'database'       => '',
-		'base64'         => false,
-		'persistent'     => true,
-		'charset'        => 'UTF-8',
-		'connection_sql' => '',
-		'cmd'            => '',
-		'prepare'        => true,
-		'transaction'    => true,
+		'base64'         => false,   // should BLOBs be converted to Base64?
+		'persistent'     => true,    // persistent connections are faster
+		'charset'        => 'UTF-8', // should be UTF-8
+		'connection_sql' => '',      // Startup-SQL
+		'cmd'            => '',      // maybe you want to start a SSH tunnel here
+		'prepare'        => true,    // using prepared statements is a good idea
+		'transaction'    => true,    // using transaction is a good idea
 		'update'         =>
 			[
 			],
-		'auto_update'    => true,
+		'auto_update'    => true,    // auto update should always be enabled
 	];
 
 
@@ -171,8 +158,6 @@ class Database
 
 
         Logger::debug('Database connection established');
-		
-		$this->available = true;
 	}
 
 	/**
@@ -224,6 +209,7 @@ class Database
 	public function disconnect()
     {
         $this->client->disconnect();
+        $this->client = null; // clear references to the client
     }
     /**
      * @param $sql string das SQL
@@ -251,4 +237,20 @@ class Database
         }
     }
 
+
+	/**
+	 * database label.
+	 *
+	 * @return string
+	 */
+    public function getLabel() {
+		return array_values(array_filter( array(
+			@$this->conf['description'],
+			@$this->conf['name'  ],
+			$this->id,
+			@$this->conf['host'  ],
+			@$this->conf['driver'],
+			@$this->conf['type'  ],
+		)))[0];
+	}
 }

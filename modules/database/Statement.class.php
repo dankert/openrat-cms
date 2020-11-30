@@ -98,14 +98,7 @@ class Statement
 	public function execute( )
 	{
 		// Ausfuehren...
-		$result = $this->client->query($this->stmt, $this->sql);
-	
-		if	( $result === FALSE )
-		{
-			throw new DatabaseException( 'Statement '.$this->sql->query.' could not be executed: '.$this->client->error);
-		}
-	
-		return $result;
+		return $this->client->query($this->stmt, $this->sql);
 	}
 
 

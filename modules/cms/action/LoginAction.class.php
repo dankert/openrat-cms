@@ -84,6 +84,7 @@ class LoginAction extends BaseAction
 			// Getting the first not-null information about the connection.
 			return array_values(array_filter( array(
 				$dbconf->get('description'),
+				$dbconf->get('label' ),
 				$dbconf->get('name'  ),
 				$dbconf->get('host'  ),
 				$dbconf->get('driver'),
