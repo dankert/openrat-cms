@@ -199,6 +199,10 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(element) {
 
 Openrat.Workbench.afterViewLoadedHandler.add( function(element) {
 
+        $(element).find(".or-input--password").dblclick( function() {
+			$(this).toggleAttr('type','text','password');
+        });
+
         $(element).find(".or-act-make-visible").click( function() {
 			$(this).toggleClass('btn--is-active' );
 			$(this).parent().children('input').toggleAttr('type','text','password');
