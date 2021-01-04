@@ -12,7 +12,7 @@ use cms\generator\PublishOrder;
 use cms\generator\PublishPreview;
 use cms\generator\ValueContext;
 use cms\generator\ValueGenerator;
-use cms\model\Acl;
+use cms\model\Permission;
 use cms\model\BaseObject;
 use cms\model\Element;
 use cms\model\Folder;
@@ -361,7 +361,7 @@ class PageelementAction extends BaseAction
         // Inhalt sofort freigegeben, wenn
         // - Recht vorhanden
         // - Freigabe gewuenscht
-        if	( $value->page->hasRight( Acl::ACL_RELEASE ) && $this->hasRequestVar('release') )
+        if	( $value->page->hasRight( Permission::ACL_RELEASE ) && $this->hasRequestVar('release') )
         $value->publish = true;
         else
         $value->publish = false;
@@ -395,7 +395,7 @@ class PageelementAction extends BaseAction
         $this->page->setTimestamp(); // "Letzte Aenderung" setzen
 
         // Falls ausgewaehlt die Seite sofort veroeffentlichen
-        if	( $value->page->hasRight( Acl::ACL_PUBLISH ) && $this->hasRequestVar('publish') )
+        if	( $value->page->hasRight( Permission::ACL_PUBLISH ) && $this->hasRequestVar('publish') )
         {
 			$this->publishPage();
         }

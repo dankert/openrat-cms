@@ -3,7 +3,7 @@
 namespace cms\action;
 
 use cms\base\Configuration as C;
-use cms\model\Acl;
+use cms\model\Permission;
 use cms\model\BaseObject;
 use cms\model\File;
 use cms\model\Project;
@@ -164,7 +164,7 @@ class SearchAction extends BaseAction
 		{
 			$o = new BaseObject( $objectid );
 			$o->load();
-            if ($o->hasRight( Acl::ACL_READ ))
+            if ($o->hasRight( Permission::ACL_READ ))
                 $resultList[] = array(
                     'id'              => $objectid,
                     'type'            => $o->getType(),
@@ -180,7 +180,7 @@ class SearchAction extends BaseAction
 			$t->load();
 			$p = new Project( $t->projectid );
 			$o = new BaseObject( $p->getRootObjectId() );
-			if ($o->hasRight( Acl::ACL_READ ))
+			if ($o->hasRight( Permission::ACL_READ ))
                 $resultList[] = array(
                     'id'  => $templateid,
                     'type'=> 'template',

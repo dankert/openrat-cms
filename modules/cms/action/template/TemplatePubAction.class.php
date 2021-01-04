@@ -2,7 +2,7 @@
 namespace cms\action\template;
 use cms\action\Method;
 use cms\action\TemplateAction;
-use cms\model\Acl;
+use cms\model\Permission;
 use cms\model\Page;
 use language\Messages;
 use util\Session;
@@ -25,7 +25,7 @@ class TemplatePubAction extends TemplateAction implements Method {
 			$page = new Page( $objectid );
 			$page->load();
 			
-			if	( !$page->hasRight( Acl::ACL_PUBLISH ) )
+			if	( !$page->hasRight( Permission::ACL_PUBLISH ) )
 				continue;
 			
 			$page->publisher = $publisher;

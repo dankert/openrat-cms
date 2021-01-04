@@ -2,7 +2,7 @@
 namespace cms\action\pageelement;
 use cms\action\Method;
 use cms\action\PageelementAction;
-use cms\model\Acl;
+use cms\model\Permission;
 use cms\model\Page;
 
 class PageelementValueAction extends PageelementAction implements Method {
@@ -40,9 +40,9 @@ class PageelementValueAction extends PageelementAction implements Method {
 
 		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
 
-		if	( $this->value->page->hasRight(Acl::ACL_RELEASE) )
+		if	( $this->value->page->hasRight(Permission::ACL_RELEASE) )
 		$this->setTemplateVar( 'release',true  );
-		if	( $this->value->page->hasRight(Acl::ACL_PUBLISH) )
+		if	( $this->value->page->hasRight(Permission::ACL_PUBLISH) )
 		$this->setTemplateVar( 'publish',false );
 
 		$funktionName = 'edit'.$this->value->element->type;

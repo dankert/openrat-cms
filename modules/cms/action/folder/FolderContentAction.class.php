@@ -2,7 +2,7 @@
 namespace cms\action\folder;
 use cms\action\FolderAction;
 use cms\action\Method;
-use cms\model\Acl;
+use cms\model\Permission;
 use cms\model\BaseObject;
 use cms\model\File;
 use util\Html;
@@ -13,7 +13,7 @@ class FolderContentAction extends FolderAction implements Method {
 		if   ( ! $this->folder->isRoot )
 			$this->setTemplateVar('up_url',Html::url('folder','show',$this->folder->parentid));
 
-		$this->setTemplateVar('writable',$this->folder->hasRight(Acl::ACL_WRITE) );
+		$this->setTemplateVar('writable',$this->folder->hasRight(Permission::ACL_WRITE) );
 
 		$list = array();
 
@@ -23,7 +23,7 @@ class FolderContentAction extends FolderAction implements Method {
             /* @var $o BaseObject */
             $id = $o->objectid;
 
-			if   ( $o->hasRight(Acl::ACL_READ) )
+			if   ( $o->hasRight(Permission::ACL_READ) )
 			{
 				$list[$id]['name']     = \util\Text::maxLength($o->name, 30);
 				$list[$id]['filename'] = \util\Text::maxLength($o->filename, 20);

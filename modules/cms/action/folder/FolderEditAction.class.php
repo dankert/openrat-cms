@@ -2,7 +2,7 @@
 namespace cms\action\folder;
 use cms\action\FolderAction;
 use cms\action\Method;
-use cms\model\Acl;
+use cms\model\Permission;
 use cms\model\BaseObject;
 use cms\model\File;
 use util\Html;
@@ -22,7 +22,7 @@ class FolderEditAction extends FolderAction implements Method {
 
             $id = $o->objectid;
 
-			if   ( $o->hasRight(Acl::ACL_READ) )
+			if   ( $o->hasRight(Permission::ACL_READ) )
 			{
 				$list[$id]['name']     = \util\Text::maxLength($o->name, 30);
 				$list[$id]['filename'] = \util\Text::maxLength($o->filename, 20);

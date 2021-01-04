@@ -2,7 +2,7 @@
 
 namespace cms\action;
 
-use cms\model\Acl;
+use cms\model\Permission;
 use cms\model\BaseObject;
 use cms\model\File;
 use cms\model\Folder;
@@ -68,6 +68,6 @@ class ObjectAction extends BaseAction
 	    $project = new Project( $this->baseObject->projectid );
 	    $rootFolder = new Folder( $project->getRootObjectId() );
 
-	    return $rootFolder->hasRight(Acl::ACL_PROP);
+	    return $rootFolder->hasRight(Permission::ACL_PROP);
     }
 }

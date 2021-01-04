@@ -4,7 +4,7 @@ namespace cms\action;
 
 use cms\base\Configuration;
 use cms\base\Startup;
-use cms\model\Acl;
+use cms\model\Permission;
 use cms\model\BaseObject;
 use cms\model\Group;
 use cms\model\Language;

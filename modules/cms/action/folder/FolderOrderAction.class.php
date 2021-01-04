@@ -2,7 +2,7 @@
 namespace cms\action\folder;
 use cms\action\FolderAction;
 use cms\action\Method;
-use cms\model\Acl;
+use cms\model\Permission;
 use cms\model\BaseObject;
 use language\Messages;
 
@@ -18,7 +18,7 @@ class FolderOrderAction extends FolderAction implements Method {
 			$id = $o->objectid;
 			$name = $o->getDefaultName();
 
-			if   ( $o->hasRight(Acl::ACL_READ) )
+			if   ( $o->hasRight(Permission::ACL_READ) )
 			{
 				$list[$id]['id'  ]     = $id;
 				$list[$id]['name']     = $name->name;

@@ -3,7 +3,7 @@
 namespace cms\action;
 
 use cms\base\Configuration;
-use cms\model\Acl;
+use cms\model\Permission;
 use cms\model\Folder;
 use cms\model\Project;
 use language\Messages;
@@ -65,7 +65,7 @@ class ProjectAction extends BaseAction
 
 		$rootFolder = new Folder( $this->project->getRootObjectId() );
 
-		return $rootFolder->hasRight(Acl::ACL_PROP);
+		return $rootFolder->hasRight(Permission::ACL_PROP);
 	}
 
 

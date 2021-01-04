@@ -2,7 +2,7 @@
 namespace cms\action\group;
 use cms\action\GroupAction;
 use cms\action\Method;
-use cms\model\Acl;
+use cms\model\Permission;
 use cms\model\BaseObject;
 use cms\model\Group;
 use cms\model\Language;
@@ -65,7 +65,7 @@ class GroupRightsAction extends GroupAction implements Method {
 		
 		$this->setTemplateVar('projects'    ,$projects );
 		
-		$this->setTemplateVar('show',Acl::getAvailableRights() );
+		$this->setTemplateVar('show',Permission::getAvailableRights() );
     }
 
 

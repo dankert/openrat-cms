@@ -2,7 +2,7 @@
 namespace cms\action\object;
 use cms\action\Method;
 use cms\action\ObjectAction;
-use cms\model\Acl;
+use cms\model\Permission;
 use cms\model\BaseObject;
 
 
@@ -19,10 +19,10 @@ class ObjectRightsAction extends ObjectAction implements Method {
 
 		foreach( $o->getAllAclIds() as $aclid )
 		{
-			$acl = new Acl( $aclid );
-			$acl->load();
-			$key = 'bu'.$acl->username.'g'.$acl->groupname.'a'.$aclid;
-			$acllist[$key] = $acl->getProperties();
+			$permission = new Permission( $aclid );
+			$permission->load();
+			$key = 'bu'.$permission->username.'g'.$permission->groupname.'a'.$aclid;
+			$acllist[$key] = $permission->getProperties();
 			$acllist[$key]['aclid'] = $aclid;
 		}
 		ksort( $acllist );

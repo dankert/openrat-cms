@@ -2,7 +2,7 @@
 
 namespace cms\action;
 
-use cms\model\Acl;
+use cms\model\Permission;
 use cms\model\Folder;
 use cms\model\Project;
 use language\Messages;

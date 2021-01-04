@@ -2,7 +2,8 @@
 
 namespace cms\model;
 
-use cms\base\DB as Db;/**
+use cms\base\DB as Db;
+/**
  * <editor-fold defaultstate="collapsed" desc="license">
  *
  *  OpenRat Content Management System
@@ -31,14 +32,12 @@ use cms\base\DB as Db;/**
 
 
 /**
- * Darstellen einer Berechtigung (ACL "Access Control List")
- * Die Berechtigung zu einem Objekt wird mit einer Liste dieser Objekte dargestellt
- *
- * Falls es mehrere ACLs zu einem Objekt gibt, werden die Berechtigung-Flags addiert.
+ * A Permssion.
+ * If there are more Permissions for an object, the flags are added.
  *
  * @author Jan Dankert
  */
-class Acl extends ModelBase
+class Permission extends ModelBase
 {
     // Definition der Berechtigungs-Flags
     const ACL_READ          =    1;

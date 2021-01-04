@@ -3,7 +3,7 @@ namespace cms\action\user;
 use cms\action\Action;
 use cms\action\Method;
 use cms\action\UserAction;
-use cms\model\Acl;
+use cms\model\Permission;
 use cms\model\BaseObject;
 use cms\model\Group;
 use cms\model\Language;
@@ -20,7 +20,7 @@ class UserRightsAction extends UserAction implements Method {
 
         foreach( $rights as $acl )
         {
-            /* @var $acl Acl */
+            /* @var $acl Permission */
             if	( !isset($projects[$acl->projectid]))
 			{
                 $p = Project::create( $acl->projectid );
@@ -80,7 +80,7 @@ class UserRightsAction extends UserAction implements Method {
 		
 		$this->setTemplateVar('projects'    ,$projects );
 		
-		$this->setTemplateVar('show',Acl::getAvailableRights() );
+		$this->setTemplateVar('show',Permission::getAvailableRights() );
 		
 		if	( $this->user->isAdmin )
 			$this->addWarningFor($this->user,Messages::ADMIN_NEEDS_NO_RIGHTS);

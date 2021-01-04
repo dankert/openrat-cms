@@ -2,7 +2,7 @@
 namespace cms\action\pageelement;
 use cms\action\Method;
 use cms\action\PageelementAction;
-use cms\model\Acl;
+use cms\model\Permission;
 use cms\model\BaseObject;
 use cms\model\Folder;
 use cms\model\Page;
@@ -62,8 +62,8 @@ class PageelementLinkAction extends PageelementAction implements Method {
         $this->value->page->languageid = $this->value->languageid;
         $this->value->page->load();
 
-        $this->setTemplateVar( 'release',$this->value->page->hasRight(Acl::ACL_RELEASE) );
-        $this->setTemplateVar( 'publish',$this->value->page->hasRight(Acl::ACL_PUBLISH) );
+        $this->setTemplateVar( 'release',$this->value->page->hasRight(Permission::ACL_RELEASE) );
+        $this->setTemplateVar( 'publish',$this->value->page->hasRight(Permission::ACL_PUBLISH) );
 
         $this->setTemplateVar( 'objectid',$this->value->page->objectid );
     }

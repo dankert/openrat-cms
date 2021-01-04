@@ -328,14 +328,14 @@ SQL
 
 		foreach($sql->getAll() as $row )
 		{
-			$acl = new Acl();
-			$acl->setDatabaseRow( $row );
-			$acl->projectid    = $row['projectid'   ];
-			if	( intval($acl->languageid) == 0 )
-				$acl->languagename = \cms\base\Language::lang('ALL_LANGUAGES');
+			$permission = new Permission();
+			$permission->setDatabaseRow( $row );
+			$permission->projectid    = $row['projectid'   ];
+			if	( intval($permission->languageid) == 0 )
+				$permission->languagename = \cms\base\Language::lang('ALL_LANGUAGES');
 			else
-				$acl->languagename = $row['languagename'];
-			$aclList[] = $acl;
+				$permission->languagename = $row['languagename'];
+			$aclList[] = $permission;
 		}
 		
 		return $aclList;

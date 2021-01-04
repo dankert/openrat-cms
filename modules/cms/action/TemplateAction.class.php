@@ -4,7 +4,7 @@ namespace cms\action;
 
 namespace cms\action;
 use cms\generator\PublishPublic;
-use cms\model\Acl;
+use cms\model\Permission;
 use cms\model\Element;
 use cms\model\Page;
 use cms\model\Project;

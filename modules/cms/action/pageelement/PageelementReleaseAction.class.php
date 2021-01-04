@@ -2,7 +2,7 @@
 namespace cms\action\pageelement;
 use cms\action\Method;
 use cms\action\PageelementAction;
-use cms\model\Acl;
+use cms\model\Permission;
 use language\Messages;
 use LogicException;
 use util\exception\SecurityException;
@@ -25,7 +25,7 @@ class PageelementReleaseAction extends PageelementAction implements Method {
             throw new LogicException( 'cannot release, bad page' );
 
         // Pruefen, ob Berechtigung zum Freigeben besteht
-        if	( !$this->page->hasRight(Acl::ACL_RELEASE) )
+        if	( !$this->page->hasRight(Permission::ACL_RELEASE) )
             throw new SecurityException( 'Cannot release','no right' );
 
         // Inhalt freigeben

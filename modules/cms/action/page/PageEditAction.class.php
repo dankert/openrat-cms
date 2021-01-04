@@ -2,7 +2,7 @@
 namespace cms\action\page;
 use cms\action\Method;
 use cms\action\PageAction;
-use cms\model\Acl;
+use cms\model\Permission;
 use cms\model\BaseObject;
 use cms\model\Element;
 use cms\model\Folder;
@@ -115,8 +115,8 @@ class PageEditAction extends PageAction implements Method {
 			asort($objects);
 			$this->setTemplateVar( 'objects' ,$objects );
 
-			$this->setTemplateVar( 'release' ,$this->page->hasRight(Acl::ACL_RELEASE) );
-			$this->setTemplateVar( 'publish' ,$this->page->hasRight(Acl::ACL_PUBLISH) );
+			$this->setTemplateVar( 'release' ,$this->page->hasRight(Permission::ACL_RELEASE) );
+			$this->setTemplateVar( 'publish' ,$this->page->hasRight(Permission::ACL_PUBLISH) );
 			$this->setTemplateVar( 'html'    ,$value->element->html );
 			$this->setTemplateVar( 'wiki'    ,$value->element->wiki );
 			$this->setTemplateVar( 'text'    ,$value->text          );
@@ -150,7 +150,7 @@ class PageEditAction extends PageAction implements Method {
 		// Inhalt sofort freigegeben, wenn
 		// - Recht vorhanden
 		// - Freigabe gewuenscht
-		if	( $value->page->hasRight( Acl::ACL_RELEASE ) && $this->getRequestVar('release')!='' )
+		if	( $value->page->hasRight( Permission::ACL_RELEASE ) && $this->getRequestVar('release')!='' )
 			$value->publish = true;
 		else
 			$value->publish = false;

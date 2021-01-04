@@ -11,7 +11,7 @@ use cms\generator\PageGenerator;
 use cms\generator\Producer;
 use cms\generator\Publisher;
 use cms\generator\PublishOrder;
-use cms\model\Acl;
+use cms\model\Permission;
 use cms\model\BaseObject;
 use cms\model\File;
 use cms\model\Folder;

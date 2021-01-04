@@ -289,10 +289,10 @@ SQL
 
                 foreach($sql->getAll() as $row )
                 {
-                    $acl = new Acl();
-                    $acl->setDatabaseRow( $row );
+                    $permission = new Permission();
+                    $permission->setDatabaseRow( $row );
 
-                    $this->aclMask |= $acl->getMask();
+                    $this->aclMask |= $permission->getMask();
                 }
 
                 $guestMask = 0;
@@ -300,10 +300,10 @@ SQL
                 {
                     case 'read':
                     case 'readonly':
-                        $guestMask = Acl::ACL_READ;
+                        $guestMask = Permission::ACL_READ;
                         break;
                     case 'write':
-                        $guestMask = Acl::ACL_READ + Acl::ACL_WRITE;
+                        $guestMask = Permission::ACL_READ + Permission::ACL_WRITE;
                         break;
                     default:
                         // nothing allowed for guests.
@@ -315,18 +315,18 @@ SQL
             elseif	( $user->isAdmin )
             {
                 // Administratoren erhalten eine Maske mit allen Rechten
-                $this->aclMask = Acl::ACL_READ +
-                    Acl::ACL_WRITE +
-                    Acl::ACL_PROP +
-                    Acl::ACL_DELETE +
-                    Acl::ACL_RELEASE +
-                    Acl::ACL_PUBLISH +
-                    Acl::ACL_CREATE_FOLDER +
-                    Acl::ACL_CREATE_FILE +
-                    Acl::ACL_CREATE_LINK +
-                    Acl::ACL_CREATE_PAGE +
-                    Acl::ACL_GRANT +
-                    Acl::ACL_TRANSMIT;
+                $this->aclMask = Permission::ACL_READ +
+                    Permission::ACL_WRITE +
+                    Permission::ACL_PROP +
+                    Permission::ACL_DELETE +
+                    Permission::ACL_RELEASE +
+                    Permission::ACL_PUBLISH +
+                    Permission::ACL_CREATE_FOLDER +
+                    Permission::ACL_CREATE_FILE +
+                    Permission::ACL_CREATE_LINK +
+                    Permission::ACL_CREATE_PAGE +
+                    Permission::ACL_GRANT +
+                    Permission::ACL_TRANSMIT;
             }
             else
             {
@@ -348,17 +348,17 @@ SQL
 
                 foreach($sql->getAll() as $row )
                 {
-                    $acl = new Acl();
-                    $acl->setDatabaseRow( $row );
+                    $permission = new Permission();
+                    $permission->setDatabaseRow( $row );
 
-                    $this->aclMask |= $acl->getMask();
+                    $this->aclMask |= $permission->getMask();
                 }
             }
         }
 
         if	( Startup::readonly() )
             // System ist im Nur-Lese-Zustand
-            $this->aclMask = Acl::ACL_READ && $this->aclMask;
+            $this->aclMask = Permission::ACL_READ && $this->aclMask;
 
         // Ermittelte Maske auswerten
         return $this->aclMask & $type;
@@ -1040,35 +1040,36 @@ SQL
         // Standard-Rechte fuer dieses neue Objekt setzen.
         // Der angemeldete Benutzer erhaelt alle Rechte auf
         // das neue Objekt. Legitim, denn er hat es ja angelegt.
-        $acl = new Acl();
-        $acl->userid = $user->userid;
-        $acl->objectid = $this->objectid;
+		//FIXME we shoul delete this.
+        $permission = new Permission();
+        $permission->userid = $user->userid;
+        $permission->objectid = $this->objectid;
 
-        $acl->read   = true;
-        $acl->write  = true;
-        $acl->prop   = true;
-        $acl->delete = true;
-        $acl->grant  = true;
+        $permission->read   = true;
+        $permission->write  = true;
+        $permission->prop   = true;
+        $permission->delete = true;
+        $permission->grant  = true;
 
-        $acl->create_file   = true;
-        $acl->create_page   = true;
-        $acl->create_folder = true;
-        $acl->create_link   = true;
+        $permission->create_file   = true;
+        $permission->create_page   = true;
+        $permission->create_folder = true;
+        $permission->create_link   = true;
 
-        $acl->persist();
+        $permission->persist();
 
         // Aus dem Eltern-Ordner vererbbare Berechtigungen uebernehmen.
         $parent = new BaseObject( $this->parentid );
         foreach( $parent->getAllAclIds() as $aclid )
         {
-            $acl = new Acl( $aclid );
-            $acl->load();
+            $permission = new Permission( $aclid );
+            $permission->load();
 
-            if	( $acl->transmit ) // ACL is vererbbar, also kopieren.
+            if	( $permission->transmit ) // ACL is vererbbar, also kopieren.
             {
-            	$acl->aclid = null;
-                $acl->objectid = $this->objectid;
-                $acl->persist(); // ... und hinzufuegen.
+            	$permission->aclid = null;
+                $permission->objectid = $this->objectid;
+                $permission->persist(); // ... und hinzufuegen.
             }
         }
     }
@@ -1175,9 +1176,9 @@ SQL
     {
         foreach( $this->getAllAclIds() as $aclid )
         {
-            $acl = new Acl( $aclid );
-            $acl->load();
-            $acl->delete();
+            $permission = new Permission( $aclid );
+            $permission->load();
+            $permission->delete();
         }
     }
 

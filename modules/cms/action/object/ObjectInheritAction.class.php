@@ -3,7 +3,7 @@ namespace cms\action\object;
 use cms\action\Action;
 use cms\action\Method;
 use cms\action\ObjectAction;
-use cms\model\Acl;
+use cms\model\Permission;
 use cms\model\BaseObject;
 use cms\model\Folder;
 use language\Messages;
@@ -37,10 +37,10 @@ class ObjectInheritAction extends ObjectAction implements Method {
 		$newAclList = array();
 		foreach( $aclids as $aclid )
 		{
-			$acl = new Acl( $aclid );
-			$acl->load();
-			if	( $acl->transmit )
-				$newAclList[] = $acl;
+			$permission = new Permission( $aclid );
+			$permission->load();
+			if	( $permission->transmit )
+				$newAclList[] = $permission;
 		}
 		Logger::debug('inheriting '.count($newAclList).' acls');
 		
@@ -60,9 +60,9 @@ class ObjectInheritAction extends ObjectAction implements Method {
 			// Die alten ACLs des Objektes löschen.
 			foreach( $object->getAllAclIds() as $aclid )
 			{
-				$acl = new Acl( $aclid );
-				$acl->objectid = $oid;
-				$acl->delete();
+				$permission = new Permission( $aclid );
+				$permission->objectid = $oid;
+				$permission->delete();
 				Logger::debug('removing acl '.$aclid.' for object '.$oid);
 			}
 			

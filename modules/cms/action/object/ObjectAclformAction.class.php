@@ -4,7 +4,7 @@ use cms\action\Action;
 use cms\action\Method;
 use cms\action\ObjectAction;
 use cms\action\RequestParams;
-use cms\model\Acl;
+use cms\model\Permission;
 use cms\model\BaseObject;
 use cms\model\Folder;
 use cms\model\Group;
@@ -33,24 +33,24 @@ class ObjectAclformAction extends ObjectAction implements Method {
 		$this->setTemplateVar('action'   ,$this->request->action);
     }
     public function post() {
-		$acl = new Acl();
+		$permission = new Permission();
 
-		$acl->objectid = $this->getRequestId();
+		$permission->objectid = $this->getRequestId();
 		
 		// Nachschauen, ob der Benutzer ueberhaupt berechtigt ist, an
 		// diesem Objekt die ACLs zu aendern.
-		$o = new BaseObject( $acl->objectid );
+		$o = new BaseObject( $permission->objectid );
 
-		if	( !$o->hasRight( Acl::ACL_GRANT ) )
+		if	( !$o->hasRight( Permission::ACL_GRANT ) )
 			throw new \util\exception\SecurityException('Not allowed to insert permissions.'); // Scheiss Hacker ;)
 		
 		// Handelt es sich um eine Benutzer- oder Gruppen ACL?
 		switch( $this->getRequestVar('type') )
 		{
 			case 'user':
-				$acl->userid  = $this->getRequestVar('userid' );
+				$permission->userid  = $this->getRequestVar('userid' );
 				
-				if	( $acl->userid <= 0 )
+				if	( $permission->userid <= 0 )
 				{
 					$this->addValidationError('type'     );
 					$this->addValidationError('userid','');
@@ -58,8 +58,8 @@ class ObjectAclformAction extends ObjectAction implements Method {
 				}
 				break;
 			case 'group':
-				$acl->groupid = $this->getRequestVar('groupid');
-				if	( $acl->groupid <= 0 )
+				$permission->groupid = $this->getRequestVar('groupid');
+				if	( $permission->groupid <= 0 )
 				{
 					$this->addValidationError('type'      );
 					$this->addValidationError('groupid','');
@@ -73,27 +73,27 @@ class ObjectAclformAction extends ObjectAction implements Method {
 				return;
 		}
 
-		$acl->languageid    = $this->getRequestVar(RequestParams::PARAM_LANGUAGE_ID);
+		$permission->languageid    = $this->getRequestVar(RequestParams::PARAM_LANGUAGE_ID);
 
-		$acl->write         = ( $this->hasRequestVar('write'        ) );
-		$acl->prop          = ( $this->hasRequestVar('prop'         ) );
-		$acl->delete        = ( $this->hasRequestVar('delete'       ) );
-		$acl->release       = ( $this->hasRequestVar('release'      ) );
-		$acl->publish       = ( $this->hasRequestVar('publish'      ) );
-		$acl->create_folder = ( $this->hasRequestVar('create_folder') );
-		$acl->create_file   = ( $this->hasRequestVar('create_file'  ) );
-		$acl->create_link   = ( $this->hasRequestVar('create_link'  ) );
-		$acl->create_page   = ( $this->hasRequestVar('create_page'  ) );
-		$acl->grant         = ( $this->hasRequestVar('grant'        ) );
-		$acl->transmit      = ( $this->hasRequestVar('transmit'     ) );
+		$permission->write         = ( $this->hasRequestVar('write'        ) );
+		$permission->prop          = ( $this->hasRequestVar('prop'         ) );
+		$permission->delete        = ( $this->hasRequestVar('delete'       ) );
+		$permission->release       = ( $this->hasRequestVar('release'      ) );
+		$permission->publish       = ( $this->hasRequestVar('publish'      ) );
+		$permission->create_folder = ( $this->hasRequestVar('create_folder') );
+		$permission->create_file   = ( $this->hasRequestVar('create_file'  ) );
+		$permission->create_link   = ( $this->hasRequestVar('create_link'  ) );
+		$permission->create_page   = ( $this->hasRequestVar('create_page'  ) );
+		$permission->grant         = ( $this->hasRequestVar('grant'        ) );
+		$permission->transmit      = ( $this->hasRequestVar('transmit'     ) );
 
-		$acl->persist();
+		$permission->persist();
 
 		// Falls die Berechtigung vererbbar ist, dann diese sofort an
 		// Unterobjekte vererben.
-		if	( $acl->transmit )
+		if	( $permission->transmit )
 		{
-			$folder = new Folder( $acl->objectid );
+			$folder = new Folder( $permission->objectid );
 			$oids = $folder->getObjectIds();
 			foreach( $folder->getAllSubfolderIds() as $sfid )
 			{
@@ -103,9 +103,9 @@ class ObjectAclformAction extends ObjectAction implements Method {
 			
 			foreach( $oids as $oid )
 			{
-				$acl->aclid = null;
-				$acl->objectid = $oid;
-				$acl->persist();
+				$permission->aclid = null;
+				$permission->objectid = $oid;
+				$permission->persist();
 			}
 		}
 		

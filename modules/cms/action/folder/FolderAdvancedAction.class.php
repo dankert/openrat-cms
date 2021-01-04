@@ -4,7 +4,7 @@ use cms\action\Action;
 use cms\action\FolderAction;
 use cms\action\Method;
 use cms\base\Startup;
-use cms\model\Acl;
+use cms\model\Permission;
 use cms\model\BaseObject;
 use cms\model\File;
 use cms\model\Folder;
@@ -20,7 +20,7 @@ use util\Html;
 class FolderAdvancedAction extends FolderAction implements Method {
 
     public function view() {
-		$this->setTemplateVar('writable',$this->folder->hasRight(Acl::ACL_WRITE) );
+		$this->setTemplateVar('writable',$this->folder->hasRight(Permission::ACL_WRITE) );
 
 		$list = array();
 
@@ -30,7 +30,7 @@ class FolderAdvancedAction extends FolderAction implements Method {
 		    /* @var $o BaseObject */
 			$id = $o->objectid;
 
-			if   ( $o->hasRight(Acl::ACL_READ) )
+			if   ( $o->hasRight(Permission::ACL_READ) )
 			{
 				$list[$id]['objectid'] = $id;
 				$list[$id]['id'      ] = 'obj'.$id;
@@ -54,7 +54,7 @@ class FolderAdvancedAction extends FolderAction implements Method {
 			}
 		}
 
-		if   ( $this->folder->hasRight(Acl::ACL_WRITE) )
+		if   ( $this->folder->hasRight(Permission::ACL_WRITE) )
 		{
 			// Alle anderen Ordner ermitteln
 			$otherfolder = array();
@@ -62,7 +62,7 @@ class FolderAdvancedAction extends FolderAction implements Method {
 			foreach( $project->getAllFolders() as $id )
 			{
 				$f = new Folder( $id );
-				if	( $f->hasRight( Acl::ACL_WRITE ) )
+				if	( $f->hasRight( Permission::ACL_WRITE ) )
 					$otherfolder[$id] = Startup::FILE_SEP.implode( Startup::FILE_SEP,$f->parentObjectNames(false,true) );
 			}
 			asort( $otherfolder );
@@ -78,7 +78,7 @@ class FolderAdvancedAction extends FolderAction implements Method {
 		$actionList[] = 'link';
 		$actionList[] = 'archive';
 
-		if	( $this->folder->hasRight(Acl::ACL_WRITE) )
+		if	( $this->folder->hasRight(Permission::ACL_WRITE) )
 		{
 			$actionList[] = 'move';
 			$actionList[] = 'delete';
@@ -118,9 +118,9 @@ class FolderAdvancedAction extends FolderAction implements Method {
 				//
 				// Beim Verschieben und Kopieren muss im Zielordner die Berechtigung
 				// zum Erstellen von Ordner, Dateien oder Seiten vorhanden sein.
-				if	( ( $type=='link' && $f->hasRight( Acl::ACL_CREATE_LINK ) ) ||
+				if	( ( $type=='link' && $f->hasRight( Permission::ACL_CREATE_LINK ) ) ||
 					  ( ( $type=='move' || $type == 'copy' ) &&
-					    ( $f->hasRight(Acl::ACL_CREATE_FOLDER) || $f->hasRight(Acl::ACL_CREATE_FILE) || $f->hasRight(Acl::ACL_CREATE_PAGE) ) ) )
+					    ( $f->hasRight(Permission::ACL_CREATE_FOLDER) || $f->hasRight(Permission::ACL_CREATE_FILE) || $f->hasRight(Permission::ACL_CREATE_PAGE) ) ) )
 				{
 					// OK
 				}
@@ -149,11 +149,11 @@ class FolderAdvancedAction extends FolderAction implements Method {
 
 			// Fuer die gewuenschte Aktion muessen pro Objekt die entsprechenden Rechte
 			// vorhanden sein.
-			if	( $type == 'copy'    && $o->hasRight( Acl::ACL_READ   ) ||
-				  $type == 'move'    && $o->hasRight( Acl::ACL_WRITE  ) ||
-				  $type == 'link'    && $o->hasRight( Acl::ACL_READ   ) ||
-				  $type == 'archive' && $o->hasRight( Acl::ACL_READ   ) ||
-				  $type == 'delete'  && $o->hasRight( Acl::ACL_DELETE )    )
+			if	( $type == 'copy'    && $o->hasRight( Permission::ACL_READ   ) ||
+				  $type == 'move'    && $o->hasRight( Permission::ACL_WRITE  ) ||
+				  $type == 'link'    && $o->hasRight( Permission::ACL_READ   ) ||
+				  $type == 'archive' && $o->hasRight( Permission::ACL_READ   ) ||
+				  $type == 'delete'  && $o->hasRight( Permission::ACL_DELETE )    )
 				$objectList[ $id ] = $o->getProperties();
 			else
 				$this->addNoticeFor($o,Messages::NO_RIGHTS );

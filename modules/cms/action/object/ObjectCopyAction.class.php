@@ -4,7 +4,7 @@ use cms\action\Action;
 use cms\action\Method;
 use cms\action\ObjectAction;
 use cms\action\RequestParams;
-use cms\model\Acl;
+use cms\model\Permission;
 use cms\model\BaseObject;
 use cms\model\File;
 use cms\model\Folder;
@@ -27,7 +27,7 @@ class ObjectCopyAction extends ObjectAction implements Method {
 		$this->setTemplateVar('targetId',$targetFolder->objectid        );
 		$this->setTemplateVar('types'   ,array('move'=>'move','moveandlink'=>'moveandlink','copy'=>'copy','link'=>'link') );
 		
-		if   ( ! $targetFolder->hasRight(Acl::ACL_WRITE) )
+		if   ( ! $targetFolder->hasRight(Permission::ACL_WRITE) )
 		{
 			$this->addErrorFor( $this->baseObject,Messages::FOLDER_NOT_WRITABLE );
 		}
@@ -44,7 +44,7 @@ class ObjectCopyAction extends ObjectAction implements Method {
 		$targetFolder->load();
 		
 		// Prüfen, ob Schreibrechte im Zielordner bestehen.
-		if   ( ! $targetFolder->hasRight(Acl::ACL_WRITE) )
+		if   ( ! $targetFolder->hasRight(Permission::ACL_WRITE) )
 		{
 			$this->addErrorFor( $targetFolder,Messages::FOLDER_NOT_WRITABLE );
 			return;
@@ -149,7 +149,7 @@ class ObjectCopyAction extends ObjectAction implements Method {
 
 				// Beim Verkn�pfen muss im Zielordner die Berechtigung zum Erstellen
 				// von Verkn�pfungen vorhanden sein.
-				if   ( ! $targetFolder->hasRight(Acl::ACL_CREATE_LINK) )
+				if   ( ! $targetFolder->hasRight(Permission::ACL_CREATE_LINK) )
 				{
 					$this->addErrorFor($targetFolder,Messages::FOLDER_NOT_WRITABLE);
 					return;

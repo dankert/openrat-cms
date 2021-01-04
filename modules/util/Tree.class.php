@@ -4,7 +4,7 @@ namespace util;
 
 use cms\action\RequestParams;
 use cms\base\Language as L;
-use cms\model\Acl;
+use cms\model\Permission;
 use cms\model\Alias;
 use cms\model\Element;
 use cms\model\File;
@@ -125,7 +125,7 @@ class Tree
 			$rootFolder->load();
 
 			// Berechtigt für das Projekt?
-			if ($rootFolder->hasRight(Acl::ACL_READ)) {
+			if ($rootFolder->hasRight(Permission::ACL_READ)) {
 				$treeElement = new TreeElement();
 
 				$treeElement->internalId = $id;
@@ -155,9 +155,9 @@ class Tree
 
 		// Ermitteln, ob der Benutzer Projektadministrator ist
 		// Projektadministratoren haben das Recht, im Root-Ordner die Eigenschaften zu aendern.
-		$userIsProjectAdmin = $folder->hasRight(Acl::ACL_PROP);
+		$userIsProjectAdmin = $folder->hasRight(Permission::ACL_PROP);
 
-		if ($folder->hasRight(Acl::ACL_READ)) {
+		if ($folder->hasRight(Permission::ACL_READ)) {
 			$treeElement = new TreeElement();
 			$treeElement->id = $folder->objectid;
 			//			$treeElement->text        = $folder->name;
@@ -457,7 +457,7 @@ class Tree
 		if ($o->isPage) {
 			// Nur wenn die Seite beschreibbar ist, werden die
 			// Elemente im Baum angezeigt
-			if ($o->hasRight(Acl::ACL_WRITE))
+			if ($o->hasRight(Permission::ACL_WRITE))
 				$treeElement->type = 'pageelements';
 		}
 		$this->addTreeElement($treeElement);
@@ -485,7 +485,7 @@ class Tree
 		if ($o->isPage) {
 			// Nur wenn die Seite beschreibbar ist, werden die
 			// Elemente im Baum angezeigt
-			if ($o->hasRight(Acl::ACL_WRITE))
+			if ($o->hasRight(Permission::ACL_WRITE))
 				$treeElement->type = 'page';
 		}
 
@@ -513,7 +513,7 @@ class Tree
 		/** @var BaseObject $o */
 		foreach ($f->getObjects() as $o) {
 			// Wenn keine Leseberechtigung
-			if (!$o->hasRight(Acl::ACL_READ))
+			if (!$o->hasRight(Permission::ACL_READ))
 				continue;
 
 			$treeElement = new TreeElement();

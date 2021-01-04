@@ -7,7 +7,7 @@ use cms\generator\PageGenerator;
 use cms\generator\Producer;
 use cms\generator\Publisher;
 use cms\generator\PublishOrder;
-use cms\model\Acl;
+use cms\model\Permission;
 use util\Session;
 
 class PagePubAction extends PageAction implements Method {
@@ -15,7 +15,7 @@ class PagePubAction extends PageAction implements Method {
 
 	}
     public function post() {
-		if	( !$this->page->hasRight( Acl::ACL_PUBLISH ) )
+		if	( !$this->page->hasRight( Permission::ACL_PUBLISH ) )
             throw new \util\exception\SecurityException( 'no right for publish' );
 
 		$project = $this->page->getProject();

@@ -2,7 +2,7 @@
 namespace cms\action\folder;
 use cms\action\FolderAction;
 use cms\action\Method;
-use cms\model\Acl;
+use cms\model\Permission;
 use cms\model\BaseObject;
 use util\Html;
 
@@ -27,7 +27,7 @@ class FolderShowAction extends FolderAction implements Method {
             /* @var $o BaseObject */
             $id = $o->objectid;
 
-            if   ( $o->hasRight(Acl::ACL_READ) )
+            if   ( $o->hasRight(Permission::ACL_READ) )
             {
                 echo '<li><a href="'. Html::url($o->getType(),'show',$id).'">'.$o->filename.'</a></li>';
 

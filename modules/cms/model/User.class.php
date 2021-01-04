@@ -863,14 +863,14 @@ SQL
 
 		foreach($sql->getAll() as $row )
 		{
-			$acl = new Acl();
-			$acl->setDatabaseRow( $row );
-			$acl->projectid    = $row['projectid'   ];
-			if	( intval($acl->languageid) == 0 )
-				$acl->languagename = Language::lang( Messages::ALL_LANGUAGES);
+			$permission = new Permission();
+			$permission->setDatabaseRow( $row );
+			$permission->projectid    = $row['projectid'   ];
+			if	( intval($permission->languageid) == 0 )
+				$permission->languagename = Language::lang( Messages::ALL_LANGUAGES);
 			else
-				$acl->languagename = $row['languagename'];
-			$aclList[] = $acl;
+				$permission->languagename = $row['languagename'];
+			$aclList[] = $permission;
 		}
 		
 		return $aclList;
@@ -956,7 +956,7 @@ SQL
 	 */ 
 	public function hasRight( $objectid,$type )
 	{
-		if   ( Startup::readonly() && ! $type & Acl::ACL_READ )
+		if   ( Startup::readonly() && ! $type & Permission::ACL_READ )
 			return false; // Nothing is writable in Readonly-Mode.
 
 		if	( $this->isAdmin )
@@ -980,13 +980,13 @@ SQL
 		$securityconfig = Configuration::subset('security');
 		
 		if	( $securityconfig->is('readonly') )
-			if	( $type & Acl::ACL_READ )
-				$type = Acl::ACL_READ;
+			if	( $type & Permission::ACL_READ )
+				$type = Permission::ACL_READ;
 			else
 				$type = 0;
 
-		if	( $type & Acl::ACL_PUBLISH && $securityconfig->is('nopublish') )
-			$type -= Acl::ACL_PUBLISH;
+		if	( $type & Permission::ACL_PUBLISH && $securityconfig->is('nopublish') )
+			$type -= Permission::ACL_PUBLISH;
 
 
 		if	( !isset($this->rights[$objectid]) )
