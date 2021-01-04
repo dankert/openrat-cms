@@ -1304,4 +1304,5 @@ class Messages {
   const VALUE_PUBLIC = 'VALUE_PUBLIC';
   const NO_RIGHTS = 'NO_RIGHTS';
   const FOLDER_NOT_WRITABLE = 'FOLDER_NOT_WRITABLE';
+  const GROUP_PARENT = 'GROUP_PARENT';
 }

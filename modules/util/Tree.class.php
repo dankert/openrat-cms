@@ -7,7 +7,6 @@ use cms\base\Language as L;
 use cms\model\Permission;
 use cms\model\Alias;
 use cms\model\Element;
-use cms\model\File;
 use cms\model\Link;
 use cms\model\BaseObject;
 use cms\model\Page;
@@ -19,9 +18,6 @@ use cms\model\Folder;
 use cms\model\Value;
 use language\Messages;
 use util\exception\SecurityException;
-use util\Session;
-use util\Text;
-use util\TreeElement;
 
 
 /**
@@ -273,7 +269,7 @@ class Tree
 			throw new SecurityException();
 
 
-		foreach (Group::getAll() as $id => $name) {
+		foreach (Group::getRootGroups() as $id => $name) {
 			$treeElement = new TreeElement();
 
 			$g = new Group($id);
@@ -300,6 +296,25 @@ class Tree
 
 		$g = new Group($id);
 
+
+		foreach ($g->getChildrenIds() as $id) {
+			$treeElement = new TreeElement();
+
+			$g = new Group($id);
+			$g->load();
+			$treeElement->id = $id;
+			$treeElement->internalId = $id;
+			$treeElement->text = $g->name;
+			$treeElement->icon = 'group';
+			$treeElement->description = L::lang('GROUP') . ' ' . $g->name . ': ' . implode(', ', $g->getUsers());
+			$treeElement->type = 'userofgroup';
+			$treeElement->action = 'group';
+
+			$this->addTreeElement($treeElement);
+		}
+
+
+
 		foreach ($g->getUsers() as $id => $name) {
 			$treeElement = new TreeElement();
 
@@ -314,6 +329,8 @@ class Tree
 
 			$this->addTreeElement($treeElement);
 		}
+
+
 	}
 
 

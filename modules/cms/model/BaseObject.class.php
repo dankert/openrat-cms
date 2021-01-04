@@ -1200,6 +1200,43 @@ SQL
     }
 
 
+	/**
+	 * Reads all direct children of this object.
+	 */
+	protected function getChildren()
+	{
+		$stmt = Db::sql(<<<SQL
+
+SELECT id FROM {{object}}
+		                 WHERE parentid={objectid}
+		                 ORDER BY orderid ASC
+SQL
+		);
+
+		$stmt->setInt( 'objectid' ,$this->objectid        );
+
+		return $stmt->getCol();
+	}
+
+
+	/**
+	 * Reads all descendants.
+	 *
+	 */
+	public function getAllDescendantsIds()
+	{
+		$descendantIds = array();
+
+		foreach( $this->getChildren() as $id )
+		{
+			$descendantIds[] = $id;
+
+			$baseObject = new BaseObject( $id );
+			$descendantIds = array_merge( $descendantIds, $baseObject->getAllDescendantsIds() );
+		}
+
+		return $descendantIds;
+	}
     /**
      * ?bergeordnete Objekt-ID dieses Objektes neu speichern
      * die Nr. wird sofort in der Datenbank gespeichert.
@@ -1208,6 +1245,12 @@ SQL
      */
     public function setParentId( $parentid )
     {
+
+		$descendantsIds = $this->getAllDescendantsIds();
+
+		if	( in_array($parentid,$descendantsIds) || $parentid == $this->objectid )
+			throw new \LogicException('new parent may not be a descendant of this node.');
+
         $db = \cms\base\DB::get();
 
         $sql = $db->sql('UPDATE {{object}} '.'  SET parentid={parentid}'.'  WHERE id={objectid}');

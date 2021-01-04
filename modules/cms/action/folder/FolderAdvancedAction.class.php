@@ -240,7 +240,7 @@ class FolderAdvancedAction extends FolderAction implements Method {
 							}
 							else
 							{
-								$this->addErrorFor($o,Messages::ERROR);
+								$this->addErrorFor($o,Messages::NO_RIGHTS);
 							}
 						}
 						else

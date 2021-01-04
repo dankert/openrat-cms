@@ -19,7 +19,7 @@ namespace cms\model;
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 use cms\base\Configuration;
-use cms\base\DB as Db;
+use cms\base\DB;
 use cms\base\Startup;
 use cms\base\Language;
 use language\Messages;
@@ -166,7 +166,7 @@ SQL
 	 */
 	function getGroupClause()
 	{
-		$groupIds = $this->getGroupIds();
+		$groupIds = $this->getEffectiveGroups();
 		
 		if	( count($groupIds) > 0 )
 			$groupclause = ' groupid='.implode(' OR groupid=',$groupIds );
@@ -748,18 +748,43 @@ SQL
 	{
 		if	( !is_array($this->groups) )
 		{
-			$db = Db::get();
-	
-			$sql = $db->sql( 'SELECT {{group}}.id,{{group}}.name FROM {{group}} '.
-			                'LEFT JOIN {{usergroup}} ON {{usergroup}}.groupid={{group}}.id '.
-			                'WHERE {{usergroup}}.userid={userid}' );
+			$sql = DB::sql( <<<SQL
+				SELECT {{group}}.id,{{group}}.name FROM {{group}}
+			                LEFT JOIN {{usergroup}} ON {{usergroup}}.groupid={{group}}.id
+			                WHERE {{usergroup}}.userid={userid}
+SQL
+			);
 			$sql->setInt('userid',$this->userid );
 			$this->groups = $sql->getAssoc();
 		}
 		
 		return $this->groups;
 	}
-	
+
+
+
+	/**
+	 * Calculates the effective group list.
+	 *
+	 * @return array
+	 */
+	function getEffectiveGroups()
+	{
+		$groupIds = array_keys( $this->getGroups() );
+		$effectiveGroupIds = $groupIds;
+
+		foreach( $groupIds as $id ) {
+			$group = new Group( $id );
+			$group->load();
+			$effectiveGroupIds = array_merge( $group->getParentGroups() );
+		}
+		$effectiveGroupIds = array_unique( $effectiveGroupIds );
+
+		return $effectiveGroupIds;
+	}
+
+
+
 
 	// Gruppen ermitteln, in denen der Benutzer Mitglied ist
 	function getGroupIds()

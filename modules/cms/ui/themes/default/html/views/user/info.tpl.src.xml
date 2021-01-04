@@ -53,6 +53,13 @@
 					</link>
 				</part>
 			</fieldset>
+
+			<fieldset label="${message:groups}">
+				<list list="${groups}" value="name">
+					<text value="${name}" />
+					<newline />
+				</list>
+			</fieldset>
 		</group>
 		<group title="${message:options}" open="false">
 			<fieldset class="line" label="">

@@ -1351,5 +1351,6 @@ Gracias.',
 'VALUE_PUBLIC'=>'public',
 'NO_RIGHTS'=>'No rights',
 'FOLDER_NOT_WRITABLE'=>'Directory not writable',
+'GROUP_PARENT'=>'Parent group',
 ];}
 }

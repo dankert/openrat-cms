@@ -3,5 +3,8 @@
     <fieldset label="${message:NAME}">
       <input hint="${message:NAME}" name="name" class="name,focus" maxlength="100"/>
     </fieldset>
+	  <fieldset label="${message:GROUP_PARENT}">
+		  <selectbox name="parentid" addempty="true" list="groups" />
+	  </fieldset>
   </form>
 </output>

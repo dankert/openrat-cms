@@ -6489,3 +6489,6 @@ NO_RIGHTS:
 FOLDER_NOT_WRITABLE:
   de: Keine Schreibrechte im Verzeichnis
   en: Directory not writable
+GROUP_PARENT:
+  de: Übergeordnete Gruppe
+  en: Parent group

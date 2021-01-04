@@ -76,6 +76,15 @@
               </div>
             </div>
           </section>
+          <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
+            <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('groups').'') ?></h3>
+            <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
+              <?php foreach((array)$groups as $list_key=>$name) {  ?>
+                <span><?php echo O::escapeHtml(''.@$name.'') ?></span>
+                <br /><?php echo O::escapeHtml('') ?>
+               <?php } ?>
+            </div>
+          </section>
         </div>
       </section>
       <section class="<?php echo O::escapeHtml('or-group or-collapsible or-collapsible--is-closed or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>

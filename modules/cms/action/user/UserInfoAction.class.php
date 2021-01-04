@@ -4,6 +4,7 @@ use cms\action\Method;
 use cms\action\UserAction;
 use cms\base\Configuration;
 use cms\base\Startup;
+use cms\model\Group;
 use security\Base2n;
 use security\Password;
 
@@ -30,8 +31,14 @@ class UserInfoAction extends UserAction implements Method {
 
 
 
+		$this->setTemplateVar( 'groups', array_map( function( $groupid) {
+			$group = new Group( $groupid);
+			$group->load();
+			return $group->name;
+		},$this->user->getEffectiveGroups() ) );
 
-        $issuer  = urlencode(Configuration::subset('application')->get('operator',Startup::TITLE));
+
+		$issuer  = urlencode(Configuration::subset('application')->get('operator',Startup::TITLE));
         $account = $this->user->name.'@'.$_SERVER['SERVER_NAME'];
 
         $base32 = new Base2n(5, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567', FALSE, TRUE, TRUE);
@@ -39,15 +46,12 @@ class UserInfoAction extends UserAction implements Method {
 
         $counter = $this->user->hotpCount;
 
-        $this->setTemplateVars(
-            $this->user->getProperties() +
-            array('totpSecretUrl' => "otpauth://totp/{$issuer}:{$account}?secret={$secret}&issuer={$issuer}",
-                'hotpSecretUrl' => "otpauth://hotp/{$issuer}:{$account}?secret={$secret}&issuer={$issuer}&counter={$counter}"
-            )
-            + array('totpToken'=>Password::getTOTPCode($this->user->otpSecret))
-        );
-
+        $this->setTemplateVar('totpSecretUrl',"otpauth://totp/{$issuer}:{$account}?secret={$secret}&issuer={$issuer}");
+		$this->setTemplateVar('hotpSecretUrl',"otpauth://hotp/{$issuer}:{$account}?secret={$secret}&issuer={$issuer}&counter={$counter}");
+		$this->setTemplateVar('totpToken'    , Password::getTOTPCode($this->user->otpSecret));
     }
+
+
     public function post() {
     }
 }

@@ -29,17 +29,10 @@ use util\Session;
  */
 class Group extends ModelBase
 {
-	var $groupid   = 0;
-	var $error    = '';
+	public $groupid   = 0;
+	public $parentid  = null;
 
-	var $name     = '';
-	var $fullname = '';
-	var $ldap_dn;
-	var $tel;
-	var $mail;
-	var $desc;
-	var $style;
-	var $isAdmin;
+	public $name     = '';
 
 
 	// Konstruktor
@@ -60,6 +53,60 @@ class Group extends ModelBase
 		return $stmt->getAssoc();
 	}
 
+	/**
+	 * Read all descendant groups.
+	 */
+	public function getAllDescendantsIds()
+	{
+		$children = [];
+
+		foreach( $this->getChildrenIds() as $groupid ) {
+			$children[] = $groupid;
+			$childGroup = new Group( $groupid );
+			$children = array_merge( $children, $childGroup->getAllDescendantsIds() );
+		}
+
+		return $children;
+	}
+
+
+	public function getParentGroups() {
+
+		$parents = [];
+
+		if   ( $this->parentid ) {
+			$parents[] = $this->parentid;
+			$parentGroup = new Group( $this->parentid );
+			$parentGroup->load();
+			$parents = array_merge( $parents, $parentGroup->getParentGroups() );
+		}
+
+		return $parents;
+	}
+
+	/**
+	 * Read all direct child groups of this group.
+	 */
+	public function getChildrenIds()
+	{
+		$stmt = Db::sql( 'SELECT id FROM {{group}} WHERE parentid = {parentid}' );
+		$stmt->setInt('parentid',$this->groupid );
+
+		return $stmt->getCol();
+	}
+
+	/**
+	 * Read all root groups.
+	 *
+	 * Root groups are groups without a parent group.
+	 */
+	public static function getRootGroups()
+	{
+		$stmt = Db::sql( 'SELECT id,name FROM {{group}} WHERE parentid IS NULL' );
+
+		return $stmt->getAssoc();
+	}
+
 
 	/**
      * Lesen Gruppe aus der Datenbank
@@ -71,10 +118,38 @@ class Group extends ModelBase
 		$sql->setInt( 'groupid',$this->groupid );
 
 		$row = $sql->getRow();
-		if	( count($row) > 0 )
-			$this->name = $row['name'    ];
-		else
-			$this->name = '';
+		if	( count($row) > 0 )  {
+			$this->name     = $row['name'    ];
+			$this->parentid = $row['parentid'];
+		}
+		else {
+			$this->name    = '';
+			$this->groupid = null;
+		}
+
+	}
+
+
+	public function getParentGroup()
+	{
+		return new Group($this->parentid);
+	}
+
+	public function getParentGroupIds() {
+		$sql = Db::sql( 'SELECT id,parentid FROM {{group}}'.
+			' WHERE id={groupid}' );
+		$sql->setInt( 'groupid',$this->parentid );
+
+		$row = $sql->getRow();
+		if	( count($row) > 0 )  {
+			$this->name     = $row['name'    ];
+			$this->parentid = $row['parentid'];
+		}
+		else {
+			$this->name    = '';
+			$this->groupid = null;
+		}
+
 	}
 
 
@@ -110,15 +185,25 @@ SQL
      */
 	public function save()
 	{
+		// Recursion check.
+		$descendantGroupoIds = $this->getAllDescendantsIds();
+		if   ( $this->parentid == $this->groupid || in_array($this->parentid, $descendantGroupoIds ))
+			throw new \LogicException('parent group is not allowed to be one of the descendant groups');
+
 		if	( empty($this->name) )
 			$this->name = \cms\base\Language::lang('GROUP').' '.$this->groupid;
-			
+
 		// Gruppe speichern
-		$sql = Db::sql( 'UPDATE {{group}} '.
-		                'SET name = {name} '.
-		                'WHERE id={groupid}' );
-		$sql->setString( 'name'  ,$this->name    );
-		$sql->setInt   ('groupid',$this->groupid );
+		$sql = Db::sql( <<<SQL
+			UPDATE {{group}}
+		          SET name     = {name},
+			          parentid = {parentid}
+		                WHERE id={groupid}
+SQL
+		);
+		$sql->setInt      ('groupid' ,$this->groupid );
+		$sql->setString   ('name'    ,$this->name    );
+		$sql->setIntOrNull('parentid',$this->parentid);
 
 		// Datenbankabfrage ausfuehren
 		$sql->query();
@@ -131,8 +216,10 @@ SQL
 	 */
 	function getProperties()
 	{
-		return Array( 'name'   =>$this->name,
-		              'groupid'=>$this->groupid );
+		return [ 'name'    =>$this->name,
+		         'groupid' =>$this->groupid,
+				 'parentid'=>$this->parentid
+		];
 	}
 
 
@@ -146,7 +233,7 @@ SQL
 
 		$sql = $db->sql('SELECT MAX(id) FROM {{group}}');
 		$this->groupid = intval($sql->getOne())+1;
-		
+
 		// Gruppe hinzuf?gen
 		$sql = $db->sql( 'INSERT INTO {{group}} '.
 		                '(id,name) VALUES( {groupid},{name} )');
@@ -199,7 +286,7 @@ SQL
 
 		return $sql->getAssoc();
 	}
-	
+
 
 	// Benutzer ermitteln, die *nicht* Mitglied dieser Gruppe sind
 	function getOtherUsers()
@@ -231,7 +318,7 @@ SQL
 		$sql->setInt('groupid'    ,$this->groupid );
 
 		$sql->query();
-	
+
 	}
 
 
@@ -272,7 +359,7 @@ SQL
 			                '    AND {{acl}}.groupid={groupid}' );
 			$sql->setInt('projectid',$projectid    );
 			$sql->setInt('groupid'   ,$this->groupid );
-			
+
 			$acls = $sql->getAll();
 
 			foreach( $acls as $acl )
@@ -283,7 +370,7 @@ SQL
 				$var[$projectid]['rights'][$aclid] = $acl;
 				$var[$projectid]['rights'][$aclid]['foldername'] = implode(' &raquo; ',$folder->parentfolder( false,true ));
 			}
-			
+
 			$sql = $db->sql( 'SELECT id FROM {{folder}}'.
 			                '  WHERE projectid={projectid}' );
 			$sql->setInt('projectid',$projectid);
@@ -300,12 +387,12 @@ SQL
 
 			asort( $var[$projectid]['folders'] );
 		}
-		
+
 		return $var;
 	}
-	
 
-	
+
+
 	/**
 	 * Ermitteln aller Berechtigungen dieser Gruppe.<br>
 	 * Diese Daten werden auf der Gruppenseite in der Administration angezeigt.
@@ -337,10 +424,10 @@ SQL
 				$permission->languagename = $row['languagename'];
 			$aclList[] = $permission;
 		}
-		
+
 		return $aclList;
 	}
-	
+
 
     public function getName()
     {

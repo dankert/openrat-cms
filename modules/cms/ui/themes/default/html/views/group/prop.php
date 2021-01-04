@@ -12,6 +12,17 @@
           <input name="<?php echo O::escapeHtml('name') ?>" placeholder="<?php echo O::escapeHtml(''.@O::lang('NAME').'') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('100') ?>" value="<?php echo O::escapeHtml(''.@$name.'') ?>" class="<?php echo O::escapeHtml('or-name or-focus or-input') ?>" /><?php echo O::escapeHtml('') ?>
         </div>
       </section>
+      <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
+        <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('GROUP_PARENT').'') ?></h3>
+        <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
+          <select name="<?php echo O::escapeHtml('parentid') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
+            <option value="<?php echo O::escapeHtml('') ?>"><?php echo O::escapeHtml(''.@O::lang('LIST_ENTRY_EMPTY').'') ?></option>
+            <?php foreach($groups as $_key=>$_value) {  ?>
+              <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$parentid){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?></option>
+             <?php } ?>
+          </select>
+        </div>
+      </section>
     </div>
     <div class="<?php echo O::escapeHtml('or-form-actionbar') ?>"><?php echo O::escapeHtml('') ?>
       <div class="<?php echo O::escapeHtml('or-btn or-btn--control or-btn--secondary or-act-form-cancel') ?>"><?php echo O::escapeHtml('') ?>

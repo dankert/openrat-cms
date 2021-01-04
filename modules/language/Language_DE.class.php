@@ -1355,5 +1355,6 @@ Vielen Dank.',
 'VALUE_PUBLIC'=>'öffentlich',
 'NO_RIGHTS'=>'Keine Berechtigung',
 'FOLDER_NOT_WRITABLE'=>'Keine Schreibrechte im Verzeichnis',
+'GROUP_PARENT'=>'Übergeordnete Gruppe',
 ];}
 }
