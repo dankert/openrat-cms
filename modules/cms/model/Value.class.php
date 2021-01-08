@@ -722,17 +722,6 @@ SQL
 	
 	
 	/**
-	 * Ermittelt einen tempor�ren Dateinamen f�r diesen Inhalt. 
-	 */
-	function tmpfile()
-	{
-		$filename = \util\FileUtils::getTempFileName(  );
-		return $filename;
-	}
-	
-	
-	
-	/**
 	 * Ermittelt den unbearbeiteten, "rohen" Inhalt.
 	 * 
 	 * @return mixed Inhalt

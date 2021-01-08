@@ -2,6 +2,7 @@
 
 namespace util;
 use cms\base\Configuration;
+use LogicException;
 use Pfad;
 use RuntimeException;
 
@@ -12,10 +13,10 @@ use RuntimeException;
 class FileUtils
 {
 	/**
-	 * Fuegt einen Slash ("/") an das Ende an, sofern nicht bereits vorhanden.
+	 * Adds a trailing slash ('/') if not existing.
 	 *
-	 * @param String $pfad
-	 * @return Pfad mit angeh�ngtem Slash.
+	 * @param String $pfad path
+	 * @return string path with trailing slash.
 	 */
 	public static function slashify($pfad)
 	{
@@ -27,52 +28,46 @@ class FileUtils
 
 
 	/**
-	 * Liefert einen Verzeichnisnamen fuer temporaere Dateien.
-	 */
-	public static function createTempFile()
-	{
-		$tmpdir  = Configuration::subset('cache')->get('tmp_dir','');
-		$tmpfile = @tempnam($tmpdir, 'openrat_tmp');
-
-		// 2. Versuch: Temp-Dir aus "upload_tmp_dir".
-		if ($tmpfile === FALSE) {
-			$tmpdir = ini_get('upload_tmp_dir');
-			$tmpfile = @tempnam($tmpdir, 'openrat_tmp');
-		} elseif ($tmpfile === FALSE) {
-			$tmpfile = @tempnam('', 'openrat_tmp');
-		}
-
-		return $tmpfile;
-	}
-
-
-	/**
-	 * Liefert einen Verzeichnisnamen fuer temporaere Dateien.
+	 * Gets a directory for temporary files.
 	 */
 	public static function getTempDir()
 	{
-		$tmpfile = FileUtils::createTempFile();
+		$cacheConfig = Configuration::subset('cache');
 
-		$tmpdir = dirname($tmpfile);
-		@unlink($tmpfile);
+		$tmpdirs = [
+			$cacheConfig->get('tmp_dir',''), // temporary cache dir from configuration
+			sys_get_temp_dir(),
+			// do not try /var/cache here as it is mostly not writable
+			'/var/tmp', // FHS, survives restarts
+			'/tmp',     // FHS
+			null
+		];
 
-		return FileUtils::slashify($tmpdir);
-	}
+		foreach( $tmpdirs as $tmpdir ) {
+			if   ( is_dir($tmpdir) && is_writable($tmpdir) )
+				break;
+		}
 
+		if   ( ! $tmpdir )
+			throw new LogicException('Could not find a directory for temporary files. Hint: You may config this with cache/tmp_dir');
 
-	/**
-	 * @param array $attr
-	 * @return string
-	 * @deprecated use \Cache
-	 */
-	public static function getTempFileName($attr = array())
-	{
-		$filename = FileUtils::getTempDir() . '/openrat';
-		foreach ($attr as $a => $w)
-			$filename .= '_' . $a . $w;
+		$tmpdir = FileUtils::slashify($tmpdir).$cacheConfig->get('name','openrat-cache');
+		$tmpdir = FileUtils::slashify($tmpdir);
 
-		$filename .= '.tmp';
-		return $filename;
+		if   ( ! is_dir($tmpdir ) ) {
+			mkdir( $tmpdir );
+
+			file_put_contents($tmpdir.'CACHEDIR.TAG', <<<CACHETAG
+Signature: 8a477f597d28d172789f06886806bc55
+# This file is a cache directory tag created by OpenRat CMS.
+# For information about cache directory tags, see:
+#	http://www.brynosaurus.com/cachedir/
+CACHETAG
+			);
+
+		}
+
+		return $tmpdir;
 	}
 
 
