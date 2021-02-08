@@ -1,3 +1,5 @@
+@smartphones: ~"only screen and (max-width: 55rem)";
+
 .or- {
     &dropdown {
 
@@ -22,6 +24,13 @@
         font-weight: normal;
         text-decoration: none;
 
+        &-key {
+          // do not display keystrokes on devices with virtual keyboard
+          @media @smartphones {
+            display: none;
+          }
+        }
+
         &-entry {
             padding: 0;
 
@@ -37,6 +46,7 @@
                 .or-dropdown-text {
                     flex: 1; /* Consumes all available space */
                 }
+
             }
 
             &--inactive {

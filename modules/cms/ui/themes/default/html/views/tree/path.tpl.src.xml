@@ -7,8 +7,8 @@
 				<!--<text value="${name}" />-->
 				<!-- without names for saving place -->
 			</link>
+			<image symbol="node-closed"/>
 		</part>
-		<image symbol="node-closed"/>
 	</list>
 	<part class="act-clickable,breadcrumb-item,breadcrumb-item--actual">
 		<link type="open" action="${actual.action}" id="${actual.id}">

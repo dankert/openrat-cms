@@ -47,6 +47,12 @@ Basis-Style for Openrat.
 
         }
 
+        &-shortcut {
+          @media @smartphones {
+            display: none;
+          }
+        }
+
         &-label, &-dropdown-icon {
             @media @smartphones {
                 display: none;
@@ -58,7 +64,7 @@ Basis-Style for Openrat.
 
             // Menüeinträge auf der rechten Seite rechtsbündig anzeigen.
             &:nth-last-child(1) {
-                div.dropdown {
+                div.or-dropdown {
                     right: 10px;
                 }
             }
@@ -71,16 +77,7 @@ Basis-Style for Openrat.
                 padding: 2px;
 
                 margin-left: 10px;
-                float: left;
-
-                /* Bestimmte Menüs sind nach rechts ausgerichet */
-                &.or-user,
-                &.or-search,
-                &.or-history {
-                    //float: right;
-                    //margin-right: 10px;
-                    //margin-left: 10px;
-                }
+                //float: left;
 
                 &.or-menu-category {
                     cursor: default;

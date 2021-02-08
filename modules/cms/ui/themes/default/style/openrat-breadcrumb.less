@@ -17,6 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+@smartphones: ~"only screen and (max-width: 55rem)";
+
 
 .or {
 
@@ -38,15 +40,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
             .or-image-icon {
                 margin-right: 0.2em;
+                @media @smartphones {
+                  display: none;
+                }
             }
 
             &--path {
                 opacity: 0.55;
+
+              @media @smartphones {
+                display: none;
+              }
             }
+
             &--actual {
                 font-size: 1.25em;
                 font-weight: bold;
             }
+
+
         }
     }
 

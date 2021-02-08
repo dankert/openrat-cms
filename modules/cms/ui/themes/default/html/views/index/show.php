@@ -23,9 +23,6 @@
       <div class="<?php echo O::escapeHtml('or-workbench-main') ?>"><?php echo O::escapeHtml('') ?>
         <header id="<?php echo O::escapeHtml('title') ?>" class="<?php echo O::escapeHtml('or-workbench-title or-view or-act-view-static') ?>" data-action="<?php echo O::escapeHtml('title') ?>" data-method="<?php echo O::escapeHtml('show') ?>"><?php echo O::escapeHtml('') ?></header>
         <main class="<?php echo O::escapeHtml('or-workbench-workplace') ?>"><?php echo O::escapeHtml('') ?>
-          <header><?php echo O::escapeHtml('') ?>
-            <div class="<?php echo O::escapeHtml('or-breadcrumb') ?>"><?php echo O::escapeHtml('') ?></div>
-          </header>
           <?php  { $mainMethodName= 'edit'; ?>
            <?php } ?>
           <section class="<?php echo O::escapeHtml('or-workbench-section or-collapsible or-collapsible--is-open') ?>"><?php echo O::escapeHtml('') ?>

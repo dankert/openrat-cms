@@ -44,9 +44,9 @@
 				<!-- The workplace with some views -->
 				<main class="or-workbench-workplace">
 
-					<header>
+<!--					<header>
 						<div class="or-breadcrumb"/>
-					</header>
+					</header>-->
 
 					<or:set var="mainMethodName" value="'edit'" />
 

@@ -4,8 +4,8 @@
       <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('open') ?>" data-action="<?php echo O::escapeHtml(''.@$action.'') ?>" data-method="<?php echo O::escapeHtml('') ?>" data-id="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/'.@$action.'/'.@$id.'') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
         <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-'.@$action.'') ?>"><?php echo O::escapeHtml('') ?></i>
       </a>
+      <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-closed') ?>"><?php echo O::escapeHtml('') ?></i>
     </div>
-    <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-closed') ?>"><?php echo O::escapeHtml('') ?></i>
    <?php } ?>
   <div class="<?php echo O::escapeHtml('or-act-clickable or-breadcrumb-item or-breadcrumb-item--actual') ?>"><?php echo O::escapeHtml('') ?>
     <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('open') ?>" data-action="<?php echo O::escapeHtml(''.@$actual['action'].'') ?>" data-method="<?php echo O::escapeHtml('') ?>" data-id="<?php echo O::escapeHtml(''.@$actual['id'].'') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/'.@$actual['action'].'/'.@$actual['id'].'') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
