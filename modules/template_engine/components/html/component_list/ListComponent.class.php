@@ -10,6 +10,8 @@ class ListComponent extends Component
 
 	public $list;
 
+	public $items;
+
 	public $extract = false;
 
 	public $key = 'list_key';
@@ -19,7 +21,13 @@ class ListComponent extends Component
 	public function createElement()
 	{
 		$list = new PHPBlockElement();
-		$list->beforeBlock = 'foreach((array)'.$list->value($this->list).' as $' . $this->key . '=>$' . $this->value . ')';
+
+		if   ( $this->items )
+			$listValue = '['.implode(',',array_map( function($value){return "'".$value."'";},explode(',',$this->items))).']';
+		else
+			$listValue = $list->value($this->list);
+
+		$list->beforeBlock = 'foreach((array)'.$listValue.' as $' . $this->key . '=>$' . $this->value . ')';
 
 		if ($this->extract)
 			$list->inBlock = 'extract($' . $this->value . ');';

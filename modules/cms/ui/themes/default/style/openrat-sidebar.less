@@ -1,0 +1,68 @@
+/*
+OpenRat Content Management System
+Copyright (C) 2002-2010 Jan Dankert
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+*/
+
+/*
+Basis-Style for Openrat.
+*/
+
+
+/* Usage to this variable is safe to be removed */
+@color-overridden-by-theme: black;
+
+@smartphones: ~"only screen and (max-width: 55rem)";
+
+
+
+.or {
+    &-sidebar {
+
+      position: fixed;
+      top: 10em;
+      right: 0;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+
+      &-button {
+        margin-left: auto;
+        margin-right: 0;
+
+        width: 2em;
+        overflow: hidden;
+        right: 0;
+        transition: width 0.2s ease-in-out;
+        margin-bottom: 2em;
+        white-space: nowrap;
+
+        //&-text {
+        //  display: none;
+        //}
+
+        &:hover {
+          width:9em;
+
+          //.or-sidebar-button-text {
+          //    display: inline;
+          //}
+        }
+
+      }
+
+    }
+}

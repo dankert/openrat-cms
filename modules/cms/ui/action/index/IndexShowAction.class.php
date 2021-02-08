@@ -90,6 +90,7 @@ class IndexShowAction extends IndexAction implements Method {
             'edit'     => true,
             'preview'  => true,
             'info'     => true,
+			'rights'   => true,
         );
 
         $methodList = array();

@@ -2780,6 +2780,11 @@ $( function() {
     closeMobileNavigation();
 
 
+	Openrat.Workbench.afterNewActionHandler.add( function() {
+
+		$('.or-sidebar').find('.or-sidebar-button').orLinkify();
+	  }
+	);
 
     Openrat.Workbench.afterNewActionHandler.add( function() {
 

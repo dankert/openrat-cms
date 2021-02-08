@@ -48,40 +48,55 @@
 						<div class="or-breadcrumb"/>
 					</header>
 
-					<or:list list="${methodList}" value="method">
+					<or:set var="mainMethodName" value="'edit'" />
 
-						<!--  A section containing the view -->
-						<section class="or-workbench-section or-collapsible or-collapsible--is-open">
+					<!--  A section containing the view -->
+					<section class="or-workbench-section or-collapsible or-collapsible--is-open">
 
-							<header class="or-view-header or-collapsible-act-switch or-collapsible-title">
-								<i class="or-collapsible--on-open or-image-icon or-image-icon--node-open"/>
-								<i class="or-collapsible--on-closed or-image-icon or-image-icon--node-closed"/>
-								<span
-									class="or-view-icon or-image-icon or-image-icon--method-${method.name}"/>
-								<or:text value="${message:METHOD_${method.name}}"/>
-							</header>
+						<header class="or-view-header or-collapsible-act-switch or-collapsible-title">
+							<i class="or-collapsible--on-open or-image-icon or-image-icon--node-open"/>
+							<i class="or-collapsible--on-closed or-image-icon or-image-icon--node-closed"/>
+							<span
+								class="or-view-icon or-image-icon or-image-icon--method-${method.name}"/>
+							<or:text value="${message:METHOD_${mainMethodName}}"/>
+						</header>
 
-							<div class="or-collapsible-value or-view or-act-view-loader or-closable"
-								 data-method="${method.name}"/>
-						</section>
-					</or:list>
+						<div class="or-collapsible-value or-view or-act-view-loader or-closable"
+							 data-method="${mainMethodName}"/>
+					</section>
 				</main>
+
+
+				<or:part class="sidebar,view">
+
+					<or:list items="preview,info,rights" value="method">
+
+						<or:link class="sidebar-button,filtered" subaction="${method}" type="dialog">
+							<or:image method="${method}" />
+							<or:text class="sidebar-button-text" value="${message:METHOD_${method}}"/>
+						</or:link>
+					</or:list>
+				</or:part>
+
+
+				<!-- Modal dialog -->
+				<div id="dialog" class="or-dialog or-dialog--is-closed" data-action="${dialogAction}"
+					 data-method="${dialogMethod}">
+					<div class="or-view or-round-corners">
+					</div>
+
+					<div class="or-dialog-filler"><!-- empty element, this is only for styling the background -->
+						<span class="or-dialog-filler-icon or-btn or-image-icon or-image-icon--menu-close"></span>
+					</div>
+				</div>
+
 
 			</div>
 
 		</div>
  
 
-		<!-- Modal dialog -->
-		<div id="dialog" class="or-dialog or-dialog--is-closed" data-action="${dialogAction}"
-			 data-method="${dialogMethod}">
-			<div class="or-view or-round-corners">
-			</div>
 
-			<div class="or-dialog-filler"><!-- empty element, this is only for styling the background -->
-				<span class="or-dialog-filler-icon or-btn or-image-icon or-image-icon--menu-close"></span>
-			</div>
-		</div>
 
 
 		<div id="noticebar" class="or-notices">
