@@ -1,0 +1,163 @@
+# OpenAPI API specification
+swagger: '2.0'
+info:
+  description: OpenRat Content Management System
+  version: 1.0.0
+  title: OpenRat Content Management System API
+  license:
+    name: GPL v3
+host: demo.openrat.de
+#basePath: /
+schemes:
+  - https
+  - http
+paths:
+  /api/:
+    get:
+      tags:
+        - pet
+      summary: Read data
+      description: Read data from CMS API
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: action
+          in: query
+          description: The called action
+          required: true
+          type: array
+          items:
+            type: string
+            enum:
+              - user
+              - profile
+              - tree
+              - folder
+              - file
+              - image
+              - text
+              - page
+              - link
+              - alias
+              - group
+              - login
+            default: user
+        - name: subaction
+          in: query
+          description: The method to call
+          required: true
+          type: array
+          items:
+            type: string
+            enum:
+              - content
+              - edit
+              - view
+              - info
+            default: info
+        - name: id
+          in: query
+          description: ID of the object
+          required: false
+          type: array
+          items:
+            type: number
+        - name: output
+          in: query
+          description: Output type
+          required: false
+          type: array
+          items:
+            type: string
+            enum:
+              - json
+              - xml
+            default: json
+          collectionFormat: multi
+      responses:
+        '200':
+          description: success
+          schema:
+            type: string
+        '210':
+          description: method not available
+          schema:
+            type: string
+    post:
+      summary: Write data
+      description: write data to the CMS
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: action
+          in: query
+          description: The called action
+          required: true
+          type: array
+          items:
+            type: string
+            enum:
+              - user
+              - profile
+              - tree
+              - folder
+              - file
+              - image
+              - text
+              - page
+              - link
+              - alias
+              - group
+              - login
+            default: user
+        - name: subaction
+          in: query
+          description: The method to call
+          required: true
+          type: array
+          items:
+            type: string
+            enum:
+              - content
+              - edit
+              - view
+              - info
+            default: info
+        - name: id
+          in: query
+          description: ID of the object
+          required: false
+          type: array
+          items:
+            type: number
+        - name: output
+          in: query
+          description: output type
+          required: false
+          type: array
+          items:
+            type: string
+            enum:
+              - json
+              - xml
+            default: json
+          collectionFormat: multi
+      responses:
+        '200':
+          description: success
+          schema:
+            type: string
+        '210':
+          description: method not available
+          schema:
+            type: string
+
+externalDocs:
+  description: Find out more about OpenRat CMS
+  url: 'http://www.openrat.de'
+
