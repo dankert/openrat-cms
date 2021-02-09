@@ -71,7 +71,7 @@
 
 					<or:list items="preview,info,rights" value="method">
 
-						<or:link class="sidebar-button,filtered" subaction="${method}" type="dialog">
+						<or:link class="btn,btn--is-active,sidebar-button,filtered" subaction="${method}" type="dialog">
 							<or:image method="${method}" />
 							<or:text class="sidebar-button-text" value="${message:METHOD_${method}}"/>
 						</or:link>
