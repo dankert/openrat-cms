@@ -94,7 +94,7 @@ class LinkComponent extends Component
 			$link->addAttribute('target',$this->frame);
 		
 		if ( $this->name )
-			$link->addAttribute('date-name',$this->name)->addAttribute('name',$this->name);
+			$link->addAttribute('data-name',$this->name)->addAttribute('name',$this->name);
 		
 		if ( $this->url )
 			$link->addAttribute('data-url',$this->url);

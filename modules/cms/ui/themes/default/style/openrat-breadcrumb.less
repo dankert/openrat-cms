@@ -18,47 +18,58 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 @smartphones: ~"only screen and (max-width: 55rem)";
+@wide: ~"only screen and (min-width: 85rem)";
 
 
 .or {
 
     &-breadcrumb {
-        margin-bottom: 0.1em;
-        margin-top: 0.3em;
-        margin-left: 1.5em;
-        line-height: 1.5em;
-        font-weight: normal;
-        white-space: nowrap;
+      margin-bottom: 0.1em;
+      margin-top: 0.3em;
+      margin-left: 1.5em;
+      line-height: 1.5em;
+      font-weight: normal;
+      white-space: nowrap;
 
-        * {
-            display: inline;
-            margin-right: 0.3em;
+      * {
+          display: inline;
+          margin-right: 0.3em;
+      }
+
+      &-parent {
+        @media @wide {
+          display: none;
         }
+      }
 
-        &-item {
+      &-path {
+        opacity: 0.55;
+        display: none;
+
+        @media @wide {
+          display: inline;
+        }
+      }
+
+      &-actual {
+        font-size: 1.25em;
+        font-weight: bold;
+
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        //overflow: hidden;
+        //max-width: 0;
+      }
+
+      &-item {
             font-size: 1.15em;
 
-            .or-image-icon {
+/*            .or-image-icon {
                 margin-right: 0.2em;
                 @media @smartphones {
                   display: none;
                 }
-            }
-
-            &--path {
-                opacity: 0.55;
-
-              @media @smartphones {
-                display: none;
-              }
-            }
-
-            &--actual {
-                font-size: 1.25em;
-                font-weight: bold;
-            }
-
-
+            }*/
         }
     }
 

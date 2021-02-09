@@ -77,6 +77,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             /* Horizontale Flexbox */
             display: flex;
             flex-direction: column;
+            position: relative;
 
             /*
             https://stackoverflow.com/questions/28636832/firefox-overflow-y-not-working-with-nested-flexbox
@@ -101,7 +102,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
         &-workplace {
-
+            flex: 1;
             //margin-left: 33%;
             transition: margin-left 0.15s ease-in-out;
 
@@ -201,7 +202,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
             width: 30em;
 
-            &--is-small {
+          .or-navtree {
+            transition: opacity 0.1s ease-in-out;
+          }
+
+          &--is-small {
                 width: 6em;
 
                 //& ~ .or-workbench-workplace {
@@ -209,24 +214,27 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 //}
 
                 .or-workbench-navigation-container {
-                    opacity: 0.2;
+                    //opacity: 0.2;
                     width: 6em;
                     overflow-y: hidden;
+
+                    .or-navtree {
+                      opacity: 0.2;
+                    }
 
                     &:hover {
                         overflow-y: auto;
                         width: 33%;
                         opacity: 0.9;
 
-                        .or-navtree-text {
+                        .or-navtree {
                             opacity: 1;
                         }
                     }
                 }
 
-                .or-navtree-text {
+                .or-navtree {
                     opacity: 0;
-                    transition: opacity ease-in-out;
                 }
             }
 

@@ -25,18 +25,31 @@
         <main class="<?php echo O::escapeHtml('or-workbench-workplace') ?>"><?php echo O::escapeHtml('') ?>
           <?php  { $mainMethodName= 'edit'; ?>
            <?php } ?>
-          <section class="<?php echo O::escapeHtml('or-workbench-section or-collapsible or-collapsible--is-open') ?>"><?php echo O::escapeHtml('') ?>
-            <header class="<?php echo O::escapeHtml('or-view-header or-collapsible-act-switch or-collapsible-title') ?>"><?php echo O::escapeHtml('') ?>
-              <i class="<?php echo O::escapeHtml('or-collapsible--on-open or-image-icon or-image-icon--node-open') ?>"><?php echo O::escapeHtml('') ?></i>
-              <i class="<?php echo O::escapeHtml('or-collapsible--on-closed or-image-icon or-image-icon--node-closed') ?>"><?php echo O::escapeHtml('') ?></i>
-              <span class="<?php echo O::escapeHtml('or-view-icon or-image-icon or-image-icon--method-'.@$method['name'].'') ?>"><?php echo O::escapeHtml('') ?></span>
-              <span><?php echo O::escapeHtml(''.@O::lang('METHOD_'.@$mainMethodName.'').'') ?></span>
-            </header>
-            <div class="<?php echo O::escapeHtml('or-collapsible-value or-view or-act-view-loader or-closable') ?>" data-method="<?php echo O::escapeHtml(''.@$mainMethodName.'') ?>"><?php echo O::escapeHtml('') ?></div>
+          <section class="<?php echo O::escapeHtml('or-workbench-section') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('or-collapsible-value or-view or-act-view-loader') ?>" data-method="<?php echo O::escapeHtml(''.@$mainMethodName.'') ?>"><?php echo O::escapeHtml('') ?></div>
           </section>
         </main>
         <div id="<?php echo O::escapeHtml('dialog') ?>" class="<?php echo O::escapeHtml('or-dialog or-dialog--is-closed') ?>" data-action="<?php echo O::escapeHtml(''.@$dialogAction.'') ?>" data-method="<?php echo O::escapeHtml(''.@$dialogMethod.'') ?>"><?php echo O::escapeHtml('') ?>
-          <div class="<?php echo O::escapeHtml('or-view or-round-corners') ?>"><?php echo O::escapeHtml('') ?></div>
+          <div class="<?php echo O::escapeHtml('or-dialog-content') ?>"><?php echo O::escapeHtml('') ?>
+            <header class="<?php echo O::escapeHtml('or-workbench-title') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('or-menu') ?>"><?php echo O::escapeHtml('') ?>
+                <div class="<?php echo O::escapeHtml('or-menu-group') ?>"><?php echo O::escapeHtml('') ?>
+                  <div class="<?php echo O::escapeHtml('or-toolbar-icon or-workbench--visible-on-wide or-act-nav-small or-act-dialog-close') ?>"><?php echo O::escapeHtml('') ?>
+                    <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-back') ?>"><?php echo O::escapeHtml('') ?></i>
+                  </div>
+                  <div class="<?php echo O::escapeHtml('or-act-dialog-name') ?>"><?php echo O::escapeHtml('') ?></div>
+                </div>
+                <div class="<?php echo O::escapeHtml('or-menu-group') ?>"><?php echo O::escapeHtml('') ?>
+                  <div class="<?php echo O::escapeHtml('or-toolbar-icon or--visible-on-desktop or-act-clickable or-act-dialog-close') ?>"><?php echo O::escapeHtml('') ?>
+                    <a title="<?php echo O::escapeHtml(''.@O::lang('menu_pub_desc').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('pub') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('pub') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'pub\'}') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
+                      <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-close') ?>"><?php echo O::escapeHtml('') ?></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </header>
+            <div class="<?php echo O::escapeHtml('or-view') ?>"><?php echo O::escapeHtml('') ?></div>
+          </div>
           <div class="<?php echo O::escapeHtml('or-dialog-filler') ?>"><?php echo O::escapeHtml('') ?>
             <span class="<?php echo O::escapeHtml('or-dialog-filler-icon or-btn or-image-icon or-image-icon--menu-close') ?>"><?php echo O::escapeHtml('') ?></span>
           </div>

@@ -1,6 +1,9 @@
 /* Usage to this variable is safe to be removed */
 @color-overridden-by-theme: black;
 
+@smartphones: ~"only screen and (max-width: 55rem)";
+
+
 .border-radius (@radius) {
     border-radius: @radius;
     -moz-border-radius: @radius;
@@ -18,6 +21,10 @@
 
         .border-radius(1em);
 
+        @media @smartphones {
+          .border-radius(0);
+        }
+
         &s {
             display: block;
             position: fixed;
@@ -25,6 +32,12 @@
             right: 4em;
             width: 25em;
             z-index: 5;
+
+            @media @smartphones {
+              right:0;
+              bottom: 0;
+              width: 100%;
+            }
         }
 
         &-toolbar {

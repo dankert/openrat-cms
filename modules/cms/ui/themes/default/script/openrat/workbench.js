@@ -484,9 +484,10 @@ Openrat.Workbench = new function()
 		let view = new Openrat.View( action,method,id,params );
 
 		view.before = function() {
-			$('#dialog > .view').html('<div class="header"><img class="or-icon" title="" src="./themes/default/images/icon/'+method+'.png" />'+name+'</div>');
-			$('#dialog > .view').data('id',id);
-			$('#dialog').removeClass('dialog--is-closed').addClass('dialog--is-open');
+			$('.or-dialog-content .or-view').html('<div class="header"><img class="or-icon" title="" src="./themes/default/images/icon/'+method+'.png" />'+name+'</div>');
+			$('.or-dialog-content .or-view').data('id',id);
+			$('.or-dialog').removeClass('dialog--is-closed').addClass('dialog--is-open');
+			$('.or-dialog-content .or-act-dialog-name').html( name );
 
 			let view = this;
 
@@ -501,8 +502,9 @@ Openrat.Workbench = new function()
 			$(document).keyup(this.escapeKeyClosingHandler);
 
 			// Nicht-Modale Dialoge durch Klick auf freie Fläche schließen.
-			$('.or-dialog-filler').click( function()
+			$('.or-dialog-filler,.or-act-dialog-close').click( function(e)
 			{
+				e.preventDefault();
 				view.close();
 			});
 
@@ -516,14 +518,14 @@ Openrat.Workbench = new function()
 				return;
 
 			// Remove dirty-flag from view
-			$('.or-view.or-view--is-dirty').removeClass('view--is-dirty');
-			$('#dialog .or-view').html('');
-			$('#dialog').removeClass('dialog--is-open').addClass('dialog--is-closed'); // Dialog schließen
+			$('.or-dialog-content .or-view.or-view--is-dirty').removeClass('view--is-dirty');
+			$('.or-dialog-content .or-view').html('');
+			$('.or-dialog').removeClass('dialog--is-open').addClass('dialog--is-closed'); // Dialog schließen
 
 			$(document).unbind('keyup',this.escapeKeyClosingHandler); // Cleanup ESC-Key-Listener
 		}
 
-		return view.start( $('.or-dialog > .or-view') );
+		return view.start( $('.or-dialog-content .or-view') );
 	}
 
 

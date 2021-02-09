@@ -14,7 +14,7 @@
 				<image class="" symbol="arrow-right"/>
 			</part>
 
-			<part class="breadcrumb" />
+			<part class="breadcrumb act-breadcrumb" />
 
 			<!--
 				  <part class="toolbar-icon,toggle-nav-small">
@@ -120,7 +120,7 @@
 				</part>
 				<part
 					class="toolbar-icon,act-clickable,filtered,menu-shortcut">
-					<link type="dialog" subaction="settings" title="${message:menu_settings_desc}">
+					<link type="dialog" subaction="settings" title="${message:menu_settings_desc}" name="${message:menu_settings}">
 						<image method="settings"/>
 						<!--
 									<text class="menu-label" key="menu_pub"></text>

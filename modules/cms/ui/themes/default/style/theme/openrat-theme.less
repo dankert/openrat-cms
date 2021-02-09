@@ -35,15 +35,17 @@ html.or-theme-@{cms-theme-id} {
     scrollbar-width: thin;
 
     .or-dialog {
-        > .or-view {
+        &-content {
+          .or-view {
             background-color: @cms-background-color;
             color: @cms-text-color;
-            border-color: @cms-text-color ! important;
-            .box-shadow(0px, 0px, 40px, @cms-text-color);
+            //border-color: @cms-text-color ! important;
+            //.box-shadow(0px, 0px, 40px, @cms-text-color);
+          }
         }
 
-        .or-dialog-filler {
-            background-color: @cms-background-color;
+        &-filler {
+            background-color: @cms-title-background-color;
         }
     }
 
@@ -53,10 +55,6 @@ html.or-theme-@{cms-theme-id} {
             &-header {
                 color: @cms-title-background-color;
             }
-        }
-
-        &-act-view-loader {
-            background-color: @cms-background-color;
         }
 
         &-notice {
@@ -148,6 +146,10 @@ html.or-theme-@{cms-theme-id} {
             &-main {
                 //background-color: @cms-inactive-background-color;
                 //background-image: linear-gradient(to bottom, @cms-inactive-background-color 0%, lighten(@cms-inactive-background-color, 10%) 100%);
+              }
+
+            &-workplace {
+              background-color: @cms-background-color;
             }
 
             &-section {

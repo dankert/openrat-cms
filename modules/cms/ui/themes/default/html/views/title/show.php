@@ -10,7 +10,7 @@
       <div class="<?php echo O::escapeHtml('or-toolbar-icon or-workbench--visible-on-small or-act-nav-wide or--visible-on-desktop') ?>"><?php echo O::escapeHtml('') ?>
         <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--arrow-right') ?>"><?php echo O::escapeHtml('') ?></i>
       </div>
-      <div class="<?php echo O::escapeHtml('or-breadcrumb') ?>"><?php echo O::escapeHtml('') ?></div>
+      <div class="<?php echo O::escapeHtml('or-breadcrumb act-breadcrumb') ?>"><?php echo O::escapeHtml('') ?></div>
     </div>
     <div class="<?php echo O::escapeHtml('or-menu-group') ?>"><?php echo O::escapeHtml('') ?>
       <?php $if4=($isLoggedIn); if($if4) {  ?>
@@ -47,7 +47,7 @@
           </a>
         </div>
         <div class="<?php echo O::escapeHtml('or-toolbar-icon or-act-clickable or-filtered or-menu-shortcut') ?>"><?php echo O::escapeHtml('') ?>
-          <a title="<?php echo O::escapeHtml(''.@O::lang('menu_settings_desc').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('settings') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('settings') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'settings\'}') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
+          <a title="<?php echo O::escapeHtml(''.@O::lang('menu_settings_desc').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-name="<?php echo O::escapeHtml(''.@O::lang('menu_settings').'') ?>" name="<?php echo O::escapeHtml(''.@O::lang('menu_settings').'') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('settings') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('settings') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'settings\'}') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
             <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-settings') ?>"><?php echo O::escapeHtml('') ?></i>
           </a>
         </div>

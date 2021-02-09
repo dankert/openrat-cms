@@ -51,17 +51,9 @@
 					<or:set var="mainMethodName" value="'edit'" />
 
 					<!--  A section containing the view -->
-					<section class="or-workbench-section or-collapsible or-collapsible--is-open">
+					<section class="or-workbench-section">
 
-						<header class="or-view-header or-collapsible-act-switch or-collapsible-title">
-							<i class="or-collapsible--on-open or-image-icon or-image-icon--node-open"/>
-							<i class="or-collapsible--on-closed or-image-icon or-image-icon--node-closed"/>
-							<span
-								class="or-view-icon or-image-icon or-image-icon--method-${method.name}"/>
-							<or:text value="${message:METHOD_${mainMethodName}}"/>
-						</header>
-
-						<div class="or-collapsible-value or-view or-act-view-loader or-closable"
+						<div class="or-collapsible-value or-view or-act-view-loader"
 							 data-method="${mainMethodName}"/>
 					</section>
 				</main>
@@ -82,7 +74,32 @@
 				<!-- Modal dialog -->
 				<div id="dialog" class="or-dialog or-dialog--is-closed" data-action="${dialogAction}"
 					 data-method="${dialogMethod}">
-					<div class="or-view or-round-corners">
+					<!-- Header menu -->
+					<div class="or-dialog-content">
+						<header class="or-workbench-title">
+
+							<or:part class="menu">
+								<or:part class="menu-group">
+									<or:part class="toolbar-icon,workbench--visible-on-wide,act-nav-small,act-dialog-close">
+										<or:image class="" menu="back"/>
+									</or:part>
+
+									<or:part class="act-dialog-name" />
+
+								</or:part>
+								<or:part class="menu-group">
+										<or:part
+											class="toolbar-icon,-visible-on-desktop,act-clickable,act-dialog-close">
+											<or:link type="dialog" subaction="pub" title="${message:menu_pub_desc}">
+												<or:image menu="close"/>
+											</or:link>
+										</or:part>
+								</or:part>
+							</or:part>
+
+						</header>
+						<div class="or-view">
+						</div>
 					</div>
 
 					<div class="or-dialog-filler"><!-- empty element, this is only for styling the background -->

@@ -19,11 +19,16 @@ class TreePathAction extends TreeAction implements Method {
 
     public function view() {
 		$type = $this->getRequestVar('type');
-		$id = $this->getRequestVar('id', RequestParams::FILTER_ALPHANUM);
+		$id   = $this->getRequestVar('id', RequestParams::FILTER_ALPHANUM);
 
+		// Calculating the path to the actual object
 		$result = $this->calculatePath($type, $id);
 		$this->setTemplateVar('path', $result);
 
+		// The parent object
+		$this->setTemplateVar('parent', end($result ) );
+
+		// The actual object
 		$name = $this->calculateName($type, $id);
 		$this->setTemplateVar('actual', $this->pathItem($type, $id, $name));
     }

@@ -8,8 +8,10 @@ class ImagePreviewAction extends ImageAction implements Method {
     public function view() {
        $this->setTemplateVar('url', Html::url('image','show',$this->image->objectid ) );
 
-       parent::previewView();
+       //parent::previewView();
     }
+
+
     public function post() {
     }
 }
