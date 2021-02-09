@@ -82,6 +82,51 @@
 									-->
 					</link>
 				</part>
+				<part
+					class="toolbar-icon,act-clickable,filtered,menu-shortcut">
+					<link type="dialog" subaction="preview" title="${message:menu_preview_desc}">
+						<image method="preview"/>
+						<!--
+									<text class="menu-label" key="menu_pub"></text>
+									-->
+					</link>
+				</part>
+				<part
+					class="toolbar-icon,act-clickable,filtered,menu-shortcut">
+					<link type="dialog" subaction="info" title="${message:menu_info_desc}">
+						<image method="info"/>
+						<!--
+									<text class="menu-label" key="menu_pub"></text>
+									-->
+					</link>
+				</part>
+				<part
+					class="toolbar-icon,act-clickable,filtered,menu-shortcut">
+					<link type="dialog" subaction="rights" title="${message:menu_rights_desc}">
+						<image method="rights"/>
+						<!--
+									<text class="menu-label" key="menu_pub"></text>
+									-->
+					</link>
+				</part>
+				<part
+					class="toolbar-icon,act-clickable,filtered,menu-shortcut">
+					<link type="dialog" subaction="prop" title="${message:menu_prop_desc}">
+						<image method="prop"/>
+						<!--
+									<text class="menu-label" key="menu_pub"></text>
+									-->
+					</link>
+				</part>
+				<part
+					class="toolbar-icon,act-clickable,filtered,menu-shortcut">
+					<link type="dialog" subaction="settings" title="${message:menu_settings_desc}">
+						<image method="settings"/>
+						<!--
+									<text class="menu-label" key="menu_pub"></text>
+									-->
+					</link>
+				</part>
 			</if>
 
 			<!-- Menü: Datei -->
