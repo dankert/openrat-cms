@@ -54,6 +54,7 @@ Openrat.View = function( action,method,id,params ) {
         let loadViewHtmlPromise = $.ajax( url );
 
 		$(this.element).addClass('loader');
+		console.debug( view);
 
         loadViewHtmlPromise.done( function(data,status){
 
@@ -87,7 +88,9 @@ Openrat.View = function( action,method,id,params ) {
 		loadViewHtmlPromise.fail( function(jqxhr,status,cause) {
 			$(element).html("");
 
-			Openrat.Workbench.notify('', 0, '', 'error', 'Server Error', ['Server Error while requesting url ' + url, status]);
+			console.error( {view:view, url:url, status:status, cause: cause} );
+
+			Openrat.Workbench.notify('', 0, '', 'error', 'Server Error');
 		});
 
 		// Load the data for this view.

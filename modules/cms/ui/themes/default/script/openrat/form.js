@@ -141,6 +141,8 @@ Openrat.Form = function() {
                 // Async: Window is closed, but the action will be startet now.
 
             let form = this;
+            console.debug( form );
+
             $.ajax( { 'type':'POST',url:url, data:data, success:function(responseData, textStatus, jqXHR)
                 {
                     form.setLoadStatus(false);
@@ -190,7 +192,10 @@ Openrat.Form = function() {
 					});
                 },
                 error:function(jqXHR, textStatus, errorThrown) {
-                    form.setLoadStatus(false);
+
+					console.warn( { form:form, status: textStatus, error: errorThrown } );
+
+					form.setLoadStatus(false);
                     $(status).remove();
 
                     try

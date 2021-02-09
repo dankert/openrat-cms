@@ -25,6 +25,7 @@ Openrat.Workbench = new function()
         this.openModalDialog();
 
 		Openrat.Workbench.registerOpenClose( $('.or-collapsible') );
+		console.info('Application started');
     }
 
 
@@ -96,10 +97,11 @@ Openrat.Workbench = new function()
         let ping = function()
         {
             let pingPromise = $.getJSON( Openrat.View.createUrl('profile','ping',0, {}, true) );
+            console.debug('ping');
 
-            pingPromise.fail( function() {
+            pingPromise.fail( function( jqXHR, textStatus, errorThrown ) {
 				// oO, what has happened? There is no session with a logged in user, or the server has gone.
-				console.warn('The server ping has failed.');
+				console.warn( {message: 'The server ping has failed.',jqXHR:jqXHR,status:textStatus,error:errorThrown });
 
 				// Is there any user input? Ok, we should warn the user that the data could not be saved.
 				if ($('.view.dirty').length > 0) {
@@ -168,6 +170,7 @@ Openrat.Workbench = new function()
 
     	// View in geschlossenen Sektionen löschen, damit diese nicht stehen bleiben.
         let promise = Openrat.Workbench.loadViews( $('.or-act-view-loader,.or-act-view-static').empty() );
+        console.debug('reloading all views');
 
         promise.done( function() {
 				Openrat.Workbench.afterAllViewsLoaded.fire();
@@ -333,13 +336,15 @@ Openrat.Workbench = new function()
 
 
     /**
-     * Show a notice bubble in the UI.
-     * @param type
-     * @param name
-     * @param status
-     * @param msg
-     * @param log
-     */
+	 * Show a notice bubble in the UI.
+	 * @param type
+	 * @param id
+	 * @param name
+	 * @param status
+	 * @param msg
+	 * @param log
+	 * @param notifyTheBrowser
+	 */
     this.notify = function (type, id, name, status, msg, log = null, notifyTheBrowser = false)
     {
         // Notice-Bar mit dieser Meldung erweitern.

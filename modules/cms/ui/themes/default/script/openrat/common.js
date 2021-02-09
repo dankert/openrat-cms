@@ -141,10 +141,9 @@ $( function() {
                 $navControl.click();
             });
 
-        }).fail(function (e) {
+        }).fail(function ( jqXHR, textStatus, errorThrown ) {
             // Ups... aber was können wir hier schon tun, außer hässliche Meldungen anzeigen.
-            console.warn(e);
-			console.warn('failed to load path from '+url);
+            console.warn( {message:'Failed to load path',url:url,error:e,status:textStatus,errorThrown } );
         }).always(function () {
 
         });
