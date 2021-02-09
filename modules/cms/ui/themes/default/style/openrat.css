@@ -812,33 +812,50 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 Basis-Style for Openrat.
 */
 /* Usage to this variable is safe to be removed */
-.or-sidebar {
-	position: fixed;
-	top: 10em;
-	right: 0;
-	z-index: 1;
-	display: flex;
-	flex-direction: column;
+/*
+.or {
+    &-sidebar {
+
+      @media @smartphones {
+        display: none;
+      }
+
+      position: fixed;
+      top: 10em;
+      right: 0;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+
+      &-button {
+        margin-left: auto;
+        margin-right: 0;
+
+        width: 2em;
+        overflow: hidden;
+        right: 0;
+        transition: width 0.2s ease-in-out;
+        margin-bottom: 2em;
+        white-space: nowrap;
+
+        //&-text {
+        //  display: none;
+        //}
+
+        &:hover {
+          width:9em;
+
+          //.or-sidebar-button-text {
+          //    display: inline;
+          //}
+        }
+
+      }
+
+    }
 }
-@media only screen and (max-width: 55rem) {
-	.or-sidebar {
-		display: none;
-	}
-}
-.or-sidebar-button {
-	margin-left: auto;
-	margin-right: 0;
-	width: 2em;
-	overflow: hidden;
-	right: 0;
-	transition: width 0.2s ease-in-out;
-	margin-bottom: 2em;
-	white-space: nowrap;
-}
-.or-sidebar-button:hover {
-	width: 9em;
-}
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-sidebar.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAgCI%2CGAAC%3BCAMC%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAALA%3BCAAA%2CGAND%3BEAGG%3B%3B%3BAAUF%2CGAbD%2CQAaE%3BCACC%3BCACA%3BCAEA%3BCACA%3BCACA%3BCACA%2CkCAAA%3BCACA%3BCACA%3B%3BAAMA%2CGA5BH%2CQAaE%2COAeE%3BCACC%22%7D */
+*/
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%22%7D */
 /* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-menu */
 /*
 OpenRat Content Management System

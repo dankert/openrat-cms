@@ -602,6 +602,14 @@
 				<part class="dropdown">
 					<part
 						class="dropdown-entry,act-clickable,filtered">
+						<link type="dialog" title="${message:menu_info_desc}" subaction="info">
+							<image method="info"/>
+							<text class="dropdown-text" value="${message:menu_info}"/>
+							<text class="dropdown-key,link-keystroke" value="${config:ui/keybinding/method/info}"/>
+						</link>
+					</part>
+					<part
+						class="dropdown-entry,act-clickable,filtered">
 						<link type="dialog" title="${message:menu_prop_desc}" subaction="prop">
 							<image method="prop"/>
 							<text class="dropdown-text" value="${message:menu_prop}"/>

@@ -67,16 +67,16 @@
 				</main>
 
 
-				<or:part class="sidebar,view">
+<!-- these views have shortcuts in the title bar				<or:part class="sidebar,view">
 
 					<or:list items="preview,info,rights" value="method">
 
-						<or:link class="btn,btn--is-active,sidebar-button,filtered" subaction="${method}" type="dialog">
+						<or:link class="btn,btn&#45;&#45;is-active,sidebar-button,filtered" subaction="${method}" type="dialog">
 							<or:image method="${method}" />
 							<or:text class="sidebar-button-text" value="${message:METHOD_${method}}"/>
 						</or:link>
 					</or:list>
-				</or:part>
+				</or:part>-->
 
 
 				<!-- Modal dialog -->

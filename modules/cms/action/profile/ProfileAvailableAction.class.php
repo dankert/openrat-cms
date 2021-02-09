@@ -16,6 +16,7 @@ class ProfileAvailableAction extends ProfileAction implements Method {
 		$viewMethods = array_filter( [
 			// All UI-related methods (reachable via dropdown menus)
 			'pub',
+			'info',
 			'prop',
 			'history',
 			'rights',
