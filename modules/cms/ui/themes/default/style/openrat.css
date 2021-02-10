@@ -1443,22 +1443,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 	transition: opacity 0.1s ease-in-out;
 }
 .or-workbench-navigation--is-small {
-	width: 6em;
+	width: 0;
 }
 .or-workbench-navigation--is-small .or-workbench-navigation-container {
-	width: 6em;
+	width: 0;
 	overflow-y: hidden;
+	/*
+                    &:hover {
+                        overflow-y: auto;
+                        width: 33%;
+                        opacity: 0.9;
+
+                        .or-navtree {
+                            opacity: 1;
+                        }
+                    }
+                    */
 }
 .or-workbench-navigation--is-small .or-workbench-navigation-container .or-navtree {
 	opacity: 0.2;
-}
-.or-workbench-navigation--is-small .or-workbench-navigation-container:hover {
-	overflow-y: auto;
-	width: 33%;
-	opacity: 0.9;
-}
-.or-workbench-navigation--is-small .or-workbench-navigation-container:hover .or-navtree {
-	opacity: 1;
 }
 .or-workbench-navigation--is-small .or-navtree {
 	opacity: 0;
@@ -1468,14 +1471,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 		width: 0;
 	}
 	.or-workbench-navigation .or-workbench-navigation-container {
-		width: 0;
-		padding: 0;
+		/*
+                    width: 0;
+                    padding: 0;
+                    */
+	}
+	.or-workbench-navigation--is-open {
+		position: fixed;
+		width: 90%;
+		z-index: 1;
+		opacity: 0.98;
+		height: 100%;
 	}
 	.or-workbench-navigation--is-open .or-workbench-navigation-container {
-		padding: 0.8em;
+		width: 100%;
+		height: 100%;
 		overflow-y: auto;
-		width: 90%;
-		opacity: 0.98;
 	}
 }
 @media only screen and (min-width: 75rem) {
@@ -1515,11 +1526,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 		display: inline;
 	}
 }
-@media only screen and (max-width: 55rem) {
-	.or-toolbar-icon.or-search input {
-		width: 3em;
-	}
-}
 .or-loader {
 	background: url(../images/loader.gif) no-repeat;
 	background-position: center, top;
@@ -1533,7 +1539,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 		font-size: 1em;
 	}
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-workbench.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAoCA%3B%3B%3BAAEI%2CGAAC%3BCAEG%3BCACA%3BCACA%3BCACA%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAEA%2CGAPH%2CUAOI%3B%3BCAEC%3BCACA%3BCACA%3B%3B%3B%3B%3B%3BAAJF%2CGAPH%2CUAOI%2COAeG%3BCAGA%3BCACA%3B%3BAAQJ%2CGAlCH%2CUAkCI%3BCACC%3B%3BAAGF%2CGAtCH%2CUAsCI%3BCACG%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAANJ%2CGAtCH%2CUAsCI%2CMAQG%2CcAEI%3BCACI%3B%3BAAOJ%3BCAAA%2CGAxDX%2CUAsCI%2CMAQG%2CcAMI%2CKAAI%3BCAIJ%2CGAxDX%2CUAsCI%2CMAQG%2CcAMgB%3BEAEJ%3B%3B%3BAAQhB%2CGA9DH%2CUA8DI%3BCACG%3BCAEA%2CyCAAA%3BCAMA%2C6BAAA%3BCACA%3BCACA%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAqDJ%2CGA9HH%2CUA8HI%3BCACG%3B%3BAAGJ%2CGAlIH%2CUAkII%3BCACG%3B%3BAAGJ%2CGAtIH%2CUAsII%2CqBACG%3BCACI%3B%3BAAFR%2CGAtIH%2CUAsII%2CqBAKG%3BCACI%3B%3BAAIR%2CGAhJH%2CUAgJI%3BCAiBG%3B%3BAAdA%2CGAnJP%2CUAgJI%2CWAGI%3BCAEG%3BCAKA%2CmCAAA%3BCAEA%3BCACA%3B%3BAAbR%2CGAhJH%2CUAgJI%2CWAmBC%3BCACE%2CoCAAA%3B%3BAAGF%2CGAvKL%2CUAgJI%2CWAuBE%3BCACK%3B%3BAADN%2CGAvKL%2CUAgJI%2CWAuBE%2CUAOK%3BCAEI%3BCACA%3B%3BAAVV%2CGAvKL%2CUAgJI%2CWAuBE%2CUAOK%2CmCAKI%3BCACE%3B%3BAAGF%2CGAvLf%2CUAgJI%2CWAuBE%2CUAOK%2CmCASK%3BCACG%3BCACA%3BCACA%3B%3BAAHJ%2CGAvLf%2CUAgJI%2CWAuBE%2CUAOK%2CmCASK%2CMAKG%3BCACI%3B%3BAAtBlB%2CGAvKL%2CUAgJI%2CWAuBE%2CUA2BK%3BCACI%3B%3BAA4BR%3BCAAA%2CGA%5C%2FNP%2CUAgJI%3BEAyDO%3B%3BCAsBJ%2CGA%5C%2FNP%2CUAgJI%2CWA2DO%3BEAEI%3BEACA%3B%3BCAGJ%2CGAjNX%2CUAgJI%2CWAiEQ%2CSAEG%3BEAEI%3BEACA%3BEACA%3BEAEA%3B%3B%3BAAWZ%3BCAAA%2CGApOP%2CUAgJI%3BEAgFO%3B%3B%3BAAhFR%2CGAhJH%2CUAgJI%2CWAoFG%3BCACI%3B%3BAAOZ%2CGAAC%3BCACG%3B%3BAAKJ%3BCAAA%2CGANC%3BEAGO%3B%3B%3BAASR%3BCAAA%2CGALC%3BEAGO%3B%3B%3BAAIR%2CGAAC%3BCACG%3B%3BAAIJ%3BCAAA%2CGALC%3BEAGO%3B%3B%3BAAIR%2CGAAC%3BCACG%3B%3BAAIJ%3BCAAA%2CGALC%3BEAGO%3B%3B%3BAAcJ%3BCAAA%2CGAVH%2CaAAa%2CUAMV%3BEAEQ%3B%3B%3BAAOZ%2CGAAC%3BCAEG%2C%2BCAAA%3BCACA%2CgCAAA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAkBR%3BCALI%3BEACI%22%7D */
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-workbench.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAoCA%3B%3B%3BAAEI%2CGAAC%3BCAEG%3BCACA%3BCACA%3BCACA%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAEA%2CGAPH%2CUAOI%3B%3BCAEC%3BCACA%3BCACA%3B%3B%3B%3B%3B%3BAAJF%2CGAPH%2CUAOI%2COAeG%3BCAGA%3BCACA%3B%3BAAQJ%2CGAlCH%2CUAkCI%3BCACC%3B%3BAAGF%2CGAtCH%2CUAsCI%3BCACG%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAANJ%2CGAtCH%2CUAsCI%2CMAQG%2CcAEI%3BCACI%3B%3BAAOJ%3BCAAA%2CGAxDX%2CUAsCI%2CMAQG%2CcAMI%2CKAAI%3BCAIJ%2CGAxDX%2CUAsCI%2CMAQG%2CcAMgB%3BEAEJ%3B%3B%3BAAQhB%2CGA9DH%2CUA8DI%3BCACG%3BCAEA%2CyCAAA%3BCAMA%2C6BAAA%3BCACA%3BCACA%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAqDJ%2CGA9HH%2CUA8HI%3BCACG%3B%3BAAGJ%2CGAlIH%2CUAkII%3BCACG%3B%3BAAGJ%2CGAtIH%2CUAsII%2CqBACG%3BCACI%3B%3BAAFR%2CGAtIH%2CUAsII%2CqBAKG%3BCACI%3B%3BAAIR%2CGAhJH%2CUAgJI%3BCAiBG%3B%3BAAdA%2CGAnJP%2CUAgJI%2CWAGI%3BCAEG%3BCAKA%2CmCAAA%3BCAEA%3BCACA%3B%3BAAbR%2CGAhJH%2CUAgJI%2CWAmBC%3BCACE%2CoCAAA%3B%3BAAGF%2CGAvKL%2CUAgJI%2CWAuBE%3BCACK%3B%3BAADN%2CGAvKL%2CUAgJI%2CWAuBE%2CUAOK%3BCAEI%3BCACA%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAVV%2CGAvKL%2CUAgJI%2CWAuBE%2CUAOK%2CmCAKI%3BCACE%3B%3BAAbZ%2CGAvKL%2CUAgJI%2CWAuBE%2CUA6BK%3BCACI%3B%3BAAgCR%3BCAAA%2CGArOP%2CUAgJI%3BEA2DO%3B%3BCA0BJ%2CGArOP%2CUAgJI%2CWA6DO%3B%3B%3B%3B%3B%3BCAQA%2CGArNX%2CUAgJI%2CWAqEQ%3BEAOC%3BEACA%3BEACA%3BEACA%3BEACA%3B%3BCAXF%2CGArNX%2CUAgJI%2CWAqEQ%2CSAEC%3BEACE%3BEACA%3BEACA%3B%3B%3BAAgBR%3BCAAA%2CGA1OP%2CUAgJI%3BEAsFO%3B%3B%3BAAtFR%2CGAhJH%2CUAgJI%2CWA0FG%3BCACI%3B%3BAAOZ%2CGAAC%3BCACG%3B%3BAAKJ%3BCAAA%2CGANC%3BEAGO%3B%3B%3BAASR%3BCAAA%2CGALC%3BEAGO%3B%3B%3BAAIR%2CGAAC%3BCACG%3B%3BAAIJ%3BCAAA%2CGALC%3BEAGO%3B%3B%3BAAIR%2CGAAC%3BCACG%3B%3BAAIJ%3BCAAA%2CGALC%3BEAGO%3B%3B%3BAAmBR%2CGAAC%3BCAEG%2C%2BCAAA%3BCACA%2CgCAAA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAkBR%3BCALI%3BEACI%22%7D */
 /* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/../../../template_engine/components/html/component_editor/editor */
 .editor__text-editor {
 	width: 100%;
