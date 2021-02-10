@@ -3,6 +3,7 @@ namespace cms\ui\action\index;
 use cms\action\Method;
 use cms\model\User;
 use cms\ui\action\IndexAction;
+use cms\ui\themes\ThemeStyle;
 use language\Messages;
 use util\Html;
 use util\Session;
@@ -67,16 +68,10 @@ class IndexShowAction extends IndexAction implements Method {
         $this->setTemplateVar('themeStyleLink', Html::url('index','themestyle') );
         $this->setTemplateVar('manifestLink'  , Html::url('index','manifest'  ) );
 
-        $styleConfig     = C::Conf()->get('style-default',[]); // default style config
-        $userStyleConfig = C::subset('style')->get( $style,[]); // user style config
-
-        if ( $userStyleConfig )
-            $styleConfig = array_merge($styleConfig,$userStyleConfig); // Merging user style into default style
-        else
-            ; // Unknown style name, we are ignoring this.
+		$themeStyle = new ThemeStyle( Configuration::subset('style')->get($style,[]) ); // user style config
 
         // Theme base color for smartphones colorizing their status bar.
-        $this->setTemplateVar('themeColor', UIUtils::getColorHexCode($styleConfig['title_background_color']));
+        $this->setTemplateVar('themeColor', UIUtils::getColorHexCode($themeStyle->getThemeColor()));
 
         $messageOfTheDay = C::subset('login')->get('motd','');
 

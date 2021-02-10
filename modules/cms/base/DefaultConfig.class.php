@@ -646,15 +646,6 @@ class DefaultConfig {
 						],
 					'content-security-policy' => true,
 				],
-			'style-default' =>
-				[ 
-					'name' => 'Unnamed',
-					'title_background_color' => 'grey',
-					'title_text_color' => 'white',
-					'text_color' => 'black',
-					'background_color' => '#d9d9d9',
-					'inactive_background_color' => 'silver',
-				],
 			'style' =>
 				[ 
 					'earlgrey' =>

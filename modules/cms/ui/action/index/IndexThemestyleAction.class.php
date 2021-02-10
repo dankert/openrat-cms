@@ -13,12 +13,14 @@ use cms\model\Project;
 use cms\model\User;
 use cms\model\Value;
 use cms\ui\themes\Theme;
+use cms\ui\themes\ThemeStyle;
 use Exception;
 use language\Messages;
 use util\Html;
 use util\json\JSON;
 use logger\Logger;
 use util\Less;
+use util\text\Converter;
 use util\UIUtils;
 use \util\exception\ObjectNotFoundException;
 use util\Session;
@@ -31,6 +33,8 @@ class IndexThemestyleAction extends IndexAction implements Method {
 
         $this->setTemplateVar('style',$this->getThemeCSS() );
     }
+
+
     public function post() {
     }
 
@@ -38,7 +42,7 @@ class IndexThemestyleAction extends IndexAction implements Method {
 	/**
 	 * Gets the theme CSS.
 	 *
-	 * @return string
+	 * @return string The ready to use CSS
 	 */
 	protected function getThemeCSS()
 	{
@@ -51,7 +55,7 @@ class IndexThemestyleAction extends IndexAction implements Method {
 		{
 			try
 			{
-				$styleConfig = C::Conf()->subset('style-default')->merge( $styleConfig );
+				$themeStyle = new ThemeStyle( $styleConfig->getConfig() );
 
 				if   ( DEVELOPMENT )
 					$css .= "\n".'/* Theme: '.$styleId.' */'."\n";
@@ -61,8 +65,11 @@ class IndexThemestyleAction extends IndexAction implements Method {
 					'cms-image-path' => '"'.Startup::THEMES_DIR.'default/images/'.'"',
 				);
 
-				foreach ($styleConfig->getConfig() as $styleSetting => $value)
-					$lessVars['cms-' . strtolower(strtr($styleSetting, '_', '-'))] = $value;
+				foreach ( $themeStyle->getProperties() as $styleSetting => $value)
+					$lessVars['cms-' . Converter::camelToUnderscore($styleSetting, '-')] = $value;
+
+				if   ( DEVELOPMENT )
+					$css .= "\n".'/* Theme-Properties: '.print_r( $lessVars,true).' */'."\n";
 
 				// we must create a new instance here, because the less parser is buggy when changing vars.
 				$parser = new Less(array(

@@ -13,10 +13,10 @@
 @cms-inactive-background-color: gray;
 @cms-background-image: "@{cms-image-path}background/fog.jpeg";
 
-@notice-ok-color: #00d95a;
-@notice-info-color: #86caff;
-@notice-warning-color: #FBDE2D;
-@notice-error-color: #f54b07;
+@cms-notice-ok-color: green;
+@cms-notice-info-color: blue;
+@cms-notice-warning-color: yellow;
+@cms-notice-error-color: red;
 
 
 html.or-theme-@{cms-theme-id} {
@@ -62,47 +62,47 @@ html.or-theme-@{cms-theme-id} {
             line-height: 1.5em;
 
             &--ok {
-                background-color: @notice-ok-color;
-                border-color: darken(@notice-ok-color, 10%);
+                background-color: @cms-notice-ok-color;
+                border-color: darken(@cms-notice-ok-color, 10%);
 
                 &:after {
-                    border-left-color: darken(@notice-ok-color, 10%);
+                    border-left-color: darken(@cms-notice-ok-color, 10%);
                 }
 
-                .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @notice-ok-color, 20%));
+                .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @cms-notice-ok-color, 20%));
             }
 
             &--warning {
-                background-color: @notice-warning-color;
-                border-color: darken(@notice-warning-color, 10%);
+                background-color: @cms-notice-warning-color;
+                border-color: darken(@cms-notice-warning-color, 10%);
 
                 &:after {
-                    border-left-color: darken(@notice-warning-color, 10%);
+                    border-left-color: darken(@cms-notice-warning-color, 10%);
                 }
 
-                .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @notice-warning-color, 20%));
+                .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @cms-notice-warning-color, 20%));
             }
 
             &--info {
-                background-color: @notice-info-color;
-                border-color: darken(@notice-info-color, 10%);
+                background-color: @cms-notice-info-color;
+                border-color: darken(@cms-notice-info-color, 10%);
 
                 &:after {
-                    border-left-color: darken(@notice-info-color, 10%);
+                    border-left-color: darken(@cms-notice-info-color, 10%);
                 }
 
-                .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @notice-info-color, 20%));
+                .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @cms-notice-info-color, 20%));
             }
 
             &--error {
-                background-color: @notice-error-color;
-                border-color: darken(@notice-error-color, 10%);
+                background-color: @cms-notice-error-color;
+                border-color: darken(@cms-notice-error-color, 10%);
 
                 &:after {
-                    border-left-color: darken(@notice-error-color, 10%);
+                    border-left-color: darken(@cms-notice-error-color, 10%);
                 }
 
-                .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @notice-error-color, 20%));
+                .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @cms-notice-error-color, 20%));
 
             }
         }
@@ -200,7 +200,7 @@ html.or-theme-@{cms-theme-id} {
 
             &--error {
                 border-bottom: 1px dotted @cms-text-color ! important;
-                border: 1px solid @notice-error-color ! important;
+                border: 1px solid @cms-notice-error-color ! important;
             }
 
 

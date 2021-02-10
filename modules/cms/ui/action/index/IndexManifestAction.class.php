@@ -1,12 +1,13 @@
 <?php
 namespace cms\ui\action\index;
 use cms\action\Method;
+use cms\base\Configuration;
 use cms\ui\action\IndexAction;
+use cms\ui\themes\ThemeStyle;
 use util\Session;
 use cms\action\RequestParams;
 use cms\auth\Auth;
 use cms\auth\AuthRunner;
-use cms\base\Configuration;
 use cms\base\Configuration as C;
 use cms\base\Startup;
 use cms\model\BaseObject;
@@ -39,19 +40,13 @@ class IndexManifestAction extends IndexAction implements Method {
         else
             $this->lastModified( time() );
 
-        $style = $this->getUserStyle( $user );
+        $currentStyle = $this->getUserStyle( $user );
 
-        $styleConfig     = C::Conf()->subset('style-default' ); // default style config
-        $userStyleConfig = C::subset('style')->subset( $style ); // user style config
+		$themeStyle = new ThemeStyle( Configuration::subset('style')->get($currentStyle,[]) ); // user style config
 
-        if ( $userStyleConfig->hasContent() )
-            $styleConfig->merge( $userStyleConfig ); // Merging user style into default style
-        else
-            ; // Unknown style name, we are ignoring this.
 
-        // Theme base color for smartphones colorizing their status bar.
-        $themeColor = UIUtils::getColorHexCode($styleConfig->get('title_background_color','white'));
-
+		// Theme base color for smartphones colorizing their status bar.
+        $themeColor = UIUtils::getColorHexCode($themeStyle->getThemeColor());
 
         $appName = C::subset(['application'])->get('name',Startup::TITLE);
 
