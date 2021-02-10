@@ -5,10 +5,10 @@
         <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-menu') ?>"><?php echo O::escapeHtml('') ?></i>
       </div>
       <div class="<?php echo O::escapeHtml('or-toolbar-icon or-workbench--visible-on-wide or- or-act-nav-small or--visible-on-desktop') ?>"><?php echo O::escapeHtml('') ?>
-        <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--arrow-left') ?>"><?php echo O::escapeHtml('') ?></i>
+        <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-menu') ?>"><?php echo O::escapeHtml('') ?></i>
       </div>
       <div class="<?php echo O::escapeHtml('or-toolbar-icon or-workbench--visible-on-small or-act-nav-wide or--visible-on-desktop') ?>"><?php echo O::escapeHtml('') ?>
-        <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--arrow-right') ?>"><?php echo O::escapeHtml('') ?></i>
+        <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-menu') ?>"><?php echo O::escapeHtml('') ?></i>
       </div>
       <div class="<?php echo O::escapeHtml('or-breadcrumb act-breadcrumb') ?>"><?php echo O::escapeHtml('') ?></div>
     </div>
@@ -182,16 +182,6 @@
            <?php } ?>
         </div>
       </div>
-      <?php $if4=($isLoggedIn); if($if4) {  ?>
-        <div class="<?php echo O::escapeHtml('or-toolbar-icon or-menu-category or-search') ?>"><?php echo O::escapeHtml('') ?>
-          <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-search') ?>"><?php echo O::escapeHtml('') ?></i>
-          <input name="<?php echo O::escapeHtml('text') ?>" placeholder="<?php echo O::escapeHtml(''.@O::lang('search').'') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$text.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
-          <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--dropdown or-menu-dropdown-icon') ?>"><?php echo O::escapeHtml('') ?></i>
-          <div class="<?php echo O::escapeHtml('or-dropdown or-dropdown--on-right or-act-global-search-results') ?>"><?php echo O::escapeHtml('') ?>
-            <span class="<?php echo O::escapeHtml('or-dropdown-entry') ?>"><?php echo O::escapeHtml('') ?></span>
-          </div>
-        </div>
-       <?php } ?>
       <div class="<?php echo O::escapeHtml('or-toolbar-icon or-menu-category') ?>"><?php echo O::escapeHtml('') ?>
         <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-more or-menu-icon') ?>"><?php echo O::escapeHtml('') ?></i>
         <span class="<?php echo O::escapeHtml('or-menu-label') ?>"><?php echo O::escapeHtml(''.@O::lang('edit').'') ?></span>

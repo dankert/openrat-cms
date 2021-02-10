@@ -665,6 +665,7 @@ class DefaultConfig {
 							'text_color' => '#f8f8f2',
 							'background_color' => '#282a36',
 							'inactive_background_color' => '#44475a',
+							'image_color' => 'orange',
 						],
 					'modern' =>
 						[ 

@@ -15,14 +15,31 @@
   </head>
   <body><?php echo O::escapeHtml('') ?>
     <div id="<?php echo O::escapeHtml('workbench') ?>" class="<?php echo O::escapeHtml('or-workbench or--initial-hidden') ?>"><?php echo O::escapeHtml('') ?>
-      <nav class="<?php echo O::escapeHtml('or-workbench-navigation') ?>"><?php echo O::escapeHtml('') ?>
-        <div class="<?php echo O::escapeHtml('or-workbench-navigation-container') ?>"><?php echo O::escapeHtml('') ?>
-          <div class="<?php echo O::escapeHtml('or-view or-act-view-static') ?>" data-action="<?php echo O::escapeHtml('tree') ?>" data-method="<?php echo O::escapeHtml('show') ?>"><?php echo O::escapeHtml('') ?></div>
+      <div class="<?php echo O::escapeHtml('or-workbench-navigation or-workbench-screen') ?>"><?php echo O::escapeHtml('') ?>
+        <div class="<?php echo O::escapeHtml('or-workbench-title or-workbench-search') ?>"><?php echo O::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('or-menu') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('or-menu-group') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('or-toolbar-icon or-act-nav-small or--visible-on-desktop') ?>"><?php echo O::escapeHtml('') ?>
+                <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-close') ?>"><?php echo O::escapeHtml('') ?></i>
+              </div>
+              <div class="<?php echo O::escapeHtml('or-toolbar-icon or-menu-category or-search') ?>"><?php echo O::escapeHtml('') ?>
+                <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-search') ?>"><?php echo O::escapeHtml('') ?></i>
+                <input name="<?php echo O::escapeHtml('text') ?>" placeholder="<?php echo O::escapeHtml(''.@O::lang('search').'') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$text.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
+                <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--dropdown or-menu-dropdown-icon') ?>"><?php echo O::escapeHtml('') ?></i>
+                <div class="<?php echo O::escapeHtml('or-dropdown or-dropdown--on-right or-act-global-search-results') ?>"><?php echo O::escapeHtml('') ?>
+                  <span class="<?php echo O::escapeHtml('or-dropdown-entry') ?>"><?php echo O::escapeHtml('') ?></span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </nav>
-      <div class="<?php echo O::escapeHtml('or-workbench-main') ?>"><?php echo O::escapeHtml('') ?>
+        <nav class="<?php echo O::escapeHtml('or-workbench-navigation-container or-workbench-content') ?>"><?php echo O::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('or-view or-act-view-static') ?>" data-action="<?php echo O::escapeHtml('tree') ?>" data-method="<?php echo O::escapeHtml('show') ?>"><?php echo O::escapeHtml('') ?></div>
+        </nav>
+      </div>
+      <div class="<?php echo O::escapeHtml('or-workbench-main or-workbench-screen') ?>"><?php echo O::escapeHtml('') ?>
         <header id="<?php echo O::escapeHtml('title') ?>" class="<?php echo O::escapeHtml('or-workbench-title or-view or-act-view-static') ?>" data-action="<?php echo O::escapeHtml('title') ?>" data-method="<?php echo O::escapeHtml('show') ?>"><?php echo O::escapeHtml('') ?></header>
-        <main class="<?php echo O::escapeHtml('or-workbench-workplace') ?>"><?php echo O::escapeHtml('') ?>
+        <main class="<?php echo O::escapeHtml('or-workbench-workplace or-workbench-content') ?>"><?php echo O::escapeHtml('') ?>
           <?php  { $mainMethodName= 'edit'; ?>
            <?php } ?>
           <section class="<?php echo O::escapeHtml('or-workbench-section') ?>"><?php echo O::escapeHtml('') ?>

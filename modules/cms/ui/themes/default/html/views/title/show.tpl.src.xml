@@ -8,10 +8,10 @@
 			</part>
 
 			<part class="toolbar-icon,workbench--visible-on-wide,,act-nav-small,-visible-on-desktop">
-				<image class="" symbol="arrow-left"/>
+				<image class="" menu="menu"/>
 			</part>
 			<part class="toolbar-icon,workbench--visible-on-small,act-nav-wide,-visible-on-desktop">
-				<image class="" symbol="arrow-right"/>
+				<image class="" menu="menu"/>
 			</part>
 
 			<part class="breadcrumb act-breadcrumb" />
@@ -583,16 +583,16 @@
 				</part>
 			</part>
 			<!-- Suche -->
-			<if true="${isLoggedIn}">
+<!--			<if true="${isLoggedIn}">
 				<part class="toolbar-icon,menu-category,search">
 					<image method="search"/>
 					<input name="text" hint="${message:search}"/>
 					<image class="menu-dropdown-icon" symbol="dropdown"/>
-					<part class="dropdown,dropdown--on-right,act-global-search-results">
+					<part class="dropdown,dropdown&#45;&#45;on-right,act-global-search-results">
 						<text class="dropdown-entry" value=""/>
 					</part>
 				</part>
-			</if>
+			</if>-->
 
 			<!-- Allgemeines Menü -->
 			<part class="toolbar-icon,menu-category">

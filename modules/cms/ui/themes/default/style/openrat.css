@@ -921,16 +921,12 @@ Basis-Style for Openrat.
 }
 .or-menu-group .or-toolbar-icon.or-search input {
 	border: 0;
-	width: 3em;
-	transition: width 0.3s ease-in-out;
-}
-.or-menu-group .or-toolbar-icon.or-search input:focus {
-	width: 8em;
+	width: 10em;
 }
 .or-menu--is-open .or-menu-category--is-open > .or-dropdown {
 	display: block;
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-menu.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAwCI%2CIAAC%3BCAGG%3BCACA%3B%3B%3BAAUA%3BCAAA%2CIAdH%2CIAUI%3BEAEG%3B%3B%3BAAQJ%3BCAAA%2CIApBH%2CIAgBI%3BCAID%2CIApBH%2CIAgBa%3BEAEF%3B%3B%3BAAIR%2CIAtBH%2CIAsBI%3BCACG%3B%3BAAGA%2CIA1BP%2CIAsBI%2CMAII%2CeAAe%2CGACZ%2CIAAG%3BCACC%3B%3BAANZ%2CIAtBH%2CIAsBI%2CMASG%3BCAEI%3B%3BAAXR%2CIAtBH%2CIAsBI%2CMAcG%3BCACI%3BCAEA%3B%3BAAGA%2CIA1CX%2CIAsBI%2CMAcG%2CiBAMK%3BCACG%3B%3BAAEJ%2CIA7CX%2CIAsBI%2CMAcG%2CiBASK%2CUACG%3BCACI%3BCAGA%3BCACA%2CkCAAA%3B%3BAACA%2CIApDnB%2CIAsBI%2CMAcG%2CiBASK%2CUACG%2CMAMK%3BCAEG%3B%3BAAWpB%2CIAjEH%2CIAiEI%2CSACG%2C2BACM%3BCACE%22%7D */
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-menu.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAwCI%2CIAAC%3BCAGG%3BCACA%3B%3B%3BAAUA%3BCAAA%2CIAdH%2CIAUI%3BEAEG%3B%3B%3BAAQJ%3BCAAA%2CIApBH%2CIAgBI%3BCAID%2CIApBH%2CIAgBa%3BEAEF%3B%3B%3BAAIR%2CIAtBH%2CIAsBI%3BCACG%3B%3BAAGA%2CIA1BP%2CIAsBI%2CMAII%2CeAAe%2CGACZ%2CIAAG%3BCACC%3B%3BAANZ%2CIAtBH%2CIAsBI%2CMASG%3BCAEI%3B%3BAAXR%2CIAtBH%2CIAsBI%2CMAcG%3BCACI%3BCAEA%3B%3BAAGA%2CIA1CX%2CIAsBI%2CMAcG%2CiBAMK%3BCACG%3B%3BAAEJ%2CIA7CX%2CIAsBI%2CMAcG%2CiBASK%2CUACG%3BCACI%3BCAGA%3B%3BAAehB%2CIAjEH%2CIAiEI%2CSACG%2C2BACM%3BCACE%22%7D */
 /* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-info */
 .or-info {
 	position: relative;
@@ -1335,8 +1331,55 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 	height: 100%;
 	display: flex;
 	flex-direction: row;
-	/* vertikale Flex-Box zwischen Header und Hauptbereich */
+	/*        &-section {
+            margin: 1.5em;
+            @media @smartphones {
+                margin: 0.5em;
+            }
+
+            //border: 1px solid;
+            //.border-radius(5px);
+
+
+            .or-view-toolbar {
+                display: inline;
+            }
+
+            // Wenn Sektion geschlossen, keine Toolbar anzeigen.
+            &.or--is-closed {
+                .or-view-toolbar {
+                    display: none;
+                }
+
+            }
+
+            // Diabled Sections are not displayed.
+            &.or--disabled {
+                //display: none;
+            }
+
+            &.or--is-empty {
+                //display: none;
+            }
+        }*/
 	/* */
+}
+.or-workbench-screen {
+	/* Horizontale Flexbox */
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	/*
+          https://stackoverflow.com/questions/28636832/firefox-overflow-y-not-working-with-nested-flexbox
+          Whenever you've got an element with overflow: [hidden|scroll|auto] inside of a flex item, you need to give its ancestor flex item min-width:0 (in a horizontal flex container) or min-height:0 (in a vertical flex container), to disable this min-sizing behavior, or else the flex item will refuse to shrink smaller than the child's min-content size.
+           */
+}
+.or-workbench-screen > * {
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+.or-workbench-main {
+	flex: 1;
 }
 .or-workbench-title {
 	height: 3.0rem;
@@ -1355,22 +1398,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 		display: none;
 	}
 }
-.or-workbench-main {
-	flex: 1;
-	/* Horizontale Flexbox */
-	display: flex;
-	flex-direction: column;
-	position: relative;
-	/*
-            https://stackoverflow.com/questions/28636832/firefox-overflow-y-not-working-with-nested-flexbox
-            Whenever you've got an element with overflow: [hidden|scroll|auto] inside of a flex item, you need to give its ancestor flex item min-width:0 (in a horizontal flex container) or min-height:0 (in a vertical flex container), to disable this min-sizing behavior, or else the flex item will refuse to shrink smaller than the child's min-content size.
-             */
-}
-.or-workbench-main > * {
-	overflow-y: auto;
-	overflow-x: hidden;
-}
-.or-workbench-workplace {
+.or-workbench-content {
 	flex: 1;
 	transition: margin-left 0.15s ease-in-out;
 	transition: opacity 0.5s ease;
@@ -1390,20 +1418,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 //overflow: hidden;
             }*/
 }
-.or-workbench-section {
-	margin: 1.5em;
-}
-@media only screen and (max-width: 55rem) {
-	.or-workbench-section {
-		margin: 0.5em;
-	}
-}
-.or-workbench-section .or-view-toolbar {
-	display: inline;
-}
-.or-workbench-section.or--is-closed .or-view-toolbar {
-	display: none;
-}
 .or-workbench--visible-on-small {
 	display: none;
 }
@@ -1421,11 +1435,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 }
 .or-workbench-navigation-container {
 	width: 30em;
-	position: fixed;
-	z-index: 1;
-	opacity: 0.9;
 	transition: width 0.15s ease-in-out;
-	height: 100%;
 	padding: 0.7em;
 	overflow-x: hidden;
 }
@@ -1523,7 +1533,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 		font-size: 1em;
 	}
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-workbench.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAoCA%3B%3B%3BAAEI%2CGAAC%3BCAEG%3BCACA%3BCACA%3BCACA%3B%3B%3B%3BAAQA%2CGAbH%2CUAaI%3BCACG%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAANJ%2CGAbH%2CUAaI%2CMAQG%2CcAEI%3BCACI%3B%3BAAOJ%3BCAAA%2CGA%5C%2FBX%2CUAaI%2CMAQG%2CcAMI%2CKAAI%3BCAIJ%2CGA%5C%2FBX%2CUAaI%2CMAQG%2CcAMgB%3BEAEJ%3B%3B%3BAAMhB%2CGAnCH%2CUAmCI%3BCACG%3B%3BCAGA%3BCACA%3BCACA%3B%3B%3B%3B%3B%3BAANJ%2CGAnCH%2CUAmCI%2CKAiBK%3BCAGE%3BCACA%3B%3BAASR%2CGAjEH%2CUAiEI%3BCACG%3BCAEA%2CyCAAA%3BCAMA%2C6BAAA%3BCACA%3BCACA%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAmBJ%2CGA%5C%2FFH%2CUA%2BFI%3BCACG%3B%3BAAKA%3BCAAA%2CGArGP%2CUA%2BFI%3BEAGO%3B%3B%3BAAHR%2CGA%5C%2FFH%2CUA%2BFI%2CQAUG%3BCACI%3B%3BAAIJ%2CGA9GP%2CUA%2BFI%2CQAeI%2CcACG%3BCACI%3B%3BAAiBZ%2CGAjIH%2CUAiII%3BCACG%3B%3BAAGJ%2CGArIH%2CUAqII%3BCACG%3B%3BAAGJ%2CGAzIH%2CUAyII%2CqBACG%3BCACI%3B%3BAAFR%2CGAzIH%2CUAyII%2CqBAKG%3BCACI%3B%3BAAIR%2CGAnJH%2CUAmJI%3BCAiBG%3B%3BAAdA%2CGAtJP%2CUAmJI%2CWAGI%3BCAEG%3BCAEA%3BCACA%3BCACA%3BCACA%2CmCAAA%3BCACA%3BCACA%3BCACA%3B%3BAAbR%2CGAnJH%2CUAmJI%2CWAmBC%3BCACE%2CoCAAA%3B%3BAAGF%2CGA1KL%2CUAmJI%2CWAuBE%3BCACK%3B%3BAADN%2CGA1KL%2CUAmJI%2CWAuBE%2CUAOK%3BCAEI%3BCACA%3B%3BAAVV%2CGA1KL%2CUAmJI%2CWAuBE%2CUAOK%2CmCAKI%3BCACE%3B%3BAAGF%2CGA1Lf%2CUAmJI%2CWAuBE%2CUAOK%2CmCASK%3BCACG%3BCACA%3BCACA%3B%3BAAHJ%2CGA1Lf%2CUAmJI%2CWAuBE%2CUAOK%2CmCASK%2CMAKG%3BCACI%3B%3BAAtBlB%2CGA1KL%2CUAmJI%2CWAuBE%2CUA2BK%3BCACI%3B%3BAA4BR%3BCAAA%2CGAlOP%2CUAmJI%3BEAyDO%3B%3BCAsBJ%2CGAlOP%2CUAmJI%2CWA2DO%3BEAEI%3BEACA%3B%3BCAGJ%2CGApNX%2CUAmJI%2CWAiEQ%2CSAEG%3BEAEI%3BEACA%3BEACA%3BEAEA%3B%3B%3BAAWZ%3BCAAA%2CGAvOP%2CUAmJI%3BEAgFO%3B%3B%3BAAhFR%2CGAnJH%2CUAmJI%2CWAoFG%3BCACI%3B%3BAAOZ%2CGAAC%3BCACG%3B%3BAAKJ%3BCAAA%2CGANC%3BEAGO%3B%3B%3BAASR%3BCAAA%2CGALC%3BEAGO%3B%3B%3BAAIR%2CGAAC%3BCACG%3B%3BAAIJ%3BCAAA%2CGALC%3BEAGO%3B%3B%3BAAIR%2CGAAC%3BCACG%3B%3BAAIJ%3BCAAA%2CGALC%3BEAGO%3B%3B%3BAAcJ%3BCAAA%2CGAVH%2CaAAa%2CUAMV%3BEAEQ%3B%3B%3BAAOZ%2CGAAC%3BCAEG%2C%2BCAAA%3BCACA%2CgCAAA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAkBR%3BCALI%3BEACI%22%7D */
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-workbench.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAoCA%3B%3B%3BAAEI%2CGAAC%3BCAEG%3BCACA%3BCACA%3BCACA%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAEA%2CGAPH%2CUAOI%3B%3BCAEC%3BCACA%3BCACA%3B%3B%3B%3B%3B%3BAAJF%2CGAPH%2CUAOI%2COAeG%3BCAGA%3BCACA%3B%3BAAQJ%2CGAlCH%2CUAkCI%3BCACC%3B%3BAAGF%2CGAtCH%2CUAsCI%3BCACG%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAANJ%2CGAtCH%2CUAsCI%2CMAQG%2CcAEI%3BCACI%3B%3BAAOJ%3BCAAA%2CGAxDX%2CUAsCI%2CMAQG%2CcAMI%2CKAAI%3BCAIJ%2CGAxDX%2CUAsCI%2CMAQG%2CcAMgB%3BEAEJ%3B%3B%3BAAQhB%2CGA9DH%2CUA8DI%3BCACG%3BCAEA%2CyCAAA%3BCAMA%2C6BAAA%3BCACA%3BCACA%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAqDJ%2CGA9HH%2CUA8HI%3BCACG%3B%3BAAGJ%2CGAlIH%2CUAkII%3BCACG%3B%3BAAGJ%2CGAtIH%2CUAsII%2CqBACG%3BCACI%3B%3BAAFR%2CGAtIH%2CUAsII%2CqBAKG%3BCACI%3B%3BAAIR%2CGAhJH%2CUAgJI%3BCAiBG%3B%3BAAdA%2CGAnJP%2CUAgJI%2CWAGI%3BCAEG%3BCAKA%2CmCAAA%3BCAEA%3BCACA%3B%3BAAbR%2CGAhJH%2CUAgJI%2CWAmBC%3BCACE%2CoCAAA%3B%3BAAGF%2CGAvKL%2CUAgJI%2CWAuBE%3BCACK%3B%3BAADN%2CGAvKL%2CUAgJI%2CWAuBE%2CUAOK%3BCAEI%3BCACA%3B%3BAAVV%2CGAvKL%2CUAgJI%2CWAuBE%2CUAOK%2CmCAKI%3BCACE%3B%3BAAGF%2CGAvLf%2CUAgJI%2CWAuBE%2CUAOK%2CmCASK%3BCACG%3BCACA%3BCACA%3B%3BAAHJ%2CGAvLf%2CUAgJI%2CWAuBE%2CUAOK%2CmCASK%2CMAKG%3BCACI%3B%3BAAtBlB%2CGAvKL%2CUAgJI%2CWAuBE%2CUA2BK%3BCACI%3B%3BAA4BR%3BCAAA%2CGA%5C%2FNP%2CUAgJI%3BEAyDO%3B%3BCAsBJ%2CGA%5C%2FNP%2CUAgJI%2CWA2DO%3BEAEI%3BEACA%3B%3BCAGJ%2CGAjNX%2CUAgJI%2CWAiEQ%2CSAEG%3BEAEI%3BEACA%3BEACA%3BEAEA%3B%3B%3BAAWZ%3BCAAA%2CGApOP%2CUAgJI%3BEAgFO%3B%3B%3BAAhFR%2CGAhJH%2CUAgJI%2CWAoFG%3BCACI%3B%3BAAOZ%2CGAAC%3BCACG%3B%3BAAKJ%3BCAAA%2CGANC%3BEAGO%3B%3B%3BAASR%3BCAAA%2CGALC%3BEAGO%3B%3B%3BAAIR%2CGAAC%3BCACG%3B%3BAAIJ%3BCAAA%2CGALC%3BEAGO%3B%3B%3BAAIR%2CGAAC%3BCACG%3B%3BAAIJ%3BCAAA%2CGALC%3BEAGO%3B%3B%3BAAcJ%3BCAAA%2CGAVH%2CaAAa%2CUAMV%3BEAEQ%3B%3B%3BAAOZ%2CGAAC%3BCAEG%2C%2BCAAA%3BCACA%2CgCAAA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAkBR%3BCALI%3BEACI%22%7D */
 /* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/../../../template_engine/components/html/component_editor/editor */
 .editor__text-editor {
 	width: 100%;

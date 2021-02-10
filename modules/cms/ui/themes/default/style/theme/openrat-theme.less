@@ -11,6 +11,15 @@
 @cms-text-color: black;
 @cms-background-color: silver;
 @cms-inactive-background-color: gray;
+
+@cms-search-text-color: gray;
+@cms-search-background-color: gray;
+
+@cms-nav-text-color: gray;
+@cms-nav-background-color: gray;
+
+@cms-image-color: gray;
+
 @cms-background-image: "@{cms-image-path}background/fog.jpeg";
 
 @cms-notice-ok-color: green;
@@ -39,8 +48,6 @@ html.or-theme-@{cms-theme-id} {
           .or-view {
             background-color: @cms-background-color;
             color: @cms-text-color;
-            //border-color: @cms-text-color ! important;
-            //.box-shadow(0px, 0px, 40px, @cms-text-color);
           }
         }
 
@@ -50,6 +57,10 @@ html.or-theme-@{cms-theme-id} {
     }
 
     .or {
+
+        &-image {
+          text-color: @cms-image-color;
+        }
 
         &-view {
             &-header {
@@ -141,16 +152,25 @@ html.or-theme-@{cms-theme-id} {
 
         &-workbench {
 
-            //background-color: @cms-title-background-color;
+          &-search {
+            text-color: @cms-search-text-color;
+            background-color: @cms-search-background-color;
+          }
 
-            &-main {
-                //background-color: @cms-inactive-background-color;
-                //background-image: linear-gradient(to bottom, @cms-inactive-background-color 0%, lighten(@cms-inactive-background-color, 10%) 100%);
-              }
+          &-navigation {
+            text-color: @cms-nav-text-color;
+            background-color: @cms-nav-background-color;
+          }
 
-            &-workplace {
-              background-color: @cms-background-color;
-            }
+          &-title {
+            text-color: @cms-text-color;
+            background-color: @cms-title-background-color;
+          }
+          &-workplace {
+            text-color: @cms-text-color;
+            background-color: @cms-background-color;
+          }
+
 
             &-section {
                 border-color: @cms-text-color;

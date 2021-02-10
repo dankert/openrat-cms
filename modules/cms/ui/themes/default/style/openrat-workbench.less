@@ -43,10 +43,35 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
         display: flex;
         flex-direction: row;
 
+        &-screen {
+          /* Horizontale Flexbox */
+          display: flex;
+          flex-direction: column;
+          position: relative;
 
-        /* vertikale Flex-Box zwischen Header und Hauptbereich */
+          /*
+          https://stackoverflow.com/questions/28636832/firefox-overflow-y-not-working-with-nested-flexbox
+          Whenever you've got an element with overflow: [hidden|scroll|auto] inside of a flex item, you need to give its ancestor flex item min-width:0 (in a horizontal flex container) or min-height:0 (in a vertical flex container), to disable this min-sizing behavior, or else the flex item will refuse to shrink smaller than the child's min-content size.
+           */
+          //min-width: 0;
+          //min-height: 0;
 
-        > * {
+          //padding-top: 0.5em;
+
+          > * {
+            //min-width: 0;
+            //min-height: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+
+            //width: 100%;
+          }
+
+
+        }
+
+        &-main {
+          flex: 1;
         }
 
         &-title {
@@ -71,37 +96,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             }
         }
 
-        &-main {
-            flex: 1;
-
-            /* Horizontale Flexbox */
-            display: flex;
-            flex-direction: column;
-            position: relative;
-
-            /*
-            https://stackoverflow.com/questions/28636832/firefox-overflow-y-not-working-with-nested-flexbox
-            Whenever you've got an element with overflow: [hidden|scroll|auto] inside of a flex item, you need to give its ancestor flex item min-width:0 (in a horizontal flex container) or min-height:0 (in a vertical flex container), to disable this min-sizing behavior, or else the flex item will refuse to shrink smaller than the child's min-content size.
-             */
-            //min-width: 0;
-            //min-height: 0;
-
-            //padding-top: 0.5em;
-
-            > * {
-                //min-width: 0;
-                //min-height: 0;
-                overflow-y: auto;
-                overflow-x: hidden;
-
-                //width: 100%;
-            }
 
 
-        }
-
-
-        &-workplace {
+        &-content {
             flex: 1;
             //margin-left: 33%;
             transition: margin-left 0.15s ease-in-out;
@@ -131,7 +128,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
         }
 
-        &-section {
+/*        &-section {
             margin: 1.5em;
             @media @smartphones {
                 margin: 0.5em;
@@ -161,7 +158,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             &.or--is-empty {
                 //display: none;
             }
-        }
+        }*/
 
 
         /* */
@@ -190,11 +187,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
                 width: 30em;
 
-                position: fixed;
-                z-index: 1;
-                opacity: 0.9;
+                //position: fixed;
+                //z-index: 1;
+                //opacity: 0.9;
                 transition: width 0.15s ease-in-out;
-                height: 100%;
+                //height: 100%;
                 padding:0.7em;
                 overflow-x:hidden; // no horizontal scrolling
 

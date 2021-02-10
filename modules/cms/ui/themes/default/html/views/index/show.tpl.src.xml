@@ -25,15 +25,45 @@
 		<!-- This is the CMS workbench which contains the whole application -->
 		<div id="workbench" class="or-workbench or--initial-hidden">
 
+
 			<!-- Navigation -->
-			<nav class="or-workbench-navigation">
-				<div class="or-workbench-navigation-container">
+			<div class="or-workbench-navigation or-workbench-screen">
+
+				<or:part class="workbench-title,workbench-search">
+					<or:part class="menu">
+						<or:part class="menu-group">
+
+							<or:part class="toolbar-icon,act-nav-small,-visible-on-desktop">
+								<or:image class="" menu="close"/>
+							</or:part>
+
+							<!--
+							<or:part class="toolbar-icon,workbench  - -visible-on-small,act-nav-wide,-visible-on-desktop">
+								<image class="" menu="menu"/>
+							</or:part>-->
+
+							<or:part class="toolbar-icon,menu-category,search">
+								<or:image method="search"/>
+								<or:input name="text" hint="${message:search}"/>
+								<or:image class="menu-dropdown-icon" symbol="dropdown"/>
+								<or:part class="dropdown,dropdown--on-right,act-global-search-results">
+									<or:text class="dropdown-entry" value=""/>
+								</or:part>
+							</or:part>
+
+						</or:part>
+					</or:part>
+				</or:part>
+
+
+
+				<nav class="or-workbench-navigation-container or-workbench-content">
 					<div class="or-view or-act-view-static" data-action="tree" data-method="show" />
-				</div>
-			</nav>
+				</nav>
+			</div>
 
 			<!-- Main area -->
-			<div class="or-workbench-main">
+			<div class="or-workbench-main or-workbench-screen">
 
 				<!-- Header menu -->
 				<header id="title" class="or-workbench-title or-view or-act-view-static" data-action="title"
@@ -42,7 +72,7 @@
 
 
 				<!-- The workplace with some views -->
-				<main class="or-workbench-workplace">
+				<main class="or-workbench-workplace or-workbench-content">
 
 <!--					<header>
 						<div class="or-breadcrumb"/>
