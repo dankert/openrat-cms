@@ -651,8 +651,8 @@ class DefaultConfig {
 					'earlgrey' =>
 						[ 
 							'name' => 'Earl grey',
-							'title_background_color' => 'grey',
-							'title_text_color' => 'white',
+							'main_title_background_color' => 'grey',
+							'main_title_text_color' => 'white',
 							'text_color' => 'black',
 							'background_color' => '#e9e9e9',
 							'inactive_background_color' => 'silver',
@@ -660,8 +660,8 @@ class DefaultConfig {
 					'dracula' =>
 						[ 
 							'name' => 'Dracula',
-							'title_background_color' => '#44475a',
-							'title_text_color' => '#f8f8f2',
+							'main_title_background_color' => '#44475a',
+							'main_title_text_color' => '#f8f8f2',
 							'text_color' => '#f8f8f2',
 							'background_color' => '#282a36',
 							'inactive_background_color' => '#44475a',
@@ -670,8 +670,10 @@ class DefaultConfig {
 					'modern' =>
 						[ 
 							'name' => 'Blue sky',
-							'title_background_color' => '#3F6194',
-							'title_text_color' => 'white',
+							'main_title_background_color' => '#3F6194',
+							'main_title_text_color' => 'white',
+							'nav_title_background_color' => '#79afd9',
+							'nav_background_color' => '#e1effa',
 							'text_color' => 'black',
 							'background_color' => '#F3F3F3',
 							'inactive_background_color' => '#CCCCCC',
@@ -679,8 +681,8 @@ class DefaultConfig {
 					'moorweide' =>
 						[ 
 							'name' => 'Moorweide',
-							'title_background_color' => '#edf7f2',
-							'title_text_color' => '#005f52',
+							'main_title_background_color' => '#edf7f2',
+							'main_title_text_color' => '#005f52',
 							'text_color' => 'black',
 							'background_color' => '#edf7f2',
 							'inactive_background_color' => 'white',
@@ -688,11 +690,17 @@ class DefaultConfig {
 					'dark' =>
 						[ 
 							'name' => 'Dark',
-							'title_background_color' => '#565655',
-							'title_text_color' => '#DCDCDC',
+							'main_title_background_color' => '#565655',
+							'main_title_text_color' => '#DCDCDC',
 							'text_color' => '#FFFFFF',
 							'background_color' => '#201F1D',
 							'inactive_background_color' => '#868685',
+						],
+					'mono' =>
+						[
+							'name' => 'Monochrome',
+							'text_color' => 'black',
+							'background_color' => 'white',
 						],
 				],
 			'theme' =>

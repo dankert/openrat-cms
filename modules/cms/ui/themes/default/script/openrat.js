@@ -2790,11 +2790,38 @@ $( function() {
 
     let closeMobileNavigation = function() {
         // Mobile navigation must close on a click on the workbench
-        $('.or-workbench-workplace').click( function() {
+        $('.or-act-navigation-close').click( function() {
             $('.or-workbench-navigation').removeClass('workbench-navigation--is-open');
+			$('.or-workbench').removeClass('workbench--navigation-is-open');
         });
     };
     closeMobileNavigation();
+
+	let closeDesktopNavigation = function() {
+
+		// Handler for desktop navigation
+		$('.or-workbench-title .or-act-nav-small').click(function () {
+			$('.or-workbench').addClass('workbench--navigation-is-small');
+			$('.or-workbench-navigation').addClass('workbench-navigation--is-small');
+		});
+	};
+	closeDesktopNavigation();
+
+
+	let registerGlobalSearch = function() {
+		$('.or-search .or-input').orSearch( {
+			dropdown    : '.or-dropdown.or-act-global-search-results',
+			openDropdown: true, // the dropdown is automatically opened by the menu.
+			select      : function(obj) {
+				// open the search result
+				Openrat.Workbench.openNewAction( obj.name, obj.action, obj.id );
+			},
+			afterSelect: function() {
+				$('.or-dropdown.or-act-selector-search-results').empty();
+			}
+		} );
+	};
+	registerGlobalSearch();
 
 
 	Openrat.Workbench.afterNewActionHandler.add( function() {
@@ -3051,18 +3078,6 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 
     }
 
-    function registerGlobalSearch($element )
-    {
-        $($element).find('.or-search .or-input').orSearch( {
-            dropdown    : '.or-dropdown.or-act-global-search-results',
-			openDropdown: false, // the dropdown is automatically opened by the menu.
-            select      : function(obj) {
-            	// open the search result
-                Openrat.Workbench.openNewAction( obj.name, obj.action, obj.id );
-            }
-        } );
-
-    }
 
     function registerSelectorSearch( $element )
     {
@@ -3090,7 +3105,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 
 
     registerMenuEvents    ( viewEl );
-    registerGlobalSearch  ( viewEl );
+    //registerGlobalSearch  ( viewEl );
     registerSelectorSearch( viewEl );
     registerTree          ( viewEl );
 

@@ -27,39 +27,50 @@
 
 
 			<!-- Navigation -->
-			<div class="or-workbench-navigation or-workbench-screen">
+			<div class="or-workbench-navigation">
 
-				<or:part class="workbench-title,workbench-search">
-					<or:part class="menu">
-						<or:part class="menu-group">
+				<div class="or-workbench-screen or-workbench-navigation-content">
 
-							<or:part class="toolbar-icon,act-nav-small,-visible-on-desktop">
-								<or:image class="" menu="close"/>
-							</or:part>
+					<or:part class="workbench-title,workbench-search">
+						<or:part class="menu">
+							<or:part class="menu-group">
 
-							<!--
-							<or:part class="toolbar-icon,workbench  - -visible-on-small,act-nav-wide,-visible-on-desktop">
-								<image class="" menu="menu"/>
-							</or:part>-->
-
-							<or:part class="toolbar-icon,menu-category,search">
-								<or:image method="search"/>
-								<or:input name="text" hint="${message:search}"/>
-								<or:image class="menu-dropdown-icon" symbol="dropdown"/>
-								<or:part class="dropdown,dropdown--on-right,act-global-search-results">
-									<or:text class="dropdown-entry" value=""/>
+								<or:part class="toolbar-icon,act-nav-small,-visible-on-desktop">
+									<or:image class="" menu="close"/>
 								</or:part>
-							</or:part>
 
+								<or:part class="toolbar-icon,act-navigation-close,-visible-on-mobile">
+									<or:image class="" menu="close"/>
+								</or:part>
+
+								<!--
+								<or:part class="toolbar-icon,workbench  - -visible-on-small,act-nav-wide,-visible-on-desktop">
+									<image class="" menu="menu"/>
+								</or:part>-->
+
+								<or:part class="toolbar-icon,menu-category,search">
+									<or:image method="search"/>
+									<or:input name="text" hint="${message:search}"/>
+									<or:image class="menu-dropdown-icon" symbol="dropdown"/>
+									<or:part class="dropdown,dropdown--on-right,act-global-search-results">
+										<or:text class="dropdown-entry" value=""/>
+									</or:part>
+								</or:part>
+
+							</or:part>
 						</or:part>
 					</or:part>
-				</or:part>
 
 
 
-				<nav class="or-workbench-navigation-container or-workbench-content">
-					<div class="or-view or-act-view-static" data-action="tree" data-method="show" />
-				</nav>
+					<nav class="or-workbench-navigation-container or-navigation or-workbench-content">
+						<div class="or-view or-act-view-static or-navigation-content" data-action="tree" data-method="show" />
+						<div class="or-navigation-filler"></div>
+					</nav>
+				</div>
+
+				<div class="or-workbench-navigation-filler or-act-navigation-close" />
+
 			</div>
 
 			<!-- Main area -->
@@ -105,8 +116,12 @@
 				<div id="dialog" class="or-dialog or-dialog--is-closed" data-action="${dialogAction}"
 					 data-method="${dialogMethod}">
 					<!-- Header menu -->
-					<div class="or-dialog-content">
-						<header class="or-workbench-title">
+					<div class="or-dialog-filler"><!-- empty element, this is only for styling the background -->
+						<span class="or-dialog-filler-icon or-btn or-image-icon or-image-icon--menu-close"></span>
+					</div>
+
+					<div class="or-dialog-content or-workbench-screen">
+						<header class="or-workbench-title or-dialog-title">
 
 							<or:part class="menu">
 								<or:part class="menu-group">
@@ -128,13 +143,12 @@
 							</or:part>
 
 						</header>
-						<div class="or-view">
+						<div class="or-workbench-content">
+							<div class="or-view">
+							</div>
 						</div>
 					</div>
 
-					<div class="or-dialog-filler"><!-- empty element, this is only for styling the background -->
-						<span class="or-dialog-filler-icon or-btn or-image-icon or-image-icon--menu-close"></span>
-					</div>
 				</div>
 
 
@@ -144,7 +158,7 @@
  
 
 
-
+		<!-- Notices -->
 
 		<div id="noticebar" class="or-notices">
 			<or:list list="${notices}" value="notice">

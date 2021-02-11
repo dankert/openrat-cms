@@ -44,7 +44,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
         flex-direction: row;
 
         &-screen {
-          /* Horizontale Flexbox */
+          /* vertical flexbox */
           display: flex;
           flex-direction: column;
           position: relative;
@@ -80,7 +80,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             min-height: 3.0rem;
             overflow: hidden;
             padding: 0.5em;
-            opacity: 0.9;
+            //opacity: 0.9;
 
             .toolbar-icon {
 
@@ -108,8 +108,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             }
 
             transition: opacity 0.5s ease;
-            display: flex;
-            flex-direction: column;
+            //display: flex;
+            //flex-direction: column;
 
             /*
             &.is-closed {
@@ -182,10 +182,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
         &-navigation {
 
+            display: flex;
+            flex-direction: row;
+            width: 30em;
+
+            &-content {
+              //width: 100%;
+              flex: 1;
+              @media @smartphones {
+                flex: none;
+              }
+            }
+            &-filler {
+              flex: 0;
+              opacity: 0.6;
+            }
 
             &-container {
 
-                width: 30em;
+                width: 100%;
 
                 //position: fixed;
                 //z-index: 1;
@@ -197,7 +212,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
             }
 
-            width: 30em;
 
           .or-navtree {
             transition: opacity 0.1s ease-in-out;
@@ -251,15 +265,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
                 &--is-open {
 
-                  .or-workbench-navigation-container {
-                    width: 100%;
-                    height:100%;
-                    overflow-y: auto;
+                  .or-workbench-navigation-content {
+                    width:90%;
                   }
+                  .or-workbench-navigation-filler {
+                    flex: 1;
+                  }
+
                   position: fixed;
-                  width: 90%;
+                  width: 100%;
                   z-index: 1;
-                  opacity: 0.98;
+                  opacity: 1;
                   height:100%;
                 }
             }
@@ -342,7 +358,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 @media @smartphones {
     html {
-        font-size: 1em;
+        font-size: 1.1em;
     }
 }
 

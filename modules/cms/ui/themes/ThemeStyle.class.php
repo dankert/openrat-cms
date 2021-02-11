@@ -10,16 +10,28 @@ use util\text\Converter;
 class ThemeStyle
 {
 	private $name;
-	private $titleBackgroundColor;
-	private $titleTextColor;
+
 	private $textColor       = 'black';
 	private $backgroundColor = '#d9d9d9';
+
 	private $inactiveBackgroundColor;
-	private $themeColor;
-	private $searchBackgroundcolor;
-	private $searchTextColor;
-	private $navBackgroundcolor;
+
+	private $mainTextColor      ;
+	private $mainBackgroundColor;
+	private $mainTitleBackgroundColor;
+	private $mainTitleTextColor;
+
+	private $navBackgroundColor;
 	private $navTextColor;
+	private $navTitleBackgroundColor;
+	private $navTitleTextColor;
+
+	private $dialogTitleBackgroundColor;
+	private $dialogTitleTextColor;
+	private $dialogBackgroundColor;
+	private $dialogTextColor;
+
+	private $themeColor;
 	private $arrowColor;
 	private $imageColor;
 
@@ -58,35 +70,55 @@ class ThemeStyle
 	 */
 	protected function fillMissingValues() {
 
-		if   ( ! $this->titleBackgroundColor )
-			$this->titleBackgroundColor = $this->backgroundColor;
+		if   ( ! $this->mainTitleBackgroundColor )
+			$this->mainTitleBackgroundColor = $this->backgroundColor;
 
-		if   ( ! $this->titleTextColor )
-			$this->titleTextColor = $this->textColor;
+		if   ( ! $this->mainTitleTextColor )
+			$this->mainTitleTextColor = $this->textColor;
+
+		if   ( ! $this->mainBackgroundColor )
+			$this->mainBackgroundColor = $this->backgroundColor;
+
+		if   ( ! $this->mainTextColor )
+			$this->mainTextColor = $this->textColor;
 
 		if   ( ! $this->themeColor )
-			$this->themeColor = $this->titleBackgroundColor;
+			$this->themeColor = $this->mainTitleBackgroundColor;
 
 		if   ( ! $this->inactiveBackgroundColor )
 			$this->inactiveBackgroundColor = $this->backgroundColor;
 
-		if   ( ! $this->searchTextColor )
-			$this->searchTextColor = $this->titleTextColor;
+		if   ( ! $this->navTitleTextColor )
+			$this->navTitleTextColor= $this->mainTitleTextColor;
 
-		if   ( ! $this->searchBackgroundcolor )
-			$this->searchBackgroundcolor = $this->titleBackgroundColor;
+		if   ( ! $this->navTitleBackgroundColor )
+			$this->navTitleBackgroundColor = $this->mainTitleBackgroundColor;
 
 		if   ( ! $this->navTextColor )
-			$this->navTextColor = $this->textColor;
+			$this->navTextColor = $this->mainTextColor;
 
-		if   ( ! $this->navBackgroundcolor )
-			$this->navBackgroundcolor = $this->backgroundColor;
+		if   ( ! $this->navBackgroundColor )
+			$this->navBackgroundColor = $this->mainBackgroundColor;
+
+
+		if   ( ! $this->dialogTitleTextColor )
+			$this->dialogTitleTextColor = $this->mainTitleTextColor;
+
+		if   ( ! $this->dialogTitleBackgroundColor )
+			$this->dialogTitleBackgroundColor = $this->mainTitleBackgroundColor;
+
+		if   ( ! $this->dialogTextColor )
+			$this->dialogTextColor = $this->mainTextColor;
+
+		if   ( ! $this->dialogBackgroundColor )
+			$this->dialogBackgroundColor = $this->mainBackgroundColor;
+
 
 		if   ( ! $this->arrowColor )
 			$this->arrowColor = $this->themeColor;
 
 		if   ( ! $this->imageColor )
-			$this->imageColor = $this->themeColor;
+			$this->imageColor = $this->mainTitleTextColor;
 	}
 
 

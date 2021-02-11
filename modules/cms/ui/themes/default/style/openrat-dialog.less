@@ -32,54 +32,59 @@ Basis-Style for Openrat.
 .or {
     &-dialog {
 
+      position: absolute;
+      z-index: 2;
+      top: 0;
+      left: 0;
+      width:100%;
+
       display: none;
+      height: 100%;
+      flex-direction: row;
 
       &--is-open {
-          display: block;
+        display: flex;
+      }
+
+      &-filler {
+        height: 100%;
+        width: 12em;
+        opacity: 0.6;
+        filter: blur(10em);
+
+        @media @smartphones {
+          width: 0;
+        }
+
+        &-icon {
+          opacity: 1;
+          font-size: 3em;
+          position: absolute;
+          right: 20px;
+          top: 20px;
+        }
       }
 
       &-content {
 
+          flex: 1;
           overflow: auto;
-          position: absolute;
+          //position: absolute;
 
-          top: 0;
-          left: 0;
-          width: 100%;
+          //top: 0;
+          //left: 0;
+          //width: 100%;
           height: 100%;
 
-          margin-left:10em;
-
-          @media @smartphones {
-            margin-left: 0;
-          }
+          //margin-left:10em;
 
           z-index: 3;
 
           .or-view {
+            height: 100%;
           }
 
-        }
-
-
-        &-filler {
-            position: absolute;
-            z-index: 2;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 100%;
-            opacity: 0.8;
-            filter: blur(10em);
-
-            &-icon {
-                opacity: 1;
-                font-size: 3em;
-                position: absolute;
-                right: 20px;
-                top: 20px;
-            }
-        }
+      }
 
     }
 }

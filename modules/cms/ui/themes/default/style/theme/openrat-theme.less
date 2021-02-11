@@ -6,17 +6,23 @@
 @cms-theme-id: 'theme-name'; /* technical name of theme */
 @cms-image-path: '/'; /* Image-path */
 @cms-name: name; /* Logic name of theme */
-@cms-title-background-color: white;
-@cms-title-text-color: black;
-@cms-text-color: black;
-@cms-background-color: silver;
+
+@cms-main-title-background-color: white;
+@cms-main-title-text-color: black;
+@cms-main-text-color: black;
+@cms-main-background-color: silver;
+
 @cms-inactive-background-color: gray;
 
-@cms-search-text-color: gray;
-@cms-search-background-color: gray;
-
+@cms-nav-title-text-color: gray;
+@cms-nav-title-background-color: gray;
 @cms-nav-text-color: gray;
 @cms-nav-background-color: gray;
+
+@cms-dialog-title-text-color: gray;
+@cms-dialog-title-background-color: gray;
+@cms-dialog-text-color: gray;
+@cms-dialog-background-color: gray;
 
 @cms-image-color: gray;
 
@@ -27,6 +33,7 @@
 @cms-notice-warning-color: yellow;
 @cms-notice-error-color: red;
 
+@cms-fill-color: black;
 
 html.or-theme-@{cms-theme-id} {
 
@@ -36,25 +43,14 @@ html.or-theme-@{cms-theme-id} {
         box-shadow: @x @y @radius @color;
     }
 
-    scrollbar-face-color: @cms-title-background-color;
-    scrollbar-arrow-color: @cms-title-background-color;
-    scrollbar-base-color: @cms-title-text-color;
+    scrollbar-face-color: @cms-main-title-background-color;
+    scrollbar-arrow-color: @cms-main-title-background-color;
+    scrollbar-base-color: @cms-main-title-text-color;
 
-    scrollbar-color: @cms-title-text-color @cms-background-color;
+    scrollbar-color: @cms-main-title-text-color @cms-main-background-color;
     scrollbar-width: thin;
 
-    .or-dialog {
-        &-content {
-          .or-view {
-            background-color: @cms-background-color;
-            color: @cms-text-color;
-          }
-        }
 
-        &-filler {
-            background-color: @cms-title-background-color;
-        }
-    }
 
     .or {
 
@@ -64,7 +60,7 @@ html.or-theme-@{cms-theme-id} {
 
         &-view {
             &-header {
-                color: @cms-title-background-color;
+                color: @cms-main-title-background-color;
             }
         }
 
@@ -80,7 +76,7 @@ html.or-theme-@{cms-theme-id} {
                     border-left-color: darken(@cms-notice-ok-color, 10%);
                 }
 
-                .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @cms-notice-ok-color, 20%));
+                .box-shadow(3px, 3px, 10px, mix(@cms-main-background-color, @cms-notice-ok-color, 20%));
             }
 
             &--warning {
@@ -91,7 +87,7 @@ html.or-theme-@{cms-theme-id} {
                     border-left-color: darken(@cms-notice-warning-color, 10%);
                 }
 
-                .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @cms-notice-warning-color, 20%));
+                .box-shadow(3px, 3px, 10px, mix(@cms-main-background-color, @cms-notice-warning-color, 20%));
             }
 
             &--info {
@@ -102,7 +98,7 @@ html.or-theme-@{cms-theme-id} {
                     border-left-color: darken(@cms-notice-info-color, 10%);
                 }
 
-                .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @cms-notice-info-color, 20%));
+                .box-shadow(3px, 3px, 10px, mix(@cms-main-background-color, @cms-notice-info-color, 20%));
             }
 
             &--error {
@@ -113,7 +109,7 @@ html.or-theme-@{cms-theme-id} {
                     border-left-color: darken(@cms-notice-error-color, 10%);
                 }
 
-                .box-shadow(3px, 3px, 10px, mix(@cms-background-color, @cms-notice-error-color, 20%));
+                .box-shadow(3px, 3px, 10px, mix(@cms-main-background-color, @cms-notice-error-color, 20%));
 
             }
         }
@@ -123,7 +119,7 @@ html.or-theme-@{cms-theme-id} {
             a:link, a:visited, a:active, a:hover {
             }
 
-            color: @cms-background-color;
+            color: @cms-main-background-color;
         }
 
 
@@ -131,11 +127,11 @@ html.or-theme-@{cms-theme-id} {
 
             tr.headline > td,
             tr.headline > th {
-                border-bottom: 1px solid @cms-title-background-color;
+                border-bottom: 1px solid @cms-main-title-background-color;
             }
 
             tr > td {
-                border-bottom: 1px solid @cms-title-background-color;
+                border-bottom: 1px solid @cms-main-title-background-color;
             }
 
             tr:nth-child(2n) {
@@ -144,95 +140,117 @@ html.or-theme-@{cms-theme-id} {
 
             tr.or-data:hover,
             tr.or-table-data:hover{
-                background-color: @cms-title-background-color;
-                color: @cms-title-text-color;
+                background-color: @cms-main-title-background-color;
+                color: @cms-main-title-text-color;
             }
         }
 
 
         &-workbench {
 
+          &-title {
+            text-color: @cms-main-text-color;
+            background-color: @cms-main-title-background-color;
+            //background-image: linear-gradient(to bottom, lighten(@cms-main-background-color, 10%), @cms-main-title-background-color 90%, @cms-inactive-background-color);
+            color: @cms-main-title-text-color;
+
+            .or-toolbar-icon > a {
+              color: @cms-main-title-text-color;
+            }
+          }
+          &-workplace {
+            text-color: @cms-main-text-color;
+            background-color: @cms-main-background-color;
+          }
+
           &-search {
-            text-color: @cms-search-text-color;
-            background-color: @cms-search-background-color;
+            text-color: @cms-nav-title-text-color;
+            background-color: @cms-nav-title-background-color;
           }
 
           &-navigation {
-            text-color: @cms-nav-text-color;
-            background-color: @cms-nav-background-color;
+            &-container {
+              text-color: @cms-nav-text-color;
+              background-color: @cms-nav-background-color;
+            }
+
+            &-filler {
+                //background-color: @cms-nav-title-background-color;
+                background-color: @cms-fill-color;
+            }
           }
 
-          &-title {
-            text-color: @cms-text-color;
-            background-color: @cms-title-background-color;
-          }
-          &-workplace {
-            text-color: @cms-text-color;
-            background-color: @cms-background-color;
-          }
 
 
             &-section {
-                border-color: @cms-text-color;
+                border-color: @cms-main-text-color;
 
                 &.or-open {
-                    background-color: lighten(@cms-background-color, 10%);
+                    background-color: lighten(@cms-main-background-color, 10%);
                 }
             }
 
 
-            &-navigation-container {
-                //background-color: @cms-title-background-color;
-                //color: @cms-title-text-color;
-                background-color: @cms-background-color;
-                .box-shadow(10px, 0px, 25px, @cms-background-color);
-                background-image: linear-gradient(to right, lighten(@cms-background-color, 10%), @cms-background-color);
-            }
+/*            &-navigation-container {
+                //background-color: @cms-main-title-background-color;
+                //color: @cms-main-title-text-color;
+                background-color: @cms-main-background-color;
+                .box-shadow(10px, 0px, 25px, @cms-main-background-color);
+                background-image: linear-gradient(to right, lighten(@cms-main-background-color, 10%), @cms-main-background-color);
+            }*/
             &-navigation,
             &-navigation .or-link {
-                color: @cms-text-color;
-            }
-
-            &-title {
-
-                background-color: @cms-title-background-color;
-                background-image: linear-gradient(to bottom, lighten(@cms-title-background-color, 10%), @cms-title-background-color 90%, @cms-inactive-background-color);
-                color: @cms-title-text-color;
-
-                .or-toolbar-icon > a {
-                    color: @cms-title-text-color;
-                }
-
+                color: @cms-main-text-color;
             }
         }
 
+      &-dialog {
+        &-title {
+          background-color: @cms-dialog-title-background-color;
+          color: @cms-dialog-title-text-color;
+        }
+        &-content {
+          background-color: @cms-dialog-background-color;
+          color: @cms-dialog-text-color;
+          //.box-shadow();
+
+          .or-view {
+          }
+        }
+
+        &-filler {
+          //background-color: @cms-main-background-color;
+          background-color: @cms-fill-color;
+        }
+      }
+
         &-input {
-            background-color: @cms-title-background-color;
-            color: @cms-title-text-color;
-            border: 1px solid mix(@cms-title-text-color, @cms-title-background-color);
-            .box-shadow(0px, 0px, 3px, @cms-title-text-color);
-            border-bottom: 1px solid @cms-text-color;
+            background-color: @cms-main-title-background-color;
+            color: @cms-main-title-text-color;
+            border: 1px solid mix(@cms-main-title-text-color, @cms-main-title-background-color);
+            .box-shadow(0px, 0px, 3px, @cms-main-title-text-color);
+            border-bottom: 1px solid @cms-main-text-color;
 
             &:focus {
             }
 
-            border-color: @cms-title-text-color;
+            border-color: @cms-main-title-text-color;
 
             &--error {
-                border-bottom: 1px dotted @cms-text-color ! important;
+                border-bottom: 1px dotted @cms-main-text-color ! important;
                 border: 1px solid @cms-notice-error-color ! important;
             }
 
 
             &.or-hint {
-                color: @cms-title-background-color;
+                color: @cms-main-title-background-color;
             }
 
         }
 
 
         &-group {
-            border-color: mix(@cms-text-color, @cms-background-color);
+            border-color: mix(@cms-main-text-color, @cms-main-background-color);
 
         }
 
@@ -262,91 +280,100 @@ html.or-theme-@{cms-theme-id} {
                 color: inherit;
             }
 
-            .box-shadow(3px, 2px, 5px, @cms-background-color);
-            border: 1px solid mix(@cms-background-color,@cms-inactive-background-color);
+            .box-shadow(3px, 2px, 5px, @cms-main-background-color);
+            border: 1px solid mix(@cms-main-background-color,@cms-inactive-background-color);
 
-            background-color: @cms-background-color;
-            color: @cms-text-color;
+            background-color: @cms-main-background-color;
+            color: @cms-main-text-color;
 
             &-entry {
 
-                background-color: @cms-background-color;
-                color: @cms-text-color;
+                background-color: @cms-main-background-color;
+                color: @cms-main-text-color;
 
                 &--inactive {
-                    color: mix(@cms-background-color, @cms-text-color, 40%);
+                    color: mix(@cms-main-background-color, @cms-main-text-color, 40%);
                 }
 
                 &--active:hover {
-                    background-color: @cms-text-color;
-                    color: @cms-background-color;
+                    background-color: @cms-main-text-color;
+                    color: @cms-main-background-color;
                 }
             }
 
 
             &-divide {
-                background-color: mix(@cms-background-color,@cms-inactive-background-color);
+                background-color: mix(@cms-main-background-color,@cms-inactive-background-color);
             }
         }
 
         &-toolbar-icon {
-            border: 1px solid @cms-title-background-color;
+            border: 1px solid @cms-main-title-background-color;
 
             &:hover {
-                border: 1px solid @cms-title-text-color;
+                border: 1px solid @cms-main-title-text-color;
             }
         }
 
 
         &-dropzone-upload > .or-value {
-            background-color: @cms-title-text-color;
-            border: 1px dotted @cms-text-color;
+            background-color: @cms-main-title-text-color;
+            border: 1px dotted @cms-main-text-color;
         }
 
         &-hover-effect:hover {
-            background-color: darken(@cms-background-color, 10%);;
+            background-color: darken(@cms-main-background-color, 10%);;
         }
 
         &-info-popup {
-            background-color: @cms-title-background-color;
-            color: @cms-title-text-color;
+            background-color: @cms-main-title-background-color;
+            color: @cms-main-title-text-color;
         }
 
 
         &-collapsible-title {
-            border-color: @cms-title-text-color;
+            border-color: @cms-main-title-text-color;
         }
 
         &-btn,
         &-link-btn {
-            border-color: @cms-background-color;
+            border-color: @cms-main-background-color;
             &--is-active {
                 background-color: @cms-inactive-background-color;
-                border-color: @cms-background-color;
+                border-color: @cms-main-background-color;
             }
-            color: @cms-title-text-color;
-            .box-shadow(0, 0, 0.5em, @cms-background-color);
+            color: @cms-main-title-text-color;
+            .box-shadow(0, 0, 0.5em, @cms-main-background-color);
 
             &:hover {
-                border-color: @cms-title-text-color;
+                border-color: @cms-main-title-text-color;
             }
 
             &--primary {
-                background-color: @cms-title-background-color;
+                background-color: @cms-main-title-background-color;
             }
+        }
+
+        &-form {
+          &-content {
+            padding-bottom: 5em;
+          }
+          &-actionbar {
+            background-color: @cms-dialog-title-background-color;
+          }
         }
     }
 
     small {
-        color: @cms-title-background-color;
+        color: @cms-main-title-background-color;
     }
 
     textarea.longtext {
-        border-color: @cms-text-color;
+        border-color: @cms-main-text-color;
     }
 
     body {
-        color: @cms-text-color;
+        color: @cms-main-text-color;
     }
     a {
         color: inherit;
