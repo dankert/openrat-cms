@@ -18,20 +18,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 @smartphones: ~"only screen and (max-width: 55rem)";
-@wide: ~"only screen and (min-width: 85rem)";
+@wide: ~"only screen and (min-width: 100rem)";
 
 
 .or {
 
     &-breadcrumb {
-      margin-bottom: 0.1em;
-      margin-top: 0.3em;
       margin-left: 1.5em;
-      line-height: 1.5em;
-      font-weight: normal;
-      white-space: nowrap;
+      margin-right: 0.5em;
 
-      * {
+      > * {
+          vertical-align: middle;
           display: inline;
           margin-right: 0.3em;
       }
@@ -43,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
       }
 
       &-path {
-        opacity: 0.55;
+        //opacity: 0.55;
         display: none;
 
         @media @wide {
@@ -52,11 +49,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
       }
 
       &-actual {
-        font-size: 1.25em;
-        font-weight: bold;
 
-        white-space: nowrap;
-        text-overflow: ellipsis;
         //overflow: hidden;
         //max-width: 0;
       }
@@ -71,6 +64,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 }
             }*/
         }
+      &-text {
+        //font-size: 1.25em;
+        font-weight: bold;
+        width: 12em;
+        @media @smartphones {
+          width: 5.5em;
+        }
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: inline-block;
+      }
     }
 
 

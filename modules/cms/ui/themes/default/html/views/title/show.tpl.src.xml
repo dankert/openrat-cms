@@ -2,15 +2,18 @@
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<part class="menu">
 		<part class="menu-group">
+
+			<!-- Open/Close-Button on mobiles -->
 			<part class="toolbar-icon,act-nav-open-close,-visible-on-mobile">
 				<image menu="menu"/>
-				<!--<text class="menu-label" key="menu"></text>-->
 			</part>
 
-			<part class="toolbar-icon,workbench--visible-on-wide,,act-nav-small,-visible-on-desktop">
+			<!-- Shrink the navigation on desktop -->
+			<part class="toolbar-icon,workbench--visible-on-wide,,act-nav-small,workbench--visible-on-dialog-open,-visible-on-desktop">
 				<image class="" menu="menu"/>
 			</part>
-			<part class="toolbar-icon,workbench--visible-on-small,act-nav-wide,-visible-on-desktop">
+			<!-- Open the navigation on desktop -->
+			<part class="toolbar-icon,workbench--visible-on-small,act-nav-wide,workbench--visible-on-dialog-open,-visible-on-desktop">
 				<image class="" menu="menu"/>
 			</part>
 

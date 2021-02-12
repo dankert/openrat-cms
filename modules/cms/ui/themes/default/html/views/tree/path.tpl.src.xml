@@ -21,6 +21,6 @@
 		<else>
 			<image action="${actual.action}"/>
 		</else>
-		<text value="${actual.name}"/>
+		<text class="breadcrumb-text" value="${actual.name}"/>
 	</part>
 </output>

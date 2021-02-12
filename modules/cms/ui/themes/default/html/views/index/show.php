@@ -59,7 +59,7 @@
             <header class="<?php echo O::escapeHtml('or-workbench-title or-dialog-title') ?>"><?php echo O::escapeHtml('') ?>
               <div class="<?php echo O::escapeHtml('or-menu') ?>"><?php echo O::escapeHtml('') ?>
                 <div class="<?php echo O::escapeHtml('or-menu-group') ?>"><?php echo O::escapeHtml('') ?>
-                  <div class="<?php echo O::escapeHtml('or-toolbar-icon or-workbench--visible-on-wide or-act-nav-small or-act-dialog-close') ?>"><?php echo O::escapeHtml('') ?>
+                  <div class="<?php echo O::escapeHtml('or-toolbar-icon or-act-dialog-close') ?>"><?php echo O::escapeHtml('') ?>
                     <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-back') ?>"><?php echo O::escapeHtml('') ?></i>
                   </div>
                   <div class="<?php echo O::escapeHtml('or-act-dialog-name') ?>"><?php echo O::escapeHtml('') ?></div>

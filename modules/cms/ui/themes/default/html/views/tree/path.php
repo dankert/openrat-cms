@@ -17,5 +17,5 @@
     <?php if(!$if3) {  ?>
       <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-'.@$actual['action'].'') ?>"><?php echo O::escapeHtml('') ?></i>
      <?php } ?>
-    <span><?php echo O::escapeHtml(''.@$actual['name'].'') ?></span>
+    <span class="<?php echo O::escapeHtml('or-breadcrumb-text') ?>"><?php echo O::escapeHtml(''.@$actual['name'].'') ?></span>
   </div>

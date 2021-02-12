@@ -124,7 +124,7 @@
 
 							<or:part class="menu">
 								<or:part class="menu-group">
-									<or:part class="toolbar-icon,workbench--visible-on-wide,act-nav-small,act-dialog-close">
+									<or:part class="toolbar-icon,act-dialog-close">
 										<or:image class="" menu="back"/>
 									</or:part>
 

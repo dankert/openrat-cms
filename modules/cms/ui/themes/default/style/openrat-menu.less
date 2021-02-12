@@ -33,6 +33,7 @@ Basis-Style for Openrat.
 }
 
 @smartphones: ~"only screen and (max-width: 55rem)";
+@smaller: ~"only screen and (max-width: 70rem)";
 @not-wide: ~"only screen and (max-width: 85rem)";
 
 
@@ -49,7 +50,7 @@ Basis-Style for Openrat.
         }
 
         &-shortcut {
-          @media @smartphones {
+          @media @smaller {
             display: none;
           }
         }
