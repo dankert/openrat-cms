@@ -34,6 +34,8 @@
 @cms-notice-error-color: red;
 
 @cms-fill-color: black;
+@cms-transition-duration: 0.1s;
+
 
 html.or-theme-@{cms-theme-id} {
 
@@ -50,6 +52,10 @@ html.or-theme-@{cms-theme-id} {
     scrollbar-color: @cms-main-title-text-color @cms-main-background-color;
     scrollbar-width: thin;
 
+    * {
+      transition: opacity @cms-transition-duration ease-in-out;
+      transition: width   @cms-transition-duration ease-in-out;
+    }
 
 
     .or {

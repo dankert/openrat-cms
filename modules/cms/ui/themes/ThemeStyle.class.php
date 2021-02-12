@@ -40,6 +40,8 @@ class ThemeStyle
 	private $noticeWarningColor = '#FBDE2D';
 	private $noticeErrorColor   = '#f54b07';
 
+	private $transitionDuration = '0.2s';
+
 	/**
 	 * ThemeStyle constructor.
 	 */
