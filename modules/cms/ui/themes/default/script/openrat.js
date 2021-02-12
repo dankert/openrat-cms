@@ -2452,10 +2452,10 @@ Openrat.Workbench = new function()
 
         // Fadeout the notice after a while.
         let timeout = 1;
-        if ( status == 'ok'     ) timeout = 20;
-        if ( status == 'info'   ) timeout = 60;
-        if ( status == 'warning') timeout = 120;
-        if ( status == 'error'  ) timeout = 120;
+        if ( status == 'ok'     ) timeout = 3;
+        if ( status == 'info'   ) timeout = 10;
+        if ( status == 'warning') timeout = 15;
+        if ( status == 'error'  ) timeout = 20;
 
         if (timeout > 0)
             setTimeout( function() {
@@ -2702,34 +2702,7 @@ $( function() {
      */
     function registerWorkbenchEvents()
     {
-        // Modalen Dialog erzeugen.
 
-        /*
-        if	( $('#workbench div.panel.modal').length > 0 )
-        {
-            $('#workbench div.panel.modal').parent().addClass('modal');
-            $('div#filler').fadeTo(500,0.5);
-            $('#workbench').addClass('modal');
-        }
-        */
-
-        /**
-         * Schaltet die Vollbildfunktion an oder aus.
-         *
-         * @param element Das Element, auf dem die Vollbildfunktion ausgeführt wurde
-         */
-        function fullscreen( element ) {
-            $(element).closest('div.panel').fadeOut('fast', function()
-            {
-                $(this).toggleClass('fullscreen').fadeIn('fast');
-            } );
-        }
-
-
-        $('div.header').dblclick( function()
-        {
-            fullscreen( this );
-        } );
     }
 
 
@@ -2759,21 +2732,6 @@ $( function() {
             $(document).bind('keydown', keystroke, keyaction );
         } );
 
-
-/*
-        $('section.toggle-open-close .on-click-open-close').click(function () {
-            var section = $(this).closest('section');
-
-            // disabled sections are ignored.
-            if (section.hasClass('disabled'))
-                return;
-
-            // if view is empty, lets load the content.
-            var view = section.find('div.view-loader');
-            if (view.children().length == 0)
-                Openrat.Workbench.loadNewActionIntoElement(view);
-        });
-*/
     }
 
     // Initial Notices

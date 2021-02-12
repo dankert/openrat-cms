@@ -384,10 +384,10 @@ Openrat.Workbench = new function()
 
         // Fadeout the notice after a while.
         let timeout = 1;
-        if ( status == 'ok'     ) timeout = 20;
-        if ( status == 'info'   ) timeout = 60;
-        if ( status == 'warning') timeout = 120;
-        if ( status == 'error'  ) timeout = 120;
+        if ( status == 'ok'     ) timeout = 3;
+        if ( status == 'info'   ) timeout = 10;
+        if ( status == 'warning') timeout = 15;
+        if ( status == 'error'  ) timeout = 20;
 
         if (timeout > 0)
             setTimeout( function() {
