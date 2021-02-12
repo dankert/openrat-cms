@@ -504,6 +504,11 @@
 					  </part>
 				  </part>
 				  -->
+
+			<part class="toolbar-icon,user,menu-category">
+				<image /><!-- empty image as a divider -->
+			</part>
+
 			<part class="toolbar-icon,user,menu-category">
 				<image action="user"/>
 				<text class="menu-label" value="${userfullname}"/>

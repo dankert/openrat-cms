@@ -51,8 +51,8 @@
 								<or:part class="toolbar-icon,search">
 									<or:image method="search"/>
 									<or:input class="title-input" name="text" hint="${message:search}"/>
-									<or:image method="delete" class="act-search-delete" />
-									<or:image class="menu-dropdown-icon" symbol="dropdown"/>
+									<or:image method="delete" class="act-search-delete,act-show-on-search-active" />
+									<or:image class="menu-dropdown-icon,act-show-on-search-active" symbol="dropdown"/>
 								</or:part>
 
 							</or:part>
