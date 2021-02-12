@@ -61,7 +61,7 @@ abstract class ModelBase
 	 */
 	public function isPersistent()
 	{
-		return boolval( $this->getId() );
+		return (bool) $this->getId();
 	}
 
 
