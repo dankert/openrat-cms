@@ -610,6 +610,17 @@
 				<part class="dropdown">
 					<part
 						class="dropdown-entry,act-clickable,filtered">
+						<link type="dialog" title="${message:menu_new_desc}" subaction="add">
+							<image method="add"/>
+							<!--
+										<text value="${message:menu_new}"></text>
+										-->
+							<text class="dropdown-text" value="${message:menu_new}"/>
+							<text class="dropdown-key,link-keystroke" value="${config:ui/keybinding/method/new}"/>
+						</link>
+					</part>
+					<part
+						class="dropdown-entry,act-clickable,filtered">
 						<link type="dialog" title="${message:menu_info_desc}" subaction="info">
 							<image method="info"/>
 							<text class="dropdown-text" value="${message:menu_info}"/>
