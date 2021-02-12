@@ -26,20 +26,18 @@
                 <div class="<?php echo O::escapeHtml('or-toolbar-icon or-act-navigation-close or--visible-on-mobile') ?>"><?php echo O::escapeHtml('') ?>
                   <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-close') ?>"><?php echo O::escapeHtml('') ?></i>
                 </div>
-                <div class="<?php echo O::escapeHtml('or-toolbar-icon or-menu-category or-search') ?>"><?php echo O::escapeHtml('') ?>
+                <div class="<?php echo O::escapeHtml('or-toolbar-icon or-search') ?>"><?php echo O::escapeHtml('') ?>
                   <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-search') ?>"><?php echo O::escapeHtml('') ?></i>
-                  <input name="<?php echo O::escapeHtml('text') ?>" placeholder="<?php echo O::escapeHtml(''.@O::lang('search').'') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$text.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
+                  <input name="<?php echo O::escapeHtml('text') ?>" placeholder="<?php echo O::escapeHtml(''.@O::lang('search').'') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$text.'') ?>" class="<?php echo O::escapeHtml('or-title-input or-input') ?>" /><?php echo O::escapeHtml('') ?>
+                  <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-delete or-act-search-delete') ?>"><?php echo O::escapeHtml('') ?></i>
                   <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--dropdown or-menu-dropdown-icon') ?>"><?php echo O::escapeHtml('') ?></i>
-                  <div class="<?php echo O::escapeHtml('or-dropdown or-dropdown--on-right or-act-global-search-results') ?>"><?php echo O::escapeHtml('') ?>
-                    <span class="<?php echo O::escapeHtml('or-dropdown-entry') ?>"><?php echo O::escapeHtml('') ?></span>
-                  </div>
                 </div>
               </div>
             </div>
           </div>
           <nav class="<?php echo O::escapeHtml('or-workbench-navigation-container or-navigation or-workbench-content') ?>"><?php echo O::escapeHtml('') ?>
             <div class="<?php echo O::escapeHtml('or-view or-act-view-static or-navigation-content') ?>" data-action="<?php echo O::escapeHtml('tree') ?>" data-method="<?php echo O::escapeHtml('show') ?>"><?php echo O::escapeHtml('') ?></div>
-            <div class="<?php echo O::escapeHtml('or-navigation-filler') ?>"><?php echo O::escapeHtml('') ?></div>
+            <div class="<?php echo O::escapeHtml('or-search-result or-act-search-result') ?>"><?php echo O::escapeHtml('') ?></div>
           </nav>
         </div>
         <div class="<?php echo O::escapeHtml('or-workbench-navigation-filler or-act-navigation-close') ?>"><?php echo O::escapeHtml('') ?></div>

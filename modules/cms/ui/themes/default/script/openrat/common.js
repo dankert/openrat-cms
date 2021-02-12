@@ -127,15 +127,19 @@ $( function() {
 
 	let registerGlobalSearch = function() {
 		$('.or-search .or-input').orSearch( {
-			dropdown    : '.or-dropdown.or-act-global-search-results',
-			openDropdown: true, // the dropdown is automatically opened by the menu.
+			dropdown    : '.or-act-search-result',
+			resultEntryClass: 'or-search-result-entry',
+			//openDropdown: true, // the dropdown is automatically opened by the menu.
 			select      : function(obj) {
 				// open the search result
 				Openrat.Workbench.openNewAction( obj.name, obj.action, obj.id );
 			},
 			afterSelect: function() {
-				$('.or-dropdown.or-act-selector-search-results').empty();
+				//$('.or-dropdown.or-act-selector-search-results').empty();
 			}
+		} );
+		$('.or-search .or-act-search-delete').click( function() {
+			$('.or-search .or-title-input').val('').change();
 		} );
 	};
 	registerGlobalSearch();
