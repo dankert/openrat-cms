@@ -1,0 +1,65 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form cancel="false" readonly="true">
+
+		<text value="${fullname}" class="headline" />
+		<!--
+		<if not="true" empty="${image}">
+			<fieldset class="line" label="">
+				<part class="value">
+					<image url="${image}" size="80x80"/>
+				</part>
+			</fieldset>
+		</if>
+		-->
+
+		<fieldset class="line" label="${message:user_username}">
+				<text value="${name}" class="name"/>
+		</fieldset>
+		<group title="${message:ADDITIONAL_INFO}">
+			<fieldset class="line" label="${message:user_fullname}">
+					<text value="${fullname}"/>
+			</fieldset>
+			<if true="${config:security/user/show_admin_mail}">
+				<fieldset class="line" label="${message:user_mail}">
+					<part tag="span">
+						<link url="mailto:${mail}" type="external">
+							<text value="${mail}"/>
+						</link>
+						<qrcode value="mailto:${mail}"/>
+					</part>
+
+				</fieldset>
+			</if>
+			<fieldset class="line" label="${message:description}">
+				<text value="${desc}"/>
+			</fieldset>
+			<fieldset class="line" label="${message:user_tel}">
+				<part tag="span">
+					<text value="${tel}"/>
+					<qrcode value="tel:${tel}"/>
+				</part>>
+			</fieldset>
+			<fieldset class="line" label="${message:timezone}">
+				<text value="${timezone}"/>
+			</fieldset>
+			<fieldset class="line" label="${message:language}">
+				<text value="${language}"/>
+			</fieldset>
+			<fieldset class="line" label="">
+				<part>
+					<link clickable="true" type="dialog" subaction="prop" action="user" id="${userid}" class="btn">
+						<text value="${message:edit}"/>
+					</link>
+				</part>
+			</fieldset>
+
+			<fieldset label="${message:groups}">
+				<list list="${groups}" value="name">
+					<text value="${name}" />
+					<newline />
+				</list>
+			</fieldset>
+		</group>
+	</form>
+</output>
