@@ -1,8 +1,21 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<group>
+	<group title="${message:url}" collapsible="false">
 		<fieldset label="${message:link_url}">
-			<text value="${url}"/>
+			<part tag="span">
+				<link url="${url}" type="external">
+					<text value="${url}"/>
+				</link>
+				<qrcode value="${url}"/>
+			</part>
+
 		</fieldset>
-	</group>
+
+		<fieldset>
+			<part>
+				<link clickable="true" type="dialog" subaction="value" action="url" id="${id}" class="btn">
+					<text value="${message:edit}"/>
+				</link>
+			</part>
+		</fieldset>	</group>
 </output>
