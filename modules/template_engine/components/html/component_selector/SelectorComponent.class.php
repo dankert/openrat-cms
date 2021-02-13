@@ -8,6 +8,11 @@ use template_engine\element\HtmlElement;
 use template_engine\element\Value;
 use template_engine\element\ValueExpression;
 
+/**
+ * A selector for selecting a node object.
+ *
+ * @package template_engine\components\html\component_selector
+ */
 class SelectorComponent extends Component
 {
 
@@ -25,6 +30,8 @@ class SelectorComponent extends Component
 	{
 		return (new HtmlElement('div'))->addStyleClass('selector')->addChild(
 			(new HtmlElement('input'))->addAttribute('type','hidden')->addStyleClass('selector-link-value')->addAttribute('name',$this->param)->addAttribute('value',Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->param))
+		)->addChild(
+			(new HtmlElement('i'))->addStyleClass( ['image-icon','image-icon--menu-tree' ])
 		)->addChild(
 			(new HtmlElement('input'))->addAttribute('type','text')->addStyleClass('selector-link-name')->addAttribute('name',$this->param.'_text')->addAttribute('placeholder',$this->name)->addAttribute('value',$this->name)
 		)->addChild(

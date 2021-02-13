@@ -3,16 +3,8 @@
 	<form>
 		<group>
 			<fieldset class="line" label="${message:link_target}">
-				<image action="${type}" />
-				<text value="${targetobjectname}" />
-
-			</fieldset>
-			<fieldset>
-				<part>
-					<link clickable="true" type="dialog" subaction="value" action="link" id="${id}" class="btn">
-						<text value="${message:edit}"/>
-					</link>
-				</part>
+				<selector id="${targetobjectid}" name="${targetobjectname}" types="page,file" param="targetobjectid"
+						  folderid="parentid"/>
 			</fieldset>
 		</group>
 	</form>

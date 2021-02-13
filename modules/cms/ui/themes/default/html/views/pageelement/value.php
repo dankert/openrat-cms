@@ -128,6 +128,7 @@
                   <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
                     <div class="<?php echo O::escapeHtml('or-selector') ?>"><?php echo O::escapeHtml('') ?>
                       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('linkobjectid') ?>" value="<?php echo O::escapeHtml(''.@$linkobjectid.'') ?>" class="<?php echo O::escapeHtml('or-selector-link-value') ?>" /><?php echo O::escapeHtml('') ?>
+                      <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-tree') ?>"><?php echo O::escapeHtml('') ?></i>
                       <input type="<?php echo O::escapeHtml('text') ?>" name="<?php echo O::escapeHtml('linkobjectid_text') ?>" placeholder="<?php echo O::escapeHtml(''.@$linkname.'') ?>" value="<?php echo O::escapeHtml(''.@$linkname.'') ?>" class="<?php echo O::escapeHtml('or-selector-link-name') ?>" /><?php echo O::escapeHtml('') ?>
                       <div class="<?php echo O::escapeHtml('or-dropdown or-act-selector-search-results') ?>"><?php echo O::escapeHtml('') ?></div>
                       <div type="<?php echo O::escapeHtml('hidden') ?>" data-types="<?php echo O::escapeHtml(''.@$types.'') ?>" data-init-id="<?php echo O::escapeHtml(''.@$linkobjectid.'') ?>" data-init-folderid="<?php echo O::escapeHtml(''.@$rootfolderid.'') ?>" class="<?php echo O::escapeHtml('or-navtree or-act-load-selector-tree') ?>"><?php echo O::escapeHtml('') ?></div>

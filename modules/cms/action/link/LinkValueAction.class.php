@@ -7,9 +7,9 @@ use cms\model\BaseObject;
 use language\Messages;
 
 
-class LinkEditAction extends LinkAction implements Method {
-    public function view() {
+class LinkValueAction extends LinkAction implements Method {
 
+    public function view() {
 		$this->setTemplateVars( $this->link->getProperties() );
 
 		// Typ der Verknuepfung
@@ -27,6 +27,12 @@ class LinkEditAction extends LinkAction implements Method {
 		}
     }
 
+
     public function post() {
+
+        $this->link->linkedObjectId = $this->getRequestVar('targetobjectid');
+        $this->link->save();
+
+        $this->addNoticeFor( $this->link, Messages::SAVED);
     }
 }
