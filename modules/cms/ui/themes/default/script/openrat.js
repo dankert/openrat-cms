@@ -145,7 +145,8 @@ jQuery.fn.orSearch = function( options )
 	
 	return $(this).on('input change', function()
 	{
-		let searchArgument = $(this).val();
+		let searchInput    = $(this)
+		let searchArgument = searchInput.val();
 		let dropdownEl     = $( settings.dropdown );
 
 		if	( searchArgument.length )
@@ -192,6 +193,7 @@ jQuery.fn.orSearch = function( options )
 					$(dropdownEl).find('.or-search-result-entry').click( function(e) {
 						settings.select( $(this).data('object') );
 						settings.afterSelect();
+						searchInput.val('');
 					} );
 
 				} } );
@@ -2996,7 +2998,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 				{
 					'openAction' : function(name,action,id) {
 						viewEl.find('.or-selector-link-value').val(id  );
-						viewEl.find('.or-selector-link-name' ).val(name).attr('placeholder',name);
+						viewEl.find('.or-selector-link-name' ).val('').attr('placeholder',name);
 					}
 				}
 			); // All subnodes are getting event listener for open/close
@@ -3051,6 +3053,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
     {
         $($element).find('.or-selector .or-selector-link-name').orSearch( {
             dropdown: '.or-dropdown.or-act-selector-search-results',
+			resultEntryClass: 'or-search-result-entry',
             select: function(obj) {
                 $($element).find('.or-selector-link-value').val(obj.id  );
                 $($element).find('.or-selector-link-name' ).val(obj.name).attr('placeholder',obj.name);

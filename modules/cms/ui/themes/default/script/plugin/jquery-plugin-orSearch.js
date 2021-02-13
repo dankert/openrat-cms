@@ -17,7 +17,8 @@ jQuery.fn.orSearch = function( options )
 	
 	return $(this).on('input change', function()
 	{
-		let searchArgument = $(this).val();
+		let searchInput    = $(this)
+		let searchArgument = searchInput.val();
 		let dropdownEl     = $( settings.dropdown );
 
 		if	( searchArgument.length )
@@ -64,6 +65,7 @@ jQuery.fn.orSearch = function( options )
 					$(dropdownEl).find('.or-search-result-entry').click( function(e) {
 						settings.select( $(this).data('object') );
 						settings.afterSelect();
+						searchInput.val('');
 					} );
 
 				} } );
