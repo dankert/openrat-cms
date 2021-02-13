@@ -633,9 +633,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 	font-family: 'Material Icons';
 	font-style: normal;
 	font-weight: 400;
-	src: local('Material Icons'), local('MaterialIcons-Regular'), url('../font/MaterialIcons-Regular.woff2') format('woff2'), url('../font/MaterialIcons-Regular.woff') format('woff');
+	src: local('Material Icons'), local('MaterialIcons-Regular'), url('../font/MaterialIcons-Regular.woff2') format('woff2');
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-font.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3BAAEA%3BCACE%3BCACA%3BCACA%3BCACA%2CKAAK%2CMAAM%2CmBAAmB%2CMAAM%2CuBAChC%2CwCAAwC%2COAAO%2CuDAC%5C%2FC%2CwCAAwC%2COAAO%2COAFnD%3B%3B%3B%3B%3BAAMF%3BCACE%2CaAAa%2CiBAAb%3BCACA%3BCACA%3BCACA%2CKAAK%2CMAAM%2CoBAAoB%2CMAAM%2C8BACjC%2CkDAAkD%2COAAO%2CuDACzD%2CiDAAiD%2COAAO%2COAF5D%3B%3B%3B%3BAAKF%3BCACE%2CaAAa%2CgBAAb%3BCACA%3BCACA%3BCACA%2CKAAK%2CMAAM%2CmBACX%2CMAAM%2C8BACF%2CuCAAuC%2COAAO%2CcAC9C%2CsCAAsC%2COAAO%2COAHjD%22%7D */
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-font.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3BAAEA%3BCACE%3BCACA%3BCACA%3BCACA%2CKAAK%2CMAAM%2CmBAAmB%2CMAAM%2CuBAChC%2CwCAAwC%2COAAO%2CuDAC%5C%2FC%2CwCAAwC%2COAAO%2COAFnD%3B%3B%3B%3B%3BAAMF%3BCACE%2CaAAa%2CiBAAb%3BCACA%3BCACA%3BCACA%2CKAAK%2CMAAM%2CoBAAoB%2CMAAM%2C8BACjC%2CkDAAkD%2COAAO%2CuDACzD%2CiDAAiD%2COAAO%2COAF5D%3B%3B%3B%3BAAKF%3BCACE%2CaAAa%2CgBAAb%3BCACA%3BCACA%3BCACA%2CKAAK%2CMAAM%2CmBACX%2CMAAM%2C8BACF%2CuCAAuC%2COAAO%2CQAFlD%22%7D */
 /* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-dialog */
 /*
 OpenRat Content Management System
