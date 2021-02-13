@@ -4,7 +4,7 @@ use cms\action\ElementAction;
 use cms\action\Method;
 
 
-class ElementInfoAction extends ElementAction implements Method {
+class ElementEditAction extends ElementAction implements Method {
     public function view() {
 		$this->setTemplateVar('id'  ,$this->element->elementid );
 		$this->setTemplateVar('name',$this->element->name );

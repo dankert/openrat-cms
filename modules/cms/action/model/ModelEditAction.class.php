@@ -4,7 +4,7 @@ use cms\action\Method;
 use cms\action\ModelAction;
 
 
-class ModelInfoAction extends ModelAction implements Method {
+class ModelEditAction extends ModelAction implements Method {
 
     public function view() {
 		$this->model->load();
