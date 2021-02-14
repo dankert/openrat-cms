@@ -1,16 +1,32 @@
 .or {
   &-search {
 
-    border-bottom: 0.1em solid;
 
-    .or-act-show-on-search-active {
+    &--on-active {
       display: none;
     }
+    &--on-inactive {
+      display: inline;
+    }
 
+    &-input {
+      border-bottom: 0.1em solid;
+      .or-input {
+        border: 0;
+        box-shadow: 0 0 0 !important;
+        border-radius: 0;
+        width: 8em;
+      }
+    }
     &--is-active {
 
-      .or-act-show-on-search-active {
-        display: inline;
+      .or-search {
+        &--on-active {
+          display: inline;
+        }
+        &--on-inactive {
+          display: none;
+        }
       }
 
     }
@@ -18,19 +34,10 @@
 
     &-result {
       display: none;
-      position: absolute;
-      width:100%;
-      height:100%;
-      top: 0;
-      left: 0;
       padding: 1em;
 
       &-entry {
         padding-top:0.2em;
-      }
-
-      &--is-active {
-        display: block;
       }
     }
 

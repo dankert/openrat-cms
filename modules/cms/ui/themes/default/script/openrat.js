@@ -2786,7 +2786,7 @@ $( function() {
 
 
 	let registerGlobalSearch = function() {
-		$('.or-search .or-input').orSearch( {
+		$('.or-search-input .or-input').orSearch( {
 			dropdown    : '.or-act-search-result',
 			resultEntryClass: 'or-search-result-entry',
 			//openDropdown: true, // the dropdown is automatically opened by the menu.

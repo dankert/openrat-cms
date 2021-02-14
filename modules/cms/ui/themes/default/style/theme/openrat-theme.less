@@ -213,10 +213,12 @@ html.or-theme-@{cms-theme-id} {
         }
 
       &-search {
-        border-color: @cms-nav-background-color;
+        &-input {
+          border-color: @cms-nav-background-color;
+        }
 
         &-result {
-          background-color: @cms-nav-background-color;
+          //background-color: @cms-nav-background-color;
         }
       }
 
@@ -243,14 +245,14 @@ html.or-theme-@{cms-theme-id} {
         &-input {
             background-color: @cms-main-title-background-color;
             color: @cms-main-title-text-color;
-            border: 1px solid mix(@cms-main-title-text-color, @cms-main-title-background-color);
+            border-color: mix(@cms-main-title-text-color, @cms-main-title-background-color);
             .box-shadow(0px, 0px, 3px, @cms-main-title-text-color);
-            border-bottom: 1px solid @cms-main-text-color;
+            border-bottom-color: @cms-main-text-color;
 
             &:focus {
             }
 
-            border-color: @cms-main-title-text-color;
+            //border-color: @cms-main-title-text-color;
 
             &--error {
                 border-bottom: 1px dotted @cms-main-text-color ! important;

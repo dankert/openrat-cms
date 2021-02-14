@@ -29,7 +29,7 @@
 			<!-- Navigation -->
 			<div class="or-workbench-navigation">
 
-				<div class="or-workbench-screen or-workbench-navigation-content">
+				<div class="or-workbench-screen or-workbench-navigation-content or-search">
 
 					<or:part class="workbench-title,workbench-search">
 						<or:part class="menu">
@@ -48,11 +48,11 @@
 									<image class="" menu="menu"/>
 								</or:part>-->
 
-								<or:part class="toolbar-icon,search">
+								<or:part class="toolbar-icon,search-input">
 									<or:image method="search"/>
 									<or:input class="title-input" name="text" hint="${message:search}"/>
-									<or:image method="delete" class="act-search-delete,act-show-on-search-active" />
-									<or:image class="menu-dropdown-icon,act-show-on-search-active" symbol="dropdown"/>
+									<or:image method="delete" class="act-search-delete,search--on-active" />
+									<or:image class="menu-dropdown-icon,search--on-active" symbol="dropdown"/>
 								</or:part>
 
 							</or:part>
@@ -62,9 +62,8 @@
 
 
 					<nav class="or-workbench-navigation-container or-navigation or-workbench-content">
-						<div class="or-view or-act-view-static or-navigation-content" data-action="tree" data-method="show" />
-						<!--<div class="or-navigation-filler"></div>-->
-						<div class="or-search-result or-act-search-result"></div>
+						<div class="or-view or-act-view-static or-navigation-content or-search--on-inactive" data-action="tree" data-method="show" />
+						<div class="or-search-result or-search--on-active or-act-search-result"></div>
 					</nav>
 				</div>
 

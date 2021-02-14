@@ -16,7 +16,7 @@
   <body><?php echo O::escapeHtml('') ?>
     <div id="<?php echo O::escapeHtml('workbench') ?>" class="<?php echo O::escapeHtml('or-workbench or--initial-hidden') ?>"><?php echo O::escapeHtml('') ?>
       <div class="<?php echo O::escapeHtml('or-workbench-navigation') ?>"><?php echo O::escapeHtml('') ?>
-        <div class="<?php echo O::escapeHtml('or-workbench-screen or-workbench-navigation-content') ?>"><?php echo O::escapeHtml('') ?>
+        <div class="<?php echo O::escapeHtml('or-workbench-screen or-workbench-navigation-content or-search') ?>"><?php echo O::escapeHtml('') ?>
           <div class="<?php echo O::escapeHtml('or-workbench-title or-workbench-search') ?>"><?php echo O::escapeHtml('') ?>
             <div class="<?php echo O::escapeHtml('or-menu') ?>"><?php echo O::escapeHtml('') ?>
               <div class="<?php echo O::escapeHtml('or-menu-group') ?>"><?php echo O::escapeHtml('') ?>
@@ -26,18 +26,18 @@
                 <div class="<?php echo O::escapeHtml('or-toolbar-icon or-act-navigation-close or--visible-on-mobile') ?>"><?php echo O::escapeHtml('') ?>
                   <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-close') ?>"><?php echo O::escapeHtml('') ?></i>
                 </div>
-                <div class="<?php echo O::escapeHtml('or-toolbar-icon or-search') ?>"><?php echo O::escapeHtml('') ?>
+                <div class="<?php echo O::escapeHtml('or-toolbar-icon or-search-input') ?>"><?php echo O::escapeHtml('') ?>
                   <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-search') ?>"><?php echo O::escapeHtml('') ?></i>
                   <input name="<?php echo O::escapeHtml('text') ?>" placeholder="<?php echo O::escapeHtml(''.@O::lang('search').'') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$text.'') ?>" class="<?php echo O::escapeHtml('or-title-input or-input') ?>" /><?php echo O::escapeHtml('') ?>
-                  <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-delete or-act-search-delete or-act-show-on-search-active') ?>"><?php echo O::escapeHtml('') ?></i>
-                  <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--dropdown or-menu-dropdown-icon or-act-show-on-search-active') ?>"><?php echo O::escapeHtml('') ?></i>
+                  <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-delete or-act-search-delete or-search--on-active') ?>"><?php echo O::escapeHtml('') ?></i>
+                  <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--dropdown or-menu-dropdown-icon or-search--on-active') ?>"><?php echo O::escapeHtml('') ?></i>
                 </div>
               </div>
             </div>
           </div>
           <nav class="<?php echo O::escapeHtml('or-workbench-navigation-container or-navigation or-workbench-content') ?>"><?php echo O::escapeHtml('') ?>
-            <div class="<?php echo O::escapeHtml('or-view or-act-view-static or-navigation-content') ?>" data-action="<?php echo O::escapeHtml('tree') ?>" data-method="<?php echo O::escapeHtml('show') ?>"><?php echo O::escapeHtml('') ?></div>
-            <div class="<?php echo O::escapeHtml('or-search-result or-act-search-result') ?>"><?php echo O::escapeHtml('') ?></div>
+            <div class="<?php echo O::escapeHtml('or-view or-act-view-static or-navigation-content or-search--on-inactive') ?>" data-action="<?php echo O::escapeHtml('tree') ?>" data-method="<?php echo O::escapeHtml('show') ?>"><?php echo O::escapeHtml('') ?></div>
+            <div class="<?php echo O::escapeHtml('or-search-result or-search--on-active or-act-search-result') ?>"><?php echo O::escapeHtml('') ?></div>
           </nav>
         </div>
         <div class="<?php echo O::escapeHtml('or-workbench-navigation-filler or-act-navigation-close') ?>"><?php echo O::escapeHtml('') ?></div>
