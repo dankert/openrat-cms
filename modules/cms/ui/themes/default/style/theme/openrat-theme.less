@@ -347,8 +347,16 @@ html.or-theme-@{cms-theme-id} {
         }
 
 
-        &-collapsible-title {
-            border-color: @cms-main-title-text-color;
+        &-collapsible {
+          &-title {
+            border-color: @cms-main-background-color;
+          }
+          &--is-open {
+            .or-collapsible-title {
+              border-color: mix(@cms-main-text-color, @cms-main-background-color);
+            }
+
+          }
         }
 
         &-btn,
@@ -375,7 +383,14 @@ html.or-theme-@{cms-theme-id} {
             padding-bottom: 5em;
           }
           &-actionbar {
-            //background-color: @cms-dialog-title-background-color;
+            background-color: @cms-dialog-background-color;
+            .box-shadow(0,-2em,2em,@cms-dialog-background-color);
+          }
+        }
+
+        &-fieldset {
+          &-label {
+            color: mix(@cms-main-text-color, @cms-main-background-color);
           }
         }
     }

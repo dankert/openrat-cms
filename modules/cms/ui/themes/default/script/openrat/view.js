@@ -68,6 +68,7 @@ Openrat.View = function( action,method,id,params ) {
 				let form = new Openrat.Form();
 
 				form.close = function() {
+
 					view.close();
 				}
 

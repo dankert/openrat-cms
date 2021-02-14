@@ -6492,3 +6492,6 @@ FOLDER_NOT_WRITABLE:
 GROUP_PARENT:
   de: Übergeordnete Gruppe
   en: Parent group
+UNSAVED_CHANGES_CONFIRM:
+  en: There are unsaved changes. Do you really want to exit?
+  de: Sie haben ungespeicherte Änderungen. Möchten Sie diese Ansicht tatsächlich verlassen?

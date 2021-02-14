@@ -1356,5 +1356,6 @@ Vielen Dank.',
 'NO_RIGHTS'=>'Keine Berechtigung',
 'FOLDER_NOT_WRITABLE'=>'Keine Schreibrechte im Verzeichnis',
 'GROUP_PARENT'=>'Übergeordnete Gruppe',
+'UNSAVED_CHANGES_CONFIRM'=>'Sie haben ungespeicherte Änderungen. Möchten Sie diese Ansicht tatsächlich verlassen?',
 ];}
 }

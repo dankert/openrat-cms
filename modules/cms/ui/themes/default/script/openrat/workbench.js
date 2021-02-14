@@ -512,6 +512,16 @@ Openrat.Workbench = new function()
 
 		view.close = function() {
 
+			let isDirty = $('.or-view--is-dirty').length; // has this view unsaved changes?
+
+			if   ( isDirty ) {
+				// ask the user if we should close this dialog
+				let exit = window.confirm( Openrat.Workbench.language.UNSAVED_CHANGES_CONFIRM );
+
+				if   ( ! exit )
+					return;
+			}
+
 			// Strong modal dialogs are unable to close.
 			// Really?
 			if	( $('.or-dialog').hasClass('or-dialog--modal') )

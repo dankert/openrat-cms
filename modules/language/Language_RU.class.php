@@ -1352,5 +1352,6 @@ if you do not know where this mail comes from, please ignore it.',
 'NO_RIGHTS'=>'No rights',
 'FOLDER_NOT_WRITABLE'=>'Directory not writable',
 'GROUP_PARENT'=>'Parent group',
+'UNSAVED_CHANGES_CONFIRM'=>'There are unsaved changes. Do you really want to exit?',
 ];}
 }
