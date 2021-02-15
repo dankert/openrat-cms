@@ -324,6 +324,9 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 						'openAction' : function(name,action,id) {
 							$selector.find('.or-selector-link-value').val(id  );
 							$selector.find('.or-selector-link-name' ).val('').attr('placeholder',name);
+
+							$selector.removeClass('selector--is-tree-active');
+							$targetElement.empty();
 						}
 					}
 				); // All subnodes are getting event listener for open/close
