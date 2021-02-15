@@ -12,7 +12,7 @@
           <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
             <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('link_target').'') ?></h3>
             <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
-              <div class="<?php echo O::escapeHtml('or-selector') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('or-selector or-droppable-selector') ?>"><?php echo O::escapeHtml('') ?>
                 <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('targetobjectid') ?>" value="<?php echo O::escapeHtml(''.@$targetobjectid.'') ?>" class="<?php echo O::escapeHtml('or-selector-link-value') ?>" /><?php echo O::escapeHtml('') ?>
                 <input type="<?php echo O::escapeHtml('text') ?>" name="<?php echo O::escapeHtml('targetobjectid_text') ?>" placeholder="<?php echo O::escapeHtml(''.@$targetobjectname.'') ?>" value="<?php echo O::escapeHtml(''.@$targetobjectname.'') ?>" class="<?php echo O::escapeHtml('or-selector-link-name or-act-selector-search') ?>" /><?php echo O::escapeHtml('') ?>
                 <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-tree or-act-selector-tree-button') ?>"><?php echo O::escapeHtml('') ?></i>

@@ -2624,7 +2624,7 @@ Openrat.Workbench = new function()
 			{
 				helper: 'clone',
 				opacity: 0.7,
-				zIndex: 2,
+				zIndex: 3,
 				distance: 10,
 				cursor: 'move',
 				revert: 'false'
@@ -2637,10 +2637,32 @@ Openrat.Workbench = new function()
 	this.registerDroppable = function(viewEl) {
 
 
-		$(viewEl).find('.or-droppable').droppable({
+		$(viewEl).find('.or-droppable-selector').droppable({
 			accept: '.or-draggable',
-			hoverClass: 'or-droppable--hover',
-			activeClass: 'or-droppable--active',
+			hoverClass: 'droppable--hover',
+			activeClass: 'droppable--active',
+
+			drop: function (event, ui) {
+
+				let dropped = ui.draggable;
+				console.info('dropped:');
+				console.info(dropped);
+				let id   = $(dropped).find('.or-link').data('id');
+				let name = $(dropped).find('.or-navtree-text').text();
+
+				if   (!name)
+					name = id;
+
+				$(this).find('.or-selector-link-value').val( id );
+				$(this).find('.or-selector-link-name' ).val( name ).attr('placeholder',name );
+			}
+		});
+
+/*
+		$(viewEl).find('.or-droppable-navigation').droppable({
+			accept: '.or-draggable',
+			hoverClass: 'droppable--hover',
+			activeClass: 'droppable--active',
 
 			drop: function (event, ui) {
 
@@ -2651,10 +2673,10 @@ Openrat.Workbench = new function()
 				if   (!name)
 					name = id;
 
-				$(this).find('.or-selector-link-value').val( id );
-				$(this).find('.or-selector-link-name' ).val( name ).attr('placeholder',name );
+				alert('dropped');
 			}
 		});
+*/
 	}
 
 }

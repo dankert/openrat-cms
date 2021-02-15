@@ -1,7 +1,7 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<list list="${branch}" extract="true">
-		<part tag="li" class="navtree-node,navtree-node--is-closed,or-draggable,or-draggable--type-${type}">
+		<part tag="li" class="navtree-node,navtree-node--is-closed,draggable,draggable--type-${type},droppable-navigation">
 			<part class="navtree-tree,navtree-node-control">
 				<if true="${type}">
 					<image class="navtree-tree-icon" symbol="node-closed"/>
