@@ -82,10 +82,10 @@
             <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
               <div class="<?php echo O::escapeHtml('or-selector') ?>"><?php echo O::escapeHtml('') ?>
                 <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('targetobjectid') ?>" value="<?php echo O::escapeHtml(''.@$targetobjectid.'') ?>" class="<?php echo O::escapeHtml('or-selector-link-value') ?>" /><?php echo O::escapeHtml('') ?>
-                <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-tree') ?>"><?php echo O::escapeHtml('') ?></i>
-                <input type="<?php echo O::escapeHtml('text') ?>" name="<?php echo O::escapeHtml('targetobjectid_text') ?>" placeholder="<?php echo O::escapeHtml(''.@$rootfoldername.'') ?>" value="<?php echo O::escapeHtml(''.@$rootfoldername.'') ?>" class="<?php echo O::escapeHtml('or-selector-link-name') ?>" /><?php echo O::escapeHtml('') ?>
+                <input type="<?php echo O::escapeHtml('text') ?>" name="<?php echo O::escapeHtml('targetobjectid_text') ?>" placeholder="<?php echo O::escapeHtml(''.@$rootfoldername.'') ?>" value="<?php echo O::escapeHtml(''.@$rootfoldername.'') ?>" class="<?php echo O::escapeHtml('or-selector-link-name or-act-selector-search') ?>" /><?php echo O::escapeHtml('') ?>
+                <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-tree or-act-selector-tree-button') ?>"><?php echo O::escapeHtml('') ?></i>
                 <div class="<?php echo O::escapeHtml('or-dropdown or-act-selector-search-results') ?>"><?php echo O::escapeHtml('') ?></div>
-                <div type="<?php echo O::escapeHtml('hidden') ?>" data-types="<?php echo O::escapeHtml('folder') ?>" data-init-id="<?php echo O::escapeHtml(''.@$rootfolderid.'') ?>" data-init-folderid="<?php echo O::escapeHtml(''.@$rootfolderid.'') ?>" class="<?php echo O::escapeHtml('or-navtree or-act-load-selector-tree') ?>"><?php echo O::escapeHtml('') ?></div>
+                <div type="<?php echo O::escapeHtml('hidden') ?>" data-types="<?php echo O::escapeHtml('folder') ?>" data-init-id="<?php echo O::escapeHtml(''.@$rootfolderid.'') ?>" data-init-folderid="<?php echo O::escapeHtml(''.@$rootfolderid.'') ?>" class="<?php echo O::escapeHtml('or-navtree or-selector-tree or-act-load-selector-tree') ?>"><?php echo O::escapeHtml('') ?></div>
               </div>
             </div>
           </section>

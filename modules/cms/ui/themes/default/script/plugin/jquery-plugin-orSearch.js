@@ -8,6 +8,8 @@ jQuery.fn.orSearch = function( options )
       'dropdown': $(), // empty element
       'select'  : function( obj ) {},
       'afterSelect' : function() {},
+      'onSearchActive' : function() {},
+      'onSearchInactive' : function() {},
 	  'openDropdown' : true,
 	  'action': 'search',
 	  'method': 'quicksearch',
@@ -23,6 +25,7 @@ jQuery.fn.orSearch = function( options )
 
 		if	( searchArgument.length )
 		{
+			settings.onSearchActive();
 			$('.or-search').addClass('search--is-active');
 			dropdownEl.addClass('search-result--is-active');
 
@@ -74,10 +77,11 @@ jQuery.fn.orSearch = function( options )
 		}
 		else
 		{
+			settings.onSearchInactive();
+
 			// No search argument.
 			$(dropdownEl).empty(); // Leeren.
 
-			$('.or-search').removeClass('search--is-active');
 			dropdownEl.removeClass('search-result--is-active');
 		}
 	});

@@ -1077,6 +1077,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 	}
 }
 /*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-breadcrumb.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAyBI%2CGAAC%3BCACC%3BCACA%3B%3BAAFF%2CGAAC%2CWAIG%3BCACE%3BCACA%3BCACA%3B%3BAAOJ%3BCAAA%2CGAdD%2CWAUE%3BEAEG%3B%3B%3BAAIJ%2CGAhBD%2CWAgBE%3BCAEC%3B%3BAAKF%3BCAAA%2CGAvBD%2CWAgBE%3BEAKG%3B%3B%3BAAUJ%2CGA%5C%2FBD%2CWA%2BBE%3B%3B%3B%3B%3B%3B%3B%3BAAUD%2CGAzCD%2CWAyCE%3BCAEC%3BCACA%3BCAIA%3BCACA%3BCACA%3BCACA%3B%3BAAHA%3BCAAA%2CGAhDH%2CWAyCE%3BEAKG%22%7D */
+/* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-selector */
+.or-selector-tree {
+	display: none;
+}
+.or-selector-search {
+	display: none;
+}
+.or-selector--is-tree-active .or-selector-tree {
+	display: block;
+}
+.or-selector--is-search-active .or-selector-search {
+	display: block;
+}
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-selector.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AAGI%2CGAFD%2CSAEE%3BCACC%3B%3BAAEF%2CGALD%2CSAKE%3BCACC%3B%3BAAOE%2CGAbL%2CSAUE%2CgBAEC%2CaACG%3BCACC%3B%3BAAOF%2CGArBL%2CSAmBE%2CkBACC%2CaACG%3BCACC%22%7D */
 /* Include style: /mnt/data/dankert/Entwicklung/Projekte/openrat-cms/modules/cms/ui/themes/default/style/openrat-diff */
 .or-diff-line {
 	text-align: right;

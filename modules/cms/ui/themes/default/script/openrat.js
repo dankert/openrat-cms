@@ -136,6 +136,8 @@ jQuery.fn.orSearch = function( options )
       'dropdown': $(), // empty element
       'select'  : function( obj ) {},
       'afterSelect' : function() {},
+      'onSearchActive' : function() {},
+      'onSearchInactive' : function() {},
 	  'openDropdown' : true,
 	  'action': 'search',
 	  'method': 'quicksearch',
@@ -151,6 +153,7 @@ jQuery.fn.orSearch = function( options )
 
 		if	( searchArgument.length )
 		{
+			settings.onSearchActive();
 			$('.or-search').addClass('search--is-active');
 			dropdownEl.addClass('search-result--is-active');
 
@@ -202,10 +205,11 @@ jQuery.fn.orSearch = function( options )
 		}
 		else
 		{
+			settings.onSearchInactive();
+
 			// No search argument.
 			$(dropdownEl).empty(); // Leeren.
 
-			$('.or-search').removeClass('search--is-active');
 			dropdownEl.removeClass('search-result--is-active');
 		}
 	});
@@ -2787,6 +2791,12 @@ $( function() {
 
 	let registerGlobalSearch = function() {
 		$('.or-search-input .or-input').orSearch( {
+			onSearchActive: function() {
+				$('.or-search').addClass('search--is-active');
+			},
+			onSearchInactive: function() {
+				$('.or-search').removeClass('search--is-active');
+			},
 			dropdown    : '.or-act-search-result',
 			resultEntryClass: 'or-search-result-entry',
 			//openDropdown: true, // the dropdown is automatically opened by the menu.
@@ -2981,45 +2991,56 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 
 	// Selectors (Einzel-Ausahl für Dateien) initialisieren
 	// Wurzel des Baums laden
-	$(viewEl).find('.or-act-load-selector-tree').each( function() {
-		var selectorEl = this;
-		/*
-		$(this).orTree( { type:'project',selectable:$(selectorEl).attr('data-types').split(','),id:$(selectorEl).attr('data-init-folderid'),onSelect:function(name,type,id) {
-		
-			var selector = $(selectorEl).parent();
-			
-			//console.log( 'Selected: '+name+" #"+id );
-			$(selector).find('input[type=text]'  ).attr( 'value',name );
-			$(selector).find('input[type=hidden]').attr( 'value',id   );
-		} });
-		*/
+	$(viewEl).find('.or-act-selector-tree-button').click( function() {
 
-		let id   = $(this).data('init-folder-id');
-		let type = id?'folder':'projects';
-		let loadBranchUrl = './?action=tree&subaction=branch&id='+id+'&type='+type;
-		let $targetElement = $(this);
+		let $selector = $(this).parent('.or-selector');
+		let $targetElement = $selector.find('.or-act-load-selector-tree');
 
-		$.get(loadBranchUrl).done( function (html) {
+		if   ( $selector.hasClass('selector--is-tree-active') ) {
+			$selector.removeClass('selector--is-tree-active');
+			$targetElement.empty();
+		}
+		else {
+			$selector.addClass('selector--is-tree-active');
 
-			// Den neuen Unter-Zweig erzeugen.
-			let $ul = $('<ul class="or-navtree-list" />');
-			$ul.appendTo( $targetElement.empty() ).append( html );
+			var selectorEl = this;
+			/*
+			$(this).orTree( { type:'project',selectable:$(selectorEl).attr('data-types').split(','),id:$(selectorEl).attr('data-init-folderid'),onSelect:function(name,type,id) {
 
-			$ul.find('li').orTree(
-				{
-					'openAction' : function(name,action,id) {
-						viewEl.find('.or-selector-link-value').val(id  );
-						viewEl.find('.or-selector-link-name' ).val('').attr('placeholder',name);
+				var selector = $(selectorEl).parent();
+
+				//console.log( 'Selected: '+name+" #"+id );
+				$(selector).find('input[type=text]'  ).attr( 'value',name );
+				$(selector).find('input[type=hidden]').attr( 'value',id   );
+			} });
+			*/
+
+			let id   = $(this).data('init-folder-id');
+			let type = id?'folder':'projects';
+			let loadBranchUrl = './?action=tree&subaction=branch&id='+id+'&type='+type;
+
+			$.get(loadBranchUrl).done( function (html) {
+
+				// Den neuen Unter-Zweig erzeugen.
+				let $ul = $('<ul class="or-navtree-list" />');
+				$ul.appendTo( $targetElement ).append( html );
+
+				$ul.find('li').orTree(
+					{
+						'openAction' : function(name,action,id) {
+							$selector.find('.or-selector-link-value').val(id  );
+							$selector.find('.or-selector-link-name' ).val('').attr('placeholder',name);
+						}
 					}
-				}
-			); // All subnodes are getting event listener for open/close
+				); // All subnodes are getting event listener for open/close
 
-			// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
-			$ul.find('.or-act-clickable').orLinkify();
+				// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
+				$ul.find('.or-act-clickable').orLinkify();
 
-			// Open the first node.
-			$ul.find('.or-navtree-node-control').first().click();
-		} );
+				// Open the first node.
+				$ul.find('.or-navtree-node-control').first().click();
+			} );
+		}
 
 	} );
 
@@ -3062,18 +3083,26 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 
     function registerSelectorSearch( $element )
     {
-        $($element).find('.or-selector .or-selector-link-name').orSearch( {
-            dropdown: '.or-dropdown.or-act-selector-search-results',
-			resultEntryClass: 'or-search-result-entry',
-            select: function(obj) {
-                $($element).find('.or-selector-link-value').val(obj.id  );
-                $($element).find('.or-selector-link-name' ).val(obj.name).attr('placeholder',obj.name);
-            },
-			afterSelect: function() {
-				$('.or-dropdown.or-act-selector-search-results').empty();
-			}
-        } );
+        $($element).find('.or-act-selector-search').orSearch( {
+			    onSearchActive: function() {
+			    	$(this).parent('or-selector').addClass('selector-search--is-active');
+				},
+				onSearchInactive: function() {
+					$(this).parent('or-selector').removeClass('selector-search--is-active' );
+				},
 
+				dropdown: '.or-act-selector-search-results',
+				resultEntryClass: 'or-search-result-entry',
+
+				select: function(obj) {
+					$($element).find('.or-selector-link-value').val(obj.id  );
+					$($element).find('.or-selector-link-name' ).val(obj.name).attr('placeholder',obj.name);
+				},
+
+				afterSelect: function() {
+					$('.or-dropdown.or-act-selector-search-results').empty();
+				}
+        } );
     }
 
 

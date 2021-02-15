@@ -1,0 +1,30 @@
+.or {
+  &-selector {
+
+    &-tree {
+      display: none;
+    }
+    &-search {
+      display: none;
+    }
+
+
+    &--is-tree-active {
+
+      .or-selector {
+        &-tree {
+          display: block;
+        }
+      }
+    }
+
+    &--is-search-active {
+      .or-selector {
+        &-search {
+          display: block;
+        }
+      }
+    }
+  }
+
+}
