@@ -1353,5 +1353,6 @@ Merci.',
 'FOLDER_NOT_WRITABLE'=>'Directory not writable',
 'GROUP_PARENT'=>'Parent group',
 'UNSAVED_CHANGES_CONFIRM'=>'There are unsaved changes. Do you really want to exit?',
+'PROGRESS'=>'Work in progress',
 ];}
 }

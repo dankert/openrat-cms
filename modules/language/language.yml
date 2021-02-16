@@ -6495,3 +6495,6 @@ GROUP_PARENT:
 UNSAVED_CHANGES_CONFIRM:
   en: There are unsaved changes. Do you really want to exit?
   de: Sie haben ungespeicherte Änderungen. Möchten Sie diese Ansicht tatsächlich verlassen?
+PROGRESS:
+  en: Work in progress
+  de: Vorgang wird ausgeführt

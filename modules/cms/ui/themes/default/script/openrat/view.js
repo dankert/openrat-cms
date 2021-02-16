@@ -22,6 +22,7 @@ Openrat.View = function( action,method,id,params ) {
 	 * @returns {Promise}
 	 */
 	this.start = function( element ) {
+
         this.before();
         this.element = element;
         return this.loadView();
@@ -32,6 +33,7 @@ Openrat.View = function( action,method,id,params ) {
     }
 
     this.close = function() {
+
     }
 
 
@@ -91,7 +93,10 @@ Openrat.View = function( action,method,id,params ) {
 
 			console.error( {view:view, url:url, status:status, cause: cause} );
 
-			Openrat.Workbench.notify('', 0, '', 'error', 'Server Error');
+			let notice = new Openrat.Notice();
+			notice.setStatus('error');
+			notice.msg = Openrat.Workbench.language.ERROR;
+			notice.show();
 		});
 
 		// Load the data for this view.

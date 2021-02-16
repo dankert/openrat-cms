@@ -82,8 +82,9 @@ jQuery.fn.orTree = function (options)
 
                 }).fail(function ( jqXHR, textStatus, errorThrown ) {
                     // Ups... aber was können wir hier schon tun, außer hässliche Meldungen anzeigen.
-					console.error( {url:loadBranchUrl,jqXHR:jqXHR,status:textStatus,error:errorThrown});
-                    Openrat.Workbench.notify('', 0, '', 'ERROR', 'Failed to load subtree', [], false);
+					console.error( {message:'Failed to load subtree',url:loadBranchUrl,jqXHR:jqXHR,status:textStatus,error:errorThrown});
+					let notice = new Openrat.Notice();
+					notice.setStatus( 'error' );
                 }).always(function () {
 
                     // Die Loader-Animation entfernen.

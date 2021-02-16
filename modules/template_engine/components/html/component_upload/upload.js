@@ -55,21 +55,23 @@ Openrat.Workbench.handleFileUpload = function(form,files)
 	    form_data.append('token'    ,$(form).find('input[name=token]').val() );
 	    form_data.append('id'       ,$(form).find('input[name=id]'   ).val() );
 	    
-		var status = $('<div class="notice info"><div class="text loader"></div></div>');
-		$('#noticebar').prepend(status); // Notice anhängen.
-		$(status).show();
+		let notice = new Openrat.Notice();
+		notice.setContext('folder',0,'' );
+		notice.inProgress();
+		notice.show();
 
 		$.ajax( { 'type':'POST',url:'./api/', cache:false,contentType: false, processData: false, data:form_data, success:function(data, textStatus, jqXHR)
 			{
-				$(status).remove();
+				notice.close();
 				let oform = new Openrat.Form();
 				oform.doResponse(data,textStatus,form);
 			},
 			error:function(jqXHR, textStatus, errorThrown) {
 				$(form).closest('div.content').removeClass('loader');
-				$(status).remove();
+				notice.close();
 				
 				let msg;
+				console.error(jqXHR);
 				try
 				{
 					let error = jQuery.parseJSON( jqXHR.responseText );
@@ -79,8 +81,11 @@ Openrat.Workbench.handleFileUpload = function(form,files)
 				{
 					msg = jqXHR.responseText;
 				}
-				
-				Openrat.Workbench.notify('Upload error', 0, msg);
+
+				let notice = new Openrat.Notice();
+				notice.setStatus('error');
+				notice.msg = 'Upload error: ' + msg;
+				notice.show();
 			}
 			
 		} );

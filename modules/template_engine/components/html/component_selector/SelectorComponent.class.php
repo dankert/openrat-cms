@@ -30,7 +30,7 @@ class SelectorComponent extends Component
 		return (new HtmlElement('div'))->addStyleClass(['selector','droppable-selector'])->addChild(
 			(new HtmlElement('input'))->addAttribute('type','hidden')->addStyleClass('selector-link-value')->addAttribute('name',$this->param)->addAttribute('value',Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->param))
 		)->addChild(
-			(new HtmlElement('input'))->addAttribute('type','text')->addStyleClass(['selector-link-name','act-selector-search'])->addAttribute('name',$this->param.'_text')->addAttribute('placeholder',$this->name)->addAttribute('value',$this->name)
+			(new HtmlElement('input'))->addAttribute('type','text')->addStyleClass(['input','selector-link-name','act-selector-search'])->addAttribute('name',$this->param.'_text')->addAttribute('placeholder',$this->name)->addAttribute('value',$this->name)
 		)->addChild(
 			(new HtmlElement('i'))->addStyleClass( ['image-icon','image-icon--menu-tree','act-selector-tree-button' ])
 		)->addChild(

@@ -47,7 +47,12 @@ $( function() {
 
     // Initial Notices
     $('.or-act-initial-notice').each( function() {
-       Openrat.Workbench.notify('', 0, '', 'info', $(this).text());
+
+       let notice = new Openrat.Notice();
+       notice.setStatus('info');
+       notice.msg = $(this).text();
+       notice.show();
+
        $(this).remove();
     });
 

@@ -300,103 +300,6 @@ Openrat.Workbench = new function()
 
 
 
-
-    /**
-     * Show a notification in the browser.
-     * Source: https://developer.mozilla.org/en-US/docs/Web/API/notification
-     * @param text text of message
-     */
-    let notifyBrowser = function(text)
-    {
-        // Let's check if the browser supports notifications
-        if (!("Notification" in window)) {
-            return;
-        }
-
-        // Let's check if the user is okay to get some notification
-        else if (Notification.permission === "granted") {
-            // If it's okay let's create a notification
-            let notification = new Notification(text);
-        }
-
-        // Otherwise, we need to ask the user for permission
-        else if (Notification.permission !== 'denied') {
-            Notification.requestPermission(function (permission) {
-                // If the user is okay, let's create a notification
-                if (permission === "granted") {
-                    let notification = new Notification(text);
-                }
-            });
-        }
-
-        // At last, if the user already denied any notification, and you
-        // want to be respectful there is no need to bother them any more.
-    }
-
-
-
-    /**
-	 * Show a notice bubble in the UI.
-	 * @param type
-	 * @param id
-	 * @param name
-	 * @param status
-	 * @param msg
-	 * @param log
-	 * @param notifyTheBrowser
-	 */
-    this.notify = function (type, id, name, status, msg, log = null, notifyTheBrowser = false)
-    {
-        // Notice-Bar mit dieser Meldung erweitern.
-
-        if   ( notifyTheBrowser )
-            notifyBrowser( msg );  // Notify browser if wanted.
-
-        let notice = $('<div class="or-notice or-notice--'+status+'"></div>');
-
-        let toolbar = $('<div class="or-notice-toolbar"></div>');
-        if   ( log )
-            $(toolbar).append('<i class="or-act-notice-full or-image-icon or-image-icon--menu-fullscreen"></i>');
-        $(toolbar).append('<i class="or-image-icon or-image-icon--menu-close or-act-notice-close"></i>');
-        $(notice).append(toolbar);
-
-        if	(name)
-            $(notice).append('<div class="or-notice-name"><a class="or-act-clickable" href="'+Openrat.Navigator.createShortUrl(type,id)+'" data-type="open" data-action="'+type+'" data-id="'+id+'"><i class="or-notice-action-full or-image-icon or-image-icon--action-'+type+'"></i> '+name+'</a></div>');
-
-        $(notice).append( '<div class="or-notice-text">'+htmlEntities(msg)+'</div>');
-
-        if (log)
-            $(notice).append('<div class="or-notice-log"><pre>'+htmlEntities(log)+'</pre></div>');
-
-        $('#noticebar').prepend(notice); // Notice anhängen.
-        $(notice).orLinkify(); // Enable links
-
-
-        // Toogle Fullscreen for notice
-        $(notice).find('.or-act-notice-full').click( function() {
-            $(notice).toggleClass('notice--is-full');
-        });
-
-        // Close the notice on click
-        $(notice).find('.or-act-notice-close').click( function() {
-            $(notice).fadeOut('fast',function() { $(notice).remove(); } );
-        });
-
-        // Fadeout the notice after a while.
-        let timeout = 1;
-        if ( status == 'ok'     ) timeout = 3;
-        if ( status == 'info'   ) timeout = 10;
-        if ( status == 'warning') timeout = 15;
-        if ( status == 'error'  ) timeout = 20;
-
-        if (timeout > 0)
-            setTimeout( function() {
-                $(notice).fadeOut('slow', function() { $(this).remove(); } );
-            },timeout*1000 );
-    }
-
-
-
 	this.dataChangedHandler = $.Callbacks();
 
 	this.dataChangedHandler.add( function() {
@@ -420,15 +323,6 @@ Openrat.Workbench = new function()
 	}
 
 
-	/**
-	 * Escape HTML entities.
-	 *
-	 * @param str
-	 * @returns {string}
-	 */
-	var htmlEntities = function( str ) {
-		return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-	}
 
 
 	/**
@@ -484,6 +378,9 @@ Openrat.Workbench = new function()
 		let view = new Openrat.View( action,method,id,params );
 
 		view.before = function() {
+
+			Openrat.Notice.removeAllNotices();
+
 			$('.or-dialog-content .or-view').html('<div class="header"><img class="or-icon" title="" src="./themes/default/images/icon/'+method+'.png" />'+name+'</div>');
 			$('.or-dialog-content .or-view').data('id',id);
 			$('.or-dialog').removeClass('dialog--is-closed').addClass('dialog--is-open');

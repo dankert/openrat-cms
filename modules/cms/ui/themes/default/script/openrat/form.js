@@ -72,6 +72,8 @@ Openrat.Form = function() {
 
     this.cancel = function() {
         //$(this.element).html('').parent().removeClass('is-open');
+		Openrat.Notice.removeAllNotices();
+
         this.close();
     }
 
@@ -88,17 +90,20 @@ Openrat.Form = function() {
 
     this.submit = function( mode ) {
 
-    	if   ( mode === undefined )
+		if   ( mode === undefined )
 			if   ( $(this.element).data('async') )
 				mode = modes.closeAfterSubmit;
 			else
 				mode = modes.closeAfterSuccess;
 
+		Openrat.Notice.removeAllNotices();
 
 		// Show progress
-        let status = $('<div class="or-notice or-notice--info"><div class="or-text or-loader"></div></div>');
-        $('.or-notices').prepend(status); // Notice anhängen.
-        $(status).show();
+        let status = new Openrat.Notice();
+        status.setStatus('info');
+        status.inProgress();
+        status.msg = Openrat.Workbench.language.PROGRESS;
+        status.show();
 
         // Alle vorhandenen Error-Marker entfernen.
         // Falls wieder ein Fehler auftritt, werden diese erneut gesetzt.
@@ -146,7 +151,7 @@ Openrat.Form = function() {
             $.ajax( { 'type':'POST',url:url, data:data, success:function(responseData, textStatus, jqXHR)
                 {
                     form.setLoadStatus(false);
-                    $(status).remove();
+                    status.close();
 
                     form.doResponse(responseData,textStatus,form.element, function() {
 
@@ -193,24 +198,30 @@ Openrat.Form = function() {
                 },
                 error:function(jqXHR, textStatus, errorThrown) {
 
-					console.warn( { form:form, status: textStatus, error: errorThrown } );
+					console.warn( {
+						message:'could not post form',
+						jqXHR:jqXHR,
+						form:form,
+						status: textStatus,
+						error: errorThrown
+					} );
 
 					form.setLoadStatus(false);
-                    $(status).remove();
+                    status.close();
 
-                    try
-                    {
-                        let error = jQuery.parseJSON( jqXHR.responseText );
-                        Openrat.Workbench.notify('', 0, '', 'error', error.error, [error.description]);
+                    let msg = '';
+                    try {
+                        msg = jQuery.parseJSON( jqXHR.responseText ).error;
                     }
-                    catch( e )
-                    {
-                        let msg = jqXHR.responseText;
-                        Openrat.Workbench.notify('', 0, '', 'error', 'Server Error', [msg]);
+                    catch( e ) {
+                        msg = jqXHR.responseText;
                     }
 
-
-                }
+					let notice = new Openrat.Notice();
+                    notice.setStatus('error');
+                    notice.msg = msg;
+                    notice.show();
+				}
 
             } );
             $(form.element).fadeIn();
@@ -231,8 +242,14 @@ Openrat.Form = function() {
     {
         if	( status != 'success' )
         {
-            alert('Server error: ' + status);
-            return;
+            console.error('Server error: ' + status);
+
+			let notice = new Openrat.Notice();
+			notice.setStatus( 'error' );
+			notice.msg = Openrat.Workbench.language.ERROR;
+			notice.show();
+
+			return;
         }
 
         let form = this;
@@ -244,7 +261,16 @@ Openrat.Form = function() {
             // gewechselt hat.
             let notifyBrowser = $(element).data('async');
 
-            Openrat.Workbench.notify(value.type, value.id, value.name, value.status, value.text, value.log, notifyBrowser); // Notice anhängen.
+            let notice = new Openrat.Notice();
+            notice.setContext( value.type, value.id, value.name );
+            notice.log = value.log;
+            notice.setStatus( value.status );
+			notice.msg = value.text;
+			notice.show();
+
+			if	( notifyBrowser )
+            	notice.notifyBrowser()
+
 
             if	( value.status == 'ok' ) // Kein Fehler?
             {
