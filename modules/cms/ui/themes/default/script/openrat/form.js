@@ -153,7 +153,7 @@ Openrat.Form = function() {
             data.output = 'json';
 
             if	( mode == modes.closeAfterSubmit )
-                this.onCloseHandler();
+                this.onCloseHandler.fire();
                 // Async: Window is closed, but the action will be startet now.
 
             let form = this;
@@ -179,7 +179,7 @@ Openrat.Form = function() {
 						// Now we can close the form.
 						if	( mode == modes.closeAfterSuccess )
 						{
-							form.onCloseHandler();
+							form.onCloseHandler.fire();
 
 							// clear the dirty flag.
 							$(form.element).closest('div.panel').find('div.header ul.views li.action.active').removeClass('dirty');
