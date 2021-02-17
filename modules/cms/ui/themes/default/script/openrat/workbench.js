@@ -56,7 +56,8 @@ Openrat.Workbench = new function()
     this.openModalDialog = function () {
 
         if   ( $('#dialog').data('action') ) {
-            this.startDialog('',$('#dialog').data('action'),$('#dialog').data('action'),0,{})
+        	let dialog = new Openrat.Dialog();
+        	dialog.start('',$('#dialog').data('action'),$('#dialog').data('action'),0,{} )
         }
     }
 
@@ -357,83 +358,7 @@ Openrat.Workbench = new function()
 
 
 
-	/**
-	 * Creating a new modal dialog.
-	 *
-	 * @param name
-	 * @param action Action
-	 * @param method
-	 * @param id Id
-	 * @param params
-	 */
-	this.startDialog = function( name,action,method,id,params )
-	{
-		// Attribute aus dem aktuellen Editor holen, falls die Daten beim Aufrufer nicht angegeben sind.
-		if (!action)
-			action =  Openrat.Workbench.state.action;
 
-		if  (!id)
-			id =  Openrat.Workbench.state.id;
-
-		let view = new Openrat.View( action,method,id,params );
-
-		view.before = function() {
-
-			Openrat.Notice.removeAllNotices();
-
-			$('.or-dialog-content .or-view').html('<div class="header"><img class="or-icon" title="" src="./themes/default/images/icon/'+method+'.png" />'+name+'</div>');
-			$('.or-dialog-content .or-view').data('id',id);
-			$('.or-dialog').removeClass('dialog--is-closed').addClass('dialog--is-open');
-			$('.or-dialog-content .or-act-dialog-name').html( name );
-
-			let view = this;
-
-			this.escapeKeyClosingHandler = function (e) {
-				if (e.keyCode == 27) { // ESC keycode
-					view.close();
-
-					$(document).off('keyup'); // de-register.
-				}
-			};
-
-			$(document).keyup(this.escapeKeyClosingHandler);
-
-			// Nicht-Modale Dialoge durch Klick auf freie Fläche schließen.
-			$('.or-dialog-filler,.or-act-dialog-close').click( function(e)
-			{
-				e.preventDefault();
-				view.close();
-			});
-
-		}
-
-		view.close = function() {
-
-			let isDirty = $('.or-view--is-dirty').length; // has this view unsaved changes?
-
-			if   ( isDirty ) {
-				// ask the user if we should close this dialog
-				let exit = window.confirm( Openrat.Workbench.language.UNSAVED_CHANGES_CONFIRM );
-
-				if   ( ! exit )
-					return;
-			}
-
-			// Strong modal dialogs are unable to close.
-			// Really?
-			if	( $('.or-dialog').hasClass('or-dialog--modal') )
-				return;
-
-			// Remove dirty-flag from view
-			$('.or-dialog-content .or-view.or-view--is-dirty').removeClass('view--is-dirty');
-			$('.or-dialog-content .or-view').html('');
-			$('.or-dialog').removeClass('dialog--is-open').addClass('dialog--is-closed'); // Dialog schließen
-
-			$(document).unbind('keyup',this.escapeKeyClosingHandler); // Cleanup ESC-Key-Listener
-		}
-
-		return view.start( $('.or-dialog-content .or-view') );
-	}
 
 
 

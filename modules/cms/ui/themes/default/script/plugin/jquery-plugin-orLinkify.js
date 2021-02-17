@@ -68,7 +68,8 @@ jQuery.fn.orLinkify = function( options )
 
 			case 'edit':
 			case 'dialog':
-				Openrat.Workbench.startDialog($link.attr('data-name'),$link.attr('data-action'),$link.attr('data-method'),$link.attr('data-id'),$link.attr('data-extra') );
+				let dialog = new Openrat.Dialog();
+				dialog.start($link.attr('data-name'),$link.attr('data-action'),$link.attr('data-method'),$link.attr('data-id'),$link.attr('data-extra') );
 				break;
 
 			case 'external':

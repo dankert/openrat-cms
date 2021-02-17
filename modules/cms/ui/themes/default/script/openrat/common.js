@@ -350,11 +350,6 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 	registerDragAndDrop(viewEl);
 	
 	
-	// Bei Änderungen in der View das Tab als 'dirty' markieren
-	$(viewEl).find('.or-input').change( function() {
-		$(this).closest('.or-view').addClass('view--is-dirty');
-	});
-
 	// Theme-Auswahl mit Preview
     $(viewEl).find('.or-theme-chooser').change( function() {
         Openrat.Workbench.setUserStyle( this.value );

@@ -13,6 +13,12 @@ Openrat.Form = function() {
 		closeAfterSuccess  : 8,
 	};
 
+	/**
+	 * Fires on input.
+	 */
+	this.onChangeHandler = $.Callbacks();
+	this.onSaveHandler   = $.Callbacks();
+
     this.setLoadStatus = function( isLoading ) {
         $(this.element).closest('div.content').toggleClass('loader',isLoading);
     }
@@ -57,7 +63,13 @@ Openrat.Form = function() {
 			form.submit();
         });
 
-        // Submithandler for the whole form.
+		// Bei Änderungen in der View das Tab als 'dirty' markieren
+		$(element).find('.or-input').change( function() {
+			form.onChangeHandler.fire();
+		});
+
+
+		// Submithandler for the whole form.
         $(element).submit( function( event ) {
 
             //
@@ -74,7 +86,7 @@ Openrat.Form = function() {
         //$(this.element).html('').parent().removeClass('is-open');
 		Openrat.Notice.removeAllNotices();
 
-        this.close();
+        this.onCloseHandler.fire();
     }
 
 
@@ -82,8 +94,7 @@ Openrat.Form = function() {
         this.element.trigger('reset');
     }
 
-    this.close = function() {
-    }
+    this.onCloseHandler = $.Callbacks();
 
     this.forwardTo = function (action, subaction, id, data) {
     }
@@ -142,7 +153,7 @@ Openrat.Form = function() {
             data.output = 'json';
 
             if	( mode == modes.closeAfterSubmit )
-                this.close();
+                this.onCloseHandler();
                 // Async: Window is closed, but the action will be startet now.
 
             let form = this;
@@ -155,8 +166,7 @@ Openrat.Form = function() {
 
                     form.doResponse(responseData,textStatus,form.element, function() {
 
-						// Remove dirty-flag from view
-						$(form.element).closest('.or-view.or-view--is-dirty').removeClass('view--is-dirty');
+                    	form.onSaveHandler.fire();
 
 						let afterSuccess = $(form.element).data('afterSuccess');
 						let forwardTo    = $(form.element).data('forwardTo'   );
@@ -169,7 +179,7 @@ Openrat.Form = function() {
 						// Now we can close the form.
 						if	( mode == modes.closeAfterSuccess )
 						{
-							form.close();
+							form.onCloseHandler();
 
 							// clear the dirty flag.
 							$(form.element).closest('div.panel').find('div.header ul.views li.action.active').removeClass('dirty');

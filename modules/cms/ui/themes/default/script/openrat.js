@@ -285,7 +285,8 @@ jQuery.fn.orLinkify = function( options )
 
 			case 'edit':
 			case 'dialog':
-				Openrat.Workbench.startDialog($link.attr('data-name'),$link.attr('data-action'),$link.attr('data-method'),$link.attr('data-id'),$link.attr('data-extra') );
+				let dialog = new Openrat.Dialog();
+				dialog.start($link.attr('data-name'),$link.attr('data-action'),$link.attr('data-method'),$link.attr('data-id'),$link.attr('data-extra') );
 				break;
 
 			case 'external':
@@ -1843,6 +1844,127 @@ Openrat.Notice.removeAllNotices = function( status) {
 	$('.or-notices').find('.or-notice').remove();
 }
 
+/* Include script: dialog.js */
+/**
+ * A dialog is a special area in the workbench for displaying and inputting data.
+ * A dialog contains a view.
+ */
+
+Openrat.Dialog = function() {
+
+	/**
+	 * The encapsulated view.
+	 */
+	this.view;
+
+	/**
+	 * Dirty-marker (if unsaved changes exist).
+	 *
+	 * @type {boolean}
+	 */
+	this.isDirty = false;
+
+	/**
+	 * the DOM element which contains the dialog.
+	 * @type {*|jQuery|HTMLElement}
+	 */
+	this.element = $('.or-dialog-content .or-view');
+
+	/**
+	 * Creating a new dialog.
+	 *
+	 * @param name
+	 * @param action Action
+	 * @param method
+	 * @param id Id
+	 * @param params
+	 *
+	 * @return Promise of underlying view
+	 */
+	this.start = function( name,action,method,id,params )
+	{
+		// Attribute aus dem aktuellen Editor holen, falls die Daten beim Aufrufer nicht angegeben sind.
+		if (!action)
+			action =  Openrat.Workbench.state.action;
+
+		if  (!id)
+			id =  Openrat.Workbench.state.id;
+
+		let dialog = this;
+
+		let view = new Openrat.View( action,method,id,params );
+
+		Openrat.Notice.removeAllNotices();
+
+		//$('.or-dialog-content .or-view').html('<div class="header"><img class="or-icon" title="" src="./themes/default/images/icon/'+method+'.png" />'+name+'</div>');
+		//$('.or-dialog-content .or-view').data('id',id);
+		$('.or-dialog').removeClass('dialog--is-closed').addClass('dialog--is-open');
+		$('.or-dialog-content .or-act-dialog-name').html( name );
+
+		this.escapeKeyClosingHandler = function (e) {
+			if (e.keyCode == 27) { // ESC keycode
+				dialog.close();
+
+				$(document).off('keyup'); // de-register.
+			}
+		};
+
+		$(document).keyup(this.escapeKeyClosingHandler);
+
+		// close dialog on click onto the blurred area.
+		$('.or-dialog-filler,.or-act-dialog-close').off('click').click( function(e)
+		{
+			e.preventDefault();
+			dialog.close();
+		});
+
+
+		view.onCloseHandler.add( function() {
+			dialog.close();
+		} );
+
+		view.onChangeHandler.add( function() {
+			// data has changed
+			console.debug("Changes detected");
+			dialog.isDirty = true;
+			// Remove dirty-flag from view
+			dialog.element.addClass('view--is-dirty');
+		});
+
+		view.onSaveHandler.add( function() {
+			// data was saved
+			dialog.isDirty = false;
+			// Remove dirty-flag from view
+			dialog.element.removeClass('view--is-dirty');
+		});
+
+		this.view = view;
+
+		return this.view.start( this.element );
+	}
+
+
+	/**
+	 * Closing the dialog.
+	 */
+	this.close = function() {
+
+		if   ( this.isDirty ) {
+			// ask the user if we should close this dialog
+			let exit = window.confirm( Openrat.Workbench.language.UNSAVED_CHANGES_CONFIRM );
+
+			if   ( ! exit )
+				return;
+		}
+
+		// Remove dirty-flag from view
+		$('.or-dialog-content .or-view.or-view--is-dirty').removeClass('view--is-dirty');
+		$('.or-dialog-content .or-view').html('');
+		$('.or-dialog').removeClass('dialog--is-open').addClass('dialog--is-closed'); // Dialog schließen
+
+		$(document).unbind('keyup',this.escapeKeyClosingHandler); // Cleanup ESC-Key-Listener
+	}
+}
 /* Include script: view.js */
 /**
  * View.
@@ -1860,6 +1982,11 @@ Openrat.View = function( action,method,id,params ) {
     this.method = method;
     this.id = id;
     this.params = params;
+
+    this.onCloseHandler = $.Callbacks();
+
+    this.onChangeHandler = $.Callbacks();
+    this.onSaveHandler = $.Callbacks();
 
     this.before = function() {};
 
@@ -1880,6 +2007,7 @@ Openrat.View = function( action,method,id,params ) {
 
     this.close = function() {
 
+		this.onCloseHandler.fire();
     }
 
 
@@ -1915,10 +2043,17 @@ Openrat.View = function( action,method,id,params ) {
 
 				let form = new Openrat.Form();
 
-				form.close = function() {
+				form.onChangeHandler.add( function() {
+					view.onChangeHandler.fire();
+				});
 
+				form.onSaveHandler.add( function() {
+					view.onSaveHandler.fire();
+				});
+
+				form.onCloseHandler.add( function() {
 					view.close();
-				}
+				} );
 
 				form.forwardTo = function (action, subaction, id, data) {
 					view.action = action;
@@ -2018,6 +2153,12 @@ Openrat.Form = function() {
 		closeAfterSuccess  : 8,
 	};
 
+	/**
+	 * Fires on input.
+	 */
+	this.onChangeHandler = $.Callbacks();
+	this.onSaveHandler   = $.Callbacks();
+
     this.setLoadStatus = function( isLoading ) {
         $(this.element).closest('div.content').toggleClass('loader',isLoading);
     }
@@ -2062,7 +2203,13 @@ Openrat.Form = function() {
 			form.submit();
         });
 
-        // Submithandler for the whole form.
+		// Bei Änderungen in der View das Tab als 'dirty' markieren
+		$(element).find('.or-input').change( function() {
+			form.onChangeHandler.fire();
+		});
+
+
+		// Submithandler for the whole form.
         $(element).submit( function( event ) {
 
             //
@@ -2079,7 +2226,7 @@ Openrat.Form = function() {
         //$(this.element).html('').parent().removeClass('is-open');
 		Openrat.Notice.removeAllNotices();
 
-        this.close();
+        this.onCloseHandler.fire();
     }
 
 
@@ -2087,8 +2234,7 @@ Openrat.Form = function() {
         this.element.trigger('reset');
     }
 
-    this.close = function() {
-    }
+    this.onCloseHandler = $.Callbacks();
 
     this.forwardTo = function (action, subaction, id, data) {
     }
@@ -2147,7 +2293,7 @@ Openrat.Form = function() {
             data.output = 'json';
 
             if	( mode == modes.closeAfterSubmit )
-                this.close();
+                this.onCloseHandler();
                 // Async: Window is closed, but the action will be startet now.
 
             let form = this;
@@ -2160,8 +2306,7 @@ Openrat.Form = function() {
 
                     form.doResponse(responseData,textStatus,form.element, function() {
 
-						// Remove dirty-flag from view
-						$(form.element).closest('.or-view.or-view--is-dirty').removeClass('view--is-dirty');
+                    	form.onSaveHandler.fire();
 
 						let afterSuccess = $(form.element).data('afterSuccess');
 						let forwardTo    = $(form.element).data('forwardTo'   );
@@ -2174,7 +2319,7 @@ Openrat.Form = function() {
 						// Now we can close the form.
 						if	( mode == modes.closeAfterSuccess )
 						{
-							form.close();
+							form.onCloseHandler();
 
 							// clear the dirty flag.
 							$(form.element).closest('div.panel').find('div.header ul.views li.action.active').removeClass('dirty');
@@ -2361,7 +2506,8 @@ Openrat.Workbench = new function()
     this.openModalDialog = function () {
 
         if   ( $('#dialog').data('action') ) {
-            this.startDialog('',$('#dialog').data('action'),$('#dialog').data('action'),0,{})
+        	let dialog = new Openrat.Dialog();
+        	dialog.start('',$('#dialog').data('action'),$('#dialog').data('action'),0,{} )
         }
     }
 
@@ -2662,83 +2808,7 @@ Openrat.Workbench = new function()
 
 
 
-	/**
-	 * Creating a new modal dialog.
-	 *
-	 * @param name
-	 * @param action Action
-	 * @param method
-	 * @param id Id
-	 * @param params
-	 */
-	this.startDialog = function( name,action,method,id,params )
-	{
-		// Attribute aus dem aktuellen Editor holen, falls die Daten beim Aufrufer nicht angegeben sind.
-		if (!action)
-			action =  Openrat.Workbench.state.action;
 
-		if  (!id)
-			id =  Openrat.Workbench.state.id;
-
-		let view = new Openrat.View( action,method,id,params );
-
-		view.before = function() {
-
-			Openrat.Notice.removeAllNotices();
-
-			$('.or-dialog-content .or-view').html('<div class="header"><img class="or-icon" title="" src="./themes/default/images/icon/'+method+'.png" />'+name+'</div>');
-			$('.or-dialog-content .or-view').data('id',id);
-			$('.or-dialog').removeClass('dialog--is-closed').addClass('dialog--is-open');
-			$('.or-dialog-content .or-act-dialog-name').html( name );
-
-			let view = this;
-
-			this.escapeKeyClosingHandler = function (e) {
-				if (e.keyCode == 27) { // ESC keycode
-					view.close();
-
-					$(document).off('keyup'); // de-register.
-				}
-			};
-
-			$(document).keyup(this.escapeKeyClosingHandler);
-
-			// Nicht-Modale Dialoge durch Klick auf freie Fläche schließen.
-			$('.or-dialog-filler,.or-act-dialog-close').click( function(e)
-			{
-				e.preventDefault();
-				view.close();
-			});
-
-		}
-
-		view.close = function() {
-
-			let isDirty = $('.or-view--is-dirty').length; // has this view unsaved changes?
-
-			if   ( isDirty ) {
-				// ask the user if we should close this dialog
-				let exit = window.confirm( Openrat.Workbench.language.UNSAVED_CHANGES_CONFIRM );
-
-				if   ( ! exit )
-					return;
-			}
-
-			// Strong modal dialogs are unable to close.
-			// Really?
-			if	( $('.or-dialog').hasClass('or-dialog--modal') )
-				return;
-
-			// Remove dirty-flag from view
-			$('.or-dialog-content .or-view.or-view--is-dirty').removeClass('view--is-dirty');
-			$('.or-dialog-content .or-view').html('');
-			$('.or-dialog').removeClass('dialog--is-open').addClass('dialog--is-closed'); // Dialog schließen
-
-			$(document).unbind('keyup',this.escapeKeyClosingHandler); // Cleanup ESC-Key-Listener
-		}
-
-		return view.start( $('.or-dialog-content .or-view') );
-	}
 
 
 
@@ -3205,11 +3275,6 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 	registerDragAndDrop(viewEl);
 	
 	
-	// Bei Änderungen in der View das Tab als 'dirty' markieren
-	$(viewEl).find('.or-input').change( function() {
-		$(this).closest('.or-view').addClass('view--is-dirty');
-	});
-
 	// Theme-Auswahl mit Preview
     $(viewEl).find('.or-theme-chooser').change( function() {
         Openrat.Workbench.setUserStyle( this.value );

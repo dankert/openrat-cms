@@ -15,6 +15,11 @@ Openrat.View = function( action,method,id,params ) {
     this.id = id;
     this.params = params;
 
+    this.onCloseHandler = $.Callbacks();
+
+    this.onChangeHandler = $.Callbacks();
+    this.onSaveHandler = $.Callbacks();
+
     this.before = function() {};
 
 	/**
@@ -34,6 +39,7 @@ Openrat.View = function( action,method,id,params ) {
 
     this.close = function() {
 
+		this.onCloseHandler.fire();
     }
 
 
@@ -69,10 +75,17 @@ Openrat.View = function( action,method,id,params ) {
 
 				let form = new Openrat.Form();
 
-				form.close = function() {
+				form.onChangeHandler.add( function() {
+					view.onChangeHandler.fire();
+				});
 
+				form.onSaveHandler.add( function() {
+					view.onSaveHandler.fire();
+				});
+
+				form.onCloseHandler.add( function() {
 					view.close();
-				}
+				} );
 
 				form.forwardTo = function (action, subaction, id, data) {
 					view.action = action;
