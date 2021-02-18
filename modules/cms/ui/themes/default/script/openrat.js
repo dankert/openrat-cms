@@ -2037,7 +2037,7 @@ Openrat.View = function( action,method,id,params ) {
         	if   ( ! data )
         		data = '';
 
-        	$(element).html(data).removeClass("loader");
+        	$(element).html(data);
 
 			$(element).find('form').each( function() {
 
@@ -2078,6 +2078,10 @@ Openrat.View = function( action,method,id,params ) {
 			notice.setStatus('error');
 			notice.msg = Openrat.Workbench.language.ERROR;
 			notice.show();
+		});
+
+		loadViewHtmlPromise.always( function() {
+			$(element).removeClass("loader");
 		});
 
 		// Load the data for this view.
@@ -3068,7 +3072,12 @@ $( function() {
 
         }).fail(function ( jqXHR, textStatus, errorThrown ) {
             // Ups... aber was können wir hier schon tun, außer hässliche Meldungen anzeigen.
-            console.warn( {message:'Failed to load path',url:url,error:e,status:textStatus,errorThrown } );
+            console.warn( {
+				message:'Failed to load path',
+				url    :url,
+				jqXHR  :jqXHR,
+				status :textStatus,
+				error  :errorThrown } );
         }).always(function () {
 
         });

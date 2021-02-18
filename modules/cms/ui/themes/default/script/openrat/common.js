@@ -143,7 +143,12 @@ $( function() {
 
         }).fail(function ( jqXHR, textStatus, errorThrown ) {
             // Ups... aber was können wir hier schon tun, außer hässliche Meldungen anzeigen.
-            console.warn( {message:'Failed to load path',url:url,error:e,status:textStatus,errorThrown } );
+            console.warn( {
+				message:'Failed to load path',
+				url    :url,
+				jqXHR  :jqXHR,
+				status :textStatus,
+				error  :errorThrown } );
         }).always(function () {
 
         });

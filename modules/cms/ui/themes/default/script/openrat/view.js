@@ -69,7 +69,7 @@ Openrat.View = function( action,method,id,params ) {
         	if   ( ! data )
         		data = '';
 
-        	$(element).html(data).removeClass("loader");
+        	$(element).html(data);
 
 			$(element).find('form').each( function() {
 
@@ -110,6 +110,10 @@ Openrat.View = function( action,method,id,params ) {
 			notice.setStatus('error');
 			notice.msg = Openrat.Workbench.language.ERROR;
 			notice.show();
+		});
+
+		loadViewHtmlPromise.always( function() {
+			$(element).removeClass("loader");
 		});
 
 		// Load the data for this view.

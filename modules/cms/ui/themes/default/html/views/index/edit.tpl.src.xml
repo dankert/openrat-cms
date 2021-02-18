@@ -1,0 +1,23 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+  <part class="linklist">
+      <part class="act-clickable,linklist-line,round-corners,hover-effect">
+        <link type="open" action="projectlist">
+          <text value="${message:projects}"/>
+        </link>
+      </part>
+    <if true="${isAdmin}">
+      <part class="act-clickable,linklist-line,round-corners,hover-effect">
+        <link type="open" action="usergroup">
+          <text value="${message:user_and_groups}"/>
+        </link>
+      </part>
+    </if>
+	  <if true="${isAdmin}">
+		  <part class="act-clickable,linklist-line,round-corners,hover-effect">
+			  <link type="open" action="configuration">
+				  <text value="${message:prefs}"/>
+			  </link>
+		  </part>
+	  </if>
+  </part>
+</output>

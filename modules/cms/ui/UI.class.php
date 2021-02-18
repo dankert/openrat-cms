@@ -55,7 +55,7 @@ class UI
             if   ( $request->isAction )
             	throw new \RuntimeException('The UI does not accept POST requests');
 
-            if   ( in_array( $request->action,['index','tree','title']) )
+            if   ( in_array( $request->action,['index','tree','title','usergroup']) )
 				$request->isUIAction = true;
 
             UI::executeAction($request);

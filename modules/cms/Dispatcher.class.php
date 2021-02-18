@@ -328,7 +328,7 @@ class Dispatcher
 			$action = strtolower( $baseActionClassName->dropNamespace()->dropSuffix('Action')->get() );
 
 			if   ( ! $action ) {
-				throw new BadMethodCallException( 'Action not found' );
+				throw new BadMethodCallException( TextMessage::create( 'No action found for action ${0} and method ${1}',[$this->request->action,$this->request->method] ) );
 			}
 		}
 
