@@ -66,6 +66,17 @@ class RequestParams
 
 
 	/**
+	 * Gets the value of the request parameter.
+	 *
+	 * @param $nameOfRequestParameter
+	 * @return String
+	 * @throws ValidationException
+	 */
+	public function getRequiredText( $nameOfRequestParameter ) {
+		return $this->getRequiredRequestVar( $nameOfRequestParameter, self::FILTER_TEXT );
+	}
+
+	/**
 	 * Ermittelt den Inhalt der gew�nschten Request-Variablen.
 	 * Falls nicht vorhanden, wird "" zur�ckgegeben.
 	 *

@@ -1793,8 +1793,10 @@ Openrat.Notice = function() {
 	 * Source: https://developer.mozilla.org/en-US/docs/Web/API/notification
 	 * @param text text of message
 	 */
-	this.notifyBrowser = function(text)
+	this.notifyBrowser = function()
 	{
+		let text = this.msg;
+
 		// Let's check if the browser supports notifications
 		if (!("Notification" in window)) {
 			return;

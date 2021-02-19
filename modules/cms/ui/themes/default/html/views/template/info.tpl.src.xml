@@ -1,24 +1,28 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<table filter="false">
-		<row class="table-data">
-			<column colspan="1">
-				<text value="${message:id}"/>
-			</column>
-			<column>
-				<text value="${id}"/>
-			</column>
-		</row>
-		<row class="data">
-			<column>
-				<text value="${message:name}"/>
-			</column>
-			<column>
-				<text value="${name}"/>
-			</column>
-		</row>
 
-	</table>
+	<group title="${message:menu_info}">
+
+		<table filter="false">
+			<row class="table-data">
+				<column colspan="1">
+					<text value="${message:id}"/>
+				</column>
+				<column>
+					<text value="${id}"/>
+				</column>
+			</row>
+			<row class="table-data">
+				<column>
+					<text value="${message:name}"/>
+				</column>
+				<column>
+					<text value="${name}"/>
+				</column>
+			</row>
+
+		</table>
+	</group>
 
 	<group title="${message:pages}">
 		<table filter="true">

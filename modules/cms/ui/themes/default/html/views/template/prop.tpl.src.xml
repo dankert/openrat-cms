@@ -1,42 +1,10 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-  <form>
-    <fieldset class="line" label="">
-      <part class="label">
-        <text value="${message:TEMPLATE_NAME}"/>
-      </part>
-      <part class="value">
-        <input name="name" maxlength="50"/>
-      </part>
-    </fieldset>
-    <group/>
-    <fieldset class="line" label="">
-      <part class="label">
-        <text value="${message:file_extension}"/>
-      </part>
-      <part class="value">
-        <link type="view" subaction="extension">
-          <part>
-            <text value="${extension}"/>
-          </part>
-        </link>
-        <part class="act-clickable">
-          <link class="action" type="view" subaction="extension">
-            <text value="${message:edit}"/>
-          </link>
-        </part>
-      </part>
-    </fieldset>
-    <fieldset class="line" label="">
-      <part class="label">
-        <text value="${message:file_mimetype}"/>
-      </part>
-      <part class="value">
-        <link action="template" subaction="extension">
-          <part>
-            <text value="${mime_type}"/>
-          </part>
-        </link>
-      </part>
-    </fieldset>
-  </form>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form>
+		<group title="${message:method_prop}">
+			<fieldset label="${message:TEMPLATE_NAME}">
+				<input name="name" maxlength="50"/>
+			</fieldset>
+		</group>
+	</form>
 </output>

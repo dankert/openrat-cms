@@ -301,7 +301,10 @@ SQL
 		$stmt = $db->sql( 'DELETE FROM {{template}}'.
 		                ' WHERE id={templateid}' );
 		$stmt->setInt( 'templateid',$this->templateid );
+
 		$stmt->query();
+
+		$this->templateid = 0;
 	}
 	
 	

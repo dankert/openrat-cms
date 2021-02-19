@@ -1,25 +1,13 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
   <form>
-    <group>
-      <fieldset class="line" label="">
-        <part class="label">
-          <text value="${message:NAME}"/>
-        </part>
-        <part class="value">
+    <group title="${message:delete}" >
+      <fieldset label="${message:NAME}">
           <text value="${name}" class="name"/>
-        </part>
       </fieldset>
     </group>
     <group title="${message:options}">
-      <fieldset class="line" label="">
-        <part class="label">
-				</part>
-        <part class="value">
-          <checkbox name="delete" required="true"/>
-          <label for="delete">
-            <text value="${message:CONFIRM_DELETE}"/>
-          </label>
-        </part>
+      <fieldset label="">
+       	<checkbox name="delete" required="true" label="${message:CONFIRM_DELETE}"/>
       </fieldset>
     </group>
   </form>
