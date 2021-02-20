@@ -1,49 +1,53 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<table filter="false">
 
-		<row header="true">
-			<column>
-				<text value="${message:TYPE}"/>
-				<text value=" / "/>
-				<text value="${message:NAME}"/>
-			</column>
-		</row>
+	<group collapsible="false" title="${message:project} ${name}">
 
-		<row class="data">
-			<column class="act-clickable">
-				<link type="open" id="${rootobjectid}" name="" action="folder">
-					<image action="folder"/>
-					<text value="${message:content}"/>
-				</link>
-			</column>
-		</row>
+		<table filter="false">
 
-		<if true="${is_project_admin}">
+<!--			<row header="true">
+				<column>
+					<text value="${message:TYPE}"/>
+					<text value=" / "/>
+					<text value="${message:NAME}"/>
+				</column>
+			</row>-->
+
 			<row class="data">
 				<column class="act-clickable">
-					<link type="open" id="${projectid}" name="" action="templatelist">
-						<image action="template"/>
-						<text value="${message:templates}"/>
+					<link type="open" id="${rootobjectid}" name="" action="folder">
+						<image action="folder"/>
+						<text value="${message:content}"/>
 					</link>
 				</column>
 			</row>
-			<row class="data">
-				<column class="act-clickable">
-					<link type="open" id="${projectid}" name="" action="languagelist">
-						<image action="language"/>
-						<text value="${message:languages}"/>
-					</link>
-				</column>
-			</row>
-			<row class="data">
-				<column class="act-clickable">
-					<link type="open" id="${projectid}" name="" action="modellist">
-						<image action="model"/>
-						<text value="${message:models}"/>
-					</link>
-				</column>
-			</row>
-		</if>
-	</table>
+
+			<if true="${is_project_admin}">
+				<row class="data">
+					<column class="act-clickable">
+						<link type="open" id="${projectid}" name="" action="templatelist">
+							<image action="template"/>
+							<text value="${message:templates}"/>
+						</link>
+					</column>
+				</row>
+				<row class="data">
+					<column class="act-clickable">
+						<link type="open" id="${projectid}" name="" action="languagelist">
+							<image action="language"/>
+							<text value="${message:languages}"/>
+						</link>
+					</column>
+				</row>
+				<row class="data">
+					<column class="act-clickable">
+						<link type="open" id="${projectid}" name="" action="modellist">
+							<image action="model"/>
+							<text value="${message:models}"/>
+						</link>
+					</column>
+				</row>
+			</if>
+		</table>
+	</group>
 </output>

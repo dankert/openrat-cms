@@ -7,7 +7,10 @@ use cms\generator\PageGenerator;
 use cms\generator\Producer;
 use cms\generator\Publisher;
 use cms\generator\PublishOrder;
+use cms\model\Page;
 use cms\model\Permission;
+use cms\model\Template;
+use language\Messages;
 use util\Session;
 
 class PagePubAction extends PageAction implements Method {
@@ -19,6 +22,14 @@ class PagePubAction extends PageAction implements Method {
             throw new \util\exception\SecurityException( 'no right for publish' );
 
 		$project = $this->page->getProject();
+
+		$template = new Template( $this->page->templateid );
+		$template->load();
+
+		if   ( ! $template->publish ) {
+			$this->addWarningFor( $this->page,Messages::NOPUBLISH );
+			return;
+		}
 
 		// Nothing is written to the session from this point. so we should free the session.
 		Session::close();

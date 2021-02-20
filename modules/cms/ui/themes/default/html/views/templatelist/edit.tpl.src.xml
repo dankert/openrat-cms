@@ -1,32 +1,35 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-  <table>
-    <row class="headline">
-      <column>
-        <text value="${message:name}"/>
-      </column>
-    </row>
-    <list list="${templates}" extract="true">
-      <row class="data">
-        <column class="act-clickable">
-          <image action="template"/>
-          <link type="open" id="${id}" name="${name}" action="template">
-            <text value="${name}"/>
-          </link>
-        </column>
-      </row>
-    </list>
-    <if empty="${templates}">
-      <row>
-        <text value="${message:NO_TEMPLATES_AVAILABLE_DESC}"/>
-      </row>
-    </if>
-    <row class="data">
-      <column colspan="1" class="act-clickable">
-        <link type="dialog" subaction="add">
-          <image method="add"/>
-          <text value="${message:add}"/>
-        </link>
-      </column>
-    </row>
-  </table>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<group title="${message:templates}">
+		<table>
+			<row class="headline">
+				<column>
+					<text value="${message:name}"/>
+				</column>
+			</row>
+			<list list="${templates}" extract="true">
+				<row class="data">
+					<column class="act-clickable">
+						<image action="template"/>
+						<link type="open" id="${id}" name="${name}" action="template">
+							<text value="${name}"/>
+						</link>
+					</column>
+				</row>
+			</list>
+			<if empty="${templates}">
+				<row>
+					<text value="${message:NO_TEMPLATES_AVAILABLE_DESC}"/>
+				</row>
+			</if>
+			<row class="data">
+				<column colspan="1" class="act-clickable">
+					<link type="dialog" subaction="add">
+						<image method="add"/>
+						<text value="${message:add}"/>
+					</link>
+				</column>
+			</row>
+		</table>
+	</group>
 </output>

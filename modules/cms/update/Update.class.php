@@ -12,12 +12,18 @@ use logger\Logger;
 class Update
 {
 	// This is the required DB version:
-	const SUPPORTED_VERSION = 25;
+	const SUPPORTED_VERSION = 26;
 	// -----------------------^^-----------------------------
 
 	const STATUS_UPDATE_PROGRESS = 0;
 	const STATUS_UPDATE_SUCCESS  = 1;
 
+	/**
+	 * Detects if the database must be upgraded.
+	 *
+	 * @param Database $db
+	 * @return bool true if database must be updated
+	 */
 	public function isUpdateRequired(Database $db)
 	{
 		$version = $this->getDbVersion($db);
@@ -38,6 +44,8 @@ class Update
 
 
 	/**
+	 * Update the database to a newer version.
+	 *
 	 * @param Database $db
 	 */
 	public function update(Database $db)
@@ -81,7 +89,8 @@ class Update
 
 
 	/**
-	 * Ermittelt die Version des Datenbank-Schemas.
+	 * Detects the actual version of the database scheme.
+	 *
 	 * @param Database $db
 	 * @return int
 	 */
@@ -113,13 +122,16 @@ SQL
 				// Tabelle 'version' wurde in Version 2 angelegt.
 				return 2;
 		} else {
+			// no version table exists.
+
+			// find out if there is the project table...
 			$projectTableExists = $this->testQuery($db, 'SELECT 1 FROM {{project}}');
 
 			if ($projectTableExists)
-				// Entspricht dem Stand vor Einführung der automatischen Migration.
+				// seems to be the old baseline version without a version table.
 				return 1;
 			else
-				// Es gibt gar keine Tabellen, es muss also alles neu angelegt werden.
+				// there are no tables, everything must be created.
 				return 0;
 		}
 	}
@@ -127,6 +139,7 @@ SQL
 
 	/**
 	 * Stellt fest, ob eine DB-Anfrage funktioniert.
+	 *
 	 * @param $db Database
 	 * @param $sql
 	 * @return <code>true</code> falls SQL funktioniert.

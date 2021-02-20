@@ -10,8 +10,10 @@ use cms\generator\PageGenerator;
 use cms\generator\Producer;
 use cms\generator\Publisher;
 use cms\generator\PublishOrder;
+use cms\model\Page;
 use cms\model\Permission;
 use cms\model\Folder;
+use cms\model\Template;
 use util\Session;
 
 
@@ -61,6 +63,15 @@ class FolderPubAction extends FolderAction implements Method {
 			if   ( $this->request->hasRequestVar('pages'  ) ) {
 
 				foreach( $folder->getPages() as $pageObjectId ) {
+
+					$page = new Page( $pageObjectId );
+					$page->load();
+
+					$template = new Template( $page->templateid );
+					$template->load();
+
+					if   ( ! $template->publish )
+						continue; // Template should not be published.
 
 					foreach( $project->getModelIds() as $modelId ) {
 

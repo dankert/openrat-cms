@@ -30,6 +30,8 @@ use util\exception\ObjectNotFoundException;
  */ 
 class Template extends ModelBase
 {
+	const TYPE_PUBLISH = 1;
+
 	/**
 	 * ID dieses Templates
 	 * @type Integer
@@ -47,7 +49,13 @@ class Template extends ModelBase
 	 * @type String
 	 */
 	var $name = 'unnamed';
-	
+
+	/**
+	 * Should this template be published?
+	 *
+	 * @var bool
+	 */
+	public $publish = true;
 
 	// Konstruktor
 	function __construct( $templateid='' )
@@ -72,6 +80,7 @@ class Template extends ModelBase
 
 		$this->name      = $row['name'     ];
 		$this->projectid = $row['projectid'];
+		$this->publish   = $row['type'] & self::TYPE_PUBLISH;
 	}
 
 
@@ -91,11 +100,21 @@ class Template extends ModelBase
 		if	( $this->name == "" )
 			$this->name = \cms\base\Language::lang(Messages::TEMPLATE).' #'.$this->templateid;
 
-		$stmt = Db::sql( 'UPDATE {{template}}'.
-		                '  SET name={name}'.
-		                '  WHERE id={templateid}' );
+		$stmt = Db::sql( <<<SQL
+			UPDATE {{template}}
+		       SET name={name},
+		           type={type}
+		     WHERE id={templateid}
+SQL
+		);
 		$stmt->setString( 'name'      ,$this->name       );
 		$stmt->setInt   ( 'templateid',$this->templateid );
+
+		$type = 0;
+		if( $this->publish ) $type |= self::TYPE_PUBLISH;
+
+		$stmt->setInt   ( 'type'      ,$type );
+
 		$stmt->query();
 	}
 
@@ -121,7 +140,7 @@ class Template extends ModelBase
 	/**
  	 * Ermitteln aller Elemente zu diesem Template
  	 * Es wird eine Liste nur mit den Element-IDs ermittelt und zur?ckgegeben
- 	 * @return Array
+ 	 * @return array
  	 */
 	function getElementIds()
 	{
@@ -139,7 +158,7 @@ class Template extends ModelBase
 	/**
  	 * Ermitteln aller Elemente zu diesem Template
  	 * Es wird eine Liste mit den kompletten Elementen ermittelt und zurueckgegeben
- 	 * @return Array
+ 	 * @return array
  	 */
 	function getElements()
 	{
@@ -166,7 +185,7 @@ class Template extends ModelBase
 	/**
  	 * Ermitteln aller Elemente zu diesem Template
  	 * Es wird eine Liste mit den kompletten Elementen ermittelt und zurueckgegeben
- 	 * @return Array
+ 	 * @return array
  	 */
 	function getWritableElements()
 	{
@@ -264,7 +283,7 @@ SQL
 	/**
  	 * Ermitteln alles Objekte (=Seiten), welche auf diesem Template basieren.
  	 * 
- 	 * @return Array Liste von Objekt-IDs
+ 	 * @return array Liste von Objekt-IDs
  	 */
 	function getDependentObjectIds()
 	{
