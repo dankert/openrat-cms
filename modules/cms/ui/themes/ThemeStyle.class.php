@@ -90,17 +90,18 @@ class ThemeStyle
 		if   ( ! $this->inactiveBackgroundColor )
 			$this->inactiveBackgroundColor = $this->backgroundColor;
 
-		if   ( ! $this->navTitleTextColor )
-			$this->navTitleTextColor= $this->mainTitleTextColor;
-
-		if   ( ! $this->navTitleBackgroundColor )
-			$this->navTitleBackgroundColor = $this->mainTitleBackgroundColor;
 
 		if   ( ! $this->navTextColor )
 			$this->navTextColor = $this->mainTextColor;
 
 		if   ( ! $this->navBackgroundColor )
 			$this->navBackgroundColor = $this->mainBackgroundColor;
+
+		if   ( ! $this->navTitleTextColor )
+			$this->navTitleTextColor= $this->navTextColor;
+
+		if   ( ! $this->navTitleBackgroundColor )
+			$this->navTitleBackgroundColor = $this->navBackgroundColor;
 
 
 		if   ( ! $this->dialogTitleTextColor )

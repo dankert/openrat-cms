@@ -662,6 +662,8 @@ class DefaultConfig {
 							'name' => 'Dracula',
 							'main_title_background_color' => '#44475a',
 							'main_title_text_color' => '#f8f8f2',
+							'nav_title_background_color' => '#44475a',
+							'nav_title_text_color' => '#f8f8f2',
 							'text_color' => '#f8f8f2',
 							'background_color' => '#282a36',
 							'inactive_background_color' => '#44475a',
@@ -681,11 +683,14 @@ class DefaultConfig {
 					'moorweide' =>
 						[ 
 							'name' => 'Moorweide',
-							'main_title_background_color' => '#edf7f2',
-							'main_title_text_color' => '#005f52',
+							'main_title_background_color' => 'rgb(237, 246, 242)',
+							'main_title_text_color' => 'rgb(0, 94, 82)',
 							'text_color' => 'black',
 							'background_color' => '#edf7f2',
 							'inactive_background_color' => 'white',
+							'image_color' => '#00a075',
+							'nav_background_color' => 'rgb(0, 94, 82)',
+							'nav_text_color' => 'white',
 						],
 					'dark' =>
 						[ 

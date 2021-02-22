@@ -45,20 +45,46 @@ html.or-theme-@{cms-theme-id} {
         box-shadow: @x @y @radius @color;
     }
 
-    scrollbar-face-color: @cms-main-title-background-color;
-    scrollbar-arrow-color: @cms-main-title-background-color;
-    scrollbar-base-color: @cms-main-title-text-color;
 
-    scrollbar-color: @cms-main-title-text-color @cms-main-background-color;
-    scrollbar-width: thin;
 
-    * {
+
+  * {
       transition: opacity @cms-transition-duration ease-in-out;
       transition: width   @cms-transition-duration ease-in-out;
+      transition: flex    @cms-transition-duration ease-in-out;
     }
 
 
     .or {
+
+        &-workbench {
+          &-navigation {
+            scrollbar-face-color: mix(@cms-nav-text-color,@cms-nav-background-color);
+            scrollbar-arrow-color: @cms-image-color;
+            scrollbar-base-color: @cms-nav-background-color;
+
+            scrollbar-color: mix(@cms-nav-text-color,@cms-nav-background-color) @cms-nav-background-color;
+            scrollbar-width: thin;
+
+          }
+          &-main {
+            scrollbar-face-color: mix(@cms-main-text-color,@cms-main-background-color);
+            scrollbar-arrow-color: @cms-image-color;
+            scrollbar-base-color: @cms-main-text-color;
+
+            scrollbar-color: mix(@cms-main-text-color,@cms-main-background-color) @cms-main-background-color;
+            scrollbar-width: thin;
+          }
+        }
+
+      &-workbench {
+        &-navigation {
+          box-shadow: 1em 0 2em @cms-nav-background-color;
+        }
+      }
+      &-dialog-content {
+        box-shadow: -1em 0 2em @cms-dialog-background-color;
+      }
 
         &-image-icon {
           color: @cms-image-color;
@@ -208,13 +234,19 @@ html.or-theme-@{cms-theme-id} {
             }*/
             &-navigation,
             &-navigation .or-link {
-                color: @cms-main-text-color;
+                color: @cms-nav-text-color;
             }
         }
 
       &-search {
         &-input {
-          border-color: @cms-nav-background-color;
+
+          border-color: @cms-nav-title-background-color;
+
+          .or-input {
+            background-color: @cms-nav-title-background-color;
+            color: @cms-nav-title-text-color;
+          }
         }
 
         &-result {
@@ -298,30 +330,30 @@ html.or-theme-@{cms-theme-id} {
                 color: inherit;
             }
 
-            .box-shadow(3px, 2px, 5px, @cms-main-background-color);
-            border: 1px solid mix(@cms-main-background-color,@cms-inactive-background-color);
+            .box-shadow(3px, 2px, 5px, @cms-nav-background-color);
+            border: 1px solid mix(@cms-nav-background-color,@cms-inactive-background-color);
 
-            background-color: @cms-main-background-color;
-            color: @cms-main-text-color;
+            background-color: @cms-nav-background-color;
+            color: @cms-nav-text-color;
 
             &-entry {
 
-                background-color: @cms-main-background-color;
-                color: @cms-main-text-color;
+                background-color: @cms-nav-background-color;
+                color: @cms-nav-text-color;
 
                 &--inactive {
-                    color: mix(@cms-main-background-color, @cms-main-text-color, 40%);
+                    color: mix(@cms-nav-background-color, @cms-nav-text-color, 40%);
                 }
 
                 &--active:hover {
-                    background-color: @cms-main-text-color;
-                    color: @cms-main-background-color;
+                    background-color: @cms-nav-text-color;
+                    color: @cms-nav-background-color;
                 }
             }
 
 
             &-divide {
-                background-color: mix(@cms-main-background-color,@cms-inactive-background-color);
+                background-color: mix(@cms-nav-background-color,@cms-nav-background-color);
             }
         }
 
