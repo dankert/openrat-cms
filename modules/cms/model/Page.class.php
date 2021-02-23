@@ -364,10 +364,42 @@ SQL
 	{
 		parent::setTimestamp();
 	}
-	
-	
 
-	
+
+	/**
+	 * Returns a page with default values.
+	 *
+	 * If a value is empty, then the value should be loaded from this referenced object.
+	 *
+	 * @return Page|null
+	 */
+	public function getPageAsDefault() {
+
+		$defaultObjectId = $this->getPageIdForDefault();
+
+		if   ( $defaultObjectId ) {
+			$page = new Page( $defaultObjectId );
+			return $page;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns a pageid with default values.
+	 *
+	 * If a value is empty, then the value should be loaded from this referenced object.
+	 *
+	 * @return int|null
+	 */
+	public function getPageIdForDefault() {
+
+		$settings = $this->getTotalSettings();
+		return @$settings['copy-default-values-from'];
+	}
+
+
+
 	/**
 	 * Stellt fest, ob diese Seite im HTML-Format veröffentlicht wird.
 	 * @return boolean

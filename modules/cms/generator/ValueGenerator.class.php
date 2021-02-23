@@ -24,6 +24,7 @@ use logger\Logger;
 use LogicException;
 use util\Code;
 use util\exception\GeneratorException;
+use util\exception\ObjectNotFoundException;
 use util\exception\PublisherException;
 use util\Html;
 use util\Http;
@@ -31,11 +32,15 @@ use util\Text;
 use util\Transformer;
 
 
+/**
+ * Generates a value.
+ */
 class ValueGenerator extends BaseGenerator
 {
 
 	/**
-	 * PageGenerator constructor.
+	 * Constructor.
+	 *
 	 * @param $valueContext ValueContext
 	 */
 	public function __construct($valueContext )
@@ -57,7 +62,7 @@ class ValueGenerator extends BaseGenerator
 	 * Hier findet die eigentliche Bereitstellung des Inhaltes statt, zu
 	 * jedem Elementtyp wird ein Inhalt ermittelt.
 	 *
-	 * @return void (aber Eigenschaft 'value' wird gesetzt).
+	 * @return string
 	 */
 	private function generateValue()
 	{
@@ -73,22 +78,27 @@ class ValueGenerator extends BaseGenerator
 		$value->elementid = $this->context->elementid;
 		$value->languageid = $pageContext->languageId;
 		$value->load();
+		$value->element = $element;
+
+		if	( ! $this->isValueHasContent( $value ) )
+		{
+			$pageForDefaultValue = $page->getPageAsDefault();
+
+			if   ( $pageForDefaultValue ) {
+
+				$pageContext = clone $this->context->pageContext;
+				$pageContext->objectId = $pageForDefaultValue->objectid;
+
+				$valueContext = clone $this->context;
+				$valueContext->pageContext = $pageContext;
+
+				$generator = new ValueGenerator( $valueContext );
+
+				return $generator->getCache()->get();
+			}
+		}
 
 		$inhalt = '';
-
-		// Inhalt ist mit anderer Seite verkn�pft.
-		if	( in_array($element->typeid,[Element::ELEMENT_TYPE_TEXT,Element::ELEMENT_TYPE_LONGTEXT,Element::ELEMENT_TYPE_DATE,Element::ELEMENT_TYPE_NUMBER]) && intval($value->linkToObjectId) != 0 && !$value->isLink )
-		{
-			$pageContext = clone $this->context->pageContext;
-			$pageContext->objectId = $value->linkToObjectId;
-
-			$valueContext = clone $this->context;
-			$valueContext->pageContext = $pageContext;
-
-			$generator = new ValueGenerator( $valueContext );
-
-			return $generator->getCache()->get();
-		}
 
 		switch( $element->typeid )
 		{
@@ -1011,6 +1021,41 @@ class ValueGenerator extends BaseGenerator
 
 		return $inhalt;
 	}
+
+
+	/**
+	 * Determines if the value has meaningful content
+	 *
+	 * @param $value Value
+	 */
+	protected function isValueHasContent( $value ) {
+
+		return in_array($value->element->typeid,[
+				Element::ELEMENT_TYPE_TEXT,
+				Element::ELEMENT_TYPE_LONGTEXT,
+				Element::ELEMENT_TYPE_SELECT,
+			]) && $value->text != '' && $value->text != null ||
+			in_array($value->element->typeid,[
+				Element::ELEMENT_TYPE_NUMBER
+			]) && $value->number != null ||
+			in_array($value->element->typeid,[
+				Element::ELEMENT_TYPE_LINK,
+				Element::ELEMENT_TYPE_INSERT,
+			]) && $value->linkToObjectId != null && $value->linkToObjectId != 0 ||
+			in_array($value->element->typeid,[
+				Element::ELEMENT_TYPE_DATE,
+			]) && $value->date != null && $value->date != 0 ||
+			in_array($value->element->typeid,[
+				Element::ELEMENT_TYPE_CODE,
+				Element::ELEMENT_TYPE_COPY,
+				Element::ELEMENT_TYPE_DYNAMIC,
+				Element::ELEMENT_TYPE_INFO,
+				Element::ELEMENT_TYPE_INFODATE,
+				Element::ELEMENT_TYPE_LINKDATE,
+				Element::ELEMENT_TYPE_LINKINFO,
+			]);
+	}
+
 
 	/**
 	 * A pure value does not have a public filename. Therefor, this method returns nothing.

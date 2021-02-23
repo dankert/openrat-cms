@@ -64,12 +64,6 @@ class Value extends ModelBase
 	var $pageid;
 	
 	/**
-	 * Kennzeichen, ob der Inhalt mit dem Inhalt einer anderern Seite verkn�pft wird.
-	 * @type BaseObject
-	 */
-	var $isLink = false;
-	
-	/**
 	 * Objekt-ID, auf die verlinkt wird
 	 * @type Integer
 	 */

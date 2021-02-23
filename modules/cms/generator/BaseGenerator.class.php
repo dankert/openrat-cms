@@ -4,8 +4,15 @@
 namespace cms\generator;
 
 
+use util\cache\Cache;
 use util\cache\FileCache;
 
+
+/**
+ * Base class for generators.
+ *
+ * @package cms\generator
+ */
 abstract class BaseGenerator implements Generator
 {
 	/**
@@ -14,7 +21,8 @@ abstract class BaseGenerator implements Generator
 	protected $context;
 
 	/**
-	 * @return FileCache
+	 * Every generator has a cache for its value.
+	 * @return Cache
 	 */
 	public function getCache() {
 
@@ -23,5 +31,11 @@ abstract class BaseGenerator implements Generator
 		}, 0 );
 	}
 
+
+	/**
+	 * Generates a value.
+	 *
+	 * @return mixed
+	 */
 	protected abstract function generate();
 }

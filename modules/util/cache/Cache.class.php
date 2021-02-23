@@ -17,6 +17,7 @@ interface Cache
 
     /**
      * Get the content. Loads the value if nessecary.
+	 * @return string
      */
     public function get();
 
