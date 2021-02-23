@@ -45,14 +45,23 @@ class TreePathAction extends TreeAction implements Method {
 
 		switch( $type ) {
 
+			case 'index':
+				return array(
+				);
+
 			case 'projectlist':
-				return array();
+				return array(
+					$this->pathItem('index',0)
+				);
 
 			case 'configuration':
-				return array();
+				return array(
+					$this->pathItem('index',0)
+				);
 
 			case 'project':
 				return array(
+					$this->pathItem('index'       ,0  ),
 					$this->pathItem('projectlist',0)
 				);
 			case 'folder':
@@ -65,6 +74,7 @@ class TreePathAction extends TreeAction implements Method {
 				$o->load();
 
 				$result= array(
+					$this->pathItem('index'       ,0  ),
 					$this->pathItem('projectlist' ),
 					$this->pathItem('project'   , $o->projectid),
 				);
@@ -90,6 +100,7 @@ class TreePathAction extends TreeAction implements Method {
 				$p->load();
 
 				$result= array(
+					$this->pathItem('index'       ,0  ),
 					$this->pathItem('projectlist' ),
 					$this->pathItem('project'   , $p->projectid),
 				);
@@ -104,29 +115,37 @@ class TreePathAction extends TreeAction implements Method {
 				return $result;
 
 			case 'userlist':
+				return array(
+					$this->pathItem('index'       ,0  ),
+					$this->pathItem('usergroup' ,0)
+				);
 			case 'usergroup':
 				return array(
-					//$this->pathItem('usergroup' ,0)
+					$this->pathItem('index' ,0)
 				);
 			case 'user':
 				return array(
-					//$this->pathItem('userandgroups',0),
-					$this->pathItem('userlist',0)
+					$this->pathItem('index'      ,0  ),
+					$this->pathItem('usergroup'  ,0),
+					$this->pathItem('userlist'   ,0)
 				);
 			case 'grouplist':
 				return array(
-					//array('type'=>'userandgroups','action'=>'userandgroups','id'=>0)
+					$this->pathItem('index'       ,0  ),
+					$this->pathItem('usergroup'   ,0)
 				);
 			case 'group':
 				return array(
-					//$this->pathItem('userandgroups',0),
-					$this->pathItem('grouplist'    ,0)
+					$this->pathItem('index'       ,0  ),
+					$this->pathItem('usergroup'   ,0),
+					$this->pathItem('grouplist'   ,0),
 				);
 
 			case 'templatelist':
 			case 'languagelist':
 			case 'modellist':
 				return array(
+					$this->pathItem('index'       ,0  ),
 					$this->pathItem('projectlist' ,0  ),
 					$this->pathItem('project'     ,$id)
 				);
@@ -136,6 +155,7 @@ class TreePathAction extends TreeAction implements Method {
 				$t->load();
 
 				return array(
+					$this->pathItem('index'       ,0  ),
 					$this->pathItem('projectlist' ,0        ),
 					$this->pathItem('project'     ,$t->projectid),
 					$this->pathItem('templatelist',$t->projectid)
@@ -148,6 +168,7 @@ class TreePathAction extends TreeAction implements Method {
 				$t->load();
 
 				return array(
+					$this->pathItem('index'       ,0  ),
 					$this->pathItem('projectlist' ,0         ),
 					$this->pathItem('project'     ,$t->projectid ),
 					$this->pathItem('templatelist',$t->projectid ),
@@ -159,6 +180,7 @@ class TreePathAction extends TreeAction implements Method {
 				$l->load();
 
 				return array(
+					$this->pathItem('index'       ,0  ),
 					$this->pathItem('projectlist' ,0  ),
 					$this->pathItem('project'     ,$l->projectid),
 					$this->pathItem('languagelist',$l->projectid)
@@ -169,6 +191,7 @@ class TreePathAction extends TreeAction implements Method {
 				$m->load();
 
 				return array(
+					$this->pathItem('index'       ,0  ),
 					$this->pathItem('projectlist' ,0        ),
 					$this->pathItem('project'     ,$m->projectid),
 					$this->pathItem('modellist'   ,$m->projectid)
