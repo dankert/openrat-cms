@@ -105,7 +105,7 @@ Openrat.Workbench = new function()
 				console.warn( {message: 'The server ping has failed.',jqXHR:jqXHR,status:textStatus,error:errorThrown });
 
 				// Is there any user input? Ok, we should warn the user that the data could not be saved.
-				if ($('.view.dirty').length > 0) {
+				if ($('.or-view--is-dirty').length > 0) {
 					window.alert("The server session is lost, please save your data.");
 				}
 				else {

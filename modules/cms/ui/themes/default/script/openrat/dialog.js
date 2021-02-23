@@ -49,28 +49,10 @@ Openrat.Dialog = function() {
 
 		Openrat.Notice.removeAllNotices();
 
-		//$('.or-dialog-content .or-view').html('<div class="header"><img class="or-icon" title="" src="./themes/default/images/icon/'+method+'.png" />'+name+'</div>');
-		//$('.or-dialog-content .or-view').data('id',id);
-		$('.or-dialog').removeClass('dialog--is-closed').addClass('dialog--is-open');
+		$('.or-dialog-content .or-view').html(''); // Clear old content
+
 		$('.or-dialog-content .or-act-dialog-name').html( name );
-
-		this.escapeKeyClosingHandler = function (e) {
-			if (e.keyCode == 27) { // ESC keycode
-				dialog.close();
-
-				$(document).off('keyup'); // de-register.
-			}
-		};
-
-		$(document).keyup(this.escapeKeyClosingHandler);
-
-		// close dialog on click onto the blurred area.
-		$('.or-dialog-filler,.or-act-dialog-close').off('click').click( function(e)
-		{
-			e.preventDefault();
-			dialog.close();
-		});
-
+		this.show();
 
 		view.onCloseHandler.add( function() {
 			dialog.close();
@@ -97,24 +79,69 @@ Openrat.Dialog = function() {
 	}
 
 
+
+	this.show = function() {
+
+		$('.or-dialog').removeClass('dialog--is-closed').addClass('dialog--is-open');
+
+		if   ( this.isDirty ) {
+			this.element.addClass('view--is-dirty');
+		}
+
+		let dialog = this;
+
+		this.escapeKeyClosingHandler = function (e) {
+			if (e.keyCode == 27) { // ESC keycode
+				dialog.close();
+
+				$(document).off('keyup'); // de-register.
+			}
+		};
+
+		$(document).keyup(this.escapeKeyClosingHandler);
+
+		// close dialog on click onto the blurred area.
+		$('.or-dialog-filler,.or-act-dialog-close').off('click').click( function(e)
+		{
+			e.preventDefault();
+			dialog.close();
+		});
+	}
+
+
+	this.hide = function() {
+		$('.or-dialog').removeClass('dialog--is-open').addClass('dialog--is-closed'); // Dialog schließen
+	}
+
+
 	/**
 	 * Closing the dialog.
 	 */
 	this.close = function() {
+
+		let dialog = this;
 
 		if   ( this.isDirty ) {
 			// ask the user if we should close this dialog
 			let exit = window.confirm( Openrat.Workbench.language.UNSAVED_CHANGES_CONFIRM );
 
 			if   ( ! exit )
-				return;
+				return; // do not close the dialog
+
+			let notice = new Openrat.Notice();
+			notice.msg = Openrat.Workbench.language.REOPEN_CLOSED_DIALOG;
+			notice.setStatus( 'warning' );
+			notice.timeout = 120;
+			notice.onClick.add( function() {
+				dialog.show();
+				notice.close();
+			});
+			notice.show();
 		}
 
 		// Remove dirty-flag from view
 		$('.or-dialog-content .or-view.or-view--is-dirty').removeClass('view--is-dirty');
-		$('.or-dialog-content .or-view').html('');
-		$('.or-dialog').removeClass('dialog--is-open').addClass('dialog--is-closed'); // Dialog schließen
-
+		this.hide();
 		$(document).unbind('keyup',this.escapeKeyClosingHandler); // Cleanup ESC-Key-Listener
 	}
 }

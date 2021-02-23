@@ -110,7 +110,6 @@ class Messages {
   const BUTTON_NEXT = 'BUTTON_NEXT';
   const BUTTON_OK_DESC = 'BUTTON_OK_DESC';
   const BUTTON_OK = 'BUTTON_OK';
-  const BUTTON_UNDO = 'BUTTON_UNDO';
   const CACHE_FILENAME = 'CACHE_FILENAME';
   const CALENDAR = 'CALENDAR';
   const CANCEL = 'CANCEL';
@@ -504,6 +503,7 @@ class Messages {
   const TREE = 'TREE';
   const TYPE = 'TYPE';
   const UNDO = 'UNDO';
+  const REOPEN_CLOSED_DIALOG = 'REOPEN_CLOSED_DIALOG';
   const UNKNOWN_TEXT = 'UNKNOWN_TEXT';
   const UNKNOWN = 'UNKNOWN';
   const UP = 'UP';

@@ -436,12 +436,6 @@ BUTTON_OK:
   es: Aprobar
   fr: Approuver
   ru: OK
-BUTTON_UNDO:
-  de: Rückgängig
-  en: Undo
-  es: Deshacer
-  fr: Défaire
-  ru: Ок Отменить
 CACHE_FILENAME:
   de: Cache-Dateiname
   en: Cache-Dateiname
@@ -2580,9 +2574,13 @@ TYPE:
 UNDO:
   de: Rückgängig
   en: Undo
-  es: Défaire
+  es: Deshacer
   fr: Défaire
+  ru: Ок Отменить
   it: Deshacer
+REOPEN_CLOSED_DIALOG:
+  de: Sie haben ungespeicherte Änderungen verworfen. Wieder herstellen?
+  en: You just canceled unsaved changes. Reopen?
 UNKNOWN_TEXT:
   de: kein Text verfügbar
   en: no text available

@@ -12,9 +12,11 @@ Openrat.Notice = function() {
 	this.status = 'inactive';
 	this.msg = '';
 	this.log = '';
+	this.timeout = 0;
 
 	let element = $('<div class="or-notice or-notice--is-inactive"></div>');
 
+	this.onClick = $.Callbacks();
 
 	const type = Object.freeze({
 		warning: 0,
@@ -86,24 +88,33 @@ Openrat.Notice = function() {
 			element.toggleClass('notice--is-full');
 		});
 
+		// Fire onclick-handler
+		element.find('.or-notice-text').click( function () {
+			notice.onClick.fire();
+		} );
+
 		// Close the notice on click
 		element.find('.or-act-notice-close').click(function () {
 			notice.close();
 		});
 
 		// Fadeout the notice after a while.
-		let timeout = 1;
-		if (this.status == 'ok') timeout = 3;
-		if (this.status == 'info') timeout = 30;
-		if (this.status == 'warning') timeout = 40;
-		if (this.status == 'error') timeout = 50;
+		if   ( !this.timeout ) {
+			switch( this.status ) {
+				case 'ok'     : this.timeout =  3; break;
+				case 'info'   : this.timeout = 30; break;
+				case 'warning': this.timeout = 40; break;
+				case 'error'  : this.timeout = 50; break;
+				default:        this.timeout = 10; console.error('unknown notice status: '+this.status);
+			}
+		}
 
-		if (timeout > 0)
+		if (this.timeout)
 			setTimeout(function () {
 				element.fadeOut('slow', function () {
 					element.remove();
 				});
-			}, timeout * 1000);
+			}, this.timeout * 1000);
 	}
 
 	this.setContext = function(type,id,name) {

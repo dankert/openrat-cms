@@ -1661,9 +1661,11 @@ Openrat.Notice = function() {
 	this.status = 'inactive';
 	this.msg = '';
 	this.log = '';
+	this.timeout = 0;
 
 	let element = $('<div class="or-notice or-notice--is-inactive"></div>');
 
+	this.onClick = $.Callbacks();
 
 	const type = Object.freeze({
 		warning: 0,
@@ -1735,24 +1737,33 @@ Openrat.Notice = function() {
 			element.toggleClass('notice--is-full');
 		});
 
+		// Fire onclick-handler
+		element.find('.or-notice-text').click( function () {
+			notice.onClick.fire();
+		} );
+
 		// Close the notice on click
 		element.find('.or-act-notice-close').click(function () {
 			notice.close();
 		});
 
 		// Fadeout the notice after a while.
-		let timeout = 1;
-		if (this.status == 'ok') timeout = 3;
-		if (this.status == 'info') timeout = 30;
-		if (this.status == 'warning') timeout = 40;
-		if (this.status == 'error') timeout = 50;
+		if   ( !this.timeout ) {
+			switch( this.status ) {
+				case 'ok'     : this.timeout =  3; break;
+				case 'info'   : this.timeout = 30; break;
+				case 'warning': this.timeout = 40; break;
+				case 'error'  : this.timeout = 50; break;
+				default:        this.timeout = 10; console.error('unknown notice status: '+this.status);
+			}
+		}
 
-		if (timeout > 0)
+		if (this.timeout)
 			setTimeout(function () {
 				element.fadeOut('slow', function () {
 					element.remove();
 				});
-			}, timeout * 1000);
+			}, this.timeout * 1000);
 	}
 
 	this.setContext = function(type,id,name) {
@@ -1898,28 +1909,10 @@ Openrat.Dialog = function() {
 
 		Openrat.Notice.removeAllNotices();
 
-		//$('.or-dialog-content .or-view').html('<div class="header"><img class="or-icon" title="" src="./themes/default/images/icon/'+method+'.png" />'+name+'</div>');
-		//$('.or-dialog-content .or-view').data('id',id);
-		$('.or-dialog').removeClass('dialog--is-closed').addClass('dialog--is-open');
+		$('.or-dialog-content .or-view').html(''); // Clear old content
+
 		$('.or-dialog-content .or-act-dialog-name').html( name );
-
-		this.escapeKeyClosingHandler = function (e) {
-			if (e.keyCode == 27) { // ESC keycode
-				dialog.close();
-
-				$(document).off('keyup'); // de-register.
-			}
-		};
-
-		$(document).keyup(this.escapeKeyClosingHandler);
-
-		// close dialog on click onto the blurred area.
-		$('.or-dialog-filler,.or-act-dialog-close').off('click').click( function(e)
-		{
-			e.preventDefault();
-			dialog.close();
-		});
-
+		this.show();
 
 		view.onCloseHandler.add( function() {
 			dialog.close();
@@ -1946,24 +1939,69 @@ Openrat.Dialog = function() {
 	}
 
 
+
+	this.show = function() {
+
+		$('.or-dialog').removeClass('dialog--is-closed').addClass('dialog--is-open');
+
+		if   ( this.isDirty ) {
+			this.element.addClass('view--is-dirty');
+		}
+
+		let dialog = this;
+
+		this.escapeKeyClosingHandler = function (e) {
+			if (e.keyCode == 27) { // ESC keycode
+				dialog.close();
+
+				$(document).off('keyup'); // de-register.
+			}
+		};
+
+		$(document).keyup(this.escapeKeyClosingHandler);
+
+		// close dialog on click onto the blurred area.
+		$('.or-dialog-filler,.or-act-dialog-close').off('click').click( function(e)
+		{
+			e.preventDefault();
+			dialog.close();
+		});
+	}
+
+
+	this.hide = function() {
+		$('.or-dialog').removeClass('dialog--is-open').addClass('dialog--is-closed'); // Dialog schließen
+	}
+
+
 	/**
 	 * Closing the dialog.
 	 */
 	this.close = function() {
+
+		let dialog = this;
 
 		if   ( this.isDirty ) {
 			// ask the user if we should close this dialog
 			let exit = window.confirm( Openrat.Workbench.language.UNSAVED_CHANGES_CONFIRM );
 
 			if   ( ! exit )
-				return;
+				return; // do not close the dialog
+
+			let notice = new Openrat.Notice();
+			notice.msg = Openrat.Workbench.language.REOPEN_CLOSED_DIALOG;
+			notice.setStatus( 'warning' );
+			notice.timeout = 120;
+			notice.onClick.add( function() {
+				dialog.show();
+				notice.close();
+			});
+			notice.show();
 		}
 
 		// Remove dirty-flag from view
 		$('.or-dialog-content .or-view.or-view--is-dirty').removeClass('view--is-dirty');
-		$('.or-dialog-content .or-view').html('');
-		$('.or-dialog').removeClass('dialog--is-open').addClass('dialog--is-closed'); // Dialog schließen
-
+		this.hide();
 		$(document).unbind('keyup',this.escapeKeyClosingHandler); // Cleanup ESC-Key-Listener
 	}
 }
@@ -2561,7 +2599,7 @@ Openrat.Workbench = new function()
 				console.warn( {message: 'The server ping has failed.',jqXHR:jqXHR,status:textStatus,error:errorThrown });
 
 				// Is there any user input? Ok, we should warn the user that the data could not be saved.
-				if ($('.view.dirty').length > 0) {
+				if ($('.or-view--is-dirty').length > 0) {
 					window.alert("The server session is lost, please save your data.");
 				}
 				else {
