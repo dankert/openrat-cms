@@ -18,6 +18,7 @@ class GroupComponent extends Component
 	public $show = true;
 	public $collapsible = true;
 	public $title;
+	public $description;
 	public $icon;
 	
 	public function createElement()
@@ -62,6 +63,12 @@ class GroupComponent extends Component
 
 			(new HtmlElement('span'))->content( $this->title )->asChildOf($headline);
 		}
+
+		if   ( $this->description )
+			(new HtmlElement('p'))
+				->addStyleClass(['group-description'])
+				->content( $this->description )
+				->asChildOf($group);
 
 		$value = (new HtmlElement('div'))
 			->addStyleClass(['collapsible-value','group-value'])

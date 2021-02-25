@@ -45,7 +45,7 @@ class PageelementValueAction extends PageelementAction implements Method {
 		if	( $this->value->page->hasRight(Permission::ACL_PUBLISH) )
 		$this->setTemplateVar( 'publish',false );
 
-		$funktionName = 'edit'.$this->value->element->type;
+		$funktionName = 'edit'.$this->value->element->getTypeName();
 
 		if	( ! method_exists($this,$funktionName) )
 		throw new \LogicException('Method does not exist: PageElementAction#'.$funktionName );

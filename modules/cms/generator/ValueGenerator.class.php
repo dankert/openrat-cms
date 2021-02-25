@@ -1015,7 +1015,7 @@ class ValueGenerator extends BaseGenerator
 		if   ( $this->context->pageContext->scheme == Producer::SCHEME_PREVIEW && $element->withIcon && $page->isHtml() )
 		{
 			// Anklickbaren Link voranstellen.
-			$iconLink = '<a href="javascript:parent.openNewAction(\''.$element->name.'\',\'pageelement\',\''.$page->objectid.'_'.$element->elementid.'\');" title="'.$element->desc.'"><i class="or-image-icon or-image-icon--el-'.$element->getTypeName().'"></i></a>';
+			$iconLink = '<a href="javascript:parent.Openrat.Workbench.openNewAction(\''.$element->name.'\',\'pageelement\',\''.$page->objectid.'_'.$element->elementid.'\');" title="'.$element->desc.'">&rarr;<i class="or-image-icon or-image-icon--el-'.$element->getTypeName().'"></i></a>';
 			$inhalt   = $iconLink.$inhalt;
 		}
 

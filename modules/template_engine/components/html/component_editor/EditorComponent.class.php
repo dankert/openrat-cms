@@ -11,6 +11,7 @@ class EditorComponent extends FieldComponent
 {
 	public $type;
 	public $name;
+	public $default;
 	public $mode      ='htmlmixed';
 	public $extension ='';
 	public $mimetype  = '';
@@ -56,7 +57,10 @@ class EditorComponent extends FieldComponent
 				throw new \LogicException("Unknown editor type: ".$this->type);
 		}
 
-		$textarea->content(Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->name));
+		if   ( $this->default )
+			$textarea->content( $this->default );
+		else
+			$textarea->content(Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->name));
 
 		return $textarea;
 	}

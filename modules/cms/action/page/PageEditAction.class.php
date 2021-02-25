@@ -13,6 +13,7 @@ use cms\model\Value;
 
 class PageEditAction extends PageAction implements Method {
     public function view() {
+
         $template = new Template( $this->page->templateid );
         $template->load();
 
@@ -31,6 +32,11 @@ class PageEditAction extends PageAction implements Method {
         }, $elements);
 
 		$this->setTemplateVar('elements',$elements);
+
+		$project   = $this->page->getProject();
+		$languages = $project->getLanguages();
+
+		$this->setTemplateVar('languages',$languages);
     }
 
     public function post() {

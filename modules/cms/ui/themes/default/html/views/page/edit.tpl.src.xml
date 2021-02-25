@@ -1,40 +1,64 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<table>
-		<row header="true">
-			<column header="true">
-				<text value="${message:NAME}"/>
-			</column>
-			<column header="true">
-				<text value="${message:DESCRIPTION}"/>
-			</column>
-			<column header="true">
-				<text value="${message:TYPE}"/>
-			</column>
-		</row>
-		<if empty="${elements}">
-			<row>
-				<column>
-					<text value="${message:NOT_FOUND}"/>
+
+	<group title="${message:LANGUAGES}">
+
+		<table>
+			<row header="true">
+				<column header="true">
+					<text value="${message:LANGUAGE}"/>
 				</column>
 			</row>
-		</if>
-		<list list="${elements}" extract="true">
-			<row class="data,act-clickable">
-				<column>
-					<link type="open" title="${desc}" name="${name}" action="pageelement" id="${pageelementid}">
-						<image action="pageelement"/>
-						<text value="${label}"/>
-					</link>
+			<list list="${languages}" key="id" value="name">
+				<row class="data,act-clickable">
+					<column>
+						<link type="dialog" title="${desc}" name="${name}" subaction="all" var1="languageid" value1="${id}">
+							<image action="pageelement"/>
+							<text value="${name}"/>
+						</link>
+					</column>
+				</row>
+			</list>
+		</table>
+	</group>
+
+	<group title="${message:PAGE_PAGEELEMENTS}">
+		<table>
+			<row header="true">
+				<column header="true">
+					<text value="${message:NAME}"/>
 				</column>
-				<column title="${desc}">
-					<text value="${desc}"/>
+				<column header="true">
+					<text value="${message:DESCRIPTION}"/>
 				</column>
-				<column>
-					<image elementtype="${typename}"/>
-					<text value="${message:el_${typename}}"/>
+				<column header="true">
+					<text value="${message:TYPE}"/>
 				</column>
 			</row>
-		</list>
-	</table>
+			<if empty="${elements}">
+				<row>
+					<column>
+						<text value="${message:NOT_FOUND}"/>
+					</column>
+				</row>
+			</if>
+			<list list="${elements}" extract="true">
+				<row class="data,act-clickable">
+					<column>
+						<link type="open" title="${desc}" name="${name}" action="pageelement" id="${pageelementid}">
+							<image action="pageelement"/>
+							<text value="${label}"/>
+						</link>
+					</column>
+					<column title="${desc}">
+						<text value="${desc}"/>
+					</column>
+					<column>
+						<image elementtype="${typename}"/>
+						<text value="${message:el_${typename}}"/>
+					</column>
+				</row>
+			</list>
+		</table>
+	</group>
 </output>

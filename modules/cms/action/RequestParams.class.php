@@ -157,7 +157,7 @@ class RequestParams
 
 	public function getRequiredRequestId( $varName ) {
 
-		$id = intval($this->getRequestVar($this->getRequestVar( $varName )));
+		$id = intval($this->getRequestVar( $varName ));
 
 		if   ( $id == 0 )
 			throw new ValidationException($varName);
