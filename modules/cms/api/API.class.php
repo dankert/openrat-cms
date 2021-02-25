@@ -28,6 +28,7 @@ class API
 	const OUTPUT_XML          = 4;
 	const OUTPUT_YAML         = 5;
 	const OUTPUT_HTML         = 6;
+	const OUTPUT_PLAIN        = 7;
 
 
 	/**
@@ -91,7 +92,12 @@ class API
                 $output = print_r($data, true);
                 break;
 
-            case self::OUTPUT_PHPSERIALIZE:
+			case self::OUTPUT_PLAIN:
+				header('Content-Type: text/plain; charset=UTF-8');
+				$output = print_r($data, true);
+				break;
+
+			case self::OUTPUT_PHPSERIALIZE:
                 header('Content-Type: application/php-serialized; charset=UTF-8');
                 $output = serialize($data);
                 break;
@@ -111,8 +117,7 @@ class API
                 else
                 {
                     // Fallback, falls json_encode() nicht existiert...
-                    $json = new JSON();
-                    $output = $json->encode($data);
+                    $output = JSON::encode($data);
                 }
                 break;
 
@@ -194,7 +199,7 @@ class API
         if (in_array('text/html', $types))
             return self::OUTPUT_HTML;  // normally an ordinary browser.
 
-        return self::OUTPUT_YAML; // Fallback
+        return self::OUTPUT_PLAIN; // Fallback
     }
 
     /**

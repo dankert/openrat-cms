@@ -117,14 +117,13 @@ class LinkComponent extends Component
 		else
 			$link->addAttribute('data-id','');
 
-		$json = new JSON();
         $arrayvalues = array();
         foreach( $this->getExtraParamArray() as $varname => $varvalue ) {
 
 			$link->addAttribute('data-extra-'.$varname,$varvalue);
             $arrayvalues[ $varname ] = $varvalue;
 		}
-		$link->addAttribute('data-extra',str_replace('"',"'",str_replace(array("\t", "\r", "\n"),'',$json->encode($arrayvalues))));
+		$link->addAttribute('data-extra',str_replace('"',"'",str_replace(array("\t", "\r", "\n"),'',JSON::encode($arrayvalues))));
 
 		switch ($this->type)
 		{
@@ -144,7 +143,7 @@ class LinkComponent extends Component
 
                 $data['none'] = '0';
 
-				$link->addAttribute('data-data',str_replace(array("\t", "\r", "\n"),'',$json->encode($data)));
+				$link->addAttribute('data-data',str_replace(array("\t", "\r", "\n"),'',JSON::encode($data)));
 				break;
 
 			case 'html':

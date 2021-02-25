@@ -78,8 +78,7 @@ class SearchIndex extends Macro
         }
 
         // Output search index as JSON
-        $json = new JSON();
-        echo $json->encode( $searchIndex );
+        echo JSON::encode( $searchIndex );
     }
 
 

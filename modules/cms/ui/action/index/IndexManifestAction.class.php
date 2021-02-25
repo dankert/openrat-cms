@@ -62,8 +62,7 @@ class IndexManifestAction extends IndexAction implements Method {
         );
 
         header("Content-Type: application/manifest+json");
-		$json = new JSON();
-		$this->setTemplateVar( 'manifest',$json->encode($value) );
+		$this->setTemplateVar( 'manifest',JSON::encode($value) );
     }
 
 

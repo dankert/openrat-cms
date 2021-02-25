@@ -405,7 +405,7 @@ class Dispatcher
         $possibleDbIds = [];
 
         if   ( $this->request->hasRequestVar('dbid') )
-            $possibleDbIds[] = $this->request->getRequestVar('dbid',RequestParams::FILTER_ALPHANUM);
+            $possibleDbIds[] = $this->request->getRequestAlphanum('dbid' );
 
         if   ( Session::getDatabaseId() )
             $possibleDbIds[] = Session::getDatabaseId();
@@ -574,7 +574,6 @@ class Dispatcher
             $date = explode(" ",$micro_date);
             $filename = $dir.'/'.$auditConfig->get('prefix','audit' ).'-'.date('c',$date[1]).'-'.$date[0].'.json';
 
-            $json = new JSON();
             $user = Session::getUser();
 
             $data = array(
@@ -592,7 +591,7 @@ class Dispatcher
             );
 
             // Write the file.
-            if   ( file_put_contents( $filename, $json->encode($data) ) === FALSE )
+            if   ( file_put_contents( $filename, JSON::encode($data) ) === FALSE )
                 Logger::warn('Could not write audit log to file: '.$filename);
             else
                 Logger::debug('Audit logfile: '.$filename);

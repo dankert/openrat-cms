@@ -3,7 +3,9 @@
 namespace cms\action;
 
 use util\exception\ValidationException;
+use util\json\JSON;
 use util\Text;
+use util\XML;
 
 
 class RequestParams
@@ -35,6 +37,8 @@ class RequestParams
 
 	public $isAction;
 
+	private $parameter;
+
 	/**
 	 * @var bool
 	 */
@@ -45,17 +49,48 @@ class RequestParams
 	 */
 	public function __construct()
 	{
-		$this->id         = @$_REQUEST[self::PARAM_ID       ];
-		$this->action     = @$_REQUEST[self::PARAM_ACTION   ];
-		$this->method     = @$_REQUEST[self::PARAM_SUBACTION];
+		$headers = array_change_key_case(getallheaders(), CASE_LOWER);
 
 		// Is this a POST request?
 		$this->isAction = @$_SERVER['REQUEST_METHOD'] == 'POST';
+
+		$contenttype = trim(explode( ';',@$headers['content-type'])[0]);
+
+		if   ( !$this->isAction )
+			$this->parameter = &$_GET;
+		else
+			switch( $contenttype ) {
+				case 'application/x-www-form-urlencoded': // the most used form url encoding
+				case 'multipart/form-data':               // Multipart-Formdata for File uploads
+				case '':
+					$this->parameter = &$_POST; // Using builtin POST data parsing
+					break;
+
+				case 'text/json':
+				case 'application/json':
+					// parsing the JSON data
+					$this->parameter = JSON::decode(file_get_contents("php://input"));
+					break;
+
+				case 'text/xml':
+				case 'application/xml':
+					$this->parameter = (array)simplexml_load_string(file_get_contents("php://input"));
+					break;
+
+				default:
+					// Unknown content type
+					throw new \LogicException('HTTP-POST with unknown content type: ' . $contenttype);
+			}
+
+		$this->id     = $this->getRequestId();
+		$this->action = $this->getRequestAlphanum(self::PARAM_ACTION   );
+		$this->method = $this->getRequestAlphanum(self::PARAM_SUBACTION);
 	}
 
 
 
 	public function getRequiredRequestVar( $varName, $transcode ) {
+
 		$value = $this->getRequestVar($varName,$transcode);
 
 		if   ( empty( $value ) )
@@ -85,21 +120,16 @@ class RequestParams
 	 */
 	public function getRequestVar($varName, $transcode = self::FILTER_TEXT)
 	{
-		if($varName == self::PARAM_ID)
-			return $this->id;
-
-		if($varName == self::PARAM_ACTION)
-			return $this->action;
-
-		if($varName == self::PARAM_SUBACTION)
-			return $this->method;
-
-		if (!isset($_REQUEST[$varName]))
+		if (!isset($this->parameter[$varName]))
 			return '';
 
-		return $this->cleanText( $_REQUEST[$varName], $transcode );
+		return $this->cleanText( $this->parameter[$varName], $transcode );
 	}
 
+
+	public function getRequestAlphanum( $varName ) {
+		return $this->getRequestVar( $varName,self::FILTER_ALPHANUM );
+	}
 
 	public function cleanText( $value, $transcode )
 	{
@@ -151,7 +181,7 @@ class RequestParams
 	 */
 	public function hasRequestVar($varName)
 	{
-		return (isset($_REQUEST[$varName]) && (!empty($_REQUEST[$varName]) || $_REQUEST[$varName] == '0'));
+		return (isset($this->parameter[$varName]) && (!empty($this->parameter[$varName]) || $this->parameter[$varName] == '0'));
 	}
 
 

@@ -10,11 +10,11 @@ require(__DIR__.'/../JSON.class.php');
  */
 class JSON
 {
-	public function encode($var) {
+	public static function encode($var) {
 		$json = new \JSON();
 		return $json->encode($var);
 	}
-	public function decode($var) {
+	public static function decode($var) {
 		$json = new \JSON();
 		return $json->decode($var);
 	}

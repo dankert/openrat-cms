@@ -181,8 +181,7 @@ class Logger
 				break;
 
 			case self::OUTPUT_JSON:
-				$json = new JSON();
-				$text = $json->encode( $values );
+				$text = JSON::encode( $values );
 				$text = str_replace("\n", "", $text);
 				break;
 		}
