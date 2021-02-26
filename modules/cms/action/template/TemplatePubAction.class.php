@@ -35,6 +35,7 @@ class TemplatePubAction extends TemplateAction implements Method {
 
 			$page = new Page( $pageId );
 			$page->load();
+			$page->setPublishedTimestamp();
 
 			foreach( $modelIds as $modelId ) {
 				foreach( $languageIds as $languageId ) {

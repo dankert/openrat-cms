@@ -657,6 +657,7 @@ class PageelementAction extends BaseAction
 			$pageGenerator = new PageGenerator( $pageContext );
 
 			$publisher->addOrderForPublishing( new PublishOrder( $pageGenerator->getCache()->load()->getFilename(),$pageGenerator->getPublicFilename(), $this->page->lastchangeDate ) );
+			$this->page->setPublishedTimestamp();
 		}
 
 		$publisher->publish();

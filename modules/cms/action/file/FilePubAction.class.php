@@ -18,6 +18,7 @@ class FilePubAction extends FileAction implements Method {
 		$publisher->addOrderForPublishing( new PublishOrder( $fileGenerator->getCache()->load()->getFilename(),$fileGenerator->getPublicFilename(),$this->file->lastchangeDate) );
 		$publisher->publish();
 
+		$this->file->setPublishedTimestamp();
 		$this->addNoticeFor($this->file,'PUBLISHED',[],'Published items:'."\n".implode("\n",$publisher->getDestinationFilenames())  );
     }
 }

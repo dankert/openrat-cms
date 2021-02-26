@@ -10,6 +10,7 @@ use cms\generator\PageGenerator;
 use cms\generator\Producer;
 use cms\generator\Publisher;
 use cms\generator\PublishOrder;
+use cms\model\File;
 use cms\model\Page;
 use cms\model\Permission;
 use cms\model\Folder;
@@ -73,6 +74,8 @@ class FolderPubAction extends FolderAction implements Method {
 					if   ( ! $template->publish )
 						continue; // Template should not be published.
 
+					$page->setPublishedTimestamp();
+
 					foreach( $project->getModelIds() as $modelId ) {
 
 						foreach( $project->getLanguageIds() as $languageId ) {
@@ -93,6 +96,8 @@ class FolderPubAction extends FolderAction implements Method {
 			if   ( $this->request->has('files'  ) ) {
 
 				foreach( $folder->getFiles() as $fileid ) {
+
+					(new File($fileid))->setPublishedTimestamp();
 
 					$fileGenerator = new FileGenerator( new FileContext( $fileid, Producer::SCHEME_PUBLIC));
 					$publisher->addOrderForPublishing( new PublishOrder( $fileGenerator->getCache()->load()->getFilename(),$fileGenerator->getPublicFilename(),0 ) );

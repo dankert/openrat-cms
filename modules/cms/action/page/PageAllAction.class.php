@@ -330,6 +330,7 @@ class PageAllAction extends PageAction implements Method {
 		}
 
 		$publisher->publish();
+		$this->page->setPublishedTimestamp();
 
 		$this->addNoticeFor( $this->page,Messages::PUBLISHED,[],
 			implode("\n",$publisher->getDestinationFilenames() ) );
