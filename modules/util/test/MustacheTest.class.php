@@ -7,7 +7,7 @@ use util\Mustache;
 class MustacheTest extends TestCase {
 
 
-	public function testMustache() {
+	public function testTemplate() {
 
 		$source = <<<SRC
 		Hello {{planet}}, {{& planet }}.{{! Simple example with a simple property }}
@@ -86,4 +86,26 @@ SRC;
 
 		$this->assertNotEmpty( $m->render( $data ) );
 	}
+
+	public function testEmptyTemplate() {
+		$m = new Mustache();
+		$m->parse( '' );
+
+
+		$this->assertEmpty( $m->render( [] ) );
+
+	}
+
+
+
+	public function testOnlyOneVariable() {
+		$m = new Mustache();
+		$m->parse( '{{name}}' );
+
+
+		$this->assertEquals('Pete', $m->render( ['name'=>'Pete'] ) );
+	}
+
+
+
 }
