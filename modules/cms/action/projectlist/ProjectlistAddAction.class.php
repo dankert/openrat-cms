@@ -9,7 +9,8 @@ use util\exception\SecurityException;
 class ProjectlistAddAction extends ProjectlistAction implements Method {
 
     public function view() {
-	    if( ! $this->userIsAdmin() )
+
+    	if( ! $this->userIsAdmin() )
 	        throw new SecurityException('user is not allowed to add a project');
 
 		$this->setTemplateVar( 'projects',Project::getAllProjects() );
@@ -21,6 +22,7 @@ class ProjectlistAddAction extends ProjectlistAction implements Method {
 	    if( !$this->userIsAdmin())
 	        throw new SecurityException();
 
+		/*
 		$projectid = $this->request->getVar('projectid');
 
 		if   ( $projectid ) {
@@ -31,18 +33,16 @@ class ProjectlistAddAction extends ProjectlistAction implements Method {
 			$project->export($db->id);
 			$this->addNoticeFor($project,Messages::DONE);
 
-		} else {
-			$name = $this->request->has('name');
+		} else {*/
 
-			if	( !$name )
-				throw new \util\exception\ValidationException('name');
+		$name = $this->request->getRequiredText('name');
 
-			$project = new Project();
-			$project->name = $name;
-			$project->persist();
-			$this->addNoticeFor($project,Messages::ADDED);
+		$project = new Project();
+		$project->name = $name;
+		$project->persist();
 
-		}
+		$this->addNoticeFor( $project,Messages::ADDED );
+		//}
 
     }
 }
