@@ -122,30 +122,35 @@ class Mustache
          	$closTag = $nextClosTag;
 
             // searching for:  {{#name}}
-            //                 +----->+
+            //                 ^
             $begin = strpos($source, $openTag, $pos);
             if   ( $begin === FALSE )
                 break;
 
+			// searching for:  {{#name}}
+			//                        ^
             $end = strpos($source, $closTag, $begin + strlen($openTag));
             if   ( $end === FALSE )
                 break;
 
-            // Example     {{#name}}
-            // Looking for   +---+
+            // looking for: {{#name}}
+            //                +---+
             $tagText = substr($source, $begin + strlen($openTag), $end - $begin - strlen($openTag));
 
-            $line = substr_count($source, "\n", 0, $begin) + 1;
+            // Calculating line/column for error messages
+            $line   = @substr_count($source, "\n", 0, $begin) + 1;
             $column = $begin - strrpos(substr($source, 0, $begin), "\n") + ($line==1?1:0);
 
+            // Creating new Mustache tag.
             $tag = new MustacheTag($tagText, $begin, $end+strlen($closTag) , $line, $column);
 
             if ( $tag->type == MustacheTag::DELIM_CHANGE ) {
-            	$parts = explode(' ',$tag->propertyName);
-			 	if   ( sizeof($parts ) >= 2 ) {
-			  		$nextOpenTag =        $parts[0];
-			  		$nextClosTag = substr($parts[1],0,-1);
+            	$nextDelimiters = explode(' ',$tag->propertyName);
+			 	if   ( sizeof($nextDelimiters ) >= 2 ) {
+			  		$nextOpenTag =        $nextDelimiters[0];
+			  		$nextClosTag = substr($nextDelimiters[1],0,-1);
 			 	}
+			 	// Removing tag from source
 			 	$source        = substr_replace($source,'',$begin,$end-$begin+strlen($closTag));
 			 	// Delimiter-Tag is not added to the taglist, we don't need it.
 				$pos = $begin;
@@ -156,6 +161,7 @@ class Mustache
 
                 $loader        = $this->partialLoader;
                 $partialSource = $loader( $tag->propertyName );
+				// Removing tag from source
                 $source        = substr_replace($source,$partialSource,$begin,$end-$begin+strlen($closTag));
                 // Partial-Tag is not added to the taglist, we don't need it.
 			 	$pos = $begin;
@@ -166,11 +172,7 @@ class Mustache
 				$pos = $end + strlen($closTag);
             }
 
-
-            //$source = substr($source,0,$begin-1).substr($source,$end+1);
         }
-
-        //echo '<pre>'; echo var_dump($this); echo '</pre';
 
         $this->parseStripTags( $source, $tagList );
     }
@@ -288,7 +290,20 @@ class Mustache
 
 class MustacheTag
 {
+	/**
+	 * The type of the tag.
+	 * for example '#' (for sections) or '' (for variables).
+	 * see the constants in this class.
+	 * @var string
+	 */
     public $type;
+
+
+	/**
+	 * the kind of the tag.
+	 * One of SIMPLE,OPEN,CLOSE
+	 * @var int
+	 */
     public $kind;
     public $propertyName;
 
@@ -308,7 +323,7 @@ class MustacheTag
     const COMMENT = '!';
     const PARTIAL = '>';
     const PARENT = '<';
-    const DELIM_CHANGE = '=';
+    const DELIM_CHANGE = '='; // Changing delimiter
     const UNESCAPED_2 = '{';
     const UNESCAPED = '&';
     const PRAGMA = '%';
@@ -320,12 +335,21 @@ class MustacheTag
         self::CLOSING, self::NEGATION, self::SECTION, self::COMMENT, self::PARTIAL, self::PARENT, self::DELIM_CHANGE, self::UNESCAPED_2, self::UNESCAPED, self::PRAGMA, self::BLOCK_VAR
     );
 
+
+	/**
+	 * MustacheTag constructor.
+	 * @param $tagText string the tag, for example: "#name"
+	 * @param $position
+	 * @param $end
+	 * @param $line
+	 * @param $column
+	 */
     public function __construct($tagText, $position, $end, $line, $column)
     {
-        $this->sourceLine = $line;
+        $this->sourceLine   = $line;
         $this->sourceColumn = $column;
-        $this->position = $position;
-        $this->end = $end;
+        $this->position     = $position;
+        $this->end          = $end;
 
         $this->parseTag($tagText);
     }
