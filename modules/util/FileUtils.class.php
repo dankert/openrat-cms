@@ -44,7 +44,7 @@ class FileUtils
 		];
 
 		foreach( $tmpdirs as $tmpdir ) {
-			if   ( is_dir($tmpdir) && is_writable($tmpdir) )
+			if   ( $tmpdir && @is_dir($tmpdir) && is_writable($tmpdir) )
 				break;
 		}
 
