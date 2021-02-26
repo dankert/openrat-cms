@@ -16,7 +16,7 @@ class FileUncompressAction extends FileAction implements Method {
 		switch( $this->file->extension )
 		{
 			case 'gz':
-				if	( $this->getRequestVar('replace') )
+				if	( $this->request->getVar('replace') )
 				{
 					if	( strcmp(substr($this->file->loadValue(),0,2),"\x1f\x8b"))
 					{
@@ -45,7 +45,7 @@ class FileUncompressAction extends FileAction implements Method {
 				break;
 
 			case 'bz2':
-				if	( $this->getRequestVar('replace') )
+				if	( $this->request->getVar('replace') )
 				{
 					$this->file->value = bzdecompress($this->file->loadValue());
 					$this->file->parse_filename( $this->file->filename );

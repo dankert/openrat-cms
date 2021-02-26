@@ -25,9 +25,9 @@ class FileAdvancedAction extends FileAction implements Method {
 
     public function post() {
 
-        $this->file->extension = $this->getRequestVar('extension'  ,RequestParams::FILTER_FILENAME);
+        $this->file->extension = $this->request->getVar('extension'  ,RequestParams::FILTER_FILENAME);
 
-		$typeid = $this->getRequestVar('type',RequestParams::FILTER_NUMBER  );
+		$typeid = $this->request->getVar('type',RequestParams::FILTER_NUMBER  );
 
 		if   ( ! in_array($typeid,[BaseObject::TYPEID_FILE,BaseObject::TYPEID_IMAGE,BaseObject::TYPEID_TEXT]))
 			throw new ValidationException('type');

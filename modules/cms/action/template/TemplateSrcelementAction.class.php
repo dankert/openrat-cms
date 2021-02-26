@@ -31,12 +31,12 @@ class TemplateSrcelementAction extends TemplateAction implements Method {
 
 
     public function post() {
-		$tplModel = $this->template->loadTemplateModelFor( $this->request->getRequestVar(RequestParams::PARAM_MODEL_ID));
+		$tplModel = $this->template->loadTemplateModelFor( $this->request->getModelId() );
 
-		$elementToAdd = new Element( $this->getRequestVar('elementid') );
+		$elementToAdd = new Element( $this->request->getText('elementid') );
 		$elementToAdd->load();
 
-		switch( $this->getRequestVar('type') )
+		switch( $this->request->getText('type') )
 		{
 			case 'addelement':
 				$tplModel->src .= "\n".'{{'.$elementToAdd->name.'}}';

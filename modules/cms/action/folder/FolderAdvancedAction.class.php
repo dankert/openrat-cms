@@ -49,7 +49,7 @@ class FolderAdvancedAction extends FolderAction implements Method {
 				$list[$id]['date'] = date( \cms\base\Language::lang('DATE_FORMAT'),$o->lastchangeDate );
 				$list[$id]['user'] = $o->lastchangeUser;
 
-				if	( $this->hasRequestVar("markall") || $this->hasRequestVar('obj'.$id) )
+				if	( $this->request->has("markall") || $this->request->has('obj'.$id) )
 					$this->setTemplateVar('obj'.$id,'1');
 			}
 		}
@@ -85,7 +85,7 @@ class FolderAdvancedAction extends FolderAction implements Method {
 		}
 
 		$this->setTemplateVar('actionlist',$actionList );
-		$this->setTemplateVar('defaulttype',$this->getRequestVar('type','alpha'));
+		$this->setTemplateVar('defaulttype',$this->request->getAlphanum('type'));
 
 		$this->setTemplateVar('object'      ,$list            );
 		$this->setTemplateVar('act_objectid',$this->folder->id);
@@ -101,9 +101,9 @@ class FolderAdvancedAction extends FolderAction implements Method {
 
 
     public function post() {
-		$type           = $this->getRequestVar('type');
-		$ids            = explode(',',$this->getRequestVar('ids'));
-		$targetObjectId = $this->getRequestVar('targetobjectid');
+		$type           = $this->request->getText('type');
+		$ids            = explode(',',$this->request->getText('ids'));
+		$targetObjectId = $this->request->getText('targetobjectid');
 
 		// Prüfen, ob Schreibrechte im Zielordner bestehen.
 		switch( $type )
@@ -141,7 +141,7 @@ class FolderAdvancedAction extends FolderAction implements Method {
 		foreach( $ids as $id )
 		{
 			// Nur, wenn Objekt ausgewaehlt wurde
-			if	( !$this->hasRequestVar('obj'.$id) )
+			if	( !$this->request->has('obj'.$id) )
 				continue;
 
 			$o = new BaseObject( $id );
@@ -202,8 +202,8 @@ class FolderAdvancedAction extends FolderAction implements Method {
 
 			// TAR speichern.
 			$tarFile = new File();
-			$tarFile->name     = \cms\base\Language::lang('ARCHIVE').' '.$this->getRequestVar('filename');
-			$tarFile->filename = $this->getRequestVar('filename');
+			$tarFile->name     = \cms\base\Language::lang('ARCHIVE').' '.$this->request->getText('filename');
+			$tarFile->filename = $this->request->getText('filename');
 			$tarFile->extension = 'tar';
 			$tarFile->parentid = $this->folder->objectid;
 
@@ -322,7 +322,7 @@ class FolderAdvancedAction extends FolderAction implements Method {
 
 					case 'delete':
 
-						if	( $this->hasRequestVar('confirm') )
+						if	( $this->request->has('confirm') )
 						{
 							switch( $o->getType() )
 							{

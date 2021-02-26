@@ -17,12 +17,12 @@ class FileCompressAction extends FileAction implements Method {
 		$this->setTemplateVar('formats'       ,$formats    );
     }
     public function post() {
-		$format = $this->getRequestVar('format',RequestParams::FILTER_ALPHANUM);
+		$format = $this->request->getVar('format',RequestParams::FILTER_ALPHANUM);
 		
 		switch( $format )
 		{
 			case 'gz':
-				if	( $this->getRequestVar('replace',RequestParams::FILTER_NUMBER)=='1' )
+				if	( $this->request->getVar('replace',RequestParams::FILTER_NUMBER)=='1' )
 				{
 					$this->file->value = gzencode( $this->file->loadValue(),1 );
 					$this->file->parse_filename( $this->file->filename.'.'.$this->file->extension.'.gz',FORCE_GZIP );
@@ -43,7 +43,7 @@ class FileCompressAction extends FileAction implements Method {
 				break;
 
 			case 'bzip2':
-				if	( $this->getRequestVar('replace')=='1' )
+				if	( $this->request->getText('replace')=='1' )
 				{
 					$this->file->value = bzcompress( $this->file->loadValue() );
 					$this->file->parse_filename( $this->file->filename.'.'.$this->file->extension.'.bz2' );

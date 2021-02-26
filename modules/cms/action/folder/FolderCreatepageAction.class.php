@@ -25,13 +25,13 @@ class FolderCreatepageAction extends FolderAction implements Method {
 
 
     public function post() {
-		$name    = $this->getRequestVar('name'   );
-		$filename    = $this->getRequestVar('filename'   );
-		$description = $this->getRequestVar('description');
+		$name    = $this->request->getText('name'   );
+		$filename    = $this->request->getText('filename'   );
+		$description = $this->request->getText('description');
 
 		$page = new Page();
 		$page->filename   = BaseObject::urlify( $name );
-		$page->templateid = $this->getRequestVar('templateid');
+		$page->templateid = $this->request->getText('templateid');
 		$page->parentid   = $this->folder->objectid;
 		$page->projectid  = $this->folder->projectid;
 

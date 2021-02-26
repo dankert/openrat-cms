@@ -62,7 +62,7 @@ class UserAction extends BaseAction
 
 
     public function init() {
-		$this->user = new User( $this->getRequestId() );
+		$this->user = new User( $this->request->getId() );
 		$this->user->load();
 		$this->setTemplateVar('userid',$this->user->userid);
 	}

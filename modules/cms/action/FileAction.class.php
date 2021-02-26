@@ -58,8 +58,8 @@ class FileAction extends ObjectAction
 
     public function init()
     {
-		$file = new File( $this->getRequestId() );
-		$file->languageid = $this->getRequestVar(RequestParams::PARAM_LANGUAGE_ID);
+		$file = new File( $this->request->getId() );
+		$file->languageid = $this->request->getLanguageId();
 		$file->load();
 
         $this->setBaseObject( $file );

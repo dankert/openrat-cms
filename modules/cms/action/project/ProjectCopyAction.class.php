@@ -25,9 +25,9 @@ class ProjectCopyAction extends ProjectAction implements Method {
 		$this->setTemplateVar( 'dbids',$dbids );
 		
 		
-		if	( $this->hasRequestVar('ok') )
+		if	( $this->request->has('ok') )
 		{
-			$this->project->export( $this->getRequestVar('dbid') );
+			$this->project->export( $this->request->getVar('dbid') );
 			
 			$this->addNoticeFor($this->project,Messages::DONE);
 		}

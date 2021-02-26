@@ -44,14 +44,14 @@ class ProfileEditAction extends ProfileAction implements Method {
 		
     }
     public function post() {
-		$this->user->fullname = $this->getRequestVar('fullname');
-		$this->user->tel      = $this->getRequestVar('tel'     );
-		$this->user->desc     = $this->getRequestVar('desc'    );
-		$this->user->style    = $this->getRequestVar('style'   );
-		$this->user->language = $this->getRequestVar('language');
-		$this->user->timezone = $this->getRequestVar('timezone');
-		$this->user->hotp     = $this->hasRequestVar('hotp'    );
-		$this->user->totp     = $this->hasRequestVar('totp'    );
+		$this->user->fullname = $this->request->getText('fullname');
+		$this->user->tel      = $this->request->getText('tel'     );
+		$this->user->desc     = $this->request->getText('desc'    );
+		$this->user->style    = $this->request->getText('style'   );
+		$this->user->language = $this->request->getText('language');
+		$this->user->timezone = $this->request->getText('timezone');
+		$this->user->hotp     = $this->request->has('hotp'    );
+		$this->user->totp     = $this->request->has('totp'    );
 		
 		
 		Session::setUser( $this->user );
@@ -68,7 +68,7 @@ class ProfileEditAction extends ProfileAction implements Method {
 		
 		
 		// Ausgewählte Sprache sofort verwenden.
-		$l = $this->getRequestVar('language');
+		$l = $this->request->getText('language');
 
 		if   ( $l )
         	$this->setLanguage($l);

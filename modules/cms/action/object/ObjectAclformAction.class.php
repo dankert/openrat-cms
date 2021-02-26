@@ -14,7 +14,7 @@ use language\Messages;
 
 class ObjectAclformAction extends ObjectAction implements Method {
     public function view() {
-		$o = new BaseObject( $this->getRequestId() );
+		$o = new BaseObject( $this->request->getId() );
 		$o->objectLoadRaw();
 
 		$this->setTemplateVars( $o->getAssocRelatedAclTypes() );
@@ -35,7 +35,7 @@ class ObjectAclformAction extends ObjectAction implements Method {
     public function post() {
 		$permission = new Permission();
 
-		$permission->objectid = $this->getRequestId();
+		$permission->objectid = $this->request->getId();
 		
 		// Nachschauen, ob der Benutzer ueberhaupt berechtigt ist, an
 		// diesem Objekt die ACLs zu aendern.
@@ -45,10 +45,10 @@ class ObjectAclformAction extends ObjectAction implements Method {
 			throw new \util\exception\SecurityException('Not allowed to insert permissions.'); // Scheiss Hacker ;)
 		
 		// Handelt es sich um eine Benutzer- oder Gruppen ACL?
-		switch( $this->getRequestVar('type') )
+		switch( $this->request->getText('type') )
 		{
 			case 'user':
-				$permission->userid  = $this->getRequestVar('userid' );
+				$permission->userid  = $this->request->getText('userid' );
 				
 				if	( $permission->userid <= 0 )
 				{
@@ -58,7 +58,7 @@ class ObjectAclformAction extends ObjectAction implements Method {
 				}
 				break;
 			case 'group':
-				$permission->groupid = $this->getRequestVar('groupid');
+				$permission->groupid = $this->request->getText('groupid');
 				if	( $permission->groupid <= 0 )
 				{
 					$this->addValidationError('type'      );
@@ -73,19 +73,19 @@ class ObjectAclformAction extends ObjectAction implements Method {
 				return;
 		}
 
-		$permission->languageid    = $this->getRequestVar(RequestParams::PARAM_LANGUAGE_ID);
+		$permission->languageid    = $this->request->getLanguageId();
 
-		$permission->write         = ( $this->hasRequestVar('write'        ) );
-		$permission->prop          = ( $this->hasRequestVar('prop'         ) );
-		$permission->delete        = ( $this->hasRequestVar('delete'       ) );
-		$permission->release       = ( $this->hasRequestVar('release'      ) );
-		$permission->publish       = ( $this->hasRequestVar('publish'      ) );
-		$permission->create_folder = ( $this->hasRequestVar('create_folder') );
-		$permission->create_file   = ( $this->hasRequestVar('create_file'  ) );
-		$permission->create_link   = ( $this->hasRequestVar('create_link'  ) );
-		$permission->create_page   = ( $this->hasRequestVar('create_page'  ) );
-		$permission->grant         = ( $this->hasRequestVar('grant'        ) );
-		$permission->transmit      = ( $this->hasRequestVar('transmit'     ) );
+		$permission->write         = ( $this->request->has('write'        ) );
+		$permission->prop          = ( $this->request->has('prop'         ) );
+		$permission->delete        = ( $this->request->has('delete'       ) );
+		$permission->release       = ( $this->request->has('release'      ) );
+		$permission->publish       = ( $this->request->has('publish'      ) );
+		$permission->create_folder = ( $this->request->has('create_folder') );
+		$permission->create_file   = ( $this->request->has('create_file'  ) );
+		$permission->create_link   = ( $this->request->has('create_link'  ) );
+		$permission->create_page   = ( $this->request->has('create_page'  ) );
+		$permission->grant         = ( $this->request->has('grant'        ) );
+		$permission->transmit      = ( $this->request->has('transmit'     ) );
 
 		$permission->persist();
 

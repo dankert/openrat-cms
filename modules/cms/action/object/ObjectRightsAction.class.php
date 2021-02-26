@@ -9,7 +9,7 @@ use cms\model\BaseObject;
 class ObjectRightsAction extends ObjectAction implements Method {
 
     public function view() {
-		$o = new BaseObject( $this->getRequestId() );
+		$o = new BaseObject( $this->request->getId() );
 		$o->objectLoadRaw();
 		$this->setTemplateVar( 'show',$o->getRelatedAclTypes() );
 		$this->setTemplateVar( 'type',$o->getType() );

@@ -39,10 +39,10 @@ class GroupMembershipsAction extends GroupAction implements Method {
 		{
 			$hasUser = array_key_exists($id,$groupUsers);
 			
-			if	( !$hasUser && $this->hasRequestVar('user'.$id) )
+			if	( !$hasUser && $this->request->has('user'.$id) )
 				$this->group->addUser($id);
 
-			if	( $hasUser && !$this->hasRequestVar('user'.$id) )
+			if	( $hasUser && !$this->request->has('user'.$id) )
 				$this->group->delUser($id);
 		}
 

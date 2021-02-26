@@ -24,11 +24,11 @@ class GroupPropAction extends GroupAction implements Method {
 
     public function post() {
 
-		if	( ! $this->getRequestVar('name') )
+		if	( ! $this->request->getText('name') )
 		    throw new \util\exception\ValidationException('name');
 
-        $this->group->name     = $this->getRequestVar('name');
-		$this->group->parentid = $this->getRequestId('parentid');
+        $this->group->name     = $this->request->getText('name');
+		$this->group->parentid = $this->request->getNumber('parentid');
 		if   ( ! $this->group->parentid )
 			$this->group->parentid = null;
 

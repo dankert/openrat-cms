@@ -56,7 +56,7 @@ class AliasAction extends ObjectAction
 
     public function init()
     {
-		$this->alias = new Alias( $this->getRequestId() );
+		$this->alias = new Alias( $this->request->getId() );
 		$this->alias->load();
 
 		parent::init();

@@ -29,7 +29,7 @@ class LanguagelistAddAction extends LanguagelistAction implements Method {
 
 		$countryList = Configuration::Conf()->get('countries',[]);
 		
-		$iso = 	$this->getRequestVar('isocode');
+		$iso = 	$this->request->getText('isocode');
 		$language = new Language();
 		$language->projectid = $this->project->projectid;
 		$language->isoCode   = $iso;

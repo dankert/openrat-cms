@@ -23,15 +23,15 @@ class ObjectPropAction extends ObjectAction implements Method {
 
 
     public function post() {
-        if   ( ! $this->hasRequestVar('filename' ) )
+        if   ( ! $this->request->has('filename' ) )
             throw new ValidationException('filename');
 
-        $this->baseObject->filename = BaseObject::urlify( $this->getRequestVar('filename') );
+        $this->baseObject->filename = BaseObject::urlify( $this->request->getText('filename') );
         $this->baseObject->save();
 
         $alias = $this->baseObject->getAliasForLanguage(null);
-        $alias->filename = BaseObject::urlify( $this->getRequestVar( 'alias_filename') );
-        $alias->parentid = $this->getRequestId('alias_folderid');
+        $alias->filename = BaseObject::urlify( $this->request->getText( 'alias_filename') );
+        $alias->parentid = $this->request->getNumber('alias_folderid');
 
         // If no alias, remove the alias
         if   ( ! $alias->filename )
@@ -41,8 +41,8 @@ class ObjectPropAction extends ObjectAction implements Method {
 
 
         // Should we do this?
-        if	( $this->hasRequestVar('creationTimestamp') && $this->userIsAdmin() )
-            $this->baseObject->createDate = $this->getRequestVar('creationTimestamp',RequestParams::FILTER_NUMBER);
+        if	( $this->request->has('creationTimestamp') && $this->userIsAdmin() )
+            $this->baseObject->createDate = $this->request->getVar('creationTimestamp',RequestParams::FILTER_NUMBER);
         $this->baseObject->setCreationTimestamp();
 
 

@@ -45,7 +45,7 @@ class ObjectAction extends BaseAction
 
     public function init()
     {
-		$baseObject = new BaseObject( $this->getRequestId() );
+		$baseObject = new BaseObject( $this->request->getId() );
 		$baseObject->objectLoad();
 
 		$this->setBaseObject( $baseObject );

@@ -15,8 +15,8 @@ class FolderCreatefolderAction extends FolderAction implements Method {
 
 
     public function post() {
-		$name        = $this->getRequestVar('name');
-		$description = $this->getRequestVar('description');
+		$name        = $this->request->getText('name');
+		$description = $this->request->getText('description');
 
 		$f = new Folder();
 		$f->projectid  = $this->folder->projectid;

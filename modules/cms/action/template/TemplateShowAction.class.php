@@ -10,7 +10,7 @@ use cms\model\TemplateModel;
 
 class TemplateShowAction extends TemplateAction implements Method {
     public function view() {
-		$modelId = $this->request->getRequestVar(RequestParams::PARAM_MODEL_ID);
+		$modelId = $this->request->getModelId();
 		if   ( ! $modelId )
 			$modelId = Project::create( $this->template->projectid )->getDefaultModelId();
 

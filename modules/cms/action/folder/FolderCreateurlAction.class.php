@@ -11,16 +11,16 @@ class FolderCreateurlAction extends FolderAction implements Method {
     public function view() {
     }
     public function post() {
-		$description = $this->getRequestVar('description');
-        $filename    = $this->getRequestVar('filename'   );
-        $name        = $this->getRequestVar('name'   );
+		$description = $this->request->getText('description');
+        $filename    = $this->request->getText('filename'   );
+        $name        = $this->request->getText('name'   );
 
 		$url = new Url();
 		$url->filename       = BaseObject::urlify( $name );
 		$url->parentid       = $this->folder->objectid;
 		$url->projectid      = $this->folder->projectid;
 
-		$url->url            = $this->getRequestVar('url');
+		$url->url            = $this->request->getText('url');
 
 		$url->persist();
 		$url->setNameForAllLanguages( $name,$description );

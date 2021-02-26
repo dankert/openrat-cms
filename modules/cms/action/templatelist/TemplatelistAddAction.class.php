@@ -33,7 +33,7 @@ class TemplatelistAddAction extends TemplatelistAction implements Method {
 
     public function post() {
 
-    	$name = $this->getRequestVar('name');
+    	$name = $this->request->getText('name');
 
 		// create a new template.
 		$template = new Template();
@@ -43,7 +43,7 @@ class TemplatelistAddAction extends TemplatelistAction implements Method {
 
 		$this->addNoticeFor($template, Messages::ADDED);
 
-		$copytemplateid = $this->getRequestId('copytemplateid');
+		$copytemplateid = $this->request->getNumber('copytemplateid');
 		if   ( $copytemplateid ) {
 
 			// Template kopieren.
@@ -83,12 +83,12 @@ class TemplatelistAddAction extends TemplatelistAction implements Method {
 				$template = new Template();
                 $template->projectid = $this->project->projectid;
 
-				$template->add( $this->getRequestVar('name') );
+				$template->add( $this->request->getRequestVar('name') );
 
 				$templateModel = $template->loadTemplateModelFor( $this->project->getDefaultModelId() );
 
 				// FIXME
-				$example = parse_ini_file('examples/templates/'.$this->getRequestVar('example'),true);
+				$example = parse_ini_file('examples/templates/'.$this->request->getRequestVar('example'),true);
 
 				foreach( $example as $exampleKey=>$exampleElement )
 				{
@@ -111,7 +111,7 @@ class TemplatelistAddAction extends TemplatelistAction implements Method {
 						$element->save();
 					}
 				}
-				$template->name = $this->getRequestVar('name');
+				$template->name = $this->request->getRequestVar('name');
 				$templateModel->src = str_replace(';',"\n",$templateModel->src);
 				
 				foreach( $template->getElementNames() as $elid=>$elname )

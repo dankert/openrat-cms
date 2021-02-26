@@ -11,7 +11,7 @@ class ProfileAvailableAction extends ProfileAction implements Method {
 
     public function view() {
 
-		$action = $this->getRequestVar('queryaction');
+		$action = $this->request->getText('queryaction');
 
 		$viewMethods = array_filter( [
 			// All UI-related methods (reachable via dropdown menus)

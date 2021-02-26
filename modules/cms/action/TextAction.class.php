@@ -49,7 +49,7 @@ class TextAction extends FileAction
 	public function init()
 	{
 
-		$text = new Text($this->getRequestId());
+		$text = new Text($this->request->getId());
 		$text->load();
 
 		$this->setBaseObject( $text );

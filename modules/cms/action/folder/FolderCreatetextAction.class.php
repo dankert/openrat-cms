@@ -22,17 +22,17 @@ class FolderCreatetextAction extends FolderAction implements Method {
 
 
     public function post() {
-		$name        = $this->getRequestVar('name'       );
-		$description = $this->getRequestVar('description');
+		$name        = $this->request->getText('name'       );
+		$description = $this->request->getText('description');
 
 		$text   = new Text();
 		$text->parentid  = $this->folder->objectid;
 		$text->projectid = $this->folder->projectid;
 
 		// Die neue Datei wird über eine URL geladen und dann im CMS gespeichert.
-		if	( $this->hasRequestVar('url') )
+		if	( $this->request->has('url') )
 		{
-			$url = $this->getRequestVar('url');
+			$url = $this->request->getText('url');
 			$http = new Http();
 			$http->setUrl( $url );
 
@@ -72,9 +72,9 @@ class FolderCreatetextAction extends FolderAction implements Method {
 				$text->value     = $upload->value;
 			}
 			else {
-				$text->filename  = $this->getRequestVar('filename');
-				$text->extension = $this->getRequestVar('extension');
-				$text->value     = $this->getRequestVar('text');
+				$text->filename  = $this->request->getText('filename');
+				$text->extension = $this->request->getText('extension');
+				$text->value     = $this->request->getText('text');
 				$text->size      = strlen( $text->value );
 			}
 		}

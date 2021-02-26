@@ -103,7 +103,7 @@ class PageFormAction extends PageAction implements Method {
     public function post() {
 		foreach( $this->page->getElements() as $elementid=>$name )
 		{
-			if   ( $this->hasRequestVar('saveid'.$elementid) )
+			if   ( $this->request->has('saveid'.$elementid) )
 			{
 				$value = new Value();
 				$value->objectid   = $this->page->objectid;
@@ -113,7 +113,7 @@ class PageFormAction extends PageAction implements Method {
 				$value->load();
 
 				// Eingegebenen Inhalt aus dem Request lesen
-				$inhalt  = $this->getRequestVar( 'id'.$elementid );
+				$inhalt  = $this->request->getText( 'id'.$elementid );
 
 				// Den Inhalt speichern.
 				switch( $value->element->type )
@@ -142,7 +142,7 @@ class PageFormAction extends PageAction implements Method {
 				$value->page = &$this->page;
 
 				// Ermitteln, ob Inhalt sofort freigegeben werden kann und soll
-				if	( $this->page->hasRight( Permission::ACL_RELEASE ) && $this->hasRequestVar('release') )
+				if	( $this->page->hasRight( Permission::ACL_RELEASE ) && $this->request->has('release') )
 					$value->publish = true;
 				else
 					$value->publish = false;
@@ -165,7 +165,7 @@ class PageFormAction extends PageAction implements Method {
 				else
 				{
 					// sonst nur 1x speichern (fuer die aktuelle Sprache)
-					$value->languageid = $this->getRequestVar(RequestParams::PARAM_LANGUAGE_ID);
+					$value->languageid = $this->request->getVar(RequestParams::PARAM_LANGUAGE_ID);
 					$value->add();
 				}
 			}

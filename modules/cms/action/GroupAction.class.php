@@ -52,7 +52,7 @@ class GroupAction extends BaseAction
 
     public function init()
     {
-        $this->group = new Group( $this->getRequestId() );
+        $this->group = new Group( $this->request->getId() );
 		$this->group->load();
 		$this->setTemplateVar( 'groupid',$this->group->groupid );
 	}

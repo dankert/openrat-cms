@@ -30,7 +30,7 @@ class LinkValueAction extends LinkAction implements Method {
 
     public function post() {
 
-        $this->link->linkedObjectId = $this->getRequestVar('targetobjectid');
+        $this->link->linkedObjectId = $this->request->getText('targetobjectid');
         $this->link->save();
 
         $this->addNoticeFor( $this->link, Messages::SAVED);

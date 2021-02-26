@@ -13,7 +13,7 @@ use language\Messages;
 class TemplateSrcAction extends TemplateAction implements Method {
     public function view() {
 	    $project = new Project( $this->template->projectid );
-	    $modelId = $this->getRequestId('modelid');
+	    $modelId = $this->request->getModelId();
 
 	    $modelSrc = array();
 
@@ -55,12 +55,12 @@ class TemplateSrcAction extends TemplateAction implements Method {
 
 
     public function post() {
-        $modelId = $this->getRequestId('modelid');
+        $modelId = $this->request->getModelId();
 
         $templatemodel = new TemplateModel($this->template->templateid, $modelId);
         $templatemodel->load();
 
-        $newSource = $this->request->getRequestVar('source',RequestParams::FILTER_RAW);
+        $newSource = $this->request->getRaw('source');
 
         /*
         // Not useful any more. Technical name of a element should not be changed.
@@ -75,7 +75,7 @@ class TemplateSrcAction extends TemplateAction implements Method {
         */
 
 		$templatemodel->src = $newSource;
-		$templatemodel->extension = $this->getRequestVar('extension');
+		$templatemodel->extension = $this->request->getText('extension');
 		$templatemodel->persist();
 
 		$this->addNoticeFor($this->template,Messages::SAVED);

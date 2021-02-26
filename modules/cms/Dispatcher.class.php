@@ -352,14 +352,14 @@ class Dispatcher
         if   ( ! $this->request->isAction && $this->request->action != 'index' && $this->request->method != 'oidc' )
             Session::close();
 
-        Logger::debug("Dispatcher executing {$action}/{$method}/" . $this->request->getRequestId().' -> '.$actionClassName->get().'#'.$subactionMethodName.'()');
+        Logger::debug("Dispatcher executing {$action}/{$method}/" . $this->request->getId().' -> '.$actionClassName->get().'#'.$subactionMethodName.'()');
 
 
         try {
 			$method = new \ReflectionMethod($do,$subactionMethodName);
 			$params = [];
 			foreach( $method->getParameters() as $parameter ) {
-				$params[ $parameter->getName() ] = $this->request->getRequiredRequestVar($parameter->getName(),RequestParams::FILTER_RAW);
+				$params[ $parameter->getName() ] = $this->request->getRequiredVar($parameter->getName(),RequestParams::FILTER_RAW);
 			}
 
             $method->invokeArgs($do,$params); // <== Executing the Action
@@ -404,8 +404,8 @@ class Dispatcher
 
         $possibleDbIds = [];
 
-        if   ( $this->request->hasRequestVar('dbid') )
-            $possibleDbIds[] = $this->request->getRequestAlphanum('dbid' );
+        if   ( $this->request->has('dbid') )
+            $possibleDbIds[] = $this->request->getAlphanum('dbid' );
 
         if   ( Session::getDatabaseId() )
             $possibleDbIds[] = Session::getDatabaseId();

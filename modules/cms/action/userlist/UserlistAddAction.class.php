@@ -16,8 +16,7 @@ class UserlistAddAction extends UserlistAction implements Method {
     public function view() {
     }
     public function post( ) {
-		$name = $this->getRequestVar('name');
-		$name = $this->request->cleanText($name,RequestParams::FILTER_ALPHANUM);
+		$name = $this->request->getAlphanum('name');
 
 		$user = User::loadWithName($name,User::AUTH_TYPE_INTERNAL);
 

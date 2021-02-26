@@ -37,10 +37,10 @@ class UserMembershipsAction extends UserAction implements Method {
 		{
 			$hasGroup = array_key_exists($id,$userGroups);
 			
-			if	( !$hasGroup && $this->hasRequestVar('group'.$id) )
+			if	( !$hasGroup && $this->request->has('group'.$id) )
 				$this->user->addGroup($id);
 
-			if	( $hasGroup && !$this->hasRequestVar('group'.$id) )
+			if	( $hasGroup && !$this->request->has('group'.$id) )
 				$this->user->delGroup($id);
 		}
 		

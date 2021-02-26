@@ -49,7 +49,7 @@ class PageAction extends ObjectAction
 
     public function init()
     {
-        $page = new Page( $this->getRequestId() );
+        $page = new Page( $this->request->getId() );
         //$context = new PageContext();
         //$context->sourceObjectId = $page->objectid;
 

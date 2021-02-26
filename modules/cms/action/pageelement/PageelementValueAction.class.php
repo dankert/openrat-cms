@@ -17,7 +17,7 @@ class PageelementValueAction extends PageelementAction implements Method {
 		$this->value->publish = false;
 
 
-		$valueId =$this->getRequestId('valueid');
+		$valueId =$this->request->getNumber('valueid');
 		if   ( $valueId ) {
 			$this->value->valueid = $valueId;
 			$this->value->loadWithId();

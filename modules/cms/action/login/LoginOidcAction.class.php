@@ -18,8 +18,8 @@ class LoginOidcAction extends LoginAction implements Method {
 
     public function view() {
 
-    	if   ( $this->hasRequestVar("id")) {
-			$providerName = $this->request->getRequestVar('id',RequestParams::FILTER_ALPHANUM);
+    	if   ( $this->request->has("id")) {
+			$providerName = $this->request->getAlphanum('id');
 			Session::set(Session::KEY_OIDC_PROVIDER,$providerName);
 		}else {
 			$providerName = Session::get( Session::KEY_OIDC_PROVIDER);

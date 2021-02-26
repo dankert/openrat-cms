@@ -16,20 +16,20 @@ class LanguagePropAction extends LanguageAction implements Method {
     }
 
     public function post() {
-		if	( $this->hasRequestVar('name') )
+		if	( $this->request->has('name') )
 		{
-			$this->language->name    = $this->getRequestVar('name'   );
-			$this->language->isoCode = $this->getRequestVar('isocode');
+			$this->language->name    = $this->request->getText('name'   );
+			$this->language->isoCode = $this->request->getText('isocode');
 		}
 		else
 		{
 			$countries = Configuration::subset('countries');
-			$iso = $this->getRequestVar('isocode');
+			$iso = $this->request->getText('isocode');
 			$this->language->name    = $countries->get($iso,$iso);
 			$this->language->isoCode = strtolower( $iso );
 		}
 
-		if  ( $this->hasRequestVar('is_default') )
+		if  ( $this->request->has('is_default') )
 		    $this->language->setDefault();
 		
 		$this->language->save();

@@ -8,7 +8,7 @@ class SearchQuicksearchAction extends SearchAction implements Method {
     public function view() {
 		$searchConfig = Configuration::subset('search')->subset('quicksearch');
 
-		$text = $this->getRequestVar('search');
+		$text = $this->request->getText('search');
 		
 		$flag = $searchConfig->subset('flag');
 

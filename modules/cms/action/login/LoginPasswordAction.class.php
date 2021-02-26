@@ -32,7 +32,7 @@ class LoginPasswordAction extends LoginAction implements Method {
 
 
     public function post() {
-		$username = $this->getRequestVar('username');
+		$username = $this->request->getText('username');
 		if	( ! $username  )
 			throw new ValidationException('username');
 
@@ -44,7 +44,7 @@ class LoginPasswordAction extends LoginAction implements Method {
 		{
 			srand ((double)microtime()*1000003);
 			$code = rand();
-			$this->setSessionVar(Session::KEY_PASSWORD_COMMIT_CODE,$code);
+			Session::set(Session::KEY_PASSWORD_COMMIT_CODE,$code);
 			
 			$eMail = new Mail($user->mail,Messages::MAIL_SUBJECT_PASSWORD_COMMIT_CODE,Messages::MAIL_TEXT_PASSWORD_COMMIT_CODE);
 			$eMail->setVar('name',$user->getName());
@@ -52,7 +52,7 @@ class LoginPasswordAction extends LoginAction implements Method {
 
 			try {
 				$eMail->send();
-				$this->setSessionVar(Session::KEY_PASSWORD_COMMIT_NAME,$user->name);
+				Session::set(Session::KEY_PASSWORD_COMMIT_NAME,$user->name);
 			}
 			catch( \Exception $e ) {
 				Logger::warn( $e );

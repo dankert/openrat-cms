@@ -426,46 +426,46 @@ class ElementAdvancedAction extends ElementAction implements Method {
     public function post() {
         $ini_date_format = Configuration::subset('date')->get('format',[] );
 
-        if	( $this->hasRequestVar('format'))
-            $this->element->format = $this->getRequestId('format');
+        if	( $this->request->has('format'))
+            $this->element->format = $this->request->getNumber('format');
 
 
-        if	( $this->hasRequestVar('dateformat'))
-            $this->element->dateformat  = @$ini_date_format[$this->getRequestVar('dateformat')];
+        if	( $this->request->has('dateformat'))
+            $this->element->dateformat  = @$ini_date_format[$this->request->getText('dateformat')];
 
 
-        if	( $this->hasRequestVar('default_longtext'))
-            $this->element->defaultText     = $this->getRequestVar('default_longtext',RequestParams::FILTER_TEXT);
+        if	( $this->request->has('default_longtext'))
+            $this->element->defaultText     = $this->request->getText('default_longtext');
         else
-            $this->element->defaultText     = $this->getRequestVar('default_text',RequestParams::FILTER_TEXT);
+            $this->element->defaultText     = $this->request->getText('default_text');
 
-        $this->element->subtype         = $this->getRequestVar('subtype');
+        $this->element->subtype         = $this->request->getText('subtype');
 
-        $this->element->html            = $this->hasRequestVar('html');
-        $this->element->withIcon        = $this->hasRequestVar('with_icon');
-        $this->element->allLanguages    = $this->hasRequestVar('all_languages');
-        $this->element->writable        = $this->hasRequestVar('writable');
-        $this->element->inherit         = $this->hasRequestVar('inherit');
+        $this->element->html            = $this->request->has('html');
+        $this->element->withIcon        = $this->request->has('with_icon');
+        $this->element->allLanguages    = $this->request->has('all_languages');
+        $this->element->writable        = $this->request->has('writable');
+        $this->element->inherit         = $this->request->has('inherit');
 
-        $this->element->decimals        = $this->getRequestVar('decimals');
-        $this->element->decPoint        = $this->getRequestVar('dec_point');
-        $this->element->thousandSep     = $this->getRequestVar('thousand_sep');
-        $this->element->folderObjectId  = $this->getRequestVar('folderobjectid'  );
-        $this->element->defaultObjectId = $this->getRequestVar('default_objectid');
+        $this->element->decimals        = $this->request->getText('decimals');
+        $this->element->decPoint        = $this->request->getText('dec_point');
+        $this->element->thousandSep     = $this->request->getText('thousand_sep');
+        $this->element->folderObjectId  = $this->request->getText('folderobjectid'  );
+        $this->element->defaultObjectId = $this->request->getText('default_objectid');
 
-        if	( $this->hasRequestVar('select_items'))
-            $this->element->code         = $this->getRequestVar('select_items');
+        if	( $this->request->has('select_items'))
+            $this->element->code         = $this->request->getText('select_items');
         else
-            $this->element->code         = $this->getRequestVar('code'            ,RequestParams::FILTER_RAW);
+            $this->element->code         = $this->request->getRaw('code');
 
-        if	( $this->hasRequestVar('name') )
-            $this->element->name = $this->getRequestVar('name');
+        if	( $this->request->has('name') )
+            $this->element->name = $this->request->getText('name');
 
-        if	( $this->hasRequestVar('linkelement') )
-            $this->element->setPrefix( $this->getRequestVar('linkelement') );
+        if	( $this->request->has('linkelement') )
+            $this->element->setPrefix( $this->request->getText('linkelement') );
 
-        if	( $this->hasRequestVar('parameters'))
-            $this->element->code = $this->getRequestVar('parameters',RequestParams::FILTER_RAW);
+        if	( $this->request->has('parameters'))
+            $this->element->code = $this->request->getVar('parameters',RequestParams::FILTER_RAW);
 
         $this->element->save();
         $this->addNoticeFor( $this->element, Messages::SAVED);

@@ -49,7 +49,7 @@ class ModellistAction extends BaseAction
     public function init()
     {
 
-        $this->project = new Project( $this->request->getRequestId());
+        $this->project = new Project( $this->request->getId());
     }
 
 

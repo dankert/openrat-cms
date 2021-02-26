@@ -11,8 +11,8 @@ class ModellistAddAction extends ModellistAction implements Method {
 
     public function post() {
 		$model = new Model();
-		$model->projectid = $this->getRequestVar('projectid');
-		$model->name      = $this->getRequestVar('name');
+		$model->projectid = $this->request->getText('projectid');
+		$model->name      = $this->request->getText('name');
 		$model->persist();
 		
 		// Wenn kein Namen eingegeben, dann einen setzen.

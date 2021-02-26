@@ -51,7 +51,7 @@ class UrlAction extends ObjectAction
 
     public function init()
     {
-		$url = new Url( $this->getRequestId() );
+		$url = new Url( $this->request->getId() );
 		$url->load();
 
 		$this->setBaseObject( $url );

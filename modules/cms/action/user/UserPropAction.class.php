@@ -43,24 +43,24 @@ class UserPropAction extends UserAction implements Method {
 
     public function post() {
 
-		if	( ! $this->getRequestVar('name') )
+		if	( ! $this->request->getText('name') )
             throw new \util\exception\ValidationException( 'name');
 
         // Benutzer speichern
-        $this->user->name     = $this->getRequestVar('name'    );
-        $this->user->fullname = $this->getRequestVar('fullname');
-        $this->user->isAdmin  = $this->hasRequestVar('is_admin');
-        $this->user->tel      = $this->getRequestVar('tel'     );
-        $this->user->desc     = $this->getRequestVar('desc'    );
-        $this->user->language = $this->getRequestVar('language');
-        $this->user->timezone = $this->getRequestVar('timezone');
-        $this->user->hotp     = $this->hasRequestVar('hotp'    );
-        $this->user->totp     = $this->hasRequestVar('totp'    );
+        $this->user->name     = $this->request->getText('name'    );
+        $this->user->fullname = $this->request->getText('fullname');
+        $this->user->isAdmin  = $this->request->has('is_admin');
+        $this->user->tel      = $this->request->getText('tel'     );
+        $this->user->desc     = $this->request->getText('desc'    );
+        $this->user->language = $this->request->getText('language');
+        $this->user->timezone = $this->request->getText('timezone');
+        $this->user->hotp     = $this->request->has('hotp'    );
+        $this->user->totp     = $this->request->has('totp'    );
 
         if	( Configuration::get(['security','user','show_admin_mail']) )
-            $this->user->mail = $this->getRequestVar('mail'    );
+            $this->user->mail = $this->request->getText('mail'    );
 
-        $this->user->style    = $this->getRequestVar('style'   );
+        $this->user->style    = $this->request->getText('style'   );
 
         $this->user->persist();
         $this->addNoticeFor($this->user,Messages::SAVED);

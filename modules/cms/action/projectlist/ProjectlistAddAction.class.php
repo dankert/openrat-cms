@@ -21,7 +21,7 @@ class ProjectlistAddAction extends ProjectlistAction implements Method {
 	    if( !$this->userIsAdmin())
 	        throw new SecurityException();
 
-		$projectid = $this->getRequestVar('projectid');
+		$projectid = $this->request->getVar('projectid');
 
 		if   ( $projectid ) {
 
@@ -32,7 +32,7 @@ class ProjectlistAddAction extends ProjectlistAction implements Method {
 			$this->addNoticeFor($project,Messages::DONE);
 
 		} else {
-			$name = $this->hasRequestVar('name');
+			$name = $this->request->has('name');
 
 			if	( !$name )
 				throw new \util\exception\ValidationException('name');

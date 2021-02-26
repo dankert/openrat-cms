@@ -15,10 +15,10 @@ use language\Messages;
 
 class ObjectCopyAction extends ObjectAction implements Method {
     public function view() {
-		$sourceObject = new BaseObject( $this->getRequestId());
+		$sourceObject = new BaseObject( $this->request->getId());
 		$sourceObject->load();
 		
-		$targetFolder = new BaseObject( $this->getRequestVar('targetFolderId',RequestParams::FILTER_NUMBER));
+		$targetFolder = new BaseObject( $this->request->getText('targetFolderId',RequestParams::FILTER_NUMBER));
 		$targetFolder->load();
 		
 		$this->setTemplateVar('source'  ,$sourceObject->getProperties() );
@@ -33,9 +33,9 @@ class ObjectCopyAction extends ObjectAction implements Method {
 		}
     }
     public function post() {
-		$type           = $this->getRequestVar('type');
-		$targetObjectId = $this->getRequestVar('targetid',RequestParams::FILTER_NUMBER);
-		$sourceObjectId = $this->getRequestVar('sourceid',RequestParams::FILTER_NUMBER);
+		$type           = $this->request->getText('type');
+		$targetObjectId = $this->request->getNumber('targetid');
+		$sourceObjectId = $this->request->getVar('sourceid',RequestParams::FILTER_NUMBER);
 
 		$sourceObject = new BaseObject( $sourceObjectId );
 		$sourceObject->load();

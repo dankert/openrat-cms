@@ -9,7 +9,7 @@ class LanguageRemoveAction extends LanguageAction implements Method {
 		$this->setTemplateVar('name'   ,$this->language->name   );
     }
     public function post() {
-		if   ( $this->getRequestVar('confirm') == '1' )
+		if   ( $this->request->getText('confirm') == '1' )
 			$this->language->delete();
     }
 }

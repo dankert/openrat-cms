@@ -35,15 +35,15 @@ class ElementPropAction extends ElementAction implements Method {
 
 
     public function post() {
-        if	( !$this->userIsAdmin() && $this->getRequestVar('type') == 'code' )
+        if	( !$this->userIsAdmin() && $this->request->getVar('type') == 'code' )
             // Code-Elemente fuer Nicht-Administratoren nicht benutzbar
             throw new \util\exception\ValidationException('type');
 
-        $this->element->typeid = $this->getRequestId('typeid');
+        $this->element->typeid = $this->request->getNumber('typeid');
 
-        $this->element->name = $this->getRequestVar('name'       ,RequestParams::FILTER_ALPHANUM);
-        $this->element->label= $this->getRequestVar('label'      ,RequestParams::FILTER_TEXT);
-        $this->element->desc = $this->getRequestVar('description',RequestParams::FILTER_TEXT);
+        $this->element->name = $this->request->getVar('name'       ,RequestParams::FILTER_ALPHANUM);
+        $this->element->label= $this->request->getVar('label'      ,RequestParams::FILTER_TEXT);
+        $this->element->desc = $this->request->getVar('description',RequestParams::FILTER_TEXT);
 
         $this->element->save();
 

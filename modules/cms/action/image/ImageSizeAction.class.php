@@ -44,22 +44,22 @@ class ImageSizeAction extends ImageAction implements Method {
 
 
     public function post() {
-		$width           = intval($this->getRequestVar('width'           ));
-		$height          = intval($this->getRequestVar('height'          ));
-		$jpegcompression =        $this->getRequestVar('jpeg_compression') ;
-		$format          =        $this->getRequestVar('format'          ) ;
-		$factor          =        $this->getRequestVar('factor'          ) ;
+		$width           = intval($this->request->getText('width'           ));
+		$height          = intval($this->request->getText('height'          ));
+		$jpegcompression =        $this->request->getText('jpeg_compression') ;
+		$format          =        $this->request->getText('format'          ) ;
+		$factor          =        $this->request->getText('factor'          ) ;
 		
-		if	( $this->getRequestVar('type') == 'input' &&
-			  ! $this->hasRequestVar('width' )      &&
-			  ! $this->hasRequestVar('height') )
+		if	( $this->request->getText('type') == 'input' &&
+			  ! $this->request->has('width' )      &&
+			  ! $this->request->has('height') )
 		{
 			$this->addValidationError('width','INPUT_NEW_IMAGE_SIZE' );
 			$this->addValidationError('height','');
 			return;
 		}
 		
-		if	( $this->hasRequestVar('copy') )
+		if	( $this->request->has('copy') )
 		{
 			// Datei neu anlegen.
 			$imageFile = new Image($this->image->objectid);
@@ -75,7 +75,7 @@ class ImageSizeAction extends ImageAction implements Method {
 			$imageFile = $this->image;
 		}
 		
-		if	( $this->getRequestVar('type') == 'factor')
+		if	( $this->request->getText('type') == 'factor')
 		{
 			$width  = 0;
 			$height = 0;

@@ -44,7 +44,7 @@ class FolderOrderAction extends FolderAction implements Method {
 		$ids   = $this->folder->getObjectIds();
 		$seq   = 0;
 
-		$order = explode(',',$this->getRequestVar('order') );
+		$order = explode(',',$this->request->getText('order') );
 
 		foreach( $order as $objectid )
 		{

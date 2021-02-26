@@ -12,7 +12,7 @@ class ProfileConfirmmailAction extends ProfileAction implements Method {
     public function post() {
 		$sessionCode       = Session::get( Session::KEY_MAIL_CHANGE_CODE );
 		$newMail           = Session::get( Session::KEY_MAIL_CHANGE_MAIL );
-		$inputRegisterCode = $this->getRequestVar('code');
+		$inputRegisterCode = $this->request->getText('code');
 		
 		if	( $sessionCode == $inputRegisterCode )
 		{

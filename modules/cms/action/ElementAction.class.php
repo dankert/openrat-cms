@@ -42,10 +42,10 @@ class ElementAction extends BaseAction
 
     public function init()
     {
-        if	( $this->getRequestId() == 0 )
+        if	( $this->request->getId() == 0 )
 			throw new \util\exception\ValidationException('no element-id available');
 
-		$this->element = new Element( $this->getRequestId() );
+		$this->element = new Element( $this->request->getId() );
 		$this->element->load();
 
 		$this->setTemplateVar( 'elementid' ,$this->element->elementid   );

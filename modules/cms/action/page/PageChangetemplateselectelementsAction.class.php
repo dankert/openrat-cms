@@ -10,7 +10,7 @@ use language\Messages;
 class PageChangetemplateselectelementsAction extends PageAction implements Method {
 
     public function view() {
-		$newTemplateId = $this->getRequestVar( 'newtemplateid' );
+		$newTemplateId = $this->request->getText( 'newtemplateid' );
 
 		if   ( $newTemplateId != 0  )
 		{
@@ -54,12 +54,12 @@ class PageChangetemplateselectelementsAction extends PageAction implements Metho
 
 
     public function post() {
-		$newTemplateId = $this->getRequestVar('newtemplateid');
+		$newTemplateId = $this->request->getText('newtemplateid');
 		$replaceElementMap = Array();
 
 		$oldTemplate = new Template( $this->page->templateid );
 		foreach( $oldTemplate->getElementIds() as $elementid )
-			$replaceElementMap[$elementid] = $this->getRequestVar('from'.$elementid);
+			$replaceElementMap[$elementid] = $this->request->getText('from'.$elementid);
 
 		if	( $newTemplateId != 0  )
 		{

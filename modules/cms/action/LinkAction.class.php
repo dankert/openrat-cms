@@ -52,7 +52,7 @@ class LinkAction extends ObjectAction
 
     public function init()
     {
-		$link = new Link( $this->getRequestId() );
+		$link = new Link( $this->request->getId() );
 		$link->load();
 
 		$this->setBaseObject( $link );

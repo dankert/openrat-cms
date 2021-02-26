@@ -56,7 +56,7 @@ class FileShowAction extends FileAction implements Method {
 		header('Content-Length: '.$this->file->size );
 
 
-		if	( $this->request->getRequestVar('encoding') == 'base64')
+		if	( $this->request->getAlphanum('encoding') == 'base64')
 		{
 		    $encodingFunction = function($value) {
 		        return base64_encode($value);

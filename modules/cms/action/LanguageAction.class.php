@@ -52,7 +52,7 @@ class LanguageAction extends BaseAction
 
     public function init()
     {
-		$this->language = new Language( $this->getRequestId() );
+		$this->language = new Language( $this->request->getId() );
 		$this->language->load();
 	}
 

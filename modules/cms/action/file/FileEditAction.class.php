@@ -35,12 +35,12 @@ class FileEditAction extends FileAction implements Method {
             $this->file->value = $upload->value;
             $this->file->saveValue();
         }
-		elseif( $this->hasRequestVar('value') )
+		elseif( $this->request->has('value') )
         {
             // File value received
-            $this->file->value = $this->getRequestVar('value');
+            $this->file->value = $this->request->getText('value');
 
-            if   ( strtolower($this->getRequestVar('encoding')) == 'base64')
+            if   ( strtolower($this->request->getText('encoding')) == 'base64')
                 // file value is base64-encoded
                 $this->file->value = base64_decode($this->file->value);
 

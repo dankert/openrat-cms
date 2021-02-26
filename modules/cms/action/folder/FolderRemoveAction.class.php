@@ -14,7 +14,7 @@ class FolderRemoveAction extends FolderAction implements Method {
 
 
     public function post() {
-        if  ( $this->hasRequestVar( 'withChildren'))
+        if  ( $this->request->has( 'withChildren'))
             $this->folder->deleteAll();  // Delete with children
         else
             if   ( $this->folder->hasChildren() )

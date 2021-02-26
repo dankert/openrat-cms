@@ -17,7 +17,7 @@ class LoginRegisterAction extends LoginAction implements Method {
     }
     public function post() {
 
-		$email_address = $this->getRequestVar('mail',RequestParams::FILTER_MAIL);
+		$email_address = $this->request->getVar('mail',RequestParams::FILTER_MAIL);
 
 		if	( ! Mail::checkAddress($email_address) )
 		{

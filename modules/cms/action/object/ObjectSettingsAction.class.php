@@ -19,7 +19,7 @@ class ObjectSettingsAction extends ObjectAction implements Method {
 
 
     public function post() {
-        $this->baseObject->settings  = $this->getRequestVar( 'settings');
+        $this->baseObject->settings  = $this->request->getText( 'settings');
 
         // Validate YAML-Settings
         try {
@@ -31,13 +31,13 @@ class ObjectSettingsAction extends ObjectAction implements Method {
         }
 
         // Gültigkeitszeiträume speichern.
-        if  ($this->hasRequestVar( 'valid_from_date' ))
-            $this->baseObject->validFromDate = strtotime( $this->getRequestVar( 'valid_from_date' ).' '.$this->getRequestVar( 'valid_from_time' ) );
+        if  ($this->request->has( 'valid_from_date' ))
+            $this->baseObject->validFromDate = strtotime( $this->request->getText( 'valid_from_date' ).' '.$this->request->getText( 'valid_from_time' ) );
         else
             $this->baseObject->validFromDate = null;
 
-        if  ($this->hasRequestVar( 'valid_until_date'))
-            $this->baseObject->validToDate   = strtotime( $this->getRequestVar( 'valid_until_date').' '.$this->getRequestVar( 'valid_until_time') );
+        if  ($this->request->has( 'valid_until_date'))
+            $this->baseObject->validToDate   = strtotime( $this->request->getText( 'valid_until_date').' '.$this->request->getText( 'valid_until_time') );
         else
             $this->baseObject->validToDate = null;
 

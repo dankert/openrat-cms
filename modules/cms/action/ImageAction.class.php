@@ -30,7 +30,7 @@ class ImageAction extends FileAction
 
     public function init()
     {
-		$image = new Image( $this->getRequestId() );
+		$image = new Image( $this->request->getId() );
 		$image->load();
 
         $this->setBaseObject( $image );

@@ -12,10 +12,10 @@ class ElementRemoveAction extends ElementAction implements Method {
     }
 
     public function post() {
-		if	( !$this->hasRequestVar('confirm') )
+		if	( !$this->request->has('confirm') )
 			throw new \util\exception\ValidationException('confirm');
 
-		$type = $this->getRequestVar('type','abc');
+		$type = $this->request->getVar('type','abc');
 		
 		if ( $type == 'value' )
 		{

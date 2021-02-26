@@ -12,7 +12,7 @@ class PageelementRestoreAction extends PageelementAction implements Method {
     }
 
     public function post() {
-        $this->value->valueid = $this->getRequestVar('valueid');
+        $this->value->valueid = $this->request->getText('valueid');
         $this->value->loadWithId();
         $this->value->element = new Element( $this->value->elementid );
 

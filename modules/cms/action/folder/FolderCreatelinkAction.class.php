@@ -16,14 +16,14 @@ class FolderCreatelinkAction extends FolderAction implements Method {
 
 
     public function post() {
-        $name        = $this->getRequestVar('name');
-        $description = $this->getRequestVar('description');
+        $name        = $this->request->getText('name');
+        $description = $this->request->getText('description');
 
 		$link = new Link();
 		$link->filename       = BaseObject::urlify( $name );
 		$link->parentid       = $this->folder->objectid;
 
-		$link->linkedObjectId = $this->getRequestVar('targetobjectid');
+		$link->linkedObjectId = $this->request->getText('targetobjectid');
 		$link->projectid      = $this->folder->projectid;
 
 		$link->persist();

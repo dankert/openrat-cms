@@ -14,12 +14,9 @@ class RequestParams
 	const PARAM_ACTION       = 'action'         ;
 	const PARAM_SUBACTION    = 'subaction'      ;
 	const PARAM_ID           = 'id'             ;
-	const PARAM_OBJECT_ID    = 'objectid'       ;
 	const PARAM_LANGUAGE_ID  = 'languageid'     ;
 	const PARAM_MODEL_ID     = 'modelid'        ;
 	const PARAM_PROJECT_ID   = 'projectid'      ;
-	const PARAM_ELEMENT_ID   = 'elementid'      ;
-	const PARAM_TEMPLATE_ID  = 'templateid'     ;
 	const PARAM_DATABASE_ID  = 'dbid'           ;
 
 	/* Filter Types */
@@ -49,10 +46,23 @@ class RequestParams
 	 */
 	public function __construct()
 	{
-		$headers = array_change_key_case(getallheaders(), CASE_LOWER);
-
 		// Is this a POST request?
 		$this->isAction = @$_SERVER['REQUEST_METHOD'] == 'POST';
+
+		$this->setParameterStore();
+
+		$this->id     = $this->getId();
+		$this->action = $this->getAlphanum(self::PARAM_ACTION   );
+		$this->method = $this->getAlphanum(self::PARAM_SUBACTION);
+	}
+
+
+	/**
+	 * Setting the source for request parameters.
+	 */
+	protected function setParameterStore() {
+
+		$headers = array_change_key_case(getallheaders(), CASE_LOWER);
 
 		$contenttype = trim(explode( ';',@$headers['content-type'])[0]);
 
@@ -82,16 +92,12 @@ class RequestParams
 					throw new \LogicException('HTTP-POST with unknown content type: ' . $contenttype);
 			}
 
-		$this->id     = $this->getRequestId();
-		$this->action = $this->getRequestAlphanum(self::PARAM_ACTION   );
-		$this->method = $this->getRequestAlphanum(self::PARAM_SUBACTION);
 	}
 
 
+	public function getRequiredVar($varName, $transcode ) {
 
-	public function getRequiredRequestVar( $varName, $transcode ) {
-
-		$value = $this->getRequestVar($varName,$transcode);
+		$value = $this->getVar($varName,$transcode);
 
 		if   ( empty( $value ) )
 			throw new ValidationException($varName);
@@ -108,8 +114,9 @@ class RequestParams
 	 * @throws ValidationException
 	 */
 	public function getRequiredText( $nameOfRequestParameter ) {
-		return $this->getRequiredRequestVar( $nameOfRequestParameter, self::FILTER_TEXT );
+		return $this->getRequiredVar( $nameOfRequestParameter, self::FILTER_TEXT );
 	}
+
 
 	/**
 	 * Ermittelt den Inhalt der gew�nschten Request-Variablen.
@@ -118,7 +125,7 @@ class RequestParams
 	 * @param String $varName Schl�ssel
 	 * @return String Inhalt
 	 */
-	public function getRequestVar($varName, $transcode = self::FILTER_TEXT)
+	public function getVar($varName, $transcode = self::FILTER_TEXT)
 	{
 		if (!isset($this->parameter[$varName]))
 			return '';
@@ -127,11 +134,99 @@ class RequestParams
 	}
 
 
-	public function getRequestAlphanum( $varName ) {
-		return $this->getRequestVar( $varName,self::FILTER_ALPHANUM );
+	public function getAlphanum($varName ) {
+		return $this->getVar( $varName,self::FILTER_ALPHANUM );
 	}
 
-	public function cleanText( $value, $transcode )
+	public function getRaw($varName ) {
+		return $this->getVar( $varName,self::FILTER_RAW );
+	}
+
+	public function getText($varName ) {
+		return $this->getVar( $varName,self::FILTER_TEXT );
+	}
+
+	/**
+	 * Ermittelt, ob der aktuelle Request eine Variable mit dem
+	 * angegebenen Namen enth�lt.
+	 *
+	 * @param String $varName Schl�ssel
+	 * @return boolean true, falls vorhanden.
+	 */
+	public function has($varName)
+	{
+		return (isset($this->parameter[$varName]) && (!empty($this->parameter[$varName]) || $this->parameter[$varName] == '0'));
+	}
+
+
+	public function getRequiredId($varName ) {
+
+		$id = intval($this->getVar( $varName ));
+
+		if   ( $id == 0 )
+			throw new ValidationException($varName);
+
+		return $id;
+	}
+
+	/**
+	 * Gets the ID for the current action.
+	 *
+	 * @return Integer
+	 */
+	public function getId()
+	{
+		return intval($this->getNumber( self::PARAM_ID ));
+	}
+
+
+
+	/**
+	 * Ermittelt die aktuelle Id aus dem Request.<br>
+	 * Um welche ID es sich handelt, ist abh�ngig von der Action.
+	 *
+	 * @param string $varName name of parameter
+	 * @return Integer
+	 */
+	public function getNumber($varName )
+	{
+		return $this->getVar( $varName,self::FILTER_NUMBER );
+	}
+
+
+
+
+	public function hasLanguageId()
+	{
+		return $this->has(self::PARAM_LANGUAGE_ID);
+	}
+
+	public function getLanguageId()
+	{
+		return $this->getVar(self::PARAM_LANGUAGE_ID,self::FILTER_NUMBER);
+	}
+
+	public function hasModelId()
+	{
+		return $this->has(self::PARAM_MODEL_ID);
+	}
+
+	public function getModelId()
+	{
+		return $this->getVar(self::PARAM_MODEL_ID,self::FILTER_NUMBER);
+	}
+	public function getProjectId()
+	{
+		return $this->getVar(self::PARAM_PROJECT_ID,self::FILTER_NUMBER);
+	}
+
+	public function getToken()
+	{
+		return $this->getVar(self::PARAM_TOKEN,self::FILTER_ALPHANUM);
+	}
+
+
+	protected function cleanText( $value, $transcode )
 	{
 		switch ($transcode) {
 			case self::FILTER_ALPHA:
@@ -172,72 +267,6 @@ class RequestParams
 		return Text::clean($value, $white);
 	}
 
-	/**
-	 * Ermittelt, ob der aktuelle Request eine Variable mit dem
-	 * angegebenen Namen enth�lt.
-	 *
-	 * @param String $varName Schl�ssel
-	 * @return boolean true, falls vorhanden.
-	 */
-	public function hasRequestVar($varName)
-	{
-		return (isset($this->parameter[$varName]) && (!empty($this->parameter[$varName]) || $this->parameter[$varName] == '0'));
-	}
-
-
-	public function getRequiredRequestId( $varName ) {
-
-		$id = intval($this->getRequestVar( $varName ));
-
-		if   ( $id == 0 )
-			throw new ValidationException($varName);
-
-		return $id;
-	}
-
-	/**
-	 * Ermittelt die aktuelle Id aus dem Request.<br>
-	 * Um welche ID es sich handelt, ist abh�ngig von der Action.
-	 *
-	 * @return Integer
-	 */
-	public function getRequestId()
-	{
-		if ($this->hasRequestVar('idvar'))
-			return intval($this->getRequestVar($this->getRequestVar('idvar')));
-		else
-			return intval($this->getRequestVar(self::PARAM_ID));
-	}
-
-
-	public function hasLanguageId()
-	{
-		return $this->hasRequestVar(self::PARAM_LANGUAGE_ID);
-	}
-
-	public function getLanguageId()
-	{
-		return $this->getRequestVar(self::PARAM_LANGUAGE_ID,self::FILTER_NUMBER);
-	}
-
-	public function hasModelId()
-	{
-		return $this->hasRequestVar(self::PARAM_MODEL_ID);
-	}
-
-	public function getModelId()
-	{
-		return $this->getRequestVar(self::PARAM_MODEL_ID,self::FILTER_NUMBER);
-	}
-	public function getProjectId()
-	{
-		return $this->getRequestVar(self::PARAM_PROJECT_ID,self::FILTER_NUMBER);
-	}
-
-	public function getToken()
-	{
-		return $this->getRequestVar(self::PARAM_TOKEN,self::FILTER_ALPHANUM);
-	}
 
 
 	public function __toString() {

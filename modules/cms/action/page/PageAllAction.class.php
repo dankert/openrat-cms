@@ -27,7 +27,7 @@ class PageAllAction extends PageAction implements Method {
     public function view()
 	{
 
-		$languageid = $this->request->getRequiredRequestId('languageid');
+		$languageid = $this->request->getRequiredId('languageid');
 		$language = new Language($languageid);
 		$language->load();
 
@@ -136,9 +136,9 @@ class PageAllAction extends PageAction implements Method {
 					break;
 
 				case Element::ELEMENT_TYPE_LONGTEXT:
-					if ($this->hasRequestVar('format'))
+					if ($this->request->has('format'))
 						// Individual format from request.
-						$format = $this->getRequestId('format');
+						$format = $this->request->getNumber('format');
 					elseif ($value->format != null)
 						$format = $value->format;
 					else
@@ -179,7 +179,7 @@ class PageAllAction extends PageAction implements Method {
 	{
 
 
-		$languageid = $this->request->getRequiredRequestId('languageid');
+		$languageid = $this->request->getRequiredId('languageid');
 		$language = new Language($languageid);
 		$language->load();
 
@@ -199,26 +199,26 @@ class PageAllAction extends PageAction implements Method {
 			switch ($element->typeid) {
 
 				case Element::ELEMENT_TYPE_TEXT:
-					$value->text = $this->getRequestVar($element->name, 'raw');
+					$value->text = $this->request->getVar($element->name, 'raw');
 					break;
 				case Element::ELEMENT_TYPE_LONGTEXT:
-					$value->text = $this->compactOIDs($this->getRequestVar($element->name, 'raw'));
+					$value->text = $this->compactOIDs($this->request->getVar($element->name, 'raw'));
 					break;
 
 				case Element::ELEMENT_TYPE_DATE:
-					$value->date = strtotime($this->getRequestVar($element->name.'_date') . $this->getRequestVar($element->name.'_time'));
+					$value->date = strtotime($this->request->getText($element->name.'_date') . $this->request->getText($element->name.'_time'));
 					break;
 
 				case Element::ELEMENT_TYPE_SELECT:
-					$value->text = $this->getRequestVar($element->name);
+					$value->text = $this->request->getText($element->name);
 					break;
 				case Element::ELEMENT_TYPE_LINK:
 				case Element::ELEMENT_TYPE_INSERT:
-					$value->linkToObjectId = intval($this->getRequestVar($element->name));
+					$value->linkToObjectId = intval($this->request->getVar($element->name));
 					break;
 
 				case Element::ELEMENT_TYPE_NUMBER:
-					$value->number = $this->getRequestVar($element->name) * pow(10, $value->element->decimals);
+					$value->number = $this->request->getVar($element->name) * pow(10, $value->element->decimals);
 					break;
 				default:
 					throw new \LogicException('Unknown element type: '.$element->getTypeName() );
@@ -230,10 +230,10 @@ class PageAllAction extends PageAction implements Method {
 			// Inhalt sofort freigegeben, wenn
 			// - Recht vorhanden
 			// - Freigabe gewuenscht
-			$value->publish = $value->page->hasRight(Permission::ACL_RELEASE) && $this->hasRequestVar('release');
+			$value->publish = $value->page->hasRight(Permission::ACL_RELEASE) && $this->request->has('release');
 
 			// Up-To-Date-Check
-			$lastChangeTime = $value->getLastChangeSinceByAnotherUser($this->getRequestVar('value_time'), Session::getUser()->userid);
+			$lastChangeTime = $value->getLastChangeSinceByAnotherUser($this->request->getVar('value_time'), Session::getUser()->userid);
 			if ($lastChangeTime)
 				$this->addWarningFor($value, Messages::CONCURRENT_VALUE_CHANGE, array('last_change_time' => date(L::lang('DATE_FORMAT'), $lastChangeTime)));
 
@@ -256,7 +256,7 @@ class PageAllAction extends PageAction implements Method {
 		}
 
 		// Falls ausgewaehlt die Seite sofort veroeffentlichen
-		if ($value->page->hasRight(Permission::ACL_PUBLISH) && $this->hasRequestVar('publish')) {
+		if ($value->page->hasRight(Permission::ACL_PUBLISH) && $this->request->has('publish')) {
 			$this->publishPage( $languageid );
 		}
 

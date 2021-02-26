@@ -49,7 +49,7 @@ class ModelAction extends BaseAction
 
     public function init()
     {
-		$this->model = new Model( $this->getRequestId() );
+		$this->model = new Model( $this->request->getId() );
 		$this->model->load();
 	}
 

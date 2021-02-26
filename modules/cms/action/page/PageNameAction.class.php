@@ -13,7 +13,7 @@ class PageNameAction extends PageAction implements Method {
 
     public function view() {
 
-		$languageId = $this->getRequestVar('languageid');
+		$languageId = $this->request->getText('languageid');
 
 		$name = $this->page->getNameForLanguage($languageId);
 
@@ -36,10 +36,10 @@ class PageNameAction extends PageAction implements Method {
 		$parentAction->init();
 		$parentAction->post(); // Save name and description
 
-        $alias = $this->page->getAliasForLanguage( $this->getRequestId('languageid'));
+        $alias = $this->page->getAliasForLanguage( $this->request->getLanguageId() );
 
-        $alias->filename = BaseObject::urlify( $this->getRequestVar( 'alias_filename') );
-        $alias->parentid = $this->getRequestId('alias_folderid');
+        $alias->filename = BaseObject::urlify( $this->request->getText( 'alias_filename') );
+        $alias->parentid = $this->request->getNumber('alias_folderid');
 
         // If no alias, remove the alias
         if   ( ! $alias->filename ) {

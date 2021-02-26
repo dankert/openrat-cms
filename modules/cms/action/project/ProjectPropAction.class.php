@@ -17,19 +17,19 @@ class ProjectPropAction extends ProjectAction implements Method {
 
     }
     public function post() {
-		if	( $this->getRequestVar('name') != '')
+		if	( $this->request->getText('name') != '')
 		{
-			$this->project->name                 = $this->getRequestVar('name'               ,RequestParams::FILTER_ALPHANUM);
-			$this->project->url                  = $this->getRequestVar('url'                ,RequestParams::FILTER_ALPHANUM);
-			$this->project->target_dir           = $this->getRequestVar('target_dir'         ,RequestParams::FILTER_RAW     );
-			$this->project->ftp_url              = $this->getRequestVar('ftp_url'            ,RequestParams::FILTER_RAW     );
-			$this->project->ftp_passive          = $this->getRequestVar('ftp_passive'        ,RequestParams::FILTER_RAW     );
-			$this->project->cmd_after_publish    = $this->getRequestVar('cmd_after_publish'  ,RequestParams::FILTER_RAW     );
-			$this->project->content_negotiation  = $this->getRequestVar('content_negotiation',RequestParams::FILTER_NUMBER  );
-			$this->project->cut_index            = $this->getRequestVar('cut_index'          ,RequestParams::FILTER_NUMBER  );
-			$this->project->publishFileExtension = $this->getRequestVar('publishFileExtension',RequestParams::FILTER_NUMBER  );
-			$this->project->publishPageExtension = $this->getRequestVar('publishPageExtension',RequestParams::FILTER_NUMBER  );
-			$this->project->linkAbsolute         = $this->getRequestVar('linksAbsolute'       ,RequestParams::FILTER_NUMBER  ) == '1';
+			$this->project->name                 = $this->request->getVar('name'               ,RequestParams::FILTER_ALPHANUM);
+			$this->project->url                  = $this->request->getVar('url'                ,RequestParams::FILTER_ALPHANUM);
+			$this->project->target_dir           = $this->request->getVar('target_dir'         ,RequestParams::FILTER_RAW     );
+			$this->project->ftp_url              = $this->request->getVar('ftp_url'            ,RequestParams::FILTER_RAW     );
+			$this->project->ftp_passive          = $this->request->getVar('ftp_passive'        ,RequestParams::FILTER_RAW     );
+			$this->project->cmd_after_publish    = $this->request->getVar('cmd_after_publish'  ,RequestParams::FILTER_RAW     );
+			$this->project->content_negotiation  = $this->request->getVar('content_negotiation',RequestParams::FILTER_NUMBER  );
+			$this->project->cut_index            = $this->request->getVar('cut_index'          ,RequestParams::FILTER_NUMBER  );
+			$this->project->publishFileExtension = $this->request->getVar('publishFileExtension',RequestParams::FILTER_NUMBER  );
+			$this->project->publishPageExtension = $this->request->getVar('publishPageExtension',RequestParams::FILTER_NUMBER  );
+			$this->project->linkAbsolute         = $this->request->getVar('linksAbsolute'       ,RequestParams::FILTER_NUMBER  ) == '1';
 
 			$this->addNoticeFor($this->project,Messages::SAVED);
 			$this->project->save(); // speichern

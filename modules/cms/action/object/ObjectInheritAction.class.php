@@ -12,7 +12,7 @@ use util\Session;
 
 class ObjectInheritAction extends ObjectAction implements Method {
     public function view() {
-		$o = new BaseObject( $this->getRequestId() );
+		$o = new BaseObject( $this->request->getId() );
 		$o->objectLoadRaw();
 		$this->setTemplateVar( 'type',$o->getType() );
 		
@@ -22,10 +22,10 @@ class ObjectInheritAction extends ObjectAction implements Method {
     public function post() {
 		Session::close();
 		
-		$folder = new Folder( $this->getRequestId() );
+		$folder = new Folder( $this->request->getId() );
 		$folder->load();
 		
-		if	( ! $this->hasRequestVar('inherit') )
+		if	( ! $this->request->has('inherit') )
 		{
 			$this->addWarningFor( $folder,Messages::NOTHING_DONE);
 			return;

@@ -60,15 +60,15 @@ class TemplateAction extends BaseAction
 
     public function init()
     {
-		$this->template = new Template( $this->getRequestId() );
+		$this->template = new Template( $this->request->getId() );
 
 		$this->template->load();
 
 		$this->setTemplateVar( 'templateid',$this->template->templateid );
 
-		if	( intval($this->getRequestVar('elementid')) != 0 )
+		if	( intval($this->request->getText('elementid')) != 0 )
 		{
-			$this->element = new Element( $this->getRequestVar('elementid') );
+			$this->element = new Element( $this->request->getText('elementid') );
 			$this->element->load();
 			$this->setTemplateVar( 'elementid',$this->element->elementid );
 		}

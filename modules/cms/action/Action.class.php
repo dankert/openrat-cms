@@ -44,14 +44,15 @@ class Action
 	];
 
 	/**
-	 * Aktuell angemeldeter Benutzer.<br>
-	 * Wird im Konstruktor gesetzt.
+	 * Current user.
 	 *
-	 * @var Object Benutzer
+	 * @var User User
 	 */
-	var $currentUser;
+	public $currentUser;
 
 	/**
+	 * Request
+	 *
 	 * @var RequestParams
 	 */
 	public $request;
@@ -71,70 +72,6 @@ class Action
 		$this->currentUser = Session::getUser();
 	}
 
-	/**
-	 * Liest eine Session-Variable
-	 *
-	 * @param String $varName Schl�ssel
-	 * @return mixed
-	 */
-	protected function getSessionVar($varName)
-	{
-		return Session::get($varName);
-	}
-
-
-	/**
-	 * Setzt eine Session-Variable
-	 *
-	 * @param string $varName Schluessel
-	 * @param mixed $value Inhalt
-	 * @return mixed
-	 */
-	protected function setSessionVar($varName, $value)
-	{
-		Session::set($varName,$value);
-	}
-
-
-	/**
-	 * Ermittelt den Inhalt der gew�nschten Request-Variablen.
-	 * Falls nicht vorhanden, wird "" zur�ckgegeben.
-	 *
-	 * @param String $varName Schl�ssel
-	 * @return String Inhalt
-	 */
-	protected function getRequestVar($varName, $transcode = RequestParams::FILTER_TEXT)
-	{
-		return $this->request->getRequestVar($varName,$transcode);
-	}
-
-
-	/**
-	 * Ermittelt, ob der aktuelle Request eine Variable mit dem
-	 * angegebenen Namen enth�lt.
-	 *
-	 * @param String $varName Schl�ssel
-	 * @return boolean true, falls vorhanden.
-	 */
-	protected function hasRequestVar($varName)
-	{
-		return $this->request->hasRequestVar($varName);
-	}
-
-
-	/**
-	 * Ermittelt die aktuelle Id aus dem Request.<br>
-	 * Um welche ID es sich handelt, ist abh�ngig von der Action.
-	 *
-	 * @return Integer
-	 */
-	protected function getRequestId( $name = null )
-	{
-		if ( is_null($name) )
-			return $this->request->getRequestId();
-		else
-			return intval($this->request->getRequestVar($name,RequestParams::FILTER_NUMBER));
-	}
 
 
 	/**

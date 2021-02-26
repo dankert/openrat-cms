@@ -26,25 +26,25 @@ class ProfilePwAction extends ProfileAction implements Method {
 		if	( $this->user->type != User::AUTH_TYPE_INTERNAL )
 			throw new \LogicException('password change only possible for internal users.');
 
-		if	( ! $this->user->checkPassword( $this->getRequestVar('act_password') ) )
+		if	( ! $this->user->checkPassword( $this->request->getText('act_password') ) )
 		{
 			$this->addValidationError('act_password');
 		}
-		elseif	( $this->getRequestVar('password1') == '' )
+		elseif	( $this->request->getText('password1') == '' )
 		{
 			$this->addValidationError('password1');
 		}
-		elseif ( $this->getRequestVar('password1') != $this->getRequestVar('password2') )
+		elseif ( $this->request->getText('password1') != $this->request->getText('password2') )
 		{
 			$this->addValidationError('password2','PASSWORDS_DO_NOT_MATCH');
 		}
-		elseif ( strlen($this->getRequestVar('password1'))<$pwMinLength )
+		elseif ( strlen($this->request->getText('password1'))<$pwMinLength )
 		{
 			$this->addValidationError('password1','PASSWORD_MINLENGTH',array('minlength'=> $pwMinLength));
 		}
 		else
 		{
-			$this->user->setPassword( $this->getRequestVar('password1') );
+			$this->user->setPassword( $this->request->getText('password1') );
 			$this->addNoticeFor( $this->user,Messages::SAVED);
 
 			// Send mail to user to inform about the new password.

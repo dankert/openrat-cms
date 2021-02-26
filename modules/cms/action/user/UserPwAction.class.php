@@ -17,18 +17,18 @@ class UserPwAction extends UserAction implements Method {
 
 
     public function post() {
-		$password = $this->getRequestVar('password');
+		$password = $this->request->getText('password');
 
 		if   ( !$password )
-			$password = $this->getRequestVar('password_proposal');
+			$password = $this->request->getVar('password_proposal');
 
 		if ( strlen($password) < Configuration::subset(['security','password'])->get('min_length',8) )
 			throw new ValidationException('password',Messages::PASSWORD_MINLENGTH );
 
-		$this->user->setPassword($password,!$this->hasRequestVar('timeout') ); // Kennwort setzen
+		$this->user->setPassword($password,!$this->request->has('timeout') ); // Kennwort setzen
 		
 		// E-Mail mit dem neuen Kennwort an Benutzer senden
-		if	( $this->hasRequestVar('email') &&
+		if	( $this->request->has('email') &&
 			  $this->user->mail                      && // user has an e-mail.
 			  Configuration::subset('mail')->is('enabled',true)
 			) {

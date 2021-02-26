@@ -45,23 +45,23 @@ class PageEditAction extends PageAction implements Method {
 		$value->objectid   = $this->page->objectid;
 		$value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
 
-		if	( ! $this->hasRequestVar('elementid') )
+		if	( ! $this->request->has('elementid') )
             $this->addValidationError('elementid' );
 
-        $value->element = new Element( $this->getRequestVar('elementid') );
+        $value->element = new Element( $this->request->getText('elementid') );
 
 		$value->element->load();
 		$value->load();
 
-		$value->number         = $this->getRequestVar('number') * pow(10,$value->element->decimals);
-		$value->linkToObjectId = intval($this->getRequestVar('linkobjectid'));
-		$value->text           = $this->getRequestVar('text');
+		$value->number         = $this->request->getText('number') * pow(10,$value->element->decimals);
+		$value->linkToObjectId = intval($this->request->getText('linkobjectid'));
+		$value->text           = $this->request->getText('text');
 
 		// Vorschau anzeigen
-		if	( $value->element->type=='longtext' && ($this->hasRequestVar('preview')||$this->hasRequestVar('addmarkup')) )
+		if	( $value->element->type=='longtext' && ($this->request->has('preview')||$this->request->has('addmarkup')) )
 		{
 			/*
-			if	( $this->hasRequestVar('preview') )
+			if	( $this->request->hasRequestVar('preview') )
 			{
 				$value->page             = $this->page;
 				$value->simple           = false;
@@ -71,35 +71,35 @@ class PageEditAction extends PageAction implements Method {
 				$this->setTemplateVar('preview_text',$value->value );
 			}*/
 
-			if	( $this->hasRequestVar('addmarkup') )
+			if	( $this->request->has('addmarkup') )
 			{
-				$addText = $this->getRequestVar('addtext');
+				$addText = $this->request->getText('addtext');
 
 				if	( !empty($addText) ) // Nur, wenn ein Text eingegeben wurde
 				{
-					$addText = $this->getRequestVar('addtext');
+					$addText = $this->request->getText('addtext');
 
-					if	( $this->hasRequestVar('strong') )
+					if	( $this->request->has('strong') )
 						$value->text .= '*'.$addText.'*';
 
-					if	( $this->hasRequestVar('emphatic') )
+					if	( $this->request->has('emphatic') )
 						$value->text .= '_'.$addText.'_';
 
-					if	( $this->hasRequestVar('link') )
-						$value->text .= '"'.$addText.'"->"'.$this->getRequestVar('objectid').'"';
+					if	( $this->request->has('link') )
+						$value->text .= '"'.$addText.'"->"'.$this->request->getText('objectid').'"';
 				}
 
-				if	( $this->hasRequestVar('table') )
+				if	( $this->request->has('table') )
 					$value->text .= "|$addText  |  |\n|$addText  |  |\n|$addText  |  |\n";
 
-				if	( $this->hasRequestVar('list') )
+				if	( $this->request->has('list') )
 					$value->text .= "\n- ".$addText."\n".'- '.$addText."\n".'- '.$addText."\n";
 
-				if	( $this->hasRequestVar('numlist') )
+				if	( $this->request->has('numlist') )
 					$value->text .= "\n# ".$addText."\n".'# '.$addText."\n".'# '.$addText."\n";
 
-				if	( $this->hasRequestVar('image') )
-					$value->text .= '{'.$this->getRequestVar('objectid').'}';
+				if	( $this->request->has('image') )
+					$value->text .= '{'.$this->request->getText('objectid').'}';
 			}
 
 			// Ermitteln aller verlinkbaren Objekte (fuer Editor)
@@ -132,23 +132,23 @@ class PageEditAction extends PageAction implements Method {
 			return;
 		}
 
-		if	( $this->hasRequestVar('year') ) // Wird ein Datum gespeichert?
+		if	( $this->request->has('year') ) // Wird ein Datum gespeichert?
 		{
 			// Wenn ein ANSI-Datum eingegeben wurde, dann dieses verwenden
-			if   ( $this->getRequestVar('ansidate') != $this->getRequestVar('ansidate_orig') )
-				$value->date = strtotime($this->getRequestVar('ansidate') );
+			if   ( $this->request->getVar('ansidate') != $this->request->getVar('ansidate_orig') )
+				$value->date = strtotime($this->request->getVar('ansidate') );
 			else
 				// Sonst die Zeitwerte einzeln zu einem Datum zusammensetzen
-				$value->date = mktime( $this->getRequestVar('hour'  ),
-				                       $this->getRequestVar('minute'),
-				 	                   $this->getRequestVar('second'),
-				 	                   $this->getRequestVar('month' ),
-					                   $this->getRequestVar('day'   ),
-					                   $this->getRequestVar('year'  ) );
+				$value->date = mktime( $this->request->getVar('hour'  ),
+				                       $this->request->getVar('minute'),
+				 	                   $this->request->getVar('second'),
+				 	                   $this->request->getVar('month' ),
+					                   $this->request->getVar('day'   ),
+					                   $this->request->getVar('year'  ) );
 		}
 		else $value->date = 0; // Datum nicht gesetzt.
 
-		$value->text = $this->getRequestVar('text');
+		$value->text = $this->request->getVar('text');
 
 		$value->page = new Page( $value->objectid );
 		$value->page->load();
@@ -156,7 +156,7 @@ class PageEditAction extends PageAction implements Method {
 		// Inhalt sofort freigegeben, wenn
 		// - Recht vorhanden
 		// - Freigabe gewuenscht
-		if	( $value->page->hasRight( Permission::ACL_RELEASE ) && $this->getRequestVar('release')!='' )
+		if	( $value->page->hasRight( Permission::ACL_RELEASE ) && $this->request->getVar('release')!='' )
 			$value->publish = true;
 		else
 			$value->publish = false;

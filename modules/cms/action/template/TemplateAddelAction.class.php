@@ -32,14 +32,14 @@ class TemplateAddelAction extends TemplateAction implements Method {
     }
     public function post() {
 
-		$name = $this->getRequestVar('name',RequestParams::FILTER_ALPHANUM);
+		$name = $this->request->getVar('name',RequestParams::FILTER_ALPHANUM);
 
 		if  ( empty($name) )
 		    throw new \util\exception\ValidationException('name');
 
-		$newElement = $this->template->addElement( $name,$this->getRequestVar('description'),$this->getRequestVar('typeid') );
+		$newElement = $this->template->addElement( $name,$this->request->getText('description'),$this->request->getText('typeid') );
 
-		if	( $this->hasRequestVar('addtotemplate') )
+		if	( $this->request->has('addtotemplate') )
 		{
 		    $project  = new Project( $this->template->projectid);
 		    $modelIds = $project->getModelIds();

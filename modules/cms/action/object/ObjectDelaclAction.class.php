@@ -12,7 +12,7 @@ class ObjectDelaclAction extends ObjectAction implements Method {
     public function view() {
     }
     public function post() {
-		$permission = new Permission($this->getRequestVar('aclid'));
+		$permission = new Permission($this->request->getText('aclid'));
 		$permission->load();
 
 		// Nachschauen, ob der Benutzer ueberhaupt berechtigt ist, an

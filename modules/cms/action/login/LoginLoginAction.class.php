@@ -77,11 +77,11 @@ class LoginLoginAction extends LoginAction implements Method {
 		if	( Configuration::subset('login')->is('nologin',false ) )
 			throw new SecurityException('login disabled');
 
-		$loginName     = $this->getRequestVar('login_name'    ,RequestParams::FILTER_ALPHANUM);
-		$loginPassword = $this->getRequestVar('login_password',RequestParams::FILTER_ALPHANUM);
-		$newPassword1  = $this->getRequestVar('password1'     ,RequestParams::FILTER_ALPHANUM);
-		$newPassword2  = $this->getRequestVar('password2'     ,RequestParams::FILTER_ALPHANUM);
-		$token         = $this->getRequestVar('user_token'    ,RequestParams::FILTER_ALPHANUM);
+		$loginName     = $this->request->getAlphanum('login_name' );
+		$loginPassword = $this->request->getVar('login_password',RequestParams::FILTER_ALPHANUM);
+		$newPassword1  = $this->request->getVar('password1'     ,RequestParams::FILTER_ALPHANUM);
+		$newPassword2  = $this->request->getVar('password2'     ,RequestParams::FILTER_ALPHANUM);
+		$token         = $this->request->getVar('user_token'    ,RequestParams::FILTER_ALPHANUM);
 
 
 		// Jedes Authentifizierungsmodul durchlaufen, bis ein Login erfolgreich ist.
@@ -243,7 +243,7 @@ class LoginLoginAction extends LoginAction implements Method {
 			$this->setCookie(Action::COOKIE_DB_ID   ,DB::get()->id );
 			$this->setCookie(Action::COOKIE_USERNAME,$user->name   );
 
-			if	( $this->hasRequestVar('remember') ) {
+			if	( $this->request->has('remember') ) {
 				// Sets the login token cookie
 				$this->setCookie(Action::COOKIE_TOKEN   ,$user->createNewLoginToken() );
 			}

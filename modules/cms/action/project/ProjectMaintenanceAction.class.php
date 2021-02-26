@@ -8,7 +8,7 @@ class ProjectMaintenanceAction extends ProjectAction implements Method {
     public function view() {
     }
     public function post() {
-		switch( $this->getRequestVar('type') )
+		switch( $this->request->getText('type') )
 		{
 			case 'check_files':
 				// Konsistenzprüfungen

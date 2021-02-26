@@ -9,7 +9,7 @@ use util\exception\ValidationException;
 
 class ObjectNameAction extends ObjectAction implements Method {
     public function view() {
-        $name = $this->baseObject->getNameForLanguage( $this->getRequestId('languageid') );
+        $name = $this->baseObject->getNameForLanguage( $this->request->getLanguageId() );
 
         $nameProps = $name->getProperties();
 
@@ -19,13 +19,13 @@ class ObjectNameAction extends ObjectAction implements Method {
         $this->setTemplateVars( $nameProps );
     }
     public function post() {
-        if   ( ! $this->hasRequestVar('name' ) )
+        if   ( ! $this->request->has('name' ) )
             throw new ValidationException('name');
 
-        $name = $this->baseObject->getNameForLanguage( $this->getRequestId('languageid'));
+        $name = $this->baseObject->getNameForLanguage( $this->request->getLanguageId() );
 
-        $name->name        = $this->getRequestVar( 'name' );
-        $name->description = $this->getRequestVar( 'description' );
+        $name->name        = $this->request->getText( 'name' );
+        $name->description = $this->request->getText( 'description' );
 
         $name->persist();
 

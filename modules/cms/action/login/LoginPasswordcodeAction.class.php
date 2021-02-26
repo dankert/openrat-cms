@@ -16,10 +16,10 @@ class LoginPasswordcodeAction extends LoginAction implements Method {
     }
     public function post() {
 
-		$username = $this->getSessionVar(Session::KEY_PASSWORD_COMMIT_NAME);
+		$username = Session::get(Session::KEY_PASSWORD_COMMIT_NAME);
 
-		if	( $this->getRequestVar("code")=='' ||
-			  $this->getSessionVar(Session::KEY_PASSWORD_COMMIT_CODE) != $this->getRequestVar("code") )
+		if	( $this->request->getText("code")=='' ||
+			  Session::get(Session::KEY_PASSWORD_COMMIT_CODE) != $this->request->getText("code") )
 		{
 			$this->addValidationError('code','PASSWORDCODE_NOT_MATCH');
 		  	return;
