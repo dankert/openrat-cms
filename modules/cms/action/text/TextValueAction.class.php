@@ -7,13 +7,14 @@ use language\Messages;
 
 
 class TextValueAction extends TextAction implements Method {
-    public function view() {
-		$this->setTemplateVar( 'text', $this->text->loadValue() );
 
-		parent::valueView();
+    public function view() {
+
+		$this->setTemplateVar( 'text', $this->text->loadValue() );
     }
 
     public function post() {
+
 		$this->text->value = $this->request->getVar('text', RequestParams::FILTER_RAW);
 		$this->text->saveValue();
 
