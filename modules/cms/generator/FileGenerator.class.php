@@ -43,13 +43,20 @@ class FileGenerator extends BaseGenerator
 	 * @param $file File
 	 * @return string
 	 */
-	private function filterValue($file )
+	private function filterValue( $file )
 	{
-		$value = $file->loadValue();
+		$totalSettings = $file->getTotalSettings();
 
-		foreach(\util\ArrayUtils::getSubArray($file->getTotalSettings(), array( 'filter')) as $filterEntry )
+		$proxyFileId = @$totalSettings['proxy-file-id'];
+
+		if   ( $proxyFileId )
+			$value = (new File( $proxyFileId ))->loadValue(); // This is a proxy for another file.
+		else
+			$value = $file->loadValue();
+
+		foreach(\util\ArrayUtils::getSubArray($totalSettings, array( 'filter')) as $filterEntry )
 		{
-			$filterName = @$filterEntry['name'];
+			$filterName = ucfirst(strtolower(@$filterEntry['name']));
 			$extension  = @$filterEntry['extension'];
 
 			if   ( $extension && strtolower($extension) != strtolower($file->getRealExtension()) )
@@ -66,20 +73,18 @@ class FileGenerator extends BaseGenerator
 
 			$parameter = (array) @$filterEntry['parameter'];
 
-			$filterClassNameWithNS = 'cms\\publish\\filter\\' . $filterName.'Filter';
+			$filterClassNameWithNS = 'cms\\generator\\filter\\' . $filterName.'Filter';
 
-			if   ( !class_exists( $filterClassNameWithNS ) ) {
-				Logger::warn("Filter '$filterName' does not exist.");
-				continue;
-			}
+			if   ( !class_exists( $filterClassNameWithNS ) )
+				throw new \LogicException("Filter '$filterName' does not exist.");
 
 			/** @var AbstractFilter $filter */
 			$filter = new $filterClassNameWithNS();
 
 			// Copy filter configuration to filter instance.
-			foreach( $parameter as $name=>$value) {
-				if   ( property_exists($filter,$name))
-					$filter->$name = $value;
+			foreach( $parameter as $parameterName=>$parameterValue) {
+				if   ( property_exists($filter,$parameterName))
+					$filter->$parameterName = $parameterValue;
 			}
 
 
@@ -88,7 +93,7 @@ class FileGenerator extends BaseGenerator
 
 			try {
 
-				$value = $filter->filter( $value );
+				$parameterValue = $filter->filter( $value );
 			} catch( \Exception $e ) {
 				// Filter has some undefined error.
 				Logger::warn( $e->getTraceAsString() );
@@ -96,7 +101,7 @@ class FileGenerator extends BaseGenerator
 			}
 		}
 
-		return $value;
+		return $parameterValue;
 
 	}
 

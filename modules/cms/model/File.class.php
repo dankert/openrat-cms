@@ -557,20 +557,10 @@ EOF
 	 */
 	private function loadValueFromDatabase()
 	{
-	    // Read from cache, if cache exist and is not too old.
-
-		$settings    = $this->getSettings();
-		$proxyFileId = @$settings['proxy-file-id'];
-
-		if   ( $proxyFileId )
-			$objectid = $proxyFileId; // This is a proxy for another file.
-		else
-			$objectid = $this->objectid;
-
 		$sql = Db::sql( 'SELECT size,value'.
 		                ' FROM {{file}}'.
 		                ' WHERE objectid={objectid}' );
-		$sql->setInt( 'objectid', $objectid);
+		$sql->setInt( 'objectid', $this->objectid);
 		$row = $sql->getRow();
 
 		if	( count($row) != 0 )

@@ -1,10 +1,16 @@
 <?php
 
 
-namespace modules\cms\generator\filter;
+namespace cms\generator\filter;
 
 
 interface Filter
 {
+	/**
+	 * Filtering a value.
+	 *
+	 * @param $value string
+	 * @return string
+	 */
 	public function filter( $value );
 }
