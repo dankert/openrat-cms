@@ -102,7 +102,7 @@ class PageelementAction extends BaseAction
 
         $this->value = new Value();
 
-		$id = $this->request->id;
+		$id = $this->request->getRequiredText(RequestParams::PARAM_ID );
 		$ids = explode('_',$id);
 		if	( count($ids) > 1 )
 		{
@@ -111,7 +111,7 @@ class PageelementAction extends BaseAction
 		else
 		{
 			$pageid    = $this->request->getId();
-			$elementid = $this->request->getText('elementid');
+			$elementid = $this->request->getNumber('elementid');
 		}
 
 		if	( $pageid != 0  )
