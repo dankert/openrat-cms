@@ -57,7 +57,6 @@ class LocalTarget extends  BaseTarget
 			$this->localDestinationDirectory = FileUtils::toAbsolutePath([$fileSystemConfig->get('directory','/var/www'),$targetDir]);
 		}
 
-
 		// Sofort pruefen, ob das Zielverzeichnis ueberhaupt beschreibbar ist.
 		if   ( $this->localDestinationDirectory && $this->localDestinationDirectory[0] == '#')
 			$this->localDestinationDirectory = '';
@@ -72,11 +71,17 @@ class LocalTarget extends  BaseTarget
 	 */
 	public function put($source, $dest, $lastChangeDate)
 	{
+		// Is the output directory existent?
+		if   ( !is_dir( $this->localDestinationDirectory ) )
+			mkdir( $this->localDestinationDirectory ); // try to create this directory.
+
 		// Is the output directory writable?
 		if   ( !is_writeable( $this->localDestinationDirectory ) )
 			throw new PublisherException('directory not writable: ' . $this->localDestinationDirectory);
 
+
 		$dest   = $this->localDestinationDirectory.'/'.$dest;
+
 
 		// Is the destination writable?
 		if   ( is_file($dest) && !is_writeable( $dest ) )

@@ -59,6 +59,9 @@
 		<fieldset label="${message:id}">
 			<text value="${objectid}"/>
 		</fieldset>
+		<fieldset label="${message:pageid}">
+			<text value="${pageid}"/>
+		</fieldset>
 	</group>
 	<include file="../include/timestamps"/>
 </output>

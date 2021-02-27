@@ -1,5 +1,6 @@
 version: '3.3'
 
+# development environment for openrat cms
 services:
    db:
      image: mysql:5.7
@@ -15,14 +16,14 @@ services:
    cms:
      depends_on:
        - db
-     image: openrat/openrat-cms:latest
+     build: ../../../
      ports:
        - "8000:8080" # CMS
        - "8001:8081" # public
        - "8002:8082" # public with host routing
+     restart: always
      volumes:
        - cms_public:/var/www/localhost/public
-     restart: always
      environment:
        DB_TYPE: mysql
        DB_HOST: db
@@ -30,10 +31,10 @@ services:
        DB_PASS: dsfg77er35fsd084351
        DB_NAME: cms
        CMS_MOTD:
-       CMS_NAME: Content-Management
-       CMS_OPERATOR: My company
+       CMS_NAME: OpenRat Development
+       CMS_OPERATOR:
        CMS_PRODUCTION: "false"
-       CMS_LOG_LEVEL: "info"
+       CMS_LOG_LEVEL: "debug"
      container_name: cms
 volumes:
     db_data: {}

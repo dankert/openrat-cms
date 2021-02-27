@@ -103,6 +103,12 @@
           <span><?php echo O::escapeHtml(''.@$objectid.'') ?></span>
         </div>
       </section>
+      <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
+        <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('pageid').'') ?></h3>
+        <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
+          <span><?php echo O::escapeHtml(''.@$pageid.'') ?></span>
+        </div>
+      </section>
     </div>
   </section>
   
