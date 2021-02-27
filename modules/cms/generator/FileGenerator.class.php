@@ -93,7 +93,7 @@ class FileGenerator extends BaseGenerator
 
 			try {
 
-				$parameterValue = $filter->filter( $value );
+				$value = $filter->filter( $value );
 			} catch( \Exception $e ) {
 				// Filter has some undefined error.
 				Logger::warn( $e->getTraceAsString() );
@@ -101,7 +101,7 @@ class FileGenerator extends BaseGenerator
 			}
 		}
 
-		return $parameterValue;
+		return $value;
 
 	}
 
