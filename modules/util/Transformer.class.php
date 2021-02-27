@@ -2,9 +2,8 @@
 
 namespace util;
 
-use cms\model\Link;
 use cms\model\BaseObject;
-use cms\model\Url;
+use cms\model\Url as MUrl;
 use \util\exception\ObjectNotFoundException;
 use wikiparser\model\DocumentElement;
 use wikiparser\parser\WikiParser;
@@ -91,7 +90,7 @@ class Transformer
 			try {
 				$o->load();
 				if ($o->isUrl) {
-					$l = new Url($objectId);
+					$l = new MUrl($objectId);
 					$l->load();
 					if ($this->page->mimeType() == 'text/html')
 						$targetPath = htmlspecialchars($targetPath);
