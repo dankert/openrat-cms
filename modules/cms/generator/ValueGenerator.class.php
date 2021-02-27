@@ -146,24 +146,22 @@ class ValueGenerator extends BaseGenerator
 													$newPageContext->objectId = $oid;
 													$pageGenerator = new PageGenerator( $newPageContext );
 
-													$inhalt .= $pageGenerator->getCache()->get();
+													$inhalt = $pageGenerator->getCache()->get();
+													//$inhalt = $oid;
 
 													break;
 												case BaseObject::TYPEID_LINK:
 													$l = new Link( $oid );
 													$l->load();
-													if	( $l->isLinkToObject )
+													$op = new BaseObject( $l->linkedObjectId );
+													$op->load();
+													if	( $op->isPage )
 													{
-														$op = new BaseObject( $l->linkedObjectId );
-														$op->load();
-														if	( $op->isPage )
-														{
-															$newPageContext = clone $pageContext;
-															$newPageContext->objectId = $l->linkedObjectId;
-															$pageGenerator = new PageGenerator( $newPageContext );
+														$newPageContext = clone $pageContext;
+														$newPageContext->objectId = $l->linkedObjectId;
+														$pageGenerator = new PageGenerator( $newPageContext );
 
-															$inhalt .= $pageGenerator->getCache()->get();
-														}
+														$inhalt .= $pageGenerator->getCache()->get();
 													}
 													break;
 											}

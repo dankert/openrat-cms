@@ -81,7 +81,7 @@ class PageGenerator extends BaseGenerator
 
 		$language->setCurrentLocale();
 
-		$page = new Page( $this->context->sourceObjectId );
+		$page = new Page( $this->context->objectId );
 		$page->load();
 
 		$template = new Template( $page->templateid );

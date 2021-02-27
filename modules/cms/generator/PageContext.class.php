@@ -49,7 +49,7 @@ class PageContext extends BaseContext
 	public function getCacheKey()
 	{
 		return [
-			$this->sourceObjectId,
+			$this->objectId,
 			$this->languageId,
 			$this->modelId,
 			$this->scheme
