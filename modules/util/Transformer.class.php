@@ -3,6 +3,7 @@
 namespace util;
 
 use cms\model\BaseObject;
+use cms\model\Page;
 use cms\model\Url as MUrl;
 use \util\exception\ObjectNotFoundException;
 use wikiparser\model\DocumentElement;
@@ -80,7 +81,9 @@ class Transformer
 			$linkFormat = $this->pageContext->getLinkScheme();
 			$target = new BaseObject($objectId);
 			$target->load();
-			$targetPath = $linkFormat->linkToObject( $this->page, $target );
+
+			$sourcePage = new Page( $this->pageContext->sourceObjectId );
+			$targetPath = $linkFormat->linkToObject( $sourcePage, $target );
 
 			// Hack: Sonderzeichen muessen in URLs maskiert werden, aber nur bei URLs die aus Link-Objekten kommen, bei allem
 			// anderen (insbesondere Preview-Links zu andereen Seiten) darf die Umsetzung nicht erfolgen. 

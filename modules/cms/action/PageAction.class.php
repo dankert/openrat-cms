@@ -105,7 +105,6 @@ class PageAction extends ObjectAction
     protected function createPageContext( $scheme ) {
 
 		$context = new PageContext( $this->page->objectid,$scheme );
-		$context->sourceObjectId = $this->page->objectid;
 
 		if  ( $this->request->hasLanguageId())
 			$context->languageId = $this->request->getLanguageId();

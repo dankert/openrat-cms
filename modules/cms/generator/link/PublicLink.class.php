@@ -11,6 +11,7 @@ use cms\model\Language;
 use cms\model\Link;
 use cms\model\Page;
 use cms\model\Project;
+use cms\model\Template;
 use cms\model\TemplateModel;
 use cms\model\Url;
 use cms\generator\target\Dav;
@@ -106,6 +107,14 @@ class PublicLink implements LinkFormat
 
 					$page = new Page($to->objectid);
 					$page->load();
+
+					$template = new Template( $page->templateid );
+					$template->load();
+
+					if   ( ! $template->publish ) {
+						// fixme: target page is not publishable - what to do here?
+						return '';
+					}
 
 					$parentFolder = new Folder($page->parentid);
 					$parentFolder->load();

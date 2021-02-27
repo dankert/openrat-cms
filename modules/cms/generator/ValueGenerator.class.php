@@ -260,11 +260,12 @@ class ValueGenerator extends BaseGenerator
 				}
 				else
 				{
-					$linkScheme = $pageContext->getLinkScheme();
-					$target = new BaseObject( $objectid );
+					$sourcePage = new Page( $pageContext->sourceObjectId ); // the source page
+					$target     = new BaseObject( $objectid );
 					$target->load();
 
-					$inhalt = $linkScheme->linkToObject( $page, $target );
+					$linkScheme = $pageContext->getLinkScheme();
+					$inhalt     = $linkScheme->linkToObject( $sourcePage, $target );
 				}
 
 				break;
@@ -677,7 +678,9 @@ class ValueGenerator extends BaseGenerator
 					$linkFormat = $pageContext->getLinkScheme();
 					$target = new BaseObject($oid);
 					$target->load();
-					$url    = $linkFormat->linkToObject($page,$target);
+
+					$sourcePage = new Page( $pageContext->sourceObjectId );
+					$url        = $linkFormat->linkToObject($sourcePage,$target);
 
 					foreach( $t as $match )
 						$inhalt = str_replace($match,$url,$inhalt);

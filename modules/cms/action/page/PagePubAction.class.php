@@ -18,6 +18,7 @@ class PagePubAction extends PageAction implements Method {
 
 	}
     public function post() {
+
 		if	( !$this->page->hasRight( Permission::ACL_PUBLISH ) )
             throw new \util\exception\SecurityException( 'no right for publish' );
 
