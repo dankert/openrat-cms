@@ -179,7 +179,7 @@ class PageAllAction extends PageAction implements Method {
 	{
 
 
-		$languageid = $this->request->getRequiredId('languageid');
+		$languageid = $this->request->getRequiredNumber('languageid');
 		$language = new Language($languageid);
 		$language->load();
 

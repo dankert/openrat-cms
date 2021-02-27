@@ -176,7 +176,7 @@ class RequestParams
 	 */
 	public function getId()
 	{
-		return intval($this->getNumber( self::PARAM_ID ));
+		return $this->getVar( self::PARAM_ID ,self::FILTER_ALPHANUM );
 	}
 
 
@@ -192,6 +192,20 @@ class RequestParams
 	{
 		return $this->getVar( $varName,self::FILTER_NUMBER );
 	}
+
+
+	/**
+	 * Ermittelt die aktuelle Id aus dem Request.<br>
+	 * Um welche ID es sich handelt, ist abh�ngig von der Action.
+	 *
+	 * @param string $varName name of parameter
+	 * @return Integer
+	 */
+	public function getRequiredNumber($varName )
+	{
+		return $this->getRequiredVar( $varName,self::FILTER_NUMBER );
+	}
+
 
 
 

@@ -328,9 +328,9 @@ class PageelementAction extends BaseAction
         $value->load();
 
         if   ( $this->request->has('linkobjectid') )
-        $value->linkToObjectId = $this->request->getText('linkobjectid');
+        	$value->linkToObjectId = $this->request->getText('linkobjectid');
         else
-        $value->text           = $this->request->getRaw('text');
+        	$value->text           = $this->request->getRaw('text');
 
         $this->afterSave($value);
     }
