@@ -35,4 +35,12 @@
 		</table>
 	</group>
 
+	<group title="${message:menu_switch}" open="false">
+		<part class="act-clickable">
+			<link class="btn" subaction="switch" type="edit">
+				<text value="${message:user_switch}"/>
+			</link>
+		</part>
+	</group>
+
 </output>

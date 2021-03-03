@@ -277,12 +277,6 @@
               <span class="<?php echo O::escapeHtml('or-dropdown-text') ?>"><?php echo O::escapeHtml(''.@O::lang('menu_advanced').'') ?></span>
             </a>
           </div>
-          <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable or-filtered') ?>"><?php echo O::escapeHtml('') ?>
-            <a title="<?php echo O::escapeHtml(''.@O::lang('menu_switch_desc').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('switch') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('switch') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'switch\'}') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
-              <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-switch') ?>"><?php echo O::escapeHtml('') ?></i>
-              <span class="<?php echo O::escapeHtml('or-dropdown-text') ?>"><?php echo O::escapeHtml(''.@O::lang('menu_switch').'') ?></span>
-            </a>
-          </div>
           <div class="<?php echo O::escapeHtml('or-dropdown-divide') ?>"><?php echo O::escapeHtml('') ?></div>
           <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable or-filtered') ?>"><?php echo O::escapeHtml('') ?>
             <a title="<?php echo O::escapeHtml(''.@O::lang('menu_src_desc').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('src') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('src') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'src\'}') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
@@ -291,12 +285,6 @@
             </a>
           </div>
           <div class="<?php echo O::escapeHtml('or-dropdown-divide') ?>"><?php echo O::escapeHtml('') ?></div>
-          <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable or-filtered') ?>"><?php echo O::escapeHtml('') ?>
-            <a title="<?php echo O::escapeHtml(''.@O::lang('menu_value_desc').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('value') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('value') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'value\'}') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
-              <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-value') ?>"><?php echo O::escapeHtml('') ?></i>
-              <span class="<?php echo O::escapeHtml('or-dropdown-text') ?>"><?php echo O::escapeHtml(''.@O::lang('menu_value').'') ?></span>
-            </a>
-          </div>
           <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable or-filtered') ?>"><?php echo O::escapeHtml('') ?>
             <a title="<?php echo O::escapeHtml(''.@O::lang('menu_order_desc').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('order') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('order') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'order\'}') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
               <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-order') ?>"><?php echo O::escapeHtml('') ?></i>
