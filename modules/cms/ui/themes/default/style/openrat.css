@@ -442,7 +442,7 @@ th {
 .or-image-icon--method-rights:after {
 	content: "https";
 }
-.or-image-icon--method-archive:after {
+.or-image-icon--method-history:after {
 	content: "schedule";
 }
 .or-image-icon--method-mail:after {

@@ -67,5 +67,16 @@
 				</link>
 			</part>
 		</group>
+		<group title="${message:security}" open="false">
+			<fieldset label="">
+				<part>
+					<link clickable="true" type="dialog" subaction="pw" class="btn">
+						<image method="password"/>
+						<text value="${message:edit_password}"/>
+					</link>
+				</part>
+			</fieldset>
+
+		</group>
 	</form>
 </output>

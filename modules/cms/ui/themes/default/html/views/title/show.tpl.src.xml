@@ -683,12 +683,6 @@
 					</part>
 					<part class="dropdown-divide"/>
 					<part class="dropdown-entry,act-clickable,filtered">
-						<link type="dialog" title="${message:menu_password_desc}" subaction="pw">
-							<image method="password"/>
-							<text class="dropdown-text" value="${message:menu_password}"/>
-						</link>
-					</part>
-					<part class="dropdown-entry,act-clickable,filtered">
 						<link type="dialog" title="${message:menu_memberships_desc}" subaction="memberships">
 							<image method="membership"/>
 							<text class="dropdown-text" value="${message:menu_memberships}"/>

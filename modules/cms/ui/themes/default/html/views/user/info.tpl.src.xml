@@ -5,7 +5,7 @@
 		<text value="${fullname}" class="headline" />
 		<!--
 		<if not="true" empty="${image}">
-			<fieldset class="line" label="">
+			<fieldset label="">
 				<part class="value">
 					<image url="${image}" size="80x80"/>
 				</part>
@@ -13,15 +13,15 @@
 		</if>
 		-->
 
-		<fieldset class="line" label="${message:user_username}">
+		<fieldset label="${message:user_username}">
 				<text value="${name}" class="name"/>
 		</fieldset>
 		<group title="${message:ADDITIONAL_INFO}">
-			<fieldset class="line" label="${message:user_fullname}">
+			<fieldset label="${message:user_fullname}">
 					<text value="${fullname}"/>
 			</fieldset>
 			<if true="${config:security/user/show_admin_mail}">
-				<fieldset class="line" label="${message:user_mail}">
+				<fieldset label="${message:user_mail}">
 					<part tag="span">
 						<link url="mailto:${mail}" type="external">
 							<text value="${mail}"/>
@@ -31,22 +31,22 @@
 
 				</fieldset>
 			</if>
-			<fieldset class="line" label="${message:description}">
+			<fieldset label="${message:description}">
 				<text value="${desc}"/>
 			</fieldset>
-			<fieldset class="line" label="${message:user_tel}">
+			<fieldset label="${message:user_tel}">
 				<part tag="span">
 					<text value="${tel}"/>
 					<qrcode value="tel:${tel}"/>
 				</part>>
 			</fieldset>
-			<fieldset class="line" label="${message:timezone}">
+			<fieldset label="${message:timezone}">
 				<text value="${timezone}"/>
 			</fieldset>
-			<fieldset class="line" label="${message:language}">
+			<fieldset label="${message:language}">
 				<text value="${language}"/>
 			</fieldset>
-			<fieldset class="line" label="">
+			<fieldset label="">
 				<part>
 					<link clickable="true" type="dialog" subaction="prop" action="user" id="${userid}" class="btn">
 						<text value="${message:edit}"/>
@@ -62,21 +62,18 @@
 			</fieldset>
 		</group>
 		<group title="${message:options}" open="false">
-			<fieldset class="line" label="">
+			<fieldset label="">
 				<checkbox name="is_admin" readonly="true" label="${message:user_admin}"/>
 			</fieldset>
-			<fieldset class="line" label="${message:user_ldapdn}">
-				<text value="${ldap_dn}"/>
-			</fieldset>
-			<fieldset class="line" label="${message:user_style}">
+			<fieldset label="${message:user_style}">
 				<text value="${style}"/>
 			</fieldset>
 		</group>
 		<group title="${message:security}" open="false">
-			<fieldset class="line" label="${message:user_password_expires}">
+			<fieldset label="${message:user_password_expires}">
 				<date date="${passwordExpires}"/>
 			</fieldset>
-			<fieldset class="line" label="">
+			<fieldset label="">
 				<part>
 					<link clickable="true" type="dialog" subaction="pw" action="user" id="${userid}" class="btn">
 						<text value="${message:edit_password}"/>
@@ -84,15 +81,15 @@
 				</part>
 			</fieldset>
 
-			<fieldset class="line" label="${message:user_last_login}">
+			<fieldset label="${message:user_last_login}">
 				<date date="${lastLogin}"/>
 			</fieldset>
 
 			<!-- TOTP Settings -->
-			<fieldset class="line" label="${message:token}">
+			<fieldset label="${message:token}">
 				<text value="${totpToken}"/>
 			</fieldset>
-			<fieldset class="line" label="${message:user_totp}">
+			<fieldset label="${message:user_totp}">
 				<checkbox name="totp" label="${message:user_totp}"/>
 				<qrcode value="${totpSecretUrl}"/>
 			</fieldset>

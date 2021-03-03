@@ -225,13 +225,6 @@
             </a>
           </div>
           <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable or-filtered') ?>"><?php echo O::escapeHtml('') ?>
-            <a title="<?php echo O::escapeHtml(''.@O::lang('menu_archive_desc').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('archive') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('archive') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'archive\'}') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link or-dropdown-entry') ?>"><?php echo O::escapeHtml('') ?>
-              <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-archive') ?>"><?php echo O::escapeHtml('') ?></i>
-              <span class="<?php echo O::escapeHtml('or-dropdown-text') ?>"><?php echo O::escapeHtml(''.@O::lang('menu_archive').'') ?></span>
-              <span class="<?php echo O::escapeHtml('or-dropdown-key or-link-keystroke') ?>"><?php echo O::escapeHtml(''.O::config(['ui','keybinding','method','archive']).'') ?></span>
-            </a>
-          </div>
-          <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable or-filtered') ?>"><?php echo O::escapeHtml('') ?>
             <a title="<?php echo O::escapeHtml(''.@O::lang('menu_rights_desc').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('rights') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('rights') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'rights\'}') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
               <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-rights') ?>"><?php echo O::escapeHtml('') ?></i>
               <span class="<?php echo O::escapeHtml('or-dropdown-text') ?>"><?php echo O::escapeHtml(''.@O::lang('menu_rights').'') ?></span>
@@ -259,12 +252,6 @@
             </a>
           </div>
           <div class="<?php echo O::escapeHtml('or-dropdown-divide') ?>"><?php echo O::escapeHtml('') ?></div>
-          <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable or-filtered') ?>"><?php echo O::escapeHtml('') ?>
-            <a title="<?php echo O::escapeHtml(''.@O::lang('menu_password_desc').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('pw') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('pw') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'pw\'}') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
-              <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-password') ?>"><?php echo O::escapeHtml('') ?></i>
-              <span class="<?php echo O::escapeHtml('or-dropdown-text') ?>"><?php echo O::escapeHtml(''.@O::lang('menu_password').'') ?></span>
-            </a>
-          </div>
           <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable or-filtered') ?>"><?php echo O::escapeHtml('') ?>
             <a title="<?php echo O::escapeHtml(''.@O::lang('menu_memberships_desc').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('memberships') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('memberships') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':null,\'dialogMethod\':\'memberships\'}') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
               <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-membership') ?>"><?php echo O::escapeHtml('') ?></i>
