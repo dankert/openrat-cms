@@ -462,6 +462,7 @@ class Messages {
   const PAGEELEMENT = 'PAGEELEMENT';
   const PAGE = 'PAGE';
   const PAGES = 'PAGES';
+  const PAGE_ID = 'PAGE_ID';
   const PHP = 'PHP';
   const PLEASE_LOGIN = 'PLEASE_LOGIN';
   const PREFS = 'PREFS';

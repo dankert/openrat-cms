@@ -2338,6 +2338,9 @@ PAGE:
 PAGES:
   de: Seiten
   en: Pages
+PAGE_ID:
+  de: Seiten-Id
+  en: Page id
 PHP:
   de: Interpreter
   en: Interpreter

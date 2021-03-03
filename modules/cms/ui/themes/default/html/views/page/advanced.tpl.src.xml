@@ -1,0 +1,39 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<group title="${message:additional_info}">
+
+		<fieldset label="${message:template}">
+			<if present="templateid">
+				<part class="act-clickable">
+					<link action="template" id="${templateid}" type="open">
+						<image action="template"/>
+						<text value="${template_name}"/>
+					</link>
+				</part>
+			</if>
+			<else>
+				<image action="template"/>
+				<text value="${template_name}"/>
+			</else>
+
+			<if present="templateid">
+
+				<part class="act-clickable">
+					<link class="btn" subaction="changetemplate" type="edit">
+						<text value="${message:edit}"/>
+					</link>
+				</part>
+			</if>
+		</fieldset>
+		<fieldset label="${message:FILE_MIMETYPE}">
+			<text value="${mime_type}" class="filename"/>
+		</fieldset>
+		<fieldset label="${message:id}">
+			<text value="${objectid}"/>
+		</fieldset>
+		<fieldset label="${message:page_id}">
+			<text value="${pageid}"/>
+		</fieldset>
+	</group>
+
+</output>

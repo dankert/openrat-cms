@@ -716,12 +716,6 @@
 						</link>
 					</part>
 					<part class="dropdown-divide"/>
-					<part class="dropdown-entry,act-clickable,filtered">
-						<link type="dialog" title="${message:menu_changetemplate_desc}" subaction="changetemplate">
-							<image method="changetemplate"/>
-							<text class="dropdown-text" value="${message:menu_changetemplate}"/>
-						</link>
-					</part>
 					<part
 						class="dropdown-entry,act-clickable,filtered">
 						<link type="dialog" title="${message:menu_src_desc}" subaction="src">

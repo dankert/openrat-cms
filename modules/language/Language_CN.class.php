@@ -462,6 +462,7 @@ public function get() { return [
 'PAGEELEMENT'=>'Page element',
 'PAGE'=>'Page',
 'PAGES'=>'Pages',
+'PAGE_ID'=>'Page id',
 'PHP'=>'Interpreter',
 'PLEASE_LOGIN'=>'Please log in',
 'PREFS'=>'Preferences',
