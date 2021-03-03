@@ -29,7 +29,6 @@ class ProfileAvailableAction extends ProfileAction implements Method {
 			'src',
 			'size',
 			'settings',
-			'archive',
 			'rights',
 			'remove',
 			'preview',

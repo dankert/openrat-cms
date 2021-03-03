@@ -650,13 +650,6 @@
 							<text class="dropdown-key,link-keystroke" value="${config:ui/keybinding/method/pub}"/>
 						</link>
 					</part>
-					<part class="dropdown-entry,act-clickable,filtered">
-						<link type="dialog" class="dropdown-entry" subaction="archive" title="${message:menu_archive_desc}">
-							<image method="archive"/>
-							<text class="dropdown-text" value="${message:menu_archive}"/>
-							<text class="dropdown-key,link-keystroke" value="${config:ui/keybinding/method/archive}"/>
-						</link>
-					</part>
 					<part
 						class="dropdown-entry,act-clickable,filtered">
 						<link type="dialog" title="${message:menu_rights_desc}" subaction="rights">
