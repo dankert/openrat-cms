@@ -29,13 +29,13 @@ class UserEditAction extends UserAction implements Method {
 			$this->setTemplateVar( 'image', 'about:blank' );
 		}
 
+		$effectiveGroups = $this->user->getEffectiveGroups();
 
-
-		$this->setTemplateVar( 'groups', array_map( function( $groupid) {
-			$group = new Group( $groupid);
+		$this->setTemplateVar( 'groups', array_map( function($groupid ) {
+			$group = new Group( $groupid );
 			$group->load();
 			return $group->name;
-		},$this->user->getEffectiveGroups() ) );
+		},array_combine($effectiveGroups,$effectiveGroups) ) );
 
 
 		$issuer  = urlencode(Configuration::subset('application')->get('operator',Startup::TITLE));

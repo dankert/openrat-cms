@@ -2,20 +2,12 @@
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form cancel="false" readonly="true">
 
-		<text value="${fullname}" class="headline" />
-		<!--
-		<if not="true" empty="${image}">
-			<fieldset class="line" label="">
-				<part class="value">
-					<image url="${image}" size="80x80"/>
-				</part>
+		<group title="${message:USER}: ${fullname}">
+			<fieldset class="line" label="${message:user_username}">
+					<text value="${name}" class="name"/>
 			</fieldset>
-		</if>
-		-->
+		</group>
 
-		<fieldset class="line" label="${message:user_username}">
-				<text value="${name}" class="name"/>
-		</fieldset>
 		<group title="${message:ADDITIONAL_INFO}">
 			<fieldset class="line" label="${message:user_fullname}">
 					<text value="${fullname}"/>
@@ -53,13 +45,27 @@
 					</link>
 				</part>
 			</fieldset>
-
-			<fieldset label="${message:groups}">
-				<list list="${groups}" value="name">
-					<text value="${name}" />
-					<newline />
+		</group>
+		<group title="${message:groups}">
+			<table class="">
+				<list list="${groups}" value="name" key="groupid">
+					<row class="act-clickable,data">
+						<column>
+							<link action="group" type="open" id="${groupid}">
+								<text value="${name}" />
+							</link>
+						</column>
+					</row>
 				</list>
-			</fieldset>
+			</table>
+
+			<newline />
+
+			<part class="act-clickable">
+				<link class="btn" subaction="memberships" type="edit">
+					<text value="${message:edit}"/>
+				</link>
+			</part>
 		</group>
 	</form>
 </output>

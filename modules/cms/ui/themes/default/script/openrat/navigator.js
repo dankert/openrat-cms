@@ -8,6 +8,8 @@ Openrat.Navigator = new function () {
 	 * Navigiert zu einer Action.
 	 */
 	this.navigateTo = function(state) {
+
+		console.debug('Navigating to '+state);
 		Openrat.Workbench.loadNewActionState(state);
 	}
 
