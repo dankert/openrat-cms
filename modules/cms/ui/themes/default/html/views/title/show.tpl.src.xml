@@ -725,12 +725,6 @@
 					</part>
 					<part class="dropdown-divide"/>
 					<part class="dropdown-entry,act-clickable,filtered">
-						<link type="dialog" title="${message:menu_value_desc}" subaction="value">
-							<image method="value"/>
-							<text class="dropdown-text" value="${message:menu_value}"/>
-						</link>
-					</part>
-					<part class="dropdown-entry,act-clickable,filtered">
 						<link type="dialog" title="${message:menu_order_desc}" subaction="order">
 							<image method="order"/>
 							<text class="dropdown-text" value="${message:menu_order}"/>
