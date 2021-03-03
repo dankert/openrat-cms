@@ -28,7 +28,6 @@ class ProfileAvailableAction extends ProfileAction implements Method {
 			'changetemplate',
 			'src',
 			'size',
-			'maintenance',
 			'settings',
 			'archive',
 			'rights',

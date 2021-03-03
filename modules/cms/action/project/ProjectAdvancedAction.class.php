@@ -4,7 +4,7 @@ use cms\action\Method;
 use cms\action\ProjectAction;
 use language\Messages;
 
-class ProjectMaintenanceAction extends ProjectAction implements Method {
+class ProjectAdvancedAction extends ProjectAction implements Method {
     public function view() {
     }
     public function post() {

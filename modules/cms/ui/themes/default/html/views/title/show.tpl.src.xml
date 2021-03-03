@@ -749,13 +749,6 @@
 							<text class="dropdown-text" value="${message:menu_size}"/>
 						</link>
 					</part>
-					<part class="dropdown-divide"/>
-					<part class="dropdown-entry,act-clickable,filtered">
-						<link type="dialog" title="${message:menu_maintenance_desc}" subaction="maintenance">
-							<image method="maintenance"/>
-							<text class="dropdown-text" value="${message:menu_maintenance}"/>
-						</link>
-					</part>
 					<!--
 												<part class="dropdown-entry,act-clickable,filtered">
 													<link type="dialog" title="${message:menu_export_desc}"
