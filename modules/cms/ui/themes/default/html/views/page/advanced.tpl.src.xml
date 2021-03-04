@@ -25,9 +25,6 @@
 				</part>
 			</if>
 		</fieldset>
-		<fieldset label="${message:FILE_MIMETYPE}">
-			<text value="${mime_type}" class="filename"/>
-		</fieldset>
 		<fieldset label="${message:id}">
 			<text value="${objectid}"/>
 		</fieldset>

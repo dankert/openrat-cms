@@ -15,7 +15,7 @@
       </a>
     </div>
   </section>
-  <?php foreach((array)$info as $list_key=>$list_value) {  ?>
+  <?php foreach((array)@$info as $list_key=>$list_value) {  ?>
     <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
       <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang(''.@$list_key.'').'') ?></h3>
       <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>

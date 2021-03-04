@@ -24,7 +24,7 @@
         <tr><?php echo O::escapeHtml('') ?>
           <td colspan="<?php echo O::escapeHtml('4') ?>"><?php echo O::escapeHtml('') ?></td>
         </tr>
-        <?php foreach((array)$diff as $list_key=>$list_value) { extract($list_value); ?>
+        <?php foreach((array)@$diff as $list_key=>$list_value) { extract($list_value); ?>
           <tr class="<?php echo O::escapeHtml('or-diff') ?>"><?php echo O::escapeHtml('') ?>
             <?php $if5=(isset($left)); if($if5) {  ?>
               <td width="<?php echo O::escapeHtml('5%') ?>" class="<?php echo O::escapeHtml('or-diff-line') ?>"><?php echo O::escapeHtml('') ?>

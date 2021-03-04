@@ -2,7 +2,7 @@
   <div class="<?php echo O::escapeHtml('or-table-wrapper') ?>"><?php echo O::escapeHtml('') ?>
     <div class="<?php echo O::escapeHtml('or-table-area') ?>"><?php echo O::escapeHtml('') ?>
       <table width="<?php echo O::escapeHtml('100%') ?>" class="<?php echo O::escapeHtml('or-table') ?>"><?php echo O::escapeHtml('') ?>
-        <?php foreach((array)$projects as $list_key=>$list_value) { extract($list_value); ?>
+        <?php foreach((array)@$projects as $list_key=>$list_value) { extract($list_value); ?>
           <tr><?php echo O::escapeHtml('') ?>
             <td><?php echo O::escapeHtml('') ?>
               <section class="<?php echo O::escapeHtml('or-group or-collapsible or-collapsible--is-open or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>
@@ -36,13 +36,13 @@
                             <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
                               <span><?php echo O::escapeHtml(''.@O::lang('LANGUAGE').'') ?></span>
                             </td>
-                            <?php foreach((array)$show as $list_key=>$t) {  ?>
+                            <?php foreach((array)@$show as $list_key=>$t) {  ?>
                               <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
                                 <span title="<?php echo O::escapeHtml(''.@O::lang('acl_'.@$t.'').'') ?>"><?php echo O::escapeHtml(''.@O::lang('acl_'.@$t.'_abbrev').'') ?></span>
                               </td>
                              <?php } ?>
                           </tr>
-                          <?php foreach((array)$rights as $aclid=>$acl) { extract($acl); ?>
+                          <?php foreach((array)@$rights as $aclid=>$acl) { extract($acl); ?>
                             <tr class="<?php echo O::escapeHtml('or-data or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
                               <td><?php echo O::escapeHtml('') ?>
                                 <?php $if12=(isset($groupname)); if($if12) {  ?>
@@ -69,7 +69,7 @@
                               <td><?php echo O::escapeHtml('') ?>
                                 <span><?php echo O::escapeHtml(''.@$languagename.'') ?></span>
                               </td>
-                              <?php foreach((array)$show as $list_key=>$list_value) {  ?>
+                              <?php foreach((array)@$show as $list_key=>$list_value) {  ?>
                                 <td><?php echo O::escapeHtml('') ?>
                                   <?php  { $$list_value= $bits[''.@$list_value.'']; ?>
                                    <?php } ?>

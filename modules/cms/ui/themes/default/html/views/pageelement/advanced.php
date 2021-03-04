@@ -16,7 +16,7 @@
             <span><?php echo O::escapeHtml(''.@O::lang('editor').'') ?></span>
           </td>
         </tr>
-        <?php foreach((array)$languages as $list_key=>$list_value) { extract($list_value); ?>
+        <?php foreach((array)@$languages as $list_key=>$list_value) { extract($list_value); ?>
           <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
             <td><?php echo O::escapeHtml('') ?>
               <span><?php echo O::escapeHtml(''.@$languagename.'') ?></span>
@@ -33,7 +33,7 @@
               </a>
             </td>
             <td><?php echo O::escapeHtml('') ?>
-              <?php foreach((array)$editors as $id=>$name) {  ?>
+              <?php foreach((array)@$editors as $id=>$name) {  ?>
                 <div class="<?php echo O::escapeHtml('or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
                   <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('edit') ?>" data-action="<?php echo O::escapeHtml('pageelement') ?>" data-method="<?php echo O::escapeHtml('value') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-languageid="<?php echo O::escapeHtml(''.@$languageid.'') ?>" data-extra-format="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('{\'languageid\':\''.@$languageid.'\',\'format\':\''.@$id.'\'}') ?>" href="<?php echo O::escapeHtml('#/pageelement') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
                     <span><?php echo O::escapeHtml(''.@$name.'') ?></span>

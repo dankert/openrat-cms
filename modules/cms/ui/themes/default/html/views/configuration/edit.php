@@ -13,7 +13,7 @@
             <span><?php echo O::escapeHtml(''.@O::lang('VALUE').'') ?></span>
           </td>
         </tr>
-        <?php foreach((array)$config as $list_key=>$entry) {  ?>
+        <?php foreach((array)@$config as $list_key=>$entry) {  ?>
           <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
             <td><?php echo O::escapeHtml('') ?>
               <span><?php echo O::escapeHtml(''.@$entry['value']['key'].'') ?></span>

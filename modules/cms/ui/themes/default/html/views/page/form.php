@@ -31,7 +31,7 @@
                   <span><?php echo O::escapeHtml(''.@O::lang('VALUE').'') ?></span>
                 </td>
               </tr>
-              <?php foreach((array)$el as $list_key=>$list_value) { extract($list_value); ?>
+              <?php foreach((array)@$el as $list_key=>$list_value) { extract($list_value); ?>
                 <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
                   <td><?php echo O::escapeHtml('') ?>
                     <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>

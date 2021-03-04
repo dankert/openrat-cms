@@ -6,7 +6,7 @@
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('action') ?>" value="<?php echo O::escapeHtml('pageelement') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('subaction') ?>" value="<?php echo O::escapeHtml('diff') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml(''.@$_id.'') ?>" /><?php echo O::escapeHtml('') ?>
-      <?php foreach((array)$languages as $list_key=>$language) {  ?>
+      <?php foreach((array)@$languages as $list_key=>$language) {  ?>
         <section class="<?php echo O::escapeHtml('or-group or-collapsible or-collapsible--is-open or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>
           <h2 class="<?php echo O::escapeHtml('or-collapsible-title or-group-title or-collapsible-act-switch') ?>"><?php echo O::escapeHtml('') ?>
             <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-closed or-collapsible--on-closed') ?>"><?php echo O::escapeHtml('') ?></i>
@@ -49,7 +49,7 @@
                       </td>
                     </tr>
                    <?php } ?>
-                  <?php foreach((array)$values as $list_key=>$list_value) { extract($list_value); ?>
+                  <?php foreach((array)@$values as $list_key=>$list_value) { extract($list_value); ?>
                     <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
                       <td width="<?php echo O::escapeHtml('5%') ?>"><?php echo O::escapeHtml('') ?>
                         <?php $if9=($comparable); if($if9) {  ?>

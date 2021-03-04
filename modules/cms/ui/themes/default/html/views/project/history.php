@@ -19,7 +19,7 @@
             <span><?php echo O::escapeHtml(''.@O::lang('lastchange').'') ?></span>
           </td>
         </tr>
-        <?php foreach((array)$timeline as $list_key=>$list_value) { extract($list_value); ?>
+        <?php foreach((array)@$timeline as $list_key=>$list_value) { extract($list_value); ?>
           <?php $if4=($typeid=='1'); if($if4) {  ?>
             <?php  { $type= 'folder'; ?>
              <?php } ?>

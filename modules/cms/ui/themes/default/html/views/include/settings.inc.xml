@@ -1,0 +1,21 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+
+	<group title="${message:settings}">
+
+		<table filter="false">
+			<list list="${settings}" value="entry">
+				<row class="data">
+					<column>
+						<text value="${entry.key}"/>
+					</column>
+					<column class="act-clickable">
+						<link subaction="settings" type="dialog">
+							<text value="${entry.value}"/>
+						</link>
+					</column>
+				</row>
+			</list>
+		</table>
+	</group>
+</output>

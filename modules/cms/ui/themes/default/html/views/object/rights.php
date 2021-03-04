@@ -12,7 +12,7 @@
           <td><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml(''.@O::lang('LANGUAGE').'') ?></span>
           </td>
-          <?php foreach((array)$show as $list_key=>$t) {  ?>
+          <?php foreach((array)@$show as $list_key=>$t) {  ?>
             <td><?php echo O::escapeHtml('') ?>
               <span><?php echo O::escapeHtml(''.@O::lang('acl_'.@$t.'_abbrev').'') ?></span>
             </td>
@@ -30,7 +30,7 @@
          <?php } ?>
         <?php $if3=!(($acls)==FALSE); if($if3) {  ?>
          <?php } ?>
-        <?php foreach((array)$acls as $aclid=>$acl) { extract($acl); ?>
+        <?php foreach((array)@$acls as $aclid=>$acl) { extract($acl); ?>
           <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
             <td><?php echo O::escapeHtml('') ?>
               <?php $if6=(isset($username)); if($if6) {  ?>
@@ -51,7 +51,7 @@
             <td><?php echo O::escapeHtml('') ?>
               <span><?php echo O::escapeHtml(''.@$languagename.'') ?></span>
             </td>
-            <?php foreach((array)$show as $list_key=>$t) {  ?>
+            <?php foreach((array)@$show as $list_key=>$t) {  ?>
               <td><?php echo O::escapeHtml('') ?>
                 <?php  { $bit= $acl[''.@$t.'']; ?>
                  <?php } ?>

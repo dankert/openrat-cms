@@ -81,7 +81,7 @@
       </div>
     </div>
     <div id="<?php echo O::escapeHtml('noticebar') ?>" class="<?php echo O::escapeHtml('or-notices') ?>"><?php echo O::escapeHtml('') ?>
-      <?php foreach((array)$notices as $list_key=>$notice) {  ?>
+      <?php foreach((array)@$notices as $list_key=>$notice) {  ?>
         <div class="<?php echo O::escapeHtml('or--invisible or-act-initial-notice') ?>"><?php echo O::escapeHtml('') ?>
           <span><?php echo O::escapeHtml(''.@$notice['text'].'') ?></span>
         </div>

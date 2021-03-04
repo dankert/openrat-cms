@@ -20,7 +20,7 @@
                 <span><?php echo O::escapeHtml(''.@O::lang('NAME').'') ?></span>
               </td>
             </tr>
-            <?php foreach((array)$object as $list_key=>$list_value) { extract($list_value); ?>
+            <?php foreach((array)@$object as $list_key=>$list_value) { extract($list_value); ?>
               <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
                 <td><?php echo O::escapeHtml('') ?>
                   <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-'.@$icon.'') ?>"><?php echo O::escapeHtml('') ?></i>
@@ -57,7 +57,7 @@
         <div class="<?php echo O::escapeHtml('or-collapsible-value or-group-value') ?>"><?php echo O::escapeHtml('') ?>
           <?php  { $type= $defaulttype; ?>
            <?php } ?>
-          <?php foreach((array)$actionlist as $list_key=>$actiontype) {  ?>
+          <?php foreach((array)@$actionlist as $list_key=>$actiontype) {  ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?></h3>
               <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>

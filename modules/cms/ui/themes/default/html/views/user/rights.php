@@ -1,5 +1,5 @@
 <?php /* THIS FILE IS GENERATED from rights.tpl.src.xml - DO NOT CHANGE */ defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
-  <?php foreach((array)$projects as $list_key=>$list_value) { extract($list_value); ?>
+  <?php foreach((array)@$projects as $list_key=>$list_value) { extract($list_value); ?>
     <section class="<?php echo O::escapeHtml('or-group or-collapsible or-collapsible--is-open or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>
       <h2 class="<?php echo O::escapeHtml('or-collapsible-title or-group-title or-collapsible-act-switch') ?>"><?php echo O::escapeHtml('') ?>
         <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-closed or-collapsible--on-closed') ?>"><?php echo O::escapeHtml('') ?></i>
@@ -29,13 +29,13 @@
                   <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
                     <span><?php echo O::escapeHtml(''.@O::lang('LANGUAGE').'') ?></span>
                   </td>
-                  <?php foreach((array)$show as $list_key=>$t) {  ?>
+                  <?php foreach((array)@$show as $list_key=>$t) {  ?>
                     <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
                       <span title="<?php echo O::escapeHtml(''.@O::lang('acl_'.@$t.'').'') ?>"><?php echo O::escapeHtml(''.@O::lang('acl_'.@$t.'_abbrev').'') ?></span>
                     </td>
                    <?php } ?>
                 </tr>
-                <?php foreach((array)$rights as $aclid=>$acl) { extract($acl); ?>
+                <?php foreach((array)@$rights as $aclid=>$acl) { extract($acl); ?>
                   <tr class="<?php echo O::escapeHtml('or-data or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
                     <td><?php echo O::escapeHtml('') ?>
                       <?php $if9=(isset($username)); if($if9) {  ?>
@@ -67,7 +67,7 @@
                       <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-language') ?>"><?php echo O::escapeHtml('') ?></i>
                       <span><?php echo O::escapeHtml(''.@$languagename.'') ?></span>
                     </td>
-                    <?php foreach((array)$show as $list_key=>$list_value) {  ?>
+                    <?php foreach((array)@$show as $list_key=>$list_value) {  ?>
                       <td><?php echo O::escapeHtml('') ?>
                         <?php  { $$list_value= $bits[''.@$list_value.'']; ?>
                          <?php } ?>

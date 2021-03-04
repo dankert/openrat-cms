@@ -170,7 +170,7 @@
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?></h3>
               <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
-                <?php foreach((array)$dynamic_class_parameters as $paramName=>$defaultValue) {  ?>
+                <?php foreach((array)@$dynamic_class_parameters as $paramName=>$defaultValue) {  ?>
                   <span><?php echo O::escapeHtml(''.@$paramName.'') ?></span>
                   <span><?php echo O::escapeHtml(' (') ?></span>
                   <span><?php echo O::escapeHtml(''.@O::lang('DEFAULT_VALUE').'') ?></span>

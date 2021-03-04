@@ -16,7 +16,7 @@
             <span><?php echo O::escapeHtml('') ?></span>
           </td>
         </tr>
-        <?php foreach((array)$el as $list_key=>$list_value) { extract($list_value); ?>
+        <?php foreach((array)@$el as $list_key=>$list_value) { extract($list_value); ?>
           <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
             <td class="<?php echo O::escapeHtml('or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
               <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-language') ?>"><?php echo O::escapeHtml('') ?></i>

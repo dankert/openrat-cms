@@ -17,7 +17,7 @@
                 <span><?php echo O::escapeHtml(''.@O::lang('name').'') ?></span>
               </td>
             </tr>
-            <?php foreach((array)$templates as $list_key=>$list_value) { extract($list_value); ?>
+            <?php foreach((array)@$templates as $list_key=>$list_value) { extract($list_value); ?>
               <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
                 <td class="<?php echo O::escapeHtml('or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
                   <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-template') ?>"><?php echo O::escapeHtml('') ?></i>

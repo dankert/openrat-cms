@@ -36,6 +36,13 @@
 		<fieldset label="${message:full_filename}">
 			<text value="${full_filename}" class="filename"/>
 		</fieldset>
+
+		<fieldset label="${message:full_filename}">
+			<list list="${filenames}" value="filename">
+				<text value="${filename}" class="filename"/>
+				<newline />
+			</list>
+		</fieldset>
 		<fieldset label="${message:full_filename}">
 			<text value="${tmp_filename}" class="filename"/>
 		</fieldset>
@@ -63,5 +70,9 @@
 			<text value="${pageid}"/>
 		</fieldset>
 	</group>
+
+	<include file="../include/validity"/>
 	<include file="../include/timestamps"/>
+	<include file="../include/settings"/>
+
 </output>

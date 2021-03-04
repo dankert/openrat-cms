@@ -7,7 +7,7 @@
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('subaction') ?>" value="<?php echo O::escapeHtml('changetemplateselectelements') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml(''.@$_id.'') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('newtemplateid') ?>" value="<?php echo O::escapeHtml(''.@$newtemplateid.'') ?>" /><?php echo O::escapeHtml('') ?>
-      <?php foreach((array)$elements as $list_key=>$list_value) { extract($list_value); ?>
+      <?php foreach((array)@$elements as $list_key=>$list_value) { extract($list_value); ?>
         <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
           <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@$name.'') ?></h3>
           <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>

@@ -18,7 +18,7 @@
                 <span><?php echo O::escapeHtml(''.@O::lang('name').'') ?></span>
               </td>
             </tr>
-            <?php foreach((array)$memberships as $list_key=>$list_value) { extract($list_value); ?>
+            <?php foreach((array)@$memberships as $list_key=>$list_value) { extract($list_value); ?>
               <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
                 <td><?php echo O::escapeHtml('') ?>
                   <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml(''.@$var.'') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$$var){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>

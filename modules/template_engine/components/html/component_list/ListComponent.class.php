@@ -27,7 +27,7 @@ class ListComponent extends Component
 		else
 			$listValue = $list->value($this->list);
 
-		$list->beforeBlock = 'foreach((array)'.$listValue.' as $' . $this->key . '=>$' . $this->value . ')';
+		$list->beforeBlock = 'foreach((array)'.'@'.$listValue.' as $' . $this->key . '=>$' . $this->value . ')';
 
 		if ($this->extract)
 			$list->inBlock = 'extract($' . $this->value . ');';

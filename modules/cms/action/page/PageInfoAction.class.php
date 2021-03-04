@@ -3,8 +3,10 @@ namespace cms\action\page;
 use cms\action\Method;
 use cms\action\object\ObjectInfoAction;
 use cms\action\PageAction;
+use cms\generator\PageContext;
 use cms\generator\PageGenerator;
 use cms\generator\Producer;
+use cms\generator\Publisher;
 use cms\model\Template;
 
 class PageInfoAction extends PageAction implements Method {
@@ -24,6 +26,7 @@ class PageInfoAction extends PageAction implements Method {
         $this->setTemplateVar( 'alias', $alias->full_filename() );
 
         $languages = $this->page->getProject()->getLanguages();
+		$models    = $this->page->getProject()->getModels();
         $languagesVars = array();
 
         foreach( $languages as $id => $name )
@@ -42,7 +45,22 @@ class PageInfoAction extends PageAction implements Method {
 
         $this->setTemplateVar('languages',$languagesVars );
 
-        if   ( $this->userIsProjectAdmin() )
+        $filenames = [];
+        foreach( $languages as $languageid=>$language )
+        	foreach( $models as $modelid=>$model ) {
+        		$pagecontext = new PageContext( $this->page->objectid,Producer::SCHEME_PUBLIC );
+        		$pagecontext->languageId = $languageid;
+				$pagecontext->modelId    = $modelid;
+
+				$pageGenerator = new PageGenerator( $pagecontext );
+				$filenames[] = $pageGenerator->getPublicFilename();
+			}
+
+		$this->setTemplateVar('filenames',$filenames );
+		$this->setTemplateVar('is_valid' ,$this->page->isValid() );
+
+
+		if   ( $this->userIsProjectAdmin() )
 		{
 			$this->setTemplateVar('templateid',$this->page->templateid);
 		}

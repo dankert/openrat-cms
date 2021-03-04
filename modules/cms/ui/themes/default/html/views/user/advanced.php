@@ -26,7 +26,7 @@
                 <span><?php echo O::escapeHtml(''.@O::lang('OPERATING_SYSTEM').'') ?></span>
               </th>
             </tr>
-            <?php foreach((array)$token as $list_key=>$list_value) { extract($list_value); ?>
+            <?php foreach((array)@$token as $list_key=>$list_value) { extract($list_value); ?>
               <tr><?php echo O::escapeHtml('') ?>
                 <td><?php echo O::escapeHtml('') ?>
                   <?php include_once( 'modules/template_engine/components/html/component_date/component-date.php'); { component_date($create_date); ?>
