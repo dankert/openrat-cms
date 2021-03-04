@@ -16,17 +16,17 @@
             <span><?php echo O::escapeHtml(''.@O::lang('LASTCHANGE').'') ?></span>
           </th>
         </tr>
-        <?php $if3=(isset($up_url)); if($if3) {  ?>
+        <?php $if3=(isset($parentid)); if($if3) {  ?>
           <tr class="<?php echo O::escapeHtml('or-data or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
             <td><?php echo O::escapeHtml('') ?>
               <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('open') ?>" data-action="<?php echo O::escapeHtml('folder') ?>" data-method="<?php echo O::escapeHtml('') ?>" data-id="<?php echo O::escapeHtml(''.@$parentid.'') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/folder/'.@$parentid.'') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
                 <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-folder') ?>"><?php echo O::escapeHtml('') ?></i>
-                <span><?php echo O::escapeHtml('..') ?></span>
               </a>
             </td>
             <td><?php echo O::escapeHtml('') ?>
-              <span><?php echo O::escapeHtml('') ?></span>
+              <span><?php echo O::escapeHtml('..') ?></span>
             </td>
+            <td><?php echo O::escapeHtml('') ?></td>
           </tr>
          <?php } ?>
         <?php foreach((array)@$object as $list_key=>$list_value) { extract($list_value); ?>
@@ -37,7 +37,6 @@
             <td><?php echo O::escapeHtml('') ?>
               <a title="<?php echo O::escapeHtml(''.@$desc.'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-name="<?php echo O::escapeHtml(''.@$name.'') ?>" name="<?php echo O::escapeHtml(''.@$name.'') ?>" data-type="<?php echo O::escapeHtml('open') ?>" data-action="<?php echo O::escapeHtml(''.@$type.'') ?>" data-method="<?php echo O::escapeHtml('') ?>" data-id="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/'.@$type.'/'.@$id.'') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(''.@$name.'') ?></span>
-                <span><?php echo O::escapeHtml(' ') ?></span>
               </a>
             </td>
             <td><?php echo O::escapeHtml('') ?>
