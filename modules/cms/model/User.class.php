@@ -776,7 +776,7 @@ SQL
 		foreach( $groupIds as $id ) {
 			$group = new Group( $id );
 			$group->load();
-			$effectiveGroupIds = array_merge( $group->getParentGroups() );
+			$effectiveGroupIds = array_merge( $effectiveGroupIds,$group->getParentGroups() );
 		}
 		$effectiveGroupIds = array_unique( $effectiveGroupIds );
 

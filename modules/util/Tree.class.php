@@ -300,13 +300,13 @@ class Tree
 		foreach ($g->getChildrenIds() as $id) {
 			$treeElement = new TreeElement();
 
-			$g = new Group($id);
-			$g->load();
+			$subGroup = new Group($id);
+			$subGroup->load();
 			$treeElement->id = $id;
 			$treeElement->internalId = $id;
-			$treeElement->text = $g->name;
+			$treeElement->text = $subGroup->name;
 			$treeElement->icon = 'group';
-			$treeElement->description = L::lang('GROUP') . ' ' . $g->name . ': ' . implode(', ', $g->getUsers());
+			$treeElement->description = L::lang('GROUP') . ' ' . $subGroup->name . ': ' . implode(', ', $subGroup->getUsers());
 			$treeElement->type = 'userofgroup';
 			$treeElement->action = 'group';
 
