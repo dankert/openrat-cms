@@ -4,7 +4,7 @@
 
 	<group title="${message:content}">
 		<part class="act-clickable">
-			<text value="${source}" escape="true" type="code" />
+			<image url="${preview}" />
 
 			<newline/>
 			<link type="dialog" subaction="value">

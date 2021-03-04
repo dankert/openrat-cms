@@ -36,7 +36,7 @@ class FileShowAction extends FileAction implements Method {
 		else
 		{
 			// Angabe Content-Type
-			header('Content-Type: '.$this->file->mimeType() );
+			header('Content-Type: '.$generator->getMimeType() );
 		}
 
 		header('X-File-Id: '   .$this->file->fileid     );

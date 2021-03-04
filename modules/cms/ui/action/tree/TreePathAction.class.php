@@ -70,6 +70,7 @@ class TreePathAction extends TreeAction implements Method {
 			case 'page'  :
 			case 'file'  :
 			case 'image' :
+			case 'text' :
 				$o = new BaseObject( $id );
 				$o->load();
 

@@ -351,8 +351,7 @@ class File extends BaseObject
 		                    array('full_filename'=>$this->fullFilename,
 		                          'extension'    =>$this->extension,
 		                          'size'         =>$this->size,
-		                          'filterid'     =>$this->filterid,
-		                          'mimetype'     =>$this->mimetype()   ) );
+		                          'filterid'     =>$this->filterid ) );
 	}
 
 
@@ -457,16 +456,6 @@ class File extends BaseObject
 		$sql->query();
 
 		parent::delete();
-	}
-
-
-
-	/**
-	 * Stellt anhand der Dateiendung fest, ob es sich bei dieser Datei um ein Bild handelt
-	 */
-	function isImage()
-	{
-		return substr($this->mimeType(),0,6)=='image/';
 	}
 
 

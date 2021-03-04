@@ -90,4 +90,14 @@ class FileAction extends ObjectAction
 		return $archiveTypes;
 	}
 
+
+	/**
+	 * @return string MIME-type
+	 */
+	protected function getMimeType() {
+		$context = new FileContext( $this->file->objectid,Producer::SCHEME_PREVIEW );
+		$fileGenerator = new FileGenerator( $context );
+		return $fileGenerator->getMimeType();
+
+	}
 }

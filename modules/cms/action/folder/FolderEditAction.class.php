@@ -43,15 +43,6 @@ class FolderEditAction extends FolderAction implements Method {
 					$file = new File( $id );
 					$file->load();
 					$list[$id]['desc'] .= ' - '.intval($file->size/1000).'kB';
-
-					if	( $file->isImage() )
-					{
-						$list[$id]['icon' ] = 'image';
-						$list[$id]['class'] = 'image';
-						//$list[$id]['url' ] = Html::url('file','show',$id) nur sinnvoll bei Lightbox-Anzeige
-					}
-//					if	( substr($file->mimeType(),0,5) == 'text/' )
-//						$list[$id]['icon'] = 'text';
 				}
 
 				$list[$id]['date'] = $o->lastchangeDate;

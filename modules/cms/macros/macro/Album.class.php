@@ -65,14 +65,8 @@ class Album extends Macro
 			$folderid = $this->page->parentid;
 
 		$f     = new Folder($folderid);
-		$files = [];
+		$files =  $f->getObjectIdsByType(BaseObject::TYPEID_IMAGE);
 
-		if   ( $this->withImages )
-			$files += $f->getObjectIdsByType(BaseObject::TYPEID_IMAGE);
-
-		if   ( $this->withFiles )
-			$files += $f->getObjectIdsByType(BaseObject::TYPEID_FILE);
-		
 		$this->output('<dl class="album">');
 		
 		foreach( $files as $fileid )
@@ -80,13 +74,10 @@ class Album extends Macro
 			$file = new Image($fileid);
 			$file->load();
 			
-			if	( $file->isImage() )
-			{
-				$file->getImageSize();
-				$img = '<img src="'.$this->pathToObject($fileid).'" alt="'.$file->name.'" width="'.$file->width.'" height="'.$file->height.'" />';
-				$this->output('<dt>'.$img.'</dt><dd>'.$file->desc.'</dd>');
-			}
-			
+			$file->getImageSize();
+			$img = '<img src="'.$this->pathToObject($fileid).'" alt="'.$file->name.'" width="'.$file->width.'" height="'.$file->height.'" />';
+			$this->output('<dt>'.$img.'</dt><dd>'.$file->desc.'</dd>');
+
 		}
 		
 		$this->output('</dl>');

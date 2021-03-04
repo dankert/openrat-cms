@@ -3,6 +3,8 @@ namespace cms\action\file;
 use cms\action\FileAction;
 use cms\action\Method;
 use cms\action\RequestParams;
+use cms\generator\FileContext;
+use cms\generator\FileGenerator;
 use cms\model\BaseObject;
 use language\Messages;
 use util\exception\ValidationException;
@@ -14,6 +16,8 @@ class FileAdvancedAction extends FileAction implements Method {
     public function view() {
 		// Eigenschaften der Datei uebertragen
 		$this->setTemplateVar( 'extension',$this->file->extension );
+		$this->setTemplateVar( 'mimetype' ,$this->getMimeType() );
+
 		$this->setTemplateVar( 'type'     ,$this->file->type      );
 		$this->setTemplateVar( 'types'    ,[
 			BaseObject::TYPEID_FILE  => \cms\base\Language::lang('file' ),
@@ -38,4 +42,7 @@ class FileAdvancedAction extends FileAction implements Method {
 
 		$this->addNoticeFor( $this->file, Messages::PROP_SAVED);
     }
+
+
+
 }

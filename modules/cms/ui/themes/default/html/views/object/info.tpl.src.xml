@@ -43,9 +43,6 @@
 		<fieldset label="${message:FILE_SIZE}">
 			<text value="${size}"/>
 		</fieldset>
-		<fieldset label="${message:FILE_mimetype}">
-			<text value="${mimetype}"/>
-		</fieldset>
 		<fieldset label="">
 			<part class="value,act-clickable">
 				<link class="action" type="dialog" subaction="size">

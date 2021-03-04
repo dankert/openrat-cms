@@ -113,8 +113,7 @@ class Page extends BaseObject
 		return array_merge( parent::getProperties(),
 		                    array('full_filename'=>'',
 		                          'pageid'       =>$this->pageid,
-		                          'templateid'   =>$this->templateid,
-		                          'mime_type'    =>$this->mimeType() ) );
+		                          'templateid'   =>$this->templateid) );
 	}
 
 
@@ -400,15 +399,6 @@ SQL
 	}
 
 
-
-	/**
-	 * Stellt fest, ob diese Seite im HTML-Format veröffentlicht wird.
-	 * @return boolean
-	 */
-	public function isHtml()
-	{
-		return $this->mimeType()=='text/html';
-	}
 
     public function __toString()
     {

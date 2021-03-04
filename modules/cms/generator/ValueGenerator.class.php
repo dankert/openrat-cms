@@ -254,9 +254,11 @@ class ValueGenerator extends BaseGenerator
 				}
 				elseif	($element->subtype == 'image_data_uri' )
 				{
+					$context = new FileContext( $objectid,Producer::SCHEME_PUBLIC );
+					$generator = new FileGenerator( $context );
 					$file = new File($objectid);
 					$file->load();
-					$inhalt = 'data:'.$file->mimeType().';base64,'.base64_encode($file->loadValue());
+					$inhalt = 'data:'.$generator->getMimeType().';base64,'.base64_encode($generator->getCache()->get());
 				}
 				else
 				{
@@ -351,7 +353,7 @@ class ValueGenerator extends BaseGenerator
 					case 'width':
 						$f = new Image( $objectid );
 						$f->load();
-						if	( $f->isImage() )
+						if	( $f->typeid == BaseObject::TYPE_IMAGE )
 						{
 							$f->getImageSize();
 							$inhalt = $f->width;
@@ -362,7 +364,7 @@ class ValueGenerator extends BaseGenerator
 					case 'height':
 						$f = new Image( $objectid );
 						$f->load();
-						if	( $f->isImage() )
+						if	( $f->typeid == BaseObject::TYPE_IMAGE )
 						{
 							$f->getImageSize();
 							$inhalt = $f->height;
@@ -506,9 +508,9 @@ class ValueGenerator extends BaseGenerator
 					case 'mime_type':
 						if	( $linkedObject->isFile || $linkedObject->isImage || $linkedObject->isText  )
 						{
-							$f = new File( $objectid );
-							$f->load();
-							$inhalt = $f->mimeType();
+							$context = new FileContext( $objectid,Producer::SCHEME_PUBLIC );
+							$generator = new FileGenerator( $context );
+							$inhalt = $generator->getMimeType();
 							unset($f);
 						}
 						break;
@@ -612,7 +614,7 @@ class ValueGenerator extends BaseGenerator
 				}
 
 				// Wenn HTML nicht erlaubt und Wiki-Formatierung aktiv, dann einfache HTML-Tags in Wiki umwandeln
-				$pageIsHtml = $page->isHtml();
+				$pageIsHtml = $this->isHtml( (new PageGenerator( $this->context->pageContext ))->getMimeType());
 
 				//
 				switch( $format )
@@ -781,7 +783,7 @@ class ValueGenerator extends BaseGenerator
 				}
 
 				// Wenn HTML-Ausgabe, dann Sonderzeichen in HTML �bersetzen
-				if   ( $page->isHtml() )
+				if   ( $this->isHtml( (new PageGenerator( $this->context->pageContext ))->getMimeType()))
 					$inhalt = Text::encodeHtmlSpecialChars( $inhalt );
 
 				break;
@@ -1004,7 +1006,7 @@ class ValueGenerator extends BaseGenerator
 
 				if	( Configuration::subset('publish')->is('encode_utf8_in_html') )
 					// Wenn HTML-Ausgabe, dann UTF-8-Zeichen als HTML-Code uebersetzen
-					if   ( $page->isHtml() )
+					if   ( $this->isHtml( (new PageGenerator( $this->context->pageContext ))->getMimeType()) )
 						$inhalt = Text::translateutf8tohtml($inhalt);
 				break;
 
@@ -1013,7 +1015,7 @@ class ValueGenerator extends BaseGenerator
 
 
 
-		if   ( $this->context->pageContext->scheme == Producer::SCHEME_PREVIEW && $element->withIcon && $page->isHtml() )
+		if   ( $this->context->pageContext->scheme == Producer::SCHEME_PREVIEW && $element->withIcon && $this->isHtml( (new PageGenerator( $this->context->pageContext ))->getMimeType()) )
 		{
 			// Anklickbaren Link voranstellen.
 			$iconLink = '<a href="javascript:parent.Openrat.Workbench.openNewAction(\''.$element->name.'\',\'pageelement\',\''.$page->objectid.'_'.$element->elementid.'\');" title="'.$element->desc.'">&rarr;<i class="or-image-icon or-image-icon--el-'.$element->getTypeName().'"></i></a>';
@@ -1075,4 +1077,11 @@ class ValueGenerator extends BaseGenerator
 	{
 		return ''; // Values does not have a mime type.
 	}
+
+
+	protected function isHtml( $mimeType )
+	{
+		return $mimeType == 'text/html';
+	}
+
 }

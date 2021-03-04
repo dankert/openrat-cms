@@ -47,5 +47,3 @@ class Text extends File
         return 'text/plain';
     }
 }
-
-?>

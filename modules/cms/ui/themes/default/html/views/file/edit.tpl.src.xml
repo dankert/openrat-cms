@@ -1,9 +1,13 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 
-	<link clickable="true" subaction="value" type="dialog">
-		<text value="${message:edit}"/>
-	</link>
+	<group title="${message:file}">
+
+		<link clickable="true" subaction="value" type="dialog">
+			<text value="${message:edit}"/>
+		</link>
+
+	</group>
 	<!--
 	<form languageid="${languageid}">
 		<fieldset class="line" label="">

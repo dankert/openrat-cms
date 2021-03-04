@@ -12,7 +12,7 @@ class ObjectInfoAction extends ObjectAction implements Method {
 		$this->setTemplateVar( 'is_valid'     ,$this->baseObject->isValid() );
 		$this->setTemplateVar( 'full_filename',$this->baseObject->full_filename() );
 		$this->setTemplateVar( 'extension'    , '' );
-		$this->setTemplateVar( 'mimetype'     , $this->baseObject->mimeType() );
+		$this->setTemplateVar( 'mimetype'     , '' );
 
 		$this->setTemplateVar( 'name'         , $this->baseObject->getDefaultName()->name        );
 		$this->setTemplateVar( 'description'  , $this->baseObject->getDefaultName()->description );
