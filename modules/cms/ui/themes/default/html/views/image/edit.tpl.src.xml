@@ -7,9 +7,16 @@
 			<image url="${preview}" />
 
 			<newline/>
-			<link type="dialog" subaction="value">
-				<image action="text"/>
-				<text value="${message:edit}"/>
+			<link type="dialog" subaction="upload">
+				<image method="edit"/>
+				<text value="${message:file_replace}"/>
+			</link>
+		</part>
+
+		<part>
+			<link type="dialog" subaction="size" clickable="true">
+				<image action="file"/>
+				<text value="${message:file_image_resize}"/>
 			</link>
 		</part>
 	</group>

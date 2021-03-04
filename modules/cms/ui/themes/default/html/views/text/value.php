@@ -7,18 +7,6 @@
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('subaction') ?>" value="<?php echo O::escapeHtml('value') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml(''.@$_id.'') ?>" /><?php echo O::escapeHtml('') ?>
       <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
-        <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?></h3>
-        <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
-          <input type="<?php echo O::escapeHtml('file') ?>" name="<?php echo O::escapeHtml('file') ?>" size="<?php echo O::escapeHtml('40') ?>" class="<?php echo O::escapeHtml('or-upload') ?>" /><?php echo O::escapeHtml('') ?>
-        </div>
-      </section>
-      <div class="<?php echo O::escapeHtml('or-dropzone-upload') ?>"><?php echo O::escapeHtml('') ?>
-        <br /><?php echo O::escapeHtml('') ?>
-        <br /><?php echo O::escapeHtml('') ?>
-        <br /><?php echo O::escapeHtml('') ?>
-        <br /><?php echo O::escapeHtml('') ?>
-      </div>
-      <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
         <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('VALUE').'') ?></h3>
         <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
           <textarea name="<?php echo O::escapeHtml('text') ?>" data-extension="<?php echo O::escapeHtml(''.@$extension.'') ?>" data-mimetype="<?php echo O::escapeHtml(''.@$mimetype.'') ?>" data-mode="<?php echo O::escapeHtml('htmlmixed') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-code-editor') ?>"><?php echo O::escapeHtml(''.@$text.'') ?></textarea>

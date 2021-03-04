@@ -8,8 +8,15 @@
 
 			<newline/>
 			<link type="dialog" subaction="value">
-				<image action="text"/>
+				<image method="text"/>
 				<text value="${message:edit}"/>
+			</link>
+		</part>
+
+		<part>
+			<link type="dialog" subaction="upload" clickable="true">
+				<image action="text"/>
+				<text value="${message:file_replace}"/>
 			</link>
 		</part>
 	</group>

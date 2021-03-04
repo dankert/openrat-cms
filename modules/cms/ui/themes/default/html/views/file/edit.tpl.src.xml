@@ -3,7 +3,7 @@
 
 	<group title="${message:file}">
 
-		<link clickable="true" subaction="value" type="dialog">
+		<link clickable="true" subaction="upload" type="dialog">
 			<text value="${message:edit}"/>
 		</link>
 
