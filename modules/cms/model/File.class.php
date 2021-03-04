@@ -382,6 +382,7 @@ class File extends BaseObject
 	 * Ermittelt den Mime-Type zu dieser Datei
 	 *
 	 * @return String Mime-Type
+	 * @deprecated use FileGenerator for this.
 	 */
 	public function mimeType()
 	{

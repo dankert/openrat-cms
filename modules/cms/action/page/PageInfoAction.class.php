@@ -53,7 +53,14 @@ class PageInfoAction extends PageAction implements Method {
 				$pagecontext->modelId    = $modelid;
 
 				$pageGenerator = new PageGenerator( $pagecontext );
-				$filenames[] = $pageGenerator->getPublicFilename();
+				$filenames[] = [
+					'filename'    => $pageGenerator->getPublicFilename(),
+					'mimetype'    => $pageGenerator->getMimeType(),
+					'modelid'     => $modelid,
+					'modelname'   => $model,
+					'languageid'  => $languageid,
+					'languagename'=> $language,
+				];
 			}
 
 		$this->setTemplateVar('filenames',$filenames );

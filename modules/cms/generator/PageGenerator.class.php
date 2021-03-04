@@ -249,4 +249,16 @@ class PageGenerator extends BaseGenerator
 
 		return $page->path().'/'.$format;
 	}
+
+
+
+	public function getMimeType()
+	{
+		$page = new Page( $this->context->sourceObjectId );
+		$page->load();
+		$templateModel = new TemplateModel( $page->templateid,$this->context->modelId );
+		$templateModel->load();
+
+		return $templateModel->mimeType();
+	}
 }

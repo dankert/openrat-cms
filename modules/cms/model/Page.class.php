@@ -346,7 +346,8 @@ SQL
 	/**
 	 * Ermittelt den Mime-Type zu dieser Seite
 	 *
-	 * @return String Mime-Type  
+	 * @return String Mime-Type
+	 * @deprecated this is model-dependant! Use the same method in PageGenerator.
 	 */
 	function mimeType()
 	{

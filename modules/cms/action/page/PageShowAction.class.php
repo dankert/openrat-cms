@@ -20,10 +20,6 @@ class PageShowAction extends PageAction implements Method {
 
 		$this->page->load();
 
-		$project = $this->page->getProject();
-
-		header('Content-Type: '.$this->page->mimeType().'; charset=UTF-8' );
-
 		// HTTP-Header mit Sprachinformation setzen.
 		$language = new Language( $this->page->languageid);
 		$language->load();
@@ -33,6 +29,9 @@ class PageShowAction extends PageAction implements Method {
 
 		$pageContext = $this->createPageContext( Producer::SCHEME_PREVIEW);
 		$generator = new PageGenerator( $pageContext );
+
+		header('Content-Type: '.$generator->getMimeType().'; charset=UTF-8' );
+
 
 		$template = new Template( $this->page->templateid );
 		$templateModel = $template->loadTemplateModelFor( $pageContext->modelId );

@@ -38,4 +38,12 @@ abstract class BaseGenerator implements Generator
 	 * @return mixed
 	 */
 	protected abstract function generate();
+
+
+	/**
+	 * Calculates the MIME-Type
+	 *
+	 * @return string
+	 */
+	public abstract  function getMimeType();
 }

@@ -105,4 +105,20 @@ class FileGenerator extends BaseGenerator
 
 	}
 
+
+	/**
+	 * Calculates the MIME type of this file.
+	 *
+	 * @return string
+	 */
+	public function getMimeType()
+	{
+		$file = new File( $this->context->sourceObjectId );
+		$file->load();
+		$ext = strtolower( $file->getRealExtension() );
+
+		$mimeType = File::getMimeType( $ext );
+
+		return( $mimeType );
+	}
 }

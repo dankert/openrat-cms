@@ -1066,4 +1066,13 @@ class ValueGenerator extends BaseGenerator
 	{
 		return null;
 	}
+
+
+	/**
+	 * @return string always blank
+	 */
+	public function getMimeType()
+	{
+		return ''; // Values does not have a mime type.
+	}
 }

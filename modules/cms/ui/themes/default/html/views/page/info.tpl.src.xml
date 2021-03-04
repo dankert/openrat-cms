@@ -32,17 +32,48 @@
 			</fieldset>
 		</group>
 	</list>
-	<group title="${message:additional_info}" open="false">
-		<fieldset label="${message:full_filename}">
-			<text value="${full_filename}" class="filename"/>
-		</fieldset>
-
-		<fieldset label="${message:full_filename}">
-			<list list="${filenames}" value="filename">
+	<group title="${message:filename}" open="true">
+		<table filter="false">
+			<row header="true">
+				<column>
+					<text value="${message:language}" />
+				</column>
+				<column>
+					<text value="${message:model}" />
+				</column>
+				<column>
+					<text value="${message:filename}" />
+				</column>
+				<column>
+					<text value="${message:file_mimetype}" />
+				</column>
+			</row>
+			<list list="${filenames}" extract="true">
+				<row class="data">
+					<column>
+				<link type="open" id="${languageid}" action="language" clickable="true">
+					<text value="${languagename}" />
+				</link>
+					</column>
+					<column>
+				<link type="open" id="${modelid}" action="model" clickable="true">
+					<text value="${modelname}" />
+				</link>
+					</column>
+					<column>
 				<text value="${filename}" class="filename"/>
-				<newline />
+					</column>
+					<column>
+				<text value=" ( ${mimetype} )" />
+					</column>
+				</row>
 			</list>
-		</fieldset>
+
+		</table>
+	</group>
+
+	<group title="${message:additional_info}" open="false">
+
 		<fieldset label="${message:full_filename}">
 			<text value="${tmp_filename}" class="filename"/>
 		</fieldset>
