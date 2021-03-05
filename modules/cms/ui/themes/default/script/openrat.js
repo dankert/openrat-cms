@@ -3147,9 +3147,9 @@ let filterMenus = function ()
     let action = Openrat.Workbench.state.action;
     let id     = Openrat.Workbench.state.id;
     $('.or-workbench-title .or-dropdown-entry.or-act-clickable').addClass('dropdown-entry--active');
-    $('.or-workbench-title .or-dropdown-entry.or-act-clickable.or-filtered').removeClass('dropdown-entry--active').addClass('dropdown-entry--inactive');
+    $('.or-workbench-title .or-filtered').removeClass('dropdown-entry--active').addClass('dropdown-entry--inactive');
 	// Jeder Menüeintrag bekommt die Id und Parameter.
-	$('.or-workbench-title .or-dropdown-entry.or-act-clickable.or-filtered .or-link').attr('data-id'    ,id    );
+	$('.or-workbench-title .or-filtered .or-link').attr('data-id'    ,id    );
 
 	let url = Openrat.View.createUrl('profile','available',id, {'queryaction':action},true );
 
@@ -3159,7 +3159,7 @@ let filterMenus = function ()
 	promise.done( function (data) {
 
 		jQuery.each(data.output.views, function(i, method) {
-			$('.or-workbench-title .or-dropdown-entry.or-act-clickable.or-filtered > .or-link[data-method=\'' + method + '\']' ).parent()
+			$('.or-workbench-title .or-filtered > .or-link[data-method=\'' + method + '\']' ).parent()
 				.addClass('dropdown-entry--active').removeClass('dropdown-entry--inactive');
 		});
 	});
