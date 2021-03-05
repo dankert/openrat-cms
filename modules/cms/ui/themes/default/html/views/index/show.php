@@ -13,7 +13,7 @@
     <link rel="<?php echo O::escapeHtml('manifest') ?>" href="<?php echo O::escapeHtml(''.@$manifestLink.'') ?>" /><?php echo O::escapeHtml('') ?>
     <link rel="<?php echo O::escapeHtml('shortcut icon') ?>" type="<?php echo O::escapeHtml('image/x-icon') ?>" href="<?php echo O::escapeHtml(''.@$favicon_url.'') ?>" /><?php echo O::escapeHtml('') ?>
   </head>
-  <body><?php echo O::escapeHtml('') ?>
+  <body class="<?php echo O::escapeHtml('or-loader') ?>"><?php echo O::escapeHtml('') ?>
     <div id="<?php echo O::escapeHtml('workbench') ?>" class="<?php echo O::escapeHtml('or-workbench or--initial-hidden') ?>"><?php echo O::escapeHtml('') ?>
       <div class="<?php echo O::escapeHtml('or-workbench-navigation') ?>"><?php echo O::escapeHtml('') ?>
         <div class="<?php echo O::escapeHtml('or-workbench-screen or-workbench-navigation-content or-search') ?>"><?php echo O::escapeHtml('') ?>
@@ -80,7 +80,7 @@
         </div>
       </div>
     </div>
-    <div id="<?php echo O::escapeHtml('noticebar') ?>" class="<?php echo O::escapeHtml('or-notices') ?>"><?php echo O::escapeHtml('') ?>
+    <div id="<?php echo O::escapeHtml('noticebar') ?>" class="<?php echo O::escapeHtml('or-notice-container') ?>"><?php echo O::escapeHtml('') ?>
       <?php foreach((array)@$notices as $list_key=>$notice) {  ?>
         <div class="<?php echo O::escapeHtml('or--invisible or-act-initial-notice') ?>"><?php echo O::escapeHtml('') ?>
           <span><?php echo O::escapeHtml(''.@$notice['text'].'') ?></span>

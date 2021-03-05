@@ -221,15 +221,16 @@ Openrat.Form = function() {
 
                     let msg = '';
                     try {
-                        msg = jQuery.parseJSON( jqXHR.responseText ).error;
+                        msg = $.parseJSON( jqXHR.responseText ).message;
                     }
                     catch( e ) {
-                        msg = jqXHR.responseText;
+                        msg = jqXHR.statusText;
                     }
 
 					let notice = new Openrat.Notice();
                     notice.setStatus('error');
                     notice.msg = msg;
+                    notice.log = JSON.stringify( $.parseJSON(jqXHR.responseText),null,2);
                     notice.show();
 				}
 

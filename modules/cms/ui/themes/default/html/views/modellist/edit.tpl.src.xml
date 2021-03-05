@@ -8,9 +8,6 @@
 			<column>
 				<text value=""/>
 			</column>
-			<column>
-				<text value=""/>
-			</column>
 		</row>
 		<list list="${el}" extract="true">
 			<row class="data">

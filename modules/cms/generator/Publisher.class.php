@@ -153,7 +153,7 @@ class Publisher
 
 			if ($rc != 0) // Wenn Returncode ungleich 0, dann Fehler melden.
 				throw new PublisherException('System command failed - returncode is ' . $rc . "\n" .
-					$ausgabe);
+					implode("\n",$ausgabe) );
 			else
 				Logger::debug('System command successful');
 

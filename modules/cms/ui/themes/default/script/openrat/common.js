@@ -190,6 +190,10 @@ Openrat.Workbench.afterAllViewsLoaded.add( function() {
     filterMenus();
 } );
 
+Openrat.Workbench.afterAllViewsLoaded.add( function() {
+	$('body').removeClass('loader');
+} );
+
 
 
 

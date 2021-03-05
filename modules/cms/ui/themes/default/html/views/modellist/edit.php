@@ -12,9 +12,6 @@
           <td><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml('') ?></span>
           </td>
-          <td><?php echo O::escapeHtml('') ?>
-            <span><?php echo O::escapeHtml('') ?></span>
-          </td>
         </tr>
         <?php foreach((array)@$el as $list_key=>$list_value) { extract($list_value); ?>
           <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>

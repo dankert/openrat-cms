@@ -3,36 +3,38 @@
 
     &-collapsible {
 
-        display: flex;
-        flex-direction: column;
+        //display: flex;
+        //flex-direction: column;
 
         .or-collapsible-act-switch {
             cursor: pointer;
             //font-weight: normal;
         }
 
-        > .or-collapsible-value {
+        .or-collapsible-value {
             //transition: transform 0.5s ease-in-out;
             //transition: opacity 0.3s ease-out;
             //transition: max-height 1s linear;
-            flex: 1;
+            //flex: 1;
             display: block;
             //overflow: hidden;
+            transform-origin: top;
         }
 
-        > .or-collapsible-title {
+        .or-collapsible-title {
             padding-bottom:0.1em;
         }
 
         /* Geschlossen */
         &--is-closed {
-            > * > .or-collapsible--on-closed {
+            .or-collapsible--on-closed {
                 display: inline;
             }
-            > * > .or-collapsible--on-open {
+            .or-collapsible--on-open {
                 display: none;
             }
-            > .or-collapsible-value {
+            .or-collapsible-value {
+                transform: scaleY(0);
                 opacity: 0;
                 max-height: 0;
                 overflow: hidden;
@@ -41,16 +43,17 @@
 
         /* Offen */
         &--is-open {
-            > .or-collapsible-title {
+            .or-collapsible-title {
                 //border-bottom:1px solid;
             }
-            > .or-collapsible-value {
-                height: auto;
+            .or-collapsible-value {
+                //height: auto;
+                transform: scaleY(1);
             }
-            > * > .or-collapsible--on-closed {
+            .or-collapsible--on-closed {
                 display: none;
             }
-            > * > .or-collapsible--on-open {
+            .or-collapsible--on-open {
                 display: inline;
             }
         }

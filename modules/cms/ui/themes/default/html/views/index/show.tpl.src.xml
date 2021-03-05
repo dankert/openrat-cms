@@ -21,7 +21,7 @@
 		<link rel="shortcut icon" type="image/x-icon" href="${favicon_url}"/>
 	</head>
 
-	<body>
+	<body class="or-loader">
 		<!-- This is the CMS workbench which contains the whole application -->
 		<div id="workbench" class="or-workbench or--initial-hidden">
 
@@ -158,7 +158,10 @@
 
 		<!-- Notices -->
 
-		<div id="noticebar" class="or-notices">
+		<div id="noticebar" class="or-notice-container">
+
+			<!-- Initial notices created by the server
+			     These will be read by notice.js and are converted to a real notice after DOM is loaded -->
 			<or:list list="${notices}" value="notice">
 				<div class="or--invisible or-act-initial-notice">
 					<or:text value="${notice.text}"/>
