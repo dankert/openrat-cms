@@ -178,17 +178,13 @@ class PDODriver
 	}
 
 
-    /**
-     * @param $stmt PDOStatement
-     * @param $result
-     * @param $rownum
-     * @return mixed Row
-     */
-	public function fetchRow( $stmt, $result, $rownum )
+	/**
+	 * @param $stmt PDOStatement
+	 * @return mixed Row
+	 */
+	public function fetchRow($stmt)
 	{
-		$row = $stmt->fetch( PDO::FETCH_ASSOC );
-		
-		return $row;
+		return $stmt->fetch( PDO::FETCH_ASSOC );
 	}
 
  

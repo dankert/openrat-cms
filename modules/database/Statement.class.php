@@ -113,14 +113,12 @@ class Statement
 		$none = '';
 		$result = $this->query();
 		
-		$row = $this->client->fetchRow( $this->stmt, $result,0 );
+		$row = $this->client->fetchRow($this->stmt);
 
 		if	( ! is_array($row) )
 			return $none;
-			
-		$keys = array_keys($row);
-		
-		return $row[ $keys[0] ];
+
+		return array_values($row)[0];;
 	}
 
 
@@ -133,7 +131,7 @@ class Statement
 	{
 		$result = $this->query();
 		
-		$row = $this->client->fetchRow( $this->stmt, $result,0 );
+		$row = $this->client->fetchRow($this->stmt);
 
 		if	( ! is_array($row) )
 			$row = array();
@@ -153,7 +151,7 @@ class Statement
 
 		$i = 0;
 		$col = array();
-		while( $row = $this->client->fetchRow( $this->stmt, $result,$i++ ) )
+		while( $row = $this->client->fetchRow($this->stmt) )
 		{
 			if	( empty($row) )
 				break;
@@ -180,7 +178,7 @@ class Statement
 
 		$i = 0;
 		
-		while( $row = $this->client->fetchRow( $this->stmt, $result,$i++ ) )
+		while( $row = $this->client->fetchRow($this->stmt) )
 		{
 			if	( empty($row) )
 				break;
@@ -213,15 +211,10 @@ class Statement
      */
 	public function &getAll()
 	{
-		$result = $this->query();
-
 		$results = array();
-		$i = 0;
 
-		while( $row = $this->client->fetchRow( $this->stmt, $result,$i++ ) )
-		{
+		while( $row = $this->client->fetchRow($this->stmt) )
 			$results[] = $row;
-		}
 
 		return $results;
 	}
