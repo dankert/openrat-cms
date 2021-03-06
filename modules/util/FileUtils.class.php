@@ -97,6 +97,9 @@ CACHETAG
 			}
 			closedir($dh);
 
+			// Sorting the files, because the order should be identically on all platforms.
+			sort($dateien );
+
 			return $dateien;
 		} else {
 			throw new RuntimeException('unable to open directory: ' . $dir);
