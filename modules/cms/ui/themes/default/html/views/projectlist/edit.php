@@ -9,6 +9,7 @@
           <td><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml(''.@O::lang('name').'') ?></span>
           </td>
+          <td><?php echo O::escapeHtml('') ?></td>
         </tr>
         <?php foreach((array)@$projects as $list_key=>$list_value) { extract($list_value); ?>
           <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
@@ -17,6 +18,33 @@
                 <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-project') ?>"><?php echo O::escapeHtml('') ?></i>
                 <span><?php echo O::escapeHtml(''.@$name.'') ?></span>
               </a>
+            </td>
+            <td><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('or-button or-toolbar-icon or-row--on-hover') ?>"><?php echo O::escapeHtml('') ?>
+                <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-more or-menu-icon') ?>"><?php echo O::escapeHtml('') ?></i>
+                <span class="<?php echo O::escapeHtml('or-menu-label') ?>"><?php echo O::escapeHtml(''.@O::lang('edit').'') ?></span>
+                <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--dropdown or-menu-dropdown-icon') ?>"><?php echo O::escapeHtml('') ?></i>
+                <div class="<?php echo O::escapeHtml('or-dropdown or-button-value') ?>"><?php echo O::escapeHtml('') ?>
+                  <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
+                    <a title="<?php echo O::escapeHtml(''.@O::lang('menu_info_desc').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('project') ?>" data-method="<?php echo O::escapeHtml('info') ?>" data-id="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('project') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('info') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':\'project\',\'dialogMethod\':\'info\'}') ?>" href="<?php echo O::escapeHtml('#/project/'.@$id.'') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
+                      <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-info') ?>"><?php echo O::escapeHtml('') ?></i>
+                      <span class="<?php echo O::escapeHtml('or-dropdown-text') ?>"><?php echo O::escapeHtml(''.@O::lang('menu_info').'') ?></span>
+                    </a>
+                  </div>
+                  <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
+                    <a title="<?php echo O::escapeHtml(''.@O::lang('menu_prop_desc').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('project') ?>" data-method="<?php echo O::escapeHtml('prop') ?>" data-id="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('project') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('prop') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':\'project\',\'dialogMethod\':\'prop\'}') ?>" href="<?php echo O::escapeHtml('#/project/'.@$id.'') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
+                      <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-prop') ?>"><?php echo O::escapeHtml('') ?></i>
+                      <span class="<?php echo O::escapeHtml('or-dropdown-text') ?>"><?php echo O::escapeHtml(''.@O::lang('menu_prop').'') ?></span>
+                    </a>
+                  </div>
+                  <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
+                    <a title="<?php echo O::escapeHtml(''.@O::lang('menu_history_desc').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('project') ?>" data-method="<?php echo O::escapeHtml('history') ?>" data-id="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('project') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('history') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':\'project\',\'dialogMethod\':\'history\'}') ?>" href="<?php echo O::escapeHtml('#/project/'.@$id.'') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
+                      <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-history') ?>"><?php echo O::escapeHtml('') ?></i>
+                      <span class="<?php echo O::escapeHtml('or-dropdown-text') ?>"><?php echo O::escapeHtml(''.@O::lang('menu_history').'') ?></span>
+                    </a>
+                  </div>
+                </div>
+              </div>
             </td>
           </tr>
          <?php } ?>
@@ -27,6 +55,7 @@
               <span><?php echo O::escapeHtml(''.@O::lang('add').'') ?></span>
             </a>
           </td>
+          <td><?php echo O::escapeHtml('') ?></td>
         </tr>
       </table>
     </div>

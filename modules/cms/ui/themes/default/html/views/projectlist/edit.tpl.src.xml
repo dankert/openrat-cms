@@ -4,6 +4,7 @@
       <column>
         <text value="${message:name}"/>
       </column>
+		<column />
     </row>
     <list list="${projects}" extract="true">
       <row class="data">
@@ -13,6 +14,38 @@
             <text value="${name}" maxlength="30"/>
           </link>
         </column>
+		  <column class="">
+
+			  <part class="button,toolbar-icon,row--on-hover">
+				  <image class="menu-icon" menu="more"/>
+				  <text class="menu-label" value="${message:edit}"/>
+				  <image class="menu-dropdown-icon" symbol="dropdown"/>
+				  <part class="dropdown,button-value">
+				  <part
+					  class="dropdown-entry,act-clickable">
+					  <link type="dialog" id="${id}" title="${message:menu_info_desc}" action="project" subaction="info">
+						  <image method="info"/>
+						  <text class="dropdown-text" value="${message:menu_info}"/>
+					  </link>
+				  </part>
+				  <part
+					  class="dropdown-entry,act-clickable">
+					  <link type="dialog" id="${id}" title="${message:menu_prop_desc}" action="project"  subaction="prop">
+						  <image method="prop"/>
+						  <text class="dropdown-text" value="${message:menu_prop}"/>
+					  </link>
+				  </part>
+				  <part
+					  class="dropdown-entry,act-clickable">
+					  <link type="dialog" id="${id}" title="${message:menu_history_desc}" action="project"  subaction="history">
+						  <image method="history"/>
+						  <text class="dropdown-text" value="${message:menu_history}"/>
+					  </link>
+				  </part>
+				  </part>
+			  </part>
+
+		  </column>
       </row>
     </list>
     <row class="data">
@@ -22,6 +55,7 @@
           <text value="${message:add}"/>
         </link>
       </column>
+		<column />
     </row>
   </table>
 </output>

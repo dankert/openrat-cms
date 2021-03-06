@@ -197,7 +197,9 @@ Openrat.Workbench.afterAllViewsLoaded.add( function() {
 
 
 
-
+Openrat.Workbench.afterViewLoadedHandler.add( function(element) {
+	$(element).find('.or-button').orButton();
+} );
 
 Openrat.Workbench.afterViewLoadedHandler.add( function(element) {
 

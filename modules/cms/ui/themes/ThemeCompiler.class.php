@@ -125,6 +125,7 @@ class ThemeCompiler
 		$js[] = __DIR__.'/default/script/plugin/jquery-plugin-toggleAttr';
 		$js[] = __DIR__.'/default/script/plugin/jquery-plugin-orSearch';
 		$js[] = __DIR__.'/default/script/plugin/jquery-plugin-orLinkify';
+		$js[] = __DIR__.'/default/script/plugin/jquery-plugin-orButton';
 		$js[] = __DIR__.'/default/script/plugin/jquery-plugin-orTree';
 		$js[] = __DIR__.'/default/script/plugin/jquery-plugin-orAutoheight';
 		$js[] = __DIR__.'/default/script/jquery-qrcode';
