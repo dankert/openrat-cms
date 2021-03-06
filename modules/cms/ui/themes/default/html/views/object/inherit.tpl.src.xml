@@ -3,16 +3,9 @@
 	<form>
 		<if value="${type}" equals="folder">
 			<group title="${message:options}">
-				<fieldset class="line" label="">
-					<part class="label">
-					</part>
-					<part class="value">
+				<fieldset label="${message:acl_transmit}">
 						<set var="inherit" value="1"/>
-						<checkbox name="inherit"/>
-						<label for="inherit">
-							<text value="${message:inherit_rights}"/>
-						</label>
-					</part>
+						<checkbox name="inherit" label="${message:inherit_rights}"/>
 				</fieldset>
 			</group>
 		</if>

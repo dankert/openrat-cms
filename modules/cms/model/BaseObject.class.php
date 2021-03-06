@@ -270,17 +270,17 @@ class BaseObject extends ModelBase
     {
         if	( is_null($this->aclMask) )
         {
-            $user     = \util\Session::getUser();
+			$user     = \util\Session::getUser();
 
+			$this->aclMask = 0;
 
-            if  ( ! $user ) {
+			if  ( ! $user ) {
                 // Anonymous
-                $this->aclMask = 0;
 
                 $sql = Db::sql( <<<SQL
-    SELECT {{acl}}.* FROM {{acl}}
-                 WHERE objectid={objectid}
-                   AND {{acl}}.type = {guest}
+    SELECT * FROM  {{acl}}
+             WHERE objectid={objectid}
+               AND type = {guest}
 SQL
                 );
 
@@ -297,30 +297,38 @@ SQL
 
             }
 
-            elseif	( $user->isAdmin )
+			elseif	( $user->isAdmin )
             {
-                // Administratoren erhalten eine Maske mit allen Rechten
+                // Administrators got all rights
                 $this->aclMask = Permission::ACL_ALL;
             }
             else
             {
+            	// Normal user
                 $this->aclMask = 0;
 
                 $sqlGroupClause = $user->getGroupClause();
                 $sql = Db::sql( <<<SQL
-SELECT {{acl}}.* FROM {{acl}}
+         SELECT * FROM  {{acl}}
                  WHERE objectid={objectid}
                    AND ( languageid={languageid} OR languageid IS NULL )
-                   AND ( {{acl}}.userid={userid} OR $sqlGroupClause
-                                                 OR ({{acl}}.userid IS NULL AND {{acl}}.groupid IS NULL) )
+                   AND (    type = {user}  AND userid={userid} 
+                         OR type = {group} AND $sqlGroupClause
+                         OR type = {all}
+                         OR type = {guest}
+                       )
 SQL
                 );
 
                 $sql->setInt  ( 'languageid'  ,$this->languageid       );
                 $sql->setInt  ( 'objectid'    ,$this->objectid         );
                 $sql->setInt  ( 'userid'      ,$user->userid           );
+				$sql->setInt  ( 'user'        ,Permission::TYPE_USER );
+				$sql->setInt  ( 'group'       ,Permission::TYPE_GROUP);
+				$sql->setInt  ( 'all'         ,Permission::TYPE_AUTH );
+				$sql->setInt  ( 'guest'       ,Permission::TYPE_GUEST );
 
-                foreach($sql->getAll() as $row )
+				foreach($sql->getAll() as $row )
                 {
                     $permission = new Permission();
                     $permission->setDatabaseRow( $row );

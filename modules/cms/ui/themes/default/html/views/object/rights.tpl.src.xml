@@ -70,4 +70,12 @@
 			</column>
 		</row>
 	</table>
+
+	<part class="act-clickable">
+		<link type="dialog" subaction="inherit" class="btn">
+			<image method="rights"/>
+			<text value="${message:ACL_TRANSMIT}"/>
+		</link>
+	</part>
+
 </output>
