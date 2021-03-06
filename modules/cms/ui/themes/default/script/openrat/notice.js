@@ -210,10 +210,10 @@ Openrat.Notice = function() {
 
 
 Openrat.Notice.removeNoticesWithStatus = function( status) {
-	$('.or-notices').find('.or-notice--'+status).remove();
+	$('.or-notice-container').find('.or-notice--'+status).remove();
 }
 
 Openrat.Notice.removeAllNotices = function( status) {
 
-	$('.or-notices').find('.or-notice').remove();
+	$('.or-notice-container').find('.or-notice').remove();
 }
