@@ -73,13 +73,20 @@ class Link extends BaseObject
      */
     public function save()
 	{
-		$db = \cms\base\DB::get();
+		$db = DB::get();
 		
-		$sql = $db->sql('UPDATE {{link}} SET '.
-		               '  link_objectid = {linkobjectid}'.
-		                ' WHERE objectid={objectid}' );
+		$sql = $db->sql( <<<SQL
+ 		UPDATE {{link}}
+ 		   SET link_objectid = {linkobjectid}
+		 WHERE objectid={objectid}
+SQL
+);
 		$sql->setInt   ('objectid'    ,$this->objectid );
-		$sql->setInt ('linkobjectid',$this->linkedObjectId );
+
+		if ( ! $this->linkedObjectId )
+			$sql->setNull('linkobjectid');
+		else
+			$sql->setInt ('linkobjectid',$this->linkedObjectId );
 
 		$sql->query();
 
@@ -117,14 +124,9 @@ class Link extends BaseObject
 		               ' VALUES( {linkid},{objectid},{linkobjectid} )' );
 		$stmt->setInt   ('linkid'      ,$this->linkid         );
 		$stmt->setInt   ('objectid'    ,$this->objectid       );
-
-		if ($this->linkedObjectId == 0)
-            $stmt->setNull('linkobjectid');
-		else
-            $stmt->setInt ('linkobjectid',$this->linkedObjectId );
+        $stmt->setNull  ('linkobjectid');
 
 		$stmt->query();
 	}	
 }
 
-?>

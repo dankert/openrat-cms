@@ -109,5 +109,3 @@ class Url extends BaseObject
 		$sql->query();
 	}	
 }
-
-?>
