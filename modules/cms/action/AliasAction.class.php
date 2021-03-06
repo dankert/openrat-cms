@@ -37,8 +37,6 @@ use cms\model\Alias;
  */
 class AliasAction extends ObjectAction
 {
-	public $security = Action::SECURITY_USER;
-
     /**
      * @var Alias
      */

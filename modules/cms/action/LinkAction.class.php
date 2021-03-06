@@ -33,8 +33,6 @@ use util\Html;
  */
 class LinkAction extends ObjectAction
 {
-	public $security = Action::SECURITY_USER;
-
     /**
      * @var Link
      */

@@ -40,8 +40,6 @@ use util\Upload;
  */
 class FileAction extends ObjectAction
 {
-	public $security = Action::SECURITY_USER;
-
     /**
      * @var File
      */

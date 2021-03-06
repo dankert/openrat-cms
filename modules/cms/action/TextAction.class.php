@@ -30,8 +30,6 @@ use language\Messages;
  */
 class TextAction extends FileAction
 {
-	public $security = Action::SECURITY_USER;
-
 	/**
 	 * @var Text
 	 */

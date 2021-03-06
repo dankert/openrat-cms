@@ -37,8 +37,6 @@ use util\Upload;
 
 class FolderAction extends ObjectAction
 {
-	public $security = Action::SECURITY_USER;
-
     /**
      * @var Folder
      */

@@ -14,8 +14,6 @@ use util\Html;
  */
 class ImageAction extends FileAction
 {
-	public $security = Action::SECURITY_USER;
-
 	protected $image;
 
 	/**

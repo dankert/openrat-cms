@@ -32,8 +32,6 @@ use util\Session;
 
 class PageAction extends ObjectAction
 {
-	public $security = Action::SECURITY_USER;
-
     /**
      * @var Page
      */

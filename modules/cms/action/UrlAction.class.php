@@ -32,8 +32,6 @@ use language\Messages;
  */
 class UrlAction extends ObjectAction
 {
-	public $security = Action::SECURITY_USER;
-
     /**
      * @var Url
      */

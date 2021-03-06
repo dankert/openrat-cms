@@ -28,7 +28,7 @@ use util\Session;
 class ObjectAction extends BaseAction
 {
 
-	public $security = Action::SECURITY_USER;
+	public $security = Action::SECURITY_GUEST;
 	
 	private $objectid;
 
@@ -50,7 +50,9 @@ class ObjectAction extends BaseAction
 		$baseObject->objectLoad();
 
 		$this->setBaseObject( $baseObject );
-    }
+
+		$this->checkRight( Permission::ACL_READ );
+	}
 
 
 	protected function setBaseObject( $baseObject ) {

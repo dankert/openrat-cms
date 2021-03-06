@@ -838,8 +838,6 @@ SQL
         $stmt = Db::sql( <<<SQL
 UPDATE {{object}} SET 
                   parentid          = {parentid},
-                  lastchange_date   = {time}    ,
-                  lastchange_userid = {userid}  ,
                   filename          = {filename},
                   valid_from        = {validFrom},
                   valid_to          = {validTo},
@@ -857,8 +855,6 @@ SQL
         $user = \util\Session::getUser();
         $this->lastchangeUser = $user;
         $this->lastchangeDate = Startup::now();
-        $stmt->setInt   ('time'     , $this->lastchangeDate          );
-        $stmt->setInt   ('userid'   , $this->lastchangeUser->userid  );
         $stmt->setString('filename' , $this->filename                );
         $stmt->setString('settings' , $this->settings                );
         $stmt->setInt   ('validFrom', $this->validFromDate           );
@@ -888,8 +884,9 @@ SQL
         $user = \util\Session::getUser();
         $this->lastchangeUser = $user;
         $this->lastchangeDate = Startup::now();
+        $userid = $this->lastchangeUser ? $this->lastchangeUser->userid : null;
 
-        $sql->setInt   ('userid'  ,$this->lastchangeUser->userid  );
+        $sql->setIntOrNull('userid'  ,$userid                        );
         $sql->setInt   ('objectid',$this->objectid                );
         $sql->setInt   ('time'    ,$this->lastchangeDate          );
 
