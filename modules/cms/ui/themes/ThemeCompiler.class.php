@@ -55,7 +55,7 @@ class ThemeCompiler
 			$cssFile = $cssF . '.css';
 			$cssMinFile = $cssF . '.min.css';
 
-			file_put_contents($combinedCssFile, '/* Include style: '.$cssF.' */'."\n",FILE_APPEND);
+			file_put_contents($combinedCssFile, '/* Include style: '.substr($cssF,strlen(__DIR__)).' */'."\n",FILE_APPEND);
 
 			if (! is_file($lessFile) && is_file($cssMinFile))
             {
