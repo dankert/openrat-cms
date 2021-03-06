@@ -53,11 +53,25 @@ class Permission extends ModelBase
     const ACL_GRANT         = 1024;
     const ACL_TRANSMIT      = 2048;
 
+    const ACL_ALL           = 4095;
+
+    const TYPE_USER  = 1;
+    const TYPE_GROUP = 2;
+    const TYPE_AUTH  = 3;
+    const TYPE_GUEST = 4;
+
 	/**
 	  * eindeutige ID dieser ACL
 	  * @type Integer
 	  */
 	public $aclid;
+
+
+	/**
+	 * one of the TYPE_* constants
+	 * @var int
+	 */
+	public $type;
 
 	/**
 	  * ID des Objektes, f?r das diese Berechtigung gilt
@@ -250,7 +264,8 @@ class Permission extends ModelBase
 	 */
 	public function setDatabaseRow( $row )
 	{
-		$this->aclid         =   $row['id'];
+		$this->aclid         =   $row['id'  ];
+		$this->type          =   $row['type'];
 
 		$this->write         = ( $row['is_write'        ] == '1' );
 		$this->prop          = ( $row['is_prop'         ] == '1' );
@@ -471,13 +486,14 @@ SQL
 		
 		$stmt = Db::sql( <<<SQL
 		INSERT INTO {{acl}} 
-		                 (id,userid,groupid,objectid,is_write,is_prop,is_create_folder,is_create_file,is_create_link,is_create_page,is_delete,is_release,is_publish,is_grant,is_transmit,languageid)
-		                 VALUES( {aclid},{userid},{groupid},{objectid},{write},{prop},{create_folder},{create_file},{create_link},{create_page},{delete},{release},{publish},{grant},{transmit},{languageid} )
+		                 (id,type,userid,groupid,objectid,is_write,is_prop,is_create_folder,is_create_file,is_create_link,is_create_page,is_delete,is_release,is_publish,is_grant,is_transmit,languageid)
+		                 VALUES( {aclid},{type},{userid},{groupid},{objectid},{write},{prop},{create_folder},{create_file},{create_link},{create_page},{delete},{release},{publish},{grant},{transmit},{languageid} )
 SQL
 );
 
 		$stmt->setInt('aclid'   ,$this->aclid   );
-		
+		$stmt->setInt('type'    ,$this->type    );
+
 		if	( intval($this->userid) == 0 )
 			$stmt->setNull('userid');
 		else

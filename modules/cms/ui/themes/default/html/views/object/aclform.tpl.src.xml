@@ -3,6 +3,10 @@
 	<form>
 		<group title="${message:users}">
 			<fieldset class="line" label="">
+				<radio name="type" value="guest" label="${message:GUEST}"/>
+			</fieldset>
+
+			<fieldset class="line" label="">
 				<radio name="type" value="all" label="${message:ALL}"/>
 			</fieldset>
 

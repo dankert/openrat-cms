@@ -14,6 +14,7 @@ use cms\model\Project;
 use cms\model\User;
 use language\Messages;
 use util\ArrayUtils;
+use util\exception\SecurityException;
 use util\exception\ValidationException;
 use util\Http;
 use util\Session;
@@ -69,5 +70,19 @@ class ObjectAction extends BaseAction
 	    $rootFolder = new Folder( $project->getRootObjectId() );
 
 	    return $rootFolder->hasRight(Permission::ACL_PROP);
+    }
+
+
+    /**
+	 * Checks if the current user has sufficient rights.
+	 *
+	 * If not, an exception is thrown.
+	 *
+     * @return bool
+     */
+    protected function checkRight( $permission ) {
+
+	    if   ( ! $this->baseObject->hasRight($permission ) )
+	    	throw new SecurityException('User has insufficient permissions ('.$permission.')' );
     }
 }

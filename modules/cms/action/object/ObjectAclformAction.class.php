@@ -32,6 +32,8 @@ class ObjectAclformAction extends ObjectAction implements Method {
 		$this->setTemplateVar('objectid' ,$o->objectid     );
 		$this->setTemplateVar('action'   ,$this->request->action);
     }
+
+
     public function post() {
 		$permission = new Permission();
 
@@ -39,17 +41,15 @@ class ObjectAclformAction extends ObjectAction implements Method {
 		
 		// Nachschauen, ob der Benutzer ueberhaupt berechtigt ist, an
 		// diesem Objekt die ACLs zu aendern.
-		$o = new BaseObject( $permission->objectid );
+		$this->checkRight( Permission::ACL_GRANT );
 
-		if	( !$o->hasRight( Permission::ACL_GRANT ) )
-			throw new \util\exception\SecurityException('Not allowed to insert permissions.'); // Scheiss Hacker ;)
-		
 		// Handelt es sich um eine Benutzer- oder Gruppen ACL?
 		switch( $this->request->getText('type') )
 		{
 			case 'user':
 				$permission->userid  = $this->request->getText('userid' );
-				
+				$permission->type    = Permission::TYPE_USER;
+
 				if	( $permission->userid <= 0 )
 				{
 					$this->addValidationError('type'     );
@@ -59,6 +59,7 @@ class ObjectAclformAction extends ObjectAction implements Method {
 				break;
 			case 'group':
 				$permission->groupid = $this->request->getText('groupid');
+				$permission->type    = Permission::TYPE_GROUP;
 				if	( $permission->groupid <= 0 )
 				{
 					$this->addValidationError('type'      );
@@ -67,6 +68,10 @@ class ObjectAclformAction extends ObjectAction implements Method {
 				}
 				break;
 			case 'all':
+				$permission->type    = Permission::TYPE_AUTH;
+				break;
+			case 'guest':
+				$permission->type    = Permission::TYPE_GUEST;
 				break;
 			default:
 				$this->addValidationError('type');
@@ -114,6 +119,6 @@ class ObjectAclformAction extends ObjectAction implements Method {
 		
 		$this->addNoticeFor( $this->baseObject,Messages::ADDED);
 		
-		$o->setTimestamp();
+		$this->baseObject->setTimestamp();
     }
 }

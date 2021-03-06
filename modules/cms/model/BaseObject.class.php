@@ -280,12 +280,12 @@ class BaseObject extends ModelBase
                 $sql = Db::sql( <<<SQL
     SELECT {{acl}}.* FROM {{acl}}
                  WHERE objectid={objectid}
-                   AND {{acl}}.userid IS NULL
-                   AND {{acl}}.groupid IS NULL
+                   AND {{acl}}.type = {guest}
 SQL
                 );
 
-                $sql->setInt  ( 'objectid'    ,$this->objectid         );
+                $sql->setInt  ( 'objectid' ,$this->objectid              );
+                $sql->setInt  ( 'guest'    ,Permission::TYPE_GUEST );
 
                 foreach($sql->getAll() as $row )
                 {
@@ -295,38 +295,12 @@ SQL
                     $this->aclMask |= $permission->getMask();
                 }
 
-                $guestMask = 0;
-                switch( Configuration::Conf()->subset('security')->get('guest-access','read') )
-                {
-                    case 'read':
-                    case 'readonly':
-                        $guestMask = Permission::ACL_READ;
-                        break;
-                    case 'write':
-                        $guestMask = Permission::ACL_READ + Permission::ACL_WRITE;
-                        break;
-                    default:
-                        // nothing allowed for guests.
-                }
-
-                $this->aclMask = $guestMask && $this->aclMask;
             }
 
             elseif	( $user->isAdmin )
             {
                 // Administratoren erhalten eine Maske mit allen Rechten
-                $this->aclMask = Permission::ACL_READ +
-                    Permission::ACL_WRITE +
-                    Permission::ACL_PROP +
-                    Permission::ACL_DELETE +
-                    Permission::ACL_RELEASE +
-                    Permission::ACL_PUBLISH +
-                    Permission::ACL_CREATE_FOLDER +
-                    Permission::ACL_CREATE_FILE +
-                    Permission::ACL_CREATE_LINK +
-                    Permission::ACL_CREATE_PAGE +
-                    Permission::ACL_GRANT +
-                    Permission::ACL_TRANSMIT;
+                $this->aclMask = Permission::ACL_ALL;
             }
             else
             {
@@ -357,7 +331,8 @@ SQL
         }
 
         if	( Startup::readonly() )
-            // System ist im Nur-Lese-Zustand
+            // System is readonly.
+        	// The maximum permission is readonly.
             $this->aclMask = Permission::ACL_READ && $this->aclMask;
 
         // Ermittelte Maske auswerten
