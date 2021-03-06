@@ -211,6 +211,7 @@ class Statement
      */
 	public function &getAll()
 	{
+		$result = $this->query();
 		$results = array();
 
 		while( $row = $this->client->fetchRow($this->stmt) )
