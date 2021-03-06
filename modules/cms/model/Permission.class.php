@@ -109,6 +109,7 @@ class Permission extends ModelBase
 	  * Es handelt sich um eine Standard-Berechtigung
 	  * (Falls false, dann Zugriffs-Berechtigung)
 	  * @type Boolean
+	  * @deprecated
 	  */
 	public $isDefault  = false;
 
@@ -130,6 +131,13 @@ class Permission extends ModelBase
 	  */
 	public $read          = true;
 
+	/**
+	 * Contains all permission flags.
+	 * This is a bitmask with the class constants ACL_*
+	 *
+	 * @var int
+	 */
+	private $flags = 0;
 	/**
 	  * Inhalt bearbeiten
 	  * @type Boolean
@@ -266,23 +274,14 @@ class Permission extends ModelBase
 	{
 		$this->aclid         =   $row['id'  ];
 		$this->type          =   $row['type'];
-
-		$this->write         = ( $row['is_write'        ] == '1' );
-		$this->prop          = ( $row['is_prop'         ] == '1' );
-		$this->delete        = ( $row['is_delete'       ] == '1' );
-		$this->release       = ( $row['is_release'      ] == '1' );
-		$this->publish       = ( $row['is_publish'      ] == '1' );
-		$this->create_folder = ( $row['is_create_folder'] == '1' );
-		$this->create_file   = ( $row['is_create_file'  ] == '1' );
-		$this->create_page   = ( $row['is_create_page'  ] == '1' );
-		$this->create_link   = ( $row['is_create_link'  ] == '1' );
-		$this->grant         = ( $row['is_grant'        ] == '1' );
-		$this->transmit      = ( $row['is_transmit'     ] == '1' );
+		$this->flags         =   $row['flags'];
 
 		$this->objectid     = intval($row['objectid'  ]);
 		$this->languageid   = intval($row['languageid']);
 		$this->userid       = intval($row['userid'    ]);
 		$this->groupid      = intval($row['groupid'   ]);
+
+		$this->updatePermissionBitsFromFlags();
 	}
 
 	
@@ -294,17 +293,17 @@ class Permission extends ModelBase
 	public function getProperties()
 	{
 		return Array( 'read'         => true,
-		              'write'        => $this->write,
-		              'prop'         => $this->prop,
-		              'create_folder'=> $this->create_folder,
-		              'create_file'  => $this->create_file,
-		              'create_link'  => $this->create_link,
-		              'create_page'  => $this->create_page,
-		              'delete'       => $this->delete,
-		              'release'      => $this->release,
-		              'publish'      => $this->publish,
-		              'grant'        => $this->grant,
-		              'transmit'     => $this->transmit,
+		              'write'        => $this->flags & self::ACL_WRITE,
+		              'prop'         => $this->flags & self::ACL_PROP,
+		              'create_folder'=> $this->flags & self::ACL_CREATE_FOLDER,
+		              'create_file'  => $this->flags & self::ACL_CREATE_FILE,
+		              'create_link'  => $this->flags & self::ACL_CREATE_LINK,
+		              'create_page'  => $this->flags & self::ACL_CREATE_PAGE,
+		              'delete'       => $this->flags & self::ACL_DELETE,
+		              'release'      => $this->flags & self::ACL_RELEASE,
+		              'publish'      => $this->flags & self::ACL_PUBLISH,
+		              'grant'        => $this->flags & self::ACL_GRANT,
+		              'transmit'     => $this->flags & self::ACL_TRANSMIT,
 		              'is_default'   => $this->isDefault,
 		              'userid'       => $this->userid,
 		              'username'     => $this->username,
@@ -341,28 +340,12 @@ class Permission extends ModelBase
 
 
 	/**
-	 * Erzeugt eine Bitmaske mit den Berechtigungen dieser ACL.
+	 * Get the bitmask with all permission flags.
 	 * 
-	 * @return Integer Bitmaske
+	 * @return int permission flags as bitmask
 	 */
-	public function getMask()
-	{
-		// intval(boolean) erzeugt numerisch 0 oder 1 :)
-		$this->mask =  self::ACL_READ;   // immer lesen
-		$this->mask += self::ACL_WRITE         *intval($this->write        );
-		$this->mask += self::ACL_PROP          *intval($this->prop         );
-		$this->mask += self::ACL_DELETE        *intval($this->delete       );
-		$this->mask += self::ACL_RELEASE       *intval($this->release      );
-		$this->mask += self::ACL_PUBLISH       *intval($this->publish      );
-		$this->mask += self::ACL_CREATE_FOLDER *intval($this->create_folder);
-		$this->mask += self::ACL_CREATE_FILE   *intval($this->create_file  );
-		$this->mask += self::ACL_CREATE_LINK   *intval($this->create_link  );
-		$this->mask += self::ACL_CREATE_PAGE   *intval($this->create_page  );
-		$this->mask += self::ACL_GRANT         *intval($this->grant        );
-		$this->mask += self::ACL_TRANSMIT      *intval($this->transmit     );
-		
-		\logger\Logger::trace('mask of acl '.$this->aclid.': '.$this->mask );
-		return $this->mask;
+	public function getMask() {
+		return $this->flags;
 	}
 
 
@@ -419,9 +402,8 @@ class Permission extends ModelBase
 	 */
 	public function add()
 	{
-		if	( $this->delete )
-			$this->prop = true;
-			
+		$this->updateFlagsFromPermissionBits();
+
 		// Pruefen, ob die ACL schon existiert
 		$user_comp     = intval($this->userid    )>0?'={userid}':'IS NULL';
 		$group_comp    = intval($this->groupid   )>0?'={groupid}':'IS NULL';
@@ -433,17 +415,7 @@ class Permission extends ModelBase
 		       groupid     $group_comp     AND
 		       languageid  $language_comp  AND
 		       objectid         = {objectid}      AND
-		       is_write         = {write}         AND
-		       is_prop          = {prop}          AND
-		       is_create_folder = {create_folder} AND
-		       is_create_file   = {create_file}   AND
-		       is_create_link   = {create_link}   AND
-		       is_create_page   = {create_page}   AND
-		       is_delete        = {delete}        AND
-		       is_release       = {release}       AND
-		       is_publish       = {publish}       AND
-		       is_grant         = {grant}         AND
-		       is_transmit      = {transmit}
+		       flags            = {flags}
 SQL
 );
 
@@ -457,17 +429,7 @@ SQL
             $stmt->setInt ('languageid',$this->languageid);
 
         $stmt->setInt('objectid',$this->objectid);
-        $stmt->setBoolean('write'        ,$this->write         );
-        $stmt->setBoolean('prop'         ,$this->prop          );
-        $stmt->setBoolean('create_folder',$this->create_folder );
-        $stmt->setBoolean('create_file'  ,$this->create_file   );
-        $stmt->setBoolean('create_link'  ,$this->create_link   );
-        $stmt->setBoolean('create_page'  ,$this->create_page   );
-        $stmt->setBoolean('delete'       ,$this->delete        );
-        $stmt->setBoolean('release'      ,$this->release       );
-        $stmt->setBoolean('publish'      ,$this->publish       );
-        $stmt->setBoolean('grant'        ,$this->grant         );
-        $stmt->setBoolean('transmit'     ,$this->transmit      );
+        $stmt->setInt('flags'        ,$this->flags             );
 
 
         $aclid = intval($stmt->getOne());
@@ -486,8 +448,8 @@ SQL
 		
 		$stmt = Db::sql( <<<SQL
 		INSERT INTO {{acl}} 
-		                 (id,type,userid,groupid,objectid,is_write,is_prop,is_create_folder,is_create_file,is_create_link,is_create_page,is_delete,is_release,is_publish,is_grant,is_transmit,languageid)
-		                 VALUES( {aclid},{type},{userid},{groupid},{objectid},{write},{prop},{create_folder},{create_file},{create_link},{create_page},{delete},{release},{publish},{grant},{transmit},{languageid} )
+		                 (id,type,userid,groupid,objectid,flags,languageid)
+		                 VALUES( {aclid},{type},{userid},{groupid},{objectid},{flags},{languageid} )
 SQL
 );
 
@@ -505,17 +467,7 @@ SQL
 			$stmt->setInt ('groupid',$this->groupid);
 
 		$stmt->setInt('objectid',$this->objectid);
-		$stmt->setBoolean('write'        ,$this->write         );
-		$stmt->setBoolean('prop'         ,$this->prop          );
-		$stmt->setBoolean('create_folder',$this->create_folder );
-		$stmt->setBoolean('create_file'  ,$this->create_file   );
-		$stmt->setBoolean('create_link'  ,$this->create_link   );
-		$stmt->setBoolean('create_page'  ,$this->create_page   );
-		$stmt->setBoolean('delete'       ,$this->delete        );
-		$stmt->setBoolean('release'      ,$this->release       );
-		$stmt->setBoolean('publish'      ,$this->publish       );
-		$stmt->setBoolean('grant'        ,$this->grant         );
-		$stmt->setBoolean('transmit'     ,$this->transmit      );
+		$stmt->setInt('flags'        ,$this->flags             );
 
 		if	( intval($this->languageid) == 0 )
 			$stmt->setNull('languageid');
@@ -547,6 +499,44 @@ SQL
 	public function getId()
 	{
 		return $this->aclid;
+	}
+
+	/**
+	 * Sets the boolean properties in this instance.
+	 */
+	protected function updatePermissionBitsFromFlags()
+	{
+			$this->write        = $this->flags & self::ACL_WRITE;
+			$this->prop         = $this->flags & self::ACL_PROP;
+			$this->create_folder= $this->flags & self::ACL_CREATE_FOLDER;
+			$this->create_file  = $this->flags & self::ACL_CREATE_FILE;
+			$this->create_link  = $this->flags & self::ACL_CREATE_LINK;
+			$this->create_page  = $this->flags & self::ACL_CREATE_PAGE;
+			$this->delete       = $this->flags & self::ACL_DELETE;
+			$this->release      = $this->flags & self::ACL_RELEASE;
+			$this->publish      = $this->flags & self::ACL_PUBLISH;
+			$this->grant        = $this->flags & self::ACL_GRANT;
+			$this->transmit     = $this->flags & self::ACL_TRANSMIT;
+	}
+
+
+	/**
+	 * Calculates the permission flags from the properties.
+	 */
+	protected function updateFlagsFromPermissionBits()
+	{
+		    $this->flags = self::ACL_READ;
+			$this->flags += self::ACL_WRITE         * intval($this->write        );
+			$this->flags += self::ACL_PROP          * intval($this->prop         );
+			$this->flags += self::ACL_CREATE_FOLDER * intval($this->create_folder);
+			$this->flags += self::ACL_CREATE_FILE   * intval($this->create_file  );
+			$this->flags += self::ACL_CREATE_LINK   * intval($this->create_link  );
+			$this->flags += self::ACL_CREATE_PAGE   * intval($this->create_page  );
+			$this->flags += self::ACL_DELETE        * intval($this->delete       );
+			$this->flags += self::ACL_RELEASE       * intval($this->release      );
+			$this->flags += self::ACL_PUBLISH       * intval($this->publish      );
+			$this->flags += self::ACL_GRANT         * intval($this->grant        );
+			$this->flags += self::ACL_TRANSMIT      * intval($this->transmit     );
 	}
 
 
