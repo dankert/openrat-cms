@@ -3,12 +3,17 @@ namespace cms\action\folder;
 use cms\action\FolderAction;
 use cms\action\Method;
 use cms\model\BaseObject;
+use cms\model\Permission;
 use cms\model\Url;
 use language\Messages;
 
 
 class FolderCreateurlAction extends FolderAction implements Method {
-    public function view() {
+	public function getRequiredPermission() {
+		return Permission::ACL_CREATE_LINK; // todo maybe we need a special permission flag for this?
+	}
+
+	public function view() {
     }
     public function post() {
 		$description = $this->request->getText('description');

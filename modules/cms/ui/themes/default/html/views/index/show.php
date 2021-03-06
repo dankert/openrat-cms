@@ -51,7 +51,7 @@
             <div class="<?php echo O::escapeHtml('or-collapsible-value or-view or-act-view-loader') ?>" data-method="<?php echo O::escapeHtml(''.@$mainMethodName.'') ?>"><?php echo O::escapeHtml('') ?></div>
           </section>
         </main>
-        <div id="<?php echo O::escapeHtml('dialog') ?>" class="<?php echo O::escapeHtml('or-dialog or-dialog--is-closed') ?>" data-action="<?php echo O::escapeHtml(''.@$dialogAction.'') ?>" data-method="<?php echo O::escapeHtml(''.@$dialogMethod.'') ?>"><?php echo O::escapeHtml('') ?>
+        <div id="<?php echo O::escapeHtml('dialog') ?>" class="<?php echo O::escapeHtml('or-dialog or-dialog--is-closed') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('') ?>"><?php echo O::escapeHtml('') ?>
           <div class="<?php echo O::escapeHtml('or-dialog-filler') ?>"><?php echo O::escapeHtml('') ?>
             <span class="<?php echo O::escapeHtml('or-dialog-filler-icon or-btn or-image-icon or-image-icon--menu-close') ?>"><?php echo O::escapeHtml('') ?></span>
           </div>

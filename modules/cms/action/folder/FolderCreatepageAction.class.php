@@ -5,14 +5,20 @@ use cms\action\FolderAction;
 use cms\action\Method;
 use cms\model\BaseObject;
 use cms\model\Page;
+use cms\model\Permission;
 use cms\model\Project;
 use language\Messages;
 
 
 class FolderCreatepageAction extends FolderAction implements Method {
 
+	public function getRequiredPermission() {
+		return Permission::ACL_CREATE_PAGE;
+	}
 
-    public function view() {
+
+
+	public function view() {
         $project = new Project( $this->folder->projectid );
 
         $all_templates = $project->getTemplates();

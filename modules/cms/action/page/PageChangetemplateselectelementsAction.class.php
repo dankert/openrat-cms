@@ -4,12 +4,18 @@ use cms\action\Action;
 use cms\action\Method;
 use cms\action\PageAction;
 use cms\model\Element;
+use cms\model\Permission;
 use cms\model\Template;
 use language\Messages;
 
 class PageChangetemplateselectelementsAction extends PageAction implements Method {
 
-    public function view() {
+	public function getRequiredPermission() {
+		return Permission::ACL_PROP;
+	}
+
+
+	public function view() {
 		$newTemplateId = $this->request->getText( 'newtemplateid' );
 
 		if   ( $newTemplateId != 0  )

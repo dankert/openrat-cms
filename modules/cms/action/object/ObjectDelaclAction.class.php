@@ -9,6 +9,12 @@ use language\Messages;
 use util\Http;
 
 class ObjectDelaclAction extends ObjectAction implements Method {
+
+	public function getRequiredPermission()
+	{
+		return Permission::ACL_GRANT;
+	}
+
     public function view() {
     }
     public function post() {

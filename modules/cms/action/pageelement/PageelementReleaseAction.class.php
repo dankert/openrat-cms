@@ -8,6 +8,13 @@ use LogicException;
 use util\exception\SecurityException;
 
 class PageelementReleaseAction extends PageelementAction implements Method {
+
+
+	protected function getRequiredPagePermission()
+	{
+		return Permission::ACL_RELEASE;
+	}
+
     public function view() {
     }
     public function post() {

@@ -3,12 +3,18 @@ namespace cms\action\text;
 use cms\action\Method;
 use cms\action\RequestParams;
 use cms\action\TextAction;
+use cms\model\Permission;
 use language\Messages;
 
 
 class TextValueAction extends TextAction implements Method {
 
-    public function view() {
+	public function getRequiredPermission() {
+		return Permission::ACL_WRITE;
+	}
+
+
+	public function view() {
 
 		$this->setTemplateVar( 'text', $this->text->loadValue() );
     }

@@ -13,6 +13,11 @@ use cms\model\User;
 use language\Messages;
 
 class ObjectAclformAction extends ObjectAction implements Method {
+	public function getRequiredPermission()
+	{
+		return Permission::ACL_GRANT;
+	}
+
     public function view() {
 		$o = new BaseObject( $this->request->getId() );
 		$o->objectLoadRaw();

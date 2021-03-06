@@ -7,7 +7,12 @@ use cms\model\Page;
 
 class PageelementValueAction extends PageelementAction implements Method {
 
-    public function view() {
+	protected function getRequiredPagePermission()
+	{
+		return Permission::ACL_WRITE;
+	}
+
+	public function view() {
 		$this->value->languageid = $this->page->languageid;
 		$this->value->objectid   = $this->page->objectid;
 		$this->value->pageid     = $this->page->pageid;
@@ -55,6 +60,7 @@ class PageelementValueAction extends PageelementAction implements Method {
 
 
     public function post() {
+
         $this->element->load();
         $type = $this->element->type;
 

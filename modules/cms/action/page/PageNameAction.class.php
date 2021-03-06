@@ -5,13 +5,18 @@ use cms\action\object\ObjectInfoAction;
 use cms\action\object\ObjectNameAction;
 use cms\action\PageAction;
 use cms\model\BaseObject;
+use cms\model\Permission;
 use cms\model\Project;
 use language\Messages;
 
 class PageNameAction extends PageAction implements Method {
 
+	public function getRequiredPermission() {
+		return Permission::ACL_WRITE;
+	}
 
-    public function view() {
+
+	public function view() {
 
 		$languageId = $this->request->getText('languageid');
 

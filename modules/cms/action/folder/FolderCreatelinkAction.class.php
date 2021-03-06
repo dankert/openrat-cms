@@ -4,10 +4,16 @@ use cms\action\FolderAction;
 use cms\action\Method;
 use cms\model\BaseObject;
 use cms\model\Link;
+use cms\model\Permission;
 use language\Messages;
 
 
 class FolderCreatelinkAction extends FolderAction implements Method {
+
+	public function getRequiredPermission() {
+		return Permission::ACL_CREATE_LINK;
+	}
+
 
 
 	public function view() {

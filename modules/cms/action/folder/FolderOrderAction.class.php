@@ -8,7 +8,11 @@ use language\Messages;
 
 
 class FolderOrderAction extends FolderAction implements Method {
-    public function view() {
+	public function getRequiredPermission() {
+		return Permission::ACL_WRITE;
+	}
+
+	public function view() {
 		$list = array();
 
 		// Schleife ueber alle Objekte in diesem Ordner

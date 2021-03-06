@@ -4,12 +4,18 @@ use cms\action\Action;
 use cms\action\LinkAction;
 use cms\action\Method;
 use cms\model\BaseObject;
+use cms\model\Permission;
 use language\Messages;
 
 
 class LinkValueAction extends LinkAction implements Method {
 
-    public function view() {
+	public function getRequiredPermission() {
+		return Permission::ACL_WRITE;
+	}
+
+
+	public function view() {
 		$this->setTemplateVars( $this->link->getProperties() );
 
 		// Typ der Verknuepfung

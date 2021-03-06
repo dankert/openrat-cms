@@ -14,7 +14,11 @@ use language\Messages;
 use util\Session;
 
 class PagePubAction extends PageAction implements Method {
-    public function view() {
+	public function getRequiredPermission() {
+		return Permission::ACL_PUBLISH;
+	}
+
+	public function view() {
 
 	}
     public function post() {

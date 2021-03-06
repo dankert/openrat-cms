@@ -57,8 +57,7 @@ use util\Transformer;
  */
 class PageelementAction extends BaseAction
 {
-	public $security = Action::SECURITY_USER;
-
+	public $security = Action::SECURITY_GUEST;
 
 	/**
 	 * Enthaelt das Seitenobjekt
@@ -131,6 +130,15 @@ class PageelementAction extends BaseAction
 		}
 
 		$this->pageelement = new Pageelement($id);
+
+		if   ( ! $this->page->hasRight( $this->getRequiredPagePermission() ) ) {
+			throw new SecurityException('Insufficient permissions for this page' );
+		}
+	}
+
+
+	protected function getRequiredPagePermission() {
+		return Permission::ACL_READ;
 	}
 
 

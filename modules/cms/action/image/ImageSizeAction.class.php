@@ -4,9 +4,14 @@ use cms\action\Action;
 use cms\action\ImageAction;
 use cms\action\Method;
 use cms\model\Image;
+use cms\model\Permission;
 use language\Messages;
 
 class ImageSizeAction extends ImageAction implements Method {
+	public function getRequiredPermission() {
+		return Permission::ACL_WRITE;
+	}
+
     public function view() {
 		$this->setTemplateVars( $this->image->getProperties() );
 		

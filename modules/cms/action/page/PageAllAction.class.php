@@ -24,7 +24,12 @@ use util\Text;
 
 class PageAllAction extends PageAction implements Method {
 
-    public function view()
+	public function getRequiredPermission() {
+		return Permission::ACL_WRITE;
+	}
+
+
+	public function view()
 	{
 
 		$languageid = $this->request->getRequiredId('languageid');

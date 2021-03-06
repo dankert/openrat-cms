@@ -6,6 +6,12 @@ use cms\model\Permission;
 use util\exception\SecurityException;
 
 class PageelementPubAction extends PageelementAction implements Method {
+
+	protected function getRequiredPagePermission()
+	{
+		return Permission::ACL_PUBLISH;
+	}
+
     public function view() {
     }
     public function post() {

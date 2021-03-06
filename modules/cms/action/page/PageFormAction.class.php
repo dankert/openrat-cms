@@ -12,8 +12,11 @@ use cms\model\Value;
 
 class PageFormAction extends PageAction implements Method {
 
+	public function getRequiredPermission() {
+		return Permission::ACL_WRITE;
+	}
 
-    public function view() {
+	public function view() {
 		$list = array();
 
 		foreach( $this->page->values as $id=>$value )

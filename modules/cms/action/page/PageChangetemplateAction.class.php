@@ -2,12 +2,17 @@
 namespace cms\action\page;
 use cms\action\Method;
 use cms\action\PageAction;
+use cms\model\Permission;
 use cms\model\Project;
 use cms\model\Template;
 use util\Html;
 
 class PageChangetemplateAction extends PageAction implements Method {
-    public function view() {
+	public function getRequiredPermission() {
+		return Permission::ACL_PROP;
+	}
+
+	public function view() {
 		$this->page->load();
 
 

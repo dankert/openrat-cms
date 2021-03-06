@@ -4,12 +4,18 @@ use cms\action\Method;
 use cms\action\ObjectAction;
 use cms\action\RequestParams;
 use cms\model\BaseObject;
+use cms\model\Permission;
 use cms\model\Project;
 use language\Messages;
 use util\exception\ValidationException;
 
 
 class ObjectPropAction extends ObjectAction implements Method {
+
+	public function getRequiredPermission()
+	{
+		return Permission::ACL_PROP;
+	}
 
 	public function view() {
         $this->setTemplateVar( 'filename', $this->baseObject->filename   );
@@ -23,6 +29,7 @@ class ObjectPropAction extends ObjectAction implements Method {
 
 
     public function post() {
+
         if   ( ! $this->request->has('filename' ) )
             throw new ValidationException('filename');
 

@@ -2,10 +2,16 @@
 namespace cms\action\folder;
 use cms\action\FolderAction;
 use cms\action\Method;
+use cms\model\Permission;
 use language\Messages;
 
 
 class FolderRemoveAction extends FolderAction implements Method {
+
+	public function getRequiredPermission() {
+		return Permission::ACL_DELETE;
+	}
+
 
 	public function view() {
         $this->setTemplateVar( 'name',$this->folder->filename );

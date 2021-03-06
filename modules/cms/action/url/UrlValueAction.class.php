@@ -2,13 +2,18 @@
 namespace cms\action\url;
 use cms\action\Method;
 use cms\action\UrlAction;
+use cms\model\Permission;
 use language\Messages;
 
 
 class UrlValueAction extends UrlAction implements Method {
 
+	public function getRequiredPermission() {
+		return Permission::ACL_WRITE;
+	}
 
-    public function view() {
+
+	public function view() {
 		$this->setTemplateVars( $this->url->getProperties() );
 
 		// Typ der Verknuepfung

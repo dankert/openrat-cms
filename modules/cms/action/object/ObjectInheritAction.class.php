@@ -11,6 +11,12 @@ use logger\Logger;
 use util\Session;
 
 class ObjectInheritAction extends ObjectAction implements Method {
+
+	public function getRequiredPermission()
+	{
+		return Permission::ACL_GRANT;
+	}
+
     public function view() {
 		$o = new BaseObject( $this->request->getId() );
 		$o->objectLoadRaw();

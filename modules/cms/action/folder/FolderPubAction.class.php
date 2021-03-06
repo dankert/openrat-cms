@@ -20,8 +20,13 @@ use util\Session;
 
 class FolderPubAction extends FolderAction implements Method {
 
+	public function getRequiredPermission() {
+		return Permission::ACL_PUBLISH;
+	}
 
-    public function view() {
+
+
+	public function view() {
 		// Schalter nur anzeigen, wenn sinnvoll
 
         // TODO texts, urls....

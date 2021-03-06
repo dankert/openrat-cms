@@ -4,9 +4,16 @@ use cms\action\Action;
 use cms\action\Method;
 use cms\action\PageelementAction;
 use cms\model\Element;
+use cms\model\Permission;
 use language\Messages;
 
 class PageelementRestoreAction extends PageelementAction implements Method {
+
+	protected function getRequiredPagePermission()
+	{
+		return Permission::ACL_WRITE;
+	}
+
 
     public function view() {
     }

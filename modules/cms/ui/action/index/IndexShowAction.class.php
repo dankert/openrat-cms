@@ -52,16 +52,6 @@ class IndexShowAction extends IndexAction implements Method {
 
         $this->setTemplateVar('style',$style );
 
-        $userIsLoggedIn = is_object($user);
-
-        // Welche Aktion soll ausgeführt werden?
-        $action = '';
-        $id     = 0;
-        $this->updateStartAction( $action, $id );
-
-        $this->setTemplateVar('action',$action);
-        $this->setTemplateVar('id'    ,$id    );
-
 		$this->setTemplateVar('scriptLink', $this->getScriptLink() );
         $this->setTemplateVar('styleLink' , $this->getStyleLink()  );
 
@@ -81,19 +71,6 @@ class IndexShowAction extends IndexAction implements Method {
         if ( DEVELOPMENT )
             $this->addInfoFor( new User(),Messages::DEVELOPMENT_MODE );
 
-        $methods = array(
-            'edit'     => true,
-            'preview'  => true,
-            'info'     => true,
-			'rights'   => true,
-        );
-
-        $methodList = array();
-        foreach( $methods as $method=>$openByDefault )
-        {
-            $methodList[] = array('name'=>$method,'open'=>$openByDefault);
-        }
-        $this->setTemplateVar('methodList', $methodList);
 		$this->setTemplateVar('favicon_url', C::subset('theme')->get('favicon','modules/cms/ui/themes/default/images/openrat-logo.ico') );
 
         $vars = $this->getOutputData();
@@ -137,64 +114,7 @@ class IndexShowAction extends IndexAction implements Method {
 	}
 
 
-	/**
-	 * Ermittelt die erste zu startende Aktion.
-	 * @param $action
-	 * @param $id
-	 */
-	protected function updateStartAction(&$action, &$id )
-	{
-		$user = Session::getUser();
 
-		if  ( !is_object($user) )
-		{
-			$action = 'login';
-			$id     = 0;
-			return;
-		}
-
-
-		// Die Action im originalen Request hat Priorität.
-		$params = new RequestParams();
-		if   ( !empty( $params->action ) )
-		{
-			$action = $params->action;
-			$id     = $params->id;
-			return;
-		}
-
-
-		$startConfig = Configuration::subset( ['login','start'] );
-		// Das zuletzt geänderte Objekt benutzen.
-		if	( $startConfig->is('start_lastchanged_object',true) )
-		{
-			$objectid = Value::getLastChangedObjectByUserId($user->userid);
-
-			if	( BaseObject::available($objectid))
-			{
-				$object = new BaseObject($objectid);
-				$object->objectLoad();
-
-				$action = $object->getType();
-				$id     = $objectid;
-				return;
-			}
-		}
-
-		// Das einzige Projekt benutzen
-		if	( $startConfig->is('start_single_project',true) )
-		{
-			$projects = Project::getAllProjects();
-			if ( count($projects) == 1 ) {
-				// Das einzige Projekt sofort starten.
-				$action = 'project';
-				$id     = array_keys($projects)[0];
-			}
-		}
-
-		$action = 'projectlist';
-		$id     = 0;
-	}
 
 	protected function tryAutoLogin()
 	{
@@ -212,15 +132,7 @@ class IndexShowAction extends IndexAction implements Method {
 			catch( ObjectNotFoundException $e )
 			{
 				Logger::warn('Username for autologin does not exist: '.$username);
-
-				// Kein Auto-Login moeglich, die Anmeldemaske anzeigen.
-				$this->setTemplateVars( array('dialogAction'=>'login','dialogMethod'=>'login'));
 			}
-		}
-		else
-		{
-			// Kein Auto-Login moeglich, die Anmeldemaske anzeigen.
-			$this->setTemplateVars( array('dialogAction'=>'login','dialogMethod'=>'login'));
 		}
 	}
 

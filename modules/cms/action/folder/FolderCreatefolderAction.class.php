@@ -4,11 +4,16 @@ use cms\action\FolderAction;
 use cms\action\Method;
 use cms\model\BaseObject;
 use cms\model\Folder;
+use cms\model\Permission;
 use language\Messages;
 
 
 class FolderCreatefolderAction extends FolderAction implements Method {
-    public function view() {
+	public function getRequiredPermission() {
+		return Permission::ACL_CREATE_FOLDER;
+	}
+
+	public function view() {
 		$this->setTemplateVar('objectid'  ,$this->folder->objectid   );
 		$this->setTemplateVar('languageid',$this->folder->languageid );
     }

@@ -7,6 +7,7 @@ use cms\model\Permission;
 use cms\model\Folder;
 use cms\model\Project;
 use language\Messages;
+use util\exception\SecurityException;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -40,7 +41,6 @@ class ProjectAction extends BaseAction
      * @var Project
      */
 	protected $project;
-	var $defaultSubAction = 'listing';
 
 
 	function __construct()
@@ -53,6 +53,10 @@ class ProjectAction extends BaseAction
     {
 		$this->project = new Project( $this->request->getId() );
 		$this->project->load();
+
+		if   ( ! $this->userMayReadProject() ) {
+			throw new SecurityException();
+		}
 	}
 
 
@@ -66,6 +70,19 @@ class ProjectAction extends BaseAction
 		$rootFolder = new Folder( $this->project->getRootObjectId() );
 
 		return $rootFolder->hasRight(Permission::ACL_PROP);
+	}
+
+
+	/**
+	 * Stellt fest, ob der angemeldete Benutzer Projekt-Admin ist.
+	 * Dies ist der Fall, wenn der Benutzer PROP-Rechte im Root-Folder hat.
+	 * @return bool|int
+	 */
+	protected function userMayReadProject() {
+
+		$rootFolder = new Folder( $this->project->getRootObjectId() );
+
+		return $rootFolder->hasRight(Permission::ACL_READ);
 	}
 
 

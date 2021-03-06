@@ -1,5 +1,6 @@
 <?php
 namespace cms\action\projectlist;
+use cms\action\Action;
 use cms\action\Method;
 use cms\action\ProjectlistAction;
 use cms\model\Project;
@@ -8,19 +9,15 @@ use util\exception\SecurityException;
 
 class ProjectlistAddAction extends ProjectlistAction implements Method {
 
-    public function view() {
+	public $security = Action::SECURITY_ADMIN;
 
-    	if( ! $this->userIsAdmin() )
-	        throw new SecurityException('user is not allowed to add a project');
+    public function view() {
 
 		$this->setTemplateVar( 'projects',Project::getAllProjects() );
     }
 
 
     public function post() {
-
-	    if( !$this->userIsAdmin())
-	        throw new SecurityException();
 
 		/*
 		$projectid = $this->request->getVar('projectid');

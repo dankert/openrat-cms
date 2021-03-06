@@ -14,6 +14,11 @@ use language\Messages;
 
 
 class ObjectCopyAction extends ObjectAction implements Method {
+	public function getRequiredPermission()
+	{
+		return Permission::ACL_WRITE;
+	}
+
     public function view() {
 		$sourceObject = new BaseObject( $this->request->getId());
 		$sourceObject->load();

@@ -4,13 +4,18 @@ use cms\action\FolderAction;
 use cms\action\Method;
 use cms\model\BaseObject;
 use cms\model\Image;
+use cms\model\Permission;
 use language\Messages;
 use util\Http;
 use util\Upload;
 
 
 class FolderCreateimageAction extends FolderAction implements Method {
-    public function view() {
+	public function getRequiredPermission() {
+		return Permission::ACL_CREATE_FILE;
+	}
+
+	public function view() {
 		// Maximale Dateigroesse.
 		$maxSizeBytes = $this->maxFileSize();
 		$this->setTemplateVar('max_size' ,($maxSizeBytes/1024).' KB' );

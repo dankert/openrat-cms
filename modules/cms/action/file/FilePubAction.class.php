@@ -7,9 +7,14 @@ use cms\generator\FileGenerator;
 use cms\generator\Producer;
 use cms\generator\Publisher;
 use cms\generator\PublishOrder;
+use cms\model\Permission;
 
 class FilePubAction extends FileAction implements Method {
-    public function view() {
+	public function getRequiredPermission() {
+		return Permission::ACL_PUBLISH;
+	}
+
+	public function view() {
     }
     public function post() {
 		$fileGenerator = new FileGenerator( new FileContext( $this->file->objectid, Producer::SCHEME_PUBLIC));

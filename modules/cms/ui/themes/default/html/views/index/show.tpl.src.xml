@@ -111,8 +111,7 @@
 
 
 				<!-- Modal dialog -->
-				<div id="dialog" class="or-dialog or-dialog--is-closed" data-action="${dialogAction}"
-					 data-method="${dialogMethod}">
+				<div id="dialog" class="or-dialog or-dialog--is-closed" data-action="" data-method="">
 					<!-- Header menu -->
 					<div class="or-dialog-filler"><!-- empty element, this is only for styling the background -->
 						<span class="or-dialog-filler-icon or-btn or-image-icon or-image-icon--menu-close"></span>

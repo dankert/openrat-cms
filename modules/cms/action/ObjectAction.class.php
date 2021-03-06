@@ -44,6 +44,16 @@ class ObjectAction extends BaseAction
     }
 
 
+	/**
+	 * Should be overwritten by subclasses.
+	 *
+	 * @return int Permission-flag.
+	 */
+    public function getRequiredPermission() {
+		return Permission::ACL_READ;
+	}
+
+
     public function init()
     {
 		$baseObject = new BaseObject( $this->request->getId() );
@@ -51,7 +61,7 @@ class ObjectAction extends BaseAction
 
 		$this->setBaseObject( $baseObject );
 
-		$this->checkRight( Permission::ACL_READ );
+		$this->checkRight( $this->getRequiredPermission() );
 	}
 
 

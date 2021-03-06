@@ -34,8 +34,6 @@ use util\exception\SecurityException;
  */
 class ProjectlistAction extends BaseAction
 {
-	public $security = Action::SECURITY_USER;
-	
 	function __construct()
 	{
         parent::__construct();
