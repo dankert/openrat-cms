@@ -33,7 +33,7 @@ UPDATE $tableProject
   SET url= CONCAT('//',name)
 SQL
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
         // Update the new flags
         $updateStmt = $db->sql(<<<SQL
@@ -41,14 +41,14 @@ UPDATE $tableProject
   SET flags=flags+1 WHERE cut_index=1
 SQL
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
         $updateStmt = $db->sql(<<<SQL
 UPDATE $tableProject
   SET flags=flags+2 WHERE content_negotiation=1
 SQL
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
         // now the information is hold in column 'flags', so we can delete the old columns.
 		$table->column( 'cut_index')->drop();

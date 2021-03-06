@@ -30,7 +30,7 @@ UPDATE $tableElement
    SET label=name
 SQL
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
         $table->addUniqueIndex(['templateid','label']);
     }

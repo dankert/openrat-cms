@@ -40,19 +40,19 @@ class DBVersion000009 extends DbVersion
         $insertStmt = $db->sql('INSERT INTO '.$table->getSqlName().
             ' (id,objectid,url) SELECT id,objectid,url FROM '.$this->table('link')->getSqlName().' WHERE url is not null'
         );
-        $insertStmt->query();
+        $insertStmt->execute();
 
         // Updating the typeid for URL entrys in table 'object'
         $updateStmt = $db->sql('UPDATE '.$this->table('object')->getSqlName().
             ' SET typeid='.BaseObject::TYPEID_URL.' WHERE id IN (SELECT objectid FROM '.$this->table('url')->getSqlName().')'
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
         $tableLink = $this->table('link');
         // Remove old entrys in table 'link'
         $updateStmt = $db->sql('DELETE FROM '.$tableLink->getSqlName().' WHERE url is not null'
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
         // Cleanup: Drop unused column.
 		$tableLink->column('url')->drop();

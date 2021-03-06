@@ -30,21 +30,21 @@ UPDATE $tableSqlName
    SET type=3;
 SQL
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
 		$updateStmt = $this->getDb()->sql(<<<SQL
 UPDATE $tableSqlName
    SET type=2 where groupid is not null;
 SQL
 		);
-		$updateStmt->query();
+		$updateStmt->execute();
 
 		$updateStmt = $this->getDb()->sql(<<<SQL
 UPDATE $tableSqlName
    SET type=1 where userid is not null;
 SQL
 		);
-		$updateStmt->query();
+		$updateStmt->execute();
 	}
 }
 

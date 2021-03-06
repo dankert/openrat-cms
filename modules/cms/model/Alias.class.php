@@ -80,7 +80,7 @@ class Alias extends BaseObject
 		                ' WHERE id={aliasid}' );
 		$sql->setInt( 'aliasid',$this->aliasid );
 
-		$sql->query();
+		$sql->execute();
 
 		parent::delete();
 	}
@@ -99,7 +99,7 @@ class Alias extends BaseObject
 		$sql->setInt ('linkobjectid',$this->linkedObjectId );
 		$sql->setIntOrNull('languageid'  ,$this->languageid     );
 
-		$sql->query();
+		$sql->execute();
 
 		parent::save();
 	}
@@ -134,6 +134,6 @@ SQL
         $stmt->setInt ('linkobjectid',$this->linkedObjectId );
         $stmt->setIntOrNull('languageid'  ,$this->languageid     );
 
-		$stmt->query();
+		$stmt->execute();
 	}	
 }

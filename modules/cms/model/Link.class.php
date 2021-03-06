@@ -62,7 +62,7 @@ class Link extends BaseObject
 		                ' WHERE objectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
 
-		$sql->query();
+		$sql->execute();
 
 		parent::delete();
 	}
@@ -88,7 +88,7 @@ SQL
 		else
 			$sql->setInt ('linkobjectid',$this->linkedObjectId );
 
-		$sql->query();
+		$sql->execute();
 
 		parent::save();
 	}
@@ -126,7 +126,7 @@ SQL
 		$stmt->setInt   ('objectid'    ,$this->objectid       );
         $stmt->setNull  ('linkobjectid');
 
-		$stmt->query();
+		$stmt->execute();
 	}	
 }
 

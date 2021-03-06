@@ -115,7 +115,7 @@ SQL
 
 		$stmt->setInt   ( 'type'      ,$type );
 
-		$stmt->query();
+		$stmt->execute();
 	}
 
 
@@ -276,7 +276,7 @@ SQL
 
 		$sql->setInt   ('projectid' ,$this->projectid );
 
-		$sql->query();
+		$sql->execute();
 	}
 
 
@@ -315,13 +315,13 @@ SQL
 		$stmt = $db->sql( 'DELETE FROM {{templatemodel}}'.
 		                ' WHERE templateid={templateid}' );
 		$stmt->setInt( 'templateid',$this->templateid );
-		$stmt->query();
+		$stmt->execute();
 
 		$stmt = $db->sql( 'DELETE FROM {{template}}'.
 		                ' WHERE id={templateid}' );
 		$stmt->setInt( 'templateid',$this->templateid );
 
-		$stmt->query();
+		$stmt->execute();
 
 		$this->templateid = 0;
 	}

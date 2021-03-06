@@ -62,7 +62,7 @@ class Update
 				$sql->setInt('version', $installVersion);
 				$sql->setInt('status', self::STATUS_UPDATE_PROGRESS);
 				$sql->setInt('time', time());
-				$sql->query();
+				$sql->execute();
 				$db->commit();
 			}
 
@@ -81,7 +81,7 @@ class Update
 				$sql->setInt('status', self::STATUS_UPDATE_SUCCESS);
 				$sql->setInt('version', $installVersion);
 				$sql->setInt('time', time());
-				$sql->query();
+				$sql->execute();
 				$db->commit();
 			}
 		}

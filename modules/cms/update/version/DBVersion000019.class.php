@@ -31,7 +31,7 @@ UPDATE $tableValue
    SET format=(select format from $tableElement where $tableValue.elementid=$tableElement.id)
 SQL
         );
-        $updateStmt->query();
+        $updateStmt->execute();
     }
 }
 

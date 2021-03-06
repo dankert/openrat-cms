@@ -167,7 +167,7 @@ class PDODriver
      * @param $query Sql
      * @return PDOStatement
      */
-    public function query($stmt,$query)
+    public function execute($stmt, $query)
 	{
 		$erg = $stmt->execute();
 
@@ -180,14 +180,67 @@ class PDODriver
 
 	/**
 	 * @param $stmt PDOStatement
-	 * @return mixed Row
+	 * @return array Row
 	 */
-	public function fetchRow($stmt)
+	public function fetchAssocRow($stmt)
 	{
 		return $stmt->fetch( PDO::FETCH_ASSOC );
 	}
 
- 
+
+	/**
+	 * Fetches all rows from the resultset
+	 * @param $stmt PDOStatement
+	 * @return array Row
+	 */
+	public function fetchAllRows($stmt)
+	{
+		return $stmt->fetchAll( PDO::FETCH_ASSOC );
+	}
+
+
+	/**
+	 * Fetches the next row with a numbered-based array.
+	 * @param $stmt PDOStatement
+	 * @return array Row
+	 */
+	public function fetchIndexedRow($stmt)
+	{
+		return $stmt->fetch( PDO::FETCH_NUM );
+	}
+
+
+
+	/**
+	 * Fetches the first column of the next row.
+	 *
+	 * @param $stmt PDOStatement
+	 * @return mixed Row
+	 */
+	public function fetchFirstColumn($stmt) {
+		return $stmt->fetchColumn();
+	}
+
+
+	/**
+	 * Fetches all first columns from the result set
+	 *
+	 * @param $stmt PDOStatement
+	 * @return array
+	 */
+	public function fetchAllFirstColumn($stmt) {
+		return $stmt->fetchAll( PDO::FETCH_COLUMN );
+	}
+
+
+	/**
+	 * Prepares a SQL query and gets the Statement.
+	 *
+	 * @param $query string SQL-query
+	 * @param $param array parameters
+	 * @return PDOStatement
+	 * @throws DatabaseException
+	 */
 	public function prepare( $query,$param)
 	{
 		$offset = 0;
@@ -279,5 +332,3 @@ class PDODriver
   }  
 	
 }
-
-?>

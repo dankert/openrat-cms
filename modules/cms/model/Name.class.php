@@ -106,7 +106,7 @@ SQL
 		$sql->setInt   ('languageid', $this->languageid  );
 		$sql->setString('name'      , $this->name);
 		$sql->setString('desc'      , $this->description);
-		$sql->query();
+		$sql->execute();
 	}
 
 	/**
@@ -129,7 +129,7 @@ SQL
 		$sql->setString('desc', $this->description);
 		$sql->setInt( 'objectid'  , $this->objectid   );
 		$sql->setInt( 'languageid', $this->languageid );
-		$sql->query();
+		$sql->execute();
 	}
 
 

@@ -387,7 +387,7 @@ class Permission extends ModelBase
 		$sql->setInt('aclid'   ,$this->aclid   );
 		$sql->setInt('objectid',$this->objectid);
 		
-		$sql->query();
+		$sql->execute();
 		
 		$this->aclid = 0;
 	}
@@ -474,7 +474,7 @@ SQL
 		else
 			$stmt->setInt ('languageid',$this->languageid);
 
-		$stmt->query();
+		$stmt->execute();
 
 
 	}

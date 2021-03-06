@@ -51,7 +51,7 @@ UPDATE $tableProject
    SET typeid=$typeid WHERE type = '$typename'
 SQL
             );
-            $updateStmt->query();
+            $updateStmt->execute();
         }
 
 		$table->column('type')->drop();
@@ -65,28 +65,28 @@ UPDATE $tableProject
    SET flags=flags+1 WHERE html = 1
 SQL
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
         $updateStmt = $db->sql(<<<SQL
 UPDATE $tableProject
    SET flags=flags+2 WHERE all_languages = 1
 SQL
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
         $updateStmt = $db->sql(<<<SQL
 UPDATE $tableProject
    SET flags=flags+4 WHERE writable = 1
 SQL
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
         $updateStmt = $db->sql(<<<SQL
 UPDATE $tableProject
    SET flags=flags+8 WHERE with_icon = 1
 SQL
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
 
 
@@ -98,7 +98,7 @@ UPDATE $tableProject
    SET format=1 WHERE html = 1 and wiki = 0
 SQL
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
         // Format = Wiki
         $updateStmt = $db->sql(<<<SQL
@@ -106,7 +106,7 @@ UPDATE $tableProject
    SET format=2 WHERE wiki = 1
 SQL
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
         // Other formats were not supported up to this version.
 

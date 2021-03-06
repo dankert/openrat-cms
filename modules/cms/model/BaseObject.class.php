@@ -862,7 +862,7 @@ SQL
         $stmt->setInt   ('objectid' , $this->objectid                );
 
 
-        $stmt->query();
+        $stmt->execute();
 
         $this->setTimestamp();
     }
@@ -890,7 +890,7 @@ SQL
         $sql->setInt   ('objectid',$this->objectid                );
         $sql->setInt   ('time'    ,$this->lastchangeDate          );
 
-        $sql->query();
+        $sql->execute();
 
     }
 
@@ -906,7 +906,7 @@ SQL
         $sql->setInt   ('objectid',$this->objectid   );
         $sql->setInt   ('time'    ,$this->createDate );
 
-        $sql->query();
+        $sql->execute();
     }
 
 
@@ -927,7 +927,7 @@ SQL
         $sql->setInt   ('objectid',$this->objectid                );
         $sql->setInt   ('time'    ,$this->publishedDate           );
 
-        $sql->query();
+        $sql->execute();
     }
 
 
@@ -945,30 +945,30 @@ SQL
             '  SET default_objectid=NULL '.
             '  WHERE default_objectid={objectid}' );
         $sql->setInt('objectid',$this->objectid);
-        $sql->query();
+        $sql->execute();
 
         $sql = $db->sql( 'UPDATE {{value}} '.
             '  SET linkobjectid=NULL '.
             '  WHERE linkobjectid={objectid}' );
         $sql->setInt('objectid',$this->objectid);
-        $sql->query();
+        $sql->execute();
 
         $sql = $db->sql( 'UPDATE {{link}} '.
             '  SET link_objectid=NULL '.
             '  WHERE link_objectid={objectid}' );
         $sql->setInt('objectid',$this->objectid);
-        $sql->query();
+        $sql->execute();
 
 
         // Objekt-Namen l?schen
         $sql = $db->sql('DELETE FROM {{name}} WHERE objectid={objectid}');
         $sql->setInt('objectid', $this->objectid);
-        $sql->query();
+        $sql->execute();
 
         // Aliases löschen.
         $sql = Db::sql('DELETE FROM {{alias}} WHERE objectid={objectid}');
         $sql->setInt('objectid', $this->objectid);
-        $sql->query();
+        $sql->execute();
 
         // ACLs loeschen
         $this->deleteAllACLs();
@@ -976,7 +976,7 @@ SQL
         // Objekt l?schen
         $sql = $db->sql('DELETE FROM {{object}} WHERE id={objectid}');
         $sql->setInt('objectid', $this->objectid);
-        $sql->query();
+        $sql->execute();
 
         $this->objectid = null;
     }
@@ -1015,7 +1015,7 @@ SQL
 
         $sql->setInt(  'typeid',$this->getTypeid());
 
-        $sql->query();
+        $sql->execute();
 
         // Standard-Rechte fuer dieses neue Objekt setzen.
         // Der angemeldete Benutzer erhaelt alle Rechte auf
@@ -1176,7 +1176,7 @@ SQL
         $sql->setInt('objectid', $this->objectid);
         $sql->setInt('orderid', $orderid);
 
-        $sql->query();
+        $sql->execute();
     }
 
 
@@ -1237,7 +1237,7 @@ SQL
         $sql->setInt('objectid', $this->objectid);
         $sql->setInt('parentid', $parentid);
 
-        $sql->query();
+        $sql->execute();
     }
 
 

@@ -32,84 +32,84 @@ UPDATE $tableSqlName
    SET flags=1;
 SQL
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
         $updateStmt = $this->getDb()->sql(<<<SQL
 UPDATE $tableSqlName
    SET flags=flags+2 WHERE is_write=1;
 SQL
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
         $updateStmt = $this->getDb()->sql(<<<SQL
 UPDATE $tableSqlName
    SET flags=flags+4 WHERE is_prop=1;
 SQL
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
         $updateStmt = $this->getDb()->sql(<<<SQL
 UPDATE $tableSqlName
    SET flags=flags+64 WHERE is_create_folder=1;
 SQL
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
         $updateStmt = $this->getDb()->sql(<<<SQL
 UPDATE $tableSqlName
    SET flags=flags+128 WHERE is_create_file=1;
 SQL
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
         $updateStmt = $this->getDb()->sql(<<<SQL
 UPDATE $tableSqlName
    SET flags=flags+256 WHERE is_create_link=1;
 SQL
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
         $updateStmt = $this->getDb()->sql(<<<SQL
 UPDATE $tableSqlName
    SET flags=flags+512 WHERE is_create_page=1;
 SQL
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
         $updateStmt = $this->getDb()->sql(<<<SQL
 UPDATE $tableSqlName
    SET flags=flags+8 WHERE is_delete=1;
 SQL
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
         $updateStmt = $this->getDb()->sql(<<<SQL
 UPDATE $tableSqlName
    SET flags=flags+16 WHERE is_release=1;
 SQL
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
         $updateStmt = $this->getDb()->sql(<<<SQL
 UPDATE $tableSqlName
    SET flags=flags+32 WHERE is_publish=1;
 SQL
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
         $updateStmt = $this->getDb()->sql(<<<SQL
 UPDATE $tableSqlName
    SET flags=flags+1024 WHERE is_grant=1;
 SQL
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
         $updateStmt = $this->getDb()->sql(<<<SQL
 UPDATE $tableSqlName
    SET flags=flags+2048 WHERE is_transmit=1;
 SQL
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
 		$table->column('is_write'        )->drop();
 		$table->column('is_prop'         )->drop();

@@ -31,22 +31,22 @@ class DBVersion000008 extends DbVersion
         $updateStmt = $db->sql('UPDATE '.$tableName.
             ' SET typeid=1 WHERE is_folder=1'
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
         $updateStmt = $db->sql('UPDATE '.$tableName.
             ' SET typeid=2 WHERE is_file=1'
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
         $updateStmt = $db->sql('UPDATE '.$tableName.
             ' SET typeid=3 WHERE is_page=1'
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
         $updateStmt = $db->sql('UPDATE '.$tableName.
             ' SET typeid=4 WHERE is_link=1'
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
 		$table->column('is_folder')->drop();
 		$table->column('is_file'  )->drop();

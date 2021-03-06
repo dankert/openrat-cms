@@ -18,6 +18,7 @@
 
 namespace database;
 use database\driver\PDODriver;
+use logger\Logger;
 use util\exception\DatabaseException;
 
 /**
@@ -83,22 +84,10 @@ class Statement
      *
      * @return Object (Result)
      */
-	public function query()
-	{
-		return $this->execute();
-	}
-	
-	
-	/**
-	 * Ausfuehren einer Datenbankanfrage.
-	 *
-	 * @param SQL-Objekt
-	 * @return Object (Result)
-	 */
-	public function execute( )
+	public function execute()
 	{
 		// Ausfuehren...
-		return $this->client->query($this->stmt, $this->sql);
+		return $this->client->execute($this->stmt, $this->sql);
 	}
 
 
@@ -106,19 +95,13 @@ class Statement
      * Ermittelt genau 1 Datenbankergebnis aus einer SQL-Anfrage.
      * Falls es mehrere Treffer gibt, wird die 1. Spalte aus der 1. Zeile genommen.
      *
-     * @return String
+     * @return String|null
      */
-	public function &getOne()
+	public function getOne()
 	{
-		$none = '';
-		$result = $this->query();
-		
-		$row = $this->client->fetchRow($this->stmt);
+		$this->execute();
 
-		if	( ! is_array($row) )
-			return $none;
-
-		return array_values($row)[0];;
+		return $this->client->fetchFirstColumn($this->stmt);
 	}
 
 
@@ -129,9 +112,8 @@ class Statement
      */
 	public function &getRow()
 	{
-		$result = $this->query();
-		
-		$row = $this->client->fetchRow($this->stmt);
+		$this->execute();
+		$row = $this->client->fetchAssocRow($this->stmt);
 
 		if	( ! is_array($row) )
 			$row = array();
@@ -145,22 +127,11 @@ class Statement
      *
      * @return array
      */
-	public function &getCol()
+	public function getCol()
 	{
-		$result = $this->query();
+		$this->execute();
 
-		$i = 0;
-		$col = array();
-		while( $row = $this->client->fetchRow($this->stmt) )
-		{
-			if	( empty($row) )
-				break;
-				
-			$keys = array_keys($row);
-			$col[] = $row[ $keys[0] ];
-		}
-			
-		return $col;
+		return $this->client->fetchAllFirstColumn($this->stmt);
 	}
 
 
@@ -171,34 +142,11 @@ class Statement
      */
 	public function &getAssoc()
 	{
-		$force_array = false;
-		
+		$this->execute();
 		$results = array();
-		$result = $this->query();
 
-		$i = 0;
-		
-		while( $row = $this->client->fetchRow($this->stmt) )
-		{
-			if	( empty($row) )
-				break;
-
-			$keys = array_keys($row);
-			$key1 = $keys[0];
-			$id = $row[$key1];
-				
-			if	( count($row) > 2 || $force_array )
-			{
-				unset( $row[$key1] );
-				$results[ $id ] = $row;
-			}
-			else
-			{
-				$key2 = $keys[1];
-
-				$results[ $id ] = $row[$key2];
-			}
-		}
+		while( $row = $this->client->fetchIndexedRow($this->stmt) )
+			$results[ $row[0] ] = $row[1];
 
 		return $results;
 	}
@@ -209,15 +157,11 @@ class Statement
      *
      * @return array
      */
-	public function &getAll()
+	public function getAll()
 	{
-		$result = $this->query();
-		$results = array();
+		$this->execute();
 
-		while( $row = $this->client->fetchRow($this->stmt) )
-			$results[] = $row;
-
-		return $results;
+		return $this->client->fetchAllRows($this->stmt);
 	}
 	
 	
@@ -305,6 +249,3 @@ class Statement
 	
 	
 }
-
-
-?>

@@ -24,7 +24,7 @@ class DBVersion000005 extends DbVersion
 		$updateStmt = $db->sql('UPDATE '.$table->getSqlName().
 				' SET password_hash=password'
 		);
-		$updateStmt->query();
+		$updateStmt->execute();
 
 		$table->column('password')->drop();
 		

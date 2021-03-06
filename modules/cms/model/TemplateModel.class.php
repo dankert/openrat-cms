@@ -98,7 +98,7 @@ class TemplateModel extends ModelBase
         $stmt->setString( 'extension'     ,$this->extension      );
         $stmt->setString( 'src'           ,$this->src            );
 
-		$stmt->query();
+		$stmt->execute();
 	}
 
 
@@ -121,7 +121,7 @@ class TemplateModel extends ModelBase
 		$stmt->setInt   ( 'modelid'       ,$this->modelid        );
 		$stmt->setString( 'src'           ,$this->src            );
 
-		$stmt->query();
+		$stmt->execute();
 
         $this->templatemodelid = $nextid;
     }
@@ -139,7 +139,7 @@ class TemplateModel extends ModelBase
 		$stmt = $db->sql( 'DELETE FROM {{templatemodel}}'.
 		                ' WHERE id={id}' );
 		$stmt->setInt( 'id',$this->templatemodelid );
-		$stmt->query();
+		$stmt->execute();
 	}
 	
 	

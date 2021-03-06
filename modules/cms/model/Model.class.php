@@ -104,7 +104,7 @@ class Model extends ModelBase
 		$sql->setInt( 'modelid',$this->modelid );
 
 		// Datenbankabfrage ausfuehren
-		$sql->query();
+		$sql->execute();
 	}
 
 
@@ -146,7 +146,7 @@ class Model extends ModelBase
 		$sql->setString('name'     ,$this->name      );
 
 		// Datenbankbefehl ausfuehren
-		$sql->query();
+		$sql->execute();
 	}
 
 
@@ -161,14 +161,14 @@ class Model extends ModelBase
 		                '  SET is_default = 0 '.
 		                '  WHERE projectid={projectid}' );
 		$sql->setInt('projectid',$this->projectid );
-		$sql->query();
+		$sql->execute();
 	
 		// Jetzt die gew?nschte Sprachvariante auf Standard setzen
 		$sql = $db->sql( 'UPDATE {{projectmodel}} '.
 		                '  SET is_default = 1 '.
 		                '  WHERE id={modelid}' );
 		$sql->setInt('modelid',$this->modelid );
-		$sql->query();
+		$sql->execute();
 	}
 
 
@@ -188,7 +188,7 @@ class Model extends ModelBase
 SQL
 );
 		$sql->setInt( 'modelid',$this->modelid );
-		$sql->query();
+		$sql->execute();
 		
 		// Dieses Modell löschen
 		$sql = $db->sql( <<<SQL
@@ -197,7 +197,7 @@ SQL
 SQL
 );
 		$sql->setInt( 'modelid',$this->modelid );
-		$sql->query();
+		$sql->execute();
 
 		// Anderes Modell auf "Default" setzen (sofern vorhanden)
 		if	( $this->isDefault )
@@ -208,7 +208,7 @@ SQL
 	
 			$sql = $db->sql( 'UPDATE {{projectmodel}} SET is_default=1 WHERE id={modelid}' );
 			$sql->setInt( 'modelid',$new_default_modelid );
-			$sql->query();
+			$sql->execute();
 		}
 	}
 

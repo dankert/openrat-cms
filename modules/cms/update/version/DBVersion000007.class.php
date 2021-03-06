@@ -28,7 +28,7 @@ class DBVersion000007 extends DbVersion
 			$stmt = $db->sql('UPDATE '.$tableName.' SET otp_secret={secret} WHERE id={id}');
 			$stmt->setString('secret',$secret);
 			$stmt->setInt('id',$userid);
-			$stmt->query();
+			$stmt->execute();
 		}
 		
 		$table->column('totp'        )->type(Column::TYPE_INT    )->size(  1)->defaultValue(   0)->add();

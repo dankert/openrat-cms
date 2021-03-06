@@ -453,7 +453,7 @@ class File extends BaseObject
 		$sql = $db->sql( 'DELETE FROM {{file}} '.
 		                '  WHERE objectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
-		$sql->query();
+		$sql->execute();
 
 		parent::delete();
 	}
@@ -516,7 +516,7 @@ EOF
 		$sql->setString('extension',$this->extension );
 		$sql->setString('objectid' ,$this->objectid  );
 		$sql->setInt   ('filterid' ,$this->filterid  );
-		$sql->query();
+		$sql->execute();
 
 		parent::save();
 	}
@@ -587,7 +587,7 @@ EOF
 		else
 			$sql->setString( 'value',$this->value );
 
-		$sql->query();
+		$sql->execute();
 	}
 
 
@@ -617,7 +617,7 @@ EOF
 		$sql->setInt   ('objectid' ,$this->objectid      );
 		$sql->setString('extension',$this->extension     );
 
-		$sql->query();
+		$sql->execute();
 
 		$this->saveValue();
 	}
@@ -656,7 +656,7 @@ SQL
 
 		$stmt->setInt('typeid'  , $this->typeid  );
 		$stmt->setInt('objectid', $this->objectid);
-		$stmt->query();
+		$stmt->execute();
 	}
 
 

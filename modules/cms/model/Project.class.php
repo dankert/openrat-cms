@@ -293,7 +293,7 @@ SQL
         $stmt->setInt   ('flags'              ,$flags );
 		$stmt->setInt   ('projectid'          ,$this->projectid );
 
-		$stmt->query();
+		$stmt->execute();
 
 		try
 		{
@@ -335,7 +335,7 @@ SQL
 		$sql->setInt   ('projectid',$this->projectid );
 		$sql->setString('name'     ,$this->name      );
 
-		$sql->query();
+		$sql->execute();
 
 		// Modell anlegen
 		$model = new Model();
@@ -419,7 +419,7 @@ SQL
 		$sql = $db->sql( 'DELETE FROM {{project}}'.
 		                '  WHERE id= {projectid} ' );
 		$sql->setInt( 'projectid',$this->projectid );
-		$sql->query();
+		$sql->execute();
 	}
 
 
@@ -742,7 +742,7 @@ EOF
                     }
 				}
 				//$sql = $db->sql( 'INSERT INTO {t_'.$tabelle.'} ('.join(array_keys($row),',').') VALUES('.join($row,',').')',$dbid_destination);
-                $stmt->query();
+                $stmt->execute();
 			}
 
 			if	( isset($data['self_key']) )
@@ -750,7 +750,7 @@ EOF
 				foreach( $mapping[$tabelle] as $oldid=>$newid )
 				{
 					$stmt = $db_dest->sql( 'UPDATE {t_'.$tabelle.'} SET '.$data['self_key'].'='.$newid.' WHERE '.$data['self_key'].'='.($oldid+$maxid),$dbid_destination );
-					$stmt->query();
+					$stmt->execute();
 				}
 			}
 		}

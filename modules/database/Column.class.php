@@ -165,7 +165,7 @@ class Column
 		$ddl = $this->db->sql('ALTER TABLE ' . $table .
 			' ADD COLUMN ' . $this->name . ' ' . $this->getColumnDefinition(). ';'
 		);
-		$ddl->query();
+		$ddl->execute();
 	}
 
 	public function modify() {
@@ -173,7 +173,7 @@ class Column
 		$ddl = $this->db->sql('ALTER TABLE ' . $table .
 			' MODIFY COLUMN ' . $this->name . ' ' . $this->getColumnDefinition() . ';'
 		);
-		$ddl->query();
+		$ddl->execute();
 	}
 
 	function drop()
@@ -181,6 +181,6 @@ class Column
 		$table = $this->table->getSqlName();
 
 		$ddl = $this->db->sql('ALTER TABLE ' . $table . ' DROP COLUMN ' . $this->name . ';');
-		$ddl->query();
+		$ddl->execute();
 	}
 }

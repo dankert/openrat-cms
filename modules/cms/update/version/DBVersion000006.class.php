@@ -31,7 +31,7 @@ class DBVersion000006 extends DbVersion
 		$updateAlgoStmt = $db->sql('UPDATE '.$table->getSqlName().
 				' SET password_algo=1 WHERE SUBSTR(password_hash,1,1) = '."'$'".';'
 		);
-		$updateAlgoStmt->query();
+		$updateAlgoStmt->execute();
 		
 	}
 }

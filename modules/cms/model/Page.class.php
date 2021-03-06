@@ -152,7 +152,7 @@ SQL
 		$sql->setInt   ('objectid'  ,$this->objectid   );
 		$sql->setInt   ('templateid',$this->templateid );
 
-		$sql->query();
+		$sql->execute();
 	}
 
 
@@ -183,12 +183,12 @@ SQL
 		$sql = $db->sql( 'DELETE FROM {{value}} '.
 		                '  WHERE pageid={pageid}' );
 		$sql->setInt('pageid',$this->pageid);
-		$sql->query();
+		$sql->execute();
 
 		$sql = $db->sql( 'DELETE FROM {{page}} '.
 		                '  WHERE objectid={objectid}' );
 		$sql->setInt('objectid',$this->objectid);
-		$sql->query();
+		$sql->execute();
 
 		parent::delete();
 	}
@@ -238,7 +238,7 @@ SQL
 		               '  WHERE objectid={objectid}' );
 		$sql->setInt('templateid' ,$this->templateid);
 		$sql->setInt('objectid'   ,$this->objectid  );
-		$sql->query();
+		$sql->execute();
 
 		parent::save();
 	}
@@ -259,7 +259,7 @@ SQL
 		               '  WHERE objectid={objectid}' );
 		$sql->setInt('templateid' ,$this->templateid);
 		$sql->setInt('objectid'   ,$this->objectid  );
-		$sql->query();
+		$sql->execute();
 
 
 		// Inhalte umschluesseln, d.h. die Element-Ids aendern
@@ -276,7 +276,7 @@ SQL
 				$sql->setInt('pageid'   ,$this->pageid);
 				$sql->setInt('elementid',$oldElementId      );
 				
-				$sql->query();
+				$sql->execute();
 			}
 			else
 			{
@@ -290,7 +290,7 @@ SQL
 				$sql->setInt('pageid'      ,$this->pageid);
 				$sql->setInt('oldelementid',$oldElementId      );
 				$sql->setInt('newelementid',$newElementId      );
-				$sql->query();
+				$sql->execute();
 			}
 		}
 	}

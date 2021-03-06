@@ -26,13 +26,13 @@ class DBVersion000010 extends DbVersion
             ' SET typeid=6 WHERE id IN (SELECT objectid FROM '.$tableFile.
             " WHERE extension IN ('gif','png','jpeg','jpg','svg','tiff') )"
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
         $updateStmt = $db->sql('UPDATE '.$tableObject.
             ' SET typeid=7 WHERE id IN (SELECT objectid FROM '.$tableFile.
             " WHERE extension IN ('css','text','txt','js','html','xml','log','ini','gpx') )"
         );
-        $updateStmt->query();
+        $updateStmt->execute();
 
 	}
 }

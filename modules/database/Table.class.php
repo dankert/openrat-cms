@@ -74,7 +74,7 @@ class Table
 		$ddl = $this->db->sql('CREATE TABLE ' . $tableName . '(id INTEGER)' . $table_opts . ';');
 		// The syntax 'TYPE = InnoDB' was deprecated in MySQL 5.0 and was removed in MySQL 5.1 and later versions.
 
-		$ddl->query();
+		$ddl->execute();
 
 		return $this;
 	}
@@ -88,7 +88,7 @@ class Table
 			$columnNames = explode(',', $columnNames);
 
 		$ddl = $this->db->sql('ALTER TABLE ' . $table . ' ADD PRIMARY KEY (' . implode(',', $columnNames) . ');');
-		$ddl->query();
+		$ddl->execute();
 
 	}
 
@@ -109,7 +109,7 @@ class Table
 //	else
 
 		$ddl = $this->db->sql('CREATE ' . ($unique ? 'UNIQUE ' : '') . 'INDEX ' . $indexName . ' ON ' . $this->getSqlName() . ' (' . implode(',', $columnNames) . ');');
-		$ddl->query();
+		$ddl->execute();
 
 	}
 
@@ -139,7 +139,7 @@ class Table
 		// Oracle doesn't support "ON DELETE RESTRICT"-Statements, but its the default.
 
 		$ddl = $this->db->sql('ALTER TABLE ' . $this->getSqlName() . ' ADD CONSTRAINT ' . $constraintName . ' FOREIGN KEY (' . $columnName . ') REFERENCES ' . $targetTablename . ' (' . $targetColumnName . ') ON DELETE RESTRICT ON UPDATE RESTRICT;');
-		$ddl->query();
+		$ddl->execute();
 	}
 
 
@@ -148,7 +148,7 @@ class Table
 		$table = $this->getSqlName();
 
 		$ddl = $this->db->sql('DROP TABLE ' . $table . ';');
-		$ddl->query();
+		$ddl->execute();
 	}
 
 	function dropIndex($columnNames)
@@ -159,7 +159,7 @@ class Table
 		$indexName = $this->tablePrefix . self::INDEX_PREFIX . '_' . $this->name . '_' . implode('_', $columnNames) . $this->tableSuffix;
 
 		$ddl = $this->db->sql('DROP INDEX ' . $indexName . ' ON ' . $this->getSqlName() . ';');
-		$ddl->query();
+		$ddl->execute();
 	}
 
 	public function dropUniqueIndex($indexName)
@@ -175,14 +175,14 @@ class Table
 			$columnNames = explode(',', $columnNames);
 
 		$ddl = $this->db->sql('ALTER TABLE ' . $table . ' DROP PRIMARY KEY(' . implode(',', $columnNames) . ')');
-		$ddl->query();
+		$ddl->execute();
 	}
 
 
 	public function dropConstraint($constraintName)
 	{
 		$ddl = $this->db->sql('DROP CONSTRAINT ' . $constraintName . ';');
-		$ddl->query();
+		$ddl->execute();
 	}
 
 }

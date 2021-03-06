@@ -43,7 +43,7 @@ class Folder extends BaseObject
 		$sql->setInt   ('folderid'    ,$this->folderid );
 		$sql->setInt   ('objectid'    ,$this->objectid );
 		
-		$sql->query();
+		$sql->execute();
 	}	
 	
 
@@ -98,7 +98,7 @@ class Folder extends BaseObject
 		$sql->setInt('folderid',$this->folderid);
 		$sql->setInt('orderid' ,$orderid       );
 
-		$sql->query();
+		$sql->execute();
 	}
 
 
@@ -563,12 +563,12 @@ SQL
 			                '  SET folderobjectid=NULL '.
 			                '  WHERE folderobjectid={objectid}' );
 			$sql->setInt('objectid',$this->objectid);
-			$sql->query();
+			$sql->execute();
 	
 			$sql = $db->sql( 'DELETE FROM {{folder}} '.
 			                '  WHERE objectid={objectid}' );
 			$sql->setInt('objectid',$this->objectid);
-			$sql->query();
+			$sql->execute();
 
 			parent::delete();
 		}

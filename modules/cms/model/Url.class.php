@@ -53,7 +53,7 @@ class Url extends BaseObject
 		                ' WHERE objectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
 		
-		$sql->query();
+		$sql->execute();
 
 		parent::delete();
 	}
@@ -70,7 +70,7 @@ class Url extends BaseObject
 		$sql->setInt   ('objectid'    ,$this->objectid );
         $sql->setString('url',$this->url );
 
-		$sql->query();
+		$sql->execute();
 
 		parent::save();
 	}
@@ -106,6 +106,6 @@ class Url extends BaseObject
 
 		$sql->setString('url',$this->url );
 
-		$sql->query();
+		$sql->execute();
 	}	
 }

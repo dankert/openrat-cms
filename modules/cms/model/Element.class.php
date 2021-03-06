@@ -208,7 +208,7 @@ class Element extends ModelBase
 		$sql->setInt    ( 'flags'      ,$flags            );
 		$sql->setString ( 'description',$this->desc       );
 
-		$sql->query();
+		$sql->execute();
 	}
 
 
@@ -329,7 +329,7 @@ SQL
 			$sql->setNull( 'defaultObjectId' );
 		else	$sql->setInt ( 'defaultObjectId' ,$this->defaultObjectId  );
 
-		$sql->query();
+		$sql->execute();
 	}
 
 
@@ -365,7 +365,7 @@ SQL
 		               '  WHERE id={elementid}'   );
 		$sql->setInt( 'elementid',$this->elementid );
 
-		$sql->query();
+		$sql->execute();
 	}
 
 
@@ -381,7 +381,7 @@ SQL
 		$sql = $db->sql('DELETE FROM {{value}} '.
 		               '  WHERE elementid={elementid}'   );
 		$sql->setInt( 'elementid',$this->elementid );
-		$sql->query();
+		$sql->execute();
 	}
 
 

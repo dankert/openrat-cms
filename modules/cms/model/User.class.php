@@ -154,7 +154,7 @@ SQL
 	    $stmt->setInt( 'userid',$this->userid  );
 
 	    // Datenbankabfrage ausfuehren
-	    $stmt->query();
+	    $stmt->execute();
 	}
 
 
@@ -514,7 +514,7 @@ SQL
 		$sql->setInt    ( 'locked_until',$this->passwordLockedUntil  );
 
 		// Datenbankabfrage ausfuehren
-		$sql->query();
+		$sql->execute();
 	}
 
 
@@ -543,7 +543,7 @@ SQL
 		$sql->setString      ('type'  ,$this->type   );
 
 		// Datenbankbefehl ausfuehren
-		$sql->query();
+		$sql->execute();
 		
 		$this->addNewUserGroups(); // Neue Gruppen hinzufuegen.
 		
@@ -628,40 +628,40 @@ SQL
 		                'SET create_userid=null '.
 		                'WHERE create_userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
-		$sql->query();
+		$sql->execute();
 
 		// "Letzte �nderung von" f�r diesen Benutzer entfernen
 		$sql = $db->sql( 'UPDATE {{object}} '.
 		                'SET lastchange_userid=null '.
 		                'WHERE lastchange_userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
-		$sql->query();
+		$sql->execute();
 
 		// Alle Archivdaten in Dateien mit diesem Benutzer entfernen
 		$sql = $db->sql( 'UPDATE {{value}} '.
 		                'SET lastchange_userid=null '.
 		                'WHERE lastchange_userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
-		$sql->query();
+		$sql->execute();
 
 		// Alle Berechtigungen dieses Benutzers l?schen
 		$sql = $db->sql( 'DELETE FROM {{acl}} '.
 		                'WHERE userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
-		$sql->query();
+		$sql->execute();
 
 		// Alle Gruppenzugehoerigkeiten dieses Benutzers l?schen
 		$sql = $db->sql( 'DELETE FROM {{usergroup}} '.
 		                'WHERE userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
-		$sql->query();
+		$sql->execute();
 
 		$this->deleteAllLoginTokens();
         // Benutzer loeschen
 		$sql = $db->sql( 'DELETE FROM {{user}} '.
 		                'WHERE id={userid}' );
 		$sql->setInt   ('userid',$this->userid );
-		$sql->query();
+		$sql->execute();
 
 		$this->userid = null;
 	}
@@ -731,7 +731,7 @@ SQL
 		$sql->setString('password',Password::hash(User::pepperPassword($password),$algo) );
 		$sql->setInt   ('userid'  ,$this->userid  );
 
-		$sql->query(); // Updating the password
+		$sql->execute(); // Updating the password
 
 		// Delete all login tokens, because the user should
 		// use the new password on all devices
@@ -837,7 +837,7 @@ SQL
 		$sql->setInt('userid'     ,$this->userid );
 		$sql->setInt('groupid'    ,$groupid      );
 
-		$sql->query();
+		$sql->execute();
 	
 	}
 
@@ -857,7 +857,7 @@ SQL
 		$sql->setInt   ('userid'  ,$this->userid );
 		$sql->setInt   ('groupid' ,$groupid      );
 
-		$sql->query();
+		$sql->execute();
 	}
 	
 
