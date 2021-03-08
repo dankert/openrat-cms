@@ -2,8 +2,8 @@
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<group title="${message:templates}">
 		<table>
-			<row class="headline">
-				<column>
+			<row header="true">
+				<column header="true">
 					<text value="${message:name}"/>
 				</column>
 				<column />
@@ -55,15 +55,13 @@
 					<column />
 				</row>
 			</if>
-			<row class="data">
-				<column colspan="1" class="act-clickable">
-					<link type="dialog" subaction="add">
-						<image method="add"/>
-						<text value="${message:add}"/>
-					</link>
-				</column>
-				<column />
-			</row>
 		</table>
+
+		<part class="button-knob,act-clickable">
+			<link type="dialog" subaction="add">
+				<image method="add"/>
+				<text value="${message:add}"/>
+			</link>
+		</part>
 	</group>
 </output>

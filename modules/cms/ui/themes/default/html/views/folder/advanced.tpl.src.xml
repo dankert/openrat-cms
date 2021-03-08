@@ -2,7 +2,7 @@
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form action="folder" subaction="edit">
 		<table>
-			<row class="headline">
+			<row header="true">
 				<column class="help">
 					<!--
 							  <text value="${message:SELECT}"></text>

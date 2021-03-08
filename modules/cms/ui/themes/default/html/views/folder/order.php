@@ -12,7 +12,7 @@
         </div>
         <div class="<?php echo O::escapeHtml('or-table-area') ?>"><?php echo O::escapeHtml('') ?>
           <table class="<?php echo O::escapeHtml('or-table or-table--sortable') ?>"><?php echo O::escapeHtml('') ?>
-            <tr class="<?php echo O::escapeHtml('or-headline') ?>"><?php echo O::escapeHtml('') ?>
+            <tr class="<?php echo O::escapeHtml('or-table-header') ?>"><?php echo O::escapeHtml('') ?>
               <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(''.@O::lang('TYPE').'') ?></span>
               </td>

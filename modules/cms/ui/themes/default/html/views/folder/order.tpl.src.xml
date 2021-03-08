@@ -2,7 +2,7 @@
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form>
 		<table class="table--sortable">
-			<row class="headline">
+			<row header="true">
 				<!--
 			  <column class="help">
 				<text value="${message:FOLDER_ORDER}"/>

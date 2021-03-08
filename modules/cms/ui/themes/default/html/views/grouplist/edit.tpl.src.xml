@@ -52,14 +52,12 @@
 		  </column>
       </row>
     </list>
-    <row class="data">
-      <column class="act-clickable">
-        <link type="dialog" subaction="add" name="${message:menu_add}">
-          <image method="add"/>
-          <text value="${message:add}"/>
-        </link>
-      </column>
-		<column />
-    </row>
   </table>
+
+	<part class="button-knob,act-clickable">
+		<link type="dialog" subaction="add">
+			<image method="add"/>
+			<text value="${message:add}"/>
+		</link>
+	</part>
 </output>

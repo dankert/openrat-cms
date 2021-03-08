@@ -1,6 +1,6 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
   <table>
-    <row class="headline">
+    <row header="true">
       <column header="true" class="table-column-auto">
         <image action="user" />
         <text value="${message:name}"/>
@@ -76,14 +76,11 @@
 		  </column>
       </row>
     </list>
-    <row class="data">
-      <column colspan="2" class="act-clickable">
-        <link type="dialog" subaction="add" name="${message:add}">
-          <image method="add"/>
-          <text value="${message:add}"/>
-        </link>
-      </column>
-		<column />
-    </row>
   </table>
+	<part class="button-knob,act-clickable">
+			<link type="dialog" subaction="add">
+				<image method="add"/>
+				<text value="${message:add}"/>
+			</link>
+	</part>
 </output>

@@ -94,9 +94,9 @@
     </if>
   </table>
 
-  <part class="act-clickable">
-    <link type="dialog" action="folder" subaction="create" class="btn">
-      <image action="new"/>
+  <part class="act-clickable,button-knob">
+    <link type="dialog" action="folder" subaction="create">
+      <image method="new"/>
       <text value="${message:add}"/>
     </link>
   </part>

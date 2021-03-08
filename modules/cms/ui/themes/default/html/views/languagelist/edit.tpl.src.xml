@@ -2,13 +2,13 @@
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<table>
 		<row header="true">
-			<column>
+			<column header="true">
 				<text value="${message:NAME}"/>
 			</column>
-			<column>
+			<column header="true">
 				<text value="${message:LANGUAGE_ISOCODE}"/>
 			</column>
-			<column>
+			<column header="true">
 				<text value=""/>
 			</column>
 			<column />
@@ -77,14 +77,13 @@
 			<set var="select_url"/>
 			<set var="default_url"/>
 		</list>
-		<row class="data">
-			<column colspan="3" class="act-clickable">
-				<link type="dialog" subaction="add">
-					<image method="add"/>
-					<text value="${message:add}"/>
-				</link>
-			</column>
-			<column />
-		</row>
 	</table>
+
+	<part class="button-knob,act-clickable">
+		<link type="dialog" subaction="add">
+			<image method="add"/>
+			<text value="${message:add}"/>
+		</link>
+	</part>
+
 </output>

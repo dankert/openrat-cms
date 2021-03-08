@@ -13,7 +13,7 @@
             </if>
             <if not="true" empty="${rights}">
               <table>
-                <row class="headline">
+                <row header="true">
                   <column class="help">
                     <text value="${message:USER}"/>
                   </column>

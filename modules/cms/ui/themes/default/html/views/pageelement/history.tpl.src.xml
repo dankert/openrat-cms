@@ -6,7 +6,7 @@
 			<group collapsible="true" title="${message:language}: ${language.name}">
 
 				<table>
-					<row class="headline">
+					<row header="true">
 
 						<!--
 						<column class="help">

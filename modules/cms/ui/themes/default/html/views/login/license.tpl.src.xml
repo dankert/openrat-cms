@@ -40,7 +40,7 @@
 		</group>
 		<group title="${message:LICENSE}">
 			<table filter="false">
-				<row class="headline">
+				<row header="true">
 					<column>
 						<text value="${message:name}"/>
 					</column>

@@ -69,7 +69,10 @@ jQuery.fn.orLinkify = function( options )
 			case 'edit':
 			case 'dialog':
 				let dialog = new Openrat.Dialog();
-				dialog.start($link.attr('data-name'),$link.attr('data-action'),$link.attr('data-method'),$link.attr('data-id'),$link.attr('data-extra') );
+				let name   = $link.attr('data-name');
+				if   ( !name )
+					name = $link.text(); // get the name from the combined text of all children.
+				dialog.start(name,$link.attr('data-action'),$link.attr('data-method'),$link.attr('data-id'),$link.attr('data-extra') );
 				break;
 
 			case 'external':

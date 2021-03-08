@@ -2,7 +2,7 @@
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<group title="${message:page_pageelements}">
 		<table>
-			<row class="headline">
+			<row header="true">
 				<column>
 					<text value="${message:name}"/>
 				</column>

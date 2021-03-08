@@ -286,7 +286,10 @@ jQuery.fn.orLinkify = function( options )
 			case 'edit':
 			case 'dialog':
 				let dialog = new Openrat.Dialog();
-				dialog.start($link.attr('data-name'),$link.attr('data-action'),$link.attr('data-method'),$link.attr('data-id'),$link.attr('data-extra') );
+				let name   = $link.attr('data-name');
+				if   ( !name )
+					name = $link.text(); // get the name from the combined text of all children.
+				dialog.start(name,$link.attr('data-action'),$link.attr('data-method'),$link.attr('data-id'),$link.attr('data-extra') );
 				break;
 
 			case 'external':
@@ -3138,21 +3141,41 @@ $( function() {
         // Die Inhalte des Zweiges laden.
         let loadPromise = $.get(url);
 
-        loadPromise.done( function(data) {
+		/**
+		 * open a object in the navigation tree.
+		 * @param action
+		 * @param id
+		 */
+		function openNavTree(action, id) {
+			let $navControl = $('.or-link[data-action='+action+'][data-id='+id+']').closest('.or-navtree-node');
+			if   ( $navControl.is( '.or-navtree-node--is-closed' ) )
+				$navControl.find('.or-navtree-node-control').click();
+		}
+
+		loadPromise.done( function(data) {
 
 			$('.or-breadcrumb').empty().append( data ).find('.or-act-clickable').orLinkify();
 
 			// Open the path in the navigator tree
-			$('nav .or-navtree-node').removeClass('or-navtree-node--selected');
-
 			$('.or-breadcrumb a').each( function () {
 				let action = $(this).data('action');
 				let id     = $(this).data('id'    );
-                let $navControl = $('nav .or-navtree-node[data-type='+action+'][data-id='+id+'].or-navtree-node--is-closed .or-navtree-node-control');
-                $navControl.click();
+
+				openNavTree( action, id );
             });
 
-        }).fail(function ( jqXHR, textStatus, errorThrown ) {
+			$('.or-link--is-active').removeClass('link--is-active');
+
+			let action = Openrat.Workbench.state.action;
+			let id     = Openrat.Workbench.state.id;
+			if  (!id) id = '0';
+
+			// Mark the links to the actual object
+			$('.or-link[data-action=\''+action+'\'][data-id=\''+id+'\']').addClass('link--is-active');
+			// Open actual object
+			openNavTree( action,id );
+
+		}).fail(function ( jqXHR, textStatus, errorThrown ) {
             // Ups... aber was können wir hier schon tun, außer hässliche Meldungen anzeigen.
             console.warn( {
 				message:'Failed to load path',
@@ -3819,7 +3842,7 @@ Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
         table.addClass('loader');
 
         setTimeout( () => {
-            table.find('tr:not(.headline)').filter(function () {
+            table.find('tr:not(.or-table-header)').filter(function () {
                 $(this).toggle($(this).text().toLowerCase().indexOf(filterExpression) > -1)
             })
             table.removeClass('loader');
