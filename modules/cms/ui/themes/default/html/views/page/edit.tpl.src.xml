@@ -34,6 +34,7 @@
 				<column header="true">
 					<text value="${message:TYPE}"/>
 				</column>
+				<column header="true"/>
 			</row>
 			<if empty="${elements}">
 				<row>
@@ -43,8 +44,8 @@
 				</row>
 			</if>
 			<list list="${elements}" extract="true">
-				<row class="data,act-clickable">
-					<column>
+				<row class="data">
+					<column class="act-clickable">
 						<link type="open" title="${desc}" name="${name}" action="pageelement" id="${pageelementid}">
 							<image action="pageelement"/>
 							<text value="${label}"/>
@@ -56,6 +57,42 @@
 					<column>
 						<image elementtype="${typename}"/>
 						<text value="${message:el_${typename}}"/>
+					</column>
+					<column>
+						<part class="button,button--active-on-hover,toolbar-icon,row--on-hover">
+							<image class="menu-icon" menu="more"/>
+							<part class="dropdown,button-value">
+								<part
+									class="dropdown-entry,act-clickable">
+									<link type="open" id="${pageelementid}" title="${message:menu_open}" action="pageelement">
+										<image method="switch"/>
+										<text class="dropdown-text" value="${message:menu_open}"/>
+									</link>
+								</part>
+								<part
+									class="dropdown-entry,act-clickable">
+									<link type="dialog" id="${pageelementid}" title="${message:menu_info_desc}" action="pageelement"  subaction="info">
+										<image method="info"/>
+										<text class="dropdown-text" value="${message:menu_info}"/>
+									</link>
+								</part>
+								<part
+									class="dropdown-entry,act-clickable">
+									<link type="dialog" id="${pageelementid}" title="${message:menu_history_desc}" action="pageelement"  subaction="history">
+										<image method="history"/>
+										<text class="dropdown-text" value="${message:menu_history}"/>
+									</link>
+								</part>
+								<part
+									class="dropdown-entry,act-clickable">
+									<link type="dialog" id="${pageelementid}" title="${message:menu_advanced_desc}" action="pageelement"  subaction="advanced">
+										<image method="advanced"/>
+										<text class="dropdown-text" value="${message:menu_advanced}"/>
+									</link>
+								</part>
+							</part>
+						</part>
+
 					</column>
 				</row>
 			</list>

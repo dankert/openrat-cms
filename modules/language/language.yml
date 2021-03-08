@@ -482,7 +482,7 @@ DATE:
   it: "la notazione dell'ANSI della data della data"
   ru: Дата
 DATE_FORMAT:
-  de: j.n.Y, H:i
+  de: d.m.Y, H:i
   en: m/d Y, H:i:s
   es: 'm/d Y, H: i: s'
   fr: 'm/d Y, H : i : s'
@@ -2152,13 +2152,6 @@ LOG:
   es: Notation
   fr: Notation
   it: Registro
-MAKE_DEFAULT:
-  de: Auf Standard setzen
-  en: Set to standard
-  es: Placer à la norme
-  fr: Placer à la norme
-  it: Fijar al estándar
-  ru: Комплект для стандартных
 MENU_TITLE_FILEBROWSER_BROWSE:
   de: Auswahl
   en: Selection
@@ -2295,9 +2288,7 @@ NOT_LOGGED_IN:
 NOW:
   de: Jetzt
   en: Now
-  es: Maintenant
   fr: Maintenant
-  it: Maintenant
 NR:
   de: Nr.
   en: No.
@@ -2308,6 +2299,9 @@ NR:
 OPEN_ALL:
   de: Alle öffnen
   en: Open all
+MENU_OPEN:
+  de: Öffnen
+  en: Open
 _OR:
   de: oder
   en: or
@@ -6204,6 +6198,7 @@ LINK:
   it: Acoplamiento
   ru: Год Ссылка Ссылка
 MAKE_DEFAULT:
+  de: Als Standard setzen
   en: set to default
   es: fijar al defecto
   fr: placer au défaut

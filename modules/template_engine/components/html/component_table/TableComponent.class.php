@@ -12,9 +12,6 @@ class TableComponent extends HtmlComponent
 {
     public $filter = true;
 
-	public $width = '100%';
-
-
 	public function createElement()
 	{
 	    $tableWrapper = (new HtmlElement('div'))->addStyleClass('table-wrapper');
@@ -34,9 +31,6 @@ class TableComponent extends HtmlComponent
 
 		if	( $this->class)
             $table->addStyleClass($this->class);
-
-        if	( $this->width)
-            $table->addAttribute('width',$this->width);
 
         $this->adoptiveElement = $table;
 

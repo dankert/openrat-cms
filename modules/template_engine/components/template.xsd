@@ -137,7 +137,6 @@
             <xsd:element ref="user" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:any namespace="http://www.w3.org/1999/xhtml"/>
         </xsd:choice>
-        <xsd:attribute name="width" type="xsd:string"/>
         <xsd:attribute name="style" type="xsd:string"/>
         <xsd:attribute name="class" type="xsd:string"/>
         <xsd:attribute name="colspan" type="xsd:string"/>
@@ -235,6 +234,7 @@
         </xsd:choice>
         <xsd:attribute name="type" type="xsd:string"/>
         <xsd:attribute name="name" type="xsd:string"/>
+        <xsd:attribute name="default" type="xsd:string"/>
         <xsd:attribute name="mode" type="xsd:string"/>
         <xsd:attribute name="extension" type="xsd:string"/>
         <xsd:attribute name="mimetype" type="xsd:string"/>
@@ -433,6 +433,7 @@
         <xsd:attribute name="show" type="xsd:boolean"/>
         <xsd:attribute name="collapsible" type="xsd:boolean"/>
         <xsd:attribute name="title" type="xsd:string"/>
+        <xsd:attribute name="description" type="xsd:string"/>
         <xsd:attribute name="icon" type="xsd:string"/>
         <xsd:attribute name="request" type="xsd:string"/>
     </xsd:complexType>
@@ -1553,7 +1554,6 @@
             <xsd:any namespace="http://www.w3.org/1999/xhtml"/>
         </xsd:choice>
         <xsd:attribute name="filter" type="xsd:boolean"/>
-        <xsd:attribute name="width" type="xsd:string"/>
         <xsd:attribute name="class" type="xsd:string"/>
         <xsd:attribute name="request" type="xsd:string"/>
     </xsd:complexType>

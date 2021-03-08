@@ -7,7 +7,6 @@ use template_engine\element\CMSElement;
 
 class ColumnComponent extends Component
 {
-	public $width;
 	public $style;
 	public $class;
 	public $colspan;
@@ -22,9 +21,6 @@ class ColumnComponent extends Component
 	public function createElement()
 	{
 		$column = new CMSElement( ($this->header?'th':'td') );
-
-		if	( $this->width )
-			$column->addAttribute('width',$this->width);
 
 		if	( $this->style )
 			$column->addAttribute('style',$this->style);

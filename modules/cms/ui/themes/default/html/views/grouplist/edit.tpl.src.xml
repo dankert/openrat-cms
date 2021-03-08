@@ -1,27 +1,65 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
   <table>
     <row header="true">
-      <column>
-        <text value="${message:name}"/>
+      <column header="true">
+        <text class="table-column-auto" value="${message:name}"/>
       </column>
+		<column class="table-column-action" header="true" />
     </row>
     <list list="${el}" extract="true">
       <row class="data">
-        <column id="${id}" name="${name}" action="group" class="act-clickable">
+        <column class="act-clickable">
           <link type="open" id="${id}" name="${name}" action="group">
             <image action="group"/>
-            <text value="${name}" maxlength="30"/>
+            <text value="${name}" />
           </link>
         </column>
+		  <column>
+			  <part class="button,button--active-on-hover,toolbar-icon,row--on-hover">
+				  <image class="menu-icon" menu="more"/>
+				  <part class="dropdown,button-value">
+					  <part
+						  class="dropdown-entry,act-clickable">
+						  <link type="open" id="${id}" title="${message:menu_open}" action="group">
+							  <image method="switch"/>
+							  <text class="dropdown-text" value="${message:menu_open}"/>
+						  </link>
+					  </part>
+					  <part
+						  class="dropdown-entry,act-clickable">
+						  <link type="dialog" id="${id}" title="${message:menu_info_desc}" action="group" subaction="info">
+							  <image method="info"/>
+							  <text class="dropdown-text" value="${message:menu_info}"/>
+						  </link>
+					  </part>
+					  <part
+						  class="dropdown-entry,act-clickable">
+						  <link type="dialog" id="${id}" title="${message:menu_prop_desc}" action="group"  subaction="prop">
+							  <image method="prop"/>
+							  <text class="dropdown-text" value="${message:menu_prop}"/>
+						  </link>
+					  </part>
+					  <part
+						  class="dropdown-entry,act-clickable">
+						  <link type="dialog" id="${id}" title="${message:menu_memberships_desc}" action="group"  subaction="memberships">
+							  <image method="memberships"/>
+							  <text class="dropdown-text" value="${message:menu_memberships}"/>
+						  </link>
+					  </part>
+				  </part>
+			  </part>
+
+		  </column>
       </row>
     </list>
     <row class="data">
-      <column colspan="2" class="act-clickable">
+      <column class="act-clickable">
         <link type="dialog" subaction="add" name="${message:menu_add}">
           <image method="add"/>
           <text value="${message:add}"/>
         </link>
       </column>
+		<column />
     </row>
   </table>
 </output>

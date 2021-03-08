@@ -1,5 +1,7 @@
 @color-overridden-by-theme: black;
 
+@smartphones: ~"only screen and (max-width: 55rem)";
+
 .border-radius (@radius) {
     border-radius: @radius;
     -moz-border-radius: @radius;
@@ -8,12 +10,28 @@
 }
 
 
+
 .or {
     &-table {
 
         overflow: auto;
         border: 2px;
         width: 100%;
+        table-layout: fixed;
+
+      &-column-date {
+        width: 12em;
+      }
+      &-column-user {
+        width: 7em;
+      }
+      &-column-action {
+        width: 5em;
+      }
+      &-column-auto {
+        width: auto;
+        max-width: 0;
+      }
 
         &-area {
 
@@ -45,6 +63,9 @@
 
           .or-row--on-hover {
             visibility: hidden;
+            @media @smartphones {
+              visibility: visible;
+            }
           }
           &:hover .or-row--on-hover {
             visibility: visible;
@@ -72,7 +93,7 @@
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
-            max-width: 0;
+            //max-width: 0;
         }
 
         td.or-readonly {

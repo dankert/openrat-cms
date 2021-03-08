@@ -10,7 +10,7 @@
   <div class="<?php echo O::escapeHtml('or-breadcrumb-item or-breadcrumb-actual') ?>"><?php echo O::escapeHtml('') ?>
     <?php $if3=!(($parent)==FALSE); if($if3) {  ?>
       <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('open') ?>" data-action="<?php echo O::escapeHtml(''.@$parent['action'].'') ?>" data-method="<?php echo O::escapeHtml('') ?>" data-id="<?php echo O::escapeHtml(''.@$parent['id'].'') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/'.@$parent['action'].'/'.@$parent['id'].'') ?>" class="<?php echo O::escapeHtml('or-link or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
-        <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-up') ?>"><?php echo O::escapeHtml('') ?></i>
+        <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-up or-image--rightshift') ?>"><?php echo O::escapeHtml('') ?></i>
         <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-'.@$actual['action'].'') ?>"><?php echo O::escapeHtml('') ?></i>
       </a>
      <?php } ?>

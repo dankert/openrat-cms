@@ -11,6 +11,7 @@
 			<column>
 				<text value=""/>
 			</column>
+			<column />
 		</row>
 		<list list="${el}" extract="true">
 			<row class="data">
@@ -39,6 +40,39 @@
 						<text value="${message:is_default}" type="emphatic"/>
 					</column>
 				</else>
+				<column>
+					<part class="button,button--active-on-hover,toolbar-icon,row--on-hover">
+						<image class="menu-icon" menu="more"/>
+						<part class="dropdown,button-value">
+							<part
+								class="dropdown-entry,act-clickable">
+								<link type="open" id="${id}" title="${message:menu_open}" action="language">
+									<image method="switch"/>
+									<text class="dropdown-text" value="${message:menu_open}"/>
+								</link>
+							</part>
+							<part
+								class="dropdown-entry,act-clickable">
+								<link type="dialog" id="${id}" title="${message:menu_prop_desc}" action="language"  subaction="prop">
+									<image method="prop"/>
+									<text class="dropdown-text" value="${message:menu_prop}"/>
+								</link>
+							</part>
+							<if false="${is_default}">
+								<if present="id">
+									<part class="dropdown-entry,act-clickable">
+											<link type="post" action="language" subaction="setdefault" id="${id}">
+												<text value="${message:make_default}"/>
+											</link>
+									</part>
+								</if>
+								<else>
+								</else>
+							</if>
+						</part>
+					</part>
+
+				</column>
 			</row>
 			<set var="select_url"/>
 			<set var="default_url"/>
@@ -50,6 +84,7 @@
 					<text value="${message:add}"/>
 				</link>
 			</column>
+			<column />
 		</row>
 	</table>
 </output>

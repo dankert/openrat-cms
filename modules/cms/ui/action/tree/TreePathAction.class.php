@@ -112,7 +112,7 @@ class TreePathAction extends TreeAction implements Method {
 					$f->load();
 					$result[] = $this->pathItem('folder'  ,$pid,$f->filename );
 				}
-				$result[] = $this->pathItem('page'  ,$id,$p->filename );
+				$result[] = $this->pathItem('page'  ,$pageid,$p->filename );
 				return $result;
 
 			case 'userlist':

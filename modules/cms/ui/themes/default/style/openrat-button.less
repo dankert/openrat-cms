@@ -3,10 +3,9 @@
 .or {
     &-button {
 
-        //display: none;
-        //overflow: hidden;
-
-        &--is-active {
+        // if the button is active, then display the content
+        &--is-active,
+        &--active-on-hover:hover {
             .or-button-value {
               display: initial;
             }

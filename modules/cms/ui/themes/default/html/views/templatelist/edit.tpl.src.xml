@@ -6,6 +6,7 @@
 				<column>
 					<text value="${message:name}"/>
 				</column>
+				<column />
 			</row>
 			<list list="${templates}" extract="true">
 				<row class="data">
@@ -15,11 +16,43 @@
 							<text value="${name}"/>
 						</link>
 					</column>
+					<column>
+						<part class="button,button--active-on-hover,toolbar-icon,row--on-hover">
+							<image class="menu-icon" menu="more"/>
+							<part class="dropdown,button-value">
+								<part
+									class="dropdown-entry,act-clickable">
+									<link type="open" id="${id}" title="${message:menu_open}" action="template">
+										<image method="switch"/>
+										<text class="dropdown-text" value="${message:menu_open}"/>
+									</link>
+								</part>
+								<part
+									class="dropdown-entry,act-clickable">
+									<link type="dialog" id="${id}" title="${message:menu_prop_desc}" action="template"  subaction="prop">
+										<image method="prop"/>
+										<text class="dropdown-text" value="${message:menu_prop}"/>
+									</link>
+								</part>
+								<part
+									class="dropdown-entry,act-clickable">
+									<link type="dialog" id="${id}" title="${message:menu_preview_desc}" action="template"  subaction="preview">
+										<image method="preview"/>
+										<text class="dropdown-text" value="${message:menu_preview}"/>
+									</link>
+								</part>
+							</part>
+						</part>
+
+					</column>
 				</row>
 			</list>
 			<if empty="${templates}">
 				<row>
-					<text value="${message:NO_TEMPLATES_AVAILABLE_DESC}"/>
+					<column>
+						<text value="${message:NO_TEMPLATES_AVAILABLE_DESC}"/>
+					</column>
+					<column />
 				</row>
 			</if>
 			<row class="data">
@@ -29,6 +62,7 @@
 						<text value="${message:add}"/>
 					</link>
 				</column>
+				<column />
 			</row>
 		</table>
 	</group>

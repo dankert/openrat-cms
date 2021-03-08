@@ -12,22 +12,22 @@
 						<column class="help">
 							<text value="${message:NR}"/>
 						</column>-->
-						<column class="help" colspan="2">
+						<column class="table-column-action" colspan="2">
 							<text value="${message:COMPARE}"/>
 						</column>
-						<column class="help">
+						<column class="table-column-auto">
 							<text value="${message:VALUE}"/>
 						</column>
-						<column class="help">
-							<text value="${message:DATE}"/>
+						<column class="-visible-on-desktop,table-column-date">
+							<text  class="" value="${message:DATE}"/>
 						</column>
-						<column class="help">
-							<text value="${message:USER}"/>
+						<column class="-visible-on-desktop,table-column-user">
+							<text  class="" value="${message:USER}"/>
 						</column>
-						<column class="help">
+						<column class="table-column-action" >
 							<text value="${message:STATE}"/>
 						</column>
-						<column class="help" colspan="2">
+						<column class="table-column-action" >
 							<text value="${message:ACTION}"/>
 						</column>
 					</row>
@@ -46,7 +46,7 @@
 							<column>
 								<text value="${lfd_nr}"/>
 							</column>-->
-							<column width="5%">
+							<column class="table-column-action">
 								<if true="${comparable}">
 									<radio name="compareid" value="${id}"/>
 								</if>
@@ -54,7 +54,7 @@
 									<text value=" "/>
 								</else>
 							</column>
-							<column width="5%">
+							<column >
 								<if true="${comparable}">
 									<radio name="withid" value="${id}"/>
 								</if>
@@ -62,18 +62,18 @@
 									<text value=" "/>
 								</else>
 							</column>
-							<column width="50%">
+							<column >
 								<text value="${text}" title="${text}"/>
 							</column>
-							<column>
+							<column class="-visible-on-desktop">
 								<date date="${date}"/>
 							</column>
-							<column>
+							<column class="-visible-on-desktop">
 								<text value="${user}"/>
 							</column>
 
 							<!-- State -->
-							<column width="5%">
+							<column >
 								<if true="${publish}">
 									<image symbol="status-released" title="${message:PAGEELEMENT_RELEASED}"/>
 								</if>
@@ -83,7 +83,7 @@
 							</column>
 
 							<!-- Actions -->
-							<column width="5%">
+							<column >
 								<if true="${releasable}">
 									<link type="post" subaction="release" var1="valueid" value1="${id}"
 										  id="${objectid}" title="${message:RELEASE_DESC}">

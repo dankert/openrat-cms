@@ -2,13 +2,14 @@
   <form>
     <table>
       <row class="headline">
-        <column colspan="2">
+		  <column header="true" class="table-column-action" />
+        <column header="true">
           <text value="${message:group}"/>
         </column>
       </row>
       <list list="${memberships}" extract="true">
         <row class="data">
-          <column width="10%">
+          <column>
             <checkbox name="${var}"/>
           </column>
           <column>

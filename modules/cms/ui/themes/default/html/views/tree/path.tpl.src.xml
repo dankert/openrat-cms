@@ -14,7 +14,7 @@
 	<part class="breadcrumb-item,breadcrumb-actual">
 		<if not="" empty="${parent}">
 			<link type="open" action="${parent.action}" id="${parent.id}" clickable="true">
-				<image menu="up" />
+				<image menu="up" class="image--rightshift" />
 				<image action="${actual.action}"/>
 			</link>
 		</if>

@@ -430,7 +430,6 @@ class Messages {
   const LISTING = 'LISTING';
   const LOGIN = 'LOGIN';
   const LOG = 'LOG';
-  const MAKE_DEFAULT = 'MAKE_DEFAULT';
   const MENU_TITLE_FILEBROWSER_BROWSE = 'MENU_TITLE_FILEBROWSER_BROWSE';
   const MINUTE = 'MINUTE';
   const MINUTES = 'MINUTES';
@@ -456,6 +455,7 @@ class Messages {
   const NOW = 'NOW';
   const NR = 'NR';
   const OPEN_ALL = 'OPEN_ALL';
+  const MENU_OPEN = 'MENU_OPEN';
   const _OR = '_OR';
   const OTHER_DESC = 'OTHER_DESC';
   const OTHER = 'OTHER';
@@ -1230,6 +1230,7 @@ class Messages {
   const ISOCODE = 'ISOCODE';
   const LAST_MONTH = 'LAST_MONTH';
   const LAST_YEAR = 'LAST_YEAR';
+  const MAKE_DEFAULT = 'MAKE_DEFAULT';
   const MENU_FILE_DECOMPRESS = 'MENU_FILE_DECOMPRESS';
   const MENU_FILE_DECOMPRESS_DESC = 'MENU_FILE_DECOMPRESS_DESC';
   const MENU_INDEX_ADMINISTRATION = 'MENU_INDEX_ADMINISTRATION';

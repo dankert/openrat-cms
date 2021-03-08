@@ -1,10 +1,10 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
   <table>
     <row header="true">
-      <column>
+      <column header="true">
         <text value="${message:NAME}"/>
       </column>
-      <column>
+      <column header="true">
         <text value="${message:VALUE}"/>
       </column>
     </row>
