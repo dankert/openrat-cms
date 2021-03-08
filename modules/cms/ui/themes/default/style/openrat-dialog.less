@@ -32,28 +32,29 @@ Basis-Style for Openrat.
 .or {
     &-dialog {
 
-      position: absolute;
-      z-index: 2;
-      top: 0;
-      left: 0;
-      width:100%;
-
       display: none;
-      height: 100%;
-      flex-direction: row;
+
+      @media @smartphones {
+      }
 
       &--is-open {
-        display: flex;
+        display: block;
       }
 
       &-filler {
+
+        position: absolute;
+        z-index: 2;
+        top: 0;
+        left: 0;
+        width:100%;
+
         height: 100%;
-        width: 12em;
         opacity: 0.6;
         filter: blur(10em);
 
         @media @smartphones {
-          width: 0;
+          //display: none;
         }
 
         &-icon {
@@ -67,18 +68,29 @@ Basis-Style for Openrat.
 
       &-content {
 
-          flex: 1;
-          overflow: auto;
-          //position: absolute;
+        position: absolute;
+        overflow: auto;
+        z-index: 3;
 
-          //top: 0;
-          //left: 0;
-          //width: 100%;
+        // On Desktop: popup.
+        top: 5%;
+        left: 5%;
+        right:5%;
+        bottom: 5%;
+        height: 90%;
+        width: 90%;
+
+        @media @smartphones {
+          position: absolute !important;
+          // On mobiles: 100%-view
+          top: 0;
+          left: 0;
+          right:0;
+          bottom: 0;
           height: 100%;
+          width:100%;
+        }
 
-          //margin-left:10em;
-
-          z-index: 3;
 
           .or-view {
             height: 100%;
