@@ -71,8 +71,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 }
 .or-button-value {
 	display: none;
+	position: absolute;
+	right: 1em;
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-button.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AAGI%2CGAAC%3BCAeG%3B%3BAAZA%2CGAHH%2COAGI%2CWAEG%3BAADJ%2CGAJH%2COAII%2CiBAAiB%2CMACd%3BCACE%3B%3BAAKN%2CGAXH%2COAWI%3BCACC%22%7D */
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-button.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AAGI%2CGAAC%3BCAmBG%3B%3BAAfA%2CGAJH%2COAII%2CWAEG%3BAADJ%2CGALH%2COAKI%2CiBAAiB%2CMACd%3BCACE%3B%3BAAKN%2CGAZH%2COAYI%3BCACC%3BCACA%3BCACA%22%7D */
 /* Include style: /default/style/openrat-collapsible */
 .or-collapsible {
 	/* Geschlossen */
