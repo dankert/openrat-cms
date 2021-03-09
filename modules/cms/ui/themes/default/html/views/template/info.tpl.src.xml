@@ -26,8 +26,13 @@
 
 	<group title="${message:pages}">
 		<table filter="true">
+			<row header="true">
+				<column header="true">
+					<text value="${message:name}" />
+				</column>
+			</row>
 			<list list="${pages}" value="name" key="pageid">
-				<row class="table-data">
+				<row class="data">
 					<column class="act-clickable">
 						<link type="open" action="page" id="${pageid}">
 							<image action="page"/>
