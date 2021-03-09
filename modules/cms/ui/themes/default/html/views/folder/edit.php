@@ -12,7 +12,7 @@
           <th class="<?php echo O::escapeHtml('or-table-column-auto') ?>"><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml(''.@O::lang('NAME').'') ?></span>
           </th>
-          <th class="<?php echo O::escapeHtml('or-table-column-date') ?>"><?php echo O::escapeHtml('') ?>
+          <th class="<?php echo O::escapeHtml('or--visible-on-desktop or-table-column-date') ?>"><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml(''.@O::lang('LASTCHANGE').'') ?></span>
           </th>
           <th class="<?php echo O::escapeHtml('or-table-column-action') ?>"><?php echo O::escapeHtml('') ?></th>
@@ -41,7 +41,7 @@
                 <span><?php echo O::escapeHtml(''.@$name.'') ?></span>
               </a>
             </td>
-            <td><?php echo O::escapeHtml('') ?>
+            <td class="<?php echo O::escapeHtml('or--visible-on-desktop') ?>"><?php echo O::escapeHtml('') ?>
               <?php include_once( 'modules/template_engine/components/html/component_date/component-date.php'); { component_date($date); ?>
                <?php } ?>
             </td>
@@ -95,7 +95,7 @@
     </div>
   </div>
   <div class="<?php echo O::escapeHtml('or-act-clickable or-button-knob') ?>"><?php echo O::escapeHtml('') ?>
-    <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('folder') ?>" data-method="<?php echo O::escapeHtml('create') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('folder') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('create') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':\'folder\',\'dialogMethod\':\'create\'}') ?>" href="<?php echo O::escapeHtml('#/folder') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
+    <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('folder') ?>" data-method="<?php echo O::escapeHtml('add') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-dialogAction="<?php echo O::escapeHtml('folder') ?>" data-extra-dialogMethod="<?php echo O::escapeHtml('add') ?>" data-extra="<?php echo O::escapeHtml('{\'dialogAction\':\'folder\',\'dialogMethod\':\'add\'}') ?>" href="<?php echo O::escapeHtml('#/folder') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
       <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-new') ?>"><?php echo O::escapeHtml('') ?></i>
       <span><?php echo O::escapeHtml(''.@O::lang('add').'') ?></span>
     </a>

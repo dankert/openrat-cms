@@ -7,7 +7,7 @@
       <column header="true" class="table-column-auto">
         <text value="${message:NAME}"/>
       </column>
-      <column header="true" class="table-column-date">
+      <column header="true" class="-visible-on-desktop,table-column-date">
         <text value="${message:LASTCHANGE}"/>
       </column>
       <column header="true" class="table-column-action">
@@ -37,7 +37,7 @@
             <text value="${name}"/>
           </link>
         </column>
-        <column>
+        <column class="-visible-on-desktop">
           <date date="${date}"/>
         </column>
 		  <column>
@@ -95,7 +95,7 @@
   </table>
 
   <part class="act-clickable,button-knob">
-    <link type="dialog" action="folder" subaction="create">
+    <link type="dialog" action="folder" subaction="add">
       <image method="new"/>
       <text value="${message:add}"/>
     </link>
