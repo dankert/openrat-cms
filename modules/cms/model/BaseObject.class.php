@@ -1241,17 +1241,27 @@ SQL
     }
 
 
+	/**
+	 * Get all References to this object
+	 * @return array
+	 */
     public function getDependentObjectIds()
     {
-        $db = \cms\base\DB::get();
+        $stmt = DB::sql( <<<SQL
 
-        $sql = $db->sql( 'SELECT {{page}}.objectid FROM {{value}}'.
-            '  LEFT JOIN {{page}} '.
-            '    ON {{value}}.pageid = {{page}}.id '.
-            '  WHERE linkobjectid={objectid}' );
-        $sql->setInt( 'objectid',$this->objectid );
+SELECT {{page}}.objectid FROM {{value}}
+              LEFT JOIN {{page}}
+                ON {{value}}.pageid = {{page}}.id
+              WHERE linkobjectid={myobjectid1}
+UNION
+       SELECT objectid FROM {{link}}
+             WHERE link_objectid={myobjectid2}
+SQL
+		);
+        $stmt->setInt( 'myobjectid1',$this->objectid );
+        $stmt->setInt( 'myobjectid2',$this->objectid );
 
-        return $sql->getCol();
+        return $stmt->getCol();
     }
 
 
@@ -1260,6 +1270,7 @@ SQL
     /**
      * Liefert die Link-Ids, die auf das aktuelle Objekt verweisen.
      * @return array Liste der gefundenen Objekt-IDs
+	 * @see BaseObject#getDependentObjectIds
      */
     public function getLinksToMe()
     {

@@ -64,24 +64,8 @@
 				</part>
 			</fieldset>
 		</if>
-		<fieldset label="${message:FILE_PAGES}">
-			<table>
-				<list list="${pages}" extract="true">
-					<row>
-						<column>
-							<link url="${url}" target="cms_main">
-								<image type="page"/>
-								<text value="${name}"/>
-							</link>
-						</column>
-					</row>
-				</list>
-			</table>
-			<if empty="${pages}">
-				<text value="${message:NOT_FOUND}"/>
-			</if>
-		</fieldset>
 	</group>
+	<include file="../include/references"/>
 	<include file="../include/validity"/>
 	<include file="../include/timestamps"/>
 	<include file="../include/settings"/>

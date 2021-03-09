@@ -1,0 +1,30 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<group title="${message:references}">
+
+		<table>
+			<row header="true">
+				<column header="true" class="table-column-action">
+					<text value="${message:TYPE}"/>
+				</column>
+				<column header="true" class="table-column-auto">
+					<text value="${message:NAME}"/>
+				</column>
+			</row>
+
+			<list list="${references}" extract="true">
+				<row class="data">
+					<column class="">
+						<image action="${type}"/>
+					</column>
+					<column class="act-clickable">
+						<link type="open" id="${id}" name="${name}" action="${type}">
+							<text value="${name}"/>
+						</link>
+					</column>
+
+				</row>
+			</list>
+		</table>
+	</group>
+</output>

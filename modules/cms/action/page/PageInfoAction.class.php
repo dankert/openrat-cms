@@ -7,7 +7,11 @@ use cms\generator\PageContext;
 use cms\generator\PageGenerator;
 use cms\generator\Producer;
 use cms\generator\Publisher;
+use cms\model\BaseObject;
+use cms\model\File;
+use cms\model\Permission;
 use cms\model\Template;
+use util\Html;
 
 class PageInfoAction extends PageAction implements Method {
     public function view() {
@@ -79,7 +83,29 @@ class PageInfoAction extends PageAction implements Method {
 		$generator = new PageGenerator( $this->createPageContext( Producer::SCHEME_PUBLIC) );
 
 		$this->setTemplateVar('tmp_filename' ,$generator->getPublicFilename() );
-    }
+
+		$references = [];
+
+		// Schleife ueber alle Objekte in diesem Ordner
+		foreach( $this->page->getDependentObjectIds() as $id )
+		{
+			/* @var BaseObject */
+			$o = new BaseObject( $id );
+			$o->load();
+
+			if   ( $o->hasRight(Permission::ACL_READ) )
+			{
+				$references[$id]['name'] = $o->getDefaultName()->name;
+				$references[$id]['type'] = $o->getType();
+				$references[$id]['id'  ] = $id;
+
+				$references[$id]['date'] = $o->lastchangeDate;
+				$references[$id]['user'] = $o->lastchangeUser;
+			}
+		}
+		$this->setTemplateVar( 'references',$references );
+
+	}
     public function post() {
     }
 }

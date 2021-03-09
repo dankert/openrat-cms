@@ -3,6 +3,7 @@ namespace cms\action\object;
 use cms\action\Method;
 use cms\action\ObjectAction;
 use cms\model\BaseObject;
+use cms\model\Permission;
 use util\ArrayUtils;
 
 class ObjectInfoAction extends ObjectAction implements Method {
@@ -46,13 +47,14 @@ class ObjectInfoAction extends ObjectAction implements Method {
 			$o = new BaseObject( $languageid );
 			$o->load();
 			$list[$languageid] = array();
+			$list[$languageid]['id'  ] = $o->objectid;
 			$list[$languageid]['name'] = $o->filename;
 			$list[$languageid]['type'] = $o->getType();
 		}
 
 		asort( $list );
 
-		$this->setTemplateVar('pages',$list);
+		$this->setTemplateVar('references',$list);
 
 		$this->setTemplateVar('size',number_format($this->baseObject->getSize()/1000,0,',','.').' kB' );
 
@@ -60,7 +62,9 @@ class ObjectInfoAction extends ObjectAction implements Method {
 		$totalSettings = $this->baseObject->getTotalSettings();
 		$this->setTemplateVar('total_settings', $totalSettings,$pad );
 		$this->setTemplateVar('settings', ArrayUtils::dryFlattenArray( $totalSettings,$pad ) );
-    }
+	}
+
+
     public function post() {
     }
 }
