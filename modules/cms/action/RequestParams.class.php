@@ -4,6 +4,7 @@ namespace cms\action;
 
 use util\exception\ValidationException;
 use util\json\JSON;
+use util\Mail;
 use util\Text;
 use util\XML;
 
@@ -129,11 +130,19 @@ class RequestParams
 	/**
 	 * Gets a mail adress out of the request.
 	 *
+	 * Throws a ValidationException if the mail adress is not valid.
+	 *
 	 * @param $varName
 	 * @return String
 	 */
-	public function getMail($varName ) {
-		return Text::clean( $this->getValue($varName), 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789._-+@' );
+	public function getValidMail($varName ) {
+
+		$adress = Text::clean( $this->getValue($varName), 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789._-+@' );
+
+		if   ( ! Mail::checkAddress( $adress ) )
+			throw new ValidationException( $varName );
+
+		return $adress;
 	}
 
 
@@ -222,7 +231,6 @@ class RequestParams
 	}
 
 
-
 	/**
 	 * Ermittelt die aktuelle Id aus dem Request.<br>
 	 * Um welche ID es sich handelt, ist abh�ngig von der Action.
@@ -237,7 +245,6 @@ class RequestParams
 
 		return intval($this->getValue( $varName ));
 	}
-
 
 
 	/**
@@ -269,9 +276,6 @@ class RequestParams
 	}
 
 
-
-
-
 	public function hasLanguageId()
 	{
 		return $this->has(self::PARAM_LANGUAGE_ID);
@@ -282,6 +286,7 @@ class RequestParams
 		return $this->getNumber(self::PARAM_LANGUAGE_ID);
 	}
 
+
 	public function hasModelId()
 	{
 		return $this->has(self::PARAM_MODEL_ID);
@@ -291,16 +296,24 @@ class RequestParams
 	{
 		return $this->getNumber(self::PARAM_MODEL_ID );
 	}
+
+
 	public function getProjectId()
 	{
 		return $this->getNumber(self::PARAM_PROJECT_ID );
 	}
 
+
+	public function getDatabaseId()
+	{
+		return $this->getAlphanum(self::PARAM_DATABASE_ID );
+	}
+
+
 	public function getToken()
 	{
 		return $this->getAlphanum(self::PARAM_TOKEN );
 	}
-
 
 
 	public function __toString() {

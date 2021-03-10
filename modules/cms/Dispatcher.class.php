@@ -404,8 +404,8 @@ class Dispatcher
 
         $possibleDbIds = [];
 
-        if   ( $this->request->has('dbid') )
-            $possibleDbIds[] = $this->request->getAlphanum('dbid' );
+        if   ( $this->request->has(RequestParams::PARAM_DATABASE_ID ) )
+            $possibleDbIds[] = $this->request->getDatabaseId();
 
         if   ( Session::getDatabaseId() )
             $possibleDbIds[] = Session::getDatabaseId();

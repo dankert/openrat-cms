@@ -27,7 +27,7 @@ class ProjectCopyAction extends ProjectAction implements Method {
 		
 		if	( $this->request->has('ok') )
 		{
-			$this->project->export( $this->request->getNumber('dbid') );
+			$this->project->export( $this->request->getDatabaseId() );
 			
 			$this->addNoticeFor($this->project,Messages::DONE);
 		}

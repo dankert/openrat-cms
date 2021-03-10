@@ -19,10 +19,7 @@ class LoginRegisterAction extends LoginAction implements Method {
 
     public function post() {
 
-		$email_address = $this->request->getMail('mail');
-
-		if	( ! Mail::checkAddress($email_address) )
-			throw  new ValidationException('mail');
+		$email_address = $this->request->getValidMail('mail');
 
 		Session::set( Session::KEY_REGISTER_MAIL,$email_address );
 		
