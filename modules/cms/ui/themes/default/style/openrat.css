@@ -1707,27 +1707,6 @@ a.editorlink:visited {
 /* Include style: /../../../template_engine/components/html/component_image/image */
 
 /*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%22%7D */
-/* Include style: /../../../template_engine/components/html/component_logo/logo */
-.or-logo {
-	display: flex;
-}
-.or-logo-icon {
-	width: 1em;
-	height: 1em;
-	font-size: 4.8em;
-	padding-top: 0.3em;
-}
-.or-logo-description {
-	flex: 1;
-}
-.or-logo-headline {
-	font-weight: normal;
-	font-size: 2em;
-}
-.or-logo-text {
-	font-size: 1.3em;
-}
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Ftemplate_engine%5C%2Fcomponents%5C%2Fhtml%5C%2Fcomponent_logo%5C%2Flogo.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AAEI%2CGAAC%3BCACG%3B%3BAAEA%2CGAHH%2CKAGI%3BCACG%3BCACA%3BCACA%3BCACA%3B%3BAAGJ%2CGAVH%2CKAUI%3BCACG%3B%3BAAGJ%2CGAdH%2CKAcI%3BCACG%3BCACA%3B%3BAAGL%2CGAnBF%2CKAmBG%3BCACI%22%7D */
 /* Include style: /../../../template_engine/components/html/component_table/table */
 .or-table {
 	overflow: auto;

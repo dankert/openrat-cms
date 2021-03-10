@@ -1,19 +1,22 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form>
-		<logo name="register"/>
+		<group title="${message:logo_register}" description="${message:logo_register_text}">
 
-		<fieldset label="${message:USER_REGISTER_CODE}">
-			<input name="code" default="" size="25" class="focus"/>
-		</fieldset>
-		<fieldset label="${message:USER_USERNAME}">
-			<input type="text" name="username" value="" size="25"/>
-		</fieldset>
-		<fieldset label="${message:USER_PASSWORD}">
-			<password name="password" default="" size="25"/>
-		</fieldset>
-		<fieldset label="${message:DATABASE}">
-			<selectbox name="dbid" list="dbids" default="actdbid"/>
-		</fieldset>
+			<fieldset label="${message:USER_REGISTER_CODE}">
+				<input name="code" default="" size="25" class="focus"/>
+			</fieldset>
+			<fieldset label="${message:USER_USERNAME}">
+				<input type="text" name="username" value="" size="25"/>
+			</fieldset>
+			<fieldset label="${message:USER_PASSWORD}">
+				<password name="password" default="" size="25"/>
+			</fieldset>
+			<fieldset label="${message:DATABASE}">
+				<selectbox name="dbid" list="dbids" default="${actdbid}"/>
+			</fieldset>
+
+		</group>
 	</form>
+
 </output>

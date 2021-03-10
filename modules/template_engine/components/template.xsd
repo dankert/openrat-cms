@@ -25,7 +25,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -72,7 +71,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -119,7 +117,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -171,7 +168,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -214,7 +210,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -265,7 +260,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -307,7 +301,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -351,7 +344,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -411,7 +403,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -459,7 +450,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -506,7 +496,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -558,7 +547,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -616,7 +604,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -659,7 +646,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -718,7 +704,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -773,7 +758,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -818,7 +802,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -864,7 +847,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -932,7 +914,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -957,49 +938,6 @@
         <xsd:attribute name="value" type="xsd:string"/>
         <xsd:attribute name="request" type="xsd:string"/>
     </xsd:complexType>
-    <xsd:element name="logo" type="logoType"/>
-    <xsd:complexType name="logoType">
-        <xsd:choice maxOccurs="unbounded" minOccurs="0">
-            <xsd:element ref="button" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="checkbox" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="column" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="date" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="editor" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="else" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="fieldset" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="form" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="group" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="hidden" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="if" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="image" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="include" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="input" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="inputarea" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="insert" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="password" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="qrcode" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="radio" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="radiobox" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="row" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="selectbox" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="selector" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="set" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="table" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="text" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="upload" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="user" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:any namespace="http://www.w3.org/1999/xhtml"/>
-        </xsd:choice>
-        <xsd:attribute name="name" type="xsd:string"/>
-        <xsd:attribute name="request" type="xsd:string"/>
-    </xsd:complexType>
     <xsd:element name="newline" type="newlineType"/>
     <xsd:complexType name="newlineType">
         <xsd:choice maxOccurs="unbounded" minOccurs="0">
@@ -1022,7 +960,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -1064,7 +1001,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -1106,7 +1042,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -1151,7 +1086,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -1203,7 +1137,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -1246,7 +1179,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -1298,7 +1230,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -1346,7 +1277,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -1391,7 +1321,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -1443,7 +1372,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -1490,7 +1418,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -1535,7 +1462,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -1579,7 +1505,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -1627,7 +1552,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>
@@ -1674,7 +1598,6 @@
             <xsd:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="list" maxOccurs="unbounded" minOccurs="0"/>
-            <xsd:element ref="logo" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="newline" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="output" maxOccurs="unbounded" minOccurs="0"/>
             <xsd:element ref="part" maxOccurs="unbounded" minOccurs="0"/>

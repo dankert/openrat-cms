@@ -1,9 +1,8 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form method="post" forwardTo="confirmmail" afterSuccess="forward">
-		<logo name="changemail"/>
 
-		<group title="${message:user_mail}">
+		<group title="${message:logo_changemail}" description="${message:logo_changemail_text}">
 			<fieldset label="${message:user_new_mail}">
 					<input name="mail" focus="true"/>
 			</fieldset>

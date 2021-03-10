@@ -7,19 +7,11 @@
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('subaction') ?>" value="<?php echo O::escapeHtml('pw') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml(''.@$_id.'') ?>" /><?php echo O::escapeHtml('') ?>
       <?php $if3=($pwchange_enabled); if($if3) {  ?>
-        <div class="<?php echo O::escapeHtml('or-logo') ?>"><?php echo O::escapeHtml('') ?>
-          <div class="<?php echo O::escapeHtml('or-logo-icon') ?>"><?php echo O::escapeHtml('') ?>
-            <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-changepassword') ?>"><?php echo O::escapeHtml('') ?></i>
-          </div>
-          <div class="<?php echo O::escapeHtml('or-logo-description') ?>"><?php echo O::escapeHtml('') ?>
-            <h2 class="<?php echo O::escapeHtml('or-logo-headline') ?>"><?php echo O::escapeHtml(''.@O::lang('logo_changepassword').'') ?></h2>
-            <p class="<?php echo O::escapeHtml('or-logo-text') ?>"><?php echo O::escapeHtml(''.@O::lang('logo_changepassword_text').'') ?></p>
-          </div>
-        </div>
         <section class="<?php echo O::escapeHtml('or-group or-collapsible--is-open or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>
           <h2 class="<?php echo O::escapeHtml('or-collapsible-title or-group-title or-collapsible-act-switch') ?>"><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml(''.@O::lang('user_act_password').'') ?></span>
           </h2>
+          <p class="<?php echo O::escapeHtml('or-group-description') ?>"><?php echo O::escapeHtml(''.@O::lang('logo_changepassword_text').'') ?></p>
           <div class="<?php echo O::escapeHtml('or-collapsible-value or-group-value') ?>"><?php echo O::escapeHtml('') ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('user_password').'') ?></h3>

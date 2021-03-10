@@ -500,7 +500,7 @@ class Mail
 	public static function checkAddress($email_address)
 	{
 		// Source: de.php.net/ereg
-		return \preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i", $email_address);
+		return \preg_match("/^[_a-z0-9-+]+(\.[_a-z0-9-+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i", $email_address);
 	}
 
 

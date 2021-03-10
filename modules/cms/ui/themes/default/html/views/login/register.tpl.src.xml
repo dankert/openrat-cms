@@ -1,16 +1,19 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<if true="${config:login/register}">
-		<form afterSuccess="forward" forwardTo="registercode">
-			<logo name="register"/>
-			<fieldset label="${message:USER_MAIL}">
-				<input name="mail" default="" class="focus"/>
-			</fieldset>
-		</form>
-	</if>
-	<else>
-		<part class="message,error">
-			<text value="${message:REGISTER_NOT_ENABLED}"/>
-		</part>
-	</else>
+	<group title="${message:logo_register}" description="${message:logo_register_text}">
+
+		<if true="${config:login/register}">
+			<form afterSuccess="forward" forwardTo="registercode">
+				<fieldset label="${message:USER_MAIL}">
+					<input name="mail" default="" class="focus"/>
+				</fieldset>
+			</form>
+		</if>
+		<else>
+			<part class="message,error">
+				<text value="${message:REGISTER_NOT_ENABLED}"/>
+			</part>
+		</else>
+
+	</group>
 </output>

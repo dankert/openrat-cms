@@ -2,14 +2,13 @@
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form>
 		<if true="${pwchange_enabled}">
-			<logo name="changepassword"/>
-			<group title="${message:user_act_password}" collapsible="false">
-				<fieldset class="line" label="${message:user_password}">
+			<group title="${message:user_act_password}" description="${message:logo_changepassword_text}" collapsible="false">
+				<fieldset label="${message:user_password}">
 					<password name="act_password" class="focus" required="true"/>
 				</fieldset>
 			</group>
 			<group title="${message:user_new_password}" collapsible="false">
-				<fieldset class="line" label="${message:user_new_password}">
+				<fieldset label="${message:user_new_password}">
 					<password name="password1" minlength="${config:security/password/min_length}"
 							  hint="${message:USER_NEW_PASSWORD}" required="true"/>
 					<password name="password2" minlength="${config:security/password/min_length}"

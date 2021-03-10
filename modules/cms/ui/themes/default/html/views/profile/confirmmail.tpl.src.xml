@@ -1,9 +1,13 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<logo name="changemail"/>
-	<form>
-		<fieldset label="${message:mail_code}">
-			<input type="text" name="code" size="30" focus="true" required="true"/>
-		</fieldset>
-	</form>
+
+	<group title="${message:logo_changemail}" description="${message:logo_changemail_text}">
+
+		<form>
+			<fieldset label="${message:mail_code}">
+				<input type="text" name="code" size="30" focus="true" required="true"/>
+			</fieldset>
+		</form>
+	</group>
+
 </output>
