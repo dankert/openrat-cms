@@ -78,10 +78,10 @@ class LoginLoginAction extends LoginAction implements Method {
 			throw new SecurityException('login disabled');
 
 		$loginName     = $this->request->getAlphanum('login_name' );
-		$loginPassword = $this->request->getVar('login_password',RequestParams::FILTER_ALPHANUM);
-		$newPassword1  = $this->request->getVar('password1'     ,RequestParams::FILTER_ALPHANUM);
-		$newPassword2  = $this->request->getVar('password2'     ,RequestParams::FILTER_ALPHANUM);
-		$token         = $this->request->getVar('user_token'    ,RequestParams::FILTER_ALPHANUM);
+		$loginPassword = $this->request->getText('login_password');
+		$newPassword1  = $this->request->getText('password1'     );
+		$newPassword2  = $this->request->getText('password2'     );
+		$token         = $this->request->getText('user_token'    );
 
 
 		// Jedes Authentifizierungsmodul durchlaufen, bis ein Login erfolgreich ist.

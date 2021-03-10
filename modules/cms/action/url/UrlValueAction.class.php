@@ -23,7 +23,7 @@ class UrlValueAction extends UrlAction implements Method {
 
 
     public function post() {
-        $this->url->url = $this->request->getVar('url');
+        $this->url->url = $this->request->getText('url');
         $this->url->save();
 
         $this->addNoticeFor( $this->url,Messages::SAVED );

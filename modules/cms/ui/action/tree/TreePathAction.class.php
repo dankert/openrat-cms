@@ -18,8 +18,8 @@ use cms\action\Method;
 class TreePathAction extends TreeAction implements Method {
 
     public function view() {
-		$type = $this->request->getVar('type');
-		$id   = $this->request->getVar('id', RequestParams::FILTER_ALPHANUM);
+		$type = $this->request->getAlphanum('type');
+		$id   = $this->request->getAlphanum('id'  );
 
 		// Calculating the path to the actual object
 		$result = $this->calculatePath($type, $id);

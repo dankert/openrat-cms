@@ -6,6 +6,7 @@ use cms\action\RequestParams;
 use cms\model\User;
 use language\Messages;
 use logger\Logger;
+use util\exception\ValidationException;
 use util\Mail;
 use util\Session;
 use util\text\TextMessage;
@@ -15,15 +16,13 @@ class LoginRegisterAction extends LoginAction implements Method {
     public function view() {
 
     }
+
     public function post() {
 
-		$email_address = $this->request->getVar('mail',RequestParams::FILTER_MAIL);
+		$email_address = $this->request->getMail('mail');
 
 		if	( ! Mail::checkAddress($email_address) )
-		{
-			$this->addValidationError('mail');
-			return;
-		}
+			throw  new ValidationException('mail');
 
 		Session::set( Session::KEY_REGISTER_MAIL,$email_address );
 		

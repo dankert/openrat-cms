@@ -32,7 +32,7 @@ class TemplateAddelAction extends TemplateAction implements Method {
     }
     public function post() {
 
-		$name = $this->request->getVar('name',RequestParams::FILTER_ALPHANUM);
+		$name = $this->request->getAlphanum('name');
 
 		if  ( empty($name) )
 		    throw new \util\exception\ValidationException('name');

@@ -20,7 +20,7 @@ class UserPwAction extends UserAction implements Method {
 		$password = $this->request->getText('password');
 
 		if   ( !$password )
-			$password = $this->request->getVar('password_proposal');
+			$password = $this->request->getText('password_proposal');
 
 		if ( strlen($password) < Configuration::subset(['security','password'])->get('min_length',8) )
 			throw new ValidationException('password',Messages::PASSWORD_MINLENGTH );

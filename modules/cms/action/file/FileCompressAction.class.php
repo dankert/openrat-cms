@@ -17,12 +17,12 @@ class FileCompressAction extends FileAction implements Method {
 		$this->setTemplateVar('formats'       ,$formats    );
     }
     public function post() {
-		$format = $this->request->getVar('format',RequestParams::FILTER_ALPHANUM);
+		$format = $this->request->getAlphanum('format');
 		
 		switch( $format )
 		{
 			case 'gz':
-				if	( $this->request->getVar('replace',RequestParams::FILTER_NUMBER)=='1' )
+				if	( $this->request->getNumber('replace' ) =='1' )
 				{
 					$this->file->value = gzencode( $this->file->loadValue(),1 );
 					$this->file->parse_filename( $this->file->filename.'.'.$this->file->extension.'.gz',FORCE_GZIP );

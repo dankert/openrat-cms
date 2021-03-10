@@ -19,17 +19,17 @@ class ProjectPropAction extends ProjectAction implements Method {
     public function post() {
 		if	( $this->request->getText('name') != '')
 		{
-			$this->project->name                 = $this->request->getVar('name'               ,RequestParams::FILTER_ALPHANUM);
-			$this->project->url                  = $this->request->getVar('url'                ,RequestParams::FILTER_ALPHANUM);
-			$this->project->target_dir           = $this->request->getVar('target_dir'         ,RequestParams::FILTER_RAW     );
-			$this->project->ftp_url              = $this->request->getVar('ftp_url'            ,RequestParams::FILTER_RAW     );
-			$this->project->ftp_passive          = $this->request->getVar('ftp_passive'        ,RequestParams::FILTER_RAW     );
-			$this->project->cmd_after_publish    = $this->request->getVar('cmd_after_publish'  ,RequestParams::FILTER_RAW     );
-			$this->project->content_negotiation  = $this->request->getVar('content_negotiation',RequestParams::FILTER_NUMBER  );
-			$this->project->cut_index            = $this->request->getVar('cut_index'          ,RequestParams::FILTER_NUMBER  );
-			$this->project->publishFileExtension = $this->request->getVar('publishFileExtension',RequestParams::FILTER_NUMBER  );
-			$this->project->publishPageExtension = $this->request->getVar('publishPageExtension',RequestParams::FILTER_NUMBER  );
-			$this->project->linkAbsolute         = $this->request->getVar('linksAbsolute'       ,RequestParams::FILTER_NUMBER  ) == '1';
+			$this->project->name                 = $this->request->getAlphanum('name'             );
+			$this->project->url                  = $this->request->getAlphanum('url'              );
+			$this->project->target_dir           = $this->request->getRaw('target_dir'          );
+			$this->project->ftp_url              = $this->request->getRaw('ftp_url'             );
+			$this->project->ftp_passive          = $this->request->getRaw('ftp_passive'         );
+			$this->project->cmd_after_publish    = $this->request->getRaw('cmd_after_publish'   );
+			$this->project->content_negotiation  = $this->request->getNumber('content_negotiation'  );
+			$this->project->cut_index            = $this->request->getNumber('cut_index'            );
+			$this->project->publishFileExtension = $this->request->getNumber('publishFileExtension' );
+			$this->project->publishPageExtension = $this->request->getNumber('publishPageExtension' );
+			$this->project->linkAbsolute         = $this->request->getNumber('linksAbsolute'        );
 
 			$this->addNoticeFor($this->project,Messages::SAVED);
 			$this->project->save(); // speichern

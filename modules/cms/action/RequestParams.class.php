@@ -19,15 +19,6 @@ class RequestParams
 	const PARAM_PROJECT_ID   = 'projectid'      ;
 	const PARAM_DATABASE_ID  = 'dbid'           ;
 
-	/* Filter Types */
-	const FILTER_ALPHA    ='abc';
-	const FILTER_ALPHANUM ='abc123';
-	const FILTER_FILENAME = 'file';
-	const FILTER_MAIL     = 'mail';
-	const FILTER_TEXT     = 'text';
-	const FILTER_NUMBER   = '123';
-	const FILTER_RAW      = 'raw';
-
 	public $action;
 	public $method;
 	public $id;
@@ -95,14 +86,88 @@ class RequestParams
 	}
 
 
-	public function getRequiredVar($varName, $transcode ) {
 
-		$value = $this->getVar($varName,$transcode);
+	/**
+	 * Ermittelt den Inhalt der gew�nschten Request-Variablen.
+	 * Falls nicht vorhanden, wird "" zur�ckgegeben.
+	 *
+	 * @param String $varName Schl�ssel
+	 * @return String Inhalt
+	 */
+	protected function getValue($varName)
+	{
+		if   ( ! $this->hasKey($varName) )
+			return null;
 
-		if   ( empty( $value ) )
-			throw new ValidationException($varName);
+		return $this->parameter[$varName];
+	}
 
-		return $value;
+	protected function requireVar( $varName )
+	{
+		if   ( ! $this->hasKey($varName) )
+			throw new ValidationException( $varName );
+
+		return;
+	}
+
+
+	public function getAlphanum($varName ) {
+		return Text::clean( $this->getValue($varName), 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,_-!?%&/()' );
+	}
+
+
+	public function getFilename($varName ) {
+
+		// RFC 1738, Section 2.2:
+		// Thus, only alphanumerics, the special characters "$-_.+!*'(),", and
+		// reserved characters used for their reserved purposes may be used
+		// unencoded within a URL.
+		return Text::clean( $this->getValue($varName), 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$-_.+!*(),\'' );
+	}
+
+
+	/**
+	 * Gets a mail adress out of the request.
+	 *
+	 * @param $varName
+	 * @return String
+	 */
+	public function getMail($varName ) {
+		return Text::clean( $this->getValue($varName), 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789._-+@' );
+	}
+
+
+	public function getRaw($varName ) {
+		return $this->getValue( $varName );
+	}
+
+
+	/**
+	 * Get required parameter value.
+	 *
+	 * @param $varName
+	 * @return String|null
+	 * @throws ValidationException
+	 */
+	public function getRequiredRaw($varName ) {
+
+		$this->requireVar( $varName );
+
+		return $this->getValue( $varName );
+	}
+
+
+	/**
+	 * @param $varName
+	 * @return string|null
+	 */
+	public function getText( $varName ) {
+
+		if   ( ! $this->hasKey($varName ))
+			return null;
+
+		// Allow all UTF-8 characters.
+		return mb_convert_encoding($this->getValue($varName), 'UTF-8', 'UTF-8');
 	}
 
 
@@ -114,37 +179,24 @@ class RequestParams
 	 * @throws ValidationException
 	 */
 	public function getRequiredText( $nameOfRequestParameter ) {
-		return $this->getRequiredVar( $nameOfRequestParameter, self::FILTER_TEXT );
+
+		$this->requireVar( $nameOfRequestParameter );
+
+		return $this->getText( $nameOfRequestParameter );
 	}
 
 
 	/**
-	 * Ermittelt den Inhalt der gew�nschten Request-Variablen.
-	 * Falls nicht vorhanden, wird "" zur�ckgegeben.
+	 * Checks if the request contains the parameter.
 	 *
 	 * @param String $varName Schl�ssel
-	 * @return String Inhalt
+	 * @return boolean true, falls vorhanden.
 	 */
-	public function getVar($varName, $transcode = self::FILTER_TEXT)
+	public function hasKey($varName)
 	{
-		if (!isset($this->parameter[$varName]))
-			return '';
-
-		return $this->cleanText( $this->parameter[$varName], $transcode );
+		return isset( $this->parameter[$varName] );
 	}
 
-
-	public function getAlphanum($varName ) {
-		return $this->getVar( $varName,self::FILTER_ALPHANUM );
-	}
-
-	public function getRaw($varName ) {
-		return $this->getVar( $varName,self::FILTER_RAW );
-	}
-
-	public function getText($varName ) {
-		return $this->getVar( $varName,self::FILTER_TEXT );
-	}
 
 	/**
 	 * Ermittelt, ob der aktuelle Request eine Variable mit dem
@@ -159,16 +211,6 @@ class RequestParams
 	}
 
 
-	public function getRequiredId($varName ) {
-
-		$id = intval($this->getVar( $varName ));
-
-		if   ( $id == 0 )
-			throw new ValidationException($varName);
-
-		return $id;
-	}
-
 	/**
 	 * Gets the ID for the current action.
 	 *
@@ -176,7 +218,7 @@ class RequestParams
 	 */
 	public function getId()
 	{
-		return $this->getVar( self::PARAM_ID ,self::FILTER_ALPHANUM );
+		return $this->getAlphanum( self::PARAM_ID );
 	}
 
 
@@ -188,10 +230,28 @@ class RequestParams
 	 * @param string $varName name of parameter
 	 * @return Integer
 	 */
-	public function getNumber($varName )
+	public function getNumber( $varName )
 	{
-		return $this->getVar( $varName,self::FILTER_NUMBER );
+		if    ( ! $this->hasKey($varName ))
+			return null;
+
+		return intval($this->getValue( $varName ));
 	}
+
+
+
+	/**
+	 * Checks if the parameter value is true.
+	 *
+	 * @param string $varName name of parameter
+	 * @return Integer
+	 */
+	public function isTrue( $varName )
+	{
+		return boolval($this->getValue( $varName ));
+	}
+
+
 
 
 	/**
@@ -203,7 +263,9 @@ class RequestParams
 	 */
 	public function getRequiredNumber($varName )
 	{
-		return $this->getRequiredVar( $varName,self::FILTER_NUMBER );
+		$this->requireVar( $varName );
+
+		return $this->getNumber( $varName );
 	}
 
 
@@ -217,7 +279,7 @@ class RequestParams
 
 	public function getLanguageId()
 	{
-		return $this->getVar(self::PARAM_LANGUAGE_ID,self::FILTER_NUMBER);
+		return $this->getNumber(self::PARAM_LANGUAGE_ID);
 	}
 
 	public function hasModelId()
@@ -227,58 +289,16 @@ class RequestParams
 
 	public function getModelId()
 	{
-		return $this->getVar(self::PARAM_MODEL_ID,self::FILTER_NUMBER);
+		return $this->getNumber(self::PARAM_MODEL_ID );
 	}
 	public function getProjectId()
 	{
-		return $this->getVar(self::PARAM_PROJECT_ID,self::FILTER_NUMBER);
+		return $this->getNumber(self::PARAM_PROJECT_ID );
 	}
 
 	public function getToken()
 	{
-		return $this->getVar(self::PARAM_TOKEN,self::FILTER_ALPHANUM);
-	}
-
-
-	protected function cleanText( $value, $transcode )
-	{
-		switch ($transcode) {
-			case self::FILTER_ALPHA:
-				$white = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-				break;
-
-			case self::FILTER_ALPHANUM:
-				$white = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,_-!?%&/()';
-				break;
-
-			case self::FILTER_FILENAME:
-				// RFC 1738, Section 2.2:
-				// Thus, only alphanumerics, the special characters "$-_.+!*'(),", and
-				// reserved characters used for their reserved purposes may be used
-				// unencoded within a URL.
-				$white = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$-_.+!*(),' . "'";
-				break;
-
-			case self::FILTER_MAIL:
-				$white = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789._-@';
-				break;
-
-			case self::FILTER_TEXT:
-				// Allow all UTF-8 characters.
-				return mb_convert_encoding($value, 'UTF-8', 'UTF-8');
-
-			case self::FILTER_NUMBER:
-				$white = '1234567890.';
-				break;
-
-			case self::FILTER_RAW:
-				return $value;
-
-			default:
-				throw new \LogicException('Unknown request filter', 'not found: ' . $transcode);
-		}
-
-		return Text::clean($value, $white);
+		return $this->getAlphanum(self::PARAM_TOKEN );
 	}
 
 

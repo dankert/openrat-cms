@@ -7,7 +7,7 @@ use util\Tree;
 class TreeBranchAction extends TreeAction implements Method {
     public function view() {
 
-        $type = $this->request->getVar('type');
+        $type = $this->request->getAlphanum('type');
 
         $branch = $this->loadTreeBranch( $type );
 
@@ -27,7 +27,7 @@ class TreeBranchAction extends TreeAction implements Method {
 		{
 			$method    = new \ReflectionMethod($tree,$type);
 			if	( $this->request->has('id'))
-				$method->invoke($tree, $this->request->getVar('id') );
+				$method->invoke($tree, $this->request->getId() );
 			else
 				$method->invoke($tree); // <== Executing the Action
 		}

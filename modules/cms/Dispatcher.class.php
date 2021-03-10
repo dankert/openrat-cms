@@ -359,7 +359,7 @@ class Dispatcher
 			$method = new \ReflectionMethod($do,$subactionMethodName);
 			$params = [];
 			foreach( $method->getParameters() as $parameter ) {
-				$params[ $parameter->getName() ] = $this->request->getRequiredVar($parameter->getName(),RequestParams::FILTER_RAW);
+				$params[ $parameter->getName() ] = $this->request->getRequiredRaw($parameter->getName());
 			}
 
             $method->invokeArgs($do,$params); // <== Executing the Action

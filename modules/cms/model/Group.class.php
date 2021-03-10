@@ -118,7 +118,7 @@ class Group extends ModelBase
 		$sql->setInt( 'groupid',$this->groupid );
 
 		$row = $sql->getRow();
-		if	( count($row) > 0 )  {
+		if	( $row )  {
 			$this->name     = $row['name'    ];
 			$this->parentid = $row['parentid'];
 		}

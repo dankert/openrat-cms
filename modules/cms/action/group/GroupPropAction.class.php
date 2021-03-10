@@ -4,10 +4,14 @@ use cms\action\GroupAction;
 use cms\action\Method;
 use cms\model\Group;
 use language\Messages;
+use util\exception\ValidationException;
 
 
 class GroupPropAction extends GroupAction implements Method {
 
+	/**
+	 * Reads the properties of this group.
+	 */
     public function view() {
 
 		$this->setTemplateVars( $this->group->getProperties() );
@@ -22,17 +26,21 @@ class GroupPropAction extends GroupAction implements Method {
 		$this->setTemplateVar('groups',$otherGroups );
     }
 
+
+	/**
+	 * Store the group properties.
+	 *
+	 * @throws ValidationException
+	 */
     public function post() {
 
-		if	( ! $this->request->getText('name') )
-		    throw new \util\exception\ValidationException('name');
-
-        $this->group->name     = $this->request->getText('name');
+        $this->group->name     = $this->request->getRequiredText('name');
 		$this->group->parentid = $this->request->getNumber('parentid');
+
 		if   ( ! $this->group->parentid )
 			$this->group->parentid = null;
 
-        $this->group->save();
+        $this->group->persist();
 
         $this->addNoticeFor($this->group,Messages::SAVED);
     }

@@ -32,7 +32,7 @@ class PageAllAction extends PageAction implements Method {
 	public function view()
 	{
 
-		$languageid = $this->request->getRequiredId('languageid');
+		$languageid = $this->request->getRequiredNumber('languageid');
 		$language = new Language($languageid);
 		$language->load();
 
@@ -204,10 +204,10 @@ class PageAllAction extends PageAction implements Method {
 			switch ($element->typeid) {
 
 				case Element::ELEMENT_TYPE_TEXT:
-					$value->text = $this->request->getVar($element->name, 'raw');
+					$value->text = $this->request->getText($element->name);
 					break;
 				case Element::ELEMENT_TYPE_LONGTEXT:
-					$value->text = $this->compactOIDs($this->request->getVar($element->name, 'raw'));
+					$value->text = $this->compactOIDs($this->request->getText($element->name));
 					break;
 
 				case Element::ELEMENT_TYPE_DATE:
@@ -219,11 +219,11 @@ class PageAllAction extends PageAction implements Method {
 					break;
 				case Element::ELEMENT_TYPE_LINK:
 				case Element::ELEMENT_TYPE_INSERT:
-					$value->linkToObjectId = intval($this->request->getVar($element->name));
+					$value->linkToObjectId = intval($this->request->getNumber($element->name));
 					break;
 
 				case Element::ELEMENT_TYPE_NUMBER:
-					$value->number = $this->request->getVar($element->name) * pow(10, $value->element->decimals);
+					$value->number = $this->request->getText($element->name) * pow(10, $value->element->decimals);
 					break;
 				default:
 					throw new \LogicException('Unknown element type: '.$element->getTypeName() );
@@ -238,7 +238,7 @@ class PageAllAction extends PageAction implements Method {
 			$value->publish = $value->page->hasRight(Permission::ACL_RELEASE) && $this->request->has('release');
 
 			// Up-To-Date-Check
-			$lastChangeTime = $value->getLastChangeSinceByAnotherUser($this->request->getVar('value_time'), Session::getUser()->userid);
+			$lastChangeTime = $value->getLastChangeSinceByAnotherUser($this->request->getNumber('value_time'), Session::getUser()->userid);
 			if ($lastChangeTime)
 				$this->addWarningFor($value, Messages::CONCURRENT_VALUE_CHANGE, array('last_change_time' => date(L::lang('DATE_FORMAT'), $lastChangeTime)));
 

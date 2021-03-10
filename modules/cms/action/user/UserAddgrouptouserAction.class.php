@@ -10,7 +10,7 @@ class UserAddgrouptouserAction extends UserAction implements Method {
 
     }
     public function post() {
-		$group = new Group( $this->request->getRequiredId('groupid' ) );
+		$group = new Group( $this->request->getRequiredNumber('groupid' ) );
 		$group->load();
 
 		$this->user->addGroup( $group->groupid );

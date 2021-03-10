@@ -465,7 +465,7 @@ class ElementAdvancedAction extends ElementAction implements Method {
             $this->element->setPrefix( $this->request->getText('linkelement') );
 
         if	( $this->request->has('parameters'))
-            $this->element->code = $this->request->getVar('parameters',RequestParams::FILTER_RAW);
+            $this->element->code = $this->request->getText('parameters');
 
         $this->element->save();
         $this->addNoticeFor( $this->element, Messages::SAVED);

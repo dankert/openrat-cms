@@ -23,7 +23,7 @@ class ObjectCopyAction extends ObjectAction implements Method {
 		$sourceObject = new BaseObject( $this->request->getId());
 		$sourceObject->load();
 		
-		$targetFolder = new BaseObject( $this->request->getText('targetFolderId',RequestParams::FILTER_NUMBER));
+		$targetFolder = new BaseObject( $this->request->getNumber('targetFolderId'));
 		$targetFolder->load();
 		
 		$this->setTemplateVar('source'  ,$sourceObject->getProperties() );
@@ -40,7 +40,7 @@ class ObjectCopyAction extends ObjectAction implements Method {
     public function post() {
 		$type           = $this->request->getText('type');
 		$targetObjectId = $this->request->getNumber('targetid');
-		$sourceObjectId = $this->request->getVar('sourceid',RequestParams::FILTER_NUMBER);
+		$sourceObjectId = $this->request->getNumber('sourceid');
 
 		$sourceObject = new BaseObject( $sourceObjectId );
 		$sourceObject->load();

@@ -10,8 +10,8 @@ use util\Text;
 class PageelementDiffAction extends PageelementAction implements Method {
 
     public function view() {
-        $value1id = $this->request->getText('compareid');
-        $value2id = $this->request->getVar('withid'   );
+        $value1id = $this->request->getNumber('compareid');
+        $value2id = $this->request->getNumber('withid'   );
 
         // Wenn Value1-Id groesser als Value2-Id, dann Variablen tauschen
         if	( $value1id == $value2id )

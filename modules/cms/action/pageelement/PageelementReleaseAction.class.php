@@ -25,7 +25,7 @@ class PageelementReleaseAction extends PageelementAction implements Method {
 		$this->value->elementid  = $this->element->elementid;
 		$this->value->element->load();
 
-        $this->value->valueid = intval($this->request->getVar('valueid'));
+        $this->value->valueid = $this->request->getNumber('valueid');
         $this->value->loadWithId();
 
         if	( $this->value->pageid != $this->page->pageid )

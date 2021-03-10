@@ -49,7 +49,7 @@ class ObjectPropAction extends ObjectAction implements Method {
 
         // Should we do this?
         if	( $this->request->has('creationTimestamp') && $this->userIsAdmin() )
-            $this->baseObject->createDate = $this->request->getVar('creationTimestamp',RequestParams::FILTER_NUMBER);
+            $this->baseObject->createDate = $this->request->getNumber('creationTimestamp');
         $this->baseObject->setCreationTimestamp();
 
 
