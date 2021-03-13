@@ -30,4 +30,9 @@ class ValueContext extends BaseContext
 	public function isPublic() {
 		return $this->scheme == Producer::SCHEME_PUBLIC;
 	}
+
+	public function getObjectId()
+	{
+		return $this->pageContext->getObjectId();
+	}
 }
