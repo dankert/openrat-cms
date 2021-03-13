@@ -34,7 +34,7 @@ class SearchIndex extends Macro
     {
         $searchIndex = array();
 
-        $project = new Project( $this->page->projectid );
+        $project = new Project( $this->getPage()->projectid );
 
         $f = new Folder( $project->getRootObjectId() );
         $f->load();
