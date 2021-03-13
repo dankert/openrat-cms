@@ -55,10 +55,10 @@ class SearchIndex extends Macro
                 	$valueContext = new ValueContext($this->pageContext);
                 	$valueContext->elementid = $element->elementid;
                 	$generator = new ValueGenerator( $valueContext );
-                	$value[] = $generator->getCache()->get();
+                	$values[] = $generator->getCache()->get();
 				}
 
-                $name = $page->getNameForLanguage( $this->getPage()->languageid );
+                $name = $page->getNameForLanguage( $this->pageContext->languageId );
 
                 $searchIndex[] = array(
                     'id'      => $pageid,
