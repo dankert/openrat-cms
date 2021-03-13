@@ -57,17 +57,8 @@ class PageContext extends BaseContext
 	}
 
 
-
-	public function getLinkScheme() {
-
-		switch( $this->scheme ) {
-			case Producer::SCHEME_PREVIEW:
-				return new PreviewLink( $this );
-			case Producer::SCHEME_PUBLIC:
-				return new PublicLink( $this );
-			default:
-				return null;
-		}
+	public function getObjectId()
+	{
+		return $this->sourceObjectId;
 	}
-
 }

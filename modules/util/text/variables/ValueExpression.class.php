@@ -16,8 +16,8 @@ class ValueExpression
      */
     public function __construct($prefix, $name, $default)
     {
-        $this->prefix = $prefix;
-        $this->name = $name;
+        $this->prefix  = $prefix;
+        $this->name    = $name;
         $this->default = $default;
     }
 }

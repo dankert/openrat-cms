@@ -23,6 +23,22 @@ SRC;
 		$this->assertNotEmpty($res->resolveVariables( $example ) );
 	}
 
+
+	/**
+	 * Test variables with a prefix.
+	 */
+	public function testNamespaced() {
+
+		$resolver = new VariableResolver();
+		$resolver->addDefaultResolver( function($key) { return 'default'; } );
+		$resolver->addResolver( 'name', function($key) { return 'me'; } );
+		$resolver->addResolver( 'cms', function($key) { return 'orcms'; } );
+
+		$this->assertEquals( 'default',$resolver->resolveVariables('${x}') );
+		$this->assertEquals( 'me',$resolver->resolveVariables('${name.x}') );
+		$this->assertEquals( 'orcms',$resolver->resolveVariables('${cms.x}') );
+	}
+
 	public function testSpecials() {
 
 		$resolver = new VariableResolver();

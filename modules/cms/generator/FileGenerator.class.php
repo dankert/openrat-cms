@@ -56,7 +56,7 @@ class FileGenerator extends BaseGenerator
 
 		foreach(\util\ArrayUtils::getSubArray($totalSettings, array( 'filter')) as $filterEntry )
 		{
-			$filterName = ucfirst(strtolower(@$filterEntry['name']));
+			$filterName = ucfirst(@$filterEntry['name']);
 			$extension  = @$filterEntry['extension'];
 
 			if   ( $extension && strtolower($extension) != strtolower($file->getRealExtension()) )
@@ -80,6 +80,7 @@ class FileGenerator extends BaseGenerator
 
 			/** @var AbstractFilter $filter */
 			$filter = new $filterClassNameWithNS();
+			$filter->context = $this->context;
 
 			// Copy filter configuration to filter instance.
 			foreach( $parameter as $parameterName=>$parameterValue) {

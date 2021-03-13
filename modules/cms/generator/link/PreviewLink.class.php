@@ -3,6 +3,7 @@
 namespace cms\generator\link;
 
 use cms\action\RequestParams;
+use cms\generator\BaseContext;
 use cms\generator\PageContext;
 use cms\model\Alias;
 use cms\model\BaseObject;
@@ -19,15 +20,15 @@ use util\exception\GeneratorException;
 
 class PreviewLink implements LinkFormat
 {
-	private $pageContext;
+	private $context;
 
 	/**
 	 * PublicLink constructor.
-	 * @param $pageContext PageContext
+	 * @param $context BaseContext
 	 */
-	public function __construct($pageContext)
+	public function __construct($context)
 	{
-		$this->pageContext = $pageContext;
+		$this->context = $context;
 	}
 
 
@@ -38,10 +39,14 @@ class PreviewLink implements LinkFormat
     public function linkToObject( BaseObject $from, BaseObject $to )
     {
 
-        $param = array(
-            'oid'                 => '__OID__'.$to->objectid.'__',
-            RequestParams::PARAM_MODEL_ID    => $this->pageContext->modelId  ,
-            RequestParams::PARAM_LANGUAGE_ID => $this->pageContext->languageId );
+        $param = [
+            'oid'                 => '__OID__'.$to->objectid.'__'
+			];
+
+        if   ( $this->context instanceof PageContext ) {
+			$param[ RequestParams::PARAM_MODEL_ID    ] = $this->context->modelId;
+            $param[ RequestParams::PARAM_LANGUAGE_ID ] = $this->context->languageId;
+		}
 
         // Interne Verlinkungen in der Seitenvorschau
         switch( $to->typeid )

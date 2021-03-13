@@ -33,4 +33,10 @@ class FileContext extends BaseContext
 			$this->scheme
 		];
 	}
+
+
+	public function getObjectId()
+	{
+		return $this->sourceObjectId;
+	}
 }
