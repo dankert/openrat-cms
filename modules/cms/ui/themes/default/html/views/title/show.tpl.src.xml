@@ -52,12 +52,6 @@
 			</part>
 			<part
 				class="toolbar-icon,act-clickable,filtered,menu-shortcut">
-				<link type="dialog" subaction="rights" title="${message:menu_rights}">
-					<image method="rights"/>
-				</link>
-			</part>
-			<part
-				class="toolbar-icon,act-clickable,filtered,menu-shortcut">
 				<link type="dialog" subaction="prop" title="${message:menu_prop}">
 					<image method="prop"/>
 				</link>
@@ -69,12 +63,19 @@
 					<image method="settings"/>
 				</link>
 			</part>
+			<part
+				class="toolbar-icon,act-clickable,filtered,menu-shortcut">
+				<link type="dialog" subaction="rights" title="${message:menu_rights}">
+					<image method="rights"/>
+				</link>
+			</part>
 
 			<!-- Menü: Datei -->
+			<!--
 			<part class="toolbar-icon,menu-category,menu-shortcut">
 				<image method="add"/>
-				<!--
-				<text class="menu-label" value="${message:file}"/>-->
+				-
+				<text class="menu-label" value="${message:file}"/>-
 				<image class="menu-dropdown-icon" symbol="dropdown"/>
 				<part class="dropdown">
 					<part
@@ -129,7 +130,7 @@
 						</link>
 					</part>
 				</part>
-			</part>
+			</part>-->
 
 			<part class="toolbar-icon,user,menu-category">
 				<image/><!-- empty image as a divider -->
