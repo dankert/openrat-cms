@@ -65,7 +65,7 @@ class FileUncompressAction extends FileAction implements Method {
 				break;
 
 			default:
-				throw new \util\exception\UIException('','cannot uncompress file with extension: ' . $this->file->extension );
+				throw new \util\exception\UIException('', 'cannot uncompress file with extension: ' . $this->file->extension, []);
 		}
 
 		$this->addNoticeFor( $this->file, Messages::DONE );

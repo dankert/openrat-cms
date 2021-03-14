@@ -11,16 +11,11 @@ class GrouplistAddAction extends GrouplistAction implements Method {
     }
 
     public function post() {
-		if	( $this->request->getText('name') != '')
-		{
-			$this->group = new Group();
-			$this->group->name = $this->request->getText('name');
-			$this->group->persist();
-			$this->addNoticeFor( $this->group, Messages::ADDED);
-		}
-		else
-		{
-			$this->addValidationError('name');
-		}
+
+		$this->group = new Group();
+		$this->group->name = $this->request->getRequiredText('name');
+		$this->group->persist();
+
+		$this->addNoticeFor( $this->group, Messages::ADDED);
     }
 }

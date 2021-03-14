@@ -6,6 +6,7 @@ use cms\model\BaseObject;
 use cms\model\File;
 use cms\model\Permission;
 use language\Messages;
+use util\exception\ValidationException;
 use util\Http;
 use util\Upload;
 
@@ -44,8 +45,8 @@ class FolderCreatefileAction extends FolderAction implements Method {
 
 			if	( !$ok )
 			{
-				$this->addValidationError('url','COMMON_VALIDATION_ERROR',array(),$http->error);
-				return;
+				$this->addWarningFor( $this->folder,Messages::COMMON_VALIDATION_ERROR,[],$http->error);
+				throw new ValidationException( 'url' );
 			}
 
 			$file->desc      = $description;

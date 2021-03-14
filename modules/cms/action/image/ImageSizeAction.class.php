@@ -6,6 +6,7 @@ use cms\action\Method;
 use cms\model\Image;
 use cms\model\Permission;
 use language\Messages;
+use util\exception\ValidationException;
 
 class ImageSizeAction extends ImageAction implements Method {
 	public function getRequiredPermission() {
@@ -59,9 +60,8 @@ class ImageSizeAction extends ImageAction implements Method {
 			  ! $this->request->has('width' )      &&
 			  ! $this->request->has('height') )
 		{
-			$this->addValidationError('width','INPUT_NEW_IMAGE_SIZE' );
-			$this->addValidationError('height','');
-			return;
+			$this->addWarningFor(null,Messages::INPUT_NEW_IMAGE_SIZE);
+			throw new ValidationException('width' );
 		}
 		
 		if	( $this->request->has('copy') )

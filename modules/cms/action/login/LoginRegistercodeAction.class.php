@@ -40,13 +40,7 @@ class LoginRegistercodeAction extends LoginAction implements Method {
 		// Best?tigungscode stimmt ?berein.
 		// Neuen Benutzer anlegen.
 			
-		if	( !$this->request->has('username') )
-		{
-			$this->addValidationError('username');
-			return;
-		}
-		
-		$user = User::loadWithName( $this->request->getText('username'),User::AUTH_TYPE_INTERNAL );
+		$user = User::loadWithName( $this->request->getRequiredText('username'),User::AUTH_TYPE_INTERNAL );
 		if	( $user )
 			throw new ValidationException('username',Messages::USER_ALREADY_IN_DATABASE );
 

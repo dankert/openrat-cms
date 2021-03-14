@@ -340,7 +340,7 @@ class Dispatcher
         catch (ValidationException $ve)
         {
         	// The validation exception is catched here
-            $do->addValidationError( $ve->fieldName,$ve->key );
+            $do->addValidationError( $ve->fieldName,$ve->key,$ve->params );
 
             if   ( !$this->request->isAction )
             	// Validation exceptions should only be thrown in POST requests.
@@ -373,7 +373,7 @@ class Dispatcher
 		$enabledDbids     = array_keys( $enabledDatabases );
 
 		if   ( ! $enabledDbids )
-			throw new UIException(Messages::DATABASE_CONNECTION_ERROR, 'No database configured.',new DatabaseException('No database configured' ) );
+			throw new UIException(Messages::DATABASE_CONNECTION_ERROR, 'No database configured.', [], new DatabaseException('No database configured'));
 
         $possibleDbIds = [];
 
@@ -404,7 +404,7 @@ class Dispatcher
 
 				}
 				catch(\Exception $e) {
-					throw new UIException(Messages::DATABASE_CONNECTION_ERROR, "Could not connect to DB ".$dbid, $e);
+					throw new UIException(Messages::DATABASE_CONNECTION_ERROR, "Could not connect to DB " . $dbid, [], $e);
 				}
 
 				// Is this the first time we are connected to this database in this session?
@@ -454,7 +454,7 @@ class Dispatcher
             $adminDb->id = $dbid;
         } catch (\Exception $e) {
 
-            throw new UIException('DATABASE_ERROR_CONNECTION', $e->getMessage(),$e);
+            throw new UIException('DATABASE_ERROR_CONNECTION', $e->getMessage(), [], $e);
         }
 
         $updater->update($adminDb);

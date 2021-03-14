@@ -44,7 +44,7 @@ class ProfileEditAction extends ProfileAction implements Method {
 		
     }
     public function post() {
-		$this->user->fullname = $this->request->getText('fullname');
+		$this->user->fullname = $this->request->getRequiredText('fullname');
 		$this->user->tel      = $this->request->getText('tel'     );
 		$this->user->desc     = $this->request->getText('desc'    );
 		$this->user->style    = $this->request->getText('style'   );
@@ -56,16 +56,9 @@ class ProfileEditAction extends ProfileAction implements Method {
 		
 		Session::setUser( $this->user );
 		
-		if	( !empty($this->user->fullname) )
-		{
-			$this->user->persist();
-			$this->addNoticeFor( $this->user,Messages::SAVED);
-		}
-		else
-		{
-			$this->addValidationError('fullname');
-		}
-		
+		$this->user->persist();
+		$this->addNoticeFor( $this->user,Messages::SAVED);
+
 		
 		// Ausgewählte Sprache sofort verwenden.
 		$l = $this->request->getText('language');

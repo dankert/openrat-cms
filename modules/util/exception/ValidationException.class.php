@@ -8,12 +8,12 @@ class ValidationException extends UIException
 	public $fieldName;
 
 	// Die Exception neu definieren, damit die Mitteilung nicht optional ist
-	public function __construct($fieldName,$key='COMMON_VALIDATION_ERROR')
+	public function __construct($fieldName,$key='COMMON_VALIDATION_ERROR',$params = [] )
 	{
 		$this->fieldName = $fieldName;
 
 		// sicherstellen, dass alles korrekt zugewiesen wird
-		parent::__construct( $key, '');
+		parent::__construct($key, '', $params );
 	}
 
 	// maßgeschneiderte Stringdarstellung des Objektes

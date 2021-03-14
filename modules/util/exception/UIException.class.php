@@ -7,11 +7,14 @@ class UIException extends Exception
 {
 	public $key;
 
+	public $params;
+
 	// Die Exception neu definieren, damit die Mitteilung nicht optional ist
-	public function __construct($key, $message, Exception $previous = null)
+	public function __construct($key, $message, $params, Exception $previous = null)
 	{
 
-		$this->key = $key;
+		$this->key    = $key;
+		$this->params = $params;
 
 		// sicherstellen, dass alles korrekt zugewiesen wird
 		parent::__construct($message, 0, $previous);

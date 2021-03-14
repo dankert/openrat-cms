@@ -5,6 +5,7 @@ use cms\action\PageelementAction;
 use cms\generator\PublishEdit;
 use cms\generator\PublishPreview;
 use cms\model\Value;
+use util\exception\ValidationException;
 use util\Text;
 
 class PageelementDiffAction extends PageelementAction implements Method {
@@ -13,13 +14,9 @@ class PageelementDiffAction extends PageelementAction implements Method {
         $value1id = $this->request->getNumber('compareid');
         $value2id = $this->request->getNumber('withid'   );
 
-        // Wenn Value1-Id groesser als Value2-Id, dann Variablen tauschen
+        // Wenn Value1-Id = Value2-Id
         if	( $value1id == $value2id )
-        {
-            $this->addValidationError('compareid'   );
-            $this->addValidationError('withid'   ,'');
-            return;
-        }
+        	throw new ValidationException('withid' );
 
         // Wenn Value1-Id groesser als Value2-Id, dann Variablen tauschen
         if	( $value1id > $value2id )

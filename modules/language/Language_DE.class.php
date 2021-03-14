@@ -1360,6 +1360,6 @@ Vielen Dank.',
 'GROUP_PARENT'=>'Übergeordnete Gruppe',
 'UNSAVED_CHANGES_CONFIRM'=>'Sie haben ungespeicherte Änderungen. Möchten Sie diese Ansicht tatsächlich verlassen?',
 'PROGRESS'=>'Vorgang wird ausgeführt',
-'REFERENZES'=>'Referenzen',
+'REFERENCES'=>'Referenzen',
 ];}
 }

@@ -81,7 +81,7 @@ class FileExtractAction extends FileAction implements Method {
 				break;
 
 			default:
-				throw new \util\exception\UIException('cannot extract file with extension: ' . $this->file->extension );
+				throw new \util\exception\UIException([]'cannot extract file with extension: ' . $this->file->extension);
 		}
     }
 }

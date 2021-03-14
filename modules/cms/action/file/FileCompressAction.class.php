@@ -6,9 +6,11 @@ use cms\action\Method;
 use cms\action\RequestParams;
 use cms\model\File;
 use language\Messages;
+use util\exception\ValidationException;
 
 
 class FileCompressAction extends FileAction implements Method {
+
     public function view() {
 		$formats = array();
 		foreach( $this->getCompressionTypes() as $t )
@@ -16,6 +18,7 @@ class FileCompressAction extends FileAction implements Method {
 
 		$this->setTemplateVar('formats'       ,$formats    );
     }
+
     public function post() {
 		$format = $this->request->getAlphanum('format');
 		
@@ -63,7 +66,7 @@ class FileCompressAction extends FileAction implements Method {
 				
 				break;
 			default:
-				throw new \util\exception\UIException('unknown compress type: ' . $format );
+				throw new ValidationException('format');
 		}
 
 		$this->addNoticeFor( $this->file, Messages::DONE);

@@ -11,6 +11,7 @@ use cms\model\Group;
 use cms\model\Project;
 use cms\model\User;
 use language\Messages;
+use util\exception\ValidationException;
 
 class ObjectAclformAction extends ObjectAction implements Method {
 	public function getRequiredPermission()
@@ -52,25 +53,13 @@ class ObjectAclformAction extends ObjectAction implements Method {
 		switch( $this->request->getText('type') )
 		{
 			case 'user':
-				$permission->userid  = $this->request->getText('userid' );
+				$permission->userid  = $this->request->getRequiredNumber('userid' );
 				$permission->type    = Permission::TYPE_USER;
 
-				if	( $permission->userid <= 0 )
-				{
-					$this->addValidationError('type'     );
-					$this->addValidationError('userid','');
-					return;
-				}
 				break;
 			case 'group':
-				$permission->groupid = $this->request->getText('groupid');
+				$permission->groupid = $this->request->getRequiredNumber('groupid');
 				$permission->type    = Permission::TYPE_GROUP;
-				if	( $permission->groupid <= 0 )
-				{
-					$this->addValidationError('type'      );
-					$this->addValidationError('groupid','');
-					return;
-				}
 				break;
 			case 'all':
 				$permission->type    = Permission::TYPE_AUTH;
@@ -79,8 +68,7 @@ class ObjectAclformAction extends ObjectAction implements Method {
 				$permission->type    = Permission::TYPE_GUEST;
 				break;
 			default:
-				$this->addValidationError('type');
-				return;
+				throw new ValidationException('type');
 		}
 
 		$permission->languageid    = $this->request->getLanguageId();

@@ -17,6 +17,7 @@ use security\Password;
 use util\Browser;
 use util\exception\ObjectNotFoundException;
 use util\exception\SecurityException;
+use util\exception\ValidationException;
 use util\Mail;
 use util\Session;
 use util\text\TextMessage;
@@ -97,17 +98,9 @@ class LoginLoginAction extends LoginAction implements Method {
 				$passwordConfig = Configuration::subset(['security','password']);
 
 				if	( $newPassword1 != $newPassword2 )
-				{
-					$this->addValidationError('password1',Messages::PASSWORDS_DO_NOT_MATCH);
-					$this->addValidationError('password2','');
-					return;
-				}
+					throw new ValidationException('password2',Messages::PASSWORDS_DO_NOT_MATCH);
 				elseif	( strlen($newPassword1) < $passwordConfig->get('min_length',10) )
-				{
-					$this->addValidationError('password1',Messages::PASSWORD_MINLENGTH,array('minlength'=>$passwordConfig->get('min_length',10)));
-					$this->addValidationError('password2','');
-					return;
-				}
+					throw new ValidationException('password1',Messages::PASSWORD_MINLENGTH,array('minlength'=>$passwordConfig->get('min_length',10)));
 				else
 				{
 					// Kennwoerter identisch und lang genug.
@@ -120,27 +113,15 @@ class LoginLoginAction extends LoginAction implements Method {
 			}
 		}
 
-		if	( $authResult & Auth::STATUS_TOKEN_NEEDED ) {
+		if	( $authResult & Auth::STATUS_TOKEN_NEEDED )
 			// Token falsch.
-			$this->addErrorFor(null,Messages::LOGIN_FAILED_TOKEN_FAILED );
-			$this->addValidationError('user_token','');
-			return;
-		}
+			throw new ValidationException('user_token',Messages::LOGIN_FAILED_TOKEN_FAILED );
 
 		if	( $authResult & Auth::STATUS_PW_EXPIRED ) {
 
-			if   ( $authResult & Auth::STATUS_FAILED ) {
-
+			if   ( $authResult & Auth::STATUS_FAILED )
 				// Anmeldung gescheitert, Benutzer muss Kennwort ?ndern.
-				$this->addErrorFor( null,Messages::LOGIN_FAILED_MUSTCHANGEPASSWORD);
-				$this->addValidationError('password1','');
-				$this->addValidationError('password2','');
-				return;
-			}
-
-			if   ( $authResult & Auth::STATUS_FAILED ) {
-				$this->addWarningFor(null,Messages::LOGIN_FAILED_MUSTCHANGEPASSWORD);
-			}
+				throw new ValidationException('password1',Messages::LOGIN_FAILED_MUSTCHANGEPASSWORD);
 		}
 
 		$ip = getenv("REMOTE_ADDR");
@@ -152,11 +133,6 @@ class LoginLoginAction extends LoginAction implements Method {
 					'ip' => $ip
 				]
 			));
-
-			// Anmeldung gescheitert.
-			$this->addErrorFor( null,Messages::LOGIN_FAILED, ['name' => $loginName] );
-			$this->addValidationError('login_name'    , '');
-			$this->addValidationError('login_password', '');
 
 			// Increase fail counter
 			$user = User::loadWithName($loginName,User::AUTH_TYPE_INTERNAL);
@@ -191,8 +167,12 @@ class LoginLoginAction extends LoginAction implements Method {
 					}
 				}
 			}
+
+			// Login failed.
+			throw new ValidationException('login_password',Messages::LOGIN_FAILED, ['name' => $loginName] );
 		}
-		else if ( $authResult & Auth::STATUS_SUCCESS ) {
+
+		if ( $authResult & Auth::STATUS_SUCCESS ) {
 
 			Logger::info(TextMessage::create('Login successful for user ${0}', [$loginName]));
 
@@ -231,11 +211,7 @@ class LoginLoginAction extends LoginAction implements Method {
 					// Anmeldung gescheitert.
 					Logger::warn( TextMessage::create('user ${0} authenticated successful, but not found in internal user table',[$loginName]) );
 
-					$this->addErrorFor(null,Messages::LOGIN_FAILED, ['name' => $loginName ]);
-					$this->addValidationError('login_name'    , '');
-					$this->addValidationError('login_password', '');
-
-					return;
+					throw new ValidationException('login_password',Messages::LOGIN_FAILED,['name' => $loginName ]);
 				}
 			}
 
@@ -272,10 +248,10 @@ class LoginLoginAction extends LoginAction implements Method {
 			$config['language']['language_code'] = $user->language;
 
 			Session::setConfig( $config );
-		}
-		else {
-			throw new \LogicException('Auth module must return either SUCCESS or FAIL, but got '.$authResult);
+
+			return; // everything ok, user logged in.
 		}
 
+		throw new \LogicException('Auth module must return either SUCCESS or FAIL, but got '.$authResult);
 	}
 }

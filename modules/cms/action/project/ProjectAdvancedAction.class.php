@@ -3,6 +3,7 @@ namespace cms\action\project;
 use cms\action\Method;
 use cms\action\ProjectAction;
 use language\Messages;
+use util\exception\ValidationException;
 
 class ProjectAdvancedAction extends ProjectAction implements Method {
     public function view() {
@@ -24,7 +25,7 @@ class ProjectAdvancedAction extends ProjectAction implements Method {
 				break;
 				
 			default:
-				$this->addValidationError('type');
+				throw new ValidationException('type');
 		}
     }
 }

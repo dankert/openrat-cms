@@ -6,6 +6,7 @@ use cms\model\User;
 use language\Messages;
 use logger\Logger;
 use security\Password;
+use util\exception\ValidationException;
 use util\Mail;
 use util\Session;
 
@@ -20,11 +21,8 @@ class LoginPasswordcodeAction extends LoginAction implements Method {
 
 		if	( $this->request->getText("code")=='' ||
 			  Session::get(Session::KEY_PASSWORD_COMMIT_CODE) != $this->request->getText("code") )
-		{
-			$this->addValidationError('code','PASSWORDCODE_NOT_MATCH');
-		  	return;
-		}
-		
+			throw new ValidationException( 'code',Messages::PASSWORDCODE_NOT_MATCH );
+
 		$user  = User::loadWithName( $username,User::AUTH_TYPE_INTERNAL );
 			
 		if	( $user && $user->isValid() )

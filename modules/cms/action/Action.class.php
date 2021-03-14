@@ -6,6 +6,7 @@ use cms\base\Configuration;
 use cms\base\Language as L;
 use cms\model\ModelBase;
 use cms\model\User;
+use language\Messages;
 use logger\Logger;
 use util\Cookie;
 use util\ClassUtils;
@@ -38,10 +39,14 @@ abstract class Action
 	 */
 	abstract function checkAccess();
 
+
+	protected $errors  = [];
+	protected $notices = [];
+	protected $output  = [];
+	protected $status  = Action::NOTICE_OK;
+	protected $success = true;
+
 	protected $templateVars = [
-		'errors'  => [],
-		'notices' => [],
-		'output'  => []
 	];
 
 	/**
@@ -83,20 +88,18 @@ abstract class Action
 	 */
 	protected function setTemplateVar($varName, $value)
 	{
-		$this->templateVars['output'][$varName] = $value;
+		$this->output[ $varName ] = $value;
 	}
 
 
 	/**
 	 * Setzt eine Liste von Variablen f�r die Oberfl�che.
 	 *
-	 * @param array $varList Assoziatives Array
+	 * @param array $varList Output variables
 	 */
 	protected function setTemplateVars($varList)
 	{
-		foreach ($varList as $name => $value) {
-			$this->setTemplateVar($name, $value);
-		}
+		$this->output += $varList;
 	}
 
 
@@ -106,12 +109,12 @@ abstract class Action
 	 * @param String $name Name des validierten Eingabefeldes
 	 * @param String Textschl�ssel der Fehlermeldung (optional)
 	 */
-	public function addValidationError($name, $message = "COMMON_VALIDATION_ERROR", $vars = array(), $log = array())
+	public function addValidationError($name, $message = Messages::COMMON_VALIDATION_ERROR, $vars = array() )
 	{
-		if (!empty($message))
-			$this->addNotice('', 0, '', $message, Action::NOTICE_ERROR, $vars, $log);
+		if ( ! empty($message) )
+			$this->addErrorFor( null, $message, $vars );
 
-		$this->templateVars['errors'][] = $name;
+		$this->errors[] = $name;
 	}
 
 
@@ -187,22 +190,15 @@ abstract class Action
 	 */
 	private function addNotice($type, $id, $name, $text, $status = Action::NOTICE_OK, $vars = array(), $log = array())
 	{
-		if ($status === true)
-			$status = Action::NOTICE_OK;
-		elseif ($status === false)
-			$status = Action::NOTICE_ERROR;
-
-		$this->templateVars['notice_status'] = $status;
-		$this->templateVars['status'] = $status;
-		$this->templateVars['success'] = ($status == Action::NOTICE_ERROR ? 'false' : 'true');
+		$this->status  = ($status == Action::NOTICE_ERROR) ? Action::NOTICE_ERROR : $status;
+		$this->success = $this->success && $status != Action::NOTICE_ERROR;
 
 		if ( is_array($log) )
 			$log = implode("\n",$log);
 
-		if (!is_array($vars))
-			$vars = array($vars);
+		$vars = (array) $vars;
 
-		$this->templateVars['notices'][] = [
+		$this->notices[] = [
 			'type'   => $type,
 			'id'     => $id  ,
 			'name'   => $name,
@@ -221,7 +217,14 @@ abstract class Action
 	 */
 	public function getOutputData()
 	{
-		return $this->templateVars;
+		return [
+			'output'        => $this->output,  // output data
+			'notices'       => $this->notices, // notices
+			'errors'        => $this->errors,  // fieldnames with validation errors
+			'status'        => $this->status,  // notice status
+			'notice_status' => $this->status,  // same as above, historical reasons
+			'success'       => $this->success, // success, true if there are no errors and no notices with status error.
+		];
 	}
 
 

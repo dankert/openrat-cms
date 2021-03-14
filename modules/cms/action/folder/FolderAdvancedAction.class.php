@@ -14,6 +14,7 @@ use cms\model\Project;
 use cms\model\Url;
 use language\Messages;
 use util\ArchiveTar;
+use util\exception\SecurityException;
 use util\Html;
 
 
@@ -121,14 +122,9 @@ class FolderAdvancedAction extends FolderAction implements Method {
 				if	( ( $type=='link' && $f->hasRight( Permission::ACL_CREATE_LINK ) ) ||
 					  ( ( $type=='move' || $type == 'copy' ) &&
 					    ( $f->hasRight(Permission::ACL_CREATE_FOLDER) || $f->hasRight(Permission::ACL_CREATE_FILE) || $f->hasRight(Permission::ACL_CREATE_PAGE) ) ) )
-				{
-					// OK
-				}
+					;	// OK
 				else
-				{
-					$this->addValidationError('targetobjectid','no_rights');
-					return;
-				}
+					throw new SecurityException('no_rights');
 
 				break;
 			default:
