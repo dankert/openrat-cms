@@ -80,28 +80,24 @@ class Transformer
 		foreach ($linkedObjectIds as $objectId) {
 			$linkFormat = $this->pageContext->getLinkScheme();
 			$target = new BaseObject($objectId);
-			$target->load();
-
-			$sourcePage = new Page( $this->pageContext->sourceObjectId );
-			$targetPath = $linkFormat->linkToObject( $sourcePage, $target );
-
-			// Hack: Sonderzeichen muessen in URLs maskiert werden, aber nur bei URLs die aus Link-Objekten kommen, bei allem
-			// anderen (insbesondere Preview-Links zu andereen Seiten) darf die Umsetzung nicht erfolgen. 
-			// Der Renderer kann dies nicht tun, denn der erzeugt nur "object://..."-URLs.
-			// Beispiel: "...?a=1&b=2" wird zu "...?a=1&amp;b=2"
-			$o = new BaseObject($objectId);
 			try {
-				$o->load();
-				if ($o->isUrl) {
+				$target->load();
+				$sourcePage = new Page( $this->pageContext->sourceObjectId );
+				$targetPath = $linkFormat->linkToObject( $sourcePage, $target );
+
+				// Hack: Sonderzeichen muessen in URLs maskiert werden, aber nur bei URLs die aus Link-Objekten kommen, bei allem
+				// anderen (insbesondere Preview-Links zu andereen Seiten) darf die Umsetzung nicht erfolgen.
+				// Der Renderer kann dies nicht tun, denn der erzeugt nur "object://..."-URLs.
+				// Beispiel: "...?a=1&b=2" wird zu "...?a=1&amp;b=2"
+				if ($target->isUrl) {
 					$l = new MUrl($objectId);
 					$l->load();
 					if ($this->page->mimeType() == 'text/html')
 						$targetPath = htmlspecialchars($targetPath);
 				}
 			} catch (ObjectNotFoundException $e) {
-				$targetPath = 'javascript:alert("object ' . $objectId . ' not found");';
+				$targetPath = '';
 			}
-
 
 			$text = str_replace('object:' . $objectId, $targetPath, $text);
 			$text = str_replace('object://' . $objectId, $targetPath, $text);

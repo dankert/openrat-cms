@@ -1,6 +1,7 @@
 <?php
 namespace cms\macros\macro;
 
+use cms\generator\PageContext;
 use cms\generator\ValueContext;
 use cms\generator\ValueGenerator;
 use cms\model\Element;
@@ -43,28 +44,31 @@ class SearchIndex extends Macro
 
             $tf = new Folder($fid);
             $tf->load();
-            foreach( $tf->getPages() as $pageid )
+            foreach( $tf->getPages() as $pageObjectId )
             {
-                $page = new Page( $pageid );
+                $page = new Page( $pageObjectId );
                 $page->load();
 
                 // Generating all values
                 $values = [];
 				/** @var Element $element */
 				foreach($page->getWritableElements() as $element ) {
-                	$valueContext = new ValueContext($this->pageContext);
+					$pageContext = clone $this->pageContext;
+					$pageContext->objectId = $pageObjectId;
+                	$valueContext = new ValueContext($pageContext);
                 	$valueContext->elementid = $element->elementid;
                 	$generator = new ValueGenerator( $valueContext );
                 	$values[] = $generator->getCache()->get();
+					//$values[] = print_r($valueContext,true);
 				}
 
                 $name = $page->getNameForLanguage( $this->pageContext->languageId );
 
                 $searchIndex[] = array(
-                    'id'      => $pageid,
+                    'id'      => $pageObjectId,
                     'title'   => $name->name,
                     'filename'=> $page->filename,
-                    'url'     => $this->pathToObject( $pageid ),
+                    'url'     => $this->pathToObject( $pageObjectId ),
                     'content' => $this->truncate(array_reduce(
                         $values,
                         function($act, $value)

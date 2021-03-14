@@ -776,6 +776,7 @@ class ValueGenerator extends BaseGenerator
 
 				$runner = new MacroRunner();
 				try {
+					//$inhalt .= print_r($pageContext,true);
 					$inhalt .= $runner->executeMacro( $macroName, $macroSettings,$page, $pageContext );
 				}
 				catch( \Exception $e ) {
