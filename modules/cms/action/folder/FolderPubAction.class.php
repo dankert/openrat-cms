@@ -15,6 +15,7 @@ use cms\model\Page;
 use cms\model\Permission;
 use cms\model\Folder;
 use cms\model\Template;
+use language\Messages;
 use util\Session;
 
 
@@ -42,8 +43,6 @@ class FolderPubAction extends FolderAction implements Method {
 
 
     public function post() {
-		if	( !$this->folder->hasRight( Permission::ACL_PUBLISH ) )
-			throw new \util\exception\SecurityException('no rights for publish');
 
 		$project = $this->folder->getProject();
 		$project->load();
@@ -97,6 +96,7 @@ class FolderPubAction extends FolderAction implements Method {
 				}
 			}
 
+
 			// Publish all files
 			if   ( $this->request->has('files'  ) ) {
 
@@ -122,9 +122,9 @@ class FolderPubAction extends FolderAction implements Method {
 
 
 		$this->addNoticeFor( $this->folder,
-			'PUBLISHED',
+			Messages::PUBLISHED,
 			array(),
-			implode("\n",$publisher->getDestinationFilenames() )
+			'Published items:'."\n".implode("\n",$publisher->getDestinationFilenames() )
 		);
     }
 }

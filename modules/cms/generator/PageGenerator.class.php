@@ -52,7 +52,7 @@ class PageGenerator extends BaseGenerator
 			// neues Inhaltobjekt erzeugen
 			$valueContext = new ValueContext($this->context);
 			$valueContext->elementid = $elementid;
-			$valueGenerator = new ValueGenerator( $valueContext );
+			$valueGenerator = new ValueGenerator( $valueContext );$this->getPublicFilename()
 			try {
 				$values[$elementid] = $valueGenerator->getCache()->get();
 			} catch( \Exception $e ) {

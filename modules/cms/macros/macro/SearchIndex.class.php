@@ -40,7 +40,7 @@ class SearchIndex extends Macro
         $f = new Folder( $project->getRootObjectId() );
         $f->load();
 
-        foreach ($f->getAllSubFolderIds() as $fid) {
+        foreach ( array_merge( [$f],$f->getAllSubFolderIds() ) as $fid) {
 
             $tf = new Folder($fid);
             $tf->load();

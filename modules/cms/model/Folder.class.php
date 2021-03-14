@@ -313,14 +313,19 @@ class Folder extends BaseObject
 	 * Returns a list of files.
 	 * @return array
 	 */
-	function getFiles()
+	public function getFiles()
 	{
-		$db = \cms\base\DB::get();
-
-		$sql = $db->sql('SELECT id FROM {{object}} '.
-		               '  WHERE parentid={objectid} AND typeid='.BaseObject::TYPEID_FILE.
-		               '  ORDER BY orderid ASC' );
-		$sql->setInt( 'objectid' ,$this->objectid  );
+		$sql = DB::sql( <<<SQL
+			SELECT id FROM {{object}} 
+		              WHERE parentid={objectid}
+			            AND typeid IN ( {typefile},{typeimage},{typetext} )
+		              ORDER BY orderid ASC
+SQL
+		);
+		$sql->setInt( 'objectid' ,$this->objectid );
+		$sql->setInt( 'typefile'  ,BaseObject::TYPEID_FILE  );
+		$sql->setInt( 'typeimage' ,BaseObject::TYPEID_IMAGE );
+		$sql->setInt( 'typetext'  ,BaseObject::TYPEID_TEXT  );
 
 		return $sql->getCol();
 	}

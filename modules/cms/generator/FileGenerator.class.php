@@ -35,7 +35,7 @@ class FileGenerator extends BaseGenerator
 		if   ( $file->extension )
 			$filename .= '.'.$file->extension;
 
-		return $filename;
+		return $file->path().'/'.$filename;
 	}
 
 
