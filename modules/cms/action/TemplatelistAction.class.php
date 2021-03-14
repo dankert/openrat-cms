@@ -3,9 +3,12 @@
 namespace cms\action;
 
 use cms\model\Element;
+use cms\model\Folder;
+use cms\model\Permission;
 use cms\model\Project;
 use cms\model\Template;
 use language\Messages;
+use util\exception\SecurityException;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2009 Jan Dankert
@@ -33,8 +36,6 @@ use language\Messages;
 
 class TemplatelistAction extends BaseAction
 {
-	public $security = Action::SECURITY_USER;
-
     /**
      * @var Project
      */
@@ -52,5 +53,20 @@ class TemplatelistAction extends BaseAction
     {
         $this->project = new Project( $this->request->getId());
     }
+
+
+
+	/**
+	 * User must be an project administrator.
+	 */
+	public function checkAccess() {
+
+		$rootFolderId = $this->project->getRootObjectId();
+		$rootFolder = new Folder( $rootFolderId );
+		$rootFolder->load();
+
+		if   ( ! $rootFolder->hasRight( Permission::ACL_PROP )  )
+			throw new SecurityException();
+	}
 
 }

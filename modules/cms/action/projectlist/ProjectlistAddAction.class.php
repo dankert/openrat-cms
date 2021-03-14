@@ -9,8 +9,6 @@ use util\exception\SecurityException;
 
 class ProjectlistAddAction extends ProjectlistAction implements Method {
 
-	public $security = Action::SECURITY_ADMIN;
-
     public function view() {
 
 		$this->setTemplateVar( 'projects',Project::getAllProjects() );
@@ -42,4 +40,11 @@ class ProjectlistAddAction extends ProjectlistAction implements Method {
 		//}
 
     }
+
+
+    public function checkAccess()
+	{
+		if   ( ! $this->userIsAdmin() )
+			throw new SecurityException();
+	}
 }

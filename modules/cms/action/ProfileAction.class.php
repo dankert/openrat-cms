@@ -27,6 +27,7 @@ use language\Language;
 use language\Messages;
 use logger\Logger;
 use security\Base2n;
+use util\exception\SecurityException;
 use util\exception\ValidationException;
 use util\Mail;
 use util\Session;
@@ -38,8 +39,6 @@ use util\UIUtils;
  */
 class ProfileAction extends BaseAction
 {
-	public $security = Action::SECURITY_USER;
-
 	protected $user;
 
 	/**
@@ -86,5 +85,10 @@ class ProfileAction extends BaseAction
 		return $style;
 	}
 
+
+	public function checkAccess() {
+		if   ( !$this->user )
+			throw new SecurityException();
+	}
 
 }

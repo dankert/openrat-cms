@@ -7,10 +7,12 @@ use cms\base\Configuration;
 use cms\model\BaseObject;
 use cms\model\Element;
 use cms\model\Folder;
+use cms\model\Permission;
 use cms\model\Project;
 use cms\model\Template;
 use ReflectionClass;
 use ReflectionProperty;
+use util\exception\SecurityException;
 use util\Text;
 
 
@@ -21,8 +23,6 @@ use util\Text;
  */
 class ElementAction extends BaseAction
 {
-	public $security = Action::SECURITY_USER;
-
     /**
      * @var Element
      */
@@ -50,5 +50,23 @@ class ElementAction extends BaseAction
 
 		$this->setTemplateVar( 'elementid' ,$this->element->elementid   );
 	}
+
+
+	/**
+	 * User must be an project administrator.
+	 */
+	public function checkAccess() {
+		$template     = new Template( $this->element->templateid );
+		$template->load();
+		$project      = new Project( $template->projectid );
+		$rootFolderId = $project->getRootObjectId();
+
+		$rootFolder = new Folder( $rootFolderId );
+		$rootFolder->load();
+
+		if   ( ! $rootFolder->hasRight( Permission::ACL_PROP )  )
+			throw new SecurityException();
+	}
+
 }
 

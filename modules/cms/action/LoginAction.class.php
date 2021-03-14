@@ -51,9 +51,6 @@ use util\text\TextMessage;
 
 class LoginAction extends BaseAction
 {
-	public $security = Action::SECURITY_GUEST;
-
-
 	public function __construct()
     {
         parent::__construct();
@@ -151,6 +148,10 @@ class LoginAction extends BaseAction
         session_regenerate_id(true);
 	}
 
+
+	public function checkAccess() {
+		return true;
+	}
 }
 
 

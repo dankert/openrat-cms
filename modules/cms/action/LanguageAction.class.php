@@ -3,7 +3,11 @@
 namespace cms\action;
 
 use cms\base\Configuration;
+use cms\model\Folder;
 use cms\model\Language;
+use cms\model\Permission;
+use cms\model\Project;
+use util\exception\SecurityException;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -31,8 +35,6 @@ use cms\model\Language;
  */
 class LanguageAction extends BaseAction
 {
-	public $security = Action::SECURITY_USER;
-	
 	/**
 	 * Zu bearbeitende Sprache, wird im Kontruktor instanziiert
 	 * @type Language
@@ -57,5 +59,18 @@ class LanguageAction extends BaseAction
 	}
 
 
+	/**
+	 * User must be an project administrator.
+	 */
+	public function checkAccess() {
+		$project      = new Project( $this->language->projectid );
+		$rootFolderId = $project->getRootObjectId();
+
+		$rootFolder = new Folder( $rootFolderId );
+		$rootFolder->load();
+
+		if   ( ! $rootFolder->hasRight( Permission::ACL_PROP )  )
+			throw new SecurityException();
+	}
 
 }

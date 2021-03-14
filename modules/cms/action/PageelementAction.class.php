@@ -6,10 +6,8 @@ use cms\base\Language as L;
 use cms\generator\PageContext;
 use cms\generator\PageGenerator;
 use cms\generator\Producer;
-use cms\generator\PublishEdit;
 use cms\generator\Publisher;
 use cms\generator\PublishOrder;
-use cms\generator\PublishPreview;
 use cms\generator\ValueContext;
 use cms\generator\ValueGenerator;
 use cms\model\Permission;
@@ -57,8 +55,6 @@ use util\Transformer;
  */
 class PageelementAction extends BaseAction
 {
-	public $security = Action::SECURITY_GUEST;
-
 	/**
 	 * Enthaelt das Seitenobjekt
 	 * @type Page
@@ -718,4 +714,14 @@ class PageelementAction extends BaseAction
 				return '';
 		}
 	}
+
+
+	/**
+	 * User must have read rights to the page.
+	 */
+	public function checkAccess() {
+		if   ( ! $this->page->hasRight( Permission::ACL_READ )  )
+			throw new SecurityException();
+	}
+
 }

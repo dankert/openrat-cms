@@ -48,11 +48,14 @@ use util\Session;
 
 class TreeAction extends BaseAction
 {
-	public $security = Action::SECURITY_GUEST;
-	
 	public function __construct()
     {
         parent::__construct();
     }
+
+
+	public function checkAccess() {
+		return true; // Allowed for all
+	}
 
 }

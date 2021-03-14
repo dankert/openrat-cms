@@ -36,5 +36,8 @@ use util\Html;
  */
 class TitleAction extends Action
 {
-	public $security = Action::SECURITY_GUEST;
+	public function checkAccess() {
+		return true; // Allowed for all
+	}
+
 }

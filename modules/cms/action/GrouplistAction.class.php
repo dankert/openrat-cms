@@ -3,6 +3,7 @@
 namespace cms\action;
 
 use cms\model\Group;
+use util\exception\SecurityException;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -32,11 +33,18 @@ use cms\model\Group;
 
 class GrouplistAction extends BaseAction
 {
-	public $security = Action::SECURITY_ADMIN;
-	
 	function __construct()
 	{
         parent::__construct();
+	}
+
+
+	/**
+	 * User must be an administration.
+	 */
+	public function checkAccess() {
+		if   ( ! $this->userIsAdmin() )
+			throw new SecurityException();
 	}
 
 

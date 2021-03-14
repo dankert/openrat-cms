@@ -2,8 +2,11 @@
 
 namespace cms\action;
 
+use cms\model\Folder;
 use cms\model\Model;
+use cms\model\Permission;
 use cms\model\Project;
+use util\exception\SecurityException;
 use util\Html;
 
 // OpenRat Content Management System
@@ -37,9 +40,6 @@ class ModellistAction extends BaseAction
      */
     protected $project;
 
-	public $security = Action::SECURITY_USER;
-
-
     function __construct()
 	{
         parent::__construct();
@@ -53,5 +53,17 @@ class ModellistAction extends BaseAction
     }
 
 
+	/**
+	 * User must be an project administrator.
+	 */
+	public function checkAccess() {
+		$rootFolderId = $this->project->getRootObjectId();
+
+		$rootFolder = new Folder( $rootFolderId );
+		$rootFolder->load();
+
+		if   ( ! $rootFolder->hasRight( Permission::ACL_PROP )  )
+			throw new SecurityException();
+	}
 
 }

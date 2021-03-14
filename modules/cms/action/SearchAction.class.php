@@ -48,8 +48,6 @@ class SearchAction extends BaseAction
 	const FLAG_DESCRIPTION =  8;
 	const FLAG_VALUE       = 16;
 
-	public $security = Action::SECURITY_USER;
-
 	/**
 	 * leerer Kontruktor
 	 */
@@ -192,5 +190,9 @@ class SearchAction extends BaseAction
 	
 		return $resultList;
 	}
-	
+
+
+	public function checkAccess() {
+		return true;
+	}
 }

@@ -13,6 +13,7 @@ use cms\model\User;
 use language\Messages;
 use security\Base2n;
 use security\Password;
+use util\exception\SecurityException;
 use util\exception\ValidationException;
 use util\Mail;
 use util\Session;
@@ -44,8 +45,6 @@ use util\Session;
  */
 class UserAction extends BaseAction
 {
-	public $security = Action::SECURITY_ADMIN;
-
     /**
      * @var User
      */
@@ -66,4 +65,15 @@ class UserAction extends BaseAction
 		$this->user->load();
 		$this->setTemplateVar('userid',$this->user->userid);
 	}
+
+
+
+	/**
+	 * User must be an administration.
+	 */
+	public function checkAccess() {
+		if   ( ! $this->userIsAdmin() )
+			throw new SecurityException();
+	}
+
 }

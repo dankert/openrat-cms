@@ -9,8 +9,6 @@ use cms\model\Project;
 
 class ProjectlistEditAction extends ProjectlistAction implements Method {
 
-	public $security = Action::SECURITY_GUEST;
-
     public function view() {
 		// Projekte ermitteln
 		$list = array();

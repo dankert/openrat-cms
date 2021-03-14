@@ -19,6 +19,7 @@ namespace cms\action;
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 use cms\base\DefaultConfig;
+use util\exception\SecurityException;
 use util\Session;
 
 /**
@@ -29,8 +30,6 @@ use util\Session;
  */
 class ConfigurationAction extends BaseAction
 {
-	public $security = Action::SECURITY_ADMIN;
-	
 	/**
 	 * Konstruktor
 	 */
@@ -80,9 +79,13 @@ class ConfigurationAction extends BaseAction
         return $conf;
     }
 
+
+	/**
+	 * User must be an administration.
+	 */
+	public function checkAccess() {
+		if   ( ! $this->userIsAdmin() )
+			throw new SecurityException();
+	}
+
 }
-
-
-
-
-?>

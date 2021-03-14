@@ -18,6 +18,7 @@ namespace cms\action;
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+use util\exception\SecurityException;
 
 
 /**
@@ -26,10 +27,18 @@ namespace cms\action;
  */
 class UsergroupAction extends BaseAction
 {
-	public $security = Action::SECURITY_ADMIN;
-	
 	function __construct()
 	{
         parent::__construct();
 	}
+
+
+	/**
+	 * User must be an administration.
+	 */
+	public function checkAccess() {
+		if   ( ! $this->userIsAdmin() )
+			throw new SecurityException();
+	}
+
 }

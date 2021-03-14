@@ -7,8 +7,6 @@ use util\ClassName;
 
 class ProfileAvailableAction extends ProfileAction implements Method {
 
-	public $security = Action::SECURITY_GUEST; // Available for all
-
     public function view() {
 
 		$action = $this->request->getText('queryaction');
@@ -63,4 +61,9 @@ class ProfileAvailableAction extends ProfileAction implements Method {
 
     public function post() {
     }
+
+
+	public function checkAccess() {
+		return true;
+	}
 }

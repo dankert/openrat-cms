@@ -35,8 +35,6 @@ use util\exception\SecurityException;
  */
 class ProjectAction extends BaseAction
 {
-	public $security = Action::SECURITY_ADMIN;
-
     /**
      * @var Project
      */
@@ -97,6 +95,16 @@ class ProjectAction extends BaseAction
 		if    ( strpos($hostname,'//') === false )
 			return 'http://'.$hostname;
 		return $hostname;
+	}
+
+
+
+	/**
+	 * User must be an administrator.
+	 */
+	public function checkAccess() {
+		if   ( ! $this->userIsAdmin() )
+			throw new SecurityException();
 	}
 
 }

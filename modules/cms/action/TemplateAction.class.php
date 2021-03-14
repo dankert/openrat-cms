@@ -3,7 +3,7 @@
 namespace cms\action;
 
 namespace cms\action;
-use cms\generator\PublishPublic;
+use cms\model\Folder;
 use cms\model\Permission;
 use cms\model\Element;
 use cms\model\Page;
@@ -11,6 +11,7 @@ use cms\model\Project;
 use cms\model\Template;
 use cms\model\TemplateModel;
 use language\Messages;
+use util\exception\SecurityException;
 use util\exception\ValidationException;
 use util\Html;
 use util\Session;
@@ -42,8 +43,6 @@ use util\Session;
 
 class TemplateAction extends BaseAction
 {
-	public $security = Action::SECURITY_USER;
-	
     /**
      * @var Template
      */
@@ -72,6 +71,23 @@ class TemplateAction extends BaseAction
 			$this->element->load();
 			$this->setTemplateVar( 'elementid',$this->element->elementid );
 		}
+	}
+
+
+
+
+	/**
+	 * User must be an project administrator.
+	 */
+	public function checkAccess() {
+		$project      = new Project( $this->template->projectid );
+		$rootFolderId = $project->getRootObjectId();
+
+		$rootFolder = new Folder( $rootFolderId );
+		$rootFolder->load();
+
+		if   ( ! $rootFolder->hasRight( Permission::ACL_PROP )  )
+			throw new SecurityException();
 	}
 
 }

@@ -33,9 +33,7 @@ use util\Session;
  */
 class IndexAction extends Action
 {
-	public $security = Action::SECURITY_GUEST;
 
-	
 	/**
 	 * Konstruktor
 	 */
@@ -74,6 +72,11 @@ class IndexAction extends Action
 		header('Content-Security-Policy: ' . implode(';', array_map( function($value,$key) {
 				return $key.' '.$value;
 			},$csp,array_keys($csp) )));
+	}
+
+
+	public function checkAccess() {
+		return true; // Allowed for all
 	}
 
 }

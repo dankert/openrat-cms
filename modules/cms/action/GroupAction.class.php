@@ -8,6 +8,7 @@ use cms\model\Group;
 use cms\model\Language;
 use cms\model\Project;
 use cms\model\User;
+use util\exception\SecurityException;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -35,8 +36,6 @@ use cms\model\User;
 
 class GroupAction extends BaseAction
 {
-	public $security = Action::SECURITY_ADMIN;
-
     /**
      * @var Group
      */
@@ -56,5 +55,15 @@ class GroupAction extends BaseAction
 		$this->group->load();
 		$this->setTemplateVar( 'groupid',$this->group->groupid );
 	}
+
+
+	/**
+	 * User must be an administration.
+	 */
+	public function checkAccess() {
+		if   ( ! $this->userIsAdmin() )
+			throw new SecurityException();
+	}
+
 
 }

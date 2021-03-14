@@ -9,7 +9,9 @@ use cms\model\User;
 use logger\Logger;
 use util\Cookie;
 use util\ClassUtils;
+use util\exception\SecurityException;
 use util\Session;
+use util\text\TextMessage;
 
 
 /**
@@ -24,18 +26,17 @@ use util\Session;
  * @package openrat.actions
  * @abstract
  */
-class Action
+abstract class Action
 {
-	const SECURITY_GUEST = 1; // Jeder (auch nicht angemeldete) dürfen diese Aktion ausführen
-	const SECURITY_USER  = 2; // Angemeldete Benutzer dürfen diese Aktion ausführen
-	const SECURITY_ADMIN = 3; // Nur Administratoren dürfen diese Aktion ausführen
-
 	const NOTICE_OK    = 'ok';
 	const NOTICE_INFO  = 'info';
 	const NOTICE_WARN  = 'warning';
 	const NOTICE_ERROR = 'error';
 
-	public $security = self::SECURITY_USER; // Default.
+	/**
+	 * Checks if the actual action is allowed.
+	 */
+	abstract function checkAccess();
 
 	protected $templateVars = [
 		'errors'  => [],

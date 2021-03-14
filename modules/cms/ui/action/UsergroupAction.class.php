@@ -33,9 +33,6 @@ use util\Session;
  */
 class UsergroupAction extends Action
 {
-	public $security = Action::SECURITY_ADMIN;
-
-	
 	/**
 	 * Konstruktor
 	 */
@@ -44,4 +41,8 @@ class UsergroupAction extends Action
         parent::__construct();
 	}
 
+
+	public function checkAccess() {
+		return true; // Allowed for all
+	}
 }

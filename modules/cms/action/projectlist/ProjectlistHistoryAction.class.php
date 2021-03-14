@@ -9,8 +9,6 @@ use cms\model\Project;
 
 class ProjectlistHistoryAction extends ProjectlistAction implements Method {
 
-	public $security = Action::SECURITY_GUEST;
-
 	public function view() {
 
 		$result = Project::getAllLastChanges();

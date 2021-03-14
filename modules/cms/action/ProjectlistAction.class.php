@@ -39,4 +39,14 @@ class ProjectlistAction extends BaseAction
         parent::__construct();
 	}
 
+
+	/**
+	 * Listing projects is allowed for all users.
+	 *
+	 * @return bool
+	 */
+	public function checkAccess() {
+
+		return true;
+	}
 }

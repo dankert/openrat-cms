@@ -6,11 +6,14 @@ use cms\action\ProfileAction;
 
 class ProfilePingAction extends ProfileAction implements Method {
 
-	public $security = Action::SECURITY_GUEST;
-
     public function view() {
+    	// Only visible in API requests.
 		$this->setTemplateVar('pong',1);
     }
     public function post() {
     }
+
+    public function checkAccess() {
+		return true;
+	}
 }

@@ -27,9 +27,6 @@ use util\Session;
 
 class ObjectAction extends BaseAction
 {
-
-	public $security = Action::SECURITY_GUEST;
-	
 	private $objectid;
 
     /**
@@ -61,7 +58,6 @@ class ObjectAction extends BaseAction
 
 		$this->setBaseObject( $baseObject );
 
-		$this->checkRight( $this->getRequiredPermission() );
 	}
 
 
@@ -92,9 +88,11 @@ class ObjectAction extends BaseAction
 	 *
      * @return bool
      */
-    protected function checkRight( $permission ) {
+    public function checkAccess() {
 
-	    if   ( ! $this->baseObject->hasRight($permission ) )
-	    	throw new SecurityException('User has insufficient permissions ('.$permission.')' );
+		$requiredPermission = $this->getRequiredPermission();
+
+		if   ( ! $this->baseObject->hasRight($requiredPermission) )
+	    	throw new SecurityException('User has insufficient permissions ('.$requiredPermission.')' );
     }
 }
