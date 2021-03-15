@@ -48,7 +48,7 @@ $( function() {
     // Initial Notices
     $('.or-act-initial-notice').each( function() {
 
-       let notice = new Openrat.Notice();
+       let notice = new Notice();
        notice.setStatus('info');
        notice.msg = $(this).text();
        notice.show();

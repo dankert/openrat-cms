@@ -47,7 +47,7 @@ Openrat.Dialog = function() {
 
 		let view = new Openrat.View( action,method,id,params );
 
-		Openrat.Notice.removeAllNotices();
+		Notice.removeAllNotices();
 
 		$('.or-dialog-content .or-view').html(''); // Clear old content
 
@@ -128,7 +128,7 @@ Openrat.Dialog = function() {
 			if   ( ! exit )
 				return; // do not close the dialog
 
-			let notice = new Openrat.Notice();
+			let notice = new Notice();
 			notice.msg = Openrat.Workbench.language.REOPEN_CLOSED_DIALOG;
 			notice.setStatus( 'warning' );
 			notice.timeout = 120;

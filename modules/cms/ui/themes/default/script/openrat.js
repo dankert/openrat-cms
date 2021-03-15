@@ -1683,27 +1683,11 @@ jQuery.fn.hasClass = function (styleClass) {
 /**
  * Notice.
  */
-Openrat.Notice = function() {
+class Notice  {
 
 	'use strict';
 
-	this.typ = '';
-	this.id = 0;
-	this.name = '';
-	this.status = 'inactive';
-	this.msg = '';
-	this.log = '';
-	this.timeout = 0;
-
-	let element = $('<div />')
-		.addClass('notice'                   )
-		.addClass('notice--is-inactive'      )
-		.addClass('collapsible'           )
-		.addClass('collapsible--is-closed');
-
-	this.onClick = $.Callbacks();
-
-	const type = Object.freeze({
+	static type = Object.freeze({
 		warning: 0,
 		validation: 1,
 		info: 2,
@@ -1713,70 +1697,89 @@ Openrat.Notice = function() {
 		inactive: 4
 	});
 
+	constructor() {
+		this.typ  = '';
+		this.id   = 0;
+		this.name = '';
+		this.status = 'inactive';
+		this.msg  = '';
+		this.log  = '';
+		this.timeout = 0;
 
-	this.before = function () {
+		this.element = $('<div />')
+			.addClass('notice'                   )
+			.addClass('notice--is-inactive'      )
+			.addClass('collapsible'           )
+			.addClass('collapsible--is-closed');
+
+		this.onClick = $.Callbacks();
+
+	}
+
+
+	before() {
 	};
 
 
 	// Close the notice.
-	this.close = function() {
-		element.fadeOut('fast', function () {
-			element.remove();
+	close() {
+		this.element.fadeOut('fast', function () {
+			this.element.remove();
 		} );
 	}
 
 
-	this.setStatus = function( status ) {
+	setStatus( status ) {
 
-		element.removeClass('notice--' + this.status );
+		this.element.removeClass('notice--' + this.status );
 		this.status = status;
-		element.addClass('notice--' + this.status );
+		this.element.addClass('notice--' + this.status );
 	}
 
 
-	this.inProgress = function() {
-		element.addClass('loader');
+	inProgress() {
+		this.element.addClass('loader');
 	}
 
-	this.stopProgress = function() {
-		element.removeClass('loader');
+	stopProgress() {
+		this.element.removeClass('loader');
 	}
 
-	this.show = function() {
+	show() {
 
 		console.debug('user notice: '+this.msg);
 		let notice = this;
-		element.removeClass('notice--is-inactive');
+		this.element.removeClass('notice--is-inactive');
 
-		element.appendTo('.or-notice-container'); // Notice anhängen.
+		this.element.appendTo('.or-notice-container'); // Notice anhängen.
 
 		let toolbar = $('<div class="or-notice-toolbar"></div>');
-		toolbar.appendTo(element);
+		toolbar.appendTo(this.element);
 		toolbar.append('<i class="or-image-icon or-image-icon--menu-close or-act-notice-close"></i>');
 
-		element.append( $('<i />').addClass('image-icon').addClass('image-icon--node-open'  ).addClass('collapsible--on-open'  ) );
-		element.append( $('<i />').addClass('image-icon').addClass('image-icon--node-closed').addClass('collapsible--on-closed') );
-		element.append('<span class="or-notice-text or-collapsible-act-switch">' + htmlEntities(this.msg) + '</span>');
+		this.element.append( $('<i />').addClass('image-icon').addClass('image-icon--node-open'  ).addClass('collapsible--on-open'  ) );
+		this.element.append( $('<i />').addClass('image-icon').addClass('image-icon--node-closed').addClass('collapsible--on-closed') );
+		this.element.append('<span class="or-notice-text or-collapsible-act-switch">' + Notice.htmlEntities(this.msg) + '</span>');
 
 		if (this.name) {
-			element.append( $('<div class="or-notice-name or-collapsible-value"><a class="or-act-clickable" href="' + Openrat.Navigator.createShortUrl(this.typ, this.id) + '" data-type="open" data-action="' + this.typ + '" data-id="' + this.id + '"><i class="or-notice-action-full or-image-icon or-image-icon--action-' + this.typ + '"></i><span class="">' + this.name + '</span></a></div>').orLinkify() );
+			this.element.append( $('<div class="or-notice-name or-collapsible-value"><a class="or-act-clickable" href="' + Openrat.Navigator.createShortUrl(this.typ, this.id) + '" data-type="open" data-action="' + this.typ + '" data-id="' + this.id + '"><i class="or-notice-action-full or-image-icon or-image-icon--action-' + this.typ + '"></i><span class="">' + this.name + '</span></a></div>').orLinkify() );
 		}
 
 		if (this.log)
-			element.append('<div class="or-notice-log or-collapsible-value"><pre>' + htmlEntities(this.log) + '</pre></div>');
+			this.element.append('<div class="or-notice-log or-collapsible-value"><pre>' + Notice.htmlEntities(this.log) + '</pre></div>');
 
-		element.append('<div class="or-notice-date or-collapsible-value">' + new Date().toLocaleTimeString() + '</div>');
+		this.element.append('<div class="or-notice-date or-collapsible-value">' + new Date().toLocaleTimeString() + '</div>');
 
 
 		// Fire onclick-handler
-		element.find('.or-notice-text').click( function () {
+		this.element.find('.or-notice-text').click( function () {
 			notice.onClick.fire();
 		} );
 
-		Openrat.Workbench.registerOpenClose( element );
+		Openrat.Workbench.registerOpenClose( this.element );
 
 		// Close the notice on click
-		element.find('.or-act-notice-close').click(function () {
+		this.element.find('.or-act-notice-close').click(function () {
 			notice.close();
 		});
 
@@ -1800,7 +1803,7 @@ Openrat.Notice = function() {
 
 			// Click anywhere in the notice should clear the auto-close timer.
 			// Because if the user interacts with the notice it should not magically disappear.
-			element.click( function () {
+			this.element.click( function () {
 				console.debug('kicked timer of notice');
 				console.debug( timer );
 				window.clearTimeout( timer );
@@ -1808,7 +1811,7 @@ Openrat.Notice = function() {
 		}
 	}
 
-	this.setContext = function(type,id,name) {
+	setContext(type,id,name) {
 		this.typ  = type;
 		this.id   = id;
 		this.name = name;
@@ -1825,7 +1828,7 @@ Openrat.Notice = function() {
 	 * @param log
 	 * @param notifyTheBrowser
 	 */
-	this.start = function (type, id, name, status, msg, log = null, notifyTheBrowser = false) {
+	start(type, id, name, status, msg, log = null, notifyTheBrowser = false) {
 		// Notice-Bar mit dieser Meldung erweitern.
 
 		this.setContext(type,id,name);
@@ -1846,7 +1849,7 @@ Openrat.Notice = function() {
 	 * Source: https://developer.mozilla.org/en-US/docs/Web/API/notification
 	 * @param text text of message
 	 */
-	this.notifyBrowser = function()
+	notifyBrowser()
 	{
 		let text = this.msg;
 
@@ -1883,20 +1886,20 @@ Openrat.Notice = function() {
 	 * @param str
 	 * @returns {string}
 	 */
-	let htmlEntities = function( str ) {
+	static htmlEntities( str ) {
 		return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 	}
 
-}
 
+	static removeNoticesWithStatus( status) {
+		$('.or-notice-container').find('.or-notice--'+status).remove();
+	}
 
-Openrat.Notice.removeNoticesWithStatus = function( status) {
-	$('.or-notice-container').find('.or-notice--'+status).remove();
-}
+	static removeAllNotices( status) {
 
-Openrat.Notice.removeAllNotices = function( status) {
+		$('.or-notice-container').find('.or-notice').remove();
+	}
 
-	$('.or-notice-container').find('.or-notice').remove();
 }
 
 /* Include script: dialog.js */
@@ -1949,7 +1952,7 @@ Openrat.Dialog = function() {
 
 		let view = new Openrat.View( action,method,id,params );
 
-		Openrat.Notice.removeAllNotices();
+		Notice.removeAllNotices();
 
 		$('.or-dialog-content .or-view').html(''); // Clear old content
 
@@ -2030,7 +2033,7 @@ Openrat.Dialog = function() {
 			if   ( ! exit )
 				return; // do not close the dialog
 
-			let notice = new Openrat.Notice();
+			let notice = new Notice();
 			notice.msg = Openrat.Workbench.language.REOPEN_CLOSED_DIALOG;
 			notice.setStatus( 'warning' );
 			notice.timeout = 120;
@@ -2156,7 +2159,7 @@ Openrat.View = function( action,method,id,params ) {
 
 			console.error( {view:view, url:url, status:status, cause: cause} );
 
-			let notice = new Openrat.Notice();
+			let notice = new Notice();
 			notice.setStatus('error');
 			notice.msg = Openrat.Workbench.language.ERROR;
 			notice.show();
@@ -2310,7 +2313,7 @@ Openrat.Form = function() {
 
     this.cancel = function() {
         //$(this.element).html('').parent().removeClass('is-open');
-		Openrat.Notice.removeAllNotices();
+		removeAllNotices();
 
         this.onCloseHandler.fire();
     }
@@ -2333,10 +2336,10 @@ Openrat.Form = function() {
 			else
 				mode = modes.closeAfterSuccess;
 
-		Openrat.Notice.removeAllNotices();
+		Notice.removeAllNotices();
 
 		// Show progress
-        let status = new Openrat.Notice();
+        let status = new Notice();
         status.setStatus('info');
         status.inProgress();
         status.msg = Openrat.Workbench.language.PROGRESS;
@@ -2453,7 +2456,7 @@ Openrat.Form = function() {
                         msg = jqXHR.statusText;
                     }
 
-					let notice = new Openrat.Notice();
+					let notice = new Notice();
                     notice.setStatus('error');
                     notice.msg = msg;
                     notice.log = JSON.stringify( $.parseJSON(jqXHR.responseText),null,2);
@@ -2481,7 +2484,7 @@ Openrat.Form = function() {
         {
             console.error('Server error: ' + status);
 
-			let notice = new Openrat.Notice();
+			let notice = new Notice();
 			notice.setStatus( 'error' );
 			notice.msg = Openrat.Workbench.language.ERROR;
 			notice.show();
@@ -2498,7 +2501,7 @@ Openrat.Form = function() {
             // gewechselt hat.
             let notifyBrowser = $(element).data('async');
 
-            let notice = new Openrat.Notice();
+            let notice = new Notice();
             notice.setContext( value.type, value.id, value.name );
             notice.log = value.log;
             notice.setStatus( value.status );
@@ -3062,7 +3065,7 @@ $( function() {
     // Initial Notices
     $('.or-act-initial-notice').each( function() {
 
-       let notice = new Openrat.Notice();
+       let notice = new Notice();
        notice.setStatus('info');
        notice.msg = $(this).text();
        notice.show();

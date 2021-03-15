@@ -84,7 +84,7 @@ Openrat.Form = function() {
 
     this.cancel = function() {
         //$(this.element).html('').parent().removeClass('is-open');
-		Openrat.Notice.removeAllNotices();
+		removeAllNotices();
 
         this.onCloseHandler.fire();
     }
@@ -107,10 +107,10 @@ Openrat.Form = function() {
 			else
 				mode = modes.closeAfterSuccess;
 
-		Openrat.Notice.removeAllNotices();
+		Notice.removeAllNotices();
 
 		// Show progress
-        let status = new Openrat.Notice();
+        let status = new Notice();
         status.setStatus('info');
         status.inProgress();
         status.msg = Openrat.Workbench.language.PROGRESS;
@@ -227,7 +227,7 @@ Openrat.Form = function() {
                         msg = jqXHR.statusText;
                     }
 
-					let notice = new Openrat.Notice();
+					let notice = new Notice();
                     notice.setStatus('error');
                     notice.msg = msg;
                     notice.log = JSON.stringify( $.parseJSON(jqXHR.responseText),null,2);
@@ -255,7 +255,7 @@ Openrat.Form = function() {
         {
             console.error('Server error: ' + status);
 
-			let notice = new Openrat.Notice();
+			let notice = new Notice();
 			notice.setStatus( 'error' );
 			notice.msg = Openrat.Workbench.language.ERROR;
 			notice.show();
@@ -272,7 +272,7 @@ Openrat.Form = function() {
             // gewechselt hat.
             let notifyBrowser = $(element).data('async');
 
-            let notice = new Openrat.Notice();
+            let notice = new Notice();
             notice.setContext( value.type, value.id, value.name );
             notice.log = value.log;
             notice.setStatus( value.status );

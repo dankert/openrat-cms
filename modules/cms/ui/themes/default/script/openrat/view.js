@@ -106,7 +106,7 @@ Openrat.View = function( action,method,id,params ) {
 
 			console.error( {view:view, url:url, status:status, cause: cause} );
 
-			let notice = new Openrat.Notice();
+			let notice = new Notice();
 			notice.setStatus('error');
 			notice.msg = Openrat.Workbench.language.ERROR;
 			notice.show();
