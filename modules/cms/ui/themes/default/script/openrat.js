@@ -289,7 +289,11 @@ jQuery.fn.orLinkify = function( options )
 				let name   = $link.attr('data-name');
 				if   ( !name )
 					name = $link.text(); // get the name from the combined text of all children.
-				dialog.start(name,$link.attr('data-action'),$link.attr('data-method'),$link.attr('data-id'),$link.attr('data-extra') );
+
+				let extraValue = $link.attr('data-extra').replace(/'/g,'"'); // Replace ' with ".
+				let extraData  = JSON.parse(extraValue);
+
+				dialog.start(name,$link.attr('data-action'),$link.attr('data-method'),$link.attr('data-id'),extraData );
 				break;
 
 			case 'external':
@@ -439,7 +443,7 @@ jQuery.fn.orTree = function (options)
                 }).fail(function ( jqXHR, textStatus, errorThrown ) {
                     // Ups... aber was können wir hier schon tun, außer hässliche Meldungen anzeigen.
 					console.error( {message:'Failed to load subtree',url:loadBranchUrl,jqXHR:jqXHR,status:textStatus,error:errorThrown});
-					let notice = new Openrat.Notice();
+					let notice = new Notice();
 					notice.setStatus( 'error' );
                 }).always(function () {
 
@@ -1723,7 +1727,7 @@ class Notice  {
 
 	// Close the notice.
 	close() {
-		this.element.fadeOut('fast', function () {
+		this.element.fadeOut('fast', () => {
 			this.element.remove();
 		} );
 	}
@@ -2203,23 +2207,22 @@ Openrat.View = function( action,method,id,params ) {
         if(id)
             url += '&id='+id;
 
-        if	( typeof extraid === 'string')
-        {
-            extraid = extraid.replace(/'/g,'"'); // Replace ' with ".
-            let extraObject = jQuery.parseJSON(extraid);
-            jQuery.each(extraObject, function(name, value) {
-                url = url + '&' + name + '=' + value;
-            });
-        }
-        else if	( typeof extraid === 'object')
-        {
-            jQuery.each(extraid, function(name, field) {
-                url = url + '&' + name + '=' + field;
-            });
+        if   ( extraid instanceof FormData ) {
+			for (let pair of extraid.entries()) {
+				// value is already encoded.
+				// this does not support multiple values.
+				url += '&' + pair[0] + '=' + pair[1];
+			}
+		}
+        else if	( extraid instanceof Object ) {
+
+			Object.keys(extraid).forEach( (key) =>  {
+				url += '&' + key + '=' + extraid[key];
+			});
         }
         else
-        {
-        }
+        	throw "Illegal argument";
+
         return url;
     }
 
@@ -2227,7 +2230,6 @@ Openrat.View = function( action,method,id,params ) {
 }
 
 /* Include script: form.js */
-
 /**
  * Form.
  *
@@ -2313,7 +2315,7 @@ Openrat.Form = function() {
 
     this.cancel = function() {
         //$(this.element).html('').parent().removeClass('is-open');
-		removeAllNotices();
+		Notice.removeAllNotices();
 
         this.onCloseHandler.fire();
     }
@@ -2349,17 +2351,13 @@ Openrat.Form = function() {
         // Falls wieder ein Fehler auftritt, werden diese erneut gesetzt.
         $(this.element).find('.or-input--error').removeClass('input--error');
 
-        let params = $(this.element).serializeArray();
-        let data = {};
-        $(params).each(function(index, obj){
-            data[obj.name] = obj.value;
-        });
+        let formData = new FormData( $(this.element).get(0) );
 
         // If form does not contain action/id, get it from the workbench.
-        if   (!data.id)
-            data.id = Openrat.Workbench.state.id;
-        if   (!data.action)
-            data.action = Openrat.Workbench.state.action;
+        if   (!formData.has('id') )
+            formData.append('id',Openrat.Workbench.state.id);
+        if   (!formData.has('action') )
+            formData.append('action',Openrat.Workbench.state.action);
 
         let formMethod = $(this.element).attr('method').toUpperCase();
 
@@ -2367,7 +2365,7 @@ Openrat.Form = function() {
         {
             // Mehrseitiges Formular
             // Die eingegebenen Formulardaten werden zur nächsten Action geschickt.
-            this.forwardTo( data.action, data.subaction,data.id,data );
+            this.forwardTo( formData.get('action'), formData.get('subaction'),formData.get('id,'),formData );
             $(status).remove();
         }
         else
@@ -2379,7 +2377,7 @@ Openrat.Form = function() {
             //url += '?output=json';
             url += '';
             //params['output'] = 'json';// Irgendwie geht das nicht.
-            data.output = 'json';
+			formData.append('output','json');
 
             if	( mode == modes.closeAfterSubmit )
                 this.onCloseHandler.fire();
@@ -2388,7 +2386,7 @@ Openrat.Form = function() {
             let form = this;
             console.debug( form );
 
-            $.ajax( { 'type':'POST',url:url, data:data, success:function(responseData, textStatus, jqXHR)
+            $.ajax( { 'type':'POST',url:url, data:this.formDataToObject(formData), success:function(responseData, textStatus, jqXHR)
                 {
                     form.setLoadStatus(false);
                     status.close();
@@ -2424,7 +2422,7 @@ Openrat.Form = function() {
 							{
 								// Forwarding to next subaction.
 								if   ( forwardTo )
-									form.forwardTo( data.action, forwardTo, data.id,[] );
+									form.forwardTo( formData.get('action'), forwardTo, formData.get('id'),[] );
 							}
 						} else {
 							if   ( async )
@@ -2532,7 +2530,13 @@ Openrat.Form = function() {
     }
 
 
+	this.formDataToObject = function (formData) {
 
+		let data = {};
+		for (let pair of formData.entries())
+			data[pair[0]] = pair[1];
+		return data;
+	}
 
 }
 
@@ -3951,7 +3955,7 @@ Openrat.Workbench.handleFileUpload = function(form,files)
 	    form_data.append('token'    ,$(form).find('input[name=token]').val() );
 	    form_data.append('id'       ,$(form).find('input[name=id]'   ).val() );
 	    
-		let notice = new Openrat.Notice();
+		let notice = new Notice();
 		notice.setContext('folder',0,'' );
 		notice.inProgress();
 		notice.show();
@@ -3978,7 +3982,7 @@ Openrat.Workbench.handleFileUpload = function(form,files)
 					msg = jqXHR.responseText;
 				}
 
-				let notice = new Openrat.Notice();
+				let notice = new Notice();
 				notice.setStatus('error');
 				notice.msg = 'Upload error: ' + msg;
 				notice.show();

@@ -42,7 +42,7 @@ class Notice  {
 
 	// Close the notice.
 	close() {
-		this.element.fadeOut('fast', function () {
+		this.element.fadeOut('fast', () => {
 			this.element.remove();
 		} );
 	}

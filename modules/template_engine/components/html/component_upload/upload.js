@@ -55,7 +55,7 @@ Openrat.Workbench.handleFileUpload = function(form,files)
 	    form_data.append('token'    ,$(form).find('input[name=token]').val() );
 	    form_data.append('id'       ,$(form).find('input[name=id]'   ).val() );
 	    
-		let notice = new Openrat.Notice();
+		let notice = new Notice();
 		notice.setContext('folder',0,'' );
 		notice.inProgress();
 		notice.show();
@@ -82,7 +82,7 @@ Openrat.Workbench.handleFileUpload = function(form,files)
 					msg = jqXHR.responseText;
 				}
 
-				let notice = new Openrat.Notice();
+				let notice = new Notice();
 				notice.setStatus('error');
 				notice.msg = 'Upload error: ' + msg;
 				notice.show();

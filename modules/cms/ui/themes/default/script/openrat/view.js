@@ -150,23 +150,22 @@ Openrat.View = function( action,method,id,params ) {
         if(id)
             url += '&id='+id;
 
-        if	( typeof extraid === 'string')
-        {
-            extraid = extraid.replace(/'/g,'"'); // Replace ' with ".
-            let extraObject = jQuery.parseJSON(extraid);
-            jQuery.each(extraObject, function(name, value) {
-                url = url + '&' + name + '=' + value;
-            });
-        }
-        else if	( typeof extraid === 'object')
-        {
-            jQuery.each(extraid, function(name, field) {
-                url = url + '&' + name + '=' + field;
-            });
+        if   ( extraid instanceof FormData ) {
+			for (let pair of extraid.entries()) {
+				// value is already encoded.
+				// this does not support multiple values.
+				url += '&' + pair[0] + '=' + pair[1];
+			}
+		}
+        else if	( extraid instanceof Object ) {
+
+			Object.keys(extraid).forEach( (key) =>  {
+				url += '&' + key + '=' + extraid[key];
+			});
         }
         else
-        {
-        }
+        	throw "Illegal argument";
+
         return url;
     }
 

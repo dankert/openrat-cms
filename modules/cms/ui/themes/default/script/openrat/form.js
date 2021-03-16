@@ -1,4 +1,3 @@
-
 /**
  * Form.
  *
@@ -84,7 +83,7 @@ Openrat.Form = function() {
 
     this.cancel = function() {
         //$(this.element).html('').parent().removeClass('is-open');
-		removeAllNotices();
+		Notice.removeAllNotices();
 
         this.onCloseHandler.fire();
     }
@@ -120,17 +119,13 @@ Openrat.Form = function() {
         // Falls wieder ein Fehler auftritt, werden diese erneut gesetzt.
         $(this.element).find('.or-input--error').removeClass('input--error');
 
-        let params = $(this.element).serializeArray();
-        let data = {};
-        $(params).each(function(index, obj){
-            data[obj.name] = obj.value;
-        });
+        let formData = new FormData( $(this.element).get(0) );
 
         // If form does not contain action/id, get it from the workbench.
-        if   (!data.id)
-            data.id = Openrat.Workbench.state.id;
-        if   (!data.action)
-            data.action = Openrat.Workbench.state.action;
+        if   (!formData.has('id') )
+            formData.append('id',Openrat.Workbench.state.id);
+        if   (!formData.has('action') )
+            formData.append('action',Openrat.Workbench.state.action);
 
         let formMethod = $(this.element).attr('method').toUpperCase();
 
@@ -138,7 +133,7 @@ Openrat.Form = function() {
         {
             // Mehrseitiges Formular
             // Die eingegebenen Formulardaten werden zur nächsten Action geschickt.
-            this.forwardTo( data.action, data.subaction,data.id,data );
+            this.forwardTo( formData.get('action'), formData.get('subaction'),formData.get('id,'),formData );
             $(status).remove();
         }
         else
@@ -150,7 +145,7 @@ Openrat.Form = function() {
             //url += '?output=json';
             url += '';
             //params['output'] = 'json';// Irgendwie geht das nicht.
-            data.output = 'json';
+			formData.append('output','json');
 
             if	( mode == modes.closeAfterSubmit )
                 this.onCloseHandler.fire();
@@ -159,7 +154,7 @@ Openrat.Form = function() {
             let form = this;
             console.debug( form );
 
-            $.ajax( { 'type':'POST',url:url, data:data, success:function(responseData, textStatus, jqXHR)
+            $.ajax( { 'type':'POST',url:url, data:this.formDataToObject(formData), success:function(responseData, textStatus, jqXHR)
                 {
                     form.setLoadStatus(false);
                     status.close();
@@ -195,7 +190,7 @@ Openrat.Form = function() {
 							{
 								// Forwarding to next subaction.
 								if   ( forwardTo )
-									form.forwardTo( data.action, forwardTo, data.id,[] );
+									form.forwardTo( formData.get('action'), forwardTo, formData.get('id'),[] );
 							}
 						} else {
 							if   ( async )
@@ -303,7 +298,13 @@ Openrat.Form = function() {
     }
 
 
+	this.formDataToObject = function (formData) {
 
+		let data = {};
+		for (let pair of formData.entries())
+			data[pair[0]] = pair[1];
+		return data;
+	}
 
 }
 

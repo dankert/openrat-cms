@@ -72,7 +72,11 @@ jQuery.fn.orLinkify = function( options )
 				let name   = $link.attr('data-name');
 				if   ( !name )
 					name = $link.text(); // get the name from the combined text of all children.
-				dialog.start(name,$link.attr('data-action'),$link.attr('data-method'),$link.attr('data-id'),$link.attr('data-extra') );
+
+				let extraValue = $link.attr('data-extra').replace(/'/g,'"'); // Replace ' with ".
+				let extraData  = JSON.parse(extraValue);
+
+				dialog.start(name,$link.attr('data-action'),$link.attr('data-method'),$link.attr('data-id'),extraData );
 				break;
 
 			case 'external':

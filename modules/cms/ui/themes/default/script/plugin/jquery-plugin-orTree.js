@@ -83,7 +83,7 @@ jQuery.fn.orTree = function (options)
                 }).fail(function ( jqXHR, textStatus, errorThrown ) {
                     // Ups... aber was können wir hier schon tun, außer hässliche Meldungen anzeigen.
 					console.error( {message:'Failed to load subtree',url:loadBranchUrl,jqXHR:jqXHR,status:textStatus,error:errorThrown});
-					let notice = new Openrat.Notice();
+					let notice = new Notice();
 					notice.setStatus( 'error' );
                 }).always(function () {
 

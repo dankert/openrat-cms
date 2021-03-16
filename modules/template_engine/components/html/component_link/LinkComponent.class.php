@@ -62,8 +62,6 @@ class LinkComponent extends Component
 
 	public $frame = '_self';
 
-	public $modal = false;
-
 	public $afterSuccess;
 
 	public $clickable = false;
@@ -171,10 +169,6 @@ class LinkComponent extends Component
 		if (! empty($this->var3))		$vars[$this->var3] = $this->value3;
 		if (! empty($this->var4))		$vars[$this->var4] = $this->value4;
 		if (! empty($this->var5))		$vars[$this->var5] = $this->value5;
-
-		// Bei Dialogen kann der Dialog auch beim Öffnen in einem neuen Fenster direkt geöffnet werden.
-		if ( $this->type=='dialog')
-			$vars += array('dialogAction'=>$this->action,'dialogMethod'=>$this->subaction);
 
 		return $vars;
 	}
