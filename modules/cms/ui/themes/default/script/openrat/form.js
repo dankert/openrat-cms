@@ -157,82 +157,79 @@ class Form {
             let form = this;
             console.debug( form );
 
-            $.ajax( { 'type':'POST',url:url, data:Form.formDataToObject(formData), success:function(responseData, textStatus, jqXHR)
-                {
-                    form.setLoadStatus(false);
-                    status.close();
+            let load = fetch( url, { 'method':'POST', body:formData } );
 
-                    form.doResponse(responseData,textStatus,form.element, function() {
+            load.then( response => {
+            	if   ( ! response.ok )
+            		throw "Failed to post";
 
-                    	form.onSaveHandler.fire();
+            	return response.json();
+			}).then( data => {
+				form.setLoadStatus(false);
+				status.close();
 
-						let afterSuccess = $(form.element).data('afterSuccess');
-						let forwardTo    = $(form.element).data('forwardTo'   );
-						let async        = $(form.element).data('async'       );
+				form.doResponse(data, "", form.element, () => {
 
-						if   ( afterSuccess == 'forward' )
-							mode = Form.modes.keepOpen;
+					form.onSaveHandler.fire();
 
-						// The data was successful saved.
-						// Now we can close the form.
-						if	( mode == Form.modes.closeAfterSuccess )
-						{
-							form.onCloseHandler.fire();
+					let afterSuccess = $(form.element).data('afterSuccess');
+					let forwardTo = $(form.element).data('forwardTo');
+					let async = $(form.element).data('async');
 
-							// clear the dirty flag.
-							$(form.element).closest('div.panel').find('div.header ul.views li.action.active').removeClass('dirty');
+					if (afterSuccess == 'forward')
+						mode = Form.modes.keepOpen;
+
+					// The data was successful saved.
+					// Now we can close the form.
+					if (mode == Form.modes.closeAfterSuccess) {
+						form.onCloseHandler.fire();
+
+						// clear the dirty flag.
+						$(form.element).closest('div.panel').find('div.header ul.views li.action.active').removeClass('dirty');
+					}
+
+					if (afterSuccess) {
+						if (afterSuccess == 'reloadAll') {
+							Workbench.reloadAll();
+						} else if (afterSuccess == 'forward') {
+							// Forwarding to next subaction.
+							if (forwardTo)
+								form.forwardTo(formData.get('action'), forwardTo, formData.get('id'), []);
 						}
+					} else {
+						if (async)
+							; // do not reload
+						else
+							Openrat.workbench.reloadViews();
+					}
 
-						if	( afterSuccess )
-						{
-							if   ( afterSuccess == 'reloadAll' )
-							{
-								Workbench.reloadAll();
-							}
-							else if   ( afterSuccess == 'forward' )
-							{
-								// Forwarding to next subaction.
-								if   ( forwardTo )
-									form.forwardTo( formData.get('action'), forwardTo, formData.get('id'),[] );
-							}
-						} else {
-							if   ( async )
-								; // do not reload
-							else
-								Openrat.workbench.reloadViews();
-						}
+				})
+			} ).catch( cause => {
 
-					});
-                },
-                error:function(jqXHR, textStatus, errorThrown) {
+				console.warn( {
+					message:'could not post form',
+					cause: cause,
+					form:form,
+				} );
 
-					console.warn( {
-						message:'could not post form',
-						jqXHR:jqXHR,
-						form:form,
-						status: textStatus,
-						error: errorThrown
-					} );
+				form.setLoadStatus(false);
+				status.close();
 
-					form.setLoadStatus(false);
-                    status.close();
-
-                    let msg = '';
-                    try {
-                        msg = $.parseJSON( jqXHR.responseText ).message;
-                    }
-                    catch( e ) {
-                        msg = jqXHR.statusText;
-                    }
-
-					let notice = new Notice();
-                    notice.setStatus('error');
-                    notice.msg = msg;
-                    notice.log = JSON.stringify( $.parseJSON(jqXHR.responseText),null,2);
-                    notice.show();
+				let msg = '';
+				try {
+					msg = $.parseJSON( cause ).message;
+				}
+				catch( e ) {
+					msg = cause;
 				}
 
+				let notice = new Notice();
+				notice.setStatus('error');
+				notice.msg = msg;
+				notice.log = cause; //JSON.stringify( $.parseJSON(jqXHR.responseText),null,2);
+				notice.show();
             } );
+
             $(form.element).fadeIn();
         }
 
@@ -249,21 +246,9 @@ class Form {
      */
     doResponse = function(data,status,element, onSuccess = $.noop )
     {
-        if	( status != 'success' )
-        {
-            console.error('Server error: ' + status);
-
-			let notice = new Notice();
-			notice.setStatus( 'error' );
-			notice.msg = Workbench.language.ERROR;
-			notice.show();
-
-			return;
-        }
-
         let form = this;
         // Hinweismeldungen in Statuszeile anzeigen
-        $.each(data['notices'], function(idx,value) {
+        for( let value of data['notices'] ) {
 
             // Bei asynchronen Requests wird zusätzlich eine Browser-Notice erzeugt, da der
             // Benutzer bei länger laufenden Aktionen vielleicht das Tab oder Fenster
@@ -279,23 +264,18 @@ class Form {
 
 			if	( notifyBrowser )
             	notice.notifyBrowser()
+        };
 
+		if	( data.success ) { // Kein Fehler?
+			onSuccess();
+			Workbench.dataChangedHandler.fire();
+		}
+		else
+			; // Server liefert Fehler zurück.
 
-            if	( value.status == 'ok' ) // Kein Fehler?
-            {
-                onSuccess();
-                Workbench.dataChangedHandler.fire();
-            }
-            else
-            // Server liefert Fehler zurück.
-            {
-            }
-        });
-
-        // Validation error should mark the input field.
-        $.each(data['errors'], function(idx,value) {
-            $('.or-input[name='+value+']').addClass('input--error').parent().addClass('input--error').parents('.or-group').removeClass('closed').addClass('show').addClass('open');
-        });
+		// Validation error should mark the input field.
+        for( name of data['errors'] )
+            $('.or-input[name='+name+']').addClass('input--error').parent().addClass('input--error').parents('.or-group').removeClass('closed').addClass('show').addClass('open');
 
         // Jetzt das erhaltene Dokument auswerten.
     }

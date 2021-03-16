@@ -56,38 +56,31 @@ Workbench.handleFileUpload = function(form,files)
 	    form_data.append('id'       ,$(form).find('input[name=id]'   ).val() );
 	    
 		let notice = new Notice();
-		notice.setContext('folder',0,'' );
 		notice.inProgress();
 		notice.show();
 
-		$.ajax( { 'type':'POST',url:'./api/', cache:false,contentType: false, processData: false, data:form_data, success:function(data, textStatus, jqXHR)
-			{
+		let url ='./api/';
+		let load = fetch( url, {
+			method: 'POST'
+		} );
+
+		load.then( response => {
+			return response.json();
+		}).then( data => {
+
 				notice.close();
 				let oform = new Form();
-				oform.doResponse(data,textStatus,form);
-			},
-			error:function(jqXHR, textStatus, errorThrown) {
-				$(form).closest('div.content').removeClass('loader');
+				oform.doResponse(data,"",form);
+			} ).catch( error => {
+
 				notice.close();
 				
-				let msg;
-				console.error(jqXHR);
-				try
-				{
-					let error = jQuery.parseJSON( jqXHR.responseText );
-					msg = error.error + '/' + error.description + ': ' + error.reason;
-				}
-				catch( e )
-				{
-					msg = jqXHR.responseText;
-				}
-
+				console.error(error);
 				let notice = new Notice();
 				notice.setStatus('error');
-				notice.msg = 'Upload error: ' + msg;
+				notice.msg = 'Upload error: ' + error;
 				notice.show();
 			}
-			
-		} );
+		);
 	}
 }

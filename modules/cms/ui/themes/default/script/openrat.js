@@ -157,51 +157,58 @@ jQuery.fn.orSearch = function( options )
 			$('.or-search').addClass('search--is-active');
 			dropdownEl.addClass('search-result--is-active');
 
-			$.ajax( { 'type':'GET',url:'./api/?action='+settings.action+'&subaction='+settings.method+'&output=json&search='+searchArgument, data:null, success:function(data, textStatus, jqXHR)
-				{
-					$(dropdownEl).empty(); // Leeren.
-
-					for( id in data.output.result )
-					{
-						let result = data.output.result[id];
-						
-						// Suchergebnis-Zeile in das Ergebnis schreiben.
-
-						let div = $('<div class="'+settings.resultEntryClass+' '+settings.resultEntryClass+'--active" title="'+result.desc+'"></div>');
-						div.data('object',{
-							'name':result.name,
-						    'action':result.type,
-							'id':result.id
-						} );
-						let link = $('<a class="or-link"/>').attr('href',WorkbenchNavigator.createShortUrl(result.type, result.id));
-						link.click( function(e) {
-							e.preventDefault();
-						});
-						$(link).append('<i class="or-image-icon or-image-icon--action-'+result.type+'" />');
-						$(link).append('<span class="or-dropdown-text">'+result.name+'</span>');
-
-						$(div).append(link);
-						$(dropdownEl).append(div);
-					}
-
-					if   ( data.output.result && settings.openDropdown ) {
-						// Open the menu
-						//$(dropdownEl).closest('.or-menu').addClass('menu--is-open');
-						$(dropdownEl).addClass('dropdown--is-open');
-					}else {
-						$(dropdownEl).removeClass('dropdown--is-open');
-					}
-
-					// Register clickhandler for search results.
-					$(dropdownEl).find('.or-search-result-entry').click( function(e) {
-						settings.select( $(this).data('object') );
-						settings.afterSelect();
-						searchInput.val('');
-					} );
-
+			let url = './api/?action='+settings.action+'&subaction='+settings.method+'&output=json&search='+searchArgument;
+			let load = fetch( url, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
 				} } );
+			load.then( response => {
+					if   ( ! response.ok )
+						throw "Search request getting an error";
+					return response.json();
+				}
+			).then( data => {
+				$(dropdownEl).empty(); // Leeren.
 
-			
+				for (id in data.output.result) {
+					let result = data.output.result[id];
+
+					// Suchergebnis-Zeile in das Ergebnis schreiben.
+
+					let div = $('<div class="' + settings.resultEntryClass + ' ' + settings.resultEntryClass + '--active" title="' + result.desc + '"></div>');
+					div.data('object', {
+						'name': result.name,
+						'action': result.type,
+						'id': result.id
+					});
+					let link = $('<a class="or-link"/>').attr('href', WorkbenchNavigator.createShortUrl(result.type, result.id));
+					link.click(function (e) {
+						e.preventDefault();
+					});
+					$(link).append('<i class="or-image-icon or-image-icon--action-' + result.type + '" />');
+					$(link).append('<span class="or-dropdown-text">' + result.name + '</span>');
+
+					$(div).append(link);
+					$(dropdownEl).append(div);
+				}
+
+				if (data.output.result && settings.openDropdown) {
+					// Open the menu
+					//$(dropdownEl).closest('.or-menu').addClass('menu--is-open');
+					$(dropdownEl).addClass('dropdown--is-open');
+				} else {
+					$(dropdownEl).removeClass('dropdown--is-open');
+				}
+
+				// Register clickhandler for search results.
+				$(dropdownEl).find('.or-search-result-entry').click(function (e) {
+					settings.select($(this).data('object'));
+					settings.afterSelect();
+					searchInput.val('');
+				});
+
+			} );
 		}
 		else
 		{
@@ -2112,12 +2119,16 @@ class View {
         let element = this.element;
         let view = this;
 
-        let loadViewHtmlPromise = $.ajax( url );
+        let loadViewHtmlPromise = fetch( url,{} );
 
 		$(this.element).addClass('loader');
 		console.debug( view);
 
-        loadViewHtmlPromise.done( function(data,status){
+        loadViewHtmlPromise.then( response => {
+        	if   ( ! response.ok )
+        		throw "failed to load the view";
+        	return response.text();
+		} ).then( data => {
 
         	if   ( ! data )
         		data = '';
@@ -2144,25 +2155,21 @@ class View {
 			});
 
 			view.fireViewLoadedEvents( element );
-		} );
-
-		loadViewHtmlPromise.fail( function(jqxhr,status,cause) {
+		} ).catch( cause => {
 			$(element).html("");
 
-			console.error( {view:view, url:url, status:status, cause: cause} );
+			console.error( {view:view, url:url, cause: cause} );
 
 			let notice = new Notice();
 			notice.setStatus('error');
 			notice.msg = Workbench.language.ERROR;
+			notice.log = cause;
 			notice.show();
 		});
 
-		loadViewHtmlPromise.always( function() {
+		loadViewHtmlPromise.finally( () => {
 			$(element).removeClass("loader");
 		});
-
-		// Load the data for this view.
-		let apiUrl = View.createUrl( this.action,this.method,this.id,this.params,true);
 
 		return loadViewHtmlPromise;
 	}
@@ -2378,82 +2385,79 @@ class Form {
             let form = this;
             console.debug( form );
 
-            $.ajax( { 'type':'POST',url:url, data:Form.formDataToObject(formData), success:function(responseData, textStatus, jqXHR)
-                {
-                    form.setLoadStatus(false);
-                    status.close();
+            let load = fetch( url, { 'method':'POST', body:formData } );
 
-                    form.doResponse(responseData,textStatus,form.element, function() {
+            load.then( response => {
+            	if   ( ! response.ok )
+            		throw "Failed to post";
 
-                    	form.onSaveHandler.fire();
+            	return response.json();
+			}).then( data => {
+				form.setLoadStatus(false);
+				status.close();
 
-						let afterSuccess = $(form.element).data('afterSuccess');
-						let forwardTo    = $(form.element).data('forwardTo'   );
-						let async        = $(form.element).data('async'       );
+				form.doResponse(data, "", form.element, () => {
 
-						if   ( afterSuccess == 'forward' )
-							mode = Form.modes.keepOpen;
+					form.onSaveHandler.fire();
 
-						// The data was successful saved.
-						// Now we can close the form.
-						if	( mode == Form.modes.closeAfterSuccess )
-						{
-							form.onCloseHandler.fire();
+					let afterSuccess = $(form.element).data('afterSuccess');
+					let forwardTo = $(form.element).data('forwardTo');
+					let async = $(form.element).data('async');
 
-							// clear the dirty flag.
-							$(form.element).closest('div.panel').find('div.header ul.views li.action.active').removeClass('dirty');
+					if (afterSuccess == 'forward')
+						mode = Form.modes.keepOpen;
+
+					// The data was successful saved.
+					// Now we can close the form.
+					if (mode == Form.modes.closeAfterSuccess) {
+						form.onCloseHandler.fire();
+
+						// clear the dirty flag.
+						$(form.element).closest('div.panel').find('div.header ul.views li.action.active').removeClass('dirty');
+					}
+
+					if (afterSuccess) {
+						if (afterSuccess == 'reloadAll') {
+							Workbench.reloadAll();
+						} else if (afterSuccess == 'forward') {
+							// Forwarding to next subaction.
+							if (forwardTo)
+								form.forwardTo(formData.get('action'), forwardTo, formData.get('id'), []);
 						}
+					} else {
+						if (async)
+							; // do not reload
+						else
+							Openrat.workbench.reloadViews();
+					}
 
-						if	( afterSuccess )
-						{
-							if   ( afterSuccess == 'reloadAll' )
-							{
-								Workbench.reloadAll();
-							}
-							else if   ( afterSuccess == 'forward' )
-							{
-								// Forwarding to next subaction.
-								if   ( forwardTo )
-									form.forwardTo( formData.get('action'), forwardTo, formData.get('id'),[] );
-							}
-						} else {
-							if   ( async )
-								; // do not reload
-							else
-								Openrat.workbench.reloadViews();
-						}
+				})
+			} ).catch( cause => {
 
-					});
-                },
-                error:function(jqXHR, textStatus, errorThrown) {
+				console.warn( {
+					message:'could not post form',
+					cause: cause,
+					form:form,
+				} );
 
-					console.warn( {
-						message:'could not post form',
-						jqXHR:jqXHR,
-						form:form,
-						status: textStatus,
-						error: errorThrown
-					} );
+				form.setLoadStatus(false);
+				status.close();
 
-					form.setLoadStatus(false);
-                    status.close();
-
-                    let msg = '';
-                    try {
-                        msg = $.parseJSON( jqXHR.responseText ).message;
-                    }
-                    catch( e ) {
-                        msg = jqXHR.statusText;
-                    }
-
-					let notice = new Notice();
-                    notice.setStatus('error');
-                    notice.msg = msg;
-                    notice.log = JSON.stringify( $.parseJSON(jqXHR.responseText),null,2);
-                    notice.show();
+				let msg = '';
+				try {
+					msg = $.parseJSON( cause ).message;
+				}
+				catch( e ) {
+					msg = cause;
 				}
 
+				let notice = new Notice();
+				notice.setStatus('error');
+				notice.msg = msg;
+				notice.log = cause; //JSON.stringify( $.parseJSON(jqXHR.responseText),null,2);
+				notice.show();
             } );
+
             $(form.element).fadeIn();
         }
 
@@ -2470,21 +2474,9 @@ class Form {
      */
     doResponse = function(data,status,element, onSuccess = $.noop )
     {
-        if	( status != 'success' )
-        {
-            console.error('Server error: ' + status);
-
-			let notice = new Notice();
-			notice.setStatus( 'error' );
-			notice.msg = Workbench.language.ERROR;
-			notice.show();
-
-			return;
-        }
-
         let form = this;
         // Hinweismeldungen in Statuszeile anzeigen
-        $.each(data['notices'], function(idx,value) {
+        for( let value of data['notices'] ) {
 
             // Bei asynchronen Requests wird zusätzlich eine Browser-Notice erzeugt, da der
             // Benutzer bei länger laufenden Aktionen vielleicht das Tab oder Fenster
@@ -2500,23 +2492,18 @@ class Form {
 
 			if	( notifyBrowser )
             	notice.notifyBrowser()
+        };
 
+		if	( data.success ) { // Kein Fehler?
+			onSuccess();
+			Workbench.dataChangedHandler.fire();
+		}
+		else
+			; // Server liefert Fehler zurück.
 
-            if	( value.status == 'ok' ) // Kein Fehler?
-            {
-                onSuccess();
-                Workbench.dataChangedHandler.fire();
-            }
-            else
-            // Server liefert Fehler zurück.
-            {
-            }
-        });
-
-        // Validation error should mark the input field.
-        $.each(data['errors'], function(idx,value) {
-            $('.or-input[name='+value+']').addClass('input--error').parent().addClass('input--error').parents('.or-group').removeClass('closed').addClass('show').addClass('open');
-        });
+		// Validation error should mark the input field.
+        for( name of data['errors'] )
+            $('.or-input[name='+name+']').addClass('input--error').parent().addClass('input--error').parents('.or-group').removeClass('closed').addClass('show').addClass('open');
 
         // Jetzt das erhaltene Dokument auswerten.
     }
@@ -3979,39 +3966,32 @@ Workbench.handleFileUpload = function(form,files)
 	    form_data.append('id'       ,$(form).find('input[name=id]'   ).val() );
 	    
 		let notice = new Notice();
-		notice.setContext('folder',0,'' );
 		notice.inProgress();
 		notice.show();
 
-		$.ajax( { 'type':'POST',url:'./api/', cache:false,contentType: false, processData: false, data:form_data, success:function(data, textStatus, jqXHR)
-			{
+		let url ='./api/';
+		let load = fetch( url, {
+			method: 'POST'
+		} );
+
+		load.then( response => {
+			return response.json();
+		}).then( data => {
+
 				notice.close();
 				let oform = new Form();
-				oform.doResponse(data,textStatus,form);
-			},
-			error:function(jqXHR, textStatus, errorThrown) {
-				$(form).closest('div.content').removeClass('loader');
+				oform.doResponse(data,"",form);
+			} ).catch( error => {
+
 				notice.close();
 				
-				let msg;
-				console.error(jqXHR);
-				try
-				{
-					let error = jQuery.parseJSON( jqXHR.responseText );
-					msg = error.error + '/' + error.description + ': ' + error.reason;
-				}
-				catch( e )
-				{
-					msg = jqXHR.responseText;
-				}
-
+				console.error(error);
 				let notice = new Notice();
 				notice.setStatus('error');
-				notice.msg = 'Upload error: ' + msg;
+				notice.msg = 'Upload error: ' + error;
 				notice.show();
 			}
-			
-		} );
+		);
 	}
 }
 

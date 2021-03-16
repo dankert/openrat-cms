@@ -63,12 +63,16 @@ class View {
         let element = this.element;
         let view = this;
 
-        let loadViewHtmlPromise = $.ajax( url );
+        let loadViewHtmlPromise = fetch( url,{} );
 
 		$(this.element).addClass('loader');
 		console.debug( view);
 
-        loadViewHtmlPromise.done( function(data,status){
+        loadViewHtmlPromise.then( response => {
+        	if   ( ! response.ok )
+        		throw "failed to load the view";
+        	return response.text();
+		} ).then( data => {
 
         	if   ( ! data )
         		data = '';
@@ -95,25 +99,21 @@ class View {
 			});
 
 			view.fireViewLoadedEvents( element );
-		} );
-
-		loadViewHtmlPromise.fail( function(jqxhr,status,cause) {
+		} ).catch( cause => {
 			$(element).html("");
 
-			console.error( {view:view, url:url, status:status, cause: cause} );
+			console.error( {view:view, url:url, cause: cause} );
 
 			let notice = new Notice();
 			notice.setStatus('error');
 			notice.msg = Workbench.language.ERROR;
+			notice.log = cause;
 			notice.show();
 		});
 
-		loadViewHtmlPromise.always( function() {
+		loadViewHtmlPromise.finally( () => {
 			$(element).removeClass("loader");
 		});
-
-		// Load the data for this view.
-		let apiUrl = View.createUrl( this.action,this.method,this.id,this.params,true);
 
 		return loadViewHtmlPromise;
 	}
