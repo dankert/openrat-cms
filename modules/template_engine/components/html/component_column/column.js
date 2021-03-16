@@ -1,5 +1,5 @@
 // View loaded...
-Openrat.Workbench.afterViewLoadedHandler.add( function(element ) {
+Workbench.afterViewLoadedHandler.add( function(element ) {
 
 
     // Clickable Columns.

@@ -31,7 +31,7 @@ class Notice  {
 			.addClass('collapsible'           )
 			.addClass('collapsible--is-closed');
 
-		this.onClick = $.Callbacks();
+		this.onClick = new Callback();
 
 	}
 
@@ -81,7 +81,7 @@ class Notice  {
 		this.element.append('<span class="or-notice-text or-collapsible-act-switch">' + Notice.htmlEntities(this.msg) + '</span>');
 
 		if (this.name) {
-			this.element.append( $('<div class="or-notice-name or-collapsible-value"><a class="or-act-clickable" href="' + Openrat.Navigator.createShortUrl(this.typ, this.id) + '" data-type="open" data-action="' + this.typ + '" data-id="' + this.id + '"><i class="or-notice-action-full or-image-icon or-image-icon--action-' + this.typ + '"></i><span class="">' + this.name + '</span></a></div>').orLinkify() );
+			this.element.append( $('<div class="or-notice-name or-collapsible-value"><a class="or-act-clickable" href="' + WorkbenchNavigator.createShortUrl(this.typ, this.id) + '" data-type="open" data-action="' + this.typ + '" data-id="' + this.id + '"><i class="or-notice-action-full or-image-icon or-image-icon--action-' + this.typ + '"></i><span class="">' + this.name + '</span></a></div>').orLinkify() );
 		}
 
 		if (this.log)
@@ -95,7 +95,7 @@ class Notice  {
 			notice.onClick.fire();
 		} );
 
-		Openrat.Workbench.registerOpenClose( this.element );
+		Workbench.registerOpenClose( this.element );
 
 		// Close the notice on click
 		this.element.find('.or-act-notice-close').click(function () {

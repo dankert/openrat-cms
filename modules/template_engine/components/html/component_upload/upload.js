@@ -1,4 +1,4 @@
-Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
+Workbench.afterViewLoadedHandler.add(  function(element ) {
 
 
 	var form = $(element).find('form');
@@ -23,7 +23,7 @@ Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
 		 var files = e.originalEvent.dataTransfer.files;
 
 		 //We need to send dropped files to Server
-		Openrat.Workbench.handleFileUpload(form,files);
+		Workbench.handleFileUpload(form,files);
 	});
 	
 	
@@ -32,7 +32,7 @@ Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
 		
 		var files = $(this).prop('files');
 
-		Openrat.Workbench.handleFileUpload(form,files);
+		Workbench.handleFileUpload(form,files);
 	});
 
 });
@@ -43,7 +43,7 @@ Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
  * @param form
  * @param files
  */
-Openrat.Workbench.handleFileUpload = function(form,files)
+Workbench.handleFileUpload = function(form,files)
 {
 	for (let i = 0, f; f = files[i]; i++)
 	{
@@ -63,7 +63,7 @@ Openrat.Workbench.handleFileUpload = function(form,files)
 		$.ajax( { 'type':'POST',url:'./api/', cache:false,contentType: false, processData: false, data:form_data, success:function(data, textStatus, jqXHR)
 			{
 				notice.close();
-				let oform = new Openrat.Form();
+				let oform = new Form();
 				oform.doResponse(data,textStatus,form);
 			},
 			error:function(jqXHR, textStatus, errorThrown) {

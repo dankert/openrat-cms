@@ -7,7 +7,7 @@ jQuery.fn.orLinkify = function( options )
 	// Create some defaults, extending them with any options that were provided
 	var settings = $.extend( {
 		'openAction' : function(name,action,id) {
-			Openrat.Workbench.openNewAction( name,action,id );
+			Openrat.workbench.openNewAction( name,action,id );
 		}
 	}, options);
 
@@ -60,7 +60,7 @@ jQuery.fn.orLinkify = function( options )
 				} );
 
 				// Submit the form.
-				let form = new Openrat.Form();
+				let form = new Form();
 				form.initOnElement( $form );
 				form.submit();
 
@@ -68,7 +68,7 @@ jQuery.fn.orLinkify = function( options )
 
 			case 'edit':
 			case 'dialog':
-				let dialog = new Openrat.Dialog();
+				let dialog = new Dialog();
 				let name   = $link.attr('data-name');
 				if   ( !name )
 					name = $link.text(); // get the name from the combined text of all children.
@@ -83,11 +83,11 @@ jQuery.fn.orLinkify = function( options )
 				window.open( $link.attr('data-url'),' _blank' );
 				break;
 			case 'window':
-				window.location.href = Openrat.View.createUrl($link.attr('data-action'),$link.attr('data-method'),$link.attr('data-id'));
+				window.location.href = View.createUrl($link.attr('data-action'),$link.attr('data-method'),$link.attr('data-id'));
 				break;
 
 			case 'popup':
-				Openrat.Workbench.popupWindow = window.open( $link.attr('data-url'), 'Popup', 'location=no,menubar=no,scrollbars=yes,toolbar=no,resizable=yes');
+				Workbench.popupWindow = window.open( $link.attr('data-url'), 'Popup', 'location=no,menubar=no,scrollbars=yes,toolbar=no,resizable=yes');
 				break;
 
 			case 'help':

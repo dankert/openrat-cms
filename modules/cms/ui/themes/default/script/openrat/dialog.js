@@ -1,27 +1,29 @@
 /**
- * A dialog is a special area in the workbench for displaying and inputting data.
- * A dialog contains a view.
+ * The encapsulated view.
  */
-
-Openrat.Dialog = function() {
-
-	/**
-	 * The encapsulated view.
-	 */
-	this.view;
+class Dialog {
 
 	/**
-	 * Dirty-marker (if unsaved changes exist).
-	 *
-	 * @type {boolean}
+	 * A dialog is a special area in the workbench for displaying and inputting data.
+	 * A dialog contains a view.
 	 */
-	this.isDirty = false;
+	constructor() {
 
-	/**
-	 * the DOM element which contains the dialog.
-	 * @type {*|jQuery|HTMLElement}
-	 */
-	this.element = $('.or-dialog-content .or-view');
+		this.view;
+
+		/**
+		 * Dirty-marker (if unsaved changes exist).
+		 *
+		 * @type {boolean}
+		 */
+		this.isDirty = false;
+
+		/**
+		 * the DOM element which contains the dialog.
+		 * @type {*|jQuery|HTMLElement}
+		 */
+		this.element = $('.or-dialog-content .or-view');
+	}
 
 	/**
 	 * Creating a new dialog.
@@ -34,18 +36,18 @@ Openrat.Dialog = function() {
 	 *
 	 * @return Promise of underlying view
 	 */
-	this.start = function( name,action,method,id,params )
+	start( name,action,method,id,params )
 	{
 		// Attribute aus dem aktuellen Editor holen, falls die Daten beim Aufrufer nicht angegeben sind.
 		if (!action)
-			action =  Openrat.Workbench.state.action;
+			action =  Workbench.state.action;
 
 		if  (!id)
-			id =  Openrat.Workbench.state.id;
+			id =  Workbench.state.id;
 
 		let dialog = this;
 
-		let view = new Openrat.View( action,method,id,params );
+		let view = new View( action,method,id,params );
 
 		Notice.removeAllNotices();
 
@@ -80,7 +82,7 @@ Openrat.Dialog = function() {
 
 
 
-	this.show = function() {
+	show() {
 
 		$('.or-dialog').removeClass('dialog--is-closed').addClass('dialog--is-open');
 
@@ -109,7 +111,7 @@ Openrat.Dialog = function() {
 	}
 
 
-	this.hide = function() {
+	hide() {
 		$('.or-dialog').removeClass('dialog--is-open').addClass('dialog--is-closed'); // Dialog schließen
 	}
 
@@ -117,19 +119,19 @@ Openrat.Dialog = function() {
 	/**
 	 * Closing the dialog.
 	 */
-	this.close = function() {
+	close() {
 
 		let dialog = this;
 
 		if   ( this.isDirty ) {
 			// ask the user if we should close this dialog
-			let exit = window.confirm( Openrat.Workbench.language.UNSAVED_CHANGES_CONFIRM );
+			let exit = window.confirm( Workbench.language.UNSAVED_CHANGES_CONFIRM );
 
 			if   ( ! exit )
 				return; // do not close the dialog
 
 			let notice = new Notice();
-			notice.msg = Openrat.Workbench.language.REOPEN_CLOSED_DIALOG;
+			notice.msg = Workbench.language.REOPEN_CLOSED_DIALOG;
 			notice.setStatus( 'warning' );
 			notice.timeout = 120;
 			notice.onClick.add( function() {

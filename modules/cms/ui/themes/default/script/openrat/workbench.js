@@ -1,22 +1,28 @@
 
 
-Openrat.Workbench = new function()
-{
+class Workbench {
     'use strict'; // Strict mode
 
-
-    this.state = {
-    	action: '',
-    	id: 0,
+	static state = {
+		action: '',
+		id: 0,
 		extra: {}
 	};
 
-    this.popupWindow = null;
+	constructor() {
+
+		this.popupWindow = null;
+		Workbench.dataChangedHandler.add( function() {
+			if   ( Workbench.popupWindow )
+				Workbench.popupWindow.location.reload();
+		} );
+	}
+
 
     /**
 	 * Initializes the Workbench.
      */
-	this.initialize = function() {
+	initialize() {
 
 		// Initialze Ping timer.
 		this.initializePingTimer();
@@ -24,12 +30,12 @@ Openrat.Workbench = new function()
         this.initializeState();
         this.openModalDialog();
 
-		Openrat.Workbench.registerOpenClose( $('.or-collapsible') );
+		Workbench.registerOpenClose( $('.or-collapsible') );
 		console.info('Application started');
     }
 
 
-    this.initializeDirtyWarning = function () {
+    initializeDirtyWarning() {
 
 		// If the application should be closed, inform the user about unsaved changes.
 		window.addEventListener('beforeunload', function (e) {
@@ -53,10 +59,10 @@ Openrat.Workbench = new function()
     /**
      * Starts a dialog, if necessary.
      */
-    this.openModalDialog = function () {
+    openModalDialog() {
 
         if   ( $('#dialog').data('action') ) {
-        	let dialog = new Openrat.Dialog();
+        	let dialog = new Dialog();
         	dialog.start('',$('#dialog').data('action'),$('#dialog').data('action'),0,{} )
         }
     }
@@ -67,7 +73,7 @@ Openrat.Workbench = new function()
      *
      * Example: #/name/1 is translated to the state {action:name,id:1}
      */
-    this.initializeState = function () {
+    initializeState() {
 
         let parts = window.location.hash.split('/');
         let state = { action:'index',id:0 };
@@ -79,25 +85,24 @@ Openrat.Workbench = new function()
             // Only numbers and '_' allowed in the id.
             state.id = parts[2].replace(/[^0-9_]/gim,"");
 
-        Openrat.Workbench.state = state;
+        Workbench.state = state;
 
-        Openrat.Navigator.toActualHistory( state );
+		Openrat.navigator.toActualHistory( state );
 
     }
 
     /**
 	 *  Registriert den Ping-Timer für den Sitzungserhalt.
      */
-	this.initializePingTimer = function() {
+	initializePingTimer() {
 
         /**
          * Ping den Server. Führt keine Aktion aus, aber sorgt dafür, dass die Sitzung erhalten bleibt.
          *
          * "Geben Sie mir ein Ping, Vasily. Und bitte nur ein einziges Ping!" (aus: Jagd auf Roter Oktober)
          */
-        let ping = function()
-        {
-            let pingPromise = $.getJSON( Openrat.View.createUrl('profile','ping',0, {}, true) );
+        let ping = () => {
+            let pingPromise = $.getJSON( View.createUrl('profile','ping',0, {}, true) );
             console.debug('ping');
 
             pingPromise.fail( function( jqXHR, textStatus, errorThrown ) {
@@ -124,24 +129,24 @@ Openrat.Workbench = new function()
 
 
 
-    this.loadNewActionState = function(state) {
+    loadNewActionState(state) {
 
-        Openrat.Workbench.state = state;
-        Openrat.Workbench.loadNewAction(state.action,state.id,state.data);
+        Workbench.state = state;
+        this.loadNewAction(state.action,state.id,state.data);
 
-        this.afterNewActionHandler.fire();
+        Workbench.afterNewActionHandler.fire();
 	}
 
 
-    this.afterNewActionHandler = $.Callbacks();
-    this.afterAllViewsLoaded   = $.Callbacks();
+    static afterNewActionHandler = new Callback();
+    static afterAllViewsLoaded   = new Callback();
 
 
     /**
 	 *
      */
 
-    this.loadNewAction = function(action, id, params ) {
+    loadNewAction = function(action, id, params ) {
 
         this.reloadViews();
     }
@@ -152,14 +157,14 @@ Openrat.Workbench = new function()
      *
      */
 
-    this.reloadViews = function() {
+    reloadViews() {
 
         // View in geschlossenen Sektionen löschen, damit diese nicht stehen bleiben.
         $('.or-workbench-section--is-closed .or-act-view-loader').empty();
 
-        let promise = Openrat.Workbench.loadViews( $('.or-workbench .or-act-view-loader') );
+        let promise = this.loadViews( $('.or-workbench .or-act-view-loader') );
 		promise.done( function() {
-				Openrat.Workbench.afterAllViewsLoaded.fire();
+				Workbench.afterAllViewsLoaded.fire();
 			}
 		);
 
@@ -167,14 +172,14 @@ Openrat.Workbench = new function()
     }
 
 
-    this.reloadAll = function() {
+    reloadAll() {
 
     	// View in geschlossenen Sektionen löschen, damit diese nicht stehen bleiben.
-        let promise = Openrat.Workbench.loadViews( $('.or-act-view-loader,.or-act-view-static').empty() );
+        let promise = this.loadViews( $('.or-act-view-loader,.or-act-view-static').empty() );
         console.debug('reloading all views');
 
         promise.done( function() {
-				Openrat.Workbench.afterAllViewsLoaded.fire();
+				Workbench.afterAllViewsLoaded.fire();
 			}
 		);
 
@@ -186,45 +191,45 @@ Openrat.Workbench = new function()
     }
 
 
-    this.loadUserStyle = function() {
+	loadUserStyle() {
 
-        let url = Openrat.View.createUrl('profile','userinfo',0, {},true );
+        let url = View.createUrl('profile','userinfo',0, {},true );
 
         // Die Inhalte des Zweiges laden.
-        $.getJSON(url, function (response) {
+        $.getJSON(url, response => {
 
             let style = response.output['style'];
-            Openrat.Workbench.setUserStyle(style);
+            this.setUserStyle(style);
 
             let color = response.output['theme-color'];
-            Openrat.Workbench.setThemeColor(color);
+            this.setThemeColor(color);
         });
     }
 
 
 
-	this.settings = {};
-    this.language = {};
+	static settings = {};
+    static language = {};
 
-    this.loadLanguage = function() {
+    loadLanguage() {
 
-        let url = Openrat.View.createUrl('profile','language',0, {},true );
+        let url = View.createUrl('profile','language',0, {},true );
 
         // Die Inhalte des Zweiges laden.
         $.getJSON(url, function (response) {
 
-            Openrat.Workbench.language = response.output.language;
+            Workbench.language = response.output.language;
         });
     }
 
-    this.loadUISettings = function() {
+    loadUISettings() {
 
-        let url = Openrat.View.createUrl('profile','uisettings',0, {},true );
+        let url = View.createUrl('profile','uisettings',0, {},true );
 
         // Die Inhalte des Zweiges laden.
         $.getJSON(url, function (response) {
 
-            Openrat.Workbench.settings = response.output.settings.settings;
+            Workbench.settings = response.output.settings.settings;
         });
     }
 
@@ -234,14 +239,15 @@ Openrat.Workbench = new function()
 	 * @param $views
 	 * @returns Promise for all views
 	 */
-	this.loadViews = function( $views )
+	loadViews( $views )
     {
+    	let wb = this;
     	let promises = [];
         $views.each(function (idx) {
 
             let $targetDOMElement = $(this);
 
-            promises.push( Openrat.Workbench.loadNewActionIntoElement( $targetDOMElement ) );
+            promises.push( wb.loadNewActionIntoElement( $targetDOMElement ) );
         });
 
         return $.when.apply( $, promises );
@@ -252,21 +258,21 @@ Openrat.Workbench = new function()
 	 * @param $viewElement
 	 * @returns {Promise}
 	 */
-	this.loadNewActionIntoElement = function( $viewElement )
+	loadNewActionIntoElement( $viewElement )
     {
         let action;
         if   ( $viewElement.is('.or-act-view-static') )
             // Static views have always the same action.
             action = $viewElement.attr('data-action');
         else
-            action = Openrat.Workbench.state.action;
+            action = Workbench.state.action;
 
-        let id     = Openrat.Workbench.state.id;
-        let params =  Openrat.Workbench.state.extra;
+        let id     = Workbench.state.id;
+        let params =  Workbench.state.extra;
 
         let method = $viewElement.data('method');
 
-        let view = new Openrat.View( action,method,id,params );
+        let view = new View( action,method,id,params );
         return view.start( $viewElement );
     }
 
@@ -277,7 +283,7 @@ Openrat.Workbench = new function()
      * Sets a new theme.
      * @param styleName
      */
-    this.setUserStyle = function( styleName )
+    setUserStyle( styleName )
     {
         var html = $('html');
         var classList = html.attr('class').split(/\s+/);
@@ -294,33 +300,27 @@ Openrat.Workbench = new function()
      * Sets a new theme color.
      * @param color Theme-color
      */
-    this.setThemeColor = function( color )
+    setThemeColor( color )
     {
-        $('#theme-color').attr('content',color);
+		document.getElementById('theme-color').setAttribute('content',color);
     }
 
 
 
-	this.dataChangedHandler = $.Callbacks();
-
-	this.dataChangedHandler.add( function() {
-		if   ( Openrat.Workbench.popupWindow )
-			Openrat.Workbench.popupWindow.location.reload();
-	} );
-
-    this.afterViewLoadedHandler = $.Callbacks();
+	static dataChangedHandler = new Callback();
+    static afterViewLoadedHandler = new Callback();
 
 
 
 	/**
 	 * Sets the application title.
 	 */
-	this.setApplicationTitle = function( title ) {
+	static setApplicationTitle( newTitle ) {
 
-		if (title)
-			$('head > title').text( title + ' - ' + $('head > title').data('default') );
-		else
-			$('head > title').text( $('head > title').data('default') );
+		let title = document.querySelector('head > title');
+		let defaultTitle = title.dataset.default;
+
+		title.textContent = (newTitle ? newTitle + ' - ' : '') + defaultTitle;
 	}
 
 
@@ -331,7 +331,7 @@ Openrat.Workbench = new function()
 	 *
 	 * @param $el
 	 */
-	this.registerOpenClose = function( $el )
+	static registerOpenClose = function( $el )
 	{
 		$($el).children('.or-collapsible-act-switch').click( function() {
 			$(this).closest('.or-collapsible').toggleClass('collapsible--is-open').toggleClass('collapsible--is-closed');
@@ -346,14 +346,14 @@ Openrat.Workbench = new function()
 	 * @param action Action
 	 * @param id Id
 	 */
-	this.openNewAction = function( name,action,id )
+	openNewAction( name,action,id )
 	{
 		// Im Mobilmodus soll das Menü verschwinden, wenn eine neue Action geoeffnet wird.
 		$('.or-workbench-navigation').removeClass('workbench-navigation--is-open');
 
-		Openrat.Workbench.setApplicationTitle( name ); // Sets the title.
+		Workbench.setApplicationTitle( name ); // Sets the title.
 
-		Openrat.Navigator.navigateToNew( {'action':action, 'id':id } );
+		Openrat.navigator.navigateToNew( {'action':action, 'id':id } );
 	}
 
 
@@ -363,7 +363,7 @@ Openrat.Workbench = new function()
 
 
 
-	this.registerDraggable = function(viewEl) {
+	registerDraggable(viewEl) {
 
 // Drag n Drop: Inhaltselemente (Dateien,Seiten,Ordner,Verknuepfungen) koennen auf Ordner gezogen werden.
 
@@ -381,7 +381,7 @@ Openrat.Workbench = new function()
 	}
 
 
-	this.registerDroppable = function(viewEl) {
+	registerDroppable(viewEl) {
 
 
 		$(viewEl).find('.or-droppable-selector').droppable({

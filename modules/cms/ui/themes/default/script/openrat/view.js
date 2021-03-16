@@ -8,44 +8,48 @@
  * @param params
  * @constructor
  */
-Openrat.View = function( action,method,id,params ) {
+class View {
 
-    this.action = action;
-    this.method = method;
-    this.id = id;
-    this.params = params;
+	constructor( action,method,id,params ) {
+		this.action = action;
+		this.method = method;
+		this.id = id;
+		this.params = params;
 
-    this.onCloseHandler = $.Callbacks();
+		this.onCloseHandler = new Callback();
 
-    this.onChangeHandler = $.Callbacks();
-    this.onSaveHandler = $.Callbacks();
+		this.onChangeHandler = new Callback();
+		this.onSaveHandler = new Callback();
+	}
 
-    this.before = function() {};
+    before() {
+
+	};
 
 	/**
 	 * @param element
 	 * @returns {Promise}
 	 */
-	this.start = function( element ) {
+	start( element ) {
 
         this.before();
         this.element = element;
         return this.loadView();
     }
 
-    this.afterLoad = function() {
+    afterLoad() {
 
     }
 
-    this.close = function() {
+    close() {
 
 		this.onCloseHandler.fire();
     }
 
 
-    function fireViewLoadedEvents(element) {
+    fireViewLoadedEvents(element) {
 
-        Openrat.Workbench.afterViewLoadedHandler.fire( element );
+        Workbench.afterViewLoadedHandler.fire( element );
     }
 
 
@@ -53,9 +57,9 @@ Openrat.View = function( action,method,id,params ) {
 	 * Loads the content of this view
 	 * @returns Promise
 	 */
-	this.loadView = function() {
+	loadView() {
 
-        let url = Openrat.View.createUrl( this.action,this.method,this.id,this.params,false); // URL für das Laden erzeugen.
+        let url = View.createUrl( this.action,this.method,this.id,this.params,false); // URL für das Laden erzeugen.
         let element = this.element;
         let view = this;
 
@@ -73,19 +77,11 @@ Openrat.View = function( action,method,id,params ) {
 
 			$(element).find('form').each( function() {
 
-				let form = new Openrat.Form();
+				let form = new Form();
 
-				form.onChangeHandler.add( function() {
-					view.onChangeHandler.fire();
-				});
-
-				form.onSaveHandler.add( function() {
-					view.onSaveHandler.fire();
-				});
-
-				form.onCloseHandler.add( function() {
-					view.close();
-				} );
+				form.onChangeHandler.add( () => { view.onChangeHandler.fire() } );
+				form.onSaveHandler  .add( () => { view.onSaveHandler  .fire() } );
+				form.onCloseHandler .add( () => { view.close()                } );
 
 				form.forwardTo = function (action, subaction, id, data) {
 					view.action = action;
@@ -98,7 +94,7 @@ Openrat.View = function( action,method,id,params ) {
 				form.initOnElement(this);
 			});
 
-			fireViewLoadedEvents( element );
+			view.fireViewLoadedEvents( element );
 		} );
 
 		loadViewHtmlPromise.fail( function(jqxhr,status,cause) {
@@ -108,7 +104,7 @@ Openrat.View = function( action,method,id,params ) {
 
 			let notice = new Notice();
 			notice.setStatus('error');
-			notice.msg = Openrat.Workbench.language.ERROR;
+			notice.msg = Workbench.language.ERROR;
 			notice.show();
 		});
 
@@ -117,7 +113,7 @@ Openrat.View = function( action,method,id,params ) {
 		});
 
 		// Load the data for this view.
-		let apiUrl = Openrat.View.createUrl( this.action,this.method,this.id,this.params,true);
+		let apiUrl = View.createUrl( this.action,this.method,this.id,this.params,true);
 
 		return loadViewHtmlPromise;
 	}
@@ -126,15 +122,16 @@ Openrat.View = function( action,method,id,params ) {
 
 
     /**
-     * Erzeugt eine URL, um die gewünschte Action vom Server zu laden.
-     *
-     * @param action
-     * @param subaction
-     * @param id
-     * @param extraid
-     * @returns URL
-     */
-    Openrat.View.createUrl = function(action,subaction,id,extraid={},api=false )
+	 * Erzeugt eine URL, um die gewünschte Action vom Server zu laden.
+	 *
+	 * @param action
+	 * @param subaction
+	 * @param id
+	 * @param extraid
+	 * @param api
+	 * @returns URL
+	 */
+    static createUrl(action,subaction,id,extraid={},api=false )
     {
         let url = './';
 

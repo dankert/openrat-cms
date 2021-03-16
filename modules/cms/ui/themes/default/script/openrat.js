@@ -173,7 +173,7 @@ jQuery.fn.orSearch = function( options )
 						    'action':result.type,
 							'id':result.id
 						} );
-						let link = $('<a class="or-link"/>').attr('href',Openrat.Navigator.createShortUrl(result.type, result.id));
+						let link = $('<a class="or-link"/>').attr('href',WorkbenchNavigator.createShortUrl(result.type, result.id));
 						link.click( function(e) {
 							e.preventDefault();
 						});
@@ -224,7 +224,7 @@ jQuery.fn.orLinkify = function( options )
 	// Create some defaults, extending them with any options that were provided
 	var settings = $.extend( {
 		'openAction' : function(name,action,id) {
-			Openrat.Workbench.openNewAction( name,action,id );
+			Openrat.workbench.openNewAction( name,action,id );
 		}
 	}, options);
 
@@ -277,7 +277,7 @@ jQuery.fn.orLinkify = function( options )
 				} );
 
 				// Submit the form.
-				let form = new Openrat.Form();
+				let form = new Form();
 				form.initOnElement( $form );
 				form.submit();
 
@@ -285,7 +285,7 @@ jQuery.fn.orLinkify = function( options )
 
 			case 'edit':
 			case 'dialog':
-				let dialog = new Openrat.Dialog();
+				let dialog = new Dialog();
 				let name   = $link.attr('data-name');
 				if   ( !name )
 					name = $link.text(); // get the name from the combined text of all children.
@@ -300,11 +300,11 @@ jQuery.fn.orLinkify = function( options )
 				window.open( $link.attr('data-url'),' _blank' );
 				break;
 			case 'window':
-				window.location.href = Openrat.View.createUrl($link.attr('data-action'),$link.attr('data-method'),$link.attr('data-id'));
+				window.location.href = View.createUrl($link.attr('data-action'),$link.attr('data-method'),$link.attr('data-id'));
 				break;
 
 			case 'popup':
-				Openrat.Workbench.popupWindow = window.open( $link.attr('data-url'), 'Popup', 'location=no,menubar=no,scrollbars=yes,toolbar=no,resizable=yes');
+				Workbench.popupWindow = window.open( $link.attr('data-url'), 'Popup', 'location=no,menubar=no,scrollbars=yes,toolbar=no,resizable=yes');
 				break;
 
 			case 'help':
@@ -374,7 +374,7 @@ jQuery.fn.orTree = function (options)
 
 	let registerTreeBranchEvents = function (viewEl)
 	{
-		Openrat.Workbench.registerDraggable(viewEl);
+		Openrat.workbench.registerDraggable(viewEl);
 	}
 
 
@@ -1654,34 +1654,24 @@ header:o[1].replace(/^ *| *\| *$/g,"").split(/ *\| */),align:o[2].replace(/^ *|\
 /* Include script: trumbowyg.min.js */
 /** Trumbowyg v2.10.0 - A lightweight WYSIWYG editor - alex-d.github.io/Trumbowyg - License MIT - Author : Alexandre Demode (Alex-D) / alex-d.fr */
 jQuery.trumbowyg={langs:{en:{viewHTML:"View HTML",undo:"Undo",redo:"Redo",formatting:"Formatting",p:"Paragraph",blockquote:"Quote",code:"Code",header:"Header",bold:"Bold",italic:"Italic",strikethrough:"Stroke",underline:"Underline",strong:"Strong",em:"Emphasis",del:"Deleted",superscript:"Superscript",subscript:"Subscript",unorderedList:"Unordered list",orderedList:"Ordered list",insertImage:"Insert Image",link:"Link",createLink:"Insert link",unlink:"Remove link",justifyLeft:"Align Left",justifyCenter:"Align Center",justifyRight:"Align Right",justifyFull:"Align Justify",horizontalRule:"Insert horizontal rule",removeformat:"Remove format",fullscreen:"Fullscreen",close:"Close",submit:"Confirm",reset:"Cancel",required:"Required",description:"Description",title:"Title",text:"Text",target:"Target",width:"Width"}},plugins:{},svgPath:null,hideButtonTexts:null},Object.defineProperty(jQuery.trumbowyg,"defaultOptions",{value:{lang:"en",fixedBtnPane:!1,fixedFullWidth:!1,autogrow:!1,autogrowOnEnter:!1,imageWidthModalEdit:!1,prefix:"trumbowyg-",semantic:!0,resetCss:!1,removeformatPasted:!1,tagsToRemove:[],btns:[["viewHTML"],["undo","redo"],["formatting"],["strong","em","del"],["superscript","subscript"],["link"],["insertImage"],["justifyLeft","justifyCenter","justifyRight","justifyFull"],["unorderedList","orderedList"],["horizontalRule"],["removeformat"],["fullscreen"]],btnsDef:{},inlineElementsSelector:"a,abbr,acronym,b,caption,cite,code,col,dfn,dir,dt,dd,em,font,hr,i,kbd,li,q,span,strikeout,strong,sub,sup,u",pasteHandlers:[],plugins:{},urlProtocol:!1,minimalLinks:!1},writable:!1,enumerable:!0,configurable:!1}),function(e,t,n,a){"use strict";var o="tbwconfirm",r="tbwcancel";a.fn.trumbowyg=function(e,t){var n="trumbowyg";if(e===Object(e)||!e)return this.each(function(){a(this).data(n)||a(this).data(n,new i(this,e))});if(1===this.length)try{var o=a(this).data(n);switch(e){case"execCmd":return o.execCmd(t.cmd,t.param,t.forceCss);case"openModal":return o.openModal(t.title,t.content);case"closeModal":return o.closeModal();case"openModalInsert":return o.openModalInsert(t.title,t.fields,t.callback);case"saveRange":return o.saveRange();case"getRange":return o.range;case"getRangeText":return o.getRangeText();case"restoreRange":return o.restoreRange();case"enable":return o.setDisabled(!1);case"disable":return o.setDisabled(!0);case"toggle":return o.toggle();case"destroy":return o.destroy();case"empty":return o.empty();case"html":return o.html(t)}}catch(r){}return!1};var i=function(o,r){var i=this,s="trumbowyg-icons",l=a.trumbowyg;i.doc=o.ownerDocument||n,i.$ta=a(o),i.$c=a(o),r=r||{},null!=r.lang||null!=l.langs[r.lang]?i.lang=a.extend(!0,{},l.langs.en,l.langs[r.lang]):i.lang=l.langs.en,i.hideButtonTexts=null!=l.hideButtonTexts?l.hideButtonTexts:r.hideButtonTexts;var d=null!=l.svgPath?l.svgPath:r.svgPath;if(i.hasSvg=d!==!1,i.svgPath=i.doc.querySelector("base")?t.location.href.split("#")[0]:"",0===a("#"+s,i.doc).length&&d!==!1){if(null==d){for(var c=n.getElementsByTagName("script"),u=0;u<c.length;u+=1){var g=c[u].src,f=g.match("trumbowyg(.min)?.js");null!=f&&(d=g.substring(0,g.indexOf(f[0]))+"ui/icons.svg")}null==d&&console.warn("You must define svgPath: https://goo.gl/CfTY9U")}var h=i.doc.createElement("div");h.id=s,i.doc.body.insertBefore(h,i.doc.body.childNodes[0]),a.ajax({async:!0,type:"GET",contentType:"application/x-www-form-urlencoded; charset=UTF-8",dataType:"xml",crossDomain:!0,url:d,data:null,beforeSend:null,complete:null,success:function(e){h.innerHTML=(new XMLSerializer).serializeToString(e.documentElement)}})}var p=i.lang.header,m=function(){return(t.chrome||t.Intl&&Intl.v8BreakIterator)&&"CSS"in t};i.btnsDef={viewHTML:{fn:"toggle"},undo:{isSupported:m,key:"Z"},redo:{isSupported:m,key:"Y"},p:{fn:"formatBlock"},blockquote:{fn:"formatBlock"},h1:{fn:"formatBlock",title:p+" 1"},h2:{fn:"formatBlock",title:p+" 2"},h3:{fn:"formatBlock",title:p+" 3"},h4:{fn:"formatBlock",title:p+" 4"},subscript:{tag:"sub"},superscript:{tag:"sup"},bold:{key:"B",tag:"b"},italic:{key:"I",tag:"i"},underline:{tag:"u"},strikethrough:{tag:"strike"},strong:{fn:"bold",key:"B"},em:{fn:"italic",key:"I"},del:{fn:"strikethrough"},createLink:{key:"K",tag:"a"},unlink:{},insertImage:{},justifyLeft:{tag:"left",forceCss:!0},justifyCenter:{tag:"center",forceCss:!0},justifyRight:{tag:"right",forceCss:!0},justifyFull:{tag:"justify",forceCss:!0},unorderedList:{fn:"insertUnorderedList",tag:"ul"},orderedList:{fn:"insertOrderedList",tag:"ol"},horizontalRule:{fn:"insertHorizontalRule"},removeformat:{},fullscreen:{"class":"trumbowyg-not-disable"},close:{fn:"destroy","class":"trumbowyg-not-disable"},formatting:{dropdown:["p","blockquote","h1","h2","h3","h4"],ico:"p"},link:{dropdown:["createLink","unlink"]}},i.o=a.extend(!0,{},l.defaultOptions,r),i.o.hasOwnProperty("imgDblClickHandler")||(i.o.imgDblClickHandler=i.getDefaultImgDblClickHandler()),i.urlPrefix=i.setupUrlPrefix(),i.disabled=i.o.disabled||"TEXTAREA"===o.nodeName&&o.disabled,r.btns?i.o.btns=r.btns:i.o.semantic||(i.o.btns[3]=["bold","italic","underline","strikethrough"]),a.each(i.o.btnsDef,function(e,t){i.addBtnDef(e,t)}),i.eventNamespace="trumbowyg-event",i.keys=[],i.tagToButton={},i.tagHandlers=[],i.pasteHandlers=[].concat(i.o.pasteHandlers),i.isIE=e.userAgent.indexOf("MSIE")!==-1||e.appVersion.indexOf("Trident/")!==-1,i.init()};i.prototype={DEFAULT_SEMANTIC_MAP:{b:"strong",i:"em",s:"del",strike:"del",div:"p"},init:function(){var e=this;e.height=e.$ta.height(),e.initPlugins();try{e.doc.execCommand("enableObjectResizing",!1,!1),e.doc.execCommand("defaultParagraphSeparator",!1,"p")}catch(t){}e.buildEditor(),e.buildBtnPane(),e.fixedBtnPaneEvents(),e.buildOverlay(),setTimeout(function(){e.disabled&&e.setDisabled(!0),e.$c.trigger("tbwinit")})},addBtnDef:function(e,t){this.btnsDef[e]=t},setupUrlPrefix:function(){var e=this.o.urlProtocol;if(e)return"string"!=typeof e?"https://":/:\/\/$/.test(e)?e:e+"://"},buildEditor:function(){var e=this,n=e.o.prefix,o="";e.$box=a("<div/>",{"class":n+"box "+n+"editor-visible "+n+e.o.lang+" trumbowyg"}),e.isTextarea=e.$ta.is("textarea"),e.isTextarea?(o=e.$ta.val(),e.$ed=a("<div/>"),e.$box.insertAfter(e.$ta).append(e.$ed,e.$ta)):(e.$ed=e.$ta,o=e.$ed.html(),e.$ta=a("<textarea/>",{name:e.$ta.attr("id"),height:e.height}).val(o),e.$box.insertAfter(e.$ed).append(e.$ta,e.$ed),e.syncCode()),e.$ta.addClass(n+"textarea").attr("tabindex",-1),e.$ed.addClass(n+"editor").attr({contenteditable:!0,dir:e.lang._dir||"ltr"}).html(o),e.o.tabindex&&e.$ed.attr("tabindex",e.o.tabindex),e.$c.is("[placeholder]")&&e.$ed.attr("placeholder",e.$c.attr("placeholder")),e.$c.is("[spellcheck]")&&e.$ed.attr("spellcheck",e.$c.attr("spellcheck")),e.o.resetCss&&e.$ed.addClass(n+"reset-css"),e.o.autogrow||e.$ta.add(e.$ed).css({height:e.height}),e.semanticCode(),e.o.autogrowOnEnter&&e.$ed.addClass(n+"autogrow-on-enter");var r,i=!1,s=!1,l="keyup";e.$ed.on("dblclick","img",e.o.imgDblClickHandler).on("keydown",function(t){if((t.ctrlKey||t.metaKey)&&!t.altKey){i=!0;var n=e.keys[String.fromCharCode(t.which).toUpperCase()];try{return e.execCmd(n.fn,n.param),!1}catch(a){}}}).on("compositionstart compositionupdate",function(){s=!0}).on(l+" compositionend",function(t){if("compositionend"===t.type)s=!1;else if(s)return;var n=t.which;if(!(n>=37&&n<=40)){if(!t.ctrlKey&&!t.metaKey||89!==n&&90!==n)if(i||17===n)"undefined"==typeof t.which&&e.semanticCode(!1,!1,!0);else{var a=!e.isIE||"compositionend"===t.type;e.semanticCode(!1,a&&13===n),e.$c.trigger("tbwchange")}else e.$c.trigger("tbwchange");setTimeout(function(){i=!1},50)}}).on("mouseup keydown keyup",function(t){(!t.ctrlKey&&!t.metaKey||t.altKey)&&setTimeout(function(){i=!1},50),clearTimeout(r),r=setTimeout(function(){e.updateButtonPaneStatus()},50)}).on("focus blur",function(t){if(e.$c.trigger("tbw"+t.type),"blur"===t.type&&a("."+n+"active-button",e.$btnPane).removeClass(n+"active-button "+n+"active"),e.o.autogrowOnEnter){if(e.autogrowOnEnterDontClose)return;"focus"===t.type?(e.autogrowOnEnterWasFocused=!0,e.autogrowEditorOnEnter()):e.o.autogrow||(e.$ed.css({height:e.$ed.css("min-height")}),e.$c.trigger("tbwresize"))}}).on("cut",function(){setTimeout(function(){e.semanticCode(!1,!0),e.$c.trigger("tbwchange")},0)}).on("paste",function(n){if(e.o.removeformatPasted){n.preventDefault(),t.getSelection&&t.getSelection().deleteFromDocument&&t.getSelection().deleteFromDocument();try{var o=t.clipboardData.getData("Text");try{e.doc.selection.createRange().pasteHTML(o)}catch(r){e.doc.getSelection().getRangeAt(0).insertNode(e.doc.createTextNode(o))}e.$c.trigger("tbwchange",n)}catch(i){e.execCmd("insertText",(n.originalEvent||n).clipboardData.getData("text/plain"))}}a.each(e.pasteHandlers,function(e,t){t(n)}),setTimeout(function(){e.semanticCode(!1,!0),e.$c.trigger("tbwpaste",n)},0)}),e.$ta.on("keyup",function(){e.$c.trigger("tbwchange")}).on("paste",function(){setTimeout(function(){e.$c.trigger("tbwchange")},0)}),e.$box.on("keydown",function(t){if(27===t.which&&1===a("."+n+"modal-box",e.$box).length)return e.closeModal(),!1})},autogrowEditorOnEnter:function(){var e=this;e.$ed.removeClass("autogrow-on-enter");var t=e.$ed[0].clientHeight;e.$ed.height("auto");var n=e.$ed[0].scrollHeight;e.$ed.addClass("autogrow-on-enter"),t!==n&&(e.$ed.height(t),setTimeout(function(){e.$ed.css({height:n}),e.$c.trigger("tbwresize")},0))},buildBtnPane:function(){var e=this,t=e.o.prefix,n=e.$btnPane=a("<div/>",{"class":t+"button-pane"});a.each(e.o.btns,function(o,r){a.isArray(r)||(r=[r]);var i=a("<div/>",{"class":t+"button-group "+(r.indexOf("fullscreen")>=0?t+"right":"")});a.each(r,function(t,n){try{e.isSupportedBtn(n)&&i.append(e.buildBtn(n))}catch(a){}}),i.html().trim().length>0&&n.append(i)}),e.$box.prepend(n)},buildBtn:function(e){var t=this,n=t.o.prefix,o=t.btnsDef[e],r=o.dropdown,i=null==o.hasIcon||o.hasIcon,s=t.lang[e]||e,l=a("<button/>",{type:"button","class":n+e+"-button "+(o["class"]||"")+(i?"":" "+n+"textual-button"),html:t.hasSvg&&i?'<svg><use xlink:href="'+t.svgPath+"#"+n+(o.ico||e).replace(/([A-Z]+)/g,"-$1").toLowerCase()+'"/></svg>':t.hideButtonTexts?"":o.text||o.title||t.lang[e]||e,title:(o.title||o.text||s)+(o.key?" (Ctrl + "+o.key+")":""),tabindex:-1,mousedown:function(){return r&&!a("."+e+"-"+n+"dropdown",t.$box).is(":hidden")||a("body",t.doc).trigger("mousedown"),!((t.$btnPane.hasClass(n+"disable")||t.$box.hasClass(n+"disabled"))&&!a(this).hasClass(n+"active")&&!a(this).hasClass(n+"not-disable"))&&(t.execCmd(!!r&&"dropdown"||o.fn||e,o.param||e,o.forceCss),!1)}});if(r){l.addClass(n+"open-dropdown");var d=n+"dropdown",c={"class":d+"-"+e+" "+d+" "+n+"fixed-top"};c["data-"+d]=e;var u=a("<div/>",c);a.each(r,function(e,n){t.btnsDef[n]&&t.isSupportedBtn(n)&&u.append(t.buildSubBtn(n))}),t.$box.append(u.hide())}else o.key&&(t.keys[o.key]={fn:o.fn||e,param:o.param||e});return r||(t.tagToButton[(o.tag||e).toLowerCase()]=e),l},buildSubBtn:function(e){var t=this,n=t.o.prefix,o=t.btnsDef[e],r=null==o.hasIcon||o.hasIcon;return o.key&&(t.keys[o.key]={fn:o.fn||e,param:o.param||e}),t.tagToButton[(o.tag||e).toLowerCase()]=e,a("<button/>",{type:"button","class":n+e+"-dropdown-button"+(o.ico?" "+n+o.ico+"-button":""),html:t.hasSvg&&r?'<svg><use xlink:href="'+t.svgPath+"#"+n+(o.ico||e).replace(/([A-Z]+)/g,"-$1").toLowerCase()+'"/></svg>'+(o.text||o.title||t.lang[e]||e):o.text||o.title||t.lang[e]||e,title:o.key?" (Ctrl + "+o.key+")":null,style:o.style||null,mousedown:function(){return a("body",t.doc).trigger("mousedown"),t.execCmd(o.fn||e,o.param||e,o.forceCss),!1}})},isSupportedBtn:function(e){try{return this.btnsDef[e].isSupported()}catch(t){}return!0},buildOverlay:function(){var e=this;return e.$overlay=a("<div/>",{"class":e.o.prefix+"overlay"}).appendTo(e.$box),e.$overlay},showOverlay:function(){var e=this;a(t).trigger("scroll"),e.$overlay.fadeIn(200),e.$box.addClass(e.o.prefix+"box-blur")},hideOverlay:function(){var e=this;e.$overlay.fadeOut(50),e.$box.removeClass(e.o.prefix+"box-blur")},fixedBtnPaneEvents:function(){var e=this,n=e.o.fixedFullWidth,o=e.$box;e.o.fixedBtnPane&&(e.isFixed=!1,a(t).on("scroll."+e.eventNamespace+" resize."+e.eventNamespace,function(){if(o){e.syncCode();var r=a(t).scrollTop(),i=o.offset().top+1,s=e.$btnPane,l=s.outerHeight()-2;r-i>0&&r-i-e.height<0?(e.isFixed||(e.isFixed=!0,s.css({position:"fixed",top:0,left:n?"0":"auto",zIndex:7}),a([e.$ta,e.$ed]).css({marginTop:s.height()})),s.css({width:n?"100%":o.width()-1+"px"}),a("."+e.o.prefix+"fixed-top",o).css({position:n?"fixed":"absolute",top:n?l:l+(r-i)+"px",zIndex:15})):e.isFixed&&(e.isFixed=!1,s.removeAttr("style"),a([e.$ta,e.$ed]).css({marginTop:0}),a("."+e.o.prefix+"fixed-top",o).css({position:"absolute",top:l}))}}))},setDisabled:function(e){var t=this,n=t.o.prefix;t.disabled=e,e?t.$ta.attr("disabled",!0):t.$ta.removeAttr("disabled"),t.$box.toggleClass(n+"disabled",e),t.$ed.attr("contenteditable",!e)},destroy:function(){var e=this,n=e.o.prefix;e.isTextarea?e.$box.after(e.$ta.css({height:""}).val(e.html()).removeClass(n+"textarea").show()):e.$box.after(e.$ed.css({height:""}).removeClass(n+"editor").removeAttr("contenteditable").removeAttr("dir").html(e.html()).show()),e.$ed.off("dblclick","img"),e.destroyPlugins(),e.$box.remove(),e.$c.removeData("trumbowyg"),a("body").removeClass(n+"body-fullscreen"),e.$c.trigger("tbwclose"),a(t).off("scroll."+e.eventNamespace+" resize."+e.eventNamespace)},empty:function(){this.$ta.val(""),this.syncCode(!0)},toggle:function(){var e=this,t=e.o.prefix;e.o.autogrowOnEnter&&(e.autogrowOnEnterDontClose=!e.$box.hasClass(t+"editor-hidden")),e.semanticCode(!1,!0),setTimeout(function(){e.doc.activeElement.blur(),e.$box.toggleClass(t+"editor-hidden "+t+"editor-visible"),e.$btnPane.toggleClass(t+"disable"),a("."+t+"viewHTML-button",e.$btnPane).toggleClass(t+"active"),e.$box.hasClass(t+"editor-visible")?e.$ta.attr("tabindex",-1):e.$ta.removeAttr("tabindex"),e.o.autogrowOnEnter&&!e.autogrowOnEnterDontClose&&e.autogrowEditorOnEnter()},0)},dropdown:function(e){var n=this,o=n.doc,r=n.o.prefix,i=a("[data-"+r+"dropdown="+e+"]",n.$box),s=a("."+r+e+"-button",n.$btnPane),l=i.is(":hidden");if(a("body",o).trigger("mousedown"),l){var d=s.offset().left;s.addClass(r+"active"),i.css({position:"absolute",top:s.offset().top-n.$btnPane.offset().top+s.outerHeight(),left:n.o.fixedFullWidth&&n.isFixed?d+"px":d-n.$btnPane.offset().left+"px"}).show(),a(t).trigger("scroll"),a("body",o).on("mousedown."+n.eventNamespace,function(e){i.is(e.target)||(a("."+r+"dropdown",n.$box).hide(),a("."+r+"active",n.$btnPane).removeClass(r+"active"),a("body",o).off("mousedown."+n.eventNamespace))})}},html:function(e){var t=this;return null!=e?(t.$ta.val(e),t.syncCode(!0),t.$c.trigger("tbwchange"),t):t.$ta.val()},syncTextarea:function(){var e=this;e.$ta.val(e.$ed.text().trim().length>0||e.$ed.find("hr,img,embed,iframe,input").length>0?e.$ed.html():"")},syncCode:function(e){var t=this;if(!e&&t.$ed.is(":visible"))t.syncTextarea();else{var n=a("<div>").html(t.$ta.val()),o=a("<div>").append(n);a(t.o.tagsToRemove.join(","),o).remove(),t.$ed.html(o.contents().html())}if(t.o.autogrow&&(t.height=t.$ed.height(),t.height!==t.$ta.css("height")&&(t.$ta.css({height:t.height}),t.$c.trigger("tbwresize"))),t.o.autogrowOnEnter){t.$ed.height("auto");var r=t.autogrowOnEnterWasFocused?t.$ed[0].scrollHeight:t.$ed.css("min-height");r!==t.$ta.css("height")&&(t.$ed.css({height:r}),t.$c.trigger("tbwresize"))}},semanticCode:function(e,t,n){var o=this;if(o.saveRange(),o.syncCode(e),o.o.semantic){if(o.semanticTag("b"),o.semanticTag("i"),o.semanticTag("s"),o.semanticTag("strike"),t){var r=o.o.inlineElementsSelector,i=":not("+r+")";o.$ed.contents().filter(function(){return 3===this.nodeType&&this.nodeValue.trim().length>0}).wrap("<span data-tbw/>");var s=function(e){if(0!==e.length){var t=e.nextUntil(i).addBack().wrapAll("<p/>").parent(),n=t.nextAll(r).first();t.next("br").remove(),s(n)}};s(o.$ed.children(r).first()),o.semanticTag("div",!0),o.$ed.find("p").filter(function(){return(!o.range||this!==o.range.startContainer)&&(0===a(this).text().trim().length&&0===a(this).children().not("br,span").length)}).contents().unwrap(),a("[data-tbw]",o.$ed).contents().unwrap(),o.$ed.find("p:empty").remove()}n||o.restoreRange(),o.syncTextarea()}},semanticTag:function(e,t){var n;if(null!=this.o.semantic&&"object"==typeof this.o.semantic&&this.o.semantic.hasOwnProperty(e))n=this.o.semantic[e];else{if(this.o.semantic!==!0||!this.DEFAULT_SEMANTIC_MAP.hasOwnProperty(e))return;n=this.DEFAULT_SEMANTIC_MAP[e]}a(e,this.$ed).each(function(){var e=a(this);e.wrap("<"+n+"/>"),t&&a.each(e.prop("attributes"),function(){e.parent().attr(this.name,this.value)}),e.contents().unwrap()})},createLink:function(){for(var e,t,n,o=this,r=o.doc.getSelection(),i=r.focusNode,s=(new XMLSerializer).serializeToString(r.getRangeAt(0).cloneContents());["A","DIV"].indexOf(i.nodeName)<0;)i=i.parentNode;if(i&&"A"===i.nodeName){var l=a(i);s=l.text(),e=l.attr("href"),o.o.minimalLinks||(t=l.attr("title"),n=l.attr("target"));var d=o.doc.createRange();d.selectNode(i),r.removeAllRanges(),r.addRange(d)}o.saveRange();var c={url:{label:"URL",required:!0,value:e},text:{label:o.lang.text,value:s}};o.o.minimalLinks||Object.assign(c,{title:{label:o.lang.title,value:t},target:{label:o.lang.target,value:n}}),o.openModalInsert(o.lang.createLink,c,function(e){var t=o.prependUrlPrefix(e.url);if(!t.length)return!1;var n=a(['<a href="',e.url,'">',e.text||e.url,"</a>"].join(""));return o.o.minimalLinks||(e.title.length>0&&n.attr("title",e.title),e.target.length>0&&n.attr("target",e.target)),o.range.deleteContents(),o.range.insertNode(n[0]),o.syncCode(),o.$c.trigger("tbwchange"),!0})},prependUrlPrefix:function(e){var t=this;if(!t.urlPrefix)return e;const n=/^([a-z][-+.a-z0-9]*:|\/|#)/i;if(n.test(e))return e;const a=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;return a.test(e)?"mailto:"+e:t.urlPrefix+e},unlink:function(){var e=this,t=e.doc.getSelection(),n=t.focusNode;if(t.isCollapsed){for(;["A","DIV"].indexOf(n.nodeName)<0;)n=n.parentNode;if(n&&"A"===n.nodeName){var a=e.doc.createRange();a.selectNode(n),t.removeAllRanges(),t.addRange(a)}}e.execCmd("unlink",void 0,void 0,!0)},insertImage:function(){var e=this;e.saveRange();var t={url:{label:"URL",required:!0},alt:{label:e.lang.description,value:e.getRangeText()}};e.o.imageWidthModalEdit&&(t.width={}),e.openModalInsert(e.lang.insertImage,t,function(t){e.execCmd("insertImage",t.url);var n=a('img[src="'+t.url+'"]:not([alt])',e.$box);return n.attr("alt",t.alt),e.o.imageWidthModalEdit&&n.attr({width:t.width}),e.syncCode(),e.$c.trigger("tbwchange"),!0})},fullscreen:function(){var e,n=this,o=n.o.prefix,r=o+"fullscreen";n.$box.toggleClass(r),e=n.$box.hasClass(r),a("body").toggleClass(o+"body-fullscreen",e),a(t).trigger("scroll"),n.$c.trigger("tbw"+(e?"open":"close")+"fullscreen")},execCmd:function(e,t,n,a){var o=this;a=!!a||"","dropdown"!==e&&o.$ed.focus();try{o.doc.execCommand("styleWithCSS",!1,n||!1)}catch(r){}try{o[e+a](t)}catch(r){try{e(t)}catch(i){"insertHorizontalRule"===e?t=void 0:"formatBlock"===e&&o.isIE&&(t="<"+t+">"),o.doc.execCommand(e,!1,t),o.syncCode(),o.semanticCode(!1,!0)}"dropdown"!==e&&(o.updateButtonPaneStatus(),o.$c.trigger("tbwchange"))}},openModal:function(e,n){var i=this,s=i.o.prefix;if(a("."+s+"modal-box",i.$box).length>0)return!1;i.o.autogrowOnEnter&&(i.autogrowOnEnterDontClose=!0),i.saveRange(),i.showOverlay(),i.$btnPane.addClass(s+"disable");var l=a("<div/>",{"class":s+"modal "+s+"fixed-top"}).css({top:i.$btnPane.height()}).appendTo(i.$box);i.$overlay.one("click",function(){return l.trigger(r),!1});var d=a("<form/>",{action:"",html:n}).on("submit",function(){return l.trigger(o),!1}).on("reset",function(){return l.trigger(r),!1}).on("submit reset",function(){i.o.autogrowOnEnter&&(i.autogrowOnEnterDontClose=!1)}),c=a("<div/>",{"class":s+"modal-box",html:d}).css({top:"-"+i.$btnPane.outerHeight()+"px",opacity:0}).appendTo(l).animate({top:0,opacity:1},100);return a("<span/>",{text:e,"class":s+"modal-title"}).prependTo(c),l.height(c.outerHeight()+10),a("input:first",c).focus(),i.buildModalBtn("submit",c),i.buildModalBtn("reset",c),a(t).trigger("scroll"),l},buildModalBtn:function(e,t){var n=this,o=n.o.prefix;return a("<button/>",{"class":o+"modal-button "+o+"modal-"+e,type:e,text:n.lang[e]||e}).appendTo(a("form",t))},closeModal:function(){var e=this,t=e.o.prefix;e.$btnPane.removeClass(t+"disable"),e.$overlay.off();var n=a("."+t+"modal-box",e.$box);n.animate({top:"-"+n.height()},100,function(){n.parent().remove(),e.hideOverlay()}),e.restoreRange()},openModalInsert:function(e,t,n){var i=this,s=i.o.prefix,l=i.lang,d="";return a.each(t,function(e,t){var n=t.label||e,a=t.name||e,o=t.attributes||{},r=Object.keys(o).map(function(e){return e+'="'+o[e]+'"'}).join(" ");d+='<label><input type="'+(t.type||"text")+'" name="'+a+'"'+("checkbox"===t.type&&t.value?' checked="checked"':' value="'+(t.value||"").replace(/"/g,"&quot;"))+'"'+r+'><span class="'+s+'input-infos"><span>'+(l[n]?l[n]:n)+"</span></span></label>"}),i.openModal(e,d).on(o,function(){var e=a("form",a(this)),r=!0,s={};a.each(t,function(t,n){var o=n.name||t,l=a('input[name="'+o+'"]',e),d=l.attr("type");switch(d.toLowerCase()){case"checkbox":s[o]=l.is(":checked");break;case"radio":s[o]=l.filter(":checked").val();break;default:s[o]=a.trim(l.val())}n.required&&""===s[o]?(r=!1,i.addErrorOnModalField(l,i.lang.required)):n.pattern&&!n.pattern.test(s[o])&&(r=!1,i.addErrorOnModalField(l,n.patternError))}),r&&(i.restoreRange(),n(s,t)&&(i.syncCode(),i.$c.trigger("tbwchange"),i.closeModal(),a(this).off(o)))}).one(r,function(){a(this).off(o),i.closeModal()})},addErrorOnModalField:function(e,t){var n=this.o.prefix,o=e.parent();e.on("change keyup",function(){o.removeClass(n+"input-error")}),o.addClass(n+"input-error").find("input+span").append(a("<span/>",{"class":n+"msg-error",text:t}))},getDefaultImgDblClickHandler:function(){var e=this;return function(){var t=a(this),n=t.attr("src"),o="(Base64)";0===n.indexOf("data:image")&&(n=o);var r={url:{label:"URL",value:n,required:!0},alt:{label:e.lang.description,value:t.attr("alt")}};return e.o.imageWidthModalEdit&&(r.width={value:t.attr("width")?t.attr("width"):""}),e.openModalInsert(e.lang.insertImage,r,function(n){return n.src!==o&&t.attr({src:n.url}),t.attr({alt:n.alt}),e.o.imageWidthModalEdit&&(parseInt(n.width)>0?t.attr({width:n.width}):t.removeAttr("width")),!0}),!1}},saveRange:function(){var e=this,t=e.doc.getSelection();if(e.range=null,t.rangeCount){var n,a=e.range=t.getRangeAt(0),o=e.doc.createRange();o.selectNodeContents(e.$ed[0]),o.setEnd(a.startContainer,a.startOffset),n=(o+"").length,e.metaRange={start:n,end:n+(a+"").length}}},restoreRange:function(){var e,t=this,n=t.metaRange,a=t.range,o=t.doc.getSelection();if(a){if(n&&n.start!==n.end){var r,i=0,s=[t.$ed[0]],l=!1,d=!1;for(e=t.doc.createRange();!d&&(r=s.pop());)if(3===r.nodeType){var c=i+r.length;!l&&n.start>=i&&n.start<=c&&(e.setStart(r,n.start-i),l=!0),l&&n.end>=i&&n.end<=c&&(e.setEnd(r,n.end-i),d=!0),i=c}else for(var u=r.childNodes,g=u.length;g>0;)g-=1,s.push(u[g])}o.removeAllRanges(),o.addRange(e||a)}},getRangeText:function(){return this.range+""},updateButtonPaneStatus:function(){var e=this,t=e.o.prefix,n=e.getTagsRecursive(e.doc.getSelection().focusNode),o=t+"active-button "+t+"active";a("."+t+"active-button",e.$btnPane).removeClass(o),a.each(n,function(n,r){var i=e.tagToButton[r.toLowerCase()],s=a("."+t+i+"-button",e.$btnPane);if(s.length>0)s.addClass(o);else try{s=a("."+t+"dropdown ."+t+i+"-dropdown-button",e.$box);var l=s.parent().data("dropdown");a("."+t+l+"-button",e.$box).addClass(o)}catch(d){}})},getTagsRecursive:function(e,t){var n=this;if(t=t||(e&&e.tagName?[e.tagName]:[]),!e||!e.parentNode)return t;e=e.parentNode;var o=e.tagName;return"DIV"===o?t:("P"===o&&""!==e.style.textAlign&&t.push(e.style.textAlign),a.each(n.tagHandlers,function(a,o){t=t.concat(o(e,n))}),t.push(o),n.getTagsRecursive(e,t).filter(function(e){return null!=e}))},initPlugins:function(){var e=this;e.loadedPlugins=[],a.each(a.trumbowyg.plugins,function(t,n){n.shouldInit&&!n.shouldInit(e)||(n.init(e),n.tagHandler&&e.tagHandlers.push(n.tagHandler),e.loadedPlugins.push(n))})},destroyPlugins:function(){a.each(this.loadedPlugins,function(e,t){t.destroy&&t.destroy()})}}}(navigator,window,document,jQuery);
-/* Include script: init.js */
+/* Include script: callback.js */
+class Callback {
 
-// Create own namespace.
+	constructor() {
+		this.list = [];
+	}
 
-window.Openrat = {};
+	// Add a callback or a collection of callbacks to the list
+	add( callable ) {
+		this.list.push( callable );
+	}
 
-let originalAddClass = jQuery.fn.addClass;
-jQuery.fn.addClass = function (styleClass) {
-	return originalAddClass.call(this,'or-'+styleClass);
+	fire() {
+		for( let c of this.list)
+			c.apply(null,arguments);
+	}
+
 }
-
-let originalRemoveClass = jQuery.fn.removeClass;
-jQuery.fn.removeClass = function (styleClass) {
-	return originalRemoveClass.call(this,'or-'+styleClass);
-}
-
-/*
-let originalToggleClass = jQuery.fn.toggleClass;
-jQuery.fn.toggleClass = function (styleClass) {
-	return originalToggleClass.call(this,'or-'+styleClass);
-}
-*/
-
-let originalHasClass = jQuery.fn.hasClass;
-jQuery.fn.hasClass = function (styleClass) {
-	return originalHasClass.call(this,'or-'+styleClass);
-}
-
 /* Include script: notice.js */
 
 /**
@@ -1716,7 +1706,7 @@ class Notice  {
 			.addClass('collapsible'           )
 			.addClass('collapsible--is-closed');
 
-		this.onClick = $.Callbacks();
+		this.onClick = new Callback();
 
 	}
 
@@ -1766,7 +1756,7 @@ class Notice  {
 		this.element.append('<span class="or-notice-text or-collapsible-act-switch">' + Notice.htmlEntities(this.msg) + '</span>');
 
 		if (this.name) {
-			this.element.append( $('<div class="or-notice-name or-collapsible-value"><a class="or-act-clickable" href="' + Openrat.Navigator.createShortUrl(this.typ, this.id) + '" data-type="open" data-action="' + this.typ + '" data-id="' + this.id + '"><i class="or-notice-action-full or-image-icon or-image-icon--action-' + this.typ + '"></i><span class="">' + this.name + '</span></a></div>').orLinkify() );
+			this.element.append( $('<div class="or-notice-name or-collapsible-value"><a class="or-act-clickable" href="' + WorkbenchNavigator.createShortUrl(this.typ, this.id) + '" data-type="open" data-action="' + this.typ + '" data-id="' + this.id + '"><i class="or-notice-action-full or-image-icon or-image-icon--action-' + this.typ + '"></i><span class="">' + this.name + '</span></a></div>').orLinkify() );
 		}
 
 		if (this.log)
@@ -1780,7 +1770,7 @@ class Notice  {
 			notice.onClick.fire();
 		} );
 
-		Openrat.Workbench.registerOpenClose( this.element );
+		Workbench.registerOpenClose( this.element );
 
 		// Close the notice on click
 		this.element.find('.or-act-notice-close').click(function () {
@@ -1908,29 +1898,31 @@ class Notice  {
 
 /* Include script: dialog.js */
 /**
- * A dialog is a special area in the workbench for displaying and inputting data.
- * A dialog contains a view.
+ * The encapsulated view.
  */
-
-Openrat.Dialog = function() {
-
-	/**
-	 * The encapsulated view.
-	 */
-	this.view;
+class Dialog {
 
 	/**
-	 * Dirty-marker (if unsaved changes exist).
-	 *
-	 * @type {boolean}
+	 * A dialog is a special area in the workbench for displaying and inputting data.
+	 * A dialog contains a view.
 	 */
-	this.isDirty = false;
+	constructor() {
 
-	/**
-	 * the DOM element which contains the dialog.
-	 * @type {*|jQuery|HTMLElement}
-	 */
-	this.element = $('.or-dialog-content .or-view');
+		this.view;
+
+		/**
+		 * Dirty-marker (if unsaved changes exist).
+		 *
+		 * @type {boolean}
+		 */
+		this.isDirty = false;
+
+		/**
+		 * the DOM element which contains the dialog.
+		 * @type {*|jQuery|HTMLElement}
+		 */
+		this.element = $('.or-dialog-content .or-view');
+	}
 
 	/**
 	 * Creating a new dialog.
@@ -1943,18 +1935,18 @@ Openrat.Dialog = function() {
 	 *
 	 * @return Promise of underlying view
 	 */
-	this.start = function( name,action,method,id,params )
+	start( name,action,method,id,params )
 	{
 		// Attribute aus dem aktuellen Editor holen, falls die Daten beim Aufrufer nicht angegeben sind.
 		if (!action)
-			action =  Openrat.Workbench.state.action;
+			action =  Workbench.state.action;
 
 		if  (!id)
-			id =  Openrat.Workbench.state.id;
+			id =  Workbench.state.id;
 
 		let dialog = this;
 
-		let view = new Openrat.View( action,method,id,params );
+		let view = new View( action,method,id,params );
 
 		Notice.removeAllNotices();
 
@@ -1989,7 +1981,7 @@ Openrat.Dialog = function() {
 
 
 
-	this.show = function() {
+	show() {
 
 		$('.or-dialog').removeClass('dialog--is-closed').addClass('dialog--is-open');
 
@@ -2018,7 +2010,7 @@ Openrat.Dialog = function() {
 	}
 
 
-	this.hide = function() {
+	hide() {
 		$('.or-dialog').removeClass('dialog--is-open').addClass('dialog--is-closed'); // Dialog schließen
 	}
 
@@ -2026,19 +2018,19 @@ Openrat.Dialog = function() {
 	/**
 	 * Closing the dialog.
 	 */
-	this.close = function() {
+	close() {
 
 		let dialog = this;
 
 		if   ( this.isDirty ) {
 			// ask the user if we should close this dialog
-			let exit = window.confirm( Openrat.Workbench.language.UNSAVED_CHANGES_CONFIRM );
+			let exit = window.confirm( Workbench.language.UNSAVED_CHANGES_CONFIRM );
 
 			if   ( ! exit )
 				return; // do not close the dialog
 
 			let notice = new Notice();
-			notice.msg = Openrat.Workbench.language.REOPEN_CLOSED_DIALOG;
+			notice.msg = Workbench.language.REOPEN_CLOSED_DIALOG;
 			notice.setStatus( 'warning' );
 			notice.timeout = 120;
 			notice.onClick.add( function() {
@@ -2065,44 +2057,48 @@ Openrat.Dialog = function() {
  * @param params
  * @constructor
  */
-Openrat.View = function( action,method,id,params ) {
+class View {
 
-    this.action = action;
-    this.method = method;
-    this.id = id;
-    this.params = params;
+	constructor( action,method,id,params ) {
+		this.action = action;
+		this.method = method;
+		this.id = id;
+		this.params = params;
 
-    this.onCloseHandler = $.Callbacks();
+		this.onCloseHandler = new Callback();
 
-    this.onChangeHandler = $.Callbacks();
-    this.onSaveHandler = $.Callbacks();
+		this.onChangeHandler = new Callback();
+		this.onSaveHandler = new Callback();
+	}
 
-    this.before = function() {};
+    before() {
+
+	};
 
 	/**
 	 * @param element
 	 * @returns {Promise}
 	 */
-	this.start = function( element ) {
+	start( element ) {
 
         this.before();
         this.element = element;
         return this.loadView();
     }
 
-    this.afterLoad = function() {
+    afterLoad() {
 
     }
 
-    this.close = function() {
+    close() {
 
 		this.onCloseHandler.fire();
     }
 
 
-    function fireViewLoadedEvents(element) {
+    fireViewLoadedEvents(element) {
 
-        Openrat.Workbench.afterViewLoadedHandler.fire( element );
+        Workbench.afterViewLoadedHandler.fire( element );
     }
 
 
@@ -2110,9 +2106,9 @@ Openrat.View = function( action,method,id,params ) {
 	 * Loads the content of this view
 	 * @returns Promise
 	 */
-	this.loadView = function() {
+	loadView() {
 
-        let url = Openrat.View.createUrl( this.action,this.method,this.id,this.params,false); // URL für das Laden erzeugen.
+        let url = View.createUrl( this.action,this.method,this.id,this.params,false); // URL für das Laden erzeugen.
         let element = this.element;
         let view = this;
 
@@ -2130,19 +2126,11 @@ Openrat.View = function( action,method,id,params ) {
 
 			$(element).find('form').each( function() {
 
-				let form = new Openrat.Form();
+				let form = new Form();
 
-				form.onChangeHandler.add( function() {
-					view.onChangeHandler.fire();
-				});
-
-				form.onSaveHandler.add( function() {
-					view.onSaveHandler.fire();
-				});
-
-				form.onCloseHandler.add( function() {
-					view.close();
-				} );
+				form.onChangeHandler.add( () => { view.onChangeHandler.fire() } );
+				form.onSaveHandler  .add( () => { view.onSaveHandler  .fire() } );
+				form.onCloseHandler .add( () => { view.close()                } );
 
 				form.forwardTo = function (action, subaction, id, data) {
 					view.action = action;
@@ -2155,7 +2143,7 @@ Openrat.View = function( action,method,id,params ) {
 				form.initOnElement(this);
 			});
 
-			fireViewLoadedEvents( element );
+			view.fireViewLoadedEvents( element );
 		} );
 
 		loadViewHtmlPromise.fail( function(jqxhr,status,cause) {
@@ -2165,7 +2153,7 @@ Openrat.View = function( action,method,id,params ) {
 
 			let notice = new Notice();
 			notice.setStatus('error');
-			notice.msg = Openrat.Workbench.language.ERROR;
+			notice.msg = Workbench.language.ERROR;
 			notice.show();
 		});
 
@@ -2174,7 +2162,7 @@ Openrat.View = function( action,method,id,params ) {
 		});
 
 		// Load the data for this view.
-		let apiUrl = Openrat.View.createUrl( this.action,this.method,this.id,this.params,true);
+		let apiUrl = View.createUrl( this.action,this.method,this.id,this.params,true);
 
 		return loadViewHtmlPromise;
 	}
@@ -2183,15 +2171,16 @@ Openrat.View = function( action,method,id,params ) {
 
 
     /**
-     * Erzeugt eine URL, um die gewünschte Action vom Server zu laden.
-     *
-     * @param action
-     * @param subaction
-     * @param id
-     * @param extraid
-     * @returns URL
-     */
-    Openrat.View.createUrl = function(action,subaction,id,extraid={},api=false )
+	 * Erzeugt eine URL, um die gewünschte Action vom Server zu laden.
+	 *
+	 * @param action
+	 * @param subaction
+	 * @param id
+	 * @param extraid
+	 * @param api
+	 * @returns URL
+	 */
+    static createUrl(action,subaction,id,extraid={},api=false )
     {
         let url = './';
 
@@ -2235,26 +2224,31 @@ Openrat.View = function( action,method,id,params ) {
  *
  * @constructor
  */
-Openrat.Form = function() {
+class Form {
 
-	const modes = {
+	static modes = {
 		showBrowserNotice  : 1,
 		keepOpen           : 2,
 		closeAfterSubmit   : 4,
 		closeAfterSuccess  : 8,
 	};
 
-	/**
-	 * Fires on input.
-	 */
-	this.onChangeHandler = $.Callbacks();
-	this.onSaveHandler   = $.Callbacks();
+	constructor() {
 
-    this.setLoadStatus = function( isLoading ) {
+
+		/**
+		 * Fires on input.
+		 */
+		this.onChangeHandler = new Callback();
+		this.onSaveHandler   = new Callback();
+		this.onCloseHandler  = new Callback();
+	}
+
+	setLoadStatus( isLoading ) {
         $(this.element).closest('div.content').toggleClass('loader',isLoading);
     }
 
-    this.initOnElement = function( element ) {
+    initOnElement( element ) {
         this.element = element;
 
         let form = this;
@@ -2264,10 +2258,10 @@ Openrat.Form = function() {
         if   ( $(this.element).data('autosave') ) {
 
             $(this.element).find('input[type="checkbox"]').click( function() {
-                form.submit(modes.keepOpen);
+                form.submit(Form.modes.keepOpen);
             });
             $(this.element).find('select').change( function() {
-                form.submit(modes.keepOpen);
+                form.submit(Form.modes.keepOpen);
             });
         }
 
@@ -2288,7 +2282,7 @@ Openrat.Form = function() {
 
         });
         $(element).find('.or-act-form-apply').click( function() {
-			form.submit(modes.keepOpen);
+			form.submit(Form.modes.keepOpen);
         });
         $(element).find('.or-act-form-save').click( function() {
 			form.submit();
@@ -2313,7 +2307,7 @@ Openrat.Form = function() {
         });
     }
 
-    this.cancel = function() {
+    cancel() {
         //$(this.element).html('').parent().removeClass('is-open');
 		Notice.removeAllNotices();
 
@@ -2321,22 +2315,20 @@ Openrat.Form = function() {
     }
 
 
-    this.rollback = function() {
+    rollback() {
         this.element.trigger('reset');
     }
 
-    this.onCloseHandler = $.Callbacks();
-
-    this.forwardTo = function (action, subaction, id, data) {
+    forwardTo(action, subaction, id, data) {
     }
 
-    this.submit = function( mode ) {
+    submit( mode ) {
 
 		if   ( mode === undefined )
 			if   ( $(this.element).data('async') )
-				mode = modes.closeAfterSubmit;
+				mode = Form.modes.closeAfterSubmit;
 			else
-				mode = modes.closeAfterSuccess;
+				mode = Form.modes.closeAfterSuccess;
 
 		Notice.removeAllNotices();
 
@@ -2344,7 +2336,7 @@ Openrat.Form = function() {
         let status = new Notice();
         status.setStatus('info');
         status.inProgress();
-        status.msg = Openrat.Workbench.language.PROGRESS;
+        status.msg = Workbench.language.PROGRESS;
         status.show();
 
         // Alle vorhandenen Error-Marker entfernen.
@@ -2355,9 +2347,9 @@ Openrat.Form = function() {
 
         // If form does not contain action/id, get it from the workbench.
         if   (!formData.has('id') )
-            formData.append('id',Openrat.Workbench.state.id);
+            formData.append('id',Workbench.state.id);
         if   (!formData.has('action') )
-            formData.append('action',Openrat.Workbench.state.action);
+            formData.append('action',Workbench.state.action);
 
         let formMethod = $(this.element).attr('method').toUpperCase();
 
@@ -2379,14 +2371,14 @@ Openrat.Form = function() {
             //params['output'] = 'json';// Irgendwie geht das nicht.
 			formData.append('output','json');
 
-            if	( mode == modes.closeAfterSubmit )
+            if	( mode == Form.modes.closeAfterSubmit )
                 this.onCloseHandler.fire();
                 // Async: Window is closed, but the action will be startet now.
 
             let form = this;
             console.debug( form );
 
-            $.ajax( { 'type':'POST',url:url, data:this.formDataToObject(formData), success:function(responseData, textStatus, jqXHR)
+            $.ajax( { 'type':'POST',url:url, data:Form.formDataToObject(formData), success:function(responseData, textStatus, jqXHR)
                 {
                     form.setLoadStatus(false);
                     status.close();
@@ -2400,11 +2392,11 @@ Openrat.Form = function() {
 						let async        = $(form.element).data('async'       );
 
 						if   ( afterSuccess == 'forward' )
-							mode = modes.keepOpen;
+							mode = Form.modes.keepOpen;
 
 						// The data was successful saved.
 						// Now we can close the form.
-						if	( mode == modes.closeAfterSuccess )
+						if	( mode == Form.modes.closeAfterSuccess )
 						{
 							form.onCloseHandler.fire();
 
@@ -2416,7 +2408,7 @@ Openrat.Form = function() {
 						{
 							if   ( afterSuccess == 'reloadAll' )
 							{
-								Openrat.Workbench.reloadAll();
+								Workbench.reloadAll();
 							}
 							else if   ( afterSuccess == 'forward' )
 							{
@@ -2428,7 +2420,7 @@ Openrat.Form = function() {
 							if   ( async )
 								; // do not reload
 							else
-								Openrat.Workbench.reloadViews();
+								Openrat.workbench.reloadViews();
 						}
 
 					});
@@ -2476,7 +2468,7 @@ Openrat.Form = function() {
      * @param status Status
      * @param element
      */
-    this.doResponse = function(data,status,element, onSuccess = $.noop )
+    doResponse = function(data,status,element, onSuccess = $.noop )
     {
         if	( status != 'success' )
         {
@@ -2484,7 +2476,7 @@ Openrat.Form = function() {
 
 			let notice = new Notice();
 			notice.setStatus( 'error' );
-			notice.msg = Openrat.Workbench.language.ERROR;
+			notice.msg = Workbench.language.ERROR;
 			notice.show();
 
 			return;
@@ -2513,7 +2505,7 @@ Openrat.Form = function() {
             if	( value.status == 'ok' ) // Kein Fehler?
             {
                 onSuccess();
-                Openrat.Workbench.dataChangedHandler.fire();
+                Workbench.dataChangedHandler.fire();
             }
             else
             // Server liefert Fehler zurück.
@@ -2530,7 +2522,12 @@ Openrat.Form = function() {
     }
 
 
-	this.formDataToObject = function (formData) {
+	/**
+	 *
+	 * @param formData
+	 * @return {{}}
+	 */
+	static formDataToObject(formData) {
 
 		let data = {};
 		for (let pair of formData.entries())
@@ -2544,23 +2541,29 @@ Openrat.Form = function() {
 /* Include script: workbench.js */
 
 
-Openrat.Workbench = new function()
-{
+class Workbench {
     'use strict'; // Strict mode
 
-
-    this.state = {
-    	action: '',
-    	id: 0,
+	static state = {
+		action: '',
+		id: 0,
 		extra: {}
 	};
 
-    this.popupWindow = null;
+	constructor() {
+
+		this.popupWindow = null;
+		Workbench.dataChangedHandler.add( function() {
+			if   ( Workbench.popupWindow )
+				Workbench.popupWindow.location.reload();
+		} );
+	}
+
 
     /**
 	 * Initializes the Workbench.
      */
-	this.initialize = function() {
+	initialize() {
 
 		// Initialze Ping timer.
 		this.initializePingTimer();
@@ -2568,12 +2571,12 @@ Openrat.Workbench = new function()
         this.initializeState();
         this.openModalDialog();
 
-		Openrat.Workbench.registerOpenClose( $('.or-collapsible') );
+		Workbench.registerOpenClose( $('.or-collapsible') );
 		console.info('Application started');
     }
 
 
-    this.initializeDirtyWarning = function () {
+    initializeDirtyWarning() {
 
 		// If the application should be closed, inform the user about unsaved changes.
 		window.addEventListener('beforeunload', function (e) {
@@ -2597,10 +2600,10 @@ Openrat.Workbench = new function()
     /**
      * Starts a dialog, if necessary.
      */
-    this.openModalDialog = function () {
+    openModalDialog() {
 
         if   ( $('#dialog').data('action') ) {
-        	let dialog = new Openrat.Dialog();
+        	let dialog = new Dialog();
         	dialog.start('',$('#dialog').data('action'),$('#dialog').data('action'),0,{} )
         }
     }
@@ -2611,7 +2614,7 @@ Openrat.Workbench = new function()
      *
      * Example: #/name/1 is translated to the state {action:name,id:1}
      */
-    this.initializeState = function () {
+    initializeState() {
 
         let parts = window.location.hash.split('/');
         let state = { action:'index',id:0 };
@@ -2623,25 +2626,24 @@ Openrat.Workbench = new function()
             // Only numbers and '_' allowed in the id.
             state.id = parts[2].replace(/[^0-9_]/gim,"");
 
-        Openrat.Workbench.state = state;
+        Workbench.state = state;
 
-        Openrat.Navigator.toActualHistory( state );
+		Openrat.navigator.toActualHistory( state );
 
     }
 
     /**
 	 *  Registriert den Ping-Timer für den Sitzungserhalt.
      */
-	this.initializePingTimer = function() {
+	initializePingTimer() {
 
         /**
          * Ping den Server. Führt keine Aktion aus, aber sorgt dafür, dass die Sitzung erhalten bleibt.
          *
          * "Geben Sie mir ein Ping, Vasily. Und bitte nur ein einziges Ping!" (aus: Jagd auf Roter Oktober)
          */
-        let ping = function()
-        {
-            let pingPromise = $.getJSON( Openrat.View.createUrl('profile','ping',0, {}, true) );
+        let ping = () => {
+            let pingPromise = $.getJSON( View.createUrl('profile','ping',0, {}, true) );
             console.debug('ping');
 
             pingPromise.fail( function( jqXHR, textStatus, errorThrown ) {
@@ -2668,24 +2670,24 @@ Openrat.Workbench = new function()
 
 
 
-    this.loadNewActionState = function(state) {
+    loadNewActionState(state) {
 
-        Openrat.Workbench.state = state;
-        Openrat.Workbench.loadNewAction(state.action,state.id,state.data);
+        Workbench.state = state;
+        this.loadNewAction(state.action,state.id,state.data);
 
-        this.afterNewActionHandler.fire();
+        Workbench.afterNewActionHandler.fire();
 	}
 
 
-    this.afterNewActionHandler = $.Callbacks();
-    this.afterAllViewsLoaded   = $.Callbacks();
+    static afterNewActionHandler = new Callback();
+    static afterAllViewsLoaded   = new Callback();
 
 
     /**
 	 *
      */
 
-    this.loadNewAction = function(action, id, params ) {
+    loadNewAction = function(action, id, params ) {
 
         this.reloadViews();
     }
@@ -2696,14 +2698,14 @@ Openrat.Workbench = new function()
      *
      */
 
-    this.reloadViews = function() {
+    reloadViews() {
 
         // View in geschlossenen Sektionen löschen, damit diese nicht stehen bleiben.
         $('.or-workbench-section--is-closed .or-act-view-loader').empty();
 
-        let promise = Openrat.Workbench.loadViews( $('.or-workbench .or-act-view-loader') );
+        let promise = this.loadViews( $('.or-workbench .or-act-view-loader') );
 		promise.done( function() {
-				Openrat.Workbench.afterAllViewsLoaded.fire();
+				Workbench.afterAllViewsLoaded.fire();
 			}
 		);
 
@@ -2711,14 +2713,14 @@ Openrat.Workbench = new function()
     }
 
 
-    this.reloadAll = function() {
+    reloadAll() {
 
     	// View in geschlossenen Sektionen löschen, damit diese nicht stehen bleiben.
-        let promise = Openrat.Workbench.loadViews( $('.or-act-view-loader,.or-act-view-static').empty() );
+        let promise = this.loadViews( $('.or-act-view-loader,.or-act-view-static').empty() );
         console.debug('reloading all views');
 
         promise.done( function() {
-				Openrat.Workbench.afterAllViewsLoaded.fire();
+				Workbench.afterAllViewsLoaded.fire();
 			}
 		);
 
@@ -2730,45 +2732,45 @@ Openrat.Workbench = new function()
     }
 
 
-    this.loadUserStyle = function() {
+	loadUserStyle() {
 
-        let url = Openrat.View.createUrl('profile','userinfo',0, {},true );
+        let url = View.createUrl('profile','userinfo',0, {},true );
 
         // Die Inhalte des Zweiges laden.
-        $.getJSON(url, function (response) {
+        $.getJSON(url, response => {
 
             let style = response.output['style'];
-            Openrat.Workbench.setUserStyle(style);
+            this.setUserStyle(style);
 
             let color = response.output['theme-color'];
-            Openrat.Workbench.setThemeColor(color);
+            this.setThemeColor(color);
         });
     }
 
 
 
-	this.settings = {};
-    this.language = {};
+	static settings = {};
+    static language = {};
 
-    this.loadLanguage = function() {
+    loadLanguage() {
 
-        let url = Openrat.View.createUrl('profile','language',0, {},true );
+        let url = View.createUrl('profile','language',0, {},true );
 
         // Die Inhalte des Zweiges laden.
         $.getJSON(url, function (response) {
 
-            Openrat.Workbench.language = response.output.language;
+            Workbench.language = response.output.language;
         });
     }
 
-    this.loadUISettings = function() {
+    loadUISettings() {
 
-        let url = Openrat.View.createUrl('profile','uisettings',0, {},true );
+        let url = View.createUrl('profile','uisettings',0, {},true );
 
         // Die Inhalte des Zweiges laden.
         $.getJSON(url, function (response) {
 
-            Openrat.Workbench.settings = response.output.settings.settings;
+            Workbench.settings = response.output.settings.settings;
         });
     }
 
@@ -2778,14 +2780,15 @@ Openrat.Workbench = new function()
 	 * @param $views
 	 * @returns Promise for all views
 	 */
-	this.loadViews = function( $views )
+	loadViews( $views )
     {
+    	let wb = this;
     	let promises = [];
         $views.each(function (idx) {
 
             let $targetDOMElement = $(this);
 
-            promises.push( Openrat.Workbench.loadNewActionIntoElement( $targetDOMElement ) );
+            promises.push( wb.loadNewActionIntoElement( $targetDOMElement ) );
         });
 
         return $.when.apply( $, promises );
@@ -2796,21 +2799,21 @@ Openrat.Workbench = new function()
 	 * @param $viewElement
 	 * @returns {Promise}
 	 */
-	this.loadNewActionIntoElement = function( $viewElement )
+	loadNewActionIntoElement( $viewElement )
     {
         let action;
         if   ( $viewElement.is('.or-act-view-static') )
             // Static views have always the same action.
             action = $viewElement.attr('data-action');
         else
-            action = Openrat.Workbench.state.action;
+            action = Workbench.state.action;
 
-        let id     = Openrat.Workbench.state.id;
-        let params =  Openrat.Workbench.state.extra;
+        let id     = Workbench.state.id;
+        let params =  Workbench.state.extra;
 
         let method = $viewElement.data('method');
 
-        let view = new Openrat.View( action,method,id,params );
+        let view = new View( action,method,id,params );
         return view.start( $viewElement );
     }
 
@@ -2821,7 +2824,7 @@ Openrat.Workbench = new function()
      * Sets a new theme.
      * @param styleName
      */
-    this.setUserStyle = function( styleName )
+    setUserStyle( styleName )
     {
         var html = $('html');
         var classList = html.attr('class').split(/\s+/);
@@ -2838,33 +2841,27 @@ Openrat.Workbench = new function()
      * Sets a new theme color.
      * @param color Theme-color
      */
-    this.setThemeColor = function( color )
+    setThemeColor( color )
     {
-        $('#theme-color').attr('content',color);
+		document.getElementById('theme-color').setAttribute('content',color);
     }
 
 
 
-	this.dataChangedHandler = $.Callbacks();
-
-	this.dataChangedHandler.add( function() {
-		if   ( Openrat.Workbench.popupWindow )
-			Openrat.Workbench.popupWindow.location.reload();
-	} );
-
-    this.afterViewLoadedHandler = $.Callbacks();
+	static dataChangedHandler = new Callback();
+    static afterViewLoadedHandler = new Callback();
 
 
 
 	/**
 	 * Sets the application title.
 	 */
-	this.setApplicationTitle = function( title ) {
+	static setApplicationTitle( newTitle ) {
 
-		if (title)
-			$('head > title').text( title + ' - ' + $('head > title').data('default') );
-		else
-			$('head > title').text( $('head > title').data('default') );
+		let title = document.querySelector('head > title');
+		let defaultTitle = title.dataset.default;
+
+		title.textContent = (newTitle ? newTitle + ' - ' : '') + defaultTitle;
 	}
 
 
@@ -2875,7 +2872,7 @@ Openrat.Workbench = new function()
 	 *
 	 * @param $el
 	 */
-	this.registerOpenClose = function( $el )
+	static registerOpenClose = function( $el )
 	{
 		$($el).children('.or-collapsible-act-switch').click( function() {
 			$(this).closest('.or-collapsible').toggleClass('collapsible--is-open').toggleClass('collapsible--is-closed');
@@ -2890,14 +2887,14 @@ Openrat.Workbench = new function()
 	 * @param action Action
 	 * @param id Id
 	 */
-	this.openNewAction = function( name,action,id )
+	openNewAction( name,action,id )
 	{
 		// Im Mobilmodus soll das Menü verschwinden, wenn eine neue Action geoeffnet wird.
 		$('.or-workbench-navigation').removeClass('workbench-navigation--is-open');
 
-		Openrat.Workbench.setApplicationTitle( name ); // Sets the title.
+		Workbench.setApplicationTitle( name ); // Sets the title.
 
-		Openrat.Navigator.navigateToNew( {'action':action, 'id':id } );
+		Openrat.navigator.navigateToNew( {'action':action, 'id':id } );
 	}
 
 
@@ -2907,7 +2904,7 @@ Openrat.Workbench = new function()
 
 
 
-	this.registerDraggable = function(viewEl) {
+	registerDraggable(viewEl) {
 
 // Drag n Drop: Inhaltselemente (Dateien,Seiten,Ordner,Verknuepfungen) koennen auf Ordner gezogen werden.
 
@@ -2925,7 +2922,7 @@ Openrat.Workbench = new function()
 	}
 
 
-	this.registerDroppable = function(viewEl) {
+	registerDroppable(viewEl) {
 
 
 		$(viewEl).find('.or-droppable-selector').droppable({
@@ -2977,16 +2974,19 @@ Openrat.Workbench = new function()
 /**
  * Navigation.
  */
-Openrat.Navigator = new function () {
+class WorkbenchNavigator {
 	'use strict';
 
+	constructor( workbench ) {
+		this.workbench = workbench;
+	}
 	/**
 	 * Navigiert zu einer Action.
 	 */
-	this.navigateTo = function(state) {
+	navigateTo(state) {
 
-		console.debug('Navigating to '+state);
-		Openrat.Workbench.loadNewActionState(state);
+		console.debug('Navigating to ',state);
+		this.workbench.loadNewActionState(state);
 	}
 
 
@@ -2994,34 +2994,32 @@ Openrat.Navigator = new function () {
 	 *
      * Navigiert zu einer neue Action und fügt einen neuen History-Eintrag hinzu.
      */
-	this.navigateToNew = function(obj) {
+	navigateToNew(obj) {
 
 		this.navigateTo(obj);
 
-		window.history.pushState(obj,obj.name,this.createShortUrl(obj.action,obj.id) );
+		window.history.pushState(obj,obj.name,WorkbenchNavigator.createShortUrl(obj.action,obj.id) );
     }
 
     /**
 	 * Setzt den State für den aktuellen History-Eintrag.
      * @param obj
      */
-    this.toActualHistory = function(obj) {
-        window.history.replaceState(obj,obj.name,this.createShortUrl(obj.action,obj.id) );
+    toActualHistory(obj) {
+        window.history.replaceState(obj,obj.name,WorkbenchNavigator.createShortUrl(obj.action,obj.id) );
     }
 
 
 
-    this.createShortUrl = function(action,id) {
+    static createShortUrl(action,id) {
 		return './#/'+action+(id?'/'+id:'');
 	}
-
-
 }
 
 /* Include script: common.js */
 
 // Execute after DOM ready:
-$( function() {
+document.addEventListener("DOMContentLoaded", event => {
     // JS is available.
     $('html').removeClass('nojs');
 
@@ -3043,11 +3041,11 @@ $( function() {
 
     // Listening to the "popstate" event:
     window.onpopstate = function (ev) {
-        Openrat.Navigator.navigateTo(ev.state);
+        Openrat.navigator.navigateTo(ev.state);
     };
 
-    Openrat.Workbench.initialize();
-    Openrat.Workbench.reloadAll();
+    Openrat.workbench.initialize();
+    Openrat.workbench.reloadAll();
 
     let registerWorkbenchGlobalEvents = function() {
 
@@ -3122,7 +3120,7 @@ $( function() {
 			//openDropdown: true, // the dropdown is automatically opened by the menu.
 			select      : function(obj) {
 				// open the search result
-				Openrat.Workbench.openNewAction( obj.name, obj.action, obj.id );
+				Workbench.openNewAction( obj.name, obj.action, obj.id );
 			},
 			afterSelect: function() {
 				//$('.or-dropdown.or-act-selector-search-results').empty();
@@ -3135,15 +3133,15 @@ $( function() {
 	registerGlobalSearch();
 
 
-	Openrat.Workbench.afterNewActionHandler.add( function() {
+	Workbench.afterNewActionHandler.add( function() {
 
 		$('.or-sidebar').find('.or-sidebar-button').orLinkify();
 	  }
 	);
 
-    Openrat.Workbench.afterNewActionHandler.add( function() {
+    Workbench.afterNewActionHandler.add( function() {
 
-        let url = Openrat.View.createUrl('tree','path',Openrat.Workbench.state.id, {'type':Openrat.Workbench.state.action} );
+        let url = View.createUrl('tree','path',Workbench.state.id, {'type':Workbench.state.action} );
 
         // Die Inhalte des Zweiges laden.
         let loadPromise = $.get(url);
@@ -3173,8 +3171,8 @@ $( function() {
 
 			$('.or-link--is-active').removeClass('link--is-active');
 
-			let action = Openrat.Workbench.state.action;
-			let id     = Openrat.Workbench.state.id;
+			let action = Workbench.state.action;
+			let id     = Workbench.state.id;
 			if  (!id) id = '0';
 
 			// Mark the links to the actual object
@@ -3195,7 +3193,7 @@ $( function() {
         });
     } );
 
-	Openrat.Workbench.afterNewActionHandler.fire();
+	Workbench.afterNewActionHandler.fire();
 });
 
 
@@ -3203,14 +3201,14 @@ $( function() {
 
 let filterMenus = function ()
 {
-    let action = Openrat.Workbench.state.action;
-    let id     = Openrat.Workbench.state.id;
+    let action = Workbench.state.action;
+    let id     = Workbench.state.id;
     $('.or-workbench-title .or-dropdown-entry.or-act-clickable').addClass('dropdown-entry--active');
     $('.or-workbench-title .or-filtered').removeClass('dropdown-entry--active').addClass('dropdown-entry--inactive');
 	// Jeder Menüeintrag bekommt die Id und Parameter.
 	$('.or-workbench-title .or-filtered .or-link').attr('data-id'    ,id    );
 
-	let url = Openrat.View.createUrl('profile','available',id, {'queryaction':action},true );
+	let url = View.createUrl('profile','available',id, {'queryaction':action},true );
 
 	// Die Inhalte des Zweiges laden.
 	let promise = $.getJSON(url);
@@ -3227,33 +3225,33 @@ let filterMenus = function ()
 }
 
 
-Openrat.Workbench.afterAllViewsLoaded.add( function() {
+Workbench.afterAllViewsLoaded.add( function() {
     filterMenus();
 } );
 
-Openrat.Workbench.afterAllViewsLoaded.add( function() {
+Workbench.afterAllViewsLoaded.add( function() {
 	$('body').removeClass('loader');
 } );
 
 
 
 
-Openrat.Workbench.afterViewLoadedHandler.add( function(element) {
+Workbench.afterViewLoadedHandler.add( function(element) {
 	$(element).find('.or-button').orButton();
 } );
 
-Openrat.Workbench.afterViewLoadedHandler.add( function(element) {
+Workbench.afterViewLoadedHandler.add( function(element) {
 
     // Refresh already opened popup windows.
-    if   ( Openrat.Workbench.popupWindow )
+    if   ( Workbench.popupWindow )
         $(element).find("a[data-type='popup']").each( function() {
-			Openrat.Workbench.popupWindow.location.href = $(this).attr('data-url');
+			Workbench.popupWindow.location.href = $(this).attr('data-url');
         });
 
 });
 
 
-Openrat.Workbench.afterViewLoadedHandler.add( function(element) {
+Workbench.afterViewLoadedHandler.add( function(element) {
 
         $(element).find(".or-input--password").dblclick( function() {
 			$(this).toggleAttr('type','text','password');
@@ -3267,7 +3265,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(element) {
 
 
 
-Openrat.Workbench.afterViewLoadedHandler.add( function($element) {
+Workbench.afterViewLoadedHandler.add( function($element) {
 
 	$element.find('.or-act-load-nav-tree').each( function() {
 
@@ -3283,7 +3281,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function($element) {
 
 			$ul.find('li').orTree( {
 				'openAction': function( name,action,id) {
-					Openrat.Workbench.openNewAction( name,action,id );
+					Openrat.workbench.openNewAction( name,action,id );
 				}
 
 			} ); // All subnodes are getting event listener for open/close
@@ -3307,7 +3305,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function($element) {
  *
  * @param viewEl DOM-Element der View
  */
-Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
+Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 
     // Die Section deaktivieren, wenn die View keinen Inhalt hat.
     var section = $(viewEl).closest('section');
@@ -3404,7 +3402,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 	
 	// Theme-Auswahl mit Preview
     $(viewEl).find('.or-theme-chooser').change( function() {
-        Openrat.Workbench.setUserStyle( this.value );
+		Openrat.workbench.setUserStyle( this.value );
     });
 
 
@@ -3472,8 +3470,8 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
     function registerDragAndDrop(viewEl)
     {
 
-		Openrat.Workbench.registerDraggable(viewEl);
-		Openrat.Workbench.registerDroppable(viewEl);
+		Openrat.workbench.registerDraggable(viewEl);
+		Openrat.workbench.registerDroppable(viewEl);
     }
 
     registerDragAndDrop(viewEl);
@@ -3482,9 +3480,34 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 } );
 
 
+/* Include script: init.js */
+
+// Create own namespace.
+
+let workbench = new Workbench();
+window.Openrat = {
+	workbench: workbench,
+	navigator: new WorkbenchNavigator(workbench)
+};
+
+let originalAddClass = jQuery.fn.addClass;
+jQuery.fn.addClass = function (styleClass) {
+	return originalAddClass.call(this,'or-'+styleClass);
+}
+
+let originalRemoveClass = jQuery.fn.removeClass;
+jQuery.fn.removeClass = function (styleClass) {
+	return originalRemoveClass.call(this,'or-'+styleClass);
+}
+
+let originalHasClass = jQuery.fn.hasClass;
+jQuery.fn.hasClass = function (styleClass) {
+	return originalHasClass.call(this,'or-'+styleClass);
+}
+
 /* Include script: column.js */
 // View loaded...
-Openrat.Workbench.afterViewLoadedHandler.add( function(element ) {
+Workbench.afterViewLoadedHandler.add( function(element ) {
 
 
     // Clickable Columns.
@@ -3492,7 +3515,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(element ) {
 
 });
 /* Include script: editor.js */
-Openrat.Workbench.afterViewLoadedHandler.add( function(element ) {
+Workbench.afterViewLoadedHandler.add( function(element ) {
 
     $(element).find('textarea').orAutoheight();
 
@@ -3747,9 +3770,9 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(element ) {
 /**
  * open/close handler for groups.
  */
-Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
+Workbench.afterViewLoadedHandler.add(  function(element ) {
 
-    Openrat.Workbench.registerOpenClose( $(element).find('.or-collapsible.or-group') );
+    Workbench.registerOpenClose( $(element).find('.or-collapsible.or-group') );
 });
 
 /* Include script: image.js */
@@ -3759,7 +3782,7 @@ $(document).on('orViewLoaded',function(event, data) {
 });
 */
 /* Include script: link.js */
-Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
+Workbench.afterViewLoadedHandler.add(  function(element ) {
 
 	// Links aktivieren...
 	$(element).find('.or-act-clickable').orLinkify();
@@ -3770,7 +3793,7 @@ Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
 
 /* Include script: qrcode.js */
 
-Openrat.Workbench.afterViewLoadedHandler.add( function(element ) {
+Workbench.afterViewLoadedHandler.add( function(element ) {
 
 	let createQRCode = function( value,text) {
 		let wrapper = $('<div class="or-info-popup or-qrcode-value"></div>');
@@ -3811,7 +3834,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(element ) {
 
 } );
 /* Include script: table.js */
-Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
+Workbench.afterViewLoadedHandler.add(  function(element ) {
 
 
 	let calculateOrderList = function() {
@@ -3898,7 +3921,7 @@ Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
 
 });
 /* Include script: upload.js */
-Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
+Workbench.afterViewLoadedHandler.add(  function(element ) {
 
 
 	var form = $(element).find('form');
@@ -3923,7 +3946,7 @@ Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
 		 var files = e.originalEvent.dataTransfer.files;
 
 		 //We need to send dropped files to Server
-		Openrat.Workbench.handleFileUpload(form,files);
+		Workbench.handleFileUpload(form,files);
 	});
 	
 	
@@ -3932,7 +3955,7 @@ Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
 		
 		var files = $(this).prop('files');
 
-		Openrat.Workbench.handleFileUpload(form,files);
+		Workbench.handleFileUpload(form,files);
 	});
 
 });
@@ -3943,7 +3966,7 @@ Openrat.Workbench.afterViewLoadedHandler.add(  function(element ) {
  * @param form
  * @param files
  */
-Openrat.Workbench.handleFileUpload = function(form,files)
+Workbench.handleFileUpload = function(form,files)
 {
 	for (let i = 0, f; f = files[i]; i++)
 	{
@@ -3963,7 +3986,7 @@ Openrat.Workbench.handleFileUpload = function(form,files)
 		$.ajax( { 'type':'POST',url:'./api/', cache:false,contentType: false, processData: false, data:form_data, success:function(data, textStatus, jqXHR)
 			{
 				notice.close();
-				let oform = new Openrat.Form();
+				let oform = new Form();
 				oform.doResponse(data,textStatus,form);
 			},
 			error:function(jqXHR, textStatus, errorThrown) {

@@ -1,5 +1,5 @@
 
-Openrat.Workbench.afterViewLoadedHandler.add( function(element ) {
+Workbench.afterViewLoadedHandler.add( function(element ) {
 
 	let createQRCode = function( value,text) {
 		let wrapper = $('<div class="or-info-popup or-qrcode-value"></div>');

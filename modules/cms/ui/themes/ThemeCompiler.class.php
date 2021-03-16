@@ -262,7 +262,7 @@ class ThemeCompiler
 
 
 		// OpenRat internal JS - als letztes, damit die vorigen bereits geladen sind.
-		$js[] = __DIR__.'/default/script/openrat/init';
+		$js[] = __DIR__.'/default/script/openrat/callback';
 		$js[] = __DIR__.'/default/script/openrat/notice';
 		$js[] = __DIR__.'/default/script/openrat/dialog';
 		$js[] = __DIR__.'/default/script/openrat/view';
@@ -270,6 +270,7 @@ class ThemeCompiler
 		$js[] = __DIR__.'/default/script/openrat/workbench';
 		$js[] = __DIR__.'/default/script/openrat/navigator';
 		$js[] = __DIR__.'/default/script/openrat/common';
+		$js[] = __DIR__.'/default/script/openrat/init';
 
 		// Komponentenbasiertes Javascript
 		foreach ( TemplateEngineInfo::getComponentList() as $c)

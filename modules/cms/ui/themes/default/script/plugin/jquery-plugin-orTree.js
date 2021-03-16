@@ -14,7 +14,7 @@ jQuery.fn.orTree = function (options)
 
 	let registerTreeBranchEvents = function (viewEl)
 	{
-		Openrat.Workbench.registerDraggable(viewEl);
+		Openrat.workbench.registerDraggable(viewEl);
 	}
 
 

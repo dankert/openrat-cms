@@ -45,7 +45,7 @@ jQuery.fn.orSearch = function( options )
 						    'action':result.type,
 							'id':result.id
 						} );
-						let link = $('<a class="or-link"/>').attr('href',Openrat.Navigator.createShortUrl(result.type, result.id));
+						let link = $('<a class="or-link"/>').attr('href',WorkbenchNavigator.createShortUrl(result.type, result.id));
 						link.click( function(e) {
 							e.preventDefault();
 						});

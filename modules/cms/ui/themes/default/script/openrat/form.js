@@ -3,26 +3,31 @@
  *
  * @constructor
  */
-Openrat.Form = function() {
+class Form {
 
-	const modes = {
+	static modes = {
 		showBrowserNotice  : 1,
 		keepOpen           : 2,
 		closeAfterSubmit   : 4,
 		closeAfterSuccess  : 8,
 	};
 
-	/**
-	 * Fires on input.
-	 */
-	this.onChangeHandler = $.Callbacks();
-	this.onSaveHandler   = $.Callbacks();
+	constructor() {
 
-    this.setLoadStatus = function( isLoading ) {
+
+		/**
+		 * Fires on input.
+		 */
+		this.onChangeHandler = new Callback();
+		this.onSaveHandler   = new Callback();
+		this.onCloseHandler  = new Callback();
+	}
+
+	setLoadStatus( isLoading ) {
         $(this.element).closest('div.content').toggleClass('loader',isLoading);
     }
 
-    this.initOnElement = function( element ) {
+    initOnElement( element ) {
         this.element = element;
 
         let form = this;
@@ -32,10 +37,10 @@ Openrat.Form = function() {
         if   ( $(this.element).data('autosave') ) {
 
             $(this.element).find('input[type="checkbox"]').click( function() {
-                form.submit(modes.keepOpen);
+                form.submit(Form.modes.keepOpen);
             });
             $(this.element).find('select').change( function() {
-                form.submit(modes.keepOpen);
+                form.submit(Form.modes.keepOpen);
             });
         }
 
@@ -56,7 +61,7 @@ Openrat.Form = function() {
 
         });
         $(element).find('.or-act-form-apply').click( function() {
-			form.submit(modes.keepOpen);
+			form.submit(Form.modes.keepOpen);
         });
         $(element).find('.or-act-form-save').click( function() {
 			form.submit();
@@ -81,7 +86,7 @@ Openrat.Form = function() {
         });
     }
 
-    this.cancel = function() {
+    cancel() {
         //$(this.element).html('').parent().removeClass('is-open');
 		Notice.removeAllNotices();
 
@@ -89,22 +94,20 @@ Openrat.Form = function() {
     }
 
 
-    this.rollback = function() {
+    rollback() {
         this.element.trigger('reset');
     }
 
-    this.onCloseHandler = $.Callbacks();
-
-    this.forwardTo = function (action, subaction, id, data) {
+    forwardTo(action, subaction, id, data) {
     }
 
-    this.submit = function( mode ) {
+    submit( mode ) {
 
 		if   ( mode === undefined )
 			if   ( $(this.element).data('async') )
-				mode = modes.closeAfterSubmit;
+				mode = Form.modes.closeAfterSubmit;
 			else
-				mode = modes.closeAfterSuccess;
+				mode = Form.modes.closeAfterSuccess;
 
 		Notice.removeAllNotices();
 
@@ -112,7 +115,7 @@ Openrat.Form = function() {
         let status = new Notice();
         status.setStatus('info');
         status.inProgress();
-        status.msg = Openrat.Workbench.language.PROGRESS;
+        status.msg = Workbench.language.PROGRESS;
         status.show();
 
         // Alle vorhandenen Error-Marker entfernen.
@@ -123,9 +126,9 @@ Openrat.Form = function() {
 
         // If form does not contain action/id, get it from the workbench.
         if   (!formData.has('id') )
-            formData.append('id',Openrat.Workbench.state.id);
+            formData.append('id',Workbench.state.id);
         if   (!formData.has('action') )
-            formData.append('action',Openrat.Workbench.state.action);
+            formData.append('action',Workbench.state.action);
 
         let formMethod = $(this.element).attr('method').toUpperCase();
 
@@ -147,14 +150,14 @@ Openrat.Form = function() {
             //params['output'] = 'json';// Irgendwie geht das nicht.
 			formData.append('output','json');
 
-            if	( mode == modes.closeAfterSubmit )
+            if	( mode == Form.modes.closeAfterSubmit )
                 this.onCloseHandler.fire();
                 // Async: Window is closed, but the action will be startet now.
 
             let form = this;
             console.debug( form );
 
-            $.ajax( { 'type':'POST',url:url, data:this.formDataToObject(formData), success:function(responseData, textStatus, jqXHR)
+            $.ajax( { 'type':'POST',url:url, data:Form.formDataToObject(formData), success:function(responseData, textStatus, jqXHR)
                 {
                     form.setLoadStatus(false);
                     status.close();
@@ -168,11 +171,11 @@ Openrat.Form = function() {
 						let async        = $(form.element).data('async'       );
 
 						if   ( afterSuccess == 'forward' )
-							mode = modes.keepOpen;
+							mode = Form.modes.keepOpen;
 
 						// The data was successful saved.
 						// Now we can close the form.
-						if	( mode == modes.closeAfterSuccess )
+						if	( mode == Form.modes.closeAfterSuccess )
 						{
 							form.onCloseHandler.fire();
 
@@ -184,7 +187,7 @@ Openrat.Form = function() {
 						{
 							if   ( afterSuccess == 'reloadAll' )
 							{
-								Openrat.Workbench.reloadAll();
+								Workbench.reloadAll();
 							}
 							else if   ( afterSuccess == 'forward' )
 							{
@@ -196,7 +199,7 @@ Openrat.Form = function() {
 							if   ( async )
 								; // do not reload
 							else
-								Openrat.Workbench.reloadViews();
+								Openrat.workbench.reloadViews();
 						}
 
 					});
@@ -244,7 +247,7 @@ Openrat.Form = function() {
      * @param status Status
      * @param element
      */
-    this.doResponse = function(data,status,element, onSuccess = $.noop )
+    doResponse = function(data,status,element, onSuccess = $.noop )
     {
         if	( status != 'success' )
         {
@@ -252,7 +255,7 @@ Openrat.Form = function() {
 
 			let notice = new Notice();
 			notice.setStatus( 'error' );
-			notice.msg = Openrat.Workbench.language.ERROR;
+			notice.msg = Workbench.language.ERROR;
 			notice.show();
 
 			return;
@@ -281,7 +284,7 @@ Openrat.Form = function() {
             if	( value.status == 'ok' ) // Kein Fehler?
             {
                 onSuccess();
-                Openrat.Workbench.dataChangedHandler.fire();
+                Workbench.dataChangedHandler.fire();
             }
             else
             // Server liefert Fehler zurück.
@@ -298,7 +301,12 @@ Openrat.Form = function() {
     }
 
 
-	this.formDataToObject = function (formData) {
+	/**
+	 *
+	 * @param formData
+	 * @return {{}}
+	 */
+	static formDataToObject(formData) {
 
 		let data = {};
 		for (let pair of formData.entries())

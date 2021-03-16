@@ -1,4 +1,4 @@
-Openrat.Workbench.afterViewLoadedHandler.add( function(element ) {
+Workbench.afterViewLoadedHandler.add( function(element ) {
 
     $(element).find('textarea').orAutoheight();
 

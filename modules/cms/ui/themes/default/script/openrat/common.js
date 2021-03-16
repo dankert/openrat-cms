@@ -1,6 +1,6 @@
 
 // Execute after DOM ready:
-$( function() {
+document.addEventListener("DOMContentLoaded", event => {
     // JS is available.
     $('html').removeClass('nojs');
 
@@ -22,11 +22,11 @@ $( function() {
 
     // Listening to the "popstate" event:
     window.onpopstate = function (ev) {
-        Openrat.Navigator.navigateTo(ev.state);
+        Openrat.navigator.navigateTo(ev.state);
     };
 
-    Openrat.Workbench.initialize();
-    Openrat.Workbench.reloadAll();
+    Openrat.workbench.initialize();
+    Openrat.workbench.reloadAll();
 
     let registerWorkbenchGlobalEvents = function() {
 
@@ -101,7 +101,7 @@ $( function() {
 			//openDropdown: true, // the dropdown is automatically opened by the menu.
 			select      : function(obj) {
 				// open the search result
-				Openrat.Workbench.openNewAction( obj.name, obj.action, obj.id );
+				Workbench.openNewAction( obj.name, obj.action, obj.id );
 			},
 			afterSelect: function() {
 				//$('.or-dropdown.or-act-selector-search-results').empty();
@@ -114,15 +114,15 @@ $( function() {
 	registerGlobalSearch();
 
 
-	Openrat.Workbench.afterNewActionHandler.add( function() {
+	Workbench.afterNewActionHandler.add( function() {
 
 		$('.or-sidebar').find('.or-sidebar-button').orLinkify();
 	  }
 	);
 
-    Openrat.Workbench.afterNewActionHandler.add( function() {
+    Workbench.afterNewActionHandler.add( function() {
 
-        let url = Openrat.View.createUrl('tree','path',Openrat.Workbench.state.id, {'type':Openrat.Workbench.state.action} );
+        let url = View.createUrl('tree','path',Workbench.state.id, {'type':Workbench.state.action} );
 
         // Die Inhalte des Zweiges laden.
         let loadPromise = $.get(url);
@@ -152,8 +152,8 @@ $( function() {
 
 			$('.or-link--is-active').removeClass('link--is-active');
 
-			let action = Openrat.Workbench.state.action;
-			let id     = Openrat.Workbench.state.id;
+			let action = Workbench.state.action;
+			let id     = Workbench.state.id;
 			if  (!id) id = '0';
 
 			// Mark the links to the actual object
@@ -174,7 +174,7 @@ $( function() {
         });
     } );
 
-	Openrat.Workbench.afterNewActionHandler.fire();
+	Workbench.afterNewActionHandler.fire();
 });
 
 
@@ -182,14 +182,14 @@ $( function() {
 
 let filterMenus = function ()
 {
-    let action = Openrat.Workbench.state.action;
-    let id     = Openrat.Workbench.state.id;
+    let action = Workbench.state.action;
+    let id     = Workbench.state.id;
     $('.or-workbench-title .or-dropdown-entry.or-act-clickable').addClass('dropdown-entry--active');
     $('.or-workbench-title .or-filtered').removeClass('dropdown-entry--active').addClass('dropdown-entry--inactive');
 	// Jeder Menüeintrag bekommt die Id und Parameter.
 	$('.or-workbench-title .or-filtered .or-link').attr('data-id'    ,id    );
 
-	let url = Openrat.View.createUrl('profile','available',id, {'queryaction':action},true );
+	let url = View.createUrl('profile','available',id, {'queryaction':action},true );
 
 	// Die Inhalte des Zweiges laden.
 	let promise = $.getJSON(url);
@@ -206,33 +206,33 @@ let filterMenus = function ()
 }
 
 
-Openrat.Workbench.afterAllViewsLoaded.add( function() {
+Workbench.afterAllViewsLoaded.add( function() {
     filterMenus();
 } );
 
-Openrat.Workbench.afterAllViewsLoaded.add( function() {
+Workbench.afterAllViewsLoaded.add( function() {
 	$('body').removeClass('loader');
 } );
 
 
 
 
-Openrat.Workbench.afterViewLoadedHandler.add( function(element) {
+Workbench.afterViewLoadedHandler.add( function(element) {
 	$(element).find('.or-button').orButton();
 } );
 
-Openrat.Workbench.afterViewLoadedHandler.add( function(element) {
+Workbench.afterViewLoadedHandler.add( function(element) {
 
     // Refresh already opened popup windows.
-    if   ( Openrat.Workbench.popupWindow )
+    if   ( Workbench.popupWindow )
         $(element).find("a[data-type='popup']").each( function() {
-			Openrat.Workbench.popupWindow.location.href = $(this).attr('data-url');
+			Workbench.popupWindow.location.href = $(this).attr('data-url');
         });
 
 });
 
 
-Openrat.Workbench.afterViewLoadedHandler.add( function(element) {
+Workbench.afterViewLoadedHandler.add( function(element) {
 
         $(element).find(".or-input--password").dblclick( function() {
 			$(this).toggleAttr('type','text','password');
@@ -246,7 +246,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(element) {
 
 
 
-Openrat.Workbench.afterViewLoadedHandler.add( function($element) {
+Workbench.afterViewLoadedHandler.add( function($element) {
 
 	$element.find('.or-act-load-nav-tree').each( function() {
 
@@ -262,7 +262,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function($element) {
 
 			$ul.find('li').orTree( {
 				'openAction': function( name,action,id) {
-					Openrat.Workbench.openNewAction( name,action,id );
+					Openrat.workbench.openNewAction( name,action,id );
 				}
 
 			} ); // All subnodes are getting event listener for open/close
@@ -286,7 +286,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function($element) {
  *
  * @param viewEl DOM-Element der View
  */
-Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
+Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 
     // Die Section deaktivieren, wenn die View keinen Inhalt hat.
     var section = $(viewEl).closest('section');
@@ -383,7 +383,7 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 	
 	// Theme-Auswahl mit Preview
     $(viewEl).find('.or-theme-chooser').change( function() {
-        Openrat.Workbench.setUserStyle( this.value );
+		Openrat.workbench.setUserStyle( this.value );
     });
 
 
@@ -451,8 +451,8 @@ Openrat.Workbench.afterViewLoadedHandler.add( function(viewEl ) {
     function registerDragAndDrop(viewEl)
     {
 
-		Openrat.Workbench.registerDraggable(viewEl);
-		Openrat.Workbench.registerDroppable(viewEl);
+		Openrat.workbench.registerDraggable(viewEl);
+		Openrat.workbench.registerDroppable(viewEl);
     }
 
     registerDragAndDrop(viewEl);
