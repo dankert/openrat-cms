@@ -1,7 +1,7 @@
 /**
  * Navigation.
  */
-class WorkbenchNavigator {
+export default class WorkbenchNavigator {
 	'use strict';
 
 	constructor( workbench ) {

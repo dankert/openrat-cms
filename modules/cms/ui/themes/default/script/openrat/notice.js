@@ -1,8 +1,10 @@
+import $ from '../jquery.min.js';
+import Workbench from './workbench.js';
 
 /**
  * Notice.
  */
-class Notice  {
+export default class Notice  {
 
 	'use strict';
 

@@ -1,7 +1,10 @@
+import $ from '../jquery.min.js';
+import View from './view.js';
+
 /**
  * The encapsulated view.
  */
-class Dialog {
+export default class Dialog {
 
 	/**
 	 * A dialog is a special area in the workbench for displaying and inputting data.

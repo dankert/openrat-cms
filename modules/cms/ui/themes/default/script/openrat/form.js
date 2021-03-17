@@ -1,9 +1,11 @@
+import $ from '../jquery.min.js';
+
 /**
  * Form.
  *
  * @constructor
  */
-class Form {
+export default class Form {
 
 	static modes = {
 		showBrowserNotice  : 1,

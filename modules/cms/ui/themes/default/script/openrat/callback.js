@@ -1,4 +1,4 @@
-class Callback {
+export default class Callback {
 
 	constructor() {
 		this.list = [];

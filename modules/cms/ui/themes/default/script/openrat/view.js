@@ -1,3 +1,7 @@
+import $ from '../jquery.min.js';
+import Workbench from './workbench.js';
+import Callback from "./callback.js";
+
 /**
  * View.
  * A view is a part of the page. An Action is loaded into this view.
@@ -8,7 +12,7 @@
  * @param params
  * @constructor
  */
-class View {
+export default class View {
 
 	constructor( action,method,id,params ) {
 		this.action = action;

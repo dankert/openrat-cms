@@ -1,4 +1,7 @@
 
+import jQuery from '../jquery.min.js';
+import Workbench from './workbench.js';
+import WorkbenchNavigator from './navigator.js';
 // Create own namespace.
 
 let workbench = new Workbench();

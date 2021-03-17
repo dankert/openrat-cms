@@ -7,6 +7,7 @@
     <meta charset="<?php echo O::escapeHtml(''.@$charset.'') ?>" /><?php echo O::escapeHtml('') ?>
     <meta name="<?php echo O::escapeHtml('robots') ?>" content="<?php echo O::escapeHtml('noindex,nofollow') ?>" /><?php echo O::escapeHtml('') ?>
     <script src="<?php echo O::escapeHtml(''.@$scriptLink.'') ?>" defer="<?php echo O::escapeHtml('defer') ?>"><?php echo O::escapeHtml('') ?></script>
+    <script type="<?php echo O::escapeHtml('module') ?>" src="<?php echo O::escapeHtml(''.@$scriptModuleLink.'') ?>" defer="<?php echo O::escapeHtml('defer') ?>"><?php echo O::escapeHtml('') ?></script>
     <link rel="<?php echo O::escapeHtml('stylesheet') ?>" type="<?php echo O::escapeHtml('text/css') ?>" href="<?php echo O::escapeHtml(''.@$styleLink.'') ?>" /><?php echo O::escapeHtml('') ?>
     <link rel="<?php echo O::escapeHtml('stylesheet') ?>" type="<?php echo O::escapeHtml('text/css') ?>" href="<?php echo O::escapeHtml(''.@$themeStyleLink.'') ?>" /><?php echo O::escapeHtml('') ?>
     <meta id="<?php echo O::escapeHtml('theme-color') ?>" name="<?php echo O::escapeHtml('theme-color') ?>" content="<?php echo O::escapeHtml(''.@$themeColor.'') ?>" /><?php echo O::escapeHtml('') ?>

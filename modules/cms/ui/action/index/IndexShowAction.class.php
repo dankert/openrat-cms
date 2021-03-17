@@ -53,6 +53,7 @@ class IndexShowAction extends IndexAction implements Method {
         $this->setTemplateVar('style',$style );
 
 		$this->setTemplateVar('scriptLink', $this->getScriptLink() );
+		$this->setTemplateVar('scriptModuleLink',Startup::THEMES_DIR . 'default/script/openrat/init.js');
         $this->setTemplateVar('styleLink' , $this->getStyleLink()  );
 
         $this->setTemplateVar('themeStyleLink', Html::url('index','themestyle') );

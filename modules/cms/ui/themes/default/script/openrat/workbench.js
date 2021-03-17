@@ -1,6 +1,9 @@
+import $ from '../jquery.min.js';
+import Dialog from './dialog.js';
+import Callback from './callback.js';
 
 
-class Workbench {
+export default class Workbench {
     'use strict'; // Strict mode
 
 	static state = {
