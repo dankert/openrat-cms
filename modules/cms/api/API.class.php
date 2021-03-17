@@ -104,21 +104,7 @@ class API
 
             case self::OUTPUT_JSON:
                 header('Content-Type: application/json; charset=UTF-8');
-                if (function_exists('json_encode'))
-                {
-                    // Native Methode ist schneller..
-                    if ( version_compare(PHP_VERSION, '5.5', '>=' ) )
-                        $jsonOptions = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK | JSON_PARTIAL_OUTPUT_ON_ERROR;
-                    else
-                        $jsonOptions = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK;
-
-                    $output = json_encode($data, $jsonOptions);
-                }
-                else
-                {
-                    // Fallback, falls json_encode() nicht existiert...
-                    $output = JSON::encode($data);
-                }
+	            $output = JSON::encode($data);
                 break;
 
             case self::OUTPUT_XML:

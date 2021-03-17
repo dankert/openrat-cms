@@ -121,7 +121,7 @@ class LinkComponent extends Component
 			$link->addAttribute('data-extra-'.$varname,$varvalue);
             $arrayvalues[ $varname ] = $varvalue;
 		}
-		$link->addAttribute('data-extra',str_replace('"',"'",str_replace(array("\t", "\r", "\n"),'',JSON::encode($arrayvalues))));
+		$link->addAttribute('data-extra',htmlentities(str_replace(array("\t", "\r", "\n"),'',JSON::encode($arrayvalues)),ENT_QUOTES, 'UTF-8'));
 
 		switch ($this->type)
 		{

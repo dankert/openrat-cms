@@ -190,7 +190,7 @@ class Form {
 
 					if (afterSuccess) {
 						if (afterSuccess == 'reloadAll') {
-							Workbench.reloadAll();
+							Openrat.workbench.reloadAll();
 						} else if (afterSuccess == 'forward') {
 							// Forwarding to next subaction.
 							if (forwardTo)
@@ -217,7 +217,7 @@ class Form {
 
 				let msg = '';
 				try {
-					msg = $.parseJSON( cause ).message;
+					msg = JSON.parse( cause ).message;
 				}
 				catch( e ) {
 					msg = cause;
@@ -281,18 +281,6 @@ class Form {
     }
 
 
-	/**
-	 *
-	 * @param formData
-	 * @return {{}}
-	 */
-	static formDataToObject(formData) {
-
-		let data = {};
-		for (let pair of formData.entries())
-			data[pair[0]] = pair[1];
-		return data;
-	}
 
 }
 

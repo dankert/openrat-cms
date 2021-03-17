@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", event => {
         let url = View.createUrl('tree','path',Workbench.state.id, {'type':Workbench.state.action} );
 
         // Die Inhalte des Zweiges laden.
-        let loadPromise = $.get(url);
+        let loadPromise = fetch( url );
 
 		/**
 		 * open a object in the navigation tree.
@@ -138,7 +138,9 @@ document.addEventListener("DOMContentLoaded", event => {
 				$navControl.find('.or-navtree-node-control').click();
 		}
 
-		loadPromise.done( function(data) {
+		loadPromise
+			.then( response => response.text() )
+			.then( data => {
 
 			$('.or-breadcrumb').empty().append( data ).find('.or-act-clickable').orLinkify();
 
@@ -161,15 +163,13 @@ document.addEventListener("DOMContentLoaded", event => {
 			// Open actual object
 			openNavTree( action,id );
 
-		}).fail(function ( jqXHR, textStatus, errorThrown ) {
+		}).catch( cause => {
             // Ups... aber was können wir hier schon tun, außer hässliche Meldungen anzeigen.
             console.warn( {
-				message:'Failed to load path',
-				url    :url,
-				jqXHR  :jqXHR,
-				status :textStatus,
-				error  :errorThrown } );
-        }).always(function () {
+				message : 'Failed to load path',
+				url     : url,
+				cause   : cause } );
+        }).finally(function () {
 
         });
     } );
@@ -192,14 +192,16 @@ let filterMenus = function ()
 	let url = View.createUrl('profile','available',id, {'queryaction':action},true );
 
 	// Die Inhalte des Zweiges laden.
-	let promise = $.getJSON(url);
+	let promise = fetch(url);
 
-	promise.done( function (data) {
+	promise.then( response => response.json() )
+		.then( (data) => {
 
-		jQuery.each(data.output.views, function(i, method) {
-			$('.or-workbench-title .or-filtered > .or-link[data-method=\'' + method + '\']' ).parent()
-				.addClass('dropdown-entry--active').removeClass('dropdown-entry--inactive');
-		});
+			for( let method of Object.values(data.output.views) )
+				$('.or-workbench-title .or-filtered > .or-link[data-method=\'' + method + '\']' )
+					.parent()
+					.addClass('dropdown-entry--active')
+					.removeClass('dropdown-entry--inactive');
 	});
 
 
@@ -254,25 +256,28 @@ Workbench.afterViewLoadedHandler.add( function($element) {
 		let loadBranchUrl = './?action=tree&subaction=branch&id=0&type='+type;
 		let $targetElement = $(this);
 
-		$.get(loadBranchUrl).done( function (html) {
+		let load = fetch( loadBranchUrl );
+		load
+			.then( response => response.text() )
+			.then( html => {
 
-			// Den neuen Unter-Zweig erzeugen.
-			let $ul = $('<ul class="or-navtree-list" />');
-			$ul.appendTo( $targetElement.empty() ).append( html );
+				// Den neuen Unter-Zweig erzeugen.
+				let $ul = $('<ul class="or-navtree-list" />');
+				$ul.appendTo( $targetElement.empty() ).append( html );
 
-			$ul.find('li').orTree( {
-				'openAction': function( name,action,id) {
-					Openrat.workbench.openNewAction( name,action,id );
-				}
+				$ul.find('li').orTree( {
+					'openAction': function( name,action,id) {
+						Openrat.workbench.openNewAction( name,action,id );
+					}
 
-			} ); // All subnodes are getting event listener for open/close
+				} ); // All subnodes are getting event listener for open/close
 
-			// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
-			$ul.find('.or-act-clickable').orLinkify();
+				// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
+				$ul.find('.or-act-clickable').orLinkify();
 
-			// Open the first node.
-			$ul.find('.or-navtree-node-control').first().click();
-		} );
+				// Open the first node.
+				$ul.find('.or-navtree-node-control').first().click();
+			} );
 
 	} );
 
@@ -294,10 +299,12 @@ Workbench.afterViewLoadedHandler.add( function(viewEl ) {
     //var viewHasContent = $(viewEl).children().length > 0;
 	//section.toggleClass('disabled',!viewHasContent);
 	section.toggleClass('is-empty',$(viewEl).is(':empty'));
+
+	/*
 	if   ( ! $(viewEl).is(':empty') )
 		section.slideDown('fast');
 	else
-		section.slideUp('fast');
+		section.slideUp('fast');*/
 
 	// Untermenüpunkte aus der View in das Fenstermenü kopieren...
 	//$(viewEl).closest('div.panel').find('div.header div.dropdown div.entry.perview').remove(); // Alte Einträge löschen
@@ -349,30 +356,33 @@ Workbench.afterViewLoadedHandler.add( function(viewEl ) {
 			let type = id?'folder':'projects';
 			let loadBranchUrl = './?action=tree&subaction=branch&id='+id+'&type='+type;
 
-			$.get(loadBranchUrl).done( function (html) {
+			let load = fetch( loadBranchUrl );
+			load
+				.then( response => response.text() )
+				.then( html => {
 
-				// Den neuen Unter-Zweig erzeugen.
-				let $ul = $('<ul class="or-navtree-list" />');
-				$ul.appendTo( $targetElement ).append( html );
+					// Den neuen Unter-Zweig erzeugen.
+					let $ul = $('<ul class="or-navtree-list" />');
+					$ul.appendTo( $targetElement ).append( html );
 
-				$ul.find('li').orTree(
-					{
-						'openAction' : function(name,action,id) {
-							$selector.find('.or-selector-link-value').val(id  );
-							$selector.find('.or-selector-link-name' ).val('').attr('placeholder',name);
+					$ul.find('li').orTree(
+						{
+							'openAction' : function(name,action,id) {
+								$selector.find('.or-selector-link-value').val(id  );
+								$selector.find('.or-selector-link-name' ).val('').attr('placeholder',name);
 
-							$selector.removeClass('selector--is-tree-active');
-							$targetElement.empty();
+								$selector.removeClass('selector--is-tree-active');
+								$targetElement.empty();
+							}
 						}
-					}
-				); // All subnodes are getting event listener for open/close
+					); // All subnodes are getting event listener for open/close
 
-				// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
-				$ul.find('.or-act-clickable').orLinkify();
+					// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
+					$ul.find('.or-act-clickable').orLinkify();
 
-				// Open the first node.
-				$ul.find('.or-navtree-node-control').first().click();
-			} );
+					// Open the first node.
+					$ul.find('.or-navtree-node-control').first().click();
+				} );
 		}
 
 	} );

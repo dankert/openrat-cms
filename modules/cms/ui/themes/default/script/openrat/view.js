@@ -163,6 +163,9 @@ class View {
         else
         	throw "Illegal argument";
 
+        if   ( api )
+        	url += '&output=json';
+
         return url;
     }
 

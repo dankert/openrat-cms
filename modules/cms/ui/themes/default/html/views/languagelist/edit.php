@@ -31,7 +31,7 @@
             <?php $if5=(!$is_default); if($if5) {  ?>
               <td class="<?php echo O::escapeHtml('or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
                 <?php $if7=(isset($id)); if($if7) {  ?>
-                  <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('post') ?>" data-action="<?php echo O::escapeHtml('language') ?>" data-method="<?php echo O::escapeHtml('setdefault') ?>" data-id="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" data-data="<?php echo O::escapeHtml('{"action":"language","subaction":"setdefault","id":"'.@$id.'","token":"'.@$_token.'","none":"0"}') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
+                  <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('post') ?>" data-action="<?php echo O::escapeHtml('language') ?>" data-method="<?php echo O::escapeHtml('setdefault') ?>" data-id="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" data-data="<?php echo O::escapeHtml('{"action":"language","subaction":"setdefault","id":"'.@$id.'","token":"'.@$_token.'","none":0}') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
                     <span><?php echo O::escapeHtml(''.@O::lang('make_default').'') ?></span>
                   </a>
                  <?php } ?>
@@ -63,7 +63,7 @@
                   <?php $if8=(!$is_default); if($if8) {  ?>
                     <?php $if9=(isset($id)); if($if9) {  ?>
                       <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
-                        <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('post') ?>" data-action="<?php echo O::escapeHtml('language') ?>" data-method="<?php echo O::escapeHtml('setdefault') ?>" data-id="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" data-data="<?php echo O::escapeHtml('{"action":"language","subaction":"setdefault","id":"'.@$id.'","token":"'.@$_token.'","none":"0"}') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
+                        <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('post') ?>" data-action="<?php echo O::escapeHtml('language') ?>" data-method="<?php echo O::escapeHtml('setdefault') ?>" data-id="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" data-data="<?php echo O::escapeHtml('{"action":"language","subaction":"setdefault","id":"'.@$id.'","token":"'.@$_token.'","none":0}') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
                           <span><?php echo O::escapeHtml(''.@O::lang('make_default').'') ?></span>
                         </a>
                       </div>

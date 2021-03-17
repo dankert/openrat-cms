@@ -102,23 +102,28 @@ class Workbench {
          * "Geben Sie mir ein Ping, Vasily. Und bitte nur ein einziges Ping!" (aus: Jagd auf Roter Oktober)
          */
         let ping = () => {
-            let pingPromise = $.getJSON( View.createUrl('profile','ping',0, {}, true) );
+        	let url = View.createUrl('profile','ping',0, {}, true);
+            let pingPromise = fetch( url  );
             console.debug('ping');
 
-            pingPromise.fail( function( jqXHR, textStatus, errorThrown ) {
-				// oO, what has happened? There is no session with a logged in user, or the server has gone.
-				console.warn( {message: 'The server ping has failed.',jqXHR:jqXHR,status:textStatus,error:errorThrown });
+            pingPromise
+				.then( response => {
+            	if   ( !response.ok )
+            		throw "ping failed" } )
+				.catch( cause => {
+					// oO, what has happened? There is no session with a logged in user, or the server has gone.
+					console.warn( {message: 'The server ping has failed.',cause:cause });
 
-				// Is there any user input? Ok, we should warn the user that the data could not be saved.
-				if ($('.or-view--is-dirty').length > 0) {
-					window.alert("The server session is lost, please save your data.");
-				}
-				else {
-					// no input data, so lets reload all views?
-					// no, maybe an anonymous user is looking around.
-					//Openrat.reloadAll();
-				}
-			} );
+					// Is there any user input? Ok, we should warn the user that the data could not be saved.
+					if ($('.or-view--is-dirty').length > 0) {
+						window.alert("The server session is lost, please save your data.");
+					}
+					else {
+						// no input data, so lets reload all views?
+						// no, maybe an anonymous user is looking around.
+						//Openrat.reloadAll();
+					}
+				} );
         }
 
         // Alle 5 Minuten pingen.
@@ -195,14 +200,16 @@ class Workbench {
 
         let url = View.createUrl('profile','userinfo',0, {},true );
 
-        // Die Inhalte des Zweiges laden.
-        $.getJSON(url, response => {
+        let load = fetch( url );
+        load
+			.then( response => response.json() )
+			.then( response => {
 
-            let style = response.output['style'];
-            this.setUserStyle(style);
+				let style = response.output['style'];
+				this.setUserStyle(style);
 
-            let color = response.output['theme-color'];
-            this.setThemeColor(color);
+				let color = response.output['theme-color'];
+				this.setThemeColor(color);
         });
     }
 
@@ -215,20 +222,25 @@ class Workbench {
 
         let url = View.createUrl('profile','language',0, {},true );
 
-        // Die Inhalte des Zweiges laden.
-        $.getJSON(url, function (response) {
-
+		let load = fetch( url );
+		load
+			.then( response => response.json() )
+			.then( response => {
             Workbench.language = response.output.language;
         });
     }
 
-    loadUISettings() {
+	/**
+	 * load UI settings from the server.
+	 */
+	loadUISettings() {
 
         let url = View.createUrl('profile','uisettings',0, {},true );
 
-        // Die Inhalte des Zweiges laden.
-        $.getJSON(url, function (response) {
-
+		let load = fetch( url );
+		load
+			.then( response => response.json() )
+			.then( response => {
             Workbench.settings = response.output.settings.settings;
         });
     }
@@ -426,5 +438,10 @@ class Workbench {
 */
 	}
 
+
+	static htmlDecode(input) {
+		let doc = new DOMParser().parseFromString(input, "text/html");
+		return doc.documentElement.textContent;
+	}
 }
 

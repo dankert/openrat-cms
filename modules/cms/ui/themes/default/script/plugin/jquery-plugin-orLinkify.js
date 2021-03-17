@@ -50,7 +50,7 @@ jQuery.fn.orLinkify = function( options )
 				// Create a temporary form element.
 				$form = $('<form />').attr('method','POST').addClass('invisible');
 				$form.data('afterSuccess', $link.data('afterSuccess'));
-				let params = jQuery.parseJSON( $link.attr('data-data')  );
+				let params = JSON.parse( $link.attr('data-data')  );
 				params.output = 'json';
 
 				// Add input elements...
@@ -73,7 +73,7 @@ jQuery.fn.orLinkify = function( options )
 				if   ( !name )
 					name = $link.text(); // get the name from the combined text of all children.
 
-				let extraValue = $link.attr('data-extra').replace(/'/g,'"'); // Replace ' with ".
+				let extraValue = $link.attr('data-extra');
 				let extraData  = JSON.parse(extraValue);
 
 				dialog.start(name,$link.attr('data-action'),$link.attr('data-method'),$link.attr('data-id'),extraData );

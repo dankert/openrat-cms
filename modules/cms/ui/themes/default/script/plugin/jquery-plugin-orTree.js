@@ -27,7 +27,7 @@ jQuery.fn.orTree = function (options)
 
             if ($node.is('.or-navtree-node--is-open')) {
                 // Pfad ist offen -> schließen
-                $node.children('ul').slideUp('fast').remove();
+                $node.children('ul').remove();
 
                 // Am Knoten die Klasse wechseln.
                 $node.removeClass('navtree-node--is-open').addClass('navtree-node--is-closed').find('.or-navtree-tree-icon').removeClass('image-icon--node-open').addClass('image-icon--node-closed');
@@ -39,13 +39,13 @@ jQuery.fn.orTree = function (options)
                 let $link   = $node.find('a');
                 //let type    = $link.data('extra-type');
                 let id      = $link.data('id');
-                let extraId = $link.data('extra');
+                let extraId = Workbench.htmlDecode($link.data('extra'));
 
                 let loadBranchUrl = './?action=tree&subaction=branch&id=' + id + '';
 
                 // Extra-Id ergänzen.
                 if (typeof extraId === 'string') {
-                    jQuery.each(jQuery.parseJSON(extraId.replace(/'/g,'"')), function (name, value) {
+                    jQuery.each(JSON.parse(extraId), function (name, value) {
                         loadBranchUrl = loadBranchUrl + '&' + name + '=' + value;
                     });
                 }
@@ -60,36 +60,39 @@ jQuery.fn.orTree = function (options)
 
                 console.debug( { url:loadBranchUrl } );
                 // Die Inhalte des Zweiges laden.
-                $.get(loadBranchUrl).done( function (html) {
+                fetch( loadBranchUrl )
+					.then( response => { if (!response.ok) throw "Failed to load tree"; return response } )
+					.then( response => response.text() )
+					.then( html => {
 
-                    // Den neuen Unter-Zweig erzeugen.
-                    let $ul = $('<ul class="or-navtree-list" />');
-                    $(treeEl).append($ul);
+						// Den neuen Unter-Zweig erzeugen.
+						let $ul = $('<ul class="or-navtree-list" />');
+						$(treeEl).append($ul);
 
-                    $ul.append( html );
-                    $ul.find('li').orTree(settings); // All subnodes are getting event listener for open/close
+						$ul.append( html );
+						$ul.find('li').orTree(settings); // All subnodes are getting event listener for open/close
 
-					/* macht linkify schon
-					$(new_li).find('.act-clickable a').click( function(event) {
-						event.preventDefault(); // Links werden per Javascript geöffnet. Beim Öffnen im neuen Tab hat das aber keine Bedeutung.
-					} );*/
-					registerTreeBranchEvents($ul);
-					// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
-					$ul.find('.or-act-clickable').orLinkify( {
-						'openAction':settings.openAction
-					} );
-                    $ul.slideDown('fast'); // Einblenden
+						/* macht linkify schon
+						$(new_li).find('.act-clickable a').click( function(event) {
+							event.preventDefault(); // Links werden per Javascript geöffnet. Beim Öffnen im neuen Tab hat das aber keine Bedeutung.
+						} );*/
+						registerTreeBranchEvents($ul);
+						// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
+						$ul.find('.or-act-clickable').orLinkify( {
+							'openAction':settings.openAction
+						} );
+						//$ul.slideDown('fast'); // Einblenden
 
-                }).fail(function ( jqXHR, textStatus, errorThrown ) {
-                    // Ups... aber was können wir hier schon tun, außer hässliche Meldungen anzeigen.
-					console.error( {message:'Failed to load subtree',url:loadBranchUrl,jqXHR:jqXHR,status:textStatus,error:errorThrown});
-					let notice = new Notice();
-					notice.setStatus( 'error' );
-                }).always(function () {
-
-                    // Die Loader-Animation entfernen.
-                    $(treeEl).closest('div.or-view').removeClass('loader');
-                });
+                	}).catch( cause => {
+						// Ups... aber was können wir hier schon tun, außer hässliche Meldungen anzeigen.
+						console.error( {message:'Failed to load subtree',url:loadBranchUrl,cause:cause});
+						let notice = new Notice();
+						notice.setStatus( 'error' );
+						notice.msg = cause;
+                	}).finally( () => {
+	                    // Die Loader-Animation entfernen.
+    	                $(treeEl).closest('div.or-view').removeClass('loader');
+        	        });
 
                 // Am Knoten die Klasse wechseln.
                 $node.addClass('navtree-node--is-open').removeClass('navtree-node--is-closed').find('.or-navtree-tree-icon').addClass('image-icon--node-open').removeClass('image-icon--node-closed');
