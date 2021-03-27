@@ -28,7 +28,7 @@ export default class Callback {
 
 }
 
-console.warn("nochmal");
+console.debug("registering callbacks");
 Callback.afterViewLoadedHandler = new Callback();
 Callback.dataChangedHandler     = new Callback();
 Callback.afterNewActionHandler  = new Callback();

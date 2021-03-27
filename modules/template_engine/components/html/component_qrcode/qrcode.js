@@ -4,14 +4,20 @@ export default function(element ) {
 
 	let createQRCode = async function( value,text) {
 
-		let Kjua = await import("../../../../cms/ui/themes/default/script/tools/kjua.min.js");
+		let Kjua = (await import("../../../../cms/ui/themes/default/script/tools/kjua.min.js")).default;
 
 		let wrapper = $('<div class="or-info-popup or-qrcode-value"></div>');
 
-		let element = Kjua.kjua( {
-			text   : text,
-			render : 'svg',
-			fill   : 'currentColor' } );
+		let element = Kjua( {
+			text     : text,
+			render   : 'svg',
+			mode     :'label',
+			label    : text,
+			rounded  : 1,
+			fill     : 'currentColor',
+		    back     : 'black'
+		} );
+
 
 		// Title is disturbing the qr-code. Do not inherit it.
 		wrapper.attr('title','');
