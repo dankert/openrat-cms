@@ -111,6 +111,8 @@ class ThemeCompiler
 
 	public function compileScripts()
 	{
+		return;
+
 		$combinedJsFile    = __DIR__.'/default/'.Theme::SCRIPT_FILENAME;
 		$combinedJsFileMin = __DIR__.'/default/'.Theme::SCRIPT_MINIFIED_FILENAME;
 
