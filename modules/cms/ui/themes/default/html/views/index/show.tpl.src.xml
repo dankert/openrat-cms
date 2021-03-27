@@ -15,7 +15,7 @@
 		<meta name="robots" content="noindex,nofollow"/>
 		<script type="module" src="${scriptModuleLink}" defer="defer"/>
 		<link rel="stylesheet" type="text/css" href="${styleLink}"/>
-		<link rel="stylesheet" type="text/css" href="${themeStyleLink}"/>
+		<link id="user-style" rel="stylesheet" type="text/css" href="${themeStyleLink}"/>
 		<meta id="theme-color" name="theme-color" content="${themeColor}"/>
 		<link rel="manifest" href="${manifestLink}"/>
 		<link rel="shortcut icon" type="image/x-icon" href="${favicon_url}"/>

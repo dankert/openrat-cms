@@ -314,14 +314,8 @@ export default class Workbench {
      */
     setUserStyle( styleName )
     {
-        var html = $('html');
-        var classList = html.attr('class').split(/\s+/);
-        $.each(classList, function(index, item) {
-            if (item.startsWith('or-theme-')) {
-                html.removeClass(item.substring(3));
-            }
-        });
-        html.addClass( 'theme-' + styleName.toLowerCase() );
+    	let styleUrl = View.createUrl('index','themestyle',0,{'style':styleName} );
+		document.getElementById('user-style').setAttribute('href',styleUrl);
     }
 
 

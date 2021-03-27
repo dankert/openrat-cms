@@ -136,7 +136,7 @@ export default class View {
 	 * @param id
 	 * @param extraid
 	 * @param api
-	 * @returns URL
+	 * @returns string
 	 */
     static createUrl(action,subaction,id,extraid={},api=false )
     {
