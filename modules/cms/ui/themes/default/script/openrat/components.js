@@ -6,12 +6,11 @@ import table  from '../../../../../../template_engine/components/html/component_
 import upload from '../../../../../../template_engine/components/html/component_upload/upload.js';
 import Callback from "./callback.js";
 
-export default function() {
+console.debug('registering component scripts');
 
-	Callback.afterViewLoadedHandler.add( editor );
-	Callback.afterViewLoadedHandler.add( group  );
-	Callback.afterViewLoadedHandler.add( link   );
-	Callback.afterViewLoadedHandler.add( qrcode );
-	Callback.afterViewLoadedHandler.add( table  );
-	Callback.afterViewLoadedHandler.add( upload );
-}
+Callback.afterViewLoadedHandler.add( editor );
+Callback.afterViewLoadedHandler.add( group  );
+Callback.afterViewLoadedHandler.add( link   );
+Callback.afterViewLoadedHandler.add( qrcode );
+Callback.afterViewLoadedHandler.add( table  );
+Callback.afterViewLoadedHandler.add( upload );

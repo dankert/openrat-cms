@@ -1,4 +1,4 @@
-export default async function(element ) {
+export default function(element ) {
 
     $(element).find('textarea').orAutoheight();
 

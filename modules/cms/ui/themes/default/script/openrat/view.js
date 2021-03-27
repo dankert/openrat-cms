@@ -105,7 +105,6 @@ export default class View {
 			});
 
 			let components = await import( './components.js');
-			components.default();
 
 			view.fireViewLoadedEvents( element );
 		}
