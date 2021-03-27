@@ -5,7 +5,7 @@ export default function(element ) {
 	// Codemirror-Editor anzeigen
 	$(element).find("textarea.or-editor.or-code-editor").each( async function() {
 
-		let CodeMirror = await import("../../../../editor/codemirror/src/edit/CodeMirror.js");
+		let CodeMirror = await import("../../../../editor/codemirror/src/codemirror.js");
 
 		let mode = $(this).data('mode');
 
@@ -15,7 +15,7 @@ export default function(element ) {
 
         let textareaEl = this;
 
-        let editor = CodeMirror.fromTextArea( textareaEl, {
+        let editor = CodeMirror.default.fromTextArea( textareaEl, {
             lineNumbers: true,
             viewportMargin: Infinity,
 			mode: mode
@@ -28,6 +28,7 @@ export default function(element ) {
         } );
 
 
+        /*
         $(editor.getWrapperElement()).droppable({
             accept: '.or-draggable',
             hoverClass: 'or-droppable--hover',
@@ -46,7 +47,7 @@ export default function(element ) {
                 //editor.setCursor(pos+toInsert.length); geht nicht.
             }
 
-        });
+        });*/
 
 
     } );
@@ -171,7 +172,7 @@ export default function(element ) {
             },
         ];
 
-        let mde = new SimpleMDE(
+        let mde = new SimpleMDE.default(
             {
                 element: $(this)[0],
                 toolbar: toolbar,
@@ -181,6 +182,8 @@ export default function(element ) {
 
         let codemirror = mde.codemirror;
 
+        /*
+        // TODO: Dragdrop with HTML5
         $(codemirror.getWrapperElement()).droppable({
             accept: '.or-draggable',
             hoverClass: 'or-droppable--hover',
@@ -203,7 +206,7 @@ export default function(element ) {
                 codemirror.setSelection(pos, pos);
                 codemirror.replaceSelection( insertText);
             }
-        });
+        });*/
 
         codemirror.on('change',function() {
             // copy back to textarea on form submit...
@@ -220,6 +223,8 @@ export default function(element ) {
         $.trumbowyg.svgPath = './modules/editor/trumbowyg/ui/icons.svg';
         $(textarea).trumbowyg();
 
+        /*
+        //  TODO
         $(textarea).closest('form').find('.trumbowyg-editor').droppable({
             accept: '.or-draggable',
             hoverClass: 'or-droppable--hover',
@@ -243,6 +248,8 @@ export default function(element ) {
                 });
             }
         });
+        */
+
 
 
 
