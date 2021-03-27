@@ -60,71 +60,71 @@ export default function(element ) {
 		let textarea = this;
 	    let toolbar = [{
                 name: "bold",
-                action: SimpleMDE.toggleBold,
+                action: SimpleMDE.default.toggleBold,
                 className: "image-icon image-icon--editor-bold",
                 title: "Bold",
             },
             {
                 name: "italic",
-                action: SimpleMDE.toggleItalic,
+                action: SimpleMDE.default.toggleItalic,
                 className: "image-icon image-icon--editor-italic",
                 title: "Italic",
             },
             {
                 name: "heading",
-                action: SimpleMDE.toggleHeadingBigger,
+                action: SimpleMDE.default.toggleHeadingBigger,
                 className: "image-icon image-icon--editor-headline",
                 title: "Headline",
             },
             "|", // Separator
             {
                 name: "quote",
-                action: SimpleMDE.toggleBlockquote,
+                action: SimpleMDE.default.toggleBlockquote,
                 className: "image-icon image-icon--editor-quote",
                 title: "Quote",
             },
             {
                 name: "code",
-                action: SimpleMDE.toggleCodeBlock,
+                action: SimpleMDE.default.toggleCodeBlock,
                 className: "image-icon image-icon--editor-code",
                 title: "Code",
             },
             "|", // Separator
             {
                 name: "generic list",
-                action: SimpleMDE.toggleUnorderedList,
+                action: SimpleMDE.default.toggleUnorderedList,
                 className: "image-icon image-icon--editor-unnumberedlist",
                 title: "Unnumbered list",
             },
             {
                 name: "numbered list",
-                action: SimpleMDE.toggleOrderedList,
+                action: SimpleMDE.default.toggleOrderedList,
                 className: "image-icon image-icon--editor-numberedlist",
                 title: "Numbered list",
             },
             "|", // Separator
             {
                 name: "table",
-                action: SimpleMDE.drawTable,
+                action: SimpleMDE.default.drawTable,
                 className: "image-icon image-icon--editor-table",
                 title: "Table",
             },
             {
                 name: "horizontalrule",
-                action: SimpleMDE.drawHorizontalRule,
+                action: SimpleMDE.default.drawHorizontalRule,
                 className: "image-icon image-icon--editor-horizontalrule",
                 title: "Horizontal rule",
             },
             "|", // Separator
             {
                 name: "undo",
-                action: SimpleMDE.undo,
+                action: SimpleMDE.default.undo,
                 className: "image-icon image-icon--editor-undo",
                 title: "Undo",
             },
             {
                 name: "redo",
-                action: SimpleMDE.redo,
+                action: SimpleMDE.default.redo,
                 className: "image-icon image-icon--editor-redo",
                 title: "Redo",
             },
@@ -137,7 +137,7 @@ export default function(element ) {
             },
             {
                 name: "image",
-                action: SimpleMDE.drawImage,
+                action: SimpleMDE.default.drawImage,
                 className: "image-icon image-icon--editor-image",
                 title: "Image",
             },
@@ -172,7 +172,8 @@ export default function(element ) {
             },
         ];
 
-        let mde = new SimpleMDE.default(
+	    let MdeEditor = SimpleMDE.default;
+        let mde = new MdeEditor(
             {
                 element: $(this)[0],
                 toolbar: toolbar,
