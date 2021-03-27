@@ -1,6 +1,7 @@
 import '../jquery-global.js';
-import Workbench from './workbench.js';
-import Callback  from "./callback.js";
+import Workbench          from './workbench.js';
+import Callback           from "./callback.js";
+import WorkbenchNavigator from "./navigator.js";
 
 /**
  * Notice.

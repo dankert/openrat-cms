@@ -235,7 +235,7 @@ export default class Form {
 				notice.show();
             } );
 
-            $(form.element).fadeIn();
+            //$(form.element).fadeIn(); TODO no effects available
         }
 
     }
