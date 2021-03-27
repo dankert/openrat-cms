@@ -1,6 +1,8 @@
-import $ from '../jquery.min.js';
+import '../jquery-global.js';
 import Dialog from './dialog.js';
+import View from './view.js';
 import Callback from './callback.js';
+import WorkbenchNavigator from "./navigator";
 
 
 export default class Workbench {
@@ -12,13 +14,30 @@ export default class Workbench {
 		extra: {}
 	};
 
+	static instance;
+
 	constructor() {
 
 		this.popupWindow = null;
-		Workbench.dataChangedHandler.add( function() {
+
+		Callback.dataChangedHandler.add( () => {
 			if   ( Workbench.popupWindow )
 				Workbench.popupWindow.location.reload();
 		} );
+
+	}
+
+
+	/**
+	 *
+	 * @return Workbench
+	 */
+	static getInstance() {
+
+		if   ( ! Workbench.instance )
+			Workbench.instance = new Workbench();
+
+		return Workbench.instance;
 	}
 
 
@@ -31,7 +50,6 @@ export default class Workbench {
 		this.initializePingTimer();
 		this.initializeDirtyWarning();
         this.initializeState();
-        this.openModalDialog();
 
 		Workbench.registerOpenClose( $('.or-collapsible') );
 		console.info('Application started');
@@ -61,6 +79,8 @@ export default class Workbench {
 
     /**
      * Starts a dialog, if necessary.
+	 *
+	 * @deprecated no dialogs are opened on load.
      */
     openModalDialog() {
 
@@ -90,8 +110,7 @@ export default class Workbench {
 
         Workbench.state = state;
 
-		Openrat.navigator.toActualHistory( state );
-
+		WorkbenchNavigator.toActualHistory( state );
     }
 
     /**
@@ -104,30 +123,33 @@ export default class Workbench {
          *
          * "Geben Sie mir ein Ping, Vasily. Und bitte nur ein einziges Ping!" (aus: Jagd auf Roter Oktober)
          */
-        let ping = () => {
+        let ping = async () => {
         	let url = View.createUrl('profile','ping',0, {}, true);
-            let pingPromise = fetch( url  );
-            console.debug('ping');
+			console.debug('ping');
 
-            pingPromise
-				.then( response => {
-            	if   ( !response.ok )
-            		throw "ping failed" } )
-				.catch( cause => {
-					// oO, what has happened? There is no session with a logged in user, or the server has gone.
-					console.warn( {message: 'The server ping has failed.',cause:cause });
+			try {
+				let response = await fetch( url  );
 
-					// Is there any user input? Ok, we should warn the user that the data could not be saved.
-					if ($('.or-view--is-dirty').length > 0) {
-						window.alert("The server session is lost, please save your data.");
-					}
-					else {
-						// no input data, so lets reload all views?
-						// no, maybe an anonymous user is looking around.
-						//Openrat.reloadAll();
-					}
-				} );
-        }
+				if   ( !response.ok )
+					throw "ping failed";
+			} catch( cause ) {
+				// oO, what has happened? There is no session with a logged in user, or the server has gone.
+				console.warn( {message: 'The server ping has failed.',cause:cause });
+
+				// Is there any user input? Ok, we should warn the user that the data could not be saved.
+				if ($('.or-view--is-dirty').length > 0) {
+					window.alert("The server session is lost, please save your data.");
+				}
+				else {
+					// no input data, so lets reload all views?
+					// no, maybe an anonymous user is looking around.
+					//Openrat.reloadAll();
+				}
+			}
+
+
+
+		}
 
         // Alle 5 Minuten pingen.
 		let timeoutMinutes = 5;
@@ -142,12 +164,8 @@ export default class Workbench {
         Workbench.state = state;
         this.loadNewAction(state.action,state.id,state.data);
 
-        Workbench.afterNewActionHandler.fire();
+		Callback.afterNewActionHandler.fire();
 	}
-
-
-    static afterNewActionHandler = new Callback();
-    static afterAllViewsLoaded   = new Callback();
 
 
     /**
@@ -171,8 +189,8 @@ export default class Workbench {
         $('.or-workbench-section--is-closed .or-act-view-loader').empty();
 
         let promise = this.loadViews( $('.or-workbench .or-act-view-loader') );
-		promise.done( function() {
-				Workbench.afterAllViewsLoaded.fire();
+		promise.then( function() {
+				Callback.afterAllViewsLoaded.fire();
 			}
 		);
 
@@ -180,73 +198,69 @@ export default class Workbench {
     }
 
 
-    reloadAll() {
+	/**
+	 * @return a promise for all views
+	 */
+	reloadAll() {
 
     	// View in geschlossenen Sektionen löschen, damit diese nicht stehen bleiben.
         let promise = this.loadViews( $('.or-act-view-loader,.or-act-view-static').empty() );
         console.debug('reloading all views');
 
-        promise.done( function() {
-				Workbench.afterAllViewsLoaded.fire();
+        promise.then( () => {
+				Callback.afterAllViewsLoaded.fire();
 			}
 		);
 
-        this.loadUserStyle();
-        this.loadLanguage();
-        this.loadUISettings();
+        let stylePromise    = this.loadUserStyle();
+        let languagePromise = this.loadLanguage();
+        let settingsPromise = this.loadUISettings();
 
-        return promise;
+        return Promise.all( [ promise,stylePromise,languagePromise,settingsPromise ] );
     }
 
 
-	loadUserStyle() {
+	async loadUserStyle() {
 
-        let url = View.createUrl('profile','userinfo',0, {},true );
+		let url = View.createUrl('profile', 'userinfo', 0, {}, true);
 
-        let load = fetch( url );
-        load
-			.then( response => response.json() )
-			.then( response => {
+		let response = await fetch(url);
+		let json = await response.json();
 
-				let style = response.output['style'];
-				this.setUserStyle(style);
+		let style = json.output['style'];
+		this.setUserStyle(style);
 
-				let color = response.output['theme-color'];
-				this.setThemeColor(color);
-        });
-    }
+		let color = json.output['theme-color'];
+		this.setThemeColor(color);
+	}
 
 
 
 	static settings = {};
     static language = {};
 
-    loadLanguage() {
+    async loadLanguage() {
 
-        let url = View.createUrl('profile','language',0, {},true );
+		let url = View.createUrl('profile', 'language', 0, {}, true);
 
-		let load = fetch( url );
-		load
-			.then( response => response.json() )
-			.then( response => {
-            Workbench.language = response.output.language;
-        });
-    }
+		let response = await fetch(url);
+		let data     = await response.json();
+
+		Workbench.language = data.output.language;
+	}
 
 	/**
 	 * load UI settings from the server.
 	 */
-	loadUISettings() {
+	async loadUISettings() {
 
-        let url = View.createUrl('profile','uisettings',0, {},true );
+		let url = View.createUrl('profile', 'uisettings', 0, {}, true);
 
-		let load = fetch( url );
-		load
-			.then( response => response.json() )
-			.then( response => {
-            Workbench.settings = response.output.settings.settings;
-        });
-    }
+		let response = await fetch(url);
+		let data = await response.json();
+
+		Workbench.settings = data.output.settings.settings;
+	}
 
 
 	/**
@@ -265,7 +279,7 @@ export default class Workbench {
             promises.push( wb.loadNewActionIntoElement( $targetDOMElement ) );
         });
 
-        return $.when.apply( $, promises );
+        return Promise.all( promises );
     }
 
 
@@ -323,7 +337,6 @@ export default class Workbench {
 
 
 	static dataChangedHandler = new Callback();
-    static afterViewLoadedHandler = new Callback();
 
 
 
@@ -368,7 +381,10 @@ export default class Workbench {
 
 		Workbench.setApplicationTitle( name ); // Sets the title.
 
-		Openrat.navigator.navigateToNew( {'action':action, 'id':id } );
+		let newState = {'action':action, 'id':id };
+		this.loadNewActionState( newState );
+
+		WorkbenchNavigator.navigateToNew( newState );
 	}
 
 
@@ -380,8 +396,10 @@ export default class Workbench {
 
 	registerDraggable(viewEl) {
 
-// Drag n Drop: Inhaltselemente (Dateien,Seiten,Ordner,Verknuepfungen) koennen auf Ordner gezogen werden.
+	// Drag n Drop: Inhaltselemente (Dateien,Seiten,Ordner,Verknuepfungen) koennen auf Ordner gezogen werden.
 
+		/*
+		no jquery ui anymore.
 		$(viewEl).find('.or-draggable').draggable(
 			{
 				helper: 'clone',
@@ -391,54 +409,30 @@ export default class Workbench {
 				cursor: 'move',
 				revert: 'false'
 			}
-		);
+		);*/
+
+		// Enable HTML5-Drag n drop
+		$(viewEl).find('.or-draggable').attr('draggable','true');
 
 	}
 
 
 	registerDroppable(viewEl) {
 
+		$(viewEl).find('.or-droppable-selector').on('drop', (event) => {
 
-		$(viewEl).find('.or-droppable-selector').droppable({
-			accept: '.or-draggable',
-			hoverClass: 'droppable--hover',
-			activeClass: 'droppable--active',
+			let data = event.dataTransfer.getData('text');
+			console.debug('dropped:',dropped);
+			let id   = $(data).find('.or-link').data('id');
+			let name = $(data).find('.or-navtree-text').text();
 
-			drop: function (event, ui) {
+			if   (!name)
+				name = id;
 
-				let dropped = ui.draggable;
-				console.info('dropped:');
-				console.info(dropped);
-				let id   = $(dropped).find('.or-link').data('id');
-				let name = $(dropped).find('.or-navtree-text').text();
-
-				if   (!name)
-					name = id;
-
-				$(this).find('.or-selector-link-value').val( id );
-				$(this).find('.or-selector-link-name' ).val( name ).attr('placeholder',name );
-			}
+			$(this).find('.or-selector-link-value').val( id );
+			$(this).find('.or-selector-link-name' ).val( name ).attr('placeholder',name );
 		});
 
-/*
-		$(viewEl).find('.or-droppable-navigation').droppable({
-			accept: '.or-draggable',
-			hoverClass: 'droppable--hover',
-			activeClass: 'droppable--active',
-
-			drop: function (event, ui) {
-
-				let dropped = ui.draggable;
-
-				let id   = dropped.data('id'  );
-				let name = dropped.data('name');
-				if   (!name)
-					name = id;
-
-				alert('dropped');
-			}
-		});
-*/
 	}
 
 

@@ -1,34 +1,45 @@
+import Workbench from "./workbench.js";
+import Callback  from "./callback.js";
+import Notice    from "./notice.js";
+import View      from "./view.js";
+import '../jquery-global.js';
+
 
 // Execute after DOM ready:
-document.addEventListener("DOMContentLoaded", event => {
-    // JS is available.
-    $('html').removeClass('nojs');
+export default event => {
+	// JS is available.
+	$('html').removeClass('nojs');
 
-    /* Fade in all elements. */
-    $('.or--initial-hidden').removeClass('-initial-hidden');
-
-
-    /**
-     * Registriert alle Events, die in der Workbench laufen sollen.
-     */
-    function registerWorkbenchEvents()
-    {
-
-    }
+	/* Fade in all elements. */
+	$('.or--initial-hidden').removeClass('-initial-hidden');
 
 
-    registerWorkbenchEvents();
+	registerWorkbenchEvents();
+
+	// Listening to the "popstate" event:
+	window.onpopstate = function (ev) {
+		Workbench.getInstance().loadNewActionState(ev.state);
+	};
+
+	Workbench.getInstance().initialize();
+
+	Workbench.getInstance().reloadAll().then( () => {
+			Callback.afterNewActionHandler.fire();
+		}
+	);
+
+}
 
 
-    // Listening to the "popstate" event:
-    window.onpopstate = function (ev) {
-        Openrat.navigator.navigateTo(ev.state);
-    };
 
-    Openrat.workbench.initialize();
-    Openrat.workbench.reloadAll();
 
-    let registerWorkbenchGlobalEvents = function() {
+
+/**
+ * Registriert alle Events, die in der Workbench laufen sollen.
+ */
+function registerWorkbenchEvents() {
+
+	let registerWorkbenchGlobalEvents = function() {
 
         // Binding aller Sondertasten.
         $('.keystroke').each( function() {
@@ -114,13 +125,13 @@ document.addEventListener("DOMContentLoaded", event => {
 	registerGlobalSearch();
 
 
-	Workbench.afterNewActionHandler.add( function() {
+	Callback.afterNewActionHandler.add( function() {
 
 		$('.or-sidebar').find('.or-sidebar-button').orLinkify();
 	  }
 	);
 
-    Workbench.afterNewActionHandler.add( function() {
+	Callback.afterNewActionHandler.add( function() {
 
         let url = View.createUrl('tree','path',Workbench.state.id, {'type':Workbench.state.action} );
 
@@ -174,299 +185,292 @@ document.addEventListener("DOMContentLoaded", event => {
         });
     } );
 
-	Workbench.afterNewActionHandler.fire();
-});
+
+	let filterMenus = function ()
+	{
+		let action = Workbench.state.action;
+		let id     = Workbench.state.id;
+		$('.or-workbench-title .or-dropdown-entry.or-act-clickable').addClass('dropdown-entry--active');
+		$('.or-workbench-title .or-filtered').removeClass('dropdown-entry--active').addClass('dropdown-entry--inactive');
+		// Jeder Menüeintrag bekommt die Id und Parameter.
+		$('.or-workbench-title .or-filtered .or-link').attr('data-id'    ,id    );
+
+		let url = View.createUrl('profile','available',id, {'queryaction':action},true );
+
+		// Die Inhalte des Zweiges laden.
+		let promise = fetch(url);
+
+		promise.then( response => response.json() )
+			.then( (data) => {
+
+				for( let method of Object.values(data.output.views) )
+					$('.or-workbench-title .or-filtered > .or-link[data-method=\'' + method + '\']' )
+						.parent()
+						.addClass('dropdown-entry--active')
+						.removeClass('dropdown-entry--inactive');
+		});
 
 
+	}
 
 
-let filterMenus = function ()
-{
-    let action = Workbench.state.action;
-    let id     = Workbench.state.id;
-    $('.or-workbench-title .or-dropdown-entry.or-act-clickable').addClass('dropdown-entry--active');
-    $('.or-workbench-title .or-filtered').removeClass('dropdown-entry--active').addClass('dropdown-entry--inactive');
-	// Jeder Menüeintrag bekommt die Id und Parameter.
-	$('.or-workbench-title .or-filtered .or-link').attr('data-id'    ,id    );
-
-	let url = View.createUrl('profile','available',id, {'queryaction':action},true );
-
-	// Die Inhalte des Zweiges laden.
-	let promise = fetch(url);
-
-	promise.then( response => response.json() )
-		.then( (data) => {
-
-			for( let method of Object.values(data.output.views) )
-				$('.or-workbench-title .or-filtered > .or-link[data-method=\'' + method + '\']' )
-					.parent()
-					.addClass('dropdown-entry--active')
-					.removeClass('dropdown-entry--inactive');
-	});
-
-
-}
-
-
-Workbench.afterAllViewsLoaded.add( function() {
-    filterMenus();
-} );
-
-Workbench.afterAllViewsLoaded.add( function() {
-	$('body').removeClass('loader');
-} );
-
-
-
-
-Workbench.afterViewLoadedHandler.add( function(element) {
-	$(element).find('.or-button').orButton();
-} );
-
-Workbench.afterViewLoadedHandler.add( function(element) {
-
-    // Refresh already opened popup windows.
-    if   ( Workbench.popupWindow )
-        $(element).find("a[data-type='popup']").each( function() {
-			Workbench.popupWindow.location.href = $(this).attr('data-url');
-        });
-
-});
-
-
-Workbench.afterViewLoadedHandler.add( function(element) {
-
-        $(element).find(".or-input--password").dblclick( function() {
-			$(this).toggleAttr('type','text','password');
-        });
-
-        $(element).find(".or-act-make-visible").click( function() {
-			$(this).toggleClass('btn--is-active' );
-			$(this).parent().children('input').toggleAttr('type','text','password');
-        });
-});
-
-
-
-Workbench.afterViewLoadedHandler.add( function($element) {
-
-	$element.find('.or-act-load-nav-tree').each( function() {
-
-		let type = $(this).data('type') || 'root';
-		let loadBranchUrl = './?action=tree&subaction=branch&id=0&type='+type;
-		let $targetElement = $(this);
-
-		let load = fetch( loadBranchUrl );
-		load
-			.then( response => response.text() )
-			.then( html => {
-
-				// Den neuen Unter-Zweig erzeugen.
-				let $ul = $('<ul class="or-navtree-list" />');
-				$ul.appendTo( $targetElement.empty() ).append( html );
-
-				$ul.find('li').orTree( {
-					'openAction': function( name,action,id) {
-						Openrat.workbench.openNewAction( name,action,id );
-					}
-
-				} ); // All subnodes are getting event listener for open/close
-
-				// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
-				$ul.find('.or-act-clickable').orLinkify();
-
-				// Open the first node.
-				$ul.find('.or-navtree-node-control').first().click();
-			} );
-
+	Callback.afterAllViewsLoaded.add( function() {
+		filterMenus();
 	} );
 
-} );
-
-
-
-
-/**
- * Registriert alle Handler für den Inhalt einer View.
- *
- * @param viewEl DOM-Element der View
- */
-Workbench.afterViewLoadedHandler.add( function(viewEl ) {
-
-    // Die Section deaktivieren, wenn die View keinen Inhalt hat.
-    var section = $(viewEl).closest('section');
-
-    //var viewHasContent = $(viewEl).children().length > 0;
-	//section.toggleClass('disabled',!viewHasContent);
-	section.toggleClass('is-empty',$(viewEl).is(':empty'));
-
-	/*
-	if   ( ! $(viewEl).is(':empty') )
-		section.slideDown('fast');
-	else
-		section.slideUp('fast');*/
-
-	// Untermenüpunkte aus der View in das Fenstermenü kopieren...
-	//$(viewEl).closest('div.panel').find('div.header div.dropdown div.entry.perview').remove(); // Alte Einträge löschen
-
-	// Handler for mobile navigation
-	$(viewEl).find('.or-act-nav-open-close').click( function() {
-		$('.or-workbench').toggleClass('workbench--navigation-is-open');
-		$('.or-workbench-navigation').toggleClass('workbench-navigation--is-open');
-	});
-
-	// Handler for desktop navigation
-	$(viewEl).find('.or-act-nav-small').click( function() {
-		$('.or-workbench').addClass('workbench--navigation-is-small');
-		$('.or-workbench-navigation').addClass('workbench-navigation--is-small');
-	});
-	$(viewEl).find('.or-act-nav-wide').click( function() {
-		$('.or-workbench').removeClass('workbench--navigation-is-small');
-		$('.or-workbench-navigation').removeClass('workbench-navigation--is-small');
-	});
-
-
-	// Selectors (Einzel-Ausahl für Dateien) initialisieren
-	// Wurzel des Baums laden
-	$(viewEl).find('.or-act-selector-tree-button').click( function() {
-
-		let $selector = $(this).parent('.or-selector');
-		let $targetElement = $selector.find('.or-act-load-selector-tree');
-
-		if   ( $selector.hasClass('selector--is-tree-active') ) {
-			$selector.removeClass('selector--is-tree-active');
-			$targetElement.empty();
-		}
-		else {
-			$selector.addClass('selector--is-tree-active');
-
-			var selectorEl = this;
-			/*
-			$(this).orTree( { type:'project',selectable:$(selectorEl).attr('data-types').split(','),id:$(selectorEl).attr('data-init-folderid'),onSelect:function(name,type,id) {
-
-				var selector = $(selectorEl).parent();
-
-				//console.log( 'Selected: '+name+" #"+id );
-				$(selector).find('input[type=text]'  ).attr( 'value',name );
-				$(selector).find('input[type=hidden]').attr( 'value',id   );
-			} });
-			*/
-
-			let id   = $(this).data('init-folder-id');
-			let type = id?'folder':'projects';
-			let loadBranchUrl = './?action=tree&subaction=branch&id='+id+'&type='+type;
-
-			let load = fetch( loadBranchUrl );
-			load
-				.then( response => response.text() )
-				.then( html => {
-
-					// Den neuen Unter-Zweig erzeugen.
-					let $ul = $('<ul class="or-navtree-list" />');
-					$ul.appendTo( $targetElement ).append( html );
-
-					$ul.find('li').orTree(
-						{
-							'openAction' : function(name,action,id) {
-								$selector.find('.or-selector-link-value').val(id  );
-								$selector.find('.or-selector-link-name' ).val('').attr('placeholder',name);
-
-								$selector.removeClass('selector--is-tree-active');
-								$targetElement.empty();
-							}
-						}
-					); // All subnodes are getting event listener for open/close
-
-					// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
-					$ul.find('.or-act-clickable').orLinkify();
-
-					// Open the first node.
-					$ul.find('.or-navtree-node-control').first().click();
-				} );
-		}
-
+	Callback.afterAllViewsLoaded.add( function() {
+		$('body').removeClass('loader');
 	} );
 
 
-	registerDragAndDrop(viewEl);
-	
-	
-	// Theme-Auswahl mit Preview
-    $(viewEl).find('.or-theme-chooser').change( function() {
-		Openrat.workbench.setUserStyle( this.value );
-    });
+
+
+	Callback.afterViewLoadedHandler.add( function(element) {
+		$(element).find('.or-button').orButton();
+	} );
+
+	Callback.afterViewLoadedHandler.add( function(element) {
+
+		// Refresh already opened popup windows.
+		if   ( Workbench.popupWindow )
+			$(element).find("a[data-type='popup']").each( function() {
+				Workbench.popupWindow.location.href = $(this).attr('data-url');
+			});
+
+	});
+
+
+	Callback.afterViewLoadedHandler.add( function(element) {
+
+			$(element).find(".or-input--password").dblclick( function() {
+				$(this).toggleAttr('type','text','password');
+			});
+
+			$(element).find(".or-act-make-visible").click( function() {
+				$(this).toggleClass('btn--is-active' );
+				$(this).parent().children('input').toggleAttr('type','text','password');
+			});
+	});
 
 
 
+	Callback.afterViewLoadedHandler.add( function($element) {
 
-    function registerMenuEvents($element )
-    {
-        // Mit der Maus geklicktes Menü aktivieren.
-        $($element).find('.or-menu-category').click( function(event) {
-            event.stopPropagation();
-            $(this).parents('.or-menu').toggleClass('menu--is-open');
-        });
+		$element.find('.or-act-load-nav-tree').each( async function() {
 
-        // Mit der Maus überstrichenes Menü aktivieren.
-        $($element).find('.or-menu-category').mouseover( function() {
+			let type = $(this).data('type') || 'root';
+			let loadBranchUrl = './?action=tree&subaction=branch&id=0&type='+type;
+			let $targetElement = $(this);
 
-            // close other menus.
-            $(this).parents('.or-menu').find('.or-menu-category').removeClass('menu-category--is-open');
-            // open the mouse-overed menu.
-            $(this).addClass('menu-category--is-open');
-        });
+			let response = await fetch( loadBranchUrl );
+			let html     = await response.text();
 
-    }
+			// Den neuen Unter-Zweig erzeugen.
+			let $ul = $('<ul class="or-navtree-list" />');
+			$ul.appendTo( $targetElement.empty() ).append( html );
 
-
-    function registerSelectorSearch( $element )
-    {
-        $($element).find('.or-act-selector-search').orSearch( {
-			    onSearchActive: function() {
-			    	$(this).parent('or-selector').addClass('selector-search--is-active');
-				},
-				onSearchInactive: function() {
-					$(this).parent('or-selector').removeClass('selector-search--is-active' );
-				},
-
-				dropdown: '.or-act-selector-search-results',
-				resultEntryClass: 'or-search-result-entry',
-
-				select: function(obj) {
-					$($element).find('.or-selector-link-value').val(obj.id  );
-					$($element).find('.or-selector-link-name' ).val(obj.name).attr('placeholder',obj.name);
-				},
-
-				afterSelect: function() {
-					$('.or-dropdown.or-act-selector-search-results').empty();
+			$ul.find('li').orTree( {
+				'openAction': function( name,action,id) {
+					Workbench.getInstance().openNewAction( name,action,id );
 				}
-        } );
-    }
+
+			} ); // All subnodes are getting event listener for open/close
+
+			// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
+			$ul.find('.or-act-clickable').orLinkify();
+
+			// Open the first node.
+			$ul.find('.or-navtree-node-control').first().click();
+
+		} );
+
+	} );
 
 
 
-    function registerTree(element) {
 
-        // Klick-Funktionen zum Öffnen/Schließen des Zweiges.
-        //$(element).find('.or-navtree-node').orTree();
+	/**
+	 * Registriert alle Handler für den Inhalt einer View.
+	 *
+	 * @param viewEl DOM-Element der View
+	 */
+	Callback.afterViewLoadedHandler.add( function(viewEl ) {
 
-    }
+		// Die Section deaktivieren, wenn die View keinen Inhalt hat.
+		var section = $(viewEl).closest('section');
+
+		//var viewHasContent = $(viewEl).children().length > 0;
+		//section.toggleClass('disabled',!viewHasContent);
+		section.toggleClass('is-empty',$(viewEl).is(':empty'));
+
+		/*
+		if   ( ! $(viewEl).is(':empty') )
+			section.slideDown('fast');
+		else
+			section.slideUp('fast');*/
+
+		// Untermenüpunkte aus der View in das Fenstermenü kopieren...
+		//$(viewEl).closest('div.panel').find('div.header div.dropdown div.entry.perview').remove(); // Alte Einträge löschen
+
+		// Handler for mobile navigation
+		$(viewEl).find('.or-act-nav-open-close').click( function() {
+			$('.or-workbench').toggleClass('workbench--navigation-is-open');
+			$('.or-workbench-navigation').toggleClass('workbench-navigation--is-open');
+		});
+
+		// Handler for desktop navigation
+		$(viewEl).find('.or-act-nav-small').click( function() {
+			$('.or-workbench').addClass('workbench--navigation-is-small');
+			$('.or-workbench-navigation').addClass('workbench-navigation--is-small');
+		});
+		$(viewEl).find('.or-act-nav-wide').click( function() {
+			$('.or-workbench').removeClass('workbench--navigation-is-small');
+			$('.or-workbench-navigation').removeClass('workbench-navigation--is-small');
+		});
 
 
-    registerMenuEvents    ( viewEl );
-    //registerGlobalSearch  ( viewEl );
-    registerSelectorSearch( viewEl );
-    registerTree          ( viewEl );
+		// Selectors (Einzel-Ausahl für Dateien) initialisieren
+		// Wurzel des Baums laden
+		$(viewEl).find('.or-act-selector-tree-button').click( function() {
 
-    function registerDragAndDrop(viewEl)
-    {
+			let $selector = $(this).parent('.or-selector');
+			let $targetElement = $selector.find('.or-act-load-selector-tree');
 
-		Openrat.workbench.registerDraggable(viewEl);
-		Openrat.workbench.registerDroppable(viewEl);
-    }
+			if   ( $selector.hasClass('selector--is-tree-active') ) {
+				$selector.removeClass('selector--is-tree-active');
+				$targetElement.empty();
+			}
+			else {
+				$selector.addClass('selector--is-tree-active');
 
-    registerDragAndDrop(viewEl);
+				var selectorEl = this;
+				/*
+				$(this).orTree( { type:'project',selectable:$(selectorEl).attr('data-types').split(','),id:$(selectorEl).attr('data-init-folderid'),onSelect:function(name,type,id) {
+
+					var selector = $(selectorEl).parent();
+
+					//console.log( 'Selected: '+name+" #"+id );
+					$(selector).find('input[type=text]'  ).attr( 'value',name );
+					$(selector).find('input[type=hidden]').attr( 'value',id   );
+				} });
+				*/
+
+				let id   = $(this).data('init-folder-id');
+				let type = id?'folder':'projects';
+				let loadBranchUrl = './?action=tree&subaction=branch&id='+id+'&type='+type;
+
+				let load = fetch( loadBranchUrl );
+				load
+					.then( response => response.text() )
+					.then( html => {
+
+						// Den neuen Unter-Zweig erzeugen.
+						let $ul = $('<ul class="or-navtree-list" />');
+						$ul.appendTo( $targetElement ).append( html );
+
+						$ul.find('li').orTree(
+							{
+								'openAction' : function(name,action,id) {
+									$selector.find('.or-selector-link-value').val(id  );
+									$selector.find('.or-selector-link-name' ).val('').attr('placeholder',name);
+
+									$selector.removeClass('selector--is-tree-active');
+									$targetElement.empty();
+								}
+							}
+						); // All subnodes are getting event listener for open/close
+
+						// Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
+						$ul.find('.or-act-clickable').orLinkify();
+
+						// Open the first node.
+						$ul.find('.or-navtree-node-control').first().click();
+					} );
+			}
+
+		} );
 
 
-} );
+		registerDragAndDrop(viewEl);
+
+
+		// Theme-Auswahl mit Preview
+		$(viewEl).find('.or-theme-chooser').change( function() {
+			Workbench.getInstance().setUserStyle( this.value );
+		});
+
+
+
+
+		function registerMenuEvents($element )
+		{
+			// Mit der Maus geklicktes Menü aktivieren.
+			$($element).find('.or-menu-category').click( function(event) {
+				event.stopPropagation();
+				$(this).parents('.or-menu').toggleClass('menu--is-open');
+			});
+
+			// Mit der Maus überstrichenes Menü aktivieren.
+			$($element).find('.or-menu-category').mouseover( function() {
+
+				// close other menus.
+				$(this).parents('.or-menu').find('.or-menu-category').removeClass('menu-category--is-open');
+				// open the mouse-overed menu.
+				$(this).addClass('menu-category--is-open');
+			});
+
+		}
+
+
+		function registerSelectorSearch( $element )
+		{
+			$($element).find('.or-act-selector-search').orSearch( {
+					onSearchActive: function() {
+						$(this).parent('or-selector').addClass('selector-search--is-active');
+					},
+					onSearchInactive: function() {
+						$(this).parent('or-selector').removeClass('selector-search--is-active' );
+					},
+
+					dropdown: '.or-act-selector-search-results',
+					resultEntryClass: 'or-search-result-entry',
+
+					select: function(obj) {
+						$($element).find('.or-selector-link-value').val(obj.id  );
+						$($element).find('.or-selector-link-name' ).val(obj.name).attr('placeholder',obj.name);
+					},
+
+					afterSelect: function() {
+						$('.or-dropdown.or-act-selector-search-results').empty();
+					}
+			} );
+		}
+
+
+
+		function registerTree(element) {
+
+			// Klick-Funktionen zum Öffnen/Schließen des Zweiges.
+			//$(element).find('.or-navtree-node').orTree();
+
+		}
+
+
+		registerMenuEvents    ( viewEl );
+		//registerGlobalSearch  ( viewEl );
+		registerSelectorSearch( viewEl );
+		registerTree          ( viewEl );
+
+		function registerDragAndDrop(viewEl)
+		{
+
+			Workbench.getInstance().registerDraggable(viewEl);
+			Workbench.getInstance().registerDroppable(viewEl);
+		}
+
+		registerDragAndDrop(viewEl);
+
+
+	} );
+};
 

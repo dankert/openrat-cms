@@ -1,4 +1,7 @@
-import $ from '../jquery.min.js';
+import '../jquery-global.js';
+import Workbench from "./workbench.js";
+import Notice from "./notice.js";
+import Callback from "./callback.js";
 
 /**
  * Form.
@@ -192,7 +195,7 @@ export default class Form {
 
 					if (afterSuccess) {
 						if (afterSuccess == 'reloadAll') {
-							Openrat.workbench.reloadAll();
+							Workbench.getInstance().reloadAll();
 						} else if (afterSuccess == 'forward') {
 							// Forwarding to next subaction.
 							if (forwardTo)
@@ -202,7 +205,7 @@ export default class Form {
 						if (async)
 							; // do not reload
 						else
-							Openrat.workbench.reloadViews();
+							Workbench.getInstance().reloadViews();
 					}
 
 				})
@@ -270,7 +273,7 @@ export default class Form {
 
 		if	( data.success ) { // Kein Fehler?
 			onSuccess();
-			Workbench.dataChangedHandler.fire();
+			Callback.dataChangedHandler.fire();
 		}
 		else
 			; // Server liefert Fehler zurück.
@@ -281,8 +284,5 @@ export default class Form {
 
         // Jetzt das erhaltene Dokument auswerten.
     }
-
-
-
 }
 

@@ -1,29 +1,16 @@
 /**
  * Navigation.
+ *
+ * Controls the history API.
  */
 export default class WorkbenchNavigator {
 	'use strict';
 
-	constructor( workbench ) {
-		this.workbench = workbench;
-	}
-	/**
-	 * Navigiert zu einer Action.
-	 */
-	navigateTo(state) {
-
-		console.debug('Navigating to ',state);
-		this.workbench.loadNewActionState(state);
-	}
-
-
     /**
 	 *
-     * Navigiert zu einer neue Action und fügt einen neuen History-Eintrag hinzu.
+     * Creates a new history entry.
      */
-	navigateToNew(obj) {
-
-		this.navigateTo(obj);
+	static navigateToNew(obj) {
 
 		window.history.pushState(obj,obj.name,WorkbenchNavigator.createShortUrl(obj.action,obj.id) );
     }
@@ -32,12 +19,18 @@ export default class WorkbenchNavigator {
 	 * Setzt den State für den aktuellen History-Eintrag.
      * @param obj
      */
-    toActualHistory(obj) {
+    static toActualHistory(obj) {
         window.history.replaceState(obj,obj.name,WorkbenchNavigator.createShortUrl(obj.action,obj.id) );
     }
 
 
-
+	/**
+	 * Creates the URL for the browser adress bar.
+	 *
+	 * @param action action
+	 * @param id ID
+	 * @return string
+	 */
     static createShortUrl(action,id) {
 		return './#/'+action+(id?'/'+id:'');
 	}

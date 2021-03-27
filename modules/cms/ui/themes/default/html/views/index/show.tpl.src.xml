@@ -13,7 +13,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<meta charset="${charset}"/>
 		<meta name="robots" content="noindex,nofollow"/>
-		<script src="${scriptLink}" defer="defer"/>
 		<script type="module" src="${scriptModuleLink}" defer="defer"/>
 		<link rel="stylesheet" type="text/css" href="${styleLink}"/>
 		<link rel="stylesheet" type="text/css" href="${themeStyleLink}"/>

@@ -1,6 +1,7 @@
-import $ from '../jquery.min.js';
-import Workbench from './workbench.js';
+import '../jquery-global.js';
 import Callback from "./callback.js";
+import Form     from "./form.js";
+import Notice   from "./notice.js";
 
 /**
  * View.
@@ -53,35 +54,36 @@ export default class View {
 
     fireViewLoadedEvents(element) {
 
-        Workbench.afterViewLoadedHandler.fire( element );
+		Callback.afterViewLoadedHandler.fire( element );
     }
 
 
 	/**
 	 * Loads the content of this view
+	 *
 	 * @returns Promise
 	 */
-	loadView() {
+	async loadView() {
 
         let url = View.createUrl( this.action,this.method,this.id,this.params,false); // URL für das Laden erzeugen.
         let element = this.element;
         let view = this;
 
-        let loadViewHtmlPromise = fetch( url,{} );
-
 		$(this.element).addClass('loader');
-		console.debug( view);
+		console.debug( view );
 
-        loadViewHtmlPromise.then( response => {
-        	if   ( ! response.ok )
-        		throw "failed to load the view";
-        	return response.text();
-		} ).then( data => {
+		try {
+			let response = await fetch( url,{} );
 
-        	if   ( ! data )
-        		data = '';
+			if   ( ! response.ok )
+				throw "failed to load the view";
 
-        	$(element).html(data);
+			let data = await response.text();
+
+			if   ( ! data )
+				data = '';
+
+			$(element).html(data);
 
 			$(element).find('form').each( function() {
 
@@ -102,24 +104,26 @@ export default class View {
 				form.initOnElement(this);
 			});
 
+			let components = await import( './components.js');
+			components.default();
+
 			view.fireViewLoadedEvents( element );
-		} ).catch( cause => {
+		}
+		catch( cause ) {
 			$(element).html("");
 
 			console.error( {view:view, url:url, cause: cause} );
 
 			let notice = new Notice();
 			notice.setStatus('error');
-			notice.msg = Workbench.language.ERROR;
+			//notice.msg = Workbench.language.ERROR;
+			notice.msg = "View error";
 			notice.log = cause;
 			notice.show();
-		});
-
-		loadViewHtmlPromise.finally( () => {
+		}
+		finally {
 			$(element).removeClass("loader");
-		});
-
-		return loadViewHtmlPromise;
+		}
 	}
 
 

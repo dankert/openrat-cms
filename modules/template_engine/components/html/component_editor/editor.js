@@ -1,10 +1,11 @@
-Workbench.afterViewLoadedHandler.add( function(element ) {
+export default async function(element ) {
 
     $(element).find('textarea').orAutoheight();
 
-	
 	// Codemirror-Editor anzeigen
-	$(element).find("textarea.or-editor.or-code-editor").each( function() {
+	$(element).find("textarea.or-editor.or-code-editor").each( async function() {
+
+		let CodeMirror = await import("../../../../editor/codemirror/src/edit/CodeMirror.js");
 
 		let mode = $(this).data('mode');
 
@@ -51,9 +52,11 @@ Workbench.afterViewLoadedHandler.add( function(element ) {
     } );
 
 	// Markdown-Editor anzeigen
-	$(element).find("textarea.or-editor.or-markdown-editor").each( function() {
+	$(element).find("textarea.or-editor.or-markdown-editor").each( async function() {
 
-	    let textarea = this;
+		let SimpleMDE  = await import("../../../../editor/simplemde/simplemde.min.js");
+
+		let textarea = this;
 	    let toolbar = [{
                 name: "bold",
                 action: SimpleMDE.toggleBold,
@@ -248,4 +251,4 @@ Workbench.afterViewLoadedHandler.add( function(element ) {
     } );
 
 
-});
+};

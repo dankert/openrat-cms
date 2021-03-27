@@ -1,10 +1,15 @@
+
+import "../jquery.min.js";
+import Workbench from "../openrat/workbench.js";
+import Notice    from "../openrat/notice.js";
+
 /**
  * Baum darstellen.
  *
  * Die Controls zum Öffnen/Schließen der Teilbäume werden mit Event-Listener bestückt.
  * Beim Öffnen von Teilbäumen wird der Inhalt vom Server geladen.
  */
-jQuery.fn.orTree = function (options)
+export default function(options)
 {
 	// Create some defaults, extending them with any options that were provided
 	var settings = $.extend( {
@@ -14,7 +19,7 @@ jQuery.fn.orTree = function (options)
 
 	let registerTreeBranchEvents = function (viewEl)
 	{
-		Openrat.workbench.registerDraggable(viewEl);
+		Workbench.getInstance().registerDraggable(viewEl);
 	}
 
 

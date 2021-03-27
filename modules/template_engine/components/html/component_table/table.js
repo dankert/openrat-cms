@@ -1,4 +1,5 @@
-Workbench.afterViewLoadedHandler.add(  function(element ) {
+
+export default function(element ) {
 
 
 	let calculateOrderList = function() {
@@ -18,7 +19,17 @@ Workbench.afterViewLoadedHandler.add(  function(element ) {
 	calculateOrderList();
 
     // Manuelles Sortieren von Tabellen per Drag and drop.
-	$(element).find('.or-table--sortable > tbody').sortable( { update: calculateOrderList } );
+
+	let sortableElement = $(element).find('.or-table--sortable > tbody').get(0);
+
+	if   ( sortableElement ) {
+
+		let sortable = import( './sortable.min.js' );
+		sortable.then( Sortable => {
+			new Sortable(sortableElement, {onUpdate: calculateOrderList})
+		} );
+
+	}
 
 	// Alle Checkboxen setzen oder nicht setzen.
 	$(element).find('tr.headline > td > input.checkbox').click( function() {
@@ -83,4 +94,4 @@ Workbench.afterViewLoadedHandler.add(  function(element ) {
         return $(row).children('td').eq(index).text();
     }
 
-});
+};

@@ -1,4 +1,6 @@
-Workbench.afterViewLoadedHandler.add(  function(element ) {
+import Workbench from "../../../../cms/ui/themes/default/script/openrat/workbench.js";
+
+export default function (element ) {
 
 
 	var form = $(element).find('form');
@@ -35,7 +37,7 @@ Workbench.afterViewLoadedHandler.add(  function(element ) {
 		Workbench.handleFileUpload(form,files);
 	});
 
-});
+};
 
 
 /**
@@ -78,7 +80,8 @@ Workbench.handleFileUpload = function(form,files)
 				console.error(error);
 				let notice = new Notice();
 				notice.setStatus('error');
-				notice.msg = 'Upload error: ' + error;
+				notice.msg = 'Upload error';
+				notice.log = error;
 				notice.show();
 			}
 		);

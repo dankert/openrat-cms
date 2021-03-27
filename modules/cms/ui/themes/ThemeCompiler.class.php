@@ -119,7 +119,6 @@ class ThemeCompiler
 
 		$js = [];
 		$js[] = __DIR__.'/default/script/jquery';
-		$js[] = __DIR__.'/default/script/jquery-ui';
 
 		// Jquery-Plugins
 		$js[] = __DIR__.'/default/script/plugin/jquery-plugin-toggleAttr';
@@ -128,7 +127,6 @@ class ThemeCompiler
 		$js[] = __DIR__.'/default/script/plugin/jquery-plugin-orButton';
 		$js[] = __DIR__.'/default/script/plugin/jquery-plugin-orTree';
 		$js[] = __DIR__.'/default/script/plugin/jquery-plugin-orAutoheight';
-		$js[] = __DIR__.'/default/script/jquery-qrcode';
 		$js[] = __DIR__.'/default/script/jquery.hotkeys';
 
 		// Codemirror Source Editor

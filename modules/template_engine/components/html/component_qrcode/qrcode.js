@@ -1,15 +1,21 @@
+import "../../../../cms/ui/themes/default/script/jquery-global.js";
 
-Workbench.afterViewLoadedHandler.add( function(element ) {
+export default function(element ) {
 
-	let createQRCode = function( value,text) {
+	let createQRCode = async function( value,text) {
+
+		let Kjua = await import("../../../../cms/ui/themes/default/script/tools/kjua.min.js");
+
 		let wrapper = $('<div class="or-info-popup or-qrcode-value"></div>');
 
-		$(wrapper).qrcode( { render : 'div',
+		let element = Kjua.kjua( {
 			text   : text,
+			render : 'svg',
 			fill   : 'currentColor' } );
 
 		// Title is disturbing the qr-code. Do not inherit it.
 		wrapper.attr('title','');
+		wrapper.append( element );
 
 		if   ( text )
 			wrapper.append('<small class="or-qrcode-text">' + text + '</small>');
@@ -18,7 +24,7 @@ Workbench.afterViewLoadedHandler.add( function(element ) {
 	}
 
 
-	$(element).find('.or-qrcode').click( function() {
+	$(element).find('.or-qrcode').click( async function() {
 
 		let $element = $(this);
 
@@ -31,11 +37,11 @@ Workbench.afterViewLoadedHandler.add( function(element ) {
 			if   ( $element.children().length > 0 )
 				return;
 
-			$element.append( createQRCode(qrcodeValue,qrcodeText) );
+			$element.append( await createQRCode(qrcodeValue,qrcodeText) );
 		}
 
 		$element.toggleClass('info--open');
     	$element.toggleClass('btn--is-active');
 	});
 
-} );
+};

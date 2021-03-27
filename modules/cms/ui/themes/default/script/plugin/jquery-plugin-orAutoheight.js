@@ -1,13 +1,14 @@
+import "../jquery.min.js";
+
 /**
  * Input-Hints
  */
-jQuery.fn.orAutoheight = function()
-{
+export default function() {
 
-	var resize = function( element )
+	let resize = function( element )
 	{
-		var lines = $(element).val().split("\n").length;
-		$(element).attr('rows',lines+3);
+		let lines = jQuery(element).val().split("\n").length;
+		jQuery(element).attr('rows',lines+3);
 	};
 	
 	$(this).each(function(i)
@@ -15,7 +16,7 @@ jQuery.fn.orAutoheight = function()
 		resize(this);
 	});
 
-	return $(this).keypress(function()
+	return jQuery(this).keypress(function()
 	{
 		resize(this);
 	});

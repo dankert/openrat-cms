@@ -1,5 +1,7 @@
-import $ from '../jquery.min.js';
+import '../jquery-global.js';
 import View from './view.js';
+import Notice from "./notice.js";
+import Workbench from "./workbench.js";
 
 /**
  * The encapsulated view.

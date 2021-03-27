@@ -1,7 +1,9 @@
+import "../jquery.min.js";
+
 /**
  * Suche mit Dropdown
  */
-jQuery.fn.orSearch = function( options )
+export default function( options )
 {
     // Create some defaults, extending them with any options that were provided
     var settings = $.extend( {

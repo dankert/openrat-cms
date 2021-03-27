@@ -1,4 +1,6 @@
-jQuery.fn.toggleAttr = function(attr, attr1, attr2) {
+import "../jquery.min.js";
+
+export default function(attr, attr1, attr2) {
 	return this.each(function() {
 		let self = $(this);
 		if (self.attr(attr) == attr1)

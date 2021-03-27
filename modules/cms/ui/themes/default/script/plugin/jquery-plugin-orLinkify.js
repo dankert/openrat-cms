@@ -1,13 +1,17 @@
+import "../jquery.min.js";
+import Workbench from "../openrat/workbench.js";
+import Dialog    from "../openrat/dialog.js";
+
 /**
  * JQuery-Plugin, enable clicking on an area.
  * It searches for an anchor (<a href="..." />) in the child elements and virtually clicks on it.
  */
-jQuery.fn.orLinkify = function( options )
+export default function( options )
 {
 	// Create some defaults, extending them with any options that were provided
 	var settings = $.extend( {
 		'openAction' : function(name,action,id) {
-			Openrat.workbench.openNewAction( name,action,id );
+			Workbench.getInstance().openNewAction( name,action,id );
 		}
 	}, options);
 
@@ -28,7 +32,9 @@ jQuery.fn.orLinkify = function( options )
 	{
 
 		// Searching for the first link in all children.
-		$el = $(this);
+		let $el = $(this);
+		let $link;
+
 		if   ( $el.is('a') )
 			$link = $el;
 		else
@@ -48,7 +54,7 @@ jQuery.fn.orLinkify = function( options )
 			case 'post':
 
 				// Create a temporary form element.
-				$form = $('<form />').attr('method','POST').addClass('invisible');
+				let $form = $('<form />').attr('method','POST').addClass('invisible');
 				$form.data('afterSuccess', $link.data('afterSuccess'));
 				let params = JSON.parse( $link.attr('data-data')  );
 				params.output = 'json';
@@ -73,7 +79,7 @@ jQuery.fn.orLinkify = function( options )
 				if   ( !name )
 					name = $link.text(); // get the name from the combined text of all children.
 
-				let extraValue = $link.attr('data-extra');
+				let extraValue = Workbench.htmlDecode($link.attr('data-extra'));
 				let extraData  = JSON.parse(extraValue);
 
 				dialog.start(name,$link.attr('data-action'),$link.attr('data-method'),$link.attr('data-id'),extraData );

@@ -1,5 +1,6 @@
-import $ from '../jquery.min.js';
+import '../jquery-global.js';
 import Workbench from './workbench.js';
+import Callback  from "./callback.js";
 
 /**
  * Notice.
@@ -127,8 +128,6 @@ export default class Notice  {
 			// Click anywhere in the notice should clear the auto-close timer.
 			// Because if the user interacts with the notice it should not magically disappear.
 			this.element.click( function () {
-				console.debug('kicked timer of notice');
-				console.debug( timer );
 				window.clearTimeout( timer );
 			} );
 		}
