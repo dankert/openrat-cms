@@ -50,12 +50,12 @@ export default function(options)
 
                 // Extra-Id ergänzen.
                 if (typeof extraId === 'string') {
-                    jQuery.each(JSON.parse(extraId), function (name, value) {
+                    $.each(JSON.parse(extraId), function (name, value) {
                         loadBranchUrl = loadBranchUrl + '&' + name + '=' + value;
                     });
                 }
                 else if (typeof extraId === 'object') {
-                    jQuery.each(extraId, function (name, field) {
+                    $.each(extraId, function (name, field) {
                         loadBranchUrl = loadBranchUrl + '&' + name + '=' + field;
                     });
                 }

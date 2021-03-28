@@ -7,8 +7,8 @@ export default function() {
 
 	let resize = function( element )
 	{
-		let lines = jQuery(element).val().split("\n").length;
-		jQuery(element).attr('rows',lines+3);
+		let lines = $(element).val().split("\n").length;
+		$(element).attr('rows',lines+3);
 	};
 	
 	$(this).each(function(i)
@@ -16,7 +16,7 @@ export default function() {
 		resize(this);
 	});
 
-	return jQuery(this).keypress(function()
+	return $(this).keypress(function()
 	{
 		resize(this);
 	});

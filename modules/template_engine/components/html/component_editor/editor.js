@@ -1,3 +1,6 @@
+
+import '../../../../cms/ui/themes/default/script/jquery-global.js';
+
 export default function(element ) {
 
     $(element).find('textarea').orAutoheight();
@@ -217,10 +220,11 @@ export default function(element ) {
     } );
 
 	// HTML-Editor anzeigen
-	$(element).find("textarea.or-editor.or-html-editor").each( function() {
+	$(element).find("textarea.or-editor.or-html-editor").each( async function() {
 
 	    let textarea = this;
 
+	    let trumbowyg = await import('../../../../editor/trumbowyg/trumbowyg.min.js');
         $.trumbowyg.svgPath = './modules/editor/trumbowyg/ui/icons.svg';
         $(textarea).trumbowyg();
 

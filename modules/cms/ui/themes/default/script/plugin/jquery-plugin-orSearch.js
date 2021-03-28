@@ -1,4 +1,5 @@
-import "../jquery.min.js";
+import "../jquery-global.js";
+import WorkbenchNavigator from "../openrat/navigator.js";
 
 /**
  * Suche mit Dropdown
@@ -45,7 +46,7 @@ export default function( options )
 			).then( data => {
 				$(dropdownEl).empty(); // Leeren.
 
-				for (id in data.output.result) {
+				for (let id in data.output.result) {
 					let result = data.output.result[id];
 
 					// Suchergebnis-Zeile in das Ergebnis schreiben.

@@ -21,7 +21,7 @@
 		<link rel="shortcut icon" type="image/x-icon" href="${favicon_url}"/>
 	</head>
 
-	<body class="or-loader">
+	<body>
 		<!-- This is the CMS workbench which contains the whole application -->
 		<div id="workbench" class="or-workbench or--initial-hidden">
 

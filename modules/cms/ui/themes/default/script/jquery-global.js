@@ -1,6 +1,7 @@
 import './jquery.min.js';
 
-window.jQuery = $;
+let jQuery = $;
+export default jQuery;
 window.$ = $;
 
 import autoheight from './plugin/jquery-plugin-orAutoheight.js';
