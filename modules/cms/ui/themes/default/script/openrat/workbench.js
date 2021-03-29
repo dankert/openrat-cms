@@ -2,8 +2,8 @@ import $ from '../jquery-global.js';
 import Dialog from './dialog.js';
 import View from './view.js';
 import Callback from './callback.js';
-import WorkbenchNavigator from "./navigator";
-import Notice from "./notice";
+import WorkbenchNavigator from "./navigator.js";
+import Notice from "./notice.js";
 
 
 export default class Workbench {

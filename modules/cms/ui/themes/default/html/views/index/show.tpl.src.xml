@@ -13,7 +13,18 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<meta charset="${charset}"/>
 		<meta name="robots" content="noindex,nofollow"/>
-		<script type="module" src="${scriptModuleLink}" defer="defer"/>
+		<script type="module" src="${scriptModuleLink}" />
+		<!-- preloading scripts as modules -->
+		<link rel="modulepreload" href="./modules/cms/ui/themes/default/script/openrat/workbench.js"/>
+		<link rel="modulepreload" href="./modules/cms/ui/themes/default/script/openrat/callback.js"/>
+		<link rel="modulepreload" href="./modules/cms/ui/themes/default/script/openrat/notice.js"/>
+		<link rel="modulepreload" href="./modules/cms/ui/themes/default/script/openrat/view.js"/>
+		<link rel="modulepreload" href="./modules/cms/ui/themes/default/script/openrat/dialog.js"/>
+		<link rel="modulepreload" href="./modules/cms/ui/themes/default/script/openrat/navigator.js"/>
+		<!-- preloading fonts -->
+		<link rel="preload" href="./modules/cms/ui/themes/default/font/oxygen-v7-latin-regular.woff2"          as="font" type="font/woff2"/>
+		<link rel="preload" href="./modules/cms/ui/themes/default/font/MaterialIcons-Regular.woff2"            as="font" type="font/woff2"/>
+		<link rel="preload" href="./modules/cms/ui/themes/default/font/source-code-pro-v8-latin-regular.woff2" as="font" type="font/woff2"/>
 		<link rel="stylesheet" type="text/css" href="${styleLink}"/>
 		<link id="user-style" rel="stylesheet" type="text/css" href="${themeStyleLink}"/>
 		<meta id="theme-color" name="theme-color" content="${themeColor}"/>

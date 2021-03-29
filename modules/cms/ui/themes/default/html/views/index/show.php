@@ -6,7 +6,16 @@
     <meta name="<?php echo O::escapeHtml('viewport') ?>" content="<?php echo O::escapeHtml('width=device-width, initial-scale=1.0') ?>" /><?php echo O::escapeHtml('') ?>
     <meta charset="<?php echo O::escapeHtml(''.@$charset.'') ?>" /><?php echo O::escapeHtml('') ?>
     <meta name="<?php echo O::escapeHtml('robots') ?>" content="<?php echo O::escapeHtml('noindex,nofollow') ?>" /><?php echo O::escapeHtml('') ?>
-    <script type="<?php echo O::escapeHtml('module') ?>" src="<?php echo O::escapeHtml(''.@$scriptModuleLink.'') ?>" defer="<?php echo O::escapeHtml('defer') ?>"><?php echo O::escapeHtml('') ?></script>
+    <script type="<?php echo O::escapeHtml('module') ?>" src="<?php echo O::escapeHtml(''.@$scriptModuleLink.'') ?>"><?php echo O::escapeHtml('') ?></script>
+    <link rel="<?php echo O::escapeHtml('modulepreload') ?>" href="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/script/openrat/workbench.js') ?>" /><?php echo O::escapeHtml('') ?>
+    <link rel="<?php echo O::escapeHtml('modulepreload') ?>" href="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/script/openrat/callback.js') ?>" /><?php echo O::escapeHtml('') ?>
+    <link rel="<?php echo O::escapeHtml('modulepreload') ?>" href="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/script/openrat/notice.js') ?>" /><?php echo O::escapeHtml('') ?>
+    <link rel="<?php echo O::escapeHtml('modulepreload') ?>" href="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/script/openrat/view.js') ?>" /><?php echo O::escapeHtml('') ?>
+    <link rel="<?php echo O::escapeHtml('modulepreload') ?>" href="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/script/openrat/dialog.js') ?>" /><?php echo O::escapeHtml('') ?>
+    <link rel="<?php echo O::escapeHtml('modulepreload') ?>" href="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/script/openrat/navigator.js') ?>" /><?php echo O::escapeHtml('') ?>
+    <link rel="<?php echo O::escapeHtml('preload') ?>" href="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/font/oxygen-v7-latin-regular.woff2') ?>" as="<?php echo O::escapeHtml('font') ?>" type="<?php echo O::escapeHtml('font/woff2') ?>" /><?php echo O::escapeHtml('') ?>
+    <link rel="<?php echo O::escapeHtml('preload') ?>" href="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/font/MaterialIcons-Regular.woff2') ?>" as="<?php echo O::escapeHtml('font') ?>" type="<?php echo O::escapeHtml('font/woff2') ?>" /><?php echo O::escapeHtml('') ?>
+    <link rel="<?php echo O::escapeHtml('preload') ?>" href="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/font/source-code-pro-v8-latin-regular.woff2') ?>" as="<?php echo O::escapeHtml('font') ?>" type="<?php echo O::escapeHtml('font/woff2') ?>" /><?php echo O::escapeHtml('') ?>
     <link rel="<?php echo O::escapeHtml('stylesheet') ?>" type="<?php echo O::escapeHtml('text/css') ?>" href="<?php echo O::escapeHtml(''.@$styleLink.'') ?>" /><?php echo O::escapeHtml('') ?>
     <link id="<?php echo O::escapeHtml('user-style') ?>" rel="<?php echo O::escapeHtml('stylesheet') ?>" type="<?php echo O::escapeHtml('text/css') ?>" href="<?php echo O::escapeHtml(''.@$themeStyleLink.'') ?>" /><?php echo O::escapeHtml('') ?>
     <meta id="<?php echo O::escapeHtml('theme-color') ?>" name="<?php echo O::escapeHtml('theme-color') ?>" content="<?php echo O::escapeHtml(''.@$themeColor.'') ?>" /><?php echo O::escapeHtml('') ?>
