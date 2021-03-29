@@ -12,4 +12,8 @@ class ProfileUisettingsAction extends ProfileAction implements Method {
     }
     public function post() {
     }
+
+	public function checkAccess() {
+		return true;
+	}
 }
