@@ -1,4 +1,4 @@
-import "../jquery.min.js";
+import $ from "../jquery-global.js";
 import Workbench from "../openrat/workbench.js";
 import Dialog    from "../openrat/dialog.js";
 

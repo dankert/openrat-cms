@@ -1,4 +1,4 @@
-import "../jquery.min.js";
+import $ from "../jquery-global.js";
 
 /**
  * Input-Hints

@@ -1,4 +1,4 @@
-import "../jquery.min.js";
+import $ from "../jquery-global.js";
 
 export default function(attr, attr1, attr2) {
 	return this.each(function() {

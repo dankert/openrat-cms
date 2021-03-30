@@ -1,4 +1,4 @@
-import '../jquery-global.js';
+import $ from  '../jquery-global.js';
 import Workbench          from './workbench.js';
 import Callback           from "./callback.js";
 import WorkbenchNavigator from "./navigator.js";
@@ -29,7 +29,7 @@ export default class Notice  {
 		this.log  = '';
 		this.timeout = 0;
 
-		this.element = $('<div />')
+		this.element = $.create('div')
 			.addClass('notice'                   )
 			.addClass('notice--is-inactive'      )
 			.addClass('collapsible'           )
@@ -72,28 +72,28 @@ export default class Notice  {
 
 	show() {
 
-		console.debug('user notice: '+this.msg);
+		console.debug('user notice: ' + this.msg);
 		let notice = this;
 		this.element.removeClass('notice--is-inactive');
 
-		this.element.appendTo('.or-notice-container'); // Notice anhängen.
+		this.element.appendTo( $('.or-notice-container') ); // Notice anhängen.
 
-		let toolbar = $('<div class="or-notice-toolbar"></div>');
+		let toolbar = $.create('div').addClass("notice-toolbar");
 		toolbar.appendTo(this.element);
-		toolbar.append('<i class="or-image-icon or-image-icon--menu-close or-act-notice-close"></i>');
+		toolbar.append( $.create('i').addClass('image-icon').addClass('image-icon--menu-close').addClass('act-notice-close') );
 
-		this.element.append( $('<i />').addClass('image-icon').addClass('image-icon--node-open'  ).addClass('collapsible--on-open'  ) );
-		this.element.append( $('<i />').addClass('image-icon').addClass('image-icon--node-closed').addClass('collapsible--on-closed') );
-		this.element.append('<span class="or-notice-text or-collapsible-act-switch">' + Notice.htmlEntities(this.msg) + '</span>');
+		this.element.append( $.create('i').addClass('image-icon').addClass('image-icon--node-open'  ).addClass('collapsible--on-open'  ) );
+		this.element.append( $.create('i').addClass('image-icon').addClass('image-icon--node-closed').addClass('collapsible--on-closed') );
+		this.element.append( $.create('span').addClass('or-notice-text').addClass('or-collapsible-act-switch').text( Notice.htmlEntities(this.msg) ) );
 
 		if (this.name) {
-			this.element.append( $('<div class="or-notice-name or-collapsible-value"><a class="or-act-clickable" href="' + WorkbenchNavigator.createShortUrl(this.typ, this.id) + '" data-type="open" data-action="' + this.typ + '" data-id="' + this.id + '"><i class="or-notice-action-full or-image-icon or-image-icon--action-' + this.typ + '"></i><span class="">' + this.name + '</span></a></div>').orLinkify() );
+			this.element.append( $.create('div').addClass('notice-name').addClass('collapsible-value').append( $.create('a').addClass('act-clickable').attr('href',WorkbenchNavigator.createShortUrl(this.typ, this.id)).data('type',open).data('action',this.typ).data('id',this.id).append( $.create('i').addClass('notice-action-full').addClass('image-icon').addClass('image-icon--action-' + this.typ )).append( $.create('span').text(this.name ))).orLinkify() );
 		}
 
 		if (this.log)
-			this.element.append('<div class="or-notice-log or-collapsible-value"><pre>' + Notice.htmlEntities(this.log) + '</pre></div>');
+			this.element.append( $.create('div').addClass('notice-log').addClass('collapsible-value').append( $.create('pre').text(Notice.htmlEntities(this.log))));
 
-		this.element.append('<div class="or-notice-date or-collapsible-value">' + new Date().toLocaleTimeString() + '</div>');
+		this.element.append( $.create('div').addClass('notice-date').addClass('collapsible-value').text(new Date().toLocaleTimeString()));
 
 
 		// Fire onclick-handler

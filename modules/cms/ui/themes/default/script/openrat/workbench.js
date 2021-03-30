@@ -485,7 +485,7 @@ export default class Workbench {
 			notice.msg = $(this).text();
 			notice.show();
 
-			$(this).remove();
+			//$(this).remove();
 		});
 	}
 

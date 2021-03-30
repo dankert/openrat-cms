@@ -1,5 +1,5 @@
 
-import "../jquery.min.js";
+import $ from "../jquery-global.js";
 import Workbench from "../openrat/workbench.js";
 import Notice    from "../openrat/notice.js";
 

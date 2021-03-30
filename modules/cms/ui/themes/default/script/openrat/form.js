@@ -1,4 +1,4 @@
-import '../jquery-global.js';
+import $ from  '../jquery-global.js';
 import Workbench from "./workbench.js";
 import Notice from "./notice.js";
 import Callback from "./callback.js";

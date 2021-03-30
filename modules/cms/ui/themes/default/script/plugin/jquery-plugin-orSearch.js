@@ -1,4 +1,4 @@
-import "../jquery-global.js";
+import $ from "../jquery-global.js";
 import WorkbenchNavigator from "../openrat/navigator.js";
 
 /**
