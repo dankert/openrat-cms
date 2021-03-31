@@ -74,7 +74,7 @@ export default class Workbench {
 		this.initializePingTimer();
 		this.initializeDirtyWarning();
 
-		Workbench.registerOpenClose( $('.or-collapsible') );
+		//Workbench.registerOpenClose( $('.or-collapsible') );
 		console.info('Application started');
     }
 
@@ -587,7 +587,7 @@ export default class Workbench {
 			 * @param id
 			 */
 			function openNavTree(action, id) {
-				let $navControl = $('.or-link[data-action='+action+'][data-id='+id+']').closest('.or-navtree-node');
+				let $navControl = $('.or-link[data-action="'+action+'"][data-id="'+id+'"]').closest('.or-navtree-node');
 				if   ( $navControl.is( '.or-navtree-node--is-closed' ) )
 					$navControl.find('.or-navtree-node-control').click();
 			}
@@ -596,7 +596,7 @@ export default class Workbench {
 				.then( response => response.text() )
 				.then( data => {
 
-					$('.or-breadcrumb').empty().append( data ).find('.or-act-clickable').orLinkify();
+					$('.or-breadcrumb').empty().html( data ).find('.or-act-clickable').orLinkify();
 
 					// Open the path in the navigator tree
 					$('.or-breadcrumb a').each( function () {
@@ -663,15 +663,15 @@ export default class Workbench {
 			$element.find('.or-act-load-nav-tree').each( async function() {
 
 				let type = $(this).data('type') || 'root';
-				let loadBranchUrl = './?action=tree&subaction=branch&id=0&type='+type;
+				let loadBranchUrl = View.createUrl('tree','branch',0,{type:type});
 				let $targetElement = $(this);
 
 				let response = await fetch( loadBranchUrl );
 				let html     = await response.text();
 
 				// Den neuen Unter-Zweig erzeugen.
-				let $ul = $('<ul class="or-navtree-list" />');
-				$ul.appendTo( $targetElement.empty() ).append( html );
+				let $ul = $.create('ul' ).addClass('navtree-list');
+				$ul.appendTo( $targetElement.empty() ).html( html );
 
 				$ul.find('li').orTree( {
 					'openAction': function( name,action,id) {
@@ -701,7 +701,7 @@ export default class Workbench {
 		Callback.afterViewLoadedHandler.add( function(viewEl ) {
 
 			// Die Section deaktivieren, wenn die View keinen Inhalt hat.
-			var section = $(viewEl).closest('section');
+			let section = $(viewEl).closest('section');
 
 			//var viewHasContent = $(viewEl).children().length > 0;
 			//section.toggleClass('disabled',!viewHasContent);
@@ -769,7 +769,7 @@ export default class Workbench {
 						.then( html => {
 
 							// Den neuen Unter-Zweig erzeugen.
-							let $ul = $('<ul class="or-navtree-list" />');
+							let $ul = $.create('ul' ).addClass('navtree-list');
 							$ul.appendTo( $targetElement ).append( html );
 
 							$ul.find('li').orTree(
@@ -811,14 +811,14 @@ export default class Workbench {
 				// Mit der Maus geklicktes Menü aktivieren.
 				$($element).find('.or-menu-category').click( function(event) {
 					event.stopPropagation();
-					$(this).parents('.or-menu').toggleClass('menu--is-open');
+					$(this).closest('.or-menu').toggleClass('menu--is-open');
 				});
 
 				// Mit der Maus überstrichenes Menü aktivieren.
 				$($element).find('.or-menu-category').mouseover( function() {
 
 					// close other menus.
-					$(this).parents('.or-menu').find('.or-menu-category').removeClass('menu-category--is-open');
+					$(this).closest('.or-menu').find('.or-menu-category').removeClass('menu-category--is-open');
 					// open the mouse-overed menu.
 					$(this).addClass('menu-category--is-open');
 				});

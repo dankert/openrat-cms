@@ -108,7 +108,7 @@ export default class Dialog {
 		$(document).keyup(this.escapeKeyClosingHandler);
 
 		// close dialog on click onto the blurred area.
-		$('.or-dialog-filler,.or-act-dialog-close').off('click').click( function(e)
+		$('.or-dialog-filler,.or-act-dialog-close').click( function(e)
 		{
 			e.preventDefault();
 			dialog.close();

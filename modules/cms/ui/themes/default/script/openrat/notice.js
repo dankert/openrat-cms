@@ -84,7 +84,7 @@ export default class Notice  {
 
 		this.element.append( $.create('i').addClass('image-icon').addClass('image-icon--node-open'  ).addClass('collapsible--on-open'  ) );
 		this.element.append( $.create('i').addClass('image-icon').addClass('image-icon--node-closed').addClass('collapsible--on-closed') );
-		this.element.append( $.create('span').addClass('or-notice-text').addClass('or-collapsible-act-switch').text( Notice.htmlEntities(this.msg) ) );
+		this.element.append( $.create('span').addClass('notice-text').addClass('collapsible-act-switch').text( Notice.htmlEntities(this.msg) ) );
 
 		if (this.name) {
 			this.element.append( $.create('div').addClass('notice-name').addClass('collapsible-value').append( $.create('a').addClass('act-clickable').attr('href',WorkbenchNavigator.createShortUrl(this.typ, this.id)).data('type',open).data('action',this.typ).data('id',this.id).append( $.create('i').addClass('notice-action-full').addClass('image-icon').addClass('image-icon--action-' + this.typ )).append( $.create('span').text(this.name ))).orLinkify() );

@@ -67,3 +67,8 @@ let originalHasClass = OQuery.fn.hasClass;
 OQuery.fn.hasClass = function (styleClass) {
 	return originalHasClass.call(this,'or-'+styleClass);
 }
+
+//let originalToggleClass = OQuery.fn.toggleClass;
+//OQuery.fn.toggleClass = function (styleClass) {
+//	return originalToggleClass.call(this,'or-'+styleClass);
+//}

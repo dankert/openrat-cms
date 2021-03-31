@@ -1,3 +1,4 @@
+import $ from  '../../../../cms/ui/themes/default/script/jquery-global.js';
 
 
 export default function(element ) {

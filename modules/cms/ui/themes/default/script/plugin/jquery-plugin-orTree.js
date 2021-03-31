@@ -12,7 +12,7 @@ import Notice    from "../openrat/notice.js";
 export default function(options)
 {
 	// Create some defaults, extending them with any options that were provided
-	var settings = $.extend( {
+	let settings = $.extend( {
 		'openAction' : function(name,action,id) {
 		}
 	}, options);
@@ -39,8 +39,7 @@ export default function(options)
             }
             else {
                 // Pfad ist geschlossen -> öffnen.
-                $(treeEl).closest('div.view').addClass('loader');
-
+				$(treeEl).closest('div.or-view').addClass('loader');
                 let $link   = $node.find('a');
                 //let type    = $link.data('extra-type');
                 let id      = $link.data('id');
@@ -49,14 +48,12 @@ export default function(options)
                 let loadBranchUrl = './?action=tree&subaction=branch&id=' + id + '';
 
                 // Extra-Id ergänzen.
-                if (typeof extraId === 'string') {
-                    $.each(JSON.parse(extraId), function (name, value) {
-                        loadBranchUrl = loadBranchUrl + '&' + name + '=' + value;
-                    });
-                }
-                else if (typeof extraId === 'object') {
-                    $.each(extraId, function (name, field) {
-                        loadBranchUrl = loadBranchUrl + '&' + name + '=' + field;
+                if (typeof extraId === 'string')
+					extraId = JSON.parse(extraId);
+
+                if (typeof extraId === 'object') {
+                    Object.keys(extraId).forEach( (name)=> {
+                        loadBranchUrl = loadBranchUrl + '&' + name + '=' + extraId[name];
                     });
                 }
                 else {
@@ -71,10 +68,10 @@ export default function(options)
 					.then( html => {
 
 						// Den neuen Unter-Zweig erzeugen.
-						let $ul = $('<ul class="or-navtree-list" />');
+						let $ul = $.create('ul' ).addClass('navtree-list');
 						$(treeEl).append($ul);
 
-						$ul.append( html );
+						$ul.html( html );
 						$ul.find('li').orTree(settings); // All subnodes are getting event listener for open/close
 
 						/* macht linkify schon

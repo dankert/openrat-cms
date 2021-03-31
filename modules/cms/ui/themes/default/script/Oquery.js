@@ -4,26 +4,34 @@
  */
 let selector = function ( selector ) {
 
-	let node;
-
 	if   ( typeof selector === 'string' )
-		node = document.querySelectorAll(selector);
+		return new OQuery( document.querySelectorAll(selector) );
 	else if ( selector instanceof HTMLElement )
-		node = [selector];
-	else
+		return new OQuery([selector] );
+	else if ( selector instanceof OQuery )
 		return selector;
+	else
+		//console.warn( new Error("Illegal argument '"+selector+"' of type "+(typeof selector)) );
+		return new OQuery( [] );
 
-	return new OQuery( node );
 }
 
 selector.create = function(tagName ) {
 	return new OQuery( [document.createElement( tagName )] );
 };
 
+selector.id = function( id ) {
+	return new OQuery( [document.getElementById( id )] );
+};
+
+selector.one = function( selector ) {
+	return new OQuery( [document.querySelector( selector )] );
+};
+
 
 selector.extend = function() {
-	for(var i=1; i<arguments.length; i++)
-		for(var key in arguments[i])
+	for(let i=1; i<arguments.length; i++)
+		for(let key in arguments[i])
 			if(arguments[i].hasOwnProperty(key))
 				arguments[0][key] = arguments[i][key];
 	return arguments[0];
@@ -38,98 +46,142 @@ export class OQuery {
 
 	constructor( nodeList ) {
 
-		this.node = Array.isArray(nodeList) ? nodeList : Array.from(nodeList)
+		this.nodes = Array.isArray(nodeList) ? nodeList : Array.from(nodeList)
 	}
 
+	get( idx ) {
+		return this.nodes[idx];
+	}
+	first() {
+		return new OQuery( this.nodes.length > 0 ? [this.nodes[0]] : [] );
+	};
+
+
 	parent() {
-		return this.node[0].parentNode;
+		return new OQuery( this.nodes.map(node => node.parentNode ).filter( node => node !== null ) );
 	};
 
 	closest( selector ) {
-		return new OQuery( [this.node[0].closest( selector )] );
+		return new OQuery( this.nodes.map(node => node.closest( selector ) ).filter( node => node !== null ) );
 	};
 
-	children() {
-		return new OQuery( this.node[0].children );
+	children( selector ) {
+		let result = [];
+		for( let node of this.nodes )
+			result = result.concat( Array.from(node.children).filter( node => selector ? node.matches(selector) : true ) );
+		return new OQuery( result );
 	};
 
 	find(selector) {
-		return new OQuery(this.node[0].querySelectorAll(selector));
+		let result = [];
+		for( let node of this.nodes )
+			result = result.concat( Array.from(node.querySelectorAll(selector)) );
+		return new OQuery( result );
 	};
 
-	text( value = null ) {
+	text( value ) {
 
-		if   ( value ) {
-			this.node.forEach( node => node.textContent = value );
+		if   ( typeof value !== 'undefined'  ) {
+			this.nodes.forEach(node => node.textContent = value );
 			return this;
 		}
 		else {
-			return this.node[0].textContent;
+			return this.nodes[0].textContent;
 		}
 	};
 
 	addClass( name ) {
-		this.node.forEach( node => node.classList.add( name ) );
+		this.nodes.forEach(node => node.classList.add( name ) );
 		return this;
 	};
-
-	remove() {
-		this.node.forEach( node => node.remove() );
-		return this;
-	};
-
-	hasClass( name ) {
-		return this.node[0].classList.contains( name );
-	};
-
-	toggleClass( name ) {
-
-		this.node.forEach( node => {
-			if (node.classList.contains( name ) )
-				node.classList.remove( name )
-			else
-				node.classList.add( name )
-		} );
-		return this;
-	};
-
 
 	removeClass ( name )  {
-		this.node.forEach(
+
+		this.nodes.forEach(
 			node => node.classList.remove( name )
 		);
 		return this;
 	};
 
-	click ( handler ) {
-		this.node.forEach( node => node.addEventListener( 'click',handler.call(node)) );
+	hasClass( name ) {
+		for( let node of this.nodes )
+			if  ( node.classList.contains( name ) )
+				return true;
+
+		return false;
+	};
+
+	toggleClass( name ) {
+		if   ( this.hasClass( name ) )
+			this.removeClass( name );
+		else
+			this.addClass( name );
+
 		return this;
 	};
 
+
+	remove() {
+		this.nodes.forEach(node => node.remove() );
+		return this;
+	};
+
+
+
+	click ( handler ) {
+		this.on( 'click',handler );
+		return this;
+	};
+	dblclick ( handler ) {
+		this.on( 'dblclick',handler );
+		return this;
+	};
+	mouseover( handler ) {
+		this.on( 'mouseover',handler );
+		return this;
+	};
+	keypress( handler ) {
+		this.on( 'keypress',handler );
+		return this;
+	};
+	keyup( handler ) {
+		this.on( 'keyup',handler );
+		return this;
+	};
+	submit( handler ) {
+		this.on( 'submit',handler );
+		return this;
+	}
+
 	on ( event,handler ) {
-		this.node.forEach( node => node.addEventListener( event,handler.call(node)) );
+		if   ( typeof handler !== 'undefined')
+			this.nodes.forEach(node => node.addEventListener( event,(ev) => {handler.call(node,ev)}) );
+		else
+			this.nodes.forEach(node => node.dispatchEvent( new Event(event) ) );
 		return this;
 	};
 
 	each( handler ) {
-		this.node.forEach(
-			node => handler.call(node)
-		);
+		let idx = -1;
+		for( let node of this.nodes )
+			if   ( handler.call(node,idx,node) === false )
+				break;
+
 		return this;
 	}
 
 	hide() {
-		this.node.forEach( node => node.style.display = 'none' );
+		this.nodes.forEach(node => node.style.display = 'none' );
 		return this;
 	}
 
 	show() {
-		this.node.forEach( node => node.style.display = '' );
+		this.nodes.forEach(node => node.style.display = '' );
 		return this;
 	}
 
 	append( el ) {
-		this.node.forEach( node => el.node.forEach( elnode => node.appendChild(elnode) ) );
+		this.nodes.forEach(node => el.nodes.forEach(elnode => node.appendChild(elnode) ) );
 		return this;
 	}
 
@@ -139,40 +191,42 @@ export class OQuery {
 		return this;
 	}
 
-	attr( name,value = null) {
-		if   ( ! value )
-			return this.node[0].getAttribute(name);
-		else
-			this.node.forEach( node => node.setAttribute(name,value) );
+	attr( name,value ) {
+		if   ( typeof value === 'undefined' )
+			return this.nodes.length > 0 ? this.nodes[0].getAttribute(name) : '';
 
+		this.nodes.forEach(node => node.setAttribute(name,value) );
+		return this;
 	}
 
-	data( name,value = null) {
-		if   ( value === null )
-			return this.node[0].dataset[name];
-		else
-			this.node.forEach( node => node.dataset[name] = value );
+	data( name,value) {
+		if   ( typeof value === 'undefined' )
+			return this.nodes.length > 0 ? this.nodes[0].dataset[name] : '';
+
+		this.nodes.forEach(node => node.dataset[name] = value );
+		return this;
 
 	}
 
 	html( value ) {
-		if   ( ! value)
-			return this.node[0].innerHTML;
-		else
-			this.node.forEach( node => node.innerHTML = value );
+		if   ( typeof value === 'undefined')
+			return this.nodes.length > 0 ? this.nodes[0].innerHTML : '';
+
+		this.nodes.forEach(node => node.innerHTML = value );
+		return this;
 	}
 
 	val( value = null ) {
 		if   ( value !== null ) {
-			this.node.forEach( node => node.value = value );
+			this.nodes.forEach(node => node.value = value );
 			return this;
 		}
 		else
-			return this.node[0].value;
+			return this.nodes.length > 0 ? this.nodes[0].value : '';
 	}
 
 	empty() {
-		this.node.forEach( node => {
+		this.nodes.forEach(node => {
 			while (node.firstChild) {
 				node.removeChild(node.firstChild);
 			}
@@ -182,7 +236,7 @@ export class OQuery {
 	}
 
 	change() {
-		this.node.forEach( node => {
+		this.nodes.forEach(node => {
 			//node.fireEvent("onchange");
 		} );
 		return this;
@@ -190,8 +244,11 @@ export class OQuery {
 
 
 	is( selector ) {
-		let el = this.node[0];
-		return el.matches(selector)
+		for( let node of this.nodes )
+			if   ( node.matches(selector) )
+				return true;
+
+		return false;
 	}
 
 }

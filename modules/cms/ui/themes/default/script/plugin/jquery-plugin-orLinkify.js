@@ -20,11 +20,11 @@ export default function( options )
     // Disable all links in this linkified area.
     // The user is already able to open the link in a new tab.
 	if  ( $(this).is('a') )
-		$(this).click( function(event) {
+		$(this).addClass('act-prevented-link').click( function(event) {
 			event.preventDefault();
 		} );
 	else
-		$(this).find('a').click( function(event) {
+		$(this).find('a').addClass('act-prevented-sublink').click( function(event) {
 			event.preventDefault();
 		} );
 
