@@ -562,7 +562,7 @@ export default class Workbench {
 				}
 			} );
 			$('.or-search .or-act-search-delete').click( function() {
-				$('.or-search .or-title-input').val('').change();
+				$('.or-search .or-title-input').val('').input();
 			} );
 		};
 		registerGlobalSearch();

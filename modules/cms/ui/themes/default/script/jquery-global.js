@@ -30,23 +30,23 @@ class CMSQuery extends OQuery {
 	}
 
 	orAutoheight() {
-		return autoheight.call(this);
+		return autoheight.apply(this,arguments);
 	};
 
 	orButton() {
-		return button.call(this);
+		return button.apply(this,arguments);
 	};
 
 	orLinkify() {
-		return linkify.call(this);
+		return linkify.apply(this,arguments);
 	};
 
 	orSearch() {
-		return search.call(this);
+		return search.apply(this,arguments);
 	};
 
 	orTree() {
-		return tree.call(this);
+		return tree.apply(this,arguments);
 	};
 
 	toggleAttr() {

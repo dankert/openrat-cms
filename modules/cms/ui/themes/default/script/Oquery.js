@@ -160,6 +160,16 @@ export class OQuery {
 		this.on( 'submit',handler );
 		return this;
 	}
+	change( handler ) {
+		this.on( 'change',handler )
+		return this;
+	}
+	input( handler ) {
+		this.on( 'input',handler )
+		return this;
+	}
+
+
 
 	on ( event,handler ) {
 		if   ( typeof handler !== 'undefined')
@@ -242,14 +252,6 @@ export class OQuery {
 
 		return this;
 	}
-
-	change() {
-		this.nodes.forEach(node => {
-			//node.fireEvent("onchange");
-		} );
-		return this;
-	}
-
 
 	is( selector ) {
 		for( let node of this.nodes )
