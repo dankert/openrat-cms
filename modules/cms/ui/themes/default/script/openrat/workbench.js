@@ -493,12 +493,23 @@ export default class Workbench {
 	initializeKeystrokes() {
 
 		let keyPressedHandler = (event) => {
-			if   ( event.key === 'F4' ) {
+
+			if (event.key === 'F4') {
 
 				let dialog = new Dialog();
-				dialog.start('','','prop',0,{} );
+				dialog.start('', '', 'prop', 0, {});
+			}
+
+			if (event.key === 'F2') {
+
+				if ($('.or-workbench').hasClass('workbench--navigation-is-small'))
+					$('.or-act-nav-wide').click();
+				else
+					$('.or-act-nav-small').click();
 			}
 		};
+
+
 
 		document.addEventListener('keydown',keyPressedHandler);
 
@@ -710,22 +721,6 @@ export default class Workbench {
 		 * @param viewEl DOM-Element der View
 		 */
 		Callback.afterViewLoadedHandler.add( function(viewEl ) {
-
-			// Die Section deaktivieren, wenn die View keinen Inhalt hat.
-			let section = $(viewEl).closest('section');
-
-			//var viewHasContent = $(viewEl).children().length > 0;
-			//section.toggleClass('disabled',!viewHasContent);
-			section.toggleClass('is-empty',$(viewEl).is(':empty'));
-
-			/*
-			if   ( ! $(viewEl).is(':empty') )
-				section.slideDown('fast');
-			else
-				section.slideUp('fast');*/
-
-			// Untermenüpunkte aus der View in das Fenstermenü kopieren...
-			//$(viewEl).closest('div.panel').find('div.header div.dropdown div.entry.perview').remove(); // Alte Einträge löschen
 
 			// Handler for mobile navigation
 			$(viewEl).find('.or-act-nav-open-close').click( function() {
