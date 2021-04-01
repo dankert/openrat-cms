@@ -18,7 +18,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 .or-breadcrumb {
-	margin-left: 1.5em;
+	margin-left: 0;
 	margin-right: 0.5em;
 }
 .or-breadcrumb > * {

@@ -4,9 +4,6 @@
       <div class="<?php echo O::escapeHtml('or-toolbar-icon or-act-nav-open-close or--visible-on-mobile') ?>"><?php echo O::escapeHtml('') ?>
         <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-menu') ?>"><?php echo O::escapeHtml('') ?></i>
       </div>
-      <div class="<?php echo O::escapeHtml('or-toolbar-icon or-workbench--visible-on-wide or- or-act-nav-small or-workbench--visible-on-dialog-open or--visible-on-desktop') ?>"><?php echo O::escapeHtml('') ?>
-        <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-menu') ?>"><?php echo O::escapeHtml('') ?></i>
-      </div>
       <div class="<?php echo O::escapeHtml('or-toolbar-icon or-workbench--visible-on-small or-act-nav-wide or-workbench--visible-on-dialog-open or--visible-on-desktop') ?>"><?php echo O::escapeHtml('') ?>
         <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-menu') ?>"><?php echo O::escapeHtml('') ?></i>
       </div>

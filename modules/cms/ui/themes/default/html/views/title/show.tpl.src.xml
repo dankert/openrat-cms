@@ -9,10 +9,13 @@
 			</part>
 
 			<!-- Shrink the navigation on desktop -->
+			<!--
 			<part
-				class="toolbar-icon,workbench--visible-on-wide,,act-nav-small,workbench--visible-on-dialog-open,-visible-on-desktop">
+				class="toolbar-icon,workbench-\\\\-visible-on-wide,,act-nav-small,workbench-\\\\-visible-on-dialog-open,-visible-on-desktop">
 				<image class="" menu="menu"/>
 			</part>
+			-->
+
 			<!-- Open the navigation on desktop -->
 			<part
 				class="toolbar-icon,workbench--visible-on-small,act-nav-wide,workbench--visible-on-dialog-open,-visible-on-desktop">
