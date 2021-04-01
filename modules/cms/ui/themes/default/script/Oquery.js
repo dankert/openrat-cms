@@ -1,35 +1,39 @@
+/*! OQuery */
 /**
  * OQuery is a very light ES6-ready replacement for JQuery
  *
  */
-let selector = function ( selector ) {
+let query = function (selector ) {
 
 	if   ( typeof selector === 'string' )
-		return new OQuery( document.querySelectorAll(selector) );
+		return query.createQuery( document.querySelectorAll(selector) );
 	else if ( selector instanceof HTMLElement )
-		return new OQuery([selector] );
+		return query.createQuery([selector] );
 	else if ( selector instanceof OQuery )
 		return selector;
 	else
 		//console.warn( new Error("Illegal argument '"+selector+"' of type "+(typeof selector)) );
-		return new OQuery( [] );
+		return query.createQuery( [] );
 
 }
 
-selector.create = function(tagName ) {
-	return new OQuery( [document.createElement( tagName )] );
+query.createQuery = function(nodeList ) {
+	return new OQuery( nodeList );
+}
+
+query.create = function(tagName ) {
+	return query.createQuery( [document.createElement( tagName )] );
 };
 
-selector.id = function( id ) {
-	return new OQuery( [document.getElementById( id )] );
+query.id = function(id ) {
+	return query.createQuery( [document.getElementById( id )] );
 };
 
-selector.one = function( selector ) {
-	return new OQuery( [document.querySelector( selector )] );
+query.one = function(selector ) {
+	return query.createQuery( [document.querySelector( selector )] );
 };
 
-
-selector.extend = function() {
+query.extend = function() {
 	for(let i=1; i<arguments.length; i++)
 		for(let key in arguments[i])
 			if(arguments[i].hasOwnProperty(key))
@@ -37,12 +41,16 @@ selector.extend = function() {
 	return arguments[0];
 }
 
-export default selector;
+export default query;
 
 
 export class OQuery {
 
 	static fn = OQuery.prototype;
+	
+	createNew(nodeList) {
+		return new OQuery(nodeList)
+	};
 
 	constructor( nodeList ) {
 
@@ -53,30 +61,30 @@ export class OQuery {
 		return this.nodes[idx];
 	}
 	first() {
-		return new OQuery( this.nodes.length > 0 ? [this.nodes[0]] : [] );
+		return this.createNew( this.nodes.length > 0 ? [this.nodes[0]] : [] );
 	};
 
 
 	parent() {
-		return new OQuery( this.nodes.map(node => node.parentNode ).filter( node => node !== null ) );
+		return this.createNew( this.nodes.map(node => node.parentNode ).filter( node => node !== null ) );
 	};
 
 	closest( selector ) {
-		return new OQuery( this.nodes.map(node => node.closest( selector ) ).filter( node => node !== null ) );
+		return this.createNew( this.nodes.map(node => node.closest( selector ) ).filter( node => node !== null ) );
 	};
 
 	children( selector ) {
 		let result = [];
 		for( let node of this.nodes )
 			result = result.concat( Array.from(node.children).filter( node => selector ? node.matches(selector) : true ) );
-		return new OQuery( result );
+		return this.createNew( result );
 	};
 
 	find(selector) {
 		let result = [];
 		for( let node of this.nodes )
 			result = result.concat( Array.from(node.querySelectorAll(selector)) );
-		return new OQuery( result );
+		return this.createNew( result );
 	};
 
 	text( value ) {
@@ -186,7 +194,7 @@ export class OQuery {
 	}
 
 	appendTo( el ) {
-		let to = selector( el );
+		let to = query( el );
 		to.append( this )
 		return this;
 	}
