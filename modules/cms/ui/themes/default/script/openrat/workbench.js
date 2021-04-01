@@ -492,6 +492,17 @@ export default class Workbench {
 
 	initializeKeystrokes() {
 
+		let keyPressedHandler = (event) => {
+			if   ( event.key === 'F4' ) {
+
+				let dialog = new Dialog();
+				dialog.start('','','prop',0,{} );
+			}
+		};
+
+		document.addEventListener('keydown',keyPressedHandler);
+
+		/*
 		$('.keystroke').each( function() {
 			let keystrokeElement = $(this);
 			let keystroke = keystrokeElement.text();
@@ -501,8 +512,8 @@ export default class Workbench {
 				keystrokeElement.click();
 			};
 			// Keybinding ausfuehren.
-			$(document).bind('keydown', keystroke, keyaction );
-		} );
+			document.addEventListener( )).bind('keydown', keystroke, keyaction );
+		} );*/
 	}
 
 
