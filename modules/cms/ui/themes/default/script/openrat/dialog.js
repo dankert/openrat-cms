@@ -97,15 +97,14 @@ export default class Dialog {
 
 		let dialog = this;
 
-		this.escapeKeyClosingHandler = function (e) {
-			if (e.keyCode == 27) { // ESC keycode
+		let escapeKeyClosingHandler = (e) => {
+			if (e.code === 'Escape') {
+				document.removeEventListener('keyup',escapeKeyClosingHandler);
 				dialog.close();
-
-				$(document).off('keyup'); // de-register.
 			}
 		};
 
-		$(document).keyup(this.escapeKeyClosingHandler);
+		document.addEventListener('keyup',escapeKeyClosingHandler);
 
 		// close dialog on click onto the blurred area.
 		$('.or-dialog-filler,.or-act-dialog-close').click( function(e)
