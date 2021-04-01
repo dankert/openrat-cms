@@ -26,6 +26,9 @@
 				<if value="${editor}" equals="html">
 					<editor type="html" name="text"/>
 				</if>
+				<if value="${editor}" equals="htmlsource">
+					<editor type="code" name="text" mode="htmlmixed"/>
+				</if>
 				<if value="${editor}" equals="wiki">
 					<editor type="wiki" name="text"/>
 					<group title="${message:help}" open="false">

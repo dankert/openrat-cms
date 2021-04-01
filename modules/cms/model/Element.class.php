@@ -36,6 +36,7 @@ class Element extends ModelBase
     const ELEMENT_FORMAT_HTML     = 1;
     const ELEMENT_FORMAT_WIKI     = 2;
     const ELEMENT_FORMAT_MARKDOWN = 3;
+	const ELEMENT_FORMAT_HTML_SOURCE = 4;
 
     const ELEMENT_FLAG_HTML_ALLOWED  =  1;
     const ELEMENT_FLAG_ALL_LANGUAGES =  2;
@@ -466,7 +467,8 @@ SQL
             self::ELEMENT_FORMAT_TEXT => 'text',
             self::ELEMENT_FORMAT_WIKI => 'wiki',
             self::ELEMENT_FORMAT_HTML => 'html',
-            self::ELEMENT_FORMAT_MARKDOWN => 'markdown'
+            self::ELEMENT_FORMAT_MARKDOWN    => 'markdown',
+            self::ELEMENT_FORMAT_HTML_SOURCE => 'htmlsource'
         );
     }
 

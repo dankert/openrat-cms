@@ -54,6 +54,9 @@
             <?php $if5=($editor=='html'); if($if5) {  ?>
               <textarea name="<?php echo O::escapeHtml('text') ?>" id="<?php echo O::escapeHtml('pageelement_edit_editor') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-html-editor') ?>"><?php echo ''.@$text.'' ?></textarea>
              <?php } ?>
+            <?php $if5=($editor=='htmlsource'); if($if5) {  ?>
+              <textarea name="<?php echo O::escapeHtml('text') ?>" data-extension="<?php echo O::escapeHtml('') ?>" data-mimetype="<?php echo O::escapeHtml('') ?>" data-mode="<?php echo O::escapeHtml('htmlmixed') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-code-editor') ?>"><?php echo O::escapeHtml(''.@$text.'') ?></textarea>
+             <?php } ?>
             <?php $if5=($editor=='wiki'); if($if5) {  ?>
               <textarea name="<?php echo O::escapeHtml('text') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-wiki-editor') ?>"><?php echo ''.@$text.'' ?></textarea>
               <section class="<?php echo O::escapeHtml('or-group or-collapsible or-collapsible--is-closed or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>
