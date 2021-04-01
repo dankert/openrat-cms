@@ -1381,5 +1381,10 @@ MENU_INDEX_ADMINISTRATION_DESC =',
 'UNSAVED_CHANGES_CONFIRM'=>'There are unsaved changes. Do you really want to exit?',
 'PROGRESS'=>'Work in progress',
 'REFERENCES'=>'References',
+'FORMAT_TEXT'=>'Text',
+'FORMAT_WIKI'=>'Wiki classic',
+'FORMAT_HTML'=>'HTML',
+'FORMAT_MARKDOWN'=>'Markdown',
+'FORMAT_HTML_SOURCE'=>'HTML source',
 ];}
 }

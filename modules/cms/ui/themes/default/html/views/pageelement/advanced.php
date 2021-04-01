@@ -36,7 +36,7 @@
               <?php foreach((array)@$editors as $id=>$name) {  ?>
                 <div class="<?php echo O::escapeHtml('or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
                   <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('edit') ?>" data-action="<?php echo O::escapeHtml('pageelement') ?>" data-method="<?php echo O::escapeHtml('value') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-languageid="<?php echo O::escapeHtml(''.@$languageid.'') ?>" data-extra-format="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('{&quot;languageid&quot;:&quot;'.@$languageid.'&quot;,&quot;format&quot;:&quot;'.@$id.'&quot;}') ?>" href="<?php echo O::escapeHtml('#/pageelement') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
-                    <span><?php echo O::escapeHtml(''.@$name.'') ?></span>
+                    <span><?php echo O::escapeHtml(''.@O::lang('format_'.@$name.'').'') ?></span>
                   </a>
                 </div>
                <?php } ?>

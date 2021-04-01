@@ -294,6 +294,7 @@ class PageelementAction extends BaseAction
             $format = $this->element->format;
 
         $this->setTemplateVar('format'   ,$format );
+
         $this->setTemplateVar( 'editor',Element::getAvailableFormats()[ $format ] );
 
         $this->setTemplateVar( 'text',$this->linkifyOIDs( $this->value->text ) );

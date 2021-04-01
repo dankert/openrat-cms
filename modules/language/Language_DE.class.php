@@ -1361,5 +1361,10 @@ Vielen Dank.',
 'UNSAVED_CHANGES_CONFIRM'=>'Sie haben ungespeicherte Änderungen. Möchten Sie diese Ansicht tatsächlich verlassen?',
 'PROGRESS'=>'Vorgang wird ausgeführt',
 'REFERENCES'=>'Referenzen',
+'FORMAT_TEXT'=>'Text',
+'FORMAT_WIKI'=>'Wiki klassisch',
+'FORMAT_HTML'=>'HTML',
+'FORMAT_MARKDOWN'=>'Markdown',
+'FORMAT_HTML_SOURCE'=>'HTML Quelltext',
 ];}
 }

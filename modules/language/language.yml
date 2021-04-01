@@ -6497,3 +6497,15 @@ PROGRESS:
 REFERENCES:
   de: Referenzen
   en: References
+FORMAT_TEXT:
+  en: Text
+FORMAT_WIKI:
+  de: Wiki klassisch
+  en: Wiki classic
+FORMAT_HTML:
+  en: HTML
+FORMAT_MARKDOWN:
+  en: Markdown
+FORMAT_HTML_SOURCE:
+  de: HTML Quelltext
+  en: HTML source

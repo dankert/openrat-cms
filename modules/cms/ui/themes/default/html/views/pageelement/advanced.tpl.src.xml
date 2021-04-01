@@ -31,7 +31,7 @@
           <list list="${editors}" key="id" value="name">
             <part class="act-clickable">
               <link type="edit" action="pageelement" subaction="value" var1="languageid" value1="${languageid}" var2="format" value2="${id}">
-                <text value="${name}"/>
+                <text value="${message:format_${name}}"/>
               </link>
             </part>
           </list>
