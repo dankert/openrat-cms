@@ -151,8 +151,6 @@
 							<link type="dialog" title="${message:menu_PROFILE_DESC}" action="profile" subaction="edit">
 								<image action="user"/>
 								<text class="dropdown-text" value="${message:menu_profile}"/>
-								<text class="dropdown-key,link-keystroke"
-									  value="${config:ui/keybinding/action/profile}"/>
 							</link>
 						</part>
 						<part class="dropdown-entry,act-clickable">
@@ -236,7 +234,6 @@
 						<link type="dialog" title="${message:menu_new_desc}" subaction="add">
 							<image method="add"/>
 							<text class="dropdown-text" value="${message:menu_new}"/>
-							<text class="dropdown-key,link-keystroke" value="${config:ui/keybinding/method/new}"/>
 						</link>
 					</part>
 					<part
@@ -244,7 +241,6 @@
 						<link type="dialog" title="${message:menu_info_desc}" subaction="info">
 							<image method="info"/>
 							<text class="dropdown-text" value="${message:menu_info}"/>
-							<text class="dropdown-key,link-keystroke" value="${config:ui/keybinding/method/info}"/>
 						</link>
 					</part>
 					<part
@@ -252,7 +248,7 @@
 						<link type="dialog" title="${message:menu_prop_desc}" subaction="prop">
 							<image method="prop"/>
 							<text class="dropdown-text" value="${message:menu_prop}"/>
-							<text class="dropdown-key,link-keystroke" value="${config:ui/keybinding/method/prop}"/>
+							<text class="dropdown-key,link-keystroke" value="F4"/>
 						</link>
 					</part>
 					<part
@@ -267,7 +263,6 @@
 						<link type="dialog" title="${message:menu_pub_desc}" subaction="pub">
 							<image method="publish"/>
 							<text class="dropdown-text" value="${message:menu_pub}"/>
-							<text class="dropdown-key,link-keystroke" value="${config:ui/keybinding/method/pub}"/>
 						</link>
 					</part>
 					<part
@@ -275,7 +270,6 @@
 						<link type="dialog" title="${message:menu_rights_desc}" subaction="rights">
 							<image method="rights"/>
 							<text class="dropdown-text" value="${message:menu_rights}"/>
-							<text class="dropdown-key,link-keystroke" value="${config:ui/keybinding/method/rights}"/>
 						</link>
 					</part>
 					<part
