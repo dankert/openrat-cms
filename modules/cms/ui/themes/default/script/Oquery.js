@@ -26,7 +26,11 @@ query.create = function(tagName ) {
 };
 
 query.id = function(id ) {
-	return query.createQuery( [document.getElementById( id )] );
+	let el = document.getElementById( id );
+	if   ( el )
+		return query.createQuery( [el] );
+	else
+		return query.createQuery( [] );
 };
 
 query.one = function(selector ) {

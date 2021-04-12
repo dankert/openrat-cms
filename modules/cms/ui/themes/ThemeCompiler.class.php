@@ -44,62 +44,44 @@ class ThemeCompiler
                 $css[] = __DIR__.'/../../../'.$componentCssFile;
         }
 
-        $css[] = __DIR__.'/../../../editor/simplemde/simplemde';
-        $css[] = __DIR__.'/../../../editor/trumbowyg/ui/trumbowyg';
-
-        $css[] = __DIR__.'/../../../editor/codemirror/lib/codemirror';
+        //$css[] = __DIR__.'/../../../editor/simplemde/simplemde';
+        //$css[] = __DIR__.'/../../../editor/trumbowyg/ui/trumbowyg';
+        //$css[] = __DIR__.'/../../../editor/codemirror/lib/codemirror';
 
 		foreach ($css as $cssF)
 		{
 			$lessFile = $cssF . '.less';
-			$cssFile = $cssF . '.css';
-			$cssMinFile = $cssF . '.min.css';
 
 			file_put_contents($combinedCssFile, '/* Include style: '.substr($cssF,strlen(__DIR__)).' */'."\n",FILE_APPEND);
 
-			if (! is_file($lessFile) && is_file($cssMinFile))
-            {
-            	// Copy minified CSS files (from integrated third-party apps)
-				file_put_contents($combinedCssFile   , file_get_contents($cssMinFile)."\n",FILE_APPEND);
-				file_put_contents($combinedCssFileMin, file_get_contents($cssMinFile)."\n",FILE_APPEND);
-				echo 'Copied source from minified css file '.$cssMinFile."\n";
-			}
-			elseif (! is_file($lessFile))
-			{
-				Logger::warn("Stylesheet not found: $lessFile");
-				continue;
-			}
-			else
-			{
-				// Den absoluten Pfad zur LESS-Datei ermitteln. Dieser wird vom LESS-Parser für den korrekten Link
-				// auf die LESS-Datei in der Sourcemap benötigt.
-				$pfx = substr(realpath($lessFile),0,0-strlen(basename($lessFile)));
+			// Den absoluten Pfad zur LESS-Datei ermitteln. Dieser wird vom LESS-Parser für den korrekten Link
+			// auf die LESS-Datei in der Sourcemap benötigt.
+			$pfx = substr(realpath($lessFile),0,0-strlen(basename($lessFile)));
 
-				$parser = new Less(array(
-					'sourceMap' => true,
-					'indentation' => '	',
-					'outputSourceFiles' => false,
-					'sourceMapBasepath' => $pfx
-				));
+			$parser = new Less(array(
+				'sourceMap' => true,
+				'indentation' => '	',
+				'outputSourceFiles' => false,
+				'sourceMapBasepath' => $pfx
+			));
 
 
-				$parser->parseFile( $lessFile );
-				$source = $parser->getCss();
+			$parser->parseFile( $lessFile );
+			$source = $parser->getCss();
 
-				file_put_contents($combinedCssFile, $source."\n",FILE_APPEND);
+			file_put_contents($combinedCssFile, $source."\n",FILE_APPEND);
 
-				$parser = new Less(array(
-					'compress' => true,
-					'sourceMap' => false,
-					'indentation' => ''
-				));
-				$parser->parseFile($lessFile);
-				$source = $parser->getCss();
+			$parser = new Less(array(
+				'compress' => true,
+				'sourceMap' => false,
+				'indentation' => ''
+			));
+			$parser->parseFile($lessFile);
+			$source = $parser->getCss();
 
-				file_put_contents($combinedCssFileMin, $source."\n",FILE_APPEND);
+			file_put_contents($combinedCssFileMin, $source."\n",FILE_APPEND);
 
-				echo 'Copied source from less source file '.$lessFile."\n";
-			}
+			echo 'Copied source from less source file '.$lessFile."\n";
 		}
 
 		echo 'Created file '.$combinedCssFileMin."\n";

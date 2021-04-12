@@ -14,7 +14,10 @@
           <span><?php echo O::escapeHtml(''.@O::lang('source').'') ?></span>
         </h2>
         <div class="<?php echo O::escapeHtml('or-collapsible-value or-group-value') ?>"><?php echo O::escapeHtml('') ?>
-          <textarea name="<?php echo O::escapeHtml('source') ?>" data-extension="<?php echo O::escapeHtml('') ?>" data-mimetype="<?php echo O::escapeHtml('') ?>" data-mode="<?php echo O::escapeHtml('htmlmixed') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-code-editor') ?>"><?php echo O::escapeHtml(''.@$source.'') ?></textarea>
+          <div><?php echo O::escapeHtml('') ?>
+            <textarea name="<?php echo O::escapeHtml('source') ?>" data-extension="<?php echo O::escapeHtml('') ?>" data-mimetype="<?php echo O::escapeHtml('') ?>" data-mode="<?php echo O::escapeHtml('htmlmixed') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-code-editor') ?>"><?php echo O::escapeHtml(''.@$source.'') ?></textarea>
+            <trix-editor input="<?php echo O::escapeHtml('source') ?>"><?php echo O::escapeHtml('') ?></trix-editor>
+          </div>
         </div>
       </section>
       <section class="<?php echo O::escapeHtml('or-group or-collapsible or-collapsible--is-closed or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>

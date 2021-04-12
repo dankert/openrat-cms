@@ -4,6 +4,7 @@ namespace template_engine\components\html\component_editor;
 
 use template_engine\components\html\FieldComponent;
 use template_engine\element\CMSElement;
+use template_engine\element\HtmlElement;
 use template_engine\element\Value;
 use template_engine\element\ValueExpression;
 
@@ -62,6 +63,8 @@ class EditorComponent extends FieldComponent
 		else
 			$textarea->content(Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->name));
 
-		return $textarea;
+		$trix = (new HtmlElement('trix-editor'))->addAttribute('input',$this->name);
+
+		return (new HtmlElement('div'))->addChild( $textarea )->addChild( $trix );
 	}
 }

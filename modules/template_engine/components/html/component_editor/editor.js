@@ -8,7 +8,12 @@ export default function(element ) {
 	// Codemirror-Editor anzeigen
 	$(element).find("textarea.or-editor.or-code-editor").each( async function() {
 
+		if   ( ! $.id('codemirror-style').is('link') )
+			$.create('link')
+				.attr('rel','stylesheet').attr('type','text/css').attr('href','./modules/editor/codemirror/lib/codemirror.css').attr('id','codemirror-style')
+				.appendTo('head');
 		let CodeMirror = await import("../../../../editor/codemirror/src/codemirror.js");
+		window.CodeMirror = CodeMirror.default;
 
 		let mode = $(this).data('mode');
 
@@ -57,6 +62,11 @@ export default function(element ) {
 
 	// Markdown-Editor anzeigen
 	$(element).find("textarea.or-editor.or-markdown-editor").each( async function() {
+
+		if   ( ! $.id('simplemde-style').is('link') )
+			$.create('link')
+				.attr('rel','stylesheet').attr('type','text/css').attr('href','./modules/editor/simplemde/simplemde.min.css').attr('id','simplemde-style')
+				.appendTo('head');
 
 		let SimpleMDE  = await import("../../../../editor/simplemde/simplemde.min.js");
 
@@ -224,9 +234,14 @@ export default function(element ) {
 
 	    let textarea = this;
 
-	    let trumbowyg = await import('../../../../editor/trumbowyg/trumbowyg.min.js');
-        $.trumbowyg.svgPath = './modules/editor/trumbowyg/ui/icons.svg';
-        $(textarea).trumbowyg();
+		if   ( ! $.id('trix-style').is('link') )
+			$.create('link')
+				.attr('rel','stylesheet').attr('type','text/css').attr('href','./modules/editor/trix/trix.css').attr('id','trix-style')
+				.appendTo('head');
+
+	    let trix = await import('../../../../editor/trix/trix.js');
+        //$.trumbowyg.svgPath = './modules/editor/trumbowyg/ui/icons.svg';
+        //$(textarea).trumbowyg();
 
         /*
         //  TODO

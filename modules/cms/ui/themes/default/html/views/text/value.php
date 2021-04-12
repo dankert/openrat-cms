@@ -9,7 +9,10 @@
       <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
         <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('VALUE').'') ?></h3>
         <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
-          <textarea name="<?php echo O::escapeHtml('text') ?>" data-extension="<?php echo O::escapeHtml(''.@$extension.'') ?>" data-mimetype="<?php echo O::escapeHtml(''.@$mimetype.'') ?>" data-mode="<?php echo O::escapeHtml('htmlmixed') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-code-editor') ?>"><?php echo O::escapeHtml(''.@$text.'') ?></textarea>
+          <div><?php echo O::escapeHtml('') ?>
+            <textarea name="<?php echo O::escapeHtml('text') ?>" data-extension="<?php echo O::escapeHtml(''.@$extension.'') ?>" data-mimetype="<?php echo O::escapeHtml(''.@$mimetype.'') ?>" data-mode="<?php echo O::escapeHtml('htmlmixed') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-code-editor') ?>"><?php echo O::escapeHtml(''.@$text.'') ?></textarea>
+            <trix-editor input="<?php echo O::escapeHtml('text') ?>"><?php echo O::escapeHtml('') ?></trix-editor>
+          </div>
         </div>
       </section>
     </div>

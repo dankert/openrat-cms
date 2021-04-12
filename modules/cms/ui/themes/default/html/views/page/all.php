@@ -45,7 +45,10 @@
                 <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
                   <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?></h3>
                   <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
-                    <textarea name="<?php echo O::escapeHtml(''.@$name.'') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-markdown-editor') ?>"><?php echo O::escapeHtml(''.@$value.'') ?></textarea>
+                    <div><?php echo O::escapeHtml('') ?>
+                      <textarea name="<?php echo O::escapeHtml(''.@$name.'') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-markdown-editor') ?>"><?php echo O::escapeHtml(''.@$value.'') ?></textarea>
+                      <trix-editor input="<?php echo O::escapeHtml(''.@$name.'') ?>"><?php echo O::escapeHtml('') ?></trix-editor>
+                    </div>
                   </div>
                 </section>
                <?php } ?>
@@ -53,7 +56,10 @@
                 <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
                   <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?></h3>
                   <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
-                    <textarea name="<?php echo O::escapeHtml(''.@$name.'') ?>" id="<?php echo O::escapeHtml('pageelement_edit_editor') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-html-editor') ?>"><?php echo ''.@$value.'' ?></textarea>
+                    <div><?php echo O::escapeHtml('') ?>
+                      <textarea name="<?php echo O::escapeHtml(''.@$name.'') ?>" id="<?php echo O::escapeHtml('pageelement_edit_editor') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-html-editor') ?>"><?php echo ''.@$value.'' ?></textarea>
+                      <trix-editor input="<?php echo O::escapeHtml(''.@$name.'') ?>"><?php echo O::escapeHtml('') ?></trix-editor>
+                    </div>
                   </div>
                 </section>
                <?php } ?>
@@ -61,7 +67,10 @@
                 <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
                   <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?></h3>
                   <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
-                    <textarea name="<?php echo O::escapeHtml(''.@$name.'') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-wiki-editor') ?>"><?php echo ''.@$value.'' ?></textarea>
+                    <div><?php echo O::escapeHtml('') ?>
+                      <textarea name="<?php echo O::escapeHtml(''.@$name.'') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-wiki-editor') ?>"><?php echo ''.@$value.'' ?></textarea>
+                      <trix-editor input="<?php echo O::escapeHtml(''.@$name.'') ?>"><?php echo O::escapeHtml('') ?></trix-editor>
+                    </div>
                   </div>
                 </section>
                <?php } ?>

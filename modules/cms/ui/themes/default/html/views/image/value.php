@@ -11,7 +11,10 @@
           <span><?php echo O::escapeHtml(''.@O::lang('VALUE').'') ?></span>
         </td>
         <td><?php echo O::escapeHtml('') ?>
-          <textarea name="<?php echo O::escapeHtml('value') ?>" data-extension="<?php echo O::escapeHtml('') ?>" data-mimetype="<?php echo O::escapeHtml('') ?>" data-mode="<?php echo O::escapeHtml('htmlmixed') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-code-editor') ?>"><?php echo O::escapeHtml(''.@$value.'') ?></textarea>
+          <div><?php echo O::escapeHtml('') ?>
+            <textarea name="<?php echo O::escapeHtml('value') ?>" data-extension="<?php echo O::escapeHtml('') ?>" data-mimetype="<?php echo O::escapeHtml('') ?>" data-mode="<?php echo O::escapeHtml('htmlmixed') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-code-editor') ?>"><?php echo O::escapeHtml(''.@$value.'') ?></textarea>
+            <trix-editor input="<?php echo O::escapeHtml('value') ?>"><?php echo O::escapeHtml('') ?></trix-editor>
+          </div>
         </td>
       </tr>
       <tr><?php echo O::escapeHtml('') ?>

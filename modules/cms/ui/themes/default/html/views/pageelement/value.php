@@ -49,16 +49,28 @@
           <?php $if4=($type=='longtext'); if($if4) {  ?>
             <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('format') ?>" value="<?php echo O::escapeHtml(''.@$format.'') ?>" /><?php echo O::escapeHtml('') ?>
             <?php $if5=($editor=='markdown'); if($if5) {  ?>
-              <textarea name="<?php echo O::escapeHtml('text') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-markdown-editor') ?>"><?php echo O::escapeHtml(''.@$text.'') ?></textarea>
+              <div><?php echo O::escapeHtml('') ?>
+                <textarea name="<?php echo O::escapeHtml('text') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-markdown-editor') ?>"><?php echo O::escapeHtml(''.@$text.'') ?></textarea>
+                <trix-editor input="<?php echo O::escapeHtml('text') ?>"><?php echo O::escapeHtml('') ?></trix-editor>
+              </div>
              <?php } ?>
             <?php $if5=($editor=='html'); if($if5) {  ?>
-              <textarea name="<?php echo O::escapeHtml('text') ?>" id="<?php echo O::escapeHtml('pageelement_edit_editor') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-html-editor') ?>"><?php echo ''.@$text.'' ?></textarea>
+              <div><?php echo O::escapeHtml('') ?>
+                <textarea name="<?php echo O::escapeHtml('text') ?>" id="<?php echo O::escapeHtml('pageelement_edit_editor') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-html-editor') ?>"><?php echo ''.@$text.'' ?></textarea>
+                <trix-editor input="<?php echo O::escapeHtml('text') ?>"><?php echo O::escapeHtml('') ?></trix-editor>
+              </div>
              <?php } ?>
             <?php $if5=($editor=='htmlsource'); if($if5) {  ?>
-              <textarea name="<?php echo O::escapeHtml('text') ?>" data-extension="<?php echo O::escapeHtml('') ?>" data-mimetype="<?php echo O::escapeHtml('') ?>" data-mode="<?php echo O::escapeHtml('htmlmixed') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-code-editor') ?>"><?php echo O::escapeHtml(''.@$text.'') ?></textarea>
+              <div><?php echo O::escapeHtml('') ?>
+                <textarea name="<?php echo O::escapeHtml('text') ?>" data-extension="<?php echo O::escapeHtml('') ?>" data-mimetype="<?php echo O::escapeHtml('') ?>" data-mode="<?php echo O::escapeHtml('htmlmixed') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-code-editor') ?>"><?php echo O::escapeHtml(''.@$text.'') ?></textarea>
+                <trix-editor input="<?php echo O::escapeHtml('text') ?>"><?php echo O::escapeHtml('') ?></trix-editor>
+              </div>
              <?php } ?>
             <?php $if5=($editor=='wiki'); if($if5) {  ?>
-              <textarea name="<?php echo O::escapeHtml('text') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-wiki-editor') ?>"><?php echo ''.@$text.'' ?></textarea>
+              <div><?php echo O::escapeHtml('') ?>
+                <textarea name="<?php echo O::escapeHtml('text') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-wiki-editor') ?>"><?php echo ''.@$text.'' ?></textarea>
+                <trix-editor input="<?php echo O::escapeHtml('text') ?>"><?php echo O::escapeHtml('') ?></trix-editor>
+              </div>
               <section class="<?php echo O::escapeHtml('or-group or-collapsible or-collapsible--is-closed or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>
                 <h2 class="<?php echo O::escapeHtml('or-collapsible-title or-group-title or-collapsible-act-switch') ?>"><?php echo O::escapeHtml('') ?>
                   <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-closed or-collapsible--on-closed') ?>"><?php echo O::escapeHtml('') ?></i>

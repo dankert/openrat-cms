@@ -31,6 +31,9 @@
       <span><?php echo O::escapeHtml(''.@O::lang('SOURCE').'') ?></span>
     </h2>
     <div class="<?php echo O::escapeHtml('or-collapsible-value or-group-value') ?>"><?php echo O::escapeHtml('') ?>
-      <textarea name="<?php echo O::escapeHtml('src') ?>" data-extension="<?php echo O::escapeHtml('') ?>" data-mimetype="<?php echo O::escapeHtml('') ?>" data-mode="<?php echo O::escapeHtml('html') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-code-editor') ?>"><?php echo O::escapeHtml(''.@$src.'') ?></textarea>
+      <div><?php echo O::escapeHtml('') ?>
+        <textarea name="<?php echo O::escapeHtml('src') ?>" data-extension="<?php echo O::escapeHtml('') ?>" data-mimetype="<?php echo O::escapeHtml('') ?>" data-mode="<?php echo O::escapeHtml('html') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-code-editor') ?>"><?php echo O::escapeHtml(''.@$src.'') ?></textarea>
+        <trix-editor input="<?php echo O::escapeHtml('src') ?>"><?php echo O::escapeHtml('') ?></trix-editor>
+      </div>
     </div>
   </section>
