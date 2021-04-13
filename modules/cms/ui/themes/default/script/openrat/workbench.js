@@ -884,5 +884,59 @@ export default class Workbench {
 		} );
 	};
 
+	/**
+	 * Adds a new Stylesheet to the DOM.
+	 *
+	 * @param id ID of element (must be unique in the DOM)
+	 * @param href Link to the stylesheet
+	 */
+	static async addStyle( id, href ) {
+
+		return new Promise( (resolve,reject) => {
+			let styleEl = document.getElementById(id);
+
+			if (!styleEl) {
+				// Style is not present, so inserting it into the DOM
+				styleEl = document.createElement('link');
+				styleEl.addEventListener('load',resolve);
+				styleEl.setAttribute('rel', 'stylesheet');
+				styleEl.setAttribute('type', 'text/css');
+				styleEl.setAttribute('href', href);
+				styleEl.setAttribute('id', id);
+
+				document.getElementsByTagName('head')[0].appendChild(styleEl);
+			} else {
+				resolve();
+			}
+		} );
+
+	}
+
+
+	/**
+	 * Adds a new Script to the DOM.
+	 *
+	 * @param id ID of element (must be unique in the DOM)
+	 * @param href Link to the stylesheet
+	 */
+	static async addScript( id, href ) {
+
+		return new Promise( (resolve,reject) => {
+			let scriptEl = document.getElementById( id );
+
+			if   ( ! scriptEl ) {
+				// Script is not present, so inserting it into the DOM
+				scriptEl = document.createElement( 'script' );
+				scriptEl.setAttribute('id'  ,id                       );
+				scriptEl.setAttribute('type','text/javascript'  );
+				scriptEl.addEventListener('load',resolve);
+				scriptEl.setAttribute('src',href );
+				document.getElementsByTagName('head')[0].appendChild(scriptEl);
+			} else {
+				resolve(); // script is already there
+			}
+		} );
+	}
+
 }
 

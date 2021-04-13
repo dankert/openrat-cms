@@ -1,5 +1,6 @@
 
 import $ from  '../../../../cms/ui/themes/default/script/jquery-global.js';
+import Workbench from "../../../../cms/ui/themes/default/script/openrat/workbench";
 
 export default function(element ) {
 
@@ -8,12 +9,8 @@ export default function(element ) {
 	// Codemirror-Editor anzeigen
 	$(element).find("textarea.or-editor.or-code-editor").each( async function() {
 
-		if   ( ! $.id('codemirror-style').is('link') )
-			$.create('link')
-				.attr('rel','stylesheet').attr('type','text/css').attr('href','./modules/editor/codemirror/lib/codemirror.css').attr('id','codemirror-style')
-				.appendTo('head');
-		let CodeMirror = await import("../../../../editor/codemirror/src/codemirror.js");
-		window.CodeMirror = CodeMirror.default;
+		await Workbench.addStyle ('codemirror-style' ,'./modules/editor/codemirror/lib/codemirror.css');
+		await Workbench.addScript('codemirror-script','./modules/editor/codemirror/lib/codemirror.js' );
 
 		let mode = $(this).data('mode');
 
@@ -23,7 +20,7 @@ export default function(element ) {
 
         let textareaEl = this;
 
-        let editor = CodeMirror.default.fromTextArea( textareaEl, {
+        let editor = CodeMirror.fromTextArea( textareaEl, {
             lineNumbers: true,
             viewportMargin: Infinity,
 			mode: mode
@@ -63,97 +60,93 @@ export default function(element ) {
 	// Markdown-Editor anzeigen
 	$(element).find("textarea.or-editor.or-markdown-editor").each( async function() {
 
-		if   ( ! $.id('simplemde-style').is('link') )
-			$.create('link')
-				.attr('rel','stylesheet').attr('type','text/css').attr('href','./modules/editor/simplemde/simplemde.min.css').attr('id','simplemde-style')
-				.appendTo('head');
-
-		let SimpleMDE  = await import("../../../../editor/simplemde/simplemde.min.js");
+		await Workbench.addStyle ('simplemde-style' ,'./modules/editor/simplemde/simplemde.min.css');
+		await Workbench.addScript('simplemde-script','./modules/editor/simplemde/simplemde.min.js' );
 
 		let textarea = this;
-	    let toolbar = [{
-                name: "bold",
-                action: SimpleMDE.default.toggleBold,
-                className: "image-icon image-icon--editor-bold",
-                title: "Bold",
-            },
-            {
-                name: "italic",
-                action: SimpleMDE.default.toggleItalic,
-                className: "image-icon image-icon--editor-italic",
-                title: "Italic",
-            },
-            {
-                name: "heading",
-                action: SimpleMDE.default.toggleHeadingBigger,
-                className: "image-icon image-icon--editor-headline",
-                title: "Headline",
-            },
-            "|", // Separator
-            {
-                name: "quote",
-                action: SimpleMDE.default.toggleBlockquote,
-                className: "image-icon image-icon--editor-quote",
-                title: "Quote",
-            },
-            {
-                name: "code",
-                action: SimpleMDE.default.toggleCodeBlock,
-                className: "image-icon image-icon--editor-code",
-                title: "Code",
-            },
-            "|", // Separator
-            {
-                name: "generic list",
-                action: SimpleMDE.default.toggleUnorderedList,
-                className: "image-icon image-icon--editor-unnumberedlist",
-                title: "Unnumbered list",
-            },
-            {
-                name: "numbered list",
-                action: SimpleMDE.default.toggleOrderedList,
-                className: "image-icon image-icon--editor-numberedlist",
-                title: "Numbered list",
-            },
-            "|", // Separator
-            {
-                name: "table",
-                action: SimpleMDE.default.drawTable,
-                className: "image-icon image-icon--editor-table",
-                title: "Table",
-            },
-            {
-                name: "horizontalrule",
-                action: SimpleMDE.default.drawHorizontalRule,
-                className: "image-icon image-icon--editor-horizontalrule",
-                title: "Horizontal rule",
-            },
-            "|", // Separator
-            {
-                name: "undo",
-                action: SimpleMDE.default.undo,
-                className: "image-icon image-icon--editor-undo",
-                title: "Undo",
-            },
-            {
-                name: "redo",
-                action: SimpleMDE.default.redo,
-                className: "image-icon image-icon--editor-redo",
-                title: "Redo",
-            },
-            "|", // Separator
-            {
-                name: "link",
-                action: SimpleMDE.drawLink,
-                className: "image-icon image-icon--editor-link",
-                title: "Link",
-            },
-            {
-                name: "image",
-                action: SimpleMDE.default.drawImage,
-                className: "image-icon image-icon--editor-image",
-                title: "Image",
-            },
+		let toolbar = [{
+			name: "bold",
+			action: SimpleMDE.toggleBold,
+			className: "image-icon image-icon--editor-bold",
+			title: "Bold",
+		},
+			{
+				name: "italic",
+				action: SimpleMDE.toggleItalic,
+				className: "image-icon image-icon--editor-italic",
+				title: "Italic",
+			},
+			{
+				name: "heading",
+				action: SimpleMDE.toggleHeadingBigger,
+				className: "image-icon image-icon--editor-headline",
+				title: "Headline",
+			},
+			"|", // Separator
+			{
+				name: "quote",
+				action: SimpleMDE.toggleBlockquote,
+				className: "image-icon image-icon--editor-quote",
+				title: "Quote",
+			},
+			{
+				name: "code",
+				action: SimpleMDE.toggleCodeBlock,
+				className: "image-icon image-icon--editor-code",
+				title: "Code",
+			},
+			"|", // Separator
+			{
+				name: "generic list",
+				action: SimpleMDE.toggleUnorderedList,
+				className: "image-icon image-icon--editor-unnumberedlist",
+				title: "Unnumbered list",
+			},
+			{
+				name: "numbered list",
+				action: SimpleMDE.toggleOrderedList,
+				className: "image-icon image-icon--editor-numberedlist",
+				title: "Numbered list",
+			},
+			"|", // Separator
+			{
+				name: "table",
+				action: SimpleMDE.drawTable,
+				className: "image-icon image-icon--editor-table",
+				title: "Table",
+			},
+			{
+				name: "horizontalrule",
+				action: SimpleMDE.drawHorizontalRule,
+				className: "image-icon image-icon--editor-horizontalrule",
+				title: "Horizontal rule",
+			},
+			"|", // Separator
+			{
+				name: "undo",
+				action: SimpleMDE.undo,
+				className: "image-icon image-icon--editor-undo",
+				title: "Undo",
+			},
+			{
+				name: "redo",
+				action: SimpleMDE.redo,
+				className: "image-icon image-icon--editor-redo",
+				title: "Redo",
+			},
+			"|", // Separator
+			{
+				name: "link",
+				action: SimpleMDE.drawLink,
+				className: "image-icon image-icon--editor-link",
+				title: "Link",
+			},
+			{
+				name: "image",
+				action: SimpleMDE.drawImage,
+				className: "image-icon image-icon--editor-image",
+				title: "Image",
+			},
 
             /*
             "|", // Separator
@@ -185,8 +178,7 @@ export default function(element ) {
             },
         ];
 
-	    let MdeEditor = SimpleMDE.default;
-        let mde = new MdeEditor(
+        let mde = new SimpleMDE(
             {
                 element: $(this)[0],
                 toolbar: toolbar,
@@ -234,14 +226,14 @@ export default function(element ) {
 
 	    let textarea = this;
 
-		if   ( ! $.id('trix-style').is('link') )
-			$.create('link')
-				.attr('rel','stylesheet').attr('type','text/css').attr('href','./modules/editor/trix/trix.css').attr('id','trix-style')
-				.appendTo('head');
-
-	    let trix = await import('../../../../editor/trix/trix.js');
-        //$.trumbowyg.svgPath = './modules/editor/trumbowyg/ui/icons.svg';
-        //$(textarea).trumbowyg();
+		//await Workbench.addStyle ('trix-style' ,'./modules/editor/trix/trix.css');
+	    //await Workbench.addScript('trix-script','./modules/editor/trix/trix.js' );
+		await Workbench.addStyle ('trumbowyg-style'   ,'./modules/editor/trumbowyg/ui/trumbowyg.css');
+		await Workbench.addScript('jquery-slim-script','./modules/cms/ui/themes/default/script/jquery.min.js' );
+		let j = jQuery.noConflict();
+	    await Workbench.addScript('trumbowyg-script'  ,'./modules/editor/trumbowyg/trumbowyg.js' );
+        j.trumbowyg.svgPath = './modules/editor/trumbowyg/ui/icons.svg';
+        j(textarea).trumbowyg();
 
         /*
         //  TODO
