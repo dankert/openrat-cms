@@ -148,6 +148,6 @@ export default class Dialog {
 		// Remove dirty-flag from view
 		$('.or-dialog-content .or-view.or-view--is-dirty').removeClass('view--is-dirty');
 		this.hide();
-		$(document).unbind('keyup',this.escapeKeyClosingHandler); // Cleanup ESC-Key-Listener
+		//$(document).unbind('keyup',this.escapeKeyClosingHandler); // Cleanup ESC-Key-Listener
 	}
 }
