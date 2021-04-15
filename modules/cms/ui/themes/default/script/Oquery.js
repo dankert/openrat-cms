@@ -177,7 +177,7 @@ export class OQuery {
 
 	on ( event,handler ) {
 		if   ( typeof handler !== 'undefined')
-			this.nodes.forEach(node => node.addEventListener( event,(ev) => {handler.call(node,ev)}) );
+			this.nodes.forEach(node => node.addEventListener( event,handler.bind(node) ) );
 		else
 			this.nodes.forEach(node => node.dispatchEvent( new Event(event) ) );
 		return this;
