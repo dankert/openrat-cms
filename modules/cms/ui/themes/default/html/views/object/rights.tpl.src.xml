@@ -2,14 +2,14 @@
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<table>
 		<row header="true">
-			<column>
+			<column class="table-column-auto">
 				<text value="${message:NAME}"/>
 			</column>
-			<column>
+			<column class="table-column-auto">
 				<text value="${message:LANGUAGE}"/>
 			</column>
 			<list list="${show}" value="t">
-				<column>
+				<column class="table-column-action">
 					<text value="${message:acl_${t}_abbrev}"/>
 				</column>
 			</list>

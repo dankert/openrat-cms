@@ -2,30 +2,30 @@
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<table>
 		<row header="true">
-			<column header="true">
+			<column header="true" class="table-column-auto">
 				<text value="${message:NAME}"/>
 			</column>
-			<column header="true">
+			<column header="true" class="-visible-on-desktop,table-column-user">
 				<text value="${message:LANGUAGE_ISOCODE}"/>
 			</column>
-			<column header="true">
+			<column header="true" class="-visible-on-desktop,table-column-user">
 				<text value=""/>
 			</column>
-			<column />
+			<column header="true" class="table-column-action" />
 		</row>
 		<list list="${el}" extract="true">
 			<row class="data">
 				<column class="act-clickable">
 					<image action="language"/>
 					<link type="open" name="${name}" action="language" id="${id}">
-						<text value="${name}" maxlength="25"/>
+						<text value="${name}" />
 					</link>
 				</column>
-				<column>
+				<column class="-visible-on-desktop">
 					<text value="${isocode}"/>
 				</column>
 				<if false="${is_default}">
-					<column class="act-clickable">
+					<column class="act-clickable,-visible-on-desktop">
 						<if present="id">
 							<link type="post" action="language" subaction="setdefault" id="${id}">
 								<text value="${message:make_default}"/>
@@ -36,7 +36,7 @@
 					</column>
 				</if>
 				<else>
-					<column>
+					<column  class="-visible-on-desktop">
 						<text value="${message:is_default}" type="emphatic"/>
 					</column>
 				</else>

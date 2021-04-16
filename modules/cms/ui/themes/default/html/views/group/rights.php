@@ -27,19 +27,19 @@
                       <div class="<?php echo O::escapeHtml('or-table-area') ?>"><?php echo O::escapeHtml('') ?>
                         <table class="<?php echo O::escapeHtml('or-table') ?>"><?php echo O::escapeHtml('') ?>
                           <tr class="<?php echo O::escapeHtml('or-table-header') ?>"><?php echo O::escapeHtml('') ?>
-                            <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
+                            <th class="<?php echo O::escapeHtml('or-table-column-uer') ?>"><?php echo O::escapeHtml('') ?>
                               <span><?php echo O::escapeHtml(''.@O::lang('USER').'') ?></span>
-                            </td>
-                            <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
+                            </th>
+                            <th class="<?php echo O::escapeHtml('or-table-column-auto') ?>"><?php echo O::escapeHtml('') ?>
                               <span><?php echo O::escapeHtml(''.@O::lang('NAME').'') ?></span>
-                            </td>
-                            <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
+                            </th>
+                            <th class="<?php echo O::escapeHtml('or-table-column-user') ?>"><?php echo O::escapeHtml('') ?>
                               <span><?php echo O::escapeHtml(''.@O::lang('LANGUAGE').'') ?></span>
-                            </td>
+                            </th>
                             <?php foreach((array)@$show as $list_key=>$t) {  ?>
-                              <td class="<?php echo O::escapeHtml('or-help') ?>"><?php echo O::escapeHtml('') ?>
+                              <th class="<?php echo O::escapeHtml('or-table-column-action') ?>"><?php echo O::escapeHtml('') ?>
                                 <span title="<?php echo O::escapeHtml(''.@O::lang('acl_'.@$t.'').'') ?>"><?php echo O::escapeHtml(''.@O::lang('acl_'.@$t.'_abbrev').'') ?></span>
-                              </td>
+                              </th>
                              <?php } ?>
                           </tr>
                           <?php foreach((array)@$rights as $aclid=>$acl) { extract($acl); ?>

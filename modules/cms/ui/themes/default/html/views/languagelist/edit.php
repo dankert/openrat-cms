@@ -6,16 +6,16 @@
     <div class="<?php echo O::escapeHtml('or-table-area') ?>"><?php echo O::escapeHtml('') ?>
       <table class="<?php echo O::escapeHtml('or-table') ?>"><?php echo O::escapeHtml('') ?>
         <tr class="<?php echo O::escapeHtml('or-table-header') ?>"><?php echo O::escapeHtml('') ?>
-          <th><?php echo O::escapeHtml('') ?>
+          <th class="<?php echo O::escapeHtml('or-table-column-auto') ?>"><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml(''.@O::lang('NAME').'') ?></span>
           </th>
-          <th><?php echo O::escapeHtml('') ?>
+          <th class="<?php echo O::escapeHtml('or--visible-on-desktop or-table-column-user') ?>"><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml(''.@O::lang('LANGUAGE_ISOCODE').'') ?></span>
           </th>
-          <th><?php echo O::escapeHtml('') ?>
+          <th class="<?php echo O::escapeHtml('or--visible-on-desktop or-table-column-user') ?>"><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml('') ?></span>
           </th>
-          <td><?php echo O::escapeHtml('') ?></td>
+          <th class="<?php echo O::escapeHtml('or-table-column-action') ?>"><?php echo O::escapeHtml('') ?></th>
         </tr>
         <?php foreach((array)@$el as $list_key=>$list_value) { extract($list_value); ?>
           <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
@@ -25,11 +25,11 @@
                 <span><?php echo O::escapeHtml(''.@$name.'') ?></span>
               </a>
             </td>
-            <td><?php echo O::escapeHtml('') ?>
+            <td class="<?php echo O::escapeHtml('or--visible-on-desktop') ?>"><?php echo O::escapeHtml('') ?>
               <span><?php echo O::escapeHtml(''.@$isocode.'') ?></span>
             </td>
             <?php $if5=(!$is_default); if($if5) {  ?>
-              <td class="<?php echo O::escapeHtml('or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
+              <td class="<?php echo O::escapeHtml('or-act-clickable or--visible-on-desktop') ?>"><?php echo O::escapeHtml('') ?>
                 <?php $if7=(isset($id)); if($if7) {  ?>
                   <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('post') ?>" data-action="<?php echo O::escapeHtml('language') ?>" data-method="<?php echo O::escapeHtml('setdefault') ?>" data-id="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" data-data="<?php echo O::escapeHtml('{"action":"language","subaction":"setdefault","id":"'.@$id.'","token":"'.@$_token.'","none":0}') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
                     <span><?php echo O::escapeHtml(''.@O::lang('make_default').'') ?></span>
@@ -40,7 +40,7 @@
               </td>
              <?php } ?>
             <?php if(!$if5) {  ?>
-              <td><?php echo O::escapeHtml('') ?>
+              <td class="<?php echo O::escapeHtml('or--visible-on-desktop') ?>"><?php echo O::escapeHtml('') ?>
                 <em><?php echo O::escapeHtml(''.@O::lang('is_default').'') ?></em>
               </td>
              <?php } ?>

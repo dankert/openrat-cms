@@ -9,17 +9,17 @@
       <if not="true" empty="${rights}">
         <table>
           <row header="true">
-            <column class="help">
+            <column header="true" class="table-column-user">
               <text value="${message:USER}"/>
             </column>
-            <column class="help">
+            <column header="true" class="table-column-auto">
               <text value="${message:NAME}"/>
             </column>
-            <column class="help">
+            <column header="true" class="table-column-user">
               <text value="${message:LANGUAGE}"/>
             </column>
             <list list="${show}" value="t">
-              <column class="help">
+              <column header="true" class="table-column-action">
                 <text value="${message:acl_${t}_abbrev}" title="${message:acl_${t}}"/>
                 <!--<text value="${message:acl_${data:t}_abbrev}" title="${message:acl_${data:t}}"></text>-->
               </column>

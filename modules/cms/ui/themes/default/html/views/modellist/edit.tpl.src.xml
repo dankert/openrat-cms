@@ -5,21 +5,21 @@
 			<column header="true">
 				<text value="${message:name}"/>
 			</column>
-			<column header="true">
+			<column header="true"  class="-visible-on-desktop">
 				<text value=""/>
 			</column>
-			<column/>
+			<column header="true" />
 		</row>
 		<list list="${el}" extract="true">
 			<row class="data">
 				<column class="act-clickable">
 					<link type="open" name="${name}" action="model" id="${id}">
 						<image action="model"/>
-						<text value="${name}" maxlength="25"/>
+						<text value="${name}" />
 					</link>
 				</column>
 				<if false="${is_default}">
-					<column class="act-clickable">
+					<column class="act-clickable,-visible-on-desktop">
 						<if present="id">
 							<link type="post" action="model" subaction="setdefault" id="${id}">
 								<text value="${message:make_default}"/>
@@ -28,7 +28,7 @@
 					</column>
 				</if>
 				<else>
-					<column>
+					<column class="-visible-on-desktop">
 						<text value="${message:is_default}" type="emphatic"/>
 					</column>
 				</else>
