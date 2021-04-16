@@ -8,26 +8,22 @@ use util\Session;
 
 class LoginLicenseAction extends LoginAction implements Method {
     public function view() {
-		$software = array();
-		
-		$software[] = array('name'   =>'OpenRat Content Management System',
-		                    'url'    =>'http://www.openrat.de/',
-		                    'license'=>'GPL v2');
-		$software[] = array('name'   =>'jQuery Core Javascript Framework',
-		                    'url'    =>'http://jquery.com/',
-		                    'license'=>'MPL, GPL v2');
-		$software[] = array('name'   =>'jQuery UI Javascript Framework',
-		                    'url'    =>'http://jqueryui.com/',
-		                    'license'=>'MPL, GPL v2');
-		$software[] = array('name'   =>'GeSHi - Generic Syntax Highlighter',
-		                    'url'    =>'http://qbnz.com/highlighter/',
-		                    'license'=>'GPL v2');
-		$software[] = array('name'   =>'TAR file format',
-		                    'url'    =>'http://www.phpclasses.org/package/529',
-		                    'license'=>'LGPL');
-		$software[] = array('name'   =>'JSON file format',
-		                    'url'    =>'http://pear.php.net/pepr/pepr-proposal-show.php?id=198',
-		                    'license'=>'BSD');
+		$software = array_map( function($lib) {
+			return [
+				'name'    => $lib[0],
+				'url'     => $lib[1],
+				'license' => $lib[2]
+			];
+		},[
+			['OpenRat Content Management System' ,'http://www.openrat.de/'      ,'GPL v2'     ],
+			['jQuery Core Javascript Framework'  ,'http://jquery.com/'          ,'MPL, GPL v2'],
+			['GeSHi - Generic Syntax Highlighter','http://qbnz.com/highlighter/','GPL v2'     ],
+			['CodeMirror'                        ,'https://codemirror.net/'     ,'MIT'        ],
+			['SimpleMDE'                         ,'https://simplemde.com/'      ,'MIT'        ],
+			['Trumbowyg'                         ,'https://alex-d.github.io/Trumbowyg/','MIT' ],
+			['TAR file format'                   ,'http://www.phpclasses.org/package/529','LGPL'],
+			['JSON file format'                  ,'http://pear.php.net/pepr/pepr-proposal-show.php?id=198','BSD'],
+		] );
 		
 		$this->setTemplateVar('software',$software);
 

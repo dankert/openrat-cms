@@ -40,11 +40,11 @@
 		</group>
 		<group title="${message:LICENSE}">
 			<table filter="false">
-				<row header="true">
+				<row header="true" class="table-column-auto">
 					<column>
 						<text value="${message:name}"/>
 					</column>
-					<column>
+					<column class="table-column-date">
 						<text value="${message:license}"/>
 					</column>
 				</row>
