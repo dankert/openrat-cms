@@ -60,39 +60,44 @@ export default function(element ) {
     /**
 	 * Table-Sortierung.
      */
-	$(element).find('table > tbody > tr.headline > td, table > tbody > tr > th').click( function() {
+	$(element).find('table > tbody > tr.or-table-header > td, table > tbody > tr > th').click( function() {
 
 		let column = $(this);
-        let table = column.parents('table');
+        let table = column.closest('table');
         table.addClass('loader');
 
         let isAscending = !column.hasClass('sort-asc');
-        table.find('tr.headline > td, tr > th').removeClass('sort-asc').removeClass('sort-desc');
+        table.find('tr.or-table-header > td, tr > th').removeClass('sort-asc').removeClass('sort-desc');
         if ( isAscending ) column.addClass('sort-asc'); else column.addClass('sort-desc');
 
-        setTimeout(function () {  // Sorting should be asynchronous, because we do not want to block the UI.
+        new Promise( (resolve,reject) => {  // Sorting should be asynchronous, because we do not want to block the UI.
 
-            let rows = table.find('tr:gt(0)').toArray().sort(comparer(column.index()))
-            if (!isAscending) {
-                rows = rows.reverse()
-            }
-            for (var i = 0; i < rows.length; i++) {
-                table.append(rows[i])
-            }
-            table.removeClass('loader');
-        }, 50);
+			let rows = table.find('tr:not(.or-table-header)').toArray().sort(comparer(column.index()))
+			if (!isAscending) {
+				rows = rows.reverse()
+			}
+			for (let i = 0; i < rows.length; i++) {
+				table.append( $(rows[i]) );
+			}
+			table.removeClass('loader');
+		});
 
 	} );
 
     function comparer(index) {
         return function(a, b) {
             let valA = getCellValue(a, index), valB = getCellValue(b, index)
-            return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB)
+            return isNumeric(valA) && isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB)
         }
     }
 
     function getCellValue(row, index) {
+        let x = $(row).children('td').eq(index);
         return $(row).children('td').eq(index).text();
     }
+
+	function isNumeric(n) {
+		return !isNaN(parseFloat(n)) && isFinite(n);
+	}
 
 };

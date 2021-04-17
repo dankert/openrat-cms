@@ -265,4 +265,27 @@ export class OQuery {
 		return false;
 	}
 
+	toArray() {
+		return this.nodes;
+	}
+
+	eq( index ) {
+		return this.createNew( [ this.nodes[index] ] );
+	}
+
+	index() {
+		if   ( this.nodes.length == 0 )
+			return -1;
+
+		let node = this.nodes[0];
+
+		let children = node.parentNode.childNodes;
+		let num = 0;
+		for (let i=0; i<children.length; i++) {
+			if ( children[i] == node) return num;
+			if ( children[i].nodeType==1) num++;
+		}
+		return -1;
+	}
+
 }
