@@ -368,7 +368,21 @@ export default class Workbench {
 	static registerOpenClose = function( $el )
 	{
 		$($el).children('.or-collapsible-act-switch').click( function() {
-			$(this).closest('.or-collapsible').toggleClass('collapsible--is-open').toggleClass('collapsible--is-closed');
+			let $group = $(this).closest('.or-collapsible');
+
+			if   ( $group.hasClass('collapsible--is-visible') ) {
+				// closing
+				$group.removeClass('collapsible--is-visible');
+				setTimeout( () => {
+					$group.removeClass('collapsible--is-open');
+				},300 );
+
+			}
+			else {
+				// open
+				$group.addClass('collapsible--is-open');
+				$group.addClass('collapsible--is-visible');
+			}
 		});
 	}
 

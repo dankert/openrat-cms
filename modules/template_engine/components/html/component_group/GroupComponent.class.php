@@ -35,9 +35,7 @@ class GroupComponent extends Component
 			->asChildOf( $group );
 
 		if   ( $this->open || !$this->collapsible )
-			$group->addStyleClass('collapsible--is-open');
-		else
-			$group->addStyleClass('collapsible--is-closed');
+			$group->addStyleClass(['collapsible--is-open','collapsible--is-visible']);
 
 		if   ( $this->show )
 			$group->addStyleClass('collapsible--show' );

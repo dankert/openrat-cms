@@ -3,52 +3,32 @@
 
     &-collapsible {
 
-        //display: flex;
-        //flex-direction: column;
-
         .or-collapsible-act-switch {
             cursor: pointer;
-            //font-weight: normal;
         }
 
         .or-collapsible-value {
-            //transition: transform 0.5s ease-in-out;
-            //transition: opacity 0.3s ease-out;
-            //transition: max-height 1s linear;
-            //flex: 1;
-            display: block;
-            //overflow: hidden;
-            transform-origin: top;
+            //display: block;
+            //transform-origin: top;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
         }
 
         .or-collapsible-title {
             padding-bottom:0.1em;
         }
 
-        /* Geschlossen */
-        &--is-closed {
-            .or-collapsible--on-closed {
-                display: inline;
-            }
-            .or-collapsible--on-open {
-                display: none;
-            }
-            .or-collapsible-value {
-                transform: scaleY(0);
-                opacity: 0;
-                max-height: 0;
-                overflow: hidden;
-            }
+        .or-collapsible--on-closed {
+            display: inline;
+        }
+        .or-collapsible--on-open {
+            display: none;
         }
 
         /* Offen */
         &--is-open {
             .or-collapsible-title {
-                //border-bottom:1px solid;
-            }
-            .or-collapsible-value {
-                //height: auto;
-                transform: scaleY(1);
             }
             .or-collapsible--on-closed {
                 display: none;
@@ -56,6 +36,16 @@
             .or-collapsible--on-open {
                 display: inline;
             }
+            .or-collapsible-value {
+              max-height: initial;
+              overflow: auto;
+            }
+        }
+
+        &--is-visible {
+          .or-collapsible-value {
+            opacity: 1;
+          }
         }
     }
 }

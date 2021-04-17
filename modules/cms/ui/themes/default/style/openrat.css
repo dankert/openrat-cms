@@ -80,33 +80,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-button.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AAGI%2CGAAC%3BCAuBG%3B%3BAArBA%2CGAFH%2COAEI%3BCAEC%3B%3BAAIF%2CGARH%2COAQI%2CWAEG%3BAADJ%2CGATH%2COASI%2CiBAAiB%2CMACd%3BCACE%3B%3BAAKN%2CGAhBH%2COAgBI%3BCACC%3BCACA%3BCACA%22%7D */
 /* Include style: /default/style/openrat-collapsible */
 .or-collapsible {
-	/* Geschlossen */
 	/* Offen */
 }
 .or-collapsible .or-collapsible-act-switch {
 	cursor: pointer;
 }
 .or-collapsible .or-collapsible-value {
-	display: block;
-	transform-origin: top;
+	max-height: 0;
+	overflow: hidden;
+	opacity: 0;
 }
 .or-collapsible .or-collapsible-title {
 	padding-bottom: 0.1em;
 }
-.or-collapsible--is-closed .or-collapsible--on-closed {
+.or-collapsible .or-collapsible--on-closed {
 	display: inline;
 }
-.or-collapsible--is-closed .or-collapsible--on-open {
+.or-collapsible .or-collapsible--on-open {
 	display: none;
-}
-.or-collapsible--is-closed .or-collapsible-value {
-	transform: scaleY(0);
-	opacity: 0;
-	max-height: 0;
-	overflow: hidden;
-}
-.or-collapsible--is-open .or-collapsible-value {
-	transform: scaleY(1);
 }
 .or-collapsible--is-open .or-collapsible--on-closed {
 	display: none;
@@ -114,7 +105,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 .or-collapsible--is-open .or-collapsible--on-open {
 	display: inline;
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-collapsible.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AAGI%2CGAAC%3B%3B%3B%3BAAAD%2CGAAC%2CYAKG%3BCACI%3B%3BAANR%2CGAAC%2CYAUG%3BCAKI%3BCAEA%3B%3BAAjBR%2CGAAC%2CYAoBG%3BCACI%3B%3BAAIJ%2CGAzBH%2CYAyBI%2CWACG%3BCACI%3B%3BAAFR%2CGAzBH%2CYAyBI%2CWAIG%3BCACI%3B%3BAALR%2CGAzBH%2CYAyBI%2CWAOG%3BCACI%2CWAAW%2CSAAX%3BCACA%3BCACA%3BCACA%3B%3BAAKR%2CGAzCH%2CYAyCI%2CSAIG%3BCAEI%2CWAAW%2CSAAX%3B%3BAANR%2CGAzCH%2CYAyCI%2CSAQG%3BCACI%3B%3BAATR%2CGAzCH%2CYAyCI%2CSAWG%3BCACI%22%7D */
+.or-collapsible--is-open .or-collapsible-value {
+	max-height: initial;
+	overflow: auto;
+}
+.or-collapsible--is-visible .or-collapsible-value {
+	opacity: 1;
+}
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-collapsible.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AAGI%2CGAAC%3B%3B%3BAAAD%2CGAAC%2CYAEG%3BCACI%3B%3BAAHR%2CGAAC%2CYAMG%3BCAGI%3BCACA%3BCACA%3B%3BAAXR%2CGAAC%2CYAcG%3BCACI%3B%3BAAfR%2CGAAC%2CYAkBG%3BCACI%3B%3BAAnBR%2CGAAC%2CYAqBG%3BCACI%3B%3BAAIJ%2CGA1BH%2CYA0BI%2CSAGG%3BCACI%3B%3BAAJR%2CGA1BH%2CYA0BI%2CSAMG%3BCACI%3B%3BAAPR%2CGA1BH%2CYA0BI%2CSASG%3BCACE%3BCACA%3B%3BAAIN%2CGAzCH%2CYAyCI%2CYACC%3BCACE%22%7D */
 /* Include style: /default/style/openrat-dialog */
 /*
 OpenRat Content Management System
