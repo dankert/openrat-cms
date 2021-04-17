@@ -70,7 +70,7 @@ export default function(element ) {
         table.find('tr.or-table-header > td, tr > th').removeClass('sort-asc').removeClass('sort-desc');
         if ( isAscending ) column.addClass('sort-asc'); else column.addClass('sort-desc');
 
-        new Promise( (resolve,reject) => {  // Sorting should be asynchronous, because we do not want to block the UI.
+        Promise.resolve().then( () => {  // Sorting should be asynchronous, because we do not want to block the UI.
 
 			let rows = table.find('tr:not(.or-table-header)').toArray().sort(comparer(column.index()))
 			if (!isAscending) {
