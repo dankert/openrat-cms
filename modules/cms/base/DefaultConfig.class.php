@@ -579,7 +579,7 @@ class DefaultConfig {
 							'random_length' => 10,
 							'min_length' => 6,
 							'pepper' => '',
-							'deny_after_expiration_duration' => 72,
+							'deny_after_expiration_duration' => '3d',
 							'force_change_if_cleartext' => false,
 						],
 					'http' =>

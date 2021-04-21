@@ -67,7 +67,7 @@ SQL
 
 			// Wenn das kennwort abgelaufen ist, kann es eine bestimmte Dauer noch benutzt und geändert werden.
 			// Nach Ablauf dieser Dauer wird das Login abgelehnt.
-			if ($row_user['password_expires'] + (Configuration::subset('security')->get('deny_after_expiration_duration',72) * 60 * 60) < time())
+			if ($row_user['password_expires'] + (Configuration::subset('security')->getSeconds('deny_after_expiration_duration',3*24*60*60)) < time())
 				return Auth::STATUS_FAILED + Auth::STATUS_PW_EXPIRED; // Abgelaufenes Kennwort wird nicht mehr akzeptiert.
 			else
 				return Auth::STATUS_SUCCESS + Auth::STATUS_PW_EXPIRED; // Kennwort ist abgelaufen, kann aber noch geändert werden.

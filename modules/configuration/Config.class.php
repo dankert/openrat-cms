@@ -66,6 +66,42 @@ class Config
     }
 
 
+	/**
+	 * Gets the configuration value in seconds for this key.
+	 *
+	 * @param $name
+	 * @param null $default
+	 * @return int
+	 */
+    public function getSeconds( $name, $default = 0 ) {
+    	return $this->parseSuffix( $this->get( $name, (string)$default ),[
+    		's' => 1,            // seconds
+    		'm' => 60,           // minutes
+    		'h' => 60*60,        // hours
+    		'd' => 60*60*24,     // days
+    		'y' => 60*60*24*365, // years
+		] );
+	}
+
+	/**
+	 * Gets the configuration value in bytes for this key.
+	 *
+	 * @param $name
+	 * @param null $default
+	 * @return int
+	 */
+    public function getBytes( $name, $default = 0 ) {
+    	return $this->parseSuffix( $this->get( $name, (string)$default ),[
+			'b' => 1,                        // bytes
+			'k' => 1024,                     // kibibyte
+			'm' => 1024*1024,                // mibibyte
+			'g' => 1024*1024*1024,           // gibibyte
+			't' => 1024*1024*1024*1024,      // tebibyte
+			'p' => 1024*1024*1024*1024*1024, // pebibyte
+			// exabyte, zettabyte, yottabyte, google, buuum...
+		] );
+	}
+
     /**
      * Gets the configuration value for this key.
      *
@@ -146,5 +182,15 @@ class Config
 	public function hasContent()
 	{
 		return !$this->isEmpty();
+	}
+
+	private function parseSuffix( $value, array $map)
+	{
+		$suffix = substr($value,-1,1);
+		$value  = substr($value,1);
+		if   ( isset($map[$suffix] ) )
+			return $value * $map[$suffix];
+		else
+			return (int) $value;
 	}
 }
