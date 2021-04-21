@@ -141,17 +141,26 @@ Basis-Style for Openrat.
 	z-index: 2;
 	top: 0;
 	left: 0;
-	width: 100%;
-	display: none;
+	width: 0;
+	opacity: 0;
+	visibility: hidden;
+	overflow: hidden;
+	display: flex;
 	height: 100%;
 	flex-direction: row;
 }
 .or-dialog--is-open {
-	display: flex;
+	visibility: visible;
+	overflow-y: auto;
+	opacity: 1;
+	width: 100%;
+}
+.or-dialog--is-open .or-dialog-filler {
+	width: 15%;
 }
 .or-dialog-filler {
 	height: 100%;
-	width: 12em;
+	width: 100%;
 	opacity: 0.6;
 	filter: blur(10em);
 }
@@ -176,7 +185,7 @@ Basis-Style for Openrat.
 .or-dialog-content .or-view {
 	height: 100%;
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-dialog.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAgCI%2CGAAC%3BCAEC%3BCACA%3BCACA%3BCACA%3BCACA%3BCAEA%3BCACA%3BCACA%3B%3BAAEA%2CGAZD%2COAYE%3BCACC%3B%3BAAGF%2CGAhBD%2COAgBE%3BCACC%3BCACA%3BCACA%3BCACA%2CQAAQ%2CUAAR%3B%3BAAMA%3BCAAA%2CGA1BH%2COAgBE%3BEAOG%3B%3B%3BAAGF%2CGA1BH%2COAgBE%2COAUE%3BCACC%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAIJ%2CGAnCD%2COAmCE%3BCAEG%3BCACA%3BCAMA%3BCAIA%3B%3BAAbJ%2CGAnCD%2COAmCE%2CQAeG%3BCACE%22%7D */
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22mnt%5C%2Fdata%5C%2Fdankert%5C%2FEntwicklung%5C%2FProjekte%5C%2Fopenrat-cms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-dialog.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAgCI%2CGAAC%3BCAEC%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCAGA%3BCACA%3B%3BAAEA%2CGAhBD%2COAgBE%3BCACC%3BCACA%3BCACA%3BCACA%3B%3BAAJF%2CGAhBD%2COAgBE%2CSAKC%3BCACE%3B%3BAAIJ%2CGA1BD%2COA0BE%3BCACC%3BCACA%3BCACA%3BCACA%2CQAAQ%2CUAAR%3B%3BAAMA%3BCAAA%2CGApCH%2COA0BE%3BEAOG%3B%3B%3BAAGF%2CGApCH%2COA0BE%2COAUE%3BCACC%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAIJ%2CGA7CD%2COA6CE%3BCAEG%3BCACA%3BCAMA%3BCAIA%3B%3BAAbJ%2CGA7CD%2COA6CE%2CQAeG%3BCACE%22%7D */
 /* Include style: /default/style/openrat-diff */
 .or-diff-line {
 	text-align: right;

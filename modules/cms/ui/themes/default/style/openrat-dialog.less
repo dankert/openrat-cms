@@ -36,19 +36,29 @@ Basis-Style for Openrat.
       z-index: 2;
       top: 0;
       left: 0;
-      width:100%;
+      width:0;
+      opacity: 0;
+      visibility: hidden;
+      overflow: hidden;
+      display: flex;
 
-      display: none;
+      //display: none;
       height: 100%;
       flex-direction: row;
 
       &--is-open {
-        display: flex;
+        visibility: visible;
+        overflow-y: auto;
+        opacity: 1;
+        width:100%;
+        .or-dialog-filler {
+          width: 15%;
+        }
       }
 
       &-filler {
         height: 100%;
-        width: 12em;
+        width: 100%;
         opacity: 0.6;
         filter: blur(10em);
 
