@@ -184,7 +184,7 @@ class Config
 		return !$this->isEmpty();
 	}
 
-	private function parseSuffix( $value, array $map)
+	private function parseSuffix( $value, $map)
 	{
 		$suffix = substr($value,-1,1);
 		$value  = substr($value,1);
