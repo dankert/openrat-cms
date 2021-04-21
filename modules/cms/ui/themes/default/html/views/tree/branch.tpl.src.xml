@@ -1,14 +1,14 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<list list="${branch}" extract="true">
-		<part tag="li" class="navtree-node,navtree-node--is-closed,draggable,draggable--type-${type},droppable-navigation">
+		<part tag="li" class="navtree-node,navtree-node--is-closed,droppable-navigation">
 			<part class="navtree-tree,navtree-node-control">
 				<if true="${type}">
 					<image class="navtree-tree-icon" symbol="node-closed"/>
 				</if>
 			</part>
 			<part class="act-clickable">
-				<link type="open" action="${action}" id="${id}" class="entry" title="${description}" var1="type"
+				<link type="open" action="${action}" id="${id}" class="entry,draggable,draggable--type-${type}" title="${description}" var1="type"
 					  value1="${type}">
 					<image action="${icon}"/>
 					<text class="navtree-text" value="${text}"/>

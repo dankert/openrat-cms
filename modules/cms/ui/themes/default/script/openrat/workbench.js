@@ -432,27 +432,63 @@ export default class Workbench {
 		);*/
 
 		// Enable HTML5-Drag n drop
-		$(viewEl).find('.or-draggable').attr('draggable','true');
-
+		$(viewEl).find('.or-draggable').attr('draggable','true')
+			.on('dragstart',(e)=>{
+				$('.or-workbench').addClass('workbench--drag-active');
+				let link = e.currentTarget;
+				e.dataTransfer.effectAllowed = 'link';
+				e.dataTransfer.setData('id'    , link.dataset.id    );
+				e.dataTransfer.setData('action', link.dataset.action);
+				console.debug('drag started',link,e.dataTransfer);
+		})
+			.on('drag',(e)=>{
+		})
+			.on('dragend',(e)=>{
+			$('.or-workbench').removeClass('workbench--drag-active');
+		});
 	}
 
 
 	registerDroppable(viewEl) {
 
-		$(viewEl).find('.or-droppable-selector').on('drop', (event) => {
+		$(viewEl).find('.or-droppable-selector').on('dragover', (e) => {
+			e.preventDefault();
+		}).on('drop', (event) => {
 
 			let data = event.dataTransfer.getData('text');
-			console.debug('dropped:',dropped);
-			let id   = $(data).find('.or-link').data('id');
+			console.debug('dropped:', dropped);
+			let id = $(data).find('.or-link').data('id');
 			let name = $(data).find('.or-navtree-text').text();
 
-			if   (!name)
+			if (!name)
 				name = id;
 
-			$(this).find('.or-selector-link-value').val( id );
-			$(this).find('.or-selector-link-name' ).val( name ).attr('placeholder',name );
+			$(this).find('.or-selector-link-value').val(id);
+			$(this).find('.or-selector-link-name').val(name).attr('placeholder', name);
 		});
 
+		$(viewEl).find('.or-droppable')
+	}
+
+	registerAsDroppable( el, onDrop ) {
+
+		el.addEventListener('dragover', (e) => {
+			//e.stopPropagation();
+			e.preventDefault();
+		});
+
+		el.addEventListener('dragenter', (e) => {
+			e.stopPropagation();
+			e.preventDefault();
+			e.currentTarget.classList.add('or-workbench--drop-active');
+		});
+
+		el.addEventListener('dragleave', (e) => {
+			e.stopPropagation();
+			e.preventDefault();
+			e.currentTarget.classList.remove('or-workbench--drop-active');
+		});
+		el.addEventListener('drop', onDrop);
 	}
 
 

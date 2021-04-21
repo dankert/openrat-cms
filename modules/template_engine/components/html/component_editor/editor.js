@@ -9,12 +9,13 @@ export default function(element ) {
 	// Codemirror-Editor anzeigen
 	$(element).find("textarea.or-editor.or-code-editor").each( async function() {
 
+		let $editor = $(this);
 		await Workbench.addStyle ('codemirror-style' ,'./modules/editor/codemirror/lib/codemirror.css');
 		await Workbench.addScript('codemirror-script','./modules/editor/codemirror/lib/codemirror.js' );
 
-		let mode = $(this).data('mode');
+		let mode = $editor.data('mode');
 
-        let mimetype = $(this).data('mimetype');
+        let mimetype = $editor.data('mimetype');
 		if(mimetype.length>0)
 			mode = mimetype;
 
@@ -23,7 +24,8 @@ export default function(element ) {
         let editor = CodeMirror.fromTextArea( textareaEl, {
             lineNumbers: true,
             viewportMargin: Infinity,
-			mode: mode
+			mode: mode,
+			dragDrop: false,
             /** settings **/ })
 
         editor.on('change',function() {
@@ -33,27 +35,20 @@ export default function(element ) {
         } );
 
 
-        /*
-        $(editor.getWrapperElement()).droppable({
-            accept: '.or-draggable',
-            hoverClass: 'or-droppable--hover',
-            activeClass: 'or-droppable--active',
-
-            drop: function (event, ui) {
-
-                let dropped = ui.draggable;
-
-                // Insert id of dragged element into cursor position
-                let pos = editor.getCursor();
-                editor.setSelection(pos, pos);
-                let insertText = dropped.data('id')
-                let toInsert = ''+insertText;
-                editor.replaceSelection(toInsert);
-                //editor.setCursor(pos+toInsert.length); geht nicht.
-            }
-
-        });*/
-
+        Workbench.getInstance().registerAsDroppable(editor.getWrapperElement(),
+			(e)=> {
+				e.stopPropagation();
+				e.preventDefault();
+				// Insert id of dragged element into cursor position
+				console.debug('dropped',e.dataTransfer);
+				let pos = editor.getCursor();
+				editor.setSelection(pos, pos);
+				let insertText = e.dataTransfer.getData('id')
+				let toInsert = ''+insertText;
+				editor.replaceSelection(toInsert);
+				//editor.setCursor(pos+toInsert.length); geht nicht.
+			}
+		);
 
     } );
 
