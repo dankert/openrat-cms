@@ -53,6 +53,10 @@ Basis-Style for Openrat.
         width:100%;
         .or-dialog-filler {
           width: 15%;
+
+          @media @smartphones {
+            width: 0;
+          }
         }
       }
 
@@ -62,9 +66,7 @@ Basis-Style for Openrat.
         opacity: 0.6;
         filter: blur(10em);
 
-        @media @smartphones {
-          width: 0;
-        }
+
 
         &-icon {
           opacity: 1;
