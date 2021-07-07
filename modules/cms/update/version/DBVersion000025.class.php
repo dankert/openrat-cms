@@ -19,6 +19,6 @@ class DBVersion000025 extends DbVersion
     public function update()
     {
 		$objectTable = $this->table('object');
-		$objectTable->addConstraint('parentid', 'object', 'id');
+		$objectTable->addConstraint('parentid', 'object');
 	}
 }

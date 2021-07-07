@@ -30,9 +30,9 @@ class DBVersion000021 extends DbVersion
         $table->column('name'         )->type(Column::TYPE_VARCHAR)->size(255 )->add();
 
 
-        $table->addPrimaryKey ('id');
+        $table->addPrimaryKey ();
 
-        $table->addConstraint ('userid'     ,'user'  ,'id');
+        $table->addConstraint ('userid', 'user');
 
         $table->addUniqueIndex('selector');
     }

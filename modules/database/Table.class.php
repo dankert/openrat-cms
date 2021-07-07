@@ -80,7 +80,7 @@ class Table
 	}
 
 
-	public function addPrimaryKey($columnNames)
+	public function addPrimaryKey($columnNames = 'id')
 	{
 		$table = $this->getSqlName();
 
@@ -129,7 +129,7 @@ class Table
 	# param 1: column name
 	# param 2: target table name
 	# param 3: target column name
-	public function addConstraint($columnName, $targetTableName, $targetColumnName)
+	public function addConstraint($columnName, $targetTableName, $targetColumnName = 'id')
 	{
 		$targetTable = new Table($this->db,$this->dbmsType,$targetTableName);
 		$targetTablename = $targetTable->getSqlName();

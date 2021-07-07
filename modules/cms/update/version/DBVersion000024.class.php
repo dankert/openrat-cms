@@ -21,6 +21,6 @@ class DBVersion000024 extends DbVersion
 		$groupTable = $this->table('group');
 		$groupTable->column('parentid')->type(Column::TYPE_INT )->nullable()->add();
 		$groupTable->addIndex('parentid');
-		$groupTable->addConstraint('parentid', 'group', 'id');
+		$groupTable->addConstraint('parentid', 'group');
 	}
 }

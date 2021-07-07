@@ -29,8 +29,8 @@ class DBVersion000009 extends DbVersion
         $table->column('objectid')->type(Column::TYPE_INT)->size(0)->add();
         $table->column('url')->type(Column::TYPE_VARCHAR)->size(255)->add();
 
-        $table->addPrimaryKey('id');
-        $table->addConstraint('objectid', 'object', 'id');
+        $table->addPrimaryKey();
+        $table->addConstraint('objectid', 'object');
 
         $table->addUniqueIndex('objectid');
 
