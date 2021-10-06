@@ -23,7 +23,7 @@ services:
        - "8002:8082" # public with host routing
      restart: always
      volumes:
-       - cms_public:/var/www/localhost/public
+       - ../../../:/var/www/localhost/public
      environment:
        DB_TYPE: mysql
        DB_HOST: db
