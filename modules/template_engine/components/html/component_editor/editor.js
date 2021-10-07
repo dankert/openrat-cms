@@ -1,6 +1,6 @@
 
 import $ from  '../../../../cms/ui/themes/default/script/jquery-global.js';
-import Workbench from "../../../../cms/ui/themes/default/script/openrat/workbench";
+import Workbench from "../../../../cms/ui/themes/default/script/openrat/workbench.js";
 
 export default function(element ) {
 
