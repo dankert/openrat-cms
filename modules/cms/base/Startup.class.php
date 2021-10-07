@@ -35,6 +35,7 @@ class Startup {
 	const HTML_MODULES_DIR = './modules/';
 	const THEMES_DIR       = './modules/cms/ui/themes/';
 	const CSS_PREFIX       = 'or-';
+	const DEFAULT_CONFIG_FILE = __DIR__ . '/../../../config/config.yml';
 
 	/**
 	 * This is the application name.

@@ -216,10 +216,14 @@ class Dispatcher
     {
         $conf = Session::getConfig();
 
-        // Konfiguration lesen.
-        // Wenn Konfiguration noch nicht in Session vorhanden oder die Konfiguration geändert wurde (erkennbar anhand des Datei-Datums)
-        // dann die Konfiguration neu einlesen.
-        $configLoader = new ConfigurationLoader(__DIR__ . '/../../config/config.yml');
+		$configFile = getenv( 'CMS_CONFIG_FILE' );
+		if   ( ! $configFile )
+			$configFile = Startup::DEFAULT_CONFIG_FILE;
+
+		// Konfiguration lesen.
+		// Wenn Konfiguration noch nicht in Session vorhanden oder die Konfiguration geändert wurde (erkennbar anhand des Datei-Datums)
+		// dann die Konfiguration neu einlesen.
+		$configLoader = new ConfigurationLoader( $configFile );
 
         if (!is_array($conf) || @$conf['config']['auto_reload'] && $configLoader->lastModificationTime() > @$conf['config']['last_modification_time']) {
 
