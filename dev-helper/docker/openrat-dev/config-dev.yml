@@ -1,0 +1,31 @@
+# OpenRat CMS configuration for development in docker
+login:
+  motd: "${env:CMS_MOTD}"
+database-default:
+  default-id:  db
+database:
+  db:
+    enabled    :  true
+    dsn        :  "${env:DB_TYPE}:host=${env:DB_HOST}; dbname=${env:DB_NAME}"
+    description:  "PDO"
+    name       :  "PRO"
+    user       :  ${env:DB_USER}
+    password   :  ${env:DB_PASS}
+    base64     :  true                 #  store binary as BASE64 (should be true for postgresql)
+    prefix     :  cms_
+    suffix     :  _or
+log:
+  file :  ""
+  level:  "${env:CMS_LOG_LEVEL}"
+  stdout: true
+
+production: ${env:CMS_PRODUCTION}
+
+publish:
+  filesystem:
+    directory: /var/www/localhost/public
+  
+application:
+  name: "${env:CMS_NAME?OpenRat CMS}"
+  operator: "${env:CMS_OPERATOR?Local}"
+  

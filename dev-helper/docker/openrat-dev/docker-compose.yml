@@ -23,7 +23,7 @@ services:
        - "8002:8082" # public with host routing
      restart: always
      volumes:
-       - ../../../:/var/www/localhost/public
+       - ../../../:/var/www/localhost/cms
      environment:
        DB_TYPE: mysql
        DB_HOST: db
@@ -35,6 +35,7 @@ services:
        CMS_OPERATOR:
        CMS_PRODUCTION: "false"
        CMS_LOG_LEVEL: "debug"
+       CMS_CONFIG_FILE: "/var/www/localhost/cms/dev-helper/docker/openrat-dev/config-dev.yml"
      container_name: cms
 volumes:
     db_data: {}
