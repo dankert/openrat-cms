@@ -5,7 +5,7 @@ use cms\action\ProfileAction;
 use language\Messages;
 use logger\Logger;
 use util\exception\ValidationException;
-use util\Mail;
+use util\mail\Mail;
 use util\Session;
 use util\text\TextMessage;
 
@@ -39,8 +39,8 @@ class ProfileMailAction extends ProfileAction implements Method {
 				$mail->send();
 				$this->addNoticeFor( $this->user, Messages::MAIL_SENT);
 			} catch( \Exception $e ) {
-				Logger::warn( new \Exception( TextMessage::create('Mail could not be sent for user ${name} with the new email adress {mail} ',['name'=>$this->user->name,'mail'=>$newMail]),$e) );
-				$this->addNoticeFor($this->user, Messages::MAIL_NOT_SENT );
+				Logger::warn( new \Exception( TextMessage::create('Mail could not be sent for user ${name} with the new email adress ${mail} ',['name'=>$this->user->name,'mail'=>$newMail]),0,$e) );
+				$this->addErrorFor($this->user, Messages::MAIL_NOT_SENT );
 			}
 		}
     }

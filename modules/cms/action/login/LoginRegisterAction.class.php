@@ -7,7 +7,7 @@ use cms\model\User;
 use language\Messages;
 use logger\Logger;
 use util\exception\ValidationException;
-use util\Mail;
+use util\mail\Mail;
 use util\Session;
 use util\text\TextMessage;
 

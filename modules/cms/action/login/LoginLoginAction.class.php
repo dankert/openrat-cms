@@ -18,7 +18,7 @@ use util\Browser;
 use util\exception\ObjectNotFoundException;
 use util\exception\SecurityException;
 use util\exception\ValidationException;
-use util\Mail;
+use util\mail\Mail;
 use util\Session;
 use util\text\TextMessage;
 

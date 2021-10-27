@@ -6,7 +6,7 @@ use cms\base\Configuration;
 use cms\model\User;
 use language\Messages;
 use util\exception\ValidationException;
-use util\Mail;
+use util\mail\Mail;
 
 class ProfilePwAction extends ProfileAction implements Method {
     public function view() {

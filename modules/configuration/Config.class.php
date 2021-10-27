@@ -111,7 +111,7 @@ class Config
      */
     public function get($name, $default = null)
     {
-        if (isset($this->config[$name])) {
+        if (isset($this->config[$name]) && !empty($this->config[$name])) {
             $value = $this->config[$name];
 
             // if default-value is given, the type of the default-value is forced.
@@ -132,7 +132,7 @@ class Config
      */
     public function has($name)
     {
-        return isset($this->config[$name]);
+        return isset($this->config[$name]) && !empty($this->config[$name]);
     }
 
 
