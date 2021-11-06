@@ -94,7 +94,7 @@ class Update
 	 * @param Database $db
 	 * @return int
 	 */
-	public function getDbVersion(Database $db)
+	private function getDbVersion(Database $db)
 	{
 		$versionTableExists = $this->testQuery($db, 'SELECT 1 FROM {{version}}');
 

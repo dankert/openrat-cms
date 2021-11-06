@@ -66,14 +66,18 @@ class Status
 							$db = new Database($dbConfig->subset('read')->getConfig() + $dbConfig->getConfig());
 
 							$update = new Update();
-							$version = $update->getDbVersion( $db );
+
+							if	( $update->isUpdateRequired( $db ) )
+								$dbState = [
+									'state'   => 'UP',
+								];
+							else
+								$dbState = [
+									'state'   => 'DOWN',
+									'message' => 'NEEDS UPGRADE',
+								];
 
 							$db->disconnect();
-
-							$dbState = [
-								'state'   => 'UP',
-								'version' => $version,
-							];
 
 						} catch (\Exception $e) {
 							$dbState = [
@@ -114,31 +118,16 @@ class Status
 
 							$updater = new Update();
 
-							$version = $updater->getDbVersion($adminDb);
-
-							Logger::debug("Need DB-Version: " . Update::SUPPORTED_VERSION . "; Actual DB-Version: " . $version);
-
-							if ($version == Update::SUPPORTED_VERSION)
-
-								// Cool, der aktuelle DB-Stand passt zu dieser Version. Das ist auch der Normalfall. Weiter so.
+							if   ( ! $updater->isUpdateRequired( $adminDb ) ) {
 								$dbState = [
-									'state'   => 'UP',
-									'version' => $version,
+									'state' => 'UP',
 								];
-
-							elseif ($version > Update::SUPPORTED_VERSION)
-								// Oh oh, in der Datenbank ist eine neuere Version, als wir unterstützen.
-								$dbState = [
-									'state'   => 'DOWN',
-									'version' => $version,
-									'message' => 'Actual DB version is not supported. ' . "DB-Version is $version, but " . Startup::VERSION . " only supports version " . Update::SUPPORTED_VERSION,
-								];
+							}
 							else {
 
 								if (!$dbConfig->is('auto_update', true))
 									$dbState = [
 										'state'   => 'DOWN',
-										'version' => $version,
 										'message' => 'DB Update required, but auto-update is disabled. ' . Startup::TITLE . " " . Startup::VERSION . " needs DB-version " . Update::SUPPORTED_VERSION
 										];
 								else {
@@ -159,8 +148,6 @@ class Status
 								'state' => 'DOWN',
 								'message' => $e->getMessage(),
 							];
-
-							break;
 						}
 
 					}
@@ -178,7 +165,6 @@ class Status
 					'date' => Startup::DATE,
 					'name' => Startup::TITLE,
 					'api'  => Startup::API_LEVEL,
-					'supportedDatabaseVersion'  => Update::SUPPORTED_VERSION,
 				];
 				$success = true;
 				break;
