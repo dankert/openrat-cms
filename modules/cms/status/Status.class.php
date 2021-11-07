@@ -169,10 +169,31 @@ class Status
 				$success = true;
 				break;
 
+			case 'system':
+				$data = [
+					'interpreter' => PHP_VERSION,
+					'os'          => PHP_OS,
+					'usage' => getrusage(),
+					'memory' => [
+						'allocated' => memory_get_usage(true),
+						'used'      => memory_get_usage(),
+						'peak_allocated' => memory_get_peak_usage(true),
+						'peak_used'      => memory_get_peak_usage(),
+
+					],
+				];
+				$success = true;
+				break;
+
 			case 'env':
 			case 'environment':
 				if   ( version_compare(PHP_VERSION,'7.1','>=') )
 					$data['environment'] = getenv(); // since PHP 7.1
+				$success = true;
+				break;
+
+			case 'server':
+				$data['server'] = $_SERVER;
 				$success = true;
 				break;
 
