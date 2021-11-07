@@ -139,6 +139,11 @@ class Status
 									// If you don't do this explicitly, PHP will automatically close the connection when your script ends.
 									$adminDb = null;
 									unset($adminDb);
+
+									$dbState = [
+										'state'   => 'UP',
+										'message' => 'Updated',
+									];
 								}
 							}
 

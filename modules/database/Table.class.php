@@ -179,9 +179,14 @@ class Table
 	}
 
 
-	public function dropConstraint($constraintName)
+	public function dropConstraint($columnName)
 	{
-		$ddl = $this->db->sql('DROP CONSTRAINT ' . $constraintName . ';');
+
+		$constraintName = $this->tablePrefix . self::CONSTRAINT_PREFIX . '_' . $this->name . $this->tableSuffix . '_' . $columnName;
+
+		$table = $this->getSqlName();
+		// In MySQL, there’s no DROP CONSTRAINT, you have to use DROP FOREIGN KEY instead
+		$ddl = $this->db->sql('ALTER TABLE ' . $table . ' DROP FOREIGN KEY ' . $constraintName . ';');
 		$ddl->execute();
 	}
 

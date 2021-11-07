@@ -2,6 +2,7 @@
 
 namespace cms\update\version;
 
+use cms\base\Startup;
 use database\DbVersion;
 use database\Column;
 use security\Password;
@@ -24,28 +25,35 @@ class DBVersion000031 extends DbVersion
 
     	$fileTable = $this->table('file' );
     	$fileTable->column('contentid')->add();
-		$fileTable->addConstraint('contentid' , 'content' );
 
 		$db    = $this->getDb();
-		$stmt  = $db->sql('SELECT * FROM '.$fileTable->getSqlName().'' );
+		$stmt  = $db->sql('SELECT id FROM '.$fileTable->getSqlName() );
 
-		foreach($stmt->getAll() as $row )
+		foreach($stmt->getCol() as $fileid )
 		{
-			$stmt = $db->sql('SELECT MAX(id) FROM '.$contentTable->getSqlName().'');
-			$contentid = $stmt->getOne();
+			$stmt = $db->sql('SELECT * FROM '.$fileTable->getSqlName().' WHERE id='.$fileid );
+			$row = $stmt->getRow();
+
+			$stmt = $db->sql('SELECT MAX(id) FROM '.$contentTable->getSqlName() );
+			$contentid = $stmt->getOne() + 1;
 
 			$stmt = $db->sql('INSERT INTO '.$contentTable->getSqlName().' (id) VALUES('.$contentid.')') ;
 			$stmt->execute();
 
-			$stmt = $db->sql('SELECT MAX(id) FROM '.$valueTable->getSqlName().'');
-			$valueid = $stmt->getOne();
+			$stmt = $db->sql('SELECT MAX(id) FROM '.$valueTable->getSqlName() );
+			$valueid = $stmt->getOne() + 1;
 
-			$stmt = $db->sql('INSERT INTO '.$valueTable->getSqlName().' (id,contentid,active,publish,binary) VALUES('.$valueid.','.$contentid.',1,1,{file}');
+			$stmt = $db->sql('INSERT INTO '.$valueTable->getSqlName().' (id,contentid,active,publish,file,lastchange_date) VALUES('.$valueid.','.$contentid.',1,1,{file},{time})');
 			$stmt->setString( 'file', $row['value'] );
+			$stmt->setInt   ( 'time', Startup::getStartTime() );
+			$stmt->execute();
+
+			$stmt = $db->sql('UPDATE '.$fileTable->getSqlName().' SET contentid='.$contentid);
 			$stmt->execute();
 		}
 
-		//$fileTable->column('value')->drop();
+		$fileTable->addConstraint('contentid' , 'content' );
+		$fileTable->column('value')->drop();
 
 	}
 }

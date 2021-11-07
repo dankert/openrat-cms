@@ -26,7 +26,7 @@ class DBVersion000029 extends DbVersion
 		$valueTable = $this->table('value');
 		$valueTable->column('contentid')->nullable()->add();
 		$valueTable->addConstraint('contentid','content');
-		$valueTable->column('binary')->type( Column::TYPE_BLOB )->add();
+		$valueTable->column('file')->type( Column::TYPE_BLOB )->nullable()->add();
 
 		$pageContentTable = $this->table('pagecontent');
     	$pageContentTable->add();
@@ -51,16 +51,21 @@ class DBVersion000029 extends DbVersion
 			$stmt = $db->sql('INSERT INTO '.$contentTable->getSqlName().' (id) VALUES('.$contentid.')');
 			$stmt->execute();
 
-			$stmt = $db->sql('INSERT INTO '.$pageContentTable->getSqlName().' (id,pageid,elementid,languageid,contentid) VALUES('.$contentid.','.$row['pageid'].','.$row['elementidid'].','.$row['languageid'].','.$contentid.')');
+			$stmt = $db->sql('INSERT INTO '.$pageContentTable->getSqlName().' (id,pageid,elementid,languageid,contentid) VALUES('.$contentid.','.$row['pageid'].','.$row['elementid'].','.$row['languageid'].','.$contentid.')');
 			$stmt->execute();
 
-			$stmt = $db->sql('UPDATE '.$valueTable->getSqlName().' SET contentid='.$contentid.' WHERE pageid='.$row['pageid'].' AND elementid='.$row['elementid'].' AND languageid='.$row['languageid'].')');
+			$stmt = $db->sql('UPDATE '.$valueTable->getSqlName().' SET contentid='.$contentid.' WHERE pageid='.$row['pageid'].' AND elementid='.$row['elementid'].' AND languageid='.$row['languageid'] );
 			$stmt->execute();
 		}
 
-		//$valueTable->column('pageid'    )->drop();
-		//$valueTable->column('elementid' )->drop();
-		//$valueTable->column('languageid')->drop();
+		$valueTable->dropConstraint('pageid');
+		$valueTable->column('pageid'    )->drop();
+
+		$valueTable->dropConstraint('elementid');
+		$valueTable->column('elementid' )->drop();
+
+		$valueTable->dropConstraint('languageid');
+		$valueTable->column('languageid')->drop();
 	}
 }
 
