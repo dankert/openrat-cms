@@ -53,18 +53,23 @@ class TemplateModel extends ModelBase
 	{
 		$db = \cms\base\DB::get();
 
-		$stmt = $db->sql( 'SELECT * FROM {{templatemodel}}'.
-		                ' WHERE templateid={templateid}'.
-		                '   AND projectmodelid={modelid}' );
+		$stmt = $db->sql( <<<SQL
+			SELECT {{templatemodel}}.*,{{value}}.text FROM {{templatemodel}}
+                LEFT JOIN {{value}}
+                       ON {{value}}.contentid = {{templatemodel}}.contentid AND {{value}}.active = 1 
+		            WHERE templateid     = {templateid}
+		              AND projectmodelid = {modelid}
+SQL
+);
 		$stmt->setInt( 'templateid',$this->templateid );
 		$stmt->setInt( 'modelid'   ,$this->modelid    );
 		$row = $stmt->getRow();
 
 		if	( isset($row['id']) )
 		{
-			$this->templatemodelid = $row['id'];
+			$this->templatemodelid = $row['id'       ];
 			$this->extension       = $row['extension'];
-			$this->src             = $row['text'];
+			$this->src             = $row['text'     ];
 		}
 		else
 		{

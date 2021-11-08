@@ -547,16 +547,23 @@ EOF
 	 */
 	private function loadValueFromDatabase()
 	{
-		$sql = Db::sql( 'SELECT size,value'.
-		                ' FROM {{file}}'.
-		                ' WHERE objectid={objectid}' );
+		$sql = Db::sql( <<<SQL
+                   SELECT {{file}}.size,{{value}}.file
+		             FROM {{file}}
+                LEFT JOIN {{content}}
+                       ON {{file}}.contentid = {{content}}.id 
+                LEFT JOIN {{value}}
+                       ON {{value}}.contentid = {{content}}.id AND {{value}}.active = 1
+					WHERE objectid={objectid}
+SQL
+		);
 		$sql->setInt( 'objectid', $this->objectid);
 		$row = $sql->getRow();
 
 		if	( count($row) != 0 )
 		{
-			$this->value = $row['value'];
-			$this->size  = $row['size' ];
+			$this->value = $row['file'];
+			$this->size  = $row['size'];
 		}
 
 		if	( $this->storeValueAsBase64 )

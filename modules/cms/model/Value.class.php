@@ -178,11 +178,15 @@ class Value extends ModelBase
 	function loadForPublic()
 	{
 		$stmt = Db::sql( <<<SQL
-			SELECT * FROM {{value}}
-			 WHERE elementid ={elementid}
-			   AND pageid    ={pageid}
-			   AND languageid={languageid}
-			   AND publish   =1
+           SELECT {{value}}.* FROM {{pagecontent}}
+        LEFT JOIN {{content}}
+               ON {{pagecontent}}.contentid = {{content}}.id 
+             LEFT JOIN {{value}}
+               ON {{value}}.contentid = {{content}}.id AND {{value}}.active = 1
+            WHERE elementid  = {elementid}
+              AND pageid     = {pageid}
+              AND languageid = {languageid}
+              AND {{value}}.publish = 1
 SQL
 		);
 		$stmt->setInt( 'elementid' ,$this->elementid );
@@ -213,11 +217,14 @@ SQL
 	function load()
 	{
 		$stmt = Db::sql( <<<SQL
-			SELECT * FROM {{value}}
+           SELECT {{value}}.* FROM {{pagecontent}}
+        LEFT JOIN {{content}}
+               ON {{pagecontent}}.contentid = {{content}}.id 
+             LEFT JOIN {{value}}
+               ON {{value}}.contentid = {{content}}.id AND {{value}}.active = 1
 			 WHERE elementid ={elementid}
 			   AND pageid    ={pageid}
 			   AND languageid={languageid}
-			   AND active=1
 SQL
 		);
 		$stmt->setInt( 'elementid' ,$this->elementid );
