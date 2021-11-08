@@ -358,14 +358,10 @@ class PageelementAction extends BaseAction
         $value->page = new Page( $value->objectid );
         $value->page->load();
 
-
         // Inhalt sofort freigegeben, wenn
         // - Recht vorhanden
         // - Freigabe gewuenscht
-        if	( $value->page->hasRight( Permission::ACL_RELEASE ) && $this->request->has('release') )
-        $value->publish = true;
-        else
-        $value->publish = false;
+		$value->publish = $value->page->hasRight( Permission::ACL_RELEASE ) && $this->request->has('release') );
 
         // Up-To-Date-Check
         $lastChangeTime = $value->getLastChangeSinceByAnotherUser( $this->request->getText('value_time'), Session::getUser()->userid );
@@ -382,13 +378,13 @@ class PageelementAction extends BaseAction
             foreach( $project->getLanguageIds() as $languageid )
             {
                 $value->languageid = $languageid;
-                $value->add();
+                $value->persist();
             }
         }
         else
         {
             // sonst nur 1x speichern (fuer die aktuelle Sprache)
-            $value->add();
+            $value->persist();
         }
 
         $this->addNoticeFor( $this->pageelement, Messages::SAVED);

@@ -59,8 +59,7 @@ class ValueGenerator extends BaseGenerator
 
 
 	/**
-	 * Hier findet die eigentliche Bereitstellung des Inhaltes statt, zu
-	 * jedem Elementtyp wird ein Inhalt ermittelt.
+	 * Generating a page value.
 	 *
 	 * @return string
 	 */

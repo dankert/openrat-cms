@@ -39,25 +39,6 @@ class DefaultConfig {
 					'auto_reload' => true,
 					'session_destroy_on_config_reload' => true,
 				],
-			'content' =>
-				[ 
-					'file' =>
-						[ 
-							'max_file_size' => '1500',
-						],
-					'revision-limit' =>
-						[ 
-							'enabled' => false,
-							'max-age' => 120,
-							'min-age' => 1,
-							'max-revisions' => 100,
-							'min-revisions' => 3,
-						],
-					'language' =>
-						[ 
-							'use_default_language' => true,
-						],
-				],
 			'countries' =>
 				[ 
 					'AA' => 'Afar',

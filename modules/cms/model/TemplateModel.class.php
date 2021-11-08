@@ -33,6 +33,10 @@ class TemplateModel extends ModelBase
     public $modelid;
     public $templateid;
 
+	/**
+	 * @var int
+	 */
+    private $contentid;
 
     /**
      * TemplateModel constructor.
@@ -65,11 +69,12 @@ SQL
 		$stmt->setInt( 'modelid'   ,$this->modelid    );
 		$row = $stmt->getRow();
 
-		if	( isset($row['id']) )
+		if	( $row )
 		{
 			$this->templatemodelid = $row['id'       ];
 			$this->extension       = $row['extension'];
 			$this->src             = $row['text'     ];
+			$this->contentid       = $row['contentid'];
 		}
 		else
 		{
@@ -93,17 +98,23 @@ SQL
 	public function save()
 	{
         // Vorlagen-Quelltext existiert für diese Varianten schon.
-        $stmt = Db::sql( 'UPDATE {{templatemodel}}'.
-                        '  SET extension={extension},'.
-                        '      text={src} '.
-                        ' WHERE id={id}' );
+        $stmt = Db::sql( <<<SQL
+			UPDATE {{templatemodel}}
+               SET extension={extension}
+			 WHERE id={id}
+SQL
+		);
 
         $stmt->setInt   ( 'id'    ,$this->templatemodelid        );
-
         $stmt->setString( 'extension'     ,$this->extension      );
-        $stmt->setString( 'src'           ,$this->src            );
 
 		$stmt->execute();
+
+		$value = new Value();
+		$value->contentid = $this->contentid;
+		$value->text = $this->src;
+		$value->publish = true;
+		$value->persist();
 	}
 
 
@@ -116,15 +127,19 @@ SQL
         $stmt = Db::sql('SELECT MAX(id) FROM {{templatemodel}}');
         $nextid = intval($stmt->getOne())+1;
 
+        $content = new Content();
+        $content->persist();
+        $this->contentid = $content->getId();
+
         $stmt = Db::sql( 'INSERT INTO {{templatemodel}}'.
-                        '        (id,templateid,projectmodelid,extension,text) '.
-                        ' VALUES ({id},{templateid},{modelid},{extension},{src}) ');
+                        '        (id,contentid,templateid,projectmodelid,extension) '.
+                        ' VALUES ({id},{contentid},{templateid},{modelid},{extension}) ');
         $stmt->setInt   ( 'id',$nextid         );
 
 		$stmt->setString( 'extension'     ,$this->extension      );
+		$stmt->setInt   ( 'contentid'     ,$this->contentid      );
 		$stmt->setInt   ( 'templateid'    ,$this->templateid     );
 		$stmt->setInt   ( 'modelid'       ,$this->modelid        );
-		$stmt->setString( 'src'           ,$this->src            );
 
 		$stmt->execute();
 

@@ -2,13 +2,23 @@
 namespace cms\action\pageelement;
 use cms\action\Method;
 use cms\action\PageelementAction;
+use cms\model\Content;
 use cms\model\Element;
+use cms\model\PageContent;
 use cms\model\Value;
 
 class PageelementHistoryAction extends PageelementAction implements Method {
     public function view() {
 
         $this->page->load();
+
+
+		$pageContent = new PageContent();
+		$pageContent->languageid = $this->page->languageid;
+		$pageContent->elementId  = &$this->element->elementid;
+		$pageContent->pageId     = $this->page->pageid;
+		$pageContent->load();
+		$this->value->contentid = $pageContent->contentId;
 
 		$this->value->objectid   = $this->page->objectid;
 		$this->value->pageid     = $this->page->pageid;
@@ -31,7 +41,12 @@ class PageelementHistoryAction extends PageelementAction implements Method {
 			$value->languageid = $languageId;
 
 			/** @var Value $value */
-			foreach($value->getVersionList() as $value) {
+			$content = new Content( $this->value->contentid );
+
+			foreach($content->getVersionList() as $valueId) {
+
+				$value = new Value();
+				$value->loadWithId( $valueId );
 
 				$language['values'][] = [
 					'text'       => $this->calculateValue( $value ),
