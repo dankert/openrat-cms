@@ -27,17 +27,17 @@ class DBVersion000030 extends DbVersion
     	$templateModelTable->column('contentid')->add();
 
 		$db    = $this->getDb();
-		$stmt  = $db->sql('SELECT * FROM '.$templateModelTable->getSqlName().'' );
+		$stmt  = $db->sql('SELECT * FROM '.$templateModelTable->getSqlName() );
 
 		foreach($stmt->getAll() as $row ) // all templates should fit into memory.
 		{
-			$stmt = $db->sql('SELECT MAX(id) FROM '.$contentTable->getSqlName().'');
+			$stmt = $db->sql('SELECT MAX(id) FROM '.$contentTable->getSqlName());
 			$contentid = $stmt->getOne() + 1;
 
 			$stmt = $db->sql('INSERT INTO '.$contentTable->getSqlName().' (id) VALUES('.$contentid.')') ;
 			$stmt->execute();
 
-			$stmt = $db->sql('SELECT MAX(id) FROM '.$valueTable->getSqlName().'');
+			$stmt = $db->sql('SELECT MAX(id) FROM '.$valueTable->getSqlName());
 			$valueid = $stmt->getOne() + 1;
 
 			$stmt = $db->sql('INSERT INTO '.$valueTable->getSqlName().' (id,contentid,active,publish,text,lastchange_date) VALUES('.$valueid.','.$contentid.',1,1,{text},{time})');
@@ -45,7 +45,7 @@ class DBVersion000030 extends DbVersion
 			$stmt->setInt   ( 'time', Startup::getStartTime() );
 			$stmt->execute();
 
-			$stmt = $db->sql('UPDATE '.$templateModelTable->getSqlName().' SET contentid='.$contentid);
+			$stmt = $db->sql('UPDATE '.$templateModelTable->getSqlName().' SET contentid='.$contentid.' WHERE id='.$row['id']);
 			$stmt->execute();
 		}
 

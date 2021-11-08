@@ -48,7 +48,7 @@ class DBVersion000031 extends DbVersion
 			$stmt->setInt   ( 'time', Startup::getStartTime() );
 			$stmt->execute();
 
-			$stmt = $db->sql('UPDATE '.$fileTable->getSqlName().' SET contentid='.$contentid);
+			$stmt = $db->sql('UPDATE '.$fileTable->getSqlName().' SET contentid='.$contentid.' WHERE id='.$row['id']);
 			$stmt->execute();
 		}
 
