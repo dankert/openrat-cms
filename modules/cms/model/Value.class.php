@@ -90,7 +90,13 @@ class Value extends ModelBase
 	 * @type String
 	 */
 	var $value;
-	
+
+	/**
+	 * file blob
+	 * @var string
+	 */
+	public $file = null;
+
 	/**
 	 * TimeStamp der letzten Aenderung
 	 * @type Integer
@@ -271,8 +277,8 @@ SQL
 
 		$stmt = DB::sql( <<<SQL
 INSERT INTO {{value}}
-            (id       ,contentid  ,linkobjectid  ,text  ,number  ,date  ,format  ,active,publish  ,lastchange_date  ,lastchange_userid  )
-     VALUES ({valueid},{contentid},{linkobjectid},{text},{number},{date},{format},1     ,{publish},{lastchange_date},{lastchange_userid})
+            (id       ,contentid  ,linkobjectid  ,text  ,file  ,number  ,date  ,format  ,active,publish  ,lastchange_date  ,lastchange_userid  )
+     VALUES ({valueid},{contentid},{linkobjectid},{text},{file},{number},{date},{format},1     ,{publish},{lastchange_date},{lastchange_userid})
 SQL
 		);
 		$stmt->setInt( 'valueid'   ,$this->valueid            );
@@ -294,6 +300,19 @@ SQL
 		if	( intval($this->date)==0)
 			$stmt->setNull  ( 'date' );
 		else	$stmt->setInt   ( 'date',$this->date );
+
+		$storeValueAsBase64 = DB::get()->conf['base64'];
+
+		if	( $storeValueAsBase64 )
+			$this->value = base64_decode( $this->value );
+
+
+		if	( $this->file === null )
+			$stmt->setNull  ( 'file' );
+		elseif( $storeValueAsBase64 )
+			$stmt->setString( 'file',base64_encode($this->file) );
+		else
+			$stmt->setString( 'file',$this->file );
 
 		$stmt->setBoolean( 'publish'          ,$this->publish );
 		$stmt->setInt    ( 'lastchange_date'  ,Startup::now()         );
