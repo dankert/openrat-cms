@@ -85,6 +85,16 @@ SQL
 
 
 
+	public function loadForPublic() {
+		$this->load();
+
+		$value = new Value();
+		$value->contentid = $this->contentid;
+		$value->loadPublished();
+		$this->src = $value->text;
+	}
+
+
 	public function isPersistent()
     {
 	    return intval( $this->templatemodelid ) > 0;
@@ -155,9 +165,15 @@ SQL
 	public function delete()
 	{
 		$db = \cms\base\DB::get();
-		
-		$stmt = $db->sql( 'DELETE FROM {{templatemodel}}'.
-		                ' WHERE id={id}' );
+
+		$content = new Content( $this->contentid );
+		$content->delete();
+
+		$stmt = $db->sql(<<<SQL
+			DELETE FROM {{templatemodel}}
+			 WHERE id={id}
+SQL
+		);
 		$stmt->setInt( 'id',$this->templatemodelid );
 		$stmt->execute();
 	}

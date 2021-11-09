@@ -448,11 +448,15 @@ class File extends BaseObject
 	 */
 	function delete()
 	{
-		$db = \cms\base\DB::get();
+		$content = new Content( $this->contentid );
+		$content->delete();
 
-		// Datei l?schen
-		$sql = $db->sql( 'DELETE FROM {{file}} '.
-		                '  WHERE objectid={objectid}' );
+		// Delete file
+		$sql = DB::sql( <<<SQL
+			DELETE FROM {{file}}
+			 WHERE objectid={objectid}
+SQL
+		);
 		$sql->setInt( 'objectid',$this->objectid );
 		$sql->execute();
 

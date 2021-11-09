@@ -361,7 +361,7 @@ class PageelementAction extends BaseAction
         // Inhalt sofort freigegeben, wenn
         // - Recht vorhanden
         // - Freigabe gewuenscht
-		$value->publish = $value->page->hasRight( Permission::ACL_RELEASE ) && $this->request->has('release') );
+		$value->publish = $value->page->hasRight( Permission::ACL_RELEASE ) && $this->request->has('release');
 
         // Up-To-Date-Check
         $lastChangeTime = $value->getLastChangeSinceByAnotherUser( $this->request->getText('value_time'), Session::getUser()->userid );

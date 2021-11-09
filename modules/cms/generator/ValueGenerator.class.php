@@ -17,6 +17,7 @@ use cms\model\Image;
 use cms\model\Language;
 use cms\model\Link;
 use cms\model\Page;
+use cms\model\PageContent;
 use cms\model\Project;
 use cms\model\Template;
 use cms\model\Value;
@@ -72,14 +73,22 @@ class ValueGenerator extends BaseGenerator
 		$element = new Element( $this->context->elementid );
 		$element->load();
 
-		$value = new Value();
-		$value->pageid    = $page->pageid;
-		$value->elementid = $this->context->elementid;
-		$value->languageid = $pageContext->languageId;
-		$value->load();
-		$value->element = $element;
+		$pageContent = new PageContent();
 
-		if	( ! $this->isValueHasContent( $value ) )
+		$pageContent->pageId     = $page->pageid;
+		$pageContent->elementId  = $this->context->elementid;
+		$pageContent->languageid = $pageContext->languageId;
+		$pageContent->load();
+
+		$value = new Value();
+		$value->contentid = $pageContent->contentId;
+
+		if   ( $this->context->scheme == Producer::SCHEME_PREVIEW )
+			$value->load();
+		else
+			$value->loadPublished();
+
+		if	( ! $this->isValueHasContent( $value,$element ) )
 		{
 			$pageForDefaultValue = $page->getPageAsDefault();
 
@@ -1030,24 +1039,24 @@ class ValueGenerator extends BaseGenerator
 	 *
 	 * @param $value Value
 	 */
-	protected function isValueHasContent( $value ) {
+	protected function isValueHasContent( $value,$element ) {
 
-		return in_array($value->element->typeid,[
+		return in_array($element->typeid,[
 				Element::ELEMENT_TYPE_TEXT,
 				Element::ELEMENT_TYPE_LONGTEXT,
 				Element::ELEMENT_TYPE_SELECT,
 			]) && $value->text != '' && $value->text != null ||
-			in_array($value->element->typeid,[
+			in_array($element->typeid,[
 				Element::ELEMENT_TYPE_NUMBER
 			]) && $value->number != null ||
-			in_array($value->element->typeid,[
+			in_array($element->typeid,[
 				Element::ELEMENT_TYPE_LINK,
 				Element::ELEMENT_TYPE_INSERT,
 			]) && $value->linkToObjectId != null && $value->linkToObjectId != 0 ||
-			in_array($value->element->typeid,[
+			in_array($element->typeid,[
 				Element::ELEMENT_TYPE_DATE,
 			]) && $value->date != null && $value->date != 0 ||
-			in_array($value->element->typeid,[
+			in_array($element->typeid,[
 				Element::ELEMENT_TYPE_CODE,
 				Element::ELEMENT_TYPE_COPY,
 				Element::ELEMENT_TYPE_DYNAMIC,

@@ -6,6 +6,7 @@ namespace cms\generator;
 
 use cms\generator\filter\AbstractFilter;
 use cms\model\File;
+use cms\model\Value;
 use logger\Logger;
 use util\exception\GeneratorException;
 
@@ -45,14 +46,26 @@ class FileGenerator extends BaseGenerator
 	 */
 	private function filterValue( $file )
 	{
-		$totalSettings = $file->getTotalSettings();
+		$contentId = $file->contentid;
 
+		$totalSettings = $file->getTotalSettings();
 		$proxyFileId = @$totalSettings['proxy-file-id'];
 
-		if   ( $proxyFileId )
-			$value = (new File( $proxyFileId ))->loadValue(); // This is a proxy for another file.
+		if   ( $proxyFileId ) {
+			$proxyFile = new File( $proxyFileId ); // This is a proxy for another file.
+			$proxyFile->load();
+			$contentId = $proxyFile->contentid;
+		}
+
+		$v = new Value();
+		$v->contentid = $contentId;
+
+		if    ( $this->context->scheme == Producer::SCHEME_PREVIEW )
+			$v->load();
 		else
-			$value = $file->loadValue();
+			$v->loadPublished();
+
+		$value = $v->file;
 
 		foreach(\util\ArrayUtils::getSubArray($totalSettings, array( 'filter')) as $filterEntry )
 		{

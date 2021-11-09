@@ -136,9 +136,13 @@ SQL
 	 */
 	function delete()
 	{
+
+		$content = new Content( $this->contentId );
+		$content->delete();
+
 		$stmt = DB::sql( <<<SQL
-		               DELETE * FROM {{pagecontent}}
-		                  WHERE id ={id}
+			DELETE * FROM {{pagecontent}}
+			 WHERE id ={id}
 SQL
 		);
 		$stmt->setInt( 'id' ,$this->id );

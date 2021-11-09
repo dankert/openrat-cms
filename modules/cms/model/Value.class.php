@@ -168,7 +168,7 @@ class Value extends ModelBase
 	{
 		$stmt = Db::sql( <<<SQL
            SELECT * FROM {{value}}
-        	WHERE contentid = {{contentid}}
+        	WHERE contentid = {contentid}
         	  AND publish = 1
 SQL
 		);
@@ -180,14 +180,20 @@ SQL
 
 	private function bindRow( $row ) {
 
-		if	( count($row) > 0 ) // Wenn Inhalt gefunden
+		if	( $row ) // Wenn Inhalt gefunden
 		{
 			$this->text           = $row['text'  ];
+			$this->file           = $row['file'  ];
 			$this->format         = $row['format'];
 			$this->valueid        = intval($row['id']          );
 			$this->linkToObjectId = intval($row['linkobjectid']);
 			$this->number         = intval($row['number'      ]);
 			$this->date           = intval($row['date'        ]);
+
+			$storeValueAsBase64 = DB::get()->conf['base64'];
+
+			if	( $storeValueAsBase64 )
+				$this->file = base64_decode( $this->file );
 
 			$this->active         = ( $row['active' ]=='1' );
 			$this->publish        = ( $row['publish']=='1' );
