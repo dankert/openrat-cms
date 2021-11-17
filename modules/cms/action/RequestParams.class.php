@@ -319,4 +319,17 @@ class RequestParams
 	public function __toString() {
 		return 'Request '.$this->action.'/'.$this->method.'/'.$this->id;
 	}
+
+
+	/**
+	 * Redirect to a new action and method.
+	 *
+	 * @param $action
+	 * @param $method
+	 */
+	public function redirectActionAndMethod( $action, $method ) {
+
+		$this->action = $action;
+		$this->method = $method;
+	}
 }

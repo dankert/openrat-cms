@@ -44,12 +44,10 @@ class UI
             self::setContentSecurityPolicy();
 
 			if   ( @$_REQUEST['scope']=='openid' ) {
-			    $request->action = 'login';
-			    $request->method = 'oidc';
+			    $request->redirectActionAndMethod('login','oidc');
 			}
 			elseif (empty($request->action)) {
-                $request->action = 'index';
-                $request->method = 'show';
+                $request->redirectActionAndMethod('index','show' );
 			}
 
             if   ( $request->isAction )
