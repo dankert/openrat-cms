@@ -1254,8 +1254,10 @@ SQL
         $stmt = DB::sql( <<<SQL
 
 SELECT {{page}}.objectid FROM {{value}}
+              LEFT JOIN {{pagecontent}}
+                ON {{value}}.contentid = {{pagecontent}}.contentid
               LEFT JOIN {{page}}
-                ON {{value}}.pageid = {{page}}.id
+                ON {{pagecontent}}.pageid = {{page}}.id
               WHERE linkobjectid={myobjectid1}
 UNION
        SELECT objectid FROM {{link}}
