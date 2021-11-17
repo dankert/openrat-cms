@@ -1,10 +1,10 @@
-FROM alpine:3.10
+FROM alpine:3.13
 
 LABEL maintainer="Jan Dankert"
 
 # Install packages
 RUN apk --update --no-cache add \
-    apache2 apache2-http2 \
+    apache2 apache2-http2 curl \
     php7 php7-apache2 php7-session php7-pdo php7-pdo_mysql php7-pdo_pgsql php7-json php7-ftp php7-iconv php7-openssl php7-mbstring
 
 ENV DB_TYPE="mysql"     \
@@ -122,4 +122,5 @@ WORKDIR $DOCROOT
 
 USER apache
 
+HEALTHCHECK --interval=10s --timeout=5m --retries=1 CMD curl -f http://localhost:8080/status/?health || exit 1
 CMD /usr/sbin/httpd -D FOREGROUND

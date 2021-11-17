@@ -176,17 +176,15 @@ SQL
 	}
 
 
-	function delete()
+	public function delete()
 	{
-		$db = \cms\base\DB::get();
-
-		$sql = $db->sql( 'DELETE FROM {{value}} '.
-		                '  WHERE pageid={pageid}' );
-		$sql->setInt('pageid',$this->pageid);
-		$sql->execute();
-
-		$sql = $db->sql( 'DELETE FROM {{page}} '.
-		                '  WHERE objectid={objectid}' );
+		$this->deleteContent();
+		// Delete the page
+		$sql = DB::sql( <<<SQL
+			DELETE FROM {{page}}
+			 WHERE objectid={objectid}
+SQL
+		);
 		$sql->setInt('objectid',$this->objectid);
 		$sql->execute();
 
@@ -225,8 +223,6 @@ SQL
 			}
 		}
 	}
-
-
 
 
 	function save()
@@ -404,4 +400,26 @@ SQL
     {
     	return 'Id '.$this->pageid.' (filename='.$this->filename.', templateid='.$this->templateid.')';
     }
+
+
+	/**
+	 * Deletes all content of the page
+	 */
+	private function deleteContent()
+	{
+		// Delete all page contents.
+		$project = $this->getProject();
+		$languageIds = $project->getLanguageIds();
+		$elementIds  = $this->getElementIds();
+
+		foreach( $languageIds as $languageId )
+			foreach ( $elementIds as $elementId ) {
+				$pageContent = new PageContent();
+				$pageContent->pageId     = $this->pageid;
+				$pageContent->elementId  = $elementId;
+				$pageContent->languageid = $languageId;
+				$pageContent->load();
+				$pageContent->delete();
+			}
+	}
 }

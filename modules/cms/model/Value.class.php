@@ -16,31 +16,10 @@ use util\Transformer;
 use util\Code;
 use util\cache\FileCache;
 
-// OpenRat Content Management System
-// Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
-
-
 /**
  * Darstellen einer Inhaltes
  *
- * @version $Revision$
- * @author $Author$
- * @package openrat.objects
+ * @author Jan Dankert
  */
 
 class Value extends ModelBase
@@ -50,6 +29,12 @@ class Value extends ModelBase
 	 * @type Integer
 	 */
 	var $valueid=0;
+
+	/**
+	 * Content ID.
+	 * @var int
+	 */
+	public $contentid;
 
 	/**
 	 * Seiten-Objekt der ?bergeordneten Seite
@@ -105,7 +90,13 @@ class Value extends ModelBase
 	 * @type String
 	 */
 	var $value;
-	
+
+	/**
+	 * file blob
+	 * @var string
+	 */
+	public $file = null;
+
 	/**
 	 * TimeStamp der letzten Aenderung
 	 * @type Integer
@@ -165,74 +156,44 @@ class Value extends ModelBase
 	 */
 	function __construct()
 	{
-		$this->lastchangeUserId    = 0;
-		$this->lastchangeTimeStamp = 0;
-
 	}
 
-	
+
+
 
 	/**
 	 * Laden des aktuellen Inhaltes aus der Datenbank
 	 */
-	function loadForPublic()
+	public function loadPublished()
 	{
 		$stmt = Db::sql( <<<SQL
-			SELECT * FROM {{value}}
-			 WHERE elementid ={elementid}
-			   AND pageid    ={pageid}
-			   AND languageid={languageid}
-			   AND publish   =1
+           SELECT * FROM {{value}}
+        	WHERE contentid = {contentid}
+        	  AND publish = 1
 SQL
 		);
-		$stmt->setInt( 'elementid' ,$this->elementid );
-		$stmt->setInt( 'pageid'    ,$this->pageid    );
-		$stmt->setInt( 'languageid',$this->languageid);
-		$row = $stmt->getRow();
-		
-		if	( count($row) > 0 ) // Wenn Inhalt gefunden
+		$stmt->setInt( 'contentid' ,$this->contentid);
+
+		$this->bindRow( $stmt->getRow() );
+	}
+
+
+	private function bindRow( $row ) {
+
+		if	( $row ) // Wenn Inhalt gefunden
 		{
 			$this->text           = $row['text'  ];
+			$this->file           = $row['file'  ];
 			$this->format         = $row['format'];
 			$this->valueid        = intval($row['id']          );
 			$this->linkToObjectId = intval($row['linkobjectid']);
 			$this->number         = intval($row['number'      ]);
 			$this->date           = intval($row['date'        ]);
-	
-			$this->active         = ( $row['active' ]=='1' );
-			$this->publish        = ( $row['publish']=='1' );
-	
-			$this->lastchangeTimeStamp = intval($row['lastchange_date'  ]);
-			$this->lastchangeUserId    = intval($row['lastchange_userid']);
-		}
-	}
 
-	/**
-	 * Laden des aktuellen Inhaltes aus der Datenbank
-	 */
-	function load()
-	{
-		$stmt = Db::sql( <<<SQL
-			SELECT * FROM {{value}}
-			 WHERE elementid ={elementid}
-			   AND pageid    ={pageid}
-			   AND languageid={languageid}
-			   AND active=1
-SQL
-		);
-		$stmt->setInt( 'elementid' ,$this->elementid );
-		$stmt->setInt( 'pageid'    ,$this->pageid    );
-		$stmt->setInt( 'languageid',$this->languageid);
-		$row = $stmt->getRow();
+			$storeValueAsBase64 = DB::get()->conf['base64'];
 
-		if	( count($row) > 0 ) // Wenn Inhalt gefunden
-		{
-			$this->text           = $row['text'  ];
-			$this->format         = $row['format'];
-			$this->valueid        = intval($row['id']          );
-			$this->linkToObjectId = intval($row['linkobjectid']);
-			$this->number         = intval($row['number'      ]);
-			$this->date           = intval($row['date'        ]);
+			if	( $storeValueAsBase64 )
+				$this->file = base64_decode( $this->file );
 
 			$this->active         = ( $row['active' ]=='1' );
 			$this->publish        = ( $row['publish']=='1' );
@@ -240,6 +201,23 @@ SQL
 			$this->lastchangeTimeStamp = intval($row['lastchange_date'  ]);
 			$this->lastchangeUserId    = intval($row['lastchange_userid']);
 		}
+	}
+
+
+	/**
+	 * Loading the last value from the database.
+	 */
+	public function load()
+	{
+		$stmt = Db::sql( <<<SQL
+           SELECT * FROM {{value}}
+        	WHERE contentid = {contentid}
+        	  AND {{value}}.active = 1
+SQL
+		);
+		$stmt->setInt( 'contentid' ,$this->contentid);
+
+		$this->bindRow( $stmt->getRow() );
 	}
 
 
@@ -248,234 +226,53 @@ SQL
 	 */
 	function loadWithId( $valueid = null )
 	{
-		if	( $valueid )
-			$this->valueid = $valueid;
-
-		$sql = DB::sql( <<<SQL
- 	SELECT {{value}}.*,{{user}}.name as lastchange_username
-	  FROM {{value}}
-	    LEFT JOIN {{user}} ON {{user}}.id={{value}}.lastchange_userid
-	        WHERE {{value}}.id={valueid}
+		$stmt = Db::sql( <<<SQL
+           SELECT * FROM {{value}}
+        	WHERE id = {{valueid}}
 SQL
 		);
-		$sql->setInt( 'valueid',$this->valueid);
-		$row = $sql->getRow();
-		
-		$this->text           =        $row['text'        ];
-        $this->format         =        $row['format'      ];
-		$this->pageid         = intval($row['pageid'      ]);
-		$this->elementid      = intval($row['elementid'   ]);
-		$this->languageid     = intval($row['languageid'  ]);
-		$this->valueid        = intval($row['id'          ]);
-		$this->linkToObjectId = intval($row['linkobjectid']);
-		$this->number         = intval($row['number'      ]);
-		$this->date           = intval($row['date'        ]);
+		$stmt->setInt( 'valueid'   ,$valueid  );
 
-		$this->active         = ( $row['active' ]=='1' );
-		$this->publish        = ( $row['publish']=='1' );
-
-		$this->lastchangeTimeStamp = intval($row['lastchange_date'    ]);
-		$this->lastchangeUserId    = intval($row['lastchange_userid'  ]);
-		$this->lastchangeUserName  =        $row['lastchange_username'];
+		$this->bindRow( $stmt->getRow() );
 	}
 
 
 	/**
-	 * Alle Versionen des aktuellen Inhaltes werden ermittelt
-	 * @return array
+	 * @see #save()
 	 */
-	function getVersionList()
+	protected function add()
 	{
-		$stmt = DB::sql( <<<SQL
-		   SELECT {{value}}.*,{{user}}.name as lastchange_username
-		                  FROM {{value}}
-		                  LEFT JOIN {{user}} ON {{user}}.id={{value}}.lastchange_userid
-		                  WHERE elementid ={elementid}
-		                    AND pageid    ={pageid}
-		                    AND languageid={languageid}
-		                  ORDER BY lastchange_date
-SQL
-		);
-		$stmt->setInt( 'elementid' ,$this->element->elementid );
-		$stmt->setInt( 'pageid'    ,$this->pageid    );
-		$stmt->setInt( 'languageid',$this->languageid);
-
-		$list = array();
-		foreach($stmt->getAll() as $row )
-		{
-			$val = new Value();
-			$val->valueid = $row['id'];
-			
-			$val->text           = $row['text'];
-            $val->format         = $row['format'];
-			$val->valueid        = intval($row['id']          );
-			$val->linkToObjectId = intval($row['linkobjectid']);
-			$val->number         = intval($row['number'      ]);
-			$val->date           = intval($row['date'        ]);
-			$val->element        = $this->element;
-			$val->elementid      = $this->elementid;
-			$val->languageid     = $this->languageid;
-
-			$val->active         = ( $row['active' ]=='1' );
-			$val->publish        = ( $row['publish']=='1' );
-	
-			$val->lastchangeTimeStamp = intval($row['lastchange_date'    ]);
-			$val->lastchangeUserId    = intval($row['lastchange_userid'  ]);
-			$val->lastchangeUserName  = $row['lastchange_username'];
-
-			$list[] = $val;
-		}
-		return $list;
+		// this is implemented in the save() method.
 	}
 
 
 	/**
-	 * Die Anzahl der Versionen des aktuellen Inhaltes wird ermittelt
-	 * @return array
-	 */
-	function getCountVersions()
-	{
-		$sql = DB::sql( <<<SQL
-SELECT COUNT(*) FROM {{value}}
-		                  WHERE elementid ={elementid}
-		                    AND pageid    ={pageid}
-		                    AND languageid={languageid}
-SQL
-		);
-		$sql->setInt( 'elementid' ,$this->element->elementid );
-		$sql->setInt( 'pageid'    ,$this->pageid    );
-		$sql->setInt( 'languageid',$this->languageid);
-
-		return $sql->getOne();
-	}
-
-
-	function getLastChangeTime()
-	{
-		$sql = DB::sql( <<<SQL
-			SELECT lastchange_date FROM {{value}}
-		     WHERE elementid ={elementid}
-		       AND pageid    ={pageid}
-		       AND languageid={languageid}
-		     ORDER BY id DESC
-SQL
-		);
-		$sql->setInt( 'elementid' ,$this->element->elementid );
-		$sql->setInt( 'pageid'    ,$this->pageid    );
-		$sql->setInt( 'languageid',$this->languageid);
-
-		return $sql->getOne();
-	}
-
-
-	/**
-	 * Gets the last change date by another user since a specific date.
-	 * @param $date
-	 * @param $userid
-	 * @return String
-	 */
-	public function getLastChangeSinceByAnotherUser( $date, $userid )
-	{
-		$sql = Db::sql( <<<SQL
-	SELECT lastchange_date FROM {{value}}
-		WHERE elementid ={elementid}
-		  AND pageid    ={pageid}
-		  AND languageid={languageid}
-		  AND lastchange_date > {date}
-		  AND lastchange_userid != {userid}
-		  ORDER BY id DESC
-SQL
-		);
-		$sql->setInt( 'elementid' ,$this->element->elementid );
-		$sql->setInt( 'pageid'    ,$this->pageid    );
-		$sql->setInt( 'languageid',$this->languageid);
-		$sql->setInt( 'date'      ,$date  );
-		$sql->setInt( 'userid'    ,$userid);
-
-		return $sql->getOne();
-	}
-
-
-
-	/**
-	 * Inhalt freigeben
-	 */
-	function release()
-	{
-		$sql = DB::sql( <<<SQL
-			UPDATE {{value}}
-		                  SET publish = 0
-		                  WHERE elementid ={elementid}
-		                    AND pageid    ={pageid}
-		                    AND languageid={languageid}
-SQL
-		);
-		$sql->setInt( 'elementid' ,$this->elementid );
-		$sql->setInt( 'pageid'    ,$this->pageid    );
-		$sql->setInt( 'languageid',$this->languageid);
-
-		$sql->execute();
-
-		$sql = Db::sql( <<<SQL
-			UPDATE {{value}}
-		                  SET publish = 1
-		                  WHERE active    = 1
-		                    AND elementid ={elementid}
-		                    AND pageid    ={pageid}
-		                    AND languageid={languageid}
-SQL
-		);
-		$sql->setInt( 'elementid' ,$this->elementid );
-		$sql->setInt( 'pageid'    ,$this->pageid    );
-		$sql->setInt( 'languageid',$this->languageid);
-
-		$sql->execute();
-	}
-
-
-	/**
-	 * No function, values are NOT updated, values are only added.
-	 * @return name|void
+	 * Saving the value.
+	 * A value is always added, never overwritten. So we are doing an INSERT here.
 	 */
 	protected function save()
-	{
-		// not implemented, values are only added ("copy on write")
-	}
-
-	/**
-	 * Inhalt speichern
-	 */
-	public function add()
 	{
 		$stmt = Db::sql( <<<SQL
 			UPDATE {{value}}
 		                  SET active=0
-		                  WHERE elementid ={elementid}
-		                    AND pageid    ={pageid}
-		                    AND languageid={languageid}
+                          WHERE contentid = {contentid}
 SQL
 		);
-		$stmt->setInt( 'elementid' ,$this->element->elementid );
-		$stmt->setInt( 'pageid'    ,$this->pageid    );
-		$stmt->setInt( 'languageid',$this->languageid);
+		$stmt->setInt( 'contentid' ,$this->contentid );
 
 		$stmt->execute();
 
 		if	( $this->publish )
 		{
 			// Wenn Inhalt sofort veroeffentlicht werden kann, dann
-			// alle anderen Inhalte auf nicht-veroeffentlichen stellen 
+			// alle anderen Inhalte auf nicht-veroeffentlichen stellen
 			$stmt = DB::sql( <<<SQL
  					UPDATE {{value}}
 			                  SET publish=0
-			                  WHERE elementid ={elementid}
-			                    AND pageid    ={pageid}
-			                    AND languageid={languageid}
+                            WHERE contentid = {contentid}
 SQL
 			);
-			$stmt->setInt( 'elementid' ,$this->element->elementid );
-			$stmt->setInt( 'pageid'    ,$this->pageid    );
-			$stmt->setInt( 'languageid',$this->languageid);
+			$stmt->setInt( 'contentid' ,$this->contentid );
 
 			$stmt->execute();
 		}
@@ -486,15 +283,13 @@ SQL
 
 		$stmt = DB::sql( <<<SQL
 INSERT INTO {{value}}
-            (id       ,linkobjectid  ,text  ,number  ,date  ,elementid  ,format  ,pageid  ,languageid  ,active,publish  ,lastchange_date  ,lastchange_userid  )
-     VALUES ({valueid},{linkobjectid},{text},{number},{date},{elementid},{format},{pageid},{languageid},1     ,{publish},{lastchange_date},{lastchange_userid})
+            (id       ,contentid  ,linkobjectid  ,text  ,file  ,number  ,date  ,format  ,active,publish  ,lastchange_date  ,lastchange_userid  )
+     VALUES ({valueid},{contentid},{linkobjectid},{text},{file},{number},{date},{format},1     ,{publish},{lastchange_date},{lastchange_userid})
 SQL
 		);
 		$stmt->setInt( 'valueid'   ,$this->valueid            );
+		$stmt->setInt( 'contentid' ,$this->contentid          );
 		$stmt->setInt( 'format'    ,$this->format             );
-		$stmt->setInt( 'elementid' ,$this->element->elementid );
-		$stmt->setInt( 'pageid'    ,$this->pageid             );
-		$stmt->setInt( 'languageid',$this->languageid         );
 
 		if	( intval($this->linkToObjectId)==0)
 			$stmt->setNull  ( 'linkobjectid' );
@@ -512,209 +307,87 @@ SQL
 			$stmt->setNull  ( 'date' );
 		else	$stmt->setInt   ( 'date',$this->date );
 
+		$storeValueAsBase64 = DB::get()->conf['base64'];
+
+		if	( $storeValueAsBase64 )
+			$this->value = base64_decode( $this->value );
+
+
+		if	( $this->file === null )
+			$stmt->setNull  ( 'file' );
+		elseif( $storeValueAsBase64 )
+			$stmt->setString( 'file',base64_encode($this->file) );
+		else
+			$stmt->setString( 'file',$this->file );
+
 		$stmt->setBoolean( 'publish'          ,$this->publish );
 		$stmt->setInt    ( 'lastchange_date'  ,Startup::now()         );
 		$user = \util\Session::getUser();
 		$stmt->setInt    ( 'lastchange_userid',$user->userid  );
 
 		$stmt->execute();
-		
-		// Nur ausfuehren, wenn in Konfiguration aktiviert.
-		$limit = Configuration::subset(['content','revision-limit'] );
-		if	( $limit->is('enabled',false) )
-			$this->checkLimit();
+
+		$this->pruneVersions();
 	}
 
-	
-	/**
-	 * Pruefen, ob maximale Anzahl von Versionen erreicht.
-	 * In diesem Fall die zu alten Versionen l�schen.
-	 */
-	function checkLimit()
-	{
-		$limitConfig = Configuration::subset(['content','revision-limit']);
 
+	// Some default values for pruning content
+	const DEFAULT_PRUNE_AFTER_AGE = 10 * 365 * 24 * 60 * 60; // prune after 10 years
+	const DEFAULT_PRUNE_AFTER_VERSIONS = 100; // prune after reaching 100 versions
+
+	/**
+	 * Automatic content pruning.
+	 *
+	 * Deletes old versions.
+	 */
+	private function pruneVersions()
+	{
+		$pruneConfig = Configuration::subset(['content','prune']);
+
+		if	( ! $pruneConfig->is('enabled',true) )
+			return; // no pruning.
+
+		// First Step: Reading all value id.
 		$sql = DB::sql( <<<SQL
 		             SELECT id FROM {{value}}
-			                  WHERE elementid  = {elementid}
-			                    AND pageid     = {pageid}
-			                    AND languageid = {languageid}
+                          WHERE contentid = {contentid}
 			                    AND active     = 0
 			                    AND publish    = 0
 			                   ORDER BY id
 SQL
 		);
-		$sql->setInt( 'elementid' ,$this->element->elementid );
-		$sql->setInt( 'pageid'    ,$this->pageid             );
-		$sql->setInt( 'languageid',$this->languageid         );
+		$sql->setInt( 'contentid' ,$this->contentid );
 		$values = $sql->getCol();
-		
-		if	( count($values) > $limitConfig->get('min-revisions',3) )
-		{
-			$sql = DB::sql( <<<SQL
-			DELETE FROM {{value}}
-				                  WHERE elementid  = {elementid}
-				                    AND pageid     = {pageid}
-				                    AND languageid = {languageid}
-				                    AND active     = 0
-				                    AND publish    = 0
-				                    AND lastchange_date < {min_date}
-				                    AND id              < {min_id}
+
+		// Now deleting all outdated content.
+		$sql = DB::sql( <<<SQL
+		DELETE FROM {{value}}
+					  WHERE contentid = {contentid}
+								AND active     = 0
+								AND publish    = 0
+								AND lastchange_date < {delete_before_date}
+								AND id              < {delete_before_id}
 SQL
-			);
-			$sql->setInt( 'elementid' ,$this->element->elementid );
-			$sql->setInt( 'pageid'    ,$this->pageid             );
-			$sql->setInt( 'languageid',$this->languageid         );
-			$sql->setInt( 'min_date'  ,$limitConfig['max-age']*24*60*60);
-			$sql->setInt( 'min_id'    ,$values[count($values)-$limitConfig['min-revisions']]);
-			$sql->execute();
-		}
-		
-		if	( count($values) > $limitConfig->get('max-revisions',100 ) )
-		{
-			$sql = Db::sql( <<<SQL
-			DELETE FROM {{value}}
-				                  WHERE elementid  = {elementid}
-				                    AND pageid     = {pageid}
-				                    AND languageid = {languageid}
-				                    AND active     = 0
-				                    AND publish    = 0
-				                    AND lastchange_date < {min_date}
-				                    AND id              < {min_id}
-SQL
-			);
-			$sql->setInt( 'elementid' ,$this->element->elementid );
-			$sql->setInt( 'pageid'    ,$this->pageid             );
-			$sql->setInt( 'languageid',$this->languageid         );
-			$sql->setInt( 'min_date'  ,$limitConfig['min-age']*24*60*60);
-			$sql->setInt( 'min_id'    ,$values[count($values)-$limitConfig['max-revisions']]);
-			$sql->execute();
-		}
+		);
+		$sql->setInt( 'contentid' ,$this->contentid );
+		$sql->setInt( 'delete_before_date'  ,time() - $pruneConfig->getSeconds('age',self::DEFAULT_PRUNE_AFTER_AGE) );
+		$sql->setInt( 'delete_before_id'    ,intval(@$values[count($values)-$pruneConfig->get('versions',self::DEFAULT_PRUNE_AFTER_VERSIONS)]) );
+		$sql->execute();
 	}
 
-	
-	
+
+
 	/**
-	 * Diesen Inhalt loeschen
+	 * Deleting (not possible).
 	 */
 	function delete()
 	{
-		$stmt = DB::sql( <<<SQL
-		               DELETE * FROM {{value}}
-		                  WHERE elementid ={elementid}
-		                    AND pageid    ={pageid}
-		                    AND languageid={languageid}
-SQL
-		);
-		$stmt->setInt( 'elementid' ,$this->element->elementid );
-		$stmt->setInt( 'pageid'    ,$this->pageid    );
-		$stmt->setInt( 'languageid',$this->languageid);
-
-		$stmt->execute();
+		// values cannot be deleted.
+		// only the whole content is able to be deleted, see class Content.
 	}
 
 
 
-	/**
-	  * Es werden Objekte mit einem Inhalt gesucht.
-	  * @param String Suchbegriff
-	  * @return array Liste der gefundenen Objekt-IDs
-	  */
-	function getObjectIdsByValue( $text )
-	{
-		$sql = DB::sql( <<<SQL
-                 SELECT {{object}}.id FROM {{value}}
-		                 LEFT JOIN {{page}}
-		                   ON {{page}}.id={{value}}.pageid
-		                 LEFT JOIN {{object}}
-		                   ON {{object}}.id={{page}}.objectid
-		                 WHERE {{value}}.text LIKE {text}
-		                   AND {{value}}.languageid={languageid}
-		                  ORDER BY {{object}}.lastchange_date DESC
-SQL
-	    );
-		                
-		$sql->setInt   ( 'languageid',$this->languageid );
-		$sql->setString( 'text'      ,'%'.$text.'%'     );
-
-		return $sql->getCol();
-	}
-
-
-	/**
-	  * Es werden Objekte mit einer UserId ermittelt
-	  * @param Integer Benutzer-Id der letzten ?nderung
-	  * @return array Liste der gefundenen Objekt-IDs
-	  */
-	function getObjectIdsByLastChangeUserId( $userid )
-	{
-		$sql = DB::sql( <<<SQL
-                  SELECT {{object}}.id FROM {{value}}
-		                 LEFT JOIN {{page}}
-		                   ON {{page}}.id={{value}}.pageid
-		                 LEFT JOIN {{object}}
-		                   ON {{object}}.id={{page}}.objectid
-		                 WHERE {{value}}.lastchange_userid={userid}
-		                   AND {{value}}.languageid={languageid}
-		                  ORDER BY {{object}}.lastchange_date DESC
-SQL
-		);
-		$sql->setInt   ( 'languageid',$this->languageid );
-		$sql->setInt   ( 'userid'    ,$userid           );
-
-		return $sql->getCol();
-	}
-
-	
-
-	/**
-	  * Es wird das Objekt ermittelt, welches der Benutzer zuletzt ge�ndert hat.
-	  * 
-	  * @return Integer Objekt-Id
-	  */
-	public static function getLastChangedObjectByUserId( $userid )
-	{
-		$sql = DB::sql( <<<SQL
-SELECT {{object}}.id
-  FROM {{value}} 
-  LEFT JOIN {{page}} 
-    ON {{page}}.id={{value}}.pageid 
-  LEFT JOIN {{object}} 
-    ON {{object}}.id={{page}}.objectid 
- WHERE {{value}}.lastchange_userid={userid}
- ORDER BY {{value}}.lastchange_date DESC
-SQL
-);
-		$sql->setInt   ( 'userid'    ,$userid           );
-		return $sql->getOne();
-	}
-	
-	
-	/**
-	  * Es wird das Objekt ermittelt, welches der Benutzer zuletzt ge�ndert hat.
-	  * 
-	  * @return Integer Objekt-Id
-	  */
-	public static function getLastChangedObjectInProjectByUserId( $projectid, $userid )
-	{
-		$sql = DB::sql( <<<SQL
-SELECT {{object}}.id
-  FROM {{value}} 
-  LEFT JOIN {{page}} 
-    ON {{page}}.id={{value}}.pageid 
-  LEFT JOIN {{object}} 
-    ON {{object}}.id={{page}}.objectid 
- WHERE {{value}}.lastchange_userid={userid}
-   AND {{object}}.projectid = {projectid}
- ORDER BY {{value}}.lastchange_date DESC
-SQL
-);
-		$sql->setInt   ( 'userid'    ,$userid     );
-		$sql->setInt   ( 'projectid' ,$projectid  );
-		return $sql->getOne();
-	}
-	
-	
 	/**
 	 * Ermittelt den unbearbeiteten, "rohen" Inhalt.
 	 * 

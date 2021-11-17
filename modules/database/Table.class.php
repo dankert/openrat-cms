@@ -80,7 +80,7 @@ class Table
 	}
 
 
-	public function addPrimaryKey($columnNames)
+	public function addPrimaryKey($columnNames = 'id')
 	{
 		$table = $this->getSqlName();
 
@@ -129,7 +129,7 @@ class Table
 	# param 1: column name
 	# param 2: target table name
 	# param 3: target column name
-	public function addConstraint($columnName, $targetTableName, $targetColumnName)
+	public function addConstraint($columnName, $targetTableName, $targetColumnName = 'id')
 	{
 		$targetTable = new Table($this->db,$this->dbmsType,$targetTableName);
 		$targetTablename = $targetTable->getSqlName();
@@ -179,9 +179,14 @@ class Table
 	}
 
 
-	public function dropConstraint($constraintName)
+	public function dropConstraint($columnName)
 	{
-		$ddl = $this->db->sql('DROP CONSTRAINT ' . $constraintName . ';');
+
+		$constraintName = $this->tablePrefix . self::CONSTRAINT_PREFIX . '_' . $this->name . $this->tableSuffix . '_' . $columnName;
+
+		$table = $this->getSqlName();
+		// In MySQL, there’s no DROP CONSTRAINT, you have to use DROP FOREIGN KEY instead
+		$ddl = $this->db->sql('ALTER TABLE ' . $table . ' DROP FOREIGN KEY ' . $constraintName . ';');
 		$ddl->execute();
 	}
 

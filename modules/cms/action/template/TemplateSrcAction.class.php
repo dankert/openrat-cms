@@ -48,8 +48,8 @@ class TemplateSrcAction extends TemplateAction implements Method {
                 $text );
         }
 
-        $this->setTemplateVar( 'modelid',$modelId );
-        $this->setTemplateVar( 'source' ,$text );
+		$this->setTemplateVar( 'modelid',$modelId );
+        $this->setTemplateVar( 'source' ,$text    );
         $this->setTemplateVar( 'extension',$templatemodel->extension );
     }
 

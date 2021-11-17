@@ -39,25 +39,6 @@ class DefaultConfig {
 					'auto_reload' => true,
 					'session_destroy_on_config_reload' => true,
 				],
-			'content' =>
-				[ 
-					'file' =>
-						[ 
-							'max_file_size' => '1500',
-						],
-					'revision-limit' =>
-						[ 
-							'enabled' => false,
-							'max-age' => 120,
-							'min-age' => 1,
-							'max-revisions' => 100,
-							'min-revisions' => 3,
-						],
-					'language' =>
-						[ 
-							'use_default_language' => true,
-						],
-				],
 			'countries' =>
 				[ 
 					'AA' => 'Afar',
@@ -418,21 +399,21 @@ class DefaultConfig {
 					'enabled' => true,
 					'from' => 'OpenRat <user@example.com>',
 					'signature' => '',
-					'cc' => '0',
-					'bcc' => '0',
-					'priority' => '3',
+					'cc' => '',
+					'bcc' => '',
+					'priority' => '',
 					'header_encoding' => 'Quoted-printable',
 					'client' => 'php',
 					'whitelist' => [],
 					'blacklist' => [],
 					'smtp' =>
 						[ 
-							'host' => 'locahost',
+							'host' => 'localhost',
 							'port' => '25',
-							'auth_username' => 'your.user@something.example',
-							'auth_password' => 'notsecret',
-							'timeout' => '45',
-							'localhost' => 'your.fully.qualified.hostname.example',
+							'auth_username' => '',
+							'auth_password' => '',
+							'timeout' => 45,
+							'localhost' => '',
 							'tls' => false,
 							'ssl' => false,
 						],

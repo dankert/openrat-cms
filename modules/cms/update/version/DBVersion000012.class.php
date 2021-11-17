@@ -21,6 +21,6 @@ class DBVersion000012 extends DbVersion
     	$table = $this->table('object');
         $table->column('published_date'  )->type(Column::TYPE_INT)->size(0)->nullable()->add();
         $table->column('published_userid')->type(Column::TYPE_INT)->size(0)->nullable()->add();
-        $table->addConstraint('published_userid', 'user', 'id');
+        $table->addConstraint('published_userid', 'user');
     }
 }

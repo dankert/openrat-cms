@@ -21,7 +21,7 @@ class DBVersion000002 extends DbVersion
 		$table->column('status'   )->type(Column::TYPE_INT)->add();
 		$table->column('installed')->type(Column::TYPE_INT)->add();
 		
-		$table->addPrimaryKey ('id'      );
+		$table->addPrimaryKey ();
 		$table->addIndex      ('status');
 		$table->addUniqueIndex('version');
 	}

@@ -25,11 +25,11 @@ class DBVersion000020 extends DbVersion
         $table->column('link_objectid')->type(Column::TYPE_INT)->add();
 
 
-        $table->addPrimaryKey ('id');
+        $table->addPrimaryKey ();
 
-        $table->addConstraint ('objectid'     ,'object'  ,'id');
-        $table->addConstraint ('languageid'   ,'language','id');
-        $table->addConstraint ('link_objectid','object'  ,'id');
+        $table->addConstraint ('objectid', 'object');
+        $table->addConstraint ('languageid', 'language');
+        $table->addConstraint ('link_objectid', 'object');
 
         $table->addUniqueIndex('objectid');
         $table->addUniqueIndex(['link_objectid','languageid']);

@@ -15,7 +15,7 @@ use security\Base2n;
 use security\Password;
 use util\exception\SecurityException;
 use util\exception\ValidationException;
-use util\Mail;
+use util\mail\Mail;
 use util\Session;
 
 

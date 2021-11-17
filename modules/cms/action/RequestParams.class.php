@@ -4,7 +4,7 @@ namespace cms\action;
 
 use util\exception\ValidationException;
 use util\json\JSON;
-use util\Mail;
+use util\mail\Mail;
 use util\Text;
 use util\XML;
 

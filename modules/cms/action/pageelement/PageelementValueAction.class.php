@@ -2,6 +2,7 @@
 namespace cms\action\pageelement;
 use cms\action\Method;
 use cms\action\PageelementAction;
+use cms\model\PageContent;
 use cms\model\Permission;
 use cms\model\Page;
 
@@ -13,6 +14,14 @@ class PageelementValueAction extends PageelementAction implements Method {
 	}
 
 	public function view() {
+
+		$pageContent = new PageContent();
+		$pageContent->languageid = $this->page->languageid;
+		$pageContent->elementId  = &$this->element->elementid;
+		$pageContent->pageId     = $this->page->pageid;
+		$pageContent->load();
+		$this->value->contentid = $pageContent->contentId;
+
 		$this->value->languageid = $this->page->languageid;
 		$this->value->objectid   = $this->page->objectid;
 		$this->value->pageid     = $this->page->pageid;

@@ -25,7 +25,7 @@ class Output
 
 	public static function escapeHtml($text)
 	{
-		return Text::translateutf8tohtml(htmlentities($text));
+		return Text::translateutf8tohtml(htmlentities($text, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401 ));
 	}
 
 	/**

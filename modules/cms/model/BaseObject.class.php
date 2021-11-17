@@ -509,9 +509,13 @@ SQL
         $slug = str_replace(array_keys($replacements), array_values($replacements), $slug);
 
         // 2nd try is to use iconv with the current locale.
-        Language::setLocale( Configuration::subset('language')->get('language_code','en' ) );
-        $slug = iconv('utf-8', 'ascii//TRANSLIT', $slug);
-
+		if ( function_exists('iconv') ) {
+			Language::setLocale(Configuration::subset('language')->get('language_code', 'en'));
+			// iconv is buggy on alpine 3 and does not support TRANSLIT. So we have to catch the error here.
+			$converted = @iconv('utf-8', 'ascii//TRANSLIT', $slug);
+			if   ( $converted !== false )
+				$slug = $converted;
+		}
         // now replace every unpleasant char with a hyphen.
         $slug = preg_replace('/[^A-Za-z0-9-]+/', '-', $slug);
 

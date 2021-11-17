@@ -27,7 +27,7 @@ class DBVersion000001 extends DbVersion
 		$table->column('content_negotiation')->type(Column::TYPE_INT    )->size(   1)->defaultValue(   0)->add();
 		$table->column('cut_index'          )->type(Column::TYPE_INT    )->size(   1)->defaultValue(   0)->add();
 		
-		$table->addPrimaryKey('id');
+		$table->addPrimaryKey();
 		$table->addIndex('name');
 		
 
@@ -41,12 +41,12 @@ class DBVersion000001 extends DbVersion
 		$table->column('descr')->type(Column::TYPE_VARCHAR)->size(255)->add();
 		$table->column('style')->type(Column::TYPE_VARCHAR)->size(64)->add();
 		$table->column('is_admin')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
-		$table->addPrimaryKey('id');
+		$table->addPrimaryKey();
 		$table->addUniqueIndex('name');
 		
 		$table = $this->table('group')->add();
 		$table->column('name')->type(Column::TYPE_VARCHAR)->size(100)->add();
-		$table->addPrimaryKey('id');
+		$table->addPrimaryKey();
 		$table->addUniqueIndex('name');
 		
 		$table = $this->table('object')->add();
@@ -62,10 +62,10 @@ class DBVersion000001 extends DbVersion
 		$table->column('is_file')->type(Column::TYPE_INT)->size(1)->add();
 		$table->column('is_page')->type(Column::TYPE_INT)->size(1)->add();
 		$table->column('is_link')->type(Column::TYPE_INT)->size(1)->add();
-		$table->addPrimaryKey('id');
-		$table->addConstraint('projectid', 'project', 'id');
-		$table->addConstraint('lastchange_userid', 'user', 'id');
-		$table->addConstraint('create_userid', 'user', 'id');
+		$table->addPrimaryKey();
+		$table->addConstraint('projectid', 'project');
+		$table->addConstraint('lastchange_userid', 'user');
+		$table->addConstraint('create_userid', 'user');
 		
 		$table->addIndex('parentid');
 		$table->addIndex('projectid');
@@ -84,8 +84,8 @@ class DBVersion000001 extends DbVersion
 		$table = $this->table('template')->add();
 		$table->column('projectid')->type(Column::TYPE_INT)->add();
 		$table->column('name')->type(Column::TYPE_VARCHAR)->size(50)->add();
-		$table->addPrimaryKey('id');
-		$table->addConstraint('projectid', 'project', 'id');
+		$table->addPrimaryKey();
+		$table->addConstraint('projectid', 'project');
 		
 		$table->addIndex('projectid');
 		$table->addIndex('name');
@@ -98,8 +98,8 @@ class DBVersion000001 extends DbVersion
 		$table->column('isocode')->type(Column::TYPE_VARCHAR)->size(10)->add();
 		$table->column('name')->type(Column::TYPE_VARCHAR)->size(50)->add();
 		$table->column('is_default')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
-		$table->addPrimaryKey('id');
-		$table->addConstraint('projectid', 'project', 'id');
+		$table->addPrimaryKey();
+		$table->addConstraint('projectid', 'project');
 		$table->addUniqueIndex(['projectid','isocode']);
 		
 		
@@ -108,9 +108,9 @@ class DBVersion000001 extends DbVersion
 		$table = $this->table('page')->add();
 		$table->column('objectid')->type(Column::TYPE_INT)->size(0)->add();
 		$table->column('templateid')->type(Column::TYPE_INT)->size(0)->add();
-		$table->addPrimaryKey('id');
-		$table->addConstraint('templateid', 'template', 'id');
-		$table->addConstraint('objectid', 'object', 'id');
+		$table->addPrimaryKey();
+		$table->addConstraint('templateid', 'template');
+		$table->addConstraint('objectid', 'object');
 		 
 		$table->addUniqueIndex('objectid');
 		$table->addIndex('templateid');
@@ -123,8 +123,8 @@ class DBVersion000001 extends DbVersion
 		$table->column('name')->type(Column::TYPE_VARCHAR)->size(50)->add();
 		$table->column('extension')->type(Column::TYPE_VARCHAR)->size(10)->nullable()->add();
 		$table->column('is_default')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
-		$table->addPrimaryKey('id');
-		$table->addConstraint('projectid', 'project', 'id');
+		$table->addPrimaryKey();
+		$table->addConstraint('projectid', 'project');
 		
 		$table->addIndex('projectid');
 		$table->addUniqueIndex(['projectid','name'] );
@@ -149,10 +149,10 @@ class DBVersion000001 extends DbVersion
 		$table->column('default_text')->type(Column::TYPE_TEXT)->nullable()->add();
 		$table->column('folderobjectid')->type(Column::TYPE_INT)->nullable()->add();
 		$table->column('default_objectid')->type(Column::TYPE_INT)->nullable()->add();
-		$table->addPrimaryKey('id');
-		$table->addConstraint('default_objectid', 'object', 'id');
-		$table->addConstraint('folderobjectid', 'object', 'id');
-		$table->addConstraint('templateid', 'template', 'id');
+		$table->addPrimaryKey();
+		$table->addConstraint('default_objectid', 'object');
+		$table->addConstraint('folderobjectid', 'object');
+		$table->addConstraint('templateid', 'template');
 		
 		$table->addIndex('templateid');
 		$table->addIndex('name');
@@ -166,8 +166,8 @@ class DBVersion000001 extends DbVersion
 		$table->column('extension')->type(Column::TYPE_VARCHAR)->size(10)->add();
 		$table->column('size')->type(Column::TYPE_INT)->size(0)->add();
 		$table->column('value')->type(Column::TYPE_BLOB)->add();
-		$table->addPrimaryKey('id');
-		$table->addConstraint('objectid', 'object', 'id');
+		$table->addPrimaryKey();
+		$table->addConstraint('objectid', 'object');
 		
 		$table->addUniqueIndex('objectid');
 		
@@ -175,8 +175,8 @@ class DBVersion000001 extends DbVersion
 		
 		$table = $this->table('folder')->add();
 		$table->column('objectid')->type(Column::TYPE_INT)->size(0)->add();
-		$table->addPrimaryKey('id');
-		$table->addConstraint('objectid', 'object', 'id');
+		$table->addPrimaryKey();
+		$table->addConstraint('objectid', 'object');
 		
 		$table->addUniqueIndex('objectid');
 		
@@ -188,9 +188,9 @@ class DBVersion000001 extends DbVersion
 		$table->column('objectid')->type(Column::TYPE_INT)->size(0)->add();
 		$table->column('link_objectid')->type(Column::TYPE_INT)->nullable()->add();
 		$table->column('url')->type(Column::TYPE_VARCHAR)->size(255)->nullable()->add();
-		$table->addPrimaryKey('id');
-		$table->addConstraint('objectid', 'object', 'id');
-		$table->addConstraint('link_objectid', 'object', 'id');
+		$table->addPrimaryKey();
+		$table->addConstraint('objectid', 'object');
+		$table->addConstraint('link_objectid', 'object');
 		
 		$table->addUniqueIndex('objectid');
 		$table->addIndex('link_objectid');
@@ -204,9 +204,9 @@ class DBVersion000001 extends DbVersion
 		$table->column('name')->type(Column::TYPE_VARCHAR)->size(255)->add();
 		$table->column('descr')->type(Column::TYPE_VARCHAR)->size(255)->add();
 		$table->column('languageid')->type(Column::TYPE_INT)->size(0)->add();
-		$table->addPrimaryKey('id');
-		$table->addConstraint('objectid', 'object', 'id');
-		$table->addConstraint('languageid', 'language', 'id');
+		$table->addPrimaryKey();
+		$table->addConstraint('objectid', 'object');
+		$table->addConstraint('languageid', 'language');
 		
 		$table->addIndex('objectid');
 		$table->addIndex('languageid');
@@ -221,9 +221,9 @@ class DBVersion000001 extends DbVersion
 		$table->column('projectmodelid')->type(Column::TYPE_INT)->size(0)->add();
 		$table->column('extension')->type(Column::TYPE_VARCHAR)->size(10)->nullable()->add();
 		$table->column('text')->type(Column::TYPE_TEXT)->add();
-		$table->addPrimaryKey('id');
-		$table->addConstraint('templateid', 'template', 'id');
-		$table->addConstraint('projectmodelid', 'projectmodel', 'id');
+		$table->addPrimaryKey();
+		$table->addConstraint('templateid', 'template');
+		$table->addConstraint('projectmodelid', 'projectmodel');
 		
 		$table->addIndex('templateid');
 		$table->addUniqueIndex(['templateid','extension'     ]);
@@ -236,9 +236,9 @@ class DBVersion000001 extends DbVersion
 		$table = $this->table('usergroup')->add();
 		$table->column('userid')->type(Column::TYPE_INT)->add();
 		$table->column('groupid')->type(Column::TYPE_INT)->add();
-		$table->addPrimaryKey('id');
-		$table->addConstraint('groupid', 'group', 'id');
-		$table->addConstraint('userid', 'user', 'id');
+		$table->addPrimaryKey();
+		$table->addConstraint('groupid', 'group');
+		$table->addConstraint('userid', 'user');
 		
 		$table->addIndex('groupid');
 		$table->addIndex('userid');
@@ -259,12 +259,12 @@ class DBVersion000001 extends DbVersion
 		$table->column('lastchange_date')->type(Column::TYPE_INT)->size(0)->add();
 		$table->column('lastchange_userid')->type(Column::TYPE_INT)->nullable()->add();
 		$table->column('publish')->type(Column::TYPE_INT)->add();
-		$table->addPrimaryKey('id');
-		$table->addConstraint('pageid', 'page', 'id');
-		$table->addConstraint('elementid', 'element', 'id');
-		$table->addConstraint('languageid', 'language', 'id');
-		$table->addConstraint('lastchange_userid', 'user', 'id');
-		$table->addConstraint('linkobjectid', 'object', 'id');
+		$table->addPrimaryKey();
+		$table->addConstraint('pageid', 'page');
+		$table->addConstraint('elementid', 'element');
+		$table->addConstraint('languageid', 'language');
+		$table->addConstraint('lastchange_userid', 'user');
+		$table->addConstraint('linkobjectid', 'object');
 		
 		$table->addIndex('pageid');
 		$table->addIndex('languageid');
@@ -293,11 +293,11 @@ class DBVersion000001 extends DbVersion
 		$table->column('is_publish')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
 		$table->column('is_grant')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
 		$table->column('is_transmit')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
-		$table->addPrimaryKey('id');
-		$table->addConstraint('groupid', 'group', 'id');
-		$table->addConstraint('userid', 'user', 'id');
-		$table->addConstraint('objectid', 'object', 'id');
-		$table->addConstraint('languageid', 'language', 'id');
+		$table->addPrimaryKey();
+		$table->addConstraint('groupid', 'group');
+		$table->addConstraint('userid', 'user');
+		$table->addConstraint('objectid', 'object');
+		$table->addConstraint('languageid', 'language');
 		
 		$table->addIndex('userid');
 		$table->addIndex('groupid');

@@ -7,7 +7,7 @@ use language\Messages;
 use logger\Logger;
 use security\Password;
 use util\exception\ValidationException;
-use util\Mail;
+use util\mail\Mail;
 use util\Session;
 
 

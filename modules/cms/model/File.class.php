@@ -37,6 +37,8 @@ class File extends BaseObject
 
 	public $fileid;
 
+	public $contentid     = null;
+
 	public $size          = 0;
 	public $value         = '';
 	public $extension     = '';
@@ -319,8 +321,6 @@ class File extends BaseObject
 	 */
 	function __construct( $objectid='' )
 	{
-		$this->storeValueAsBase64 = DB::get()->conf['base64'];
-
 		parent::__construct( $objectid );
 		$this->isFile = true;
 		$this->typeid = BaseObject::TYPEID_FILE;
@@ -421,7 +421,7 @@ class File extends BaseObject
 	{
 		$db = \cms\base\DB::get();
 
-		$sql = $db->sql( 'SELECT id,extension,size,filterid'.
+		$sql = $db->sql( 'SELECT id,contentid,extension,size,filterid'.
 		                ' FROM {{file}}'.
 		                ' WHERE objectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
@@ -433,6 +433,7 @@ class File extends BaseObject
 			$this->extension = $row['extension'];
 			$this->size      = $row['size'     ];
 			$this->filterid  = $row['filterid' ];
+			$this->contentid = $row['contentid'];
 		}
 
 		$this->objectLoad();
@@ -447,11 +448,15 @@ class File extends BaseObject
 	 */
 	function delete()
 	{
-		$db = \cms\base\DB::get();
+		$content = new Content( $this->contentid );
+		$content->delete();
 
-		// Datei l?schen
-		$sql = $db->sql( 'DELETE FROM {{file}} '.
-		                '  WHERE objectid={objectid}' );
+		// Delete file
+		$sql = DB::sql( <<<SQL
+			DELETE FROM {{file}}
+			 WHERE objectid={objectid}
+SQL
+		);
 		$sql->setInt( 'objectid',$this->objectid );
 		$sql->execute();
 
@@ -547,19 +552,28 @@ EOF
 	 */
 	private function loadValueFromDatabase()
 	{
-		$sql = Db::sql( 'SELECT size,value'.
-		                ' FROM {{file}}'.
-		                ' WHERE objectid={objectid}' );
+		$sql = Db::sql( <<<SQL
+                   SELECT {{file}}.size,{{value}}.file
+		             FROM {{file}}
+                LEFT JOIN {{content}}
+                       ON {{file}}.contentid = {{content}}.id 
+                LEFT JOIN {{value}}
+                       ON {{value}}.contentid = {{content}}.id AND {{value}}.active = 1
+					WHERE objectid={objectid}
+SQL
+		);
 		$sql->setInt( 'objectid', $this->objectid);
 		$row = $sql->getRow();
 
 		if	( count($row) != 0 )
 		{
-			$this->value = $row['value'];
-			$this->size  = $row['size' ];
+			$this->value = $row['file'];
+			$this->size  = $row['size'];
 		}
 
-		if	( $this->storeValueAsBase64 )
+		$storeValueAsBase64 = DB::get()->conf['base64'];
+
+		if	( $storeValueAsBase64 )
 			$this->value = base64_decode( $this->value );
 
 		return $this->value;
@@ -576,18 +590,24 @@ EOF
 		$db = \cms\base\DB::get();
 
 		$sql = $db->sql( 'UPDATE {{file}}'.
-		                ' SET value={value}, '.
-		                '      size={size}   '.
+		                ' SET size={size}   '.
 		                ' WHERE objectid={objectid}' );
 		$sql->setString( 'objectid' ,$this->objectid      );
 		$sql->setInt   ( 'size'     ,strlen($this->value) );
 
-		if	( $this->storeValueAsBase64 )
-			$sql->setString( 'value',base64_encode($this->value) );
-		else
-			$sql->setString( 'value',$this->value );
-
 		$sql->execute();
+
+		$value = new Value();
+		$value->contentid = $this->contentid;
+
+		$storeValueAsBase64 = DB::get()->conf['base64'];
+
+		if	( $storeValueAsBase64 )
+			$value->file = base64_encode($this->value);
+		else
+			$value->file = $this->value;
+
+		$value->persist();
 	}
 
 
@@ -607,13 +627,19 @@ EOF
 	{
 		parent::add();
 
+		// Getting the content id
+		$content = new Content();
+		$content->persist();
+		$this->contentid = $content->getId();
+
 		$sql = Db::sql('SELECT MAX(id) FROM {{file}}');
 		$this->fileid = intval($sql->getOne())+1;
 
 		$sql = Db::sql('INSERT INTO {{file}}'.
-		               ' (id,objectid,extension,size,value)'.
-		               " VALUES( {fileid},{objectid},{extension},0,'' )" );
+		               ' (id,contentid,objectid,extension,size)'.
+		               " VALUES( {fileid},{contentid},{objectid},{extension},0 )" );
 		$sql->setInt   ('fileid'   ,$this->fileid        );
+		$sql->setInt   ('contentid',$this->contentid     );
 		$sql->setInt   ('objectid' ,$this->objectid      );
 		$sql->setString('extension',$this->extension     );
 
@@ -695,4 +721,3 @@ SQL
 
 }
 
-?>

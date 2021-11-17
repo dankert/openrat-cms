@@ -95,7 +95,11 @@ class PageGenerator extends BaseGenerator
 		},$page->getElements() );
 
 		$templatemodel = new TemplateModel( $template->templateid, $this->context->modelId );
-		$templatemodel->load();
+		if   ( $this->context->scheme == Producer::SCHEME_PREVIEW )
+			$templatemodel->load();
+		else
+			$templatemodel->loadForPublic();
+
 		$src = $templatemodel->src;
 
 		$data = array();
