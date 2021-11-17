@@ -4,6 +4,7 @@ namespace template_engine\components\html;
 
 use cms\action\RequestParams;
 use template_engine\element\Element;
+use template_engine\engine\TemplateContext;
 
 /**
  * Base class for all components.
@@ -30,9 +31,9 @@ abstract class Component
 	}
 
     /**
-     * @var RequestParams
+     * @var TemplateContext
      */
-    public $request;
+    public $context;
 
 	/**
 	 * @var Element

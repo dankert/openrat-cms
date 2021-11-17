@@ -56,13 +56,13 @@ class FormComponent extends Component
 	public function createElement()
 	{
 		if   ( ! $this->action )
-			$this->action = $this->request->action;
+			$this->action = $this->context->action;
 
 		if   ( ! $this->subaction )
-			$this->subaction = $this->request->method;
+			$this->subaction = $this->context->method;
 
 		if   ( ! $this->id )
-			$this->id = $this->request->id;
+			$this->id = $this->context->id;
 
 		$form = new CMSElement('form');
 

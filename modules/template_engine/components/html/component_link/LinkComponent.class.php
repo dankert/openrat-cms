@@ -131,8 +131,8 @@ class LinkComponent extends Component
 				// Aufpassen: Keine doppelten Hochkommas, keine Zeilenumbrüche.
 				$data = array();
 				
-				$data['action'   ] = (!empty($this->action   ))?$this->action   :$this->request->action;
-				$data['subaction'] = (!empty($this->subaction))?$this->subaction:$this->request->method;
+				$data['action'   ] = (!empty($this->action   ))?$this->action   :$this->context->action;
+				$data['subaction'] = (!empty($this->subaction))?$this->subaction:$this->context->method;
 				$data['id'       ] = (!empty($this->id       ))?$this->id       :'';
 				$data[RequestParams::PARAM_TOKEN] = '${_token}';
 

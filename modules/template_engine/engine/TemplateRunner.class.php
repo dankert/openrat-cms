@@ -20,11 +20,6 @@ use template_engine\components\html\NativeHtmlComponent;
 class TemplateRunner
 {
 	/**
-	 * @var \cms\action\RequestParams
-	 */
-	public $request;
-
-	/**
 	 * Executes the required template and writes the output to standard-out..
 	 *
 	 * @param $templateFile string filename of template

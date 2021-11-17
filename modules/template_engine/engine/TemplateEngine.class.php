@@ -34,7 +34,7 @@ class TemplateEngine
 	public $renderType = 'html';
 
 	public $config = array();
-	public $request;
+	public $context;
 
 	private $srcFilename;
 
@@ -156,7 +156,7 @@ class TemplateEngine
 		/* @var $component Component */
 		$component = new $className();
 		$component->setDepth($depth+1);
-		$component->request = $this->request;
+		$component->context = $this->context;
 
 		foreach ($attributes as $attribute)
 		{

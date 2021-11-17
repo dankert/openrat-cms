@@ -115,7 +115,7 @@ class UI
             header('X-OR-Template: '.$templateFile);
 
         $engine = new TemplateRunner();
-        $engine->request = $request;
+        //$engine->request = $request;
         $engine->executeTemplate( $templateFile, $outputData );
     }
 

@@ -11,6 +11,7 @@ ini_set('display_startup_errors', 1);
 
 use cms\base\Startup;
 use template_engine\AppInfo;
+use template_engine\engine\TemplateContext;
 use template_engine\engine\TemplateEngine;
 use util\FileUtils;
 
@@ -48,10 +49,10 @@ foreach(FileUtils::readDir( $searchDir ) as $action )
 
             // We are creating a fake request, because the template compiler needs to know
 			// the action and subaction in which it will be executed.
-            $fakeRequest = new \cms\action\RequestParams();
-            $fakeRequest->action = $action;
-            $fakeRequest->method = $method;
-            $engine->request = $fakeRequest;
+            $context = new TemplateContext();
+            $context->action = $action;
+            $context->method = $method;
+            $engine->context = $context;
 
             echo "\t\tcompiling $templateFile\n\t\t       to $outFile\n";
 
