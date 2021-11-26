@@ -42,7 +42,7 @@ class DBVersion000030 extends DbVersion
 
 			$stmt = $db->sql('INSERT INTO '.$valueTable->getSqlName().' (id,contentid,active,publish,text,lastchange_date) VALUES('.$valueid.','.$contentid.',1,1,{text},{time})');
 			$stmt->setString( 'text', $row['text'] );
-			$stmt->setInt   ( 'time', Startup::getStartTime() );
+			$stmt->setInt   ( 'time', 0 );
 			$stmt->execute();
 
 			$stmt = $db->sql('UPDATE '.$templateModelTable->getSqlName().' SET contentid='.$contentid.' WHERE id='.$row['id']);
