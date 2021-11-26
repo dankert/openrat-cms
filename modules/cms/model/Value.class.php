@@ -228,7 +228,7 @@ SQL
 	{
 		$stmt = Db::sql( <<<SQL
            SELECT * FROM {{value}}
-        	WHERE id = {{valueid}}
+        	WHERE id = {valueid}
 SQL
 		);
 		$stmt->setInt( 'valueid'   ,$valueid  );

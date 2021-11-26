@@ -1,0 +1,102 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form method="get" subaction="diff" label="${message:compare}" cancel="false" visible="true">
+		<list list="${models}" value="model">
+
+			<group collapsible="true" title="${message:language}: ${language.name}">
+
+				<table>
+					<row header="true">
+
+						<column class="table-column-action" colspan="2">
+							<text value="${message:COMPARE}"/>
+						</column>
+						<column class="table-column-auto">
+							<text value="${message:VALUE}"/>
+						</column>
+						<column class="-visible-on-desktop,table-column-date">
+							<text  class="" value="${message:DATE}"/>
+						</column>
+						<column class="-visible-on-desktop,table-column-user">
+							<text  class="" value="${message:USER}"/>
+						</column>
+						<column class="table-column-action" >
+							<text value="${message:STATE}"/>
+						</column>
+						<column class="table-column-action" >
+							<text value="${message:ACTION}"/>
+						</column>
+					</row>
+
+					<if empty="${values}">
+						<row>
+							<column colspan="8">
+								<text value="${message:NOT_FOUND}"/>
+							</column>
+						</row>
+					</if>
+					<list list="${values}" extract="true">
+						<row class="data">
+							<column class="table-column-action">
+								<if true="${comparable}">
+									<radio name="compareid" value="${id}"/>
+								</if>
+								<else>
+									<text value=" "/>
+								</else>
+							</column>
+							<column >
+								<if true="${comparable}">
+									<radio name="withid" value="${id}"/>
+								</if>
+								<else>
+									<text value=" "/>
+								</else>
+							</column>
+							<column >
+								<text value="${text}" title="${text}"/>
+							</column>
+							<column class="-visible-on-desktop">
+								<date date="${date}"/>
+							</column>
+							<column class="-visible-on-desktop">
+								<text value="${user}"/>
+							</column>
+
+							<!-- State -->
+							<column >
+								<if true="${publish}">
+									<image symbol="status-released" title="${message:PAGEELEMENT_RELEASED}"/>
+								</if>
+								<if true="${active}">
+									<image symbol="status-active" title="${message:active}"/>
+								</if>
+							</column>
+
+							<!-- Actions -->
+							<column >
+								<if true="${releasable}">
+									<link type="post" subaction="release" var1="valueid" value1="${id}"
+										  id="${objectid}" title="${message:RELEASE_DESC}">
+										<image method="release"/>
+									</link>
+								</if>
+								<if true="${usable}">
+									<link clickable="true" type="post" subaction="restore" var1="valueid" value1="${id}"
+										  id="${objectid}" title="${message:RESTORE_DESC}">
+										<image method="restore"/>
+									</link>
+
+									<link clickable="true" type="dialog" subaction="value" var1="valueid" value1="${id}"
+										  id="${objectid}" title="${message:edit}">
+										<image method="edit"/>
+									</link>
+								</if>
+							</column>
+						</row>
+					</list>
+				</table>
+			</group>
+		</list>
+	</form>
+</output>

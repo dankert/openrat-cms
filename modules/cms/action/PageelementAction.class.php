@@ -674,11 +674,12 @@ class PageelementAction extends BaseAction
 	 * Textual representation of a value.
 	 *
 	 * @param Value $value
+	 * @param int $elementTypeId
 	 * @return string
 	 */
-	protected function calculateValue(Value $value)
+	protected function calculateValue(Value $value, $elementTypeId = 0)
 	{
-		switch( $value->element->typeid ) {
+		switch( $elementTypeId ) {
 			case Element::ELEMENT_TYPE_DATE:
 				if   ( ! $value->date )
 					return '';

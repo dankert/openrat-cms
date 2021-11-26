@@ -28,7 +28,7 @@ class PageelementAdvancedAction extends PageelementAction implements Method {
             $languages[$languageId] = array(
                 'languageid'   => $languageId,
                 'languagename' => $languageName,
-				'text'         => $this->calculateValue( $this->value ),
+				'text'         => $this->calculateValue($this->value, 0),
                 'number'       => $this->value->number,
                 'date'         => $this->value->date,
                 'linkObjectId' => $this->value->linkToObjectId,

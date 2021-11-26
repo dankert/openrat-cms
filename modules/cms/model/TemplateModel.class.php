@@ -212,5 +212,12 @@ SQL
 	}
 
 
+	/**
+	 * @return int
+	 */
+	public function getContentid()
+	{
+		return $this->contentid;
+	}
 }
 

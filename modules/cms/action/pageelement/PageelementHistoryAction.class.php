@@ -11,21 +11,7 @@ class PageelementHistoryAction extends PageelementAction implements Method {
     public function view() {
 
         $this->page->load();
-
-
-		$pageContent = new PageContent();
-		$pageContent->languageid = $this->page->languageid;
-		$pageContent->elementId  = &$this->element->elementid;
-		$pageContent->pageId     = $this->page->pageid;
-		$pageContent->load();
-		$this->value->contentid = $pageContent->contentId;
-
-		$this->value->objectid   = $this->page->objectid;
-		$this->value->pageid     = $this->page->pageid;
-		$this->value->page       = $this->page;
-		$this->value->element    = &$this->element;
-		$this->value->elementid  = $this->element->elementid;
-		$this->value->element->load();
+        $this->element->load();
 
 		$languages = array();
 
@@ -37,11 +23,13 @@ class PageelementHistoryAction extends PageelementAction implements Method {
 				'values' => [],
 			];
 
-			$value = clone $this->value; // do not overwrite the value
-			$value->languageid = $languageId;
+			$pageContent = new PageContent();
+			$pageContent->languageid = $languageId;
+			$pageContent->elementId  = $this->element->elementid;
+			$pageContent->pageId     = $this->page->pageid;
+			$pageContent->load();
 
-			/** @var Value $value */
-			$content = new Content( $this->value->contentid );
+			$content = new Content( $pageContent->contentId );
 
 			foreach($content->getVersionList() as $valueId) {
 
@@ -49,7 +37,7 @@ class PageelementHistoryAction extends PageelementAction implements Method {
 				$value->loadWithId( $valueId );
 
 				$language['values'][] = [
-					'text'       => $this->calculateValue( $value ),
+					'text'       => $this->calculateValue($value, $this->element->typeid ),
 					'active'     => $value->active,
 					'publish'    => $value->publish,
 					'user'       => $value->lastchangeUserName,

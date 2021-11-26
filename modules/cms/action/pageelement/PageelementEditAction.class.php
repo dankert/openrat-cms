@@ -28,7 +28,7 @@ class PageelementEditAction extends PageelementAction implements Method {
             $languages[$languageId] = array(
                 'languageid'   => $languageId,
                 'languagename' => $languageName,
-                'text'         => $this->calculateValue( $value ),
+                'text'         => $this->calculateValue($value, 0),
                 'number'       => $value->number,
                 'date'         => $value->date,
                 'linkObjectId' => $value->linkToObjectId,
