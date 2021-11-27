@@ -81,8 +81,14 @@
                         <?php $if9=($publish); if($if9) {  ?>
                           <i title="<?php echo O::escapeHtml(''.@O::lang('PAGEELEMENT_RELEASED').'') ?>" class="<?php echo O::escapeHtml('or-image-icon or-image-icon--status-released') ?>"><?php echo O::escapeHtml('') ?></i>
                          <?php } ?>
+                        <?php if(!$if9) {  ?>
+                          <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--blank') ?>"><?php echo O::escapeHtml('') ?></i>
+                         <?php } ?>
                         <?php $if9=($active); if($if9) {  ?>
                           <i title="<?php echo O::escapeHtml(''.@O::lang('active').'') ?>" class="<?php echo O::escapeHtml('or-image-icon or-image-icon--status-active') ?>"><?php echo O::escapeHtml('') ?></i>
+                         <?php } ?>
+                        <?php if(!$if9) {  ?>
+                          <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--blank') ?>"><?php echo O::escapeHtml('') ?></i>
                          <?php } ?>
                       </td>
                       <td><?php echo O::escapeHtml('') ?>
@@ -90,6 +96,9 @@
                           <a title="<?php echo O::escapeHtml(''.@O::lang('RELEASE_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('post') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('release') ?>" data-id="<?php echo O::escapeHtml(''.@$objectid.'') ?>" data-extra-valueid="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('{&quot;valueid&quot;:&quot;'.@$id.'&quot;}') ?>" data-data="<?php echo O::escapeHtml('{"action":"pageelement","subaction":"release","id":"'.@$objectid.'","token":"'.@$_token.'","valueid":"'.@$id.'","none":0}') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
                             <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-release') ?>"><?php echo O::escapeHtml('') ?></i>
                           </a>
+                         <?php } ?>
+                        <?php if(!$if9) {  ?>
+                          <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--blank') ?>"><?php echo O::escapeHtml('') ?></i>
                          <?php } ?>
                         <?php $if9=($usable); if($if9) {  ?>
                           <a title="<?php echo O::escapeHtml(''.@O::lang('RESTORE_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('post') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('restore') ?>" data-id="<?php echo O::escapeHtml(''.@$objectid.'') ?>" data-extra-valueid="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('{&quot;valueid&quot;:&quot;'.@$id.'&quot;}') ?>" data-data="<?php echo O::escapeHtml('{"action":"pageelement","subaction":"restore","id":"'.@$objectid.'","token":"'.@$_token.'","valueid":"'.@$id.'","none":0}') ?>" class="<?php echo O::escapeHtml('or-link or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>

@@ -8,10 +8,6 @@
 				<table>
 					<row header="true">
 
-						<!--
-						<column class="help">
-							<text value="${message:NR}"/>
-						</column>-->
 						<column class="table-column-action" colspan="2">
 							<text value="${message:COMPARE}"/>
 						</column>
@@ -42,10 +38,6 @@
 					</if>
 					<list list="${values}" extract="true">
 						<row class="data">
-							<!--
-							<column>
-								<text value="${lfd_nr}"/>
-							</column>-->
 							<column class="table-column-action">
 								<if true="${comparable}">
 									<radio name="compareid" value="${id}"/>
@@ -77,9 +69,17 @@
 								<if true="${publish}">
 									<image symbol="status-released" title="${message:PAGEELEMENT_RELEASED}"/>
 								</if>
+								<else>
+									<image symbol="blank" />
+								</else>
+
 								<if true="${active}">
 									<image symbol="status-active" title="${message:active}"/>
 								</if>
+								<else>
+									<image symbol="blank" />
+								</else>
+
 							</column>
 
 							<!-- Actions -->
@@ -90,6 +90,10 @@
 										<image method="release"/>
 									</link>
 								</if>
+								<else>
+									<image symbol="blank" />
+								</else>
+
 								<if true="${usable}">
 									<link clickable="true" type="post" subaction="restore" var1="valueid" value1="${id}"
 										  id="${objectid}" title="${message:RESTORE_DESC}">

@@ -68,9 +68,17 @@
 								<if true="${publish}">
 									<image symbol="status-released" title="${message:PAGEELEMENT_RELEASED}"/>
 								</if>
+								<else>
+									<image symbol="blank" />
+								</else>
+
 								<if true="${active}">
 									<image symbol="status-active" title="${message:active}"/>
 								</if>
+								<else>
+									<image symbol="blank" />
+								</else>
+
 							</column>
 
 							<!-- Actions -->
@@ -81,6 +89,10 @@
 										<image method="release"/>
 									</link>
 								</if>
+								<else>
+									<image symbol="blank" />
+								</else>
+
 								<if false="${active}">
 									<link clickable="true" type="post" subaction="restore" var1="valueid" value1="${id}"
 										  title="${message:RESTORE_DESC}">
