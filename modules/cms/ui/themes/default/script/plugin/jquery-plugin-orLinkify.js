@@ -66,6 +66,10 @@ export default function( options )
 				Object.keys( params ).forEach( (key) => {
 					formData.append( key, params[key] );
 				} );
+				if   (!formData.get('id') )
+					formData.set('id',Workbench.state.id);
+				if   (!formData.get('action') )
+					formData.set('action',Workbench.state.action);
 
 				// Submit the form.
 				api.sendData( formData );
