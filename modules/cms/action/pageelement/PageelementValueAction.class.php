@@ -32,7 +32,10 @@ class PageelementValueAction extends PageelementAction implements Method {
 
 
 		$valueId =$this->request->getNumber('valueid');
+
 		if   ( $valueId ) {
+			$this->ensureValueIdIsInAnyContent( $valueId );
+
 			$this->value->valueid = $valueId;
 			$this->value->loadWithId();
 		}

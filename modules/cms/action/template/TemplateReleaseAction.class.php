@@ -1,38 +1,37 @@
 <?php
-namespace cms\action\pageelement;
+namespace cms\action\template;
+use cms\action\ContentAction;
 use cms\action\Method;
 use cms\action\PageelementAction;
+use cms\action\TemplateAction;
 use cms\model\Permission;
 use cms\model\Value;
 use language\Messages;
 use LogicException;
 use util\exception\SecurityException;
 
-class PageelementReleaseAction extends PageelementAction implements Method {
+class TemplateReleaseAction extends TemplateAction implements Method {
 
-
-	protected function getRequiredPagePermission()
-	{
-		return Permission::ACL_RELEASE;
-	}
 
     public function view() {
     }
+
+
     public function post() {
 
 		$valueId = $this->request->getRequiredNumber('valueid');
 
-		$this->ensureValueIdIsInAnyContent( $valueId );
+		$this->ensureValueIdIsInAnyTemplate( $valueId );
 
 		$value = new Value();
 		$value->valueid = $valueId;
 		$value->loadWithId( $value->valueid );
 
-		// Restore value.
+		// Publish value.
 		$value->valueid = null;
 		$value->publish = true;
 		$value->persist();
 
-		$this->addNoticeFor( $this->template,Messages::PAGEELEMENT_RELEASED );
+        $this->addNoticeFor($this->template, Messages::PAGEELEMENT_RELEASED );
     }
 }

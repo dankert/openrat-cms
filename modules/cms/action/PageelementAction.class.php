@@ -10,6 +10,8 @@ use cms\generator\Publisher;
 use cms\generator\PublishOrder;
 use cms\generator\ValueContext;
 use cms\generator\ValueGenerator;
+use cms\model\Content;
+use cms\model\PageContent;
 use cms\model\Permission;
 use cms\model\BaseObject;
 use cms\model\Element;
@@ -720,6 +722,41 @@ class PageelementAction extends BaseAction
 	public function checkAccess() {
 		if   ( ! $this->page->hasRight( Permission::ACL_READ )  )
 			throw new SecurityException();
+	}
+
+
+
+	protected function getContents()
+	{
+		$this->page->load();
+		$this->element->load();
+
+		$contents = array();
+
+		foreach ($this->page->getProject()->getLanguages() as $languageId => $languageName) {
+			$pageContent = new PageContent();
+			$pageContent->languageid = $languageId;
+			$pageContent->elementId = $this->element->elementid;
+			$pageContent->pageId = $this->page->pageid;
+			$pageContent->load();
+
+			$contents[] = new Content($pageContent->contentId);
+		}
+
+		return $contents;
+	}
+
+
+
+
+	protected function ensureValueIdIsInAnyContent( $valueId )
+	{
+		foreach ($this->getContents() as $content ) {
+			if   ( in_array( $valueId,$content->getVersionList() ) )
+				return;
+		}
+
+		throw new SecurityException('valueId is not valid in this context');
 	}
 
 }

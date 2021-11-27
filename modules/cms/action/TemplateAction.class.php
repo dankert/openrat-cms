@@ -3,6 +3,7 @@
 namespace cms\action;
 
 namespace cms\action;
+use cms\model\Content;
 use cms\model\Folder;
 use cms\model\Permission;
 use cms\model\Element;
@@ -10,6 +11,7 @@ use cms\model\Page;
 use cms\model\Project;
 use cms\model\Template;
 use cms\model\TemplateModel;
+use cms\model\Value;
 use language\Messages;
 use util\exception\SecurityException;
 use util\exception\ValidationException;
@@ -90,4 +92,36 @@ class TemplateAction extends BaseAction
 			throw new SecurityException();
 	}
 
+
+	protected function getTemplateModels()
+	{
+		$project = new Project($this->template->projectid);
+		$versions = [];
+
+		$templatemodels = [];
+		foreach ($project->getModels() as $modelId => $modelName) {
+			$templatemodels[] = new TemplateModel($this->template->templateid, $modelId);
+		}
+
+		return $templatemodels;
+	}
+
+
+
+	protected function ensureValueIdIsInAnyTemplate( $valueId ) {
+
+		$versions = [];
+
+		foreach( $this->getTemplateModels() as $templateModel )
+		{
+			$templateModel->load();
+
+			$content = new Content( $templateModel->getContentid() );
+
+			$versions = array_merge( $versions, $content->getVersionList() );
+		}
+
+		if   ( ! in_array( $valueId, $versions ))
+			throw new SecurityException( 'value-id is not contained in the version list of this file' );
+	}
 }

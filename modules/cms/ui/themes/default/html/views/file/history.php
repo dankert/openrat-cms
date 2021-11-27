@@ -20,12 +20,6 @@
             <div class="<?php echo O::escapeHtml('or-table-area') ?>"><?php echo O::escapeHtml('') ?>
               <table class="<?php echo O::escapeHtml('or-table') ?>"><?php echo O::escapeHtml('') ?>
                 <tr class="<?php echo O::escapeHtml('or-table-header') ?>"><?php echo O::escapeHtml('') ?>
-                  <td colspan="<?php echo O::escapeHtml('2') ?>" class="<?php echo O::escapeHtml('or-table-column-action') ?>"><?php echo O::escapeHtml('') ?>
-                    <span><?php echo O::escapeHtml(''.@O::lang('COMPARE').'') ?></span>
-                  </td>
-                  <td class="<?php echo O::escapeHtml('or-table-column-auto') ?>"><?php echo O::escapeHtml('') ?>
-                    <span><?php echo O::escapeHtml(''.@O::lang('VALUE').'') ?></span>
-                  </td>
                   <td class="<?php echo O::escapeHtml('or--visible-on-desktop or-table-column-date') ?>"><?php echo O::escapeHtml('') ?>
                     <span><?php echo O::escapeHtml(''.@O::lang('DATE').'') ?></span>
                   </td>
@@ -48,25 +42,6 @@
                  <?php } ?>
                 <?php foreach((array)@$values as $list_key=>$list_value) { extract($list_value); ?>
                   <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
-                    <td class="<?php echo O::escapeHtml('or-table-column-action') ?>"><?php echo O::escapeHtml('') ?>
-                      <?php $if8=($comparable); if($if8) {  ?>
-                        <input type="<?php echo O::escapeHtml('radio') ?>" name="<?php echo O::escapeHtml('compareid') ?>" value="<?php echo O::escapeHtml(''.@$id.'') ?>" <?php if(@$compareid=='${id}'){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-radio') ?>" /><?php echo O::escapeHtml('') ?>
-                       <?php } ?>
-                      <?php if(!$if8) {  ?>
-                        <span><?php echo O::escapeHtml(' ') ?></span>
-                       <?php } ?>
-                    </td>
-                    <td><?php echo O::escapeHtml('') ?>
-                      <?php $if8=($comparable); if($if8) {  ?>
-                        <input type="<?php echo O::escapeHtml('radio') ?>" name="<?php echo O::escapeHtml('withid') ?>" value="<?php echo O::escapeHtml(''.@$id.'') ?>" <?php if(@$withid=='${id}'){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-radio') ?>" /><?php echo O::escapeHtml('') ?>
-                       <?php } ?>
-                      <?php if(!$if8) {  ?>
-                        <span><?php echo O::escapeHtml(' ') ?></span>
-                       <?php } ?>
-                    </td>
-                    <td><?php echo O::escapeHtml('') ?>
-                      <span title="<?php echo O::escapeHtml(''.@$text.'') ?>"><?php echo O::escapeHtml(''.@$text.'') ?></span>
-                    </td>
                     <td class="<?php echo O::escapeHtml('or--visible-on-desktop') ?>"><?php echo O::escapeHtml('') ?>
                       <?php include_once( 'modules/template_engine/components/html/component_date/component-date.php'); { component_date($date); ?>
                        <?php } ?>

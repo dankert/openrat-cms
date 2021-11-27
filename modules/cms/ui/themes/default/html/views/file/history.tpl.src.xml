@@ -6,12 +6,6 @@
 			<table>
 				<row header="true">
 
-					<column class="table-column-action" colspan="2">
-						<text value="${message:COMPARE}"/>
-					</column>
-					<column class="table-column-auto">
-						<text value="${message:VALUE}"/>
-					</column>
 					<column class="-visible-on-desktop,table-column-date">
 						<text class="" value="${message:DATE}"/>
 					</column>
@@ -35,25 +29,6 @@
 				</if>
 				<list list="${values}" extract="true">
 					<row class="data">
-						<column class="table-column-action">
-							<if true="${comparable}">
-								<radio name="compareid" value="${id}"/>
-							</if>
-							<else>
-								<text value=" "/>
-							</else>
-						</column>
-						<column>
-							<if true="${comparable}">
-								<radio name="withid" value="${id}"/>
-							</if>
-							<else>
-								<text value=" "/>
-							</else>
-						</column>
-						<column>
-							<text value="${text}" title="${text}"/>
-						</column>
 						<column class="-visible-on-desktop">
 							<date date="${date}"/>
 						</column>

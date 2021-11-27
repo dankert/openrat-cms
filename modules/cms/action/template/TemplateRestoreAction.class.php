@@ -1,28 +1,34 @@
 <?php
-namespace cms\action\pageelement;
+namespace cms\action\template;
 use cms\action\Action;
 use cms\action\Method;
 use cms\action\PageelementAction;
+use cms\action\TemplateAction;
+use cms\model\Content;
 use cms\model\Element;
 use cms\model\Permission;
+use cms\model\Project;
+use cms\model\TemplateModel;
 use cms\model\Value;
 use language\Messages;
+use util\exception\SecurityException;
 
-class PageelementRestoreAction extends PageelementAction implements Method {
+class TemplateRestoreAction extends TemplateAction implements Method {
 
-	protected function getRequiredPagePermission()
+	public function getRequiredPermission()
 	{
 		return Permission::ACL_WRITE;
 	}
 
 
-    public function view() {
-    }
+	public function view() {
+	}
 
-    public function post() {
+	public function post() {
+
 		$valueId = $this->request->getRequiredNumber('valueid');
 
-		$this->ensureValueIdIsInAnyContent( $valueId );
+		$this->ensureValueIdIsInAnyTemplate( $valueId );
 
 		$value = new Value();
 		$value->valueid = $valueId;
@@ -34,6 +40,5 @@ class PageelementRestoreAction extends PageelementAction implements Method {
 		$value->persist();
 
 		$this->addNoticeFor( $this->template,Messages::PAGEELEMENT_USE_FROM_ARCHIVE );
-
     }
 }
