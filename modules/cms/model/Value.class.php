@@ -39,12 +39,14 @@ class Value extends ModelBase
 	/**
 	 * Seiten-Objekt der ?bergeordneten Seite
 	 * @type Page
+	 * @deprecated
 	 */
 	var $page;
 	
 	/**
 	 * Seiten-Id der uebergeordneten Seite
 	 * @type Integer
+	 * @deprecated
 	 */
 	var $pageid;
 	
@@ -76,12 +78,14 @@ class Value extends ModelBase
 	/**
 	 * Element-Objekt
 	 * @type Element
+	 * @deprecated
 	 */
 	var $element;
 	
 	/**
 	 * Element-Id
 	 * @type Integer
+	 * @deprecated
 	 */
 	var $elementid;
 	
@@ -141,6 +145,7 @@ class Value extends ModelBase
     /**
      * Sprach-Id.
      * @var int
+	 * @deprecated
      */
     public $languageid;
 
@@ -324,7 +329,7 @@ SQL
 		$stmt->setBoolean( 'publish'          ,$this->publish );
 		$stmt->setInt    ( 'lastchange_date'  ,Startup::now()         );
 		$user = \util\Session::getUser();
-		$stmt->setInt    ( 'lastchange_userid',$user->userid  );
+		$stmt->setIntOrNull( 'lastchange_userid',$user?$user->userid:null ); // user may be null, if a guest is saving.
 
 		$stmt->execute();
 

@@ -252,6 +252,19 @@ abstract class Action
 
 
 	/**
+	 * Returns the current user id if there is one.
+	 * @return int|null
+	 */
+	protected function getCurrentUserId() {
+
+		$user = $this->getUserFromSession();
+		if   ( $user )
+			return $user->userid;
+		else
+			return null;
+	}
+
+	/**
 	 * Using the HTTP-Caching, the "Conditional GET".
 	 *
 	 * The HTTP-header "Last-Modified" is set.

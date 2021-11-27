@@ -2,6 +2,7 @@
 namespace cms\action\pageelement;
 use cms\action\Method;
 use cms\action\PageelementAction;
+use cms\base\Startup;
 use cms\model\PageContent;
 use cms\model\Permission;
 use cms\model\Page;
@@ -15,21 +16,10 @@ class PageelementValueAction extends PageelementAction implements Method {
 
 	public function view() {
 
-		$pageContent = new PageContent();
-		$pageContent->languageid = $this->page->languageid;
-		$pageContent->elementId  = &$this->element->elementid;
-		$pageContent->pageId     = $this->page->pageid;
-		$pageContent->load();
-		$this->value->contentid = $pageContent->contentId;
+		$this->element->load();
+		$this->pageContent->load();
 
-		$this->value->languageid = $this->page->languageid;
-		$this->value->objectid   = $this->page->objectid;
-		$this->value->pageid     = $this->page->pageid;
-		$this->value->element = &$this->element;
-		$this->value->elementid = &$this->element->elementid;
-		$this->value->element->load();
-		$this->value->publish = false;
-
+		$this->value->contentid = $this->pageContent->contentId;
 
 		$valueId =$this->request->getNumber('valueid');
 
@@ -43,47 +33,41 @@ class PageelementValueAction extends PageelementAction implements Method {
 			$this->value->load();
 		}
 
-		$this->setTemplateVar('name'     ,$this->value->element->name     );
-		$this->setTemplateVar('desc'     ,$this->value->element->desc     );
-		$this->setTemplateVar('elementid',$this->value->element->elementid);
-		$this->setTemplateVar('languageid',$this->value->languageid       );
-		$this->setTemplateVar('type'     ,$this->value->element->getTypeName() );
-		$this->setTemplateVar('value_time',time() );
+		$this->setTemplateVar('name'      ,$this->element->name     );
+		$this->setTemplateVar('desc'      ,$this->element->desc     );
+		$this->setTemplateVar('elementid' ,$this->element->elementid);
+		$this->setTemplateVar('languageid',$this->pageContent->languageid );
+		$this->setTemplateVar('type'      ,$this->element->getTypeName() );
+		$this->setTemplateVar('value_time',Startup::getStartTime() );
 
+		$this->setTemplateVar( 'objectid' ,$this->page->objectid );
 
-		$this->value->page             = new Page( $this->page->objectid );
-		$this->value->page->languageid = $this->value->languageid;
-		$this->value->page->load();
+		if	( $this->page->hasRight(Permission::ACL_RELEASE) )
+			$this->setTemplateVar( 'release',true  );
 
-		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
+		if	( $this->page->hasRight(Permission::ACL_PUBLISH) )
+			$this->setTemplateVar( 'publish',false );
 
-		if	( $this->value->page->hasRight(Permission::ACL_RELEASE) )
-		$this->setTemplateVar( 'release',true  );
-		if	( $this->value->page->hasRight(Permission::ACL_PUBLISH) )
-		$this->setTemplateVar( 'publish',false );
+		$methodName = 'edit'.ucfirst($this->element->getTypeName());
 
-		$funktionName = 'edit'.$this->value->element->getTypeName();
+		if	( ! method_exists($this,$methodName) )
+			throw new \LogicException('Method does not exist: PageElementAction#'.$methodName );
 
-		if	( ! method_exists($this,$funktionName) )
-		throw new \LogicException('Method does not exist: PageElementAction#'.$funktionName );
-
-		$this->$funktionName(); // Aufruf der Funktion "edit<Elementtyp>()".
+		$this->$methodName(); // Call method "edit<Elementtyp>()".
     }
 
 
     public function post() {
 
         $this->element->load();
-        $type = $this->element->type;
 
-        if	( empty($type))
-            throw new \InvalidArgumentException('No element type available');
+        $type = $this->element->getTypeName();
 
-        $funktionName = 'save'.$type;
+        $methodName = 'save'.ucfirst($type);
 
-        if  ( !method_exists($this,$funktionName))
-            throw new \InvalidArgumentException('Function not available: '.$funktionName);
+        if  ( !method_exists($this,$methodName))
+            throw new \InvalidArgumentException('Method not available: '.$methodName);
 
-        $this->$funktionName(); // Aufruf Methode "save<ElementTyp>()"
+        $this->$methodName(); // Call method "save<ElementType>()"
     }
 }

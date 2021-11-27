@@ -24,6 +24,7 @@ use cms\model\User;
 use cms\model\Value;
 use language\Messages;
 use LogicException;
+use util\exception\ObjectNotFoundException;
 use util\exception\SecurityException;
 use util\exception\ValidationException;
 use util\Html;
@@ -61,19 +62,20 @@ class PageelementAction extends BaseAction
 	 * Enthaelt das Seitenobjekt
 	 * @type Page
 	 */
-	var $page;
+	protected $page;
 
 	/**
 	 * Enthaelt das Elementobjekt
 	 * @type Element
 	 */
-	var $element;
+	protected $element;
 
 
 	/**
-	 * @type Pageelement
+	 * @type PageContent
 	 */
-	protected $pageelement;
+	protected $pageContent;
+
 
 
 	/**
@@ -108,18 +110,14 @@ class PageelementAction extends BaseAction
 		else
 		{
 			$pageid    = $this->request->getId();
-			$elementid = $this->request->getNumber('elementid');
+			$elementid = $this->request->getRequiredNumber('elementid');
 		}
 
-		if	( $pageid != 0  )
-		{
-			$this->page = new Page( $pageid );
+		$this->page = new Page( $pageid );
+        $this->page->load();
 
-            if  ( $this->request->has('languageid'))
-                $this->page->languageid = $this->request->getNumber('languageid');
-
-            $this->page->load();
-		}
+        if   ( ! $this->page->isPersistent() )
+        	throw new ObjectNotFoundException("page not found");
 
 		if	( $elementid != 0 )
 		{
@@ -127,7 +125,14 @@ class PageelementAction extends BaseAction
 			$this->element   = new Element( $elementid );
 		}
 
-		$this->pageelement = new Pageelement($id);
+		if  ( $this->request->has('languageid')) {
+
+			$this->pageContent = new PageContent();
+			$this->pageContent->pageId = $this->page->pageid;
+			$this->pageContent->elementId = $this->element->elementid;
+			$this->pageContent->languageid = $this->request->getNumber('languageid');
+			$this->pageContent->load();
+		}
 
 		if   ( ! $this->page->hasRight( $this->getRequiredPagePermission() ) ) {
 			throw new SecurityException('Insufficient permissions for this page' );
@@ -168,7 +173,7 @@ class PageelementAction extends BaseAction
 	 * Verkn�pfung bearbeiten.
 	 *
 	 */
-	protected function editlink()
+	protected function editLink()
 	{
         $project = new Project($this->page->projectid);
 		$this->setTemplateVar('rootfolderid',$project->getRootObjectId() );
@@ -205,7 +210,7 @@ class PageelementAction extends BaseAction
      * Auswahlbox.
      *
      */
-    protected function editselect()
+    protected function editSelect()
     {
         $this->setTemplateVar( 'items',$this->value->element->getSelectItems() );
         $this->setTemplateVar( 'text' ,$this->value->text                      );
@@ -218,9 +223,9 @@ class PageelementAction extends BaseAction
      * Einf�gen-Element.
      *
      */
-    protected function editlist()
+    protected function editList()
     {
-        $this->editinsert();
+        $this->editInsert();
     }
 
 
@@ -229,7 +234,7 @@ class PageelementAction extends BaseAction
      * Einf�gen-Element.
      *
      */
-    protected function editinsert()
+    protected function editInsert()
     {
         // Auswahl ueber alle Elementtypen
         $objects = array();
@@ -273,7 +278,7 @@ class PageelementAction extends BaseAction
      * Zahl bearbeiten.
      *
      */
-    protected function editnumber()
+    protected function editNumber()
     {
         $this->setTemplateVar('number',$this->value->number / pow(10,$this->value->element->decimals) );
     }
@@ -284,7 +289,7 @@ class PageelementAction extends BaseAction
      *
      * Es wird ein Formular erzeugt, mit dem der Benutzer den Inhalt bearbeiten kann.
      */
-    protected function editlongtext()
+    protected function editLongtext()
     {
         if   ( $this->request->has('format') )
             // Individual format from request.
@@ -309,7 +314,7 @@ class PageelementAction extends BaseAction
      *
      * Es wird ein Formular erzeugt, mit dem der Benutzer den Inhalt bearbeiten kann.
      */
-    protected function edittext()
+    protected function editText()
     {
         $this->setTemplateVar( 'text',$this->value->text );
     }
@@ -319,7 +324,7 @@ class PageelementAction extends BaseAction
      *
      * Der Inhalt eines Elementes wird abgespeichert
      */
-    protected function savetext()
+    protected function saveText()
     {
         $value = new Value();
         $value->publisher  = $this->page->publisher;
@@ -357,44 +362,49 @@ class PageelementAction extends BaseAction
      */
     protected function afterSave( $value )
     {
-        $value->page = new Page( $value->objectid );
-        $value->page->load();
-
         // Inhalt sofort freigegeben, wenn
         // - Recht vorhanden
         // - Freigabe gewuenscht
-		$value->publish = $value->page->hasRight( Permission::ACL_RELEASE ) && $this->request->has('release');
+		$value->publish = $this->page->hasRight( Permission::ACL_RELEASE ) && $this->request->has('release');
 
         // Up-To-Date-Check
-        $lastChangeTime = $value->getLastChangeSinceByAnotherUser( $this->request->getText('value_time'), Session::getUser()->userid );
+		$content = new Content( $this->pageContent->contentId );
+        $lastChangeTime = $content->getLastChangeSinceByAnotherUser( $this->request->getText('value_time'), $this->getCurrentUserId() );
+
         if	( $lastChangeTime  )
             $this->addWarningFor( $this->value,Messages::CONCURRENT_VALUE_CHANGE, array('last_change_time'=>date(L::lang('DATE_FORMAT'),$lastChangeTime)));
 
         // Inhalt speichern
+		$value->persist();
 
         // Wenn Inhalt in allen Sprachen gleich ist, dann wird der Inhalt
         // fuer jede Sprache einzeln gespeichert.
-        if	( $value->element->allLanguages )
+        if	( $this->element->allLanguages )
         {
             $project = new Project( $this->page->projectid );
             foreach( $project->getLanguageIds() as $languageid )
             {
-                $value->languageid = $languageid;
-                $value->persist();
+            	if   ( $languageid != $this->pageContent->languageid ) {
+            		$otherPageContent = clone $this->pageContent;
+            		$otherPageContent->languageid = $languageid;
+            		$otherPageContent->contentId = null;
+            		$otherPageContent->load();
+            		if   ( ! $otherPageContent->contentId )
+            			$otherPageContent->persist(); // create pagecontent if it does not exist.
+
+					$otherValue = clone $value;
+					$otherValue->contentid = $otherPageContent->contentId;
+					$otherValue->persist();
+				}
             }
         }
-        else
-        {
-            // sonst nur 1x speichern (fuer die aktuelle Sprache)
-            $value->persist();
-        }
 
-        $this->addNoticeFor( $this->pageelement, Messages::SAVED);
+        $this->addNoticeFor( $this->page, Messages::SAVED);
         
         $this->page->setTimestamp(); // "Letzte Aenderung" setzen
 
         // Falls ausgewaehlt die Seite sofort veroeffentlichen
-        if	( $value->page->hasRight( Permission::ACL_PUBLISH ) && $this->request->has('publish') )
+        if	( $this->page->hasRight( Permission::ACL_PUBLISH ) && $this->request->has('publish') )
         {
 			$this->publishPage();
         }
@@ -406,20 +416,10 @@ class PageelementAction extends BaseAction
      *
      * Der Inhalt eines Elementes wird abgespeichert
      */
-    protected function savelongtext()
+    protected function saveLongtext()
     {
         $value = new Value();
-        $value->languageid = $this->page->languageid;
-        $value->objectid   = $this->page->objectid;
-        $value->publisher  = $this->page->publisher;
-
-        $value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
-
-        if	( !$this->request->has('elementid') )
-            throw new ValidationException('elementid');
-        $value->element = new Element( $this->request->getText('elementid') );
-
-        $value->element->load();
+        $value->contentid = $this->pageContent->contentId;
         $value->load();
 
         if   ( $this->request->has('format') )
@@ -431,7 +431,6 @@ class PageelementAction extends BaseAction
         $value->text           = $this->compactOIDs( $this->request->getRaw('text') );
 
         $this->afterSave($value);
-
     }
 
 
@@ -440,7 +439,7 @@ class PageelementAction extends BaseAction
      *
      * Der Inhalt eines Elementes wird abgespeichert
      */
-    protected function savedate()
+    protected function saveDate()
     {
         $value = new Value();
         $value->languageid = $this->page->languageid;
@@ -472,7 +471,7 @@ class PageelementAction extends BaseAction
      *
      * Der Inhalt eines Elementes wird abgespeichert
      */
-    protected function saveselect()
+    protected function saveSelect()
     {
         $value = new Value();
         $value->languageid = $this->page->languageid;
@@ -499,7 +498,7 @@ class PageelementAction extends BaseAction
      *
      * Der Inhalt eines Elementes wird abgespeichert
      */
-    protected function savelink()
+    protected function saveLink()
     {
         $value = new Value();
         $value->publisher  = $this->page->publisher;
@@ -529,9 +528,9 @@ class PageelementAction extends BaseAction
      *
      * Der Inhalt eines Elementes wird abgespeichert
      */
-    protected function savelist()
+    protected function saveList()
     {
-        $this->saveinsert();
+        $this->saveInsert();
     }
 
 
@@ -541,7 +540,7 @@ class PageelementAction extends BaseAction
      *
      * Der Inhalt eines Elementes wird abgespeichert
      */
-    protected function saveinsert()
+    protected function saveInsert()
     {
         $value = new Value();
         $value->publisher = $this->page->publisher;
@@ -568,7 +567,7 @@ class PageelementAction extends BaseAction
      *
      * Der Inhalt eines Elementes wird abgespeichert
      */
-    protected function savenumber()
+    protected function saveNumber()
     {
         $value = new Value();
         $value->publisher  = $this->page->publisher;
