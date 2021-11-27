@@ -45,10 +45,6 @@ class ObjectAclformAction extends ObjectAction implements Method {
 
 		$permission->objectid = $this->request->getId();
 		
-		// Nachschauen, ob der Benutzer ueberhaupt berechtigt ist, an
-		// diesem Objekt die ACLs zu aendern.
-		$this->checkRight( Permission::ACL_GRANT );
-
 		// Handelt es sich um eine Benutzer- oder Gruppen ACL?
 		switch( $this->request->getText('type') )
 		{

@@ -3,32 +3,6 @@
 namespace cms\model;
 
 use cms\base\DB as Db;
-/**
- * <editor-fold defaultstate="collapsed" desc="license">
- *
- *  OpenRat Content Management System
- *  Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
- *  This program is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU General Public License
- *  as published by the Free Software Foundation; either version 2
- *  of the License, or (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *
- * </editor-fold>
- */
-
-
-
-
-
 
 
 /**
@@ -39,25 +13,75 @@ use cms\base\DB as Db;
  */
 class Permission extends ModelBase
 {
-    // Definition der Berechtigungs-Flags
+	/**
+	 * Permission to read
+	 */
     const ACL_READ          =    1;
+	/**
+	 * Permission to write
+	 */
     const ACL_WRITE         =    2;
+	/**
+	 * Permission to edit the properties
+	 */
     const ACL_PROP          =    4;
+	/**
+	 * Permission to delete
+	 */
     const ACL_DELETE        =    8;
+	/**
+	 * Permission to release
+	 */
     const ACL_RELEASE       =   16;
+	/**
+	 * Permission to publish
+	 */
     const ACL_PUBLISH       =   32;
+	/**
+	 * Permission to create new folders
+	 */
     const ACL_CREATE_FOLDER =   64;
+	/**
+	 * Permission to create files
+	 */
     const ACL_CREATE_FILE   =  128;
+	/**
+	 * Permission to create links and urls
+	 */
     const ACL_CREATE_LINK   =  256;
+	/**
+	 * Permission to create pages
+	 */
     const ACL_CREATE_PAGE   =  512;
+	/**
+	 * Permission to grant permissions
+	 */
     const ACL_GRANT         = 1024;
+	/**
+	 * Permission to transmit permissions
+	 */
     const ACL_TRANSMIT      = 2048;
 
     const ACL_ALL           = 4095;
 
+	/**
+	 * Permission type: User-related permission
+	 */
     const TYPE_USER  = 1;
+
+	/**
+	 * Permission type: Group-related permission
+	 */
     const TYPE_GROUP = 2;
+
+	/**
+	 * Permission type: Permission for authenticated users
+	 */
     const TYPE_AUTH  = 3;
+
+	/**
+	 * Permission type: Permission for non-authenticated users (guests)
+	 */
     const TYPE_GUEST = 4;
 
 	/**
