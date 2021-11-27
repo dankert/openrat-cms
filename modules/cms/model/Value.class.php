@@ -182,6 +182,7 @@ SQL
 
 		if	( $row ) // Wenn Inhalt gefunden
 		{
+			$this->contentid      = $row['contentid' ];
 			$this->text           = $row['text'  ];
 			$this->file           = $row['file'  ];
 			$this->format         = $row['format'];
