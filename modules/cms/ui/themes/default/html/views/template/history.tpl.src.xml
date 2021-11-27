@@ -1,7 +1,7 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form method="get" subaction="diff" label="${message:compare}" cancel="false" visible="true">
-		<list list="${models}" value="model">
+		<list list="${models}" value="model" extract="true">
 
 			<group collapsible="true" title="${message:language}: ${language.name}">
 
@@ -75,21 +75,16 @@
 
 							<!-- Actions -->
 							<column >
-								<if true="${releasable}">
-									<link type="post" subaction="release" var1="valueid" value1="${id}"
-										  id="${objectid}" title="${message:RELEASE_DESC}">
+								<if false="${publish}">
+									<link clickable="true" type="post" subaction="release" var1="valueid" value1="${id}"
+										  title="${message:RELEASE_DESC}">
 										<image method="release"/>
 									</link>
 								</if>
-								<if true="${usable}">
+								<if false="${active}">
 									<link clickable="true" type="post" subaction="restore" var1="valueid" value1="${id}"
-										  id="${objectid}" title="${message:RESTORE_DESC}">
+										  title="${message:RESTORE_DESC}">
 										<image method="restore"/>
-									</link>
-
-									<link clickable="true" type="dialog" subaction="value" var1="valueid" value1="${id}"
-										  id="${objectid}" title="${message:edit}">
-										<image method="edit"/>
 									</link>
 								</if>
 							</column>

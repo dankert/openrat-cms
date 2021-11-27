@@ -6,7 +6,7 @@
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('action') ?>" value="<?php echo O::escapeHtml('template') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('subaction') ?>" value="<?php echo O::escapeHtml('diff') ?>" /><?php echo O::escapeHtml('') ?>
       <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('id') ?>" value="<?php echo O::escapeHtml(''.@$_id.'') ?>" /><?php echo O::escapeHtml('') ?>
-      <?php foreach((array)@$models as $list_key=>$model) {  ?>
+      <?php foreach((array)@$models as $list_key=>$model) { extract($model); ?>
         <section class="<?php echo O::escapeHtml('or-group or-collapsible or-collapsible--is-open or-collapsible--is-visible or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>
           <h2 class="<?php echo O::escapeHtml('or-collapsible-title or-group-title or-collapsible-act-switch') ?>"><?php echo O::escapeHtml('') ?>
             <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-closed or-collapsible--on-closed') ?>"><?php echo O::escapeHtml('') ?></i>
@@ -84,17 +84,14 @@
                          <?php } ?>
                       </td>
                       <td><?php echo O::escapeHtml('') ?>
-                        <?php $if9=($releasable); if($if9) {  ?>
-                          <a title="<?php echo O::escapeHtml(''.@O::lang('RELEASE_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('post') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('release') ?>" data-id="<?php echo O::escapeHtml(''.@$objectid.'') ?>" data-extra-valueid="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('{&quot;valueid&quot;:&quot;'.@$id.'&quot;}') ?>" data-data="<?php echo O::escapeHtml('{"action":"template","subaction":"release","id":"'.@$objectid.'","token":"'.@$_token.'","valueid":"'.@$id.'","none":0}') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
+                        <?php $if9=(!$publish); if($if9) {  ?>
+                          <a title="<?php echo O::escapeHtml(''.@O::lang('RELEASE_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('post') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('release') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-valueid="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('{&quot;valueid&quot;:&quot;'.@$id.'&quot;}') ?>" data-data="<?php echo O::escapeHtml('{"action":"template","subaction":"release","id":"","token":"'.@$_token.'","valueid":"'.@$id.'","none":0}') ?>" class="<?php echo O::escapeHtml('or-link or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
                             <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-release') ?>"><?php echo O::escapeHtml('') ?></i>
                           </a>
                          <?php } ?>
-                        <?php $if9=($usable); if($if9) {  ?>
-                          <a title="<?php echo O::escapeHtml(''.@O::lang('RESTORE_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('post') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('restore') ?>" data-id="<?php echo O::escapeHtml(''.@$objectid.'') ?>" data-extra-valueid="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('{&quot;valueid&quot;:&quot;'.@$id.'&quot;}') ?>" data-data="<?php echo O::escapeHtml('{"action":"template","subaction":"restore","id":"'.@$objectid.'","token":"'.@$_token.'","valueid":"'.@$id.'","none":0}') ?>" class="<?php echo O::escapeHtml('or-link or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
+                        <?php $if9=(!$active); if($if9) {  ?>
+                          <a title="<?php echo O::escapeHtml(''.@O::lang('RESTORE_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('post') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('restore') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-valueid="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('{&quot;valueid&quot;:&quot;'.@$id.'&quot;}') ?>" data-data="<?php echo O::escapeHtml('{"action":"template","subaction":"restore","id":"","token":"'.@$_token.'","valueid":"'.@$id.'","none":0}') ?>" class="<?php echo O::escapeHtml('or-link or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
                             <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-restore') ?>"><?php echo O::escapeHtml('') ?></i>
-                          </a>
-                          <a title="<?php echo O::escapeHtml(''.@O::lang('edit').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('value') ?>" data-id="<?php echo O::escapeHtml(''.@$objectid.'') ?>" data-extra-valueid="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('{&quot;valueid&quot;:&quot;'.@$id.'&quot;}') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
-                            <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-edit') ?>"><?php echo O::escapeHtml('') ?></i>
                           </a>
                          <?php } ?>
                       </td>

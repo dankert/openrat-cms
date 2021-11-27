@@ -54,6 +54,9 @@ class TemplateSrcAction extends TemplateAction implements Method {
     }
 
 
+	/**
+	 * Saving template source.
+	 */
     public function post() {
         $modelId = $this->request->getModelId();
 
@@ -76,6 +79,7 @@ class TemplateSrcAction extends TemplateAction implements Method {
 
 		$templatemodel->src = $newSource;
 		$templatemodel->extension = $this->request->getText('extension');
+		$templatemodel->public    = $this->request->isTrue('release');
 		$templatemodel->persist();
 
 		$this->addNoticeFor($this->template,Messages::SAVED);

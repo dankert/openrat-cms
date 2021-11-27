@@ -38,7 +38,9 @@ class TemplateModel extends ModelBase
 	 */
     private $contentid;
 
-    /**
+    public $public;
+
+	/**
      * TemplateModel constructor.
      * @param $templateid
      * @param $modelid
@@ -58,7 +60,7 @@ class TemplateModel extends ModelBase
 		$db = \cms\base\DB::get();
 
 		$stmt = $db->sql( <<<SQL
-			SELECT {{templatemodel}}.*,{{value}}.text FROM {{templatemodel}}
+			SELECT {{templatemodel}}.*,{{value}}.text,{{value}}.publish FROM {{templatemodel}}
                 LEFT JOIN {{value}}
                        ON {{value}}.contentid = {{templatemodel}}.contentid AND {{value}}.active = 1 
 		            WHERE templateid     = {templateid}
@@ -75,6 +77,7 @@ SQL
 			$this->extension       = $row['extension'];
 			$this->src             = $row['text'     ];
 			$this->contentid       = $row['contentid'];
+			$this->public          = $row['publish'  ];
 		}
 		else
 		{
@@ -123,7 +126,7 @@ SQL
 		$value = new Value();
 		$value->contentid = $this->contentid;
 		$value->text = $this->src;
-		$value->publish = true;
+		$value->publish = $this->public;
 		$value->persist();
 	}
 
