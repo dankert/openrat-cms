@@ -1836,6 +1836,12 @@ ALL:
   en: All
   es: Tous
   fr: Tous
+USERS_AUTHENTICATED:
+  de: Angemeldete Benutzer
+  en: Authenticated users
+USERS_GUESTS:
+  de: Gäste
+  en: Guests
 ALL_LANGUAGES:
   de: Alle Sprachen
   en: All languages

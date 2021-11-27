@@ -374,6 +374,8 @@ public function get() { return [
 'ADD'=>'Hinzufügen',
 'ADMINISTRATION'=>'Administration',
 'ALL'=>'Alle',
+'USERS_AUTHENTICATED'=>'Angemeldete Benutzer',
+'USERS_GUESTS'=>'Gäste',
 'ALL_LANGUAGES'=>'Alle Sprachen',
 'ARCHIVE'=>'Archiv',
 'ARCHIVE_DESC'=>'Alle historischen Inhalte zu diesem Platzhalter.',

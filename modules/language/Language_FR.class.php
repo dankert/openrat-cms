@@ -374,6 +374,8 @@ public function get() { return [
 'ADD'=>'Ajouter',
 'ADMINISTRATION'=>'Administration',
 'ALL'=>'Tous',
+'USERS_AUTHENTICATED'=>'Authenticated users',
+'USERS_GUESTS'=>'Guests',
 'ALL_LANGUAGES'=>'Toutes les langues',
 'ARCHIVE'=>'Archives',
 'ARCHIVE_DESC'=>'All archived values of this element.',

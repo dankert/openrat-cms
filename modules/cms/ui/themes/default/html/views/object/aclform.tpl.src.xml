@@ -2,27 +2,27 @@
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form>
 		<group title="${message:users}">
-			<fieldset class="line" label="">
-				<radio name="type" value="guest" label="${message:GUEST}"/>
+			<fieldset label="">
+				<radio name="type" value="guest" label="${message:USERS_GUESTS}"/>
 			</fieldset>
 
-			<fieldset class="line" label="">
-				<radio name="type" value="all" label="${message:ALL}"/>
+			<fieldset label="">
+				<radio name="type" value="all" label="${message:USERS_AUTHENTICATED}"/>
 			</fieldset>
 
-			<fieldset class="line" label="">
+			<fieldset label="">
 				<radio name="type" value="user" label="${message:USER}"/>
 				<selectbox name="userid" list="users" addempty="true" default=""/>
 			</fieldset>
 			<if present="groups">
-				<fieldset class="line" label="">
+				<fieldset label="">
 					<radio name="type" value="group" label="${message:GROUP}"/>
 					<selectbox name="groupid" list="groups" addempty="true" default=""/>
 				</fieldset>
 			</if>
 		</group>
 		<group title="${message:language}">
-			<fieldset class="line" label="${message:LANGUAGE}">
+			<fieldset label="${message:LANGUAGE}">
 				<selectbox name="languageid" list="languages" default=""/>
 			</fieldset>
 		</group>
@@ -36,7 +36,7 @@
 						</if>
 						<else>
 							<set var="${t}" value="false"/>
-							<checkbox name="${t}" readonly="false" label="${message:acl_${t}}"/>
+							<checkbox name="${t}" readonly="false" label="${message:acl_${t}}" />
 						</else>
 					</part>
 				</list>

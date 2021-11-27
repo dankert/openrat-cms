@@ -27,7 +27,9 @@
             /* Support for IE. */
             font-feature-settings: 'liga';
 
-            &--action {
+          &--blank:after { content: "link"; visibility: hidden; }
+
+          &--action {
 
                 &-el_text:after { content: "spellcheck"; }
                 &-el_longtext:after { content: "view_headline"; }
@@ -94,12 +96,32 @@
                 &-info:after { content: "info"; }
                 &-restore:after { content: "restore"; }
                 &-release:after { content: "check_circle"; }
+                &-login:after { content: "person"; }
+                &-logout:after { content: "person_off"; }
+            }
+
+            &--permission {
+
+              &-read:after { content: "search"; }
+              &-write:after { content: "spellcheck"; }
+              &-prop:after { content: "description"; }
+              &-delete:after { content: "delete"; }
+              &-create_link:after { content: "call_made"; }
+              &-create_page:after { content: "add_box"; }
+              &-create_file:after { content: "save"; }
+              &-create_folder:after { content: "folder_open"; }
+              &-grant:after { content: "https"; }
+              &-transmit:after { content: "perm_data_setting"; }
+              &-publish:after { content: "cloud_upload"; }
+              &-release:after { content: "check_circle"; }
             }
 
             &--status {
 
                 &-released:after { content: "verified_user"; }
                 &-active:after { content: "grade"; }
+                &-authenticated:after { content: "lock_outline"; }
+                &-guest:after { content: "lock_open"; }
             }
 
             &--menu {

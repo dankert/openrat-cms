@@ -333,9 +333,11 @@ class Permission extends ModelBase
 		              'username'     => $this->username,
 		              'groupid'      => $this->groupid,
 		              'groupname'    => $this->groupname,
+		              'name'         => $this->type==self::TYPE_GROUP?$this->groupname:($this->type==self::TYPE_USER?$this->username:''),
 		              'languageid'   => $this->languageid,
 		              'languagename' => $this->languagename,
-		              'objectid'     => $this->objectid );
+		              'objectid'     => $this->objectid,
+		              'type'         => $this->type      );
 
 	}
 

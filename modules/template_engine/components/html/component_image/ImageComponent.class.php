@@ -24,6 +24,7 @@ class ImageComponent extends Component
 	public $size;
 	public $title;
 	public $symbol;
+	public $permission;
 
 	public function createElement()
 	{
@@ -50,6 +51,11 @@ class ImageComponent extends Component
 		{
             $tagName = 'i';
 			$styleClasses = ['image-icon','image-icon--action-'.$this->action];
+		}
+		elseif	( $this->permission )
+		{
+            $tagName = 'i';
+			$styleClasses = ['image-icon','image-icon--permission-'.$this->permission];
 		}
 		elseif	( $this->method )
 		{

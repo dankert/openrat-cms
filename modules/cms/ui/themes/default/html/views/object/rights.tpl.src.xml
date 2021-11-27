@@ -2,18 +2,16 @@
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<table>
 		<row header="true">
-			<column class="table-column-auto">
+			<column header="true" class="table-column-auto">
 				<text value="${message:NAME}"/>
 			</column>
-			<column class="table-column-auto">
+			<column header="true" class="table-column-auto">
 				<text value="${message:LANGUAGE}"/>
 			</column>
-			<list list="${show}" value="t">
-				<column class="table-column-action">
-					<text value="${message:acl_${t}_abbrev}"/>
-				</column>
-			</list>
-			<column>
+			<column header="true" class="table-column-auto">
+				<text value="${message:acl}"/>
+			</column>
+			<column header="true" class="table-column-action">
 				<text value="${message:options}"/>
 			</column>
 		</row>
@@ -28,43 +26,45 @@
 		<list list="${acls}" key="aclid" value="acl" extract="true">
 			<row class="data">
 				<column>
-					<if present="username">
+					<if value="${type}" equals="user">
 						<image action="user"/>
-						<text value="${username}"/>
 					</if>
-					<if present="groupname">
+					<if value="${type}" equals="group">
 						<image action="group"/>
-						<text value="${groupname}"/>
 					</if>
-					<if not="true" present="username">
-						<if not="true" present="groupname">
-							<image action="group"/>
-							<text value="${message:all}"/>
-						</if>
+					<if value="${type}" equals="auth">
+						<image symbol="status-authenticated"/>
 					</if>
+					<if value="${type}" equals="guest">
+						<image symbol="status-guest"/>
+					</if>
+					<text value="${name}"/>
 				</column>
 				<column>
 					<text value="${languagename}"/>
 				</column>
-				<list list="${show}" value="t">
-					<column>
+				<column>
+					<list list="${show}" value="t">
 						<set var="bit" value="${acl}" key="${t}"/>
 						<if true="${bit}">
-							<text value="&amp;check;" escape="false"/>
+							<image permission="${t}" title="${message:acl_${t}}" />
 						</if>
-					</column>
-				</list>
+						<else>
+							<image symbol="blank" />
+						</else>
+					</list>
+				</column>
 				<column class="act-clickable">
 					<link type="post" subaction="delacl" var1="aclid" value1="${aclid}">
-						<text value="${message:DELETE}"/>
+						<image method="delete" title="${message:DELETE}" />
 					</link>
 				</column>
 			</row>
 		</list>
 		<row class="data">
-			<column colspan="99" class="act-clickable">
+			<column colspan="4" class="act-clickable">
 				<link type="dialog" name="${message:menu_aclform}" subaction="aclform">
-					<image method="add"/>
+					<image method="add" />
 					<text value="${message:add}"/>
 				</link>
 			</column>
