@@ -28,7 +28,6 @@ export default class Callback {
 
 }
 
-console.debug("registering callbacks");
 Callback.afterViewLoadedHandler = new Callback();
 Callback.dataChangedHandler     = new Callback();
 Callback.afterNewActionHandler  = new Callback();

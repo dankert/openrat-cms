@@ -1,6 +1,8 @@
 import $ from "../jquery-global.js";
 import Workbench from "../openrat/workbench.js";
 import Dialog    from "../openrat/dialog.js";
+import Form      from "../openrat/form.js";
+import Api       from "../openrat/api.js";
 
 /**
  * JQuery-Plugin, enable clicking on an area.
@@ -53,22 +55,20 @@ export default function( options )
 			 */
 			case 'post':
 
-				// Create a temporary form element.
-				let $form = $('<form />').attr('method','POST').addClass('invisible');
-				$form.data('afterSuccess', $link.data('afterSuccess'));
+				let api = new Api();
+				api.mode = Api.modes.write;
+				let formData = new FormData();
+
 				let params = JSON.parse( $link.attr('data-data')  );
 				params.output = 'json';
 
-				// Add input elements...
-				$.each( params, function(key,value) {
-					let $input = $('<input />').attr('type','hidden').attr('name',key).attr('value',value);
-					$form.append( $input );
+				// Add formular data...
+				Object.keys( params ).forEach( (key) => {
+					formData.append( key, params[key] );
 				} );
 
 				// Submit the form.
-				let form = new Form();
-				form.initOnElement( $form );
-				form.submit();
+				api.sendData( formData );
 
 				break;
 

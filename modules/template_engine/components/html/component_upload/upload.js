@@ -1,5 +1,6 @@
 import Workbench from "../../../../cms/ui/themes/default/script/openrat/workbench.js";
-import $ from  '../../../../cms/ui/themes/default/script/jquery-global.js';
+import Api       from "../../../../cms/ui/themes/default/script/openrat/api.js";
+import $         from "../../../../cms/ui/themes/default/script/jquery-global.js";
 
 export default function (element ) {
 
@@ -54,37 +55,10 @@ Workbench.handleFileUpload = function(form,files)
 	    form_data.append('file'     , f);
 	    form_data.append('action'   ,'folder');
 	    form_data.append('subaction',$(form).data('method'));
-	    form_data.append('output'   ,'json');
 	    form_data.append('token'    ,$(form).find('input[name=token]').val() );
 	    form_data.append('id'       ,$(form).find('input[name=id]'   ).val() );
-	    
-		let notice = new Notice();
-		notice.inProgress();
-		notice.show();
 
-		let url ='./api/';
-		let load = fetch( url, {
-			method: 'POST'
-		} );
-
-		load.then( response => {
-			return response.json();
-		}).then( data => {
-
-				notice.close();
-				let oform = new Form();
-				oform.doResponse(data,"",form);
-			} ).catch( error => {
-
-				notice.close();
-				
-				console.error(error);
-				let notice = new Notice();
-				notice.setStatus('error');
-				notice.msg = 'Upload error';
-				notice.log = error;
-				notice.show();
-			}
-		);
+	    let form = new Api();
+	    form.sendData( form_data );
 	}
 }
