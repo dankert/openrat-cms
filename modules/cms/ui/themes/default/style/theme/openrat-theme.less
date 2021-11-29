@@ -459,6 +459,9 @@ html {
             // background image is not displayed now. So we should not use it here, the browser should not download it.
             //filter: hue-rotate(unit(hue(@cms-inactive-background-color),deg)) saturate(saturation(@cms-inactive-background-color)) brightness(lightness(@cms-inactive-background-color)  );
             //background-image: url(@cms-background-image);
+            //@media (prefers-reduced-data: reduce) {
+            //  background-image: none;
+            //}
         }
     }
 }
