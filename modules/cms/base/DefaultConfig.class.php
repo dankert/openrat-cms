@@ -492,8 +492,9 @@ class DefaultConfig {
 						],
 					'content-security-policy' => true,
 				],
-			'style' =>
-				[ 
+			'style' => // style key names max length is 64 chars
+				[
+					/*
 					'earlgrey' =>
 						[ 
 							'name' => 'Earl grey',
@@ -504,24 +505,10 @@ class DefaultConfig {
 								'background_color' => '#e9e9e9',
 								'inactive_background_color' => 'silver',
 							]
-						],
-					'dracula' =>
-						[
-							'name' => 'Dracula',
-							'defaults' => [
-								'main_title_background_color' => '#44475a',
-								'main_title_text_color' => '#f8f8f2',
-								'nav_title_background_color' => '#44475a',
-								'nav_title_text_color' => '#f8f8f2',
-								'text_color' => '#f8f8f2',
-								'background_color' => '#282a36',
-								'inactive_background_color' => '#44475a',
-								'image_color' => 'orange',
-							]
-						],
+						],*/
 					'elastique' =>
 						[
-							'name' => 'Elastique',
+							'name' => 'Elastique', // Taken from roundcube's elastic theme
 							'schemes' => [
 								'dark'=> [
 									'main_title_background_color' => '#21292C',
@@ -548,6 +535,72 @@ class DefaultConfig {
 								'image_color' => '#3687AD',
 							]
 						],
+					'elastiquedark' =>
+						[
+							'name' => 'Elastique dark',
+							'schemes' => [
+								],
+							'defaults'=> [
+								'main_title_background_color' => '#21292C',
+								'main_title_text_color' => '#C5D1D3',
+								'nav_title_background_color' => '#21292C',
+								'nav_title_text_color' => '#C5D1D3',
+								'text_color' => '#C5D1D3',
+								'background_color' => '#21292C',
+								'inactive_background_color' => '#21292C',
+								'image_color' => '#3687AD',
+							]
+						],
+					'moorweide' =>
+						[
+							'name' => 'Moorweide daylight', // Moorweide is a green place in hamburg city
+							'defaults' => [
+								'main_title_background_color' => '#EDF6F2',
+								'main_title_text_color' => '#4D4C4C',
+								'text_color' => 'black',
+								'background_color' => 'white',
+								'inactive_background_color' => 'white',
+								'nav_background_color' => '#EDF6F2',
+								'nav_text_color' => '#4D4C4C',
+								'image_color' => '#00A075',
+							]
+						],
+					'jawed' =>
+						[
+							'name' => 'Jawed', // Jawed Karim is one of the YT founders
+							'schemes' => [
+								'dark'=> [
+									'main_background_color' => '#181818',
+									'background_color' => '#202020',
+									'nav_background_color' => '#202020',
+									'text_color' => '#FFFFFF',
+								],
+								'light'=> [
+									'main_background_color' => '#F9F9F9',
+									'background_color' => '#FFFFFF',
+									'nav_background_color' => '#FFFFFF',
+									'text_color' => '#030303',
+								]
+							],
+							'defaults'=> [
+								'image_color' => '#FF0000',
+							]
+						],
+					'dracula' =>
+						[
+							'name' => 'Dracula',
+							'defaults' => [
+								'main_title_background_color' => '#44475a',
+								'main_title_text_color' => '#f8f8f2',
+								'nav_title_background_color' => '#44475a',
+								'nav_title_text_color' => '#f8f8f2',
+								'text_color' => '#f8f8f2',
+								'background_color' => '#282a36',
+								'inactive_background_color' => '#44475a',
+								'image_color' => 'orange',
+							]
+						],
+					/*
 					'modern' =>
 						[ 
 							'name' => 'Blue sky',
@@ -560,33 +613,20 @@ class DefaultConfig {
 								'background_color' => '#F3F3F3',
 								'inactive_background_color' => '#CCCCCC',
 							]
-						],
-					'moorweide' =>
-						[ 
-							'name' => 'Moorweide',
-							'defaults' => [
-								'main_title_background_color' => 'rgb(237, 246, 242)',
-								'main_title_text_color' => 'rgb(0, 94, 82)',
-								'text_color' => 'black',
-								'background_color' => '#edf7f2',
-								'inactive_background_color' => 'white',
-								'image_color' => '#00a075',
-								'nav_background_color' => 'rgb(0, 94, 82)',
-								'nav_text_color' => 'white',
-							]
-						],
+						],*/
 					'dark' =>
 						[ 
-							'name' => 'Dark',
+							'name' => 'Dark night',
 							'defaults' => [
 								'main_title_background_color' => '#565655',
 								'main_title_text_color' => '#DCDCDC',
 								'text_color' => '#FFFFFF',
 								'background_color' => '#201F1D',
 								'inactive_background_color' => '#868685',
+								'image_color' => '#e4e5d3',
 							]
 						],
-					'mono' =>
+					/*'mono' =>
 						[
 							'name' => 'Monochrome',
 							'schemes' => [
@@ -603,7 +643,7 @@ class DefaultConfig {
 							'defaults' => [
 								'transition_duration' => '0'
 							],
-						],
+						],*/
 				],
 			'theme' =>
 				[ 
