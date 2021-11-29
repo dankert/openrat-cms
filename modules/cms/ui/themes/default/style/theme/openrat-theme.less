@@ -105,52 +105,43 @@ html {
         }
 
         &-notice {
-            color: black;
-            line-height: 1.5em;
+          border-color: @cms-main-title-text-color;
+          color: @cms-main-title-text-color;
+          background-color: @cms-main-title-background-color;
+          line-height: 1.5em;
+          .box-shadow(3px, 3px, 10px, @cms-main-title-text-color);
 
             &--ok {
-                background-color: @cms-notice-ok-color;
-                border-color: darken(@cms-notice-ok-color, 10%);
+                border-left-color: @cms-notice-ok-color;
 
                 &:after {
-                    border-left-color: darken(@cms-notice-ok-color, 10%);
+                    //border-left-color: darken(@cms-notice-ok-color, 10%);
                 }
-
-                .box-shadow(3px, 3px, 10px, mix(@cms-main-background-color, @cms-notice-ok-color, 20%));
             }
 
             &--warning {
-                background-color: @cms-notice-warning-color;
-                border-color: darken(@cms-notice-warning-color, 10%);
+                border-left-color: @cms-notice-warning-color;
 
                 &:after {
-                    border-left-color: darken(@cms-notice-warning-color, 10%);
+                    //border-left-color: darken(@cms-notice-warning-color, 10%);
                 }
 
-                .box-shadow(3px, 3px, 10px, mix(@cms-main-background-color, @cms-notice-warning-color, 20%));
             }
 
             &--info {
-                background-color: @cms-notice-info-color;
-                border-color: darken(@cms-notice-info-color, 10%);
+                border-left-color: @cms-notice-info-color;
 
                 &:after {
-                    border-left-color: darken(@cms-notice-info-color, 10%);
+                    //border-left-color: darken(@cms-notice-info-color, 10%);
                 }
-
-                .box-shadow(3px, 3px, 10px, mix(@cms-main-background-color, @cms-notice-info-color, 20%));
             }
 
             &--error {
-                background-color: @cms-notice-error-color;
-                border-color: darken(@cms-notice-error-color, 10%);
+                border-left-color: @cms-notice-error-color;
 
                 &:after {
-                    border-left-color: darken(@cms-notice-error-color, 10%);
+                    //border-left-color: darken(@cms-notice-error-color, 10%);
                 }
-
-                .box-shadow(3px, 3px, 10px, mix(@cms-main-background-color, @cms-notice-error-color, 20%));
-
             }
         }
 

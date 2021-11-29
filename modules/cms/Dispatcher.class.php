@@ -58,6 +58,7 @@ class Dispatcher
      */
     public function doAction()
     {
+    	sleep(1);
         // Start the session. All classes should have been loaded up to now.
         session_name('or_sid');
 		session_start();

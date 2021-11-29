@@ -82,7 +82,15 @@ export default class Dialog {
 
 		this.view = view;
 
-		return this.view.start( this.element );
+		Workbench.getInstance().startSpinner();
+
+		let viewPromise = this.view.start( this.element );
+
+		viewPromise.then(
+			() => Workbench.getInstance().stopSpinner()
+		);
+
+		return viewPromise;
 	}
 
 
