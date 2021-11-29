@@ -50,6 +50,11 @@ html {
 
   * {
       transition: opacity  @cms-transition-duration ease-in-out,width  @cms-transition-duration ease-in-out,height  @cms-transition-duration ease-in-out,flex  @cms-transition-duration ease-in-out,transform   @cms-transition-duration ease-in-out;
+
+      // Reduced Motion
+      @media screen and (prefers-reduced-motion: reduce) {
+        transition: none;
+      }
     }
 
 
@@ -275,11 +280,12 @@ html {
         &-input {
             background-color: @cms-main-title-background-color;
             color: @cms-main-title-text-color;
-            border-color: mix(@cms-main-title-text-color, @cms-main-title-background-color);
-            .box-shadow(0px, 0px, 3px, @cms-main-title-text-color);
-            border-bottom-color: @cms-main-text-color;
+            //border-color: mix(@cms-main-title-text-color, @cms-main-title-background-color);
+            //.box-shadow(0px, 0px, 3px, @cms-main-title-text-color);
+            border-color: @cms-main-text-color;
 
             &:focus {
+              border-color: @cms-image-color;
             }
 
             //border-color: @cms-main-title-text-color;

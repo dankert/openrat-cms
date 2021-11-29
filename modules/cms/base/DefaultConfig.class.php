@@ -17,7 +17,7 @@ class DefaultConfig {
 	 */
 	public static function get()
 	{
-		return 
+		return
 		[ 
 			'applications' =>
 				[ 
@@ -198,7 +198,7 @@ class DefaultConfig {
 					'override_title' => '',
 					'style' =>
 						[ 
-							'default' => 'modern',
+							'default' => 'elastique',
 						],
 					'config' =>
 						[ 
@@ -497,61 +497,112 @@ class DefaultConfig {
 					'earlgrey' =>
 						[ 
 							'name' => 'Earl grey',
-							'main_title_background_color' => 'grey',
-							'main_title_text_color' => 'white',
-							'text_color' => 'black',
-							'background_color' => '#e9e9e9',
-							'inactive_background_color' => 'silver',
+							'defaults' => [
+								'main_title_background_color' => 'grey',
+								'main_title_text_color' => 'white',
+								'text_color' => 'black',
+								'background_color' => '#e9e9e9',
+								'inactive_background_color' => 'silver',
+							]
 						],
 					'dracula' =>
-						[ 
+						[
 							'name' => 'Dracula',
-							'main_title_background_color' => '#44475a',
-							'main_title_text_color' => '#f8f8f2',
-							'nav_title_background_color' => '#44475a',
-							'nav_title_text_color' => '#f8f8f2',
-							'text_color' => '#f8f8f2',
-							'background_color' => '#282a36',
-							'inactive_background_color' => '#44475a',
-							'image_color' => 'orange',
+							'defaults' => [
+								'main_title_background_color' => '#44475a',
+								'main_title_text_color' => '#f8f8f2',
+								'nav_title_background_color' => '#44475a',
+								'nav_title_text_color' => '#f8f8f2',
+								'text_color' => '#f8f8f2',
+								'background_color' => '#282a36',
+								'inactive_background_color' => '#44475a',
+								'image_color' => 'orange',
+							]
+						],
+					'elastique' =>
+						[
+							'name' => 'Elastique',
+							'schemes' => [
+								'dark'=> [
+									'main_title_background_color' => '#21292C',
+									'main_title_text_color' => '#C5D1D3',
+									'nav_title_background_color' => '#21292C',
+									'nav_title_text_color' => '#C5D1D3',
+									'text_color' => '#C5D1D3',
+									'background_color' => '#21292C',
+									'inactive_background_color' => '#21292C',
+								],
+								'light'=> [
+									'main_title_background_color' => '#FFFFFF',
+									'main_title_text_color' => '#2C363A',
+									'main_background_color' => '#E4E4E4',
+									'main_text_color' => '#2C363A',
+									'nav_background_color' => '#2F3A3F',
+									'nav_text_color' => '#FFFFFF',
+									'background_color' => '#E4E4E4',
+									'text_color' => '#2C363A',
+									'inactive_background_color' => '#44475a',
+								]
+							],
+							'defaults'=> [
+								'image_color' => '#3687AD',
+							]
 						],
 					'modern' =>
 						[ 
 							'name' => 'Blue sky',
-							'main_title_background_color' => '#3F6194',
-							'main_title_text_color' => 'white',
-							'nav_title_background_color' => '#79afd9',
-							'nav_background_color' => '#e1effa',
-							'text_color' => 'black',
-							'background_color' => '#F3F3F3',
-							'inactive_background_color' => '#CCCCCC',
+							'defaults' => [
+								'main_title_background_color' => '#3F6194',
+								'main_title_text_color' => 'white',
+								'nav_title_background_color' => '#79afd9',
+								'nav_background_color' => '#e1effa',
+								'text_color' => 'black',
+								'background_color' => '#F3F3F3',
+								'inactive_background_color' => '#CCCCCC',
+							]
 						],
 					'moorweide' =>
 						[ 
 							'name' => 'Moorweide',
-							'main_title_background_color' => 'rgb(237, 246, 242)',
-							'main_title_text_color' => 'rgb(0, 94, 82)',
-							'text_color' => 'black',
-							'background_color' => '#edf7f2',
-							'inactive_background_color' => 'white',
-							'image_color' => '#00a075',
-							'nav_background_color' => 'rgb(0, 94, 82)',
-							'nav_text_color' => 'white',
+							'defaults' => [
+								'main_title_background_color' => 'rgb(237, 246, 242)',
+								'main_title_text_color' => 'rgb(0, 94, 82)',
+								'text_color' => 'black',
+								'background_color' => '#edf7f2',
+								'inactive_background_color' => 'white',
+								'image_color' => '#00a075',
+								'nav_background_color' => 'rgb(0, 94, 82)',
+								'nav_text_color' => 'white',
+							]
 						],
 					'dark' =>
 						[ 
 							'name' => 'Dark',
-							'main_title_background_color' => '#565655',
-							'main_title_text_color' => '#DCDCDC',
-							'text_color' => '#FFFFFF',
-							'background_color' => '#201F1D',
-							'inactive_background_color' => '#868685',
+							'defaults' => [
+								'main_title_background_color' => '#565655',
+								'main_title_text_color' => '#DCDCDC',
+								'text_color' => '#FFFFFF',
+								'background_color' => '#201F1D',
+								'inactive_background_color' => '#868685',
+							]
 						],
 					'mono' =>
 						[
 							'name' => 'Monochrome',
-							'text_color' => 'black',
-							'background_color' => 'white',
+							'schemes' => [
+								'dark'=> [
+									'text_color' => 'white',
+									'background_color' => 'black',
+								],
+								'light'=>[
+									'text_color' => 'black',
+									'background_color' => 'white',
+
+								],
+							],
+							'defaults' => [
+								'transition_duration' => '0'
+							],
 						],
 				],
 			'theme' =>
