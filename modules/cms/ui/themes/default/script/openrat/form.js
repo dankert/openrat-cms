@@ -38,7 +38,10 @@ export default class Form {
 	}
 
 	setLoadStatus( isLoading ) {
-        $(this.element).closest('div.content').toggleClass('loader',isLoading);
+		if   ( isLoading )
+			Workbench.getInstance().startSpinner();
+		else
+			Workbench.getInstance().stopSpinner();
     }
 
     initOnElement( element ) {

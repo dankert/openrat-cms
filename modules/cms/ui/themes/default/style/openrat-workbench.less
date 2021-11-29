@@ -348,18 +348,35 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
     /* Fortschrittsbalken, fuer alle Elemente verfuegbar. */
     &-loader
     {
-        background: url(../images/loader.gif) no-repeat;
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+
+      border-width: 0.5em;
+      border-style: solid;
+      border-radius: 50%;
+      visibility: hidden;
+      z-index: 6;
+
+      &--is-active {
+
+        visibility: visible;
+        width: 5em;
+        height: 5em;
+        animation: spin 2s linear infinite;
+
+        @keyframes spin {
+            0% { transform: rotate(  0deg); }
+          100% { transform: rotate(360deg); }
+        }
 
         // Reduced Motion
         @media screen and (prefers-reduced-motion: reduce) {
-          background: none;
+          display: none;
         }
-
-        background-position: center, top;
-        height: 30px;
-        opacity: 0.5;
-        cursor: wait;
-        pointer-events: none;
+      }
     }
 
 

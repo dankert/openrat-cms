@@ -69,7 +69,7 @@ export default class View {
         let element = this.element;
         let view = this;
 
-		$(this.element).addClass('loader');
+		//$(this.element).addClass('loader');
 		console.debug( view );
 
 		try {
@@ -121,7 +121,7 @@ export default class View {
 			notice.show();
 		}
 		finally {
-			$(element).removeClass("loader");
+			//$(element).removeClass("loader");
 		}
 	}
 

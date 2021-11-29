@@ -24,6 +24,7 @@
   </head>
   <body><?php echo O::escapeHtml('') ?>
     <div id="<?php echo O::escapeHtml('workbench') ?>" class="<?php echo O::escapeHtml('or-workbench or--initial-hidden') ?>"><?php echo O::escapeHtml('') ?>
+      <div class="<?php echo O::escapeHtml('or-workbench-loader') ?>"><?php echo O::escapeHtml('') ?></div>
       <div class="<?php echo O::escapeHtml('or-workbench-navigation') ?>"><?php echo O::escapeHtml('') ?>
         <div class="<?php echo O::escapeHtml('or-workbench-screen or-workbench-navigation-content or-search') ?>"><?php echo O::escapeHtml('') ?>
           <div class="<?php echo O::escapeHtml('or-workbench-title or-workbench-search') ?>"><?php echo O::escapeHtml('') ?>

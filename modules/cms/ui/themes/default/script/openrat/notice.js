@@ -63,11 +63,11 @@ export default class Notice  {
 
 
 	inProgress() {
-		this.element.addClass('loader');
+		//this.element.addClass('loader');
 	}
 
 	stopProgress() {
-		this.element.removeClass('loader');
+		//this.element.removeClass('loader');
 	}
 
 	show() {

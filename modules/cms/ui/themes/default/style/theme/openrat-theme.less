@@ -60,6 +60,11 @@ html {
 
     .or {
 
+        &-loader {
+          border-color: @cms-inactive-background-color;
+          border-top-color: @cms-image-color;
+        }
+
         &-workbench {
           &-navigation {
             scrollbar-face-color: mix(@cms-nav-text-color,@cms-nav-background-color);
@@ -291,8 +296,8 @@ html {
             //border-color: @cms-main-title-text-color;
 
             &--error {
-                border-bottom: 1px dotted @cms-main-text-color ! important;
-                border: 1px solid @cms-notice-error-color ! important;
+                //border-bottom: 1px dotted @cms-main-text-color ! important;
+                border-color: @cms-notice-error-color ! important;
             }
 
 

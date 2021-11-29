@@ -202,18 +202,30 @@ export default class Workbench {
      */
     reloadViews() {
 
+		this.startSpinner();
         let promise = this.loadViews( $('.or-workbench .or-act-view-loader') );
+
+        promise.then(
+			() => this.stopSpinner()
+		);
 
 		return promise;
     }
 
+
+    startSpinner() {
+    	$('.or-workbench-loader').addClass('loader').addClass('loader--is-active');
+	}
+    stopSpinner() {
+    	$('.or-workbench-loader').removeClass('loader').removeClass('loader--is-active');
+	}
 
 	/**
 	 * @return a promise for all views
 	 */
 	reloadAll() {
 
-		document.querySelector('body').classList.add('or-loader');
+		this.startSpinner();
 
 		let promise = this.loadViews( $('.or-act-view-loader,.or-act-view-static') );
         console.debug('reloading all views');
@@ -225,7 +237,7 @@ export default class Workbench {
         let all = Promise.all( [ promise,stylePromise,languagePromise,settingsPromise ] );
 
         all.then(
-			() => document.querySelector('body').classList.remove('or-loader')
+			() => this.stopSpinner()
 		);
 
         return all;
