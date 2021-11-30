@@ -551,6 +551,7 @@ class DefaultConfig {
 								'image_color' => '#3687AD',
 							]
 						],
+					/*
 					'moorweide' =>
 						[
 							'name' => 'Moorweide daylight', // Moorweide is a green place in hamburg city
@@ -564,7 +565,7 @@ class DefaultConfig {
 								'nav_text_color' => '#4D4C4C',
 								'image_color' => '#00A075',
 							]
-						],
+						],*/
 					'jawed' =>
 						[
 							'name' => 'Jawed', // Jawed Karim is one of the YT founders
@@ -614,18 +615,21 @@ class DefaultConfig {
 								'inactive_background_color' => '#CCCCCC',
 							]
 						],*/
+					/*
 					'dark' =>
 						[ 
 							'name' => 'Dark night',
 							'defaults' => [
-								'main_title_background_color' => '#565655',
-								'main_title_text_color' => '#DCDCDC',
-								'text_color' => '#FFFFFF',
-								'background_color' => '#201F1D',
-								'inactive_background_color' => '#868685',
-								'image_color' => '#e4e5d3',
+								'main_background_color' => '#232525',
+								'main_text_color' => '#a8b7c6',
+								'text_color' => '#afb1b3',
+								'background_color' => '#3c3f41',
+								'nav_text_color' => '#afb1b3',
+								'nav_background_color' => '#3c3f41',
+								'inactive_background_color' => '#313335',
+								'image_color' => '#3e86a0',
 							]
-						],
+						],*/
 					/*'mono' =>
 						[
 							'name' => 'Monochrome',
