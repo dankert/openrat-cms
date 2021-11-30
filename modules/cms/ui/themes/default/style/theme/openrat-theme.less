@@ -417,6 +417,14 @@ html {
         }
 
         &-form {
+          &-checkbox,
+          &-radio {
+            border-color: @cms-main-text-color;
+            &:checked {
+              background-color: @cms-image-color;
+            }
+          }
+
           &-content {
             padding-bottom: 5em;
           }

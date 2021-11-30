@@ -19,8 +19,30 @@
 
         &-checkbox,
         &-radio {
-          transform: scale(1.5); // Increase size of checkboxes
+          //transform: scale(1.5); // Increase size of checkboxes
           margin-right: 1em;
+          appearance: none;
+          width:1.5em;
+          height: 1.5em;
+          border: 1px solid;
+          &::after {
+            //content: "\2610";
+            //font-size: 2em;
+          }
+          &:checked {
+            &::after {
+              //content: '\2714';
+              //content: "\2705";
+              //content: "\1F5F9";
+              //font-size: 2em;
+            }
+          }
+        }
+        &-checkbox {
+          border-radius: 2px;
+        }
+        &-radio {
+          border-radius: 0.75em;
         }
 
         &-headline {
