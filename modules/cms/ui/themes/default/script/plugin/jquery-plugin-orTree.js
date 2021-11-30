@@ -39,7 +39,7 @@ export default function(options)
             }
             else {
                 // Pfad ist geschlossen -> öffnen.
-				$(treeEl).closest('div.or-view').addClass('loader');
+				Workbench.getInstance().startSpinner();
                 let $link   = $node.find('a');
                 //let type    = $link.data('extra-type');
                 let id      = $link.data('id');
@@ -93,7 +93,7 @@ export default function(options)
 						notice.msg = cause;
                 	}).finally( () => {
 	                    // Die Loader-Animation entfernen.
-    	                $(treeEl).closest('div.or-view').removeClass('loader');
+						Workbench.getInstance().stopSpinner();
         	        });
 
                 // Am Knoten die Klasse wechseln.
