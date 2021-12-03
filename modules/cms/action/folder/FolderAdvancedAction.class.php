@@ -20,7 +20,7 @@ use util\Html;
 
 class FolderAdvancedAction extends FolderAction implements Method {
 
-    public function view() {
+	public function view() {
 		$this->setTemplateVar('writable',$this->folder->hasRight(Permission::ACL_WRITE) );
 
 		$list = array();

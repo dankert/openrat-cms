@@ -5,6 +5,7 @@ use cms\action\object\ObjectInfoAction;
 use cms\action\PageAction;
 use cms\generator\PageGenerator;
 use cms\generator\Producer;
+use cms\model\Permission;
 use cms\model\Template;
 
 class PageAdvancedAction extends PageAction implements Method {
@@ -30,4 +31,10 @@ class PageAdvancedAction extends PageAction implements Method {
     }
     public function post() {
     }
+
+	public function getRequiredPermission()
+	{
+		return Permission::ACL_READ;
+	}
+
 }

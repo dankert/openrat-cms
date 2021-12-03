@@ -6,6 +6,7 @@ use cms\action\RequestParams;
 use cms\generator\FileContext;
 use cms\generator\FileGenerator;
 use cms\model\BaseObject;
+use cms\model\Permission;
 use language\Messages;
 use util\exception\ValidationException;
 
@@ -44,5 +45,8 @@ class FileAdvancedAction extends FileAction implements Method {
     }
 
 
-
+	public function getRequiredPermission()
+	{
+		return Permission::ACL_PROP;
+	}
 }
