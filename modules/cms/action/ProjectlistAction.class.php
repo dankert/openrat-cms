@@ -32,21 +32,10 @@ use util\exception\SecurityException;
  * @version $Revision$
  * @package openrat.actions
  */
-class ProjectlistAction extends BaseAction
+abstract class ProjectlistAction extends BaseAction
 {
 	function __construct()
 	{
         parent::__construct();
-	}
-
-
-	/**
-	 * Listing projects is allowed for all users.
-	 *
-	 * @return bool
-	 */
-	public function checkAccess() {
-
-		return true;
 	}
 }

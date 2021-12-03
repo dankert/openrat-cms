@@ -11,24 +11,13 @@ class ProjectlistAddAction extends ProjectlistAction implements Method {
 
     public function view() {
 
-		$this->setTemplateVar( 'projects',Project::getAllProjects() );
     }
 
 
+	/**
+	 * Add a new project.
+	 */
     public function post() {
-
-		/*
-		$projectid = $this->request->getVar('projectid');
-
-		if   ( $projectid ) {
-
-			$db = \cms\base\DB::get();
-			$project = Project::create($projectid);
-			$project->load();
-			$project->export($db->id);
-			$this->addNoticeFor($project,Messages::DONE);
-
-		} else {*/
 
 		$name = $this->request->getRequiredText('name');
 
@@ -37,8 +26,6 @@ class ProjectlistAddAction extends ProjectlistAction implements Method {
 		$project->persist();
 
 		$this->addNoticeFor( $project,Messages::ADDED );
-		//}
-
     }
 
 

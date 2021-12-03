@@ -9,6 +9,10 @@ use cms\model\Project;
 
 class ProjectlistHistoryAction extends ProjectlistAction implements Method {
 
+
+	/**
+	 * History of a project.
+	 */
 	public function view() {
 
 		$result = Project::getAllLastChanges();
@@ -22,6 +26,18 @@ class ProjectlistHistoryAction extends ProjectlistAction implements Method {
 		$this->setTemplateVar('timeline', $result);
     }
 
+
     public function post() {
+		throw new \BadMethodCallException();
     }
+
+
+	/**
+	 * Check permission. This is allowed to all users.
+	 * @return bool true
+	 */
+	function checkAccess()
+	{
+		return true;
+	}
 }
