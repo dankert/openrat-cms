@@ -1,17 +1,19 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<part class="form">
-		<group title="${message:USER}" open="true" show="true">
-			<fieldset label="${message:USER_USERNAME}">
-				<text value="${user_name}"/>
-			</fieldset>
-			<fieldset label="${message:USER_FULLNAME}">
-				<text value="${user_fullname}"/>
-			</fieldset>
-			<fieldset label="${message:USER_LOGIN_DATE}">
-				<date date="${user_login}"/>
-			</fieldset>
-		</group>
+		<if true="${user_name}">
+			<group title="${message:USER}" open="true" show="true">
+				<fieldset label="${message:USER_USERNAME}">
+					<text value="${user_name}"/>
+				</fieldset>
+				<fieldset label="${message:USER_FULLNAME}">
+					<text value="${user_fullname}"/>
+				</fieldset>
+				<fieldset label="${message:USER_LOGIN_DATE}">
+					<date date="${user_login}"/>
+				</fieldset>
+			</group>
+		</if>
 		<group title="${message:CMS}">
 			<fieldset label="${message:NAME}">
 				<part>
