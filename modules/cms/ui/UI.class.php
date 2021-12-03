@@ -70,10 +70,7 @@ class UI
             throw new LogicException(L::lang($e->key,$e->params),0, $e);
         } catch (SecurityException $e) {
             Logger::info($e);
-            Http::noContent();
-
-            // this is not good at all, because the user may have signed off.
-            //Http::notAuthorized("You are not allowed to execute this action.");
+            Http::notAuthorized("You are not allowed to execute this action.");
         } catch (Exception $e) {
             Logger::warn( $e );
             throw new LogicException("Internal CMS error",0, $e);

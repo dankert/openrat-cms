@@ -18,6 +18,7 @@ use cms\model\Permission;
 use cms\model\Project;
 use cms\model\Value;
 use language\Messages;
+use util\exception\SecurityException;
 use util\exception\ValidationException;
 use util\Session;
 use util\Text;
@@ -25,7 +26,7 @@ use util\Text;
 class PageAllAction extends PageAction implements Method {
 
 	public function getRequiredPermission() {
-		return Permission::ACL_WRITE;
+		return Permission::ACL_READ;
 	}
 
 
@@ -182,7 +183,8 @@ class PageAllAction extends PageAction implements Method {
 
     public function post()
 	{
-
+		if   ( !$this->page->hasRight( Permission::ACL_WRITE ))
+			throw new SecurityException();
 
 		$languageid = $this->request->getRequiredNumber('languageid');
 		$language = new Language($languageid);

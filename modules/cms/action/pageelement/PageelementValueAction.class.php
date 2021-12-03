@@ -9,11 +9,6 @@ use cms\model\Page;
 
 class PageelementValueAction extends PageelementAction implements Method {
 
-	protected function getRequiredPagePermission()
-	{
-		return Permission::ACL_WRITE;
-	}
-
 	public function view() {
 
 		$this->element->load();

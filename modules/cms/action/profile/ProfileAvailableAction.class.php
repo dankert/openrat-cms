@@ -5,6 +5,7 @@ use cms\action\BaseAction;
 use cms\action\Method;
 use cms\action\ProfileAction;
 use util\ClassName;
+use util\exception\SecurityException;
 
 class ProfileAvailableAction extends ProfileAction implements Method {
 
@@ -47,10 +48,10 @@ class ProfileAvailableAction extends ProfileAction implements Method {
 						 */
 						$actionMethod = new $n();
 						$actionMethod->request = $this->request;
-						$actionMethod->init();
 						try {
+							$actionMethod->init();
 							$actionMethod->checkAccess();
-						} catch( \Exception $e ) {
+						} catch( SecurityException $e ) {
 							return false;
 						}
 						return true;
