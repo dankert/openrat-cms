@@ -482,12 +482,19 @@ DATE:
   it: "la notazione dell'ANSI della data della data"
   ru: Дата
 DATE_FORMAT:
-  de: d.m.Y, H:i
-  en: m/d Y, H:i:s
-  es: 'm/d Y, H: i: s'
-  fr: 'm/d Y, H : i : s'
-  it: "m/d Y, H: i:s"
-  ru: 'm/d Y, H: i:s'
+  de: "d.m.Y"
+  en: "m/d Y"
+  es: 'm/d Y'
+  fr: 'm/d Y'
+  it: "m/d Y"
+  ru: 'm/d Y'
+DATE_FORMAT_TODAY:
+  de: "H:i"
+  en: "H:i:s"
+  es: "H: i: s"
+  fr: "H : i : s"
+  it: "H: i:s"
+  ru: "H: i:s"
 DATE_FORMAT_LONG:
   de: '{weekday}\, d. {month} Y \u\m H:i:s'
   en: "l F jS Y, H:i"

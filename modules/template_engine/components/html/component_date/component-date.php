@@ -62,7 +62,8 @@ function component_date($time )
 		echo ' datetime="'.date('c',$time).'"';
 
 		echo '>';
-		echo date( Output::lang(Messages::DATE_FORMAT),$time );
+		$format = (\cms\base\Startup::getStartTime()-$time)>(60*60*24)?Messages::DATE_FORMAT:Messages::DATE_FORMAT_TODAY;
+		echo date( Output::lang($format),$time );
 		echo '</time>';
 	}
 }
