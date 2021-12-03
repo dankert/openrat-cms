@@ -3,6 +3,7 @@ namespace cms\action\login;
 use cms\action\LoginAction;
 use cms\action\Method;
 use cms\base\Configuration;
+use cms\model\User;
 use util\Session;
 
 
@@ -40,16 +41,21 @@ class LoginLicenseAction extends LoginAction implements Method {
         $this->setTemplateVar('cms_operator', Configuration::Conf()->subset('application')->get('operator') );
 
         $user = Session::getUser();
-        if   ( !empty($user) )
-        {
-            $this->setTemplateVar('user_login'   , $user->loginDate );
-            $this->setTemplateVar('user_name'    , $user->name      );
-            $this->setTemplateVar('user_fullname', $user->fullname  );
-        }
+        if   ( ! $user )
+			$user = new User(); // empty user object as default.
 
+		$this->setTemplateVar('user_login'   , $user->loginDate );
+		$this->setTemplateVar('user_name'    , $user->name      );
+		$this->setTemplateVar('user_fullname', $user->fullname  );
     }
 
 
     public function post() {
     }
+
+
+	public function checkAccess()
+	{
+		return true;
+	}
 }

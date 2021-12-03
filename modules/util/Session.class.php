@@ -66,9 +66,11 @@ class Session
 
 
 	/**
-	 * Liefert den Benutzer aus der Sitzung oder <code>null</code>, wenn kein Benutze angemeldet ist.
+	 * Current user.
 	 *
-	 * @return User
+	 * Gets the current user from session or <code>null</code>, if no user is present.
+	 *
+	 * @return User|null
 	 */
 	public static function getUser()
 	{

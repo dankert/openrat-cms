@@ -1,6 +1,7 @@
 <?php
 namespace cms\action\profile;
 use cms\action\Action;
+use cms\action\BaseAction;
 use cms\action\Method;
 use cms\action\ProfileAction;
 use util\ClassName;
@@ -39,8 +40,21 @@ class ProfileAvailableAction extends ProfileAction implements Method {
 					$actionClassName = new ClassName( ucfirst($action) . ucfirst($methodName) . 'Action');
 					$actionClassName->addNamespace( ['cms','action',$action] );
 
-					if ( $actionClassName->exists() )
+					if ( $actionClassName->exists() ) {
+						$n = $actionClassName->getName();
+						/**
+						 * @var BaseAction
+						 */
+						$actionMethod = new $n();
+						$actionMethod->request = $this->request;
+						$actionMethod->init();
+						try {
+							$actionMethod->checkAccess();
+						} catch( \Exception $e ) {
+							return false;
+						}
 						return true;
+					}
 
 					$baseActionClassName = new ClassName( ucfirst($action) . 'Action' );
 					$baseActionClassName->addNamespace( ['cms','action'] );

@@ -57,14 +57,17 @@ class BaseObject extends ModelBase
      */
     public $parentid;
 
-    /** Physikalischer Dateiname des Objektes (bei Links nicht gef?llt)
-     * <em>enth?lt nicht die Dateinamen-Erweiterung</em>
+    /** Filename.
+	 *
+	 * Technical filename of this object without any extension. This name must be unique in a folder.
+	 *
      * @type String
      */
     public $filename = '';
 
-    /** Logischer (sprachabhaengiger) Name des Objektes
-     * (wird in Tabelle <code>name</code> abgelegt)
+    /** Name.
+	 *
+	 * Logical name of this object.
      * @type String
      * @deprecated use modelclass Name instead
      */

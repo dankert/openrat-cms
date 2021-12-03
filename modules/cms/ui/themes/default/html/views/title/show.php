@@ -48,12 +48,50 @@
       <div class="<?php echo O::escapeHtml('or-toolbar-icon or-user or-menu-category') ?>"><?php echo O::escapeHtml('') ?>
         <img /><?php echo O::escapeHtml('') ?>
       </div>
-      <div class="<?php echo O::escapeHtml('or-toolbar-icon or-user or-menu-category') ?>"><?php echo O::escapeHtml('') ?>
-        <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-user') ?>"><?php echo O::escapeHtml('') ?></i>
-        <span class="<?php echo O::escapeHtml('or-menu-label') ?>"><?php echo O::escapeHtml(''.@$userfullname.'') ?></span>
-        <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--dropdown or-menu-dropdown-icon') ?>"><?php echo O::escapeHtml('') ?></i>
-        <div class="<?php echo O::escapeHtml('or-dropdown or-dropdown--on-right') ?>"><?php echo O::escapeHtml('') ?>
-          <?php $if6=($isLoggedIn); if($if6) {  ?>
+      <?php $if4=(!$isLoggedIn); if($if4) {  ?>
+        <div class="<?php echo O::escapeHtml('or-toolbar-icon or-user or-menu-category') ?>"><?php echo O::escapeHtml('') ?>
+          <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-logout') ?>"><?php echo O::escapeHtml('') ?></i>
+          <span class="<?php echo O::escapeHtml('or-menu-label') ?>"><?php echo O::escapeHtml(''.@$userfullname.'') ?></span>
+          <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--dropdown or-menu-dropdown-icon') ?>"><?php echo O::escapeHtml('') ?></i>
+          <div class="<?php echo O::escapeHtml('or-dropdown or-dropdown--on-right') ?>"><?php echo O::escapeHtml('') ?>
+            <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
+              <a title="<?php echo O::escapeHtml(''.@O::lang('USER_LOGIN_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('login') ?>" data-method="<?php echo O::escapeHtml('login') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/login') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
+                <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-user') ?>"><?php echo O::escapeHtml('') ?></i>
+                <span class="<?php echo O::escapeHtml('or-dropdown-text') ?>"><?php echo O::escapeHtml(''.@O::lang('USER_LOGIN').'') ?></span>
+              </a>
+            </div>
+            <?php $if7=(O::config(['login','register'])); if($if7) {  ?>
+              <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
+                <a title="<?php echo O::escapeHtml(''.@O::lang('REGISTER_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('login') ?>" data-method="<?php echo O::escapeHtml('register') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/login') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
+                  <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-register') ?>"><?php echo O::escapeHtml('') ?></i>
+                  <span class="<?php echo O::escapeHtml('or-dropdown-text') ?>"><?php echo O::escapeHtml(''.@O::lang('REGISTER').'') ?></span>
+                </a>
+              </div>
+             <?php } ?>
+            <?php $if7=(O::config(['login','send_password'])); if($if7) {  ?>
+              <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
+                <a title="<?php echo O::escapeHtml(''.@O::lang('SEND_PASSWORD_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('login') ?>" data-method="<?php echo O::escapeHtml('password') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/login') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
+                  <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-password') ?>"><?php echo O::escapeHtml('') ?></i>
+                  <span class="<?php echo O::escapeHtml('or-dropdown-text') ?>"><?php echo O::escapeHtml(''.@O::lang('SEND_PASSWORD').'') ?></span>
+                </a>
+              </div>
+             <?php } ?>
+            <div class="<?php echo O::escapeHtml('or-dropdown-divide') ?>"><?php echo O::escapeHtml('') ?></div>
+            <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
+              <a title="<?php echo O::escapeHtml(''.@O::lang('menu_license_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('login') ?>" data-method="<?php echo O::escapeHtml('license') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/login') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
+                <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-info') ?>"><?php echo O::escapeHtml('') ?></i>
+                <span class="<?php echo O::escapeHtml('or-dropdown-text') ?>"><?php echo O::escapeHtml(''.@O::lang('menu_info').'') ?></span>
+              </a>
+            </div>
+          </div>
+        </div>
+       <?php } ?>
+      <?php $if4=($isLoggedIn); if($if4) {  ?>
+        <div class="<?php echo O::escapeHtml('or-toolbar-icon or-user or-menu-category') ?>"><?php echo O::escapeHtml('') ?>
+          <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-user') ?>"><?php echo O::escapeHtml('') ?></i>
+          <span class="<?php echo O::escapeHtml('or-menu-label') ?>"><?php echo O::escapeHtml(''.@$userfullname.'') ?></span>
+          <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--dropdown or-menu-dropdown-icon') ?>"><?php echo O::escapeHtml('') ?></i>
+          <div class="<?php echo O::escapeHtml('or-dropdown or-dropdown--on-right') ?>"><?php echo O::escapeHtml('') ?>
             <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
               <a title="<?php echo O::escapeHtml(''.@O::lang('menu_PROFILE_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('profile') ?>" data-method="<?php echo O::escapeHtml('edit') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/profile') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
                 <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-user') ?>"><?php echo O::escapeHtml('') ?></i>
@@ -92,33 +130,9 @@
                 <span class="<?php echo O::escapeHtml('or-dropdown-text') ?>"><?php echo O::escapeHtml(''.@O::lang('USER_LOGOUT').'') ?></span>
               </a>
             </div>
-           <?php } ?>
-          <?php if(!$if6) {  ?>
-            <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
-              <a title="<?php echo O::escapeHtml(''.@O::lang('USER_LOGIN_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('login') ?>" data-method="<?php echo O::escapeHtml('login') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/login') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
-                <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-user') ?>"><?php echo O::escapeHtml('') ?></i>
-                <span class="<?php echo O::escapeHtml('or-dropdown-text') ?>"><?php echo O::escapeHtml(''.@O::lang('USER_LOGIN').'') ?></span>
-              </a>
-            </div>
-            <?php $if7=(O::config(['login','register'])); if($if7) {  ?>
-              <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
-                <a title="<?php echo O::escapeHtml(''.@O::lang('REGISTER_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('login') ?>" data-method="<?php echo O::escapeHtml('register') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/login') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
-                  <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-register') ?>"><?php echo O::escapeHtml('') ?></i>
-                  <span class="<?php echo O::escapeHtml('or-dropdown-text') ?>"><?php echo O::escapeHtml(''.@O::lang('REGISTER').'') ?></span>
-                </a>
-              </div>
-             <?php } ?>
-            <?php $if7=(O::config(['login','send_password'])); if($if7) {  ?>
-              <div class="<?php echo O::escapeHtml('or-dropdown-entry or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
-                <a title="<?php echo O::escapeHtml(''.@O::lang('SEND_PASSWORD_DESC').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('login') ?>" data-method="<?php echo O::escapeHtml('password') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/login') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
-                  <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-password') ?>"><?php echo O::escapeHtml('') ?></i>
-                  <span class="<?php echo O::escapeHtml('or-dropdown-text') ?>"><?php echo O::escapeHtml(''.@O::lang('SEND_PASSWORD').'') ?></span>
-                </a>
-              </div>
-             <?php } ?>
-           <?php } ?>
+          </div>
         </div>
-      </div>
+       <?php } ?>
       <div class="<?php echo O::escapeHtml('or-toolbar-icon or-menu-category') ?>"><?php echo O::escapeHtml('') ?>
         <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-more or-menu-icon') ?>"><?php echo O::escapeHtml('') ?></i>
         <span class="<?php echo O::escapeHtml('or-menu-label') ?>"><?php echo O::escapeHtml(''.@O::lang('edit').'') ?></span>

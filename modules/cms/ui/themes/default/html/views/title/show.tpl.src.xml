@@ -8,21 +8,13 @@
 				<image menu="menu"/>
 			</part>
 
-			<!-- Shrink the navigation on desktop -->
-			<!--
-			<part
-				class="toolbar-icon,workbench-\\\\-visible-on-wide,,act-nav-small,workbench-\\\\-visible-on-dialog-open,-visible-on-desktop">
-				<image class="" menu="menu"/>
-			</part>
-			-->
-
 			<!-- Open the navigation on desktop -->
 			<part
 				class="toolbar-icon,workbench--visible-on-small,act-nav-wide,workbench--visible-on-dialog-open,-visible-on-desktop">
 				<image class="" menu="menu"/>
 			</part>
 
-			<!-- Placeholder for breadcrum navigation -->
+			<!-- Placeholder for breadcrumb navigation -->
 			<part class="breadcrumb act-breadcrumb"/>
 
 		</part>
@@ -73,80 +65,67 @@
 				</link>
 			</part>
 
-			<!-- Menü: Datei -->
-			<!--
-			<part class="toolbar-icon,menu-category,menu-shortcut">
-				<image method="add"/>
-				-
-				<text class="menu-label" value="${message:file}"/>-
-				<image class="menu-dropdown-icon" symbol="dropdown"/>
-				<part class="dropdown">
-					<part
-						class="dropdown-entry,act-clickable,filtered">
-						<link type="dialog" title="${message:menu_new_desc}" subaction="add">
-							<image method="add"/>
-							<text value="${message:menu_new}"/>
-							<text class="dropdown-key,link-keystroke" value="${config:ui/keybinding/method/add}"/>
-						</link>
-					</part>
-					<part class="dropdown-divide"/>
-					<part class="dropdown-entry,act-clickable,filtered">
-						<link type="dialog" title="${message:menu_createfolder_desc}" subaction="createfolder">
-							<image method="add"/>
-							<text class="dropdown-text" value="${message:menu_createfolder}"/>
-						</link>
-					</part>
-					<part class="dropdown-entry,act-clickable,filtered">
-						<link type="dialog" title="${message:menu_createpage_desc}" subaction="createpage">
-							<image method="add"/>
-							<text class="dropdown-text" value="${message:menu_createpage}"/>
-						</link>
-					</part>
-					<part class="dropdown-entry,act-clickable,filtered">
-						<link type="dialog" title="${message:menu_createfile_desc}" subaction="createfile">
-							<image method="add"/>
-							<text class="dropdown-text" value="${message:menu_createfile}"/>
-						</link>
-					</part>
-					<part class="dropdown-entry,act-clickable,filtered">
-						<link type="dialog" title="${message:menu_createimage_desc}" subaction="createimage">
-							<image method="add"/>
-							<text class="dropdown-text" value="${message:menu_createimage}"/>
-						</link>
-					</part>
-					<part class="dropdown-entry,act-clickable,filtered">
-						<link type="dialog" title="${message:menu_createtext_desc}" subaction="createtext">
-							<image method="add"/>
-							<text class="dropdown-text" value="${message:menu_createtext}"/>
-						</link>
-					</part>
-					<part class="dropdown-entry,act-clickable,filtered">
-						<link type="dialog" title="${message:menu_createlink_desc}" subaction="createlink">
-							<image method="add"/>
-							<text class="dropdown-text" value="${message:menu_createlink}"/>
-						</link>
-					</part>
-					<part class="dropdown-entry,act-clickable,filtered">
-						<link type="dialog" title="${message:menu_createurl_desc}" subaction="createurl">
-							<image method="add"/>
-							<text class="dropdown-text" value="${message:menu_createurl}"/>
-						</link>
-					</part>
-				</part>
-			</part>-->
-
 			<part class="toolbar-icon,user,menu-category">
 				<image/><!-- empty image as a divider -->
 			</part>
 
-			<part class="toolbar-icon,user,menu-category">
-				<image action="user"/>
-				<text class="menu-label" value="${userfullname}"/>
-				<image class="menu-dropdown-icon" symbol="dropdown"/>
-				<!-- <image symbol="dropdown" />-->
-				<part class="dropdown,dropdown--on-right">
-					<if true="${isLoggedIn}">
-						<!-- logged in -->
+
+			<!-- no user is logged in -->
+			<if false="${isLoggedIn}">
+				<part class="toolbar-icon,user,menu-category">
+					<image method="logout"/>
+					<text class="menu-label" value="${userfullname}"/>
+					<image class="menu-dropdown-icon" symbol="dropdown"/>
+					<!-- <image symbol="dropdown" />-->
+					<part class="dropdown,dropdown--on-right">
+						<part class="dropdown-entry,act-clickable">
+							<link type="dialog" title="${message:USER_LOGIN_DESC}" action="login" subaction="login">
+								<image method="user"/>
+								<text class="dropdown-text" value="${message:USER_LOGIN}"/>
+							</link>
+						</part>
+						<if value="${config:login/register}">
+							<part class="dropdown-entry,act-clickable">
+								<link type="dialog" title="${message:REGISTER_DESC}" action="login"
+									  subaction="register">
+									<image method="register"/>
+									<text class="dropdown-text" value="${message:REGISTER}"/>
+								</link>
+							</part>
+
+						</if>
+						<if value="${config:login/send_password}">
+							<part class="dropdown-entry,act-clickable">
+								<link type="dialog" title="${message:SEND_PASSWORD_DESC}" action="login"
+									  subaction="password">
+									<image method="password"/>
+									<text class="dropdown-text" value="${message:SEND_PASSWORD}"/>
+								</link>
+							</part>
+						</if>
+						<part class="dropdown-divide"/>
+
+						<!-- License info -->
+						<part class="dropdown-entry,act-clickable">
+							<link type="dialog" title="${message:menu_license_DESC}" action="login" subaction="license">
+								<image method="info"/>
+								<text class="dropdown-text" value="${message:menu_info}"/>
+							</link>
+						</part>
+
+					</part>
+				</part>
+			</if>
+
+
+			<!-- a user is logged in -->
+			<if true="${isLoggedIn}">
+				<part class="toolbar-icon,user,menu-category">
+					<image action="user"/>
+					<text class="menu-label" value="${userfullname}"/>
+					<image class="menu-dropdown-icon" symbol="dropdown"/>
+					<!-- <image symbol="dropdown" />-->
+					<part class="dropdown,dropdown--on-right">
 						<part class="dropdown-entry,act-clickable">
 							<link type="dialog" title="${message:menu_PROFILE_DESC}" action="profile" subaction="edit">
 								<image action="user"/>
@@ -188,39 +167,9 @@
 								<text class="dropdown-text" value="${message:USER_LOGOUT}"/>
 							</link>
 						</part>
-					</if>
-					<else>
-						<!-- not logged in -->
-						<part class="dropdown-entry,act-clickable">
-							<link type="dialog" title="${message:USER_LOGIN_DESC}" action="login" subaction="login">
-								<image method="user"/>
-								<text class="dropdown-text" value="${message:USER_LOGIN}"/>
-							</link>
-						</part>
-						<if value="${config:login/register}">
-							<part class="dropdown-entry,act-clickable">
-								<link type="dialog" title="${message:REGISTER_DESC}" action="login"
-									  subaction="register">
-									<image method="register"/>
-									<text class="dropdown-text" value="${message:REGISTER}"/>
-								</link>
-							</part>
-
-						</if>
-						<if value="${config:login/send_password}">
-							<part class="dropdown-entry,act-clickable">
-								<link type="dialog" title="${message:SEND_PASSWORD_DESC}" action="login"
-									  subaction="password">
-									<image method="password"/>
-									<text class="dropdown-text" value="${message:SEND_PASSWORD}"/>
-								</link>
-							</part>
-
-						</if>
-					</else>
+					</part>
 				</part>
-			</part>
-			<!-- Search is now in the navigation pane -->
+			</if>
 
 
 			<!-- Common menu -->

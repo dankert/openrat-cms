@@ -59,4 +59,14 @@ class ObjectRightsAction extends ObjectAction implements Method {
     }
     public function post() {
     }
+
+
+	/**
+	 * @return int Permission-flag.
+	 */
+	public function getRequiredPermission() {
+		return Permission::ACL_GRANT;
+	}
+
+
 }

@@ -3,6 +3,7 @@ namespace cms\action\folder;
 use cms\action\FolderAction;
 use cms\action\Method;
 use cms\model\Permission;
+use util\exception\SecurityException;
 
 
 class FolderAddAction extends FolderAction implements Method {
@@ -20,4 +21,11 @@ class FolderAddAction extends FolderAction implements Method {
 
     public function post() {
     }
+
+
+	public function checkAccess()
+	{
+		if   ( ! parent::hasPermissionToAddAnyObject() )
+			throw new SecurityException();
+	}
 }

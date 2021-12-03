@@ -51,7 +51,9 @@ class FolderEditAction extends FolderAction implements Method {
 		}
 
 		$this->setTemplateVar('object'      ,$list            );
-    }
+
+		$this->setTemplateVar('add',parent::hasPermissionToAddAnyObject() );
+	}
 
 
     public function post() {

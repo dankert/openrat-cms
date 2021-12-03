@@ -132,4 +132,17 @@ class FolderAction extends ObjectAction
      	return intval($val);
 	}
 
+
+	/**
+	 * Is it allowed to add a new object?
+	 * @return bool
+	 */
+	protected function hasPermissionToAddAnyObject() {
+
+		return
+			$this->folder->hasRight( Permission::ACL_CREATE_FILE   ) ||
+			$this->folder->hasRight( Permission::ACL_CREATE_FOLDER ) ||
+			$this->folder->hasRight( Permission::ACL_CREATE_LINK   ) ||
+			$this->folder->hasRight( Permission::ACL_CREATE_PAGE   );
+	}
 }

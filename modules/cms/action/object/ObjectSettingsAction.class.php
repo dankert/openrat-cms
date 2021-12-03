@@ -3,6 +3,7 @@ namespace cms\action\object;
 use cms\action\Action;
 use cms\action\Method;
 use cms\action\ObjectAction;
+use cms\model\Permission;
 use language\Messages;
 use util\exception\ValidationException;
 
@@ -46,4 +47,15 @@ class ObjectSettingsAction extends ObjectAction implements Method {
 
 		$this->addNoticeFor( $this->baseObject,Messages::SAVED);
     }
+
+
+
+	/**
+	 * @return int Permission-flag.
+	 */
+	public function getRequiredPermission() {
+		return Permission::ACL_PROP;
+	}
+
+
 }

@@ -20,6 +20,16 @@ class ClassName
 			$this->name = $className;
 	}
 
+	/**
+	 * get full class name.
+	 * @return string
+	 */
+	public function getName()
+	{
+		return $this->name;
+	}
+
+
 	public function dropNamespace()
 	{
 		if	( $pos = strrpos($this->name, '\\') )

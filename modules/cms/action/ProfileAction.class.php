@@ -39,6 +39,13 @@ use util\UIUtils;
  */
 class ProfileAction extends BaseAction
 {
+	/**
+	 * Current user.
+	 *
+	 * Current user or null, if no user is present.
+	 *
+	 * @var User|null
+	 */
 	protected $user;
 
 	/**
@@ -71,21 +78,32 @@ class ProfileAction extends BaseAction
 
 
 	/**
+	 * Theme name.
+	 *
+	 * Gets the theme name of the current user, or the
+	 * default style if no user is present.
+	 *
 	 * @param User $user
 	 * @return string
 	 */
 	protected function getUserStyle($user )
 	{
-		// Theme für den angemeldeten Benuter ermitteln
+		// Gets theme for current user.
 		if  ( $user && Configuration::subset('style')->has($user->style))
 			$style = $user->style;
 		else
+			// Fallback: Default theme.
 			$style = Configuration::subset(['interface','style'])->get('default','');
 
 		return $style;
 	}
 
 
+	/**
+	 * Default permission: An authenticated user is necessary.
+	 *
+	 * @return void
+	 */
 	public function checkAccess() {
 		if   ( !$this->user )
 			throw new SecurityException();

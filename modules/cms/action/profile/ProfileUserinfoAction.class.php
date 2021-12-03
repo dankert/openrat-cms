@@ -10,6 +10,12 @@ use util\UIUtils;
 class ProfileUserinfoAction extends ProfileAction implements Method {
 
 
+	/**
+	 * Gets user information.
+	 * If no user is logged in, default information will be returned.
+	 *
+	 * @return void
+	 */
     public function view() {
 
 		$user = Session::getUser();
