@@ -30,7 +30,7 @@ class ProjectEditAction extends ProjectAction implements Method {
 		$rootFolder = new Folder( $rootFolderId );
 		$rootFolder->load();
 
-		if   ( ! $rootFolder->hasRight( Permission::ACL_PROP )  )
+		if   ( ! $rootFolder->hasRight( Permission::ACL_READ )  )
 			throw new SecurityException();
 	}
 

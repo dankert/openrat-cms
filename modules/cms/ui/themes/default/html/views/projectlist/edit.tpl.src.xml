@@ -1,58 +1,67 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-  <table>
-    <row header="true">
-      <column header="true" class="table-column-auto">
-        <text value="${message:name}"/>
-      </column>
-		<column header="true" class="table-column-action" />
-    </row>
-    <list list="${projects}" extract="true">
-      <row class="data">
-        <column class="act-clickable">
-          <link type="open" id="${id}" name="${name}" action="project">
-            <image action="project"/>
-            <text value="${name}" maxlength="30"/>
-          </link>
-        </column>
-		  <column class="">
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<table>
+		<row header="true">
+			<column header="true" class="table-column-auto">
+				<text value="${message:name}"/>
+			</column>
+			<column header="true" class="table-column-action"/>
+		</row>
+		<list list="${projects}" extract="true">
+			<row class="data">
+				<column class="act-clickable">
+					<!-- Open the project -->
+					<link type="open" id="${id}" name="${name}" action="project">
+						<image action="project"/>
+						<text value="${name}" />
+					</link>
+				</column>
+				<column class="">
 
-			  <part class="button,button--active-on-hover,toolbar-icon,row--on-hover">
-				  <image class="menu-icon" menu="more"/>
-				  <part class="dropdown,button-value">
-				  <part
-					  class="dropdown-entry,act-clickable">
-					  <link type="dialog" id="${id}" title="${message:menu_info_desc}" action="project" subaction="info">
-						  <image method="info"/>
-						  <text class="dropdown-text" value="${message:menu_info}"/>
-					  </link>
-				  </part>
-				  <part
-					  class="dropdown-entry,act-clickable">
-					  <link type="dialog" id="${id}" title="${message:menu_prop_desc}" action="project"  subaction="prop">
-						  <image method="prop"/>
-						  <text class="dropdown-text" value="${message:menu_prop}"/>
-					  </link>
-				  </part>
-				  <part
-					  class="dropdown-entry,act-clickable">
-					  <link type="dialog" id="${id}" title="${message:menu_history_desc}" action="project"  subaction="history">
-						  <image method="history"/>
-						  <text class="dropdown-text" value="${message:menu_history}"/>
-					  </link>
-				  </part>
-				  </part>
-			  </part>
+					<part class="button,button--active-on-hover,toolbar-icon,row--on-hover">
+						<image class="menu-icon" menu="more"/>
+						<part class="dropdown,button-value">
+							<part
+								class="dropdown-entry,act-clickable">
+								<link type="dialog" id="${id}" title="${message:menu_info_desc}" action="project"
+									  subaction="info">
+									<image method="info"/>
+									<text class="dropdown-text" value="${message:menu_info}"/>
+								</link>
+							</part>
+							<part
+								class="dropdown-entry,act-clickable">
+								<link type="dialog" id="${id}" title="${message:menu_prop_desc}" action="project"
+									  subaction="prop">
+									<image method="prop"/>
+									<text class="dropdown-text" value="${message:menu_prop}"/>
+								</link>
+							</part>
+							<part
+								class="dropdown-entry,act-clickable">
+								<link type="dialog" id="${id}" title="${message:menu_history_desc}" action="project"
+									  subaction="history">
+									<image method="history"/>
+									<text class="dropdown-text" value="${message:menu_history}"/>
+								</link>
+							</part>
+						</part>
+					</part>
 
-		  </column>
-      </row>
-    </list>
-  </table>
+				</column>
+			</row>
+		</list>
+	</table>
 
-	<part class="act-clickable,button-knob">
-		<link type="dialog" subaction="add">
-			<image method="add"/>
-			<text value="${message:add}"/>
-		</link>
-	</part>
+	<if value="${add}"><!-- Is it allowed to add a new project? -->
+
+		<!-- Add a new project -->
+		<part class="act-clickable,button-knob">
+			<link type="dialog" subaction="add">
+				<image method="add"/>
+				<text value="${message:add}"/>
+			</link>
+		</part>
+	</if>
 
 </output>

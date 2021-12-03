@@ -49,9 +49,11 @@
       </table>
     </div>
   </div>
-  <div class="<?php echo O::escapeHtml('or-act-clickable or-button-knob') ?>"><?php echo O::escapeHtml('') ?>
-    <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('add') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
-      <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-add') ?>"><?php echo O::escapeHtml('') ?></i>
-      <span><?php echo O::escapeHtml(''.@O::lang('add').'') ?></span>
-    </a>
-  </div>
+  <?php $if2=($add); if($if2) {  ?>
+    <div class="<?php echo O::escapeHtml('or-act-clickable or-button-knob') ?>"><?php echo O::escapeHtml('') ?>
+      <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('add') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
+        <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-add') ?>"><?php echo O::escapeHtml('') ?></i>
+        <span><?php echo O::escapeHtml(''.@O::lang('add').'') ?></span>
+      </a>
+    </div>
+   <?php } ?>
