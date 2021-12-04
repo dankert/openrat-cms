@@ -1,80 +1,61 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-  <table>
-    <row class="data">
-      <column>
-        <text value="${message:name}"/>
-      </column>
-      <column class="name">
-        <text value="${name}"/>
-      </column>
-    </row>
-    <row class="data">
-      <column>
-        <text value="${message:description}"/>
-      </column>
-      <column>
-        <text value="${description}"/>
-      </column>
-    </row>
-    <row class="data">
-      <column>
-        <text value="${message:type}"/>
-      </column>
-      <column class="filename">
-        <image elementtype="${element_type}"/>
-        <text value="${message:el_${element_type}}"/>
-      </column>
-    </row>
-    <row class="data">
-      <column>
-        <text value="${message:template}"/>
-      </column>
-      <column class="act-clickable">
-        <link type="open" action="template" id="${template_id}">
-          <image action="template"/>
-          <text value="${template_name}"/>
-        </link>
-      </column>
-    </row>
-    <row class="data">
-      <column>
-        <text value="${message:element}"/>
-      </column>
-      <column class="act-clickable">
-        <link id="${element_id}" name="${element_name}" action="element" type="open">
-          <image elementtype="${element_type}"/>
-          <text value="${element_name}"/>
-        </link>
-      </column>
-    </row>
-    <row class="data">
-      <column>
-        <text value="${message:format}"/>
-        <text value="${message:element}"/>
-      </column>
-      <column>
-        <text value="${element_format}"/>
-      </column>
-    </row>
-    <row class="data">
-      <column>
-        <text value="${message:format}"/>
-      </column>
-      <column>
-        <text value="${format}"/>
-      </column>
-    </row>
-    <row class="data">
-      <column>
-        <text value="${message:lastchange}"/>
-      </column>
-      <column>
-        <image elementtype="date"/>
-        <date date="${lastchange_date}"/>
-        <text value=", "/>
-        <image action="user"/>
-        <user user="${lastchange_user}"/>
-      </column>
-    </row>
-  </table>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<table filter="false">
+		<row header="true">
+			<column header="true">
+				<text value="${message:name}"/>
+			</column>
+			<column header="true">
+				<text value="${name}"/>
+			</column>
+		</row>
+		<row>
+			<column>
+				<text value="${message:description}"/>
+			</column>
+			<column>
+				<text value="${description}"/>
+			</column>
+		</row>
+		<row>
+			<column>
+				<text value="${message:type}"/>
+			</column>
+			<column class="filename">
+				<image elementtype="${element_type}"/>
+				<text value="${message:el_${element_type}}"/>
+			</column>
+		</row>
+		<row>
+			<column>
+				<text value="${message:template}"/>
+			</column>
+			<column class="act-clickable">
+				<link type="open" action="template" id="${template_id}">
+					<image action="template"/>
+					<text value="${template_name}"/>
+				</link>
+			</column>
+		</row>
+		<row>
+			<column>
+				<text value="${message:element}"/>
+			</column>
+			<column class="act-clickable">
+				<link id="${element_id}" name="${element_name}" action="element" type="open">
+					<image elementtype="${element_type}"/>
+					<text value="${element_name}"/>
+				</link>
+			</column>
+		</row>
+		<row>
+			<column>
+				<text value="${message:format}"/>
+				<text value="${message:element}"/>
+			</column>
+			<column>
+				<text value="${element_format}"/>
+			</column>
+		</row>
+	</table>
 </output>

@@ -1,19 +1,16 @@
 <?php /* THIS FILE IS GENERATED from info.tpl.src.xml - DO NOT CHANGE */ defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
   <div class="<?php echo O::escapeHtml('or-table-wrapper') ?>"><?php echo O::escapeHtml('') ?>
-    <div class="<?php echo O::escapeHtml('or-table-filter') ?>"><?php echo O::escapeHtml('') ?>
-      <input type="<?php echo O::escapeHtml('search') ?>" name="<?php echo O::escapeHtml('filter') ?>" placeholder="<?php echo O::escapeHtml(''.@O::lang('SEARCH_FILTER').'') ?>" class="<?php echo O::escapeHtml('or-input or-table-filter-input') ?>" /><?php echo O::escapeHtml('') ?>
-    </div>
     <div class="<?php echo O::escapeHtml('or-table-area') ?>"><?php echo O::escapeHtml('') ?>
       <table class="<?php echo O::escapeHtml('or-table') ?>"><?php echo O::escapeHtml('') ?>
-        <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
-          <td><?php echo O::escapeHtml('') ?>
+        <tr class="<?php echo O::escapeHtml('or-table-header') ?>"><?php echo O::escapeHtml('') ?>
+          <th><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml(''.@O::lang('name').'') ?></span>
-          </td>
-          <td class="<?php echo O::escapeHtml('or-name') ?>"><?php echo O::escapeHtml('') ?>
+          </th>
+          <th><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml(''.@$name.'') ?></span>
-          </td>
+          </th>
         </tr>
-        <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
+        <tr><?php echo O::escapeHtml('') ?>
           <td><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml(''.@O::lang('description').'') ?></span>
           </td>
@@ -21,7 +18,7 @@
             <span><?php echo O::escapeHtml(''.@$description.'') ?></span>
           </td>
         </tr>
-        <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
+        <tr><?php echo O::escapeHtml('') ?>
           <td><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml(''.@O::lang('type').'') ?></span>
           </td>
@@ -30,7 +27,7 @@
             <span><?php echo O::escapeHtml(''.@O::lang('el_'.@$element_type.'').'') ?></span>
           </td>
         </tr>
-        <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
+        <tr><?php echo O::escapeHtml('') ?>
           <td><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml(''.@O::lang('template').'') ?></span>
           </td>
@@ -41,7 +38,7 @@
             </a>
           </td>
         </tr>
-        <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
+        <tr><?php echo O::escapeHtml('') ?>
           <td><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml(''.@O::lang('element').'') ?></span>
           </td>
@@ -52,35 +49,13 @@
             </a>
           </td>
         </tr>
-        <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
+        <tr><?php echo O::escapeHtml('') ?>
           <td><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml(''.@O::lang('format').'') ?></span>
             <span><?php echo O::escapeHtml(''.@O::lang('element').'') ?></span>
           </td>
           <td><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml(''.@$element_format.'') ?></span>
-          </td>
-        </tr>
-        <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
-          <td><?php echo O::escapeHtml('') ?>
-            <span><?php echo O::escapeHtml(''.@O::lang('format').'') ?></span>
-          </td>
-          <td><?php echo O::escapeHtml('') ?>
-            <span><?php echo O::escapeHtml(''.@$format.'') ?></span>
-          </td>
-        </tr>
-        <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
-          <td><?php echo O::escapeHtml('') ?>
-            <span><?php echo O::escapeHtml(''.@O::lang('lastchange').'') ?></span>
-          </td>
-          <td><?php echo O::escapeHtml('') ?>
-            <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-el_date') ?>"><?php echo O::escapeHtml('') ?></i>
-            <?php include_once( 'modules/template_engine/components/html/component_date/component-date.php'); { component_date($lastchange_date); ?>
-             <?php } ?>
-            <span><?php echo O::escapeHtml(', ') ?></span>
-            <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-user') ?>"><?php echo O::escapeHtml('') ?></i>
-            <?php include_once( 'modules/template_engine/components/html/component_user/component-user.php'); { component_user($lastchange_user); ?>
-             <?php } ?>
           </td>
         </tr>
       </table>
