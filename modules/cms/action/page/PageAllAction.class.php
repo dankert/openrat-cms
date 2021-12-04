@@ -10,10 +10,12 @@ use cms\generator\Producer;
 use cms\generator\Publisher;
 use cms\generator\PublishOrder;
 use cms\model\BaseObject;
+use cms\model\Content;
 use cms\model\Element;
 use cms\model\Folder;
 use cms\model\Language;
 use cms\model\Page;
+use cms\model\PageContent;
 use cms\model\Permission;
 use cms\model\Project;
 use cms\model\Value;
@@ -32,7 +34,6 @@ class PageAllAction extends PageAction implements Method {
 
 	public function view()
 	{
-
 		$languageid = $this->request->getRequiredNumber('languageid');
 		$language = new Language($languageid);
 		$language->load();
@@ -41,20 +42,28 @@ class PageAllAction extends PageAction implements Method {
 		$this->setTemplateVar('languageid'   , $language->languageid );
 
 		$this->setTemplateVar('value_time',time() );
+		$this->setTemplateVar('writable'  ,$this->page->hasRight( Permission::ACL_WRITE ) );
 
 		$elements = [];
 
 		/** @var Element $element */
 		foreach ($this->getElements() as $element) {
-			$value = new Value();
-			$value->languageid = $languageid;
-			$value->objectid   = $this->page->objectid;
-			$value->pageid     = $this->page->pageid;
-			$value->element    = &$element;
-			$value->elementid  = &$element->elementid;
-			$value->element->load();
-			$value->publish    = false;
-			$value->load();
+
+			$pageContent = new PageContent();
+			$pageContent->elementId  = $element->elementid;
+			$pageContent->pageId     = $this->page->pageid;
+			$pageContent->languageid = $languageid;
+			$pageContent->load();
+
+			if   ( $pageContent->isPersistent() ) {
+				$value = new Value();
+				$value->contentid = $pageContent->contentId;
+				$value->load();
+			}
+			else {
+				// There is no content yet, so creating an empty value.
+				$value = new Value();
+			}
 
 			$output = [];
 			$output += $element->getProperties();
@@ -98,7 +107,7 @@ class PageAllAction extends PageAction implements Method {
 					break;
 
 				case Element::ELEMENT_TYPE_SELECT:
-					$output['items'] = $value->element->getSelectItems();
+					$output['items'] = $element->getSelectItems();
 					$content = $value->text;
 					break;
 
@@ -138,7 +147,7 @@ class PageAllAction extends PageAction implements Method {
 					break;
 
 				case Element::ELEMENT_TYPE_NUMBER:
-					$content = $value->number / pow(10, $value->element->decimals);
+					$content = $value->number / pow(10, $element->decimals);
 					break;
 
 				case Element::ELEMENT_TYPE_LONGTEXT:
@@ -176,7 +185,6 @@ class PageAllAction extends PageAction implements Method {
 			$this->setTemplateVar('publish', false);
 
 		$this->setTemplateVar('elements', $elements );
-		//echo "<pre>" . print_r($elements,true) . '</pre>';
 	}
 
 
@@ -193,15 +201,14 @@ class PageAllAction extends PageAction implements Method {
 		/** @var Element $element */
 		foreach ($this->getElements() as $element) {
 
+			$pageContent = new PageContent();
+			$pageContent->elementId = $element->elementid;
+			$pageContent->pageId = $this->page->pageid;
+			$pageContent->languageid = $languageid;
+			$pageContent->load();
+
 			$value = new Value();
-			$value->languageid = $languageid;
-			$value->objectid = $this->page->objectid;
-			$value->pageid = $this->page->pageid;
-			$value->element = &$element;
-			$value->elementid = &$element->elementid;
-			$value->element->load();
-			$value->publish = false;
-			$value->load();
+			$value->contentid = $pageContent->contentId;
 
 			switch ($element->typeid) {
 
@@ -213,7 +220,7 @@ class PageAllAction extends PageAction implements Method {
 					break;
 
 				case Element::ELEMENT_TYPE_DATE:
-					$value->date = strtotime($this->request->getText($element->name.'_date') . $this->request->getText($element->name.'_time'));
+					$value->date = strtotime($this->request->getText($element->name . '_date') . $this->request->getText($element->name . '_time'));
 					break;
 
 				case Element::ELEMENT_TYPE_SELECT:
@@ -228,42 +235,47 @@ class PageAllAction extends PageAction implements Method {
 					$value->number = $this->request->getText($element->name) * pow(10, $value->element->decimals);
 					break;
 				default:
-					throw new \LogicException('Unknown element type: '.$element->getTypeName() );
+					throw new \LogicException('Unknown element type: ' . $element->getTypeName());
 			}
-			$value->page = new Page($value->objectid);
-			$value->page->load();
 
 
 			// Inhalt sofort freigegeben, wenn
 			// - Recht vorhanden
 			// - Freigabe gewuenscht
-			$value->publish = $value->page->hasRight(Permission::ACL_RELEASE) && $this->request->has('release');
+			$value->publish = $this->page->hasRight(Permission::ACL_RELEASE) && $this->request->has('release');
 
 			// Up-To-Date-Check
-			$lastChangeTime = $value->getLastChangeSinceByAnotherUser($this->request->getNumber('value_time'), Session::getUser()->userid);
+			$content = new Content( $pageContent->contentId );
+			$lastChangeTime = $content->getLastChangeSinceByAnotherUser($this->request->getNumber('value_time'), $this->getCurrentUserId());
 			if ($lastChangeTime)
 				$this->addWarningFor($value, Messages::CONCURRENT_VALUE_CHANGE, array('last_change_time' => date(L::lang('DATE_FORMAT'), $lastChangeTime)));
 
 			// Inhalt speichern
+			$value->persist();
 
 			// Wenn Inhalt in allen Sprachen gleich ist, dann wird der Inhalt
 			// fuer jede Sprache einzeln gespeichert.
-			if ($value->element->allLanguages) {
+			if ($element->allLanguages) {
 				$project = new Project($this->page->projectid);
 				foreach ($project->getLanguageIds() as $languageid) {
-					$value->languageid = $languageid;
-					$value->add();
+					if ($languageid != $pageContent->languageid) {
+						$otherPageContent = clone $pageContent;
+						$otherPageContent->languageid = $languageid;
+						$otherPageContent->contentId = null;
+						$otherPageContent->load();
+						if (!$otherPageContent->contentId)
+							$otherPageContent->persist(); // create pagecontent if it does not exist.
+
+						$otherValue = clone $value;
+						$otherValue->contentid = $otherPageContent->contentId;
+						$otherValue->persist();
+					}
 				}
-			} else {
-				// sonst nur 1x speichern (fuer die aktuelle Sprache)
-				$value->add();
 			}
-
-
 		}
 
 		// Falls ausgewaehlt die Seite sofort veroeffentlichen
-		if ($value->page->hasRight(Permission::ACL_PUBLISH) && $this->request->has('publish')) {
+		if ($this->page->hasRight(Permission::ACL_PUBLISH) && $this->request->has('publish')) {
 			$this->publishPage( $languageid );
 		}
 
