@@ -20,6 +20,7 @@ namespace cms\generator\target;
 use cms\base\Startup;
 use logger\Logger;
 use util\exception\PublisherException;
+use util\FileUtils;
 
 
 /**
@@ -32,6 +33,7 @@ use util\exception\PublisherException;
 class S3Target extends BaseTarget
 {
 	const SERVICE = 's3';
+	const AWS_4_HMAC_SHA_256 = 'AWS4-HMAC-SHA256';
 
 	/**
 	 * @var false|resource
@@ -45,14 +47,22 @@ class S3Target extends BaseTarget
 	}
 
 
+	/**
+	 * @param $source String source file
+	 * @param $dest String filename
+	 * @param $time int this is ignored, because the date in S3 must be a current date.
+	 * @return mixed
+	 * @throws PublisherException
+	 */
 	public function put($source, $dest, $time)
 	{
 		$dateIso   = date('r',Startup::getStartTime());
 		$dateShort = date('Ymd');
-		$timeStamp = date('Ymd\THise',Startup::getStartTime());
-		$dest = $this->url->path . '/' . $dest;
+		$timeStamp = date('Ymd\THis\Z',Startup::getStartTime());
+		//$destPath = FileUtils::unslashifyBegin($this->url->path . '/' . $dest);
+		$destPath = $this->url->path . '/' . $dest;
 
-		$accessKeyId = $this->url->user;
+		$accessKeyId     = $this->url->user;
 		$secretAccessKey = $this->url->pass;
 
 		$domain = explode('.',$this->url->host);
@@ -61,60 +71,109 @@ class S3Target extends BaseTarget
 
 		list($bucket,$service,$region) = $domain;
 		$scope = $dateShort.'/'.$region.'/'.$service.'/aws4_request';
-		$credential = $this->url->user.'/'.$scope;
+		$credential = $accessKeyId.'/'.$scope;
 
 		$headers = [];
-		$hashedPayload = hash_file('SHA256',$source);
+		$hashedPayload = hash_file('SHA256', $source);
 		$headers['x-amz-content-sha256'] = $hashedPayload;
-		//$headers['x-amz-date'] = $timeStamp;
-		//$content .= "Content-Length: ".filesize($source)."\r\n";
-		//$content .= "Connection: Close\r\n";
+		$headers['x-amz-date']           = $timeStamp;
 
 		$headers['Host'] = $this->url->host;
 		$headers['Date'] = $dateIso;
 
+
+		// Creating the "signedHeaders"
 		$signedHeaders    = $this->getSignedHeaders($headers);
+
+
+		// Creating the "canonicalHeaders"
 		$canonicalHeaders = $this->getCanonicalHeaders($headers);
-		$canonicalRequest = "PUT\n".$dest."\n\n".$canonicalHeaders."\n\n".$signedHeaders."\n".$hashedPayload;
 
-		$stringToSign = 'AWS4-HMAC-SHA256'."\n".$timeStamp."\n".$scope."\n".hash('SHA256',$canonicalRequest);
 
+		$canonicalRequestParts = [
+			'PUT',
+			utf8_encode($destPath),
+			'',
+			$canonicalHeaders,
+			'',
+			$signedHeaders,
+			$hashedPayload
+		];
+		$canonicalRequest = implode("\n",$canonicalRequestParts);
+		Logger::debug("S3 Canonical request:\n".$canonicalRequest);
+
+
+		// Create the "StringToSign"
+		$stringToSignParts = [
+			self::AWS_4_HMAC_SHA_256,
+			$timeStamp,
+			$scope,
+			hash('SHA256',$canonicalRequest )
+		];
+		$stringToSign = implode("\n",$stringToSignParts);
+		Logger::debug("S3 StringToSign:\n".$stringToSign);
+
+
+		// Create the "Signature"
 		$signatureParts = [
-			$dateIso,
+			$dateShort,
 			$region,
 			's3',
 			'aws4_request',
 		];
-		$signingKey = array_reduce(array_reverse($signatureParts),function ($initial,$value){
-			return hash_hmac('SHA256',$initial,$value);
+		$signingKey = array_reduce($signatureParts,function ($initialKey, $value){
+			Logger::debug('S3 Signing "'.$value.'"');
+			return hash_hmac('SHA256',$value,$initialKey,true);
 		},'AWS4'.$secretAccessKey);
-
 		$signature = hash_hmac( 'SHA256',$stringToSign, $signingKey );
+		Logger::debug("S3 Signature: ".$signature);
+
+
+		// Create the "Authorization" header
 		$authorizationParts = [
-			'Credential'=>$credential,
-			'SignedHeaders'=>$signedHeaders,
-			'Signature'=>$signature,
+			'Credential'    => $credential,
+			'SignedHeaders' => $signedHeaders,
+			'Signature'     => $signature,
 		];
 		array_walk($authorizationParts,function(&$value,$key){$value=$key.'='.$value;});
-		$headers['Authorization'] = 'AWS4-HMAC-SHA256'." ".implode(",",$authorizationParts);
-		$headers['Connection'   ] = 'Close';
+		$authorization = self::AWS_4_HMAC_SHA_256 ." ".implode(",",$authorizationParts);
+		$headers['Authorization' ] = $authorization;
+		Logger::debug("S3 Authorization: ".$authorization);
 
-		$content  = "PUT $dest HTTP/1.1\r\n";
+
+		// Add some extra headers
+		$headers['Connection'    ] = 'Close';
+		$headers['Content-Length'] = filesize($source);
+
+
+		// Creating the HTTP request
+		$content  = "PUT $destPath HTTP/1.1\r\n";
 
 		foreach( $headers as $key=>$value )
 			$content .= $key.': '.$value."\r\n";
+		Logger::trace( "S3 Request:\n".$content );
 
 		fwrite($this->socket, $content."\r\n".file_get_contents($source));
 
 		$response = '';
+		if	( !feof($this->socket) ) {
+			$line = fgets($this->socket, 14);
+			$status = substr($line,9,3);
+		}else{
+			$status = false;
+		}
 		while (!feof($this->socket)) {
 			$line = fgets($this->socket, 1028);
 			$response .= $line;
 		}
 
 		$response .= "\n\n\n\n".$content;
-		Logger::debug( "S3 Request:\n".$content );
-		throw new PublisherException($response);
+
+		Logger::debug( "S3 Response status: ".$status );
+
+		if ( $status != '200' )
+			// Some server error occured.
+			throw new PublisherException( "Status is ".$status."\n".$response );
 	}
 
 
@@ -166,6 +225,7 @@ class S3Target extends BaseTarget
 			$header[ strtolower($key) ] = $value;
 
 		ksort($header );
+		array_walk($header,function(&$value,$key){$value=$key.':'.$value;});
 
 		return implode( "\n",$header );
 	}
