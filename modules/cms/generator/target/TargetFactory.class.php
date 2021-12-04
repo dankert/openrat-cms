@@ -52,6 +52,10 @@ class TargetFactory
 				$target = new SFtpTarget($url);
 				break;
 
+			case 's3':
+				$target = new S3Target($url);
+				break;
+
 			default:
 				throw new PublisherException('The scheme "'.$scheme.'" is not supported.' );
 		}
