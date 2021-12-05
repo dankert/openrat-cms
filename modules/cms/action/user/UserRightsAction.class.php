@@ -46,7 +46,7 @@ class UserRightsAction extends UserAction implements Method {
 			
 			$o = new BaseObject($acl->objectid);
 			$o->objectLoad();
-			$right['objectname'] = $o->name;
+			$right['objectname'] = $o->filename;
 			$right['objectid'  ] = $o->objectid;
 			$right['objecttype'] = $o->getType();
 			

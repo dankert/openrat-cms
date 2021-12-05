@@ -13,7 +13,7 @@ class FolderRootAction extends FolderAction implements Method {
         $rootFolder = new Folder( $project->getRootObjectId() );
 		$rootFolder->load();
 
-		$this->setTemplateVar('rootfolderid'  ,$rootFolder->id  );
+		$this->setTemplateVar('rootfolderid'  ,$rootFolder->objectid  );
 		$this->setTemplateVar('rootfoldername',$rootFolder->filename );
     }
 

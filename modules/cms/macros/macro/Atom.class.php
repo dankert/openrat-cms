@@ -70,10 +70,10 @@ class Atom extends Macro
 		$folder->load();
 
 		if	( $this->feed_title == '' )
-			$this->feed_title = $folder->name;
+			$this->feed_title = $folder->getNameForLanguage( $this->pageContext->languageId )->name;
 
 		if	( $this->feed_description == '' )
-			$this->feed_description = $folder->desc;
+			$this->feed_description = $folder->getNameForLanguage( $this->pageContext->languageId )->description;
 
 		$feed['title'      ] = $this->feed_title;			
 		$feed['description'] = $this->feed_description;			
@@ -85,7 +85,6 @@ class Atom extends Macro
 			if	( $id == $this->getObjectId() )
 				continue;
 			$o = new BaseObject( $id );
-			$o->languageid = $this->page->languageid;
 			$o->load();
 			if ( $o->isPage ) // Nur wenn Seite
 			{
@@ -93,8 +92,8 @@ class Atom extends Macro
 				$p->load();
 
 				$item = array();
-				$item['title'      ] = $p->name;
-				$item['description'] = $p->desc;
+				$item['title'      ] = $p->getNameForLanguage( $this->pageContext->languageId )->name;
+				$item['description'] = $p->getNameForLanguage( $this->pageContext->languageId )->description;
 				$item['date'       ] = $p->lastchangeDate;
 				if	( empty($this->feed_url) )
 					$item['link'       ] = $this->pathToObject($id);

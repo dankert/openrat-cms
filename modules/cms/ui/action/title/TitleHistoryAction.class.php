@@ -21,11 +21,12 @@ class TitleHistoryAction extends TitleAction implements Method {
 				$resultList[$objectid] = array();
 				$resultList[$objectid]['url']  = Html::url($o->getType(),'',$objectid);
 				$resultList[$objectid]['type'] = $o->getType();
-				$resultList[$objectid]['name'] = $o->name;
+				$resultList[$objectid]['name'] = $o->getDefaultName()->name;
 				$resultList[$objectid]['lastchange_date'] = $o->lastchangeDate;
-	
-				if	( $o->desc != '' )
-					$resultList[$objectid]['desc'] = $o->desc;
+
+				$defaultName = $o->getDefaultName();
+				if	( $defaultName->description != '' )
+					$resultList[$objectid]['desc'] = $defaultName->description;
 				else
 					$resultList[$objectid]['desc'] = \cms\base\Language::lang('NO_DESCRIPTION_AVAILABLE');
 			}

@@ -49,9 +49,7 @@ class FolderCreatefileAction extends FolderAction implements Method {
 				throw new ValidationException( 'url' );
 			}
 
-			$file->desc      = $description;
 			$file->filename  = BaseObject::urlify( $name );
-			$file->name      = !empty($name)?$name:basename($url);
 			$file->size      = strlen($http->body);
 			$file->value     = $http->body;
 			$file->parentid  = $this->folder->objectid;
@@ -83,9 +81,7 @@ class FolderCreatefileAction extends FolderAction implements Method {
                 //throw new \ValidationException( $upload->parameterName );
             }
 
-            $file->desc      = $description;
-            $file->filename  = BaseObject::urlify( $upload->filename );
-            $file->name      = !empty($name)?$name:$upload->filename;
+			$file->filename  = BaseObject::urlify( $upload->filename );
             $file->extension = $upload->extension;
             $file->size      = $upload->size;
             $file->parentid  = $this->folder->objectid;

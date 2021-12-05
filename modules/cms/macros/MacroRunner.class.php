@@ -68,7 +68,7 @@ class MacroRunner
 			$value->contentid = $pageContent->contentId;
 			$value->load();
 
-			return $value->getRawValue();
+			return $value->getRawValue($element->typeid);
 		});
 
 		$parameters = $resolver->resolveVariablesInArray($parameter);

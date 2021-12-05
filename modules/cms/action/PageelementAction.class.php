@@ -179,7 +179,7 @@ class PageelementAction extends BaseAction
 		$this->setTemplateVar('rootfolderid',$project->getRootObjectId() );
 		
 		// Ermitteln, welche Objekttypen verlinkt werden d�rfen.
-		$type = $this->value->element->subtype;
+		$type = $this->velement->subtype;
 
 		if	( substr($type,0,5) == 'image' )
 		$type = 'file';
@@ -212,7 +212,7 @@ class PageelementAction extends BaseAction
      */
     protected function editSelect()
     {
-        $this->setTemplateVar( 'items',$this->value->element->getSelectItems() );
+        $this->setTemplateVar( 'items',$this->element->getSelectItems() );
         $this->setTemplateVar( 'text' ,$this->value->text                      );
 
     }
@@ -280,7 +280,7 @@ class PageelementAction extends BaseAction
      */
     protected function editNumber()
     {
-        $this->setTemplateVar('number',$this->value->number / pow(10,$this->value->element->decimals) );
+        $this->setTemplateVar('number',$this->value->number / pow(10,$this->element->decimals) );
     }
 
 
@@ -537,7 +537,7 @@ class PageelementAction extends BaseAction
         if   ( $this->request->has('linkobjectid') )
 	        $value->linkToObjectId = $this->request->getText('linkobjectid');
         else
-    	    $value->number         = $this->request->getText('number') * pow(10,$value->element->decimals);
+    	    $value->number         = $this->request->getText('number') * pow(10,$this->element->decimals);
 
         $this->afterSave($value);
     }

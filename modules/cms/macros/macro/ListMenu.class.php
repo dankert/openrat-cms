@@ -73,7 +73,6 @@ class ListMenu extends Macro
 		foreach( $folder->getObjectIds() as $id )
 		{
 			$o = new BaseObject( $id );
-			$o->languageid = $this->page->languageid;
 			$o->load();
 			if ( $o->isFolder ) // Nur wenn Ordner
 			{
@@ -85,13 +84,12 @@ class ListMenu extends Macro
 				
 				if	( count($f->getLinks())+count($f->getPages()) > 0 )
 				{
-					$this->output( '<h1 class="title">'.$o->name.'</h1><ul>');
+					$this->output( '<h1 class="title">'.$o->getNameForLanguage( $this->pageContext->languageId )->name.'</h1><ul>');
 					// Untermenue
 					// Schleife ber alle Objekte im aktuellen Ordner
 					foreach( $f->getObjectIds() as $xid )
 				    {
 						$o = new BaseObject( $xid );
-						$o->languageid = $this->page->languageid;
 						$o->load();
 				
 						// Nur Seiten und Verknuepfungen anzeigen
@@ -101,11 +99,11 @@ class ListMenu extends Macro
 						if ( $this->getObjectId() == $xid )
 						{
 							// aktuelle Seite
-							$this->output( '<li class="menu">'.$o->name.'</li>' );
+							$this->output( '<li class="menu">'.$o->getNameForLanguage( $this->pageContext->languageId )->name.'</li>' );
 						}
 						else
 						{
-							$this->output( '<li class="menu"><a class="menu" href="'.$this->pathToObject($xid).'">'.$o->name.'</a></li>' );
+							$this->output( '<li class="menu"><a class="menu" href="'.$this->pathToObject($xid).'">'.$o->getNameForLanguage( $this->pageContext->languageId )->name.'</a></li>' );
 						}
 					}
 			

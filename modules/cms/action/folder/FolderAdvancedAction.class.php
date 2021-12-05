@@ -35,9 +35,9 @@ class FolderAdvancedAction extends FolderAction implements Method {
 			{
 				$list[$id]['objectid'] = $id;
 				$list[$id]['id'      ] = 'obj'.$id;
-				$list[$id]['name'    ] = $o->name;
+				$list[$id]['name'    ] = $o->getDefaultName()->name;
 				$list[$id]['filename'] = $o->filename;
-				$list[$id]['desc'    ] = $o->desc;
+				$list[$id]['desc'    ] = $o->getDefaultName()->description;
 				if	( $list[$id]['desc'] == '' )
 					$list[$id]['desc'] = \cms\base\Language::lang('NO_DESCRIPTION_AVAILABLE');
 				$list[$id]['desc'] = 'ID '.$id.' - '.$list[$id]['desc'];
@@ -71,7 +71,7 @@ class FolderAdvancedAction extends FolderAction implements Method {
 			$this->setTemplateVar('folder',$otherfolder);
 
 			// URLs zum Umsortieren der Eintraege
-			$this->setTemplateVar('order_url'      ,Html::url('folder','order',$this->folder->id) );
+			$this->setTemplateVar('order_url'      ,Html::url('folder','order',$this->folder->objectid) );
 		}
 
 		$actionList = array();
@@ -89,15 +89,15 @@ class FolderAdvancedAction extends FolderAction implements Method {
 		$this->setTemplateVar('defaulttype',$this->request->getAlphanum('type'));
 
 		$this->setTemplateVar('object'      ,$list            );
-		$this->setTemplateVar('act_objectid',$this->folder->id);
+		$this->setTemplateVar('act_objectid',$this->folder->objectid);
 
 		$project = new Project($this->folder->projectid);
 		$rootFolder = new Folder( $project->getRootObjectId() );
 		$rootFolder->load();
 
 		$this->setTemplateVar('properties'    ,$this->folder->getProperties() );
-		$this->setTemplateVar('rootfolderid'  ,$rootFolder->id  );
-		$this->setTemplateVar('rootfoldername',$rootFolder->name);
+		$this->setTemplateVar('rootfolderid'  ,$rootFolder->objectid  );
+		$this->setTemplateVar('rootfoldername',$rootFolder->filename  );
     }
 
 
@@ -198,7 +198,6 @@ class FolderAdvancedAction extends FolderAction implements Method {
 
 			// TAR speichern.
 			$tarFile = new File();
-			$tarFile->name     = \cms\base\Language::lang('ARCHIVE').' '.$this->request->getText('filename');
 			$tarFile->filename = $this->request->getText('filename');
 			$tarFile->extension = 'tar';
 			$tarFile->parentid = $this->folder->objectid;
@@ -256,35 +255,35 @@ class FolderAdvancedAction extends FolderAction implements Method {
 								break;
 
 							case 'file':
-								$f = new File( $id );
+								$f = new File();
 								$f->load();
 								$f->filename = '';
-								$f->name     = \cms\base\Language::lang('COPY_OF').' '.$f->name;
 								$f->parentid = $targetObjectId;
 								$f->persist();
 								$f->copyValueFromFile( $id );
+								$f->copyNamesFrom( $id );
 
 								$this->addNoticeFor($o,Messages::COPIED);
 								break;
 
 							case 'page':
-								$p = new Page( $id );
+								$p = new Page();
 								$p->load();
 								$p->filename = '';
-								$p->name     = \cms\base\Language::lang('COPY_OF').' '.$p->name;
 								$p->parentid = $targetObjectId;
 								$p->persist();
 								$p->copyValuesFromPage( $id );
+								$p->copyNamesFrom( $id );
 								$this->addNoticeFor($o,Messages::COPIED);
 								break;
 
 							case 'link':
-								$l = new Link( $id );
+								$l = new Link();
 								$l->load();
 								$l->filename = '';
-								$l->name     = \cms\base\Language::lang('COPY_OF').' '.$l->name;
 								$l->parentid = $targetObjectId;
 								$l->persist();
+								$l->copyNamesFrom( $id );
 								$this->addNoticeFor($o,Messages::COPIED);
 								break;
 
@@ -306,8 +305,8 @@ class FolderAdvancedAction extends FolderAction implements Method {
 
 							$link->linkedObjectId = $id;
 							$link->isLinkToObject = true;
-							$link->name           = \cms\base\Language::lang('LINK_TO').' '.$o->name;
 							$link->persist();
+							$link->copyNamesFrom($o->objectid);
 							$this->addNoticeFor($o,Messages::LINKED);
 						}
 						else

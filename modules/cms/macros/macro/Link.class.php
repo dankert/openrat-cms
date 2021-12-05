@@ -50,8 +50,8 @@ class NextPage extends Macro
 		$o = new BaseObject( $this->targetid );
 		$o->load();
 		
-		if	( empty($this->name ) ) $this->name  = $o->name;
-		if	( empty($this->title) ) $this->title = $o->description;
+		if	( empty($this->name ) ) $this->name  = $o->getNameForLanguage( $this->pageContext->languageId )->name;
+		if	( empty($this->title) ) $this->title = $o->getNameForLanguage( $this->pageContext->languageId )->description;
 
 		$this->output( '<a href="'.$this->pathToObject($this->targetid).' title="'.$this->title.'" class="'.$this->classes.'">'.$this->name.'</a>' );
 	}

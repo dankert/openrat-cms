@@ -31,7 +31,6 @@ class TitleShowAction extends TitleAction implements Method {
 			$this->setTemplateVar('dbid'  ,$db->id);
 		}
 
-        $this->setTemplateVar('username'    ,$user->name    );
         $this->setTemplateVar('userfullname',$user->fullname);
 
 		// Urls zum Benutzerprofil und zum Abmelden

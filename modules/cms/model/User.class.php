@@ -44,40 +44,55 @@ class User extends ModelBase
 	 */
 	const AUTH_TYPE_OIDC = 2;
 
-	var $userid   = 0;
-	var $error    = '';
+	public $userid   = 0;
 
-	var $name     = '';
-	var $fullname = '';
-	var $tel;
-	var $mail;
-	var $desc;
-	var $style;
-	var $isAdmin;
-	var $rights;
-	var $loginDate = 0;
+	/**
+	 * Username.
+	 * This name should not be displayed to other users.
+	 *
+	 * @var string
+	 */
+	public $name     = '';
 
-	var $language;
-	var $timezone;
-	var $passwordExpires;
-	var $passwordAlgo;
-	
-	var $lastLogin;
-	var $otpSecret;
-	var $hotp     ;
-	var $hotpCount;
-	var $totp     ;
-	
-	
-	
-	var $mustChangePassword = false;
-	var $groups = null;
+	/**
+	 * natural name of this user.
+	 *
+	 * @var string
+	 */
+	public $fullname = '';
+	public $tel;
+	public $mail;
+	public $desc;
+	public $style;
+	public $isAdmin;
+	public $loginDate = 0;
+
+	/**
+	 * User prefered language.
+	 *
+	 * As ISO string.
+	 *
+	 * @var string
+	 */
+	public $language;
+
+	public $timezone;
+	public $passwordExpires;
+	public $passwordAlgo;
+
+	public $lastLogin;
+	public $otpSecret;
+	public $hotp     ;
+	public $hotpCount;
+	public $totp     ;
 
 	public $issuer = null;
 	public $type = User::AUTH_TYPE_INTERNAL;
 
 	public $passwordFailedCount = 0;
 	public $passwordLockedUntil = 0;
+
+	private $groups = null;
 
 
 	// Konstruktor
@@ -95,10 +110,12 @@ class User extends ModelBase
      */
 	public static function listAll()
 	{
-		$sql = Db::sql( 'SELECT id,name '.
-		                '  FROM {{user}}'.
-		                '  ORDER BY name' );
-
+		$sql = Db::sql( <<<SQL
+			SELECT id,name
+		      FROM {{user}}
+		     ORDER BY name
+SQL
+		);
 		return $sql->getAssoc();
 	}
 
@@ -111,10 +128,12 @@ class User extends ModelBase
 	public static function getAllUsers()
 	{
 		$list = array();
-		$sql = Db::sql( 'SELECT * '.
-		                '  FROM {{user}}'.
-		                '  ORDER BY name' );
-
+		$sql = Db::sql( <<<SQL
+                 SELECT *
+		           FROM {{user}}
+		          ORDER BY name
+SQL
+		);
 		foreach($sql->getAll() as $row )
 		{
 			$user = new User();
@@ -159,12 +178,13 @@ SQL
 
 
 	/**
-	 * Erzeugt eine WHERE-Bedingung zur Verwendung in einer SQL-Anfrage.<br>
-	 * Es wird eine Oder-Liste mit allen Gruppen-Ids erzeugt.
+	 * Creates an SQL-WHERE-Clause.
 	 *
-	 * @return String SQL-WHERE-Bedingung
+	 * A "WHERE IN()" clause is difficult, because groups may be part of another groups.
+	 *
+	 * @return String SQL-WHERE-Clause
 	 */
-	function getGroupClause()
+	public function getGroupClause()
 	{
 		$groupIds = $this->getEffectiveGroups();
 		
@@ -195,19 +215,26 @@ SQL
 		{
 			$groupClause = $this->getGroupClause();
 			$sql = $db->sql(<<<SQL
-SELECT DISTINCT {{project}}.id,{{project}}.name
-  FROM {{object}}
-  LEFT JOIN {{acl}}     ON {{object}}.id  = {{acl}}.objectid 
-  LEFT JOIN {{project}} ON {{project}}.id = {{object}}.projectid 
- WHERE {{object}}.parentid IS NULL     AND
-       {{acl}}.id          IS NOT NULL AND
-       (  {{acl}}.userid={userid} OR
-       $groupClause OR 
-       ({{acl}}.userid IS NULL AND {{acl}}.groupid IS NULL)) 
- ORDER BY {{project}}.name
+				SELECT DISTINCT {{project}}.id,{{project}}.name
+				  FROM {{object}}
+				  LEFT JOIN {{acl}}     ON {{object}}.id  = {{acl}}.objectid 
+				  LEFT JOIN {{project}} ON {{project}}.id = {{object}}.projectid 
+				 WHERE {{object}}.parentid IS NULL     AND
+					   {{acl}}.id          IS NOT NULL AND
+						 (
+							{{acl}}.type = {usertype}  AND {{acl}}.userid={userid}
+						 OR {{acl}}.type = {grouptype} AND $groupClause 
+						 OR ({{acl}}.type = {alltype}
+						 OR ({{acl}}.type = {guesttype}
+					   ) 
+				 ORDER BY {{project}}.name
 SQL
 );
-		$sql->setInt   ( 'userid',$this->userid );
+			$sql->setInt( 'userid',$this->userid );
+			$sql->setInt( 'usertype' ,Permission::TYPE_USER  );
+			$sql->setInt( 'grouptype',Permission::TYPE_GROUP );
+			$sql->setInt( 'alltype'  ,Permission::TYPE_AUTH  );
+			$sql->setInt( 'guesttype',Permission::TYPE_GUEST );
 
 			return $sql->getAssoc();
 		}
@@ -867,21 +894,28 @@ SQL
 	 *
 	 * @return array
 	 */
-	function getAllAcls()
+	public function getAllAcls()
 	{
+		$groupClause = $this->getGroupClause();
 
-		$this->delRights();
-
-		$group_clause = $this->getGroupClause();
-
-		$sql = Db::sql( 'SELECT {{acl}}.*,{{object}}.projectid,{{language}}.name AS languagename FROM {{acl}}'.
-		                '  LEFT JOIN {{object}} '.
-		                '         ON {{object}}.id={{acl}}.objectid '.
-		                '  LEFT JOIN {{language}} '.
-		                '         ON {{language}}.id={{acl}}.languageid '.
-		                '  WHERE ( {{acl}}.userid={userid} OR '.$group_clause.
-		                                                 ' OR ({{acl}}.userid IS NULL AND {{acl}}.groupid IS NULL) )'.
-		                '  ORDER BY {{object}}.projectid,{{acl}}.languageid' );
+		$sql = Db::sql( <<<SQL
+			              SELECT    {{acl}}.*,
+			                        {{object}}.projectid,
+			                        {{language}}.name AS languagename
+			                   FROM {{acl}}
+		                  LEFT JOIN {{object}}
+		                         ON {{object}}.id={{acl}}.objectid
+		                  LEFT JOIN {{language}}
+		                         ON {{language}}.id={{acl}}.languageid
+		                  WHERE ( 
+										{{acl}}.type = {usertype}  AND {{acl}}.userid={userid}
+									 OR {{acl}}.type = {grouptype} AND $groupClause 
+									 OR ({{acl}}.type = {alltype}
+									 OR ({{acl}}.type = {guesttype}
+						  )
+		                  ORDER BY {{object}}.projectid,{{acl}}.languageid
+SQL
+		);
 		$sql->setInt  ( 'userid'    ,$this->userid );
 
 		$aclList = array();
@@ -964,61 +998,6 @@ SQL
 	}
 
 
-	/**
-	 * Entfernt alle Rechte aus diesem Benutzerobjekt.
-	 */
-	function delRights()
-	{
-		$this->rights = array();
-	}
-
-
-	/**
-	 * Ueberpruft, ob der Benutzer ein bestimmtes Recht hat
-	 *
-	 * @param $objectid int Objekt-Id zu dem Objekt, dessen Rechte untersucht werden sollen
-	 * @param $type int Typ des Rechts (Lesen,Schreiben,...) als Konstante Acl::ACL_*
-	 */ 
-	public function hasRight( $objectid,$type )
-	{
-		if   ( Startup::readonly() && ! $type & Permission::ACL_READ )
-			return false; // Nothing is writable in Readonly-Mode.
-
-		if	( $this->isAdmin )
-			return true;
-
-		if	( !isset($this->rights[$objectid]) )
-			return false;
-
-		return $this->rights[$objectid] & $type;
-	}
-
-
-	/**
-	 * Berechtigung dem Benutzer hinzufuegen.
-	 * 
-	 * @param $objectid int Objekt-Id, zu dem eine Berechtigung hinzugefuegt werden soll
-	 * @param $type int Art des Rechtes, welches hinzugefuegt werden soll
-	 */
-	function addRight( $objectid,$type )
-	{
-		$securityconfig = Configuration::subset('security');
-		
-		if	( $securityconfig->is('readonly') )
-			if	( $type & Permission::ACL_READ )
-				$type = Permission::ACL_READ;
-			else
-				$type = 0;
-
-		if	( $type & Permission::ACL_PUBLISH && $securityconfig->is('nopublish') )
-			$type -= Permission::ACL_PUBLISH;
-
-
-		if	( !isset($this->rights[$objectid]) )
-			$this->rights[$objectid] = 0;
-
-		$this->rights[$objectid] = $this->rights[$objectid] | $type;
-	}
 
 
 	/**

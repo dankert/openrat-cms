@@ -4,6 +4,7 @@ use cms\action\Action;
 use cms\action\Method;
 use cms\action\ObjectAction;
 use cms\action\RequestParams;
+use cms\model\Name;
 use cms\model\Permission;
 use cms\model\BaseObject;
 use cms\model\File;
@@ -94,7 +95,6 @@ class ObjectCopyAction extends ObjectAction implements Method {
 				
 				$link = new Link();
 				$link->parentid = $oldParentId;
-				$link->name     = \cms\base\Language::lang('LINK_TO').' '.$sourceObject->name;
 				$link->filename = $sourceObject->filename;
 				$link->linkedObjectId = $sourceObjectId;
 				$link->persist();
@@ -103,52 +103,52 @@ class ObjectCopyAction extends ObjectAction implements Method {
 				break;
 				
 			case 'copy':
-				
+
+				$destObject = null;
 				switch( $sourceObject->getType() )
 				{
 					case 'folder':
-						// Ordner zur Zeit nicht kopieren
-						// Funktion waere zu verwirrend
+						// this is a little bit too complicated :(
 						$this->addErrorFor($sourceObject,Messages::CANNOT_COPY_FOLDER);
-						break;
+						break 2;
 							
 					case 'file':
-						$f = new File( $sourceObjectId );
-						$f->load();
+						$f = new File();
 						$f->filename = '';
-						$f->name     = \cms\base\Language::lang('COPY_OF').' '.$f->name;
 						$f->parentid = $targetObjectId;
 						$f->persist();
 						$f->copyValueFromFile( $sourceObjectId );
+						$f->copyNamesFrom( $sourceObjectId);
 
-						$this->addNoticeFor($sourceObject,Messages::COPIED);
+						$destObject = $f;
 						break;
 				
 					case 'page':
 						$p = new Page( $sourceObjectId );
 						$p->load();
 						$p->filename = '';
-						$p->name     = \cms\base\Language::lang('COPY_OF').' '.$p->name;
 						$p->parentid = $targetObjectId;
 						$p->persist();
 						$p->copyValuesFromPage( $sourceObjectId );
-						$this->addNoticeFor($sourceObject,Messages::COPIED);
+						$p->copyNamesFrom( $sourceObjectId );
+						$destObject = $p;
 						break;
 							
 					case 'link':
 						$l = new Link( $sourceObjectId );
 						$l->load();
 						$l->filename = '';
-						$l->name     = \cms\base\Language::lang('COPY_OF').' '.$l->name;
 						$l->parentid = $targetObjectId;
 						$l->persist();
-						$this->addNoticeFor($sourceObject,Messages::COPIED);
+						$destObject = $l;
 						break;
 							
 					default:
 						throw new \LogicException('fatal: unknown type while deleting');
 				}
-				break;				
+				$this->addNoticeFor($sourceObject,Messages::COPIED);
+
+				break;
 				
 			case 'link':
 
@@ -162,7 +162,6 @@ class ObjectCopyAction extends ObjectAction implements Method {
 				
 				$link = new Link();
 				$link->parentid = $targetObjectId;
-				$link->name     = \cms\base\Language::lang('LINK_TO').' '.$sourceObject->name;
 				$link->filename = $sourceObject->filename;
 				$link->linkedObjectId = $sourceObjectId;
 				$link->isLinkToObject = true;

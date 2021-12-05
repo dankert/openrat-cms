@@ -14,7 +14,7 @@ class FolderShowAction extends FolderAction implements Method {
         header('Content-Type: text/html' );
 
         header('X-Folder-Id: '   .$this->folder->folderid );
-        header('X-Id: '         .$this->folder->id       );
+        header('X-Id: '         .$this->folder->objectid       );
         header('Content-Description: '.$this->folder->filename() );
 
         echo '<html><body>';

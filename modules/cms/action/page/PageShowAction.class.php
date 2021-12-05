@@ -20,14 +20,16 @@ class PageShowAction extends PageAction implements Method {
 
 		$this->page->load();
 
-		// HTTP-Header mit Sprachinformation setzen.
-		$language = new Language( $this->page->languageid);
-		$language->load();
-		header('Content-Language: '.$language->isoCode);
 
 		Logger::debug("Preview page: ".$this->page->__toString() );
 
-		$pageContext = $this->createPageContext( Producer::SCHEME_PREVIEW);
+		$pageContext = $this->createPageContext( Producer::SCHEME_PREVIEW );
+
+		// HTTP-Header mit Sprachinformation setzen.
+		$language = new Language( $pageContext->languageid);
+		$language->load();
+		header('Content-Language: '.$language->isoCode);
+
 		$generator = new PageGenerator( $pageContext );
 
 		header('Content-Type: '.$generator->getMimeType().'; charset=UTF-8' );

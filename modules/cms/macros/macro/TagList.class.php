@@ -50,7 +50,7 @@ class TagList extends Macro
 			$target->load();
 			
 			// Link erzeugen
-			$this->output( '<div class="tag"><a href="'.$this->pathToObject($target->objectid).'">'.$f->name.'</a></div>' );
+			$this->output( '<div class="tag"><a href="'.$this->pathToObject($target->objectid).'">'.$f->getNameForLanguage( $this->pageContext->languageId )->name.'</a></div>' );
 		}
 	}
 

@@ -112,7 +112,6 @@ class HtmlRenderer
 
 			case 'rawelement':
 				$tag = '';
-				$val = $child->src;
 
 				break;
 
@@ -251,7 +250,7 @@ class HtmlRenderer
 				if (BaseObject::available($child->objectId)) {
 					$file = new File($child->objectId);
 					$file->load();
-					$attr['title'] = $file->description;
+					$attr['title'] = $file->getDefaultName()->description;
 					unset($file);
 				}
 				break;
@@ -271,8 +270,8 @@ class HtmlRenderer
 					$image = new Image($child->objectId);
 
 					$image->load();
-					$attr['alt'] = $image->name;
-					$attr['title'] = $image->description;
+					$attr['alt'  ] = $image->getDefaultName()->name;
+					$attr['title'] = $image->getDefaultName()->description;
 
 					$image->getImageSize();
 					$attr['width'] = $image->width;

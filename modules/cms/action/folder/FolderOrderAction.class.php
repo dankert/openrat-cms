@@ -41,7 +41,7 @@ class FolderOrderAction extends FolderAction implements Method {
 		}
 
 		$this->setTemplateVar('object'      ,$list            );
-		$this->setTemplateVar('act_objectid',$this->folder->id);
+		$this->setTemplateVar('act_objectid',$this->folder->objectid);
     }
 
 

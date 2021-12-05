@@ -87,13 +87,12 @@ class Sitemap extends Macro
 		foreach( $f->getObjectIds() as $id )
 		{
 			$o = new BaseObject( $id );
-			$o->languageid = $this->page->languageid;
 			$o->load();
 	
 			// Ordner
 			if ($o->isFolder )
 			{
-				$this->output( '<li><strong>'.$o->name.'</strong><br/>' );
+				$this->output( '<li><strong>'.$o->getNameForLanguage( $this->pageContext->languageId )->name.'</strong><br/>' );
 				$this->output( '<ul>' );
 				$this->showFolder( $id ); // Rekursiver Aufruf dieser Methode
 				$this->output( '</ul></li>' );
@@ -106,12 +105,12 @@ class Sitemap extends Macro
 				if ( $this->getObjectId() == $id )
 				{
 					// aktuelle Seite
-					$this->output( '<li><strong>'.$o->name.'</strong></li>' );
+					$this->output( '<li><strong>'.$o->getNameForLanguage( $this->pageContext->languageId )->name.'</strong></li>' );
 				}
 				else
 				{
 					// Link erzeugen
-					$this->output( '<li><a href="'.$this->pathToObject($id).'">'.$o->name.'</a></li>' );
+					$this->output( '<li><a href="'.$this->pathToObject($id).'">'.$o->getNameForLanguage( $this->pageContext->languageId )->name.'</a></li>' );
 				}
 			}
 		}

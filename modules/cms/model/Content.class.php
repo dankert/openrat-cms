@@ -438,7 +438,7 @@ SQL
 
     public function getName()
     {
-        return $this->id;
+        return 'Content#'.$this->id;
     }
 
 

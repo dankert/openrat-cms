@@ -35,7 +35,6 @@ class PageInfoAction extends PageAction implements Method {
 
         foreach( $languages as $id => $name )
         {
-            $this->page->languageid = $id;
             $this->page->load();
 
             $languagesVar = $this->page->getProperties();

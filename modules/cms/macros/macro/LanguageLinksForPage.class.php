@@ -44,9 +44,6 @@ class LanguageLinksForPage extends Macro
 	// Build the navigation links to other languages
 	function execute()
 	{
-		// current language
-		$languageId = $this->page->languageid;
-
 		$project = new Project( $this->page->projectid );
 		// Schleife ueber alle Inhalte des Root-Ordners
 		echo '<ul>';

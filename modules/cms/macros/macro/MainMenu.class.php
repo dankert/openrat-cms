@@ -67,7 +67,6 @@ class MainMenu extends Macro
 		foreach( $folder->getObjectIds() as $id )
 		{
 			$o = new BaseObject( $id );
-			$o->languageid = $this->page->languageid;
 			$o->load();
 			if ( $o->isFolder ) // Nur wenn Ordner
 			{
@@ -76,7 +75,7 @@ class MainMenu extends Macro
 				// Ermitteln eines Objektes mit dem Dateinamen index
 				$oid = $f->getObjectIdByFileName('index');
 				if ( is_numeric($oid) && $oid!=0 )
-					$this->output( $this->arrowChar.'<a href="'.$this->pathToObject($oid).'" title="'.$o->desc.'">'.$o->name.'</a>' );
+					$this->output( $this->arrowChar.'<a href="'.$this->pathToObject($oid).'" title="'.$o->getNameForLanguage( $this->pageContext->languageId )->description.'">'.$o->getNameForLanguage( $this->pageContext->languageId )->name.'</a>' );
 			}
 		}
 	}

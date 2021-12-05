@@ -40,7 +40,7 @@ class FileShowAction extends FileAction implements Method {
 		}
 
 		header('X-File-Id: '   .$this->file->fileid     );
-		header('X-Id: '        .$this->file->id         );
+		header('X-Id: '        .$this->file->objectid   );
 
 		// Angabe Content-Disposition
 		// - Bild soll "inline" gezeigt werden

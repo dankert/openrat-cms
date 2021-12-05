@@ -25,17 +25,17 @@ class PageelementLinkAction extends PageelementAction implements Method {
 		$value->contentid = $pageContent->contentId;
 		$value->load();
 
-		$this->setTemplateVar('name'     ,$this->value->element->name     );
-		$this->setTemplateVar('desc'     ,$this->value->element->desc     );
+		$this->setTemplateVar('name'     ,$this->element->name     );
+		$this->setTemplateVar('desc'     ,$this->element->desc     );
 
         $project = new Project($this->page->projectid);
         $this->setTemplateVar('rootfolderid'     ,$project->getRootObjectId() );
 		
 		// Ermitteln, welche Objekttypen verlinkt werden d�rfen.
-		if	( empty($this->value->element->subtype) )
+		if	( empty($this->element->subtype) )
 			$types = array('page','file','link'); // Fallback: Alle erlauben :)
 		else
-			$types = explode(',',$this->value->element->subtype );
+			$types = explode(',',$this->element->subtype );
 
 		$objects = array();
 			
@@ -56,7 +56,7 @@ class PageelementLinkAction extends PageelementAction implements Method {
 
 			$objects[ $id ]  = \cms\base\Language::lang( $o->getType() ).': ';
 			$objects[ $id ] .=  implode( \util\Text::FILE_SEP,$f->parentObjectNames(false,true) );
-			$objects[ $id ] .= \util\Text::FILE_SEP.$o->name;
+			$objects[ $id ] .= \util\Text::FILE_SEP.$o->filename;
 			//			}
 		}
 

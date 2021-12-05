@@ -14,6 +14,9 @@ use util\Html;
  */
 class ImageAction extends FileAction
 {
+	/**
+	 * @var Image
+	 */
 	protected $image;
 
 	/**

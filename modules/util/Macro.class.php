@@ -94,6 +94,10 @@ class Macro
 	}
 
 
+	protected function getPageName() {
+		return $this->getPage()->getNameForLanguage( $this->pageContext->languageId )->name;
+	}
+
 	/**
 	 * Holt das aktuelle Objekt.
 	 * @return Object

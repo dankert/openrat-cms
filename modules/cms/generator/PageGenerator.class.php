@@ -92,7 +92,7 @@ class PageGenerator extends BaseGenerator
 		// Get a List with ElementId->ElementName
 		$elements = array_map(function($element) {
 			return $element->name;
-		},$page->getElements() );
+		},$page->getTemplate()->getElements() );
 
 		$templatemodel = new TemplateModel( $template->templateid, $this->context->modelId );
 		if   ( $this->context->scheme == Producer::SCHEME_PREVIEW )

@@ -94,7 +94,7 @@ class SearchAction extends BaseAction
                     $userResult = array( 'url'  => '',
                         'type' => 'user',
                         'id' => $user->userid,
-                        'name' => $user->name,
+                        'name' => $user->fullname,
                         'desc' => $user->desc,
                         'lastchange_date' => 0 );
                     $resultList[] = $userResult;
@@ -114,7 +114,7 @@ class SearchAction extends BaseAction
                     $userResult = array('url' => '',
                         'type' => 'user',
                         'id' => $user->userid,
-                        'name' => $user->name,
+                        'name' => $user->fullname,
                         'desc' => $user->desc,
                         'lastchange_date' => 0);
                     $resultList[] = $userResult;
@@ -166,9 +166,9 @@ class SearchAction extends BaseAction
                 $resultList[] = array(
                     'id'              => $objectid,
                     'type'            => $o->getType(),
-                    'name'            => $o->name,
+                    'name'            => $o->filename,
                     'lastchange_date' => $o->lastchangeDate,
-                    'desc'            => $o->desc
+                    'desc'            => ''
                 );
 		}
 	

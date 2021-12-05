@@ -52,7 +52,7 @@ class SearchIndex extends Macro
                 // Generating all values
                 $values = [];
 				/** @var Element $element */
-				foreach($page->getWritableElements() as $element ) {
+				foreach($page->getTemplate()->getWritableElements() as $element ) {
 					$pageContext = clone $this->pageContext;
 					$pageContext->objectId = $pageObjectId;
                 	$valueContext = new ValueContext($pageContext);

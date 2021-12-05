@@ -72,7 +72,7 @@ class TeaserList extends Macro
 				$p = new Page( $o->objectid );
 				$p->load();
 				
-				$desc = $p->desc;
+				$desc = $p->getNameForLanguage( $this->pageContext->languageId )->description;
 
 				if	( !empty($this->teaserElementId) )
 				{
@@ -111,9 +111,9 @@ class TeaserList extends Macro
 				
 				$this->output( '<'.$this->title_html_tag.' class="'.$this->title_css_class.'">');
 				if	( filter_var($this->linktitle,FILTER_VALIDATE_BOOLEAN))
-					$this->output( '<a href="'.$url.'">'.$p->name.'</a>' );
+					$this->output( '<a href="'.$url.'">'.$p->getNameForLanguage( $this->pageContext->languageId )->name.'</a>' );
 				else
-					$this->output( $p->name );
+					$this->output( $p->getNameForLanguage( $this->pageContext->languageId )->name );
 				$this->output( '</'.$this->title_html_tag.'>' );
 					
 				$this->output( '<p class="'.$this->description_css_class.'">' );

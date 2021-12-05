@@ -10,7 +10,7 @@ use util\Html;
 
 class FolderEditAction extends FolderAction implements Method {
     public function view() {
-		if   ( ! $this->folder->isRoot )
+		if   ( ! $this->folder->isRoot() )
 			$this->setTemplateVar('parentid',$this->folder->parentid);
 
 		$list = array();
@@ -24,9 +24,9 @@ class FolderEditAction extends FolderAction implements Method {
 
 			if   ( $o->hasRight(Permission::ACL_READ) )
 			{
-				$list[$id]['name']     = \util\Text::maxLength($o->name, 30);
-				$list[$id]['filename'] = \util\Text::maxLength($o->filename, 20);
-				$list[$id]['desc']     = \util\Text::maxLength($o->desc, 30);
+				$list[$id]['name']     = $o->getDefaultName()->name;
+				$list[$id]['filename'] = $o->filename;
+				$list[$id]['desc']     = $o->getDefaultName()->description;
 				if	( $list[$id]['desc'] == '' )
 					$list[$id]['desc'] = \cms\base\Language::lang('NO_DESCRIPTION_AVAILABLE');
 				$list[$id]['desc'] = $list[$id]['desc'].' - '.\cms\base\Language::lang('IMAGE').' '.$id;

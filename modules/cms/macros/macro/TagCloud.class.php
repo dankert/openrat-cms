@@ -47,7 +47,7 @@ class TagCloud extends Macro
 		
 		$f = new Folder( $this->keywordFolderId );
 		
-		foreach( $f->getChildObjectIdsByName() as $fid )
+		foreach( $f->getChildObjectIdsByName( $this->pageContext->languageId ) as $fid )
 		{
 			$tf = new Folder($fid);
 			if	( !$tf->isFolder)
@@ -61,7 +61,7 @@ class TagCloud extends Macro
 			$target->load();
 				
 			// Link zum Tag erzeugen
-			$this->output( '<div class="tag" style="font-size:'.(0.5+(sizeof($tf->getObjectIds())*0.1)).'em"><a href="'.$this->pathToObject($target->objectid).'">'.$tf->name.'</a></div>' );			
+			$this->output( '<div class="tag" style="font-size:'.(0.5+(sizeof($tf->getObjectIds())*0.1)).'em"><a href="'.$this->pathToObject($target->objectid).'">'.$tf->getNameForLanguage( $this->pageContext->languageId )->name.'</a></div>' );
 		}
 	}
 

@@ -49,9 +49,7 @@ class FolderCreateimageAction extends FolderAction implements Method {
 				throw new ValidationException( 'url' );
 			}
 
-			$image->desc      = $description;
 			$image->filename  = BaseObject::urlify( basename($url) );
-			$image->name      = !empty($name)?$name:basename($url);
 			$image->size      = strlen($http->body);
 			$image->value     = $http->body;
 			$image->parentid  = $this->folder->objectid;
@@ -72,9 +70,7 @@ class FolderCreateimageAction extends FolderAction implements Method {
                 //throw new \ValidationException( $upload->parameterName );
             }
 
-            $image->desc      = $description;
             $image->filename  = BaseObject::urlify( $upload->filename );
-            $image->name      = !empty($name)?$name:$upload->filename;
             $image->extension = $upload->extension;
             $image->size      = $upload->size;
             $image->parentid  = $this->folder->objectid;

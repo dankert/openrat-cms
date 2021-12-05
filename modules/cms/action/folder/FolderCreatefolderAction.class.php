@@ -15,7 +15,6 @@ class FolderCreatefolderAction extends FolderAction implements Method {
 
 	public function view() {
 		$this->setTemplateVar('objectid'  ,$this->folder->objectid   );
-		$this->setTemplateVar('languageid',$this->folder->languageid );
     }
 
 
@@ -25,10 +24,7 @@ class FolderCreatefolderAction extends FolderAction implements Method {
 
 		$f = new Folder();
 		$f->projectid  = $this->folder->projectid;
-		$f->languageid = $this->folder->languageid;
-		$f->name       = $name;
 		$f->filename   = BaseObject::urlify( $name );
-		$f->desc       = $description;
 		$f->parentid   = $this->folder->objectid;
 
 		$f->persist();

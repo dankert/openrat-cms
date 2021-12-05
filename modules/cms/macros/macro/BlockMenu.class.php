@@ -70,7 +70,6 @@ class BlockMenu extends Macro
 		foreach( $folder->getObjectIds() as $id )
 		{
 			$o = new BaseObject( $id );
-			$o->languageid = $this->page->languageid;
 			$o->load();
 			if ( $o->isFolder ) // Nur wenn Ordner
 			{
@@ -88,7 +87,7 @@ class BlockMenu extends Macro
 		       <td>
 		        <table border="0" cellpadding="3" cellspacing="1" width="100%">
 		         <tr>
-		          <td bgcolor="#cccccc"><span class="title"> '.$o->name.'</span></a>
+		          <td bgcolor="#cccccc"><span class="title"> '.$o->getNameForLanguage( $this->pageContext->languageId )->name.'</span></a>
 		          </td>
 		         </tr>
 		         <tr>
@@ -99,7 +98,6 @@ class BlockMenu extends Macro
 					foreach( $f->getObjectIds() as $xid )
 				    {
 						$o = new BaseObject( $xid );
-						$o->languageid = $this->page->languageid;
 						$o->load();
 				
 						// Nur Seiten anzeigen
@@ -110,13 +108,13 @@ class BlockMenu extends Macro
 						{
 							// aktuelle Seite
 							$this->output( '            <span class="small">o</span>
-							<strong class="nav">'.$o->name.'</strong>
+							<strong class="nav">'.$o->getNameForLanguage( $this->pageContext->languageId )->name.'</strong>
 							<br />' );
 						}
 						else
 						{
 							$this->output( '            <span class="small">o</span>
-						       <a class="nav" href="'.$this->pathToObject($xid).'">'.$o->name.'</a>
+						       <a class="nav" href="'.$this->pathToObject($xid).'">'.$o->getNameForLanguage( $this->pageContext->languageId )->name.'</a>
 						       <br />' );
 						}
 					//Api::output( '<br/>' );

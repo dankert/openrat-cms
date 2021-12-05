@@ -437,7 +437,7 @@ class Tree
 				$treeElement = new TreeElement();
 				$treeElement->id = $id;
 				$treeElement->internalId = $id;
-				$treeElement->text = $object->name;
+				$treeElement->text = $object->getDefaultName()->name;
 				if (in_array($object->getType(), array('page', 'folder'))) {
 					$treeElement->type = $object->getType();
 					$treeElement->internalId = $object->objectid;
@@ -446,9 +446,10 @@ class Tree
 				$treeElement->icon = $object->getType();
 				$treeElement->extraId = array(RequestParams::PARAM_LANGUAGE_ID => $object->getProject()->getDefaultLanguageId());
 
-				$treeElement->description = L::lang('' . $object->getType());
-				if ($object->desc != '')
-					$treeElement->description .= ' - ' . Text::maxLength($object->desc, 25);
+				$defaultName = $object->getDefaultName();
+
+				if ($defaultName->description )
+					$treeElement->description .= ' - ' . $defaultName->description;
 				else
 					$treeElement->description .= ' - ' . L::lang('NO_DESCRIPTION_AVAILABLE');
 
@@ -472,8 +473,10 @@ class Tree
 		$treeElement->text = $o->getName();
 		$treeElement->description = L::lang('' . $o->getType()) . ' ' . $id;
 
-		if ($o->desc != '')
-			$treeElement->description .= ': ' . $o->desc;
+		$defaultName = $o->getDefaultName();
+
+		if ($defaultName->description )
+			$treeElement->description .= ': ' . $defaultName->description;
 		else
 			$treeElement->description .= ' - ' . L::lang('NO_DESCRIPTION_AVAILABLE');
 
@@ -536,8 +539,6 @@ class Tree
 	{
 		$f = new Folder($id);
 		$f->load();
-		$f->languageid = $f->getProject()->getDefaultLanguageId();
-		$f->modelid    = $f->getProject()->getDefaultModelId();
 
 		/** @var BaseObject $o */
 		foreach ($f->getObjects() as $o) {
@@ -548,12 +549,13 @@ class Tree
 			$treeElement = new TreeElement();
 			$treeElement->id = $o->objectid;
 			$treeElement->internalId = $o->objectid;
-			$treeElement->extraId = array(RequestParams::PARAM_LANGUAGE_ID => $f->languageid, RequestParams::PARAM_MODEL_ID => $f->modelid);
-			$treeElement->text = $o->name;
+			$treeElement->text = $o->getDefaultName()->name;
 			$treeElement->description = L::lang('' . $o->getType()) . ' ' . $o->objectid;
 
-			if ($o->desc != '')
-				$treeElement->description .= ': ' . $o->desc;
+			$defaultName = $o->getDefaultName();
+
+			if ( $defaultName->description )
+				$treeElement->description .= ': ' . $defaultName->description;
 			else
 				$treeElement->description .= ' - ' . L::lang('NO_DESCRIPTION_AVAILABLE');
 

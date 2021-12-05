@@ -36,11 +36,11 @@ class FileCompressAction extends FileAction implements Method {
 				else
 				{
 					$newFile = new File();
-					$newFile->name     = $this->file->name;
 					$newFile->parentid = $this->file->parentid;
 					$newFile->value    = gzencode( $this->file->loadValue(),1 );
 					$newFile->parse_filename( $this->file->filename.'.'.$this->file->extension.'.gz',FORCE_GZIP );
 					$newFile->persist();
+					$newFile->copyNamesFrom( $this->file->objectid );
 				}
 				
 				break;
@@ -57,11 +57,11 @@ class FileCompressAction extends FileAction implements Method {
 				else
 				{
 					$newFile = new File();
-					$newFile->name     = $this->file->name;
 					$newFile->parentid = $this->file->parentid;
 					$newFile->value    = bzcompress( $this->file->loadValue() );
 					$newFile->parse_filename( $this->file->filename.'.'.$this->file->extension.'.bz2' );
 					$newFile->persist();
+					$newFile->copyNamesFrom( $this->file->objectid );
 				}
 				
 				break;

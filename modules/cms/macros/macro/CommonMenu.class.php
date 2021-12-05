@@ -31,6 +31,7 @@ namespace cms\macros\macro;
 // Beispiele fuer dynamische Templateelemente
 //
 // ---------------------------------------------------------------------------
+use cms\model\BaseObject;
 use cms\model\Folder;
 use cms\model\Page;
 use util\Macro;
@@ -80,23 +81,24 @@ class CommonMenu extends Macro
 		// Schleife ueber alle Objekte im aktuellen Ordner
 		foreach( $f->getObjectIds() as $id )
 		{
-			$o = new Object( $id );
-			$o->languageid = $this->page->languageid;
+			$o = new BaseObject( $id );
 			$o->load();
 	
 			// Nur Seiten anzeigen
 			if (!$o->isPage && !$o->isLink ) continue;
-	
+
+			$name = $o->getNameForLanguage( $this->pageContext->languageId );
+
 			// Wenn aktuelle Seite, dann markieren, sonst Link
 			if ( $this->getObjectId() == $id )
 			{
 				// aktuelle Seite
-				$this->output( '<li><strong>'.$o->name.'</strong></li>' );
+				$this->output( '<li><strong>'.$name->name.'</strong></li>' );
 			}
 			else
 			{
 				// Link erzeugen
-				$this->output( '<li><a href="'.$this->pathToObject($id).'">'.$o->name.'</a></li>' );
+				$this->output( '<li><a href="'.$this->pathToObject($id).'">'.$name->name.'</a></li>' );
 			}
 		}
 	}

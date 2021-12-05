@@ -75,8 +75,8 @@ class Album extends Macro
 			$file->load();
 			
 			$file->getImageSize();
-			$img = '<img src="'.$this->pathToObject($fileid).'" alt="'.$file->name.'" width="'.$file->width.'" height="'.$file->height.'" />';
-			$this->output('<dt>'.$img.'</dt><dd>'.$file->desc.'</dd>');
+			$img = '<img src="'.$this->pathToObject($fileid).'" alt="'.$file->getNameForLanguage( $this->pageContext->languageId )->name.'" width="'.$file->width.'" height="'.$file->height.'" />';
+			$this->output('<dt>'.$img.'</dt><dd>'.$file->getNameForLanguage( $this->pageContext->languageId )->description.'</dd>');
 
 		}
 		

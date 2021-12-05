@@ -72,7 +72,7 @@ class PagesNavigation extends Macro
 			if ( $o->isPage || $o->isLink )
 			{
 				if ( $o->objectid != $this->page->objectid )
-					$this->output( '<a href="'.$this->pathToObject($o->objectid).'" title="'.$o->desc.'" class="pagenav">'.$nr.'</a>' );
+					$this->output( '<a href="'.$this->pathToObject($o->objectid).'" title="'.$o->getNameForLanguage( $this->pageContext->languageId )->description.'" class="pagenav">'.$nr.'</a>' );
 				else
 					$this->output( '<strong>'.$nr.'</strong>' );
 			}

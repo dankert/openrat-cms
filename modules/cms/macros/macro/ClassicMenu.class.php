@@ -67,7 +67,6 @@ class ClassicMenu extends Macro
 		/** @var BaseObject $o */
 		foreach($f->getObjects() as $o )
 		{
-			$o->languageid = $this->page->languageid;
 			$o->load();
 
 			// Wenn aktuelle Seite, dann markieren, sonst Link

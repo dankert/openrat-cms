@@ -4,6 +4,7 @@ use cms\action\Action;
 use cms\action\ImageAction;
 use cms\action\Method;
 use cms\model\Image;
+use cms\model\Name;
 use cms\model\Permission;
 use language\Messages;
 use util\exception\ValidationException;
@@ -67,12 +68,11 @@ class ImageSizeAction extends ImageAction implements Method {
 		if	( $this->request->has('copy') )
 		{
 			// Datei neu anlegen.
-			$imageFile = new Image($this->image->objectid);
-			$imageFile->load();
-			$imageFile->name       = \cms\base\Language::lang('copy_of').' '.$imageFile->name;
-			$imageFile->desription = \cms\base\Language::lang('copy_of').' '.$imageFile->description;
+			$imageFile = new Image();
+
 			$imageFile->filename   = $imageFile->filename.'_resized_'.time();
 			$imageFile->persist();
+			$imageFile->copyNamesFrom( $this->image->objectid );
 			$imageFile->copyValueFromFile( $this->image->objectid );
 		}
 		else

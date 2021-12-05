@@ -347,7 +347,7 @@ class ValueGenerator extends BaseGenerator
 				$objectid = $linkValue->linkToObjectId;
 
 				if   ( intval($objectid) == 0 )
-					$objectid = $linkValue->element->defaultObjectId;
+					$objectid = $element->defaultObjectId;
 
 				if	( !BaseObject::available( $objectid ) )
 					break;
@@ -868,15 +868,15 @@ class ValueGenerator extends BaseGenerator
 						$inhalt = Project::create( $page->projectid )->load()->name;
 						break;
 					case 'language_id':
-						$inhalt = $page->languageid;
+						$inhalt = $pageContext->languageid;
 						break;
 					case 'language_iso':
-						$language = new Language( $page->languageid );
+						$language = new Language( $pageContext->languageid );
 						$language->load();
 						$inhalt = $language->isoCode;
 						break;
 					case 'language_name':
-						$language = new Language( $page->languageid );
+						$language = new Language( $pageContext->languageid );
 						$language->load();
 						$inhalt = $language->name;
 						break;

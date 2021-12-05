@@ -232,7 +232,7 @@ class PageAllAction extends PageAction implements Method {
 					break;
 
 				case Element::ELEMENT_TYPE_NUMBER:
-					$value->number = $this->request->getText($element->name) * pow(10, $value->element->decimals);
+					$value->number = $this->request->getText($element->name) * pow(10, $element->decimals);
 					break;
 				default:
 					throw new \LogicException('Unknown element type: ' . $element->getTypeName());
@@ -292,7 +292,7 @@ class PageAllAction extends PageAction implements Method {
 	 */
     protected function getElements() {
 
-		return $this->page->getWritableElements();
+		return $this->page->getTemplate()->getWritableElements();
 	}
 
 

@@ -78,16 +78,15 @@ class BreadCrumb extends Macro
 		foreach( $parentIds as $oid=>$filename )
 		{
 			$of = new Folder($oid);
-			$of->languageid = $this->page->languageid;
 			$of->load();
 			$pl = $of->getFirstPageOrLink();
 			
 			$this->output( $this->beforeEntry );
 
 			if	( is_object($pl) && $pl->objectid != $this->page->objectid )
-				$this->output('<a href="'.$this->pathToObject($pl->objectid).'" class="breadcrumb">'.$of->name.'</a>' );
+				$this->output('<a href="'.$this->pathToObject($pl->objectid).'" class="breadcrumb">'.$of->getNameForLanguage( $this->pageContext->languageId )->name.'</a>' );
 			else
-				$this->output('<span class="breadcrumb">'.$of->name.'</span>' );
+				$this->output('<span class="breadcrumb">'.$of->getNameForLanguage( $this->pageContext->languageId )->name.'</span>' );
 
 			if	( is_object($pl) )
 				$lastoid = $pl->objectid;
@@ -96,7 +95,7 @@ class BreadCrumb extends Macro
 		if	( $lastoid != $this->page->objectid )
 		{
 			$this->output( $this->beforeEntry );
-			$this->output('<span class="breadcrumb">'.$this->page->name.'</span>' );
+			$this->output('<span class="breadcrumb">'.$this->page->getNameForLanguage( $this->pageContext->languageId )->name.'</span>' );
 		}
 			
 	}

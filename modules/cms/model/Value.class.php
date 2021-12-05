@@ -25,7 +25,7 @@ use util\cache\FileCache;
 class Value extends ModelBase
 {
 	/**
-	 * ID dieser Inhaltes
+	 * ID of this value.
 	 * @type Integer
 	 */
 	public $valueid=0;
@@ -38,60 +38,61 @@ class Value extends ModelBase
 
 
 	/**
-	 * Objekt-ID, auf die verlinkt wird
+	 * Linked object-id.
 	 * @type Integer
 	 */
-	var $linkToObjectId=0;
+	public $linkToObjectId=0;
 
 	/**
-	 * Text-Inhalt
+	 * textual value
 	 * @type String
 	 */
-	var $text='';
+	public $text='';
 	
 	/**
-	 * Zahl. Auch Flie?kommazahlen werden als Ganzzahl gespeichert
+	 * Number.
 	 * @type Integer
 	 */
-	var $number=0;
+	public $number=0;
 
 	
 	/**
-	 * Datum als Unix-Timestamp
+	 * Date.
+	 *
+	 * Saved as unix-timestamp
+	 *
 	 * @type Integer
 	 */
-	var $date=0;
-	
-	/**
-	 * Element-Objekt
-	 * @type Element
-	 * @deprecated
-	 */
-	var $element;
+	public $date=0;
 
 	/**
-	 * file blob
+	 * file blob.
+	 *
 	 * @var string
 	 */
 	public $file = null;
 
 	/**
-	 * TimeStamp der letzten Aenderung
+	 * TimeStamp of last change.
 	 * @type Integer
 	 */
-	var $lastchangeTimeStamp;
+	public $lastchangeTimeStamp;
 	
 	/**
-	 * Benutzer-ID der letzten Aenderung
+	 * user-Id of the user who created this value.
+	 *
 	 * @type Integer
 	 */
-	var $lastchangeUserId;
+	public $lastchangeUserId;
 
 	/**
-	 * Benutzername der letzten Aenderung
+	 * Name of user who created this value.
+	 *
+	 * This attribute is readonly.
+	 *
 	 * @type Integer
 	 */
-	var $lastchangeUserName;
+	public $lastchangeUserName;
 	
 	/**
 	 * Is this content active?
@@ -100,13 +101,13 @@ class Value extends ModelBase
 	 *
 	 * @type Boolean
 	 */
-	var $active;
+	public $active;
 	
 	/**
 	 * Is this content public available?
 	 * @type boolean
 	 */
-	var $publish = false;
+	public $publish = false;
 
     /**
      * Format
@@ -116,7 +117,7 @@ class Value extends ModelBase
     public $format = null;
 
     /**
-	 * Konstruktor
+	 * Constructor.
 	 */
 	function __construct()
 	{
@@ -131,7 +132,10 @@ class Value extends ModelBase
 	public function loadPublished()
 	{
 		$stmt = Db::sql( <<<SQL
-           SELECT * FROM {{value}}
+             SELECT *,{{user}}.fullname as lastchange_username
+               FROM {{value}}
+		  LEFT JOIN {{user}}
+		         ON {{user}}.id = {{value}}.lastchange_userid
         	WHERE contentid = {contentid}
         	  AND publish = 1
 SQL
@@ -144,12 +148,12 @@ SQL
 
 	private function bindRow( $row ) {
 
-		if	( $row ) // Wenn Inhalt gefunden
+		if	( $row ) // If found
 		{
 			$this->contentid      = $row['contentid' ];
-			$this->text           = $row['text'  ];
-			$this->file           = $row['file'  ];
-			$this->format         = $row['format'];
+			$this->text           = $row['text'      ];
+			$this->file           = $row['file'      ];
+			$this->format         = $row['format'    ];
 			$this->valueid        = intval($row['id']          );
 			$this->linkToObjectId = intval($row['linkobjectid']);
 			$this->number         = intval($row['number'      ]);
@@ -163,8 +167,9 @@ SQL
 			$this->active         = ( $row['active' ]=='1' );
 			$this->publish        = ( $row['publish']=='1' );
 
-			$this->lastchangeTimeStamp = intval($row['lastchange_date'  ]);
-			$this->lastchangeUserId    = intval($row['lastchange_userid']);
+			$this->lastchangeTimeStamp = intval($row['lastchange_date'    ]);
+			$this->lastchangeUserId    = intval($row['lastchange_userid'  ]);
+			$this->lastchangeUserName  =        $row['lastchange_username'];
 		}
 	}
 
@@ -175,9 +180,12 @@ SQL
 	public function load()
 	{
 		$stmt = Db::sql( <<<SQL
-           SELECT * FROM {{value}}
-        	WHERE contentid = {contentid}
-        	  AND {{value}}.active = 1
+             SELECT *,{{user}}.fullname as lastchange_username
+               FROM {{value}}
+		  LEFT JOIN {{user}}
+		         ON {{user}}.id = {{value}}.lastchange_userid
+        	  WHERE contentid = {contentid}
+        	    AND {{value}}.active = 1
 SQL
 		);
 		$stmt->setInt( 'contentid' ,$this->contentid);
@@ -192,8 +200,11 @@ SQL
 	function loadWithId( $valueid = null )
 	{
 		$stmt = Db::sql( <<<SQL
-           SELECT * FROM {{value}}
-        	WHERE id = {valueid}
+             SELECT {{value}}.*,{{user}}.fullname as lastchange_username
+               FROM {{value}}
+		  LEFT JOIN {{user}}
+		         ON {{user}}.id = {{value}}.lastchange_userid
+        	WHERE {{value}}.id = {valueid}
 SQL
 		);
 		$stmt->setInt( 'valueid'   ,$valueid  );
@@ -351,12 +362,13 @@ SQL
 
 	/**
 	 * Ermittelt den unbearbeiteten, "rohen" Inhalt.
-	 * 
+	 *
+	 * @param int $elementTypeId
 	 * @return mixed Inhalt
 	 */
-	public function getRawValue()
+	public function getRawValue($elementTypeId)
 	{
-		switch( $this->element->typeid )
+		switch( $elementTypeId )
 		{
 			case Element::ELEMENT_TYPE_LINK:
 				return $this->linkToObjectId;
@@ -372,7 +384,7 @@ SQL
 
     public function getName()
     {
-        return $this->element->label;
+        return "Value#".$this->valueid;
     }
 
 

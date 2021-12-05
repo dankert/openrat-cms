@@ -12,7 +12,7 @@ class LinkShowAction extends LinkAction implements Method {
         header('Content-Type: text/html' );
 
         header('X-Link-Id: ' .$this->link->linkid );
-        header('X-Id: '      .$this->link->id     );
+        header('X-Id: '      .$this->link->objectid     );
         header('Content-Description: '.$this->link->filename() );
 
         echo '<html><body>';

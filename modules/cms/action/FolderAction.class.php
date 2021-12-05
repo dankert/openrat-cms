@@ -51,7 +51,6 @@ class FolderAction extends ObjectAction
     public function init()
     {
 		$folder = new Folder( $this->request->getId() );
-		$folder->languageid = $this->request->getLanguageId(); // FIXME
 		$folder->load();
 
 		$this->lastModified( $folder->lastchangeDate);

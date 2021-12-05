@@ -40,22 +40,21 @@ class BaseObject extends ModelBase
     const TYPE_MACRO  = 'macro' ;
 
     /** eindeutige ID dieses Objektes
-     * @see #$objectid
-     * @type Integer
-     */
-    public $id;
-
-    /** eindeutige ID dieses Objektes
      * @type Integer
      */
     public $objectid;
 
-    /** Objekt-ID des Ordners, in dem sich dieses Objekt befindet
-     * Kann "null" oder "0" sein, wenn es sich um den Wurzelordner des Projektes handelt
-     * @see #$isRoot
+    /**
+	 * Parent-Id.
+	 *
+	 * Object-Id of the folder, which this objects belongs to.
+	 *
+     * Is 0 in case of the root folder.
+	 *
+     * @see #isRoot()
      * @type Integer
      */
-    public $parentid;
+    public $parentid = null;
 
     /** Filename.
 	 *
@@ -65,26 +64,6 @@ class BaseObject extends ModelBase
      */
     public $filename = '';
 
-    /** Name.
-	 *
-	 * Logical name of this object.
-     * @type String
-     * @deprecated use modelclass Name instead
-     */
-    var $name = '';
-
-    /** Logische (sprachabhaengige) Beschreibung des Objektes
-     * (wird in Tabelle <code>name</code> abgelegt)
-     * @type String
-     * @deprecated use modelclass Name instead
-     */
-    var $description = 'none';
-
-    /**
-     * @var string
-     * @deprecated
-     */
-    var $desc = '';
 
     /** Zeitpunkt der Erstellung. Die Variable beinhaltet den Unix-Timestamp.
      * @type Integer
@@ -118,7 +97,22 @@ class BaseObject extends ModelBase
     public $publishedDate;
 
 
+	/**
+	 * Valid from.
+	 *
+	 * This is a unix-timestamp.
+	 *
+	 * @var int
+	 */
     public $validFromDate;
+
+	/**
+	 * Valid to.
+	 *
+	 * This is a unix-timestamp.
+	 *
+	 * @var int
+	 */
     public $validToDate;
 
     /**
@@ -183,44 +177,19 @@ class BaseObject extends ModelBase
      */
     var $type = null;
 
-    /** Kennzeichen ob Objekt den Wurzelordner des Projektes darstellt (parentid ist dann NULL)
-     * @type Boolean
-     */
-    var $isRoot = false;
-
-    /** Sprach-ID
-     * @see Language
-     * @type Integer
-	 * @deprecated 
-     */
-    var $languageid;
-
-    /**
-     * Projektmodell-ID
-     * @see Projectmodel
-     * @type Integer
-	 * @deprecated
-     */
-    var $modelid;
 
     /**
      * Projekt-ID
      * @see Project
      * @type Integer
      */
-    var $projectid;
+    public $projectid;
 
-    /**
-     * Dateiname der temporaeren Datei
-     * @type String
-     */
-    var $tmpfile;
-
-    var $aclMask = null;
 
     public $typeid;
 
-    var $parentfolders = array();
+	private $aclMask = null;
+	private $parentfolders = array();
 
     /**
      * @type String
@@ -245,7 +214,6 @@ class BaseObject extends ModelBase
         if	( is_numeric($objectid) )
         {
             $this->objectid = $objectid;
-            $this->id       = $objectid;
         }
     }
 
@@ -314,7 +282,7 @@ SQL
                 $sql = Db::sql( <<<SQL
          SELECT * FROM  {{acl}}
                  WHERE objectid={objectid}
-                   AND ( languageid={languageid} OR languageid IS NULL )
+                   --AND ( languageid={languageid} OR languageid IS NULL )
                    AND (    type = {user}  AND userid={userid} 
                          OR type = {group} AND $sqlGroupClause
                          OR type = {all}
@@ -323,7 +291,6 @@ SQL
 SQL
                 );
 
-                $sql->setInt  ( 'languageid'  ,$this->languageid       );
                 $sql->setInt  ( 'objectid'    ,$this->objectid         );
                 $sql->setInt  ( 'userid'      ,$user->userid           );
 				$sql->setInt  ( 'user'        ,Permission::TYPE_USER );
@@ -387,13 +354,11 @@ SQL
      */
     public function getProperties()
     {
-        return Array( 'id'               =>$this->objectid,
+        return [
+			'id'               =>$this->objectid,
             'objectid'         =>$this->objectid,
             'parentid'         =>$this->parentid,
             'filename'         =>$this->filename,
-            'name'             =>$this->name,
-            'desc'             =>$this->desc,
-            'description'      =>$this->desc,
             'create_date'      =>$this->createDate,
             'create_user'      =>$this->createUser->getProperties(),
             'lastchange_date'  =>$this->lastchangeDate,
@@ -407,14 +372,13 @@ SQL
             'isLink'           =>$this->isLink,
             'isUrl'            =>$this->isUrl,
             'isPage'           =>$this->isPage,
-            'isRoot'           =>$this->isRoot,
-            'languageid'       =>$this->languageid,
-            'modelid'          =>$this->modelid,
+            'isRoot'           =>$this->isRoot(),
             'projectid'        =>$this->projectid,
             'settings'         =>$this->settings,
             'valid_from_date'  =>$this->validFromDate,
             'valid_to_date'    =>$this->validToDate,
-            'type'             =>$this->getType()  );
+            'type'             =>$this->getType()
+		];
     }
 
 
@@ -559,70 +523,38 @@ SQL
         if	( $filenameConfig->is('edit',true) && $filename != '' && $filename != $this->objectid )
         {
             // do not change the filename here - otherwise there is a danger of filename collisions.
-            //$filename = self::urlify($filename);
-
             return $filename;
         }
 
-        if	( $this->isFolder )
-        {
-            $filename = $this->objectid;
-        }
-        elseif	( isset($this->orderId) && intval($this->orderId ) == 1   &&
-            $filenameConfig->has('default') &&
-            !$filenameConfig->is('edit')              )
-        {
-            $filename = $filenameConfig->get('default');
-        }
-        else
-        {
-            // Filename is not edited, so we are generating a pleasant filename.
-            switch( $filenameConfig->get('style','short' ) )
-            {
-                case 'longid':
-                    // Eine etwas laengere ID als Dateinamen benutzen
-                    $filename = base_convert(str_pad($this->objectid,6,'a'),11,10);
-                    break;
+		// Filename is not edited, so we are generating a pleasant filename.
+		switch( $filenameConfig->get('style','short' ) )
+		{
+			case 'longid':
+				// Eine etwas laengere ID als Dateinamen benutzen
+				return base_convert(str_pad($this->objectid,6,'a'),11,10);
+				break;
 
-                case 'short':
-                    // So kurz wie moeglich: Erhoehen der Basis vom 10 auf 36.
-                    // Beispiele:
-                    // 1  -> 1
-                    // 10 -> a
-                    $filename = base_convert($this->objectid,10,36);
-                    break;
+			case 'longalpha':
+				// Eine etwas laengere ID als Dateinamen benutzen
+				return base_convert(str_pad($this->objectid,6,'a'),11,36);
+				break;
 
-                case 'md5':
-                    // MD5-Summe als Dateinamen verwenden
-                    // Achtung: Kollisionen sind unwahrscheinlich, aber theoretisch möglich.
-                    $filename = md5(md5($this->objectid));
-                    break;
+			case 'short':
+				// As shortly as possible
+				// Examples:
+				// 1  -> 1
+				// 10 -> a
+				return base_convert($this->objectid,10,36);
 
-                case  'ss':
-                    // Imitieren von "StoryServer" URLs. Wers braucht.
-                    $filename = '0,'.
-                        base_convert(str_pad($this->parentid,3,'a'),11,10).
-                        ','.
-                        base_convert(str_pad($this->objectid,7,'a'),11,10).
-                        ',00';
-                    break;
+			case 'md5':   // Removed, because collisions are possible.
+			case 'title': // Not possible any more because of the collision danger
+			case 'ss':    // Old storyserver crap (removed)
+			case 'id':
+			default:
+				// Taking the object id as filename.
+				return $this->objectid;
 
-                case  'title':
-                    // Achtung: Kollisionen sind möglich.
-                    // COLLISION ALARM! THIS IS NOT A GOOD IDEA!
-                    $filename = self::urlify($this->name);
-                    break;
-
-                case 'id':
-                default:
-                    // Einfach die Objekt-Id als Dateinamen verwenden.
-                    $filename = $this->objectid;
-                    break;
-
-            }
-        }
-
-        return $filename;
+		}
     }
 
 
@@ -657,28 +589,27 @@ SQL
     {
         $db = \cms\base\DB::get();
 
-        $stmt = $db->sql('SELECT {{object}}.*,' .
-            '       {{name}}.name,{{name}}.descr,'.
-            '       lastchangeuser.name     as lastchange_username,     '.
-            '       lastchangeuser.fullname as lastchange_userfullname, '.
-            '       lastchangeuser.mail     as lastchange_usermail,     '.
-            '       publisheduser.name      as published_username,     '.
-            '       publisheduser.fullname  as published_userfullname, '.
-            '       publisheduser.mail      as published_usermail,     '.
-            '       createuser.name         as create_username,     '.
-            '       createuser.fullname     as create_userfullname, '.
-            '       createuser.mail         as create_usermail      '.
-            ' FROM {{object}}'.
-            ' LEFT JOIN {{name}} '.
-            '        ON {{object}}.id={{name}}.objectid AND {{name}}.languageid={languageid} '.
-            ' LEFT JOIN {{user}} as lastchangeuser '.
-            '        ON {{object}}.lastchange_userid=lastchangeuser.id '.
-            ' LEFT JOIN {{user}} as publisheduser '.
-            '        ON {{object}}.published_userid=publisheduser.id '.
-            ' LEFT JOIN {{user}} as createuser '.
-            '        ON {{object}}.create_userid=createuser.id '.
-            ' WHERE {{object}}.id={objectid}');
-        $stmt->setInt('languageid', $this->languageid);
+        $stmt = $db->sql( <<<SQL
+			SELECT {{object}}.*,
+                   lastchangeuser.name     as lastchange_username,     
+                   lastchangeuser.fullname as lastchange_userfullname, 
+                   lastchangeuser.mail     as lastchange_usermail,     
+                   publisheduser.name      as published_username,     
+                   publisheduser.fullname  as published_userfullname, 
+                   publisheduser.mail      as published_usermail,     
+                   createuser.name         as create_username,     
+                   createuser.fullname     as create_userfullname, 
+                   createuser.mail         as create_usermail      
+             FROM {{object}}
+             LEFT JOIN {{user}} as lastchangeuser 
+                    ON {{object}}.lastchange_userid=lastchangeuser.id 
+             LEFT JOIN {{user}} as publisheduser 
+                    ON {{object}}.published_userid=publisheduser.id 
+             LEFT JOIN {{user}} as createuser 
+                    ON {{object}}.create_userid=createuser.id 
+             WHERE {{object}}.id={objectid}
+SQL
+		);
         $stmt->setInt('objectid'  , $this->objectid  );
 
         $row = $stmt->getRow();
@@ -711,17 +642,10 @@ SQL
         $this->filename  = $row['filename' ];
         $this->projectid = $row['projectid'];
 
-        if	( intval($this->parentid) == 0 )
-            $this->isRoot = true;
-        else
-            $this->isRoot = false;
-
-        $this->name = 'n/a';
-
-        $this->create_date       = $row['create_date'];
-        $this->create_userid     = $row['create_userid'];
-        $this->lastchange_date   = $row['lastchange_date'];
-        $this->lastchange_userid = $row['lastchange_userid'];
+        $this->createDate       = $row['create_date'      ];
+        $this->createUser       = $row['create_userid'    ];
+        $this->lastchangeDate   = $row['lastchange_date'  ];
+        $this->lastchangeUser   = $row['lastchange_userid'];
 
         $this->isFolder = ( $row['typeid'] == self::TYPEID_FOLDER );
         $this->isFile   = ( $row['typeid'] == self::TYPEID_FILE   );
@@ -735,6 +659,15 @@ SQL
 
     }
 
+
+	/**
+	 * Is this the root object in a project?
+	 *
+	 * @return bool
+	 */
+	public function isRoot() {
+		return intval($this->parentid) == 0;
+	}
 
     /**
      * Setzt die Eigenschaften des Objektes mit einer Datenbank-Ergebniszeile
@@ -750,11 +683,6 @@ SQL
         $this->projectid = $row['projectid'];
         $this->filename  = $row['filename' ];
         $this->orderid   = $row['orderid'  ];
-
-        if	( intval($this->parentid) == 0 )
-            $this->isRoot = true;
-        else
-            $this->isRoot = false;
 
         $this->createDate     = $row['create_date'    ];
         $this->lastchangeDate = $row['lastchange_date'];
@@ -804,22 +732,7 @@ SQL
         $this->isAlias  = ( $row['typeid'] == self::TYPEID_ALIAS  );
         $this->isMacro  = ( $row['typeid'] == self::TYPEID_MACRO  );
 
-        if	( $this->isRoot )
-        {
-            $this->name        = $row['name' ];
-            $this->desc        = '';
-            $this->description = '';
-        }
-        else
-        {
-            $this->name        = $row['name' ];
-            $this->desc        = $row['descr'];
-            $this->description = $row['descr'];
-        }
-
         $this->settings = $row['settings'];
-
-        $this->checkName();
     }
 
 
@@ -854,9 +767,10 @@ SQL
         );
 
 
-        if	( $this->isRoot )
+        if	( ! $this->parentid )
             $stmt->setNull('parentid');
-        else	$stmt->setInt ('parentid',$this->parentid );
+        else
+			$stmt->setInt ('parentid',$this->parentid );
 
 
         $user = \util\Session::getUser();
@@ -948,32 +862,49 @@ SQL
     {
         $db = \cms\base\DB::get();
 
-        $sql = $db->sql( 'UPDATE {{element}} '.
-            '  SET default_objectid=NULL '.
-            '  WHERE default_objectid={objectid}' );
+        $sql = DB::sql( <<<SQL
+			UPDATE {{element}}
+              SET default_objectid=NULL
+              WHERE default_objectid={objectid}
+SQL
+		);
         $sql->setInt('objectid',$this->objectid);
         $sql->execute();
 
-        $sql = $db->sql( 'UPDATE {{value}} '.
-            '  SET linkobjectid=NULL '.
-            '  WHERE linkobjectid={objectid}' );
+        $sql = $db->sql( <<<'SQL'
+			UPDATE {{value}} 
+              SET linkobjectid=NULL 
+              WHERE linkobjectid={objectid}
+SQL
+		);
         $sql->setInt('objectid',$this->objectid);
         $sql->execute();
 
-        $sql = $db->sql( 'UPDATE {{link}} '.
-            '  SET link_objectid=NULL '.
-            '  WHERE link_objectid={objectid}' );
+        $sql = $db->sql( <<<'SQL'
+			UPDATE {{link}} 
+              SET link_objectid=NULL
+              WHERE link_objectid={objectid}
+SQL
+		);
         $sql->setInt('objectid',$this->objectid);
         $sql->execute();
 
 
         // Objekt-Namen l?schen
-        $sql = $db->sql('DELETE FROM {{name}} WHERE objectid={objectid}');
+        $sql = $db->sql(<<<'SQL'
+			DELETE FROM {{name}}
+			 WHERE objectid={objectid}
+SQL
+);
         $sql->setInt('objectid', $this->objectid);
         $sql->execute();
 
         // Aliases löschen.
-        $sql = Db::sql('DELETE FROM {{alias}} WHERE objectid={objectid}');
+        $sql = Db::sql(<<<'SQL'
+			DELETE FROM {{alias}}
+			 WHERE objectid={objectid}
+SQL
+);
         $sql->setInt('objectid', $this->objectid);
         $sql->execute();
 
@@ -981,7 +912,11 @@ SQL
         $this->deleteAllACLs();
 
         // Objekt l?schen
-        $sql = $db->sql('DELETE FROM {{object}} WHERE id={objectid}');
+        $sql = $db->sql(<<<'SQL'
+			DELETE FROM {{object}}
+			 WHERE id={objectid}
+SQL
+);
         $sql->setInt('objectid', $this->objectid);
         $sql->execute();
 
@@ -997,70 +932,99 @@ SQL
     protected function add()
     {
         // Neue Objekt-Id bestimmen
-        $sql = Db::sql('SELECT MAX(id) FROM {{object}}');
+        $sql = Db::sql(<<<'SQL'
+			SELECT MAX(id) FROM {{object}}
+SQL
+		);
         $this->objectid = intval($sql->getOne())+1;
 
         $this->checkFilename();
-        $sql = Db::sql('INSERT INTO {{object}}'.
-            ' (id,parentid,projectid,filename,orderid,create_date,create_userid,lastchange_date,lastchange_userid,typeid,settings)'.
-            ' VALUES( {objectid},{parentid},{projectid},{filename},{orderid},{time},{createuserid},{createtime},{userid},{typeid},\'\' )');
+        $sql = Db::sql(<<<SQL
+			INSERT INTO {{object}}
+                    (id,parentid,projectid,filename,orderid,create_date,create_userid,lastchange_date,lastchange_userid,typeid,settings)
+            VALUES( {objectid},{parentid},{projectid},{filename},{orderid},{time},{createuserid},{createtime},{userid},{typeid},'' )
+SQL
+		);
 
-        if	( $this->isRoot )
+		$user = \util\Session::getUser();
+		$currentUserId = $user ? $user->userid : 0;
+
+		if	( !$this->parentid )
             $sql->setNull('parentid');
-        else	$sql->setInt ('parentid',$this->parentid );
+        else
+			$sql->setInt ('parentid',$this->parentid );
 
         $sql->setInt   ('objectid' , $this->objectid );
         $sql->setString('filename' , $this->filename );
         $sql->setString('projectid', $this->projectid);
         $sql->setInt   ('orderid'  , 99999           );
-        $sql->setInt   ('time'     , Startup::now()           );
-        $user = \util\Session::getUser();
-        $sql->setInt   ('createuserid'   , $user->userid   );
-        $sql->setInt   ('createtime'     , Startup::now()           );
-        $user = \util\Session::getUser();
-        $sql->setInt   ('userid'   , $user->userid   );
+        $sql->setInt   ('time'     , Startup::now()        );
+
+        $sql->setInt   ('createuserid'   , $currentUserId  );
+        $sql->setInt   ('createtime'     , Startup::now()  );
+        $sql->setInt   ('userid'   , $currentUserId );
 
         $sql->setInt(  'typeid',$this->getTypeid());
 
         $sql->execute();
 
-        // Standard-Rechte fuer dieses neue Objekt setzen.
-        // Der angemeldete Benutzer erhaelt alle Rechte auf
-        // das neue Objekt. Legitim, denn er hat es ja angelegt.
-		//FIXME we shoul delete this.
-        $permission = new Permission();
-        $permission->userid = $user->userid;
-        $permission->objectid = $this->objectid;
-
-        $permission->read   = true;
-        $permission->write  = true;
-        $permission->prop   = true;
-        $permission->delete = true;
-        $permission->grant  = true;
-
-        $permission->create_file   = true;
-        $permission->create_page   = true;
-        $permission->create_folder = true;
-        $permission->create_link   = true;
-
-        $permission->persist();
-
-        // Aus dem Eltern-Ordner vererbbare Berechtigungen uebernehmen.
-        $parent = new BaseObject( $this->parentid );
-        foreach( $parent->getAllAclIds() as $aclid )
-        {
-            $permission = new Permission( $aclid );
-            $permission->load();
-
-            if	( $permission->transmit ) // ACL is vererbbar, also kopieren.
-            {
-            	$permission->aclid = null;
-                $permission->objectid = $this->objectid;
-                $permission->persist(); // ... und hinzufuegen.
-            }
-        }
+		$this->grantToActualUser(); // Is this a good idea? don't know ...
+		$this->inheritPermissions();
     }
 
+
+	/**
+	 * Set permissions for the actual user for the just added object.
+	 *
+	 * @return void
+	 */
+	private function grantToActualUser() {
+
+		$user = \util\Session::getUser();
+
+		if   ( ! $user ) {  // User logged in?
+
+			$permission = new Permission();
+			$permission->userid = $user->userid;
+			$permission->objectid = $this->objectid;
+
+			$permission->read   = true;
+			$permission->write  = true;
+			$permission->prop   = true;
+			$permission->delete = true;
+			$permission->grant  = true;
+
+			$permission->create_file   = true;
+			$permission->create_page   = true;
+			$permission->create_folder = true;
+			$permission->create_link   = true;
+
+			$permission->persist();
+		}
+	}
+
+
+	/**
+	 * Inherit permissions from parent folder.
+	 *
+	 * @return void
+	 */
+	private function inheritPermissions() {
+		$parent = new BaseObject( $this->parentid );
+
+		foreach( $parent->getAllAclIds() as $aclid )
+		{
+			$permission = new Permission( $aclid );
+			$permission->load();
+
+			if	( $permission->transmit ) // ACL is vererbbar, also kopieren.
+			{
+				$permission->aclid = null;
+				$permission->objectid = $this->objectid;
+				$permission->persist(); // ... und hinzufuegen.
+			}
+		}
+	}
 
     /**
      * Pruefung auf Gueltigkeit des Dateinamens
@@ -1070,7 +1034,7 @@ SQL
         if	( empty($this->filename) )
             $this->filename = $this->objectid;
 
-        if	( $this->isRoot )  // Beim Root-Ordner ist es egal, es gibt nur einen.
+        if	( $this->isRoot() )  // Beim Root-Ordner ist es egal, es gibt nur einen.
             return;
 
         if	( !$this->filenameIsUnique( $this->filename ) )
@@ -1107,26 +1071,16 @@ SQL
     }
 
 
-    /**
-     * Pruefung auf Gueltigkeit des logischen Namens
-     */
-    function checkName()
-    {
-        if	( empty($this->name) )
-            $this->name = $this->filename;
-
-        if	( empty($this->name) )
-            $this->name = $this->objectid;
-    }
-
-
     function getAllAclIds()
     {
         $db = \cms\base\DB::get();
 
-        $sql = $db->sql( 'SELECT id FROM {{acl}} '.
-            '  WHERE objectid={objectid}'.
-            '  ORDER BY userid,groupid ASC' );
+        $sql = $db->sql( <<<'SQL'
+			SELECT id FROM {{acl}} 
+             WHERE objectid={objectid}
+             ORDER BY userid,groupid ASC
+SQL
+ );
         $sql->setInt('objectid'  ,$this->objectid);
 
         return $sql->getCol();
@@ -1364,7 +1318,7 @@ SQL
      */
     public function parentObjectFileNames(  $with_root = false, $with_self = false  )
     {
-        $foid = $this->id;
+        $foid = $this->objectid;
         $idCache = array();
 
         while( intval($foid)!=0 )
@@ -1398,22 +1352,16 @@ SQL
 
     public function parentObjectNames( $with_root = false, $with_self = false )
     {
-        $foid = $this->id;
+        $foid = $this->objectid;
         $idCache = array();
 
         while( intval($foid)!=0 )
         {
             $sql = Db::sql( <<<SQL
-            
-SELECT {{object}}.parentid,{{object}}.id,{{object}}.filename,{{name}}.name FROM {{object}}
-  LEFT JOIN {{name}}
-         ON {{object}}.id = {{name}}.objectid
-        AND {{name}}.languageid = {languageid}  
- WHERE {{object}}.id={parentid}
-
+				SELECT {{object}}.parentid,{{object}}.id,{{object}}.filename FROM {{object}}
+				 WHERE {{object}}.id={parentid}
 SQL
             );
-            $sql->setInt('languageid',$this->languageid);
             $sql->setInt('parentid'  ,$foid            );
 
             $row = $sql->getRow();
@@ -1595,13 +1543,13 @@ SQL
 
     public function __toString()
     {
-        return 'Object-Id '.$this->objectid.' (type='.$this->getType().',filename='.$this->filename.',language='.$this->languageid.', modelid='.$this->modelid.')';
+        return 'Object-Id '.$this->objectid.' (type='.$this->getType().',filename='.$this->filename. ')';
     }
 
 
     /**
      * Liefert alle Name-Objekte.
-     * @return array
+     * @return Name[]
      * @throws \util\exception\ObjectNotFoundException
      */
     public function getNames()
@@ -1645,7 +1593,12 @@ SQL
     {
         $languageId = $this->getProject()->getDefaultLanguageId();
 
-        return $this->getNameForLanguage( $languageId );
+        $defaultName = $this->getNameForLanguage( $languageId );
+
+		if  ( ! $defaultName->name )
+			$defaultName->name = $this->filename;
+
+		return $defaultName;
     }
 
 
@@ -1708,10 +1661,11 @@ SQL
      * The Alias for this Object or <code>null</code>.
      *
      * @return Alias|null
+	 * @deprecated use #getAliasForLanguage
      */
     public function getAlias()
     {
-        $alias = $this->getAliasForLanguage( $this->languageid );
+        $alias = $this->getAliasForLanguage( $this->getProject()->getDefaultLanguageId() );
 
         if   ( !$alias->isPersistent() )
             $alias = $this->getAliasForLanguage( null );
@@ -1769,6 +1723,23 @@ SQL
 		return $this->objectid;
 	}
 
+
+	public function copyNamesFrom($sourceObjectId ) {
+
+		$sourceObject = new BaseObject( $sourceObjectId );
+		foreach ( $sourceObject->getNames() as $name ) {
+
+			if   ( $name->isPersistent() ) {
+
+				$copiedName = new Name();
+				$copiedName->name        = $name->name;
+				$copiedName->description = $name->description;
+				$copiedName->languageid  = $name->languageid;
+				$copiedName->objectid    = $this->objectid;
+				$copiedName->persist();
+			}
+		}
+	}
 }
 
 

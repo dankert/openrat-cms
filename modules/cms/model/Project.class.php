@@ -352,12 +352,8 @@ SQL
 		
 		// Haupt-Ordner anlegen
 		$folder = new Folder();
-		$folder->isRoot     = true;
 		$folder->projectid  = $this->projectid;
-		$folder->languageid = $language->languageid;
 		$folder->filename   = $this->name;
-		$folder->name       = $this->name;
-		$folder->isRoot     = true;
 		$folder->persist();
 
 		// Template anlegen
@@ -366,21 +362,38 @@ SQL
 		$template->name       = '#1';
 		$template->persist();
 
+		$element = new Element();
+		$element->templateid = $template->templateid;
+		$element->typeid = Element::ELEMENT_TYPE_TEXT;
+		$element->label = 'Text';
+		$element->name  = 'text';
+		$element->persist();
+
 		// Template anlegen
 		$templateModel = $template->loadTemplateModelFor( $model->modelid );
 		$templateModel->extension  = 'html';
-		$templateModel->src        = '<html><body><h1>Hello world</h1><hr><p>Hello, World.</p></body></html>';
+		$templateModel->src        = '<html><body><h1>Sample page</h1><hr><p>Text: {{name}</p></body></html>';
 		$templateModel->persist();
 
 		// Beispiel-Seite anlegen
 		$page = new Page();
 		$page->parentid   = $folder->objectid;
 		$page->projectid  = $this->projectid;
-		$page->languageid = $language->languageid;
 		$page->templateid = $template->templateid;
-		$page->filename   = '';
-		$page->name       = 'OpenRat';
+		$page->filename   = 'start';
+		$page->getDefaultName()->name = 'Sample page';
 		$page->persist();
+
+		$pageContent = new PageContent();
+		$pageContent->pageId     = $page->pageid;
+		$pageContent->elementId  = $element->elementid;
+		$pageContent->languageid = $language->languageid;
+		$pageContent->persist();
+
+		$value = new Value();
+		$value->contentid = $pageContent->contentId;
+		$value->text = 'sample text';
+		$value->persist();
 	}
 
 
@@ -491,9 +504,7 @@ EOF
 		{
 			$lostAndFoundFolder = new Folder();
 			$lostAndFoundFolder->projectid = $this->projectid;
-			$lostAndFoundFolder->languageid = $this->getDefaultLanguageId();
 			$lostAndFoundFolder->filename = "lostandfound";
-			$lostAndFoundFolder->name     = 'Lost+found';
 			$lostAndFoundFolder->parentid = $this->getRootObjectId();
 			$lostAndFoundFolder->persist();
 			
@@ -980,7 +991,7 @@ SQL
             $o->load();
 
             $folders[ $id ] = '';
-            if	( !$o->isRoot )
+            if	( !$o->isRoot() )
             {
                 $f = new Folder( $o->parentid );
                 $f->load();

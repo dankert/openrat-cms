@@ -142,17 +142,17 @@ class Folder extends BaseObject
 	{
 		$db = \cms\base\DB::get();
 
-		$sql = $db->sql('SELECT {{object}}.*,{{name}}.name,{{name}}.descr'.
-		               '  FROM {{object}}'.
-		               ' LEFT JOIN {{name}} '.
-		               '   ON {{object}}.id={{name}}.objectid AND {{name}}.languageid={languageid} '.
-		               '  WHERE parentid={objectid}'.
-		               '  ORDER BY orderid ASC' );
-		$sql->setInt('languageid',$this->languageid );
+		$sql = $db->sql( <<<SQL
+			SELECT {{object}}.*
+		                 FROM {{object}}
+		                 WHERE parentid={objectid}
+		                 ORDER BY orderid ASC
+SQL
+		);
 		$sql->setInt('objectid'  ,$this->objectid   );
-		
-		$liste = array();
 		$res = $sql->getAll();
+
+		$liste = array();
 		foreach( $res as $row )
 		{
 			$o = new BaseObject( $row['id'] );
@@ -179,7 +179,7 @@ class Folder extends BaseObject
 
 
 	// Liest alle Objekte in diesem Ordner sortiert nach dem Namen (nicht Dateinamen!)
-	function getChildObjectIdsByName()
+	function getChildObjectIdsByName( $languageId )
 	{
 		$db = \cms\base\DB::get();
 
@@ -188,7 +188,7 @@ class Folder extends BaseObject
                        ' WHERE parentid={objectid}'.
                        ' ORDER BY {{name}}.name,{{object}}.filename ASC');
 		$sql->setInt('objectid'  , $this->objectid  );
-		$sql->setInt('languageid', $this->languageid);
+		$sql->setInt('languageid', $languageId);
 		return( $sql->getCol() );
 	}
 
@@ -425,63 +425,6 @@ SQL
 	}
 
 
-    /**
-     * Ermitteln des Dateinamens.
-     * @return String Dateiname
-     */
-    public function filename()
-    {
-        $filenameConfig = Configuration::subset('filename');
-
-        if	( $filenameConfig->is('edit',true ) )
-        {
-            if   ( $this->filename == '' )
-                // Filename ist eigentlich ein Pflichtfeld, daher kann dies nahezu nie auftreten.
-                // Rein technisch kann der Filename aber leer sein.
-                return $this->objectid;
-            else
-                return BaseObject::urlify($this->name);
-        }
-        else
-        {
-            // Filename is not edited, so we are generating a pleasant filename.
-            switch( $filenameConfig->get('style','short') )
-            {
-                case 'longid':
-                    // Eine etwas laengere ID als Dateinamen benutzen
-                    return base_convert(str_pad($this->objectid,6,'a'),11,10);
-
-                case 'short':
-                    // So kurz wie moeglich: Erhoehen der Basis vom 10 auf 36.
-                    // Beispiele:
-                    // 1  -> 1
-                    // 10 -> a
-                    return base_convert($this->objectid,10,36);
-
-                case 'md5':
-                    // MD5-Summe als Dateinamen verwenden
-                    // Achtung: Kollisionen sind unwahrscheinlich, aber theoretisch möglich.
-                    return  md5(md5($this->objectid));
-
-                case  'ss':
-                    // Imitieren von "StoryServer" URLs. Wers braucht.
-                    return $this->objectid;
-
-                case  'title':
-                    // Achtung: Kollisionen sind möglich.
-                    // COLLISION ALARM! THIS IS NOT A GOOD IDEA!
-                    return  BaseObject::urlify($this->name);
-
-                case 'id':
-                default:
-                    // Einfach die Objekt-Id als Dateinamen verwenden.
-                    return $this->objectid;
-
-            }
-        }
-    }
-
-
 
 
 	// Ermitteln aller Unterordner
@@ -675,15 +618,11 @@ SQL
 		       {{object}}.lastchange_date as lastchange_date,
 		       {{object}}.filename as filename,
 		       {{object}}.typeid   as typeid,
-		       {{name}}.name       as name,
 		       {{user}}.name       as username,
 		       {{user}}.id         as userid,
 		       {{user}}.mail       as usermail,
 		       {{user}}.fullname   as userfullname
 		  FROM {{object}}
-		  LEFT JOIN {{name}}
-		         ON {{name}}.objectid = {{object}}.id
-				AND {{name}}.languageid = {languageid}
 		  LEFT JOIN {{user}}
 		         ON {{user}}.id = {{object}}.lastchange_userid
 			  WHERE {{object}}.parentid = {folderid}
@@ -693,9 +632,7 @@ SQL
 	
 		// Variablen setzen.
 		$sql->setInt( 'folderid', $this->objectid );
-	
-		$sql->setInt( 'languageid', $this->languageid );
-	
+
 		return $sql->getAll();
 	}
 

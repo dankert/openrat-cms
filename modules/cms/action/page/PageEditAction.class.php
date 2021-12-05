@@ -28,7 +28,7 @@ class PageEditAction extends PageAction implements Method {
         } );
 
         $elements = array_map( function( $element ) {
-            return get_object_vars( $element ) + array('pageelementid'=>$this->page->id.'_'.$element->elementid,'typename'=>$element->getTypeName() );
+            return get_object_vars( $element ) + array('pageelementid'=>$this->page->objectid.'_'.$element->elementid,'typename'=>$element->getTypeName() );
         }, $elements);
 
 		$this->setTemplateVar('elements',$elements);

@@ -379,7 +379,7 @@ class ElementAdvancedAction extends ElementAction implements Method {
 
                         $objects[ $id ]  = \cms\base\Language::lang( $o->getType() ).': ';
 
-                        if	( !$o->isRoot )
+                        if	( !$o->isRoot() )
                         {
                             $f = new Folder( $o->parentid );
                             $f->load();

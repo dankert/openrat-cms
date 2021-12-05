@@ -12,7 +12,7 @@ class UrlShowAction extends UrlAction implements Method {
         header('Content-Type: text/html' );
 
         header('X-Url-Id: '   .$this->url->urlid );
-        header('X-Id: '       .$this->url->id    );
+        header('X-Id: '       .$this->url->objectid    );
         header('Content-Description: '.$this->url->filename() );
 
         echo '<html><body>';

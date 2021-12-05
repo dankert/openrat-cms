@@ -18,6 +18,7 @@ namespace cms\model;
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 use cms\base\DB as Db;
 use cms\generator\PageContext;
+use phpseclib\Math\BigInteger;
 
 
 /**
@@ -29,78 +30,32 @@ use cms\generator\PageContext;
 
 class Page extends BaseObject
 {
+	/**
+	 * Page-Id
+	 *
+	 * Hint: This is not the object-id!
+	 *
+	 * @var Integer
+	 */
 	public $pageid;
+
+	/**
+	 * Template-Id.
+	 *
+	 * The id of the underlying template. Every page must have a template.
+	 *
+	 * @var Integer
+	 */
 	public $templateid;
 
-	/**
-	 * @var Template
-	 */
-	public $template;
-
-	public $el = array();
-
-	/**
-	 * Stellt fest, ob die Editier-Icons angezeigt werden sollen. Dies ist
-	 * nur der Fall, wenn die Seite auch zum Bearbeiten generiert wird.
-	 * Wird die Seite zum Veröffentlichen generiert, muss diese Eigenschaft
-	 * natürlich "false" sein.
-	 * @var boolean
-	 */
-	var $src   = '';
-
-	var $modelid = 0;
-
-	/**
-	 * Page context.
-	 *
-	 * @var PageContext
-	 */
-	public $context;
 
 	function __construct( $objectid='' )
 	{
 		parent::__construct( $objectid );
 		$this->isPage = true;
 		$this->typeid = BaseObject::TYPEID_PAGE;
-
-		//$this->publisher = new PublishPreview();
-
     }
 
-
-
-	/**
-	 * Ermitteln der Objekt-ID (Tabelle object) anhand der Seiten-ID (Tablle page)
-	 *
-	 * @deprecated pageid sollte nicht mehr benutzt werden
-	 * @return Integer objectid
-	 */
-	function getObjectIdFromPageId( $pageid )
-	{
-		$db = \cms\base\DB::get();
-
-		$sql  = $db->sql( 'SELECT objectid FROM {{page}} '.
-		                 '  WHERE id={pageid}' );
-		$sql->setInt('pageid',$pageid);
-
-		return $sql->getOne();
-	}
-
-
-	/**
-	 * Ermitteln der Seiten-ID anhand der Objekt-ID
-	 *
-	 * @deprecated pageid sollte nicht mehr benutzt werden
-	 * @return Integer pageid
-	 */
-	public static function getPageIdFromObjectId( $objectid )
-	{
-		$sql  = Db::sql( 'SELECT id FROM {{page}} '.
-		                 '  WHERE objectid={objectid}' );
-		$sql->setInt('objectid',$objectid);
-
-		return $sql->getOne();
-	}
 
 
 	/**
@@ -118,24 +73,9 @@ class Page extends BaseObject
 
 
 	/**
-	 * Ermitteln der Ordner, in dem sich die Seite befindet
-	 * @return array
-	 */
-	function parentfolder()
-	{
-		$folder = new Folder();
-		$folder->folderid = $this->parentid;
-		
-		return $folder->parentObjectFileNames( false,true );
-	}
-
-
-
-
-	/**
 	 * Eine Seite hinzufuegen
 	 */
-	function add()
+	protected function add()
 	{
 		parent::add(); // Hinzuf?gen von Objekt (dabei wird Objekt-ID ermittelt)
 
@@ -159,7 +99,7 @@ SQL
 	/**
 	  * Seite laden
 	  */
-	function load()
+	public function load()
 	{
 		$sql  = Db::sql( 'SELECT * FROM {{page}} '.
 		                 '  WHERE objectid={objectid}' );
@@ -172,7 +112,7 @@ SQL
 		$this->pageid      = $row['id'        ];
 		$this->templateid  = $row['templateid'];
 
-		$this->objectLoad();
+		parent::load();
 	}
 
 
@@ -244,7 +184,7 @@ SQL
 	}
 
 
-	function save()
+	public function save()
 	{
 		$db = \cms\base\DB::get();
 
@@ -260,7 +200,7 @@ SQL
 
 
 	
-	function replaceTemplate( $newTemplateId,$replaceElementMap )
+	public function replaceTemplate( $newTemplateId,$replaceElementMap )
 	{
 		$oldTemplateId = $this->templateid;
 
@@ -325,35 +265,14 @@ SQL
 	}
 
 
-
 	/**
-	  * Erzeugen der Inhalte zu allen Elementen dieser Seite
-	  * wird von generate() aufgerufen
-	  */
-	public function getElements()
-	{
-		if	( !isset($this->template) )
-			$this->template = new Template( $this->templateid );
-		
-		return $this->template->getElements();
+	 * Gets the template.
+	 *
+	 * @return Template
+	 */
+	public function getTemplate() {
+		return new Template( $this->templateid );
 	}
-
-
-
-	/**
-	  * Erzeugen der Inhalte zu allen Elementen dieser Seite
-	  * wird von generate() aufgerufen
-	  *
-	  * @access private 
-	  */
-	function getWritableElements()
-	{
-		if	( !isset($this->template) )
-			$this->template = new Template( $this->templateid );
-		
-		return $this->template->getWritableElements();
-	}
-
 
 
 
@@ -375,12 +294,6 @@ SQL
 
 	
 	
-	public function setTimestamp()
-	{
-		parent::setTimestamp();
-	}
-
-
 	/**
 	 * Returns a page with default values.
 	 *
@@ -417,7 +330,7 @@ SQL
 
     public function __toString()
     {
-    	return 'Id '.$this->pageid.' (filename='.$this->filename.', templateid='.$this->templateid.')';
+    	return 'Page#'.$this->pageid.' (filename='.$this->filename.', templateid='.$this->templateid.')';
     }
 
 
