@@ -28,6 +28,12 @@ class ArrayUtils
 	}
 
 
+	/**
+	 * Dives into an array and gets a value with a sub key.
+	 * @param array $array
+	 * @param array $keys
+	 * @return mixed|null
+	 */
 	public static function getSubValue($array, $keys)
 	{
 
@@ -42,6 +48,20 @@ class ArrayUtils
 		return $a;
 	}
 
+
+	/**
+	 * Maps an array to a new array.
+	 * @param $callback callable callback, it is called with 3 parameters: the new array, key, value.
+	 * @param $array array array which should be mapped
+	 * @return array the new array
+	 */
+	public static function mapToNewArray($array, $callback) {
+		$newArray = [];
+		foreach( $array as $key => $value ) {
+			$newArray += (array) call_user_func( $callback, $key, $value );
+		}
+		return $newArray;
+	}
 
 
 

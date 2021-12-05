@@ -222,8 +222,7 @@ class Text
 					$pos_to++;
 				}
 				break;
-			} elseif
-			(rtrim($from_text[$pos_from]) != rtrim($to_text[$pos_to])) {
+			} elseif( rtrim($from_text[$pos_from]) != rtrim($to_text[$pos_to]) ) {
 				// Zeilen sind vorhanden, aber ungleich
 				// Wir suchen jetzt die naechsten beiden Zeilen, die gleich sind.
 				$max_entf = min(count($from_text) - $pos_from - 1, count($to_text) - $pos_to - 1);
@@ -367,40 +366,6 @@ class Text
 
 		return $oids;
 	}
-
-
-	public static function resolveVariables($value, $key, $resolver)
-	{
-		$begin = '${';
-		$end = '}';
-		$split = ':';
-		$offset = 0;
-
-		while (true) {
-			$pos = strpos($value, $begin . $key . $split, $offset);
-
-			if ($pos === FALSE)
-				return $value;
-
-			$offset = $pos + 1;
-
-			$posEnd = strpos($value, $end, $offset);
-
-			if ($posEnd === FALSE)
-				return $value;
-
-			$name = substr($value, $pos + strlen($begin . $key . $split), $posEnd - strlen($begin . $key . $split) - $pos);
-
-			$varValue = $resolver($name);
-
-			$value = substr($value, 0, $pos) . $varValue . substr($value, $posEnd + strlen($end));
-		}
-
-		return $value;
-	}
-
-
-
 
 
 

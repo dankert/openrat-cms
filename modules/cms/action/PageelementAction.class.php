@@ -24,6 +24,7 @@ use cms\model\User;
 use cms\model\Value;
 use language\Messages;
 use LogicException;
+use util\ArrayUtils;
 use util\exception\ObjectNotFoundException;
 use util\exception\SecurityException;
 use util\exception\ValidationException;
@@ -677,25 +678,28 @@ class PageelementAction extends BaseAction
 	}
 
 
-
+	/**
+	 * Get page contents.
+	 *
+	 * @return PageContent[] array of pagecontents of the page
+	 * @throws ObjectNotFoundException
+	 */
 	protected function getContents()
 	{
 		$this->page->load();
 		$this->element->load();
 
-		$contents = array();
-
-		foreach ($this->page->getProject()->getLanguages() as $languageId => $languageName) {
-			$pageContent = new PageContent();
-			$pageContent->languageid = $languageId;
-			$pageContent->elementId = $this->element->elementid;
-			$pageContent->pageId = $this->page->pageid;
-			$pageContent->load();
-
-			$contents[] = new Content($pageContent->contentId);
-		}
-
-		return $contents;
+		return ArrayUtils::mapToNewArray(
+			$this->page->getProject()->getLanguages(),
+			function ( $languageId, $languageName ) {
+				$pageContent = new PageContent();
+				$pageContent->languageid = $languageId;
+				$pageContent->elementId  = $this->element->elementid;
+				$pageContent->pageId     = $this->page->pageid;
+				$pageContent->load();
+				return [ $pageContent->contentId => new Content( $pageContent->contentId ) ];
+			}
+		);
 	}
 
 
@@ -709,6 +713,12 @@ class PageelementAction extends BaseAction
 		}
 
 		throw new SecurityException('valueId is not valid in this context');
+	}
+
+	protected function ensureContentIdIsPartOfPage( $contentId )
+	{
+		if  ( ! in_array( $contentId, array_keys($this->getContents()) ) )
+			throw new SecurityException('content '.$contentId.' is not part of page #'.$this->page->objectid.' with contents '.print_r($this->getContents(),true) );
 	}
 
 }

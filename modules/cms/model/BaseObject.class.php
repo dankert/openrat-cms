@@ -1371,7 +1371,7 @@ SQL
             else
                 $idCache[] = $row['id'];
 
-            $this->addParentfolder( $row['id'],$row['name'],$row['filename'] );
+            $this->addParentfolder( $row['id'],$row['filename'] );
             $foid = $row['parentid'];
         }
 
@@ -1381,10 +1381,9 @@ SQL
     }
 
 
-    private function addParentFolder( $id,$name,$filename='' )
+    private function addParentFolder( $id,$filename='' )
     {
-        if  ( empty($name) )
-            $name = $filename;
+        $name = $filename;
 
         if  ( empty($name) )
             $name = "($id)";

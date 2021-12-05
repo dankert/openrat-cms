@@ -2,47 +2,47 @@
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<table>
 		<row header="true">
-			<column header="true" class="table-column-action"/>
+			<!-- <column header="true" class="table-column-action"/> -->
 			<column header="true" class="table-column-auto">
 				<text type="emphatic" value="${message:COMPARE}"/>
 				<text value=" "/>
 				<date date="${date_left}"/>
 			</column>
-			<column header="true" class="table-column-action"/>
+<!--			<column header="true" class="table-column-action"/>-->
 			<column header="true" class="table-column-auto">
-				<text type="emphatic" value="${message:WITH}"/>
+				<text type="emphatic" value="${message:WITH} "/>
 				<text value=" "/>
 				<date date="${date_right}"/>
 			</column>
 		</row>
 		<row>
-			<column colspan="4"/>
+			<column colspan="2"/>
 		</row>
 		<list list="${diff}" extract="true">
 			<row class="diff">
 				<if present="left">
-					<column class="diff-line">
-						<text value="${left.line}" type="tt"/>
-					</column>
-					<column class="diff-text--${left.type}">
+<!--					<column class="diff-line">-->
+<!--						<text value="${left.line}" type="tt"/>-->
+<!--					</column>-->
+					<column class="diff-text--${left.type}" title="${left.text}">
 						<text value="${left.text}"/>
 					</column>
 				</if>
 				<else>
-					<column colspan="2" class="help" width="50%">
+					<column>
 						<text value=" "/>
 					</column>
 				</else>
 				<if present="right">
-					<column class="diff-line">
+					<!--<column class="diff-line">
 						<text value="${right.line}" type="tt"/>
-					</column>
-					<column class="diff-text--${right.type}">
+					</column>-->
+					<column class="diff-text--${right.type}" title="${right.text}">
 						<text value="${right.text}"/>
 					</column>
 				</if>
 				<else>
-					<column colspan="2" class="help" width="50%">
+					<column >
 						<text value=" "/>
 					</column>
 				</else>

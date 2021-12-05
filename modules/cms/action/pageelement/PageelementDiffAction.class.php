@@ -18,26 +18,32 @@ class PageelementDiffAction extends PageelementAction implements Method {
         if	( $value1id == $value2id )
         	throw new ValidationException('withid' );
 
-        // Wenn Value1-Id groesser als Value2-Id, dann Variablen tauschen
+        // Value 2 must be greater than value 1.
         if	( $value1id > $value2id )
-        list($value1id,$value2id) = array( $value2id,$value1id );
-
+        	list($value1id,$value2id) = array( $value2id,$value1id );
 
         $value1 = new Value( $value1id );
         $value2 = new Value( $value2id );
-        $value1->valueid = $value1id;
-        $value2->valueid = $value2id;
 
-        $value1->loadWithId();
-        $value2->loadWithId();
+        $value1->loadWithId( $value1id );
+        $value2->loadWithId( $value2id );
+
+		// both values must be part of the same content.
+		if   ( $value1->contentid != $value2->contentid )
+			throw new ValidationException('compareid');
+
+		// Security-Check:
+		// Content must be a part of the page.
+		$this->ensureContentIdIsPartOfPage( $value1->contentid );
 
         $this->setTemplateVar('date_left' ,$value1->lastchangeTimeStamp);
         $this->setTemplateVar('date_right',$value2->lastchangeTimeStamp);
 
+		// Split whole text into lines.
         $text1 = explode("\n",$value1->text);
         $text2 = explode("\n",$value2->text);
 
-        // Unterschiede feststellen.
+        // Make the diff
         $diffResult = Text::diff($text1,$text2);
 
         $outputResult = array_map( function( $left,$right) {
@@ -49,6 +55,8 @@ class PageelementDiffAction extends PageelementAction implements Method {
 
         $this->setTemplateVar('diff',$outputResult );
     }
+
+
     public function post() {
     }
 }
