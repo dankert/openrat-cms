@@ -116,15 +116,15 @@ SQL
 
 		$stmt = DB::sql( <<<SQL
 INSERT INTO {{pagecontent}}
-            (id       ,contentid  ,elementid  ,pageid  ,languageid   )
-     VALUES ({valueid},{contentid},{elementid},{pageid},{languageid} )
+            (id  ,contentid  ,elementid  ,pageid  ,languageid   )
+     VALUES ({id},{contentid},{elementid},{pageid},{languageid} )
 SQL
 		);
-		$stmt->setInt( 'valueid'   ,$this->valueid            );
-		$stmt->setInt( 'contentid' ,$this->contentId          );
-		$stmt->setInt( 'elementid' ,$this->elementId          );
-		$stmt->setInt( 'pageid'    ,$this->pageid             );
-		$stmt->setInt( 'languageid',$this->languageid         );
+		$stmt->setInt( 'id'        ,$this->id            );
+		$stmt->setInt( 'contentid' ,$this->contentId     );
+		$stmt->setInt( 'elementid' ,$this->elementId     );
+		$stmt->setInt( 'pageid'    ,$this->pageId        );
+		$stmt->setInt( 'languageid',$this->languageid    );
 
 		$stmt->execute();
 	}

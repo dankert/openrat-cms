@@ -364,15 +364,17 @@ SQL
 
 		$element = new Element();
 		$element->templateid = $template->templateid;
-		$element->typeid = Element::ELEMENT_TYPE_TEXT;
-		$element->label = 'Text';
-		$element->name  = 'text';
+		$element->typeid     = Element::ELEMENT_TYPE_TEXT;
+		$element->writable   = true;
+		$element->format     = Element::ELEMENT_FORMAT_MARKDOWN;
+		$element->label      = 'Text';
+		$element->name       = 'text';
 		$element->persist();
 
 		// Template anlegen
 		$templateModel = $template->loadTemplateModelFor( $model->modelid );
 		$templateModel->extension  = 'html';
-		$templateModel->src        = '<html><body><h1>Sample page</h1><hr><p>Text: {{name}</p></body></html>';
+		$templateModel->src        = '<html><body><h1>Sample page</h1><hr><p>Text: {{text}}</p></body></html>';
 		$templateModel->persist();
 
 		// Beispiel-Seite anlegen

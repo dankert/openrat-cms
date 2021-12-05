@@ -26,7 +26,7 @@ class PageShowAction extends PageAction implements Method {
 		$pageContext = $this->createPageContext( Producer::SCHEME_PREVIEW );
 
 		// HTTP-Header mit Sprachinformation setzen.
-		$language = new Language( $pageContext->languageid);
+		$language = new Language( $pageContext->languageId);
 		$language->load();
 		header('Content-Language: '.$language->isoCode);
 

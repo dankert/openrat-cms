@@ -36,16 +36,17 @@ class PageGenerator extends BaseGenerator
 
 	/**
 	 * Erzeugen der Inhalte zu allen Elementen dieser Seite
-	 * wird von generate() aufgerufen
+	 * wird von generate() aufgerufen.
+
+	 * @param $page Page page
+	 * @return array
+	 * @throws GeneratorException
 	 */
 	protected function generatePageElements( $page )
 	{
 		$values = array();
 
-		//if	( $this->publisher->isSimplePreview() )
-		//	$elements = $this->getWritableElements();
-		//else
-			$elements = $page->getElements();
+		$elements = $page->getTemplate()->getElements();
 
 		foreach( $elements as $elementid=>$element )
 		{
