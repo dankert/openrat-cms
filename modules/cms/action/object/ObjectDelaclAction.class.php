@@ -24,6 +24,7 @@ class ObjectDelaclAction extends ObjectAction implements Method {
 		// Nachschauen, ob der Benutzer ueberhaupt berechtigt ist, an
 		// diesem Objekt die ACLs zu aendern.
 		$o = new BaseObject( $permission->objectid );
+		$o->load();
 
 		if	( !$o->hasRight( Permission::ACL_GRANT ) )
 			Http::notAuthorized('no grant rights'); // Da wollte uns wohl einer vereimern.

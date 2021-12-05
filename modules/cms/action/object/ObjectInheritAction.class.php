@@ -25,20 +25,22 @@ class ObjectInheritAction extends ObjectAction implements Method {
 		$acllist = array();
 		$this->setTemplateVar('acls',$acllist );
     }
+
+
     public function post() {
+
 		Session::close();
 		
-		$folder = new Folder( $this->request->getId() );
-		$folder->load();
+		$baseObject = new Folder( $this->request->getId() );
+		$baseObject->load();
 		
 		if	( ! $this->request->has('inherit') )
 		{
-			$this->addWarningFor( $folder,Messages::NOTHING_DONE);
+			$this->addWarningFor( $baseObject,Messages::NOTHING_DONE);
 			return;
 		}
-		
-		
-		$aclids = $folder->getAllAclIds();
+
+		$aclids = $baseObject->getAllAclIds();
 		
 		$newAclList = array();
 		foreach( $aclids as $aclid )
@@ -50,9 +52,9 @@ class ObjectInheritAction extends ObjectAction implements Method {
 		}
 		Logger::debug('inheriting '.count($newAclList).' acls');
 		
-		$oids = $folder->getObjectIds();
+		$oids = $baseObject->getObjectIds();
 		
-		foreach( $folder->getAllSubfolderIds() as $sfid )
+		foreach( $baseObject->getAllSubfolderIds() as $sfid )
 		{
 			$subfolder = new Folder( $sfid );
 			
@@ -75,12 +77,13 @@ class ObjectInheritAction extends ObjectAction implements Method {
 			// Vererbbare ACLs des aktuellen Ordners anwenden.
 			foreach( $newAclList as $newAcl )
 			{
+				$newAcl->aclid = null;
 				$newAcl->objectid = $oid;
 				$newAcl->persist();
 				Logger::debug('adding new acl '.$newAcl->aclid.' for object '.$oid);
 			}
 		}
 		
-		$this->addNoticeFor($folder,Messages::SAVED);
+		$this->addNoticeFor($baseObject,Messages::SAVED);
     }
 }
