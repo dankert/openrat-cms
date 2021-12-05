@@ -41,7 +41,10 @@ function component_date($time )
 		];
 
 		echo ' (';
-		
+
+		if   ( time()<$time)
+			echo "+";
+
 		foreach ( $units as $unit ) {
 			if	( $past == 1 ) {
 				echo $past.' '.Output::lang($unit[1] );
@@ -62,7 +65,7 @@ function component_date($time )
 		echo ' datetime="'.date('c',$time).'"';
 
 		echo '>';
-		$format = (\cms\base\Startup::getStartTime()-$time)>(60*60*24)?Messages::DATE_FORMAT:Messages::DATE_FORMAT_TODAY;
+		$format = abs(\cms\base\Startup::getStartTime()-$time)>(60*60*24)?Messages::DATE_FORMAT:Messages::DATE_FORMAT_TODAY;
 		echo date( Output::lang($format),$time );
 		echo '</time>';
 	}
