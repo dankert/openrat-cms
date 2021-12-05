@@ -2,21 +2,28 @@
 namespace cms\action\pageelement;
 use cms\action\Method;
 use cms\action\PageelementAction;
+use cms\model\PageContent;
 use cms\model\Permission;
 use cms\model\BaseObject;
 use cms\model\Folder;
 use cms\model\Page;
 use cms\model\Project;
 use cms\model\Template;
+use cms\model\Value;
 
 class PageelementLinkAction extends PageelementAction implements Method {
+
     public function view() {
-		$this->value->languageid = $this->page->languageid;
-		$this->value->objectid   = $this->page->objectid;
-		$this->value->pageid     = $this->page->pageid;
-		$this->value->element = &$this->element;
-		$this->value->element->load();
-		$this->value->load();
+
+		$pageContent = new PageContent();
+		$pageContent->pageId     = $this->page->pageid;
+		$pageContent->languageid = $this->page->getProject()->getDefaultLanguageId();
+		$pageContent->elementId  = $this->element->elementid;
+		$pageContent->load();
+
+		$value = new Value();
+		$value->contentid = $pageContent->contentId;
+		$value->load();
 
 		$this->setTemplateVar('name'     ,$this->value->element->name     );
 		$this->setTemplateVar('desc'     ,$this->value->element->desc     );
@@ -26,9 +33,9 @@ class PageelementLinkAction extends PageelementAction implements Method {
 		
 		// Ermitteln, welche Objekttypen verlinkt werden d�rfen.
 		if	( empty($this->value->element->subtype) )
-		$types = array('page','file','link'); // Fallback: Alle erlauben :)
+			$types = array('page','file','link'); // Fallback: Alle erlauben :)
 		else
-		$types = explode(',',$this->value->element->subtype );
+			$types = explode(',',$this->value->element->subtype );
 
 		$objects = array();
 			
@@ -58,14 +65,10 @@ class PageelementLinkAction extends PageelementAction implements Method {
         $this->setTemplateVar('objects'         ,$objects);
         $this->setTemplateVar('linkobjectid',$this->value->linkToObjectId);
 
-        $this->value->page             = new Page( $this->page->objectid );
-        $this->value->page->languageid = $this->value->languageid;
-        $this->value->page->load();
+        $this->setTemplateVar( 'release',$this->page->hasRight(Permission::ACL_RELEASE) );
+        $this->setTemplateVar( 'publish',$this->page->hasRight(Permission::ACL_PUBLISH) );
 
-        $this->setTemplateVar( 'release',$this->value->page->hasRight(Permission::ACL_RELEASE) );
-        $this->setTemplateVar( 'publish',$this->value->page->hasRight(Permission::ACL_PUBLISH) );
-
-        $this->setTemplateVar( 'objectid',$this->value->page->objectid );
+        $this->setTemplateVar( 'objectid',$this->page->objectid );
     }
 
 

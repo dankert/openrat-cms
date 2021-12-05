@@ -28,7 +28,7 @@ class Value extends ModelBase
 	 * ID dieser Inhaltes
 	 * @type Integer
 	 */
-	var $valueid=0;
+	public $valueid=0;
 
 	/**
 	 * Content ID.
@@ -36,20 +36,7 @@ class Value extends ModelBase
 	 */
 	public $contentid;
 
-	/**
-	 * Seiten-Objekt der ?bergeordneten Seite
-	 * @type Page
-	 * @deprecated
-	 */
-	var $page;
-	
-	/**
-	 * Seiten-Id der uebergeordneten Seite
-	 * @type Integer
-	 * @deprecated
-	 */
-	var $pageid;
-	
+
 	/**
 	 * Objekt-ID, auf die verlinkt wird
 	 * @type Integer
@@ -81,19 +68,6 @@ class Value extends ModelBase
 	 * @deprecated
 	 */
 	var $element;
-	
-	/**
-	 * Element-Id
-	 * @type Integer
-	 * @deprecated
-	 */
-	var $elementid;
-	
-	/**
-	 * Der eigentliche Inhalt des Elementes
-	 * @type String
-	 */
-	var $value;
 
 	/**
 	 * file blob
@@ -120,34 +94,19 @@ class Value extends ModelBase
 	var $lastchangeUserName;
 	
 	/**
-	 * Schalter, ob dieser Inhalt der aktive Inhalt ist
+	 * Is this content active?
+	 *
+	 * Only 1 value (mostly the latest) in a content is active.
+	 *
 	 * @type Boolean
 	 */
 	var $active;
 	
 	/**
-	 * @type Publish
-	 */
-	public $publisher;
-
-	/**
+	 * Is this content public available?
 	 * @type boolean
 	 */
 	var $publish = false;
-
-    /**
-     * @type Boolean
-     * @deprecated
-     */
-	public $simple;
-
-
-    /**
-     * Sprach-Id.
-     * @var int
-	 * @deprecated
-     */
-    public $languageid;
 
     /**
      * Format
@@ -314,10 +273,6 @@ SQL
 		else	$stmt->setInt   ( 'date',$this->date );
 
 		$storeValueAsBase64 = DB::get()->conf['base64'];
-
-		if	( $storeValueAsBase64 )
-			$this->value = base64_decode( $this->value );
-
 
 		if	( $this->file === null )
 			$stmt->setNull  ( 'file' );

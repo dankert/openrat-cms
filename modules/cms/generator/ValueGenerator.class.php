@@ -288,6 +288,7 @@ class ValueGenerator extends BaseGenerator
 				if	( empty($targetElementName) )
 					break;
 
+				// TODO: missing element-id
 				$element = new Element();
 				$element->name = $linkElementName;
 				$element->load();
@@ -295,12 +296,8 @@ class ValueGenerator extends BaseGenerator
 				if	( intval($element->elementid)==0 )
 					break;
 
+				// TODO: does not work
 				$linkValue = new Value();
-				$linkValue->elementid = $element->elementid;
-				$linkValue->element   = $element;
-				$linkValue->pageid = $page->pageid;
-				$linkValue->page   = $page;
-				$linkValue->languageid = $value->languageid;
 				$linkValue->load();
 
 				if	( !BaseObject::available( $linkValue->linkToObjectId ) )
@@ -337,11 +334,14 @@ class ValueGenerator extends BaseGenerator
 				$element = new Element($elementId);
 				$element->load();
 
+				$pageContent = new PageContent();
+				$pageContent->pageId     = $page->pageid;
+				$pageContent->languageid = $pageContext->languageId;
+				$pageContent->elementId  = $elementId;
+				$pageContent->load();
+
 				$linkValue = new Value();
-				$linkValue->elementid = $element->elementid;
-				$linkValue->element   = $element;
-				$linkValue->pageid = $page->pageid;
-				$linkValue->languageid = $value->languageid;
+				$linkValue->contentid = $pageContent->contentId;
 				$linkValue->load();
 
 				$objectid = $linkValue->linkToObjectId;
@@ -353,7 +353,6 @@ class ValueGenerator extends BaseGenerator
 					break;
 
 				$linkedObject = new BaseObject( $objectid );
-				$linkedObject->languageid = $value->languageid;
 				$linkedObject->load();
 
 				switch( $element->subtype )
@@ -385,11 +384,11 @@ class ValueGenerator extends BaseGenerator
 						break;
 
 					case 'name':
-						$inhalt = $linkedObject->name;
+						$inhalt = $linkedObject->getDefaultName()->getName();
 						break;
 
 					case 'description':
-						$inhalt = $linkedObject->description;
+						$inhalt = $linkedObject->getDefaultName()->description;
 						break;
 
 					case 'create_user_desc':
@@ -550,17 +549,20 @@ class ValueGenerator extends BaseGenerator
 				$element = new Element($elementId);
 				$element->load();
 
+				$pageContent = new PageContent();
+				$pageContent->pageId     = $page->pageid;
+				$pageContent->languageid = $pageContext->languageId;
+				$pageContent->elementId  = $elementId;
+				$pageContent->load();
+
 				$linkValue = new Value();
-				$linkValue->elementid = $element->elementid;
-				$linkValue->element   = $element;
-				$linkValue->pageid = $page->pageid;
-				$linkValue->languageid = $value->languageid;
+				$linkValue->contentid = $pageContent->contentId;
 				$linkValue->load();
 
 				$objectid = $linkValue->linkToObjectId;
 
 				if   ( intval($objectid) == 0 )
-					$objectid = $linkValue->element->defaultObjectId;
+					$objectid = $element->defaultObjectId;
 
 				if	( !BaseObject::available( $objectid ) )
 					break;
@@ -606,12 +608,22 @@ class ValueGenerator extends BaseGenerator
 				$format = $value->format;
 
 				// Wenn Inhalt leer, dann versuchen, den Inhalt der Default-Sprache zu laden.
-				if   ( $inhalt == '' && Configuration::subset('content')->subset('language')->is('use_default_language',true) )
+				if   ( $inhalt == '' && Configuration::subset(['content','language'])->is('use_default_language',true) )
 				{
 					$project = new Project($page->projectid);
-					$value->languageid = $project->getDefaultLanguageId();
-					$value->load();
-					$inhalt = $value->text;
+
+					$otherPageContent = new PageContent();
+					$otherPageContent->elementId  = $pageContent->elementId;
+					$otherPageContent->pageId     = $pageContent->pageId;
+					$otherPageContent->languageid = $project->getDefaultLanguageId();
+					$otherPageContent->load();
+
+					if   ( $otherPageContent->isPersistent() ) {
+						$otherValue = new Value();
+						$otherValue->contentid = $pageContent->contentId;
+						$otherValue->load();
+						$inhalt = $otherValue->text;
+					}
 				}
 
 				// Wenn Inhalt leer, dann Vorbelegung verwenden

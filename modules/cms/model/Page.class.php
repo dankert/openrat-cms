@@ -193,8 +193,11 @@ SQL
 
 
 	/**
-	 * Kopieren der Inhalts von einer anderen Seite
-	 * @param $otherpageid integer ID der Seite, von der der Inhalt kopiert werden soll
+	 * Copy another page.
+	 *
+	 * Copies the contents of another page and merge it into this one.
+	 *
+	 * @param $otherpageid integer ID of the page which should be copied
 	 */
 	function copyValuesFromPage( $otherpageid )
 	{
@@ -202,25 +205,41 @@ SQL
 
 		foreach( $this->getElementIds() as $elementid )
 		{
-			$project = new Project( $this->projectid );
+			$project = $this->getProject();
 			foreach( $project->getLanguages() as $lid=>$lname )
 			{
-				$val = new Value();
-				$val->element = new Element( $elementid );
-	
-				$val->objectid   = $otherpageid;
-				$val->pageid     = Page::getPageIdFromObjectId( $otherpageid );
-				$val->languageid = $lid;
-				$val->load();
+				$pageContent = new PageContent();
+				$pageContent->pageId     = $this->pageid;
+				$pageContent->languageid = $lid;
+				$pageContent->elementId  = $elementid;
+				$pageContent->load();
 
-				// Inhalt nur speichern, wenn vorher vorhanden	
-				if	( $val->isPersistent() )
-				{
-					$val->objectid   = $this->objectid;
-					$val->pageid     = Page::getPageIdFromObjectId( $this->objectid );
-					$val->add();
+				$value = new Value();
+				$value->contentid = $pageContent->contentId;
+				$value->load();
+
+				$otherPageContent = new PageContent();
+				$otherPageContent->pageId     = $this->pageid;
+				$otherPageContent->languageid = $lid;
+				$otherPageContent->elementId  = $elementid;
+				$otherPageContent->load();
+
+				if   ( $otherPageContent->isPersistent() ) {
+
+					$value = new Value();
+					$value->contentid = $otherPageContent->contentId;
+					$value->load();
+
+					if ( $value->isPersistent() ) {
+						if   ( !$pageContent->isPersistent() )
+							$pageContent->persist();
+
+						$value->contentid = $pageContent->contentId;
+						$value->persist();
+					}
 				}
 			}
+
 		}
 	}
 

@@ -4,6 +4,7 @@ namespace util;
 
 use cms\action\RequestParams;
 use cms\base\Language as L;
+use cms\model\PageContent;
 use cms\model\Permission;
 use cms\model\Alias;
 use cms\model\Element;
@@ -372,6 +373,13 @@ class Tree
 	}
 
 
+	/**
+	 * Gets the linked object (if there is one).
+	 *
+	 * @param $id
+	 * @return void
+	 * @throws exception\ObjectNotFoundException
+	 */
 	public function pageelement($id)
 	{
 		$ids = explode('_', $id);
@@ -385,22 +393,27 @@ class Tree
 			$element = new Element($elementid);
 			$element->load();
 
+			$pageContent = new PageContent();
+			$pageContent->pageId     = $page->pageid;
+			$pageContent->elementId  = $elementid;
+			$project = $page->getProject();
+			$pageContent->languageid = $project->getDefaultLanguageId();
+			$pageContent->load();
+
 			$value = new Value();
-			$value->pageid = $page->pageid;
-			$value->element = $element;
-			$value->languageid = $page->languageid;
+			$value->contentid = $pageContent->contentId;
 			$value->load();
 
 			if (BaseObject::available($value->linkToObjectId)) {
 				$o = new BaseObject($value->linkToObjectId);
 				$o->load();
 				$treeElement = new TreeElement();
-				$treeElement->type = $o->getType();
+				$treeElement->type   = $o->getType();
 				$treeElement->action = $o->getType();
-				$treeElement->id = $o->objectid;
+				$treeElement->id     = $o->objectid;
 				$treeElement->internalId = $o->objectid;
 				$treeElement->extraId = array();
-				$treeElement->text = $o->getName();
+				$treeElement->text    = $o->getName();
 				$treeElement->description = L::lang('' . $o->getType()) . ' ' . $o->objectid;
 
 				$this->addTreeElement($treeElement);
@@ -412,7 +425,6 @@ class Tree
 
 	public function value($id)
 	{
-		//echo "id: $id";
 		if ($id != 0) {
 			$value = new Value();
 			$value->loadWithId($id);
@@ -432,7 +444,7 @@ class Tree
 				}
 				$treeElement->action = $object->getType();
 				$treeElement->icon = $object->getType();
-				$treeElement->extraId = array(RequestParams::PARAM_LANGUAGE_ID => $value->languageid);
+				$treeElement->extraId = array(RequestParams::PARAM_LANGUAGE_ID => $object->getProject()->getDefaultLanguageId());
 
 				$treeElement->description = L::lang('' . $object->getType());
 				if ($object->desc != '')

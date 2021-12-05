@@ -326,18 +326,12 @@ class PageelementAction extends BaseAction
      */
     protected function saveText()
     {
-        $value = new Value();
-        $value->publisher  = $this->page->publisher;
-        $value->languageid = $this->page->languageid;
-        $value->objectid   = $this->page->objectid;
-        $value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
+		$value = new Value();
+		$value->contentid = $this->pageContent->contentId;
+		$value->load();
 
         if	( !$this->request->has('elementid') )
             throw new ValidationException('elementid');
-        $value->element = new Element( $this->request->getText('elementid') );
-
-        $value->element->load();
-        $value->load();
 
         if   ( $this->request->has('linkobjectid') )
         	$value->linkToObjectId = $this->request->getText('linkobjectid');
@@ -441,18 +435,8 @@ class PageelementAction extends BaseAction
      */
     protected function saveDate()
     {
-        $value = new Value();
-        $value->languageid = $this->page->languageid;
-        $value->objectid   = $this->page->objectid;
-        $value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
-        $value->publisher  = $this->page->publisher;
-
-        if	( !$this->request->has('elementid') )
-            throw new ValidationException('elementid');
-
-        $value->element = new Element( $this->request->getText('elementid') );
-        $value->element->load();
-        $value->load();
+		$value = new Value();
+		$value->contentid = $this->pageContent->contentId;
 
         if   ( $this->request->has('linkobjectid') )
             $value->linkToObjectId = $this->request->getText('linkobjectid');
@@ -473,18 +457,12 @@ class PageelementAction extends BaseAction
      */
     protected function saveSelect()
     {
-        $value = new Value();
-        $value->languageid = $this->page->languageid;
-        $value->objectid   = $this->page->objectid;
-        $value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
-        $value->publisher  = $this->page->publisher;
+		$value = new Value();
+		$value->contentid = $this->pageContent->contentId;
+		$value->load();
 
         if	( !$this->request->has('elementid') )
             throw new ValidationException('elementid');
-        $value->element = new Element( $this->request->getText('elementid') );
-
-        $value->element->load();
-        $value->load();
 
         $value->text           = $this->request->getText('text');
 
@@ -500,17 +478,9 @@ class PageelementAction extends BaseAction
      */
     protected function saveLink()
     {
-        $value = new Value();
-        $value->publisher  = $this->page->publisher;
-        $value->languageid = $this->page->languageid;
-        $value->objectid   = $this->page->objectid;
-        $value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
+		$value = new Value();
+		$value->contentid = $this->pageContent->contentId;
 
-        if	( !$this->request->has('elementid') )
-            throw new ValidationException('elementid');
-        $value->element = new Element( $this->request->getText('elementid') );
-
-        $value->element->load();
         $value->load();
 
         if	( $this->request->has('linkurl') )
@@ -542,18 +512,9 @@ class PageelementAction extends BaseAction
      */
     protected function saveInsert()
     {
-        $value = new Value();
-        $value->publisher = $this->page->publisher;
-        $value->languageid = $this->page->languageid;
-        $value->objectid   = $this->page->objectid;
-        $value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
-
-        if	( !$this->request->has('elementid') )
-            throw new ValidationException('elementid');
-        $value->element = new Element( $this->request->getText('elementid') );
-
-        $value->element->load();
-        $value->load();
+		$value = new Value();
+		$value->contentid = $this->pageContent->contentId;
+		$value->load();
 
         $value->linkToObjectId = intval($this->request->getText('linkobjectid'));
 
@@ -569,23 +530,14 @@ class PageelementAction extends BaseAction
      */
     protected function saveNumber()
     {
-        $value = new Value();
-        $value->publisher  = $this->page->publisher;
-        $value->languageid = $this->page->languageid;
-        $value->objectid   = $this->page->objectid;
-        $value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
+		$value = new Value();
+		$value->contentid = $this->pageContent->contentId;
 
-        if	( !$this->request->has('elementid') )
-            throw new ValidationException('elementid');
-        $value->element = new Element( $this->request->getText('elementid') );
-
-        $value->element->load();
-        $value->load();
 
         if   ( $this->request->has('linkobjectid') )
-        $value->linkToObjectId = $this->request->getText('linkobjectid');
+	        $value->linkToObjectId = $this->request->getText('linkobjectid');
         else
-        $value->number         = $this->request->getText('number') * pow(10,$value->element->decimals);
+    	    $value->number         = $this->request->getText('number') * pow(10,$value->element->decimals);
 
         $this->afterSave($value);
     }
@@ -596,7 +548,7 @@ class PageelementAction extends BaseAction
     {
 		$pageContext = new PageContext( $this->page->objectid, Producer::SCHEME_PREVIEW );
 		$pageContext->modelId    = 0;
-		$pageContext->languageId = $this->value->languageid;
+		$pageContext->languageId = $this->request->getNumber('languageid');
 
 		$linkFormat = $pageContext->getLinkScheme();
 
@@ -652,14 +604,18 @@ class PageelementAction extends BaseAction
 
 		foreach( $project->getModelIds() as $modelId ) {
 
-			$pageContext = new PageContext( $this->page->objectid, Producer::SCHEME_PUBLIC );
-			$pageContext->modelId    = $modelId;
-			$pageContext->languageId = $this->value->languageid;
 
-			$pageGenerator = new PageGenerator( $pageContext );
+			foreach( $project->getLanguageIds() as $languageId ) {
 
-			$publisher->addOrderForPublishing( new PublishOrder( $pageGenerator->getCache()->load()->getFilename(),$pageGenerator->getPublicFilename(), $this->page->lastchangeDate ) );
-			$this->page->setPublishedTimestamp();
+				$pageContext = new PageContext($this->page->objectid, Producer::SCHEME_PUBLIC);
+				$pageContext->modelId    = $modelId;
+				$pageContext->languageId = $languageId;
+
+				$pageGenerator = new PageGenerator($pageContext);
+
+				$publisher->addOrderForPublishing(new PublishOrder($pageGenerator->getCache()->load()->getFilename(), $pageGenerator->getPublicFilename(), $this->page->lastchangeDate));
+				$this->page->setPublishedTimestamp();
+			}
 		}
 
 		$publisher->publish();
@@ -699,10 +655,7 @@ class PageelementAction extends BaseAction
 
 				$linkObject = new BaseObject( $value->linkToObjectId );
 				$linkObject->load();
-				$name = $linkObject->getNameForLanguage( $value->languageid )->name;
-
-				if   ( empty( $name ))
-					$name = $linkObject->filename();
+				$name = $linkObject->filename();
 
 				return $name;
 

@@ -460,30 +460,8 @@ SQL
 	 */
 	public function checkLimit()
 	{
-		$root = new Folder( $this->getRootObjectId() );
-		$root->projectid = $this->projectid;
-		
-		$pages = $this->getAllObjectIds( array('page') );
-		$languages = $this->getLanguageIds();
-		
-		foreach( $pages as $objectid )
-		{
-			$page = new Page( $objectid );
-			$page->load();
-			foreach( $page->getElementIds() as $eid )
-			{
-				foreach( $languages as $lid )
-				{
-					$value = new Value();
-					$value->element    = new Element($eid);
-					$value->pageid     = $page->pageid;
-					$value->languageid = $lid;
-					
-					$value->checkLimit();
-				}
-			}
-		}
-		
+		// not necessary any more.
+		// this is done while saving a value!
 	}
 
 	

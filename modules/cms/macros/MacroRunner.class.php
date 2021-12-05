@@ -5,6 +5,7 @@ namespace cms\macros;
 
 use cms\generator\PageContext;
 use cms\model\Element;
+use cms\model\PageContent;
 use cms\model\Template;
 use cms\model\Value;
 use logger\Logger;
@@ -49,17 +50,22 @@ class MacroRunner
 		$resolver->addResolver('setting',function ($var) {
 			return ArrayUtils::getSubValue($this->page->getSettings(), explode('.', $var));
 		});
-		$resolver->addResolver('element',function ($var) {
+		$resolver->addResolver('element',function ($var) use($pageContext) {
 			$template = new Template($this->page->templateid);
 			$elements = $template->getElementNames();
 			$elementid = array_search($var, $elements);
 
+			$element = new Element($elementid);
+			$element->load();
+
+			$pageContent = new PageContent();
+			$pageContent->pageId     = $this->page->pageid;
+			$pageContent->languageid = $pageContext->languageId;
+			$pageContent->elementId  = $elementid;
+			$pageContent->load();
+
 			$value = new Value();
-			$value->elementid = $elementid;
-			$value->element = new Element($elementid);
-			$value->element->load();
-			$value->pageid = $this->page->pageid;
-			$value->languageid = $this->page->languageid;
+			$value->contentid = $pageContent->contentId;
 			$value->load();
 
 			return $value->getRawValue();
