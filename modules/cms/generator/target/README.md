@@ -8,14 +8,16 @@ Possible publishing targets are
 - WebDAV
 - SCP
 - SFTP
+- S3 (Amazon S3 Storage)
 
 The corresponding scheme names are
-- `file`
-- `ftp`
-- `ftps`
-- `dav`
-- `scp`
-- `sftp`
+- `file`: Local filesystem
+- `ftp`:  FTP
+- `ftps`: FTPS (FTP over SSL)
+- `dav`:  WebDAV
+- `scp`:  Secure copy (SCP)
+- `sftp`: SFTP
+- `s3`: Amazon S3 Storage
 
 The target is selected by the scheme in the target url in the project properties.
 

@@ -5,11 +5,11 @@
 
 ## About
 
-OpenRat is a statifying CMS.
+OpenRat is a statifying CMS, also known as a [static site generator](https://en.wikipedia.org/wiki/Web_template_system#Static_site_generators).
 
 OpenRat generates static files, which are served by a dedicated live web server like Apache, Nginx, Boa etc.
 
-Unlike popular static site generators like Jekyll, JBake etc. OpenRat CMS contains a complete Web UI with user management.
+Unlike other static site generators OpenRat CMS contains a complete Web UI with user management.
 
 ### Why OpenRat?
 
@@ -22,7 +22,7 @@ Yes, there are a lot of good CMS in the world, and a lot of them are available f
 
 ### Requirements
 
-You need a server with PHP >= 5.5 and a relational database.
+You need a server with PHP >= 5.6 and a relational database.
 
 MariaDB and MySQL are recommended, while PostgresQL and SQLite are supported too.
  
@@ -31,7 +31,7 @@ MariaDB and MySQL are recommended, while PostgresQL and SQLite are supported too
 
 #### Docker-Compose
 
-The easiest way is to start the content-management-system inside a docker machine.
+The easiest way is to start the content-management-system inside a docker machine with an MySql database.
 Copy the following lines to a file named `docker-compose.yml`.
 
 ```
@@ -72,16 +72,16 @@ services:
 
 Start the environment with `docker-compose up -d`.
 
-Now the CMS is available on http://localhost:8000
-The published website is available on http://localhost:8001
+Now the CMS is available on [localhost:8000](http://localhost:8000).
+The published website is available on [localhost:8001](http://localhost:8001)
 
-#### Run the docker container
+#### Start the single CMS docker container
 
-Download and run the docker image from [Dockerhub](https://hub.docker.com/r/openrat/openrat-cms):
+Download and run the docker image from [Dockerhub](https://hub.docker.com/r/openrat/openrat-cms), you need an already  running database.
 
 `docker run -d -p 8080:8080 -e DB_HOST=$host -e DB_NAME=$name -e DB_USER=$user -e DB_PASS=$pass openrat/openrat-cms`
 
-Be sure to replace the variables. You need a database to use this way.
+Be sure to replace the variables.
 
 #### Environment variables for Docker
 
@@ -101,13 +101,11 @@ The following environment variables could be set in the docker container:
 
 ### Local installation
 
-Of course the old style local installation is possible with the following steps.
+The old style local installation is possible with the following steps.
 
 #### Download and untar it
 
-Download the last release from Github and install it on your server:
-
-https://github.com/dankert/openrat-cms/releases
+Download the [latest release](https://github.com/dankert/openrat-cms/releases) from Github and install it on your server.
 
 #### Clone GIT repository
 

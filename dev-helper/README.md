@@ -4,7 +4,7 @@ These files are only necessary **for developers**!
  
 ## Creating a release tag
 
-`tag-version.sh <version>`
+Usage: `tag-version.sh <version>`
 
 - updates the file `version.php` with the new version
 - creates a git tag
@@ -21,4 +21,4 @@ Makes the necessary output files writable, then updates them.
 - `-w` do not exit, **watch**es the files for modifications 
 - `-x <type>` where `type` is one of `tpl`,`lang`,`js`,`css`,`xsd` or `all`.
 
-You can to the same while [invoking the update via your browser](./update.php). 
+You can to the same with [invoking the update via your browser](./update.php). 

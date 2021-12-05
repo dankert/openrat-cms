@@ -1,5 +1,5 @@
 # Java client side implementation
 
-Java client for accessing the API is now available in a separate project.  
+The CMS API is callable in a program language independent way.
 
-See [openrat-java-client](http://code.weiherhei.de/openrat-java-client/log.html).
+A Java client for accessing the API is now available in a separate project, see [openrat-java-client](http://code.weiherhei.de/openrat-java-client/log.html).
