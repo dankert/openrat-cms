@@ -19,12 +19,20 @@ export default function( options )
 	  'resultEntryClass': 'dropdown-entry',
     }, options);
 	
-	
+
 	return $(this).input(async function()
 	{
 		let searchInput    = $(this)
 		let searchArgument = searchInput.val();
 		let dropdownEl     = $( settings.dropdown );
+
+		let closeSearch = function() {
+			settings.onSearchInactive();
+
+			// No search argument.
+			$(dropdownEl).empty(); // Leeren.
+			dropdownEl.removeClass('search-result--is-active');
+		};
 
 		if	( searchArgument.length )
 		{
@@ -52,11 +60,9 @@ export default function( options )
 					.addClass( settings.resultEntryClass )
 					.addClass( settings.resultEntryClass + '--active' )
 					.attr('title',result.desc);
-				div.data('object', {
-					'name': result.name,
-					'action': result.type,
-					'id': result.id
-				});
+				div.data( 'name'  , result.name );
+				div.data( 'action', result.type );
+				div.data( 'id'    , result.id   );
 				let link = $.create('a')
 					.addClass('link')
 					.attr('href', WorkbenchNavigator.createShortUrl(result.type, result.id));
@@ -84,19 +90,15 @@ export default function( options )
 
 			// Register clickhandler for search results.
 			$(dropdownEl).find('.or-search-result-entry').click(function (e) {
-				settings.select($(this).data('object'));
+				settings.select( $(this).data() );
 				settings.afterSelect();
 				searchInput.val('');
+				closeSearch();
 			});
 		}
 		else
 		{
-			settings.onSearchInactive();
-
-			// No search argument.
-			$(dropdownEl).empty(); // Leeren.
-
-			dropdownEl.removeClass('search-result--is-active');
+			closeSearch();
 		}
 	});
 };

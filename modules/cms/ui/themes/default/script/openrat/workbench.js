@@ -635,7 +635,7 @@ export default class Workbench {
 					$('.or-search').removeClass('search--is-active');
 				},
 				dropdown    : '.or-act-search-result',
-				resultEntryClass: 'or-search-result-entry',
+				resultEntryClass: 'search-result-entry',
 				//openDropdown: true, // the dropdown is automatically opened by the menu.
 				select      : function(obj) {
 					// open the search result

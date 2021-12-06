@@ -223,7 +223,10 @@ export class OQuery {
 
 	data( name,value) {
 		if   ( typeof value === 'undefined' )
-			return this.nodes.length > 0 ? this.nodes[0].dataset[name] : '';
+			if   ( typeof name === 'undefined' )
+				return this.nodes.length > 0 ? this.nodes[0].dataset : {};
+			else
+				return this.nodes.length > 0 ? this.nodes[0].dataset[name] : null;
 
 		this.nodes.forEach(node => node.dataset[name] = value );
 		return this;
