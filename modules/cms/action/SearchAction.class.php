@@ -81,8 +81,10 @@ class SearchAction extends BaseAction
 
         if	( $searchFlag & self::FLAG_ID )
         {
-            if   ( BaseObject::available( intval($searchText) ) )
-                $listObjectIds[] = intval( $searchText );
+            if   ( BaseObject::available( intval($searchText) ) ) {
+
+				$listObjectIds[intval($searchText)] = intval( $searchText );
+			}
 
             if  ( $this->userIsAdmin() ) {
 
@@ -97,7 +99,7 @@ class SearchAction extends BaseAction
                         'name' => $user->fullname,
                         'desc' => $user->desc,
                         'lastchange_date' => 0 );
-                    $resultList[] = $userResult;
+                    $resultList['u'.$user->userid] = $userResult;
                 }
                 catch( \util\exception\ObjectNotFoundException $e) {
                     ; // userid is unknown
@@ -117,7 +119,7 @@ class SearchAction extends BaseAction
                         'name' => $user->fullname,
                         'desc' => $user->desc,
                         'lastchange_date' => 0);
-                    $resultList[] = $userResult;
+                    $resultList['u'.$user->userid] = $userResult;
                 }
             }
 
@@ -163,7 +165,7 @@ class SearchAction extends BaseAction
 			$o = new BaseObject( $objectid );
 			$o->load();
             if ($o->hasRight( Permission::ACL_READ ))
-                $resultList[] = array(
+                $resultList['o'.$objectid] = array(
                     'id'              => $objectid,
                     'type'            => $o->getType(),
                     'name'            => $o->filename,
@@ -178,8 +180,8 @@ class SearchAction extends BaseAction
 			$t->load();
 			$p = new Project( $t->projectid );
 			$o = new BaseObject( $p->getRootObjectId() );
-			if ($o->hasRight( Permission::ACL_READ ))
-                $resultList[] = array(
+			if ($o->hasRight( Permission::ACL_PROP ))
+                $resultList['t'.$templateid] = array(
                     'id'  => $templateid,
                     'type'=> 'template',
                     'name'=> $t->name,
