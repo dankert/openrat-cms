@@ -1,5 +1,6 @@
 import $ from "../jquery-global.js";
 import WorkbenchNavigator from "../openrat/navigator.js";
+import Dialog from "../openrat/dialog.js";
 
 /**
  * Suche mit Dropdown
@@ -18,21 +19,30 @@ export default function( options )
 	  'method': 'quicksearch',
 	  'resultEntryClass': 'dropdown-entry',
     }, options);
-	
+
+	let searchInput    = $(this)
+	let dropdownEl     = $( settings.dropdown );
+
+	let closeSearch = function() {
+		settings.onSearchInactive();
+
+		// No search argument.
+		$(dropdownEl).empty(); // Leeren.
+		dropdownEl.removeClass('search-result--is-active');
+	};
+
+	$(this).on('keydown',async function(e) {
+		if   ( e.keyCode == 13 ) { // Listen to ENTER
+			let dialog = new Dialog();
+			closeSearch();
+			dialog.start('','search','edit',0,{'text':searchInput.val()});
+			searchInput.val('');
+		}
+	} );
 
 	return $(this).input(async function()
 	{
-		let searchInput    = $(this)
 		let searchArgument = searchInput.val();
-		let dropdownEl     = $( settings.dropdown );
-
-		let closeSearch = function() {
-			settings.onSearchInactive();
-
-			// No search argument.
-			$(dropdownEl).empty(); // Leeren.
-			dropdownEl.removeClass('search-result--is-active');
-		};
 
 		if	( searchArgument.length )
 		{

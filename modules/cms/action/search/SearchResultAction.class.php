@@ -7,16 +7,6 @@ class SearchResultAction extends SearchAction implements Method {
 
     public function view() {
 
-		$suchText    = $this->request->getText('text');
-		$searchFlags = 0;
-		
-		if	( $this->request->has('id'         ) ) $searchFlags |= self::FLAG_ID;
-		if	( $this->request->has('filename'   ) ) $searchFlags |= self::FLAG_FILENAME;
-		if	( $this->request->has('name'       ) ) $searchFlags |= self::FLAG_NAME;
-		if	( $this->request->has('description') ) $searchFlags |= self::FLAG_DESCRIPTION;
-		if	( $this->request->has('content'    ) ) $searchFlags |= self::FLAG_VALUE;
-			
-		$this->performSearch($suchText, $searchFlags);
 
 				/*
 			case 'lastchange_user':
