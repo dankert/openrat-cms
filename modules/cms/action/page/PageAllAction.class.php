@@ -253,12 +253,13 @@ class PageAllAction extends PageAction implements Method {
 				$this->addWarningFor($value, Messages::CONCURRENT_VALUE_CHANGE, array('last_change_time' => date(L::lang('DATE_FORMAT'), $lastChangeTime)));
 
 			// Check if anything has changed
-			if   ( $oldValue->publish        == $value->publish  &&
-			       $oldValue->text           == $value->text     &&
+			if   ( $oldValue->text           == $value->text     &&
 			       $oldValue->linkToObjectId == $value->linkToObjectId  &&
 			       $oldValue->format         == $value->format    &&
 			       $oldValue->number         == $value->number    &&
-			       $oldValue->date           == $value->date )
+			       $oldValue->date           == $value->date      &&
+				   !(!$oldValue->publish && $value->publish)
+			)
 				continue; // nothing has changed.
 
 			// Inhalt speichern
