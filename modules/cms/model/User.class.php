@@ -909,14 +909,18 @@ SQL
 		                         ON {{language}}.id={{acl}}.languageid
 		                  WHERE ( 
 										{{acl}}.type = {usertype}  AND {{acl}}.userid={userid}
-									 OR {{acl}}.type = {grouptype} AND $groupClause 
-									 OR ({{acl}}.type = {alltype}
-									 OR ({{acl}}.type = {guesttype}
+									 OR {{acl}}.type = {grouptype} AND ($groupClause) 
+									 OR {{acl}}.type = {alltype}
+									 OR {{acl}}.type = {guesttype}
 						  )
 		                  ORDER BY {{object}}.projectid,{{acl}}.languageid
 SQL
 		);
-		$sql->setInt  ( 'userid'    ,$this->userid );
+		$sql->setInt( 'userid'   ,$this->userid                );
+		$sql->setInt( 'usertype' ,Permission::TYPE_USER  );
+		$sql->setInt( 'grouptype',Permission::TYPE_GROUP );
+		$sql->setInt( 'alltype'  ,Permission::TYPE_AUTH  );
+		$sql->setInt( 'guesttype',Permission::TYPE_GUEST );
 
 		$aclList = array();
 
