@@ -320,7 +320,7 @@ SQL
 	{
 		// Delete all values
 		$stmt = DB::sql( <<<SQL
-		               DELETE * FROM {{value}}
+		               DELETE FROM {{value}}
                           WHERE contentid = {contentid}
 SQL
 		);
@@ -329,8 +329,8 @@ SQL
 
 		// Delete the content
 		$stmt = DB::sql( <<<SQL
-		               DELETE * FROM {{content}}
-                          WHERE contentid = {contentid}
+		               DELETE FROM {{content}}
+                          WHERE id = {contentid}
 SQL
 		);
 		$stmt->setInt( 'contentid' ,$this->id );

@@ -222,7 +222,7 @@ class Element extends ModelBase
 	{
 		if	( intval($this->elementid) != 0 )
 		{
-			$db = \cms\base\DB::get();
+			$db = Db::get();
 			$sql = $db->sql( <<<SQL
 SELECT * FROM {{element}}
  WHERE id={elementid}
@@ -355,7 +355,7 @@ SQL
 	 */
 	public function delete()
 	{
-		$db = \cms\base\DB::get();
+		$db = Db::get();
 
 		// Inhalte loeschen.
         // notwendig, damit die Fremdschlüsselbeziehungen auf diesen Element aufgehoben werden.
@@ -371,18 +371,48 @@ SQL
 
 
 	/**
-	 * L?schen aller Seiteninhalte mit diesem Element
-	 * Das Element wird nicht gel?scht.
+	 * Deletes all values for this element.
 	 */
 	public function deleteValues()
 	{
-		$db = \cms\base\DB::get();
-
-		// Alle Inhalte mit diesem Element l?schen
-		$sql = $db->sql('DELETE FROM {{value}} '.
-		               '  WHERE elementid={elementid}'   );
+		$sql = DB::sql( <<<SQL
+			SELECT id as pagecontentid,contentid
+			  FROM {{pagecontent}}
+		     WHERE elementid = {elementid}
+SQL
+		);
 		$sql->setInt( 'elementid',$this->elementid );
-		$sql->execute();
+
+		foreach( $sql->getAll() as $pagecontentRow ) {
+			$sql = DB::sql( <<<SQL
+				DELETE
+				  FROM {{value}}
+				 WHERE contentid = {contentid}
+SQL
+			);
+			$sql->setInt( 'contentid',$pagecontentRow['contentid'] );
+			$sql->execute();
+
+
+			$sql = DB::sql( <<<SQL
+				DELETE
+				  FROM {{pagecontent}}
+				 WHERE id = {pagecontentid}
+SQL
+			);
+			$sql->setInt( 'pagecontentid',$pagecontentRow['pagecontentid'] );
+			$sql->execute();
+
+
+			$sql = DB::sql( <<<SQL
+				DELETE
+				  FROM {{content}}
+				 WHERE id = {contentid}
+SQL
+			);
+			$sql->setInt( 'contentid',$pagecontentRow['contentid'] );
+			$sql->execute();
+		}
 	}
 
 

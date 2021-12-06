@@ -302,7 +302,7 @@ SQL
  	 *
  	 * Entfernen alle Templateinhalte und des Templates selber
  	 */
-	function delete()
+	public function delete()
 	{
 		$db = \cms\base\DB::get();
 		

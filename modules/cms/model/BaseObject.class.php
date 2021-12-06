@@ -982,9 +982,10 @@ SQL
 
 		$user = \util\Session::getUser();
 
-		if   ( ! $user ) {  // User logged in?
+		if   ( $user ) {  // User logged in?
 
 			$permission = new Permission();
+			$permission->type = Permission::TYPE_USER;
 			$permission->userid = $user->userid;
 			$permission->objectid = $this->objectid;
 

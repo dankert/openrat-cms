@@ -171,7 +171,7 @@ class Language extends ModelBase
 
 
 	// Diese Sprache als 'default' markieren.
-	function setDefault()
+	public function setDefault()
 	{
 		$db = \cms\base\DB::get();
 
@@ -191,43 +191,42 @@ class Language extends ModelBase
 	}
 
 
-	// Sprache entfernen
-	function delete()
+	/**
+	 * Delete language
+	 */
+	public function delete()
 	{
 		$db = \cms\base\DB::get();
 
-		// Sprache l?schen
-//		$sql = $db->sql( 'SELECT COUNT(*) FROM {{language}} WHERE projectid={projectid}' );
-//		$sql->setInt( 'projectid',$this->projectid );
-//		$count = $sql->getOne( $sql );
-//		
-//		// Nur l?schen, wenn es mindestens 2 Sprachen gibt
-//		if   ( $count >= 2 )
-//		{
-			// Inhalte mit dieser Sprache l?schen
-			$sql = $db->sql( 'DELETE FROM {{value}} WHERE languageid={languageid}' );
-			$sql->setInt( 'languageid',$this->languageid );
-			$sql->execute();
+		// Inhalte mit dieser Sprache l?schen
+		$sql = $db->sql( 'DELETE FROM {{pagecontent}} WHERE languageid={languageid}' );
+		$sql->setInt( 'languageid',$this->languageid );
+		$sql->execute();
 
-			// Inhalte mit dieser Sprache l?schen
-			$sql = $db->sql( 'DELETE FROM {{name}} WHERE languageid={languageid}' );
-			$sql->setInt( 'languageid',$this->languageid );
-			$sql->execute();
+		// Inhalte mit dieser Sprache l?schen
+		$sql = $db->sql( 'DELETE FROM {{name}} WHERE languageid={languageid}' );
+		$sql->setInt( 'languageid',$this->languageid );
+		$sql->execute();
 
-			// Sprache l?schen
-			$sql = $db->sql( 'DELETE FROM {{language}} WHERE id={languageid}' );
-			$sql->setInt( 'languageid',$this->languageid );
-			$sql->execute();
+		// Andere Sprache auf "Default" setzen
+		if   ( $this->isDefault ) {
 
-			// Andere Sprache auf "Default" setzen
 			$sql = $db->sql( 'SELECT id FROM {{language}} WHERE projectid={projectid}' );
 			$sql->setInt( 'projectid',$this->projectid );
 			$new_default_languageid = $sql->getOne();
 
-			$sql = $db->sql( 'UPDATE {{language}} SET is_default=1 WHERE id={languageid}' );
-			$sql->setInt( 'languageid',$new_default_languageid );
-			$sql->execute();
-//		}
+			if   ( $new_default_languageid )
+			{
+				$sql = $db->sql( 'UPDATE {{language}} SET is_default=1 WHERE id={languageid}' );
+				$sql->setInt( 'languageid',$new_default_languageid );
+				$sql->execute();
+			}
+		}
+
+		// Sprache l?schen
+		$sql = $db->sql( 'DELETE FROM {{language}} WHERE id={languageid}' );
+		$sql->setInt( 'languageid',$this->languageid );
+		$sql->execute();
 	}
 
     public function setCurrentLocale()

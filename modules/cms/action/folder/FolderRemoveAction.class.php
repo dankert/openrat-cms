@@ -4,6 +4,7 @@ use cms\action\FolderAction;
 use cms\action\Method;
 use cms\model\Permission;
 use language\Messages;
+use util\exception\ValidationException;
 
 
 class FolderRemoveAction extends FolderAction implements Method {
@@ -20,11 +21,16 @@ class FolderRemoveAction extends FolderAction implements Method {
 
 
     public function post() {
-        if  ( $this->request->has( 'withChildren'))
+
+		if   ( $this->folder->isRoot() )
+			// Could not delete the root folder on user request.
+			throw new ValidationException("parent",Messages::FOLDER_ROOT);
+
+		if  ( $this->request->has( 'withChildren'))
             $this->folder->deleteAll();  // Delete with children
         else
             if   ( $this->folder->hasChildren() )
-                throw new \util\exception\ValidationException("withChildren",Messages::CONTAINS_CHILDREN);
+                throw new ValidationException("withChildren",Messages::CONTAINS_CHILDREN);
             else
                 $this->folder->delete();  // Only delete current folder.
 

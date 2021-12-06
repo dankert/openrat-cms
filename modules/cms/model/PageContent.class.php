@@ -132,22 +132,20 @@ SQL
 
 	
 	/**
-	 * Diesen Inhalt loeschen
+	 * Delete this page content.
 	 */
-	function delete()
+	public function delete()
 	{
-
-		$content = new Content( $this->contentId );
-		$content->delete();
-
 		$stmt = DB::sql( <<<SQL
-			DELETE * FROM {{pagecontent}}
+			DELETE FROM {{pagecontent}}
 			 WHERE id ={id}
 SQL
 		);
 		$stmt->setInt( 'id' ,$this->id );
-
 		$stmt->execute();
+
+		$content = new Content( $this->contentId );
+		$content->delete();
 	}
 
 
