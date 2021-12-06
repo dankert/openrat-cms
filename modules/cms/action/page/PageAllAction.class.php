@@ -209,6 +209,8 @@ class PageAllAction extends PageAction implements Method {
 
 			$value = new Value();
 			$value->contentid = $pageContent->contentId;
+			$oldValue = clone $value;
+			$oldValue->load();
 
 			switch ($element->typeid) {
 
@@ -249,6 +251,15 @@ class PageAllAction extends PageAction implements Method {
 			$lastChangeTime = $content->getLastChangeSinceByAnotherUser($this->request->getNumber('value_time'), $this->getCurrentUserId());
 			if ($lastChangeTime)
 				$this->addWarningFor($value, Messages::CONCURRENT_VALUE_CHANGE, array('last_change_time' => date(L::lang('DATE_FORMAT'), $lastChangeTime)));
+
+			// Check if anything has changed
+			if   ( $oldValue->publish        == $value->publish  &&
+			       $oldValue->text           == $value->text     &&
+			       $oldValue->linkToObjectId == $value->linkToObjectId  &&
+			       $oldValue->format         == $value->format    &&
+			       $oldValue->number         == $value->number    &&
+			       $oldValue->date           == $value->date )
+				continue; // nothing has changed.
 
 			// Inhalt speichern
 			$value->persist();
