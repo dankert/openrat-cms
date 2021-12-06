@@ -21,8 +21,6 @@ namespace cms\model;
 // Standard Mime-Type 
 use cms\base\Configuration;
 use cms\base\DB as Db;
-use cms\generator\filter\AbstractFilter;
-use logger\Logger;
 use util\cache\FileCache;
 
 
@@ -313,8 +311,9 @@ class File extends BaseObject
 	var $storeValueAsBase64 = false;
 
     public $filterid;
+	public $public;
 
-    /**
+	/**
 	 * Konstruktor
 	 *
 	 * @param Objekt-Id
@@ -583,7 +582,7 @@ SQL
 	/**
 	 * Speichert den Inhalt in der Datenbank.
 	 */
-	function saveValue( $value = '' )
+	function saveValue()
 	{
 		$this->getCache()->invalidate();
 
@@ -600,12 +599,10 @@ SQL
 		$value = new Value();
 		$value->contentid = $this->contentid;
 
-		$storeValueAsBase64 = DB::get()->conf['base64'];
-
-		if	( $storeValueAsBase64 )
-			$value->file = base64_encode($this->value);
-		else
-			$value->file = $this->value;
+		// Base64-encoding is done in the Value.
+		$value->file = $this->value;
+		
+		$value->publish = $this->public;
 
 		$value->persist();
 	}

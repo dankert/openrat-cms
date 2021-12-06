@@ -24,17 +24,12 @@
 					</column>
 				</row>
 
-				<if empty="${values}">
-					<row>
-						<column colspan="8">
-							<text value="${message:NOT_FOUND}"/>
-						</column>
-					</row>
-				</if>
 				<list list="${values}" extract="true">
 					<row class="data">
 						<column>
-							<image action="image" />
+							<link clickable="true" type="dialog" subaction="preview" var1="valueid" value1="${id}" title="${message:preview}">
+								<image action="image" />
+							</link>
 						</column>
 						<column class="-visible-on-desktop">
 							<date date="${date}"/>

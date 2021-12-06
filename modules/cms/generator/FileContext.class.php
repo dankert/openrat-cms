@@ -6,7 +6,7 @@ namespace cms\generator;
 
 
 /**
- * The page context, necessary for generating and publishing a page.
+ * The page context, necessary for generating and publishing a file.
  */
 class FileContext extends BaseContext
 {
@@ -29,6 +29,7 @@ class FileContext extends BaseContext
 	public function getCacheKey()
 	{
 		return [
+			'file',
 			$this->sourceObjectId,
 			$this->scheme
 		];

@@ -2,13 +2,14 @@
 namespace cms\action\text;
 use cms\action\Method;
 use cms\action\PageelementAction;
+use cms\action\TextAction;
 use cms\generator\PublishEdit;
 use cms\generator\PublishPreview;
 use cms\model\Value;
 use util\exception\ValidationException;
 use util\Text;
 
-class TextDiffAction extends PageelementAction implements Method {
+class TextDiffAction extends TextAction implements Method {
 
     public function view() {
         $value1id = $this->request->getNumber('compareid');
@@ -23,19 +24,16 @@ class TextDiffAction extends PageelementAction implements Method {
         list($value1id,$value2id) = array( $value2id,$value1id );
 
 
-        $value1 = new Value( $value1id );
-        $value2 = new Value( $value2id );
-        $value1->valueid = $value1id;
-        $value2->valueid = $value2id;
-
-        $value1->loadWithId();
-        $value2->loadWithId();
+        $value1 = new Value();
+        $value2 = new Value();
+		$value1->loadWithId( $value1id );
+		$value2->loadWithId( $value2id );
 
         $this->setTemplateVar('date_left' ,$value1->lastchangeTimeStamp);
         $this->setTemplateVar('date_right',$value2->lastchangeTimeStamp);
 
-        $text1 = explode("\n",$value1->text);
-        $text2 = explode("\n",$value2->text);
+        $text1 = explode("\n",$value1->file);
+        $text2 = explode("\n",$value2->file);
 
         // Unterschiede feststellen.
         $diffResult = Text::diff($text1,$text2);

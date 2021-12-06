@@ -5,16 +5,33 @@ use cms\action\Method;
 use cms\base\Configuration;
 use cms\generator\FileContext;
 use cms\generator\FileGenerator;
+use cms\generator\FileHistoryContext;
+use cms\generator\FileHistoryGenerator;
 use cms\generator\Producer;
 use cms\model\File;
+use cms\model\Value;
+use util\exception\SecurityException;
 
 
 class FileShowAction extends FileAction implements Method {
 
     public function view() {
-		$fileContext = new FileContext($this->file->objectid, Producer::SCHEME_PREVIEW );
 
-		$generator = new FileGenerator( $fileContext);
+		$valueId = $this->request->getNumber('valueid');
+
+		if   ( $valueId ) {
+			$value = new Value();
+			$value->loadWithId( $valueId );
+			if   ( $value->contentid != $this->file->contentid )
+				throw new SecurityException('Content-Id does not match');
+
+			$fileHistoryContext = new FileHistoryContext($this->file->objectid, $valueId );
+			$generator          = new FileHistoryGenerator( $fileHistoryContext );
+		} else {
+			$fileContext = new FileContext($this->file->objectid, Producer::SCHEME_PREVIEW );
+			$generator   = new FileGenerator( $fileContext );
+		}
+
 
 		$this->lastModified( $this->file->lastchangeDate );
 
@@ -42,14 +59,12 @@ class FileShowAction extends FileAction implements Method {
 		header('X-File-Id: '   .$this->file->fileid     );
 		header('X-Id: '        .$this->file->objectid   );
 
-		// Angabe Content-Disposition
-		// - Bild soll "inline" gezeigt werden
-		// - Dateiname wird benutzt, wenn der Browser das Bild speichern moechte
+		// Image should be displayed inline.
+		// Filename is used if the user agent is saving the file.
 		header('Content-Disposition: inline; filename='.$this->file->filename() );
 		header('Content-Transfer-Encoding: binary' );
 		header('Content-Description: '.$this->file->filename() );
 
-		//$this->file->write(); // Bild aus Datenbank laden
 
 		// Groesse des Bildes in Bytes
 		// Der Browser hat so die Moeglichkeit, einen Fortschrittsbalken zu zeigen

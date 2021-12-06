@@ -22,8 +22,8 @@ class PageelementDiffAction extends PageelementAction implements Method {
         if	( $value1id > $value2id )
         	list($value1id,$value2id) = array( $value2id,$value1id );
 
-        $value1 = new Value( $value1id );
-        $value2 = new Value( $value2id );
+        $value1 = new Value();
+        $value2 = new Value();
 
         $value1->loadWithId( $value1id );
         $value2->loadWithId( $value2id );

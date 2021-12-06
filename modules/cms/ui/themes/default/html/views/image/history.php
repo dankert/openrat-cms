@@ -36,17 +36,12 @@
                     <span><?php echo O::escapeHtml(''.@O::lang('ACTION').'') ?></span>
                   </td>
                 </tr>
-                <?php $if5=(($values)==FALSE); if($if5) {  ?>
-                  <tr><?php echo O::escapeHtml('') ?>
-                    <td colspan="<?php echo O::escapeHtml('8') ?>"><?php echo O::escapeHtml('') ?>
-                      <span><?php echo O::escapeHtml(''.@O::lang('NOT_FOUND').'') ?></span>
-                    </td>
-                  </tr>
-                 <?php } ?>
                 <?php foreach((array)@$values as $list_key=>$list_value) { extract($list_value); ?>
                   <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
                     <td><?php echo O::escapeHtml('') ?>
-                      <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-image') ?>"><?php echo O::escapeHtml('') ?></i>
+                      <a title="<?php echo O::escapeHtml(''.@O::lang('preview').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('preview') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-valueid="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('{&quot;valueid&quot;:&quot;'.@$id.'&quot;}') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
+                        <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-image') ?>"><?php echo O::escapeHtml('') ?></i>
+                      </a>
                     </td>
                     <td class="<?php echo O::escapeHtml('or--visible-on-desktop') ?>"><?php echo O::escapeHtml('') ?>
                       <?php include_once( 'modules/template_engine/components/html/component_date/component-date.php'); { component_date($date); ?>
