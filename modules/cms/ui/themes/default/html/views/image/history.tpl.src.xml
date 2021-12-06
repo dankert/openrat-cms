@@ -51,7 +51,7 @@
 						<!-- Actions -->
 						<column>
 							<if true="${releasable}">
-								<link type="post" subaction="release" var1="valueid" value1="${id}"
+								<link clickable="true" type="post" subaction="release" var1="valueid" value1="${id}"
 									  id="${objectid}" title="${message:RELEASE_DESC}">
 									<image method="release"/>
 								</link>

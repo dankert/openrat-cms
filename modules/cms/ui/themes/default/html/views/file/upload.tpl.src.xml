@@ -1,15 +1,19 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<form>
-		<fieldset >
-			<upload name="file"/>
-		</fieldset>
+	<form readonly="true">
+		<group title="${message:upload}">
+			<fieldset>
+				<upload name="file" multiple="true" />
+			</fieldset>
 
-		<part class="dropzone-upload">
-			<newline />
-			<newline />
-			<newline />
-			<newline />
-		</part>
+			<fieldset>
+				<part class="dropzone-upload">
+					<newline/>
+					<newline/>
+					<newline/>
+					<newline/>
+				</part>
+			</fieldset>
+		</group>
 	</form>
 </output>

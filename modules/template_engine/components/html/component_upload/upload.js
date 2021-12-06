@@ -5,10 +5,10 @@ import $         from "../../../../cms/ui/themes/default/script/jquery-global.js
 export default function (element ) {
 
 
-	var form = $(element).find('form');
+	let form = $(element).find('form');
 
 	// Dateiupload über Drag and Drop
-	var dropzone = $(element).find('div.or-dropzone-upload > div.input');
+	let dropzone = $(element).find('div.or-dropzone-upload');
 	dropzone.on('dragenter', function (e) 
 	{
 		e.stopPropagation();
@@ -24,7 +24,7 @@ export default function (element ) {
 	{
 		 $(this).css('border','1px dotted red');
 		 e.preventDefault();
-		 var files = e.originalEvent.dataTransfer.files;
+		 let files = e.originalEvent.dataTransfer.files;
 
 		 //We need to send dropped files to Server
 		Workbench.handleFileUpload(form,files);
@@ -34,7 +34,7 @@ export default function (element ) {
 	// Dateiupload über File-Input-Button
 	$(element).find('input[type=file]').change( function() {
 		
-		var files = $(this).prop('files');
+		let files = this.files;
 
 		Workbench.handleFileUpload(form,files);
 	});
@@ -49,16 +49,18 @@ export default function (element ) {
  */
 Workbench.handleFileUpload = function(form,files)
 {
-	for (let i = 0, f; f = files[i]; i++)
+	for (let i = 0; i < files.length; i++)
 	{
+		let f = files[i];
 	    let form_data = new FormData();
 	    form_data.append('file'     , f);
-	    form_data.append('action'   ,'folder');
-	    form_data.append('subaction',$(form).data('method'));
-	    form_data.append('token'    ,$(form).find('input[name=token]').val() );
-	    form_data.append('id'       ,$(form).find('input[name=id]'   ).val() );
+	    form_data.append('action'   , $(form).data('action'));
+	    form_data.append('subaction', $(form).data('method'));
+	    form_data.append('token'    , $(form).find('input[name=token]').val() );
+	    form_data.append('id'       , $(form).find('input[name=id]'   ).val() );
+	    form_data.append('output'   , 'json' );
 
-	    let form = new Api();
-	    form.sendData( form_data );
+	    let api = new Api();
+	    api.sendData( form_data );
 	}
 }

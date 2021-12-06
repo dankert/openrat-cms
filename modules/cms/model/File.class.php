@@ -591,8 +591,8 @@ SQL
 		$sql = $db->sql( 'UPDATE {{file}}'.
 		                ' SET size={size}   '.
 		                ' WHERE objectid={objectid}' );
-		$sql->setString( 'objectid' ,$this->objectid      );
-		$sql->setInt   ( 'size'     ,strlen($this->value) );
+		$sql->setInt( 'objectid' ,$this->objectid      );
+		$sql->setInt( 'size'     ,strlen($this->value) );
 
 		$sql->execute();
 
