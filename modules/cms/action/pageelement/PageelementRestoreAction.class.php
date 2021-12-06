@@ -25,15 +25,14 @@ class PageelementRestoreAction extends PageelementAction implements Method {
 		$this->ensureValueIdIsInAnyContent( $valueId );
 
 		$value = new Value();
-		$value->valueid = $valueId;
-		$value->loadWithId( $value->valueid );
+		$value->loadWithId( $valueId );
 
 		// Restore value.
 		$value->valueid = null;
 		$value->publish = false;
 		$value->persist();
 
-		$this->addNoticeFor( $this->template,Messages::PAGEELEMENT_USE_FROM_ARCHIVE );
+		$this->addNoticeFor( $this->page,Messages::PAGEELEMENT_USE_FROM_ARCHIVE );
 
     }
 }
