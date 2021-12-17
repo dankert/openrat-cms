@@ -46,6 +46,8 @@ export default class Workbench {
      */
 	initialize() {
 
+		this.checkBrowserRequirements();
+
 		$('html').removeClass('nojs');
 
 		/* Fade in all elements. */
@@ -134,6 +136,33 @@ export default class Workbench {
         Workbench.state = state;
 
 		WorkbenchNavigator.toActualHistory( state );
+    }
+
+    /**
+     * Checks the browser requirements for this application.
+     */
+    checkBrowserRequirements() {
+
+		if   ( ! window.Promise ) {
+			console.error('This browser does not support Promises, which is required for this application.' );
+
+			// Show a little Notice for the user that his shit browser is not supported.
+			let notice = new Notice();
+			notice.msg = 'This browser is not supported';
+			notice.msg = 'Promises are not available';
+			notice.show();
+		}
+
+		if   ( ! window.fetch ) {
+			console.error('This browser does not support the fetch API, which is required for this application.' );
+
+			// Show a little Notice for the user that his shit browser is not supported.
+			let notice = new Notice();
+			notice.setStatus('error');
+			notice.msg = 'This browser is not supported';
+			notice.log = 'Fetch API is not available';
+			notice.show();
+		}
     }
 
     /**
