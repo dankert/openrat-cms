@@ -1,6 +1,6 @@
 import $ from "../jquery-global.js";
 import WorkbenchNavigator from "../openrat/navigator.js";
-import Dialog from "../openrat/dialog.js";
+import Workbench from "../openrat/workbench.js";
 
 /**
  * Suche mit Dropdown
@@ -33,7 +33,7 @@ export default function( options )
 
 	$(this).on('keydown',async function(e) {
 		if   ( e.keyCode == 13 ) { // Listen to ENTER
-			let dialog = new Dialog();
+			let dialog = Workbench.getInstance().createDialog();
 			closeSearch();
 			dialog.start('','search','edit',0,{'text':searchInput.val()});
 			searchInput.val('');

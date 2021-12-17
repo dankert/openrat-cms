@@ -2,6 +2,7 @@ import $ from "../jquery-global.js";
 import View from './view.js';
 import Notice from "./notice.js";
 import Workbench from "./workbench.js";
+import WorkbenchNavigator from "./navigator.js";
 
 /**
  * The encapsulated view.
@@ -62,7 +63,7 @@ export default class Dialog {
 		this.show();
 
 		view.onCloseHandler.add( function() {
-			dialog.close();
+			dialog.back();
 		} );
 
 		view.onChangeHandler.add( function() {
@@ -97,31 +98,20 @@ export default class Dialog {
 
 	show() {
 
+		//WorkbenchNavigator.navigateToNew( {'action':Workbench.state.action+'','id':Workbench.state.id } );
+		WorkbenchNavigator.navigateToNew( Workbench.state );
+
 		$('.or-dialog').removeClass('dialog--is-closed').addClass('dialog--is-open');
 
 		if   ( this.isDirty ) {
 			this.element.addClass('view--is-dirty');
 		}
-
-		let dialog = this;
-
-		let escapeKeyClosingHandler = (e) => {
-			if (e.code === 'Escape') {
-				document.removeEventListener('keyup',escapeKeyClosingHandler);
-				dialog.close();
-			}
-		};
-
-		document.addEventListener('keyup',escapeKeyClosingHandler);
-
-		// close dialog on click onto the blurred area.
-		$('.or-dialog-filler,.or-act-dialog-close').click( function(e)
-		{
-			e.preventDefault();
-			dialog.close();
-		});
 	}
 
+	back() {
+		console.debug("Back from dialog");
+		history.back();
+	}
 
 	hide() {
 		$('.or-dialog').removeClass('dialog--is-open').addClass('dialog--is-closed'); // Dialog schließen
@@ -137,16 +127,17 @@ export default class Dialog {
 
 		if   ( this.isDirty ) {
 			// ask the user if we should close this dialog
-			let exit = window.confirm( Workbench.language.UNSAVED_CHANGES_CONFIRM );
+			//let confirmed = window.confirm( Workbench.language.UNSAVED_CHANGES_CONFIRM );
 
-			if   ( ! exit )
-				return; // do not close the dialog
+			//if   ( ! confirmed )
+			//	return; // do not close the dialog
 
 			let notice = new Notice();
 			notice.msg = Workbench.language.REOPEN_CLOSED_DIALOG;
 			notice.setStatus( 'warning' );
 			notice.timeout = 120;
 			notice.onClick.add( function() {
+				Workbench.dialog = dialog;
 				dialog.show();
 				notice.close();
 			});

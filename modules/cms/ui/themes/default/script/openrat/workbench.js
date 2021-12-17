@@ -15,6 +15,8 @@ export default class Workbench {
 		extra: {}
 	};
 
+	static dialog;
+
 	static instance;
 
 	constructor() {
@@ -57,6 +59,9 @@ export default class Workbench {
 		// Listening to the "popstate" event
 		// If the user navigates back or forward, the new state is set.
 		window.onpopstate = ev => {
+			console.debug("Event after navigating",ev);
+			this.closeDialog();
+			this.closeMenu();
 			this.loadNewActionState(ev.state);
 		};
 
@@ -101,19 +106,6 @@ export default class Workbench {
 			}
 		});
 	}
-
-    /**
-     * Starts a dialog, if necessary.
-	 *
-	 * @deprecated no dialogs are opened on load.
-     */
-    openModalDialog() {
-
-        if   ( $('#dialog').data('action') ) {
-        	let dialog = new Dialog();
-        	dialog.start('',$('#dialog').data('action'),$('#dialog').data('action'),0,{} )
-        }
-    }
 
 
     /**
@@ -217,6 +209,7 @@ export default class Workbench {
 	 */
 	loadNewActionState(state) {
 
+		console.debug("New state",state);
         Workbench.state = state;
 
         this.reloadViews();
@@ -225,6 +218,22 @@ export default class Workbench {
 		Callback.afterNewActionHandler.fire();
 	}
 
+
+	closeDialog() {
+		if   ( Workbench.dialog ) {
+			Workbench.dialog.close();
+			Workbench.dialog = null;
+		}
+	}
+
+
+	createDialog() {
+
+		this.closeDialog();
+
+		Workbench.dialog = new Dialog();
+		return Workbench.dialog;
+	}
 
     /**
      *
@@ -586,36 +595,35 @@ export default class Workbench {
 		let keyPressedHandler = (event) => {
 
 			if (event.key === 'F4') {
+				// Open "properties" dialog.
 
-				let dialog = new Dialog();
+				let dialog = this.createDialog();
 				dialog.start('', '', 'prop', 0, {});
 			}
 
 			if (event.key === 'F2') {
 
+				// Toggle navigation bar
 				if ($('.or-workbench').hasClass('workbench--navigation-is-small'))
 					$('.or-act-nav-wide').click();
 				else
 					$('.or-act-nav-small').click();
+			}
+
+			if (event.code === 'Escape') {
+				// Close an existing dialog.
+				this.closeDialog();
 			}
 		};
 
 
 
 		document.addEventListener('keydown',keyPressedHandler);
+	}
 
-		/*
-		$('.keystroke').each( function() {
-			let keystrokeElement = $(this);
-			let keystroke = keystrokeElement.text();
-			if (keystroke.length == 0)
-				return; // No Keybinding.
-			let keyaction = function() {
-				keystrokeElement.click();
-			};
-			// Keybinding ausfuehren.
-			document.addEventListener( )).bind('keydown', keystroke, keyaction );
-		} );*/
+
+	closeMenu() {
+		$('.or-menu').removeClass('menu--is-open');
 	}
 
 
@@ -624,61 +632,54 @@ export default class Workbench {
 	 */
 	initializeEvents() {
 
-		let closeMenu = function() {
-			// Mit der Maus irgendwo hin geklickt, das Menü muss schließen.
-			$('body').click( function() {
-				//$('.toolbar-icon.or-menu-category').parents('.or-menu').removeClass('menu--is-open');
-				$('.or-menu').removeClass('menu--is-open');
-			});
-		};
-		closeMenu();
+		// Mit der Maus irgendwo hin geklickt, das Menü muss schließen.
+		$('body').click( () => {
+			this.closeMenu();
+		});
+
+		// close dialog on click onto the blurred area.
+		$('.or-dialog-filler,.or-act-dialog-close').click( (e) =>
+			{
+				e.preventDefault();
+				this.closeDialog();
+			}
+		);
 
 
+		// Mobile navigation must close on a click on the workbench
+		$('.or-act-navigation-close').click( () => {
+			$('.or-workbench-navigation').removeClass('workbench-navigation--is-open');
+			$('.or-workbench').removeClass('workbench--navigation-is-open');
+		});
 
-		let closeMobileNavigation = function() {
-			// Mobile navigation must close on a click on the workbench
-			$('.or-act-navigation-close').click( function() {
-				$('.or-workbench-navigation').removeClass('workbench-navigation--is-open');
-				$('.or-workbench').removeClass('workbench--navigation-is-open');
-			});
-		};
-		closeMobileNavigation();
-
-		let closeDesktopNavigation = function() {
-
-			// Handler for desktop navigation
-			$('.or-workbench-title .or-act-nav-small').click(function () {
-				$('.or-workbench').addClass('workbench--navigation-is-small');
-				$('.or-workbench-navigation').addClass('workbench-navigation--is-small');
-			});
-		};
-		closeDesktopNavigation();
+		// Handler for desktop navigation
+		$('.or-workbench-title .or-act-nav-small').click( () => {
+			$('.or-workbench').addClass('workbench--navigation-is-small');
+			$('.or-workbench-navigation').addClass('workbench-navigation--is-small');
+		});
 
 
-		let registerGlobalSearch = function() {
-			$('.or-search-input .or-input').orSearch( {
-				onSearchActive: function() {
-					$('.or-search').addClass('search--is-active');
-				},
-				onSearchInactive: function() {
-					$('.or-search').removeClass('search--is-active');
-				},
-				dropdown    : '.or-act-search-result',
-				resultEntryClass: 'search-result-entry',
-				//openDropdown: true, // the dropdown is automatically opened by the menu.
-				select      : function(obj) {
-					// open the search result
-					Workbench.getInstance().openNewAction( obj.name, obj.action, obj.id );
-				},
-				afterSelect: function() {
-					//$('.or-dropdown.or-act-selector-search-results').empty();
-				}
-			} );
-			$('.or-search .or-act-search-delete').click( function() {
-				$('.or-search .or-title-input').val('').input();
-			} );
-		};
-		registerGlobalSearch();
+		$('.or-search-input .or-input').orSearch( {
+			onSearchActive: function() {
+				$('.or-search').addClass('search--is-active');
+			},
+			onSearchInactive: function() {
+				$('.or-search').removeClass('search--is-active');
+			},
+			dropdown    : '.or-act-search-result',
+			resultEntryClass: 'search-result-entry',
+			//openDropdown: true, // the dropdown is automatically opened by the menu.
+			select      : function(obj) {
+				// open the search result
+				Workbench.getInstance().openNewAction( obj.name, obj.action, obj.id );
+			},
+			afterSelect: function() {
+				//$('.or-dropdown.or-act-selector-search-results').empty();
+			}
+		} );
+		$('.or-search .or-act-search-delete').click( () => {
+			$('.or-search .or-title-input').val('').input();
+		} );
 
 
 		Callback.afterNewActionHandler.add( function() {

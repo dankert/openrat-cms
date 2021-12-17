@@ -1,7 +1,5 @@
 import $ from "../jquery-global.js";
 import Workbench from "../openrat/workbench.js";
-import Dialog    from "../openrat/dialog.js";
-import Form      from "../openrat/form.js";
 import Api       from "../openrat/api.js";
 
 /**
@@ -78,7 +76,7 @@ export default function( options )
 
 			case 'edit':
 			case 'dialog':
-				let dialog = new Dialog();
+				let dialog = Workbench.getInstance().createDialog();
 				let name   = $link.attr('data-name');
 				if   ( !name )
 					name = $link.text(); // get the name from the combined text of all children.
