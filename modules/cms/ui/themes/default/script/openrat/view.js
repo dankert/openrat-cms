@@ -104,8 +104,6 @@ export default class View {
 				form.initOnElement(this);
 			});
 
-			let components = await import( './components.js');
-
 			view.fireViewLoadedEvents( element );
 		}
 		catch( cause ) {

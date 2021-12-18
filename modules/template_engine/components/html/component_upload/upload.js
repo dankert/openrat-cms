@@ -1,4 +1,3 @@
-import Workbench from "../../../../cms/ui/themes/default/script/openrat/workbench.js";
 import Api       from "../../../../cms/ui/themes/default/script/openrat/api.js";
 import $         from "../../../../cms/ui/themes/default/script/jquery-global.js";
 
@@ -27,7 +26,7 @@ export default function (element ) {
 		 let files = e.originalEvent.dataTransfer.files;
 
 		 //We need to send dropped files to Server
-		Workbench.handleFileUpload(form,files);
+		handleFileUpload(form,files);
 	});
 	
 	
@@ -36,7 +35,7 @@ export default function (element ) {
 		
 		let files = this.files;
 
-		Workbench.handleFileUpload(form,files);
+		handleFileUpload(form,files);
 	});
 
 };
@@ -47,7 +46,7 @@ export default function (element ) {
  * @param form
  * @param files
  */
-Workbench.handleFileUpload = function(form,files)
+let handleFileUpload = function(form,files)
 {
 	for (let i = 0; i < files.length; i++)
 	{

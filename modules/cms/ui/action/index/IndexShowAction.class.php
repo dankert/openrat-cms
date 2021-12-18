@@ -53,8 +53,9 @@ class IndexShowAction extends IndexAction implements Method {
         $this->setTemplateVar('style',$style );
 
 		$this->setTemplateVar('scriptLink', $this->getScriptLink() );
-		$this->setTemplateVar('scriptModuleLink',Startup::THEMES_DIR . 'default/script/openrat/init.js');
-        $this->setTemplateVar('styleLink' , $this->getStyleLink()  );
+		$this->setTemplateVar('scriptModuleLink',$this->getScriptModuleLink() );
+		$this->setTemplateVar('jsExt'           ,(PRODUCTION?'.min.js':'.js') );
+        $this->setTemplateVar('styleLink'       , $this->getStyleLink()  );
 
         $this->setTemplateVar('themeStyleLink', Html::url('index','themestyle',0,['style'=>$style]) );
         $this->setTemplateVar('manifestLink'  , Html::url('index','manifest'  ) );
@@ -108,10 +109,21 @@ class IndexShowAction extends IndexAction implements Method {
 	 * Gets JS file for displaying the UI.
 	 *
 	 * @return string
+	 * @deprecated
 	 */
 	protected function getScriptLink()
 	{
 		return Startup::THEMES_DIR . 'default/'.(PRODUCTION?Theme::SCRIPT_MINIFIED_FILENAME:Theme::SCRIPT_FILENAME);
+	}
+
+	/**
+	 * Gets JS file for displaying the UI.
+	 *
+	 * @return string
+	 */
+	protected function getScriptModuleLink()
+	{
+		return Startup::THEMES_DIR . 'default/script/openrat/init.'.(PRODUCTION?'min.':'').'js';
 	}
 
 

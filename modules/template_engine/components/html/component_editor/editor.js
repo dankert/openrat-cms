@@ -167,7 +167,7 @@ export default function(element ) {
             "|", // Separator
             {
                 name: "guide",
-                action: "https://simplemde.com/markdown-guide",
+                action: "https:/"+"/simplemde.com/markdown-guide",
                 className: "image-icon image-icon--editor-help",
                 title: "Howto markdown",
             },

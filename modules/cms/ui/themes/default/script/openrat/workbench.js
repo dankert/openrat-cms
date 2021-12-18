@@ -4,6 +4,7 @@ import View from './view.js';
 import Callback from './callback.js';
 import WorkbenchNavigator from "./navigator.js";
 import Notice from "./notice.js";
+import Components from "./components.js";
 
 
 export default class Workbench {
@@ -49,6 +50,7 @@ export default class Workbench {
 	initialize() {
 
 		this.checkBrowserRequirements();
+		this.initializeState();
 
 		$('html').removeClass('nojs');
 
@@ -65,7 +67,7 @@ export default class Workbench {
 			this.loadNewActionState(ev.state);
 		};
 
-		this.initializeState();
+		this.registerWorkbench();
 		this.initializeStartupNotices();
 		this.initializeEvents();
 		this.initializeKeystrokes();
@@ -105,6 +107,16 @@ export default class Workbench {
 				return undefined; // nothing to do.
 			}
 		});
+	}
+
+
+	/**
+	 * Register this workbench in the window object
+	 * Only for debugging in browser console.
+	 */
+	registerWorkbench() {
+
+		window.OpenRat = { workbench: this };
 	}
 
 
@@ -631,6 +643,8 @@ export default class Workbench {
 	 * Registriert alle Events, die in der Workbench laufen sollen.
 	 */
 	initializeEvents() {
+
+		new Components().registerComponents();
 
 		// Mit der Maus irgendwo hin geklickt, das Menü muss schließen.
 		$('body').click( () => {

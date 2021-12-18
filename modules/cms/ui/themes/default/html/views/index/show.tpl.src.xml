@@ -15,12 +15,12 @@
 		<meta name="robots" content="noindex,nofollow"/>
 		<script type="module" src="${scriptModuleLink}" />
 		<!-- preloading scripts as modules -->
-		<link rel="modulepreload" href="./modules/cms/ui/themes/default/script/openrat/workbench.js"/>
-		<link rel="modulepreload" href="./modules/cms/ui/themes/default/script/openrat/callback.js"/>
-		<link rel="modulepreload" href="./modules/cms/ui/themes/default/script/openrat/notice.js"/>
-		<link rel="modulepreload" href="./modules/cms/ui/themes/default/script/openrat/view.js"/>
-		<link rel="modulepreload" href="./modules/cms/ui/themes/default/script/openrat/dialog.js"/>
-		<link rel="modulepreload" href="./modules/cms/ui/themes/default/script/openrat/navigator.js"/>
+		<link rel="modulepreload" href="./modules/cms/ui/themes/default/script/openrat/workbench${jsExt}"/>
+		<link rel="modulepreload" href="./modules/cms/ui/themes/default/script/openrat/callback${jsExt}"/>
+		<link rel="modulepreload" href="./modules/cms/ui/themes/default/script/openrat/notice${jsExt}"/>
+		<link rel="modulepreload" href="./modules/cms/ui/themes/default/script/openrat/view${jsExt}"/>
+		<link rel="modulepreload" href="./modules/cms/ui/themes/default/script/openrat/dialog${jsExt}"/>
+		<link rel="modulepreload" href="./modules/cms/ui/themes/default/script/openrat/navigator${jsExt}"/>
 		<!-- preloading fonts -->
 		<link rel="preload" href="./modules/cms/ui/themes/default/font/oxygen-v7-latin-regular.woff2"          as="font" type="font/woff2" crossorigin="anonymous"/>
 		<link rel="preload" href="./modules/cms/ui/themes/default/font/MaterialIcons-Regular.woff2"            as="font" type="font/woff2" crossorigin="anonymous"/>

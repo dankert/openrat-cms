@@ -16,7 +16,9 @@ export default class WorkbenchNavigator {
     }
 
     /**
-	 * Setzt den State für den aktuellen History-Eintrag.
+	 * Sets the state for the current history entry.
+	 * This will be called once while initializing the workbench.
+	 *
      * @param obj
      */
     static toActualHistory(obj) {

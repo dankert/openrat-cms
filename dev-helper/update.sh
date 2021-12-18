@@ -82,7 +82,7 @@ function make_writable {
         lang ) chmod -v a+w ../modules/language ../modules/language/Language_*.php ../modules/language/Messages*;;
         xsd  ) chmod -v a+w ../modules/template_engine/components/template.xsd ../modules/template_engine/components/components.ini;;
         css  ) chmod -v a+w ../modules/cms/ui/themes/$theme/style/openrat*.css;;
-        js   ) chmod -v a+w ../modules/cms/ui/themes/$theme/script/openrat*.js;;
+        js   ) find ../modules/cms/ui/themes/$theme/script/ -type f -name "*.min.js" -exec chmod -v a+w {} \; ; find ../modules/template_engine/components/html/ -type f -name "*.min.js" -exec chmod -v a+w {} \; ;;
         tpl  ) find ../modules/cms/ui/themes/$theme/html/views/ -type f -name "*.php" -exec chmod -v a+w {} \; ;;
         * ) echo "unknown type";exit;;
   esac
