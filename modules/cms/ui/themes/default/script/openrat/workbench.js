@@ -68,6 +68,7 @@ export default class Workbench {
 		};
 
 		this.registerWorkbench();
+		this.initializeTheme();
 		this.initializeStartupNotices();
 		this.initializeEvents();
 		this.initializeKeystrokes();
@@ -86,6 +87,16 @@ export default class Workbench {
 		//Workbench.registerOpenClose( $('.or-collapsible') );
 		console.info('Application started');
     }
+
+
+
+	initializeTheme() {
+		if (window.localStorage) {
+			let style = window.localStorage.getItem('style');
+			if (style)
+				this.setUserStyle(style);
+		}
+	}
 
 
     initializeDirtyWarning() {
@@ -392,6 +403,9 @@ export default class Workbench {
      */
     setUserStyle( styleName )
     {
+		if   ( window.localStorage )
+			window.localStorage.setItem('style',styleName);
+
     	let styleUrl = View.createUrl('index','themestyle',0,{'style':styleName} );
 		document.getElementById('user-style').setAttribute('href',styleUrl);
     }
