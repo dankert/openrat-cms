@@ -1,12 +1,7 @@
-import $ from  '../jquery-global.js';
-import Workbench from "./workbench.js";
 import Notice from "./notice.js";
-import Callback from "./callback.js";
 
 /**
- * Form.
- *
- * @constructor
+ * Api.
  */
 export default class Api {
 
@@ -22,6 +17,12 @@ export default class Api {
 	}
 
 
+	/**
+	 * Sending data to the server.
+	 *
+	 * @param formData formular data
+	 * @returns a promise
+	 */
     sendData = function( formData ) {
 
 		console.debug( "API form data", formData );

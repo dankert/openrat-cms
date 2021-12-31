@@ -1501,11 +1501,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* Usage to this variable is safe to be removed */
 .or-view {
 	padding: 0.5em;
+	/* Fortschrittsbalken, fuer alle Elemente verfuegbar. */
 }
 .or-view-header {
 	font-size: 1.2em;
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22var%5C%2Fwww%5C%2Flocalhost%5C%2Fcms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-view.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAgCI%2CGAAC%3BCACG%3B%3BAACA%2CGAFH%2CKAEI%3BCACG%22%7D */
+.or-view-central {
+	position: absolute;
+	top: 30%;
+	margin-left: 40%;
+	margin-right: 40%;
+	font-size: 3em;
+}
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22var%5C%2Fwww%5C%2Flocalhost%5C%2Fcms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-view.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAgCI%2CGAAC%3BCACC%3B%3B%3BAAEA%2CGAHD%2CKAGE%3BCACC%3B%3BAASF%2CGAbD%2CKAaE%3BCACC%3BCACA%3BCACA%3BCACA%3BCACA%22%7D */
 /* Include style: /default/style/openrat-workbench */
 /*
 OpenRat Content Management System

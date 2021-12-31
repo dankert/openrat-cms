@@ -2,6 +2,7 @@ import $ from  '../jquery-global.js';
 import Callback from "./callback.js";
 import Form     from "./form.js";
 import Notice   from "./notice.js";
+import Workbench from "./workbench.js";
 
 /**
  * View.
@@ -65,18 +66,30 @@ export default class View {
 	 */
 	async loadView() {
 
-        let url = View.createUrl( this.action,this.method,this.id,this.params,false); // URL für das Laden erzeugen.
+        let url     = View.createUrl( this.action,this.method,this.id,this.params,false); // URL für das Laden erzeugen.
         let element = this.element;
-        let view = this;
+        let view    = this;
 
 		//$(this.element).addClass('loader');
 		console.debug( view );
 
 		try {
 			let response = await fetch( url,{} );
+			$(element).html("");
 
-			if   ( ! response.ok )
-				throw "failed to load the view";
+			if   ( ! response.ok ) {
+
+				$(element).html('<div class="or-view-central"><i class="or-image-icon or-image-icon--method-logout" /></div>');
+
+				if   ( response.status == 403 ) {
+					throw "Permission denied";
+				}
+				else if   ( response.status == 503 )
+					throw "server error";
+				else
+					throw "failed to load the view";
+
+			}
 
 			let data = await response.text();
 
@@ -107,14 +120,13 @@ export default class View {
 			view.fireViewLoadedEvents( element );
 		}
 		catch( cause ) {
-			$(element).html("");
 
 			console.error( {view:view, url:url, cause: cause} );
 
 			let notice = new Notice();
 			notice.setStatus('error');
 			//notice.msg = Workbench.language.ERROR;
-			notice.msg = "View error";
+			notice.msg = Workbench.language.NOTHING_DONE;
 			notice.log = cause;
 			notice.show();
 		}
