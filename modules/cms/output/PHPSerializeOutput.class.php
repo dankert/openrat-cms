@@ -6,7 +6,8 @@ use cms\output\APIOutput;
 use util\json\JSON;
 
 /**
- * JSON Rendering.
+ * Renders as a internal serialized PHP array.
+ * A PHP powered client may simply unserialize it.
  */
 class PHPSerializeOutput extends APIOutput
 {

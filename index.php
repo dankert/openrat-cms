@@ -1,14 +1,21 @@
 <?php
-// Excecuting the CMS user interface (UI)
-require('modules/autoload.php');
+// Excecuting the CMS HTTP Endpoint
+// This is both for UI and API requests.
+
+
+require('modules/autoload.php'); // Autoloading all classes
 
 use cms\base\Startup;
 use cms\output\OutputFactory;
 use cms\ui\UI;
 
+// - Validating the environment
+// - Initialize all constants
 Startup::initialize();
 
+// Creates the output driver
+// Dependent on which data format is requested by the client.
 $output = OutputFactory::createOutput();
-header('X-CMS-Output-Type: ' . get_class($output ) );
 header('Content-Type: ' . $output->getContentType() . '; charset=' . Startup::CHARSET);
-$output->execute();
+
+$output->execute(); // Outputs the data.

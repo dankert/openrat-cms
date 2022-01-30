@@ -20,12 +20,12 @@ use util\text\TextMessage;
 
 
 /**
- * Executing the Openrat CMS User Interface.
+ * The HTML output is calling a template for the user interface.
  */
 class HtmlOutput extends BaseOutput
 {
     /**
-     * Shows the complete UI.
+     * Preparing the client...
      */
     protected  function beforeAction($request)
 	{
@@ -40,7 +40,7 @@ class HtmlOutput extends BaseOutput
 		}
 
 		if   ( $request->isAction )
-			throw new \RuntimeException('The UI does not accept POST requests');
+			throw new \RuntimeException('The HTML output driver does not accept POST requests');
 
 		if   ( in_array( $request->action,['index','tree','title','usergroup']) )
 			$request->isUIAction = true;

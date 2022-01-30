@@ -34,15 +34,16 @@ abstract class BaseOutput implements Output
     {
 		$request = new RequestParams();
 
-		$this->beforeAction( $request );
-
-        $dispatcher = new Dispatcher();
-        $dispatcher->request = $request;
-
 		try {
-			$data = $dispatcher->doAction();
+			$this->beforeAction( $request );
 
-			$this->outputData( $request,$data );
+			$dispatcher = new Dispatcher();
+			$dispatcher->request = $request;
+
+			$data = $dispatcher->doAction();      // calling the action ...
+
+			$this->outputData( $request,$data );  // ... and output the data
+
 		} catch (BadMethodCallException $e) {
 			// Action-Method does not exist.
 			Logger::debug( $e );
@@ -67,17 +68,23 @@ abstract class BaseOutput implements Output
 		}
     }
 
+
+	/**
+	 * This method is executed before the dispatcher is called.
+	 * Subclasses may override this to prepare the response.
+	 * @param $request RequestParams
+	 * @return void
+	 */
 	protected function beforeAction( $request )
 	{
 	}
 
 
+	/**
+	 * Is called if an error is thrown.
+	 *
+	 * @param $text string a message
+	 * @param $cause Exception
+	 */
 	abstract protected function setError($text, $cause);
-
-
-	protected function setStatus( $status, $text )
-	{
-		header('HTTP/1.0 ' . intval($status) . ' ' . $text);
-	}
-
 }

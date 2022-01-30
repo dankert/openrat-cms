@@ -29,5 +29,10 @@ interface Output
      */
     public function execute();
 
+	/**
+	 * Gets the content type.
+	 *
+	 * @return string
+	 */
 	public function getContentType();
 }

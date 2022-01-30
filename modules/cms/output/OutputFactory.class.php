@@ -39,17 +39,24 @@ class OutputFactory {
 		'text/html'                  => self::OUTPUT_HTML,
 	];
 
+
+	/**
+	 * Creates the output driver.
+	 *
+	 * Dependent on the HTTP request a output driver will be selected.
+	 *
+	 * @return Output
+	 */
 	public static function createOutput() {
 
 		switch ( self::discoverOutputType() ) {
+
 			case self::OUTPUT_PHPARRAY:
 				return new PHPArrayOutput();
 			case self::OUTPUT_PHPSERIALIZE:
 				return new PHPSerializeOutput();
 			case self::OUTPUT_JSON:
 				return new JsonOutput();
-			// case self::
-			//	return new HtmlPlainOutput();
 			case self::OUTPUT_XML:
 				return new XmlOutput();
 			case self::OUTPUT_YAML:
@@ -77,7 +84,7 @@ class OutputFactory {
 		if   ( $reqOutput && array_key_exists( $reqOutput, self::MAP_OUTPUT ) )
 			return self::MAP_OUTPUT[ $reqOutput ];
 
-		// Try 2: Lets check the HTTP request headers
+		// Try 2: Lets check the HTTP request "Accept" header.
 		foreach( Http::getAccept() as $acceptType )
 			if   ( array_key_exists( $acceptType, self::MAP_ACCEPT ) )
 				return self::MAP_ACCEPT[ $acceptType ];

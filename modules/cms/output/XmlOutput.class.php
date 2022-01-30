@@ -7,7 +7,7 @@ use util\json\JSON;
 use util\XML;
 
 /**
- * JSON Rendering.
+ * XML Rendering.
  */
 class XmlOutput extends APIOutput
 {
