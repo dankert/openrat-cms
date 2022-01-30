@@ -150,12 +150,7 @@ export default class View {
 	 */
     static createUrl(action,subaction,id,extraid={},api=false )
     {
-        let url = './';
-
-		if   ( api )
-			url += 'api/';
-
-		url += '?';
+        let url = './?';
 
         if(action)
             url += '&action='+action;

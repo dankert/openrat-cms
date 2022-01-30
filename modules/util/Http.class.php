@@ -390,8 +390,11 @@ class Http
 	 *
 	 * @param String $message Eigener Hinweistext
 	 */
-	public static function serverError($message, $reason = '')
+	public static function serverError($message = '', $reason = '')
 	{
+		/*
+		try {
+
 		if (class_exists('util\Session')) {
 			$db = DB::get();
 			if (is_object($db))
@@ -400,8 +403,12 @@ class Http
 
 		if (class_exists('logger\Logger'))
 			Logger::warn($message . "\n" . $reason);
+		}
+		catch( \Exception $e ) {
+			//error_log( $e->__toString() );
+		}*/
 
-		Http::sendStatus(501, 'Internal Server Error', $message, $reason);
+		self::sendStatus(501, 'Internal Server Error');
 	}
 
 
@@ -414,10 +421,9 @@ class Http
 	 * @param String $text Text
 	 * @param String $message Eigener Hinweistext
 	 */
-	public static function notAuthorized($message = '')
+	public static function notAuthorized()
 	{
-		Logger::warn("Security warning: $message");
-		Http::sendStatus(403, 'Not authorized', $message);
+		Http::sendStatus(403, 'Not authorized');
 	}
 
 
@@ -427,12 +433,10 @@ class Http
 	 * Diese Funktion erzeugt einen "HTTP 404 Not found" und das
 	 * Skript wird beendet.
 	 *
-	 * @param String $text Text
-	 * @param String $message Eigener Hinweistext
 	 */
-	public static function notFound($text, $message)
+	public static function notFound()
 	{
-		Http::sendStatus(404, 'Not found', $message);
+		Http::sendStatus(404, 'Not found');
 	}
 
 
@@ -443,8 +447,7 @@ class Http
 	 */
 	public static function noContent()
 	{
-		header('HTTP/1.0 204 No Content');
-		exit;
+		self::sendStatus(204,'No Content');
 	}
 
 
@@ -453,32 +456,15 @@ class Http
 	 *
 	 * @param Integer $status HTTP-Status (ganzzahlig) (Default: 501)
 	 * @param String $text HTTP-Meldung (Default: 'Internal Server Error')
-	 * @param String $message Eigener Hinweistext (Default: leer)
-	 * @param String $reason Technischer Grund (Default: leer)
 	 */
-	private static function sendStatus($status = 501, $text = 'Internal Server Error', $message = '', $reason = '')
+	private static function sendStatus($status = 501, $text = 'Internal Server Error')
 	{
 		if (headers_sent()) {
-			echo "$status $text\n$message";
+			echo "$status $text";
 			exit;
 		}
 
 		header('HTTP/1.0 ' . intval($status) . ' ' . $text);
-
-
-		$types = Http::getAccept();
-
-		header('Content-Type: text/html');
-		$message = htmlentities($message);
-		$reason = htmlentities($reason);
-		echo <<<HTML
-<h1>$text</h1>
-<p>$message</p>
-<pre><?php echo $reason; ?></pre>
-<?php
-
-HTML;
-		exit;
 	}
 
 

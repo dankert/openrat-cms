@@ -27,6 +27,7 @@ class Startup {
 
 	const MIN_VERSION = '5.6'; // minimum required PHP version.
 	const API_LEVEL   = '2';   // public API version.
+	const CHARSET     = 'UTF-8'; // Everything is UTF-8.
 
 	const IMG_EXT      = '.gif';
 	const IMG_ICON_EXT = '.png';
@@ -36,6 +37,8 @@ class Startup {
 	const THEMES_DIR       = './modules/cms/ui/themes/';
 	const CSS_PREFIX       = 'or-';
 	const DEFAULT_CONFIG_FILE = __DIR__ . '/../../../config/config.yml';
+	const APP_DIR             = __DIR__ . '/../../../';
+	const MODULE_DIR          = self::APP_DIR .'modules/';
 
 	/**
 	 * This is the application name.
@@ -67,6 +70,9 @@ class Startup {
 
 		// in some situations we want to know, if the CMS is really started up.
 		define('APP_STARTED','1');
+
+		// Cookie path
+		define('COOKIE_PATH',dirname($_SERVER['SCRIPT_NAME']).'/');
 	}
 
 	protected static function checkPHPVersion()

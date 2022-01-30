@@ -6,6 +6,7 @@ use cms\action\ObjectAction;
 use cms\model\Permission;
 use cms\model\BaseObject;
 use language\Messages;
+use util\exception\SecurityException;
 use util\Http;
 
 class ObjectDelaclAction extends ObjectAction implements Method {
@@ -27,7 +28,7 @@ class ObjectDelaclAction extends ObjectAction implements Method {
 		$o->load();
 
 		if	( !$o->hasRight( Permission::ACL_GRANT ) )
-			Http::notAuthorized('no grant rights'); // Da wollte uns wohl einer vereimern.
+			throw new SecurityException( 'no grant rights' ); // Da wollte uns wohl einer vereimern.
 
 		$permission->delete(); // Weg mit der ACL
 		

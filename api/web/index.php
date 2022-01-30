@@ -10,7 +10,7 @@
 
 <p>A web interface for communicating with the CMS API.</p>
 <hr>
-<form action="../../api/">
+<form action="../../">
 <table>
 <tr>
 <th>Parameter</th><th>Value</th>
@@ -50,7 +50,7 @@
 </select>
 
 <select name="output">
-	<?php foreach( array('HTML','JSON','XML','YAML') as $type ) { ?>
+	<?php foreach( array('JSON','XML','YAML','HTML','PLAIN',) as $type ) { ?>
 		<option value="<?php echo strtolower($type) ?>"><?php echo $type ?></option>
 	<?php } ?>
 </select>

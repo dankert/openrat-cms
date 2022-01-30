@@ -50,7 +50,7 @@ export default function( options )
 			$('.or-search').addClass('search--is-active');
 			dropdownEl.addClass('search-result--is-active');
 
-			let url = './api/?action='+settings.action+'&subaction='+settings.method+'&output=json&search='+searchArgument;
+			let url = './?action='+settings.action+'&subaction='+settings.method+'&output=json&search='+searchArgument;
 			let response = await fetch( url, {
 				method: 'GET',
 				headers: {

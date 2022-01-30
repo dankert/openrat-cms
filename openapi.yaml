@@ -12,7 +12,7 @@ schemes:
   - https
   - http
 paths:
-  /api/:
+  /:
     get:
       tags:
         - pet
