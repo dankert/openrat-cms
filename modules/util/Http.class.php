@@ -382,6 +382,19 @@ class Http
 	}
 
 
+
+	public static function badRequest() {
+		self::sendStatus('400','Bad Request');
+	}
+
+	public static function methodNotAllowed() {
+		self::sendStatus('405','Bad Request');
+	}
+
+	public static function notAcceptable() {
+		self::sendStatus('406','Not Acceptable');
+	}
+
 	/**
 	 * Server-Fehlermeldung anzeigen.<br>
 	 *
@@ -408,7 +421,7 @@ class Http
 			//error_log( $e->__toString() );
 		}*/
 
-		self::sendStatus(501, 'Internal Server Error');
+		self::sendStatus(500, 'Internal Server Error');
 	}
 
 
@@ -421,9 +434,9 @@ class Http
 	 * @param String $text Text
 	 * @param String $message Eigener Hinweistext
 	 */
-	public static function notAuthorized()
+	public static function forbidden()
 	{
-		Http::sendStatus(403, 'Not authorized');
+		Http::sendStatus(403, 'Forbidden');
 	}
 
 
@@ -457,7 +470,7 @@ class Http
 	 * @param Integer $status HTTP-Status (ganzzahlig) (Default: 501)
 	 * @param String $text HTTP-Meldung (Default: 'Internal Server Error')
 	 */
-	private static function sendStatus($status = 501, $text = 'Internal Server Error')
+	private static function sendStatus($status = 500, $text = 'Internal Server Error')
 	{
 		if (headers_sent()) {
 			echo "$status $text";
@@ -476,7 +489,10 @@ class Http
 	public static function getAccept()
 	{
 		$httpAccept = getenv('HTTP_ACCEPT');
-		return $types = explode(',', $httpAccept);
+		return array_map( function($accept) {
+				return explode(';',$accept)[0];
+			}, explode(',', $httpAccept)
+		);
 	}
 
 

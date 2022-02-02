@@ -7,7 +7,6 @@ require('modules/autoload.php'); // Autoloading all classes
 
 use cms\base\Startup;
 use cms\output\OutputFactory;
-use cms\ui\UI;
 
 // - Validating the environment
 // - Initialize all constants

@@ -24,7 +24,8 @@ class OutputFactory {
 		'json'      => self::OUTPUT_JSON,
 		'xml'       => self::OUTPUT_XML,
 		'yaml'      => self::OUTPUT_YAML,
-		'plain'     => self::OUTPUT_PLAIN
+		'plain'     => self::OUTPUT_PLAIN,
+		'html'      => self::OUTPUT_HTML,
 	];
 
 	/**
@@ -33,10 +34,14 @@ class OutputFactory {
 	const MAP_ACCEPT = [
 		'application/php-array'      => self::OUTPUT_PHPARRAY,
 		'application/php-serialized' => self::OUTPUT_PHPSERIALIZE,
+		'text/json'                  => self::OUTPUT_JSON,
 		'application/json'           => self::OUTPUT_JSON,
+		'text/xml'                   => self::OUTPUT_XML,
 		'application/xml'            => self::OUTPUT_XML,
 		'application/yaml'           => self::OUTPUT_YAML,
+		'application/xhtml+xml'      => self::OUTPUT_HTML,
 		'text/html'                  => self::OUTPUT_HTML,
+		'*/*'                        => self::OUTPUT_HTML,
 	];
 
 
@@ -81,16 +86,29 @@ class OutputFactory {
 		$reqOutput = strtolower(@$_REQUEST['output']);
 
 		// Try 1: Checking the 'output' request parameter.
-		if   ( $reqOutput && array_key_exists( $reqOutput, self::MAP_OUTPUT ) )
+		if   ( $reqOutput ) {
+			if   ( ! array_key_exists( $reqOutput, self::MAP_OUTPUT ) )
+			{
+				Http::notAcceptable();
+				header('Content-Type: text/plain');
+				echo "Accepted output types are: ".implode(",",array_keys(self::MAP_OUTPUT));
+				exit;
+			}
+
 			return self::MAP_OUTPUT[ $reqOutput ];
+		}
 
 		// Try 2: Lets check the HTTP request "Accept" header.
+		//print_r(Http::getAccept());
 		foreach( Http::getAccept() as $acceptType )
 			if   ( array_key_exists( $acceptType, self::MAP_ACCEPT ) )
 				return self::MAP_ACCEPT[ $acceptType ];
 
 		// Fallback
-		return self::OUTPUT_HTML;
+		Http::notAcceptable();
+		header('Content-Type: text/plain');
+		echo "Accepted types are: ".implode(",",array_keys(self::MAP_ACCEPT));
+		exit;
 	}
 
 }

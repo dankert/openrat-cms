@@ -5,19 +5,13 @@ namespace cms\output;
 use BadMethodCallException;
 use cms\action\RequestParams;
 use cms\base\Language as L;
-use cms\base\Startup;
 use cms\Dispatcher;
 use Exception;
-use template_engine\engine\TemplateRunner;
 use util\Http;
 use logger\Logger;
-use LogicException;
 use \util\exception\ObjectNotFoundException;
 use util\exception\UIException;
 use util\exception\SecurityException;
-use template_engine\engine\TemplateEngine;
-use util\Session;
-use util\text\TextMessage;
 
 
 /**
@@ -58,7 +52,7 @@ abstract class BaseOutput implements Output
 			$this->setError(L::lang($e->key,$e->params),$e);
 		} catch (SecurityException $e) {
 			Logger::info($e);
-			Http::notAuthorized();
+			Http::forbidden();
 			$this->setError("You are not allowed to execute this action.",$e);
 		} catch (Exception $e) {
 			Logger::warn( $e );

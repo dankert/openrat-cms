@@ -149,6 +149,10 @@ class Startup {
 				// It is not possibile to throw an exception out of a shutdown function!
 				// PHP will exit the request directly after executing this method, so a
 				// Exception would never reach a caller.
+
+				header('HTTP/1.0 503 Internal CMS fatal error');
+				header('Content-Type: text/html; charset=utf-8');
+				echo "<h1>Fatal error</h1><pre>$errstr</pre><hr />".Startup::TITLE;
 			}
 
 		};

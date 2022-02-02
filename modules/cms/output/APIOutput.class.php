@@ -4,19 +4,10 @@ namespace cms\output;
 
 use BadMethodCallException;
 use cms\action\RequestParams;
-use cms\api\API;
 use cms\base\Startup;
-use cms\Dispatcher;
 use Exception;
-use util\Http;
-use logger\Logger;
-use \util\exception\ObjectNotFoundException;
-use util\exception\UIException;
-use util\exception\SecurityException;
-use util\json\JSON;
+use util\exception\ClientException;
 use util\Session;
-use util\XML;
-use util\YAML;
 
 /**
  * Entrypoint for all API requests.
@@ -51,6 +42,21 @@ abstract class APIOutput extends BaseOutput
 
         return $data;
     }
+
+	/**
+	 * This method is executed before the dispatcher is called.
+	 * Subclasses may override this to prepare the response.
+	 * @param $request RequestParams
+	 * @return void
+	 */
+	protected function beforeAction( $request )
+	{
+		if   ( ! $request->action )
+			throw new ClientException('no action set');
+		if   ( ! $request->method )
+			throw new ClientException('no subaction set');
+	}
+
 
     /**
      * Removing the call argument from the trace.
@@ -107,7 +113,7 @@ abstract class APIOutput extends BaseOutput
 		if (!defined('DEVELOPMENT') || DEVELOPMENT)
 			$data['cause'] = $this->exceptionToArray($cause);
 
-		$this->outputData($data);
+		$this->outputData(null,$data);
 	}
 
 }
