@@ -50,11 +50,11 @@ export default function( options )
 			$('.or-search').addClass('search--is-active');
 			dropdownEl.addClass('search-result--is-active');
 
-			let url = './?action='+settings.action+'&subaction='+settings.method+'&output=json&search='+searchArgument;
+			let url = './?action='+settings.action+'&subaction='+settings.method+'&search='+searchArgument;
 			let response = await fetch( url, {
 				method: 'GET',
 				headers: {
-					'Content-Type': 'application/json',
+					'Accept': 'application/json'
 				} } );
 			if   ( ! response.ok )
 				throw "Search request getting an error";

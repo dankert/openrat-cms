@@ -30,7 +30,13 @@ export default class Api {
 		let api = this;
 		return new Promise( (resolve, reject) => {
 
-			let load = fetch( './', { 'method':'POST', body:formData } );
+			let load = fetch( './', {
+				'method':'POST',
+				headers: {
+					'Accept': 'application/json',
+				},
+				body:formData
+			} );
 
 			load.then( response => {
 				if   ( ! response.ok )

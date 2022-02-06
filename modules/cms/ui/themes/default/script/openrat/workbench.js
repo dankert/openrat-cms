@@ -195,7 +195,12 @@ export default class Workbench {
 			console.debug('ping');
 
 			try {
-				let response = await fetch( url  );
+				let response = await fetch( url,{
+					method: 'GET',
+					headers: {
+						'Accept': 'application/json',
+					}
+				}  );
 
 				if   ( !response.ok )
 					throw "ping failed";
@@ -309,7 +314,12 @@ export default class Workbench {
 
 		let url = View.createUrl('profile', 'userinfo', 0, {}, true);
 
-		let response = await fetch(url);
+		let response = await fetch(url,{
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+			}
+		});
 		let json = await response.json();
 
 		let style = json.output['style'];
@@ -328,7 +338,13 @@ export default class Workbench {
 
 		let url = View.createUrl('profile', 'language', 0, {}, true);
 
-		let response = await fetch(url);
+		let response = await fetch(url,{
+				method: 'GET',
+				headers: {
+					'Accept': 'application/json',
+				}
+			}
+		);
 		let data     = await response.json();
 
 		Workbench.language = data.output.language;
@@ -341,7 +357,12 @@ export default class Workbench {
 
 		let url = View.createUrl('profile', 'uisettings', 0, {}, true);
 
-		let response = await fetch(url);
+		let response = await fetch(url,{
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+			}
+		});
 		let data = await response.json();
 
 		Workbench.settings = data.output.settings.settings;
@@ -588,7 +609,12 @@ export default class Workbench {
 		let url = View.createUrl('profile', 'available', id, {'queryaction': action}, true);
 
 		// Die Inhalte des Zweiges laden.
-		let response = await fetch(url);
+		let response = await fetch(url, {
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+			}
+		});
 		let data     = await response.json();
 
 		for (let method of Object.values(data.output.views))
@@ -721,7 +747,12 @@ export default class Workbench {
 			let url = View.createUrl('tree','path',Workbench.state.id, {'type':Workbench.state.action} );
 
 			// Die Inhalte des Zweiges laden.
-			let loadPromise = fetch( url );
+			let loadPromise = fetch( url,{
+				method: 'GET',
+				headers: {
+					'Accept': 'text/html',
+				}
+			} );
 
 			/**
 			 * open a object in the navigation tree.
@@ -808,7 +839,12 @@ export default class Workbench {
 				let loadBranchUrl = View.createUrl('tree','branch',0,{type:type});
 				let $targetElement = $(this);
 
-				let response = await fetch( loadBranchUrl );
+				let response = await fetch( loadBranchUrl,{
+					method: 'GET',
+					headers: {
+						'Accept': 'text/html',
+					}
+				} );
 				let html     = await response.text();
 
 				// Den neuen Unter-Zweig erzeugen.
@@ -889,7 +925,12 @@ export default class Workbench {
 					let type = id?'folder':'projects';
 					let loadBranchUrl = './?action=tree&subaction=branch&id='+id+'&type='+type;
 
-					let load = fetch( loadBranchUrl );
+					let load = fetch( loadBranchUrl,{
+						method: 'GET',
+						headers: {
+							'Accept': 'text/html',
+						}
+					} );
 					load
 						.then( response => response.text() )
 						.then( html => {

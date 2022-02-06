@@ -62,7 +62,12 @@ export default function(options)
 
                 console.debug( { url:loadBranchUrl } );
                 // Die Inhalte des Zweiges laden.
-                fetch( loadBranchUrl )
+                fetch( loadBranchUrl,{
+					method: 'GET',
+					headers: {
+						'Accept': 'text/html',
+					}
+				} )
 					.then( response => { if (!response.ok) throw "Failed to load tree"; return response } )
 					.then( response => response.text() )
 					.then( html => {

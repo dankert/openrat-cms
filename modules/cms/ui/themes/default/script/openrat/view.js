@@ -74,7 +74,12 @@ export default class View {
 		console.debug( view );
 
 		try {
-			let response = await fetch( url,{} );
+			let response = await fetch( url,{
+				method: 'GET',
+				headers: {
+					'Accept': 'text/html',
+				}
+			} );
 			$(element).html("");
 
 			if   ( ! response.ok ) {
@@ -175,8 +180,8 @@ export default class View {
         else
         	throw "Illegal argument";
 
-        if   ( api )
-        	url += '&output=json';
+        //if   ( api )
+        //	url += '&output=json';
 
         return url;
     }
