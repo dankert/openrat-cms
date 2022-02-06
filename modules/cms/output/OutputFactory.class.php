@@ -13,6 +13,7 @@ class OutputFactory {
 	const OUTPUT_YAML         = 5;
 	const OUTPUT_HTML         = 6;
 	const OUTPUT_PLAIN        = 7;
+	const OUTPUT_CSS          = 8;
 
 
 	/**
@@ -26,6 +27,7 @@ class OutputFactory {
 		'yaml'      => self::OUTPUT_YAML,
 		'plain'     => self::OUTPUT_PLAIN,
 		'html'      => self::OUTPUT_HTML,
+		'css'       => self::OUTPUT_CSS,
 	];
 
 	/**
@@ -41,7 +43,8 @@ class OutputFactory {
 		'application/yaml'           => self::OUTPUT_YAML,
 		'application/xhtml+xml'      => self::OUTPUT_HTML,
 		'text/html'                  => self::OUTPUT_HTML,
-		'*/*'                        => self::OUTPUT_HTML,
+		'text/css'                   => self::OUTPUT_CSS,
+		//'*/*'                        => self::OUTPUT_HTML,
 	];
 
 
@@ -66,11 +69,13 @@ class OutputFactory {
 				return new XmlOutput();
 			case self::OUTPUT_YAML:
 				return new YamlOutput();
-			case self::OUTPUT_PLAIN:
-				return new PlainOutput();
 			case self::OUTPUT_HTML:
-			default:
 				return new HtmlOutput();
+			case self::OUTPUT_CSS:
+				return new CssOutput();
+			case self::OUTPUT_PLAIN:
+			default:
+				return new PlainOutput();
 		}
 	}
 

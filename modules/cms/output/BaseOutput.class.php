@@ -31,6 +31,10 @@ abstract class BaseOutput implements Output
 		try {
 			$this->beforeAction( $request );
 
+			// special behaviour of UI actions, these are placed in a special package.
+			if   ( in_array( $request->action,['index','tree','title','usergroup']) )
+				$request->isUIAction = true;
+
 			$dispatcher = new Dispatcher();
 			$dispatcher->request = $request;
 

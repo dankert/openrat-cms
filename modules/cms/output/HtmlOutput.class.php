@@ -42,9 +42,6 @@ class HtmlOutput extends BaseOutput
 		if   ( $request->isAction )
 			throw new \RuntimeException('The HTML output driver does not accept POST requests');
 
-		if   ( in_array( $request->action,['index','tree','title','usergroup']) )
-			$request->isUIAction = true;
-
     }
 
 

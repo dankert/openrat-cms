@@ -35,8 +35,6 @@ class IndexThemestyleAction extends IndexAction implements Method {
 
         $styleName = $this->request->getText('style');
 
-        header('Content-Type: text/css');
-
         $this->setTemplateVar('style',$this->getThemeCSS( $styleName) );
     }
 
