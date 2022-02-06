@@ -91,7 +91,7 @@ export default function( options )
 				window.open( $link.attr('data-url'),' _blank' );
 				break;
 			case 'window':
-				window.location.href = View.createUrl($link.attr('data-action'),$link.attr('data-method'),$link.attr('data-id'));
+				window.location.href = View.createUrl($link.attr('data-action'), $link.attr('data-method'), $link.attr('data-id'));
 				break;
 
 			case 'popup':

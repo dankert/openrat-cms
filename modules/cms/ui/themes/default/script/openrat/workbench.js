@@ -191,7 +191,7 @@ export default class Workbench {
          * "Geben Sie mir ein Ping, Vasily. Und bitte nur ein einziges Ping!" (aus: Jagd auf Roter Oktober)
          */
         let ping = async () => {
-        	let url = View.createUrl('profile','ping',0, {}, true);
+        	let url = View.createUrl('profile', 'ping' );
 			console.debug('ping');
 
 			try {
@@ -312,7 +312,7 @@ export default class Workbench {
 
 	async loadUserStyle() {
 
-		let url = View.createUrl('profile', 'userinfo', 0, {}, true);
+		let url = View.createUrl('profile', 'userinfo' );
 
 		let response = await fetch(url,{
 			method: 'GET',
@@ -336,7 +336,7 @@ export default class Workbench {
 
     async loadLanguage() {
 
-		let url = View.createUrl('profile', 'language', 0, {}, true);
+		let url = View.createUrl('profile', 'language');
 
 		let response = await fetch(url,{
 				method: 'GET',
@@ -355,7 +355,7 @@ export default class Workbench {
 	 */
 	async loadUISettings() {
 
-		let url = View.createUrl('profile', 'uisettings', 0, {}, true);
+		let url = View.createUrl('profile', 'uisettings' );
 
 		let response = await fetch(url,{
 			method: 'GET',
@@ -427,7 +427,7 @@ export default class Workbench {
 		if   ( window.localStorage )
 			window.localStorage.setItem('style',styleName);
 
-    	let styleUrl = View.createUrl('index','themestyle',0,{'style':styleName} );
+    	let styleUrl = View.createUrl('index', 'themestyle', 0, {'style': styleName});
 		document.getElementById('user-style').setAttribute('href',styleUrl);
     }
 
@@ -606,7 +606,7 @@ export default class Workbench {
 		// Jeder Menüeintrag bekommt die Id und Parameter.
 		$('.or-workbench-title .or-filtered .or-link').attr('data-id', id);
 
-		let url = View.createUrl('profile', 'available', id, {'queryaction': action}, true);
+		let url = View.createUrl('profile', 'available', id, {'queryaction': action});
 
 		// Die Inhalte des Zweiges laden.
 		let response = await fetch(url, {
@@ -744,7 +744,7 @@ export default class Workbench {
 
 		Callback.afterNewActionHandler.add( function() {
 
-			let url = View.createUrl('tree','path',Workbench.state.id, {'type':Workbench.state.action} );
+			let url = View.createUrl('tree', 'path', Workbench.state.id, {'type': Workbench.state.action});
 
 			// Die Inhalte des Zweiges laden.
 			let loadPromise = fetch( url,{
@@ -836,7 +836,7 @@ export default class Workbench {
 			$element.find('.or-act-load-nav-tree').each( async function() {
 
 				let type = $(this).data('type') || 'root';
-				let loadBranchUrl = View.createUrl('tree','branch',0,{type:type});
+				let loadBranchUrl = View.createUrl('tree', 'branch', 0, {type: type});
 				let $targetElement = $(this);
 
 				let response = await fetch( loadBranchUrl,{

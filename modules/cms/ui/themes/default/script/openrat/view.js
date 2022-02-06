@@ -66,7 +66,7 @@ export default class View {
 	 */
 	async loadView() {
 
-        let url     = View.createUrl( this.action,this.method,this.id,this.params,false); // URL für das Laden erzeugen.
+        let url     = View.createUrl(this.action, this.method, this.id, this.params); // URL für das Laden erzeugen.
         let element = this.element;
         let view    = this;
 
@@ -150,11 +150,9 @@ export default class View {
 	 * @param subaction
 	 * @param id
 	 * @param extraid
-	 * @param api
 	 * @returns string
 	 */
-    static createUrl(action,subaction,id,extraid={},api=false )
-    {
+    static createUrl(action, subaction, id= 0, extraid = {}) {
         let url = './?';
 
         if(action)
@@ -179,9 +177,6 @@ export default class View {
         }
         else
         	throw "Illegal argument";
-
-        //if   ( api )
-        //	url += '&output=json';
 
         return url;
     }
