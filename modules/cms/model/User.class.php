@@ -1162,18 +1162,6 @@ SQL
 	}
 
 
-	public function increaseFailedPasswordCounter() {
-		$this->passwordFailedCount++;
-		$this->save();
-	}
-
-
-	public function resetFailedPasswordCounter() {
-		$this->passwordFailedCount = 0;
-		$this->save();
-	}
-
-
 	public function getId()
 	{
 		return $this->userid;

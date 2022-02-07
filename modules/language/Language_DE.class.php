@@ -121,6 +121,7 @@ public function get() { return [
 'CREATE_USER'=>'Erstellungsautor',
 'DATE_ANSI'=>'Datum gemäß ANSI-Notation',
 'DATE'=>'Datum',
+'DATE_FORMAT_FULL'=>'d.m.Y H:i',
 'DATE_FORMAT'=>'d.m.Y',
 'DATE_FORMAT_TODAY'=>'H:i',
 'DATE_FORMAT_LONG'=>'{weekday}\, d. {month} Y \u\m H:i:s',

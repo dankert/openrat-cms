@@ -134,40 +134,6 @@ class LoginLoginAction extends LoginAction implements Method {
 				]
 			));
 
-			// Increase fail counter
-			$user = User::loadWithName($loginName,User::AUTH_TYPE_INTERNAL);
-
-			if   ( $authResult & Auth::STATUS_ACCOUNT_LOCKED ) {
-				;
-				// the account is locked, so the login failed.
-				// we are NOT informing the UI about this. The user is already informed about the lock.
-			}
-			else {
-				// Increase password fail counter
-				$user->increaseFailedPasswordCounter();
-				// $user->passwordFailedCount is now at least 1.
-
-				$lockAfter = Configuration::subset(['security','password'])->get('lock_after_fail_count',10);
-				if   ( $lockAfter && $user->passwordFailedCount % $lockAfter == 0 ) {
-					// exponentially increase the lock duration.
-					$factor         = pow(2, intval($user->passwordFailedCount/$lockAfter) - 1 ) ;
-					$lockedDuration = Configuration::subset(['security','password'])->get('lock_duration',120) * $factor * 60;
-
-					$lockedUntil = Startup::getStartTime() + $lockedDuration;
-					$user->passwordLockedUntil = $lockedUntil;
-					$user->persist();
-
-					// Inform the user about the lock.
-					if   ( $user->mail ) {
-						$mail = new Mail( $user->mail,Messages::MAIL_PASSWORD_LOCKED_SUBJECT,Messages::MAIL_PASSWORD_LOCKED);
-						$mail->setVar('username',$user->name);
-						$mail->setVar('name',$user->getName() );
-						$mail->setVar('until',date( \cms\base\Language::lang(Messages::DATE_FORMAT ), $lockedUntil ) );
-						$mail->send();
-					}
-				}
-			}
-
 			// Login failed.
 			throw new ValidationException('login_password',Messages::LOGIN_FAILED, ['name' => $loginName] );
 		}
@@ -184,7 +150,6 @@ class LoginLoginAction extends LoginAction implements Method {
 				$user = User::loadWithName($loginName, User::AUTH_TYPE_INTERNAL, null);
 				$user->setCurrent();
 				$user->updateLoginTimestamp();
-				$user->resetFailedPasswordCounter();
 
 				if ($user->passwordAlgo != Password::bestAlgoAvailable())
 					// Re-Hash the password with a better hash algo.
