@@ -7,6 +7,7 @@ use util\json\JSON;
 use util\mail\Mail;
 use util\Text;
 use util\XML;
+use util\YAML;
 
 
 class RequestParams
@@ -62,12 +63,14 @@ class RequestParams
 			$this->parameter = &$_GET;
 		else
 			switch( $contenttype ) {
+				// These content-types are known by PHP, so we do NOT have to parse them:
 				case 'application/x-www-form-urlencoded': // the most used form url encoding
 				case 'multipart/form-data':               // Multipart-Formdata for File uploads
 				case '':
 					$this->parameter = &$_POST; // Using builtin POST data parsing
 					break;
 
+				// The request body contains a JSON document
 				case 'text/json':
 				case 'application/json':
 					// parsing the JSON data
@@ -77,6 +80,10 @@ class RequestParams
 				case 'text/xml':
 				case 'application/xml':
 					$this->parameter = (array)simplexml_load_string(file_get_contents("php://input"));
+					break;
+
+				case 'application/yaml':
+					$this->parameter = YAML::parse(file_get_contents("php://input"));
 					break;
 
 				default:
