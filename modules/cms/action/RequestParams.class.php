@@ -2,6 +2,9 @@
 
 namespace cms\action;
 
+use cms\auth\Auth;
+use cms\auth\InternalAuth;
+use util\exception\SecurityException;
 use util\exception\ValidationException;
 use util\json\JSON;
 use util\mail\Mail;
@@ -27,12 +30,22 @@ class RequestParams
 
 	public $isAction;
 
+	public $headers;
+	public $authUser;
+	public $authPassword;
+
 	private $parameter;
 
 	/**
 	 * @var bool
 	 */
 	public $isUIAction;
+
+
+	/**
+	 * @var bool
+	 */
+	public $withAuthorization;
 
 	/**
 	 * RequestParams constructor.
@@ -41,6 +54,15 @@ class RequestParams
 	{
 		// Is this a POST request?
 		$this->isAction = @$_SERVER['REQUEST_METHOD'] == 'POST';
+		$this->headers = array_change_key_case(getallheaders(), CASE_LOWER);
+
+		if   ( @$this->headers['authorization'] ) {
+			$this->withAuthorization = true;
+			// Only supporting Basic Auth
+			// Maybe in the future we will support JWT Bearer tokens...
+			if   ( substr( $this->headers['authorization'],0,6 ) == 'Basic ' )
+				list($this->authUser,$this->authPassword) = explode(':',base64_decode( substr( $this->headers['authorization'],6) ) );
+		}
 
 		$this->setParameterStore();
 
@@ -55,13 +77,16 @@ class RequestParams
 	 */
 	protected function setParameterStore() {
 
-		$headers = array_change_key_case(getallheaders(), CASE_LOWER);
 
-		$contenttype = trim(explode( ';',@$headers['content-type'])[0]);
+		$contenttype = trim(explode( ';',@$this->headers['content-type'])[0]);
 
 		if   ( !$this->isAction )
 			$this->parameter = &$_GET;
+			// GET method in the HTTP/1.1 spec, section 9.3:
+			// The GET method means retrieve whatever information ([...]) is identified by the Request-URI.
+			// so the request body MUST be ignored here.
 		else
+			// POST requests are NOT idempotent
 			switch( $contenttype ) {
 				// These content-types are known by PHP, so we do NOT have to parse them:
 				case 'application/x-www-form-urlencoded': // the most used form url encoding

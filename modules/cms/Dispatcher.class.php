@@ -8,11 +8,14 @@ namespace cms;
 use BadMethodCallException;
 use cms\action\Action;
 use cms\action\RequestParams;
+use cms\auth\Auth;
+use cms\auth\InternalAuth;
 use cms\base\Configuration;
 use cms\base\DB;
 use cms\base\DefaultConfig;
 use cms\base\Startup;
 use cms\base\Version;
+use cms\model\User;
 use configuration\Config;
 use configuration\ConfigurationLoader;
 use database\Database;
@@ -99,6 +102,7 @@ class Dispatcher
 
         $this->connectToDatabase();
         $this->startDatabaseTransaction();
+		$this->checkLogin();
 
         try{
 
@@ -133,10 +137,6 @@ class Dispatcher
         $result['output']['_id'   ] = $this->request->id;
 
 
-        // Yes, closing the session flushes the session data and unlocks other waiting requests.
-        // Now another request is able to be executed.
-        Session::close();
-
         // Ablaufzeit für den Inhalt auf aktuelle Zeit setzen.
         header('Expires: ' . substr(date('r', time() - date('Z')), 0, -5) . 'GMT', false);
 
@@ -144,8 +144,47 @@ class Dispatcher
     }
 
 
+	/**
+	 * Clear up after the work is done.
+	 */
+	private function clear() {
+		// Yes, closing the session flushes the session data and unlocks other waiting requests.
+		// Now another request is able to be executed.
+		Session::close();
+		if   ( $this->request->authUser ) {
+			session_destroy();
+			setcookie('or_sid','',time());
+		}
+	}
+
+
+	/**
+	 * Make a authentication, if there is a HTTP authorization.
+	 */
+	private function checkLogin() {
+
+		if   ( $this->request->withAuthorization ) {
+			$userAuth = new InternalAuth();
+			$status = $userAuth->login( $this->request->authUser,$this->request->authPassword,'' );
+			if   ( ! ($status & Auth::STATUS_SUCCESS) )
+				throw new SecurityException('user cannot be authenticated');
+
+			$user = User::loadWithName( $this->request->authUser,User::AUTH_TYPE_INTERNAL );
+			Session::setUser( $user );
+		}
+	}
+
+
+	/**
+	 * checks if the request contains a pleasant CSRF token.
+	 *
+	 * @return void
+	 */
     private function checkPostToken()
     {
+		if ( $this->request->withAuthorization )
+			return; // no CSRF token necessary if there are no cookies used for authentication.
+
         if ( Configuration::subset('security')->is('use_post_token',true) &&
 			 $this->request->isAction &&
 			 $this->request->getToken() != Session::token() ) {
@@ -448,27 +487,8 @@ class Dispatcher
         if   ( ! $updater->isUpdateRequired( DB::get() ) )
             return;
 
-
-        if   ( ! $dbConfig->is('auto_update',true))
-            throw new \LogicException('DB Update required, but auto-update is disabled. '.Startup::TITLE." ".Startup::VERSION." needs DB-version ".Update::SUPPORTED_VERSION );
-
-
-        try {
-            $adminDb = new Database( $dbConfig->subset('admin')->getConfig() + $dbConfig->getConfig() );
-            $adminDb->id = $dbid;
-        } catch (\Exception $e) {
-
-            throw new UIException('DATABASE_ERROR_CONNECTION', $e->getMessage(), [], $e);
-        }
-
-        $updater->update($adminDb);
-
-        // Try to close the PDO connection. PDO doc:
-        // To close the connection, you need to destroy the object by ensuring that all
-        // remaining references to it are deleted—you do this by assigning NULL to the variable that holds the object.
-        // If you don't do this explicitly, PHP will automatically close the connection when your script ends.
-        $adminDb = null;
-        unset($adminDb);
+		Logger::error("Database update required. Please call /status/?upgrade");
+		throw new LogicException("Database update required, try calling /status/?upgrade");
     }
 
 

@@ -3,26 +3,9 @@
 namespace cms\action;
 
 
-use cms\auth\Auth;
-use cms\auth\AuthRunner;
-use cms\auth\InternalAuth;
 use cms\base\Configuration;
-use cms\base\DB;
-use cms\base\Startup;
-use cms\model\User;
 use configuration\Config;
-use Exception;
-use language\Messages;
-use logger\Logger;
-use openid_connect\OpenIDConnectClient;
-use security\Password;
-use util\exception\ObjectNotFoundException;
-use util\exception\SecurityException;
-use util\exception\UIException;
-use util\exception\ValidationException;
-use util\mail\Mail;
 use util\Session;
-use util\text\TextMessage;
 
 
 // OpenRat Content Management System

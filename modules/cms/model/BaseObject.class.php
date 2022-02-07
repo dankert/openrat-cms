@@ -282,7 +282,7 @@ SQL
                 $sql = Db::sql( <<<SQL
          SELECT * FROM  {{acl}}
                  WHERE objectid={objectid}
-                   --AND ( languageid={languageid} OR languageid IS NULL )
+                   /*--AND ( languageid={languageid} OR languageid IS NULL )*/
                    AND (    type = {user}  AND userid={userid} 
                          OR type = {group} AND $sqlGroupClause
                          OR type = {all}
