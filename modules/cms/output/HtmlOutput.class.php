@@ -90,13 +90,15 @@ class HtmlOutput extends BaseOutput
     }
 
 
+	/**
+	 * @param $text
+	 * @param $cause Exception the cause, or <code>null</code> if not available.
+	 */
 	protected function setError($text, $cause)
 	{
-if (!headers_sent())
-{
-    header('HTTP/1.0 500 Internal Server Error');
-    header('Content-Security-Policy: style-src: inline; default: self');
-}
+		if ( !headers_sent() )
+			// The following HTML contains inline CSS code, so we have to allow inline CSS.
+			header('Content-Security-Policy: style-src: inline; default: self');
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -146,7 +148,7 @@ if (!headers_sent())
     <p>Something went terribly wrong &#x1F61E;</p>
 
     <pre><?php // Display exceptions only in development mode, because they may contain sensitive internal information like passwords.
-      if (!defined('DEVELOPMENT') || DEVELOPMENT ) {
+      if ($cause && defined('DEVELOPMENT') && DEVELOPMENT ) {
       	echo $cause->__toString();
 	  }
     ?></pre>
