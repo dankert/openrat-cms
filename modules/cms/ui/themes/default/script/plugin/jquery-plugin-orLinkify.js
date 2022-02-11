@@ -54,7 +54,6 @@ export default function( options )
 			case 'post':
 
 				let api = new Api();
-				api.mode = Api.modes.write;
 				let formData = new FormData();
 
 				let params = JSON.parse( $link.attr('data-data')  );
@@ -71,6 +70,11 @@ export default function( options )
 
 				// Submit the form.
 				api.sendData( formData );
+
+				if   ( $link.data('afterSuccess') === 'reload' )
+					Workbench.getInstance().reloadViews();
+				if   ( $link.data('afterSuccess') === 'reloadAll' )
+					Workbench.getInstance().reloadAll();
 
 				break;
 

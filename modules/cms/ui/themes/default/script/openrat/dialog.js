@@ -18,17 +18,29 @@ export default class Dialog {
 		this.view;
 
 		/**
-		 * Dirty-marker (if unsaved changes exist).
-		 *
-		 * @type {boolean}
-		 */
-		this.isDirty = false;
-
-		/**
 		 * the DOM element which contains the dialog.
 		 * @type {*|jQuery|HTMLElement}
 		 */
 		this.element = $('.or-dialog-content .or-view');
+	}
+
+	/**
+	 * Set Dirty-marker.
+	 * @param dirty true, if unsaved changes exist
+	 */
+	set isDirty( dirty ) {
+		if   ( dirty )
+			this.element.addClass('view--is-dirty');
+		else
+			this.element.removeClass('view--is-dirty');
+	}
+
+	/**
+	 * Get Dirty-marker.
+	 * @return true, if unsaved changes exist
+	 */
+	get isDirty() {
+		this.element.hasClass('view--is-dirty');
 	}
 
 	/**
@@ -70,15 +82,11 @@ export default class Dialog {
 			// data has changed
 			console.debug("Changes detected");
 			dialog.isDirty = true;
-			// Remove dirty-flag from view
-			dialog.element.addClass('view--is-dirty');
 		});
 
 		view.onSaveHandler.add( function() {
 			// data was saved
 			dialog.isDirty = false;
-			// Remove dirty-flag from view
-			dialog.element.removeClass('view--is-dirty');
 		});
 
 		this.view = view;

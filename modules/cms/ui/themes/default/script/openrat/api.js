@@ -5,18 +5,6 @@ import Notice from "./notice.js";
  */
 export default class Api {
 
-	static modes = {
-		get   : 1,
-		write : 2,
-	};
-
-	constructor() {
-
-		this.notifyBrowser = false;
-		this.mode = Api.modes.get;
-	}
-
-
 	/**
 	 * Sending data to the server.
 	 *

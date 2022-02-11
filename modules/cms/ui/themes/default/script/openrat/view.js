@@ -111,13 +111,13 @@ export default class View {
 				form.onSaveHandler  .add( () => { view.onSaveHandler  .fire() } );
 				form.onCloseHandler .add( () => { view.close()                } );
 
-				form.forwardTo = function (action, subaction, id, data) {
+				form.forwardHandler.add( (action, subaction, id, data) => {
 					view.action = action;
 					view.method = subaction;
 					view.id     = id;
 					view.params = data;
 					view.loadView();
-				}
+				} );
 
 				form.initOnElement(this);
 			});

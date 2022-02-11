@@ -46,10 +46,6 @@ export default class Notice  {
 
 	// Close the notice.
 	close() {
-		/* no effects in jquery slim
-		this.element.fadeOut('fast', () => {
-			this.element.remove();
-		} );*/
 		this.element.remove();
 	}
 

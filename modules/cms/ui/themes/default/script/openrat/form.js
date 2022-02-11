@@ -12,10 +12,9 @@ import Api       from "./api.js";
 export default class Form {
 
 	static modes = {
-		showBrowserNotice  : 1,
-		keepOpen           : 2,
-		closeAfterSubmit   : 4,
-		closeAfterSuccess  : 8,
+		keepOpen           :  2,
+		closeAfterSubmit   :  4,
+		closeAfterSuccess  :  8,
 	};
 
 	constructor() {
@@ -27,6 +26,7 @@ export default class Form {
 		this.onChangeHandler = new Callback();
 		this.onSaveHandler   = new Callback();
 		this.onCloseHandler  = new Callback();
+		this.forwardHandler  = new Callback();
 
 		this.async = false;
 		this.afterSuccess = '';
@@ -37,7 +37,7 @@ export default class Form {
 		this.forwardToMethod = null;
 	}
 
-	setLoadStatus( isLoading ) {
+	set isLoadStatus( isLoading ) {
 		if   ( isLoading )
 			Workbench.getInstance().startSpinner();
 		else
@@ -47,12 +47,10 @@ export default class Form {
     initOnElement( element ) {
         this.element = element;
 
-		this.formMethod    = $(this.element).attr('method').toUpperCase();
-		this.afterSuccess  = $(this.element).data('afterSuccess');
+		this.formMethod      = $(this.element).attr('method').toUpperCase();
+		this.afterSuccess    = $(this.element).data('afterSuccess');
 		this.forwardToMethod = $(this.element).data('forwardTo');
-		this.async         = $(this.element).data('async');
-
-		let form = this;
+		this.async           = $(this.element).data('async');
 
         // Autosave in Formularen.
         // Bei Veränderungen von Checkboxen wird das Formular sofort abgeschickt.
@@ -60,46 +58,47 @@ export default class Form {
 
         	this.autosave = true;
 
-            $(this.element).find('input[type="checkbox"]').click( function() {
-                form.submit(Form.modes.keepOpen);
+            $(this.element).find('input[type="checkbox"]').click( () => {
+                this.submit(Form.modes.keepOpen);
             });
-            $(this.element).find('select').change( function() {
-                form.submit(Form.modes.keepOpen);
+            $(this.element).find('select').change( () => {
+                this.submit(Form.modes.keepOpen);
             });
         }
 
 
-        $(element).find('.or-act-form-cancel').click( function() {
-            form.cancel();
-
+        $(element).find('.or-act-form-cancel').click( () => {
+			this.cancel();
         });
-        $(element).find('.or-act-form-reset').click( function() {
-            form.rollback();
-
+        $(element).find('.or-act-form-reset').click( () => {
+			this.rollback();
         });
-        $(element).find('.or-act-form-apply').click( function() {
-			form.submit(Form.modes.keepOpen);
+        $(element).find('.or-act-form-apply').click( () => {
+			this.submit(Form.modes.keepOpen);
         });
-        $(element).find('.or-act-form-save').click( function() {
-			form.submit();
+        $(element).find('.or-act-form-save').click( () => {
+			if   ( this.async )
+				this.submit( Form.modes.closeAfterSubmit );
+			else
+				this.submit( Form.modes.closeAfterSuccess );
         });
 
 		// Bei Änderungen in der View das Tab als 'dirty' markieren
-		$(element).find('.or-input').change( function() {
-			form.onChangeHandler.fire();
+		$(element).find('.or-input').change( () => {
+			this.onChangeHandler.fire();
 		});
 
 
-		// Submithandler for the whole form.
-        $(element).submit( function( event ) {
+		// Catches the form submit.
+		// This is called by hitting the enter key.
+        $(element).submit( ( event ) => {
 
-            //
-            if   ($(this).data('target')=='view')
-            {
-                form.submit();
-                event.preventDefault();
-            }
-            // target=top will load the native way without javascript.
+            if   ( this.async )
+				this.submit( Form.modes.closeAfterSubmit );
+			else
+				this.submit( Form.modes.closeAfterSuccess );
+
+            event.preventDefault();
         });
     }
 
@@ -107,37 +106,42 @@ export default class Form {
         //$(this.element).html('').parent().removeClass('is-open');
 		Notice.removeAllNotices();
 
-        this.onCloseHandler.fire();
+        this.close();
     }
 
 
     rollback() {
-        this.element.trigger('reset');
+        this.element.nodes[0].reset();
     }
 
+
+	/**
+	 * Forward to another action.
+	 *
+	 * @param action
+	 * @param subaction
+	 * @param id
+	 * @param data
+	 */
     forwardTo(action, subaction, id, data) {
-    }
+		this.forwardHandler.fire( action, subaction, id, data );
+	}
 
-    submit( mode ) {
 
-		if   ( mode === undefined )
-			if   ( this.async )
-				mode = Form.modes.closeAfterSubmit;
-			else
-				mode = Form.modes.closeAfterSuccess;
+    async submit( mode ) {
 
 		Notice.removeAllNotices();
 
 		// Show progress
-        let status = new Notice();
-        status.setStatus('info');
-        status.inProgress();
-        status.msg = Workbench.language.PROGRESS;
-        status.show();
+        let progressStatus = new Notice();
+        progressStatus.setStatus('info');
+        progressStatus.inProgress();
+        progressStatus.msg = Workbench.language.PROGRESS;
+        progressStatus.show();
 
         // Alle vorhandenen Error-Marker entfernen.
         // Falls wieder ein Fehler auftritt, werden diese erneut gesetzt.
-        $(this.element).find('.or-input--error').removeClass('input--error');
+		this.removeErrorMarkers();
 
         let formData = new FormData( $(this.element).get(0) );
 
@@ -153,75 +157,75 @@ export default class Form {
             // Mehrseitiges Formular
             // Die eingegebenen Formulardaten werden zur nächsten Action geschickt.
             this.forwardTo( formData.get('action'), formData.get('subaction'),formData.get('id,'),formData );
-            $(status).remove();
+            progressStatus.close();
         }
         else
         {
 			if	( mode == Form.modes.closeAfterSubmit )
-				this.onCloseHandler.fire();
+				this.close();
 			// Async: Window is closed, but the action will be startet now.
 
-			formData.append('output','json');
-        	this.sendFormData( formData );
-			status.close();
+        	await this.sendFormData( formData,mode );
+			progressStatus.close();
 		}
 
     }
 
 
-    sendFormData = function( formData ) {
+    sendFormData = async function( formData,mode ) {
 
-		this.setLoadStatus(true);
-
-		let form = this;
+		if   ( !this.async )
+			this.isLoadStatus = true;
 
 		let api = new Api();
-		api.notifyBrowser = form.async;
+		api.notifyBrowser = this.async;
 		api.validationErrorForField = (name) => {
 			$('.or-input[name='+name+']').addClass('input--error').parent().addClass('input--error').parents('.or-group').removeClass('closed').addClass('show').addClass('open');
 		}
 
-		let result = api.sendData( formData );
-		let mode = 0;
 
-		result.then(
-			() => {
-				form.onSaveHandler.fire();
-				if (this.afterSuccess == 'forward')
-					mode = Form.modes.keepOpen;
+		try {
+			await api.sendData( formData );
 
-				// The data was successful saved.
-				// Now we can close the form.
-				if (mode == Form.modes.closeAfterSuccess) {
-					form.onCloseHandler.fire();
+			this.onSaveHandler.fire();
+			// The data was successful saved.
 
-					// clear the dirty flag.
-					$(form.element).closest('div.panel').find('div.header ul.views li.action.active').removeClass('dirty');
-				}
-
-				if (form.afterSuccess) {
-					if (form.afterSuccess == 'reloadAll') {
-						Workbench.getInstance().reloadAll();
-					} else if (form.afterSuccess == 'forward') {
-						// Forwarding to next subaction.
-						if (form.forwardToMethod)
-							form.forwardTo(formData.get('action'), form.forwardToMethod, formData.get('id'), []);
-					}
-				} else {
-					if (async)
-						; // do not reload
-					else
-						Workbench.getInstance().reloadViews();
-				}
-				//form.onSuccess();
-				Callback.dataChangedHandler.fire();
+			if (mode == Form.modes.closeAfterSuccess) {
+				this.close();
 			}
-		).catch( (reason) => {
 
-		}).finally( () => {
-			form.setLoadStatus(false);
-		})
+			if (this.afterSuccess) {
+				if (this.afterSuccess == 'reloadAll') {
+					Workbench.getInstance().reloadAll();
+				} else if (this.afterSuccess == 'forward') {
+					// Forwarding to next subaction.
+					if (this.forwardToMethod)
+						this.forwardTo(formData.get('action'), this.forwardToMethod, formData.get('id'), []);
+				}
+			} else {
+				if (this.async)
+					; // do not reload
+				else
+					Workbench.getInstance().reloadViews();
+			}
+			//this.onSuccess();
+			Callback.dataChangedHandler.fire();
+		} finally {
+			this.isLoadStatus = false;
+		}
+	}
 
+
+	/**
+	 * Closing the form.
+	 */
+	close = function() {
+		this.onCloseHandler.fire();
+	}
+
+
+	removeErrorMarkers = function() {
+		$(this.element).find('.or-input--error').removeClass('input--error');
 	}
 }
 
