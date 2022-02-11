@@ -40,7 +40,7 @@ export default class Dialog {
 	 * @return true, if unsaved changes exist
 	 */
 	get isDirty() {
-		this.element.hasClass('view--is-dirty');
+		return this.element.hasClass('view--is-dirty');
 	}
 
 	/**
