@@ -54,6 +54,13 @@ class FolderCreatetextAction extends FolderAction implements Method {
 			$text->size      = strlen($http->body);
 			$text->value     = $http->body;
 		}
+		elseif	( $this->request->has('text') )
+		{
+			$text->filename  = $this->request->getRequiredText('filename' );
+			$text->extension = $this->request->getRequiredText('extension');
+			$text->value     = $this->request->getRequiredText('text'     );
+			$text->size      = strlen( $text->value );
+		}
 		else
 		{
 			$upload = new Upload();
