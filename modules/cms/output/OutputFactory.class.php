@@ -2,6 +2,7 @@
 
 namespace cms\output;
 
+use cms\action\RequestParams;
 use util\Http;
 
 class OutputFactory {
@@ -11,9 +12,10 @@ class OutputFactory {
 	const OUTPUT_JSON         = 3;
 	const OUTPUT_XML          = 4;
 	const OUTPUT_YAML         = 5;
-	const OUTPUT_HTML         = 6;
+	const OUTPUT_UI           = 6;
 	const OUTPUT_PLAIN        = 7;
 	const OUTPUT_CSS          = 8;
+	const OUTPUT_PREVIEW      = 9;
 
 
 	/**
@@ -26,8 +28,9 @@ class OutputFactory {
 		'xml'       => self::OUTPUT_XML,
 		'yaml'      => self::OUTPUT_YAML,
 		'plain'     => self::OUTPUT_PLAIN,
-		'html'      => self::OUTPUT_HTML,
+		'html'      => self::OUTPUT_UI,
 		'css'       => self::OUTPUT_CSS,
+		'preview'   => self::OUTPUT_PREVIEW,
 	];
 
 	/**
@@ -41,8 +44,8 @@ class OutputFactory {
 		'text/xml'                   => self::OUTPUT_XML,
 		'application/xml'            => self::OUTPUT_XML,
 		'application/yaml'           => self::OUTPUT_YAML,
-		'application/xhtml+xml'      => self::OUTPUT_HTML,
-		'text/html'                  => self::OUTPUT_HTML,
+		'application/xhtml+xml'      => self::OUTPUT_UI,
+		'text/html'                  => self::OUTPUT_UI,
 		'text/css'                   => self::OUTPUT_CSS,
 		//'*/*'                        => self::OUTPUT_HTML,
 	];
@@ -69,10 +72,12 @@ class OutputFactory {
 				return new XmlOutput();
 			case self::OUTPUT_YAML:
 				return new YamlOutput();
-			case self::OUTPUT_HTML:
-				return new HtmlOutput();
+			case self::OUTPUT_UI:
+				return new UIOutput();
 			case self::OUTPUT_CSS:
 				return new CssOutput();
+			case self::OUTPUT_PREVIEW:
+				return new PreviewOutput();
 			case self::OUTPUT_PLAIN:
 			default:
 				return new PlainOutput();
@@ -88,7 +93,7 @@ class OutputFactory {
 	 */
 	private static function discoverOutputType()
 	{
-		$reqOutput = strtolower(@$_REQUEST['output']);
+		$reqOutput = strtolower(@$_REQUEST[ RequestParams::PARAM_OUTPUT ]);
 
 		// Try 1: Checking the 'output' request parameter.
 		if   ( $reqOutput ) {

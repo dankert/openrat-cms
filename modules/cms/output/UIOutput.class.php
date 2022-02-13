@@ -22,7 +22,7 @@ use util\text\TextMessage;
 /**
  * The HTML output is calling a template for the user interface.
  */
-class HtmlOutput extends BaseOutput
+class UIOutput extends BaseOutput
 {
     /**
      * Preparing the client...

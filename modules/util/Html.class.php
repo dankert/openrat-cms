@@ -74,4 +74,19 @@ class Html
 		// Maybe the escaping should be controlled by a parameter.
 		return './?'.implode('&', $urlParameterList);
 	}
+
+
+	/**
+	 * creates a relative url to the UI.
+	 *
+	 * @param string $action Aktion, die aufgerufen werden soll
+	 * @param $id string Unteraktion, die innerhalb der Aktion aufgerufen werden soll
+	 */
+	public static function locationUrl($action, $id = '')
+	{
+		if (intval($id) == 0)
+			$id = '';
+
+		return './#/'.$action.'/'.$id;
+	}
 }

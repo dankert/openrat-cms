@@ -900,18 +900,13 @@ class ValueGenerator extends BaseGenerator
 						break;
 					case 'edit_url':
 						$raw = true;
-						$db = \util\Session::getDatabase();
-						$inhalt = Html::url('page',null,$page->objectid,array('dbid'=>$db->id));
+						$inhalt = Html::locationUrl('page',$page->objectid );
 						break;
 					case 'edit_fullurl':
 						$raw = true;
 						$inhalt = Http::getServer();
 
-						// Der Link soll nicht auf die API, sondern auf das UI zeigen.
-						if   ( substr($inhalt,-4) == 'api/' )
-							$inhalt = substr($inhalt,0,-4);
-
-						$inhalt .= '/#/page/'.$page->objectid;
+						$inhalt .= Html::locationUrl('page',$page->objectid );
 						break;
 					case 'lastch_user_username':
 						$user = $page->lastchangeUser;

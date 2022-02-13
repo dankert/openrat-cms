@@ -33,22 +33,24 @@ class PreviewLink implements LinkFormat
 
 
 	/**
-     * @param $from \cms\model\BaseObject
-     * @param $to \cms\model\BaseObject
+	 * Calculates the Preview Link to an object.
+	 *
+     * @param $from \cms\model\BaseObject this is the source object from which the links points to $to.
+     * @param $to \cms\model\BaseObject the target where the link points to.
      */
     public function linkToObject( BaseObject $from, BaseObject $to )
     {
 
         $param = [
-            'oid'                 => '__OID__'.$to->objectid.'__'
-			];
+            'oid'                       => '__OID__'.$to->objectid.'__',
+            RequestParams::PARAM_OUTPUT => 'preview',
+		];
 
         if   ( $this->context instanceof PageContext ) {
 			$param[ RequestParams::PARAM_MODEL_ID    ] = $this->context->modelId;
             $param[ RequestParams::PARAM_LANGUAGE_ID ] = $this->context->languageId;
 		}
 
-        // Interne Verlinkungen in der Seitenvorschau
         switch( $to->typeid )
         {
             case BaseObject::TYPEID_FOLDER:

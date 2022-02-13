@@ -23,6 +23,7 @@ class RequestParams
 	const PARAM_MODEL_ID     = 'modelid'        ;
 	const PARAM_PROJECT_ID   = 'projectid'      ;
 	const PARAM_DATABASE_ID  = 'dbid'           ;
+	const PARAM_OUTPUT       = 'output'         ;
 
 	public $action;
 	public $method;

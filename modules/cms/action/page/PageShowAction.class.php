@@ -46,11 +46,11 @@ class PageShowAction extends PageAction implements Method {
         {
             ob_start();
             require( $generator->getCache()->load()->getFilename() );
-            $this->setTemplateVar('output',ob_get_contents() );
+            $this->setTemplateVar('value',ob_get_contents() );
             ob_end_clean();
         }
 		else
-            $this->setTemplateVar('output',$generator->getCache()->get());
+            $this->setTemplateVar('value',$generator->getCache()->get());
     }
 
     public function post() {
