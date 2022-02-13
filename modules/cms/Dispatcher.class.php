@@ -130,7 +130,7 @@ class Dispatcher
         $this->commitDatabaseTransaction();
 
         if  ( DEVELOPMENT )
-            Logger::info('Output' . "\n" . print_r( $this->response->getOutputData(),true));
+            Logger::trace('Output' . "\n" . print_r( $this->response->getOutputData(),true));
 
 
         // Ablaufzeit für den Inhalt auf aktuelle Zeit setzen.
