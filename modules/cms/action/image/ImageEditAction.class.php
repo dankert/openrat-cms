@@ -9,8 +9,12 @@ class ImageEditAction extends ImageAction implements Method {
 
     public function view() {
 
+		$params = [
+			'output' => 'preview',
+		];
+
 		// MIME-Types aus Datei lesen
-		$this->setTemplateVar( 'preview', Html::url('image','show',$this->image->objectid ) );
+		$this->setTemplateVar( 'preview', Html::url('image','show',$this->image->objectid,$params ) );
     }
 
 

@@ -9,7 +9,9 @@ use util\Html;
 class ImagePreviewAction extends ImageAction implements Method {
 
     public function view() {
-		$params = [];
+		$params = [
+			'output' => 'preview',
+		];
 
 		$valueid = $this->request->getNumber('valueid');
 
