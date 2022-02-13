@@ -68,6 +68,7 @@ class UIOutput extends BaseOutput
     private static function outputTemplate($request, $action, $subaction, $outputData)
     {
 		$outputData += [
+			// the following special data is used in FormComponent for filling the form.
 			'_id'    => $request->id,
 			'_token' => Session::token(),
 		];
