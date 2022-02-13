@@ -66,7 +66,7 @@ class LoginOidcAction extends LoginAction implements Method {
     		throw new \RuntimeException('OpenId-Connect authentication failed',0,$e);
 		}
 
-    	header( 'Location: ./');
+    	$this->addHeader( 'Location','./');
     }
 
 

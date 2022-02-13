@@ -47,28 +47,28 @@ class FileShowAction extends FileAction implements Method {
 
 			$mime_type = File::$MIME_TYPES[$ext];
 
-			header('Content-Type: '.$mime_type );
-			header('Content-Encoding: gzip' );
+			$this->addHeader('Content-Type',$mime_type );
+			$this->addHeader('Content-Encoding','gzip' );
 		}
 		else
 		{
 			// Angabe Content-Type
-			header('Content-Type: '.$generator->getMimeType() );
+			$this->addHeader('Content-Type',$generator->getMimeType() );
 		}
 
-		header('X-File-Id: '   .$this->file->fileid     );
-		header('X-Id: '        .$this->file->objectid   );
+		$this->addHeader('X-File-Id',$this->file->fileid     );
+		$this->addHeader('X-Id'     ,$this->file->objectid   );
 
 		// Image should be displayed inline.
 		// Filename is used if the user agent is saving the file.
-		header('Content-Disposition: inline; filename='.$this->file->filename() );
-		header('Content-Transfer-Encoding: binary' );
-		header('Content-Description: '.$this->file->filename() );
+		$this->addHeader('Content-Disposition'      ,'inline; filename='.$this->file->filename() );
+		$this->addHeader('Content-Transfer-Encoding','binary' );
+		$this->addHeader('Content-Description'      ,$this->file->filename() );
 
 
 		// Groesse des Bildes in Bytes
 		// Der Browser hat so die Moeglichkeit, einen Fortschrittsbalken zu zeigen
-		header('Content-Length: '.$this->file->size );
+		$this->addHeader('Content-Length',$this->file->size );
 
 
 		if	( $this->request->getAlphanum('encoding') == 'base64')

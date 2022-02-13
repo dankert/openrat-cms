@@ -9,11 +9,11 @@ use util\Html;
 class LinkShowAction extends LinkAction implements Method {
 
     public function view() {
-        header('Content-Type: text/html' );
+        $this->addHeader('Content-Type','text/html' );
 
-        header('X-Link-Id: ' .$this->link->linkid );
-        header('X-Id: '      .$this->link->objectid     );
-        header('Content-Description: '.$this->link->filename() );
+        $this->addHeader('X-Link-Id'          ,$this->link->linkid     );
+        $this->addHeader('X-Id'               ,$this->link->objectid   );
+        $this->addHeader('Content-Description',$this->link->filename() );
 
         echo '<html><body>';
         echo '<h1>'.$this->link->filename.'</h1>';

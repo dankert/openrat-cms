@@ -16,7 +16,7 @@ class PageShowAction extends PageAction implements Method {
         // The output is only shown in an iframe, so there is no security impact to the CMS.
         // But if the template is using inline JS or CSS, we would break this with a CSP-header.
 		$pageSettingsConfig =  new Config( $this->page->getTotalSettings() );
-        header('Content-Security-Policy: '.$pageSettingsConfig->get('content-security-policy','') );
+        $this->addHeader('Content-Security-Policy',$pageSettingsConfig->get('content-security-policy','') );
 
 		$this->page->load();
 
@@ -28,11 +28,11 @@ class PageShowAction extends PageAction implements Method {
 		// HTTP-Header mit Sprachinformation setzen.
 		$language = new Language( $pageContext->languageId);
 		$language->load();
-		header('Content-Language: '.$language->isoCode);
+		$this->addHeader('Content-Language',$language->isoCode);
 
 		$generator = new PageGenerator( $pageContext );
 
-		header('Content-Type: '.$generator->getMimeType().'; charset=UTF-8' );
+		$this->addHeader('Content-Type',$generator->getMimeType().'; charset=UTF-8' );
 
 
 		$template = new Template( $this->page->templateid );

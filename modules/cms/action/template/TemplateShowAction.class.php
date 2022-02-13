@@ -17,7 +17,7 @@ class TemplateShowAction extends TemplateAction implements Method {
 		$templatemodel = new TemplateModel($this->template->templateid, $modelId);
 		$templatemodel->load();
 
-		header('Content-Type: '.$templatemodel->mimeType().'; charset=UTF-8' );
+		$this->addHeader('Content-Type',$templatemodel->mimeType().'; charset=UTF-8' );
 		$text = $templatemodel->src;
 	
 		foreach( $this->template->getElementIds() as $elid )

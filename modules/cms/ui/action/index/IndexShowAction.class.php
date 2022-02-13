@@ -75,7 +75,7 @@ class IndexShowAction extends IndexAction implements Method {
 
 		$this->setTemplateVar('favicon_url', C::subset('theme')->get('favicon','modules/cms/ui/themes/default/images/openrat-logo.ico') );
 
-        $vars = $this->getOutputData();
+        $vars = $this->getResponse()->getOutputData();
         $this->setTemplateVar( 'notices',$vars['notices'] ); // will be extracted in the included template file.
 		$this->setTemplateVar( 'charset','UTF-8' );
 

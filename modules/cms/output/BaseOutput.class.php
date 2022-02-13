@@ -4,6 +4,7 @@ namespace cms\output;
 
 use BadMethodCallException;
 use cms\action\RequestParams;
+use cms\action\Response;
 use cms\base\Language as L;
 use cms\Dispatcher;
 use Exception;
@@ -19,6 +20,13 @@ use util\exception\SecurityException;
  */
 abstract class BaseOutput implements Output
 {
+	/**
+	 * Outputting the data to the client.
+	 * Must be overwritten by subclasses.
+	 * @param $request Request
+	 * @param $data data data array
+	 * @return void
+	 */
 	abstract protected function outputData($request, $data);
 
 	/**
@@ -26,7 +34,8 @@ abstract class BaseOutput implements Output
 	 */
 	public function execute()
     {
-		$request = new RequestParams();
+		$request  = new RequestParams();
+		$response = new Response();
 
 		try {
 			$this->beforeAction( $request );
@@ -36,11 +45,12 @@ abstract class BaseOutput implements Output
 				$request->isUIAction = true;
 
 			$dispatcher = new Dispatcher();
-			$dispatcher->request = $request;
+			$dispatcher->setRequestAndResponse( $request,$response );
 
-			$data = $dispatcher->doAction();      // calling the action ...
+			$dispatcher->doAction();      // calling the action ...
+			$response->setHTTPHeader();
 
-			$this->outputData( $request,$data );  // ... and output the data
+			$this->outputData( $request,$response->getOutputData() );  // ... and output the data
 
 		} catch (BadMethodCallException $e) {
 			// Action-Method does not exist.

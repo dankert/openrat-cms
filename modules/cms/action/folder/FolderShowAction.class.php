@@ -11,11 +11,11 @@ class FolderShowAction extends FolderAction implements Method {
     public function view() {
 
         // Angabe Content-Type
-        header('Content-Type: text/html' );
+        $this->addHeader('Content-Type','text/html' );
 
-        header('X-Folder-Id: '   .$this->folder->folderid );
-        header('X-Id: '         .$this->folder->objectid       );
-        header('Content-Description: '.$this->folder->filename() );
+        $this->addHeader('X-Folder-Id'        ,$this->folder->folderid   );
+        $this->addHeader('X-Id'               ,$this->folder->objectid   );
+        $this->addHeader('Content-Description',$this->folder->filename() );
 
         echo '<html><body>';
         echo '<h1>'.$this->folder->filename.'</h1>';

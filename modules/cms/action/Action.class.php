@@ -40,14 +40,12 @@ abstract class Action
 	abstract function checkAccess();
 
 
-	protected $errors  = [];
-	protected $notices = [];
-	protected $output  = [];
-	protected $status  = Action::NOTICE_OK;
-	protected $success = true;
-
-	protected $templateVars = [
-	];
+	/**
+	 * The Response to the actual request.
+	 *
+	 * @var Response
+	 */
+	public $response;
 
 	/**
 	 * Current user.
@@ -57,7 +55,7 @@ abstract class Action
 	public $currentUser;
 
 	/**
-	 * Request
+	 * Request.
 	 *
 	 * @var RequestParams
 	 */
@@ -76,6 +74,7 @@ abstract class Action
 	public function __construct()
 	{
 		$this->currentUser = Session::getUser();
+		$this->response    = new Response();
 	}
 
 
@@ -88,7 +87,7 @@ abstract class Action
 	 */
 	protected function setTemplateVar($varName, $value)
 	{
-		$this->output[ $varName ] = $value;
+		$this->response->addOutput( $varName, $value );
 	}
 
 
@@ -99,9 +98,19 @@ abstract class Action
 	 */
 	protected function setTemplateVars($varList)
 	{
-		$this->output += $varList;
+		$this->response->addOutputList( $varList );
 	}
 
+
+	/**
+	 * Adding a HTTP header.
+	 *
+	 * @param $name
+	 * @param $value
+	 */
+	protected function addHeader( $name, $value ) {
+		$this->response->addHeader( $name, $value );
+	}
 
 	/**
 	 * F�gt einen Validierungsfehler hinzu.
@@ -114,7 +123,7 @@ abstract class Action
 		if ( ! empty($message) )
 			$this->addErrorFor( null, $message, $vars );
 
-		$this->errors[] = $name;
+		$this->response->addError( $name );
 	}
 
 
@@ -173,58 +182,13 @@ abstract class Action
 			$name = '';
 		}
 
-		$this->addNotice($type,$id,$name, $key, $noticeType, $vars, $message);
+		$this->response->addNotice($type,$id,$name, $key, $noticeType, $vars, $message);
 	}
 
 
-	/**
-	 * F�gt ein Meldung hinzu.
-	 *
-	 * @param String $type Typ des Objektes, zu dem diese Meldung geh�rt.
-	 * @param $id
-	 * @param String $name Name des Objektes, zu dem diese Meldung geh�rt.
-	 * @param String $text Textschl�ssel der Fehlermeldung (optional)
-	 * @param String $status Einer der Werte Action::NOTICE_(OK|WARN|ERROR)
-	 * @param array $vars Variablen f�r den Textschl�ssel
-	 * @param string|array $log Weitere Hinweistexte f�r diese Meldung.
-	 */
-	private function addNotice($type, $id, $name, $text, $status = Action::NOTICE_OK, $vars = array(), $log = array())
-	{
-		$this->status  = ($status == Action::NOTICE_ERROR) ? Action::NOTICE_ERROR : $status;
-		$this->success = $this->success && $status != Action::NOTICE_ERROR;
 
-		if ( is_array($log) )
-			$log = implode("\n",$log);
-
-		$vars = (array) $vars;
-
-		$this->notices[] = [
-			'type'   => $type,
-			'id'     => $id  ,
-			'name'   => $name,
-			'key'    => $text,
-			'vars'   => $vars,
-			'text'   => L::lang($text, $vars),
-			'log'    => $log ,
-			'status' => $status];
-	}
-
-
-	/**
-	 * Getting the output data.
-	 *
-	 * @return array[]
-	 */
-	public function getOutputData()
-	{
-		return [
-			'output'        => $this->output,  // output data
-			'notices'       => $this->notices, // notices
-			'errors'        => $this->errors,  // fieldnames with validation errors
-			'status'        => $this->status,  // notice status
-			'notice_status' => $this->status,  // same as above, historical reasons
-			'success'       => $this->success, // success, true if there are no errors and no notices with status error.
-		];
+	public function getResponse() {
+		return $this->response;
 	}
 
 
@@ -298,18 +262,18 @@ abstract class Action
 		$etag         = '"' . base_convert($time, 10, 36) . '"'; // a short representation of the unix timestamp.
 
 		// Header senden
-		header('Expires: '       . $expires);
-		header('Last-Modified: ' . $lastModified);
-		header('ETag: '          . $etag);
+		$this->addHeader('Expires'       , $expires);
+		$this->addHeader('Last-Modified' , $lastModified);
+		$this->addHeader('ETag'          , $etag);
 
 		// Die vom Interpreter sonst automatisch gesetzten
 		// Header uebersteuern
-		header('Cache-Control: must-revalidate');
-		header('Pragma:');
+		$this->addHeader('Cache-Control','must-revalidate');
+		$this->addHeader('Pragma'       ,'');
 
 		// See if the client has provided the required headers
 		$if_modified_since = isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) ? stripslashes($_SERVER['HTTP_IF_MODIFIED_SINCE']) : false;
-		$if_none_match = isset($_SERVER['HTTP_IF_NONE_MATCH']) ? stripslashes($_SERVER['HTTP_IF_NONE_MATCH']) : false;
+		$if_none_match     = isset($_SERVER['HTTP_IF_NONE_MATCH']    ) ? stripslashes($_SERVER['HTTP_IF_NONE_MATCH'    ]) : false;
 
 		// Bug in Apache 2.2, mod_deflat adds '-gzip' to E-Tag
 		if (substr($if_none_match, -6) == '-gzip"')
@@ -326,23 +290,8 @@ abstract class Action
 			return;
 
 		// Der entfernte Browser bzw. Proxy holt die Seite nun aus seinem Cache
-		header('HTTP/1.0 304 Not Modified');
+		$this->addHeader('HTTP/1.0 304 Not Modified');
 		exit;  // Sofortiges Skript-Ende
-	}
-
-
-	/**
-	 * @param $max int max Anzahl der Sekunden, die die Seite im Browsercache bleiben darf
-	 */
-	protected function maxAge($max = 3600)
-	{
-		// Die Header "Last-Modified" und "ETag" wurden bereits in der
-		// Methode "lastModified()" gesetzt.
-
-		header('Expires: ' . substr(date('r', time() - date('Z') + $max), 0, -5) . 'GMT');
-		header('Pragma: '); // 'Pragma' ist Bullshit und
-		// wird von den meisten Browsern ignoriert.
-		header('Cache-Control: public, max-age=' . $max . ", s-maxage=" . $max);
 	}
 
 

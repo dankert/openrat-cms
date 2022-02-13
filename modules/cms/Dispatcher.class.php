@@ -8,6 +8,7 @@ namespace cms;
 use BadMethodCallException;
 use cms\action\Action;
 use cms\action\RequestParams;
+use cms\action\Response;
 use cms\auth\Auth;
 use cms\auth\InternalAuth;
 use cms\base\Configuration;
@@ -51,13 +52,16 @@ class Dispatcher
     /**
      * @var RequestParams
      */
-    public $request;
+    private $request;
+
+	/**
+	 * @var Response
+	 */
+	private $response;
 
     /**
      * Vollständige Abarbeitug einer Aktion.
      * Führt die gesamte Abarbeitung einer Aktion durch, incl. Datenbank-Transaktionssteuerung.
-     *
-     * @return array data for the client
      */
     public function doAction()
     {
@@ -105,8 +109,7 @@ class Dispatcher
 		$this->checkLogin();
 
         try{
-
-            $result = $this->callActionMethod();
+            $this->callActionMethod();
         }
         catch(Exception $e)
         {
@@ -127,21 +130,25 @@ class Dispatcher
         $this->commitDatabaseTransaction();
 
         if  ( DEVELOPMENT )
-            Logger::trace('Output' . "\n" . print_r($result, true));
-
-        // Weitere Variablen anreichern.
-        $result['session'] = array('name' => session_name(), 'id' => session_id(), 'token' => Session::token());
-        $result['version'] = Startup::VERSION;
-        $result['api']     = Startup::API_LEVEL;
-        $result['output']['_token'] = Session::token();
-        $result['output']['_id'   ] = $this->request->id;
+            Logger::info('Output' . "\n" . print_r( $this->response->getOutputData(),true));
 
 
         // Ablaufzeit für den Inhalt auf aktuelle Zeit setzen.
-        header('Expires: ' . substr(date('r', time() - date('Z')), 0, -5) . 'GMT', false);
-
-        return $result;
+		if   ( !$this->response->hasHeader('Expires') )
+        	$this->response->addHeader('Expires', substr(date('r', time() - date('Z')), 0, -5) . 'GMT', false);
     }
+
+
+	/**
+	 * @param $request RequestParams
+	 * @param $response Response
+	 */
+	public function setRequestAndResponse($request, $response)
+	{
+		$this->request  = $request;
+		$this->response = $response;
+	}
+
 
 
 	/**
@@ -318,7 +325,7 @@ class Dispatcher
     /**
      * Aufruf der Action-Methode.
      *
-     * @return array Vollständige Rückgabe aller Daten als assoziatives Array
+     * @return Response Vollständige Rückgabe aller Daten
      */
     private function callActionMethod()
     {
@@ -355,6 +362,7 @@ class Dispatcher
         $do = new $class;
 
         $do->request         = $this->request;
+        $do->response        = $this->response;
         $do->init();
 
         $do->checkAccess();
@@ -397,8 +405,6 @@ class Dispatcher
         // The action is able to change its method name.
         $this->request   = $do->request;
         $this->request->action = $action;
-
-		return $do->getOutputData();
     }
 
     /**
