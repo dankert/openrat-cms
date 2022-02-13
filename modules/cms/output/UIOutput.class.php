@@ -16,7 +16,7 @@ use \util\exception\ObjectNotFoundException;
 use util\exception\UIException;
 use util\exception\SecurityException;
 use template_engine\engine\TemplateEngine;
-use util\text\TextMessage;
+use util\Session;use util\text\TextMessage;
 
 
 /**
@@ -67,6 +67,11 @@ class UIOutput extends BaseOutput
 	 */
     private static function outputTemplate($request, $action, $subaction, $outputData)
     {
+		$outputData += [
+			'_id'    => $request->id,
+			'_token' => Session::token(),
+		];
+
         $templateFile = Startup::MODULE_DIR . 'cms/ui/themes/default/html/views/' . $action.'/'.$subaction . '.php';
 
         if   ( DEVELOPMENT )

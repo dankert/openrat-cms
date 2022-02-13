@@ -40,10 +40,7 @@ class Response
 	public function getOutputData()
 	{
 		return [
-			'output'        => $this->output + [
-				'_token' => Session::token(),
-				//'_id'    => $this->request->id,
-			],
+			'output'        => $this->output,
 			'notices'       => $this->notices, // notices
 			'errors'        => $this->errors,  // fieldnames with validation errors
 			'status'        => $this->status,  // notice status
