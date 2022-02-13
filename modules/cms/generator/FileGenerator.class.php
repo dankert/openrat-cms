@@ -44,7 +44,7 @@ class FileGenerator extends BaseGenerator
 	 * @param $file File
 	 * @return string
 	 */
-	private function filterValue( $file )
+	protected function filterValue( $file )
 	{
 		$contentId = $file->contentid;
 

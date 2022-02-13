@@ -8,10 +8,8 @@ namespace cms\generator;
 /**
  * The file history context, necessary for generating and publishing a file.
  */
-class FileHistoryContext extends BaseContext
+class FileHistoryContext extends FileContext
 {
-	public $sourceObjectId;
-
 	/**
 	 * value id.
 	 *
@@ -27,23 +25,12 @@ class FileHistoryContext extends BaseContext
 	 */
 	public function __construct($sourceObjectId,$valueId )
 	{
-		$this->sourceObjectId = $sourceObjectId;
+		parent::__construct($sourceObjectId,Producer::SCHEME_PREVIEW);
 		$this->valueId        = $valueId;
-		$this->scheme = Producer::SCHEME_PREVIEW;
 	}
 
 	public function getCacheKey()
 	{
-		return [
-			'filehistory',
-			$this->sourceObjectId,
-			$this->valueId
-		];
-	}
-
-
-	public function getObjectId()
-	{
-		return $this->sourceObjectId;
+		return array_merge( parent::getCacheKey(),['history',$this->valueId] );
 	}
 }

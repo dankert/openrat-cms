@@ -570,6 +570,7 @@ SQL
 			$this->size  = $row['size'];
 		}
 
+		// Because we are reading directly from the value table we must do base64-encoding here.
 		$storeValueAsBase64 = DB::get()->conf['base64'];
 
 		if	( $storeValueAsBase64 )
