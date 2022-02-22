@@ -7,7 +7,9 @@ use cms\base\DB as Db;
 use cms\base\Startup;
 use cms\model\User;
 use language\Messages;
+use logger\Logger;
 use LogicException;
+use security\OTP;
 use security\Password;
 use util\mail\Mail;
 
@@ -133,14 +135,35 @@ SQL
 		if ($row_user['totp'] == 1) {
 			$user = new User($row_user['id']);
 			$user->load();
-			if (Password::getTOTPCode($user->otpSecret) == $token)
+			if ( DEVELOPMENT )
+				Logger::info("valid TOTP tokens are \n".print_r(OTP::getValidTOTPCodes($user->otpSecret),true));
+			if ( in_array( $token, OTP::getValidTOTPCodes($user->otpSecret) ) )
 				return Auth::STATUS_SUCCESS;
 			else
 				return Auth::STATUS_FAILED + Auth::STATUS_TOKEN_NEEDED;
 		}
-
-		if ($row_user['hotp'] == 1) {
-			throw new LogicException('HOTP not yet implemented.');
+		elseif ($row_user['hotp'] == 1) {
+			$user = new User($row_user['id']);
+			$user->load();
+			$validHOTPCodes = OTP::getValidHOTPCodes($user->otpSecret,$user->hotpCount);
+			if ( DEVELOPMENT )
+				Logger::info("valid HOTP tokens are \n".print_r($validHOTPCodes,true));
+			if ( in_array( $token, $validHOTPCodes ) ) {
+				// Synchronize the internal counter
+				$newCount = array_flip($validHOTPCodes)[$token]+1;
+				$sql = Db::sql(<<<SQL
+UPDATE {{user}}
+ SET hotp_counter={count}
+ WHERE name={name}
+SQL
+				);
+				$sql->setString('name' ,$username );
+				$sql->setInt   ('count',$newCount );
+				$sql->execute();
+				return Auth::STATUS_SUCCESS;
+			}
+			else
+				return Auth::STATUS_FAILED + Auth::STATUS_TOKEN_NEEDED;
 		}
 
 		// Benutzer wurde erfolgreich authentifiziert.

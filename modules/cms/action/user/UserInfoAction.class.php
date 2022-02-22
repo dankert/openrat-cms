@@ -6,6 +6,7 @@ use cms\base\Configuration;
 use cms\base\Startup;
 use cms\model\Group;
 use security\Base2n;
+use security\OTP;
 use security\Password;
 
 
@@ -48,7 +49,7 @@ class UserInfoAction extends UserAction implements Method {
 
         $this->setTemplateVar('totpSecretUrl',"otpauth://totp/{$issuer}:{$account}?secret={$secret}&issuer={$issuer}");
 		$this->setTemplateVar('hotpSecretUrl',"otpauth://hotp/{$issuer}:{$account}?secret={$secret}&issuer={$issuer}&counter={$counter}");
-		$this->setTemplateVar('totpToken'    , Password::getTOTPCode($this->user->otpSecret));
+		$this->setTemplateVar('totpToken'    , OTP::getTOTPCode($this->user->otpSecret));
     }
 
 
