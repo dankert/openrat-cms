@@ -69,6 +69,17 @@ export class OQuery {
 	};
 
 
+	/**
+	 * 'length' property is the size of all nodes in this object.
+	 * this property is readonly.
+	 *
+	 * @return size of all elements
+	 */
+	get length() {
+		return this.nodes.length;
+	}
+
+
 	parent() {
 		return this.createNew( this.nodes.map(node => node.parentNode ).filter( node => node !== null ) );
 	};

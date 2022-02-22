@@ -60,7 +60,15 @@ html {
 
     .or {
 
-        &-loader {
+      &-qrcode {
+          &-value {
+            background-color: @cms-dialog-background-color;
+            fill: @cms-image-color;
+            .box-shadow(3px, 3px, 10px, @cms-dialog-title-background-color);
+          }
+      }
+
+      &-loader {
           border-color: @cms-inactive-background-color;
           border-top-color: @cms-image-color;
         }

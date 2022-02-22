@@ -28,6 +28,9 @@ class ProfileUserinfoAction extends ProfileAction implements Method {
 
 		// Theme base color for smartphones colorizing their status bar.
 		$this->setTemplateVar('theme-color', UIUtils::getColorHexCode($themeStyle->getThemeColor()));
+
+		// Output all theme colors
+		$this->setTemplateVar('theme'     , $themeStyle->getProperties() );
     }
 
 

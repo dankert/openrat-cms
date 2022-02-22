@@ -6,25 +6,28 @@ export default function(element ) {
 
 		let Kjua = (await import("../../../../cms/ui/themes/default/script/tools/kjua.min.js")).default;
 
-		let wrapper = $('<div class="or-info-popup or-qrcode-value"></div>');
+		let wrapper = $.create('div').addClass('info-popup').addClass('qrcode-value');
 
 		let element = Kjua( {
-			text     : text,
+			text     : value,
 			render   : 'svg',
-			mode     :'label',
-			label    : text,
+			mode     :'plain',
+			label    : '',
 			rounded  : 1,
-			fill     : 'currentColor',
-		    back     : 'black'
+			fill     : null,
+		    back     : null,
 		} );
 
 
 		// Title is disturbing the qr-code. Do not inherit it.
 		wrapper.attr('title','');
-		wrapper.append( element );
+
+		// OQuery is not supporting appending SVGs.
+		// We must append the SVG to the native HTML element.
+		wrapper.get(0).appendChild( element );
 
 		if   ( text )
-			wrapper.append('<small class="or-qrcode-text">' + text + '</small>');
+			wrapper.append( $.create('small').addClass('qrcode-text').text(text) );
 
 		return wrapper;
 	}
@@ -32,22 +35,22 @@ export default function(element ) {
 
 	$(element).find('.or-qrcode').click( async function() {
 
-		let $element = $(this);
+		let $qrCodeElement = $(this);
 
 		// Create QRCode on first click.
-		if   ( ! $element.children().length ) {
+		if   ( ! $qrCodeElement.children('.or-info-popup').length ) {
 
-			let qrcodeValue = $(element).attr('data-qrcode');
-			let qrcodeText  = $(element).attr('data-qrcode-text');
+			let qrcodeValue = $qrCodeElement.data('qrcode');
+			let qrcodeText  = $qrCodeElement.data('qrcode-text');
 
-			if   ( $element.children().length > 0 )
+			if   ( $qrCodeElement.children().length > 0 )
 				return;
 
-			$element.append( await createQRCode(qrcodeValue,qrcodeText) );
+			$qrCodeElement.append( await createQRCode(qrcodeValue,qrcodeText) );
 		}
 
-		$element.toggleClass('info--open');
-    	$element.toggleClass('btn--is-active');
+		$qrCodeElement.toggleClass('info--open');
+    	$qrCodeElement.toggleClass('btn--is-active');
 	});
 
 };
