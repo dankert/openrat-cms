@@ -48,9 +48,13 @@ export default function(element ) {
         table.addClass('loader');
 
         setTimeout( () => {
-            table.find('tr:not(.or-table-header)').filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(filterExpression) > -1)
-            })
+            table.find('tr:not(.or-table-header)').each(function () {
+                let $row = $(this);
+				if   ( $row.text().toLowerCase().indexOf(filterExpression) > -1)
+					$row.removeClass('-off');
+				else
+					$row.addClass('-off');
+			} );
             table.removeClass('loader');
         }, 50);
 

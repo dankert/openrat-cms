@@ -80,10 +80,44 @@ export class OQuery {
 	}
 
 
-	parent() {
-		return this.createNew( this.nodes.map(node => node.parentNode ).filter( node => node !== null ) );
+	/**
+	 * Reads the direct parent of all nodes, optionally filtered by a selector.
+	 * @param selector
+	 * @return {OQuery}
+	 */
+	parent( selector = null ) {
+		return this.createNew(
+			this.nodes.map(node => node.parentElement )
+				.filter( node => !!node ) // Filter non-existent parents
+				.filter( node => !selector || node.matches(selector) )
+		);
 	};
 
+
+	/**
+	 * Reads all parents of all nodes, optionally filtered by a selector.
+	 *
+	 * @param selector
+	 * @return {OQuery}
+	 */
+	parents( selector = null ) {
+		let parents = [];
+		for( let node of this.nodes )
+			while (node) {
+				node = node.parentElement;
+				if   ( node && (!selector || node.matches(selector)) )
+					parents.unshift(node);
+			}
+		return this.createNew( parents );
+	};
+
+
+	/**
+	 * reads the closest anchestor that meets the selector.
+	 *
+	 * @param selector
+	 * @return {OQuery}
+	 */
 	closest( selector ) {
 		return this.createNew( this.nodes.map(node => node.closest( selector ) ).filter( node => node !== null ) );
 	};
@@ -91,7 +125,7 @@ export class OQuery {
 	children( selector ) {
 		let result = [];
 		for( let node of this.nodes )
-			result = result.concat( Array.from(node.children).filter( node => selector ? node.matches(selector) : true ) );
+			result = result.concat( Array.from(node.children).filter( node => !selector || node.matches(selector) ) );
 		return this.createNew( result );
 	};
 
@@ -199,6 +233,17 @@ export class OQuery {
 		for( let node of this.nodes )
 			if   ( handler.call(node,idx,node) === false )
 				break;
+
+		return this;
+	}
+
+	toggle( handler ) {
+		let idx = -1;
+		for( let node of this.nodes )
+			if   ( handler.call(node,idx,node) === false )
+				node.style.display = 'none';
+			else
+				node.style.display = '';
 
 		return this;
 	}
