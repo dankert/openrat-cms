@@ -165,8 +165,15 @@ export default class Form {
 				this.close();
 			// Async: Window is closed, but the action will be startet now.
 
-        	await this.sendFormData( formData,mode );
-			progressStatus.close();
+			try {
+				await this.sendFormData( formData,mode );
+			}
+			catch( error ) {
+				// no catch logic here, error messages are already displayed.
+			}
+			finally {
+				progressStatus.close();
+			}
 		}
 
     }
