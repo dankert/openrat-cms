@@ -214,6 +214,46 @@ class RequestParams
 
 
 	/**
+	 * @param $varName
+	 * @param $callback
+	 */
+	public function handleText( $varName,$callback ) {
+
+		if   ( $this->hasKey($varName ) )
+			call_user_func( $callback, $this->getText($varName) );
+	}
+
+	/**
+	 * @param $varName
+	 * @param $callback
+	 */
+	public function handleNumber( $varName,$callback ) {
+
+		if   ( $this->hasKey($varName ) )
+			call_user_func( $callback, $this->getNumber($varName) );
+	}
+
+	/**
+	 * @param $varName
+	 * @param $callback
+	 */
+	public function handleBool( $varName,$callback ) {
+
+		if   ( $this->hasKey($varName ) )
+			call_user_func( $callback, in_array( $this->getText($varName),['1','true','on']) );
+	}
+
+	/**
+	 * @param $varName
+	 * @param $callback
+	 */
+	public function handleBoolDefaultFalse( $varName,$callback ) {
+
+		call_user_func( $callback, in_array( $this->getText($varName),['1','true','on']) );
+	}
+
+
+	/**
 	 * Gets the value of the request parameter.
 	 *
 	 * @param $nameOfRequestParameter

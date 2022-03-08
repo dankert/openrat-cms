@@ -42,26 +42,56 @@ class UserPropAction extends UserAction implements Method {
 		        
     }
 
+
+	/**
+	 * Save the user properties.
+	 */
     public function post() {
 
-		if	( ! $this->request->getText('name') )
-            throw new \util\exception\ValidationException( 'name');
+		$this->request->handleText('name', function($name) {
+			$this->user->name = $name;
+		} );
 
-        // Benutzer speichern
-        $this->user->name     = $this->request->getText('name'    );
-        $this->user->fullname = $this->request->getText('fullname');
-        $this->user->isAdmin  = $this->request->has('is_admin');
-        $this->user->tel      = $this->request->getText('tel'     );
-        $this->user->desc     = $this->request->getText('desc'    );
-        $this->user->language = $this->request->getText('language');
-        $this->user->timezone = $this->request->getText('timezone');
-        $this->user->hotp     = $this->request->has('hotp'    );
-        $this->user->totp     = $this->request->has('totp'    );
+		$this->request->handleText('fullname', function($fullname) {
+			$this->user->fullname = $fullname;
+		});
+
+		$this->request->handleBoolDefaultFalse('is_admin', function($isAdmin) {
+			$this->user->isAdmin = $isAdmin;
+		});
+
+		$this->request->handleText( 'tel',function($tel) {
+			$this->user->tel      = $tel;
+		});
+
+		$this->request->handleText( 'desc',function($desc) {
+			$this->user->desc      = $desc;
+		});
+
+		$this->request->handleText( 'language',function($language) {
+			$this->user->language      = $language;
+		});
+
+		$this->request->handleText( 'timezone',function($timezone) {
+			$this->user->timezone      = $timezone;
+		});
+
+		$this->request->handleText( 'hotp',function($hotp) {
+			$this->user->hotp      = $hotp;
+		});
+
+		$this->request->handleText( 'totp',function($value) {
+			$this->user->totp      = $value;
+		});
 
         if	( Configuration::get(['security','user','show_admin_mail']) )
-            $this->user->mail = $this->request->getText('mail'    );
+			$this->request->handleText( 'mail',function($value) {
+				$this->user->mail      = $value;
+			});
 
-        $this->user->style    = $this->request->getText('style'   );
+		$this->request->handleText( 'style',function($value) {
+			$this->user->style      = $value;
+		});
 
         $this->user->persist();
         $this->addNoticeFor($this->user,Messages::SAVED);
