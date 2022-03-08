@@ -531,8 +531,8 @@ SQL
 		$sql->setString ( 'desc'    ,$this->desc    );
 		$sql->setString ( 'mail'    ,$this->mail    );
 		$sql->setString ( 'style'   ,$this->style   );
-		$sql->setString ( 'language',$this->language);
-		$sql->setString ( 'timezone',$this->timezone);
+		$sql->setStringOrNull( 'language',$this->language);
+		$sql->setStringOrNull( 'timezone',$this->timezone);
 		$sql->setBoolean( 'isAdmin' ,$this->isAdmin );
 		$sql->setBoolean( 'totp'    ,$this->totp    );
 		$sql->setBoolean( 'hotp'    ,$this->hotp    );

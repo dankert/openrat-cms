@@ -4,7 +4,7 @@ namespace cms\output;
 
 use BadMethodCallException;
 use cms\action\RequestParams;
-use cms\base\Language as L;
+use cms\base\Configuration;use cms\base\Language as L;
 use cms\base\Startup;use cms\Dispatcher;
 use cms\output\BaseOutput;
 use Exception;
@@ -57,8 +57,39 @@ class UIOutput extends BaseOutput
     }
 
 
+
 	/**
-	 * Executes and outputs a HTML template.
+	 * Sets the timezone so that dates in the UI are displayed in the correct timezone.
+	 */
+	protected static function setTimezone() {
+
+		if   ( $timezone = self::getCustomTimezone() ) {
+
+			date_default_timezone_set( $timezone );
+
+			if   ( DEVELOPMENT )
+				header('X-OR-custom-timezone: '.$timezone );
+		}
+
+		// Default: Unchanged, so /etc/timezone or /etc/localtime is used by PHP.
+	}
+
+
+	/**
+	 * Gets the custom timezone of the user or the configured timezone.
+	 */
+	protected static function getCustomTimezone() {
+
+		$user = Session::getUser(); // the user timezone has precedence.
+		if   ( $user && $user->timezone ) // user is set and a timezone is set
+			return( $user->timezone );
+		else
+			return Configuration::subset('ui')->get('timezone');
+	}
+
+
+	/**
+	 * Executes and outputs an HTML template.
 	 *
 	 * @param $request RequestParams
 	 * @param $action string action
@@ -75,8 +106,14 @@ class UIOutput extends BaseOutput
 
         $templateFile = Startup::MODULE_DIR . 'cms/ui/themes/default/html/views/' . $action.'/'.$subaction . '.php';
 
-        if   ( DEVELOPMENT )
-            header('X-OR-Template: '.$templateFile);
+        if   ( DEVELOPMENT ) {
+			header('X-OR-Template: '.$templateFile               );
+
+			echo "<!--  \n".var_export($outputData,true)."\n-->";
+		}
+
+
+		self::setTimezone();
 
         $engine = new TemplateRunner();
         //$engine->request = $request;

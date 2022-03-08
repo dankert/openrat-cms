@@ -11,13 +11,6 @@ function component_date($time )
 		echo Output::lang(Messages::UNKNOWN );
 	else
 	{
-		// Benutzereinstellung 'Zeitzonen-Offset' auswerten.
-		if	( Cookie::has(Action::COOKIE_TIMEZONE_OFFSET) )
-		{
-			$time -= (int)date('Z');
-			$time += ( ((int)Cookie::get(Action::COOKIE_TIMEZONE_OFFSET))*60);
-		}
-	
 		echo '<span class="or-table-sort-value">'.str_pad($time, 20, "0", STR_PAD_LEFT).'</span>'; // For sorting a table.
 
 		echo '<time title="';

@@ -30,7 +30,7 @@ class UserPropAction extends UserAction implements Method {
 
 		$this->setTemplateVar( 'allstyles',$this->user->getAvailableStyles() );
 		
-	    $this->setTemplateVar('timezone_list',timezone_identifiers_list() );
+	    $this->setTemplateVar('timezone_list',array_combine(timezone_identifiers_list(),timezone_identifiers_list() ));
 	    
         $languages = Messages::$AVAILABLE_LANGUAGES;
         foreach($languages as $id=>$name)

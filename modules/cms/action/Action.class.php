@@ -315,12 +315,6 @@ abstract class Action
 	const COOKIE_DB_ID    = 'or_dbid';
 
 	/**
-	 * Timezone offset
-	 */
-	const COOKIE_TIMEZONE_OFFSET = 'or_timezone_offset';
-
-
-	/**
 	 * Sets a cookie.
 	 *
 	 * @param $name string cookie name
