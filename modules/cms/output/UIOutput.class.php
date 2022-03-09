@@ -83,8 +83,10 @@ class UIOutput extends BaseOutput
 		$user = Session::getUser(); // the user timezone has precedence.
 		if   ( $user && $user->timezone ) // user is set and a timezone is set
 			return( $user->timezone );
-		else
-			return Configuration::subset('ui')->get('timezone');
+		elseif ( $configuredTimezone = Configuration::subset('ui')->get('timezone') )
+			return $configuredTimezone; // Timezone from configuration
+
+		return  null;
 	}
 
 
@@ -106,14 +108,13 @@ class UIOutput extends BaseOutput
 
         $templateFile = Startup::MODULE_DIR . 'cms/ui/themes/default/html/views/' . $action.'/'.$subaction . '.php';
 
-        if   ( DEVELOPMENT ) {
+		self::setTimezone();
+
+		if   ( DEVELOPMENT ) {
 			header('X-OR-Template: '.$templateFile               );
 
 			echo "<!--  \n".var_export($outputData,true)."\n-->";
 		}
-
-
-		self::setTimezone();
 
         $engine = new TemplateRunner();
         //$engine->request = $request;

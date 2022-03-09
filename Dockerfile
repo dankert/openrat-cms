@@ -17,6 +17,8 @@ ENV DB_TYPE="mysql"     \
     CMS_OPERATOR=""                      \
     CMS_LOG_LEVEL="info"                 \
     CMS_PRODUCTION="true"                \
+    CMS_TIMEZONE=""                      \
+    CMS_LANGUAGE=""                      \
     DOCROOT="/var/www/localhost/cms"
 
 # Configuring apache webserver
@@ -107,6 +109,10 @@ publish:\n\
 application:\n\
 	name: "${env:CMS_NAME}"\n\
 	operator: "${env:CMS_OPERATOR}"\n\
+ui:\n\
+	timezone: "${env:CMS_TIMEZONE}"\n\
+i18n:\n\
+	default: "${env:CMS_LANGUAGE}"\n\
 \n\
 ' >> /etc/openrat.yml
 

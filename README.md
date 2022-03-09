@@ -87,16 +87,18 @@ Be sure to replace the variables.
 
 The following environment variables could be set in the docker container: 
 
-| Name      | Description |   Default |
-| ----------- | ----------- | ------- |
-|DB_TYPE|database type|mysql
-|DB_HOST|database hostname|localhost
-|DB_NAME|database schema|cms
-|DB_USER|database user|
-|DB_PASS|database password|
-|CMS_MOTD|Message of the day|Welcome to dockerized CMS
-|CMS_NAME|Software name|OpenRat CMS (Docker)
-|CMS_OPERATOR|Name of your company|Docker-Host
+| Name         | Description          |   Default |
+|--------------|----------------------| ------- |
+| DB_TYPE      | database type        |mysql
+| DB_HOST      | database hostname    |localhost
+| DB_NAME      | database schema      |cms
+| DB_USER      | database user        |cms
+| DB_PASS      | database password    |\<empty\>
+| CMS_MOTD     | Message of the day   |Welcome to dockerized CMS
+| CMS_NAME     | Software name        |OpenRat CMS (Docker)
+| CMS_OPERATOR | Name of your company |Docker-Host
+| CMS_TIMEZONE | Timezone             |UTC
+| CMS_LANGUAGE | Language             |Browser
 
 
 ### Local installation

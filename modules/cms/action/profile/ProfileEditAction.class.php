@@ -53,7 +53,7 @@ class ProfileEditAction extends ProfileAction implements Method {
 		$this->user->hotp     = $this->request->has('hotp'    );
 		$this->user->totp     = $this->request->has('totp'    );
 		
-		
+		// Overwrite user in session with new settings.
 		Session::setUser( $this->user );
 		
 		$this->user->persist();

@@ -296,11 +296,6 @@ abstract class Action
 
 
 	/**
-	 * Language ISO code.
-	 */
-	const COOKIE_LANGUAGE = 'or_language';
-
-	/**
 	 * Last used username.
 	 */
 	const COOKIE_USERNAME = 'or_username';

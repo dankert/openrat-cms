@@ -285,22 +285,26 @@ class Dispatcher
 
             // Sprache lesen
 			$languages = [];
-			if ( Cookie::has( Action::COOKIE_LANGUAGE))
-				$languages[] = Cookie::get(Action::COOKIE_LANGUAGE);
 
-			$i18nConfig = (new Config($conf))->subset('i18n');
+			if	( $user = Session::getUser() )
+				$languages[] = $user->language; // user language has precedence.
+			else {
+				$i18nConfig = (new Config($conf))->subset('i18n');
 
-			if	( $i18nConfig->is('use_http',true ) )
-                // Die vom Browser angeforderten Sprachen ermitteln
-                $languages = array_merge( $languages,Http::getLanguages() );
+				$languages[] = $i18nConfig->get('default','en');
 
-            // Default-Sprache hinzufuegen.
-            // Wird dann verwendet, wenn die vom Browser angeforderten Sprachen
-            // nicht vorhanden sind
-            $languages[] = $i18nConfig->get('default','en');
-            $languages[] = 'en'; // last fallback.
+				if	( $i18nConfig->is('use_http',true ) )
+					// Die vom Browser angeforderten Sprachen ermitteln
+					$languages = array_merge( $languages,Http::getLanguages() );
+			}
 
-            foreach ($languages as $l) {
+			// Default-Sprache hinzufuegen.
+			// Wird dann verwendet, wenn die vom Browser angeforderten Sprachen
+			// nicht vorhanden sind
+			$languages[] = 'en'; // last fallback.
+
+
+			foreach ($languages as $l) {
                 if (!in_array($l, Messages::$AVAILABLE_LANGUAGES))
                     continue; // language is not available.
 

@@ -67,13 +67,12 @@ class ProfileAction extends BaseAction
      */
     protected function setLanguage($languageISOcode )
     {
+		// Overwrite configuration
         $conf = Session::getConfig();
         $language = new Language();
         $conf['language'] = $language->getLanguage($languageISOcode);
         $conf['language']['language_code'] = $languageISOcode;
-
-        Session::setConfig($conf);
-        $this->setCookie( Action::COOKIE_LANGUAGE,$languageISOcode);
+		Session::setConfig($conf);
     }
 
 
