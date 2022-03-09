@@ -43,27 +43,52 @@ class ProfileEditAction extends ProfileAction implements Method {
 		
 		
     }
+
+
+	/**
+	 * Saving the user profile.
+	 *
+	 * @return void
+	 */
     public function post() {
-		$this->user->fullname = $this->request->getRequiredText('fullname');
-		$this->user->tel      = $this->request->getText('tel'     );
-		$this->user->desc     = $this->request->getText('desc'    );
-		$this->user->style    = $this->request->getText('style'   );
-		$this->user->language = $this->request->getText('language');
-		$this->user->timezone = $this->request->getText('timezone');
-		$this->user->hotp     = $this->request->has('hotp'    );
-		$this->user->totp     = $this->request->has('totp'    );
-		
+
+		$this->request->handleText('fullname',function($value) {
+			$this->user->fullname = $value;
+		});
+
+		$this->request->handleText('tel',function($value) {
+			$this->user->tel = $value;
+		});
+
+		$this->request->handleText('desc',function($value) {
+			$this->user->desc = $value;
+		});
+
+		$this->request->handleText('style',function($value) {
+			$this->user->style = $value;
+		});
+
+		$this->request->handleText('language',function($value) {
+			$this->user->language = $value;
+			$this->setLanguage($value); // Change language immediately
+		});
+
+		$this->request->handleText('timezone',function($value) {
+			$this->user->timezone = $value;
+		});
+
+		$this->request->handleBoolDefaultFalse('hotp',function($value) {
+			$this->user->hotp = $value;
+		});
+
+		$this->request->handleBoolDefaultFalse('totp',function($value) {
+			$this->user->totp = $value;
+		});
+
 		// Overwrite user in session with new settings.
 		Session::setUser( $this->user );
 		
 		$this->user->persist();
 		$this->addNoticeFor( $this->user,Messages::SAVED);
-
-		
-		// Ausgewählte Sprache sofort verwenden.
-		$l = $this->request->getText('language');
-
-		if   ( $l )
-        	$this->setLanguage($l);
     }
 }
