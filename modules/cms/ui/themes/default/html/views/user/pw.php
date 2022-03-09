@@ -30,7 +30,8 @@
                   <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?></h3>
                   <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
                     <label><?php echo O::escapeHtml('') ?>
-                      <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('email') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$email){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+                      <input type="<?php echo O::escapeHtml('checkbox') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$email){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+                      <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('email') ?>" <?php if(@$email){ ?>value="<?php echo O::escapeHtml('1') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
                       <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('user_mail_new_password').'') ?></span>
                     </label>
                   </div>
@@ -41,7 +42,8 @@
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?></h3>
               <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
                 <label><?php echo O::escapeHtml('') ?>
-                  <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('timeout') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$timeout){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+                  <input type="<?php echo O::escapeHtml('checkbox') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$timeout){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+                  <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('timeout') ?>" <?php if(@$timeout){ ?>value="<?php echo O::escapeHtml('1') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
                   <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('user_password_timeout').'') ?></span>
                 </label>
               </div>

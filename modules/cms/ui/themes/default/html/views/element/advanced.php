@@ -39,7 +39,8 @@
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?></h3>
               <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
                 <label><?php echo O::escapeHtml('') ?>
-                  <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('with_icon') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$with_icon){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+                  <input type="<?php echo O::escapeHtml('checkbox') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$with_icon){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+                  <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('with_icon') ?>" <?php if(@$with_icon){ ?>value="<?php echo O::escapeHtml('1') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
                   <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('EL_PROP_WITH_ICON').'') ?></span>
                 </label>
               </div>
@@ -50,7 +51,8 @@
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?></h3>
               <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
                 <label><?php echo O::escapeHtml('') ?>
-                  <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('inherit') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$inherit){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+                  <input type="<?php echo O::escapeHtml('checkbox') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$inherit){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+                  <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('inherit') ?>" <?php if(@$inherit){ ?>value="<?php echo O::escapeHtml('1') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
                   <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('EL_PROP_INHERIT').'') ?></span>
                 </label>
               </div>
@@ -61,7 +63,8 @@
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?></h3>
               <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
                 <label><?php echo O::escapeHtml('') ?>
-                  <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('all_languages') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$all_languages){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+                  <input type="<?php echo O::escapeHtml('checkbox') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$all_languages){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+                  <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('all_languages') ?>" <?php if(@$all_languages){ ?>value="<?php echo O::escapeHtml('1') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
                   <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('EL_PROP_ALL_LANGUAGES').'') ?></span>
                 </label>
               </div>
@@ -72,7 +75,8 @@
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?></h3>
               <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
                 <label><?php echo O::escapeHtml('') ?>
-                  <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('writable') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$writable){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+                  <input type="<?php echo O::escapeHtml('checkbox') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$writable){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+                  <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('writable') ?>" <?php if(@$writable){ ?>value="<?php echo O::escapeHtml('1') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
                   <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('EL_PROP_writable').'') ?></span>
                 </label>
               </div>

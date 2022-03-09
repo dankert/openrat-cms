@@ -34,7 +34,7 @@ class ObjectInheritAction extends ObjectAction implements Method {
 		$baseObject = new Folder( $this->request->getId() );
 		$baseObject->load();
 		
-		if	( ! $this->request->has('inherit') )
+		if	( ! $this->request->isTrue('inherit') )
 		{
 			$this->addWarningFor( $baseObject,Messages::NOTHING_DONE);
 			return;

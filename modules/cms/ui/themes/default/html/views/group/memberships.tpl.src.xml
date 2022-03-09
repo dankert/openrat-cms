@@ -2,21 +2,15 @@
   <form autosave="true">
     <table>
       <row header="true">
-        <column header="true" class="table-column-action" />
         <column header="true">
+			<image action="user"/>
           <text value="${message:name}"/>
         </column>
       </row>
       <list list="${memberships}" extract="true">
         <row class="data">
           <column>
-            <checkbox name="${var}"/>
-          </column>
-          <column>
-            <label for="${var}">
-              <image action="user"/>
-              <text value="${name}"/>
-            </label>
+            <checkbox name="${var}" label="${name}" />
           </column>
         </row>
       </list>

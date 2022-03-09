@@ -50,7 +50,7 @@ class FolderAdvancedAction extends FolderAction implements Method {
 				$list[$id]['date'] = date( \cms\base\Language::lang('DATE_FORMAT'),$o->lastchangeDate );
 				$list[$id]['user'] = $o->lastchangeUser;
 
-				if	( $this->request->has("markall") || $this->request->has('obj'.$id) )
+				if	( $this->request->isTrue("markall") || $this->request->isTrue('obj'.$id) )
 					$this->setTemplateVar('obj'.$id,'1');
 			}
 		}
@@ -137,7 +137,7 @@ class FolderAdvancedAction extends FolderAction implements Method {
 		foreach( $ids as $id )
 		{
 			// Nur, wenn Objekt ausgewaehlt wurde
-			if	( !$this->request->has('obj'.$id) )
+			if	( !$this->request->isTrue('obj'.$id) )
 				continue;
 
 			$o = new BaseObject( $id );
@@ -317,7 +317,7 @@ class FolderAdvancedAction extends FolderAction implements Method {
 
 					case 'delete':
 
-						if	( $this->request->has('confirm') )
+						if	( $this->request->isTrue('confirm') )
 						{
 							switch( $o->getType() )
 							{

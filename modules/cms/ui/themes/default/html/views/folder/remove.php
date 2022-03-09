@@ -21,11 +21,13 @@
             <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?></h3>
             <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
               <label><?php echo O::escapeHtml('') ?>
-                <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('delete') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$delete){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+                <input type="<?php echo O::escapeHtml('checkbox') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$delete){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+                <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('delete') ?>" <?php if(@$delete){ ?>value="<?php echo O::escapeHtml('1') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
                 <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('DELETE').'') ?></span>
               </label>
               <label><?php echo O::escapeHtml('') ?>
-                <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('withChildren') ?>" disabled="<?php echo O::escapeHtml('disabled') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$withChildren){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+                <input type="<?php echo O::escapeHtml('checkbox') ?>" disabled="<?php echo O::escapeHtml('disabled') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$withChildren){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+                <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('withChildren') ?>" <?php if(@$withChildren){ ?>value="<?php echo O::escapeHtml('1') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
                 <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('DELETE_WITH_CHILDREN').'') ?></span>
               </label>
             </div>

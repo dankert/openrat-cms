@@ -151,9 +151,9 @@ class PageAllAction extends PageAction implements Method {
 					break;
 
 				case Element::ELEMENT_TYPE_LONGTEXT:
-					if ($this->request->has('format'))
+					if ($requestFormat = $this->request->getText('format'))
 						// Individual format from request.
-						$format = $this->request->getNumber('format');
+						$format = $requestFormat;
 					elseif ($value->format != null)
 						$format = $value->format;
 					else
@@ -244,7 +244,7 @@ class PageAllAction extends PageAction implements Method {
 			// Inhalt sofort freigegeben, wenn
 			// - Recht vorhanden
 			// - Freigabe gewuenscht
-			$value->publish = $this->page->hasRight(Permission::ACL_RELEASE) && $this->request->has('release');
+			$value->publish = $this->page->hasRight(Permission::ACL_RELEASE) && $this->request->isTrue('release');
 
 			// Up-To-Date-Check
 			$content = new Content( $pageContent->contentId );
@@ -287,7 +287,7 @@ class PageAllAction extends PageAction implements Method {
 		}
 
 		// Falls ausgewaehlt die Seite sofort veroeffentlichen
-		if ($this->page->hasRight(Permission::ACL_PUBLISH) && $this->request->has('publish')) {
+		if ($this->page->hasRight(Permission::ACL_PUBLISH) && $this->request->isTrue('publish')) {
 			$this->publishPage( $languageid );
 		}
 

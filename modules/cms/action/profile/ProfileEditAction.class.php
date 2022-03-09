@@ -77,11 +77,11 @@ class ProfileEditAction extends ProfileAction implements Method {
 			$this->user->timezone = $value;
 		});
 
-		$this->request->handleBoolDefaultFalse('hotp',function($value) {
+		$this->request->handleBool('hotp',function($value) {
 			$this->user->hotp = $value;
 		});
 
-		$this->request->handleBoolDefaultFalse('totp',function($value) {
+		$this->request->handleBool('totp',function($value) {
 			$this->user->totp = $value;
 		});
 

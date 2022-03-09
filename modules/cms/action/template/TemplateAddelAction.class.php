@@ -39,7 +39,7 @@ class TemplateAddelAction extends TemplateAction implements Method {
 
 		$newElement = $this->template->addElement( $name,$this->request->getText('description'),$this->request->getText('typeid') );
 
-		if	( $this->request->has('addtotemplate') )
+		if	( $this->request->isTrue('addtotemplate') )
 		{
 		    $project  = new Project( $this->template->projectid);
 		    $modelIds = $project->getModelIds();

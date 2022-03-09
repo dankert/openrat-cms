@@ -430,8 +430,8 @@ class Dispatcher
 
         $possibleDbIds = [];
 
-        if   ( $this->request->has(RequestParams::PARAM_DATABASE_ID ) )
-            $possibleDbIds[] = $this->request->getDatabaseId();
+        if   ( $databaseId = $this->request->getDatabaseId() )
+            $possibleDbIds[] = $databaseId;
 
         if   ( Session::getDatabaseId() )
             $possibleDbIds[] = Session::getDatabaseId();

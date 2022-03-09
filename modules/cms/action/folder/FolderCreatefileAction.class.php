@@ -35,9 +35,8 @@ class FolderCreatefileAction extends FolderAction implements Method {
 		$file   = new File();
 
 		// Die neue Datei wird über eine URL geladen und dann im CMS gespeichert.
-		if	( $this->request->has('url') )
+		if	( $url = $this->request->getText('url') )
 		{
-			$url = $this->request->getText('url');
 			$http = new Http();
 			$http->setUrl( $url );
 
@@ -55,11 +54,11 @@ class FolderCreatefileAction extends FolderAction implements Method {
 			$file->parentid  = $this->folder->objectid;
             $file->projectid = $this->folder->projectid;
 		}
-        elseif	( $this->request->has('value') )
+        elseif	( $value = $this->request->getText('value') )
         {
             // New file is inserted.
             $file->filename  = BaseObject::urlify( $filename );
-            $file->value     = $this->request->getText('value');
+            $file->value     = $value;
             $file->size      = strlen($file->value);
             $file->parentid  = $this->folder->objectid;
             $file->projectid = $this->folder->projectid;

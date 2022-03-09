@@ -56,7 +56,7 @@ class FolderPubAction extends FolderAction implements Method {
 		$folderList = [ $this->folder->objectid ];
 
 		// Add all subfolders to the list
-		if   ( $this->request->has('subdirs') )
+		if   ( $this->request->isTrue('subdirs') )
 			$folderList = array_merge( $folderList, $this->folder->getAllSubFolderIds() );
 
 		foreach( $folderList as $folderId ) {
@@ -65,7 +65,7 @@ class FolderPubAction extends FolderAction implements Method {
 			$folder->load();
 
 			// Publish all pages
-			if   ( $this->request->has('pages'  ) ) {
+			if   ( $this->request->isTrue('pages'  ) ) {
 
 				foreach( $folder->getPages() as $pageObjectId ) {
 
@@ -98,7 +98,7 @@ class FolderPubAction extends FolderAction implements Method {
 
 
 			// Publish all files
-			if   ( $this->request->has('files'  ) ) {
+			if   ( $this->request->isTrue('files'  ) ) {
 
 				foreach( $folder->getFiles() as $fileid ) {
 
@@ -117,7 +117,7 @@ class FolderPubAction extends FolderAction implements Method {
 
 
 		// Cleanup the target directory (if supported by the underlying target)
-		if	( $this->request->has('clean')      )
+		if	( $this->request->isTrue('clean')      )
 			$publisher->cleanOlderThan( Startup::getStartTime() );
 
 

@@ -19,14 +19,18 @@ class ObjectNameAction extends ObjectAction implements Method {
         $nameProps[ 'languageName' ] = $language->name;
         $this->setTemplateVars( $nameProps );
     }
-    public function post() {
-        if   ( ! $this->request->has('name' ) )
-            throw new ValidationException('name');
 
+
+    public function post() {
         $name = $this->baseObject->getNameForLanguage( $this->request->getLanguageId() );
 
-        $name->name        = $this->request->getText( 'name' );
-        $name->description = $this->request->getText( 'description' );
+		$this->request->handleText('name',function($value) use ($name) {
+			$name->name = $value;
+		});
+
+		$this->request->handleText('description',function($value) use ($name) {
+			$name->description = $value;
+		});
 
         $name->persist();
 

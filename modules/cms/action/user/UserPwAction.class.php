@@ -27,10 +27,10 @@ class UserPwAction extends UserAction implements Method {
 		if ( strlen($password) < Configuration::subset(['security','password'])->get('min_length',8) )
 			throw new ValidationException('password',Messages::PASSWORD_MINLENGTH );
 
-		$this->user->setPassword($password,!$this->request->has('timeout') ); // Kennwort setzen
+		$this->user->setPassword($password,!$this->request->isTrue('timeout') ); // Kennwort setzen
 		
 		// E-Mail mit dem neuen Kennwort an Benutzer senden
-		if	( $this->request->has('email') &&
+		if	( $this->request->isTrue('email') &&
 			  $this->user->mail                      && // user has an e-mail.
 			  Configuration::subset('mail')->is('enabled',true)
 			) {

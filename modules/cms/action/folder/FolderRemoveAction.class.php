@@ -26,13 +26,15 @@ class FolderRemoveAction extends FolderAction implements Method {
 			// Could not delete the root folder on user request.
 			throw new ValidationException("parent",Messages::FOLDER_ROOT);
 
-		if  ( $this->request->has( 'withChildren'))
-            $this->folder->deleteAll();  // Delete with children
+		if   ( $this->folder->hasChildren() ) {
+			if ($this->request->isTrue('withChildren'))
+				$this->folder->deleteAll();  // Delete with children
+			else
+				throw new ValidationException("withChildren",Messages::CONTAINS_CHILDREN);
+
+		}
         else
-            if   ( $this->folder->hasChildren() )
-                throw new ValidationException("withChildren",Messages::CONTAINS_CHILDREN);
-            else
-                $this->folder->delete();  // Only delete current folder.
+            $this->folder->delete();  // Only delete current folder.
 
         $this->addNoticeFor($this->folder, Messages::DELETED);
     }

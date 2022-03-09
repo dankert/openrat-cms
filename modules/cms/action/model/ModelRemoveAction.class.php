@@ -12,7 +12,7 @@ class ModelRemoveAction extends ModelAction implements Method {
 		$this->setTemplateVar( 'name',$this->model->name );
     }
     public function post() {
-		if   ( $this->request->has('confirm') )
+		if   ( $this->request->isTrue('confirm') )
 		{
 			$this->model->delete();
 			$this->addNoticeFor( $this->model, Messages::DONE );

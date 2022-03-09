@@ -25,7 +25,7 @@ class ProjectCopyAction extends ProjectAction implements Method {
 		$this->setTemplateVar( 'dbids',$dbids );
 		
 		
-		if	( $this->request->has('ok') )
+		if	( $this->request->isTrue('ok') )
 		{
 			$this->project->export( $this->request->getDatabaseId() );
 			

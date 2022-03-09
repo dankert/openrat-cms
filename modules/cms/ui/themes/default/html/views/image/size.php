@@ -98,7 +98,8 @@
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?></h3>
               <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
                 <label><?php echo O::escapeHtml('') ?>
-                  <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml('copy') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$copy){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+                  <input type="<?php echo O::escapeHtml('checkbox') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$copy){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+                  <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('copy') ?>" <?php if(@$copy){ ?>value="<?php echo O::escapeHtml('1') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
                   <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('copy').'') ?></span>
                 </label>
               </div>

@@ -26,8 +26,8 @@ class TreeBranchAction extends TreeAction implements Method {
 		try
 		{
 			$method    = new \ReflectionMethod($tree,$type);
-			if	( $this->request->has('id'))
-				$method->invoke($tree, $this->request->getId() );
+			if	( $id = $this->request->getId() )
+				$method->invoke($tree, $id );
 			else
 				$method->invoke($tree); // <== Executing the Action
 		}

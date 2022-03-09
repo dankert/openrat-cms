@@ -214,8 +214,8 @@ class RequestParams
 
 
 	/**
-	 * @param $varName
-	 * @param $callback
+	 * @param $varName string name of request parameter
+	 * @param $callback callable only called if the request parameter is given by the client
 	 */
 	public function handleText( $varName,$callback ) {
 
@@ -237,19 +237,9 @@ class RequestParams
 	 * @param $varName
 	 * @param $callback
 	 */
-	public function handleBool( $varName,$callback ) {
+	public function handleBool($varName, $callback ) {
 
-		if   ( $this->hasKey($varName ) )
-			call_user_func( $callback, in_array( $this->getText($varName),['1','true','on']) );
-	}
-
-	/**
-	 * @param $varName
-	 * @param $callback
-	 */
-	public function handleBoolDefaultFalse( $varName,$callback ) {
-
-		call_user_func( $callback, in_array( $this->getText($varName),['1','true','on']) );
+		call_user_func( $callback, $this->isTrue($varName) );
 	}
 
 
@@ -274,22 +264,9 @@ class RequestParams
 	 * @param String $varName Schl�ssel
 	 * @return boolean true, falls vorhanden.
 	 */
-	public function hasKey($varName)
+	protected function hasKey($varName)
 	{
 		return isset( $this->parameter[$varName] );
-	}
-
-
-	/**
-	 * Ermittelt, ob der aktuelle Request eine Variable mit dem
-	 * angegebenen Namen enth�lt.
-	 *
-	 * @param String $varName Schl�ssel
-	 * @return boolean true, falls vorhanden.
-	 */
-	public function has($varName)
-	{
-		return (isset($this->parameter[$varName]) && (!empty($this->parameter[$varName]) || $this->parameter[$varName] == '0'));
 	}
 
 
@@ -328,7 +305,7 @@ class RequestParams
 	 */
 	public function isTrue( $varName )
 	{
-		return boolval($this->getValue( $varName ));
+		return in_array( $this->getValue($varName),['1','true','on']);
 	}
 
 
@@ -349,21 +326,11 @@ class RequestParams
 	}
 
 
-	public function hasLanguageId()
-	{
-		return $this->has(self::PARAM_LANGUAGE_ID);
-	}
-
 	public function getLanguageId()
 	{
 		return $this->getNumber(self::PARAM_LANGUAGE_ID);
 	}
 
-
-	public function hasModelId()
-	{
-		return $this->has(self::PARAM_MODEL_ID);
-	}
 
 	public function getModelId()
 	{

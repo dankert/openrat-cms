@@ -13,20 +13,18 @@
         <div class="<?php echo O::escapeHtml('or-table-area') ?>"><?php echo O::escapeHtml('') ?>
           <table class="<?php echo O::escapeHtml('or-table') ?>"><?php echo O::escapeHtml('') ?>
             <tr class="<?php echo O::escapeHtml('or-table-header') ?>"><?php echo O::escapeHtml('') ?>
-              <th class="<?php echo O::escapeHtml('or-table-column-action') ?>"><?php echo O::escapeHtml('') ?></th>
               <th><?php echo O::escapeHtml('') ?>
+                <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-group') ?>"><?php echo O::escapeHtml('') ?></i>
                 <span><?php echo O::escapeHtml(''.@O::lang('group').'') ?></span>
               </th>
             </tr>
             <?php foreach((array)@$memberships as $list_key=>$list_value) { extract($list_value); ?>
               <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
                 <td><?php echo O::escapeHtml('') ?>
-                  <input type="<?php echo O::escapeHtml('checkbox') ?>" name="<?php echo O::escapeHtml(''.@$var.'') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$$var){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
-                </td>
-                <td><?php echo O::escapeHtml('') ?>
-                  <label class="<?php echo O::escapeHtml('or-label') ?>"><?php echo O::escapeHtml('') ?>
-                    <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-group') ?>"><?php echo O::escapeHtml('') ?></i>
-                    <span><?php echo O::escapeHtml(''.@$name.'') ?></span>
+                  <label><?php echo O::escapeHtml('') ?>
+                    <input type="<?php echo O::escapeHtml('checkbox') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$$var){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+                    <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml(''.@$var.'') ?>" <?php if(@$$var){ ?>value="<?php echo O::escapeHtml('1') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
+                    <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@$name.'') ?></span>
                   </label>
                 </td>
               </tr>

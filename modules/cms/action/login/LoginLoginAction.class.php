@@ -184,7 +184,7 @@ class LoginLoginAction extends LoginAction implements Method {
 			$this->setCookie(Action::COOKIE_DB_ID   ,DB::get()->id );
 			$this->setCookie(Action::COOKIE_USERNAME,$user->name   );
 
-			if	( $this->request->has('remember') ) {
+			if	( $this->request->isTrue('remember') ) {
 				// Sets the login token cookie
 				$this->setCookie(Action::COOKIE_TOKEN   ,$user->createNewLoginToken() );
 			}

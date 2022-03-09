@@ -22,22 +22,14 @@
     <if present="release">
       <row>
         <column colspan="2">
-          <checkbox name="release"/>
-          <label for="release">
-            <text value=" "/>
-            <text value="${message:RELEASE}"/>
-          </label>
+          <checkbox name="release" label="${message:RELEASE}"/>
         </column>
       </row>
     </if>
     <if present="publish">
       <row>
         <column colspan="2">
-          <checkbox name="publish"/>
-          <label for="publish">
-            <text value=" "/>
-            <text value="${message:PAGE_PUBLISH_AFTER_SAVE}"/>
-          </label>
+          <checkbox name="publish" label="${message:PAGE_PUBLISH_AFTER_SAVE}" />
         </column>
       </row>
     </if>

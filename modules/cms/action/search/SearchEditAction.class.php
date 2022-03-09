@@ -13,7 +13,7 @@ class SearchEditAction extends SearchAction implements Method {
 		$searchConfig = Configuration::subset('search')->subset('quicksearch');
 		$flag = $searchConfig->subset('flag');
 
-		$initial = ! $this->request->has('repeat');
+		$initial = ! $this->request->isTrue('repeat');
 
 		if   ( $initial ) {
 			$searchById       = $flag->is('id'         );
@@ -22,11 +22,11 @@ class SearchEditAction extends SearchAction implements Method {
 			$searchByDesc     = $flag->is('description');
 			$searchByContent  = $flag->is('content'    );
 		} else {
-			$searchById       = $this->request->has('oid'        );
-			$searchByName     = $this->request->has('name'       );
-			$searchByFilename = $this->request->has('filename'   );
-			$searchByDesc     = $this->request->has('description');
-			$searchByContent  = $this->request->has('content'    );
+			$searchById       = $this->request->isTrue('oid'        );
+			$searchByName     = $this->request->isTrue('name'       );
+			$searchByFilename = $this->request->isTrue('filename'   );
+			$searchByDesc     = $this->request->isTrue('description');
+			$searchByContent  = $this->request->isTrue('content'    );
 		}
 
 		$this->setTemplateVar('oid'        ,$searchById       );

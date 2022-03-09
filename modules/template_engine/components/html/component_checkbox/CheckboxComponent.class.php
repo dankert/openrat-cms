@@ -23,7 +23,9 @@ class CheckboxComponent extends Component
 			->addAttribute('type','checkbox')
 			->addStyleClass('form-checkbox');
 
-		$checkbox->addAttribute('name',$this->name);
+		if ( !$this->label )
+			$checkbox->addAttribute('name',$this->name);
+
         if	( $this->readonly )
 			$checkbox->addAttribute('disabled','disabled');
 		$checkbox->addAttribute('value','1');
@@ -46,6 +48,7 @@ class CheckboxComponent extends Component
 			$label = (new CMSElement('label'))
 				//->addStyleClass('form-checkbox')
 				->addChild($checkbox)
+				->addChild( (new CMSElement('input'))->addAttribute('type','hidden')->addAttribute('name',$this->name)->addConditionalAttribute('value', $condition, '1') )
 				->addChild( (new CMSElement('span'))
 					->addStyleClass('form-label')
 					->content($this->label));

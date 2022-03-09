@@ -69,17 +69,17 @@ class ObjectAclformAction extends ObjectAction implements Method {
 
 		$permission->languageid    = $this->request->getLanguageId();
 
-		$permission->write         = ( $this->request->has('write'        ) );
-		$permission->prop          = ( $this->request->has('prop'         ) );
-		$permission->delete        = ( $this->request->has('delete'       ) );
-		$permission->release       = ( $this->request->has('release'      ) );
-		$permission->publish       = ( $this->request->has('publish'      ) );
-		$permission->create_folder = ( $this->request->has('create_folder') );
-		$permission->create_file   = ( $this->request->has('create_file'  ) );
-		$permission->create_link   = ( $this->request->has('create_link'  ) );
-		$permission->create_page   = ( $this->request->has('create_page'  ) );
-		$permission->grant         = ( $this->request->has('grant'        ) );
-		$permission->transmit      = ( $this->request->has('transmit'     ) );
+		$permission->write         = ( $this->request->isTrue('write'        ) );
+		$permission->prop          = ( $this->request->isTrue('prop'         ) );
+		$permission->delete        = ( $this->request->isTrue('delete'       ) );
+		$permission->release       = ( $this->request->isTrue('release'      ) );
+		$permission->publish       = ( $this->request->isTrue('publish'      ) );
+		$permission->create_folder = ( $this->request->isTrue('create_folder') );
+		$permission->create_file   = ( $this->request->isTrue('create_file'  ) );
+		$permission->create_link   = ( $this->request->isTrue('create_link'  ) );
+		$permission->create_page   = ( $this->request->isTrue('create_page'  ) );
+		$permission->grant         = ( $this->request->isTrue('grant'        ) );
+		$permission->transmit      = ( $this->request->isTrue('transmit'     ) );
 
 		$permission->persist();
 

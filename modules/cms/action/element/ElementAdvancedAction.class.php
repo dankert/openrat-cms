@@ -424,48 +424,77 @@ class ElementAdvancedAction extends ElementAction implements Method {
 
 
     public function post() {
-        $ini_date_format = Configuration::subset('date')->get('format',[] );
 
-        if	( $this->request->has('format'))
-            $this->element->format = $this->request->getNumber('format');
-
-
-        if	( $this->request->has('dateformat'))
-            $this->element->dateformat  = @$ini_date_format[$this->request->getText('dateformat')];
+        $this->request->handleNumber('format',function($value) {
+			$this->element->format = $value;
+		});
 
 
-        if	( $this->request->has('default_longtext'))
-            $this->element->defaultText     = $this->request->getText('default_longtext');
-        else
-            $this->element->defaultText     = $this->request->getText('default_text');
+        $this->request->handleText('dateformat',function($value) {
+			$this->element->dateformat = @Configuration::subset('date')->get('format',[] )[$value];
+		});
 
-        $this->element->subtype         = $this->request->getText('subtype');
 
-        $this->element->html            = $this->request->has('html');
-        $this->element->withIcon        = $this->request->has('with_icon');
-        $this->element->allLanguages    = $this->request->has('all_languages');
-        $this->element->writable        = $this->request->has('writable');
-        $this->element->inherit         = $this->request->has('inherit');
+        $this->request->handleText('default_longtext',function($value) {
+			$this->element->defaultText = $value;
+		});
+        $this->request->handleText('default_text',function($value) {
+			$this->element->defaultText = $value;
+		});
 
-        $this->element->decimals        = $this->request->getText('decimals');
-        $this->element->decPoint        = $this->request->getText('dec_point');
-        $this->element->thousandSep     = $this->request->getText('thousand_sep');
-        $this->element->folderObjectId  = $this->request->getText('folderobjectid'  );
-        $this->element->defaultObjectId = $this->request->getText('default_objectid');
+		$this->request->handleText('subtype',function($value) {
+			$this->element->subtype = $value;
+		});
 
-        if	( $this->request->has('select_items'))
-            $this->element->code         = $this->request->getText('select_items');
-        else
-            $this->element->code         = $this->request->getRaw('code');
+		$this->request->handleBool('html',function($value) {
+			$this->element->html = $value;
+		});
+		$this->request->handleBool('with_icon',function($value) {
+			$this->element->withIcon = $value;
+		});
+		$this->request->handleBool('all_languages',function($value) {
+			$this->element->allLanguages = $value;
+		});
+		$this->request->handleBool('writable',function($value) {
+			$this->element->writable = $value;
+		});
+		$this->request->handleBool('inherit',function($value) {
+			$this->element->inherit = $value;
+		});
 
-        if	( $this->request->has('name') )
-            $this->element->name = $this->request->getText('name');
+		$this->request->handleText('decimals',function($value) {
+			$this->element->decimals = $value;
+		});
+		$this->request->handleText('dec_point',function($value) {
+			$this->element->decPoint = $value;
+		});
+		$this->request->handleText('thousand_sep',function($value) {
+			$this->element->thousandSep = $value;
+		});
+		$this->request->handleText('folderobjectid',function($value) {
+			$this->element->folderObjectId = $value;
+		});
+		$this->request->handleText('default_objectid',function($value) {
+			$this->element->defaultObjectId = $value;
+		});
 
-        if	( $this->request->has('linkelement') )
-            $this->element->setPrefix( $this->request->getText('linkelement') );
 
-        if	( $this->request->has('parameters'))
-            $this->element->code = $this->request->getText('parameters');
+		$this->request->handleText('select_items',function($value) {
+			$this->element->code = $value;
+		});
+		$this->request->handleText('code',function($value) {
+			$this->element->code = $value;
+		});
+
+		$this->request->handleText('name',function($value) {
+			$this->element->name = $value;
+		});
+		$this->request->handleText('linkelement',function($value) {
+			$this->element->setPrefix( $value );
+		});
+		$this->request->handleText('parameters',function($value) {
+			$this->element->code = $value;
+		});
 
         $this->element->save();
         $this->addNoticeFor( $this->element, Messages::SAVED);

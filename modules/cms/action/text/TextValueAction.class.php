@@ -22,7 +22,7 @@ class TextValueAction extends TextAction implements Method {
     public function post() {
 
 		$this->text->value  = $this->request->getText('text');
-		$this->text->public = $this->request->has('release');
+		$this->text->public = $this->request->isTrue('release');
 		$this->text->saveValue();
 
 		$this->addNoticeFor($this->text,Messages::VALUE_SAVED);

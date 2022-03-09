@@ -13,12 +13,12 @@ class ModelPropAction extends ModelAction implements Method {
     }
 
     public function post() {
-        if	( $this->request->has('name') ) {
-            $this->model->name = $this->request->getText('name');
+        if	( $name = $this->request->getText('name') ) {
+            $this->model->name = $name;
             $this->model->save();
         }
 
-        if  ( $this->request->has('is_default') )
+        if  ( $this->request->isTrue('is_default') )
             $this->model->setDefault();
 
         $this->addNoticeFor( $this->model, Messages::DONE );

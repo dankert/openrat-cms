@@ -56,7 +56,7 @@ class UserPropAction extends UserAction implements Method {
 			$this->user->fullname = $fullname;
 		});
 
-		$this->request->handleBoolDefaultFalse('is_admin', function($isAdmin) {
+		$this->request->handleBool('is_admin', function($isAdmin) {
 			$this->user->isAdmin = $isAdmin;
 		});
 

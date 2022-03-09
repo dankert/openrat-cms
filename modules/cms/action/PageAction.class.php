@@ -104,11 +104,11 @@ class PageAction extends ObjectAction
 
 		$context = new PageContext( $this->page->objectid,$scheme );
 
-		if  ( $this->request->hasLanguageId())
-			$context->languageId = $this->request->getLanguageId();
+		if  ( $languageId = $this->request->getLanguageId())
+			$context->languageId = $languageId;
 
-		if  ( $this->request->hasModelId())
-			$context->modelId = $this->request->getModelId();
+		if  ( $modelId = $this->request->getModelId())
+			$context->modelId = $modelId;
 
         if  ( !$context->languageId )
 			$context->languageId = $this->page->getProject()->getDefaultLanguageId();

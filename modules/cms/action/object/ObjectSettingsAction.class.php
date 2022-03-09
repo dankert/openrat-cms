@@ -5,6 +5,7 @@ use cms\action\Method;
 use cms\action\ObjectAction;
 use cms\model\Permission;
 use language\Messages;
+use template_engine\components\html\component_else\ElseComponent;
 use util\exception\ValidationException;
 
 
@@ -28,19 +29,20 @@ class ObjectSettingsAction extends ObjectAction implements Method {
         }
         catch( \Exception $e )
         {
+			$this->addWarningFor( $this->baseObject,"Invalid YAML");
             throw new ValidationException( 'settings' );
         }
 
         // Gültigkeitszeiträume speichern.
-        if  ($this->request->has( 'valid_from_date' ))
-            $this->baseObject->validFromDate = strtotime( $this->request->getText( 'valid_from_date' ).' '.$this->request->getText( 'valid_from_time' ) );
-        else
-            $this->baseObject->validFromDate = null;
+        $this->baseObject->validFromDate = $this->toTimestamp(
+			$this->request->getText( 'valid_from_date' ),
+			$this->request->getText( 'valid_from_time' )
+		);
 
-        if  ($this->request->has( 'valid_until_date'))
-            $this->baseObject->validToDate   = strtotime( $this->request->getText( 'valid_until_date').' '.$this->request->getText( 'valid_until_time') );
-        else
-            $this->baseObject->validToDate = null;
+		$this->baseObject->validToDate = $this->toTimestamp(
+			$this->request->getText( 'valid_until_date'),
+			$this->request->getText( 'valid_until_time')
+		);
 
 
         $this->baseObject->save();
@@ -48,6 +50,15 @@ class ObjectSettingsAction extends ObjectAction implements Method {
 		$this->addNoticeFor( $this->baseObject,Messages::SAVED);
     }
 
+
+	protected function toTimestamp( $date, $time ) {
+		if   ( $date && $time )
+			return strtotime( $date.' '.$time );
+		if   ( $date )
+			return strtotime( $date );
+		else
+			return null;
+	}
 
 
 	/**

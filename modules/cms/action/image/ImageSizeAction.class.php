@@ -51,21 +51,21 @@ class ImageSizeAction extends ImageAction implements Method {
 
 
     public function post() {
-		$width           = intval($this->request->getText('width'           ));
-		$height          = intval($this->request->getText('height'          ));
-		$jpegcompression =        $this->request->getText('jpeg_compression') ;
-		$format          =        $this->request->getText('format'          ) ;
-		$factor          =        $this->request->getText('factor'          ) ;
+		$width           = $this->request->getNumber('width'         );
+		$height          = $this->request->getNumber('height'        );
+		$jpegcompression = $this->request->getText('jpeg_compression');
+		$format          = $this->request->getText('format'          );
+		$factor          = $this->request->getText('factor'          );
 		
 		if	( $this->request->getText('type') == 'input' &&
-			  ! $this->request->has('width' )      &&
-			  ! $this->request->has('height') )
+			  ! $width      &&
+			  ! $height )
 		{
 			$this->addWarningFor(null,Messages::INPUT_NEW_IMAGE_SIZE);
 			throw new ValidationException('width' );
 		}
 		
-		if	( $this->request->has('copy') )
+		if	( $this->request->isTrue('copy') )
 		{
 			// Datei neu anlegen.
 			$imageFile = new Image();

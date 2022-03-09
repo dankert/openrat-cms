@@ -27,6 +27,7 @@ class FolderCreatetextAction extends FolderAction implements Method {
 
 
     public function post() {
+
 		$name        = $this->request->getText('name'       );
 		$description = $this->request->getText('description');
 
@@ -35,9 +36,8 @@ class FolderCreatetextAction extends FolderAction implements Method {
 		$text->projectid = $this->folder->projectid;
 
 		// Die neue Datei wird über eine URL geladen und dann im CMS gespeichert.
-		if	( $this->request->has('url') )
+		$this->request->handleText('url', function($url) use ($text)
 		{
-			$url = $this->request->getText('url');
 			$http = new Http();
 			$http->setUrl( $url );
 
@@ -53,42 +53,34 @@ class FolderCreatetextAction extends FolderAction implements Method {
 			$text->filename  = BaseObject::urlify( basename($url) );
 			$text->size      = strlen($http->body);
 			$text->value     = $http->body;
-		}
-		elseif	( $this->request->has('text') )
-		{
+		});
+
+		$this->request->handleText('text',function($value) use ($text) {
 			$text->filename  = $this->request->getRequiredText('filename' );
 			$text->extension = $this->request->getRequiredText('extension');
 			$text->value     = $this->request->getRequiredText('text'     );
 			$text->size      = strlen( $text->value );
-		}
-		else
-		{
-			$upload = new Upload();
+		});
 
-			if   ( $upload->isAvailable() ) {
+		$upload = new Upload();
 
-				try
-				{
-					$upload->processUpload();
-				}
-				catch( \Exception $e )
-				{
-					// TODO: make a UIException?
-					throw $e;
-				}
+		if   ( $upload->isAvailable() ) {
 
-				$text->filename  = BaseObject::urlify( $upload->filename );
-				$text->extension = $upload->extension;
-				$text->size      = $upload->size;
-
-				$text->value     = $upload->value;
+			try
+			{
+				$upload->processUpload();
 			}
-			else {
-				$text->filename  = $this->request->getText('filename');
-				$text->extension = $this->request->getText('extension');
-				$text->value     = $this->request->getText('text');
-				$text->size      = strlen( $text->value );
+			catch( \Exception $e )
+			{
+				// TODO: make a UIException?
+				throw $e;
 			}
+
+			$text->filename  = BaseObject::urlify( $upload->filename );
+			$text->extension = $upload->extension;
+			$text->size      = $upload->size;
+
+			$text->value     = $upload->value;
 		}
 
 		$text->persist(); // Datei hinzufuegen

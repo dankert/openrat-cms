@@ -20,7 +20,7 @@
 				<selectbox name="alias_folderid" list="folders"/>
 			</fieldset>
 			<fieldset label="${message:leave_link}">
-				<checkbox name="leave_link" default="0"/>
+				<checkbox name="leave_link" default="0"  label="${message:leave_link}" />
 			</fieldset>
 		</group>
 	</form>

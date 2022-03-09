@@ -35,9 +35,8 @@ class FolderCreateimageAction extends FolderAction implements Method {
 		$image       = new Image();
 
 		// Die neue Datei wird über eine URL geladen und dann im CMS gespeichert.
-		if	( $this->request->has('url') )
+		if	( $url = $this->request->getText('url') )
 		{
-			$url = $this->request->getText('url');
 			$http = new Http();
 			$http->setUrl( $url );
 

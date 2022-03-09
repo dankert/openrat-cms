@@ -126,12 +126,12 @@ class PageelementAction extends BaseAction
 			$this->element   = new Element( $elementid );
 		}
 
-		if  ( $this->request->has('languageid')) {
+		if  ( $languageId = $this->request->getLanguageId() ) {
 
 			$this->pageContent = new PageContent();
-			$this->pageContent->pageId = $this->page->pageid;
-			$this->pageContent->elementId = $this->element->elementid;
-			$this->pageContent->languageid = $this->request->getNumber('languageid');
+			$this->pageContent->pageId     = $this->page->pageid;
+			$this->pageContent->elementId  = $this->element->elementid;
+			$this->pageContent->languageid = $languageId;
 			$this->pageContent->load();
 		}
 
@@ -150,11 +150,11 @@ class PageelementAction extends BaseAction
 
 		$pageContext = new PageContext( $this->page->objectid,$scheme );
 
-		if  ( $this->request->hasLanguageId())
-			$pageContext->languageId = $this->request->getLanguageId();
+		if  ( $languageId = $this->request->getLanguageId())
+			$pageContext->languageId = $languageId;
 
-		if  ( $this->request->hasModelId())
-			$pageContext->modelId = $this->request->getModelId();
+		if  ( $modelId = $this->request->getModelId())
+			$pageContext->modelId = $modelId;
 
 		if  ( !$pageContext->languageId )
 			$pageContext->languageId = $this->page->getProject()->getDefaultLanguageId();
@@ -292,9 +292,9 @@ class PageelementAction extends BaseAction
      */
     protected function editLongtext()
     {
-        if   ( $this->request->has('format') )
+        if   ( $f = $this->request->getNumber('format') )
             // Individual format from request.
-            $format = $this->request->getNumber('format');
+            $format = $f;
         elseif   ( $this->value->format != null )
             $format = $this->value->format;
         else
@@ -331,11 +331,8 @@ class PageelementAction extends BaseAction
 		$value->contentid = $this->pageContent->contentId;
 		$value->load();
 
-        if	( !$this->request->has('elementid') )
-            throw new ValidationException('elementid');
-
-        if   ( $this->request->has('linkobjectid') )
-        	$value->linkToObjectId = $this->request->getText('linkobjectid');
+        if   ( $linkObjectId = $this->request->getNumber('linkobjectid') )
+        	$value->linkToObjectId = $linkObjectId;
         else
         	$value->text           = $this->request->getRaw('text');
 
@@ -360,7 +357,7 @@ class PageelementAction extends BaseAction
         // Inhalt sofort freigegeben, wenn
         // - Recht vorhanden
         // - Freigabe gewuenscht
-		$value->publish = $this->page->hasRight( Permission::ACL_RELEASE ) && $this->request->has('release');
+		$value->publish = $this->page->hasRight( Permission::ACL_RELEASE ) && $this->request->isTrue('release');
 
         // Up-To-Date-Check
 		$content = new Content( $this->pageContent->contentId );
@@ -399,7 +396,7 @@ class PageelementAction extends BaseAction
         $this->page->setTimestamp(); // "Letzte Aenderung" setzen
 
         // Falls ausgewaehlt die Seite sofort veroeffentlichen
-        if	( $this->page->hasRight( Permission::ACL_PUBLISH ) && $this->request->has('publish') )
+        if	( $this->page->hasRight( Permission::ACL_PUBLISH ) && $this->request->isTrue('publish') )
         {
 			$this->publishPage();
         }
@@ -417,7 +414,7 @@ class PageelementAction extends BaseAction
         $value->contentid = $this->pageContent->contentId;
         $value->load();
 
-        if   ( $this->request->has('format') )
+        if   ( $this->request->isTrue('format') )
             $value->format     = $this->request->getNumber('format');
         else
             // Fallback: Format of the element.
@@ -439,8 +436,8 @@ class PageelementAction extends BaseAction
 		$value = new Value();
 		$value->contentid = $this->pageContent->contentId;
 
-        if   ( $this->request->has('linkobjectid') )
-            $value->linkToObjectId = $this->request->getText('linkobjectid');
+        if   ( $linkTo = $this->request->getNumber('linkobjectid') )
+            $value->linkToObjectId = $linkTo;
         else {
             $value->date = strtotime( $this->request->getText( 'date' ).' '.$this->request->getText( 'time' ) );
 
@@ -462,10 +459,7 @@ class PageelementAction extends BaseAction
 		$value->contentid = $this->pageContent->contentId;
 		$value->load();
 
-        if	( !$this->request->has('elementid') )
-            throw new ValidationException('elementid');
-
-        $value->text           = $this->request->getText('text');
+        $value->text           = $this->request->getRequiredText('text');
 
         $this->afterSave($value);
     }
@@ -484,8 +478,8 @@ class PageelementAction extends BaseAction
 
         $value->load();
 
-        if	( $this->request->has('linkurl') )
-            $value->linkToObjectId = $this->parseSimpleOID($this->request->getText('linkurl'));
+        if	( $linkUrl = $this->request->getText('linkurl') )
+            $value->linkToObjectId = $this->parseSimpleOID($linkUrl);
         else
             $value->linkToObjectId = intval($this->request->getText('linkobjectid'));
 
@@ -535,8 +529,8 @@ class PageelementAction extends BaseAction
 		$value->contentid = $this->pageContent->contentId;
 
 
-        if   ( $this->request->has('linkobjectid') )
-	        $value->linkToObjectId = $this->request->getText('linkobjectid');
+        if   ( $linkTo = $this->request->getText('linkobjectid') )
+	        $value->linkToObjectId = $linkTo;
         else
     	    $value->number         = $this->request->getText('number') * pow(10,$this->element->decimals);
 

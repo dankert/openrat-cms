@@ -30,10 +30,7 @@ class ObjectPropAction extends ObjectAction implements Method {
 
     public function post() {
 
-        if   ( ! $this->request->has('filename' ) )
-            throw new ValidationException('filename');
-
-        $this->baseObject->filename = BaseObject::urlify( $this->request->getText('filename') );
+        $this->baseObject->filename = BaseObject::urlify( $this->request->getRequiredText('filename') );
         $this->baseObject->save();
 
         $alias = $this->baseObject->getAliasForLanguage(null);
@@ -48,9 +45,11 @@ class ObjectPropAction extends ObjectAction implements Method {
 
 
         // Should we do this?
-        if	( $this->request->has('creationTimestamp') && $this->userIsAdmin() )
-            $this->baseObject->createDate = $this->request->getNumber('creationTimestamp');
-        $this->baseObject->setCreationTimestamp();
+        if	( $this->userIsAdmin() )
+			$this->request->handleNumber('creationTimestamp',function($value) {
+				$this->baseObject->createDate = $value;
+				$this->baseObject->setCreationTimestamp();
+			});
 
 
 		$this->addNoticeFor( $this->baseObject,Messages::PROP_SAVED);

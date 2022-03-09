@@ -15,10 +15,12 @@ class LanguagePropAction extends LanguageAction implements Method {
 		$this->setTemplateVar('is_default',$this->language->isDefault );
     }
 
+
     public function post() {
-		if	( $this->request->has('name') )
+
+		if	( $name = $this->request->getText('name') )
 		{
-			$this->language->name    = $this->request->getText('name'   );
+			$this->language->name    = $name;
 			$this->language->isoCode = $this->request->getText('isocode');
 		}
 		else
@@ -29,7 +31,7 @@ class LanguagePropAction extends LanguageAction implements Method {
 			$this->language->isoCode = strtolower( $iso );
 		}
 
-		if  ( $this->request->has('is_default') )
+		if  ( $this->request->isTrue('is_default') )
 		    $this->language->setDefault();
 		
 		$this->language->save();

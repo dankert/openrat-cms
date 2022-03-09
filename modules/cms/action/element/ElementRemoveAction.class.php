@@ -12,9 +12,6 @@ class ElementRemoveAction extends ElementAction implements Method {
     }
 
     public function post() {
-		if	( !$this->request->has('confirm') )
-			throw new \util\exception\ValidationException('confirm');
-
 		$type = $this->request->getAlphanum('type');
 		
 		if ( $type == 'value' )
