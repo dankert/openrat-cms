@@ -126,10 +126,15 @@ SQL
 	  */
 	public static function getTemplateIdsByValue( $text )
 	{
-		$db = \cms\base\DB::get();
-
-		$stmt = $db->sql( 'SELECT templateid FROM {{templatemodel}}'.
-		                ' WHERE text LIKE {text} ' );
+		$stmt = DB::sql( <<<SQL
+			SELECT templateid FROM {{templatemodel}}
+			LEFT JOIN {{content}}
+			       ON {{content}}.id = {{templatemodel}}.contentid
+			LEFT JOIN {{value}}
+			       ON {{value}}.contentid = {{content}}.id
+		     WHERE {{value}}.text LIKE {text}
+SQL
+		);
 
 		$stmt->setString( 'text'   ,'%'.$text.'%'  );
 		
@@ -142,11 +147,9 @@ SQL
  	 * Es wird eine Liste nur mit den Element-IDs ermittelt und zur?ckgegeben
  	 * @return array
  	 */
-	function getElementIds()
+	public function getElementIds()
 	{
-		$db = \cms\base\DB::get();
-
-		$stmt = $db->sql( 'SELECT id FROM {{element}}'.
+		$stmt = DB::sql( 'SELECT id FROM {{element}}'.
 		                '  WHERE templateid={templateid}'.
 		                '  ORDER BY name ASC' );
 		$stmt->setInt( 'templateid',$this->templateid );

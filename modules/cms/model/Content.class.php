@@ -344,14 +344,18 @@ SQL
 	  * @param String Suchbegriff
 	  * @return array Liste der gefundenen Objekt-IDs
 	  */
-	function getObjectIdsByValue( $text )
+	public static function getObjectIdsByValue( $text )
 	{
 		$sql = DB::sql( <<<SQL
-                 SELECT {{object}}.id FROM {{value}}
+                 SELECT {{object}}.id FROM {{object}}
 		                 LEFT JOIN {{page}}
-		                   ON {{page}}.id={{value}}.pageid
-		                 LEFT JOIN {{object}}
 		                   ON {{object}}.id={{page}}.objectid
+		                 LEFT JOIN {{pagecontent}}
+		                   ON {{page}}.id={{pagecontent}}.pageid
+		                 LEFT JOIN {{content}}
+		                   ON {{pagecontent}}.contentid={{content}}.id
+		                 LEFT JOIN {{value}}
+		                   ON {{content}}.id={{value}}.contentid
 		                 WHERE {{value}}.text LIKE {text}
 		                  ORDER BY {{object}}.lastchange_date DESC
 SQL

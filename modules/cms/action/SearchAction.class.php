@@ -3,6 +3,7 @@
 namespace cms\action;
 
 use cms\base\Configuration as C;
+use cms\model\Content;
 use cms\model\Permission;
 use cms\model\BaseObject;
 use cms\model\File;
@@ -101,7 +102,7 @@ class SearchAction extends BaseAction
                         'lastchange_date' => 0 );
                     $resultList['u'.$user->userid] = $userResult;
                 }
-                catch( \util\exception\ObjectNotFoundException $e) {
+                catch( \util\exception\ObjectNotFoundException $content) {
                     ; // userid is unknown
                 }
             }
@@ -141,8 +142,7 @@ class SearchAction extends BaseAction
         // Inhalte durchsuchen
         if	( $searchFlag & self::FLAG_VALUE )
         {
-            $e = new Value();
-            $listObjectIds += $e->getObjectIdsByValue( $searchText );
+            $listObjectIds += Content::getObjectIdsByValue( $searchText );
 
             $listTemplateIds += Template::getTemplateIdsByValue( $searchText );
         }
@@ -151,10 +151,15 @@ class SearchAction extends BaseAction
 
         $this->setTemplateVar( 'result',$resultList );
     }
-	
-	
+
+
 	/**
+	 * Transforms the found objects into an array of search results.
 	 *
+	 * @param $listObjectIds Object ids
+	 * @param $listTemplateIds template ids
+	 * @return array
+	 * @throws \util\exception\ObjectNotFoundException
 	 */
 	private function explainResult( $listObjectIds, $listTemplateIds )
 	{
@@ -165,13 +170,13 @@ class SearchAction extends BaseAction
 			$o = new BaseObject( $objectid );
 			$o->load();
             if ($o->hasRight( Permission::ACL_READ ))
-                $resultList['o'.$objectid] = array(
+                $resultList['o'.$objectid] = [
                     'id'              => $objectid,
                     'type'            => $o->getType(),
                     'name'            => $o->filename,
                     'lastchange_date' => $o->lastchangeDate,
                     'desc'            => ''
-                );
+                ];
 		}
 	
 		foreach( $listTemplateIds as $templateid )
@@ -179,21 +184,27 @@ class SearchAction extends BaseAction
 			$t = new Template( $templateid );
 			$t->load();
 			$p = new Project( $t->projectid );
-			$o = new BaseObject( $p->getRootObjectId() );
-			if ($o->hasRight( Permission::ACL_PROP ))
-                $resultList['t'.$templateid] = array(
+			$rootObject = new BaseObject( $p->getRootObjectId() );
+			if ($rootObject->hasRight( Permission::ACL_PROP )) // only project admins may read the templates
+                $resultList['t'.$templateid] = [
                     'id'  => $templateid,
                     'type'=> 'template',
                     'name'=> $t->name,
                     'desc'=> '',
                     'lastchange_date'=> 0
-                );
+                ];
 		}
 	
 		return $resultList;
 	}
 
 
+	/**
+	 * The search is executable for all users.
+	 * But the search results are filtered.
+	 *
+	 * @return true
+	 */
 	public function checkAccess() {
 		return true;
 	}
