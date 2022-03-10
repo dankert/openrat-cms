@@ -55,7 +55,7 @@
             <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('leave_link').'') ?></h3>
             <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
               <label><?php echo O::escapeHtml('') ?>
-                <input type="<?php echo O::escapeHtml('checkbox') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$leave_link){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+                <input type="<?php echo O::escapeHtml('checkbox') ?>" data-name="<?php echo O::escapeHtml('leave_link') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$leave_link){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
                 <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('leave_link') ?>" <?php if(@$leave_link){ ?>value="<?php echo O::escapeHtml('1') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
                 <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('leave_link').'') ?></span>
               </label>

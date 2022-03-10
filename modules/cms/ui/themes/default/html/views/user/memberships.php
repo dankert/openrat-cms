@@ -22,7 +22,7 @@
               <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
                 <td><?php echo O::escapeHtml('') ?>
                   <label><?php echo O::escapeHtml('') ?>
-                    <input type="<?php echo O::escapeHtml('checkbox') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$$var){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+                    <input type="<?php echo O::escapeHtml('checkbox') ?>" data-name="<?php echo O::escapeHtml(''.@$var.'') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$$var){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
                     <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml(''.@$var.'') ?>" <?php if(@$$var){ ?>value="<?php echo O::escapeHtml('1') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
                     <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@$name.'') ?></span>
                   </label>

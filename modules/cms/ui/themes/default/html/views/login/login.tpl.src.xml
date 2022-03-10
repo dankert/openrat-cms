@@ -51,7 +51,7 @@
 						<password name="login_password" class="name" default="" size="20"
 								  hint="${message:USER_PASSWORD}"
 								  required="true"/>
-						<checkbox name="remember" default="false" label="${message:REMEMBER_ME}"/>
+						<checkbox name="remember" default="false" label="${message:REMEMBER_ME}" remember="true"/>
 					</fieldset>
 				</group>
 

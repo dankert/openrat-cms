@@ -71,7 +71,7 @@
                     <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--visible or-act-make-visible or-btn') ?>"><?php echo O::escapeHtml('') ?></i>
                   </span>
                   <label><?php echo O::escapeHtml('') ?>
-                    <input type="<?php echo O::escapeHtml('checkbox') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$remember){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+                    <input type="<?php echo O::escapeHtml('checkbox') ?>" data-name="<?php echo O::escapeHtml('remember') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$remember){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox or-remember') ?>" /><?php echo O::escapeHtml('') ?>
                     <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('remember') ?>" <?php if(@$remember){ ?>value="<?php echo O::escapeHtml('1') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
                     <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('REMEMBER_ME').'') ?></span>
                   </label>

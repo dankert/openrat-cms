@@ -15,6 +15,7 @@ class CheckboxComponent extends Component
 	public $name;
 	public $readonly = false;
 	public $required = false;
+	public $remember = false;
 	public $label;
 
 	public function createElement()
@@ -23,8 +24,13 @@ class CheckboxComponent extends Component
 			->addAttribute('type','checkbox')
 			->addStyleClass('form-checkbox');
 
+		if    ( $this->remember )
+			$checkbox->addStyleClass('remember');
+
 		if ( !$this->label )
 			$checkbox->addAttribute('name',$this->name);
+		else
+			$checkbox->addAttribute('data-name',$this->name);
 
         if	( $this->readonly )
 			$checkbox->addAttribute('disabled','disabled');

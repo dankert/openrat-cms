@@ -20,7 +20,7 @@
                 <?php  { $inherit= 1; ?>
                  <?php } ?>
                 <label><?php echo O::escapeHtml('') ?>
-                  <input type="<?php echo O::escapeHtml('checkbox') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$inherit){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+                  <input type="<?php echo O::escapeHtml('checkbox') ?>" data-name="<?php echo O::escapeHtml('inherit') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if(@$inherit){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
                   <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('inherit') ?>" <?php if(@$inherit){ ?>value="<?php echo O::escapeHtml('1') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
                   <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('inherit_rights').'') ?></span>
                 </label>

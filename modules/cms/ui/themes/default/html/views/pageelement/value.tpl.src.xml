@@ -146,12 +146,12 @@
 			<fieldset>
 				<if present="release">
 					<part>
-						<checkbox name="release" label="${message:RELEASE}"/>
+						<checkbox name="release" label="${message:RELEASE}" remember="true"/>
 					</part>
 				</if>
 				<if present="publish">
 					<part>
-						<checkbox name="publish" label="${message:PAGE_PUBLISH_AFTER_SAVE}"/>
+						<checkbox name="publish" label="${message:PAGE_PUBLISH_AFTER_SAVE}" remember="true"/>
 					</part>
 				</if>
 			</fieldset>

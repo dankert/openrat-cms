@@ -59,6 +59,8 @@ class Startup {
 
 	/**
 	 * Initialize.
+	 *
+	 * @throws ErrorException if something happens
 	 */
 	public static function initialize()
 	{
@@ -68,14 +70,33 @@ class Startup {
 		self::setStartTime();
 		self::checkDatabaseDriver();
 		self::checkMultibyteSupport();
+		self::setCookiePath();
 
 		// in some situations we want to know, if the CMS is really started up.
 		define('APP_STARTED','1');
-
-		// Cookie path
-		define('COOKIE_PATH',dirname($_SERVER['SCRIPT_NAME']).'/');
 	}
 
+
+	/**
+	 * Setting the cookie path.
+	 */
+	protected static function setCookiePath() {
+
+		$scriptPath = dirname($_SERVER['SCRIPT_NAME']);
+
+		if   ( substr($scriptPath,-1 ) != '/' )
+			$scriptPath = $scriptPath.'/'; // Add trailing slash
+
+		// Cookie path
+		define('COOKIE_PATH',$scriptPath);
+	}
+
+
+	/**
+	 * Checking the minimum PHP version.
+	 *
+	 * @throws ErrorException
+	 */
 	protected static function checkPHPVersion()
 	{
 		if (version_compare(phpversion(), self::MIN_VERSION, "<"))

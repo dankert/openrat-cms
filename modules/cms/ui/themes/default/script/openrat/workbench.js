@@ -92,7 +92,7 @@ export default class Workbench {
 
 	initializeTheme() {
 		if (window.localStorage) {
-			let style = window.localStorage.getItem('style');
+			let style = window.localStorage.getItem('ui.style');
 			if (style)
 				this.setUserStyle(style);
 		}
@@ -425,7 +425,7 @@ export default class Workbench {
     setUserStyle( styleName )
     {
 		if   ( window.localStorage )
-			window.localStorage.setItem('style',styleName);
+			window.localStorage.setItem('ui.style',styleName);
 
     	let styleUrl = View.createUrl('index', 'themestyle', 0, {'style': styleName});
 		document.getElementById('user-style').setAttribute('href',styleUrl);

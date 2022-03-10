@@ -8,9 +8,17 @@ require('modules/autoload.php'); // Autoloading all classes
 use cms\base\Startup;
 use cms\output\OutputFactory;
 
-// - Validating the environment
-// - Initialize all constants
-Startup::initialize();
+try {
+	// Starting the application
+	// - Validating the environment
+	// - Initialize all constants
+	Startup::initialize();
+
+} catch (ErrorException $e) {
+	header('Content-Type: text/plain');
+	error_log( $e->getMessage() );
+	echo "Startup failed";
+}
 
 // Creates the output driver
 // Dependent on which data format is requested by the client.

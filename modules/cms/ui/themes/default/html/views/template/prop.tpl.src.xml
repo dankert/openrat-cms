@@ -6,7 +6,7 @@
 				<input name="name" maxlength="50"/>
 			</fieldset>
 			<fieldset label="${message:PUBLISH}">
-				<checkbox label="${message:publish}" name="publish" />
+				<checkbox label="${message:publish}" name="publish" remember="true"/>
 			</fieldset>
 		</group>
 	</form>
