@@ -868,15 +868,15 @@ class ValueGenerator extends BaseGenerator
 						$inhalt = Project::create( $page->projectid )->load()->name;
 						break;
 					case 'language_id':
-						$inhalt = $pageContext->languageid;
+						$inhalt = $pageContext->languageId;
 						break;
 					case 'language_iso':
-						$language = new Language( $pageContext->languageid );
+						$language = new Language( $pageContext->languageId );
 						$language->load();
 						$inhalt = $language->isoCode;
 						break;
 					case 'language_name':
-						$language = new Language( $pageContext->languageid );
+						$language = new Language( $pageContext->languageId );
 						$language->load();
 						$inhalt = $language->name;
 						break;
