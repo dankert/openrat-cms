@@ -180,7 +180,7 @@ class PageelementAction extends BaseAction
 		$this->setTemplateVar('rootfolderid',$project->getRootObjectId() );
 		
 		// Ermitteln, welche Objekttypen verlinkt werden d�rfen.
-		$type = $this->velement->subtype;
+		$type = $this->element->subtype;
 
 		if	( substr($type,0,5) == 'image' )
 		$type = 'file';
