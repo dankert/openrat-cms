@@ -152,6 +152,9 @@ class Project extends ModelBase
 	}
 
 
+	/**
+	 * @return int[]
+	 */
 	public function getLanguageIds()
 	{
 		return array_keys( $this->getLanguages() );

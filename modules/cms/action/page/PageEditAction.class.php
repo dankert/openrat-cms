@@ -12,6 +12,8 @@ use cms\model\Template;
 use cms\model\Value;
 
 class PageEditAction extends PageAction implements Method {
+
+
     public function view() {
 
         $template = new Template( $this->page->templateid );

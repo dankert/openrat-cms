@@ -22,6 +22,7 @@
 		</table>
 	</group>
 
+	<!-- list all elements -->
 	<group title="${message:PAGE_PAGEELEMENTS}">
 		<table>
 			<row header="true">
@@ -46,11 +47,18 @@
 			<list list="${elements}" extract="true">
 				<row class="data">
 					<column class="act-clickable">
-						<link type="open" title="${desc}" name="${name}" action="pageelement" id="${pageelementid}">
+						<link type="dialog" title="${desc}" name="${name}"  action="pageelement" subaction="all" id="${pageelementid}">
 							<image action="pageelement"/>
 							<text value="${label}"/>
 						</link>
 					</column>
+					<!--
+					<column class="act-clickable">
+						<link type="open" title="${desc}" name="${name}" action="pageelement" id="${pageelementid}">
+							<image action="pageelement"/>
+							<text value="${label}"/>
+						</link>
+					</column>-->
 					<column title="${desc}" class="-visible-on-desktop">
 						<text value="${desc}"/>
 					</column>
