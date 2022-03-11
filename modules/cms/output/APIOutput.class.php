@@ -105,7 +105,14 @@ abstract class APIOutput extends BaseOutput
 	protected function setError($text, $cause)
 	{
 		$data = [
-			'message' => $text
+			'message' => $text,
+			'notices' => [
+				[
+					'status'=>'error',
+					'text'  =>$text,
+				]
+			],
+			'errors'  => [],
 		];
 
 		// Traces only in DEVELOPMENT mode
