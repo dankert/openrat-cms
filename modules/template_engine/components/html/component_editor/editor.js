@@ -62,84 +62,84 @@ export default function(element ) {
 		let toolbar = [{
 			name: "bold",
 			action: SimpleMDE.toggleBold,
-			className: "image-icon image-icon--editor-bold",
+			className: "or-image-icon or-image-icon--editor-bold",
 			title: "Bold",
 		},
 			{
 				name: "italic",
 				action: SimpleMDE.toggleItalic,
-				className: "image-icon image-icon--editor-italic",
+				className: "or-image-icon or-image-icon--editor-italic",
 				title: "Italic",
 			},
 			{
 				name: "heading",
 				action: SimpleMDE.toggleHeadingBigger,
-				className: "image-icon image-icon--editor-headline",
+				className: "or-image-icon or-image-icon--editor-headline",
 				title: "Headline",
 			},
 			"|", // Separator
 			{
 				name: "quote",
 				action: SimpleMDE.toggleBlockquote,
-				className: "image-icon image-icon--editor-quote",
+				className: "or-image-icon or-image-icon--editor-quote",
 				title: "Quote",
 			},
 			{
 				name: "code",
 				action: SimpleMDE.toggleCodeBlock,
-				className: "image-icon image-icon--editor-code",
+				className: "or-image-icon or-image-icon--editor-code",
 				title: "Code",
 			},
 			"|", // Separator
 			{
 				name: "generic list",
 				action: SimpleMDE.toggleUnorderedList,
-				className: "image-icon image-icon--editor-unnumberedlist",
+				className: "or-image-icon or-image-icon--editor-unnumberedlist",
 				title: "Unnumbered list",
 			},
 			{
 				name: "numbered list",
 				action: SimpleMDE.toggleOrderedList,
-				className: "image-icon image-icon--editor-numberedlist",
+				className: "or-image-icon or-image-icon--editor-numberedlist",
 				title: "Numbered list",
 			},
 			"|", // Separator
 			{
 				name: "table",
 				action: SimpleMDE.drawTable,
-				className: "image-icon image-icon--editor-table",
+				className: "or-image-icon or-image-icon--editor-table",
 				title: "Table",
 			},
 			{
 				name: "horizontalrule",
 				action: SimpleMDE.drawHorizontalRule,
-				className: "image-icon image-icon--editor-horizontalrule",
+				className: "or-image-icon or-image-icon--editor-horizontalrule",
 				title: "Horizontal rule",
 			},
 			"|", // Separator
 			{
 				name: "undo",
 				action: SimpleMDE.undo,
-				className: "image-icon image-icon--editor-undo",
+				className: "or-image-icon or-image-icon--editor-undo",
 				title: "Undo",
 			},
 			{
 				name: "redo",
 				action: SimpleMDE.redo,
-				className: "image-icon image-icon--editor-redo",
+				className: "or-image-icon or-image-icon--editor-redo",
 				title: "Redo",
 			},
 			"|", // Separator
 			{
 				name: "link",
 				action: SimpleMDE.drawLink,
-				className: "image-icon image-icon--editor-link",
+				className: "or-image-icon or-image-icon--editor-link",
 				title: "Link",
 			},
 			{
 				name: "image",
 				action: SimpleMDE.drawImage,
-				className: "image-icon image-icon--editor-image",
+				className: "or-image-icon or-image-icon--editor-image",
 				title: "Image",
 			},
 
@@ -148,19 +148,19 @@ export default function(element ) {
             {
                 name: "preview",
                 action: SimpleMDE.togglePreview,
-                className: "image-icon image-icon--editor-preview",
+                className: "or-image-icon or-image-icon--editor-preview",
                 title: "Preview",
             },
             {
                 name: "sidebyside",
                 action: SimpleMDE.toggleSideBySide,
-                className: "image-icon image-icon--editor-sidebyside",
+                className: "or-image-icon or-image-icon--editor-sidebyside",
                 title: "Side by side",
             },
             {
                 name: "fullscreen",
                 action: SimpleMDE.toggleFullScreen,
-                className: "image-icon image-icon--editor-fullscreen",
+                className: "or-image-icon or-image-icon--editor-fullscreen",
                 title: "Fullscreen",
             },
             */
@@ -168,7 +168,7 @@ export default function(element ) {
             {
                 name: "guide",
                 action: "https:/"+"/simplemde.com/markdown-guide",
-                className: "image-icon image-icon--editor-help",
+                className: "or-image-icon or-image-icon--editor-help",
                 title: "Howto markdown",
             },
         ];
