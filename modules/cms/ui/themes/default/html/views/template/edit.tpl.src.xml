@@ -3,10 +3,11 @@
 	<group title="${message:page_pageelements}">
 		<table>
 			<row header="true">
-				<column>
+				<column header="true">
+					<image />
 					<text value="${message:name}"/>
 				</column>
-				<column>
+				<column header="true">
 					<text value="${message:type}"/>
 				</column>
 				<column />

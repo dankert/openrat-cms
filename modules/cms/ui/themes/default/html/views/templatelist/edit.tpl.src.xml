@@ -6,7 +6,7 @@
 				<column header="true">
 					<text value="${message:name}"/>
 				</column>
-				<column />
+				<column header="true"/>
 			</row>
 			<list list="${templates}" extract="true">
 				<row class="data">

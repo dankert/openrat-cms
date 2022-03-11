@@ -13,12 +13,13 @@
         <div class="<?php echo O::escapeHtml('or-table-area') ?>"><?php echo O::escapeHtml('') ?>
           <table class="<?php echo O::escapeHtml('or-table') ?>"><?php echo O::escapeHtml('') ?>
             <tr class="<?php echo O::escapeHtml('or-table-header') ?>"><?php echo O::escapeHtml('') ?>
-              <td><?php echo O::escapeHtml('') ?>
+              <th><?php echo O::escapeHtml('') ?>
+                <img /><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(''.@O::lang('name').'') ?></span>
-              </td>
-              <td><?php echo O::escapeHtml('') ?>
+              </th>
+              <th><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(''.@O::lang('type').'') ?></span>
-              </td>
+              </th>
               <td><?php echo O::escapeHtml('') ?></td>
             </tr>
             <?php foreach((array)@$elements as $list_key=>$list_value) { extract($list_value); ?>

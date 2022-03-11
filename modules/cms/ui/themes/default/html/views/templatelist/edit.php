@@ -16,7 +16,7 @@
               <th><?php echo O::escapeHtml('') ?>
                 <span><?php echo O::escapeHtml(''.@O::lang('name').'') ?></span>
               </th>
-              <td><?php echo O::escapeHtml('') ?></td>
+              <th><?php echo O::escapeHtml('') ?></th>
             </tr>
             <?php foreach((array)@$templates as $list_key=>$list_value) { extract($list_value); ?>
               <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
