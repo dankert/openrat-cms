@@ -81,7 +81,8 @@ class MacroRunner
 				continue;
 			}
 
-			Logger::trace("Setting parameter for Macro-class $className, " . $param_name . ':' . print_r($param_value, true));
+			if ( DEVELOPMENT )
+				Logger::trace("Setting parameter for Macro-class $className, " . $param_name . ':' . print_r($param_value, true));
 
 			// Die Parameter der Makro-Klasse typisiert setzen.
 			if (is_int($macro->$param_name))

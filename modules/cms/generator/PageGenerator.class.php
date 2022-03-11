@@ -133,7 +133,8 @@ class PageGenerator extends BaseGenerator
 				$src = str_replace( '{{->'.$elementId.'}}','',$src );
 		}
 
-		Logger::trace( 'pagedata: '.print_r($data,true) );
+		if ( DEVELOPMENT )
+			Logger::trace( 'pagedata: '.print_r($data,true) );
 
 		// Now we have collected all data, lets call the template engine:
 
