@@ -113,7 +113,9 @@ class UIOutput extends BaseOutput
 		if   ( DEVELOPMENT ) {
 			header('X-OR-Template: '.$templateFile               );
 
-			echo "<!--  \n".htmlentities(var_export($outputData,true))."\n-->";
+			$outputDataClone = $outputData;
+			array_walk_recursive($outputDataClone, function(&$v) { $v = htmlspecialchars($v); });
+			echo "<!--  \n".var_export($outputDataClone,true)."\n-->";
 		}
 
         $engine = new TemplateRunner();
