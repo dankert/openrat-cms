@@ -20,6 +20,7 @@ use cms\model\Permission;
 use cms\model\Project;
 use cms\model\Value;
 use language\Messages;
+use util\exception\PublisherException;
 use util\exception\SecurityException;
 use util\exception\ValidationException;
 use util\Session;
@@ -360,7 +361,12 @@ class PageAllAction extends PageAction implements Method {
 			$publisher->addOrderForPublishing( new PublishOrder( $pageGenerator->getCache()->load()->getFilename(),$pageGenerator->getPublicFilename(), $this->page->lastchangeDate ) );
 		}
 
-		$publisher->publish();
+		try {
+			$publisher->publish();
+		} catch( PublisherException $e ) {
+			$this->addErrorFor( $this->page,Messages::PUBLISHED_ERROR,[],$e->getMessage() );
+		}
+
 		$this->page->setPublishedTimestamp();
 
 		$this->addNoticeFor( $this->page,Messages::PUBLISHED,[],

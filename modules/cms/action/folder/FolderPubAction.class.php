@@ -16,6 +16,7 @@ use cms\model\Permission;
 use cms\model\Folder;
 use cms\model\Template;
 use language\Messages;
+use util\exception\PublisherException;
 use util\Session;
 
 
@@ -110,7 +111,13 @@ class FolderPubAction extends FolderAction implements Method {
 				}
 			}
 
-			$publisher->publish();
+			try {
+				$publisher->publish();
+				$this->folder->setPublishedTimestamp();
+
+			} catch( PublisherException $e ) {
+				$this->addErrorFor( $this->folder,Messages::PUBLISHED_ERROR,[],$e->getMessage() );
+			}
 		}
 
 

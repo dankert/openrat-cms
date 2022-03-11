@@ -26,6 +26,7 @@ use language\Messages;
 use LogicException;
 use util\ArrayUtils;
 use util\exception\ObjectNotFoundException;
+use util\exception\PublisherException;
 use util\exception\SecurityException;
 use util\exception\ValidationException;
 use util\Html;
@@ -613,10 +614,15 @@ class PageelementAction extends BaseAction
 			}
 		}
 
-		$publisher->publish();
+		try {
+			$publisher->publish();
 
-		$this->addNoticeFor( $this->value,Messages::PUBLISHED,[],
-			implode("\n",$publisher->getDestinationFilenames() ) );
+			$this->addNoticeFor( $this->value,Messages::PUBLISHED,[],
+				implode("\n",$publisher->getDestinationFilenames() ) );
+
+		} catch( PublisherException $e ) {
+			$this->addErrorFor( $this->value,Messages::PUBLISHED_ERROR,[],$e->getMessage() );
+		}
 
 	}
 

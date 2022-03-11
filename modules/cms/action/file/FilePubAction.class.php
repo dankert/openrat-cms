@@ -8,6 +8,8 @@ use cms\generator\Producer;
 use cms\generator\Publisher;
 use cms\generator\PublishOrder;
 use cms\model\Permission;
+use language\Messages;
+use util\exception\PublisherException;
 
 class FilePubAction extends FileAction implements Method {
 	public function getRequiredPermission() {
@@ -21,9 +23,14 @@ class FilePubAction extends FileAction implements Method {
 
 		$publisher = new Publisher( $this->file->projectid );
 		$publisher->addOrderForPublishing( new PublishOrder( $fileGenerator->getCache()->load()->getFilename(),$fileGenerator->getPublicFilename(),$this->file->lastchangeDate) );
-		$publisher->publish();
 
-		$this->file->setPublishedTimestamp();
-		$this->addNoticeFor($this->file,'PUBLISHED',[],'Published items:'."\n".implode("\n",$publisher->getDestinationFilenames())  );
+		try {
+			$publisher->publish();
+			$this->file->setPublishedTimestamp();
+			$this->addNoticeFor($this->file,'PUBLISHED',[],'Published items:'."\n".implode("\n",$publisher->getDestinationFilenames())  );
+		} catch( PublisherException $e ) {
+			$this->addErrorFor( $this->file,Messages::PUBLISHED_ERROR,[],$e->getMessage() );
+		}
+
     }
 }

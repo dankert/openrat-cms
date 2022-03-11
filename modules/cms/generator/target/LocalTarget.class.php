@@ -68,12 +68,14 @@ class LocalTarget extends  BaseTarget
 	 *
 	 * @param String Quelle
 	 * @param String Ziel
+	 * @throws PublisherException
 	 */
 	public function put($source, $dest, $lastChangeDate)
 	{
 		// Is the output directory existent?
 		if   ( !is_dir( $this->localDestinationDirectory ) )
-			mkdir( $this->localDestinationDirectory ); // try to create this directory.
+			if   ( ! @mkdir( $this->localDestinationDirectory ) )
+				throw new PublisherException('cannot create directory: ' . $this->localDestinationDirectory);
 
 		// Is the output directory writable?
 		if   ( !is_writeable( $this->localDestinationDirectory ) )

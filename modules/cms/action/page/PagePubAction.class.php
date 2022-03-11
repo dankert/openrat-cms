@@ -11,6 +11,7 @@ use cms\model\Page;
 use cms\model\Permission;
 use cms\model\Template;
 use language\Messages;
+use util\exception\PublisherException;
 use util\Session;
 
 class PagePubAction extends PageAction implements Method {
@@ -55,13 +56,17 @@ class PagePubAction extends PageAction implements Method {
 			}
 		}
 
-		$publisher->publish();
-		$this->page->setPublishedTimestamp();
+		try {
+			$publisher->publish();
+			$this->page->setPublishedTimestamp();
 
-		$this->addNoticeFor( $this->page,
-		                  'PUBLISHED',
-		                  array(),
-		                  implode("\n",$publisher->getDestinationFilenames() )
-        );
+			$this->addNoticeFor( $this->page,
+				'PUBLISHED',
+				array(),
+				implode("\n",$publisher->getDestinationFilenames() )
+			);
+		} catch( PublisherException $e ) {
+			$this->addErrorFor( $this->page,Messages::PUBLISHED_ERROR,[],$e->getMessage() );
+		}
     }
 }

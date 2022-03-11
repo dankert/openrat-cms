@@ -11,6 +11,7 @@ use cms\model\Permission;
 use cms\model\Page;
 use cms\model\Project;
 use language\Messages;
+use util\exception\PublisherException;
 use util\Session;
 
 
@@ -50,9 +51,13 @@ class TemplatePubAction extends TemplateAction implements Method {
 			}
 		}
 
-		$publisher->publish();
+		try {
+			$publisher->publish();
 
-		$this->addNoticeFor( $this->template,Messages::PUBLISHED,[],
-			implode("\n",$publisher->getDestinationFilenames() ) );
+			$this->addNoticeFor( $this->template,Messages::PUBLISHED,[],
+				implode("\n",$publisher->getDestinationFilenames() ) );
+		} catch( PublisherException $e ) {
+			$this->addErrorFor( $this->template,Messages::PUBLISHED_ERROR,[],$e->getMessage() );
+		}
     }
 }
