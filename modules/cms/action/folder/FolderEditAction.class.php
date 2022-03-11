@@ -46,7 +46,7 @@ class FolderEditAction extends FolderAction implements Method {
 				}
 
 				$list[$id]['date'] = $o->lastchangeDate;
-				$list[$id]['user'] = $o->lastchangeUser;
+				$list[$id]['user'] = $o->lastchangeUser->getProperties();
 			}
 		}
 
