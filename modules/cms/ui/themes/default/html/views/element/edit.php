@@ -5,6 +5,14 @@
     </div>
     <div class="<?php echo O::escapeHtml('or-table-area') ?>"><?php echo O::escapeHtml('') ?>
       <table class="<?php echo O::escapeHtml('or-table') ?>"><?php echo O::escapeHtml('') ?>
+        <tr class="<?php echo O::escapeHtml('or-table-header') ?>"><?php echo O::escapeHtml('') ?>
+          <th><?php echo O::escapeHtml('') ?>
+            <span><?php echo O::escapeHtml('') ?></span>
+          </th>
+          <th><?php echo O::escapeHtml('') ?>
+            <span><?php echo O::escapeHtml(''.@O::lang('value').'') ?></span>
+          </th>
+        </tr>
         <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
           <td colspan="<?php echo O::escapeHtml('1') ?>"><?php echo O::escapeHtml('') ?>
             <span><?php echo O::escapeHtml(''.@O::lang('type').'') ?></span>
