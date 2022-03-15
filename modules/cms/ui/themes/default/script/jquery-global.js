@@ -50,7 +50,7 @@ class CMSQuery extends OQuery {
 	};
 
 	toggleAttr() {
-		return toggleAttr.call(this);
+		return toggleAttr.apply(this,arguments);
 	};
 }
 
