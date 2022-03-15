@@ -87,7 +87,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 }
 .or-collapsible .or-collapsible-value {
 	max-height: 0;
-	overflow: hidden;
 	opacity: 0;
 }
 .or-collapsible .or-collapsible-title {
@@ -111,7 +110,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 .or-collapsible--is-visible .or-collapsible-value {
 	opacity: 1;
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22var%5C%2Fwww%5C%2Flocalhost%5C%2Fcms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-collapsible.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AAGI%2CGAAC%3B%3B%3BAAAD%2CGAAC%2CYAEG%3BCACI%3B%3BAAHR%2CGAAC%2CYAMG%3BCAGI%3BCACA%3BCACA%3B%3BAAXR%2CGAAC%2CYAcG%3BCACI%3B%3BAAfR%2CGAAC%2CYAkBG%3BCACI%3B%3BAAnBR%2CGAAC%2CYAqBG%3BCACI%3B%3BAAIJ%2CGA1BH%2CYA0BI%2CSAGG%3BCACI%3B%3BAAJR%2CGA1BH%2CYA0BI%2CSAMG%3BCACI%3B%3BAAPR%2CGA1BH%2CYA0BI%2CSASG%3BCACE%3B%3BAAKN%2CGAzCH%2CYAyCI%2CYACC%3BCACE%22%7D */
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22var%5C%2Fwww%5C%2Flocalhost%5C%2Fcms%5C%2Fmodules%5C%2Fcms%5C%2Fui%5C%2Fthemes%5C%2Fdefault%5C%2Fstyle%5C%2Fopenrat-collapsible.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AAGI%2CGAAC%3B%3B%3BAAAD%2CGAAC%2CYAEG%3BCACI%3B%3BAAHR%2CGAAC%2CYAMG%3BCAGI%3BCAEA%3B%3BAAXR%2CGAAC%2CYAcG%3BCACI%3B%3BAAfR%2CGAAC%2CYAkBG%3BCACI%3B%3BAAnBR%2CGAAC%2CYAqBG%3BCACI%3B%3BAAIJ%2CGA1BH%2CYA0BI%2CSAGG%3BCACI%3B%3BAAJR%2CGA1BH%2CYA0BI%2CSAMG%3BCACI%3B%3BAAPR%2CGA1BH%2CYA0BI%2CSASG%3BCACE%3B%3BAAKN%2CGAzCH%2CYAyCI%2CYACC%3BCACE%22%7D */
 /* Include style: /default/style/openrat-dialog */
 /*
 OpenRat Content Management System
