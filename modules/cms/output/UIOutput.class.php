@@ -115,6 +115,7 @@ class UIOutput extends BaseOutput
 
 			$outputDataClone = $outputData;
 			array_walk_recursive($outputDataClone, function(&$v) { $v = htmlspecialchars($v); });
+			//array_walk_recursive($outputDataClone, function(&$v) { if(is_string($v)) $v = htmlspecialchars($v); });
 			echo "<!--  \n".var_export($outputDataClone,true)."\n-->";
 		}
 
