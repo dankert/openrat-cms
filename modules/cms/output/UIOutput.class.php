@@ -81,8 +81,8 @@ class UIOutput extends BaseOutput
 	protected static function getCustomTimezone() {
 
 		$user = Session::getUser(); // the user timezone has precedence.
-		if   ( $user && $user->timezone ) // user is set and a timezone is set
-			return( $user->timezone );
+		if   ( $user && $user->timezone && in_array( $user->timezone,timezone_identifiers_list() ) ) // user is set and a timezone is set and timezone is valid
+			return( $user->timezone ); // Timezone from user setting
 		elseif ( $configuredTimezone = Configuration::subset('ui')->get('timezone') )
 			return $configuredTimezone; // Timezone from configuration
 
