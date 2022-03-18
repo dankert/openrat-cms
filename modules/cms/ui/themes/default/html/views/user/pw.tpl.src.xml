@@ -13,13 +13,13 @@
 				<if true="${config:mail/enabled}">
 					<if present="mail">
 						<fieldset>
-							<checkbox name="email" label="${message:user_mail_new_password}"/>
+							<checkbox name="email" label="${message:user_mail_new_password}" remember="true"/>
 						</fieldset>
 					</if>
 				</if>
 
 				<fieldset>
-					<checkbox name="timeout" label="${message:user_password_timeout}"/>
+					<checkbox name="timeout" label="${message:user_password_timeout}" remember="true"/>
 				</fieldset>
 			</group>
 		</form>
