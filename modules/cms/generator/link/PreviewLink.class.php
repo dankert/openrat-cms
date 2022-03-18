@@ -35,7 +35,7 @@ class PreviewLink implements LinkFormat
 	/**
 	 * Calculates the Preview Link to an object.
 	 *
-     * @param $from \cms\model\BaseObject this is the source object from which the links points to $to.
+     * @param $from \cms\model\BaseObject unused in preview.
      * @param $to \cms\model\BaseObject the target where the link points to.
      */
     public function linkToObject( BaseObject $from, BaseObject $to )
