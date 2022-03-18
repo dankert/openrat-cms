@@ -4,8 +4,8 @@
 		<group title="${message:OPTIONS}" collapsible="true">
 			<fieldset>
 
-				<selectbox name="languageid" list="languages" default="${languageid}"/>
-				<selectbox name="modelid" list="models" default="${modelid}" />
+				<selectbox name="languageid" list="languages" />
+				<selectbox name="modelid" list="models"  />
 			</fieldset>
 		</group>
 		<group title="${message:PREVIEW}">

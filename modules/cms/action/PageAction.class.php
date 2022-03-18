@@ -92,10 +92,10 @@ class PageAction extends ObjectAction
     protected function setModelAndLanguage()
     {
         $this->setTemplateVar('languages' ,$this->page->getProject()->getLanguages());
-        $this->setTemplateVar('languageid',$this->page->getProject()->getDefaultLanguageId() );
+        $this->setTemplateVar('languageid',$this->request->getLanguageId() ?: $this->page->getProject()->getDefaultLanguageId() );
 
         $this->setTemplateVar('models'    ,$this->page->getProject()->getModels()   );
-        $this->setTemplateVar('modelid'   ,$this->page->getProject()->getDefaultModelId() );
+        $this->setTemplateVar('modelid'   ,$this->request->getModelId() ?: $this->page->getProject()->getDefaultModelId() );
     }
 
 

@@ -8,7 +8,7 @@ use cms\generator\PageContext;
 use cms\generator\Producer;
 use util\Html;
 
-class PagePreviewAction extends PageAction implements Method {
+class PagePreviewAction extends PageAction {
 
 
 	/**
@@ -22,7 +22,4 @@ class PagePreviewAction extends PageAction implements Method {
 		$this->setTemplateVar('preview_url',$linkFormat->linkToObject($this->page,$this->page) );
     }
 
-
-    public function post() {
-    }
 }
