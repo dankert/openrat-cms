@@ -13,7 +13,7 @@
         <part class="label">
 				</part>
         <part class="value">
-          <checkbox name="pages" readonly="true" default="true"/>
+          <checkbox name="pages" readonly="true" default="true" remember="true"/>
           <label for="files">
             <text value="${message:publish}"/>
           </label>

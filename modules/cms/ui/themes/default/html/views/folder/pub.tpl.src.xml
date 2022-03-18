@@ -12,24 +12,24 @@
 		<group title="${message:publish}">
 			<if true="${pages}">
 				<fieldset label="">
-					<checkbox name="pages" label="${message:pages}"/>
+					<checkbox name="pages" label="${message:pages}" remember="true"/>
 				</fieldset>
 			</if>
 			<if true="${files}">
 				<fieldset>
-					<checkbox name="files" label="${message:files}"/>
+					<checkbox name="files" label="${message:files}" remember="true"/>
 				</fieldset>
 			</if>
 		</group>
 		<group title="${message:options}">
 			<if present="subdirs">
 				<fieldset label="">
-					<checkbox name="subdirs" label="${message:PUBLISH_WITH_SUBDIRS}"/>
+					<checkbox name="subdirs" label="${message:PUBLISH_WITH_SUBDIRS}" remember="true"/>
 				</fieldset>
 			</if>
 			<if present="clean">
 				<fieldset label="">
-					<checkbox name="clean" label="${message:CLEAN_AFTER_PUBLISH}"/>
+					<checkbox name="clean" label="${message:CLEAN_AFTER_PUBLISH}" remember="true"/>
 				</fieldset>
 			</if>
 		</group>
