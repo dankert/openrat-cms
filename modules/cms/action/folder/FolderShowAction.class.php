@@ -18,7 +18,7 @@ class FolderShowAction extends FolderAction implements Method {
     public function view() {
 
         // Angabe Content-Type
-        $this->addHeader('Content-Type','text/html' );
+        $this->setContentType('text/html' );
 
         $this->addHeader('X-Folder-Id'        ,$this->folder->folderid   );
         $this->addHeader('X-Id'               ,$this->folder->objectid   );

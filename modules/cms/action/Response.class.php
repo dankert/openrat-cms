@@ -32,6 +32,24 @@ class Response
 	}
 
 
+	public function setContentSecurityPolicy( $csp ) {
+
+		// Content Security Policy
+		$this->header['Content-Security-Policy'] = implode(';', array_map( function($value,$key) {
+				return $key.' '.$value;
+			},$csp,array_keys($csp) ));
+	}
+
+
+	/**
+	 * Sets the content type.
+	 * @param $type string
+	 * @param $charset string Default: UTF-8
+	 */
+	public function setContentType( $type, $charset = Startup::CHARSET) {
+		$this->header['Content-Type'] = $type.'; charset=' . $charset;
+	}
+
 	/**
 	 * Getting the response data as an array.
 	 *
@@ -70,6 +88,8 @@ class Response
 			header( $name.': '.$value );
 		}
 	}
+
+
 
 
 	/**

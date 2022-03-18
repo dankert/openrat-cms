@@ -48,7 +48,7 @@ class IndexAction extends Action
      */
     protected function getUserStyle($user )
     {
-        // Theme für den angemeldeten Benuter ermitteln
+        // Theme für den angemeldeten Benutzer ermitteln
         if  ( $user && C::subset('style')->has($user->style) )
             $style = $user->style;
         else
@@ -62,16 +62,14 @@ class IndexAction extends Action
 	/**
 	 * Content-Security-Policy.
 	 */
-	protected function setContentSecurityPolicy()
+	protected function addContentSecurityPolicy()
 	{
 		$csp = Configuration::subset('security' )->get('csp', [
 			'default-src' =>'\'self\'', // Default for all is 'self' (CSS, styles, etc)
 			'frame-src'   => '*'        // For preview of urls we need to show every url in an iframe.
 		] );
 
-		header('Content-Security-Policy: ' . implode(';', array_map( function($value,$key) {
-				return $key.' '.$value;
-			},$csp,array_keys($csp) )));
+		$this->setContentSecurityPolicy( $csp );
 	}
 
 

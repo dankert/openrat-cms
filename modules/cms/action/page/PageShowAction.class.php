@@ -16,7 +16,7 @@ class PageShowAction extends PageAction implements Method {
         // The output is only shown in an iframe, so there is no security impact to the CMS.
         // But if the template is using inline JS or CSS, we would break this with a CSP-header.
 		$pageSettingsConfig =  new Config( $this->page->getTotalSettings() );
-        $this->addHeader('Content-Security-Policy',$pageSettingsConfig->get('content-security-policy','') );
+        $this->setContentSecurityPolicy($pageSettingsConfig->get('content-security-policy',[]) );
 
 		$this->page->load();
 
@@ -32,7 +32,7 @@ class PageShowAction extends PageAction implements Method {
 
 		$generator = new PageGenerator( $pageContext );
 
-		$this->addHeader('Content-Type',$generator->getMimeType().'; charset=UTF-8' );
+		$this->setContentType( $generator->getMimeType() );
 
 
 		$template = new Template( $this->page->templateid );

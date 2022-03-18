@@ -58,6 +58,7 @@ class ObjectAction extends BaseAction
 
 		$this->setBaseObject( $baseObject );
 
+		$this->addHeader('X-CMS-OID',$baseObject->objectid );
 	}
 
 

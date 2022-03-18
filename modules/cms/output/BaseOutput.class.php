@@ -6,6 +6,7 @@ use BadMethodCallException;
 use cms\action\RequestParams;
 use cms\action\Response;
 use cms\base\Language as L;
+use cms\base\Startup;
 use cms\Dispatcher;
 use Exception;
 use util\Http;
@@ -48,6 +49,10 @@ abstract class BaseOutput implements Output
 			$dispatcher->setRequestAndResponse( $request,$response );
 
 			$dispatcher->doAction();      // calling the action ...
+
+			if   ( $contentType = $this->getContentType() )
+				header('Content-Type: '.$contentType.'; charset='.Startup::CHARSET);
+
 			$response->setHTTPHeader();
 
 			$this->outputData( $request,$response->getOutputData() );  // ... and output the data

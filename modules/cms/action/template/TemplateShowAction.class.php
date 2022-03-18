@@ -16,7 +16,7 @@ class TemplateShowAction extends TemplateAction implements Method {
 
 		$tplGenerator = new TemplateGenerator( $this->template->templateid, $this->request->getModelId(), Producer::SCHEME_PREVIEW );
 
-		$this->addHeader('Content-Type',$tplGenerator->getMimeType().'; charset=UTF-8' );
+		$this->setContentType($tplGenerator->getMimeType() );
 
 		// Template should have access to the page properties.
 		// Template should have access to the settings of this node object.

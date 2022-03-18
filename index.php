@@ -15,14 +15,15 @@ try {
 	Startup::initialize();
 
 } catch (ErrorException $e) {
+	// Switching to text/plain here because so there is no way to inject any HTML to the page.
 	header('Content-Type: text/plain');
 	error_log( $e->getMessage() );
-	echo "Startup failed";
+	echo "Sorry, startup failed";
+	exit;
 }
 
 // Creates the output driver
 // Dependent on which data format is requested by the client.
 $output = OutputFactory::createOutput();
-header('Content-Type: ' . $output->getContentType() . '; charset=' . Startup::CHARSET);
 
 $output->execute(); // Outputs the data.

@@ -9,11 +9,7 @@ class UrlShowAction extends UrlAction implements Method {
 
 	public function view() {
         // Angabe Content-Type
-        $this->addHeader('Content-Type','text/html' );
-
-		$this->addHeader('X-Url-Id'           ,$this->url->urlid      );
-		$this->addHeader('X-Id'               ,$this->url->objectid   );
-		$this->addHeader('Content-Description',$this->url->filename() );
+        $this->setContentType('text/html' );
 
         echo '<html><body>';
         echo '<h1>'.$this->url->filename.'</h1>';

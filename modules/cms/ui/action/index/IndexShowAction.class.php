@@ -27,7 +27,7 @@ class IndexShowAction extends IndexAction implements Method {
 
     public function view() {
 
-		$this->setContentSecurityPolicy();
+		$this->addContentSecurityPolicy();
 
         $user = Session::getUser();
 
@@ -58,7 +58,7 @@ class IndexShowAction extends IndexAction implements Method {
         $this->setTemplateVar('styleLink'       , $this->getStyleLink()  );
 
         $this->setTemplateVar('themeStyleLink', Html::url('index','themestyle',0,['style'=>$style]) );
-        $this->setTemplateVar('manifestLink'  , Html::url('index','manifest'  ) );
+        $this->setTemplateVar('manifestLink'  , Html::url('index','manifest',0,['output'=>'json']  ) );
 
 		$themeStyle = new ThemeStyle( Configuration::subset('style')->get($style,[]) ); // user style config
 

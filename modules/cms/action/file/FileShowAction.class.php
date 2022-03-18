@@ -47,17 +47,14 @@ class FileShowAction extends FileAction implements Method {
 
 			$mime_type = File::$MIME_TYPES[$ext];
 
-			$this->addHeader('Content-Type',$mime_type );
+			$this->setContentType( $mime_type );
 			$this->addHeader('Content-Encoding','gzip' );
 		}
 		else
 		{
 			// Angabe Content-Type
-			$this->addHeader('Content-Type',$generator->getMimeType() );
+			$this->setContentType($generator->getMimeType() );
 		}
-
-		$this->addHeader('X-File-Id',$this->file->fileid     );
-		$this->addHeader('X-Id'     ,$this->file->objectid   );
 
 		// Image should be displayed inline.
 		// Filename is used if the user agent is saving the file.

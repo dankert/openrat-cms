@@ -112,6 +112,26 @@ abstract class Action
 		$this->response->addHeader( $name, $value );
 	}
 
+
+	/**
+	 * Sets the content security policy.
+	 *
+	 * @param $csp string content security policy as array
+	 */
+	protected function setContentSecurityPolicy( $csp ) {
+		$this->response->setContentSecurityPolicy( $csp );
+	}
+
+
+	/**
+	 * Sets the content type.
+	 *
+	 * @param $type
+	 */
+	protected function setContentType( $type ) {
+		$this->response->setContentType( $type );
+	}
+
 	/**
 	 * F�gt einen Validierungsfehler hinzu.
 	 *
@@ -290,7 +310,7 @@ abstract class Action
 			return;
 
 		// Der entfernte Browser bzw. Proxy holt die Seite nun aus seinem Cache
-		$this->addHeader('HTTP/1.0 304 Not Modified');
+		header('HTTP/1.0 304 Not Modified');
 		exit;  // Sofortiges Skript-Ende
 	}
 

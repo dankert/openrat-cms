@@ -12,15 +12,22 @@ use util\YAML;
 class PreviewOutput extends APIOutput
 {
 	/**
-     * Renders the output directy from the action output.
+     * Renders the output directly from the action output.
      */
     protected function renderOutput( $data )
 	{
+		// HTTP Spec:
+		// "Applications SHOULD use this field to indicate the transfer-length of the
+		//  message-body, unless this is prohibited by the rules in section 4.4."
+		//
+		// And the overhead of 'Transfer-Encoding: chunked' is eliminated...
+		header('Content-Length: ' . strlen($data['output']['value']));
+
 		return $data['output']['value'];
 	}
 
 	public function getContentType()
 	{
-		return 'text/css';
+		return null; // 'null' because the actions are setting their Content-Type.
 	}
 }
