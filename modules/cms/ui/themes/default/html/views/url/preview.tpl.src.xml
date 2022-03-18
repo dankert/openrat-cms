@@ -1,15 +1,13 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-  <part class="toolbar-icon">
-    <image menu="refresh"/>
-  </part>
-  <!--
-    <part class="toolbar-icon,act-clickable">
-        <link type="popup" class="action" url="${preview_url}">
-            <image menu="open_in_new"></image>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<group title="${message:preview}">
+		<insert url="${preview_url}" name="preview" />
 
-            <text value="${message:link_open_in_new_window}"></text>
-        </link>
-    </part>
-    -->
-  <insert url="${preview_url}" name="preview"/>
+		<!-- action button for previewing in popup -->
+		<link clickable="true" type="popup" class="action" url="${preview_url}">
+			<image menu="open_in_new"/>
+			<text value="${message:link_open_in_new_window}"/>
+		</link>
+	</group>
+
 </output>

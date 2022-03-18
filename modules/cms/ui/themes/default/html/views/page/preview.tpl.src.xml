@@ -1,20 +1,23 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form action="page" method="GET" target="self" subaction="preview" autosave="true" cancel="false">
-		<selectbox name="languageid" list="languages" default="${languageid}">
+		<group title="${message:OPTIONS}" collapsible="true">
+			<fieldset>
 
-		</selectbox>
-		<selectbox name="modelid" list="models" default="${modelid}">
+				<selectbox name="languageid" list="languages" default="${languageid}"/>
+				<selectbox name="modelid" list="models" default="${modelid}" />
+			</fieldset>
+		</group>
+		<group title="${message:PREVIEW}">
+			<!-- Inserting the preview as an iframe -->
+			<insert url="${preview_url}" name="preview"/>
 
-		</selectbox>
-	</form>
-
-	<group title="${message:PREVIEW}">
+			<!-- action button for previewing in popup -->
 			<link clickable="true" type="popup" class="action" url="${preview_url}">
 				<image menu="open_in_new"/>
 				<text value="${message:link_open_in_new_window}"/>
 			</link>
+		</group>
+	</form>
 
-		<insert url="${preview_url}" name="preview"/>
-	</group>
 </output>

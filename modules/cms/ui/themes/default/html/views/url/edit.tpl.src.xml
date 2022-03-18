@@ -3,7 +3,7 @@
 	<group title="${message:url}" collapsible="false">
 		<fieldset label="${message:link_url}">
 			<part tag="span">
-				<link url="${url}" type="external">
+				<link url="${url}" type="external" >
 					<text value="${url}"/>
 				</link>
 				<qrcode value="${url}"/>

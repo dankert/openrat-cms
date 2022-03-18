@@ -1,18 +1,18 @@
-<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-  <form action="template" method="GET" target="self" subaction="preview" autosave="true" cancel="false">
-    <selectbox name="modelid" list="models" default="${modelid}">
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form action="template" method="GET" target="self" subaction="preview" autosave="true" cancel="false">
+		<group title="${message:options}">
+			<selectbox name="modelid" list="models" default="${modelid}" />
+		</group>
 
-        </selectbox>
-  </form>
-  <group title="${message:preview}">
-    <insert url="${preview_url}"/>
-    <link class="action" action="file" subaction="edit">
-      <image file="icon/edit"/>
-      <text value="${message:menu_file_edit}"/>
-    </link>
-    <link class="action" action="file" subaction="editvalue">
-      <image file="icon/editvalue"/>
-      <text value="${message:menu_file_editvalue}"/>
-    </link>
-  </group>
+		<group title="${message:preview}">
+			<insert url="${preview_url}"/>
+
+			<!-- action button for previewing in popup -->
+			<link clickable="true" type="popup" class="action" url="${preview_url}">
+				<image menu="open_in_new"/>
+				<text value="${message:link_open_in_new_window}"/>
+			</link>
+		</group>
+	</form>
 </output>

@@ -1,14 +1,16 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 
-	<image url="${url}" class="image--preview"/>
+	<group title="${message:PREVIEW}">
 
-	<newline />
-	<newline />
+		<image url="${url}" class="image--preview"/>
 
-	<link clickable="true" type="popup" class="action" url="${preview_url}">
-		<image menu="open_in_new"/>
-		<text value="${message:link_open_in_new_window}"/>
-	</link>
+		<newline/>
+
+		<link clickable="true" type="popup" class="action" url="${preview_url}">
+			<image menu="open_in_new"/>
+			<text value="${message:link_open_in_new_window}"/>
+		</link>
+	</group>
 
 </output>
