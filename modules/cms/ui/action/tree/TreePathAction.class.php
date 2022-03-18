@@ -67,10 +67,11 @@ class TreePathAction extends TreeAction implements Method {
 			case 'folder':
 			case 'link'  :
 			case 'url'   :
+			case 'alias' :
 			case 'page'  :
 			case 'file'  :
 			case 'image' :
-			case 'text' :
+			case 'text'  :
 				$o = new BaseObject( $id );
 				$o->load();
 
