@@ -20,7 +20,7 @@ class TemplatePreviewAction extends TemplateAction implements Method {
 
         $this->setTemplateVar('modelid'   ,$modelId);
 
-		$this->setTemplateVar('preview_url',Html::url('template','show',$this->template->templateid,array('target'=>'none','modelid'=>$modelId ) ) );
+		$this->setTemplateVar('preview_url',Html::url('template','show',$this->template->templateid,array('target'=>'none','modelid'=>$modelId,'output'=>'preview' ) ) );
     }
     public function post() {
     }

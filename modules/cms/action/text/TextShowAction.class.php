@@ -6,8 +6,6 @@ use cms\action\TextAction;
 class TextShowAction extends TextAction implements Method {
     public function view() {
 
-		parent::showView();
-    }
-    public function post() {
+		parent::view();
     }
 }

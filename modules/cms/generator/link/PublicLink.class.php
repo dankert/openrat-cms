@@ -32,6 +32,8 @@ use util\Session;
 
 
 /**
+ * Linkformatter for public links.
+ *
  * @author Jan Dankert
  */
 

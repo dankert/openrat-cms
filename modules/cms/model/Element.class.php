@@ -3,6 +3,9 @@ namespace cms\model;
 
 
 use cms\base\DB as Db;
+use cms\generator\FileContext;
+use cms\generator\link\PreviewLink;
+use cms\generator\Producer;
 use util\ArrayUtils;
 use logger\Logger;
 
@@ -441,23 +444,47 @@ SQL
 	}
 
 
-
-	function getDefaultValue()
+	/**
+	 * Default value
+	 * @return string default value
+	 */
+	public function getDefaultValue()
 	{
-		switch(  $this->type )
+		switch(  $this->typeid )
 		{
-			case 'text':
-			case 'longtext':
+			case self::ELEMENT_TYPE_TEXT:
+			case self::ELEMENT_TYPE_LONGTEXT:
 				return $this->defaultText;
-
+			case self::ELEMENT_TYPE_INFO:
+				return '(i)';
+			case self::ELEMENT_TYPE_LINKDATE:
+			case self::ELEMENT_TYPE_INFODATE:
+			case self::ELEMENT_TYPE_DATE:
+				return date($this->dateformat);
+			case self::ELEMENT_TYPE_LINK:
+				if   ( $this->defaultObjectId ) {
+					$o = new BaseObject($this->defaultObjectId);
+					$o->load();
+					switch( $o->typeid ) {
+						case BaseObject::TYPEID_FILE:
+						case BaseObject::TYPEID_IMAGE:
+						case BaseObject::TYPEID_TEXT:
+							$linkFormat = new PreviewLink( new FileContext($o->objectid,Producer::SCHEME_PREVIEW));
+							return $linkFormat->linkToObject($o,$o);
+						case BaseObject::TYPEID_LINK:
+							return "";
+						case BaseObject::TYPEID_URL:
+							$url = new Url( $o->objectid );
+							$url->load();
+							return $url->url;
+					}
+				}
+				return $this->getName();
 			case 'number';
 				return '0';
-
 			default:
+				return $this->getName();
 		}
-
-		return \cms\base\Language::lang('EL_TYPE_'.$this->type);
-
 	}
 
     /**

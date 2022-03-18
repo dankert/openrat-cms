@@ -7,7 +7,7 @@
 
 		<newline/>
 
-		<link clickable="true" type="popup" class="action" url="${preview_url}">
+		<link clickable="true" type="popup" class="action" url="${url}">
 			<image menu="open_in_new"/>
 			<text value="${message:link_open_in_new_window}"/>
 		</link>

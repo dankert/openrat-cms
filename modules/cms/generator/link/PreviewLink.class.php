@@ -12,10 +12,7 @@ use cms\model\Url;
 use util\exception\GeneratorException;
 
 /**
- * Created by PhpStorm.
- * User: dankert
- * Date: 10.08.18
- * Time: 23:47
+ * Linkformatter for Preview.
  */
 
 class PreviewLink implements LinkFormat
@@ -23,7 +20,7 @@ class PreviewLink implements LinkFormat
 	private $context;
 
 	/**
-	 * PublicLink constructor.
+	 * PreviewLink constructor.
 	 * @param $context BaseContext
 	 */
 	public function __construct($context)
@@ -35,8 +32,8 @@ class PreviewLink implements LinkFormat
 	/**
 	 * Calculates the Preview Link to an object.
 	 *
-     * @param $from \cms\model\BaseObject unused in preview.
-     * @param $to \cms\model\BaseObject the target where the link points to.
+     * @param $from BaseObject unused in preview.
+     * @param $to BaseObject the target where the link points to.
      */
     public function linkToObject( BaseObject $from, BaseObject $to )
     {

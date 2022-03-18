@@ -3,50 +3,35 @@ namespace cms\action\template;
 use cms\action\Method;
 use cms\action\RequestParams;
 use cms\action\TemplateAction;
+use cms\generator\Producer;
+use cms\generator\TemplateGenerator;
 use cms\model\Element;
 use cms\model\Project;
 use cms\model\TemplateModel;
 
 
 class TemplateShowAction extends TemplateAction implements Method {
+
     public function view() {
-		$modelId = $this->request->getModelId();
-		if   ( ! $modelId )
-			$modelId = Project::create( $this->template->projectid )->getDefaultModelId();
 
-		$templatemodel = new TemplateModel($this->template->templateid, $modelId);
-		$templatemodel->load();
+		$tplGenerator = new TemplateGenerator( $this->template->templateid, $this->request->getModelId(), Producer::SCHEME_PREVIEW );
 
-		$this->addHeader('Content-Type',$templatemodel->mimeType().'; charset=UTF-8' );
-		$text = $templatemodel->src;
-	
-		foreach( $this->template->getElementIds() as $elid )
-		{
-			$element = new Element( $elid );
+		$this->addHeader('Content-Type',$tplGenerator->getMimeType().'; charset=UTF-8' );
+
+		// Template should have access to the page properties.
+		// Template should have access to the settings of this node object.
+		$data = [];
+		$data['_page'         ] = [];
+		$data['_localsettings'] = [];
+		$data['_settings'     ] = [];
+
+		/** @var Element $element */
+		foreach($this->template->getElements() as $element ) {
+
 			$element->load();
-
-			$text = str_replace('{{'.$elid.'}}',$element->name,
-			                    $text );
-			$text = str_replace('{{->'.$elid.'}}','',
-			                    $text );
-
-			$text = str_replace('{{IFEMPTY:'.$elid.':BEGIN}}','',
-			                    $text );
-			$text = str_replace('{{IFEMPTY:'.$elid.':END}}','',
-			                    $text );
-
-			$text = str_replace('{{IFNOTEMPTY:'.$elid.':BEGIN}}','',
-			                    $text );
-			$text = str_replace('{{IFNOTEMPTY:'.$elid.':END}}','',
-			                    $text );
-			                    
-			unset( $element );
+			$data[ $element->name ] = $element->getDefaultValue();
 		}
-	
-		$this->setTemplateVar('text',$text);
-    }
 
-
-    public function post() {
+		$this->setTemplateVar('value',$tplGenerator->generateValue( $data ) );
     }
 }

@@ -106,17 +106,15 @@ class PageAction extends ObjectAction
 
 		if  ( $languageId = $this->request->getLanguageId())
 			$context->languageId = $languageId;
+		else
+			$context->languageId = $this->page->getProject()->getDefaultLanguageId();
 
 		if  ( $modelId = $this->request->getModelId())
 			$context->modelId = $modelId;
-
-        if  ( !$context->languageId )
-			$context->languageId = $this->page->getProject()->getDefaultLanguageId();
-
-        if  ( !$context->modelId )
+		else
 			$context->modelId = $this->page->getProject()->getDefaultModelId();
 
-        return $context;
+		return $context;
 	}
 
 }

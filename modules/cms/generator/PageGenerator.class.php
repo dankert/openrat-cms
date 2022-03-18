@@ -85,114 +85,21 @@ class PageGenerator extends BaseGenerator
 		$page = new Page( $this->context->objectId );
 		$page->load();
 
-		$template = new Template( $page->templateid );
-		$template->load();
+		$tplGenerator = new TemplateGenerator( $page->templateid,$this->context->modelId, $this->context->scheme );
 
-		$values = $this->generatePageElements( $page );
-
-		// Get a List with ElementId->ElementName
-		$elements = array_map(function($element) {
-			return $element->name;
-		},$page->getTemplate()->getElements() );
-
-		$templatemodel = new TemplateModel( $template->templateid, $this->context->modelId );
-		if   ( $this->context->scheme == Producer::SCHEME_PREVIEW )
-			$templatemodel->load();
-		else
-			$templatemodel->loadForPublic();
-
-		$src = $templatemodel->src;
-
-		$data = array();
+		$pageValues = $this->generatePageElements( $page ); // generating the value of all page elements.
 
 		// Template should have access to the page properties.
 		// Template should have access to the settings of this node object.
+		$data = [];
 		$data['_page'         ] = $page->getProperties()   ;
 		$data['_localsettings'] = $page->getSettings()     ;
 		$data['_settings'     ] = $page->getTotalSettings();
 
-		// No we are collecting the data and are fixing some old stuff.
+		foreach( $page->getTemplate()->getElements() as $elementId=>$element )
+			$data[ $element->name ] = $pageValues[$elementId];
 
-		foreach( $elements as $elementId=>$elementName )
-		{
-			$data[ $elementName ] = $values[$elementId];
-
-			// The following code is for old template values:
-
-			// convert {{<id>}} to {{<name>}}
-			$src = str_replace( '{{'.$elementId.'}}','{{'.$elementName.'}}',$src );
-
-			$src = str_replace( '{{IFNOTEMPTY:'.$elementId.':BEGIN}}','{{#'.$elementName.'}}',$src );
-			$src = str_replace( '{{IFNOTEMPTY:'.$elementId.':END}}'  ,'{{/'.$elementName.'}}',$src );
-			$src = str_replace( '{{IFEMPTY:'   .$elementId.':BEGIN}}','{{^'.$elementName.'}}',$src );
-			$src = str_replace( '{{IFEMPTY:'   .$elementId.':END}}'  ,'{{/'.$elementName.'}}',$src );
-
-			/*if   ( $this->icons )
-				$src = str_replace( '{{->'.$elementId.'}}','<a href="javascript:parent.openNewAction(\''.$elementName.'\',\'pageelement\',\''.$this->objectid.'_'.$value->element->elementid.'\');" title="'.$value->element->desc.'"><img src="'.OR_THEMES_DIR.$conf['interface']['theme'].'/images/icon_el_'.$value->element->type.IMG_ICON_EXT.'" border="0" align="left"></a>',$src );
-			else*/
-				$src = str_replace( '{{->'.$elementId.'}}','',$src );
-		}
-
-		if ( DEVELOPMENT )
-			Logger::trace( 'pagedata: '.print_r($data,true) );
-
-		// Now we have collected all data, lets call the template engine:
-
-		$mustache = new Mustache();
-		$mustache->escape = null; // No HTML escaping, this is the job of this CMS ;)
-		$mustache->partialLoader = function( $name ) use ($page,$template) {
-
-			if   ( substr($name,0,5) == 'file:') {
-				$fileid = intval( substr($name,5) );
-				$file = new File( $fileid );
-				return $file->loadValue();
-			}
-
-
-			$project       = Project::create( $page->projectid );
-			$templateid    = array_search($name,$project->getTemplates() );
-
-			if   ( ! $templateid )
-				throw new \InvalidArgumentException( TextMessage::create('template ${name} not found',['name'=>$name]) );
-
-			if   ( $templateid == $template->templateid )
-				throw new \InvalidArgumentException('Template recursion detected on template-id '.$templateid);
-
-
-			$templatemodel = new TemplateModel( $templateid, $this->context->modelId );
-			$templatemodel->load();
-
-			return $templatemodel->src;
-		};
-
-		try {
-			$mustache->parse($src);
-		} catch (\Exception $e) {
-			// Should we throw it to the caller?
-			// No, because it is not a technical error. So let's only log it.
-			Logger::warn("Template rendering failed: ".$e->getMessage() );
-			return $e->getMessage();
-		}
-		$src = $mustache->render( $data );
-
-		// now we have the fully generated source.
-
-		// should we do a UTF-8-escaping here?
-		// Default should be off, because if you are fully using utf-8 (you should do), this is unnecessary.
-		if	( Configuration::subset('publish' )->is('escape_8bit_characters') )
-			if	( substr($this->mimeType(),-4) == 'html' )
-			{
-				/*
-				 *
-				$src = htmlentities($src,ENT_NOQUOTES,'UTF-8');
-				$src = str_replace('&lt;' , '<', $src);
-				$src = str_replace('&gt;' , '>', $src);
-				$src = str_replace('&amp;', '&', $src);
-				 */
-				$src = translateutf8tohtml($src);
-			}
-
-		return $src;
+		return $tplGenerator->generateValue( $data );
 	}
 
 	protected function generate()
