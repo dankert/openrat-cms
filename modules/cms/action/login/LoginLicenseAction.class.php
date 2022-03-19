@@ -7,7 +7,8 @@ use cms\model\User;
 use util\Session;
 
 
-class LoginLicenseAction extends LoginAction implements Method {
+class LoginLicenseAction extends LoginAction  {
+
     public function view() {
 		$software = array_map( function($lib) {
 			return [
@@ -22,7 +23,6 @@ class LoginLicenseAction extends LoginAction implements Method {
 			['CodeMirror'                        ,'https://codemirror.net/'     ,'MIT'        ],
 			['SimpleMDE'                         ,'https://simplemde.com/'      ,'MIT'        ],
 			['Trumbowyg'                         ,'https://alex-d.github.io/Trumbowyg/','MIT' ],
-			['TAR file format'                   ,'http://www.phpclasses.org/package/529','LGPL'],
 			['JSON file format'                  ,'http://pear.php.net/pepr/pepr-proposal-show.php?id=198','BSD'],
 		] );
 		
@@ -47,10 +47,6 @@ class LoginLicenseAction extends LoginAction implements Method {
 		$this->setTemplateVar('user_login'   , $user->loginDate );
 		$this->setTemplateVar('user_name'    , $user->name      );
 		$this->setTemplateVar('user_fullname', $user->fullname  );
-    }
-
-
-    public function post() {
     }
 
 

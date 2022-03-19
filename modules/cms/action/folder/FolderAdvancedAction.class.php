@@ -13,7 +13,6 @@ use cms\model\Page;
 use cms\model\Project;
 use cms\model\Url;
 use language\Messages;
-use util\ArchiveTar;
 use util\exception\SecurityException;
 use util\Html;
 
@@ -157,213 +156,161 @@ class FolderAdvancedAction extends FolderAction implements Method {
 
 		$ids = array_keys($objectList);
 
-		if	( $type == 'archive' )
+		foreach( $ids as $id )
 		{
-			require_once('serviceClasses/ArchiveTar.class.php');
-			$tar = new ArchiveTar();
-			$tar->files = array();
+			$o = new BaseObject( $id );
+			$o->load();
 
-			foreach( $ids as $id )
+			switch( $type )
 			{
-				$o = new BaseObject( $id );
-				$o->load();
+				case 'move':
+					if	( $o->isFolder )
+					{
+						$f = new Folder( $id );
+						$allsubfolders = $f->getAllSubFolderIds();
 
-				if	( $o->isFile )
-				{
-					$file = new File($id);
-					$file->load();
-
-					// Datei dem Archiv hinzufügen.
-					$info = array();
-					$info['name'] = $file->filename();
-					$info['file'] = $file->loadValue();
-					$info['mode'] = 0600;
-					$info['size'] = $file->size;
-					$info['time'] = $file->lastchangeDate;
-					$info['user_id' ] = 1000;
-					$info['group_id'] = 1000;
-					$info['user_name' ] = 'nobody';
-					$info['group_name'] = 'nobody';
-
-					$tar->numFiles++;
-					$tar->files[]= $info;
-				}
-				else
-				{
-					// Was anderes als Dateien ignorieren.
-					$this->addNoticeFor($o,Messages::NOTHING_DONE);
-				}
-
-			}
-
-			// TAR speichern.
-			$tarFile = new File();
-			$tarFile->filename = $this->request->getText('filename');
-			$tarFile->extension = 'tar';
-			$tarFile->parentid = $this->folder->objectid;
-
-			$tar->__generateTAR();
-			$tarFile->value = $tar->tar_file;
-			$tarFile->persist();
-		}
-		else
-		{
-			foreach( $ids as $id )
-			{
-				$o = new BaseObject( $id );
-				$o->load();
-
-				switch( $type )
-				{
-					case 'move':
-						if	( $o->isFolder )
+						// Plausibilisierungsprüfung:
+						//
+						// Wenn
+						// - Das Zielverzeichnis sich nicht in einem Unterverzeichnis des zu verschiebenen Ordners liegt
+						// und
+						// - Das Zielverzeichnis nicht der zu verschiebene Ordner ist
+						// dann verschieben
+						if	( !in_array($targetObjectId,$allsubfolders) && $id != $targetObjectId )
 						{
-							$f = new Folder( $id );
-							$allsubfolders = $f->getAllSubFolderIds();
-
-							// Plausibilisierungsprüfung:
-							//
-							// Wenn
-							// - Das Zielverzeichnis sich nicht in einem Unterverzeichnis des zu verschiebenen Ordners liegt
-							// und
-							// - Das Zielverzeichnis nicht der zu verschiebene Ordner ist
-							// dann verschieben
-							if	( !in_array($targetObjectId,$allsubfolders) && $id != $targetObjectId )
-							{
-								$this->addNoticeFor($o,Messages::MOVED);
-								$o->setParentId( $targetObjectId );
-							}
-							else
-							{
-								$this->addErrorFor($o,Messages::NO_RIGHTS);
-							}
+							$this->addNoticeFor($o,Messages::MOVED);
+							$o->setParentId( $targetObjectId );
 						}
 						else
 						{
-							$o->setParentId( $targetObjectId );
-							$this->addNoticeFor($o,Messages::MOVED);
+							$this->addErrorFor($o,Messages::NO_RIGHTS);
 						}
-						break;
+					}
+					else
+					{
+						$o->setParentId( $targetObjectId );
+						$this->addNoticeFor($o,Messages::MOVED);
+					}
+					break;
 
-					case 'copy':
+				case 'copy':
+					switch( $o->getType() )
+					{
+						case 'folder':
+							// Ordner zur Zeit nicht kopieren
+							// Funktion waere zu verwirrend
+							$this->addErrorFor($o,Messages::CANNOT_COPY_FOLDER);
+							break;
+
+						case 'file':
+							$f = new File();
+							$f->load();
+							$f->filename = '';
+							$f->parentid = $targetObjectId;
+							$f->persist();
+							$f->copyValueFromFile( $id );
+							$f->copyNamesFrom( $id );
+
+							$this->addNoticeFor($o,Messages::COPIED);
+							break;
+
+						case 'page':
+							$p = new Page();
+							$p->load();
+							$p->filename = '';
+							$p->parentid = $targetObjectId;
+							$p->persist();
+							$p->copyValuesFromPage( $id );
+							$p->copyNamesFrom( $id );
+							$this->addNoticeFor($o,Messages::COPIED);
+							break;
+
+						case 'link':
+							$l = new Link();
+							$l->load();
+							$l->filename = '';
+							$l->parentid = $targetObjectId;
+							$l->persist();
+							$l->copyNamesFrom( $id );
+							$this->addNoticeFor($o,Messages::COPIED);
+							break;
+
+						default:
+							throw new \LogicException('fatal: what type to delete?');
+					}
+					$notices[] = \cms\base\Language::lang('COPIED');
+					break;
+
+				case 'link':
+
+					if	( $o->isFile  ||
+						  $o->isImage ||
+						  $o->isText  ||
+						  $o->isPage  )  // Nur Seiten oder Dateien sind verknuepfbar
+					{
+						$link = new Link();
+						$link->parentid       = $targetObjectId;
+
+						$link->linkedObjectId = $id;
+						$link->isLinkToObject = true;
+						$link->persist();
+						$link->copyNamesFrom($o->objectid);
+						$this->addNoticeFor($o,Messages::LINKED);
+					}
+					else
+					{
+						$this->addErrorFor($o,Messages::ERROR);
+					}
+					break;
+
+				case 'delete':
+
+					if	( $this->request->isTrue('confirm') )
+					{
 						switch( $o->getType() )
 						{
 							case 'folder':
-								// Ordner zur Zeit nicht kopieren
-								// Funktion waere zu verwirrend
-								$this->addErrorFor($o,Messages::CANNOT_COPY_FOLDER);
+								$f = new Folder( $id );
+								$f->deleteAll();
 								break;
 
 							case 'file':
-								$f = new File();
-								$f->load();
-								$f->filename = '';
-								$f->parentid = $targetObjectId;
-								$f->persist();
-								$f->copyValueFromFile( $id );
-								$f->copyNamesFrom( $id );
-
-								$this->addNoticeFor($o,Messages::COPIED);
+								$f = new File( $id );
+								$f->delete();
 								break;
 
 							case 'page':
-								$p = new Page();
+								$p = new Page( $id );
 								$p->load();
-								$p->filename = '';
-								$p->parentid = $targetObjectId;
-								$p->persist();
-								$p->copyValuesFromPage( $id );
-								$p->copyNamesFrom( $id );
-								$this->addNoticeFor($o,Messages::COPIED);
+								$p->delete();
 								break;
 
 							case 'link':
-								$l = new Link();
-								$l->load();
-								$l->filename = '';
-								$l->parentid = $targetObjectId;
-								$l->persist();
-								$l->copyNamesFrom( $id );
-								$this->addNoticeFor($o,Messages::COPIED);
+								$l = new Link( $id );
+								$l->delete();
+								break;
+
+							case 'url':
+								$u = new Url( $id );
+								$u->delete();
 								break;
 
 							default:
-								throw new \LogicException('fatal: what type to delete?');
+								throw new \LogicException("Error while deleting: Unknown type: {$o->getType()}");
 						}
-						$notices[] = \cms\base\Language::lang('COPIED');
-						break;
+						$this->addNoticeFor($o,Messages::DELETED);
+					}
+					else
+					{
+						$this->addNoticeFor($o,Messages::NOTHING_DONE);
+					}
 
-					case 'link':
+					break;
 
-						if	( $o->isFile  ||
-                              $o->isImage ||
-                              $o->isText  ||
-							  $o->isPage  )  // Nur Seiten oder Dateien sind verknuepfbar
-						{
-							$link = new Link();
-							$link->parentid       = $targetObjectId;
-
-							$link->linkedObjectId = $id;
-							$link->isLinkToObject = true;
-							$link->persist();
-							$link->copyNamesFrom($o->objectid);
-							$this->addNoticeFor($o,Messages::LINKED);
-						}
-						else
-						{
-							$this->addErrorFor($o,Messages::ERROR);
-						}
-						break;
-
-					case 'delete':
-
-						if	( $this->request->isTrue('confirm') )
-						{
-							switch( $o->getType() )
-							{
-								case 'folder':
-									$f = new Folder( $id );
-									$f->deleteAll();
-									break;
-
-								case 'file':
-									$f = new File( $id );
-									$f->delete();
-									break;
-
-								case 'page':
-									$p = new Page( $id );
-									$p->load();
-									$p->delete();
-									break;
-
-								case 'link':
-									$l = new Link( $id );
-									$l->delete();
-									break;
-
-								case 'url':
-									$u = new Url( $id );
-									$u->delete();
-									break;
-
-								default:
-									throw new \LogicException("Error while deleting: Unknown type: {$o->getType()}");
-							}
-							$this->addNoticeFor($o,Messages::DELETED);
-						}
-						else
-						{
-							$this->addNoticeFor($o,Messages::NOTHING_DONE);
-						}
-
-						break;
-
-					default:
-						$this->addErrorFor($o,Messages::ERROR);
-				}
-
+				default:
+					$this->addErrorFor($o,Messages::ERROR);
 			}
+
 		}
 
 		$this->folder->setTimestamp();

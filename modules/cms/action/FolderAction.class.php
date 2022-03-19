@@ -3,31 +3,8 @@
 namespace cms\action;
 
 use cms\base\Configuration;
-use cms\base\Startup;
-use cms\generator\FileContext;
-use cms\generator\FileGenerator;
-use cms\generator\PageContext;
-use cms\generator\PageGenerator;
-use cms\generator\Producer;
-use cms\generator\Publisher;
-use cms\generator\PublishOrder;
 use cms\model\Permission;
-use cms\model\BaseObject;
-use cms\model\File;
 use cms\model\Folder;
-use cms\model\Image;
-use cms\model\Link;
-use cms\model\Page;
-use cms\model\Project;
-use cms\model\Text;
-use cms\model\Url;
-use language\Messages;
-use util\ArchiveTar;
-use util\exception\ValidationException;
-use util\Html;
-use util\Http;
-use util\Session;
-use util\Upload;
 
 /**
  * Action-Klasse zum Bearbeiten eines Ordners.
