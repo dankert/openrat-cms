@@ -224,7 +224,7 @@ export default function(element ) {
 		//await Workbench.addStyle ('trix-style' ,'./modules/editor/trix/trix.css');
 	    //await Workbench.addScript('trix-script','./modules/editor/trix/trix.js' );
 		await Workbench.addStyle ('trumbowyg-style'   ,'./modules/editor/trumbowyg/ui/trumbowyg.css');
-		await Workbench.addScript('jquery-slim-script','./modules/cms/ui/themes/default/script/jquery.min.js' );
+		await Workbench.addScript('jquery-slim-script','./modules/editor/trumbowyg/jquery-3.6.0.min.js' ); // Trumbowyg needs JQuery
 		let j = jQuery.noConflict();
 	    await Workbench.addScript('trumbowyg-script'  ,'./modules/editor/trumbowyg/trumbowyg.js' );
         j.trumbowyg.svgPath = './modules/editor/trumbowyg/ui/icons.svg';
