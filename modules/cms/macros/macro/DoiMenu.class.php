@@ -34,6 +34,7 @@ namespace cms\macros\macro;
 // Erzeugen und Anzeigen einer Sitemap
 //
 // ---------------------------------------------------------------------------
+use cms\model\BaseObject;
 use cms\model\File;
 use cms\model\Folder;
 use cms\model\Page;
@@ -106,7 +107,8 @@ class DoiMenu extends Macro
 		else
 			$parentMenu = 'menu'.$fo->objectid;
 
-		foreach( $fo->getObjects() as $o )
+		/** @var BaseObject $o */
+		foreach($fo->getObjects() as $o )
 		{
 			$menu = 'menu'.$o->objectid;
 
@@ -115,7 +117,7 @@ class DoiMenu extends Macro
 				$pl = $nf->getFirstPageOrLink();
 				if	( is_object($pl) )
 				{
-					$this->outputLn(" var $menu = new TPopMenu('".$o->name."','','a','".$this->pathToObject($pl->objectid)."','".$o->desc."');");
+					$this->outputLn(" var $menu = new TPopMenu('".$o->filename."','','a','".$this->pathToObject($pl->objectid)."','".$o->filename."');");
 					$this->outputLn(" $parentMenu.Add(menu".$o->objectid.");");
 					$this->showFolder( $nf );
 				}
@@ -123,7 +125,7 @@ class DoiMenu extends Macro
 
 			if	( $o->isPage || $o->isPage )
 			{
-				$this->outputLn(" var $menu = new TPopMenu('".$o->name."','','a','".$this->pathToObject($o->objectid)."','".$o->desc."');");
+				$this->outputLn(" var $menu = new TPopMenu('".$o->filename."','','a','".$this->pathToObject($o->objectid)."','".$o->filename."');");
 				$this->outputLn(" $parentMenu.Add(menu".$o->objectid.");");
 			}
 		}
