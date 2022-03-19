@@ -24,8 +24,8 @@ abstract class BaseOutput implements Output
 	/**
 	 * Outputting the data to the client.
 	 * Must be overwritten by subclasses.
-	 * @param $request Request
-	 * @param $data data data array
+	 * @param $request RequestParams
+	 * @param $data array data array
 	 * @return void
 	 */
 	abstract protected function outputData($request, $data);

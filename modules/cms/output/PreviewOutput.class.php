@@ -9,12 +9,9 @@ use util\YAML;
 /**
  * Preview rendering.
  */
-class PreviewOutput extends APIOutput
+class PreviewOutput extends UIOutput
 {
-	/**
-     * Renders the output directly from the action output.
-     */
-    protected function renderOutput( $data )
+	protected function outputData($request, $data)
 	{
 		// HTTP Spec:
 		// "Applications SHOULD use this field to indicate the transfer-length of the
@@ -23,11 +20,6 @@ class PreviewOutput extends APIOutput
 		// And the overhead of 'Transfer-Encoding: chunked' is eliminated...
 		header('Content-Length: ' . strlen($data['output']['value']));
 
-		return $data['output']['value'];
-	}
-
-	public function getContentType()
-	{
-		return null; // 'null' because the actions are setting their Content-Type.
+		echo $data['output']['value'];
 	}
 }

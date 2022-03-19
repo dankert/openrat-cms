@@ -79,7 +79,6 @@ abstract class APIOutput extends BaseOutput
 	protected function outputData($request, $data)
 	{
 		$data += [
-			'output'  => $data,
 			'session' => [
 				'name'  => session_name(),
 				'id'    => session_id(),
