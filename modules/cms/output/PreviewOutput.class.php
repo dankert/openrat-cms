@@ -22,4 +22,9 @@ class PreviewOutput extends UIOutput
 
 		echo $data['output']['value'];
 	}
+
+	public function getContentType()
+	{
+		return null; // the content type is set by the action itself.
+	}
 }
