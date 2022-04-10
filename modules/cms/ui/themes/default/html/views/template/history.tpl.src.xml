@@ -3,7 +3,7 @@
 	<form method="get" subaction="diff" label="${message:compare}" cancel="false" visible="true">
 		<list list="${models}" value="model" extract="true">
 
-			<group collapsible="true" title="${message:language}: ${language.name}">
+			<group collapsible="true" title="${message:model}: ${model.name}">
 
 				<table>
 					<row header="true">
