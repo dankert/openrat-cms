@@ -208,6 +208,7 @@ class PageelementAllAction extends PageelementAction implements Method {
 			$pageContent->pageId = $this->page->pageid;
 			$pageContent->languageid = $languageid;
 			$pageContent->load();
+			$pageContent->persist(); // Create the content if it does not exist yet.
 
 			$value = new Value();
 			$value->contentid = $pageContent->contentId;

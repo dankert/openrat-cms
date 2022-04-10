@@ -104,7 +104,7 @@ SQL
 	/**
 	 * Add new object.
 	 */
-	public function add()
+	protected function add()
 	{
 		// Get next ID from database.
 		$stmt = DB::sql('SELECT MAX(id) FROM {{pagecontent}}');

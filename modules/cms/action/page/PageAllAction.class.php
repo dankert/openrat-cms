@@ -207,6 +207,7 @@ class PageAllAction extends PageAction implements Method {
 			$pageContent->pageId = $this->page->pageid;
 			$pageContent->languageid = $languageid;
 			$pageContent->load();
+			$pageContent->persist(); // Create if it does not exist yet.
 
 			$value = new Value();
 			$value->contentid = $pageContent->contentId;
