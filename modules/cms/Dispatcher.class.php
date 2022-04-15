@@ -65,22 +65,22 @@ class Dispatcher
      */
     public function doAction()
     {
-        // Start the session. All classes should have been loaded up to now.
-        session_name('or_sid');
+        // Start the session.
+        session_name(getenv('CMS_SESSION_NAME') ?: 'or_sid');
 		session_start();
 
         $this->checkConfiguration();
 
-		define('PRODUCTION', Configuration::Conf()->is('production',true));
+		define('PRODUCTION' , Configuration::Conf()->is('production',true));
         define('DEVELOPMENT', !PRODUCTION);
 
         if( DEVELOPMENT)
         {
-            ini_set('display_errors', 1);
+            ini_set('display_errors'        , 1);
             ini_set('display_startup_errors', 1);
             error_reporting(E_ALL);
         }else {
-            ini_set('display_errors', 0);
+            ini_set('display_errors'        , 0);
             ini_set('display_startup_errors', 0);
             error_reporting(0);
         }
@@ -262,9 +262,7 @@ class Dispatcher
     {
         $conf = Session::getConfig();
 
-		$configFile = getenv( 'CMS_CONFIG_FILE' );
-		if   ( ! $configFile )
-			$configFile = Startup::DEFAULT_CONFIG_FILE;
+		$configFile = getenv( 'CMS_CONFIG_FILE' ) ?: Startup::DEFAULT_CONFIG_FILE;
 
 		// Konfiguration lesen.
 		// Wenn Konfiguration noch nicht in Session vorhanden oder die Konfiguration geändert wurde (erkennbar anhand des Datei-Datums)

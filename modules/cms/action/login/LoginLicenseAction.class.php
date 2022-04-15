@@ -40,9 +40,7 @@ class LoginLicenseAction extends LoginAction  {
         $this->setTemplateVar('cms_version' , Configuration::Conf()->subset('application')->get('version' ) );
         $this->setTemplateVar('cms_operator', Configuration::Conf()->subset('application')->get('operator') );
 
-        $user = Session::getUser();
-        if   ( ! $user )
-			$user = new User(); // empty user object as default.
+        $user = Session::getUser() ?: new User(); // empty user object as default.
 
 		$this->setTemplateVar('user_login'   , $user->loginDate );
 		$this->setTemplateVar('user_name'    , $user->name      );

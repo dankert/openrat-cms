@@ -59,7 +59,7 @@ class ConfigurationLoader
 
 
 	/**
-	 * Loads the configuration file an resolves all include-commands.
+	 * Loads the configuration file and resolves all include-commands.
 	 *
 	 * @return array Configuration
 	 */
@@ -73,7 +73,7 @@ class ConfigurationLoader
 		$customConfig = YAML::parse(file_get_contents($configFile));
 
 		// resolve variables
-		$customConfig = ConfigurationLoader::resolveVariables($customConfig);
+		$customConfig = self::resolveVariables($customConfig);
 
 		// Does we have includes?
 		if (isset($customConfig['include'])) {
@@ -94,7 +94,7 @@ class ConfigurationLoader
 				if (substr($file, -4) == '.yml' ||
 					substr($file, -5) == '.yaml' ||
 					substr($file, -8) == '.yml.php')
-					$customConfig = array_replace_recursive($customConfig, ConfigurationLoader::loadCustomConfig($file));
+					$customConfig = array_replace_recursive($customConfig, self::loadCustomConfig($file));
 				else
 					error_log('Warning: ' . $file . ' is no .yml file - not loaded');
 
