@@ -41,7 +41,7 @@ SQL
 
 			// Benutzer ist nicht vorhanden.
 			// Trotzdem das Kennwort hashen, um Timingattacken zu verhindern.
-			$unusedHash = Password::hash(User::pepperPassword($password), Password::bestAlgoAvailable());
+			$unusedHash = Password::hash(Password::pepperPassword($password), Password::bestAlgoAvailable());
 			if ( DEVELOPMENT )
 				Logger::debug('user not found');
 			return Auth::STATUS_FAILED ;
@@ -55,7 +55,7 @@ SQL
 		}
 
 		// Pruefen ob Kennwort mit Datenbank uebereinstimmt.
-		if (!Password::check(User::pepperPassword($password), $row_user['password_hash'], $row_user['password_algo'])) {
+		if (!Password::check(Password::pepperPassword($password), $row_user['password_hash'], $row_user['password_algo'])) {
 			// Password does NOT match.
 
 			// Increase password fail counter

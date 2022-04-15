@@ -3,6 +3,8 @@ namespace security;
 
 
 
+use cms\base\Configuration;
+
 /**
  * Security functions for passwords.
  * 
@@ -230,5 +232,53 @@ class Password
 	{
 	    time_nanosleep(0, Password::randomNumber(3)*10); // delay: 0-167772150ns (= 0-~168ms)  
 	}
+
+
+	/**
+	 * Creates a new, pronounceable password.
+	 *
+	 * Inspired by http://www.phpbuilder.com/annotate/message.php3?id=1014451
+	 *
+	 * @return String a random password
+	 */
+	public static function createPassword()
+	{
+		$passwordConfig = Configuration::subset('security')->subset('password');
+
+		$pw = '';
+		$c  = 'bcdfghjklmnprstvwz'; // consonants except hard to speak ones
+		$v  = 'aeiou';              // vowels
+		$a  = $c.$v.'123456789';    // both (plus numbers except zero)
+
+		//use two syllables...
+		for ( $i=0; $i < intval($passwordConfig->get('generated_length',16))/3; $i++ )
+		{
+			$pw .= $c[rand(0, strlen($c)-1)];
+			$pw .= $v[rand(0, strlen($v)-1)];
+			$pw .= $a[rand(0, strlen($a)-1)];
+		}
+
+		return $pw;
+	}
+
+
+
+	/**
+	 * Pepper the password.
+	 *
+	 * Siehe http://de.wikipedia.org/wiki/Salt_%28Kryptologie%29#Pfeffer
+	 * für weitere Informationen.
+	 *
+	 * @param $pass string password
+	 * @return string peppered password
+	 */
+	public static function pepperPassword( $pass )
+	{
+		$salt = Configuration::Conf()->subset('security')->subset('password')->get('pepper');
+
+		return $salt.$pass;
+	}
+
+
 
 }

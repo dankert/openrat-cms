@@ -757,7 +757,7 @@ SQL
 		// Hashsumme für Kennwort erzeugen
 		$sql->setIntOrNull('expires',$expire);
 		$sql->setInt   ('algo'    ,$algo                                                  );
-		$sql->setString('password',Password::hash(User::pepperPassword($password),$algo) );
+		$sql->setString('password',Password::hash(Password::pepperPassword($password),$algo) );
 		$sql->setInt   ('userid'  ,$this->userid  );
 
 		$sql->execute(); // Updating the password
@@ -1036,55 +1036,11 @@ SQL
 		$row_user = $sql->getRow();
 		
 		// Pruefen ob Kennwort mit Datenbank uebereinstimmt.
-		return Password::check(User::pepperPassword($password),$row_user['password_hash'],$row_user['password_algo']);
+		return Password::check(Password::pepperPassword($password),$row_user['password_hash'],$row_user['password_algo']);
 	}
 	
-	
-	/**
-	 * Erzeugt ein aussprechbares Kennwort.
-	 * 
-	 * Inspired by http://www.phpbuilder.com/annotate/message.php3?id=1014451
-	 * 
-	 * @return String Zuf�lliges Kennwort
-	 */
-	public function createPassword()
-	{
-		$passwordConfig = Configuration::subset('security')->subset('password');
-		
-		$pw = '';
-		$c  = 'bcdfghjklmnprstvwz'; // consonants except hard to speak ones
-		$v  = 'aeiou';              // vowels
-		$a  = $c.$v.'123456789';    // both (plus numbers except zero)
 
-		//use two syllables...
-		for ( $i=0; $i < intval($passwordConfig->get('generated_length',16))/3; $i++ )
-		{
-			$pw .= $c[rand(0, strlen($c)-1)];
-			$pw .= $v[rand(0, strlen($v)-1)];
-			$pw .= $a[rand(0, strlen($a)-1)];
-		}
 
-		return $pw;
-	}
-
-	
-	/**
-	 * Pepper the password.
-	 * 
-	 * Siehe http://de.wikipedia.org/wiki/Salt_%28Kryptologie%29#Pfeffer
-	 * für weitere Informationen.
-	 * 
-	 * @param $pass string password
-	 * @return string peppered password
-	 */
-	public static function pepperPassword( $pass )
-	{
-		$salt = Configuration::Conf()->subset('security')->subset('password')->get('pepper');
-
-		return $salt.$pass;
-	}
-	
-	
 	/**
 	 * Ermittelt projektübergreifend die letzten Änderungen des Benutzers.
 	 *
@@ -1116,36 +1072,7 @@ SQL
 	}
 	
 	
-	/**
-	 * Calculate the code, with given secret and point in time.
-	 *
-	 * @param string   $secret
-	 * @param int|null $timeSlice
-	 *
-	 * @return string
-	 */
-	public function getTOTPCode()
-	{
-	    $codeLength = 6;
-	    $timeSlice = floor(time() / 30);
-	    $secretkey = @hex2bin($this->otpSecret);
-	    // Pack time into binary string
-	    $time = chr(0).chr(0).chr(0).chr(0).pack('N*', $timeSlice);
-	    // Hash it with users secret key
-	    $hm = hash_hmac('SHA1', $time, $secretkey, true);
-	    // Use last nipple of result as index/offset
-	    $offset = ord(substr($hm, -1)) & 0x0F;
-	    // grab 4 bytes of the result
-	    $hashpart = substr($hm, $offset, 4);
-	    // Unpak binary value
-	    $value = unpack('N', $hashpart);
-	    $value = $value[1];
-	    // Only 32 bits
-	    $value = $value & 0x7FFFFFFF;
-	    $modulo = pow(10, $codeLength);
-	    return str_pad($value % $modulo, $codeLength, '0', STR_PAD_LEFT);
-	}
-	
+
 	
 	/**
 	 * Erzeugt ein neues OTP-Secret.
@@ -1160,7 +1087,6 @@ SQL
 	    $stmt->setInt   ( 'id'    , $this->userid );
 	    
 	    $stmt->execute();
-	    
 	}
 
 

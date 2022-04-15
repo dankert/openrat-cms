@@ -27,7 +27,7 @@ class LoginPasswordcodeAction extends LoginAction implements Method {
 			
 		if	( $user && $user->isValid() )
 		{
-			$newPw = $user->createPassword(); // Neues Kennwort erzeugen.
+			$newPw = Password::createPassword(); // Neues Kennwort erzeugen.
 
 			$eMail = new Mail($user->mail, Messages::MAIL_SUBJECT_PASSWORD_NEW,Messages::MAIL_TEXT_PASSWORD_NEW);
 			$eMail->setVar('name'    ,$user->getName());

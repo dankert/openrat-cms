@@ -5,7 +5,9 @@ use cms\action\UserAction;
 use cms\base\Configuration;
 use cms\model\User;
 use language\Messages;
+use security\Password;
 use util\exception\ValidationException;
+use util\mail\Mail;
 
 
 class UserPwAction extends UserAction implements Method {
@@ -14,7 +16,7 @@ class UserPwAction extends UserAction implements Method {
 		$this->setTemplateVar('enabled',$this->user->type == User::AUTH_TYPE_INTERNAL );
 		$this->setTemplateVar('mail'   ,(boolean) $this->user->mail );
 
-		$this->setTemplateVar('password_proposal', $this->user->createPassword() );
+		$this->setTemplateVar('password_proposal', Password::createPassword() );
     }
 
 
@@ -34,7 +36,10 @@ class UserPwAction extends UserAction implements Method {
 			  $this->user->mail                      && // user has an e-mail.
 			  Configuration::subset('mail')->is('enabled',true)
 			) {
-		    $this->mailPw( $password );
+			$eMail = new Mail($this->user->mail, Messages::MAIL_SUBJECT_PASSWORD_NEW,Messages::MAIL_TEXT_PASSWORD_NEW);
+			$eMail->setVar('name'    ,$this->user->getName());
+			$eMail->setVar('password',$password          );
+			$eMail->send();
 			$this->addNoticeFor( $this->user, Messages::MAIL_SENT);
 		}
 
