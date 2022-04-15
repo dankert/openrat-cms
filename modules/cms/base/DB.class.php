@@ -3,6 +3,7 @@
 namespace cms\base;
 
 use RuntimeException;
+use util\Request;
 use util\Session;
 
 class DB {
@@ -23,7 +24,7 @@ class DB {
 	 */
 	public static function get() {
 
-		$db = Session::getDatabase();
+		$db = Request::getDatabase();
 
 		if (!is_object($db))
 			throw new RuntimeException('no database available');

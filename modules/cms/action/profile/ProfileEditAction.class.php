@@ -7,6 +7,7 @@ use cms\base\Startup;
 use language\Language;
 use language\Messages;
 use security\Base2n;
+use util\Request;
 use util\Session;
 
 class ProfileEditAction extends ProfileAction implements Method {
@@ -86,7 +87,7 @@ class ProfileEditAction extends ProfileAction implements Method {
 		});
 
 		// Overwrite user in session with new settings.
-		Session::setUser( $this->user );
+		Request::setUser( $this->user );
 		
 		$this->user->persist();
 		$this->addNoticeFor( $this->user,Messages::SAVED);

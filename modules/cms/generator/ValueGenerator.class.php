@@ -29,6 +29,7 @@ use util\exception\ObjectNotFoundException;
 use util\exception\PublisherException;
 use util\Html;
 use util\Http;
+use util\Request;
 use util\Text;
 use util\Transformer;
 
@@ -971,27 +972,27 @@ class ValueGenerator extends BaseGenerator
 						break;
 
 					case 'act_user_username':
-						$user = \util\Session::getUser();
+						$user = Request::getUser();
 						if   ( $user )
 							$inhalt = $user->name;
 						break;
 					case 'act_user_fullname':
-						$user = \util\Session::getUser();
+						$user = Request::getUser();
 						if   ( $user )
 							$inhalt = $user->fullname;
 						break;
 					case 'act_user_mail':
-						$user = \util\Session::getUser();
+						$user = Request::getUser();
 						if   ( $user )
 							$inhalt = $user->mail;
 						break;
 					case 'act_user_desc':
-						$user = \util\Session::getUser();
+						$user = Request::getUser();
 						if   ( $user )
 							$inhalt = $user->desc;
 						break;
 					case 'act_user_tel':
-						$user = \util\Session::getUser();
+						$user = Request::getUser();
 						if   ( $user )
 							$inhalt = $user->tel;
 						break;

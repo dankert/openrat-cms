@@ -37,6 +37,7 @@ use LogicException;
 use util\exception\UIException;
 use util\exception\SecurityException;
 use util\json\JSON;
+use util\Request;
 use util\Session;
 use util\Text;
 use util\text\TextMessage;
@@ -65,9 +66,10 @@ class Dispatcher
      */
     public function doAction()
     {
-        // Start the session.
-        session_name(getenv('CMS_SESSION_NAME') ?: 'or_sid');
-		session_start();
+		if   ( $this->request->withAuthorization )
+			; // No session required (otherwise every API request would create a new session)
+		else
+			Session::start();
 
         $this->checkConfiguration();
 
@@ -166,7 +168,7 @@ class Dispatcher
 
 
 	/**
-	 * Make a authentication, if there is a HTTP authorization.
+	 * Make an authentication, if there is a HTTP authorization.
 	 */
 	private function checkLogin() {
 
@@ -177,7 +179,7 @@ class Dispatcher
 				throw new SecurityException('user cannot be authenticated');
 
 			$user = User::loadWithName( $this->request->authUser,User::AUTH_TYPE_INTERNAL );
-			Session::setUser( $user );
+			Request::setUser( $user );
 		}
 	}
 
@@ -245,7 +247,7 @@ class Dispatcher
 					return Session::get('action');
 
 				case 'user':
-					$user = Session::getUser();
+					$user = Request::getUser();
 					if (is_object($user))
 						return  $user->name;
 					else
@@ -260,7 +262,7 @@ class Dispatcher
 
     private function checkConfiguration()
     {
-        $conf = Session::getConfig();
+        $conf = Request::getConfig();
 
 		$configFile = getenv( 'CMS_CONFIG_FILE' ) ?: Startup::DEFAULT_CONFIG_FILE;
 
@@ -284,7 +286,7 @@ class Dispatcher
             // Sprache lesen
 			$languages = [];
 
-			if	( $user = Session::getUser() )
+			if	( $user = Request::getUser() )
 				$languages[] = $user->language; // user language has precedence.
 			else {
 				$i18nConfig = (new Config($conf))->subset('i18n');
@@ -319,7 +321,7 @@ class Dispatcher
 
             // Schreibt die Konfiguration in die Sitzung. Diese wird anschliessend nicht
             // mehr veraendert.
-            Session::setConfig($conf);
+            Request::setConfig($conf);
         }
 
     }
@@ -431,8 +433,8 @@ class Dispatcher
         if   ( $databaseId = $this->request->getDatabaseId() )
             $possibleDbIds[] = $databaseId;
 
-        if   ( Session::getDatabaseId() )
-            $possibleDbIds[] = Session::getDatabaseId();
+        if   ( $dbId = Request::getDatabaseId() )
+            $possibleDbIds[] = $dbId;
 
         if   ( Cookie::has(Action::COOKIE_DB_ID) )
             $possibleDbIds[] = Cookie::get(Action::COOKIE_DB_ID);
@@ -441,32 +443,31 @@ class Dispatcher
 
 		$possibleDbIds[] = $enabledDbids[0];
 
-		foreach( $possibleDbIds as $dbid ) {
-			if	( in_array($dbid,$enabledDbids) ) {
+		foreach( $possibleDbIds as $dbId ) {
+			if	( in_array($dbId,$enabledDbids) ) {
 
-				$dbConfig = $allDbConfig->subset( $dbid );
+				$dbConfig = $allDbConfig->subset( $dbId );
 
 				try
 				{
 					$key = $this->request->isAction && !Startup::readonly() ?'write':'read';
 
 					$db = new Database( $dbConfig->merge( $dbConfig->subset($key))->getConfig() );
-					$db->id = $dbid;
+					$db->id = $dbId;
 
 				}
 				catch(\Exception $e) {
-					throw new UIException(Messages::DATABASE_CONNECTION_ERROR, "Could not connect to DB " . $dbid, [], $e);
+					throw new UIException(Messages::DATABASE_CONNECTION_ERROR, "Could not connect to DB " . $dbId, [], $e);
 				}
 
 				// Is this the first time we are connected to this database in this session?
-				$firstDbContact = Session::getDatabaseId() != $dbid;
+				$firstDbContact = Request::getDatabaseId() != $dbId;
 
-				Session::setDatabaseId( $dbid );
-				Session::setDatabase  ( $db           );
+				Request::setDatabase  ( $db   );
 
 				if   ( $firstDbContact )
 					// Test, if we must install/update the database scheme.
-					$this->updateDatabase( $dbid );
+					$this->updateDatabase( $dbId );
 
 				return;
 			}
@@ -509,7 +510,7 @@ class Dispatcher
     {
         // Verbindung zur Datenbank
         //
-        $db = Session::getDatabase();
+        $db = Request::getDatabase();
 
         if (is_object($db)) {
             // Transactions are only needed for POST-Request
@@ -529,7 +530,7 @@ class Dispatcher
 
     private function commitDatabaseTransaction()
     {
-        $db = Session::getDatabase();
+        $db = Request::getDatabase();
 
         if (is_object($db))
             // Transactions were only started for POST-Request
@@ -541,7 +542,7 @@ class Dispatcher
 
     private function rollbackDatabaseTransaction()
     {
-        $db = Session::getDatabase();
+        $db = Request::getDatabase();
 
         if (is_object($db))
             // Transactions were only started for POST-Request
@@ -579,7 +580,7 @@ class Dispatcher
             $date = explode(" ",$micro_date);
             $filename = $dir.'/'.$auditConfig->get('prefix','audit' ).'-'.date('c',$date[1]).'-'.$date[0].'.json';
 
-            $user = Session::getUser();
+            $user = Request::getUser();
 
             $data = array(
                 'database'    => array(

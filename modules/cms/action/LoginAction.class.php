@@ -89,7 +89,7 @@ class LoginAction extends BaseAction
 		$conf = Configuration::rawConfig();
 		
 		// Diese Seite gilt pro Sitzung. 
-		$user       = Session::getUser();
+		$user       = $this->currentUser;
 		$userGroups = $user->getGroups();
 		$this->lastModified( $user->loginDate );
 

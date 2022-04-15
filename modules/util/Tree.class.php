@@ -38,7 +38,7 @@ class Tree
 	public function __construct()
 	{
 		// Feststellen, ob der angemeldete Benutzer ein Administrator ist
-		$user = Session::getUser();
+		$user = Request::getUser();
 		$this->userIsAdmin = is_object($user) && $user->isAdmin;
 	}
 

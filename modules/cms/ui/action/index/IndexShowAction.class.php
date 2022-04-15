@@ -29,7 +29,7 @@ class IndexShowAction extends IndexAction implements Method {
 
 		$this->addContentSecurityPolicy();
 
-        $user = Session::getUser();
+        $user = $this->currentUser;
 
         // Is a user logged in?
         if	( !is_object($user) )
@@ -37,7 +37,7 @@ class IndexShowAction extends IndexAction implements Method {
 		    // Lets try an auto login.
             $this->tryAutoLogin();
 
-            $user = Session::getUser();
+            $user = $this->currentUser;
         }
 
 		$configLastModificationTime = C::subset('config')->get('last_modification_time', 0);

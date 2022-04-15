@@ -2,14 +2,10 @@
 
 namespace cms\action;
 
-use cms\auth\Auth;
-use cms\auth\InternalAuth;
-use util\exception\SecurityException;
 use util\exception\ValidationException;
 use util\json\JSON;
 use util\mail\Mail;
 use util\Text;
-use util\XML;
 use util\YAML;
 
 
@@ -30,6 +26,11 @@ class RequestParams
 	public $id;
 
 	public $isAction;
+
+	/**
+	 * Request headers.
+	 * @var array
+	 */
 
 	public $headers;
 	public $authUser;
@@ -57,13 +58,7 @@ class RequestParams
 		$this->isAction = @$_SERVER['REQUEST_METHOD'] == 'POST';
 		$this->headers = array_change_key_case(getallheaders(), CASE_LOWER);
 
-		if   ( @$this->headers['authorization'] ) {
-			$this->withAuthorization = true;
-			// Only supporting Basic Auth
-			// Maybe in the future we will support JWT Bearer tokens...
-			if   ( substr( $this->headers['authorization'],0,6 ) == 'Basic ' )
-				list($this->authUser,$this->authPassword) = explode(':',base64_decode( substr( $this->headers['authorization'],6) ) );
-		}
+		$this->tryBasicAuthorization();
 
 		$this->setParameterStore();
 
@@ -371,5 +366,25 @@ class RequestParams
 
 		$this->action = $action;
 		$this->method = $method;
+	}
+
+
+	/**
+	 * Basic Authorization.
+	 *
+	 * Try login with basic authorization. This is useful for API clients, they to not need to track a session with cookies.
+	 */
+	private function tryBasicAuthorization()
+	{
+		if   ( $auth = @$this->headers['authorization'] ) {
+
+			$this->withAuthorization = true;
+			if   ( substr( $auth,0,6 ) == 'Basic ' )
+				list($this->authUser,$this->authPassword) = explode(':',base64_decode( substr( $this->headers['authorization'],6) ) );
+			else
+				// Only supporting Basic Auth
+				// Maybe in the future we will support JWT Bearer tokens...
+				error_log('Only supporting basic authorization. Authorization header will be ignored.');
+		}
 	}
 }

@@ -61,7 +61,7 @@ class SearchAction extends BaseAction
 	
 	public function editView()
 	{
-		$user = Session::getUser();
+		$user = $this->currentUser;
 		$this->setTemplateVar( 'users'     ,User::listAll() );
 		$this->setTemplateVar( 'act_userid',$user->userid   );
 	}

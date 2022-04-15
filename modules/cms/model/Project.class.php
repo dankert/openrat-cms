@@ -6,6 +6,7 @@ use cms\base\DB;
 use database\Database;
 use logger\Logger;
 use util\FileUtils;
+use util\Request;
 use util\Session;
 
 
@@ -846,7 +847,7 @@ SQL
 		
 		$sql->setInt( 'languageid', 0 );
 		
-		$user = Session::getUser();
+		$user = Request::getUser();
 		$sql->setInt( 'userid', $user->userid );
 		
 		return $sql->getAll();

@@ -42,11 +42,15 @@ SQL
 			// Benutzer ist nicht vorhanden.
 			// Trotzdem das Kennwort hashen, um Timingattacken zu verhindern.
 			$unusedHash = Password::hash(User::pepperPassword($password), Password::bestAlgoAvailable());
+			if ( DEVELOPMENT )
+				Logger::debug('user not found');
 			return Auth::STATUS_FAILED ;
 		}
 
 		$lockedUntil = $row_user['password_locked_until'];
 		if ( $lockedUntil && $lockedUntil > Startup::getStartTime() ) {
+			if ( DEVELOPMENT )
+				Logger::debug('user account ist locked until '.date('r',$lockedUntil));
 			return Auth::STATUS_FAILED + Auth::STATUS_ACCOUNT_LOCKED; // Password is locked
 		}
 

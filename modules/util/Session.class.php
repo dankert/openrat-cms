@@ -4,6 +4,7 @@
 namespace util;
 
 use cms\model\User;
+use security\Password;
 
 
 /**
@@ -31,8 +32,11 @@ class Session
 	const KEY_REGISTER_MAIL = 'register_mail';
 	const KEY_MAIL_CHANGE_CODE = 'mail_change_code';
 	const KEY_MAIL_CHANGE_MAIL = 'mail_change_mail';
+	const KEY_TOKEN            = 'token';
 
 	const PRAEFIX = 'ors_';
+
+	private static $sessionStarted;
 
 	public static function get($var)
 	{
@@ -52,66 +56,6 @@ class Session
 
 
 	/**
-	 * @return array
-	 */
-	public static function getConfig()
-	{
-		return Session::get(self::KEY_CONFIG);
-	}
-
-	public static function setConfig($var)
-	{
-		Session::set(self::KEY_CONFIG, $var);
-	}
-
-
-	/**
-	 * Current user.
-	 *
-	 * Gets the current user from session or <code>null</code>, if no user is present.
-	 *
-	 * @return User|null
-	 */
-	public static function getUser()
-	{
-		return Session::get(self::KEY_USER);
-	}
-
-	public static function setUser($var)
-	{
-		Session::set(self::KEY_USER, $var);
-	}
-
-
-	/**
-	 * @return \database\Database
-	 */
-	public static function getDatabase()
-	{
-		return Session::get(self::KEY_DB);
-	}
-
-	public static function setDatabase($var)
-	{
-		Session::set(self::KEY_DB, $var);
-	}
-
-
-	/**
-	 * @return String DB-Id
-	 */
-	public static function getDatabaseId()
-	{
-		return Session::get(self::KEY_DBID);
-	}
-
-	public static function setDatabaseId($var)
-	{
-		Session::set(self::KEY_DBID, $var);
-	}
-
-
-	/**
 	 * Schliesst die aktuelle Session
 	 *
 	 * Diese Funktion sollte so schnell wie moeglich aufgerufen werden, da vorher
@@ -122,11 +66,25 @@ class Session
 	public static function close()
 	{
 		session_write_close();
+		self::$sessionStarted = false;
 	}
 
 
 	public static function token() {
-		return substr(session_id(), -10);
+		return self::get( self::KEY_TOKEN );
+	}
+
+
+    public static function start()
+    {
+		// Start the session.
+		session_name(getenv('CMS_SESSION_NAME') ?: 'or_sid');
+		session_start();
+
+		if   ( ! self::token() )
+			self::set( self::KEY_TOKEN,Password::randomHexString(15 ) );
+
+		self::$sessionStarted = true;
 	}
 }
 

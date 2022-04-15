@@ -2,12 +2,13 @@
 namespace cms\action\configuration;
 use cms\action\ConfigurationAction;
 use cms\action\Method;
+use util\Request;
 use util\Session;
 
 
 class ConfigurationSrcAction extends ConfigurationAction implements Method {
     public function view() {
-        $conf = Session::getConfig();
+        $conf = Request::getConfig();
         unset( $conf['language']);
 
         // Mask passwords.

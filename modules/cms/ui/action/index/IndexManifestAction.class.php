@@ -33,7 +33,7 @@ use \util\exception\ObjectNotFoundException;
 class IndexManifestAction extends IndexAction implements Method {
 
     public function view() {
-        $user = Session::getUser();
+        $user = $this->currentUser;
 
         if   ( $user )
             $this->lastModified( C::subset('config')->get('last_modification_time',time() ) );

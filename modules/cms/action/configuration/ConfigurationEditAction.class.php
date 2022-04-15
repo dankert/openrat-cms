@@ -4,6 +4,7 @@ use cms\action\ConfigurationAction;
 use cms\action\Method;
 use cms\base\DefaultConfig;
 use util\ArrayUtils;
+use util\Request;
 use util\Session;
 
 class ConfigurationEditAction extends ConfigurationAction {
@@ -12,7 +13,7 @@ class ConfigurationEditAction extends ConfigurationAction {
 	public function view() {
 
 		$defaultConfig = DefaultConfig::get();;
-		$currentConfig = Session::getConfig();
+		$currentConfig = Request::getConfig();
 
 		$currentConfig['system'] = $this->getSystemConfiguration();
 
@@ -22,7 +23,7 @@ class ConfigurationEditAction extends ConfigurationAction {
 		$pad = str_repeat("\xC2\xA0",10); // Hard spaces
 
 		$flatDefaultConfig = ArrayUtils::dryFlattenArray( $defaultConfig      , $pad );
-		$flatCMSConfig     = ArrayUtils::dryFlattenArray( Session::getConfig(), $pad );
+		$flatCMSConfig     = ArrayUtils::dryFlattenArray( Request::getConfig(), $pad );
 		$flatConfig        = ArrayUtils::dryFlattenArray( $currentConfig      , $pad );
 
 		$config = array_map( function($key,$value) use ($flatConfig,$flatCMSConfig,$flatDefaultConfig) {

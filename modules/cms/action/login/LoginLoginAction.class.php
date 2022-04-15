@@ -19,6 +19,7 @@ use util\exception\ObjectNotFoundException;
 use util\exception\SecurityException;
 use util\exception\ValidationException;
 use util\mail\Mail;
+use util\Request;
 use util\Session;
 use util\text\TextMessage;
 
@@ -54,8 +55,8 @@ class LoginLoginAction extends LoginAction implements Method {
         $this->setTemplateVar( 'dbids',$dbids );
 
         // Database was already connected in the Dispatcher. So we MUST have a db connection here.
-        $db = Session::getDatabase();
-        $this->setTemplateVar('dbid',$db->id);
+        $dbId = Request::getDatabaseId();
+        $this->setTemplateVar('dbid',$dbId);
 
         $this->setTemplateVar('register'     ,$loginConfig->get('register' ));
         $this->setTemplateVar('send_password',$loginConfig->get('send_password'));
@@ -73,7 +74,7 @@ class LoginLoginAction extends LoginAction implements Method {
 
     public function post() {
 
-		Session::setUser(null); // Altes Login entfernen.
+		Request::setUser(null); // Altes Login entfernen.
 		
 		if	( Configuration::subset('login')->is('nologin',false ) )
 			throw new SecurityException('login disabled');
@@ -207,12 +208,12 @@ class LoginLoginAction extends LoginAction implements Method {
 			$this->addNoticeFor( $user,Messages::LOGIN_OK, array('name' => $user->getName() ));
 
 			// Setting the user-defined language
-			$config = Session::getConfig();
+			$config = Request::getConfig();
 			$language = new Language();
 			$config['language'] = $language->getLanguage($user->language);
 			$config['language']['language_code'] = $user->language;
 
-			Session::setConfig( $config );
+			Request::setConfig( $config );
 
 			return; // everything ok, user logged in.
 		}

@@ -14,7 +14,7 @@ class ProfilePwAction extends ProfileAction implements Method {
 		//
 		// Hier wird festgestellt, ob der Benutzer sich über die interne Datenbank angemeldet hat.
 		// Nur dann kann man auch sein Kennwort ändern.
-		$user             = $this->getUserFromSession();
+		$user             = $this->currentUser;
 		$pwchangePossible = $user->type == User::AUTH_TYPE_INTERNAL;
 		$this->setTemplateVar('pwchange_enabled', $pwchangePossible);
     }

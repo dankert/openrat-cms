@@ -8,6 +8,7 @@ use cms\base\Startup;
 use cms\model\User;
 use Exception;
 use openid_connect\OpenIDConnectClient;
+use util\Request;
 use util\Session;
 
 /**
@@ -58,7 +59,7 @@ class LoginOidcAction extends LoginAction implements Method {
 
 			}
 
-			Session::setUser( $user );
+			Request::setUser( $user );
 
 		} catch( Exception $e) {
     		throw new \RuntimeException('OpenId-Connect authentication failed',0,$e);

@@ -16,7 +16,7 @@ use \util\exception\ObjectNotFoundException;
 use util\exception\UIException;
 use util\exception\SecurityException;
 use template_engine\engine\TemplateEngine;
-use util\Session;use util\text\TextMessage;
+use util\Request;use util\Session;use util\text\TextMessage;
 
 
 /**
@@ -80,7 +80,7 @@ class UIOutput extends BaseOutput
 	 */
 	protected static function getCustomTimezone() {
 
-		$user = Session::getUser(); // the user timezone has precedence.
+		$user = Request::getUser(); // the user timezone has precedence.
 		if   ( $user && $user->timezone && in_array( $user->timezone,timezone_identifiers_list() ) ) // user is set and a timezone is set and timezone is valid
 			return( $user->timezone ); // Timezone from user setting
 		elseif ( $configuredTimezone = Configuration::subset('ui')->get('timezone') )

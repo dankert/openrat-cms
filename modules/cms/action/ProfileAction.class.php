@@ -30,6 +30,7 @@ use security\Base2n;
 use util\exception\SecurityException;
 use util\exception\ValidationException;
 use util\mail\Mail;
+use util\Request;
 use util\Session;
 use util\UIUtils;
 
@@ -56,7 +57,7 @@ class ProfileAction extends BaseAction
 	{
         parent::__construct();
 
-        $this->user = Session::getUser();
+        $this->user = $this->currentUser;
 	}
 
 
@@ -68,11 +69,11 @@ class ProfileAction extends BaseAction
     protected function setLanguage($languageISOcode )
     {
 		// Overwrite configuration
-        $conf = Session::getConfig();
+        $conf = Request::getConfig();
         $language = new Language();
         $conf['language'] = $language->getLanguage($languageISOcode);
         $conf['language']['language_code'] = $languageISOcode;
-		Session::setConfig($conf);
+		Request::setConfig($conf);
     }
 
 

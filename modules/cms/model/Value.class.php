@@ -9,6 +9,7 @@ use cms\macros\MacroRunner;
 use \util\exception\ObjectNotFoundException;
 use logger\Logger;
 use util\exception\GeneratorException;
+use util\Request;
 use util\Text;
 use util\Html;
 use util\Http;
@@ -294,7 +295,7 @@ SQL
 
 		$stmt->setBoolean( 'publish'          ,$this->publish );
 		$stmt->setInt    ( 'lastchange_date'  ,Startup::now()         );
-		$user = \util\Session::getUser();
+		$user = Request::getUser();
 		$stmt->setIntOrNull( 'lastchange_userid',$user?$user->userid:null ); // user may be null, if a guest is saving.
 
 		$stmt->execute();

@@ -8,7 +8,7 @@ use util\Session;
 class LoginUserinfoAction extends LoginAction implements Method {
 
     public function view() {
-		$user = Session::getUser();
+		$user = $this->currentUser;
 
 		$info = array('username'   => $user->name,
 		              'fullname'   => $user->fullname,

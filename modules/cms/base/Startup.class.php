@@ -20,6 +20,7 @@ namespace cms\base;
 use ErrorException;
 use logger\Logger;
 use util\exception\ValidationException;
+use util\Request;
 use util\Session;
 
 class Startup {
@@ -211,7 +212,7 @@ class Startup {
 
 		// Aktuelle Datenbankverbindung ist readonly.
 		//$db = DB::get();
-		$db = Session::getDatabase();
+		$db = Request::getDatabase();
 
 		if ($db && isset($db->conf['readonly']) && $db->conf['readonly'])
 			return true;

@@ -6,6 +6,7 @@ use cms\action\Method;
 use cms\base\Configuration;
 use language\Messages;
 use util\Cookie;
+use util\Request;
 use util\Session;
 
 
@@ -27,7 +28,7 @@ class LoginLogoutAction extends LoginAction implements Method {
 		// Cookie mit Logintoken löschen.
         $this->setCookie(Action::COOKIE_TOKEN );
 
-        Session::setUser(null);
+        Request::setUser(null);
 
         $this->addNoticeFor( $this->currentUser, Messages::LOGOUT_OK );
     }

@@ -3,6 +3,7 @@
 namespace cms\base;
 
 use configuration\Config;
+use util\Request;
 use util\Session;
 
 class Configuration {
@@ -29,7 +30,7 @@ class Configuration {
 
 	private static function getConfig()
 	{
-		return Session::getConfig();
+		return Request::getConfig();
 	}
 
 

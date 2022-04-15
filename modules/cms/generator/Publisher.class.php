@@ -13,6 +13,7 @@ use cms\model\Project;
 use logger\Logger;
 use cms\generator\target\TargetFactory;
 use util\exception\PublisherException;
+use util\Request;
 use util\Session;
 use util\text\TextMessage;
 use util\text\variables\VariableResolver;
@@ -140,7 +141,7 @@ class Publisher
 			Logger::debug( TextMessage::create('Executing system command: ${0}',[$systemCommand]) );
 
 			/** @var ModelBase $baseObjectToEnv */
-			foreach (['user' => Session::getUser(),
+			foreach (['user' => Request::getUser(),
 						 'project' => $this->project]
 					 as $key => $baseObjectToEnv) {
 

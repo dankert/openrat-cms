@@ -12,6 +12,7 @@ use logger\Logger;
 use util\Cookie;
 use security\Password;
 use \util\exception\ObjectNotFoundException;
+use util\Request;
 use util\Session;
 use util\text\TextMessage;
 
@@ -117,7 +118,7 @@ SQL
 
 	protected function makeDBWritable( $dbid ) {
 
-		$oldDB = Session::getDatabase();
+		$oldDB = Request::getDatabase();
 		if   ( $oldDB ) {
 			$oldDB->rollback();
 			$oldDB->disconnect();
@@ -130,6 +131,6 @@ SQL
 		$writableDB->id = $dbid;
 		$writableDB->start();
 
-		Session::setDatabase( $writableDB );
+		Request::setDatabase( $writableDB );
 	}
 }

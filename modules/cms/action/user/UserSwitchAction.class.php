@@ -3,6 +3,7 @@ namespace cms\action\user;
 use cms\action\Method;
 use cms\action\UserAction;
 use language\Messages;
+use util\Request;
 use util\Session;
 
 
@@ -14,6 +15,6 @@ class UserSwitchAction extends UserAction implements Method {
 		$this->addNoticeFor( $this->user,Messages::USER_LOGIN );
 
 		// Und in der Sitzung speichern.
-		Session::setUser( $this->user );
+		Request::setUser( $this->user );
     }
 }

@@ -11,6 +11,7 @@ use logger\Logger;
 use util\Cookie;
 use util\ClassUtils;
 use util\exception\SecurityException;
+use util\Request;
 use util\Session;
 use util\text\TextMessage;
 
@@ -73,7 +74,7 @@ abstract class Action
 
 	public function __construct()
 	{
-		$this->currentUser = Session::getUser();
+		$this->currentUser = Request::getUser();
 		$this->response    = new Response();
 	}
 
@@ -219,19 +220,7 @@ abstract class Action
 	 */
 	protected function userIsAdmin()
 	{
-		$user = $this->getUserFromSession();
-
-		return is_object($user) && $user->isAdmin;
-	}
-
-
-	/**
-	 * Ermitteln des Benutzerobjektes aus der Session
-	 * @return User
-	 */
-	protected function getUserFromSession()
-	{
-		return Session::getUser();
+		return $this->currentUser && $this->currentUser->isAdmin;
 	}
 
 
@@ -241,9 +230,8 @@ abstract class Action
 	 */
 	protected function getCurrentUserId() {
 
-		$user = $this->getUserFromSession();
-		if   ( $user )
-			return $user->userid;
+		if   ( $this->currentUser )
+			return $this->currentUser->userid;
 		else
 			return null;
 	}

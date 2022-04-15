@@ -18,7 +18,7 @@ class ProfileUserinfoAction extends ProfileAction implements Method {
 	 */
     public function view() {
 
-		$user = Session::getUser();
+		$user = $this->currentUser;
 
 		$currentStyle = $this->getUserStyle($user);
 		$this->setTemplateVar('style',$currentStyle);

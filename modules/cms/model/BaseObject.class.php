@@ -9,6 +9,7 @@ use cms\base\Startup;
 use cms\generator\Publisher;
 use util\ArrayUtils;
 use phpseclib\Math\BigInteger;
+use util\Request;
 use util\text\variables\VariableResolver;
 use util\YAML;
 
@@ -241,7 +242,7 @@ class BaseObject extends ModelBase
     {
         if	( is_null($this->aclMask) )
         {
-			$user     = \util\Session::getUser();
+			$user     = Request::getUser();
 
 			$this->aclMask = 0;
 
@@ -773,7 +774,7 @@ SQL
 			$stmt->setInt ('parentid',$this->parentid );
 
 
-        $user = \util\Session::getUser();
+        $user = Request::getUser();
         $this->lastchangeUser = $user;
         $this->lastchangeDate = Startup::now();
         $stmt->setString('filename' , $this->filename                );
@@ -802,7 +803,7 @@ SQL
             '  lastchange_userid = {userid} '.
             ' WHERE id={objectid}');
 
-        $user = \util\Session::getUser();
+        $user = Request::getUser();
         $this->lastchangeUser = $user;
         $this->lastchangeDate = Startup::now();
         $userid = $this->lastchangeUser ? $this->lastchangeUser->userid : null;
@@ -840,7 +841,7 @@ SQL
             '  published_userid = {userid} '.
             ' WHERE id={objectid}');
 
-        $user = \util\Session::getUser();
+        $user = Request::getUser();
         $this->publishedUser = $user;
         $this->publishedDate = Startup::now();
 
@@ -946,7 +947,7 @@ SQL
 SQL
 		);
 
-		$user = \util\Session::getUser();
+		$user = Request::getUser();
 		$currentUserId = $user ? $user->userid : 0;
 
 		if	( !$this->parentid )
@@ -980,7 +981,7 @@ SQL
 	 */
 	private function grantToActualUser() {
 
-		$user = \util\Session::getUser();
+		$user = Request::getUser();
 
 		if   ( $user ) {  // User logged in?
 

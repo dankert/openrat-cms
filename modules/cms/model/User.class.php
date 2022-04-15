@@ -25,6 +25,7 @@ use cms\base\Language;
 use language\Messages;
 use security\Password;
 use util\exception\ObjectNotFoundException;
+use util\Request;
 
 
 /**
@@ -153,7 +154,7 @@ SQL
 	{
 		$this->loginDate = time();
 
-		\util\Session::setUser( $this );
+		Request::setUser( $this );
 	}
 
 
@@ -728,16 +729,21 @@ SQL
 
 
 	/**
-	 * Setzt ein neues Kennwort fuer diesen Benutzer.
+	 * Sets a new password for the user.
+	 *
+	 * if the user account was locked it will be unlocked.
 	 * 
 	 * @param $password string new password
 	 * @param $forever int true, wenn Kennwort dauerhaft.
 	 */
 	public function setPassword($password, $forever = true )
 	{
-		$sql = DB::sql( 'UPDATE {{user}} SET password_hash={password},password_algo={algo},password_expires={expires} '.
-		                'WHERE id={userid}' );
-		                
+		$sql = DB::sql( <<<SQL
+           UPDATE {{user}}
+              SET password_hash={password}, password_algo={algo}, password_expires={expires}, password_fail_count=0, password_locked_until=NULL
+		    WHERE id={userid}
+SQL
+		);
 		if	( $forever ) {
 			$algo   = Password::bestAlgoAvailable();
 			$expire = null;
@@ -749,11 +755,7 @@ SQL
 		}
 
 		// Hashsumme für Kennwort erzeugen
-		if	( $expire == null )
-			$sql->setNull('expires');
-		else
-			$sql->setInt('expires',$expire);
-		
+		$sql->setIntOrNull('expires',$expire);
 		$sql->setInt   ('algo'    ,$algo                                                  );
 		$sql->setString('password',Password::hash(User::pepperPassword($password),$algo) );
 		$sql->setInt   ('userid'  ,$this->userid  );

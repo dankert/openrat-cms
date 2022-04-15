@@ -14,7 +14,7 @@ class TitleShowAction extends TitleAction implements Method {
 
 		$this->setTemplateVar('buildinfo',Startup::TITLE.' '.Startup::VERSION.' - build date '.Startup::DATE );
 
-		$user = Session::getUser();
+		$user = $this->currentUser;
 
 		if	( !is_object($user) )
 		{
