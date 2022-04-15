@@ -1,6 +1,6 @@
 # OpenRat CMS configuration for development in docker
 login:
-  motd: "${env:CMS_MOTD}"
+  motd: ""
 database-default:
   default-id:  db
 database:
@@ -16,7 +16,7 @@ database:
     suffix     :  _or
 log:
   file :  ""
-  level:  "${env:CMS_LOG_LEVEL}"
+  level:  "debug"
   stdout: true
 
 production: ${env:CMS_PRODUCTION}

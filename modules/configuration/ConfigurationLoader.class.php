@@ -75,6 +75,9 @@ class ConfigurationLoader
 		// resolve variables
 		$customConfig = self::resolveVariables($customConfig);
 
+		// enrich with environment variables
+		$customConfig = self::enrichEnvironmentVariables($customConfig, getenv('CMS_CONFIG_PREFIX')?:'CMS');
+
 		// Does we have includes?
 		if (isset($customConfig['include'])) {
 
@@ -133,6 +136,31 @@ class ConfigurationLoader
 		});
 
 		return $resolver->resolveVariablesInArray($config);
+	}
+
+	/**
+	 * Test for environment variables.
+	 * @param $prefix string|array prefix
+	 * @return array
+	 */
+	private function enrichEnvironmentVariables($config, $prefix)
+	{
+		foreach ( $config as $key=>$value ) {
+			$newKey = array_merge( (array)$prefix,[$key] );
+			if   ( is_array($value) ) {
+				$value = $this->enrichEnvironmentVariables($value,$newKey );
+			} else {
+				$envKey = strtoupper( implode('_',$newKey ) );
+				//error_log( "get env ".$envKey );
+				$value = getenv( $envKey ) ?: $value;
+				if   ( in_array(strtolower($value),['true ','on' ]) )
+					$value = true;
+				if   ( in_array(strtolower($value),['false','off']) )
+					$value = false;
+			}
+			$config[$key] = $value;
+		}
+		return $config;
 	}
 
 }

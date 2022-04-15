@@ -31,7 +31,7 @@ services:
        DB_USER: cms
        DB_PASS: dsfg77er35fsd084351
        DB_NAME: cms
-       CMS_MOTD:
+       CMS_LOGIN_MOTD: "Welcome, developers."
        CMS_NAME: OpenRat Development
        CMS_OPERATOR:
        CMS_PRODUCTION: "false"
