@@ -407,18 +407,20 @@ class Tree
 			if (BaseObject::available($value->linkToObjectId)) {
 				$o = new BaseObject($value->linkToObjectId);
 				$o->load();
-				$treeElement = new TreeElement();
-				$treeElement->type   = $o->getType();
-				$treeElement->action = $o->getType();
-				$treeElement->id     = $o->objectid;
-				$treeElement->internalId = $o->objectid;
-				$treeElement->extraId = array();
-				$treeElement->text    = $o->getName();
-				$treeElement->description = L::lang('' . $o->getType()) . ' ' . $o->objectid;
+				if   ( $o->hasRight( Permission::ACL_READ ) ) {
 
-				$this->addTreeElement($treeElement);
+					$treeElement = new TreeElement();
+					$treeElement->type = $o->getType();
+					$treeElement->action = $o->getType();
+					$treeElement->id = $o->objectid;
+					$treeElement->internalId = $o->objectid;
+					$treeElement->extraId = array();
+					$treeElement->text = $o->getName();
+					$treeElement->description = L::lang('' . $o->getType()) . ' ' . $o->objectid;
+
+					$this->addTreeElement($treeElement);
+				}
 			}
-
 		}
 	}
 
@@ -467,32 +469,37 @@ class Tree
 		$o = new BaseObject($link->linkedObjectId);
 		$o->load();
 
-		$treeElement = new TreeElement();
-		$treeElement->id = $o->objectid;
-		$treeElement->internalId = $o->objectid;
-		$treeElement->text = $o->getName();
-		$treeElement->description = L::lang('' . $o->getType()) . ' ' . $id;
+		if   ( $o->hasRight( Permission::ACL_READ ) ) {
+			// Object is readable
 
-		$defaultName = $o->getDefaultName();
+			$treeElement = new TreeElement();
+			$treeElement->id = $o->objectid;
+			$treeElement->internalId = $o->objectid;
+			$treeElement->text = $o->getName();
+			$treeElement->description = L::lang('' . $o->getType()) . ' ' . $id;
 
-		if ($defaultName->description )
-			$treeElement->description .= ': ' . $defaultName->description;
-		else
-			$treeElement->description .= ' - ' . L::lang('NO_DESCRIPTION_AVAILABLE');
+			$defaultName = $o->getDefaultName();
 
-		$treeElement->action = $o->getType();
-		$treeElement->icon = $o->getType();
-		$treeElement->extraId = array(RequestParams::PARAM_LANGUAGE_ID => $_REQUEST[RequestParams::PARAM_LANGUAGE_ID], RequestParams::PARAM_MODEL_ID => $_REQUEST[RequestParams::PARAM_MODEL_ID]);
+			if ($defaultName->description )
+				$treeElement->description .= ': ' . $defaultName->description;
+			else
+				$treeElement->description .= ' - ' . L::lang('NO_DESCRIPTION_AVAILABLE');
 
-		// Besonderheiten fuer bestimmte Objekttypen
+			$treeElement->action = $o->getType();
+			$treeElement->icon = $o->getType();
+			$treeElement->extraId = array(RequestParams::PARAM_LANGUAGE_ID => $_REQUEST[RequestParams::PARAM_LANGUAGE_ID], RequestParams::PARAM_MODEL_ID => $_REQUEST[RequestParams::PARAM_MODEL_ID]);
 
-		if ($o->isPage) {
-			// Nur wenn die Seite beschreibbar ist, werden die
-			// Elemente im Baum angezeigt
-			if ($o->hasRight(Permission::ACL_WRITE))
-				$treeElement->type = 'pageelements';
+			// Besonderheiten fuer bestimmte Objekttypen
+
+			if ($o->isPage) {
+				// Nur wenn die Seite beschreibbar ist, werden die
+				// Elemente im Baum angezeigt
+				if ($o->hasRight(Permission::ACL_WRITE))
+					$treeElement->type = 'pageelements';
+			}
+			$this->addTreeElement($treeElement);
 		}
-		$this->addTreeElement($treeElement);
+
 	}
 
 
