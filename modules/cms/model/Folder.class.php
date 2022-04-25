@@ -28,7 +28,7 @@ class Folder extends BaseObject
 	}
 
 
-	public function add()
+	protected function add()
 	{
 		parent::add();
 

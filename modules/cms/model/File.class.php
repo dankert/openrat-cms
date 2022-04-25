@@ -447,9 +447,6 @@ class File extends BaseObject
 	 */
 	function delete()
 	{
-		$content = new Content( $this->contentid );
-		$content->delete();
-
 		// Delete file
 		$sql = DB::sql( <<<SQL
 			DELETE FROM {{file}}
@@ -458,6 +455,10 @@ SQL
 		);
 		$sql->setInt( 'objectid',$this->objectid );
 		$sql->execute();
+
+		// Content must be deleted after the file (because the file is referencing the content)
+		$content = new Content( $this->contentid );
+		$content->delete();
 
 		parent::delete();
 	}

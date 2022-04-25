@@ -1,10 +1,17 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form>
-		<fieldset class="line" label="${message:name}">
-			<input name="name" class="focus" maxlength="128"/>
-		</fieldset>
-
+		<group title="${message:ADD}">
+			<fieldset label="${message:name}">
+				<input name="name" class="focus" maxlength="128"/>
+			</fieldset>
+		</group>
+		<group title="${message:OPTIONS}">
+			<fieldset>
+				<radio name="type" value="empty"  label="${message:EMPTY}" />
+				<radio name="type" checked="true" value="example" label="${message:EXAMPLE}"/>
+			</fieldset>
+		</group>
 		<!--
 		Project copy/export is not available
 		<group title="${message:options}">

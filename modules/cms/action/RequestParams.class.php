@@ -253,6 +253,24 @@ class RequestParams
 	}
 
 
+
+	/**
+	 * Gets the value of the request parameter.
+	 *
+	 * @param $nameOfRequestParameter
+	 * @return String
+	 * @throws ValidationException
+	 */
+	public function getNotEmptyText( $nameOfRequestParameter ) {
+
+		if   ( $value = $this->getRequiredText( $nameOfRequestParameter ) )
+			return $value;
+		else
+			return new ValidationException( $nameOfRequestParameter );
+	}
+
+
+
 	/**
 	 * Checks if the request contains the parameter.
 	 *

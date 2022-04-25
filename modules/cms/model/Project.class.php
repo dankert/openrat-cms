@@ -341,65 +341,11 @@ SQL
 
 		$sql->execute();
 
-		// Modell anlegen
-		$model = new Model();
-		$model->projectid = $this->projectid;
-		$model->name = 'html';
-		$model->persist();;
-		
-		// Sprache anlegen
-		$language = new Language();
-		$language->projectid = $this->projectid;
-		$language->isoCode = 'en';
-		$language->name    = 'english';
-		$language->persist();
-		
-		// Haupt-Ordner anlegen
+		// Every projects needs a root folder. The root folder has no parent.
 		$folder = new Folder();
 		$folder->projectid  = $this->projectid;
 		$folder->filename   = $this->name;
 		$folder->persist();
-
-		// Template anlegen
-		$template = new Template();
-		$template->projectid  = $this->projectid;
-		$template->name       = '#1';
-		$template->persist();
-
-		$element = new Element();
-		$element->templateid = $template->templateid;
-		$element->typeid     = Element::ELEMENT_TYPE_TEXT;
-		$element->writable   = true;
-		$element->format     = Element::ELEMENT_FORMAT_MARKDOWN;
-		$element->label      = 'Text';
-		$element->name       = 'text';
-		$element->persist();
-
-		// Template anlegen
-		$templateModel = $template->loadTemplateModelFor( $model->modelid );
-		$templateModel->extension  = 'html';
-		$templateModel->src        = '<html><body><h1>Sample page</h1><hr><p>Text: {{text}}</p></body></html>';
-		$templateModel->persist();
-
-		// Beispiel-Seite anlegen
-		$page = new Page();
-		$page->parentid   = $folder->objectid;
-		$page->projectid  = $this->projectid;
-		$page->templateid = $template->templateid;
-		$page->filename   = 'start';
-		$page->getDefaultName()->name = 'Sample page';
-		$page->persist();
-
-		$pageContent = new PageContent();
-		$pageContent->pageId     = $page->pageid;
-		$pageContent->elementId  = $element->elementid;
-		$pageContent->languageid = $language->languageid;
-		$pageContent->persist();
-
-		$value = new Value();
-		$value->contentid = $pageContent->contentId;
-		$value->text = 'sample text';
-		$value->persist();
 	}
 
 
