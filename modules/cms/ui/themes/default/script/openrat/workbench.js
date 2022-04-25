@@ -937,7 +937,7 @@ export default class Workbench {
 
 							// Den neuen Unter-Zweig erzeugen.
 							let $ul = $.create('ul' ).addClass('navtree-list');
-							$ul.appendTo( $targetElement ).append( html );
+							$ul.appendTo( $targetElement ).html( html );
 
 							$ul.find('li').orTree(
 								{
@@ -1004,7 +1004,7 @@ export default class Workbench {
 					},
 
 					dropdown: '.or-act-selector-search-results',
-					resultEntryClass: 'or-search-result-entry',
+					resultEntryClass: 'search-result-entry',
 
 					select: function(obj) {
 						$($element).find('.or-selector-link-value').val(obj.id  );
