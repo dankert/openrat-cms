@@ -536,7 +536,8 @@ export default class Workbench {
 				e.dataTransfer.effectAllowed = 'link';
 				e.dataTransfer.setData('id'    , link.dataset.id    );
 				e.dataTransfer.setData('action', link.dataset.action);
-				console.debug('drag started',link,e.dataTransfer);
+				e.dataTransfer.setData('name'  , link.dataset.name || link.textContent.trim()   );
+				console.debug('drag started',e.dataTransfer);
 		})
 			.on('drag',(e)=>{
 		})
@@ -552,16 +553,19 @@ export default class Workbench {
 			e.preventDefault();
 		}).on('drop', (event) => {
 
-			let data = event.dataTransfer.getData('text');
-			console.debug('dropped:', dropped);
-			let id = $(data).find('.or-link').data('id');
-			let name = $(data).find('.or-navtree-text').text();
-
+			let id = event.dataTransfer.getData('id');
+			if   ( !id) {
+				console.debug("dropped object has no object id, ignoring");
+				return;
+			}
+			let name = event.dataTransfer.getData('name');
 			if (!name)
 				name = id;
 
-			$(this).find('.or-selector-link-value').val(id);
-			$(this).find('.or-selector-link-name').val(name).attr('placeholder', name);
+			console.debug("dropped",id,name,event.dataTransfer );
+			$(event.currentTarget).find('.or-selector-link-value').val(id);
+			$(event.currentTarget).find('.or-selector-link-name').val(name).attr('placeholder', name);
+			event.preventDefault();
 		});
 
 		$(viewEl).find('.or-droppable')
