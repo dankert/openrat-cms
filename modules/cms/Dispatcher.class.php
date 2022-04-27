@@ -173,13 +173,63 @@ class Dispatcher
 	private function checkLogin() {
 
 		if   ( $this->request->withAuthorization ) {
-			$userAuth = new InternalAuth();
-			$status = $userAuth->login( $this->request->authUser,$this->request->authPassword,'' );
-			if   ( ! ($status & Auth::STATUS_SUCCESS) )
-				throw new SecurityException('user cannot be authenticated');
+			$securityConfig = Configuration::subset('security');
+			$authConfig = $securityConfig->subset('authorization');
 
-			$user = User::loadWithName( $this->request->authUser,User::AUTH_TYPE_INTERNAL );
-			Request::setUser( $user );
+			if   ( $this->request->authUser ) {
+				if   ( ! $authConfig->is('basic'))
+					throw new SecurityException('Basic Authorization is disabled');
+
+				$userAuth = new InternalAuth();
+				$status = $userAuth->login( $this->request->authUser,$this->request->authPassword,'' );
+				if   ( ! ($status & Auth::STATUS_SUCCESS) )
+					throw new SecurityException('user cannot be authenticated');
+
+				$user = User::loadWithName( $this->request->authUser,User::AUTH_TYPE_INTERNAL );
+				Request::setUser( $user );
+			}
+			elseif   ( $authToken = $this->request->authToken ) {
+				if   ( ! $authConfig->is('bearer'))
+					throw new SecurityException('Bearer Authorization is disabled');
+
+				// We are expecting a JSON webtoken here
+				function base64url_decode( $data ){
+					return base64_decode( strtr( $data, '-_', '+/') . str_repeat('=', 3 - ( 3 + strlen( $data )) % 4 ));
+				}
+
+				list( $b64Header,$b64Payload,$signature ) = array_pad(explode('.',$authToken),3,'');
+				$header = JSON::decode( base64url_decode($b64Header) );
+				$supportedAlgos = [
+					'HS256' => 'sha256',
+					'HS384' => 'sha384',
+					'HS512' => 'sha512',
+				];
+				if ( ! $algo = @$supportedAlgos[ @$header['alg'] ] )
+					throw new SecurityException('Unknown algorithm in JWT, only supporting: '.implode(',',array_keys($supportedAlgos) ));
+				elseif( ! in_array( $algo,hash_algos() ) )
+					throw new SecurityException('Unsupported algorithm');
+				elseif( hash_hmac( $algo,$b64Header.'.'.$b64Payload,$securityConfig->get('key'),true) != base64url_decode($signature) )
+					throw new SecurityException('Signature does not match');
+
+				$payload = JSON::decode( base64url_decode($b64Payload));
+
+				if   ( $notBefore = @$payload['nbf'] )
+					if   ( $notBefore < Startup::getStartTime() )
+						throw new SecurityException('token is not valid');
+
+				if   ( $expires = @$payload['exp'] )
+					if   ( $expires > Startup::getStartTime() )
+						throw new SecurityException('token is not valid');
+
+				if   ( $subject = @$payload['sub'] ) {
+					if   ( $user = User::loadWithName( $subject,User::AUTH_TYPE_INTERNAL ) )
+						Request::setUser( $user );
+					else
+						throw new SecurityException('User not found');
+				}
+				else
+					throw new SecurityException('User not found');
+			}
 		}
 	}
 

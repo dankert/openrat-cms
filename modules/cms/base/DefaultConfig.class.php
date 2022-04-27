@@ -348,7 +348,12 @@ class DefaultConfig {
 						],
 				],
 			'security' =>
-				[ 
+				[
+					'key' => 'OAp5M3GYvm2U7r1FEdvVhqDBxJjMTWgKvN8VfJrHLa7D9pVdrYkMyA',
+					'authorization' => [
+						'basic'  => true,
+						'bearer' => false,
+					],
 					'cookie' =>
 						[ 
 							'secure' => false,

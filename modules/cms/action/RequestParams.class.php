@@ -35,6 +35,7 @@ class RequestParams
 	public $headers;
 	public $authUser;
 	public $authPassword;
+	public $authToken;
 
 	private $parameter;
 
@@ -397,12 +398,19 @@ class RequestParams
 		if   ( $auth = @$this->headers['authorization'] ) {
 
 			$this->withAuthorization = true;
-			if   ( substr( $auth,0,6 ) == 'Basic ' )
-				list($this->authUser,$this->authPassword) = explode(':',base64_decode( substr( $this->headers['authorization'],6) ) );
-			else
-				// Only supporting Basic Auth
-				// Maybe in the future we will support JWT Bearer tokens...
-				error_log('Only supporting basic authorization. Authorization header will be ignored.');
+			list( $type,$value ) = array_pad( explode(' ',$auth),2,'');
+			switch( $type ) {
+				case 'Basic':
+					list($this->authUser,$this->authPassword) = array_pad(explode(':',base64_decode( $value )),2,'' );
+					break;
+				case 'Bearer':
+					$this->authToken = $value;
+					break;
+				default:
+					// Only supporting Basic Auth and Bearer Auth
+					error_log('Only supporting Basic and Bearer authorization. Authorization header will be ignored.');
+			}
+
 		}
 	}
 }

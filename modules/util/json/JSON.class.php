@@ -32,10 +32,10 @@ class JSON
 	}
 	public static function decode($jsonText) {
 
-		if (!function_exists('json_decode')) {
-			return json_decode( $jsonText );
+		if (function_exists('json_decode')) {
+			return json_decode( $jsonText,true );
 		} else {
-			$json = new \JSON();
+			$json = new JSON();
 			return $json->decode($jsonText);
 		}
 	}
