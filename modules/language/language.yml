@@ -1475,6 +1475,9 @@ EL_TEXT:
 EMPTY_VALUE:
   de: Leer
   en: Empty
+EMPTY:
+  de: Leer
+  en: Empty
 ERROR_ACCESS_DENIED_DESC:
   de: Sie haben keine ausreichenden Rechte, um auf das ausgewählte Objekt zuzugreifen
   en: You do not have enough rights to access the selected object.
@@ -5044,6 +5047,9 @@ COPIED:
 DUPLICATE_INPUT:
   de: Ihre Eingabe muss eindeutig sein.
   en: Duplicate Input detected.
+DUPLICATE_NAME_EXISTS:
+  de: Der Name existiert bereits
+  en: The name is already in use
 DATABASE_CONNECTION_ERROR:
   de: Es konnte keine Verbindung zur Datenbank hergestellt werden.
   en: The connection to the database could not be established.

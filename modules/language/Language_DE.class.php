@@ -302,6 +302,7 @@ public function get() { return [
 'EL_TEXT_DESC'=>'Das einfache Textfeld dient für einzeilige Texte bis max. 255 Zeichen',
 'EL_TEXT'=>'Text (einfach)',
 'EMPTY_VALUE'=>'Leer',
+'EMPTY'=>'Leer',
 'ERROR_ACCESS_DENIED_DESC'=>'Sie haben keine ausreichenden Rechte, um auf das ausgewählte Objekt zuzugreifen',
 'ERROR_ACCESS_DENIED'=>'Zugriff verweigert',
 'ERROR_DESC'=>'Ein nicht näher spezifizierter Fehler ist aufgetreten, Ihre Aktion wurde vermutlich nicht korrekt ausgeführt. Wenden Sie sich bei Bedarf an Ihren Administrator',

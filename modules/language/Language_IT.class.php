@@ -302,6 +302,7 @@ public function get() { return [
 'EL_TEXT_DESC'=>'il textfield è usato per una linea testi fino a 255 lettere',
 'EL_TEXT'=>'Text field',
 'EMPTY_VALUE'=>'Empty',
+'EMPTY'=>'Empty',
 'ERROR_ACCESS_DENIED_DESC'=>'non hanno abbastanza diritti di accedere all\'oggetto selezionato.',
 'ERROR_ACCESS_DENIED'=>'li ha negati',
 'ERROR_DESC'=>'Un errore non specificato occurered. Informare prego il vostro coordinatore.',

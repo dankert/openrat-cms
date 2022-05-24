@@ -302,6 +302,7 @@ public function get() { return [
 'EL_TEXT_DESC'=>'В textfield используется для одной строки текста до 255 букв Technischer',
 'EL_TEXT'=>'Текстовые области',
 'EMPTY_VALUE'=>'Empty',
+'EMPTY'=>'Empty',
 'ERROR_ACCESS_DENIED_DESC'=>'Вы не имеете достаточно прав для доступа к отдельным статьям.',
 'ERROR_ACCESS_DENIED'=>'Фехлер В доступе отказано',
 'ERROR_DESC'=>'Определенная погрешность occurered. Пожалуйста, информируйте администратора.',
