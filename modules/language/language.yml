@@ -694,11 +694,15 @@ EL_CODE_DESC:
   it: 'che questo <strong>PHP code</strong>-element contiene il PHP-Codice che è eseguito mentre pubblica la pagina. Soltanto per i programmatori con esperienza di PHP!'
   ru: 'Кодекс Это <strong> PHP-код </strong> - элемент содержит PHP кодекса, который выполняется при публикации страницы. Только для опытных программистов PHP! Копировать'
 EL_CODE:
-  de: PHP Code
-  en: PHP Code
-  es: Código de PHP
-  fr: Code de PHP
-  it: codice di PHP
+  de: Code
+  en: Code
+  es: Código
+  fr: Code
+  it: codice
+EL_CODE_PHP:
+  en: PHP
+EL_CODE_JS:
+  en: Javascript
 EL_COPY_DESC:
   de: Einen Wert aus einem Platzhalter einer verlinkten Seite kopieren
   en: Copy a Value out of an element of a linked page

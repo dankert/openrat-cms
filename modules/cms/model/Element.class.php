@@ -436,7 +436,7 @@ SQL
 		             'copy'    =>array('inherit','prefix','name','defaultText'),
 		             'linkinfo'=>array('prefix','subtype','defaultText'),
 		             'linkdate'=>array('prefix','subtype','dateformat'),
-		             'code'    =>array('code'),
+		             'code'    =>array('code','subtype'),
 		             'dynamic' =>array('subtype','code'),
 		             'info'    =>array('subtype'),
 		             'infodate'=>array('subtype','dateformat') );

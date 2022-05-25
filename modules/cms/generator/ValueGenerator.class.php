@@ -8,6 +8,9 @@ use cms\base\Configuration;
 use cms\base\Configuration as C;
 use cms\base\DB;
 use cms\base\Startup;
+use cms\generator\dsl\DslAlert;
+use cms\generator\dsl\DslConsole;
+use cms\generator\dsl\DslDocument;
 use cms\macros\MacroRunner;
 use cms\model\BaseObject;
 use cms\model\Element;
@@ -21,6 +24,7 @@ use cms\model\PageContent;
 use cms\model\Project;
 use cms\model\Template;
 use cms\model\Value;
+use dsl\executor\DslExecutor;
 use logger\Logger;
 use LogicException;
 use util\Code;
@@ -753,33 +757,55 @@ class ValueGenerator extends BaseGenerator
 			// Programmcode (PHP)
 			case Element::ELEMENT_TYPE_CODE:
 
-				// Die Ausführung von benutzer-erzeugtem PHP-Code kann in der
-				// Konfiguration aus Sicherheitsgründen deaktiviert sein.
-				if	( Configuration::subset('security')->is('disable_dynamic_code',false) )
-				{
-					Logger::warn("Execution of dynamic code elements is disabled by configuration. Set security/disable_dynamic_code to true to allow this");
-					break;
+				switch( $element->subtype ) {
+					case 'php':
+						// Die Ausführung von benutzer-erzeugtem PHP-Code kann in der
+						// Konfiguration aus Sicherheitsgründen deaktiviert sein.
+						if	( Configuration::subset('security')->is('disable_dynamic_code',false) )
+						{
+							Logger::warn("Execution of dynamic code elements is disabled by configuration. Set security/disable_dynamic_code to true to allow this");
+							break;
+						}
+
+						$page->load();
+
+						// Das Ausführen geschieht über die Klasse "Code".
+						// In dieser wird der Code in eine Datei geschrieben und
+						// von dort eingebunden.
+						$code = new Code();
+						$code->setPageContext($this->context->pageContext );
+						$code->code = $element->code;
+
+						ob_start();
+
+						// Jetzt ausfuehren des temporaeren PHP-Codes
+						$code->execute();
+
+						$output = ob_get_contents();
+						ob_end_clean();
+
+						// Ausgabe ermitteln.
+						$inhalt = $output;
+						break;
+
+					case 'js':
+						ob_start();
+						$executor = new DslExecutor();
+						$executor->setContext( [
+							'console'  => new DslConsole(),
+							'document' => new DslDocument(),
+							'alert'    => new DslAlert(),
+							'page'     => $page
+						]);
+
+						$executor->runCode( $element->code );
+						$output = ob_get_contents();
+						ob_end_clean();
+
+						// Ausgabe ermitteln.
+						$inhalt = $output;
+						break;
 				}
-
-				$page->load();
-
-				// Das Ausführen geschieht über die Klasse "Code".
-				// In dieser wird der Code in eine Datei geschrieben und
-				// von dort eingebunden.
-				$code = new Code();
-				$code->setPageContext($this->context->pageContext );
-				$code->code = $element->code;
-
-				ob_start();
-
-				// Jetzt ausfuehren des temporaeren PHP-Codes
-				$code->execute();
-
-				$output = ob_get_contents();
-				ob_end_clean();
-
-				// Ausgabe ermitteln.
-				$inhalt = $output;
 
 
 				break;

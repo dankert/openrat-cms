@@ -105,6 +105,14 @@ class ElementAdvancedAction extends ElementAction implements Method {
                             $convertToLang = true;
                             break;
 
+                        case Element::ELEMENT_TYPE_CODE:
+                            $subtypes = [
+                                'php',
+                                'js',
+								];
+                            $convertToLang = true;
+                            break;
+
                         case Element::ELEMENT_TYPE_LINKINFO:
                             $subtypes = Array('width',
                                 'height',
