@@ -798,7 +798,13 @@ class ValueGenerator extends BaseGenerator
 							'page'     => $page
 						]);
 
-						$executor->runCode( $element->code );
+						try {
+							$executor->runCode( $element->code );
+						}catch( \Exception $e ) {
+							if   ( $pageContext->scheme == Producer::SCHEME_PREVIEW )
+								echo "Interpreter error: ".$e->getMessage();
+							Logger::warn( $e );
+						}
 						$output = ob_get_contents();
 						ob_end_clean();
 
