@@ -5,7 +5,7 @@ namespace dsl\ast;
 use dsl\DslParserException;
 use dsl\DslToken;
 
-class DslExpression implements DslStatement
+class DslExpression extends DslElement implements DslStatement
 {
 	private $value;
 
@@ -31,6 +31,17 @@ class DslExpression implements DslStatement
 			return;
 		}
 
+
+		// Split the expression on operators
+		foreach ( array_reverse(['*','/','-','+','!','||','&&','>','>=','<=','<']) as $tokenValue ) {
+			list( $left,$right ) = $this->splitTokenOnOperator( $tokens, $tokenValue );
+			if   ( sizeof($right ) > 0 ) {
+				$this->value = new DslOperation( $tokenValue,$left,$right );
+				return;
+			}
+		}
+
+
 		if   ( sizeof($tokens) == 1) {
 			$token = $tokens[0];
 			switch( $token->type ) {
@@ -49,8 +60,6 @@ class DslExpression implements DslStatement
 			return;
 		}
 
-		$depth = 0;
-
 		while( true ) {
 
 			$token = array_shift( $tokens );
@@ -64,16 +73,31 @@ class DslExpression implements DslStatement
 				$nextToken = array_shift( $tokens );
 				if ( $nextToken &&  $nextToken->type == DslToken::T_BRACKET_OPEN )
 				{
-					$nextToken = array_shift( $tokens );
-					if ( $nextToken && ( $nextToken->type == DslToken::T_TEXT  || $nextToken->type == DslToken::T_STRING || $nextToken->type == DslToken::T_NUMBER ) ) {
+					array_unshift( $tokens,$nextToken );
 
-						echo "found function";
-						$this->value = new DslFunctionCall( $token->value, [$nextToken] );
-						return;
-					}
+					$parameterGroup = $this->getGroup( $tokens );
+					$splittedParameters = $this->splitByComma( $parameterGroup );
+
+					$this->value = new DslFunctionCall( $token->value,$splittedParameters  );
+					return;
 				}
 			}
 		}
 		$this->value = new DslNull();
+	}
+
+
+	private function splitTokenOnOperator( $tokens, $operatorValue ) {
+		// Split the expression on operators
+		$leftToken  = [];
+
+		while( true ) {
+			$token = array_shift($tokens);
+			if   ( $token == null )
+				return [ $leftToken,[] ];
+			if   ( $token->type == DslToken::T_OPERATOR && $token->value == $operatorValue )
+				return [ $leftToken,$tokens ];
+			$leftToken[] = $token;
+		}
 	}
 }

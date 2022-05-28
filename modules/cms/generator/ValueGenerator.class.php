@@ -11,6 +11,7 @@ use cms\base\Startup;
 use cms\generator\dsl\DslAlert;
 use cms\generator\dsl\DslConsole;
 use cms\generator\dsl\DslDocument;
+use cms\generator\dsl\DslPage;
 use cms\generator\dsl\DslWrite;
 use cms\macros\MacroRunner;
 use cms\model\BaseObject;
@@ -795,12 +796,12 @@ class ValueGenerator extends BaseGenerator
 					case 'js':
 						ob_start();
 						$executor = new DslInterpreter();
-						$executor->setContext( [
+						$executor->addContext( [
 							'console'  => new DslConsole(),
 							'document' => new DslDocument(),
 							'write'    => new DslWrite(),
 							'alert'    => new DslAlert(),
-							'page'     => $page,
+							'page'     => new DslPage( $page ),
 						]);
 
 						try {

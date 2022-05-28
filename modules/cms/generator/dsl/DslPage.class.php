@@ -2,24 +2,24 @@
 
 namespace cms\generator\dsl;
 
+use cms\model\Page;
 use dsl\context\DslObject;
 
 class DslPage implements DslObject
 {
 	private $page;
 
+	public $id;
+
 	/**
 	 * DslPage constructor.
-	 * @param $page
+	 * @param Page $page
 	 */
 	public function __construct($page)
 	{
 		$this->page = $page;
+
+		$this->id = $page->getId();
 	}
 
-
-	public function execute( $text )
-	{
-		echo $text;
-	}
 }

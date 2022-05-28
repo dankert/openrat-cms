@@ -5,9 +5,11 @@ namespace dsl\ast;
 use dsl\DslParserException;
 use dsl\DslToken;
 
-class DslStatementList implements DslStatement
+class DslStatementList extends DslElement implements DslStatement
 {
 	private $statements = [];
+
+	private $functions = [];
 
 	public function __construct($tokenList)
 	{
@@ -20,14 +22,21 @@ class DslStatementList implements DslStatement
 	 */
 	public function parse($tokens)
 	{
-
 		$this->parseTokens($tokens);
 	}
 
 	public function execute( & $context)
 	{
-		foreach ($this->statements as $statement)
-			$statement->execute($context);
+		// Auto hoisting for functions: Add functions to context.
+		$context = array_merge( $context, $this->functions );
+
+		foreach ($this->statements as $statement) {
+
+			$value = $statement->execute($context);
+
+			if ($statement instanceof DslReturn)
+				return $value; // Return to the caller
+		}
 	}
 
 
@@ -71,7 +80,7 @@ class DslStatementList implements DslStatement
 					$functionParameter = $this->getGroup($tokens);
 					$functionBlock = $this->getBlock($tokens);
 
-					$this->statements[] = new DslFunction($name,$functionParameter, $functionBlock);
+					$this->functions[ $name ] = new DslFunction( $functionParameter, $functionBlock );
 					break;
 
 				case DslToken::T_IF:
@@ -109,7 +118,14 @@ class DslStatementList implements DslStatement
 					$forGroup = $this->getGroup();
 					$forBlock = $this->getStatementOrBlock();
 
-					$this->statements[] = new DslFor( $forGroup, $forBlock );
+					$varName = array_shift( $forGroup );
+					if   ( $varName->type != DslToken::T_STRING )
+						throw new DslParserException('for loop variable missing');
+					$ofName = array_shift( $forGroup );
+					if   ( $ofName->type != DslToken::T_STRING || strtolower($ofName->value) != 'or' )
+						throw new DslParserException('missing \'of\' in for loop');
+
+					$this->statements[] = new DslFor( $varName, $forGroup, $forBlock );
 					break;
 
 				case DslToken::T_NEW:
@@ -151,120 +167,5 @@ class DslStatementList implements DslStatement
 
 	}
 
-
-	/**
-	 *
-	 * @param $tokens DslToken[]
-	 * @return DslToken[]
-	 * @throws DslParserException
-	 */
-	private function getGroup(&$tokens)
-	{
-		$groupTokens = [];
-		$depth = 0;
-
-		$nextToken = array_shift($tokens);
-		if ($nextToken == null)
-			throw new DslParserException('Unexpecting end, missing closing group');
-		if ($nextToken->type != DslToken::T_BRACKET_OPEN)
-			throw new DslParserException('Expecting parenthesis', $nextToken->lineNumber);
-
-		while (true) {
-			$nextToken = array_shift($tokens);
-			if ($nextToken->type == null)
-				throw new DslParserException('Unclosed parenthesis', $nextToken->lineNumber);
-			if ($nextToken->type == DslToken::T_BRACKET_OPEN)
-				$depth += 1;
-			if ($nextToken->type == DslToken::T_BRACKET_CLOSE)
-				if ($depth == 0)
-					return $groupTokens;
-				else
-					$depth--;
-
-			$groupTokens[] = $nextToken;
-		}
-	}
-
-	/**
-	 *
-	 * @param $tokens DslToken[]
-	 * @return DslToken[]
-	 * @throws DslParserException
-	 */
-	private function getBlock(&$tokens)
-	{
-		$blockTokens = [];
-		$depth = 0;
-
-		$nextToken = array_shift($tokens);
-		if ($nextToken->type != DslToken::T_BLOCK_BEGIN)
-			throw new DslParserException('Expecting block', $nextToken->lineNumber);
-
-		while (true) {
-			$nextToken = array_shift($tokens);
-			if ($nextToken->type == null)
-				throw new DslParserException('Unclosed block', $nextToken->lineNumber);
-			if ($nextToken->type == DslToken::T_BLOCK_BEGIN)
-				$depth += 1;
-			if ($nextToken->type == DslToken::T_BLOCK_END)
-				if ($depth == 0)
-					return $blockTokens;
-				else
-					$depth--;
-
-			$blockTokens[] = $nextToken;
-		}
-	}
-
-	/**
-	 *
-	 * @param $tokens DslToken[]
-	 * @return DslToken[]
-	 * @throws DslParserException
-	 */
-	private function getStatementOrBlock(&$tokens)
-	{
-		if (!$tokens)
-			return [];
-
-		$firstToken = $tokens[0];
-		if ($firstToken->type == DslToken::T_BLOCK_BEGIN)
-			return $this->getBlock($tokens);
-		else
-			return $this->getSingleStatement($tokens);
-	}
-
-
-	/**
-	 * parse single statement
-	 *
-	 * @param $tokens DslToken[]
-	 * @return DslToken[]
-	 * @throws DslParserException
-	 */
-	private function getSingleStatement(&$tokens)
-	{
-		//echo "<h3>Statement:</h3><pre>"; var_dump( $tokens ); echo "</pre>";
-
-		$depth = 0;
-		$statementTokens = [];
-		while (true) {
-			$nextToken = array_shift($tokens);
-			if ($nextToken == null)
-				throw new DslParserException('unrecognized statement');
-
-			if ($depth == 0 && $nextToken->type == DslToken::T_STATEMENT_END)
-				return $statementTokens;
-
-			if ($nextToken->type == DslToken::T_BLOCK_BEGIN)
-				$depth++;
-			if ($nextToken->type == DslToken::T_BLOCK_END)
-				$depth--;
-			if ($depth < 0)
-				throw new DslParserException('Unexpected closing block', $nextToken->lineNumber);
-
-			$statementTokens[] = $nextToken;
-		}
-	}
 
 }

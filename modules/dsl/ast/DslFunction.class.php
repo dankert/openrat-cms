@@ -3,24 +3,32 @@
 namespace dsl\ast;
 
 use dsl\DslParserException;
+use dsl\DslRuntimeException;
 use dsl\DslToken;
 
-class DslFunction implements DslStatement
+class DslFunction extends DslElement implements DslStatement
 {
-	private $name;
-
 	/**
 	 * @var String[]
 	 */
-	private $parameters;
+	public $parameters;
 
 	/**
 	 * @var DslStatementList
 	 */
-	private $body;
+	public $body;
 
+	/**
+	 * creates the function.
+	 *
+	 * @param array $context
+	 * @return mixed|void
+	 * @throws DslRuntimeException
+	 */
 	public function execute( & $context ) {
 
+		$clonedContext = $context;
+		return $this->body->execute( $context );
 	}
 
 	/**
@@ -30,20 +38,17 @@ class DslFunction implements DslStatement
 	 * @param $functionBody DslToken[]
 	 * @throws DslParserException
 	 */
-	public function __construct( $name,$functionParameter, $functionBody )
+	public function __construct( $functionParameter, $functionBody )
 	{
-		$this->name = $name;
-		
-		foreach ( $functionParameter as $token ) {
+		$this->parameters = [];
+		foreach( $this->splitByComma( $functionParameter ) as $parameter ) {
+			if   ( sizeof($parameter) != 1 )
+				throw new DslParserException('function parameter must be a name');
+			$nameToken = $parameter[0];
+			if   ( $nameToken->type != DslToken::T_STRING )
+				throw new DslParserException('function parameter must be a name');
 
-			if   ( $token->type == DslToken::T_COMMA )
-				continue;
-
-			if   ( $token->type == DslToken::T_STRING )
-				$this->parameters[] = $token->value;
-			else
-				throw new DslParserException("Unknown token in function parameter",$token->lineNumber );
-
+			$this->parameters[] = $nameToken->value;
 		}
 
 		$this->body = new DslStatementList( $functionBody );
@@ -52,4 +57,5 @@ class DslFunction implements DslStatement
 	public function parse($tokens)
 	{
 	}
+
 }

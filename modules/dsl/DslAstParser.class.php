@@ -1,13 +1,6 @@
 <?php
 namespace dsl;
 
-use dsl\ast\DslAssignment;
-use dsl\ast\DslBlock;
-use dsl\ast\DslFor;
-use dsl\ast\DslFunction;
-use dsl\ast\DslIf;
-use dsl\ast\DslInitialisation;
-use dsl\ast\DslReturn;
 use dsl\ast\DslStatementList;
 
 /**
