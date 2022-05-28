@@ -4,9 +4,14 @@ namespace dsl\ast;
 
 class DslReturn implements DslStatement
 {
-	private $statements;
+	private $value;
 
-	public function execute( $context ) {
+	public function __construct( $expressionTokens )
+	{
+		$this->value = new DslExpression( $expressionTokens );
+	}
+
+	public function execute( & $context ) {
 
 	}
 

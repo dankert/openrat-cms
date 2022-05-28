@@ -262,7 +262,7 @@ public function get() { return [
 'EL_PROP_ALL_LANGUAGES'=>'Todas las idiomas',
 'EL_PROP_ALL_LANGUAGES_DESC'=>'El contenido es igual en todas las idiomas',
 'EL_PROP_CODE_DESC'=>'<em>Hint: Toma de </em> una mirada en la API-Documentación de esta clase. ¡Ser seguro utilizar solamente los métodos de esta clase, nunca <tt>echo</tt> o <tt>print</tt>!',
-'EL_PROP_CODE'=>'Código de PHP',
+'EL_PROP_CODE'=>'Código',
 'EL_PROP_DATEFORMAT'=>'Formato de fecha',
 'EL_PROP_DATEFORMAT_DESC'=>'Formato de la fecha. Informar a tu administrador si necesitas el otro formats<br/> (indirecta: Esto ajusta a formato se define en el archivo <tt>dateformat.ini.php</tt>)',
 'EL_PROP_DECIMALS_DESC'=>'Cuenta de comas',

@@ -262,7 +262,7 @@ public function get() { return [
 'EL_PROP_ALL_LANGUAGES'=>'Все языки',
 'EL_PROP_ALL_LANGUAGES_DESC'=>'Содержание равно на всех языках PHP',
 'EL_PROP_CODE_DESC'=>'Кодекс <em> Подсказка : </em> Посмотрите на API - Документация этого класса. Обязательно используйте только из методов этого класса, не повторить <tt> </tt> или распечатать <tt> </tt>!',
-'EL_PROP_CODE'=>'PHP Code',
+'EL_PROP_CODE'=>'Code',
 'EL_PROP_DATEFORMAT'=>'Формат даты',
 'EL_PROP_DATEFORMAT_DESC'=>'Формат даты. Расскажите своим администратором Вам нужны другие форматы <br> (Полезный совет : Это форматы, определены в файле <tt> dateformat.ini.php </tt>)',
 'EL_PROP_DECIMALS_DESC'=>'графом сотых',

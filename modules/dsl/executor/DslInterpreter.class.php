@@ -5,7 +5,7 @@ namespace dsl\executor;
 use dsl\DslAstParser;
 use dsl\DslLexer;
 
-class DslExecutor
+class DslInterpreter
 {
 	private $context = [];
 

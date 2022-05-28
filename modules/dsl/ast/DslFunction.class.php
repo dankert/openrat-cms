@@ -2,25 +2,54 @@
 
 namespace dsl\ast;
 
+use dsl\DslParserException;
 use dsl\DslToken;
 
 class DslFunction implements DslStatement
 {
-	private $statements;
+	private $name;
 
-	public function execute( $context ) {
+	/**
+	 * @var String[]
+	 */
+	private $parameters;
 
+	/**
+	 * @var DslStatementList
+	 */
+	private $body;
+
+	public function execute( & $context ) {
+
+	}
+
+	/**
+	 * DslFunction constructor.
+	 *
+	 * @param $functionParameter DslToken[]
+	 * @param $functionBody DslToken[]
+	 * @throws DslParserException
+	 */
+	public function __construct( $name,$functionParameter, $functionBody )
+	{
+		$this->name = $name;
+		
+		foreach ( $functionParameter as $token ) {
+
+			if   ( $token->type == DslToken::T_COMMA )
+				continue;
+
+			if   ( $token->type == DslToken::T_STRING )
+				$this->parameters[] = $token->value;
+			else
+				throw new DslParserException("Unknown token in function parameter",$token->lineNumber );
+
+		}
+
+		$this->body = new DslStatementList( $functionBody );
 	}
 
 	public function parse($tokens)
 	{
-		$functionName = array_pop( $tokens );
-		if   ( $functionName->type != DslToken::T_STRING )
-			throw new \Exception('function must be named' );
-		$bracketOpen  = array_pop( $tokens );
-		$bracketClose = array_pop( $tokens );
-		$blockBegin   = array_pop( $tokens );
-		if   ( $blockBegin->type != DslToken::T_BLOCK_BEGIN )
-			throw new \Exception('function must be followed by a block' );
 	}
 }

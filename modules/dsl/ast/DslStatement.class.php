@@ -6,8 +6,19 @@ use dsl\DslToken;
 
 interface DslStatement
 {
-	public function parse($tokens);
+	/**
+	 * Parses a list of tokens.
+	 * @param $tokens DslToken[] List of tokens
+	 */
+	public function parse( $tokens );
 
-	public function execute($context);
+
+	/**
+	 * Executes this statement.
+	 *
+	 * @param $context array Context of execution.
+	 * @return mixed
+	 */
+	public function execute( & $context );
 
 }

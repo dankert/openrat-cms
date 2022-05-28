@@ -262,7 +262,7 @@ public function get() { return [
 'EL_PROP_ALL_LANGUAGES'=>'Alle Sprachen',
 'EL_PROP_ALL_LANGUAGES_DESC'=>'Der Inhalt der Platzhalter ist in allen Sprachen gleich.',
 'EL_PROP_CODE_DESC'=>'<em>Hinweis:</em> Beachten Sie die API-Dokumentation der Klasse <tt>Api</tt>. Benutzen Sie ausschließlich diese Klasse und vermeiden Sie Ausgaben mit <tt>echo</tt> oder <tt>print</tt>!',
-'EL_PROP_CODE'=>'PHP Code',
+'EL_PROP_CODE'=>'Code',
 'EL_PROP_DATEFORMAT'=>'Datumsformat',
 'EL_PROP_DATEFORMAT_DESC'=>'Format bei der Darstellung des Datums. Wenden Sie sich an Ihren Administrator wenn sie weitere Formate benötigen<br/>(Hinweis: Die Formate sind definiert in der Datei <tt>dateformat.ini.php</tt>)',
 'EL_PROP_DECIMALS_DESC'=>'Anzahl der Dezimalstellen bei der Darstellung dieser Zahl',

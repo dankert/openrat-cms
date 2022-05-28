@@ -15,6 +15,7 @@ class DslLexer
 		'const'    => DslToken::T_LET,
 		'var'      => DslToken::T_LET,
 		'return'   => DslToken::T_RETURN,
+		'new'      => DslToken::T_NEW,
 	];
 
 	/**
@@ -28,10 +29,10 @@ class DslLexer
 		$line = 1;
 
 		// mb_str_split only available since PHP 7.4
-		$chars = array_reverse(str_split($code));
+		$chars = str_split($code);
 
 		while( true ) {
-			$char = array_pop($chars);
+			$char = array_shift($chars);
 
 			if   ( $char == null )
 				break;
@@ -40,8 +41,6 @@ class DslLexer
 				continue;
 
 			if   ( ( $char == "\n" )) {
-				//$this->addToken($line,DslToken::T_STATEMENT_END); // line-end is implicite end of statement
-				// oh, not so good on "if" constructs.
 				$line++;
 				continue;
 			}
@@ -51,9 +50,11 @@ class DslLexer
 				$textEncloser = $char;
 				$value = '';
 				while( true ) {
-					$char = array_pop($chars);
+					$char = array_shift($chars);
+					if   ( $char == "\n")
+						throw new DslParserException("Unclosed string",$line);
 					if   ( $char == '\\') {
-						$char = array_pop($chars);
+						$char = array_shift($chars);
 						$value .= $char;
 					}
 					elseif ($char != $textEncloser) {
@@ -69,11 +70,13 @@ class DslLexer
 
 			// Comments
 			if   ( $char == '/' ) {
-				$nextChar = array_pop($chars);
+				$nextChar = array_shift($chars);
 				if   ( $nextChar == '/' ) { // Comment after "//"
 
 					while( true ) {
-						$c = array_pop($chars);
+						$c = array_shift($chars);
+						if ($c == "\n")
+							$line++;
 						if ($c == "\n" || $c == null )
 							continue 2;
 					}
@@ -83,9 +86,11 @@ class DslLexer
 
 					$lastChar = null;
 					while( true ) {
-						$c = array_pop($chars);
+						$c = array_shift($chars);
 						if   ( $c == null )
 							break 2;
+						if ($c == "\n")
+							$line++;
 						if   ( $lastChar == '*' && $c == '/')
 							continue 2;
 						$lastChar = $c;
@@ -94,7 +99,7 @@ class DslLexer
 
 				}
 				else {
-					array_push($chars,$nextChar); // this is no comment
+					array_unshift($chars,$nextChar); // this is no comment
 				}
 			}
 
@@ -105,7 +110,7 @@ class DslLexer
 				   $char == '$' ) {
 				$value = $char;
 				while( true ) {
-					$char = array_pop( $chars );
+					$char = array_shift( $chars );
 					if   ( ( $char >= 'a' && $char <= 'z') ||
 						( $char >= 'A' && $char <= 'Z') ||
 						( $char >= '0' && $char <= '9') ||
@@ -119,7 +124,7 @@ class DslLexer
 							$type = self::KEYWORDS[$value]; // it is a keyword
 
 						$this->addToken( $line,$type,$value );
-						array_push($chars,$char);
+						array_unshift($chars,$char);
 						break;
 					}
 				}
@@ -130,13 +135,13 @@ class DslLexer
 			if   ( $char >= '0' && $char <= '9') {
 				$value = $char;
 				while( true ) {
-					$char = array_pop( $chars );
+					$char = array_shift( $chars );
 					if   ( ( $char >= '0' && $char <= '9') ||
 						     $char == '.' ) {
 						$value .= $char;
 					} else {
 						$this->addToken( $line,DslToken::T_NUMBER,$value );
-						array_push($chars,$char);
+						array_unshift($chars,$char);
 						break;
 					}
 				}
@@ -147,13 +152,13 @@ class DslLexer
 
 				$value = $char;
 				while( true ) {
-					$char = array_pop( $chars );
+					$char = array_shift( $chars );
 					if   ( $char == '+' || $char == '-' || $char == '/' || $char == '*' || $char == '='  || $char == '|' || $char == '&' ) {
 						$value .= $char;
 					} else {
 						$type = DslToken::T_OPERATOR;
 						$this->addToken( $line,$type,$value );
-						array_push($chars,$char);
+						array_unshift($chars,$char);
 						continue 2;
 					}
 				}

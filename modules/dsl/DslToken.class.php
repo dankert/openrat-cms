@@ -24,6 +24,7 @@ class DslToken
 	const T_STATEMENT_END = 17;
 	const T_NEGATION = 18;
 	const T_COMMA = 19;
+	const T_NEW = 20;
 
 	public $lineNumber;
 	public $type;

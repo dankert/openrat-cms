@@ -262,7 +262,7 @@ public function get() { return [
 'EL_PROP_ALL_LANGUAGES'=>'tutte le lingue',
 'EL_PROP_ALL_LANGUAGES_DESC'=>'il soddisfare è uguale in tutto il <em>Hint di codice di lingue',
 'EL_PROP_CODE_DESC'=>': Introito di </em> uno sguardo alla Api-Documentazione di questo codice categoria. Essere sicuro usare soltanto i metodi da questo codice categoria, mai <tt>echo</tt> o <tt>print</tt>!',
-'EL_PROP_CODE'=>'PHP',
+'EL_PROP_CODE'=>'Code',
 'EL_PROP_DATEFORMAT'=>'Disposizione di disposizione di data',
 'EL_PROP_DATEFORMAT_DESC'=>'della data. Informare il vostro coordinatore se avete bisogno dell\'altro formats<br/> (suggerimento: Ciò formatta è definita nel conteggio della lima <tt>dateformat.ini.php</tt>)',
 'EL_PROP_DECIMALS_DESC'=>'del carbone del punto decimale, Fe del punto decimale dei punti decimali',

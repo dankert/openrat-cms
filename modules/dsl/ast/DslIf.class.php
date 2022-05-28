@@ -4,10 +4,37 @@ namespace dsl\ast;
 
 class DslIf implements DslStatement
 {
-	private $statements;
 
-	public function execute( $context ) {
+	/**
+	 * Expression for the condition
+	 * @var DslExpression
+	 */
+	private $condition;
 
+	/**
+	 * @var DslStatementList
+	 */
+	private $pos;
+
+	/**
+	 * @var DslStatementList
+	 */
+	private $neg;
+
+	public function execute( & $context ) {
+
+		$conditionValue = $this->condition->execute( $context );
+
+		if   ( $conditionValue )
+			$this->pos->execute( $context );
+		else
+			$this->neg->execute( $context );
+	}
+
+	public function __construct( $condition, $positive,$negative ) {
+		$this->condition = new DslExpression( $condition );
+		$this->pos = new DslStatementList( $positive );
+		$this->neg = new DslStatementList( $negative );
 	}
 
 	public function parse($tokens)

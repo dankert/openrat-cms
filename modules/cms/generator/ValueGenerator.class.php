@@ -11,6 +11,7 @@ use cms\base\Startup;
 use cms\generator\dsl\DslAlert;
 use cms\generator\dsl\DslConsole;
 use cms\generator\dsl\DslDocument;
+use cms\generator\dsl\DslWrite;
 use cms\macros\MacroRunner;
 use cms\model\BaseObject;
 use cms\model\Element;
@@ -24,7 +25,10 @@ use cms\model\PageContent;
 use cms\model\Project;
 use cms\model\Template;
 use cms\model\Value;
-use dsl\executor\DslExecutor;
+use dsl\DslException;
+use dsl\DslParserException;
+use dsl\DslRuntimeException;
+use dsl\executor\DslInterpreter;
 use logger\Logger;
 use LogicException;
 use util\Code;
@@ -790,19 +794,21 @@ class ValueGenerator extends BaseGenerator
 
 					case 'js':
 						ob_start();
-						$executor = new DslExecutor();
+						$executor = new DslInterpreter();
 						$executor->setContext( [
 							'console'  => new DslConsole(),
 							'document' => new DslDocument(),
+							'write'    => new DslWrite(),
 							'alert'    => new DslAlert(),
-							'page'     => $page
+							'page'     => $page,
 						]);
 
 						try {
 							$executor->runCode( $element->code );
-						}catch( \Exception $e ) {
+						}
+						catch( DslException $e ) {
 							if   ( $pageContext->scheme == Producer::SCHEME_PREVIEW )
-								echo "Interpreter error: ".$e->getMessage();
+								echo $e->getMessage();
 							Logger::warn( $e );
 						}
 						$output = ob_get_contents();

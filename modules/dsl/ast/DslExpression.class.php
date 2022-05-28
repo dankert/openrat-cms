@@ -2,27 +2,58 @@
 
 namespace dsl\ast;
 
+use dsl\DslParserException;
 use dsl\DslToken;
 
 class DslExpression implements DslStatement
 {
-	private $value  = [];
+	private $value;
 
-	public function execute( $context ) {
+	public function __construct( $valueTokens )
+	{
+		$this->parse( $valueTokens );
+	}
 
-		//echo "ausführen expression: "; var_dump($this->value);
-		foreach( $this->value as $v)
-			$v->execute( $context );
+	public function execute( & $context ) {
+
+		if   ( is_array( $this->value ) )
+			foreach( $this->value as $v)
+				$v->execute( $context );
+		else
+			return $this->value->execute( $context );
 	}
 
 	public function parse($tokens)
 	{
+		echo "<h5>Expression:</h5><pre>"; var_export( $tokens ); echo "</pre>";
+		if   ( ! $tokens ) {
+			$this->value = new DslNull();
+			return;
+		}
+
+		if   ( sizeof($tokens) == 1) {
+			$token = $tokens[0];
+			switch( $token->type ) {
+				case DslToken::T_TEXT:
+					$this->value = new DslString( $token->value );
+					break;
+				case DslToken::T_STRING:
+					$this->value = new DslVariable( $token->value );
+					break;
+				case DslToken::T_NUMBER:
+					$this->value = new DslInteger( $token->value );
+					break;
+				default:
+					throw new DslParserException('unknown token '.$token->type.' in expression',$token->lineNumber);
+			}
+			return;
+		}
+
 		$depth = 0;
 
-		//echo "<h2>Expression</h2><pre>"; var_dump( $tokens ); echo "</pre>";
 		while( true ) {
 
-			$token = array_pop( $tokens );
+			$token = array_shift( $tokens );
 
 			if   ( $token == null ) {
 				break;
@@ -30,19 +61,19 @@ class DslExpression implements DslStatement
 
 			if ( $token->type == DslToken::T_STRING )
 			{
-				$nextToken = array_pop( $tokens );
-				if ( $nextToken->type == DslToken::T_BRACKET_OPEN )
+				$nextToken = array_shift( $tokens );
+				if ( $nextToken &&  $nextToken->type == DslToken::T_BRACKET_OPEN )
 				{
-					$nextToken = array_pop( $tokens );
-					if ( $nextToken->type == DslToken::T_TEXT ) {
+					$nextToken = array_shift( $tokens );
+					if ( $nextToken && ( $nextToken->type == DslToken::T_TEXT  || $nextToken->type == DslToken::T_STRING || $nextToken->type == DslToken::T_NUMBER ) ) {
 
-						$functionCall = new DslFunctionCall();
-						$functionCall->name = $token->value;
-						$functionCall->parse( $nextToken );
-						$this->value[] = $functionCall;
+						echo "found function";
+						$this->value = new DslFunctionCall( $token->value, [$nextToken] );
+						return;
 					}
 				}
 			}
 		}
+		$this->value = new DslNull();
 	}
 }

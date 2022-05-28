@@ -1230,11 +1230,10 @@ EL_PROP_CODE_DESC:
   it: ': Introito di </em> uno sguardo alla Api-Documentazione di questo codice categoria. Essere sicuro usare soltanto i metodi da questo codice categoria, mai <tt>echo</tt> o <tt>print</tt>!'
   ru: 'Кодекс <em> Подсказка : </em> Посмотрите на API - Документация этого класса. Обязательно используйте только из методов этого класса, не повторить <tt> </tt> или распечатать <tt> </tt>!'
 EL_PROP_CODE:
-  de: PHP Code
-  en: PHP Code
-  es: Código de PHP
-  fr: Code de PHP
-  it: PHP
+  de: Code
+  en: Code
+  es: Código
+  fr: Code
 EL_PROP_DATEFORMAT:
   de: Datumsformat
   en: Date format

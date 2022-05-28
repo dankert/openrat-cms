@@ -2,13 +2,9 @@
 
 namespace dsl\ast;
 
-class DslFor implements DslStatement
+class DslGroup implements DslStatement
 {
 	private $statements;
-
-	public function __construct( $group, $block )
-	{
-	}
 
 	public function execute( & $context ) {
 

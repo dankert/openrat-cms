@@ -262,7 +262,7 @@ public function get() { return [
 'EL_PROP_ALL_LANGUAGES'=>'All languages',
 'EL_PROP_ALL_LANGUAGES_DESC'=>'The content is equal in all languages',
 'EL_PROP_CODE_DESC'=>'Hint: Take a look at the API-Documentation of this class. Be sure to only use the Methods from this class, never <tt>echo</tt> or <tt>print</tt>!',
-'EL_PROP_CODE'=>'PHP Code',
+'EL_PROP_CODE'=>'Code',
 'EL_PROP_DATEFORMAT'=>'Date format',
 'EL_PROP_DATEFORMAT_DESC'=>'Format of the date. Inform your adminOCistrator if you need other formats<br/>(Hint: This formats are defined in the file <tt>dateformat.ini.php</tt>)',
 'EL_PROP_DECIMALS_DESC'=>'Count of decimal points',

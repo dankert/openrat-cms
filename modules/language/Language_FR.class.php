@@ -262,7 +262,7 @@ public function get() { return [
 'EL_PROP_ALL_LANGUAGES'=>'Toutes les langues',
 'EL_PROP_ALL_LANGUAGES_DESC'=>'Le contenu est égal dans toutes les langues',
 'EL_PROP_CODE_DESC'=>'<em>Hint : Prise de </em> un regard à l\'Api-Documentation de cette classe. Être sûr d\'employer seulement les méthodes de cette classe, jamais <tt>echo</tt> ou <tt>print</tt> !',
-'EL_PROP_CODE'=>'Code de PHP',
+'EL_PROP_CODE'=>'Code',
 'EL_PROP_DATEFORMAT'=>'Format de date',
 'EL_PROP_DATEFORMAT_DESC'=>'Format de la date. Informer votre administrateur si vous avez besoin de l\'autre formats<br/> (conseil : Ceci compose sont définis dans le dossier <tt>dateformat.ini.php</tt>)',
 'EL_PROP_DECIMALS_DESC'=>'Compte de virgules décimales',

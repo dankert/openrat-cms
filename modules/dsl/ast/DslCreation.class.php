@@ -3,9 +3,8 @@
 namespace dsl\ast;
 
 use dsl\DslRuntimeException;
-use dsl\DslToken;
 
-class DslInitialisation implements DslStatement
+class DslCreation implements DslStatement
 {
 	private $name;
 	private $value;
@@ -21,12 +20,9 @@ class DslInitialisation implements DslStatement
 			throw new DslRuntimeException('variable '.$this->name.' is already initialised');
 
 		$context[ $this->name ] = $this->value->execute( $context );
-		//echo "new var: ".$this->name.':'.$context[$this->name];
-
 	}
 
 	public function parse($tokens)
 	{
-		// TODO: Implement parse() method.
 	}
 }
