@@ -13,6 +13,7 @@ class DslReturn implements DslStatement
 
 	public function execute( & $context ) {
 
+		return $this->value->execute( $context );
 	}
 
 	public function parse($tokens)

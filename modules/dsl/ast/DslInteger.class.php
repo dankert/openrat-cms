@@ -18,7 +18,7 @@ class DslInteger implements DslStatement
 
 	public function execute( & $context ) {
 
-		return $this->number;
+		return intval($this->number);
 	}
 
 	public function parse($tokens)

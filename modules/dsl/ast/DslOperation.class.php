@@ -36,19 +36,43 @@ class DslOperation implements DslStatement
 
 		switch( $this->operator ) {
 			case '+':
-				if   ( is_string($left) )
+				if   ( is_string($left)  )
 					return $left . $right;
 				else
-					return $left + $right;
+					return intval($left) + intval($right);
 
 			case '-':
-				return $left - $right;
+				return intval($left) - intval($right);
 
 			case '*':
 				return $left * $right;
 
 			case '/':
 				return $left / $right;
+
+			case '==':
+				return $left == $right;
+			case '!=':
+				return $left != $right;
+			case '<':
+				return $left < $right;
+			case '<=':
+				return $left <= $right;
+			case '>':
+				return $left > $right;
+			case '>=':
+				return $left >= $right;
+
+			case '||':
+				return $left || $right;
+			case '&&':
+				return $left && $right;
+
+			case '%':
+				return $left % $right;
+
+			case '!':
+				return ! $left;
 
 			default:
 				throw new DslRuntimeException('Unknown operator \''.$this->operator.'\'');

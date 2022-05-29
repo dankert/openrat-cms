@@ -22,4 +22,12 @@ class DslPage implements DslObject
 		$this->id = $page->getId();
 	}
 
+	/**
+	 * @return array
+	 * @throws \util\exception\ObjectNotFoundException
+	 */
+	public function elements() {
+		return $this->page->getElementIds();
+	}
+
 }

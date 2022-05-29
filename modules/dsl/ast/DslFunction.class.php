@@ -35,15 +35,17 @@ class DslFunction extends DslElement implements DslStatement
 	 * DslFunction constructor.
 	 *
 	 * @param $functionParameter DslToken[]
-	 * @param $functionBody DslToken[]
+	 * @param $functionBody DslStatement
 	 * @throws DslParserException
 	 */
 	public function __construct( $functionParameter, $functionBody )
 	{
-		$this->parameters = [];
+		//$this->parameters = $functionParameter;
+
+		//var_export($this->splitByComma( $functionParameter ));
 		foreach( $this->splitByComma( $functionParameter ) as $parameter ) {
 			if   ( sizeof($parameter) != 1 )
-				throw new DslParserException('function parameter must be a name');
+				throw new DslParserException('function parameter must be a single name');
 			$nameToken = $parameter[0];
 			if   ( $nameToken->type != DslToken::T_STRING )
 				throw new DslParserException('function parameter must be a name');

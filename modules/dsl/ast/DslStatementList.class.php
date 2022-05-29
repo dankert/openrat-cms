@@ -77,6 +77,7 @@ class DslStatementList extends DslElement implements DslStatement
 						throw new DslParserException('function must have a name', $token->lineNumber);
 					$name = $nameToken->value;
 
+					$functionCallOp    = array_shift($tokens);
 					$functionParameter = $this->getGroup($tokens);
 					$functionBlock = $this->getBlock($tokens);
 
@@ -87,7 +88,7 @@ class DslStatementList extends DslElement implements DslStatement
 					$condition = $this->getGroup($tokens);
 					$positiveBlock = $this->getStatementOrBlock($tokens);
 					$nextToken = array_shift($tokens);
-					if ($nextToken->type == DslToken::T_ELSE) {
+					if ($nextToken && $nextToken->type == DslToken::T_ELSE) {
 						$negativeBlock = $this->getStatementOrBlock($tokens);
 					} else {
 						$negativeBlock = [];
@@ -115,21 +116,21 @@ class DslStatementList extends DslElement implements DslStatement
 					break;
 
 				case DslToken::T_FOR:
-					$forGroup = $this->getGroup();
-					$forBlock = $this->getStatementOrBlock();
+					$forGroup = $this->getGroup( $tokens );
+					$forBlock = $this->getStatementOrBlock( $tokens );
+
+					//echo "<h5>Forgroup:</h5><pre>"; var_export( $forGroup); echo "</pre>";
 
 					$varName = array_shift( $forGroup );
-					if   ( $varName->type != DslToken::T_STRING )
+					if   ( $varName == null || $varName->type != DslToken::T_STRING )
 						throw new DslParserException('for loop variable missing');
 					$ofName = array_shift( $forGroup );
-					if   ( $ofName->type != DslToken::T_STRING || strtolower($ofName->value) != 'or' )
+					if   ( $ofName == null || $ofName->type != DslToken::T_STRING || strtolower($ofName->value) != 'of' )
 						throw new DslParserException('missing \'of\' in for loop');
 
-					$this->statements[] = new DslFor( $varName, $forGroup, $forBlock );
+					$this->statements[] = new DslFor( $varName->value, $forGroup, $forBlock );
 					break;
 
-				case DslToken::T_NEW:
-					throw new DslParserException("new makes no sense without an assignment");
 				case DslToken::T_RETURN:
 					$returnTokens = $this->getSingleStatement( $tokens );
 					$this->statements[] = new DslReturn( $returnTokens );
@@ -140,27 +141,11 @@ class DslStatementList extends DslElement implements DslStatement
 					array_unshift( $tokens, $token );
 					$statementTokens = $this->getSingleStatement( $tokens );
 
-					// we have to look if it is an assignment.
-					$assignmentTokens = [];
-					$expressionTokens = [];
-					foreach ( $statementTokens as $t ) {
-						if   ( $t->type == DslToken::T_OPERATOR && $t->value == '=' ) {
-							$assignmentTokens = $expressionTokens;
-							$expressionTokens = [];
-							continue;
-						}
-
-						$expressionTokens[] = $t;
-					}
-
-					if   ( $assignmentTokens )
-						$this->statements[] = new DslAssignment( $assignmentTokens, $expressionTokens );
-					else
-						$this->statements[] = new DslExpression( $expressionTokens );
+					$this->statements[] = new DslExpression( $statementTokens );
 					break;
 
 				default:
-					throw new DslParserException('Unknown token of type '+ $token->type );
+					throw new DslParserException('Unknown token of type '.$token->type,$token->lineNumber );
 			}
 
 		}

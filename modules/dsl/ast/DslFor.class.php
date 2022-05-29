@@ -27,13 +27,15 @@ class DslFor implements DslStatement
 
 
 	public function execute( & $context ) {
+
 		$list = $this->list->execute( $context );
+
 		if   ( !is_array( $list ) )
 			throw new DslRuntimeException('for value is not a list');
 
 		$copiedContext = $context;
-		foreach( $list as $blockVar ) {
-			$copiedContext[ $this->name ] = $blockVar;
+		foreach( $list as $loopVar ) {
+			$copiedContext[ $this->name ] = $loopVar;
 			$this->statements->execute( $copiedContext );
 		}
 	}

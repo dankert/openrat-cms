@@ -13,19 +13,16 @@ class DslAssignment implements DslStatement
 
 	/**
 	 * DslAssignment constructor.
-	 * @param $target DslToken[]
-	 * @param $value DslToken[]
+	 * @param $target DslStatement
+	 * @param $value DslStatement
 	 * @throws DslParserException
 	 */
 	public function __construct( $target, $value )
 	{
-		echo "<h5>Assignment:</h5><pre>"; var_export( $target ); var_export($value); echo "</pre>";
+		//echo "<h5>Assignment:</h5><pre>"; var_export( $target ); var_export($value); echo "</pre>";
 
-		if   ( sizeof( $target ) != 1 )
-			throw new DslParserException('Assignment only possible for variables.');
-
-		$this->target = new DslVariable( $target[0]->value );
-		$this->value  = new DslExpression( $value  );
+		$this->target = $target;
+		$this->value  = $value;
 	}
 
 	/**

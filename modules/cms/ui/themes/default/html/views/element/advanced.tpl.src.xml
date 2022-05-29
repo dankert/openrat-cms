@@ -125,7 +125,7 @@
       </if>
       <if present="code">
         <fieldset class="line" label="${message:EL_PROP_code}">
-            <inputarea name="code" rows="35"/>
+			<editor name="code" type="code" mode="js" />
         </fieldset>
       </if>
     </group>

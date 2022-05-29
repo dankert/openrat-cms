@@ -18,6 +18,45 @@ class DslLexer
 		'new'      => DslToken::T_NEW,
 	];
 
+	const UNUSED_KEYWORDS = [
+		'null',
+		'true',
+		'false',
+		'implements',
+		'interface',
+		'package',
+		'private',
+		'protected',
+		'public',
+		'static',
+		'in',
+		'do',
+		'new',
+		'try',
+		'this',
+		'case',
+		'void',
+		'with',
+		'enum',
+		'while',
+		'break',
+		'catch',
+		'throw',
+		'yield',
+		'class',
+		'super',
+		'typeof',
+		'delete',
+		'switch',
+		'export',
+		'import',
+		'default',
+		'finally',
+		'extends',
+		'continue',
+		'debugger',
+		'instanceof',
+		];
 	/**
 	 * @param $code
 	 * @return array(DslToken)
@@ -120,6 +159,9 @@ class DslLexer
 					} else {
 						$type = DslToken::T_STRING;
 
+						if   ( array_key_exists($value,self::UNUSED_KEYWORDS ) )
+							throw new DslParserException( 'use of reserved word \''.$value.'\' is not allowed.');
+
 						if   ( array_key_exists($value,self::KEYWORDS ) )
 							$type = self::KEYWORDS[$value]; // it is a keyword
 
@@ -148,12 +190,13 @@ class DslLexer
 				continue;
 			}
 
-			if   ( $char == '+' || $char == '-' || $char == '/' || $char == '*' || $char == '=' || $char == '|' || $char == '&' ) {
+			$operatorChars = ['+' ,'-','/' ,'*','=','|','&',',','.' ];
+			if   ( in_array($char,$operatorChars)) {
 
 				$value = $char;
 				while( true ) {
 					$char = array_shift( $chars );
-					if   ( $char == '+' || $char == '-' || $char == '/' || $char == '*' || $char == '='  || $char == '|' || $char == '&' ) {
+					if   ( in_array($char,$operatorChars) ) {
 						$value .= $char;
 					} else {
 						$type = DslToken::T_OPERATOR;
@@ -175,8 +218,12 @@ class DslLexer
 				$this->addToken( $line,DslToken::T_DOT,$char);
 			elseif   ( $char == ',' )
 				$this->addToken( $line,DslToken::T_COMMA,$char);
-			elseif   ( $char == '(' )
+
+			elseif   ( $char == '(' ) {
+				if  ( end( $this->token)->type == DslToken::T_STRING)
+					$this->addToken( $line, DslToken::T_OPERATOR,'$'); // function call
 				$this->addToken( $line,DslToken::T_BRACKET_OPEN,$char);
+			}
 			elseif   ( $char == ')' )
 				$this->addToken( $line,DslToken::T_BRACKET_CLOSE,$char);
 			elseif   ( $char == '{' )
@@ -184,7 +231,7 @@ class DslLexer
 			elseif   ( $char == '}' )
 				$this->addToken( $line,DslToken::T_BLOCK_END,$char);
 			else {
-				throw new \Exception('Unknown character \''.$char.'\' on line '.$line.'.');
+				throw new DslParserException('Unknown character \''.$char.'\'',$line);
 			}
 		}
 

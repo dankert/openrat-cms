@@ -246,7 +246,10 @@
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('EL_PROP_code').'') ?></h3>
               <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
-                <textarea name="<?php echo O::escapeHtml('code') ?>" class="<?php echo O::escapeHtml('or-input or-inputarea') ?>"><?php echo O::escapeHtml(''.@$code.'') ?></textarea>
+                <div><?php echo O::escapeHtml('') ?>
+                  <textarea name="<?php echo O::escapeHtml('code') ?>" data-extension="<?php echo O::escapeHtml('') ?>" data-mimetype="<?php echo O::escapeHtml('') ?>" data-mode="<?php echo O::escapeHtml('js') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-code-editor') ?>"><?php echo O::escapeHtml(''.@$code.'') ?></textarea>
+                  <trix-editor input="<?php echo O::escapeHtml('code') ?>"><?php echo O::escapeHtml('') ?></trix-editor>
+                </div>
               </div>
             </section>
            <?php } ?>

@@ -134,7 +134,7 @@ class DslElement
 		$act   = [];
 		foreach ( $functionParameter as $token ) {
 
-			if   ( $token->type == DslToken::T_COMMA ) {
+			if   ( $token->type == DslToken::T_OPERATOR && $token->value == ',' ) {
 				$parts[] = $act;
 				$act     = []; // Cleanup
 				continue;
