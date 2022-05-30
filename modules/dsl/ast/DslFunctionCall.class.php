@@ -17,6 +17,14 @@ class DslFunctionCall implements DslStatement
 	 */
 	public function __construct($name, $parameters)
 	{
+		//echo "name:";var_export( $name );
+		//echo "params:";var_export( $parameters );
+
+		// Parameterless function calls are not correctly detected by the AST parser
+		if   ( $name==null) {
+			$name = $parameters;
+			$parameters = null;
+		}
 		$this->name       = $name;
 		$this->parameters = $parameters;
 	}
@@ -37,7 +45,10 @@ class DslFunctionCall implements DslStatement
 //
 //		$function = $context[$name];
 
-		$parameterValues = $this->parameters->execute( $context );
+		if   ( $this->parameters == null )
+			$parameterValues = []; // parameterless functions.
+		else
+			$parameterValues = $this->parameters->execute( $context );
 
 		// if there is only 1 parameter it must be converted to an array.
 		// if there are more than 1 parameter, it is already a sequence
@@ -52,6 +63,7 @@ class DslFunctionCall implements DslStatement
 		elseif   ( $function instanceof DslFunction ) {
 
 			$parameters = $function->parameters;
+			//var_export( $function->parameters);
 
 			if   ( sizeof($parameters) != sizeof($parameterValues) )
 				throw new DslRuntimeException('function call has '.sizeof($parameterValues).' parameters but the function has '.sizeof($parameters).' parameters');

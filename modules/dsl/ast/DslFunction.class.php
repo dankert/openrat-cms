@@ -42,6 +42,7 @@ class DslFunction extends DslElement implements DslStatement
 	{
 		//$this->parameters = $functionParameter;
 
+		$this->parameters = [];
 		//var_export($this->splitByComma( $functionParameter ));
 		foreach( $this->splitByComma( $functionParameter ) as $parameter ) {
 			if   ( sizeof($parameter) != 1 )

@@ -2,6 +2,7 @@
 
 namespace dsl\ast;
 
+use cms\generator\dsl\DslObject;
 use dsl\DslRuntimeException;
 
 class DslProperty implements DslStatement
@@ -30,18 +31,35 @@ class DslProperty implements DslStatement
 
 		$object = $this->variable->execute( $context );
 
-		if   ( ! is_object( $object ) )
-			throw new DslRuntimeException('is no object');
+		$objectContext = [];
 
-		$objectContext = get_object_vars( $object );
+		if   (  is_object( $object ) ) {
 
-		// copy object methods to the object context to make them callable.
-		foreach( get_class_methods( $object ) as $method ) {
-			$objectContext[ $method ] = function() use ($method, $object) {
-				return call_user_func_array( array($object,$method),func_get_args() );
-			};
+			$objectContext = get_object_vars( $object );
+
+			// copy object methods to the object context to make them callable.
+			foreach( get_class_methods( $object ) as $method ) {
+				$objectContext[ $method ] = function() use ($method, $object) {
+					return call_user_func_array( array($object,$method),func_get_args() );
+				};
+			}
 		}
+		elseif   (  is_array( $object ) ) {
+
+			$objectContext = $object;
+
+		} else {
+
+			throw new DslRuntimeException('not an object');
+		}
+
 		$prop = $this->property->execute( $objectContext );
+
+		// TODO: how to recognize objects
+		// For Security: Do not expose internal objects.
+		//if   ( is_object($prop) && ! $prop instanceof DslObject )
+		//	$prop = '@'.get_class($prop).'@';
+
 		return $prop;
 	}
 
