@@ -11,6 +11,8 @@ use cms\base\Startup;
 use cms\generator\dsl\DslAlert;
 use cms\generator\dsl\DslConsole;
 use cms\generator\dsl\DslDocument;
+use cms\generator\dsl\DslHttp;
+use cms\generator\dsl\DslJson;
 use cms\generator\dsl\DslPage;
 use cms\generator\dsl\DslWrite;
 use cms\macros\MacroRunner;
@@ -799,6 +801,8 @@ class ValueGenerator extends BaseGenerator
 						$executor->addContext( [
 							'console'  => new DslConsole(),
 							'document' => new DslDocument(),
+							'http'     => new DslHttp(),
+							'json'     => new DslJson(),
 							'write'    => new DslWrite(),
 							'alert'    => new DslAlert(),
 							'page'     => new DslPage( $page ),

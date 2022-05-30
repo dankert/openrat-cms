@@ -22,7 +22,7 @@ class DslAstParser
 
 		$this->rootStatement = new DslStatementList( $tokens );
 
-		echo "<h1>AST:</h1><pre>"; var_export( $this->rootStatement ); echo "</pre>";
+		//echo "<h1>AST:</h1><pre>"; var_export( $this->rootStatement ); echo "</pre>";
 	}
 
 

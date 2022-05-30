@@ -16,6 +16,10 @@ class DslConsole implements DslObject
 	{
 		Logger::debug( $text );
 	}
+	public function trace( $text )
+	{
+		Logger::trace( $text );
+	}
 	public function info( $text )
 	{
 		Logger::info( $text );
