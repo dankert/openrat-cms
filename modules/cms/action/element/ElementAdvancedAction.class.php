@@ -13,6 +13,7 @@ use cms\model\Template;
 use language\Messages;
 use ReflectionClass;
 use ReflectionProperty;
+use util\FileUtils;
 use util\Text;
 
 
@@ -141,10 +142,21 @@ class ElementAdvancedAction extends ElementAction implements Method {
                             $convertToLang = true;
                             break;
 
+                        case Element::ELEMENT_TYPE_DATA:
+                        	break;
+
+                        case Element::ELEMENT_TYPE_COORD:
+                            $subtypes = [
+                            	'olc',
+                                'coordinates',
+							];
+                            $convertToLang = true;
+                            break;
+
                         case Element::ELEMENT_TYPE_DYNAMIC:
 
                             $files = Array();
-                            $macroFiles = \util\FileUtils::readDir(__DIR__ . '/../../../cms/macros/macro');
+                            $macroFiles = FileUtils::readDir(__DIR__ . '/../../../cms/macros/macro');
                             foreach( $macroFiles as $macroFile )
                             {
                                 $file = substr($macroFile,0,strlen($macroFile)-10);
@@ -337,6 +349,9 @@ class ElementAdvancedAction extends ElementAction implements Method {
 
                             $this->setTemplateVar('code',$this->element->code);
                             break;
+
+						case Element::ELEMENT_TYPE_NUMBER:
+							$this->setTemplateVar('code',$this->element->code);
                     }
                     break;
 

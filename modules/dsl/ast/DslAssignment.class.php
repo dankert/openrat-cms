@@ -38,6 +38,8 @@ class DslAssignment implements DslStatement
 			throw new DslRuntimeException('variable \''.$this->target->name.'\' does not exist');
 
 		$context[ $this->target->name ] = $value;
+
+		return $value;
 	}
 
 	public function parse($tokens)

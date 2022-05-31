@@ -3,7 +3,9 @@
 namespace dsl\executor;
 
 use dsl\DslAstParser;
+use dsl\DslException;
 use dsl\DslLexer;
+use dsl\DslParserException;
 use dsl\standard\StandardArray;
 use dsl\standard\StandardDate;
 use dsl\standard\StandardMath;
@@ -33,7 +35,9 @@ class DslInterpreter
 
 
 	/**
-	 * @throws \Exception
+	 * Parses and runs the DSL code.
+	 *
+	 * @throws DslException
 	 */
 	public function runCode( $code ) {
 		$lexer = new DslLexer();
@@ -42,6 +46,6 @@ class DslInterpreter
 		$parser = new DslAstParser();
 		$parser->parse( $token );
 
-		$parser->execute( $this->context );
+		return $parser->execute( $this->context );
 	}
 }

@@ -128,7 +128,7 @@
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('EL_PROP_DECIMALS').'') ?></h3>
               <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
-                <input name="<?php echo O::escapeHtml('decimals') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('2') ?>" value="<?php echo O::escapeHtml(''.@$decimals.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
+                <input name="<?php echo O::escapeHtml('decimals') ?>" type="<?php echo O::escapeHtml('number') ?>" maxlength="<?php echo O::escapeHtml('2') ?>" value="<?php echo O::escapeHtml(''.@$decimals.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
               </div>
             </section>
            <?php } ?>

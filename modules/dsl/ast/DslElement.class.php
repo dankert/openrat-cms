@@ -87,28 +87,33 @@ class DslElement
 		if ($firstToken->type == DslToken::T_BLOCK_BEGIN)
 			return $this->getBlock($tokens);
 		else
-			return $this->getSingleStatement($tokens);
+			return $this->getSingleStatement($tokens,true);
 	}
 
 
 	/**
-	 * parse single statement
+	 * Gets the first single statement out of the tokens.
 	 *
 	 * @param $tokens DslToken[]
 	 * @return DslToken[]
 	 * @throws DslParserException
 	 */
-	protected function getSingleStatement(&$tokens)
+	protected function getSingleStatement(&$tokens, $withEnd = false)
 	{
 		$depth = 0;
 		$statementTokens = [];
 		while (true) {
 			$nextToken = array_shift($tokens);
 			if ($nextToken == null)
+				var_export( $statementTokens );
+			if ($nextToken == null)
 				throw new DslParserException('unrecognized statement');
 
-			if ($depth == 0 && $nextToken->type == DslToken::T_STATEMENT_END)
+			if ($depth == 0 && $nextToken->type == DslToken::T_STATEMENT_END) {
+				if   ( $withEnd )
+					$statementTokens[] = $nextToken;
 				return $statementTokens;
+			}
 
 			if ($nextToken->type == DslToken::T_BLOCK_BEGIN)
 				$depth++;

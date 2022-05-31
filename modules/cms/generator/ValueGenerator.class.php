@@ -615,6 +615,8 @@ class ValueGenerator extends BaseGenerator
 			case Element::ELEMENT_TYPE_LONGTEXT:
 			case Element::ELEMENT_TYPE_TEXT:
 			case Element::ELEMENT_TYPE_SELECT:
+			case Element::ELEMENT_TYPE_DATA:
+			case Element::ELEMENT_TYPE_COORD:
 
 				$inhalt = $value->text;
 				$format = $value->format;
@@ -728,6 +730,7 @@ class ValueGenerator extends BaseGenerator
 			// wird im entsprechenden Format angezeigt.
 			case Element::ELEMENT_TYPE_NUMBER:
 
+
 				if   ( $value->number == 0 )
 				{
 					// Zahl ist gleich 0, dann Default-Text
@@ -737,6 +740,39 @@ class ValueGenerator extends BaseGenerator
 
 				$number = $value->number / pow(10,$element->decimals);
 				$inhalt = number_format( $number,$element->decimals,$element->decPoint,$element->thousandSep );
+
+
+				$executor = new DslInterpreter();
+				$executor->addContext( [
+					'console'  => new DslConsole(),
+					'document' => new DslDocument(),
+					'value'    => $inhalt,
+					'http'     => new DslHttp(),
+					'json'     => new DslJson(),
+					'write'    => new DslWrite(),
+					'alert'    => new DslAlert(),
+					'page'     => new DslPage( $page ),
+				]);
+
+				try {
+					//echo "###";
+					$result = $executor->runCode( $element->code );
+					//echo "*result*";var_export($result);
+				}
+				catch( DslException $e ) {
+					if   ( $pageContext->scheme == Producer::SCHEME_PREVIEW )
+						$inhalt = $e->getMessage();
+					else
+						$inhalt = '';
+					Logger::warn( $e );
+					break;
+				}
+
+				// any output will be discarded
+
+
+				if   ( $result != null )
+					$inhalt = $result;
 
 				break;
 
@@ -1096,6 +1132,8 @@ class ValueGenerator extends BaseGenerator
 				Element::ELEMENT_TYPE_TEXT,
 				Element::ELEMENT_TYPE_LONGTEXT,
 				Element::ELEMENT_TYPE_SELECT,
+				Element::ELEMENT_TYPE_DATA,
+				Element::ELEMENT_TYPE_COORD,
 			]) && $value->text != '' && $value->text != null ||
 			in_array($element->typeid,[
 				Element::ELEMENT_TYPE_NUMBER

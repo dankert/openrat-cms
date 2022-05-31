@@ -163,6 +163,8 @@ public function get() { return [
 'EL_CODE'=>'Code',
 'EL_CODE_PHP'=>'PHP',
 'EL_CODE_JS'=>'Javascript',
+'EL_COORD_OLC'=>'Open location code',
+'EL_COORD_COORDINATES'=>'Coordinates',
 'EL_COPY_DESC'=>'Copy a Value out of an element of a linked page',
 'EL_COPY'=>'Copy',
 'EL_DATE'=>'Date',

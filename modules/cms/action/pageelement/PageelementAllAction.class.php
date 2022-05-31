@@ -216,6 +216,7 @@ class PageelementAllAction extends PageelementAction implements Method {
 			switch ($element->typeid) {
 
 				case Element::ELEMENT_TYPE_TEXT:
+				case Element::ELEMENT_TYPE_DATA:
 					$value->text = $this->request->getText($language->isoCode);
 					break;
 				case Element::ELEMENT_TYPE_LONGTEXT:

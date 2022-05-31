@@ -163,6 +163,8 @@ class Messages {
   const EL_CODE = 'EL_CODE';
   const EL_CODE_PHP = 'EL_CODE_PHP';
   const EL_CODE_JS = 'EL_CODE_JS';
+  const EL_COORD_OLC = 'EL_COORD_OLC';
+  const EL_COORD_COORDINATES = 'EL_COORD_COORDINATES';
   const EL_COPY_DESC = 'EL_COPY_DESC';
   const EL_COPY = 'EL_COPY';
   const EL_DATE = 'EL_DATE';

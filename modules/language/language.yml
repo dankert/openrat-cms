@@ -703,6 +703,11 @@ EL_CODE_PHP:
   en: PHP
 EL_CODE_JS:
   en: Javascript
+EL_COORD_OLC:
+  en: Open location code
+EL_COORD_COORDINATES:
+  de: Koordinaten
+  en: Coordinates
 EL_COPY_DESC:
   de: Einen Wert aus einem Platzhalter einer verlinkten Seite kopieren
   en: Copy a Value out of an element of a linked page

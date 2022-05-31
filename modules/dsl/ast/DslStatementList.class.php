@@ -37,6 +37,8 @@ class DslStatementList extends DslElement implements DslStatement
 			if ($statement instanceof DslReturn)
 				return $value; // Return to the caller
 		}
+
+		return null;
 	}
 
 

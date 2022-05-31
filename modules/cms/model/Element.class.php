@@ -35,6 +35,16 @@ class Element extends ModelBase
     const ELEMENT_TYPE_LINKDATE = 13;
     const ELEMENT_TYPE_INSERT   = 14;
 
+	/**
+	 * Data.
+	 */
+    const ELEMENT_TYPE_DATA     = 15;
+
+	/**
+	 * Coordinates.
+	 */
+    const ELEMENT_TYPE_COORD    = 16;
+
     const ELEMENT_FORMAT_TEXT     = 0;
     const ELEMENT_FORMAT_HTML     = 1;
     const ELEMENT_FORMAT_WIKI     = 2;
@@ -421,26 +431,29 @@ SQL
 
 	/**
 	 * Abhaengig vom Element-Typ werden die zur Darstellung notwendigen Eigenschaften ermittelt.
-	 * @return array
+	 * @return string[]
 	 */
-	function getRelatedProperties()
+	public function getRelatedProperties()
 	{
-		$prp = array('text'    =>array('inherit','withIcon','allLanguages','writable','html','defaultText','format'),
-		             'longtext'=>array('inherit','withIcon','allLanguages','writable','html','defaultText','format'),
-		             'select'  =>array('inherit','withIcon','allLanguages','writable','defaultText','code'),
-		             'number'  =>array('inherit','withIcon','allLanguages','writable','decPoint','decimals','thousandSep'),
-		             'link'    =>array('inherit','subtype','withIcon','allLanguages','writable','linktype','folderObjectId','defaultObjectId'),
-		             'date'    =>array('inherit','withIcon','allLanguages','writable','dateformat','defaultText'),
-		             'list'    =>array('inherit','subtype','withIcon','allLanguages','writable','folderObjectId','defaultObjectId'),
-		             'insert'  =>array('inherit','subtype','withIcon','allLanguages','writable','folderObjectId','defaultObjectId'),
-		             'copy'    =>array('inherit','prefix','name','defaultText'),
-		             'linkinfo'=>array('prefix','subtype','defaultText'),
-		             'linkdate'=>array('prefix','subtype','dateformat'),
-		             'code'    =>array('code','subtype'),
-		             'dynamic' =>array('subtype','code'),
-		             'info'    =>array('subtype'),
-		             'infodate'=>array('subtype','dateformat') );
-		return $prp[ $this->getTypeName() ];
+		$relatedProperties = [
+			self::ELEMENT_TYPE_TEXT     => ['inherit','withIcon','allLanguages','writable','html','defaultText','format'],
+			self::ELEMENT_TYPE_LONGTEXT => ['inherit','withIcon','allLanguages','writable','html','defaultText','format'],
+			self::ELEMENT_TYPE_SELECT   => ['inherit','withIcon','allLanguages','writable','defaultText','code'],
+			self::ELEMENT_TYPE_NUMBER   => ['inherit','withIcon','allLanguages','writable','decPoint','decimals','thousandSep','code'],
+			self::ELEMENT_TYPE_LINK     => ['inherit','subtype','withIcon','allLanguages','writable','linktype','folderObjectId','defaultObjectId'],
+			self::ELEMENT_TYPE_DATE     => ['inherit','withIcon','allLanguages','writable','dateformat','defaultText'],
+			self::ELEMENT_TYPE_INSERT   => ['inherit','subtype','withIcon','allLanguages','writable','folderObjectId','defaultObjectId'],
+			self::ELEMENT_TYPE_COPY     => ['inherit','prefix','name','defaultText'],
+			self::ELEMENT_TYPE_LINKINFO => ['prefix','subtype','defaultText'],
+			self::ELEMENT_TYPE_LINKDATE => ['prefix','subtype','dateformat'],
+			self::ELEMENT_TYPE_CODE     => ['code','subtype'],
+			self::ELEMENT_TYPE_DYNAMIC  => ['subtype','code'],
+			self::ELEMENT_TYPE_INFO     => ['subtype'],
+			self::ELEMENT_TYPE_INFODATE => ['subtype','dateformat'],
+			self::ELEMENT_TYPE_DATA     => ['code'],
+			self::ELEMENT_TYPE_COORD    => ['subtype'],
+		];
+		return $relatedProperties[ $this->typeid ];
 	}
 
 
@@ -488,45 +501,47 @@ SQL
 	}
 
     /**
-     * Ermitteln aller benutzbaren Elementtypen.
+     * a textual representation for all element types.
      *
      * @return array id->name
      */
     public static function getAvailableTypes()
     {
-        return array(
-            self::ELEMENT_TYPE_TEXT => 'text',
+        return [
+            self::ELEMENT_TYPE_TEXT     => 'text',
             self::ELEMENT_TYPE_LONGTEXT => 'longtext',
-            self::ELEMENT_TYPE_SELECT => 'select',
-            self::ELEMENT_TYPE_NUMBER => 'number',
-            self::ELEMENT_TYPE_LINK => 'link',
-            self::ELEMENT_TYPE_DATE => 'date',
-            self::ELEMENT_TYPE_INSERT => 'insert',
-            self::ELEMENT_TYPE_COPY => 'copy',
+            self::ELEMENT_TYPE_SELECT   => 'select',
+            self::ELEMENT_TYPE_NUMBER   => 'number',
+            self::ELEMENT_TYPE_LINK     => 'link',
+            self::ELEMENT_TYPE_DATE     => 'date',
+            self::ELEMENT_TYPE_INSERT   => 'insert',
+            self::ELEMENT_TYPE_COPY     => 'copy',
             self::ELEMENT_TYPE_LINKINFO => 'linkinfo',
             self::ELEMENT_TYPE_LINKDATE => 'linkdate',
-            self::ELEMENT_TYPE_CODE => 'code',
-            self::ELEMENT_TYPE_DYNAMIC => 'dynamic',
-            self::ELEMENT_TYPE_INFO => 'info',
-            self::ELEMENT_TYPE_INFODATE => 'infodate'
-        );
+            self::ELEMENT_TYPE_CODE     => 'code',
+            self::ELEMENT_TYPE_DYNAMIC  => 'dynamic',
+            self::ELEMENT_TYPE_INFO     => 'info',
+            self::ELEMENT_TYPE_INFODATE => 'infodate',
+            self::ELEMENT_TYPE_DATA     => 'data',
+            self::ELEMENT_TYPE_COORD    => 'coord'
+        ];
     }
 
 
     /**
-     * Ermitteln aller benutzbaren Elementtypen.
+     * all available formats for text elements.
      *
      * @return array id->name
      */
     public static function getAvailableFormats()
     {
-        return array(
-            self::ELEMENT_FORMAT_TEXT => 'text',
-            self::ELEMENT_FORMAT_WIKI => 'wiki',
-            self::ELEMENT_FORMAT_HTML => 'html',
+        return [
+            self::ELEMENT_FORMAT_TEXT        => 'text',
+            self::ELEMENT_FORMAT_WIKI        => 'wiki',
+            self::ELEMENT_FORMAT_HTML        => 'html',
             self::ELEMENT_FORMAT_MARKDOWN    => 'markdown',
-            self::ELEMENT_FORMAT_HTML_SOURCE => 'htmlsource'
-        );
+            self::ELEMENT_FORMAT_HTML_SOURCE => 'htmlsource',
+        ];
     }
 
 

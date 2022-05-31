@@ -223,6 +223,14 @@ class PageAllAction extends PageAction implements Method {
 					$value->text = $this->compactOIDs($this->request->getText($element->name));
 					break;
 
+				case Element::ELEMENT_TYPE_COORD:
+					$value->text = $this->request->getText($element->name);
+					break;
+
+				case Element::ELEMENT_TYPE_DATA:
+					$value->text = $this->request->getText($element->name);
+					break;
+
 				case Element::ELEMENT_TYPE_DATE:
 					$value->date = strtotime($this->request->getText($element->name . '_date') . $this->request->getText($element->name . '_time'));
 					break;

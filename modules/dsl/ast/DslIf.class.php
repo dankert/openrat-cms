@@ -26,9 +26,9 @@ class DslIf implements DslStatement
 		$conditionValue = $this->condition->execute( $context );
 
 		if   ( $conditionValue )
-			$this->pos->execute( $context );
+			return $this->pos->execute( $context );
 		else
-			$this->neg->execute( $context );
+			return $this->neg->execute( $context );
 	}
 
 	public function __construct( $condition, $positive,$negative ) {

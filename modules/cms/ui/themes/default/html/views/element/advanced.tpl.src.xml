@@ -60,7 +60,7 @@
       </if>
       <if present="decimals">
         <fieldset class="line" label="${message:EL_PROP_DECIMALS}">
-            <input size="10" maxlength="2" name="decimals"/>
+            <input type="number" size="10" maxlength="2" name="decimals"/>
         </fieldset>
       </if>
       <if present="dec_point">

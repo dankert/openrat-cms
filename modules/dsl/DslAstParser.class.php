@@ -28,7 +28,7 @@ class DslAstParser
 
 	public function execute($context)
 	{
-		$this->rootStatement->execute( $context );
+		return $this->rootStatement->execute( $context );
 	}
 
 
