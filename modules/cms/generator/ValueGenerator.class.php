@@ -43,6 +43,7 @@ use util\Http;
 use util\Request;
 use util\Text;
 use util\Transformer;
+use util\YAML;
 
 
 /**
@@ -615,8 +616,6 @@ class ValueGenerator extends BaseGenerator
 			case Element::ELEMENT_TYPE_LONGTEXT:
 			case Element::ELEMENT_TYPE_TEXT:
 			case Element::ELEMENT_TYPE_SELECT:
-			case Element::ELEMENT_TYPE_DATA:
-			case Element::ELEMENT_TYPE_COORD:
 
 				$inhalt = $value->text;
 				$format = $value->format;
@@ -742,37 +741,8 @@ class ValueGenerator extends BaseGenerator
 				$inhalt = number_format( $number,$element->decimals,$element->decPoint,$element->thousandSep );
 
 
-				$executor = new DslInterpreter();
-				$executor->addContext( [
-					'console'  => new DslConsole(),
-					'document' => new DslDocument(),
-					'value'    => $inhalt,
-					'http'     => new DslHttp(),
-					'json'     => new DslJson(),
-					'write'    => new DslWrite(),
-					'alert'    => new DslAlert(),
-					'page'     => new DslPage( $page ),
-				]);
+				$inhalt = $this->filterValue( $inhalt, $element->code );
 
-				try {
-					//echo "###";
-					$result = $executor->runCode( $element->code );
-					//echo "*result*";var_export($result);
-				}
-				catch( DslException $e ) {
-					if   ( $pageContext->scheme == Producer::SCHEME_PREVIEW )
-						$inhalt = $e->getMessage();
-					else
-						$inhalt = '';
-					Logger::warn( $e );
-					break;
-				}
-
-				// any output will be discarded
-
-
-				if   ( $result != null )
-					$inhalt = $result;
 
 				break;
 
@@ -1084,6 +1054,26 @@ class ValueGenerator extends BaseGenerator
 
 				break;
 
+			case Element::ELEMENT_TYPE_COORD:
+				$inhalt = $value->text;
+				break;
+
+			case Element::ELEMENT_TYPE_DATA:
+
+				try {
+					$data = YAML::parse( $value->text );
+				} catch ( \Exception $e ) {
+					if   ( $this->context->pageContext->scheme == Producer::SCHEME_PREVIEW )
+						$inhalt = 'Invalid YAML: '.$e->getMessage();
+					break;
+				}
+
+				$inhalt = $this->filterValue( $data, $element->code );
+
+				if   ( is_array($inhalt) )
+					$inhalt = YAML::dump( $inhalt );
+
+				break;
 			default:
 				// this should never happen in production.
 				// inform the user.
@@ -1179,6 +1169,41 @@ class ValueGenerator extends BaseGenerator
 	protected function isHtml( $mimeType )
 	{
 		return $mimeType == 'text/html';
+	}
+
+	/**
+	 * @param $inhalt mixed
+	 * @param $code string
+	 * @return mixed|string
+	 */
+	protected function filterValue( $inhalt, $code)
+	{
+		$executor = new DslInterpreter();
+
+		$executor->addContext( [
+			'console'  => new DslConsole(),
+			'document' => new DslDocument(),
+			'value'    => $inhalt,
+			'http'     => new DslHttp(),
+			'json'     => new DslJson(),
+			'write'    => new DslWrite(),
+		]);
+
+		try {
+			$result = $executor->runCode( $code );
+		}
+		catch( DslException $e ) {
+			Logger::warn($e);
+			if   ( $this->context->pageContext->scheme == Producer::SCHEME_PREVIEW )
+				return $e->getMessage();
+			else
+				return '';
+		}
+
+		if   ( $result != null )
+			return $result;
+		else
+			return $inhalt;
 	}
 
 }

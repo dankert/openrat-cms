@@ -18,6 +18,11 @@
 						<input size="50" maxlength="255" class="text" name="text" default="${value}" />
 					</fieldset>
 				</if>
+				<if value="${type}" equals="data">
+					<fieldset>
+						<editor type="code" mode="yaml" name="${name}" default="${value}" />
+					</fieldset>
+				</if>
 				<if value="${type}" equals="longtext">
 					<hidden name="format"/>
 					<if value="${editor}" equals="markdown">

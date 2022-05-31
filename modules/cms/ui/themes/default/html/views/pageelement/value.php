@@ -46,6 +46,17 @@
               </div>
             </section>
            <?php } ?>
+          <?php $if4=($type=='data'); if($if4) {  ?>
+            <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
+              <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?></h3>
+              <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
+                <div><?php echo O::escapeHtml('') ?>
+                  <textarea name="<?php echo O::escapeHtml('text') ?>" data-extension="<?php echo O::escapeHtml('') ?>" data-mimetype="<?php echo O::escapeHtml('') ?>" data-mode="<?php echo O::escapeHtml('yaml') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-code-editor') ?>"><?php echo O::escapeHtml(''.@$value.'') ?></textarea>
+                  <trix-editor input="<?php echo O::escapeHtml('text') ?>"><?php echo O::escapeHtml('') ?></trix-editor>
+                </div>
+              </div>
+            </section>
+           <?php } ?>
           <?php $if4=($type=='longtext'); if($if4) {  ?>
             <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('format') ?>" value="<?php echo O::escapeHtml(''.@$format.'') ?>" /><?php echo O::escapeHtml('') ?>
             <?php $if5=($editor=='markdown'); if($if5) {  ?>

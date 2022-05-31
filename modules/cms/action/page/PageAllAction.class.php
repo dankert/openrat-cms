@@ -168,6 +168,8 @@ class PageAllAction extends PageAction implements Method {
 					break;
 
 				case Element::ELEMENT_TYPE_TEXT:
+				case Element::ELEMENT_TYPE_DATA:
+				case Element::ELEMENT_TYPE_COORD:
 
 					$content = $value->text;
 					break;
@@ -217,6 +219,8 @@ class PageAllAction extends PageAction implements Method {
 			switch ($element->typeid) {
 
 				case Element::ELEMENT_TYPE_TEXT:
+				case Element::ELEMENT_TYPE_DATA:
+				case Element::ELEMENT_TYPE_COORD:
 					$value->text = $this->request->getText($element->name);
 					break;
 				case Element::ELEMENT_TYPE_LONGTEXT:

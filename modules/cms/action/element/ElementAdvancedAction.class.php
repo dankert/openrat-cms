@@ -351,6 +351,7 @@ class ElementAdvancedAction extends ElementAction implements Method {
                             break;
 
 						case Element::ELEMENT_TYPE_NUMBER:
+						case Element::ELEMENT_TYPE_DATA:
 							$this->setTemplateVar('code',$this->element->code);
                     }
                     break;

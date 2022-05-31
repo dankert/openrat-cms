@@ -450,8 +450,8 @@ SQL
 			self::ELEMENT_TYPE_DYNAMIC  => ['subtype','code'],
 			self::ELEMENT_TYPE_INFO     => ['subtype'],
 			self::ELEMENT_TYPE_INFODATE => ['subtype','dateformat'],
-			self::ELEMENT_TYPE_DATA     => ['code'],
-			self::ELEMENT_TYPE_COORD    => ['subtype'],
+			self::ELEMENT_TYPE_DATA     => ['inherit','withIcon','allLanguages','writable','code'],
+			self::ELEMENT_TYPE_COORD    => ['inherit','withIcon','allLanguages','writable','subtype'],
 		];
 		return $relatedProperties[ $this->typeid ];
 	}

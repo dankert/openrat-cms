@@ -310,6 +310,14 @@ class PageelementAction extends BaseAction
     }
 
 
+    protected function editData() {
+    	$this->editText();
+	}
+
+    protected function editCoord() {
+    	$this->editText();
+	}
+
 
     /**
      * Ein Element der Seite bearbeiten
@@ -321,7 +329,17 @@ class PageelementAction extends BaseAction
         $this->setTemplateVar( 'text',$this->value->text );
     }
 
-    /**
+	protected function saveData()
+	{
+		$this->saveText();
+	}
+
+	protected function saveCoord()
+	{
+		$this->saveText();
+	}
+
+		/**
      * Element speichern
      *
      * Der Inhalt eines Elementes wird abgespeichert

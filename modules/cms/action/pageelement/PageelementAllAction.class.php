@@ -165,6 +165,8 @@ class PageelementAllAction extends PageelementAction implements Method {
 					break;
 
 				case Element::ELEMENT_TYPE_TEXT:
+				case Element::ELEMENT_TYPE_DATA:
+				case Element::ELEMENT_TYPE_COORD:
 
 					$content = $value->text;
 					break;
@@ -217,6 +219,7 @@ class PageelementAllAction extends PageelementAction implements Method {
 
 				case Element::ELEMENT_TYPE_TEXT:
 				case Element::ELEMENT_TYPE_DATA:
+				case Element::ELEMENT_TYPE_COORD:
 					$value->text = $this->request->getText($language->isoCode);
 					break;
 				case Element::ELEMENT_TYPE_LONGTEXT:
