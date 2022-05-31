@@ -175,7 +175,7 @@ export default function(element ) {
 
         let mde = new SimpleMDE(
             {
-                element: $(this)[0],
+                element: this,
                 toolbar: toolbar,
                 autoDownloadFontAwesome: false
             }
