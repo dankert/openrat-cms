@@ -21,7 +21,7 @@ class DslFolder implements DslContextObject
 	 */
 	public function __construct($folder)
 	{
-		$this->folder = folder;
+		$this->folder = $folder;
 
 		$this->id = $folder->getId();
 	}

@@ -873,15 +873,11 @@ class ValueGenerator extends BaseGenerator
 						break;
 
 					case self::CODE_SCRIPT:
-						ob_start();
 						$executor = new DslInterpreter();
 						$executor->addContext( [
 							'console'  => new DslConsole(),
-							'document' => new DslDocument(),
 							'http'     => new DslHttp(),
 							'json'     => new DslJson(),
-							'write'    => new DslWrite(),
-							'alert'    => new DslAlert(),
 							'page'     => new DslPage( $page ),
 						]);
 
@@ -889,15 +885,15 @@ class ValueGenerator extends BaseGenerator
 							$executor->runCode( $element->code );
 						}
 						catch( DslException $e ) {
-							if   ( $pageContext->scheme == Producer::SCHEME_PREVIEW )
-								echo $e->getMessage();
 							Logger::warn( $e );
+							if   ( $pageContext->scheme == Producer::SCHEME_PREVIEW )
+								$inhalt = $e->getMessage();
+							break;
 						}
-						$output = ob_get_contents();
-						ob_end_clean();
 
 						// Ausgabe ermitteln.
-						$inhalt = $output;
+						$inhalt = $executor->getOutput();
+
 						break;
 					case self::CODE_MUSTACHE:
 						// TODO
@@ -1256,11 +1252,9 @@ class ValueGenerator extends BaseGenerator
 
 		$executor->addContext( [
 			'console'  => new DslConsole(),
-			'document' => new DslDocument(),
 			'value'    => $inhalt,
 			'http'     => new DslHttp(),
 			'json'     => new DslJson(),
-			'write'    => new DslWrite(),
 		]);
 
 		try {
