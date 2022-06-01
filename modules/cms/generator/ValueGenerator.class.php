@@ -29,8 +29,6 @@ use cms\model\Project;
 use cms\model\Template;
 use cms\model\Value;
 use dsl\DslException;
-use dsl\DslParserException;
-use dsl\DslRuntimeException;
 use dsl\executor\DslInterpreter;
 use logger\Logger;
 use LogicException;
@@ -51,6 +49,74 @@ use util\YAML;
  */
 class ValueGenerator extends BaseGenerator
 {
+
+	const CODE_PHP = 'php';
+	const CODE_SCRIPT = 'js';
+	const CODE_MUSTACHE  = 'mustache';
+
+	const INFO_DB_ID   = 'db_id';
+	const INFO_DB_NAME = 'db_name';
+	const INFO_PROJECT_ID = 'project_id';
+	const INFO_PROJECT_NAME = 'project_name';
+	const INFO_LANGUAGE_ID = 'language_id';
+	const INFO_LANGUAGE_ISO = 'language_iso';
+	const INFO_LANGUAGE_NAME = 'language_name';
+	const INFO_PAGE_ID = 'page_id';
+	const INFO_PAGE_NAME = 'page_name';
+	const INFO_PAGE_DESC = 'page_desc';
+	const INFO_PAGE_FULLFILENAME = 'page_fullfilename';
+	const INFO_PAGE_FILENAME = 'page_filename';
+	const INFO_PAGE_EXTENSION = 'page_extension';
+	const INFO_EDIT_URL = 'edit_url';
+	const INFO_EDIT_FULLURL = 'edit_fullurl';
+	const INFO_LASTCHANGE_USER_USERNAME = 'lastch_user_username';
+	const INFO_LASTCHANGE_USER_FULLNAME = 'lastch_user_fullname';
+	const INFO_LASTCHANGE_USER_MAIL = 'lastch_user_mail';
+	const INFO_LASTCHANGE_USER_DESC = 'lastch_user_desc';
+	const INFO_LASTCHANGE_USER_TEL = 'lastch_user_tel';
+	const INFO_CREATION_USER_USERNAME = 'create_user_username';
+	const INFO_CREATION_FULLNAME = 'create_user_fullname';
+	const INFO_CREATION_MAIL = 'create_user_mail';
+	const INFO_CREATION_DESC = 'create_user_desc';
+	const INFO_CREATION_TEL = 'create_user_tel';
+	const INFO_ACT_USERNAME = 'act_user_username';
+	const INFO_ACT_FULLNAME = 'act_user_fullname';
+	const INFO_ACT_MAIL = 'act_user_mail';
+	const INFO_ACT_DESC = 'act_user_desc';
+	const INFO_ACT_TEL = 'act_user_tel';
+	const INFO_PUB_USERNAME = 'pub_user_username';
+	const INFO_PUB_FULLNAME = 'pub_user_fullname';
+	const INFO_PUB_MAIL = 'pub_user_mail';
+	const INFO_PUB_DESC = 'pub_user_desc';
+	const INFO_PUB_TEL = 'pub_user_tel';
+	const INFO_FILENAME = 'filename';
+	const INFO_FULL_FILENAME = 'full_filename';
+
+	const COORD_OLC = 'olc';
+	const COORD_COORDINATES = 'coordinates';
+
+	const INFO_DATE_PUBLISHED = 'date_published';
+	const INFO_DATE_SAVED = 'date_saved';
+	const INFO_DATE_CREATED = 'date_created';
+
+	const INSERT_SSI = 'ssi';
+	const INSERT_INLINE = 'inline';
+
+
+	const LINK_FILE_ = 'file';
+	const LINK_IMAGE = 'image';
+	const LINK_IMAGE_DATE_URI = 'image_data_uri';
+	const LINK_PAGE = 'page';
+	const LINK_FOLDER = 'folder';
+	const LINK_LINK = 'link';
+
+	const LINKINFO_WIDTH = 'width';
+	const LINKINFO_HEIGHT = 'height';
+	const LINKINFO_ID = 'id';
+	const LINKINFO_NAME = 'name';
+	const LINKINFO_DESCRIPTION = 'description';
+	const LINKINFO_MIME_TYPE = 'mime_type';
+
 
 	/**
 	 * Constructor.
@@ -157,7 +223,7 @@ class ValueGenerator extends BaseGenerator
 									switch( $element->subtype )
 									{
 										case '':
-										case 'inline':
+										case self::INSERT_INLINE:
 											$o = new BaseObject( $oid );
 											$o->load();
 											switch( $o->typeid )
@@ -188,7 +254,7 @@ class ValueGenerator extends BaseGenerator
 											}
 											break;
 
-										case 'ssi':
+										case self::INSERT_SSI:
 											$linkScheme = $pageContext->getLinkScheme();
 											$inhalt .= '<!--#include virtual="'.$linkScheme->linkToObject( $page,new BaseObject($oid)).'" -->';
 											break;
@@ -273,7 +339,7 @@ class ValueGenerator extends BaseGenerator
 					$o->load();
 					$inhalt = $o->filename;
 				}
-				elseif	($element->subtype == 'image_data_uri' )
+				elseif	($element->subtype == self::LINK_IMAGE_DATE_URI )
 				{
 					$context = new FileContext( $objectid,Producer::SCHEME_PUBLIC );
 					$generator = new FileGenerator( $context );
@@ -370,7 +436,7 @@ class ValueGenerator extends BaseGenerator
 
 				switch( $element->subtype )
 				{
-					case 'width':
+					case self::LINKINFO_WIDTH:
 						$f = new Image( $objectid );
 						$f->load();
 						if	( $f->typeid == BaseObject::TYPE_IMAGE )
@@ -381,7 +447,7 @@ class ValueGenerator extends BaseGenerator
 						unset($f);
 						break;
 
-					case 'height':
+					case self::LINKINFO_HEIGHT:
 						$f = new Image( $objectid );
 						$f->load();
 						if	( $f->typeid == BaseObject::TYPE_IMAGE )
@@ -392,19 +458,19 @@ class ValueGenerator extends BaseGenerator
 						unset($f);
 						break;
 
-					case 'id':
+					case self::LINKINFO_ID:
 						$inhalt = $objectid;
 						break;
 
-					case 'name':
+					case self::LINKINFO_NAME:
 						$inhalt = $linkedObject->getDefaultName()->getName();
 						break;
 
-					case 'description':
+					case self::LINKINFO_DESCRIPTION:
 						$inhalt = $linkedObject->getDefaultName()->description;
 						break;
 
-					case 'create_user_desc':
+					case self::INFO_CREATION_DESC:
 						$user = $linkedObject->createUser;
 						try
 						{
@@ -416,7 +482,7 @@ class ValueGenerator extends BaseGenerator
 						}
 						break;
 
-					case 'create_user_fullname':
+					case self::INFO_CREATION_FULLNAME:
 						$user = $linkedObject->createUser;
 						try
 						{
@@ -428,7 +494,7 @@ class ValueGenerator extends BaseGenerator
 						}
 						break;
 
-					case 'create_user_mail':
+					case self::INFO_CREATION_MAIL:
 						$user = $linkedObject->createUser;
 						try
 						{
@@ -440,7 +506,7 @@ class ValueGenerator extends BaseGenerator
 						}
 						break;
 
-					case 'create_user_tel':
+					case self::INFO_CREATION_TEL:
 						$user = $linkedObject->createUser;
 						try
 						{
@@ -452,7 +518,7 @@ class ValueGenerator extends BaseGenerator
 						}
 						break;
 
-					case 'create_user_username':
+					case self::INFO_CREATION_USER_USERNAME:
 						$user = $linkedObject->createUser;
 						try
 						{
@@ -464,7 +530,7 @@ class ValueGenerator extends BaseGenerator
 						}
 						break;
 
-					case 'lastch_user_desc':
+					case self::INFO_LASTCHANGE_USER_DESC:
 						$user = $linkedObject->lastchangeUser;
 						try
 						{
@@ -476,7 +542,7 @@ class ValueGenerator extends BaseGenerator
 						}
 						break;
 
-					case 'lastch_user_fullname':
+					case self::INFO_LASTCHANGE_USER_FULLNAME:
 						$user = $linkedObject->lastchangeUser;
 						try
 						{
@@ -488,7 +554,7 @@ class ValueGenerator extends BaseGenerator
 						}
 						break;
 
-					case 'lastch_user_mail':
+					case self::INFO_LASTCHANGE_USER_MAIL:
 						$user = $linkedObject->lastchangeUser;
 						try
 						{
@@ -500,7 +566,7 @@ class ValueGenerator extends BaseGenerator
 						}
 						break;
 
-					case 'lastch_user_tel':
+					case self::INFO_LASTCHANGE_USER_TEL:
 						$user = $linkedObject->lastchangeUser;
 						try
 						{
@@ -513,7 +579,7 @@ class ValueGenerator extends BaseGenerator
 
 						break;
 
-					case 'lastch_user_username':
+					case self::INFO_LASTCHANGE_USER_USERNAME:
 						$user = $linkedObject->lastchangeUser;
 						try
 						{
@@ -525,7 +591,7 @@ class ValueGenerator extends BaseGenerator
 						}
 						break;
 
-					case 'mime_type':
+					case self::LINKINFO_MIME_TYPE:
 						if	( $linkedObject->isFile || $linkedObject->isImage || $linkedObject->isText  )
 						{
 							$context = new FileContext( $objectid,Producer::SCHEME_PUBLIC );
@@ -535,17 +601,17 @@ class ValueGenerator extends BaseGenerator
 						}
 						break;
 
-					case 'filename':
+					case self::INFO_FILENAME:
 						$inhalt = $linkedObject->filename();
 						break;
 
-					case 'full_filename':
+					case self::INFO_FULL_FILENAME:
 						$inhalt = $linkedObject->full_filename();
 						break;
 
 					default:
 						$inhalt = '';
-						Logger::warn('subtype for linkinfo not implemented:'.$element->subtype);
+						Logger::error('Subtype for linkinfo not implemented:'.$element->subtype); // should not happen
 				}
 
 				break;
@@ -586,23 +652,23 @@ class ValueGenerator extends BaseGenerator
 
 				switch( $element->subtype )
 				{
-					case 'date_published':
+					case self::INFO_DATE_PUBLISHED:
 						// START_TIME wird zu Beginn im Controller gesetzt.
 						// So erh�lt jede Datei das gleiche Ver�ffentlichungsdatum.
 						$date = Startup::getStartTime();
 						break;
 
-					case 'date_saved':
+					case self::INFO_DATE_SAVED:
 						$date = $linkedObject->lastchangeDate;
 						break;
 
-					case 'date_created':
+					case self::INFO_DATE_CREATED:
 						$date = $linkedObject->createDate;
 						break;
 
 					default:
 						Logger::warn('element:'.$element->name.', '.
-							'type:'.$element->type.', '.
+							'type:'.$element->typeid.', '.
 							'unknown subtype:'.$element->subtype);
 						$date = Startup::getStartTime();
 				}
@@ -727,6 +793,11 @@ class ValueGenerator extends BaseGenerator
 			// Zahl
 			//
 			// wird im entsprechenden Format angezeigt.
+			case Element::ELEMENT_TYPE_CHECKBOX:
+
+				$inhalt = boolval($value->number);
+				break;
+
 			case Element::ELEMENT_TYPE_NUMBER:
 
 
@@ -771,7 +842,7 @@ class ValueGenerator extends BaseGenerator
 			case Element::ELEMENT_TYPE_CODE:
 
 				switch( $element->subtype ) {
-					case 'php':
+					case self::CODE_PHP:
 						// Die Ausführung von benutzer-erzeugtem PHP-Code kann in der
 						// Konfiguration aus Sicherheitsgründen deaktiviert sein.
 						if	( Configuration::subset('security')->is('disable_dynamic_code',false) )
@@ -801,7 +872,7 @@ class ValueGenerator extends BaseGenerator
 						$inhalt = $output;
 						break;
 
-					case 'js':
+					case self::CODE_SCRIPT:
 						ob_start();
 						$executor = new DslInterpreter();
 						$executor->addContext( [
@@ -828,6 +899,9 @@ class ValueGenerator extends BaseGenerator
 						// Ausgabe ermitteln.
 						$inhalt = $output;
 						break;
+					case self::CODE_MUSTACHE:
+						// TODO
+					default:
 				}
 
 
@@ -867,17 +941,17 @@ class ValueGenerator extends BaseGenerator
 
 				switch( $element->subtype )
 				{
-					case 'date_published':
+					case self::INFO_DATE_PUBLISHED:
 						// START_TIME wird zu Beginn im Controller gesetzt.
 						// So erh�lt jede Datei das gleiche Ver�ffentlichungsdatum.
 						$date = Startup::getStartTime();
 						break;
 
-					case 'date_saved':
+					case self::INFO_DATE_SAVED:
 						$date = $page->lastchangeDate;
 						break;
 
-					case 'date_created':
+					case self::INFO_DATE_CREATED:
 						$date = $page->createDate;
 						break;
 
@@ -905,149 +979,149 @@ class ValueGenerator extends BaseGenerator
 
 				switch( $element->subtype )
 				{
-					case 'db_id':
+					case self::INFO_DB_ID:
 						$inhalt = DB::get()->id;
 						break;
-					case 'db_name':
+					case self::INFO_DB_NAME:
 						$inhalt = @DB::get()->getLabel();
 						break;
-					case 'project_id':
+					case self::INFO_PROJECT_ID:
 						$inhalt = $page->projectid;
 						break;
-					case 'project_name':
+					case self::INFO_PROJECT_NAME:
 						$inhalt = Project::create( $page->projectid )->load()->name;
 						break;
-					case 'language_id':
+					case self::INFO_LANGUAGE_ID:
 						$inhalt = $pageContext->languageId;
 						break;
-					case 'language_iso':
+					case self::INFO_LANGUAGE_ISO:
 						$language = new Language( $pageContext->languageId );
 						$language->load();
 						$inhalt = $language->isoCode;
 						break;
-					case 'language_name':
+					case self::INFO_LANGUAGE_NAME:
 						$language = new Language( $pageContext->languageId );
 						$language->load();
 						$inhalt = $language->name;
 						break;
-					case 'page_id':
+					case self::INFO_PAGE_ID:
 						$inhalt = $page->objectid;
 						break;
-					case 'page_name':
+					case self::INFO_PAGE_NAME:
 						$inhalt = $page->getNameForLanguage( $pageContext->languageId )->name;
 						break;
-					case 'page_desc':
+					case self::INFO_PAGE_DESC:
 						$inhalt = $page->getNameForLanguage( $pageContext->languageId )->description;
 						break;
-					case 'page_fullfilename':
+					case self::INFO_PAGE_FULLFILENAME:
 						$inhalt = $this->getPublicFilename();
 						break;
-					case 'page_filename':
+					case self::INFO_PAGE_FILENAME:
 						$inhalt = $page->filename();
 						break;
-					case 'page_extension':
+					case self::INFO_PAGE_EXTENSION:
 						$inhalt = '';
 						break;
-					case 'edit_url':
+					case self::INFO_EDIT_URL:
 						$raw = true;
 						$inhalt = Html::locationUrl('page',$page->objectid );
 						break;
-					case 'edit_fullurl':
+					case self::INFO_EDIT_FULLURL:
 						$raw = true;
 						$inhalt = Http::getServer();
 
 						$inhalt .= Html::locationUrl('page',$page->objectid );
 						break;
-					case 'lastch_user_username':
+					case self::INFO_LASTCHANGE_USER_USERNAME:
 						$user = $page->lastchangeUser;
 						if   ( $user->userid )
 							$user->load();
 						$inhalt = $user->name;
 						break;
-					case 'lastch_user_fullname':
+					case self::INFO_LASTCHANGE_USER_FULLNAME:
 						$user = $page->lastchangeUser;
 						if   ( $user->userid )
 							$user->load();
 						$inhalt = $user->fullname;
 						break;
-					case 'lastch_user_mail':
+					case self::INFO_LASTCHANGE_USER_MAIL:
 						$user = $page->lastchangeUser;
 						if   ( $user->userid )
 							$user->load();
 						$inhalt = $user->mail;
 						break;
-					case 'lastch_user_desc':
+					case self::INFO_LASTCHANGE_USER_DESC:
 						$user = $page->lastchangeUser;
 						if   ( $user->userid )
 							$user->load();
 						$inhalt = $user->desc;
 						break;
-					case 'lastch_user_tel':
+					case self::INFO_LASTCHANGE_USER_TEL:
 						$user = $page->lastchangeUser;
 						if   ( $user->userid )
 							$user->load();
 						$inhalt = $user->tel;
 						break;
 
-					case 'create_user_username':
+					case self::INFO_CREATION_USER_USERNAME:
 						$user = $page->createUser;
 						if   ( $user->userid )
 							$user->load();
 						$inhalt = $user->name;
 						break;
-					case 'create_user_fullname':
+					case self::INFO_CREATION_FULLNAME:
 						$user = $page->createUser;
 						if   ( $user->userid )
 							$user->load();
 						$inhalt = $user->fullname;
 						break;
-					case 'create_user_mail':
+					case self::INFO_CREATION_MAIL:
 						$user = $page->createUser;
 						if   ( $user->userid )
 							$user->load();
 						$inhalt = $user->mail;
 						break;
-					case 'create_user_desc':
+					case self::INFO_CREATION_DESC:
 						$user = $page->createUser;
 						if   ( $user->userid )
 							$user->load();
 						$inhalt = $user->desc;
 						break;
-					case 'create_user_tel':
+					case self::INFO_CREATION_TEL:
 						$user = $page->createUser;
 						if   ( $user->userid )
 							$user->load();
 						$inhalt = $user->tel;
 						break;
 
-					case 'act_user_username':
+					case self::INFO_ACT_USERNAME:
 						$user = Request::getUser();
 						if   ( $user )
 							$inhalt = $user->name;
 						break;
-					case 'act_user_fullname':
+					case self::INFO_ACT_FULLNAME:
 						$user = Request::getUser();
 						if   ( $user )
 							$inhalt = $user->fullname;
 						break;
-					case 'act_user_mail':
+					case self::INFO_ACT_MAIL:
 						$user = Request::getUser();
 						if   ( $user )
 							$inhalt = $user->mail;
 						break;
-					case 'act_user_desc':
+					case self::INFO_ACT_DESC:
 						$user = Request::getUser();
 						if   ( $user )
 							$inhalt = $user->desc;
 						break;
-					case 'act_user_tel':
+					case self::INFO_ACT_TEL:
 						$user = Request::getUser();
 						if   ( $user )
 							$inhalt = $user->tel;
 						break;
 					default:
 						Logger::warn('element:'.$element->name.', '.
-							'type:'.$element->type.', '.
+							'type:'.$element->getTypeName().', '.
 							'unknown subtype:'.$element->subtype);
 					// Keine Fehlermeldung in erzeugte Seite schreiben.
 				}
@@ -1083,11 +1157,11 @@ class ValueGenerator extends BaseGenerator
 		}
 
 
-		switch( $element->type )
+		switch( $element->typeid )
 		{
-			case 'longtext':
-			case 'text':
-			case 'select':
+			case Element::ELEMENT_TYPE_LONGTEXT:
+			case Element::ELEMENT_TYPE_TEXT:
+			case Element::ELEMENT_TYPE_SELECT:
 
 				if	( Configuration::subset('publish')->is('encode_utf8_in_html') )
 					// Wenn HTML-Ausgabe, dann UTF-8-Zeichen als HTML-Code uebersetzen

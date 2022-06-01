@@ -151,6 +151,10 @@ class PageAllAction extends PageAction implements Method {
 					$content = $value->number / pow(10, $element->decimals);
 					break;
 
+				case Element::ELEMENT_TYPE_CHECKBOX:
+					$content = $value->number;
+					break;
+
 				case Element::ELEMENT_TYPE_LONGTEXT:
 					if ($requestFormat = $this->request->getText('format'))
 						// Individual format from request.
@@ -227,14 +231,6 @@ class PageAllAction extends PageAction implements Method {
 					$value->text = $this->compactOIDs($this->request->getText($element->name));
 					break;
 
-				case Element::ELEMENT_TYPE_COORD:
-					$value->text = $this->request->getText($element->name);
-					break;
-
-				case Element::ELEMENT_TYPE_DATA:
-					$value->text = $this->request->getText($element->name);
-					break;
-
 				case Element::ELEMENT_TYPE_DATE:
 					$value->date = strtotime($this->request->getText($element->name . '_date') . $this->request->getText($element->name . '_time'));
 					break;
@@ -242,12 +238,18 @@ class PageAllAction extends PageAction implements Method {
 				case Element::ELEMENT_TYPE_SELECT:
 					$value->text = $this->request->getText($element->name);
 					break;
+				case Element::ELEMENT_TYPE_CHECKBOX:
+					$value->number = $this->request->getText($element->name)?1:0;
+					break;
 				case Element::ELEMENT_TYPE_LINK:
 				case Element::ELEMENT_TYPE_INSERT:
 					$value->linkToObjectId = intval($this->request->getNumber($element->name));
 					break;
 
 				case Element::ELEMENT_TYPE_NUMBER:
+					$value->number = $this->request->getText($element->name) * pow(10, $element->decimals);
+					break;
+				case Element::ELEMENT_TYPE_CHECKBOX:
 					$value->number = $this->request->getText($element->name) * pow(10, $element->decimals);
 					break;
 				default:

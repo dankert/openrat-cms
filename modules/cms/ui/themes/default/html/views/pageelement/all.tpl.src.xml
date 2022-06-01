@@ -109,11 +109,24 @@
 							<selectbox list="objects" name="${name}" default="${value}" />
 						</fieldset>
 				</if>
+				<if value="${type}" equals="checkbox">
+					<fieldset>
+						<part>
+							<checkbox name="${name}" default="${value}"   label="${label}" />
+						</part>
+					</fieldset>
+				</if>
 				<if value="${type}" equals="number">
 					<fieldset>
 						<part>
 							<hidden name="decimals" default="decimals"/>
-							<input size="15" maxlength="20" name="${name}" default="${value}"/>
+							<if value="${decimals}" equals="0">
+								<set var="type" value="'number'" />
+							</if>
+							<else>
+								<set var="type" value="text" />
+							</else>
+							<input type="${type}" size="15" maxlength="20" name="${name}" default="${value}"/>
 						</part>
 					</fieldset>
 				</if>

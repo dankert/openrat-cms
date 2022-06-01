@@ -5,6 +5,7 @@ use cms\action\ElementAction;
 use cms\action\Method;
 use cms\action\RequestParams;
 use cms\base\Configuration;
+use cms\generator\ValueGenerator;
 use cms\model\BaseObject;
 use cms\model\Element;
 use cms\model\Folder;
@@ -18,127 +19,167 @@ use util\Text;
 
 
 class ElementAdvancedAction extends ElementAction implements Method {
-    public function view() {
+
+	const PROP_INHERIT = 'inherit';
+	const PROP_WITHICON = 'withIcon';
+	const PROP_ALL_LANGUAGES = 'allLanguages';
+	const PROP_WRITABLE = 'writable';
+	const PROP_HTML = 'html';
+	const PROP_DEFAULT_TEXT = 'defaultText';
+	const PROP_FORMAT = 'format';
+	const PROP_LINKTYPE = 'linktype';
+	const PROP_FOLDER_OBJECTID ='folderObjectId';
+	const PROP_DEFAULT_OBJECTID ='defaultObjectId';
+	const PROP_SUBTYPE = 'subtype';
+	const PROP_DECPOINT = 'decPoint';
+	const PROP_DECIMALS = 'decimals';
+	const PROP_THOUSANDSEP = 'thousandSep';
+	const PROP_CODE = 'code';
+	const PROP_DATEFORMAT = 'dateformat';
+	const PROP_PREFIX = 'prefix';
+	const PROP_NAME = 'name';
+
+	public function view() {
+
         $this->setTemplateVar('type',$this->element->getTypeName() );
 
         // Abhaengig vom aktuellen Element-Typ die Eigenschaften anzeigen
-        $properties = $this->element->getRelatedProperties();
-
-        foreach( $this->element->getRelatedProperties() as $propertyName )
+        foreach( $this->getRelatedProperties() as $propertyName )
         {
             switch( $propertyName )
             {
-                case 'withIcon':
+                case self::PROP_WITHICON:
                     $this->setTemplateVar('with_icon'    ,$this->element->withIcon    );
                     break;
 
-                case 'allLanguages':
+                case self::PROP_ALL_LANGUAGES:
                     $this->setTemplateVar('all_languages',$this->element->allLanguages);
                     break;
 
-                case 'writable':
+                case self::PROP_WRITABLE:
                     $this->setTemplateVar('writable'     ,$this->element->writable    );
                     break;
 
-                case 'inherit':
+                case self::PROP_INHERIT:
                     $this->setTemplateVar('inherit'     ,$this->element->inherit      );
                     break;
 
-                case 'html':
+                case self::PROP_HTML:
                     $this->setTemplateVar('html'       ,$this->element->html          );
                     break;
 
-                case 'subtype':
+                case self::PROP_SUBTYPE:
 
                     $convertToLang = false;
                     switch( $this->element->typeid )
                     {
                         case Element::ELEMENT_TYPE_INFO:
-                            $subtypes = Array('db_id',
-                                'db_name',
-                                'project_id',
-                                'project_name',
-                                'language_id',
-                                'language_iso',
-                                'language_name',
-                                'page_id',
-                                'page_name',
-                                'page_desc',
-                                'page_fullfilename',
-                                'page_filename',
-                                'page_extension',
-                                'edit_url',
-                                'edit_fullurl',
-                                'lastch_user_username',
-                                'lastch_user_fullname',
-                                'lastch_user_mail',
-                                'lastch_user_desc',
-                                'lastch_user_tel',
-                                'create_user_username',
-                                'create_user_fullname',
-                                'create_user_mail',
-                                'create_user_desc',
-                                'create_user_tel',
-                                'act_user_username',
-                                'act_user_fullname',
-                                'act_user_mail',
-                                'act_user_desc',
-                                'act_user_tel' );
+                            $subtypes = [
+                            	ValueGenerator::INFO_DB_ID,
+                                ValueGenerator::INFO_DB_NAME,
+                                ValueGenerator::INFO_PROJECT_ID,
+                                ValueGenerator::INFO_PROJECT_NAME,
+                                ValueGenerator::INFO_LANGUAGE_ID,
+                                ValueGenerator::INFO_LANGUAGE_ISO,
+                                ValueGenerator::INFO_LANGUAGE_NAME,
+                                ValueGenerator::INFO_PAGE_ID,
+                                ValueGenerator::INFO_PAGE_NAME,
+                                ValueGenerator::INFO_PAGE_DESC,
+                                ValueGenerator::INFO_PAGE_FULLFILENAME,
+                                ValueGenerator::INFO_PAGE_FILENAME,
+                                ValueGenerator::INFO_PAGE_EXTENSION,
+                                ValueGenerator::INFO_EDIT_URL,
+                                ValueGenerator::INFO_EDIT_FULLURL,
+                                ValueGenerator::INFO_LASTCHANGE_USER_USERNAME,
+                                ValueGenerator::INFO_LASTCHANGE_USER_FULLNAME,
+                                ValueGenerator::INFO_LASTCHANGE_USER_MAIL,
+                                ValueGenerator::INFO_LASTCHANGE_USER_DESC,
+                                ValueGenerator::INFO_LASTCHANGE_USER_TEL,
+                                ValueGenerator::INFO_CREATION_USER_USERNAME,
+                                ValueGenerator::INFO_CREATION_FULLNAME,
+                                ValueGenerator::INFO_CREATION_MAIL,
+                                ValueGenerator::INFO_CREATION_DESC,
+                                ValueGenerator::INFO_CREATION_TEL,
+                                ValueGenerator::INFO_ACT_USERNAME,
+                                ValueGenerator::INFO_ACT_FULLNAME,
+                                ValueGenerator::INFO_ACT_MAIL,
+                                ValueGenerator::INFO_ACT_DESC,
+                                ValueGenerator::INFO_ACT_TEL,
+                                ValueGenerator::INFO_PUB_USERNAME,
+                                ValueGenerator::INFO_PUB_FULLNAME,
+                                ValueGenerator::INFO_PUB_MAIL,
+                                ValueGenerator::INFO_PUB_DESC,
+                                ValueGenerator::INFO_PUB_TEL
+							];
                             $convertToLang = true;
                             break;
 
                         case Element::ELEMENT_TYPE_INFODATE:
                         case Element::ELEMENT_TYPE_LINKDATE:
-                            $subtypes = Array('date_published',
-                                'date_saved',
-                                'date_created' );
+                            $subtypes = [
+                            	ValueGenerator::INFO_DATE_PUBLISHED,
+								ValueGenerator::INFO_DATE_SAVED,
+								ValueGenerator::INFO_DATE_CREATED,
+							];
                             $convertToLang = true;
                             break;
 
                         case Element::ELEMENT_TYPE_LINK:
-                            $subtypes = Array(
-                                'file',
-                                'image',
-                                'image_data_uri',
-                                'page',
-                                'folder',
-                                'link' );
+                            $subtypes = [
+								ValueGenerator::LINK_FILE_,
+                                ValueGenerator::LINK_IMAGE,
+                                ValueGenerator::LINK_IMAGE_DATE_URI,
+                                ValueGenerator::LINK_PAGE,
+                                ValueGenerator::LINK_FOLDER,
+                                ValueGenerator::LINK_LINK
+							];
                             $convertToLang = true;
                             break;
 
                         case Element::ELEMENT_TYPE_CODE:
+
                             $subtypes = [
-                                'php',
-                                'js',
-								];
+                                ValueGenerator::CODE_PHP,
+                                ValueGenerator::CODE_SCRIPT,
+                                ValueGenerator::CODE_MUSTACHE,
+							];
                             $convertToLang = true;
                             break;
 
                         case Element::ELEMENT_TYPE_LINKINFO:
-                            $subtypes = Array('width',
-                                'height',
-                                'id',
-                                'name',
-                                'description',
-                                'mime_type',
-                                'lastch_user_username',
-                                'lastch_user_fullname',
-                                'lastch_user_mail',
-                                'lastch_user_desc',
-                                'lastch_user_tel',
-                                'create_user_username',
-                                'create_user_fullname',
-                                'create_user_mail',
-                                'create_user_desc',
-                                'create_user_tel',
-                                'filename',
-                                'full_filename' );
+                            $subtypes = [
+								ValueGenerator::LINKINFO_WIDTH,
+								ValueGenerator::LINKINFO_HEIGHT,
+								ValueGenerator::LINKINFO_ID,
+								ValueGenerator::LINKINFO_NAME,
+								ValueGenerator::LINKINFO_DESCRIPTION,
+								ValueGenerator::LINKINFO_MIME_TYPE,
+								ValueGenerator::INFO_LASTCHANGE_USER_USERNAME,
+								ValueGenerator::INFO_LASTCHANGE_USER_FULLNAME,
+								ValueGenerator::INFO_LASTCHANGE_USER_MAIL,
+								ValueGenerator::INFO_LASTCHANGE_USER_DESC,
+								ValueGenerator::INFO_LASTCHANGE_USER_TEL,
+								ValueGenerator::INFO_CREATION_USER_USERNAME,
+								ValueGenerator::INFO_CREATION_FULLNAME,
+								ValueGenerator::INFO_CREATION_MAIL,
+								ValueGenerator::INFO_CREATION_DESC,
+								ValueGenerator::INFO_CREATION_TEL,
+								ValueGenerator::INFO_PUB_USERNAME,
+								ValueGenerator::INFO_PUB_FULLNAME,
+								ValueGenerator::INFO_PUB_MAIL,
+								ValueGenerator::INFO_PUB_DESC,
+								ValueGenerator::INFO_PUB_TEL,
+								ValueGenerator::INFO_FILENAME,
+								ValueGenerator::INFO_FULL_FILENAME
+							];
                             $convertToLang = true;
                             break;
 
                         case Element::ELEMENT_TYPE_INSERT:
-                            $subtypes = Array('inline',
-                                'ssi'     );
+                            $subtypes = [
+                            	ValueGenerator::INSERT_INLINE,
+								ValueGenerator::INSERT_SSI,
+							];
                             $convertToLang = true;
                             break;
 
@@ -147,8 +188,8 @@ class ElementAdvancedAction extends ElementAction implements Method {
 
                         case Element::ELEMENT_TYPE_COORD:
                             $subtypes = [
-                            	'olc',
-                                'coordinates',
+								ValueGenerator::COORD_OLC,
+								ValueGenerator::COORD_COORDINATES,
 							];
                             $convertToLang = true;
                             break;
@@ -191,7 +232,7 @@ class ElementAdvancedAction extends ElementAction implements Method {
                     break;
 
 
-                case 'dateformat':
+                case self::PROP_DATEFORMAT:
 
                     $ini_date_format = Configuration::subset('date')->get('format',[]);
                     $dateformat = array();
@@ -214,7 +255,7 @@ class ElementAdvancedAction extends ElementAction implements Method {
 
 
                 // Eigenschaften Text und Text-Absatz
-                case 'defaultText':
+                case self::PROP_DEFAULT_TEXT:
 
                     switch( $this->element->typeid )
                     {
@@ -230,7 +271,7 @@ class ElementAdvancedAction extends ElementAction implements Method {
                     break;
 
 
-                case 'format':
+                case self::PROP_FORMAT:
                     $this->setTemplateVar('format', $this->element->format );
 
                     $formats = Element::getAvailableFormats();
@@ -245,12 +286,12 @@ class ElementAdvancedAction extends ElementAction implements Method {
                     $this->setTemplateVar('formatlist', $formats);
                     break;
 
-                case 'linktype':
+                case self::PROP_LINKTYPE:
                     $this->setTemplateVar('linktype', $this->element->wiki );
                     $this->setTemplateVar('linktypelist', array('page','file','link') );
                     break;
 
-                case 'prefix':
+                case self::PROP_PREFIX:
                     $t = new Template( $this->element->templateid );
 
                     $elements = array();
@@ -268,7 +309,7 @@ class ElementAdvancedAction extends ElementAction implements Method {
 
                     break;
 
-                case 'name':
+                case self::PROP_NAME:
 
                     $names = array();
 
@@ -297,7 +338,7 @@ class ElementAdvancedAction extends ElementAction implements Method {
                     break;
 
                 // Eigenschaften PHP-Code
-                case 'code':
+                case self::PROP_CODE:
 
                     switch( $this->element->typeid )
                     {
@@ -357,21 +398,21 @@ class ElementAdvancedAction extends ElementAction implements Method {
                     break;
 
 
-                case 'decimals':
+                case self::PROP_DECIMALS:
                     $this->setTemplateVar('decimals'     ,$this->element->decimals    );
                     break;
 
-                case 'decPoint':
+                case self::PROP_DECPOINT:
                     $this->setTemplateVar('dec_point'    ,$this->element->decPoint    );
                     break;
 
-                case 'thousandSep':
+                case self::PROP_THOUSANDSEP:
                     $this->setTemplateVar('thousand_sep' ,$this->element->thousandSep );
                     break;
 
 
                 // Eigenschaften Link
-                case 'defaultObjectId':
+                case self::PROP_DEFAULT_OBJECTID:
 
                     $objects = array();
 
@@ -425,7 +466,7 @@ class ElementAdvancedAction extends ElementAction implements Method {
                     break;
 
 
-                case 'folderObjectId':
+                case self::PROP_FOLDER_OBJECTID:
 
 
                     // Ermitteln aller verf?gbaren Objekt-IDs
@@ -524,4 +565,36 @@ class ElementAdvancedAction extends ElementAction implements Method {
         $this->addNoticeFor( $this->element, Messages::SAVED);
 
     }
+
+
+
+	/**
+	 * Abhaengig vom Element-Typ werden die zur Darstellung notwendigen Eigenschaften ermittelt.
+	 * @return string[]
+	 */
+	protected function getRelatedProperties()
+	{
+		$relatedProperties = [
+			Element::ELEMENT_TYPE_TEXT     => [self::PROP_INHERIT,self::PROP_WITHICON,self::PROP_ALL_LANGUAGES,self::PROP_WRITABLE,self::PROP_HTML,self::PROP_DEFAULT_TEXT,self::PROP_FORMAT],
+			Element::ELEMENT_TYPE_LONGTEXT => [self::PROP_INHERIT,self::PROP_WITHICON,self::PROP_ALL_LANGUAGES,self::PROP_WRITABLE,self::PROP_HTML,self::PROP_DEFAULT_TEXT,self::PROP_FORMAT],
+			Element::ELEMENT_TYPE_SELECT   => [self::PROP_INHERIT,self::PROP_WITHICON,self::PROP_ALL_LANGUAGES,self::PROP_WRITABLE,self::PROP_DEFAULT_TEXT,self::PROP_CODE],
+			Element::ELEMENT_TYPE_NUMBER   => [self::PROP_INHERIT,self::PROP_WITHICON,self::PROP_ALL_LANGUAGES,self::PROP_WRITABLE,self::PROP_DECPOINT,self::PROP_DECIMALS,self::PROP_THOUSANDSEP,self::PROP_CODE],
+			Element::ELEMENT_TYPE_CHECKBOX => [self::PROP_INHERIT,self::PROP_WITHICON,self::PROP_ALL_LANGUAGES,self::PROP_WRITABLE],
+			Element::ELEMENT_TYPE_LINK     => [self::PROP_INHERIT,self::PROP_SUBTYPE,self::PROP_WITHICON,self::PROP_ALL_LANGUAGES,self::PROP_WRITABLE,self::PROP_LINKTYPE,self::PROP_FOLDER_OBJECTID,self::PROP_DEFAULT_OBJECTID],
+			Element::ELEMENT_TYPE_DATE     => [self::PROP_INHERIT,self::PROP_WITHICON,self::PROP_ALL_LANGUAGES,self::PROP_WRITABLE,self::PROP_DATEFORMAT,self::PROP_DEFAULT_TEXT],
+			Element::ELEMENT_TYPE_INSERT   => [self::PROP_INHERIT,self::PROP_SUBTYPE,self::PROP_WITHICON,self::PROP_ALL_LANGUAGES,self::PROP_WRITABLE,self::PROP_FOLDER_OBJECTID,self::PROP_DEFAULT_OBJECTID],
+			Element::ELEMENT_TYPE_COPY     => [self::PROP_INHERIT,self::PROP_PREFIX,self::PROP_NAME,self::PROP_DEFAULT_TEXT],
+			Element::ELEMENT_TYPE_LINKINFO => [self::PROP_PREFIX,self::PROP_SUBTYPE,self::PROP_DEFAULT_TEXT],
+			Element::ELEMENT_TYPE_LINKDATE => [self::PROP_PREFIX,self::PROP_SUBTYPE,self::PROP_DATEFORMAT],
+			Element::ELEMENT_TYPE_CODE     => [self::PROP_CODE,self::PROP_SUBTYPE],
+			Element::ELEMENT_TYPE_DYNAMIC  => [self::PROP_SUBTYPE,self::PROP_CODE],
+			Element::ELEMENT_TYPE_INFO     => [self::PROP_SUBTYPE],
+			Element::ELEMENT_TYPE_INFODATE => [self::PROP_SUBTYPE,self::PROP_DATEFORMAT],
+			Element::ELEMENT_TYPE_DATA     => [self::PROP_INHERIT,self::PROP_WITHICON,self::PROP_ALL_LANGUAGES,self::PROP_WRITABLE,self::PROP_CODE],
+			Element::ELEMENT_TYPE_COORD    => [self::PROP_INHERIT,self::PROP_WITHICON,self::PROP_ALL_LANGUAGES,self::PROP_WRITABLE,self::PROP_SUBTYPE],
+		];
+
+		return $relatedProperties[ $this->element->typeid ];
+	}
+
 }

@@ -148,6 +148,10 @@ class PageelementAllAction extends PageelementAction implements Method {
 					$content = $value->number / pow(10, $element->decimals);
 					break;
 
+				case Element::ELEMENT_TYPE_CHECKBOX:
+					$content = $value->number;
+					break;
+
 				case Element::ELEMENT_TYPE_LONGTEXT:
 					if ($requestedFormat = $this->request->getText('format'))
 						// Individual format from request.
@@ -240,6 +244,9 @@ class PageelementAllAction extends PageelementAction implements Method {
 
 				case Element::ELEMENT_TYPE_NUMBER:
 					$value->number = $this->request->getText($language->isoCode) * pow(10, $element->decimals);
+					break;
+				case Element::ELEMENT_TYPE_CHECKBOX:
+					$value->number = $this->request->getText($language->isoCode)?1:0;
 					break;
 				default:
 					throw new \LogicException('Unknown element type: ' . $element->getTypeName());

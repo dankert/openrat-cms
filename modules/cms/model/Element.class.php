@@ -44,6 +44,7 @@ class Element extends ModelBase
 	 * Coordinates.
 	 */
     const ELEMENT_TYPE_COORD    = 16;
+	const ELEMENT_TYPE_CHECKBOX = 17;
 
     const ELEMENT_FORMAT_TEXT     = 0;
     const ELEMENT_FORMAT_HTML     = 1;
@@ -429,32 +430,6 @@ SQL
 	}
 
 
-	/**
-	 * Abhaengig vom Element-Typ werden die zur Darstellung notwendigen Eigenschaften ermittelt.
-	 * @return string[]
-	 */
-	public function getRelatedProperties()
-	{
-		$relatedProperties = [
-			self::ELEMENT_TYPE_TEXT     => ['inherit','withIcon','allLanguages','writable','html','defaultText','format'],
-			self::ELEMENT_TYPE_LONGTEXT => ['inherit','withIcon','allLanguages','writable','html','defaultText','format'],
-			self::ELEMENT_TYPE_SELECT   => ['inherit','withIcon','allLanguages','writable','defaultText','code'],
-			self::ELEMENT_TYPE_NUMBER   => ['inherit','withIcon','allLanguages','writable','decPoint','decimals','thousandSep','code'],
-			self::ELEMENT_TYPE_LINK     => ['inherit','subtype','withIcon','allLanguages','writable','linktype','folderObjectId','defaultObjectId'],
-			self::ELEMENT_TYPE_DATE     => ['inherit','withIcon','allLanguages','writable','dateformat','defaultText'],
-			self::ELEMENT_TYPE_INSERT   => ['inherit','subtype','withIcon','allLanguages','writable','folderObjectId','defaultObjectId'],
-			self::ELEMENT_TYPE_COPY     => ['inherit','prefix','name','defaultText'],
-			self::ELEMENT_TYPE_LINKINFO => ['prefix','subtype','defaultText'],
-			self::ELEMENT_TYPE_LINKDATE => ['prefix','subtype','dateformat'],
-			self::ELEMENT_TYPE_CODE     => ['code','subtype'],
-			self::ELEMENT_TYPE_DYNAMIC  => ['subtype','code'],
-			self::ELEMENT_TYPE_INFO     => ['subtype'],
-			self::ELEMENT_TYPE_INFODATE => ['subtype','dateformat'],
-			self::ELEMENT_TYPE_DATA     => ['inherit','withIcon','allLanguages','writable','code'],
-			self::ELEMENT_TYPE_COORD    => ['inherit','withIcon','allLanguages','writable','subtype'],
-		];
-		return $relatedProperties[ $this->typeid ];
-	}
 
 
 	/**
@@ -512,6 +487,7 @@ SQL
             self::ELEMENT_TYPE_LONGTEXT => 'longtext',
             self::ELEMENT_TYPE_SELECT   => 'select',
             self::ELEMENT_TYPE_NUMBER   => 'number',
+            self::ELEMENT_TYPE_CHECKBOX => 'checkbox',
             self::ELEMENT_TYPE_LINK     => 'link',
             self::ELEMENT_TYPE_DATE     => 'date',
             self::ELEMENT_TYPE_INSERT   => 'insert',

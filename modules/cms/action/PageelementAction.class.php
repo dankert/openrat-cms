@@ -329,6 +329,11 @@ class PageelementAction extends BaseAction
         $this->setTemplateVar( 'text',$this->value->text );
     }
 
+    protected function editCheckbox()
+    {
+        $this->setTemplateVar( 'number',$this->value->number );
+    }
+
 	protected function saveData()
 	{
 		$this->saveText();
@@ -537,7 +542,12 @@ class PageelementAction extends BaseAction
 
 
 
-    /**
+	protected function saveCheckbox()
+	{
+		$this->saveNumber();
+	}
+
+	/**
      * Element speichern
      *
      * Der Inhalt eines Elementes wird abgespeichert
@@ -680,6 +690,9 @@ class PageelementAction extends BaseAction
 
 			case Element::ELEMENT_TYPE_NUMBER:
 				return $value->number;
+
+			case Element::ELEMENT_TYPE_CHECKBOX:
+				return $value->number?'ON':'OFF';
 
 			default:
 				return '';

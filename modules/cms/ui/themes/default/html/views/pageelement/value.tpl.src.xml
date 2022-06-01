@@ -114,11 +114,18 @@
 				</part>
 			</group>
 		</if>
+		<if value="${type}" equals="checkbox">
+			<fieldset>
+				<part>
+					<checkbox name="number" />
+				</part>
+			</fieldset>
+		</if>
 		<if value="${type}" equals="number">
 			<group>
 				<part>
 					<hidden name="decimals" default="decimals"/>
-					<input size="15" maxlength="20" name="number"/>
+					<input type="number" size="15" maxlength="20" name="number"/>
 				</part>
 			</group>
 		</if>
