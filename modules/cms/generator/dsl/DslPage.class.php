@@ -3,13 +3,11 @@
 namespace cms\generator\dsl;
 
 use cms\model\Page;
-use dsl\context\DslObject;
+use dsl\context\DslObject as DslContextObject;
 
-class DslPage implements DslObject
+class DslPage extends DslObject implements DslContextObject
 {
 	private $page;
-
-	public $id;
 
 	/**
 	 * DslPage constructor.
@@ -18,8 +16,7 @@ class DslPage implements DslObject
 	public function __construct($page)
 	{
 		$this->page = $page;
-
-		$this->id = $page->getId();
+		parent::__construct( $page );
 	}
 
 	/**

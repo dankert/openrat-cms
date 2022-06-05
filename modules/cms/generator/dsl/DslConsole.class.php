@@ -5,6 +5,13 @@ namespace cms\generator\dsl;
 use dsl\context\DslObject;
 use logger\Logger;
 
+/**
+ * Logging.
+ *
+ * Wraps around the internal CMS logging.
+ *
+ * @package cms\generator\dsl
+ */
 class DslConsole implements DslObject
 {
 

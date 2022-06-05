@@ -6,14 +6,12 @@ use cms\model\Folder;
 use dsl\context\DslObject as DslContextObject;
 
 
-class DslFolder implements DslContextObject
+class DslFolder extends DslObject implements DslContextObject
 {
 	/**
 	 * @var Folder
 	 */
 	private $folder;
-
-	public $id;
 
 	/**
 	 * DslPage constructor.
@@ -23,7 +21,7 @@ class DslFolder implements DslContextObject
 	{
 		$this->folder = $folder;
 
-		$this->id = $folder->getId();
+		parent::__construct( $folder );
 	}
 
 	public function children() {

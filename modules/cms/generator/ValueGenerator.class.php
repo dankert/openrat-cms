@@ -8,7 +8,6 @@ use cms\base\Configuration;
 use cms\base\Configuration as C;
 use cms\base\DB;
 use cms\base\Startup;
-use cms\generator\dsl\DslAlert;
 use cms\generator\dsl\DslConsole;
 use cms\generator\dsl\DslDocument;
 use cms\generator\dsl\DslHttp;
@@ -439,7 +438,7 @@ class ValueGenerator extends BaseGenerator
 					case self::LINKINFO_WIDTH:
 						$f = new Image( $objectid );
 						$f->load();
-						if	( $f->typeid == BaseObject::TYPE_IMAGE )
+						if	( $f->typeid == BaseObject::TYPEID_IMAGE )
 						{
 							$f->getImageSize();
 							$inhalt = $f->width;
@@ -450,7 +449,7 @@ class ValueGenerator extends BaseGenerator
 					case self::LINKINFO_HEIGHT:
 						$f = new Image( $objectid );
 						$f->load();
-						if	( $f->typeid == BaseObject::TYPE_IMAGE )
+						if	( $f->typeid == BaseObject::TYPEID_IMAGE )
 						{
 							$f->getImageSize();
 							$inhalt = $f->height;

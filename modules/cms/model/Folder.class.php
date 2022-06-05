@@ -65,30 +65,9 @@ class Folder extends BaseObject
 	}
 
 
-	public function load()
-	{
-//		$db = \cms\base\DB::get();
-//
-//		$sql = $db->sql('SELECT * FROM {{folder}} WHERE objectid={objectid}');
-//		$sql->setInt('objectid',$this->objectid);
-//
-//		$row = $sql->getRow( $sql );
-//
-		$this->objectLoad();
-		
-//		$this->folderid = $row['id' ];
-	}
 
 
-
-	function save()
-	{
-		parent::save();
-	}
-
-
-	
-	function setOrderId( $orderid )
+	public function setOrderId( $orderid )
 	{
 		$db = \cms\base\DB::get();
 

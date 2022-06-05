@@ -702,7 +702,19 @@ EL_CODE:
 EL_CODE_PHP:
   en: PHP
 EL_CODE_JS:
-  en: Javascript
+  en: Script
+  de: Skript
+EL_CODE_MUSTACHE:
+  en: Mustache template
+  de: Mustache-Template
+EL_COORD:
+  en: Location
+  de: Position
+EL_CHECKBOX:
+  en: Checkbox
+EL_DATA:
+  en: Data
+  de: Daten
 EL_COORD_OLC:
   en: Open location code
 EL_COORD_COORDINATES:

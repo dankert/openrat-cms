@@ -3,7 +3,6 @@
 namespace cms\generator\dsl;
 
 use cms\model\Folder;
-use cms\model\Page;
 use cms\model\Project;
 use dsl\context\DslObject;
 
@@ -12,6 +11,8 @@ class DslProject implements DslObject
 	private $project;
 
 	public $id;
+	public $url;
+	public $name;
 
 	/**
 	 * DslPage constructor.
@@ -21,7 +22,9 @@ class DslProject implements DslObject
 	{
 		$this->project = $project;
 
-		$this->id = $project->getId();
+		$this->id   = $project->getId();
+		$this->name = $project->name;
+		$this->url  = $project->url;
 	}
 
 	/**
@@ -29,25 +32,30 @@ class DslProject implements DslObject
 	 * @throws \util\exception\ObjectNotFoundException
 	 */
 	public function languages() {
-		return $this->project->getLanguages();
+
+		return array_map( function( $language ) {
+			return get_object_vars($language);
+		} ,$this->project->getLanguages() );
 	}
 	/**
 	 * @return array
 	 * @throws \util\exception\ObjectNotFoundException
 	 */
 	public function models() {
-		return $this->project->getLanguages();
 
+		return array_map( function($model ) {
+			return get_object_vars($model);
+		} ,$this->project->getModels() );
 	}
 	/**
 	 * @return DslObject
 	 * @throws \util\exception\ObjectNotFoundException
 	 */
 	public function root() {
+
 		$oid = $this->project->getRootObjectId();
 		$folder = new Folder( $oid );
-		$folder->load();
-		return new \cms\generator\dsl\DslObject( $folder );
+		return new DslFolder( $folder->load() );
 	}
 
 }

@@ -30,17 +30,10 @@ class BaseObject extends ModelBase
     const TYPEID_ALIAS  = 8;
     const TYPEID_MACRO  = 9;
 
-    const TYPE_FOLDER = 'folder';
-    const TYPE_FILE   = 'file'  ;
-    const TYPE_PAGE   = 'page'  ;
-    const TYPE_LINK   = 'link'  ;
-    const TYPE_URL    = 'url'   ;
-    const TYPE_IMAGE  = 'image' ;
-    const TYPE_TEXT   = 'text'  ;
-    const TYPE_ALIAS  = 'alias' ;
-    const TYPE_MACRO  = 'macro' ;
 
-    /** eindeutige ID dieses Objektes
+    /**
+	 * Unique ID of this base object.
+	 *
      * @type Integer
      */
     public $objectid;
@@ -320,32 +313,25 @@ SQL
 
 
     /**
-     * Typ des Objektes ermitteln
+     * Get the type name.
      *
-     * @return String der Typ des Objektes entweder 'folder','file','page' oder 'link'.
+     * @return String type of object, f.e. 'folder','file','page', ...
      */
     function getType()
     {
-        if ($this->isFolder)
-            return self::TYPE_FOLDER;
-        if ($this->isFile)
-            return self::TYPE_FILE;
-        if ($this->isImage)
-            return self::TYPE_IMAGE;
-        if ($this->isText)
-            return self::TYPE_TEXT;
-        if ($this->isPage)
-            return self::TYPE_PAGE;
-        if ($this->isLink)
-            return self::TYPE_LINK;
-        if ($this->isUrl)
-            return self::TYPE_URL;
-        if ($this->isAlias)
-            return self::TYPE_ALIAS;
-        if ($this->isMacro)
-            return self::TYPE_MACRO;
+		$mapTypeIdToName = [
+			self::TYPEID_FOLDER => 'folder',
+			self::TYPEID_FILE   => 'file'  ,
+			self::TYPEID_PAGE   => 'page'  ,
+			self::TYPEID_LINK   => 'link'  ,
+			self::TYPEID_URL    => 'url'   ,
+			self::TYPEID_IMAGE  => 'image' ,
+			self::TYPEID_TEXT   => 'text'  ,
+			self::TYPEID_ALIAS  => 'alias' ,
+			self::TYPEID_MACRO  => 'macro' ,
+		];
 
-        return 'unknown';
+		return $mapTypeIdToName[ $this->getTypeid() ];
     }
 
 
@@ -667,7 +653,8 @@ SQL
 	 * @return bool
 	 */
 	public function isRoot() {
-		return intval($this->parentid) == 0;
+
+		return ! $this->parentid;
 	}
 
     /**
