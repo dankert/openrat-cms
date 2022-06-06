@@ -100,21 +100,6 @@ class DslStatementList extends DslElement implements DslStatement
 					break;
 
 				case DslToken::T_LET:
-					$statementTokens = $this->getSingleStatement( $tokens );
-					$nextToken = array_shift($statementTokens );
-					if ($nextToken->type != DslToken::T_STRING)
-						throw new DslParserException('only variables may be initialized', $token->lineNumber);
-					$name = $nextToken->value;
-
-					$nextToken = array_shift($statementTokens);
-					if   ( $nextToken == null )
-						$value = null;
-					elseif ($nextToken->type == DslToken::T_OPERATOR && $nextToken->value == '=')
-						$value = $statementTokens;
-					else
-						throw new DslParserException('Unexpected token in initialisation', $token->lineNumber);
-
-					$this->statements[] = new DslInitialisation( $name, $value );
 					break;
 
 				case DslToken::T_FOR:

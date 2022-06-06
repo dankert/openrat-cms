@@ -34,8 +34,10 @@ class DslAssignment implements DslStatement
 
 		$value = $this->value->execute( $context );
 
-		if   ( ! array_key_exists( $this->target->name,$context ) )
-			throw new DslRuntimeException('variable \''.$this->target->name.'\' does not exist');
+		// if the variable is not already bound in this context it will be created.
+		// there is no need for a "var" or "let". they are completely obsolet.
+		//if   ( ! array_key_exists( $this->target->name,$context ) )
+		//	throw new DslRuntimeException('variable \''.$this->target->name.'\' does not exist');
 
 		$context[ $this->target->name ] = $value;
 
