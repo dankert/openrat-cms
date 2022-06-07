@@ -5,6 +5,10 @@ namespace cms\generator;
 
 
 use cms\base\Configuration;
+use cms\generator\dsl\DslConsole;
+use cms\generator\dsl\DslHttp;
+use cms\generator\dsl\DslJson;
+use cms\generator\dsl\DslPage;
 use cms\generator\PageContext;
 use cms\model\File;
 use cms\model\Folder;
@@ -14,6 +18,9 @@ use cms\model\Project;
 use cms\model\Template;
 use cms\model\TemplateModel;
 use cms\model\Value;
+use dsl\DslException;
+use dsl\DslTemplate;
+use dsl\executor\DslInterpreter;
 use logger\Logger;
 use util\exception\GeneratorException;
 use util\Mustache;
@@ -119,6 +126,29 @@ class TemplateGenerator
 		$src = $mustache->render( $data );
 
 		// now we have the fully generated source.
+
+		try {
+
+			$templateParser = new DslTemplate();
+			$templateParser->parseTemplate($src);
+			if ($templateParser->tagsFound) {
+				$executor = new DslInterpreter();
+				$executor->addContext([
+					'console' => new DslConsole(),
+					'http' => new DslHttp(),
+					'json' => new DslJson(),
+				]);
+				$executor->addContext( $data );
+
+				$executor->runCode($templateParser->script);
+
+				// Ausgabe ermitteln.
+				$src = $executor->getOutput();
+			}
+		} catch (DslException $e) {
+			Logger::warn($e);
+			$src = $e->getMessage()."\nscript source:\n".$templateParser->script;
+		}
 
 		// should we do a UTF-8-escaping here?
 		// Default should be off, because if you are fully using utf-8 (you should do), this is unnecessary.
