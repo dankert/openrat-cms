@@ -190,7 +190,7 @@ class DslLexer
 				continue;
 			}
 
-			$operatorChars = ['+' ,'-','/' ,'*','=','|','&',',','.' ];
+			$operatorChars = ['>','<','+' ,'-','/' ,'*','=','|','&',',','.' ];
 			if   ( in_array($char,$operatorChars)) {
 
 				$value = $char;
