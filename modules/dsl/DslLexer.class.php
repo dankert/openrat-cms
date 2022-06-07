@@ -179,10 +179,10 @@ class DslLexer
 				while( true ) {
 					$char = array_shift( $chars );
 					if   ( ( $char >= '0' && $char <= '9') ||
-						     $char == '.' ) {
+						$char == '.' || $char == '_' ) {
 						$value .= $char;
 					} else {
-						$this->addToken( $line,DslToken::T_NUMBER,$value );
+						$this->addToken( $line,DslToken::T_NUMBER,str_replace('_','',$value ));
 						array_unshift($chars,$char);
 						break;
 					}
