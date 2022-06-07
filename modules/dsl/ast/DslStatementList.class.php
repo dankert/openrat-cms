@@ -123,6 +123,11 @@ class DslStatementList extends DslElement implements DslStatement
 					$this->statements[] = new DslReturn( $returnTokens );
 					break;
 
+				case DslToken::T_THROW:
+					$returnTokens = $this->getSingleStatement($tokens );
+					$this->statements[] = new DslThrow( $returnTokens );
+					break;
+
 				case DslToken::T_TEXT:
 				case DslToken::T_STRING:
 					array_unshift( $tokens, $token );

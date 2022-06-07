@@ -16,6 +16,7 @@ class DslLexer
 		'var'      => DslToken::T_LET,
 		'return'   => DslToken::T_RETURN,
 		'new'      => DslToken::T_NEW,
+		'throw'    => DslToken::T_THROW,
 	];
 
 	const UNUSED_KEYWORDS = [
