@@ -429,6 +429,30 @@ class Text
 	}
 
 
+	public static function hexDump( $data, $newline="\n")
+	{
+		$width =  16; # number of bytes per line
+		$pad   = '.'; # padding for non-visible characters
+
+		$from   = '';
+		$to     = '';
+		$output = '';
+
+		for ($i=0; $i<=0xFF; $i++)
+		{
+			$from .= chr($i);
+			$to   .= ($i >= 0x20 && $i <= 0x7E) ? chr($i) : $pad;
+		}
+
+		$hex   = str_split(bin2hex($data), $width*2);
+		$chars = str_split(strtr($data, $from, $to), $width);
+
+		foreach ($hex as $i=>$line)
+			$output .=
+				implode('  ',array_pad(str_split($chars[$i]),16,' ')     ) . '   ['.str_pad($chars[$i],16).']' . $newline .
+				implode(' ' ,array_pad(str_split($line ,2),16,'  ') ) . $newline;
+		return $output;
+	}
 
 
 

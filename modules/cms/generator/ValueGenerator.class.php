@@ -37,6 +37,7 @@ use util\exception\ObjectNotFoundException;
 use util\exception\PublisherException;
 use util\Html;
 use util\Http;
+use util\Mqtt;
 use util\Request;
 use util\Text;
 use util\Transformer;
@@ -878,6 +879,12 @@ class ValueGenerator extends BaseGenerator
 							'http'     => new DslHttp(),
 							'json'     => new DslJson(),
 							'page'     => new DslPage( $page ),
+							'Mqtt'     => new class{
+								public static function open( $url ) {
+									return new Mqtt( $url );
+								}
+							}
+							,
 						]);
 
 						try {
