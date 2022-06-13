@@ -410,9 +410,10 @@ class Tree
 				if   ( $o->hasRight( Permission::ACL_READ ) ) {
 
 					$treeElement = new TreeElement();
-					$treeElement->type = $o->getType();
+					$treeElement->type   = $o->getType();
 					$treeElement->action = $o->getType();
-					$treeElement->id = $o->objectid;
+					$treeElement->icon   = $o->getType();
+					$treeElement->id     = $o->objectid;
 					$treeElement->internalId = $o->objectid;
 					$treeElement->extraId = array();
 					$treeElement->text = $o->getName();
