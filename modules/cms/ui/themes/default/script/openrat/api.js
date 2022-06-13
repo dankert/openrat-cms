@@ -65,18 +65,22 @@ export default class Api {
 					data   : formData,
 				} );
 
-				let msg = '';
+				let msg         = '';
+				let description = '';
 				try {
-					msg = JSON.parse( cause ).message;
+					let parsedCause = JSON.parse( cause );
+					msg         = parsedCause.message;
+					description = parsedCause.cause.description;
 				}
 				catch( e ) {
-					msg = cause;
+					msg         = 'Internal CMS error';
+					description = cause + "\n\n" + e;
 				}
 
 				let notice = new Notice();
 				notice.setStatus('error');
 				notice.msg = msg;
-				notice.log = cause; //JSON.stringify( $.parseJSON(jqXHR.responseText),null,2);
+				notice.log = description;
 				notice.show();
 
 				reject( msg );

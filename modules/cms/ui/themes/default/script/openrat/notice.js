@@ -87,7 +87,7 @@ export default class Notice  {
 		}
 
 		if (this.log)
-			this.element.append( $.create('div').addClass('notice-log').addClass('collapsible-value').append( $.create('pre').text(Notice.htmlEntities(this.log))));
+			this.element.append( $.create('div').addClass('notice-log').addClass('collapsible-value').append( $.create('pre').text(this.log)));
 
 		this.element.append( $.create('div').addClass('notice-date').addClass('collapsible-value').text(new Date().toLocaleTimeString()));
 

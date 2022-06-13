@@ -24,15 +24,15 @@ abstract class APIOutput extends BaseOutput
     private static function exceptionToArray($e)
     {
         $data = array(
-            'error'=>get_class($e),
-            'description'=>$e->getMessage(),
-            'code'=>$e->getCode(),
+            'error'      => get_class($e),
+            'description'=> $e->getMessage(),
+            'code'       => $e->getCode(),
 
             'trace'=>array_merge( array( array(
-                'file'=>$e->getFile(),
-                'line'=>$e->getLine(),
-                'function'=>'',
-                'class'   => ''
+                'file'     => $e->getFile(),
+                'line'     => $e->getLine(),
+                'function' => '',
+                'class'    => '',
                 )), self::removeArgsFromTrace($e->getTrace()))
         );
 
@@ -101,14 +101,19 @@ abstract class APIOutput extends BaseOutput
 
 	abstract protected function renderOutput( $data );
 
+	/**
+	 * @param string $text
+	 * @param Exception $cause
+	 */
 	protected function setError($text, $cause)
 	{
 		$data = [
 			'message' => $text,
 			'notices' => [
 				[
-					'status'=>'error',
-					'text'  =>$text,
+					'status'=> 'error',
+					'text'  => $text,
+					'log'   => (!defined('DEVELOPMENT') || DEVELOPMENT) ? $cause->getMessage() : '',
 				]
 			],
 			'errors'  => [],
