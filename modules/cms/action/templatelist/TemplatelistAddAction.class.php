@@ -55,9 +55,10 @@ class TemplatelistAddAction extends TemplatelistAction implements Method {
 			{
 				/* @type $element Element */
 				$element->load();
+				$element->elementid = null; // we want to copy this element
+
 				$element->templateid = $template->templateid;
 				$element->persist();
-				$element->save();
 			}
 
 			// copy all template models
