@@ -8,6 +8,7 @@ use cms\model\Page;
 use cms\model\Permission;
 use cms\model\Project;
 use language\Messages;
+use util\exception\ValidationException;
 
 
 class FolderCreatepageAction extends FolderAction implements Method {
@@ -37,7 +38,8 @@ class FolderCreatepageAction extends FolderAction implements Method {
 
 		$page = new Page();
 		$page->filename   = BaseObject::urlify( $name );
-		$page->templateid = $this->request->getText('templateid');
+		$page->templateid = $this->request->getRequiredNumber('templateid');
+
 		$page->parentid   = $this->folder->objectid;
 		$page->projectid  = $this->folder->projectid;
 
