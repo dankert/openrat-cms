@@ -24,6 +24,9 @@ use util\Session;
 use util\Text;
 
 
+/**
+ * Edit values for all languages.
+ */
 class PageelementAllAction extends PageelementAction implements Method {
 
 	public function getRequiredPermission() {

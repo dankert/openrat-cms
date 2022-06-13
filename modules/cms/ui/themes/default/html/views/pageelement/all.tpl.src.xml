@@ -15,7 +15,7 @@
 				</if>
 				<if value="${type}" equals="text">
 					<fieldset>
-						<input size="50" maxlength="255" class="text" name="text" default="${value}" />
+						<input size="50" maxlength="255" class="text" name="${name}" default="${value}" />
 					</fieldset>
 				</if>
 				<if value="${type}" equals="data">
