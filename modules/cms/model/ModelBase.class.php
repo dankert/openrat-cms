@@ -88,4 +88,9 @@ abstract class ModelBase
 
 		$this->save();
 	}
+
+
+	public function __toString() {
+		return $this->getId().':'.$this->getName();
+	}
 }

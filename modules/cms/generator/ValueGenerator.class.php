@@ -99,6 +99,7 @@ class ValueGenerator extends BaseGenerator
 	const INFO_DATE_SAVED = 'date_saved';
 	const INFO_DATE_CREATED = 'date_created';
 
+	const INSERT_ESI = 'esi';
 	const INSERT_SSI = 'ssi';
 	const INSERT_INLINE = 'inline';
 
@@ -191,122 +192,75 @@ class ValueGenerator extends BaseGenerator
 		{
 			case Element::ELEMENT_TYPE_INSERT:
 
+
+				/**
+				 * @param $pageContext PageContext
+				 * @param $element Element
+				 * @param $oid integer
+				 * @return string
+				 */
+				function generatePageValue($pageContext, $element, $oid ) {
+
+					$o = new BaseObject( $oid );
+					$o->load();
+
+					switch( $o->typeid )
+					{
+						case BaseObject::TYPEID_FOLDER:
+							$f = new Folder( $oid );
+							$value = '';
+							foreach( $f->getObjectIds() as $childOid ) {
+								$value .= generatePageValue( $pageContext,$element,$childOid );
+							}
+							return $value;
+
+						case BaseObject::TYPEID_PAGE:
+
+							$subtype = $element->subtype;
+							if   ( $pageContext->scheme == Producer::SCHEME_PREVIEW )
+								$subtype = null; // In preview the SSI/ESI are not available.
+
+							switch( $subtype )
+							{
+								case ValueGenerator::INSERT_INLINE:
+								default:
+
+									$newPageContext = clone $pageContext;
+									$newPageContext->objectId = $oid;
+									$pageGenerator = new PageGenerator( $newPageContext );
+
+									return $pageGenerator->getCache()->get();
+
+								case ValueGenerator::INSERT_SSI:
+									$linkScheme = $pageContext->getLinkScheme();
+									return '<!--#include virtual="'.$linkScheme->linkToObject( new BaseObject($pageContext->sourceObjectId),(new BaseObject($oid))->load()).'" -->';
+
+								case ValueGenerator::INSERT_ESI:
+									$linkScheme = $pageContext->getLinkScheme();
+									return '<esi:include src="'.$linkScheme->linkToObject( new BaseObject($pageContext->sourceObjectId),(new BaseObject($oid))->load()).'"/>';
+							}
+
+						case BaseObject::TYPEID_LINK:
+							$l = new Link( $oid );
+							$l->load();
+
+							return generatePageValue( $pageContext,$element,$l->linkedObjectId );
+						default:
+							return '';
+					}
+
+				}
+
+
 				$objectid = $value->linkToObjectId;
 
-				if   ( intval($objectid) == 0 )
+				if   ( ! $objectid )
 					$objectid = $element->defaultObjectId;
 
 				if	( ! BaseObject::available( $objectid) )
-					return;
+					break;
 
-				$object = new BaseObject( $objectid );
-				$object->objectLoadRaw();
-
-				if	( $object->isFolder )
-				{
-					if   ( false&&$value->publisher->isSimplePreview() ) // FIXME
-					{
-						$f = new Folder( $objectid );
-						$f->load();
-						$inhalt = $f->filename;
-						unset( $f );
-					}
-					else
-					{
-						if	( $objectid != $page->objectid ) // Rekursion vermeiden
-						{
-							$f = new Folder( $objectid );
-							foreach( $f->getObjectIds() as $oid )
-							{
-								if	( $oid != $page->objectid )  // Rekursion vermeiden
-								{
-									switch( $element->subtype )
-									{
-										case '':
-										case self::INSERT_INLINE:
-											$o = new BaseObject( $oid );
-											$o->load();
-											switch( $o->typeid )
-											{
-												case BaseObject::TYPEID_PAGE:
-													$newPageContext = clone $pageContext;
-													$newPageContext->objectId = $oid;
-													$pageGenerator = new PageGenerator( $newPageContext );
-
-													$inhalt = $pageGenerator->getCache()->get();
-													//$inhalt = $oid;
-
-													break;
-												case BaseObject::TYPEID_LINK:
-													$l = new Link( $oid );
-													$l->load();
-													$op = new BaseObject( $l->linkedObjectId );
-													$op->load();
-													if	( $op->isPage )
-													{
-														$newPageContext = clone $pageContext;
-														$newPageContext->objectId = $l->linkedObjectId;
-														$pageGenerator = new PageGenerator( $newPageContext );
-
-														$inhalt .= $pageGenerator->getCache()->get();
-													}
-													break;
-											}
-											break;
-
-										case self::INSERT_SSI:
-											$linkScheme = $pageContext->getLinkScheme();
-											$inhalt .= '<!--#include virtual="'.$linkScheme->linkToObject( $page,new BaseObject($oid)).'" -->';
-											break;
-
-										default:
-											$inhalt = '?'.$element->subtype.'?';
-									}
-								}
-								else throw new \LogicException('FATAL: recursion detected');
-							}
-						}
-						else throw new LogicException('FATAL: recursion detected');
-					}
-				}
-				elseif	( $object->isPage )
-				{
-					if   ( false&&$value->publisher->isSimplePreview() )
-					{
-						$p = new Page( $objectid );
-						$p->load();
-						$inhalt = $p->filename;
-						unset( $p );
-					}
-					else
-					{
-						if	( $objectid != $page->objectid ) // Rekursion vermeiden
-						{
-							switch( $element->subtype )
-							{
-								case '':
-								case 'inline':
-									$newPageContext = clone $pageContext;
-									$newPageContext->objectId = $objectid;
-									$pageGenerator = new PageGenerator( $newPageContext );
-
-									$inhalt = $pageGenerator->getCache()->get();
-									unset( $p );
-									break;
-
-								case 'ssi':
-									$linkScheme = $pageContext->getLinkScheme();
-									$inhalt = '<!--#include virtual="'.$linkScheme->linkToObject( $page,new BaseObject($objectid)).'" -->';
-									break;
-
-								default:
-									$inhalt = '?'.$element->subtype.'?';
-									break;
-							}
-						}
-						else throw new LogicException('FATAL: recursion detected');
-					}
-				}
+				$inhalt = generatePageValue( $pageContext,$element,$objectid );
 
 				if	( false&& $value->publisher->isSimplePreview() )
 				{
@@ -409,9 +363,8 @@ class ValueGenerator extends BaseGenerator
 				$template = new Template( $page->templateid );
 				$elementId = array_search( $linkElementName, $template->getElementNames() );
 
-
-				$element = new Element($elementId);
-				$element->load();
+				$linkedElement = new Element($elementId);
+				$linkedElement->load();
 
 				$pageContent = new PageContent();
 				$pageContent->pageId     = $page->pageid;
@@ -434,7 +387,7 @@ class ValueGenerator extends BaseGenerator
 				$linkedObject = new BaseObject( $objectid );
 				$linkedObject->load();
 
-				switch( $element->subtype )
+				switch( $linkedElement->subtype )
 				{
 					case self::LINKINFO_WIDTH:
 						$f = new Image( $objectid );
@@ -611,7 +564,7 @@ class ValueGenerator extends BaseGenerator
 
 					default:
 						$inhalt = '';
-						Logger::error('Subtype for linkinfo not implemented:'.$element->subtype); // should not happen
+						Logger::warn('Subtype \''.$linkedElement->subtype.'\' for element \''.$linkedElement.'\' not implemented'); // should not happen
 				}
 
 				break;

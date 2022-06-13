@@ -225,6 +225,7 @@ public function get() { return [
 'EL_INSERT'=>'Einfügen',
 'EL_INSERT_INLINE'=>'Internes Einfügen bei Veröffentlichung',
 'EL_INSERT_SSI'=>'Einfügen per Serverside-Include (SSI)',
+'EL_INSERT_ESI'=>'Einfügen per Edge Side Include (ESI)',
 'EL_LINKDATE_DATE_CREATED'=>'Verlinktes Objekt: Datum/Zeit der Erstellung',
 'EL_LINKDATE_DATE_PUBLISHED'=>'Verlinktes Objekt: Datum/Zeit der Veröffentlichung',
 'EL_LINKDATE_DATE_SAVED'=>'Verlinktes Objekt: Datum/Zeit der letzten Speicherung',

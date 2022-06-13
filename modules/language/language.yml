@@ -1078,6 +1078,9 @@ EL_INSERT_INLINE:
 EL_INSERT_SSI:
   de: Einfügen per Serverside-Include (SSI)
   en: Insert via Serverside-Include (SSI)
+EL_INSERT_ESI:
+  de: Einfügen per Edge Side Include (ESI)
+  en: Insert via Edge Side Include (ESI)
 EL_LINKDATE_DATE_CREATED:
   de: 'Verlinktes Objekt: Datum/Zeit der Erstellung'
   en: 'Linked object: Creation-Date/Time'

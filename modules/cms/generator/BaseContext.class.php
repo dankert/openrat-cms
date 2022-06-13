@@ -4,6 +4,7 @@
 namespace cms\generator;
 
 
+use cms\generator\link\LinkFormat;
 use cms\generator\link\PreviewLink;
 use cms\generator\link\PublicLink;
 
@@ -20,6 +21,9 @@ abstract class BaseContext
 
 	public abstract function getObjectId();
 
+	/**
+	 * @return LinkFormat
+	 */
 	public function getLinkScheme() {
 
 		switch( $this->scheme ) {

@@ -20,6 +20,10 @@ class PageContext extends BaseContext
 	 */
 	public $sourceObjectId;
 
+	/**
+	 * The page which should be generated.
+	 * @var int
+	 */
 	public $objectId;
 
 	/**

@@ -179,6 +179,7 @@ class ElementAdvancedAction extends ElementAction implements Method {
                             $subtypes = [
                             	ValueGenerator::INSERT_INLINE,
 								ValueGenerator::INSERT_SSI,
+								ValueGenerator::INSERT_ESI,
 							];
                             $convertToLang = true;
                             break;
