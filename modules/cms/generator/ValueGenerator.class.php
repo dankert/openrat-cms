@@ -199,56 +199,58 @@ class ValueGenerator extends BaseGenerator
 				 * @param $oid integer
 				 * @return string
 				 */
-				function generatePageValue($pageContext, $element, $oid ) {
+				if (!function_exists('generatePageValue') ) {
+					function generatePageValue($pageContext, $element, $oid ) {
 
-					$o = new BaseObject( $oid );
-					$o->load();
+						$o = new BaseObject( $oid );
+						$o->load();
 
-					switch( $o->typeid )
-					{
-						case BaseObject::TYPEID_FOLDER:
-							$f = new Folder( $oid );
-							$value = '';
-							foreach( $f->getObjectIds() as $childOid ) {
-								$value .= generatePageValue( $pageContext,$element,$childOid );
-							}
-							return $value;
+						switch( $o->typeid )
+						{
+							case BaseObject::TYPEID_FOLDER:
+								$f = new Folder( $oid );
+								$value = '';
+								foreach( $f->getObjectIds() as $childOid ) {
+									$value .= generatePageValue( $pageContext,$element,$childOid );
+								}
+								return $value;
 
-						case BaseObject::TYPEID_PAGE:
+							case BaseObject::TYPEID_PAGE:
 
-							$subtype = $element->subtype;
-							if   ( $pageContext->scheme == Producer::SCHEME_PREVIEW )
-								$subtype = null; // In preview the SSI/ESI are not available.
+								$subtype = $element->subtype;
+								if   ( $pageContext->scheme == Producer::SCHEME_PREVIEW )
+									$subtype = null; // In preview the SSI/ESI are not available.
 
-							switch( $subtype )
-							{
-								case ValueGenerator::INSERT_INLINE:
-								default:
+								switch( $subtype )
+								{
+									case ValueGenerator::INSERT_INLINE:
+									default:
 
-									$newPageContext = clone $pageContext;
-									$newPageContext->objectId = $oid;
-									$pageGenerator = new PageGenerator( $newPageContext );
+										$newPageContext = clone $pageContext;
+										$newPageContext->objectId = $oid;
+										$pageGenerator = new PageGenerator( $newPageContext );
 
-									return $pageGenerator->getCache()->get();
+										return $pageGenerator->getCache()->get();
 
-								case ValueGenerator::INSERT_SSI:
-									$linkScheme = $pageContext->getLinkScheme();
-									return '<!--#include virtual="'.$linkScheme->linkToObject( new BaseObject($pageContext->sourceObjectId),(new BaseObject($oid))->load()).'" -->';
+									case ValueGenerator::INSERT_SSI:
+										$linkScheme = $pageContext->getLinkScheme();
+										return '<!--#include virtual="'.$linkScheme->linkToObject( new BaseObject($pageContext->sourceObjectId),(new BaseObject($oid))->load()).'" -->';
 
-								case ValueGenerator::INSERT_ESI:
-									$linkScheme = $pageContext->getLinkScheme();
-									return '<esi:include src="'.$linkScheme->linkToObject( new BaseObject($pageContext->sourceObjectId),(new BaseObject($oid))->load()).'"/>';
-							}
+									case ValueGenerator::INSERT_ESI:
+										$linkScheme = $pageContext->getLinkScheme();
+										return '<esi:include src="'.$linkScheme->linkToObject( new BaseObject($pageContext->sourceObjectId),(new BaseObject($oid))->load()).'"/>';
+								}
 
-						case BaseObject::TYPEID_LINK:
-							$l = new Link( $oid );
-							$l->load();
+							case BaseObject::TYPEID_LINK:
+								$l = new Link( $oid );
+								$l->load();
 
-							return generatePageValue( $pageContext,$element,$l->linkedObjectId );
-						default:
-							return '';
+								return generatePageValue( $pageContext,$element,$l->linkedObjectId );
+							default:
+								return '';
+						}
+
 					}
-
 				}
 
 
