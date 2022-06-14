@@ -192,68 +192,6 @@ class ValueGenerator extends BaseGenerator
 		{
 			case Element::ELEMENT_TYPE_INSERT:
 
-
-				/**
-				 * @param $pageContext PageContext
-				 * @param $element Element
-				 * @param $oid integer
-				 * @return string
-				 */
-				if (!function_exists('generatePageValue') ) {
-					function generatePageValue($pageContext, $element, $oid ) {
-
-						$o = new BaseObject( $oid );
-						$o->load();
-
-						switch( $o->typeid )
-						{
-							case BaseObject::TYPEID_FOLDER:
-								$f = new Folder( $oid );
-								$value = '';
-								foreach( $f->getObjectIds() as $childOid ) {
-									$value .= generatePageValue( $pageContext,$element,$childOid );
-								}
-								return $value;
-
-							case BaseObject::TYPEID_PAGE:
-
-								$subtype = $element->subtype;
-								if   ( $pageContext->scheme == Producer::SCHEME_PREVIEW )
-									$subtype = null; // In preview the SSI/ESI are not available.
-
-								switch( $subtype )
-								{
-									case ValueGenerator::INSERT_INLINE:
-									default:
-
-										$newPageContext = clone $pageContext;
-										$newPageContext->objectId = $oid;
-										$pageGenerator = new PageGenerator( $newPageContext );
-
-										return $pageGenerator->getCache()->get();
-
-									case ValueGenerator::INSERT_SSI:
-										$linkScheme = $pageContext->getLinkScheme();
-										return '<!--#include virtual="'.$linkScheme->linkToObject( new BaseObject($pageContext->sourceObjectId),(new BaseObject($oid))->load()).'" -->';
-
-									case ValueGenerator::INSERT_ESI:
-										$linkScheme = $pageContext->getLinkScheme();
-										return '<esi:include src="'.$linkScheme->linkToObject( new BaseObject($pageContext->sourceObjectId),(new BaseObject($oid))->load()).'"/>';
-								}
-
-							case BaseObject::TYPEID_LINK:
-								$l = new Link( $oid );
-								$l->load();
-
-								return generatePageValue( $pageContext,$element,$l->linkedObjectId );
-							default:
-								return '';
-						}
-
-					}
-				}
-
-
 				$objectid = $value->linkToObjectId;
 
 				if   ( ! $objectid )
@@ -262,7 +200,7 @@ class ValueGenerator extends BaseGenerator
 				if	( ! BaseObject::available( $objectid) )
 					break;
 
-				$inhalt = generatePageValue( $pageContext,$element,$objectid );
+				$inhalt = $this->generatePageValue( $pageContext,$element,$objectid );
 
 				if	( false&& $value->publisher->isSimplePreview() )
 				{
@@ -1233,6 +1171,64 @@ class ValueGenerator extends BaseGenerator
 			return $result;
 		else
 			return $inhalt;
+	}
+
+	/**
+	 * @param $pageContext PageContext
+	 * @param $element Element
+	 * @param $oid integer
+	 * @return string
+	 */
+	protected function generatePageValue($pageContext, $element, $oid ) {
+
+		$o = new BaseObject( $oid );
+		$o->load();
+
+		switch( $o->typeid )
+		{
+			case BaseObject::TYPEID_FOLDER:
+				$f = new Folder( $oid );
+				$value = '';
+				foreach( $f->getObjectIds() as $childOid ) {
+					$value .= $this->generatePageValue( $pageContext,$element,$childOid );
+				}
+				return $value;
+
+			case BaseObject::TYPEID_PAGE:
+
+				$subtype = $element->subtype;
+				if   ( $pageContext->scheme == Producer::SCHEME_PREVIEW )
+					$subtype = null; // In preview the SSI/ESI are not available.
+
+				switch( $subtype )
+				{
+					case ValueGenerator::INSERT_INLINE:
+					default:
+
+						$newPageContext = clone $pageContext;
+						$newPageContext->objectId = $oid;
+						$pageGenerator = new PageGenerator( $newPageContext );
+
+						return $pageGenerator->getCache()->get();
+
+					case ValueGenerator::INSERT_SSI:
+						$linkScheme = $pageContext->getLinkScheme();
+						return '<!--#include virtual="'.$linkScheme->linkToObject( new BaseObject($pageContext->sourceObjectId),(new BaseObject($oid))->load()).'" -->';
+
+					case ValueGenerator::INSERT_ESI:
+						$linkScheme = $pageContext->getLinkScheme();
+						return '<esi:include src="'.$linkScheme->linkToObject( new BaseObject($pageContext->sourceObjectId),(new BaseObject($oid))->load()).'"/>';
+				}
+
+			case BaseObject::TYPEID_LINK:
+				$l = new Link( $oid );
+				$l->load();
+
+				return $this->generatePageValue( $pageContext,$element,$l->linkedObjectId );
+			default:
+				return '';
+		}
+
 	}
 
 }
