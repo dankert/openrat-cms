@@ -12,15 +12,13 @@ use util\YAML;
  * Loades the configuration values from a YAML file.
  *
  * @author Jan Dankert
- * @package openrat.util
  */
 class ConfigurationLoader
 {
 	public $configFile;
 
 
-	/*
-	 * Erzeugt eine neue Instanz.
+	/**
 	 */
 	public function __construct($configFile)
 	{
@@ -29,9 +27,9 @@ class ConfigurationLoader
 
 
 	/**
-	 * Ermittelt den Zeitpunkt der letzten Änderung der Konfigurationsdatei.
+	 * Gets the last timestamp from the configuration file.
 	 *
-	 * @return int Zeitpunkt der letzten Änderung als Unix-Timestamp
+	 * @return int timestamp of last change as unix-timestamp
 	 */
 	public function lastModificationTime()
 	{
@@ -70,6 +68,7 @@ class ConfigurationLoader
 			return array();
 		}
 
+		// Parse the YAML config to a hierarchical array
 		$customConfig = YAML::parse(file_get_contents($configFile));
 
 		// resolve variables
@@ -110,9 +109,10 @@ class ConfigurationLoader
 	/**
 	 * Evaluates variables in a config array.
 	 * Examples:
-	 * - config-${http:host}.yml        => config-yourdomain.yml
-	 * - config-${server:http-host}.yml => config-yourdomain.yml
-	 * - config-${env:myvar}.yml        => config-myvalue.yml
+	 * - config-${http:host}.yml         => config-yourdomain.yml
+	 * - config-${server:http-host}.yml  => config-yourdomain.yml
+	 * - config-${env:myvar}.yml         => config-myvalue.yml
+	 * - config-${env:myxyz?default}.yml => config-default.yml
 	 * @param $config array Configuration
 	 * @return array
 	 */
@@ -138,29 +138,50 @@ class ConfigurationLoader
 		return $resolver->resolveVariablesInArray($config);
 	}
 
+
+
 	/**
-	 * Test for environment variables.
+	 * Walk through an array and search for pleasant environment variables.
+	 *
+	 * Example input:
+	 *
+	 *     ['fruits' =>
+	 *         [ 'red' => 'apple' ]
+	 *     ]
+	 *
+	 * would search for the environment variable "PREFIX_FRUITS_RED" and,
+	 * if present, replaces the value "apple".
+	 *
+	 * @param $data array data array
 	 * @param $prefix string|array prefix
 	 * @return array
 	 */
-	private function enrichEnvironmentVariables($config, $prefix)
+	private function enrichEnvironmentVariables($data, $prefix)
 	{
-		foreach ( $config as $key=>$value ) {
+		foreach ($data as $key=> $value ) {
+
 			$newKey = array_merge( (array)$prefix,[$key] );
+
 			if   ( is_array($value) ) {
-				$value = $this->enrichEnvironmentVariables($value,$newKey );
+				$value = $this->enrichEnvironmentVariables($value,$newKey ); // recursive call
 			} else {
-				$envKey = strtoupper( implode('_',$newKey ) );
-				//error_log( "get env ".$envKey );
-				$value = getenv( $envKey ) ?: $value;
+				$environmentKey   = strtoupper( implode('_',$newKey ) );
+
+				// replace with value from environment
+				// if present, otherwise leave it untouched
+				$value = getenv( $environmentKey ) ?: $value;
+
+				// string-based boolean flags must be converted to real booleans
 				if   ( in_array(strtolower($value),['true ','on' ]) )
 					$value = true;
 				if   ( in_array(strtolower($value),['false','off']) )
 					$value = false;
 			}
-			$config[$key] = $value;
+
+			$data[ $key ] = $value;
 		}
-		return $config;
+
+		return $data;
 	}
 
 }
