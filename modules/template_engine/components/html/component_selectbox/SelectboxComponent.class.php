@@ -93,7 +93,9 @@ class SelectboxComponent extends Component
 		$optionLoop->beforeBlock = 'foreach($'.$this->list.' as $_key=>$_value)';
 		$option = (new CMSElement('option'))
 			->addAttribute('value',Value::createExpression( ValueExpression::TYPE_DATA_VAR,'_key'))
-			->content(Value::createExpression( ValueExpression::TYPE_DATA_VAR,'_value'))
+			->content( $this->lang
+				? Value::createExpression( ValueExpression::TYPE_MESSAGE, Value::createExpression( ValueExpression::TYPE_DATA_VAR,'_value')) // Translate the option value
+				: Value::createExpression( ValueExpression::TYPE_DATA_VAR,'_value') )
 			->addConditionalAttribute('selected','$_key=='.$value,'selected');
 
 		$optionLoop->addChild($option);

@@ -19,7 +19,7 @@
            <?php } ?>
           <select name="<?php echo O::escapeHtml('typeid') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
             <?php foreach($types as $_key=>$_value) {  ?>
-              <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$typeid){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?></option>
+              <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$typeid){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@O::lang(''.@$_value.'').'') ?></option>
              <?php } ?>
           </select>
         </div>
