@@ -10,7 +10,7 @@
 
 <p>A web interface for communicating with the CMS API.</p>
 <hr>
-<form action="../../">
+<form action="..">
 <table>
 <tr>
 <th>Parameter</th><th>Value</th>
