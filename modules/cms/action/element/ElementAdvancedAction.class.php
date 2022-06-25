@@ -392,8 +392,7 @@ class ElementAdvancedAction extends ElementAction implements Method {
                             $this->setTemplateVar('code',$this->element->code);
                             break;
 
-						case Element::ELEMENT_TYPE_NUMBER:
-						case Element::ELEMENT_TYPE_DATA:
+						default:
 							$this->setTemplateVar('code',$this->element->code);
                     }
                     break;
@@ -576,23 +575,23 @@ class ElementAdvancedAction extends ElementAction implements Method {
 	protected function getRelatedProperties()
 	{
 		$relatedProperties = [
-			Element::ELEMENT_TYPE_TEXT     => [self::PROP_INHERIT,self::PROP_WITHICON,self::PROP_ALL_LANGUAGES,self::PROP_WRITABLE,self::PROP_HTML,self::PROP_DEFAULT_TEXT,self::PROP_FORMAT],
-			Element::ELEMENT_TYPE_LONGTEXT => [self::PROP_INHERIT,self::PROP_WITHICON,self::PROP_ALL_LANGUAGES,self::PROP_WRITABLE,self::PROP_HTML,self::PROP_DEFAULT_TEXT,self::PROP_FORMAT],
+			Element::ELEMENT_TYPE_TEXT     => [self::PROP_INHERIT,self::PROP_WITHICON,self::PROP_ALL_LANGUAGES,self::PROP_WRITABLE,self::PROP_HTML,self::PROP_DEFAULT_TEXT,self::PROP_FORMAT,self::PROP_CODE],
+			Element::ELEMENT_TYPE_LONGTEXT => [self::PROP_INHERIT,self::PROP_WITHICON,self::PROP_ALL_LANGUAGES,self::PROP_WRITABLE,self::PROP_HTML,self::PROP_DEFAULT_TEXT,self::PROP_FORMAT,self::PROP_CODE],
 			Element::ELEMENT_TYPE_SELECT   => [self::PROP_INHERIT,self::PROP_WITHICON,self::PROP_ALL_LANGUAGES,self::PROP_WRITABLE,self::PROP_DEFAULT_TEXT,self::PROP_CODE],
 			Element::ELEMENT_TYPE_NUMBER   => [self::PROP_INHERIT,self::PROP_WITHICON,self::PROP_ALL_LANGUAGES,self::PROP_WRITABLE,self::PROP_DECPOINT,self::PROP_DECIMALS,self::PROP_THOUSANDSEP,self::PROP_CODE],
-			Element::ELEMENT_TYPE_CHECKBOX => [self::PROP_INHERIT,self::PROP_WITHICON,self::PROP_ALL_LANGUAGES,self::PROP_WRITABLE],
-			Element::ELEMENT_TYPE_LINK     => [self::PROP_INHERIT,self::PROP_SUBTYPE,self::PROP_WITHICON,self::PROP_ALL_LANGUAGES,self::PROP_WRITABLE,self::PROP_LINKTYPE,self::PROP_FOLDER_OBJECTID,self::PROP_DEFAULT_OBJECTID],
-			Element::ELEMENT_TYPE_DATE     => [self::PROP_INHERIT,self::PROP_WITHICON,self::PROP_ALL_LANGUAGES,self::PROP_WRITABLE,self::PROP_DATEFORMAT,self::PROP_DEFAULT_TEXT],
+			Element::ELEMENT_TYPE_CHECKBOX => [self::PROP_INHERIT,self::PROP_WITHICON,self::PROP_ALL_LANGUAGES,self::PROP_WRITABLE,self::PROP_CODE],
+			Element::ELEMENT_TYPE_LINK     => [self::PROP_INHERIT,self::PROP_SUBTYPE,self::PROP_WITHICON,self::PROP_ALL_LANGUAGES,self::PROP_WRITABLE,self::PROP_LINKTYPE,self::PROP_FOLDER_OBJECTID,self::PROP_DEFAULT_OBJECTID,self::PROP_CODE],
+			Element::ELEMENT_TYPE_DATE     => [self::PROP_INHERIT,self::PROP_WITHICON,self::PROP_ALL_LANGUAGES,self::PROP_WRITABLE,self::PROP_DATEFORMAT,self::PROP_DEFAULT_TEXT,self::PROP_CODE],
 			Element::ELEMENT_TYPE_INSERT   => [self::PROP_INHERIT,self::PROP_SUBTYPE,self::PROP_WITHICON,self::PROP_ALL_LANGUAGES,self::PROP_WRITABLE,self::PROP_FOLDER_OBJECTID,self::PROP_DEFAULT_OBJECTID],
 			Element::ELEMENT_TYPE_COPY     => [self::PROP_INHERIT,self::PROP_PREFIX,self::PROP_NAME,self::PROP_DEFAULT_TEXT],
-			Element::ELEMENT_TYPE_LINKINFO => [self::PROP_PREFIX,self::PROP_SUBTYPE,self::PROP_DEFAULT_TEXT],
-			Element::ELEMENT_TYPE_LINKDATE => [self::PROP_PREFIX,self::PROP_SUBTYPE,self::PROP_DATEFORMAT],
-			Element::ELEMENT_TYPE_CODE     => [self::PROP_CODE,self::PROP_SUBTYPE],
+			Element::ELEMENT_TYPE_LINKINFO => [self::PROP_PREFIX,self::PROP_SUBTYPE,self::PROP_DEFAULT_TEXT,self::PROP_CODE],
+			Element::ELEMENT_TYPE_LINKDATE => [self::PROP_PREFIX,self::PROP_SUBTYPE,self::PROP_DATEFORMAT,self::PROP_CODE],
+			Element::ELEMENT_TYPE_CODE     => [self::PROP_SUBTYPE,self::PROP_CODE],
 			Element::ELEMENT_TYPE_DYNAMIC  => [self::PROP_SUBTYPE,self::PROP_CODE],
 			Element::ELEMENT_TYPE_INFO     => [self::PROP_SUBTYPE],
-			Element::ELEMENT_TYPE_INFODATE => [self::PROP_SUBTYPE,self::PROP_DATEFORMAT],
+			Element::ELEMENT_TYPE_INFODATE => [self::PROP_SUBTYPE,self::PROP_DATEFORMAT,self::PROP_CODE],
 			Element::ELEMENT_TYPE_DATA     => [self::PROP_INHERIT,self::PROP_WITHICON,self::PROP_ALL_LANGUAGES,self::PROP_WRITABLE,self::PROP_CODE],
-			Element::ELEMENT_TYPE_COORD    => [self::PROP_INHERIT,self::PROP_WITHICON,self::PROP_ALL_LANGUAGES,self::PROP_WRITABLE,self::PROP_SUBTYPE],
+			Element::ELEMENT_TYPE_COORD    => [self::PROP_INHERIT,self::PROP_WITHICON,self::PROP_ALL_LANGUAGES,self::PROP_WRITABLE,self::PROP_SUBTYPE,self::PROP_CODE],
 		];
 
 		return $relatedProperties[ $this->element->typeid ];

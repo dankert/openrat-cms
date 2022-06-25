@@ -38,11 +38,6 @@ class PageContext extends BaseContext
 	 */
 	public $modelId;
 
-	/**
-	 * @var link\PreviewLink|link\PublicLink
-	 */
-	public $linkFormat;
-
 	public function __construct($objectId, $scheme )
 	{
 		$this->objectId       = $objectId;

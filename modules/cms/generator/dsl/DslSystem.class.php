@@ -49,6 +49,23 @@ class DslSystem implements DslObject
 		$this->os = PHP_OS;
 	}
 
-	public function now() { return new DslDate(); }
-	public function env( $name ) { if   ( substr($name,0,8) == 'CMS_DSL_')   return getenv($name); else return null; }
+
+	/**
+	 * Gets the current date object.
+	 * @return DslDate
+	 */
+	public function now() {
+
+		return new DslDate();
+	}
+
+
+	/**
+	 * @param $name
+	 * @return array|false|string
+	 */
+	public function env( $name ) {
+
+		return getenv('CMS_DSL_'.$name);
+	}
 }

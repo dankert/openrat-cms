@@ -16,6 +16,9 @@ class ValueContext extends BaseContext
 	 */
 	public $pageContext;
 
+	/**
+	 * @param $pageContext PageContext
+	 */
 	public function __construct($pageContext )
 	{
 		$this->pageContext = $pageContext;

@@ -37,7 +37,7 @@ class DslOperation implements DslStatement
 		switch( $this->operator ) {
 			case '+':
 				if   ( is_string($left)  )
-					return $left . $right;
+					return $left . (string)$right;
 				else
 					return intval($left) + intval($right);
 

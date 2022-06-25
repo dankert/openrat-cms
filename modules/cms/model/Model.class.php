@@ -85,6 +85,8 @@ class Model extends ModelBase
 		if	( $row['is_default'] == '1' )
 			$this->isDefault = true;
 		else $this->isDefault = false;
+
+		return $this;
 	}
 
 

@@ -12,7 +12,10 @@ use cms\generator\dsl\DslConsole;
 use cms\generator\dsl\DslDocument;
 use cms\generator\dsl\DslHttp;
 use cms\generator\dsl\DslJson;
+use cms\generator\dsl\DslObject;
 use cms\generator\dsl\DslPage;
+use cms\generator\dsl\DslPageContext;
+use cms\generator\dsl\DslProject;
 use cms\generator\dsl\DslWrite;
 use cms\macros\MacroRunner;
 use cms\model\BaseObject;
@@ -247,8 +250,15 @@ class ValueGenerator extends BaseGenerator
 					$target     = new BaseObject( $objectid );
 					$target->load();
 
-					$linkScheme = $pageContext->getLinkScheme();
-					$inhalt     = $linkScheme->linkToObject( $sourcePage, $target );
+					$filteredValue = $this->filterValue( new DslObject($target), $element->code );
+
+					if   ( is_string($inhalt) ) {
+						$inhalt = $filteredValue;
+					}
+					else {
+						$linkScheme = $pageContext->getLinkScheme();
+						$inhalt     = $linkScheme->linkToObject( $sourcePage, $target );
+					}
 				}
 
 				break;
@@ -570,6 +580,9 @@ class ValueGenerator extends BaseGenerator
 					$inhalt = strftime( $element->dateformat,$date );
 				else
 					$inhalt = date    ( $element->dateformat,$date );
+
+				$inhalt = $this->filterValue( $inhalt, $element->code );
+
 				break;
 
 			case Element::ELEMENT_TYPE_LONGTEXT:
@@ -680,7 +693,20 @@ class ValueGenerator extends BaseGenerator
 						$inhalt = str_replace($match,$url,$inhalt);
 				}
 
-				break;
+			switch ($element->typeid) {
+
+				case Element::ELEMENT_TYPE_TEXT:
+				case Element::ELEMENT_TYPE_LONGTEXT:
+
+					$inhalt = $this->filterValue($inhalt, $element->code);
+					break;
+
+				case Element::ELEMENT_TYPE_SELECT:
+					// not for selects, because the code contains the select items.
+				default:
+			}
+
+			break;
 
 
 			// Zahl
@@ -689,6 +715,9 @@ class ValueGenerator extends BaseGenerator
 			case Element::ELEMENT_TYPE_CHECKBOX:
 
 				$inhalt = boolval($value->number);
+
+				$inhalt = $this->filterValue( $inhalt, $element->code );
+
 				break;
 
 			case Element::ELEMENT_TYPE_NUMBER:
@@ -706,7 +735,6 @@ class ValueGenerator extends BaseGenerator
 
 
 				$inhalt = $this->filterValue( $inhalt, $element->code );
-
 
 				break;
 
@@ -728,6 +756,9 @@ class ValueGenerator extends BaseGenerator
 					$inhalt = strftime( $element->dateformat,$date );
 				else
 					$inhalt = date    ( $element->dateformat,$date );
+
+				$inhalt = $this->filterValue( $inhalt, $element->code );
+
 				break;
 
 
@@ -771,7 +802,9 @@ class ValueGenerator extends BaseGenerator
 							'console'  => new DslConsole(),
 							'http'     => new DslHttp(),
 							'json'     => new DslJson(),
-							'page'     => new DslPage( $page ),
+							'page'     => new DslObject( $page ),
+							'context'  => new DslPageContext( $pageContext ),
+							'project'  => new DslProject( $page->getProject() ),
 							'Mqtt'     => new class{
 								public static function open( $url ) {
 									return new Mqtt( $url );
@@ -862,6 +895,8 @@ class ValueGenerator extends BaseGenerator
 					$inhalt = strftime( $element->dateformat,$date );
 				else
 					$inhalt = date    ( $element->dateformat,$date );
+
+				$inhalt = $this->filterValue( $inhalt, $element->code );
 
 				break;
 
@@ -1025,6 +1060,8 @@ class ValueGenerator extends BaseGenerator
 
 			case Element::ELEMENT_TYPE_COORD:
 				$inhalt = $value->text;
+				$inhalt = $this->filterValue( $inhalt, $element->code );
+
 				break;
 
 			case Element::ELEMENT_TYPE_DATA:
@@ -1150,6 +1187,9 @@ class ValueGenerator extends BaseGenerator
 		$executor = new DslInterpreter();
 
 		$executor->addContext( [
+			'page'     => new DslObject( (new BaseObject($this->context->pageContext->objectId))->load() ),
+			'context'  => new DslPageContext( $this->context->pageContext ),
+			'project'  => new DslProject( (new BaseObject($this->context->pageContext->objectId))->load()->getProject() ),
 			'console'  => new DslConsole(),
 			'value'    => $inhalt,
 			'http'     => new DslHttp(),
@@ -1157,7 +1197,8 @@ class ValueGenerator extends BaseGenerator
 		]);
 
 		try {
-			$result = $executor->runCode( $code );
+			$executor->runCode( $code );
+			$result = $executor->getOutput();
 		}
 		catch( DslException $e ) {
 			Logger::warn($e);

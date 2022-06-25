@@ -331,7 +331,7 @@ SQL
 			self::TYPEID_MACRO  => 'macro' ,
 		];
 
-		return $mapTypeIdToName[ $this->getTypeid() ];
+		return @$mapTypeIdToName[ $this->getTypeid() ] ?: 'unknown';
     }
 
 

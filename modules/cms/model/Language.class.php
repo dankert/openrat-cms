@@ -101,6 +101,8 @@ class Language extends ModelBase
 			
 			$this->isDefault = ( $row['is_default'] == '1' );
 		}
+
+		return $this;
 	}
 
 
