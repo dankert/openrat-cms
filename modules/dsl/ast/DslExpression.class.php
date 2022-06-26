@@ -106,8 +106,8 @@ class DslExpression extends DslElement implements DslStatement
 		$precedence['('] = 0;
 		$precedence[')'] = 0;
 
-		$output_queue   = array();
-		$operator_stack = array();
+		$output_queue   = [];
+		$operator_stack = [];
 
 		if   ( $tokens instanceof DslStatement ) {
 
@@ -118,14 +118,15 @@ class DslExpression extends DslElement implements DslStatement
 		if   ( $tokens instanceof DslToken )
 			$tokens = [$tokens];
 
-		if   ( ! is_array($tokens)) echo "tokens ist kein array, aber ".get_class($tokens);
+		if   ( ! is_array($tokens))
+			throw new DslParserException("tokens must be an array, but it is ".get_class($tokens));
 
 		// while there are tokens to be read:
-		while ($tokens) {
+		while ( $tokens ) {
 			// read a token.
 			$token = array_shift($tokens);
 
-			if ($token->type == DslToken::T_OPERATOR) {
+			if ($token->isOperator() ) {
 
 				// while there is an operator at the top of the operator stack with
 				// greater than or equal to precedence:
@@ -157,7 +158,7 @@ class DslExpression extends DslElement implements DslStatement
 					// /* if the stack runs out without finding a left bracket, then there are
 					// mismatched parentheses. */
 					if (!$operator_stack) {
-						throw new DslParserException("Mismatched parentheses!");
+						throw new DslParserException("Mismatched ')' parentheses");
 					}
 				}
 
@@ -182,7 +183,7 @@ class DslExpression extends DslElement implements DslStatement
 			// if the operator token on the top of the stack is a bracket, then
 			// there are mismatched parentheses.
 			if ($token->type == DslToken::T_OPERATOR && $token->value == '(') {
-				throw new DslParserException( "Mismatched parentheses");
+				throw new DslParserException( "Mismatched '(' parentheses");
 			}
 			// pop the operator onto the output queue.
 			$left  = array_pop( $output_queue );
@@ -190,8 +191,6 @@ class DslExpression extends DslElement implements DslStatement
 			$output_queue[] = $this->createNode( $token,$left,$right );
 		}
 
-
-		//echo "<h5>Output queue:</h5><pre>"; var_export( $output_queue ); echo "</pre>";
 		$this->value = $output_queue[0];
 	}
 
@@ -221,6 +220,8 @@ class DslExpression extends DslElement implements DslStatement
 	private function tokenToStatement($token)
 	{
 		switch( $token->type ) {
+			case DslToken::T_NONE:
+				return new DslInteger( 0 );
 			case DslToken::T_NUMBER:
 				return new DslInteger( $token->value );
 			case DslToken::T_TEXT:

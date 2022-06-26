@@ -21,8 +21,8 @@ class DslOperation implements DslStatement
 	public function __construct($operator, $left, $right)
 	{
 		$this->operator = $operator;
-		$this->left = new DslExpression( $left );
-		$this->right = new DslExpression($right );
+		$this->left  = new DslExpression(  $left );
+		$this->right = new DslExpression( $right );
 	}
 
 
@@ -83,6 +83,5 @@ class DslOperation implements DslStatement
 
 	public function parse($tokens)
 	{
-		// TODO: Implement parse() method.
 	}
 }

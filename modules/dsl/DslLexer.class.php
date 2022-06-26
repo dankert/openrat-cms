@@ -175,7 +175,7 @@ class DslLexer
 			}
 
 			// Numbers
-			if   ( $char >= '0' && $char <= '9' || $char == '-') {
+			if   ( $char >= '0' && $char <= '9' ) {
 				$value = $char;
 				while( true ) {
 					$char = array_shift( $chars );
@@ -222,11 +222,16 @@ class DslLexer
 
 			elseif   ( $char == '(' ) {
 				if  ( end( $this->token)->type == DslToken::T_STRING)
+					// if string is followed by "(" it is a function or a function call
 					$this->addToken( $line, DslToken::T_OPERATOR,'$'); // function call
 				$this->addToken( $line,DslToken::T_BRACKET_OPEN,$char);
 			}
-			elseif   ( $char == ')' )
-				$this->addToken( $line,DslToken::T_BRACKET_CLOSE,$char);
+			elseif   ( $char == ')' ) {
+				if (end($this->token)->type == DslToken::T_BRACKET_OPEN)
+					// if there is an empty parenthesis, make it contain something, otherwise the shunting yard algo will fail.
+					$this->addToken($line, DslToken::T_NONE ); //
+				$this->addToken($line, DslToken::T_BRACKET_CLOSE, $char);
+			}
 			elseif   ( $char == '{' )
 				$this->addToken( $line,DslToken::T_BLOCK_BEGIN,$char);
 			elseif   ( $char == '}' )

@@ -48,4 +48,15 @@ class DslToken
 	{
 		return '#'.$this->lineNumber.':'.$this->type.':"'.$this->value.'"';
 	}
+
+
+	/**
+	 * @return bool
+	 */
+	public function isOperator( $value = null ) {
+		if   ( ! $value )
+			return $this->type == self::T_OPERATOR;
+
+		return $this->type == self::T_OPERATOR && $this->value == $value;
+	}
 }

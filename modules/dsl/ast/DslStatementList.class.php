@@ -80,10 +80,14 @@ class DslStatementList extends DslElement implements DslStatement
 					$name = $nameToken->value;
 
 					$functionCallOp    = array_shift($tokens);
+					if   ( $functionCallOp->type != DslToken::T_OPERATOR || $functionCallOp->value != '$' )
+						throw new DslParserException('function \''.$name.'\' must have a function signature');
+
 					$functionParameter = $this->getGroup($tokens);
-					$functionBlock = $this->getBlock($tokens);
+					$functionBlock     = $this->getBlock($tokens);
 
 					$this->functions[ $name ] = new DslFunction( $functionParameter, $functionBlock );
+
 					break;
 
 				case DslToken::T_IF:

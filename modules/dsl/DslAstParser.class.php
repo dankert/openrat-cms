@@ -18,11 +18,7 @@ class DslAstParser
 	 */
 	public function parse($tokens ) {
 
-		//echo "<h1>Token:</h1><pre>"; var_export( $tokens ); echo "</pre>";
-
 		$this->rootStatement = new DslStatementList( $tokens );
-
-		//echo "<h1>AST:</h1><pre>"; var_export( $this->rootStatement ); echo "</pre>";
 	}
 
 
