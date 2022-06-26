@@ -28,14 +28,19 @@ class DslInterpreter
 	private $writer;
 	private $flags;
 
-	const FLAG_SHOW_ERROR  = 1;
-	const FLAG_SHOW_TRACE  = 2;
-	const FLAG_THROW_ERROR = 4;
-	const FLAG_DEBUG       = 8;
+	const FLAG_SHOW_ERROR  =  1;
+	const FLAG_SHOW_TRACE  =  2;
+	const FLAG_THROW_ERROR =  4;
+	const FLAG_DEBUG       =  8;
+	const FLAG_SECURE      = 16;
 
-	public function __construct( $flags = self::FLAG_SHOW_ERROR )
+	private static $secure = true;
+
+	public function __construct( $flags = self::FLAG_SHOW_ERROR + self::FLAG_SECURE )
 	{
 		$this->flags = $flags;
+
+		self::$secure = boolval($this->flags & self::FLAG_SECURE );
 
 		// Standard-Globals
 		$this->addContext( [
@@ -105,5 +110,12 @@ class DslInterpreter
 	public function getOutput() {
 
 		return $this->writer->buffer;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public static function isSecure() {
+		return self::$secure;
 	}
 }

@@ -5,6 +5,7 @@ namespace dsl\ast;
 use cms\generator\dsl\DslObject;
 use dsl\context\Scriptable;
 use dsl\DslRuntimeException;
+use dsl\executor\DslInterpreter;
 
 class DslProperty implements DslStatement
 {
@@ -43,8 +44,8 @@ class DslProperty implements DslStatement
 				$objectContext[ $method ] = function() use ($method, $object) {
 
 					// For Security: Do not expose all available objects, they must implement a marker interface.
-					if   ( ! $object instanceof Scriptable )
-						throw new DslRuntimeException('security: Object '.get_class($object).' is not scriptable and therefore not available in script context');
+					if   ( DslInterpreter::isSecure() && ! $object instanceof Scriptable )
+						throw new DslRuntimeException('Object '.get_class($object).' is not marked as scriptable and therefore not available in secure mode');
 
 					return call_user_func_array( array($object,$method),func_get_args() );
 				};

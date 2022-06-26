@@ -800,7 +800,7 @@ class ValueGenerator extends BaseGenerator
 						break;
 
 					case self::CODE_SCRIPT:
-						$executor = new DslInterpreter(DslInterpreter::FLAG_THROW_ERROR );
+						$executor = new DslInterpreter(DslInterpreter::FLAG_THROW_ERROR + DslInterpreter::FLAG_SECURE );
 						$executor->addContext( [
 							'console'  => new DslConsole(),
 							'cms'      => new DslCms(),
@@ -1188,7 +1188,7 @@ class ValueGenerator extends BaseGenerator
 	 */
 	protected function filterValue( $inhalt, $code)
 	{
-		$executor = new DslInterpreter(DslInterpreter::FLAG_THROW_ERROR );
+		$executor = new DslInterpreter(DslInterpreter::FLAG_THROW_ERROR + DslInterpreter::FLAG_SECURE );
 
 		$executor->addContext( [
 			'page'     => new DslObject( (new BaseObject($this->context->pageContext->objectId))->load() ),

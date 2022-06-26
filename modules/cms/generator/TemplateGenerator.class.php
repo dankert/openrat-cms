@@ -133,7 +133,7 @@ class TemplateGenerator
 			$templateParser = new DslTemplate();
 			$templateParser->parseTemplate($src);
 			if ($templateParser->tagsFound) {
-				$executor = new DslInterpreter( DslInterpreter::FLAG_THROW_ERROR );
+				$executor = new DslInterpreter( DslInterpreter::FLAG_THROW_ERROR + DslInterpreter::FLAG_SECURE );
 				$executor->addContext([
 					'console' => new DslConsole(),
 					'cms'  => new DslCms(),
