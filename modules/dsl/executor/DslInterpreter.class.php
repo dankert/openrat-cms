@@ -5,6 +5,7 @@ namespace dsl\executor;
 use dsl\DslAstParser;
 use dsl\DslException;
 use dsl\DslLexer;
+use dsl\standard\Script;
 use dsl\standard\StandardArray;
 use dsl\standard\StandardDate;
 use dsl\standard\StandardMath;
@@ -24,9 +25,17 @@ class DslInterpreter
 	 * @var Write
 	 */
 	private $writer;
+	private $flags;
 
-	public function __construct()
+	const FLAG_SHOW_ERROR  = 1;
+	const FLAG_SHOW_TRACE  = 2;
+	const FLAG_THROW_ERROR = 4;
+	const FLAG_DEBUG       = 8;
+
+	public function __construct( $flags = self::FLAG_SHOW_ERROR )
 	{
+		$this->flags = $flags;
+
 		// Standard-Globals
 		$this->addContext( [
 			'Math'  => new StandardMath(),
@@ -60,11 +69,29 @@ class DslInterpreter
 		$token = $lexer->tokenize( $code );
 
 		// Step 2: Creating a syntax tree (abstract syntax tree, AST).
-		$parser = new DslAstParser();
-		$parser->parse( $token );
+		try {
 
-		// Step 3: Executing the syntax tree.
-		return $parser->execute( $this->context );
+			$parser = new DslAstParser();
+			$parser->parse( $token );
+
+			//if   ( $this->flags & self::FLAG_DEBUG )
+			// it has no security impact, so lets do it always.
+				$this->addContext(
+					[ 'Script' => new Script( $token,$parser->rootStatement ) ]
+				);
+
+			// Step 3: Executing the syntax tree.
+			return $parser->execute( $this->context );
+		} catch ( \Exception $e ) {
+			if   ( $this->flags & self::FLAG_SHOW_ERROR ) {
+				if   ( $this->flags & self::FLAG_SHOW_TRACE )
+					$this->writer->buffer .= $e->__toString();
+				else
+					$this->writer->buffer .= $e->getMessage();
+			}
+			if   ( $this->flags & self::FLAG_THROW_ERROR )
+				throw $e;
+		}
 	}
 
 

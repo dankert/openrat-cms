@@ -44,4 +44,8 @@ class DslToken
 		$this->value = $value;
 	}
 
+	public function __toString()
+	{
+		return '#'.$this->lineNumber.':'.$this->type.':"'.$this->value.'"';
+	}
 }

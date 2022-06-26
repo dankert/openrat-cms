@@ -175,7 +175,7 @@ class DslLexer
 			}
 
 			// Numbers
-			if   ( $char >= '0' && $char <= '9') {
+			if   ( $char >= '0' && $char <= '9' || $char == '-') {
 				$value = $char;
 				while( true ) {
 					$char = array_shift( $chars );
