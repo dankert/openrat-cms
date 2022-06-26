@@ -95,7 +95,12 @@ class DslLexer
 						throw new DslParserException("Unclosed string",$line);
 					if   ( $char == '\\') {
 						$char = array_shift($chars);
-						$value .= $char;
+						if   ( $char == 'n' )
+							$value = "\n";
+						elseif ( $char == 't' )
+							$value = "\t";
+						else
+							$value .= $char;
 					}
 					elseif ($char != $textEncloser) {
 						$value .= $char;
