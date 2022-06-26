@@ -2,7 +2,7 @@
 
 namespace cms\generator\dsl;
 
-use dsl\context\DslObject;
+use dsl\context\BaseScriptableObject;
 use logger\Logger;
 
 /**
@@ -12,7 +12,7 @@ use logger\Logger;
  *
  * @package cms\generator\dsl
  */
-class DslConsole implements DslObject
+class DslConsole  extends BaseScriptableObject
 {
 
 	public function log( $text )

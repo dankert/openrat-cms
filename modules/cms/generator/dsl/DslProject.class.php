@@ -4,8 +4,9 @@ namespace cms\generator\dsl;
 
 use cms\model\Folder;
 use cms\model\Project;
+use dsl\context\BaseScriptableObject;
 
-class DslProject implements \dsl\context\DslObject
+class DslProject  extends BaseScriptableObject
 {
 	private $project;
 

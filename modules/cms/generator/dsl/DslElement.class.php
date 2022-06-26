@@ -2,14 +2,10 @@
 
 namespace cms\generator\dsl;
 
-use cms\model\BaseObject;
 use cms\model\Element;
-use cms\model\Folder;
-use cms\model\Page;
-use cms\model\Template;
-use dsl\context\DslObject as DslContextObject;
+use dsl\context\BaseScriptableObject;
 
-class DslElement implements DslContextObject
+class DslElement extends BaseScriptableObject
 {
 	private $element;
 

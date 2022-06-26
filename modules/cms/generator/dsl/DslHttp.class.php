@@ -2,11 +2,12 @@
 
 namespace cms\generator\dsl;
 
-use dsl\context\DslObject;
+use dsl\context\BaseScriptableObject;
+use dsl\context\Scriptable;
 use util\Http;
 use util\json\JSON;
 
-class DslHttp implements DslObject
+class DslHttp  extends BaseScriptableObject
 {
 	public function get( $url )
 	{

@@ -1,10 +1,8 @@
 <?php
 
-namespace cms\generator\dsl;
+namespace dsl\standard;
 
-use cms\model\Page;
-use cms\model\Project;
-use dsl\context\DslObject;
+use dsl\context\BaseScriptableObject;
 
 
 /**
@@ -12,7 +10,7 @@ use dsl\context\DslObject;
  *
  * Similar to the javascript Date object
  */
-class DslDate implements DslObject
+class Date extends BaseScriptableObject
 {
 	private $time;
 
@@ -21,7 +19,7 @@ class DslDate implements DslObject
 	 */
 	public function __construct( $time = null )
 	{
-		if   ( $time = null )
+		if   ( $time == null )
 			$time = time();
 
 		$this->time = $time;
@@ -47,4 +45,18 @@ class DslDate implements DslObject
 	public function getUTCMonth()        { return date('m',$this->time);}
 	public function getUTCSeconds()      { return date('s',$this->time);}
 	public function getYear()            { return date('y',$this->time); }
+
+	public function __toString()
+	{
+		return date('r');
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function help()
+	{
+		return Helper::getHelp($this);
+	}
 }

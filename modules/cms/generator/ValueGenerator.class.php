@@ -8,10 +8,12 @@ use cms\base\Configuration;
 use cms\base\Configuration as C;
 use cms\base\DB;
 use cms\base\Startup;
+use cms\generator\dsl\DslCms;
 use cms\generator\dsl\DslConsole;
 use cms\generator\dsl\DslDocument;
 use cms\generator\dsl\DslHttp;
 use cms\generator\dsl\DslJson;
+use cms\generator\dsl\DslMqtt;
 use cms\generator\dsl\DslObject;
 use cms\generator\dsl\DslPage;
 use cms\generator\dsl\DslPageContext;
@@ -30,6 +32,7 @@ use cms\model\PageContent;
 use cms\model\Project;
 use cms\model\Template;
 use cms\model\Value;
+use dsl\context\BaseScriptableObject;
 use dsl\DslException;
 use dsl\executor\DslInterpreter;
 use logger\Logger;
@@ -800,14 +803,15 @@ class ValueGenerator extends BaseGenerator
 						$executor = new DslInterpreter(DslInterpreter::FLAG_THROW_ERROR );
 						$executor->addContext( [
 							'console'  => new DslConsole(),
+							'cms'      => new DslCms(),
 							'http'     => new DslHttp(),
 							'json'     => new DslJson(),
 							'page'     => new DslObject( $page ),
 							'context'  => new DslPageContext( $pageContext ),
 							'project'  => new DslProject( $page->getProject() ),
-							'Mqtt'     => new class{
-								public static function open( $url ) {
-									return new Mqtt( $url );
+							'Mqtt'     => new class extends BaseScriptableObject {
+								public static function open( $url,$user,$password ) {
+									return new DslMqtt( $url,$user,$password );
 								}
 							}
 							,
@@ -1191,6 +1195,7 @@ class ValueGenerator extends BaseGenerator
 			'context'  => new DslPageContext( $this->context->pageContext ),
 			'project'  => new DslProject( (new BaseObject($this->context->pageContext->objectId))->load()->getProject() ),
 			'console'  => new DslConsole(),
+			'cms'      => new DslCms(),
 			'value'    => $inhalt,
 			'http'     => new DslHttp(),
 			'json'     => new DslJson(),

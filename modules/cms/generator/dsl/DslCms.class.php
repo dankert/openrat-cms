@@ -3,9 +3,9 @@
 namespace cms\generator\dsl;
 
 use cms\base\Startup;
-use dsl\context\DslObject;
+use dsl\context\BaseScriptableObject;
 
-class DslSystem implements DslObject
+class DslCms  extends BaseScriptableObject
 {
 	/**
 	 * application version
@@ -22,22 +22,12 @@ class DslSystem implements DslObject
 	 * build date
 	 * @var null
 	 */
-	private $build;
+	public $build;
 	/**
 	 * api version
 	 * @var string
 	 */
-	private $api;
-	/**
-	 * runtime
-	 * @var string
-	 */
-	private $runtime;
-	/**
-	 * Operating system
-	 * @var string
-	 */
-	private $os;
+	public $api;
 
 	public function __construct()
 	{
@@ -45,18 +35,6 @@ class DslSystem implements DslObject
 		$this->build  = Startup::DATE;
 		$this->name = Startup::TITLE;
 		$this->api = Startup::API_LEVEL;
-		$this->runtime = PHP_VERSION;
-		$this->os = PHP_OS;
-	}
-
-
-	/**
-	 * Gets the current date object.
-	 * @return DslDate
-	 */
-	public function now() {
-
-		return new DslDate();
 	}
 
 
@@ -66,6 +44,6 @@ class DslSystem implements DslObject
 	 */
 	public function env( $name ) {
 
-		return getenv('CMS_DSL_'.$name);
+		return getenv('CMS_SCRIPT_'.$name);
 	}
 }

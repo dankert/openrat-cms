@@ -43,12 +43,7 @@ class DslFunctionCall implements DslStatement
 		if   ( ! is_array($parameterValues)) $parameterValues = array($parameterValues);
 
 
-		if   ( $function instanceof \dsl\context\DslFunction ) {
-			// call "external" native function
-
-			return call_user_func_array(array($function,'execute'),$parameterValues );
-		}
-		elseif   ( $function instanceof DslFunction ) {
+		if   ( $function instanceof DslFunction ) {
 
 			$parameters = $function->parameters;
 
@@ -56,7 +51,7 @@ class DslFunctionCall implements DslStatement
 				throw new DslRuntimeException('function call has '.sizeof($parameterValues).' parameters but the function has '.sizeof($parameters).' parameters');
 
 			// Put all function parameters to the function context.
-			$parameterContext = array_combine( $parameters, $parameterValues );
+			$parameterContext = array_combine( $parameters, array_slice($parameterValues,0,sizeof($parameters)) );
 			$subContext = array_merge( $context,$parameterContext );
 
 			return $function->execute( $subContext );

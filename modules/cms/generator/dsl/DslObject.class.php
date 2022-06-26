@@ -5,10 +5,9 @@ namespace cms\generator\dsl;
 use cms\model\BaseObject;
 use cms\model\Folder;
 use cms\model\Page;
-use cms\model\Template;
-use dsl\context\DslObject as DslContextObject;
+use dsl\context\BaseScriptableObject;
 
-class DslObject implements DslContextObject
+class DslObject extends BaseScriptableObject
 {
 	private $object;
 

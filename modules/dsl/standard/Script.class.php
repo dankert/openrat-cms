@@ -3,10 +3,10 @@
 namespace dsl\standard;
 
 use dsl\ast\DslStatement;
-use dsl\context\DslObject;
+use dsl\context\BaseScriptableObject;
 use dsl\DslToken;
 
-class Script implements DslObject
+class Script  extends BaseScriptableObject
 {
 	/**
 	 * @var DslToken[]
@@ -52,5 +52,18 @@ class Script implements DslObject
 	public function getSyntaxTree()
 	{
 		return print_r($this->ast,true);
+	}
+
+	public function __toString()
+	{
+		return "Script Info, call help() for help.";
+	}
+
+	/**
+	 * @return string
+	 */
+	public function help()
+	{
+		return Helper::getHelp($this);
 	}
 }

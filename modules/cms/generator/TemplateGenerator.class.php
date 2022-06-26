@@ -5,6 +5,7 @@ namespace cms\generator;
 
 
 use cms\base\Configuration;
+use cms\generator\dsl\DslCms;
 use cms\generator\dsl\DslConsole;
 use cms\generator\dsl\DslHttp;
 use cms\generator\dsl\DslJson;
@@ -135,6 +136,7 @@ class TemplateGenerator
 				$executor = new DslInterpreter( DslInterpreter::FLAG_THROW_ERROR );
 				$executor->addContext([
 					'console' => new DslConsole(),
+					'cms'  => new DslCms(),
 					'http' => new DslHttp(),
 					'json' => new DslJson(),
 				]);

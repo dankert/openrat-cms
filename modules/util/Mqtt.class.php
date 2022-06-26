@@ -18,9 +18,7 @@
 
 
 namespace util;
-use cms\base\DB;
 use logger\Logger;
-use withPraefixQuestionMark;
 
 /**
  * MQTT client.
@@ -232,7 +230,7 @@ class Mqtt {
 	}
 
 
-	public function readPacketFromServer() {
+	protected function readPacketFromServer() {
 
 		if (!is_resource($this->connection))
 			throw new \Exception('Connection lost during transfer' );

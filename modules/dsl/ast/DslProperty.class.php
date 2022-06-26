@@ -3,6 +3,7 @@
 namespace dsl\ast;
 
 use cms\generator\dsl\DslObject;
+use dsl\context\Scriptable;
 use dsl\DslRuntimeException;
 
 class DslProperty implements DslStatement
@@ -40,6 +41,11 @@ class DslProperty implements DslStatement
 			// copy object methods to the object context to make them callable.
 			foreach( get_class_methods( $object ) as $method ) {
 				$objectContext[ $method ] = function() use ($method, $object) {
+
+					// For Security: Do not expose all available objects, they must implement a marker interface.
+					if   ( ! $object instanceof Scriptable )
+						throw new DslRuntimeException('security: Object '.get_class($object).' is not scriptable and therefore not available in script context');
+
 					return call_user_func_array( array($object,$method),func_get_args() );
 				};
 			}
@@ -55,10 +61,6 @@ class DslProperty implements DslStatement
 
 		$prop = $this->property->execute( $objectContext );
 
-		// TODO: how to recognize objects
-		// For Security: Do not expose internal objects.
-		//if   ( is_object($prop) && ! $prop instanceof DslObject )
-		//	$prop = '@'.get_class($prop).'@';
 
 		return $prop;
 	}

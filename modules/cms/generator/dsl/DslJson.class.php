@@ -2,10 +2,10 @@
 
 namespace cms\generator\dsl;
 
-use dsl\context\DslObject;
+use dsl\context\BaseScriptableObject;
 use util\json\JSON;
 
-class DslJson implements DslObject
+class DslJson  extends BaseScriptableObject
 {
 
 	public function parse( $text )

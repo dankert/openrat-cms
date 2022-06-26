@@ -9,6 +9,7 @@ use dsl\standard\Script;
 use dsl\standard\StandardArray;
 use dsl\standard\StandardDate;
 use dsl\standard\StandardMath;
+use dsl\standard\System;
 use dsl\standard\Write;
 
 class DslInterpreter
@@ -38,6 +39,7 @@ class DslInterpreter
 
 		// Standard-Globals
 		$this->addContext( [
+			'System'=> new System(),
 			'Math'  => new StandardMath(),
 			'Array' => new StandardArray(),
 			'Date'  => new StandardDate(),

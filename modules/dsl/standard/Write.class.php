@@ -2,13 +2,11 @@
 
 namespace dsl\standard;
 
-use dsl\context\DslFunction;
-
-class Write implements DslFunction
+class Write
 {
 	public $buffer;
 
-	public function execute( $text )
+	public function __invoke( $text )
 	{
 		$this->buffer .= $text;
 	}

@@ -6,10 +6,10 @@ use cms\generator\PageContext;
 use cms\model\BaseObject;
 use cms\model\Language;
 use cms\model\Model;
-use dsl\context\DslObject as DslContextObject;
+use dsl\context\BaseScriptableObject;
 use dsl\DslRuntimeException;
 
-class DslPageContext implements DslContextObject
+class DslPageContext  extends BaseScriptableObject
 {
 	private $pageContext;
 

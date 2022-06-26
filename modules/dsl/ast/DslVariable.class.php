@@ -20,7 +20,7 @@ class DslVariable implements DslStatement
 	public function execute( & $context ) {
 
 		if   ( ! array_key_exists( $this->name, $context ) )
-			throw new DslRuntimeException('variable \''.$this->name.'\' does not exist.');
+			throw new DslRuntimeException('\''.$this->name.'\' does not exist');
 
 		return $context[ $this->name ];
 	}
