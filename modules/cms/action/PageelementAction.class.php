@@ -287,6 +287,17 @@ class PageelementAction extends BaseAction
 
 
     /**
+     * Date.
+     *
+     */
+    protected function editDate()
+    {
+        $this->setTemplateVar('date',date('Y-m-d',$this->value->date ));
+        $this->setTemplateVar('time',date('H:i'  ,$this->value->date ));
+    }
+
+
+    /**
      * Ein Element der Seite bearbeiten
      *
      * Es wird ein Formular erzeugt, mit dem der Benutzer den Inhalt bearbeiten kann.

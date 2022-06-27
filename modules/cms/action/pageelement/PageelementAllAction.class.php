@@ -74,6 +74,11 @@ class PageelementAllAction extends PageelementAction implements Method {
 
 			switch( $element->typeid) {
 
+				case Element::ELEMENT_TYPE_DATE:
+					$output['date']=date('Y-m-d',$value->date );
+					$output['time']=date('H:i'  ,$value->date );
+					break;
+
 				case Element::ELEMENT_TYPE_LINK:
 					$project = new Project($this->page->projectid);
 					$output['rootfolderid'] = $project->getRootObjectId();

@@ -9,8 +9,8 @@
 			<group title="${label}" description="${desc}">
 				<if value="${type}" equals="date">
 					<fieldset label="">
-						<input type="date" name="${name}_date" label="date" default="${value}" />
-						<input type="time" name="${name}_time" label="time" default="${value}" />
+						<input type="date" name="${name}_date" label="${message:date}" default="${date}" />
+						<input type="time" name="${name}_time" label="${message:time}" default="${time}" />
 					</fieldset>
 				</if>
 				<if value="${type}" equals="text">
