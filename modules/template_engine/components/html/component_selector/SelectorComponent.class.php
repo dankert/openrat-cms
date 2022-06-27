@@ -24,11 +24,13 @@ class SelectorComponent extends Component
 
 	public $folderid;
 
+	public $default;
+
 	public $param;
 
 	public function createElement() {
 		return (new HtmlElement('div'))->addStyleClass(['selector','droppable-selector'])->addChild(
-			(new HtmlElement('input'))->addAttribute('type','hidden')->addStyleClass('selector-link-value')->addAttribute('name',$this->param)->addAttribute('value',Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->param))
+			(new HtmlElement('input'))->addAttribute('type','hidden')->addStyleClass('selector-link-value')->addAttribute('name',$this->param)->addAttribute('value',$this->default?:Value::createExpression(ValueExpression::TYPE_DATA_VAR,$this->param))
 		)->addChild(
 			(new HtmlElement('input'))->addAttribute('type','text')->addStyleClass(['input','selector-link-name','act-selector-search'])->addAttribute('name',$this->param.'_text')->addAttribute('placeholder',$this->name)->addAttribute('value',$this->name)
 		)->addChild(

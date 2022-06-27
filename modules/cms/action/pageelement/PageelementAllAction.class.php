@@ -242,7 +242,7 @@ class PageelementAllAction extends PageelementAction implements Method {
 					break;
 				case Element::ELEMENT_TYPE_LINK:
 				case Element::ELEMENT_TYPE_INSERT:
-					$value->linkToObjectId = intval($this->request->getNumber($language->isoCode));
+					$value->linkToObjectId = $this->request->getNumber($language->isoCode);
 					break;
 
 				case Element::ELEMENT_TYPE_NUMBER:

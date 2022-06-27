@@ -1394,6 +1394,7 @@
         <xsd:attribute name="name" type="xsd:string"/>
         <xsd:attribute name="id" type="xsd:string"/>
         <xsd:attribute name="folderid" type="xsd:string"/>
+        <xsd:attribute name="default" type="xsd:string"/>
         <xsd:attribute name="param" type="xsd:string"/>
         <xsd:attribute name="context" type="xsd:string"/>
     </xsd:complexType>

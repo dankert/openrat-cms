@@ -505,7 +505,7 @@ class PageelementAction extends BaseAction
         if	( $linkUrl = $this->request->getText('linkurl') )
             $value->linkToObjectId = $this->parseSimpleOID($linkUrl);
         else
-            $value->linkToObjectId = intval($this->request->getText('linkobjectid'));
+            $value->linkToObjectId = $this->request->getNumber('linkobjectid');
 
         $this->afterSave($value);
     }

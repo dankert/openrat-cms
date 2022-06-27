@@ -101,7 +101,7 @@
 				</if>
 				<if value="${type}" equals="link">
 						<fieldset label="${message:link_target}">
-							<selector param="linkobjectid" types="${types}" name="${name}" id="${linkobjectid}"
+							<selector param="${name}" default="${value}" types="${types}" name="${linkname}" id="${linkobjectid}"
 									  folderid="${rootfolderid}"/>
 						</fieldset>
 						<fieldset label="${message:link_url}">
