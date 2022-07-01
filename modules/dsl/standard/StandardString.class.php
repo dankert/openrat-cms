@@ -27,6 +27,8 @@ class StandardString extends BaseScriptableObject
 		elseif   ( is_callable( $value ) )
 			$this->value = 'function';
 
+		elseif   ( is_bool( $value ) )
+			$this->value = $value ? 'true' : 'false';
 		else
 			$this->value = (string) $value;
 
@@ -131,8 +133,8 @@ class StandardString extends BaseScriptableObject
 		return strtoupper($this->value);
 	}
 
-	public function length() {
-		return strlen($this->value);
-	}
+//	public function length() {
+//		return strlen($this->value);
+//	}
 
 }

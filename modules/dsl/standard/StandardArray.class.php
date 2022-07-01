@@ -6,6 +6,7 @@ use dsl\context\BaseScriptableObject;
 class StandardArray extends BaseScriptableObject
 {
 	private $value;
+	public $length = 0;
 
 	/**
 	 * StandardArray constructor.
@@ -14,6 +15,8 @@ class StandardArray extends BaseScriptableObject
 	public function __construct($value=null)
 	{
 		$this->value = $value;
+		if   ( $value )
+			$this->length = sizeof( $this->value );
 	}
 
 

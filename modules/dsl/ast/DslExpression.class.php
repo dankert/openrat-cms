@@ -262,6 +262,10 @@ class DslExpression extends DslElement implements DslStatement
 
 			return new Number($value);
 		}
+		elseif   (  is_float( $value ) ) {
+
+			return new Number($value);
+		}
 		elseif   (  is_string( $value ) ) {
 
 			return new StandardString($value);

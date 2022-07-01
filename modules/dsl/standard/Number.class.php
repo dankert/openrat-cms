@@ -32,11 +32,15 @@ class Number extends BaseScriptableObject
 	{
 		return new Number( $value );
 	}
-	public function parseFloat()
+
+	public function parseFloat( $num )
 	{
+		return floatval($num );
 	}
-	public function parseInt()
+
+	public function parseInt( $num )
 	{
+		return intval($num);
 	}
 
 	public function toFixed( $digits )
