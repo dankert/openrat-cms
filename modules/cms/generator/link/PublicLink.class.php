@@ -60,8 +60,12 @@ class PublicLink implements LinkFormat
 
 
 	/**
+	 * Creates a link from an object to another object.
+	 *
      * @param $from \cms\model\BaseObject
      * @param $to \cms\model\BaseObject
+	 *
+	 * @return string the url
      */
     public function linkToObject( BaseObject $from, BaseObject $to ) {
 
@@ -134,7 +138,7 @@ class PublicLink implements LinkFormat
 
 					$withModel    =
 						! $fromProject->content_negotiation   &&
-						! $fromProject->publishPageExtension  &&
+						$fromProject->publishPageExtension    &&
 						(count($allModels) > 1    || $publishConfig->get('filename_type','always') == 'always');
 
 					$languagePart = '';
