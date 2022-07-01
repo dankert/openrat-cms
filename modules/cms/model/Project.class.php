@@ -47,16 +47,21 @@ class Project extends ModelBase
 	public $content_negotiation = false;
 
     /**
+	 * Should links to index pages contain the filename?
+	 *
      * @var boolean
      */
 	public $cut_index = false;
 
     /**
+	 * Link to files with extension
+	 *
      * @var boolean
      */
     public $publishFileExtension = true;
 
     /**
+	 * link to pages with extension
      * @var boolean
      */
     public $publishPageExtension = true;

@@ -127,7 +127,7 @@ class PageGenerator extends BaseGenerator
 
 		$publishConfig = Configuration::subset('publish');
 		$format = $publishConfig->get('format','{filename}{language_sep}{language}{type_sep}{type}');
-		$format = str_replace('{filename}',$page->filename,$format );
+		$format = str_replace('{filename}',$page->filename(),$format );
 
 		$allLanguages = $project->getLanguageIds();
 		$allModels    = $project->getModelIds();
