@@ -7,6 +7,10 @@ use cms\model\Folder;
 use cms\model\Page;
 use dsl\context\BaseScriptableObject;
 
+/**
+ * Class DslObject
+ * @package cms\generator\dsl
+ */
 class DslObject extends BaseScriptableObject
 {
 	private $object;
@@ -91,7 +95,7 @@ class DslObject extends BaseScriptableObject
 
 	public function __toString()
 	{
-		return "Object:".$this->id;
+		return "CMS-Object:".$this->id;
 	}
 
 

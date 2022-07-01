@@ -256,7 +256,7 @@ class ValueGenerator extends BaseGenerator
 
 					$filteredValue = $this->filterValue( new DslObject($target), $element->code );
 
-					if   ( is_string($inhalt) ) {
+					if   ( is_string($filteredValue) ) {
 						$inhalt = $filteredValue;
 					}
 					else {
