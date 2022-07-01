@@ -5,8 +5,13 @@ namespace dsl\ast;
 define('LEFT', 0);
 define('RIGHT', 1);
 
+use dsl\context\BaseScriptableObject;
 use dsl\DslParserException;
 use dsl\DslToken;
+use dsl\executor\DslInterpreter;
+use dsl\standard\Number;
+use dsl\standard\StandardArray;
+use dsl\standard\StandardString;
 
 class DslExpression extends DslElement implements DslStatement
 {
@@ -32,14 +37,12 @@ class DslExpression extends DslElement implements DslStatement
 	 */
 	public function parse($tokens)
 	{
-		//echo "<h5>Expression:</h5><pre>"; var_export( $tokens ); echo "</pre>";
 		if   ( ! $tokens ) {
 			$this->value = new DslNull();
 			return;
 		}
 
 		$this->parseExpression( $tokens );
-		// Groups
 	}
 
 
@@ -97,7 +100,7 @@ class DslExpression extends DslElement implements DslStatement
 			'^'   => RIGHT,
 			'!'   => RIGHT,
 			'**'  => RIGHT,
-			'.'   => RIGHT,
+			'.'   => LEFT,
 			'$'   => LEFT,
 		];
 
@@ -166,13 +169,8 @@ class DslExpression extends DslElement implements DslStatement
 				array_pop($operator_stack);
 
 			}
-			elseif		// if the token is a number, then push it to the output queue.
-				    (true) {
+			else {
 					$output_queue[] = $this->tokenToStatement( $token );
-
-					// if the token is an operator, then:
-			} else {
-				throw new DslParserException( 'Unexpected token '.$token->value, $token->lineNumber);
 			}
 		} // if there are no more tokens to read:
 
@@ -222,6 +220,12 @@ class DslExpression extends DslElement implements DslStatement
 		switch( $token->type ) {
 			case DslToken::T_NONE:
 				return new DslInteger( 0 );
+			case DslToken::T_NULL:
+				return new DslNull();
+			case DslToken::T_TRUE:
+				return new DslTrue();
+			case DslToken::T_FALSE:
+				return new DslFalse();
 			case DslToken::T_NUMBER:
 				return new DslInteger( $token->value );
 			case DslToken::T_TEXT:
@@ -232,6 +236,35 @@ class DslExpression extends DslElement implements DslStatement
 				return new DslProperty( $token->value );
 			default:
 				throw new DslParserException('Unknown token '.$token->value,$token->lineNumber);
+		}
+	}
+
+
+	public static function convertValueToStandardObject($value ) {
+
+		if   (  is_object( $value ) ) {
+
+			if   ( $value instanceof BaseScriptableObject ) {
+				return $value;
+			}
+
+			if   ( DslInterpreter::isSecure() )
+				// Secured Sandbox, external objects are not evaluated.
+				return new StandardString( 'ProtectedObject' );
+			else
+				return $value; // Unsecured, but wanted.
+		}
+		elseif   (  is_array( $value ) ) {
+
+			return new StandardArray($value);
+		}
+		elseif   (  is_int( $value ) ) {
+
+			return new Number($value);
+		}
+		elseif   (  is_string( $value ) ) {
+
+			return new StandardString($value);
 		}
 	}
 }

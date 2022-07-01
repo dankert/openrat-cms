@@ -106,6 +106,18 @@ class DslStatementList extends DslElement implements DslStatement
 				case DslToken::T_LET:
 					break;
 
+				case DslToken::T_NULL:
+					$this->statements[] = new DslNull();
+					break;
+
+				case DslToken::T_TRUE:
+					$this->statements[] = new DslTrue();
+					break;
+
+				case DslToken::T_FALSE:
+					$this->statements[] = new DslFalse();
+					break;
+
 				case DslToken::T_FOR:
 					$forGroup = $this->getGroup( $tokens );
 					$forBlock = $this->getStatementOrBlock( $tokens );
@@ -133,6 +145,7 @@ class DslStatementList extends DslElement implements DslStatement
 					break;
 
 				case DslToken::T_TEXT:
+				case DslToken::T_NUMBER:
 				case DslToken::T_STRING:
 					array_unshift( $tokens, $token );
 					$statementTokens = $this->getSingleStatement( $tokens );

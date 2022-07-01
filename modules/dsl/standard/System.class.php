@@ -8,13 +8,13 @@ class System extends BaseScriptableObject
 {
 	/**
 	 * runtime
-	 * @var string
+	 * @var StandardString
 	 */
 	public $version;
 
 	/**
 	 * Operating system
-	 * @var string
+	 * @var StandardString
 	 */
 	public $os;
 
@@ -26,7 +26,7 @@ class System extends BaseScriptableObject
 
 	/**
 	 * @param $name
-	 * @return array|false|string
+	 * @return array|false|StandardString
 	 */
 	public function env( $name ) {
 

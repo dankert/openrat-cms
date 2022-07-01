@@ -31,4 +31,16 @@ class BaseScriptableObject implements Scriptable
 	{
 		return Helper::getHelp($this);
 	}
+
+
+	public function getClass() {
+		return get_class($this);
+	}
+
+	public function values() {
+		return array_values(get_object_vars($this));
+	}
+	public function keys() {
+		return array_keys(get_object_vars($this));
+	}
 }

@@ -17,12 +17,12 @@ class DslLexer
 		'return'   => DslToken::T_RETURN,
 		'new'      => DslToken::T_NEW,
 		'throw'    => DslToken::T_THROW,
+		'null'     => DslToken::T_NULL,
+		'true'     => DslToken::T_TRUE,
+		'false'    => DslToken::T_FALSE,
 	];
 
 	const UNUSED_KEYWORDS = [
-		'null',
-		'true',
-		'false',
 		'implements',
 		'interface',
 		'package',
@@ -180,12 +180,15 @@ class DslLexer
 			}
 
 			// Numbers
+			// TODO we have a problem with
+			// - "-" is an operator, so we cannot parse negative numbers
+			// - "." is the property char, so we cannot parse decimal values
 			if   ( $char >= '0' && $char <= '9' ) {
 				$value = $char;
 				while( true ) {
 					$char = array_shift( $chars );
 					if   ( ( $char >= '0' && $char <= '9') ||
-						$char == '.' || $char == '_' ) {
+						$char == '_' ) {
 						$value .= $char;
 					} else {
 						$this->addToken( $line,DslToken::T_NUMBER,str_replace('_','',$value ));

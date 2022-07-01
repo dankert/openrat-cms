@@ -26,6 +26,9 @@ class DslToken
 	const T_COMMA = 19;
 	const T_NEW = 20;
 	const T_THROW = 21;
+	const T_TRUE  = 22;
+	const T_FALSE = 23;
+	const T_NULL  = 24;
 
 	public $lineNumber;
 	public $type;

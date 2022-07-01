@@ -6,6 +6,9 @@ use cms\generator\dsl\DslObject;
 use dsl\context\Scriptable;
 use dsl\DslRuntimeException;
 use dsl\executor\DslInterpreter;
+use dsl\standard\Number;
+use dsl\standard\StandardArray;
+use dsl\standard\StandardString;
 
 class DslProperty implements DslStatement
 {
@@ -51,17 +54,11 @@ class DslProperty implements DslStatement
 				};
 			}
 		}
-		elseif   (  is_array( $object ) ) {
-
-			$objectContext = $object;
-
-		} else {
-
-			throw new DslRuntimeException('not an object');
+		else {
+			$objectContext = DslExpression::convertValueToStandardObject($object);
 		}
 
 		$prop = $this->property->execute( $objectContext );
-
 
 		return $prop;
 	}

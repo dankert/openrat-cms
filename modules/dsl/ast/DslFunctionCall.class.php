@@ -4,6 +4,7 @@ namespace dsl\ast;
 
 use dsl\DslRuntimeException;
 use dsl\DslToken;
+use dsl\executor\DslInterpreter;
 
 class DslFunctionCall implements DslStatement
 {
@@ -44,7 +45,7 @@ class DslFunctionCall implements DslStatement
 
 
 		if   ( $function instanceof DslFunction ) {
-
+			// inscript custom function
 			$parameters = $function->parameters;
 
 			if   ( sizeof($parameters) > sizeof($parameterValues) )
@@ -59,8 +60,7 @@ class DslFunctionCall implements DslStatement
 		}
 		elseif   ( is_callable($function) ) {
 
-			//var_export( call_user_func_array( $function, $parameterValues) );
-			return call_user_func_array( $function, $parameterValues);
+			return DslExpression::convertValueToStandardObject( call_user_func_array( $function, $parameterValues) );
 		}
 		else
 			throw new DslRuntimeException('function is not callable'.var_export($function));

@@ -4,6 +4,7 @@ namespace dsl\ast;
 
 use dsl\DslRuntimeException;
 use dsl\DslToken;
+use dsl\standard\StandardArray;
 
 class DslFor implements DslStatement
 {
@@ -30,12 +31,16 @@ class DslFor implements DslStatement
 
 		$list = $this->list->execute( $context );
 
-		if   ( !is_array( $list ) )
-			throw new DslRuntimeException('for value is not a list');
+		if   ( ! $list instanceof StandardArray )
+			throw new DslRuntimeException('for value is not an array');
 
 		$copiedContext = $context;
-		foreach( $list as $loopVar ) {
+		foreach( $list->getInternalValue() as $loopVar ) {
+
+			// copy loop var to current loop context
 			$copiedContext[ $this->name ] = $loopVar;
+
+			// Execute "for" block
 			$this->statements->execute( $copiedContext );
 		}
 	}

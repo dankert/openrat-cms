@@ -53,7 +53,7 @@ class Date extends BaseScriptableObject
 
 
 	/**
-	 * @return string
+	 * @return StandardString
 	 */
 	public function help()
 	{

@@ -54,16 +54,13 @@ class Script  extends BaseScriptableObject
 		return print_r($this->ast,true);
 	}
 
+	public function dump( $value )
+	{
+		return print_r($value,true);
+	}
+
 	public function __toString()
 	{
 		return "Script Info, call help() for help.";
-	}
-
-	/**
-	 * @return string
-	 */
-	public function help()
-	{
-		return Helper::getHelp($this);
 	}
 }

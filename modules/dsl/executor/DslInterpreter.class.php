@@ -5,10 +5,12 @@ namespace dsl\executor;
 use dsl\DslAstParser;
 use dsl\DslException;
 use dsl\DslLexer;
+use dsl\standard\Number;
 use dsl\standard\Script;
 use dsl\standard\StandardArray;
 use dsl\standard\StandardDate;
 use dsl\standard\StandardMath;
+use dsl\standard\StandardString;
 use dsl\standard\System;
 use dsl\standard\Write;
 
@@ -44,11 +46,17 @@ class DslInterpreter
 
 		// Standard-Globals
 		$this->addContext( [
-			'System'=> new System(),
-			'Math'  => new StandardMath(),
-			'Array' => new StandardArray(),
-			'Date'  => new StandardDate(),
-			'write' => $this->writer = new Write(),
+
+			// Standard JS objects
+			'Math'   => new StandardMath(),
+			'Array'  => new StandardArray(),
+			'String' => new StandardString(),
+			'Number' => new Number(),
+			'Date'   => new StandardDate(),
+
+			// Custom Scriptbox objects
+			'System' => new System(),
+			'write'  => $this->writer = new Write(),
 		] );
 	}
 
