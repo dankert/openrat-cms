@@ -35,6 +35,7 @@ use cms\model\Value;
 use dsl\context\BaseScriptableObject;
 use dsl\DslException;
 use dsl\executor\DslInterpreter;
+use dsl\standard\Data;
 use logger\Logger;
 use LogicException;
 use util\Code;
@@ -1078,7 +1079,7 @@ class ValueGenerator extends BaseGenerator
 					break;
 				}
 
-				$inhalt = $this->filterValue( $data, $element->code );
+				$inhalt = $this->filterValue( new Data($data), $element->code );
 
 				if   ( is_array($inhalt) )
 					$inhalt = YAML::dump( $inhalt );

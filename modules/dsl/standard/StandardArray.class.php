@@ -107,13 +107,20 @@ class StandardArray extends BaseScriptableObject
 	{
 		return array_unshift( $this->value,$value );
 	}
-	public function slice($from,$end)
+	public function slice($from,$end = null )
 	{
-		return array_slice( $this->value,$from,$end-$from);
+		if   ( $end )
+			return array_slice( $this->value,$from,$end-$from);
+		else
+			return array_slice( $this->value,$from);
 	}
 	public function sort()
 	{
 		return asort( $this->value );
+	}
+	public function get( $key )
+	{
+		return @$this->value[ $key ];
 	}
 
 }

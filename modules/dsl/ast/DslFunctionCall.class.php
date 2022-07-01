@@ -5,6 +5,9 @@ namespace dsl\ast;
 use dsl\DslRuntimeException;
 use dsl\DslToken;
 use dsl\executor\DslInterpreter;
+use dsl\standard\Number;
+use dsl\standard\StandardArray;
+use dsl\standard\StandardString;
 
 class DslFunctionCall implements DslStatement
 {
@@ -29,10 +32,6 @@ class DslFunctionCall implements DslStatement
 	public function execute(& $context ) {
 
 		$function = $this->name->execute( $context );
-
-
-		//if   ( ! array_key_exists( $name, $context ) )
-		//	throw new DslRuntimeException('function \''.$this->name.'\' does not exist.');
 
 		if   ( $this->parameters == null )
 			$parameterValues = []; // parameterless functions.
@@ -60,7 +59,7 @@ class DslFunctionCall implements DslStatement
 		}
 		elseif   ( is_callable($function) ) {
 
-			return DslExpression::convertValueToStandardObject( call_user_func_array( $function, $parameterValues) );
+			return DslExpression::convertValueToStandardObject( call_user_func_array( $function, $this->toPrimitiveValues($parameterValues)) );
 		}
 		else
 			throw new DslRuntimeException('function is not callable'.var_export($function));
@@ -69,5 +68,26 @@ class DslFunctionCall implements DslStatement
 	public function parse($tokens)
 	{
 		$this->statements[] = $tokens;
+	}
+
+
+	/**
+	 * Converts variables to its primitives, because external objects in applications will not be able to handle things like "StandardString".
+	 * @param $parameterValues
+	 * @return array
+	 */
+	private function toPrimitiveValues( $parameterValues )
+	{
+		return array_map( function( $val ) {
+			if   ( $val instanceof StandardArray )
+				return $val->getInternalValue();
+			if   ( $val instanceof Number )
+				return $val->toNumber();
+			if   ( $val instanceof StandardString )
+				return (string)$val;
+
+			return $val;
+
+		},$parameterValues );
 	}
 }

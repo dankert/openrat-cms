@@ -37,7 +37,7 @@ class StandardMath extends BaseScriptableObject
 
 	public function exp($x) { return exp($x); }
 	public function expm1($x) { return expm1($x); }
-	public function log($x) { return ($x); }
+	public function log($x) { return log($x); }
 	public function log1p($x) { return log($x); }
 	public function log10($x) { return log10($x); }
 	public function max($x,$y) { return max($x,$y); }
