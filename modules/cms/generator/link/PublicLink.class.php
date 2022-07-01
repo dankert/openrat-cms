@@ -175,6 +175,12 @@ class PublicLink implements LinkFormat
                 $url->load();
                 return $url->url;
 
+            case BaseObject::TYPEID_FOLDER:
+            	// of course it is not possible to link a folder
+				// this is a fallback if anywhere a folder is accidentally linked
+                $filename = '';
+                break;
+
             default:
                 throw new \LogicException("Could not build a link to the unknown Type ".$to->typeid.':'.$to->getType() );
         }
