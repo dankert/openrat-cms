@@ -6,7 +6,7 @@ namespace dsl\standard;
 
 use dsl\context\BaseScriptableObject;
 
-class StandardString extends BaseScriptableObject
+class StringInstance extends BaseScriptableObject
 {
 	private $value;
 	public $length;
@@ -43,7 +43,7 @@ class StandardString extends BaseScriptableObject
 
 	public function __invoke( $value )
 	{
-		return new StandardString( $value );
+		return new StringInstance( $value );
 	}
 
 
@@ -69,7 +69,7 @@ class StandardString extends BaseScriptableObject
 	}
 
 	public function valueOf( $val ) {
-		return new StandardString( $val );
+		return new StringInstance( $val );
 	}
 
 	public function charAt( $pos ) {

@@ -7,9 +7,9 @@ use dsl\context\Scriptable;
 use dsl\DslRuntimeException;
 use dsl\executor\DslInterpreter;
 use dsl\standard\Data;
-use dsl\standard\Number;
-use dsl\standard\StandardArray;
-use dsl\standard\StandardString;
+use dsl\standard\NumberInstance;
+use dsl\standard\ArrayInstance;
+use dsl\standard\StringInstance;
 
 class DslProperty implements DslStatement
 {

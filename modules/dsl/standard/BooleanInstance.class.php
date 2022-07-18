@@ -6,7 +6,7 @@ namespace dsl\standard;
 
 use dsl\context\BaseScriptableObject;
 
-class Boolean extends BaseScriptableObject
+class BooleanInstance extends BaseScriptableObject
 {
 	private $value;
 
@@ -27,7 +27,7 @@ class Boolean extends BaseScriptableObject
 
 	public function __invoke( $value )
 	{
-		return new Boolean( $value );
+		return new BooleanInstance( $value );
 	}
 	public function length()
 	{

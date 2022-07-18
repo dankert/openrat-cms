@@ -5,9 +5,9 @@ namespace dsl\ast;
 use dsl\DslRuntimeException;
 use dsl\DslToken;
 use dsl\executor\DslInterpreter;
-use dsl\standard\Number;
-use dsl\standard\StandardArray;
-use dsl\standard\StandardString;
+use dsl\standard\NumberInstance;
+use dsl\standard\ArrayInstance;
+use dsl\standard\StringInstance;
 
 class DslFunctionCall implements DslStatement
 {
@@ -79,11 +79,11 @@ class DslFunctionCall implements DslStatement
 	private function toPrimitiveValues( $parameterValues )
 	{
 		return array_map( function( $val ) {
-			if   ( $val instanceof StandardArray )
+			if   ( $val instanceof ArrayInstance )
 				return $val->getInternalValue();
-			if   ( $val instanceof Number )
+			if   ( $val instanceof NumberInstance )
 				return $val->toNumber();
-			if   ( $val instanceof StandardString )
+			if   ( $val instanceof StringInstance )
 				return (string)$val;
 
 			return $val;

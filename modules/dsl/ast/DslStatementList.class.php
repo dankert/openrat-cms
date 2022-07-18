@@ -103,8 +103,9 @@ class DslStatementList extends DslElement implements DslStatement
 					$this->statements[] = new DslIf($condition, $positiveBlock, $negativeBlock);
 					break;
 
+				case DslToken::T_NEW:
 				case DslToken::T_LET:
-					break;
+					break; // ignore these statements
 
 				case DslToken::T_NULL:
 					$this->statements[] = new DslNull();

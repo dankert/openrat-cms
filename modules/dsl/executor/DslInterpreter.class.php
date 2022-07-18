@@ -5,14 +5,18 @@ namespace dsl\executor;
 use dsl\DslAstParser;
 use dsl\DslException;
 use dsl\DslLexer;
-use dsl\standard\Number;
+use dsl\standard\ArrayWrapper;
+use dsl\standard\NumberInstance;
+use dsl\standard\NumberWrapper;
 use dsl\standard\Script;
-use dsl\standard\StandardArray;
-use dsl\standard\StandardDate;
-use dsl\standard\StandardMath;
-use dsl\standard\StandardString;
+use dsl\standard\ArrayInstance;
+use dsl\standard\DateWrapper;
+use dsl\standard\MathWrapper;
+use dsl\standard\StringInstance;
+use dsl\standard\StringWrapper;
 use dsl\standard\System;
-use dsl\standard\Write;
+use dsl\standard\Writer;
+use dsl\standard\WriteWrapper;
 
 class DslInterpreter
 {
@@ -25,7 +29,7 @@ class DslInterpreter
 
 	/**
 	 * Holds a reference to the write()-Function for getting the output buffer after execution.
-	 * @var Write
+	 * @var Writer
 	 */
 	private $writer;
 	private $flags;
@@ -48,15 +52,18 @@ class DslInterpreter
 		$this->addContext( [
 
 			// Standard JS objects
-			'Math'   => new StandardMath(),
-			'Array'  => new StandardArray(),
-			'String' => new StandardString(),
-			'Number' => new Number(),
-			'Date'   => new StandardDate(),
+			'Math'   => new MathWrapper(),
+			'Array'  => new ArrayWrapper(),
+			'String' => new StringWrapper(),
+			'Number' => new NumberWrapper(),
+			'Date'   => new DateWrapper(),
 
 			// Custom Scriptbox objects
-			'System' => new System(),
-			'write'  => $this->writer = new Write(),
+			'System'  => new System(),
+			'write'   => $this->writer = new Writer(),
+			'writeln' => new WriteWrapper( $this->writer,"\n" ),
+			'print'   => new WriteWrapper( $this->writer,'' ),
+			'println' => new WriteWrapper( $this->writer,"\n" ),
 		] );
 	}
 

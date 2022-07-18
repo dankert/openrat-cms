@@ -9,9 +9,9 @@ use dsl\context\BaseScriptableObject;
 use dsl\DslParserException;
 use dsl\DslToken;
 use dsl\executor\DslInterpreter;
-use dsl\standard\Number;
-use dsl\standard\StandardArray;
-use dsl\standard\StandardString;
+use dsl\standard\NumberInstance;
+use dsl\standard\ArrayInstance;
+use dsl\standard\StringInstance;
 
 class DslExpression extends DslElement implements DslStatement
 {
@@ -250,25 +250,25 @@ class DslExpression extends DslElement implements DslStatement
 
 			if   ( DslInterpreter::isSecure() )
 				// Secured Sandbox, external objects are not evaluated.
-				return new StandardString( 'ProtectedObject' );
+				return new StringInstance( 'ProtectedObject' );
 			else
 				return $value; // Unsecured, but wanted.
 		}
 		elseif   (  is_array( $value ) ) {
 
-			return new StandardArray($value);
+			return new ArrayInstance($value);
 		}
 		elseif   (  is_int( $value ) ) {
 
-			return new Number($value);
+			return new NumberInstance($value);
 		}
 		elseif   (  is_float( $value ) ) {
 
-			return new Number($value);
+			return new NumberInstance($value);
 		}
 		elseif   (  is_string( $value ) ) {
 
-			return new StandardString($value);
+			return new StringInstance($value);
 		}
 	}
 }

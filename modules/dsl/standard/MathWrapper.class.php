@@ -3,7 +3,7 @@ namespace dsl\standard;
 
 use dsl\context\BaseScriptableObject;
 
-class StandardMath extends BaseScriptableObject
+class MathWrapper extends BaseScriptableObject
 {
 	public $E = M_EULER;
 	public $PI = M_PI;

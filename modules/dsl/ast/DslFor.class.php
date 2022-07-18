@@ -4,7 +4,7 @@ namespace dsl\ast;
 
 use dsl\DslRuntimeException;
 use dsl\DslToken;
-use dsl\standard\StandardArray;
+use dsl\standard\ArrayInstance;
 
 class DslFor implements DslStatement
 {
@@ -31,7 +31,7 @@ class DslFor implements DslStatement
 
 		$list = $this->list->execute( $context );
 
-		if   ( ! $list instanceof StandardArray )
+		if   ( ! $list instanceof ArrayInstance )
 			throw new DslRuntimeException('for value is not an array');
 
 		$copiedContext = $context;

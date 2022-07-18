@@ -22,6 +22,11 @@ class DslLexer
 		'false'    => DslToken::T_FALSE,
 	];
 
+	const IGNORED_KEYWORDS = [
+		'let',
+		'new',
+	];
+
 	const UNUSED_KEYWORDS = [
 		'implements',
 		'interface',
@@ -32,8 +37,9 @@ class DslLexer
 		'static',
 		'in',
 		'do',
-		'new',
 		'try',
+		'catch',
+		'finally',
 		'this',
 		'case',
 		'void',
@@ -41,8 +47,6 @@ class DslLexer
 		'enum',
 		'while',
 		'break',
-		'catch',
-		'throw',
 		'yield',
 		'class',
 		'super',
@@ -52,11 +56,11 @@ class DslLexer
 		'export',
 		'import',
 		'default',
-		'finally',
 		'extends',
 		'continue',
 		'debugger',
 		'instanceof',
+		'goto', // ;)
 		];
 	/**
 	 * @param $code
@@ -165,8 +169,11 @@ class DslLexer
 					} else {
 						$type = DslToken::T_STRING;
 
-						if   ( array_key_exists($value,self::UNUSED_KEYWORDS ) )
+						if   ( array_search($value,self::UNUSED_KEYWORDS ) !== false )
 							throw new DslParserException( 'use of reserved word \''.$value.'\' is not allowed.');
+
+						if   ( array_search($value,self::IGNORED_KEYWORDS ) !== false )
+							break; // ignore this keyword
 
 						if   ( array_key_exists($value,self::KEYWORDS ) )
 							$type = self::KEYWORDS[$value]; // it is a keyword

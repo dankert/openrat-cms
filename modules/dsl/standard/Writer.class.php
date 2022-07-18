@@ -2,10 +2,15 @@
 
 namespace dsl\standard;
 
-class Write
+class Writer
 {
 	public $buffer;
 
+	/**
+	 * Write something to an output queue.
+	 *
+	 * @param $text
+	 */
 	public function __invoke( $text )
 	{
 		if   ( is_object($text ) && !method_exists($text, '__toString') )

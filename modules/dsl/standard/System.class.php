@@ -4,17 +4,22 @@ namespace dsl\standard;
 
 use dsl\context\BaseScriptableObject;
 
+/**
+ * System information.
+ *
+ * @package dsl\standard
+ */
 class System extends BaseScriptableObject
 {
 	/**
 	 * runtime
-	 * @var StandardString
+	 * @var string
 	 */
 	public $version;
 
 	/**
 	 * Operating system
-	 * @var StandardString
+	 * @var string
 	 */
 	public $os;
 
@@ -26,10 +31,10 @@ class System extends BaseScriptableObject
 
 	/**
 	 * @param $name
-	 * @return array|false|StandardString
+	 * @return array|false|string
 	 */
 	public function env( $name ) {
 
-		return getenv('SCRIPTBOX_'.$name);
+		return getenv( 'SCRIPTBOX_'.$name );
 	}
 }

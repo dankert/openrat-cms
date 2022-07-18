@@ -10,7 +10,7 @@ use dsl\context\BaseScriptableObject;
  *
  * Similar to the javascript Date object
  */
-class Date extends BaseScriptableObject
+class DateInstance extends BaseScriptableObject
 {
 	private $time;
 
@@ -48,12 +48,12 @@ class Date extends BaseScriptableObject
 
 	public function __toString()
 	{
-		return date('r');
+		return date('r',$this->time);
 	}
 
 
 	/**
-	 * @return StandardString
+	 * @return string
 	 */
 	public function help()
 	{

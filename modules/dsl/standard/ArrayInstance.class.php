@@ -3,9 +3,10 @@ namespace dsl\standard;
 
 use dsl\context\BaseScriptableObject;
 
-class StandardArray extends BaseScriptableObject
+class ArrayInstance extends BaseScriptableObject
 {
 	private $value;
+
 	public $length = 0;
 
 	/**
@@ -17,12 +18,6 @@ class StandardArray extends BaseScriptableObject
 		$this->value = $value;
 		if   ( $value )
 			$this->length = sizeof( $this->value );
-	}
-
-
-	public function of() {
-
-		return func_get_args();
 	}
 
 
@@ -49,7 +44,7 @@ class StandardArray extends BaseScriptableObject
 
 	public function concat( $concat )
 	{
-		return new StandardArray( array_merge($this->value,(array)$concat));
+		return new ArrayInstance( array_merge($this->value,(array)$concat));
 	}
 	public function fill( $value,$start,$count)
 	{
