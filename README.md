@@ -5,11 +5,11 @@
 
 ## About
 
-OpenRat is a statifying CMS, also known as a [static site generator](https://en.wikipedia.org/wiki/Web_template_system#Static_site_generators).
+OpenRat is a cloud-ready statifying CMS, also known as a [static site generator](https://en.wikipedia.org/wiki/Web_template_system#Static_site_generators).
 
-OpenRat generates static files, which are served by a dedicated live web server like Apache, Nginx, Boa etc.
+OpenRat generates static files, which are served by a dedicated live web server like Apache, Nginx etc.
 
-Unlike other static site generators OpenRat CMS contains a complete Web UI with user management.
+Unlike other static site generators OpenRat CMS contains a complete Web UI with user management and a domain specific language.
 
 ### Why OpenRat?
 
