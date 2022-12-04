@@ -56,33 +56,27 @@ class Update
 		for ($installVersion = $version + 1; $installVersion <= self::SUPPORTED_VERSION; $installVersion++) {
 			if ($installVersion > 2) // Up to version 2 there was no table 'version'.
 			{
-				$db->start();
 				$sql = $db->sql('INSERT INTO {{version}} (id,version,status,installed) VALUES( {id},{version},{status},{time} )', $db->id);
 				$sql->setInt('id', $installVersion);
 				$sql->setInt('version', $installVersion);
 				$sql->setInt('status', self::STATUS_UPDATE_PROGRESS);
 				$sql->setInt('time', time());
 				$sql->execute();
-				$db->commit();
 			}
 
 			$updaterClassName = __NAMESPACE__.'\version\DBVersion' . str_pad($installVersion, 6, '0', STR_PAD_LEFT);
 
-			$db->start();
 			/** @var \database\DbVersion $updater */
 			$updater = new $updaterClassName($db);
 
 			$updater->update();
-			$db->commit();
 
 			if ($installVersion > 2) {
-				$db->start();
 				$sql = $db->sql('UPDATE {{version}} SET status={status},installed={time} WHERE version={version}', $db->id);
 				$sql->setInt('status', self::STATUS_UPDATE_SUCCESS);
 				$sql->setInt('version', $installVersion);
 				$sql->setInt('time', time());
 				$sql->execute();
-				$db->commit();
 			}
 		}
 	}
