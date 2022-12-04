@@ -67,7 +67,7 @@ class Status
 
 							$update = new Update();
 
-							if	( $update->isUpdateRequired( $db ) )
+							if	( ! $update->isUpdateRequired( $db ) )
 								$dbState = [
 									'state'   => 'UP',
 								];
@@ -81,8 +81,9 @@ class Status
 
 						} catch (\Exception $e) {
 							$dbState = [
-								'state' => 'DOWN',
-								'message' => $e->getMessage(),
+								'state'   => 'DOWN',
+								'message' => $e->getMessage() .' '. $e->getFile() . ':'.$e->getLine(),
+								'cause'   => $e->getTraceAsString(),
 							];
 						}
 
@@ -150,8 +151,9 @@ class Status
 
 						} catch (\Exception $e) {
 							$dbState = [
-								'state' => 'DOWN',
-								'message' => $e->getMessage(),
+								'state'   => 'DOWN',
+								'message' => $e->getMessage() .' '. $e->getFile() . ':'.$e->getLine(),
+								'cause'   => $e->getTraceAsString(),
 							];
 						}
 
