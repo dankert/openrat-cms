@@ -46,26 +46,28 @@ class ConfigurationAction extends BaseAction
      */
     protected function getSystemConfiguration()
     {
-        $conf['server'] = array('time' => date('r'),
-            'name' => php_uname(),
-            'os' => php_uname('s'),
-            'host' => php_uname('n'),
+        $conf['server'] = [
+			'time'    => date('r'),
+            'name'    => php_uname(),
+            'os'      => php_uname('s'),
+            'host'    => php_uname('n'),
             'release' => php_uname('r'),
             'machine' => php_uname('m'),
-            'owner' => get_current_user(),
-            'pid' => getmypid());
+            'owner'   => get_current_user(),
+            'pid'     => getmypid(),
+		];
 
 
-        $conf['interpreter'] = array('version' => phpversion(),
-            'SAPI' => php_sapi_name(),
-            'session-name' => session_name(),
-            'magic_quotes_gpc' => @get_magic_quotes_gpc(),
+        $conf['interpreter'] = [
+			'version'         => phpversion(),
+            'SAPI'            => php_sapi_name(),
+            'session-name'    => session_name(),
             'loaded_ini_file' => php_ini_loaded_file(),
-            'magic_quotes_runtime' => @get_magic_quotes_runtime());
+		];
 
-        $conf['interpreter']['server'] = $_SERVER;
+        $conf['interpreter']['server'     ] = $_SERVER;
         $conf['interpreter']['environment'] = $_ENV;
-        $conf['interpreter']['temp_dir'] = sys_get_temp_dir();
+        $conf['interpreter']['temp_dir'   ] = sys_get_temp_dir();
 
         $conf['interpreter']['configuration'] = ini_get_all();
         $conf['resources'] = getrusage();
