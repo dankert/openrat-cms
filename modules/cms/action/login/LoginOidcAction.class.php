@@ -40,22 +40,25 @@ class LoginOidcAction extends LoginAction implements Method {
 			$user = User::loadWithName( $subjectIdentifier,User::AUTH_TYPE_OIDC,$providerName );
 
 			if   ( ! $user ) {
+				// User does not exist already
+				// Maybe we are able to add the user
 
+				// Check, if system is readonly
 				if ( Startup::readonly() ) {
 					throw new \LogicException('Cannot add authenticated user to database, because the system is readonly');
 				}
-				elseif (Configuration::subset(['security', 'newuser'])->is('autoadd', true)) {
 
-					// Create user
-					$user = new User();
-					$user->name = $subjectIdentifier;
-					$user->type = User::AUTH_TYPE_OIDC;
-					$user->issuer = $providerName;
-					$user->persist();
-				}
-				else {
+				// Check, if auto-adding users is enabled
+				if (! Configuration::subset(['security', 'newuser'])->is('autoadd', true)) {
 					throw new \LogicException('Cannot add authenticated user to database, because auto adding is disabled.');
 				}
+
+				// Create the user
+				$user = new User();
+				$user->name   = $subjectIdentifier;
+				$user->type   = User::AUTH_TYPE_OIDC;
+				$user->issuer = $providerName;
+				$user->persist();
 
 			}
 
@@ -65,10 +68,8 @@ class LoginOidcAction extends LoginAction implements Method {
     		throw new \RuntimeException('OpenId-Connect authentication failed',0,$e);
 		}
 
+		// Redirect to the UI, because the login process succeeded.
     	$this->addHeader( 'Location','./');
     }
 
-
-    public function post() {
-    }
 }

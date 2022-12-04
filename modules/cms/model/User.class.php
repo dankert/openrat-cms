@@ -382,13 +382,13 @@ SQL
 
 
 	/**
-	 * Benutzerobjekt �ber Benutzernamen ermitteln.<br>
-	 * Liefert ein neues Benutzerobjekt zur�ck.
+	 * Gets a user by its name.
 	 * 
 	 * @static 
-	 * @param $name string Benutzername
+	 * @param $name string user name
 	 * @param $authType int authentication type
 	 * @param $issuer string issuer who created this user
+	 * @return User or null, if user is not found
 	 */
 	public static function loadWithName( $name,$authType,$issuer = null )
 	{
@@ -408,15 +408,15 @@ SQL
 
 		$userId = $sql->getOne();
 
-		if (empty($userId))
+		if ( ! $userId )
 		    return null; // no user found.
 
-		// Benutzer �ber Id instanziieren
-		$neuerUser = new User( $userId );
+		// Create the user by id.
+		$namedUser = new User( $userId );
 		
-		$neuerUser->load();
+		$namedUser->load();
 		
-		return $neuerUser;
+		return $namedUser;
 	}
 	
 	
