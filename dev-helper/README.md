@@ -14,6 +14,18 @@ The containers will start up,
 - the CMS is available under [localhost:8000](http://localhost:8000).
 - the generated page is available under [localhost:8001](http://localhost:8001).
 
+## Accessing the database
+
+The database can be accessed in the docker container
+
+    docker exec -ti openrat-dev_db_1 bash
+    mysql -u root -p$MYSQL_ROOT_PASSWORD
+
+Selecting the database and show all CMS tables:
+
+    mysql> use cms;
+    mysql> show tables;
+
 ## Creating a release tag
 
 Usage: `tag-version.sh <version>`. It
