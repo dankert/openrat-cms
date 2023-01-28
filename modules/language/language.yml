@@ -6545,3 +6545,12 @@ FORMAT_MARKDOWN:
 FORMAT_HTML_SOURCE:
   de: HTML Quelltext
   en: HTML source
+FORMAT_MUSTACHE:
+  de: Mustache-Vorlage
+  en: Mustache template
+FORMAT_RATSCRIPT:
+  de: Script
+  en: Script
+FORMAT_RATSCRIPT_TEMPLATE:
+  de: Script template
+  en: Script template

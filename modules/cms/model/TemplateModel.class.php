@@ -5,12 +5,20 @@ namespace cms\model;
 use cms\base\DB;
 
 /**
- * Templatemodell. Enthält den Template-Sourcecode und die Extension.
+ * Templatemodel.
+ *
+ * Contains mainly the source code.
+ * For every model exists a template model.
  *
  * @author: Jan Dankert
  */
 class TemplateModel extends ModelBase
 {
+	const FORMAT_MUSTACHE_TEMPLATE = 1;
+	const FORMAT_RATSCRIPT = 2;
+	const FORMAT_RATSCRIPT_TEMPLATE = 3;
+
+
     /**
      * Primary Key.
      * @var
@@ -41,6 +49,13 @@ class TemplateModel extends ModelBase
     public $public;
 
 	/**
+	 * The format of the template, f.e. mustache, etc.
+	 * See the FORMAT_*-constants in this class.
+	 * @var int
+	 */
+	public $format;
+
+	/**
      * TemplateModel constructor.
      * @param $templateid
      * @param $modelid
@@ -60,7 +75,7 @@ class TemplateModel extends ModelBase
 		$db = \cms\base\DB::get();
 
 		$stmt = $db->sql( <<<SQL
-			SELECT {{templatemodel}}.*,{{value}}.text,{{value}}.publish FROM {{templatemodel}}
+			SELECT {{templatemodel}}.*,{{value}}.text,{{value}}.publish,{{value}}.format FROM {{templatemodel}}
                 LEFT JOIN {{value}}
                        ON {{value}}.contentid = {{templatemodel}}.contentid AND {{value}}.active = 1 
 		            WHERE templateid     = {templateid}
@@ -78,11 +93,13 @@ SQL
 			$this->src             = $row['text'     ];
 			$this->contentid       = $row['contentid'];
 			$this->public          = $row['publish'  ];
+			$this->format          = $row['format'   ];
 		}
 		else
 		{
 			$this->extension = null;
 			$this->src       = null;
+			$this->format    = null;
 		}
 	}
 
@@ -94,7 +111,8 @@ SQL
 		$value = new Value();
 		$value->contentid = $this->contentid;
 		$value->loadPublished();
-		$this->src = $value->text;
+		$this->src    = $value->text;
+		$this->format = $value->format;
 	}
 
 
@@ -118,15 +136,17 @@ SQL
 SQL
 		);
 
-        $stmt->setInt   ( 'id'    ,$this->templatemodelid        );
-        $stmt->setString( 'extension'     ,$this->extension      );
+        $stmt->setInt   ( 'id'       ,$this->templatemodelid );
+        $stmt->setString( 'extension',$this->extension       );
 
 		$stmt->execute();
 
 		$value = new Value();
 		$value->contentid = $this->contentid;
-		$value->text = $this->src;
+		$value->text   = $this->src;
+		$value->format = $this->format;
 		$value->publish = $this->public;
+
 		$value->persist();
 	}
 
@@ -221,6 +241,27 @@ SQL
 	public function getContentid()
 	{
 		return $this->contentid;
+	}
+
+
+	/**
+	 * @return int
+	 */
+	public function getFormat()
+	{
+		if   ( $this->format )
+			return $this->format;
+		else
+			return self::FORMAT_MUSTACHE_TEMPLATE;
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getSource()
+	{
+		return $this->src;
 	}
 }
 

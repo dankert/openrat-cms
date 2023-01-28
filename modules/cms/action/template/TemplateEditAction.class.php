@@ -36,40 +36,13 @@ class TemplateEditAction extends TemplateAction implements Method {
 
         foreach( $project->getModels() as $modelId => $modelName )
         {
-            $templatemodel = new TemplateModel( $this->template->templateid, $modelId );
-            $templatemodel->load();
-
-            $text = $templatemodel->src;
-
-            foreach( $this->template->getElementIds() as $elid )
-            {
-                $element = new Element( $elid );
-                $element->load();
-
-                // Fix old stuff:
-                $text = str_replace('{{'.$elid.'}}',
-                    '{{'.$element->name.'}}',
-                    $text );
-                $text = str_replace('{{->'.$elid.'}}',
-                    '{{goto.'.$element->name.'}}',
-                    $text );
-                $text = str_replace('{{IFEMPTY:'.$elid.':BEGIN}}',
-                    '{{^'.$element->name.'}}',
-                    $text );
-                $text = str_replace('{{IFEMPTY:'.$elid.':END}}',
-                    '{{/'.$element->name.'}}',
-                    $text );
-                $text = str_replace('{{IFNOTEMPTY:'.$elid.':BEGIN}}',
-                    '{{#'.$element->name.'}}',
-                    $text );
-                $text = str_replace('{{IFNOTEMPTY:'.$elid.':END}}',
-                    '{{/'.$element->name.'}}',
-                    $text );
-            }
+            $templateModel = new TemplateModel( $this->template->templateid, $modelId );
+            $templateModel->load();
 
             $models[ $modelId ] = array(
                 'name'    => $modelName,
-                'source'  => $text,
+                'source'  => $templateModel->getSource(),
+                'format'  => $templateModel->format,
                 'modelid' => $modelId
             );
         }

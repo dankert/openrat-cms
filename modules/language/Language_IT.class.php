@@ -1377,5 +1377,8 @@ Gracias.',
 'FORMAT_HTML'=>'HTML',
 'FORMAT_MARKDOWN'=>'Markdown',
 'FORMAT_HTML_SOURCE'=>'HTML source',
+'FORMAT_MUSTACHE'=>'Mustache template',
+'FORMAT_RATSCRIPT'=>'Script',
+'FORMAT_RATSCRIPT_TEMPLATE'=>'Script template',
 ];}
 }

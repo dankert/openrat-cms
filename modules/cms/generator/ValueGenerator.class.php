@@ -856,7 +856,7 @@ class ValueGenerator extends BaseGenerator
 					$inhalt .= $runner->executeMacro( $macroName, $macroSettings,$page, $pageContext );
 				}
 				catch( \Exception $e ) {
-					throw new GeneratorException("Macro ".$macroName.' in value '.$value->__toString().' could not executed',$e);
+					throw new GeneratorException("Macro '".$macroName."' could not executed",$e);
 				}
 
 				// Wenn HTML-Ausgabe, dann Sonderzeichen in HTML �bersetzen

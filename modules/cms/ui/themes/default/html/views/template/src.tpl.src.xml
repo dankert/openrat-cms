@@ -5,10 +5,22 @@
 		<group title="${message:source}">
 			<editor type="code" name="source" mode="htmlmixed"/>
 		</group>
-		<group title="${message:options}" open="false">
+		<group title="${message:options}">
 			<fieldset label="${message:file_extension}">
 				<input name="extension" maxlength="10" required="true"/>
 			</fieldset>
+
+			<!-- Format -->
+			<fieldset label="${message:format}">
+				<radio name="format" value="1" label="${message:FORMAT_MUSTACHE}"/>
+			</fieldset>
+			<fieldset label="">
+				<radio name="format" value="2" label="${message:FORMAT_RATSCRIPT}"/>
+			</fieldset>
+			<fieldset label="">
+				<radio name="format" value="3" label="${message:FORMAT_RATSCRIPT_TEMPLATE}"/>
+			</fieldset>
+
 		</group>
 		<group title="${message:options}">
 			<fieldset>

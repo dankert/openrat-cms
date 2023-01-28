@@ -33,7 +33,7 @@ class MacroRunner
 		$output = '';
 
 		if (!class_exists($className))
-			throw new GeneratorException('class not found:' . $className);
+			throw new GeneratorException('Class not found:' . $className);
 
 		/** @var \util\Macro $macro */
 		$macro = new $className;

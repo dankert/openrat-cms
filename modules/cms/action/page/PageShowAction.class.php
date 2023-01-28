@@ -9,6 +9,9 @@ use cms\model\Language;
 use cms\model\Template;
 use configuration\Config;
 use logger\Logger;
+use util\exception\DatabaseException;
+use util\exception\GeneratorException;
+use util\Text;
 
 class PageShowAction extends PageAction implements Method {
     public function view() {
@@ -39,18 +42,24 @@ class PageShowAction extends PageAction implements Method {
 		$templateModel = $template->loadTemplateModelFor( $pageContext->modelId );
 		$templateModel->load();
 
-		// Executing PHP in Pages.
-		$enablePHP = Configuration::subset('publish')->get('enable_php_in_page_content');
-		if	( ( $enablePHP=='auto' && $templateModel->extension == 'php') ||
-		        $enablePHP===true )
-        {
-            ob_start();
-            require( $generator->getCache()->load()->getFilename() );
-            $this->setTemplateVar('value',ob_get_contents() );
-            ob_end_clean();
-        }
-		else
-            $this->setTemplateVar('value',$generator->getCache()->get());
+		try {
+			// Executing PHP in Pages.
+			// DEPRECATED: Use the script language!
+			$enablePHP = Configuration::subset('publish')->get('enable_php_in_page_content');
+			if	( ( $enablePHP=='auto' && $templateModel->extension == 'php') ||
+				$enablePHP===true )
+			{
+				ob_start();
+				require( $generator->getCache()->load()->getFilename() );
+				$this->setTemplateVar('value',ob_get_contents() );
+				ob_end_clean();
+			}
+			else
+				$this->setTemplateVar('value',$generator->getCache()->get());
+		} catch (GeneratorException $e) {
+			$this->setContentType( 'text/html' );
+			$this->setTemplateVar('value',Text::getUserFriendlyHTMLErrorMessage($e ) );
+		}
     }
 
     public function post() {

@@ -22,9 +22,12 @@ use cms\model\Value;
 use dsl\DslException;
 use dsl\DslTemplate;
 use dsl\executor\DslInterpreter;
+use http\Exception\InvalidArgumentException;
 use logger\Logger;
 use util\exception\GeneratorException;
+use util\exception\ObjectNotFoundException;
 use util\Mustache;
+use util\Text;
 use util\text\TextMessage;
 
 
@@ -48,6 +51,7 @@ class TemplateGenerator
 	 *
 	 * @param $data array values
 	 * @return String Inhalt
+	 * @throws GeneratorException|ObjectNotFoundException
 	 */
 	public function generateValue( $data )
 	{
@@ -68,111 +72,124 @@ class TemplateGenerator
 		$src = $templatemodel->src;
 
 		// No we are collecting the data and are fixing some old stuff.
-
-		foreach( $elements as $elementId=>$elementName )
-		{
-			// The following code is for old template values:
-
-			// convert {{<id>}} to {{<name>}}
-			$src = str_replace( '{{'.$elementId.'}}','{{'.$elementName.'}}',$src );
-
-			$src = str_replace( '{{IFNOTEMPTY:'.$elementId.':BEGIN}}','{{#'.$elementName.'}}',$src );
-			$src = str_replace( '{{IFNOTEMPTY:'.$elementId.':END}}'  ,'{{/'.$elementName.'}}',$src );
-			$src = str_replace( '{{IFEMPTY:'   .$elementId.':BEGIN}}','{{^'.$elementName.'}}',$src );
-			$src = str_replace( '{{IFEMPTY:'   .$elementId.':END}}'  ,'{{/'.$elementName.'}}',$src );
-
-			$src = str_replace( '{{->'.$elementId.'}}','',$src );
-		}
-
 		if ( DEVELOPMENT )
 			Logger::trace( 'generating template with data: '.print_r($data,true) );
 
-		// Now we have collected all data, lets call the template engine:
+		switch( $templatemodel->getFormat() ) {
+			case TemplateModel::FORMAT_MUSTACHE_TEMPLATE:
+				foreach( $elements as $elementId=>$elementName )
+				{
+					// The following code is for old template values:
 
-		$mustache = new Mustache();
-		$mustache->escape = null; // No HTML escaping, this is the job of this CMS ;)
-		$mustache->partialLoader = function( $name ) use ($template) {
+					// convert {{<id>}} to {{<name>}}
+					$src = str_replace( '{{'.$elementId.'}}','{{'.$elementName.'}}',$src );
 
-			if   ( substr($name,0,5) == 'file:') {
-				$fileid = intval( substr($name,5) );
-				$file = new File( $fileid );
-				return $file->loadValue();
-			}
+					$src = str_replace( '{{IFNOTEMPTY:'.$elementId.':BEGIN}}','{{#'.$elementName.'}}',$src );
+					$src = str_replace( '{{IFNOTEMPTY:'.$elementId.':END}}'  ,'{{/'.$elementName.'}}',$src );
+					$src = str_replace( '{{IFEMPTY:'   .$elementId.':BEGIN}}','{{^'.$elementName.'}}',$src );
+					$src = str_replace( '{{IFEMPTY:'   .$elementId.':END}}'  ,'{{/'.$elementName.'}}',$src );
+
+					$src = str_replace( '{{->'.$elementId.'}}','',$src );
+				}
+
+				// Now we have collected all data, lets call the template engine:
+
+				$mustache = new Mustache();
+				$mustache->escape = null; // No HTML escaping, this is the job of this CMS ;)
+				$mustache->partialLoader = function( $name ) use ($template) {
+
+					if   ( substr($name,0,5) == 'file:') {
+						$fileid = intval( substr($name,5) );
+						$file = new File( $fileid );
+						return $file->loadValue();
+					}
 
 
-			$project       = Project::create( $template->projectid );
-			$templateid    = array_search($name,$project->getTemplates() );
+					$project       = Project::create( $template->projectid );
+					$templateid    = array_search($name,$project->getTemplates() );
 
-			if   ( ! $templateid )
-				throw new \InvalidArgumentException( TextMessage::create('template ${name} not found',['name'=>$name]) );
+					if   ( ! $templateid )
+						throw new \InvalidArgumentException( TextMessage::create('template ${name} not found',['name'=>$name]) );
 
-			if   ( $templateid == $template->templateid )
-				throw new \InvalidArgumentException('Template recursion detected on template-id '.$templateid);
+					if   ( $templateid == $template->templateid )
+						throw new \InvalidArgumentException('Template recursion detected on template-id '.$templateid);
 
 
-			$templatemodel = new TemplateModel( $templateid, $this->modelId );
-			$templatemodel->load();
+					$templatemodel = new TemplateModel( $templateid, $this->modelId );
+					$templatemodel->load();
 
-			return $templatemodel->src;
-		};
+					return $templatemodel->src;
+				};
 
-		try {
-			$mustache->parse($src);
-		} catch (\Exception $e) {
-			// Should we throw it to the caller?
-			// No, because it is not a technical error. So let's only log it.
-			Logger::warn("Template rendering failed: ".$e->getMessage() );
-			return $e->getMessage();
+				try {
+					$mustache->parse($src);
+				} catch (\Exception $e) {
+
+					return new GeneratorException("Mustache template rendering failed:\n".$e->getMessage());
+				}
+				$src = $mustache->render( $data );
+				break;
+
+
+			case TemplateModel::FORMAT_RATSCRIPT_TEMPLATE:
+				try {
+					$templateParser = new DslTemplate();
+					$templateParser->parseTemplate($src);
+
+					$src= $templateParser->script;
+
+				} catch (DslException $e) {
+					throw new GeneratorException('Parsing of Script-Template failed',$e);
+				}
+
+				// here is intentionally no "break" statement!
+				// The generated source will be executed in the next case.
+
+
+			case TemplateModel::FORMAT_RATSCRIPT:
+				try {
+
+					$executor = new DslInterpreter( DslInterpreter::FLAG_THROW_ERROR + DslInterpreter::FLAG_SECURE );
+					$executor->addContext([
+						'console' => new DslConsole(),
+						'cms'     => new DslCms(),
+						'http'    => new DslHttp(),
+						'json'    => new DslJson(),
+					]);
+					$executor->addContext( $data );
+
+					$executor->runCode($src);
+
+					// Ausgabe ermitteln.
+					$src = $executor->getOutput();
+				} catch (DslException $e) {
+					Logger::warn($e);
+					throw new GeneratorException("Error in script:\n".Text::makeLineNumbers($src),$e );
+				}
+				break;
+
+			default:
+				throw new InvalidArgumentException('Format of template source is unknown: '.$templatemodel->getFormat() );
 		}
-		$src = $mustache->render( $data );
 
-		// now we have the fully generated source.
 
-		try {
-
-			$templateParser = new DslTemplate();
-			$templateParser->parseTemplate($src);
-			if ($templateParser->tagsFound) {
-				$executor = new DslInterpreter( DslInterpreter::FLAG_THROW_ERROR + DslInterpreter::FLAG_SECURE );
-				$executor->addContext([
-					'console' => new DslConsole(),
-					'cms'  => new DslCms(),
-					'http' => new DslHttp(),
-					'json' => new DslJson(),
-				]);
-				$executor->addContext( $data );
-
-				$executor->runCode($templateParser->script);
-
-				// Ausgabe ermitteln.
-				$src = $executor->getOutput();
-			}
-		} catch (DslException $e) {
-			Logger::warn($e);
-			$src = $e->getMessage()."\nscript source:\n".$templateParser->script;
-		}
 
 		// should we do a UTF-8-escaping here?
 		// Default should be off, because if you are fully using utf-8 (you should do), this is unnecessary.
 		if	( Configuration::subset('publish' )->is('escape_8bit_characters') )
-			if	( substr($this->mimeType(),-4) == 'html' )
-			{
-				/*
-				 *
-				$src = htmlentities($src,ENT_NOQUOTES,'UTF-8');
-				$src = str_replace('&lt;' , '<', $src);
-				$src = str_replace('&gt;' , '>', $src);
-				$src = str_replace('&amp;', '&', $src);
-				 */
-				$src = translateutf8tohtml($src);
-			}
+			if	( substr($this->getMimeType(),-4) == 'html' )
+				$src = Text::translateutf8tohtml($src);
 
 		return $src;
 	}
 
 
+	/**
+	 * @return String
+	 */
 	public function getMimeType()
 	{
+		// A MIME type has two parts: a type and a subtype. They are separated by a slash (/)
 		$templateModel = new TemplateModel( $this->templateId,$this->modelId );
 		$templateModel->load();
 

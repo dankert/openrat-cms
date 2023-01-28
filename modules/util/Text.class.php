@@ -19,7 +19,7 @@
 
 namespace util;
 
-use cms\base\Configuration;
+use cms\base\Configuration;use cms\base\Startup;
 
 /**
  * Nuetzliche Funktionen fuer das Bearbeiten von Texten/Zeichenketten
@@ -454,7 +454,110 @@ class Text
 		return $output;
 	}
 
+	/**
+	 * Creates a nice to read error message from an exception.
+	 *
+	 * @param $e
+	 * @return string
+	 */
+	public static function UserFriendlyErrorMessage($e)
+	{
+		return implode( "\n" . '  caused by: ',self::GetExceptionAsArray($e));
+	}
 
+
+	public static function GetExceptionAsArray($e)
+	{
+		$errors = [];
+		while(true) {
+			$errors[] = $e->getMessage();
+			$previous = $e->getPrevious();
+			if   ( $previous )
+				$e = $previous;
+			else
+				break;
+		}
+
+		return $errors;
+	}
+
+
+
+	public static function getUserFriendlyHTMLErrorMessage($e) {
+
+		$errors = self::GetExceptionAsArray($e);
+
+		array_walk($errors,function (&$v) {$v= htmlentities($v);});
+		$errorList = implode( '</pre></li><li><pre>',$errors);
+		$firstError = $errors[0];
+
+		$html = <<<HTML
+<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>{$firstError}</title>
+	<style type="text/css">
+
+		header, main {
+			display: block
+		}
+
+		body {
+			width: 100%;
+			height: 100%;
+			background-color: rgba(13,8,5,0.58);
+			color: white;
+			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+			line-height: 1.4;
+			font-size: 1.5em;
+			text-align: center;
+		}
+
+		pre {
+			margin:1em;
+			color: silver;
+			text-align: left;
+			font-size: 1em;
+		}
+		
+		ul {
+			margin: 10%;
+		}
+
+		h1 {
+			font-size: 2em;
+		}
+	</style>
+	</head>
+	<body>
+
+	<header>
+		<h1>${firstError}</h1>
+	</header>
+
+	<main>
+		<p>Something went wrong &#x1F61E;</p>
+
+		<ul><li><pre>${errorList}</pre></li></ul>
+	</main>
+
+	</body>
+	</html>
+HTML;
+
+		return $html;
+	}
+
+	public static function makeLineNumbers($src)
+	{
+		$lines = explode("\n",$src);
+		array_walk( $lines,function(&$value,$line) {
+			$value = str_pad($line+1,5,' ',STR_PAD_LEFT).': '.$value;
+		});
+		return implode("\n",$lines);
+	}
 
 }
 

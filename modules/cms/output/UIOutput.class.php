@@ -195,8 +195,21 @@ class UIOutput extends BaseOutput
     <p>Something went terribly wrong &#x1F61E;</p>
 
     <pre><?php // Display exceptions only in development mode, because they may contain sensitive internal information like passwords.
-      if ($cause && defined('DEVELOPMENT') && DEVELOPMENT ) {
-      	echo $cause->__toString();
+      if ($cause) {
+		if (defined('DEVELOPMENT') && DEVELOPMENT  ) {
+		  echo $cause->__toString();
+		}
+		else {
+			while (true) {
+				echo($cause->getMessage());
+				$previous = $cause->getPrevious();
+				if ($previous) {
+					echo "\n\n" . 'Caused by:'."\n";
+					$cause = $previous;
+				} else
+					break;
+			}
+		}
 	  }
     ?></pre>
 </main>

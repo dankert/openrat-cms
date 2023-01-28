@@ -1381,5 +1381,8 @@ Vielen Dank.',
 'FORMAT_HTML'=>'HTML',
 'FORMAT_MARKDOWN'=>'Markdown',
 'FORMAT_HTML_SOURCE'=>'HTML Quelltext',
+'FORMAT_MUSTACHE'=>'Mustache-Vorlage',
+'FORMAT_RATSCRIPT'=>'Script',
+'FORMAT_RATSCRIPT_TEMPLATE'=>'Script template',
 ];}
 }

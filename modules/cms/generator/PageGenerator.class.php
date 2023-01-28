@@ -9,14 +9,18 @@ use cms\generator\PageContext;
 use cms\model\File;
 use cms\model\Folder;
 use cms\model\Language;
+use cms\model\Link;
 use cms\model\Page;
 use cms\model\Project;
 use cms\model\Template;
 use cms\model\TemplateModel;
 use cms\model\Value;
 use logger\Logger;
+use template_engine\components\html\component_else\ElseComponent;
 use util\exception\GeneratorException;
+use util\exception\ObjectNotFoundException;
 use util\Mustache;
+use util\Text;
 use util\text\TextMessage;
 
 
@@ -58,7 +62,9 @@ class PageGenerator extends BaseGenerator
 				$values[$elementid] = $valueGenerator->getCache()->get();
 			} catch( \Exception $e ) {
 				// Unrecoverable Error while generating the content.
-				throw new GeneratorException('Could not generate Value',$e );
+				Logger::info('Could not generate Value',$e );
+
+				throw new GeneratorException("Element '".$element->name."' could not be generated.",$e);
 			}
 
 		}
@@ -72,6 +78,7 @@ class PageGenerator extends BaseGenerator
 	 * Erzeugen des Inhaltes der gesamten Seite.
 	 *
 	 * @return String Inhalt
+	 * @throws GeneratorException|ObjectNotFoundException
 	 */
 	private function generatePageValue()
 	{
@@ -87,7 +94,12 @@ class PageGenerator extends BaseGenerator
 
 		$tplGenerator = new TemplateGenerator( $page->templateid,$this->context->modelId, $this->context->scheme );
 
-		$pageValues = $this->generatePageElements( $page ); // generating the value of all page elements.
+		try {
+			$pageValues = $this->generatePageElements($page); // generating the value of all page elements.
+		}
+		catch( \Exception $e ) {
+			throw new GeneratorException("Page '".$page->getName()."' could not be generated.",$e);
+		}
 
 		// Template should have access to the page properties.
 		// Template should have access to the settings of this node object.
@@ -104,7 +116,13 @@ class PageGenerator extends BaseGenerator
 
 	protected function generate()
 	{
-		return $this->generatePageValue();
+		try {
+			return $this->generatePageValue();
+		} catch( GeneratorException $e ) {
+
+			throw new GeneratorException('Could not render page '.$this->context->getObjectId(),$e );
+		}
+
 	}
 
 

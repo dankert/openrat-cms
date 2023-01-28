@@ -18,7 +18,7 @@ usage() {
   exit 1;
 }
 
-url="http://localhost/"
+url="http://localhost:8000/"
 watch=
 type=
 theme="default"
