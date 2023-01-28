@@ -199,6 +199,7 @@ STYLE
 This is your first page in OpenRat CMS. You may edit the page and change this text.
 TEXT
 		);
+		$value->format = Element::ELEMENT_FORMAT_MARKDOWN;
 		$value->publish = true;
 		$value->persist();
 
