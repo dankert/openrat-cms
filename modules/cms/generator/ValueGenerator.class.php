@@ -822,10 +822,9 @@ class ValueGenerator extends BaseGenerator
 							$executor->runCode( $element->code );
 						}
 						catch( DslException $e ) {
-							Logger::warn( $e );
-							if   ( $pageContext->scheme == Producer::SCHEME_PREVIEW )
-								$inhalt = $e->getMessage();
-							break;
+							Logger::info( $e );
+
+							throw new GeneratorException('Script error'."\n".Text::makeLineNumbers($element->code),$e);
 						}
 
 						// Ausgabe ermitteln.
@@ -1207,11 +1206,8 @@ class ValueGenerator extends BaseGenerator
 			$result = $executor->getOutput();
 		}
 		catch( DslException $e ) {
-			Logger::warn($e);
-			if   ( $this->context->pageContext->scheme == Producer::SCHEME_PREVIEW )
-				return $e->getMessage();
-			else
-				return '';
+			Logger::info($e);
+			throw new GeneratorException('Script error in filter'."\n".Text::makeLineNumbers($code),$e);
 		}
 
 		if   ( $result != null )
