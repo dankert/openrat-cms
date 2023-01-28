@@ -4,11 +4,22 @@
 namespace cms\generator;
 
 
+use cms\generator\dsl\DslCms;
+use cms\generator\dsl\DslConsole;
+use cms\generator\dsl\DslHttp;
+use cms\generator\dsl\DslJson;
+use cms\generator\dsl\DslObject;
+use cms\generator\dsl\DslPageContext;
+use cms\generator\dsl\DslProject;
 use cms\generator\filter\AbstractFilter;
+use cms\model\BaseObject;
 use cms\model\File;
 use cms\model\Value;
+use dsl\DslException;
+use dsl\executor\DslInterpreter;
 use logger\Logger;
 use util\exception\GeneratorException;
+use util\Text;
 
 class FileGenerator extends BaseGenerator
 {
@@ -66,6 +77,28 @@ class FileGenerator extends BaseGenerator
 			$v->loadPublished();
 
 		$value = $v->file;
+
+		if   ( $file->isScript ) {
+			$executor = new DslInterpreter(DslInterpreter::FLAG_THROW_ERROR + DslInterpreter::FLAG_SECURE );
+
+			$executor->addContext( [
+				'file'     => new DslObject( (new BaseObject($this->context->getObjectId()))->load() ),
+				'project'  => new DslProject( (new BaseObject($this->context->getObjectId()))->load()->getProject() ),
+				'console'  => new DslConsole(),
+				'cms'      => new DslCms(),
+				'http'     => new DslHttp(),
+				'json'     => new DslJson(),
+			]);
+
+			try {
+				$executor->runCode( $value );
+				$value = $executor->getOutput();
+			}
+			catch( DslException $e ) {
+				Logger::info($e);
+				throw new GeneratorException('Script error in script'."\n".Text::makeLineNumbers($value),$e);
+			}
+		}
 
 		foreach(\util\ArrayUtils::getSubArray($totalSettings, array( 'filter')) as $filterEntry )
 		{

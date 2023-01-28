@@ -242,5 +242,3 @@ class Image extends File
 	}
 
 }
-
-?>

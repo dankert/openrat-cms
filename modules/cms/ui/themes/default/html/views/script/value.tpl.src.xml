@@ -1,0 +1,20 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+
+	<form>
+		<group title="${message:edit}">
+			<fieldset label="${message:VALUE}">
+				<editor name="text" type="code" mode="javascript" extension="js" mimetype="text/javascript" />
+			</fieldset>
+		</group>
+		<group title="${message:options}">
+			<fieldset>
+				<part>
+					<checkbox name="release" label="${message:RELEASE}" remember="true"/>
+				</part>
+			</fieldset>
+		</group>
+	</form>
+
+
+</output>

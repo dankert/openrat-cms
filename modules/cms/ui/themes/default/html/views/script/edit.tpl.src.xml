@@ -1,0 +1,18 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+
+
+	<group title="${message:content}">
+		<part class="act-clickable">
+			<text value="${source}" escape="true" type="code"  />
+
+			<newline/>
+			<link type="dialog" subaction="value">
+				<image method="text"/>
+				<text value="${message:edit}"/>
+			</link>
+		</part>
+
+	</group>
+
+</output>

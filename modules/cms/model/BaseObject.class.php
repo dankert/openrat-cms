@@ -28,7 +28,7 @@ class BaseObject extends ModelBase
     const TYPEID_IMAGE  = 6;
     const TYPEID_TEXT   = 7;
     const TYPEID_ALIAS  = 8;
-    const TYPEID_MACRO  = 9;
+    const TYPEID_SCRIPT  = 9;
 
 
     /**
@@ -160,8 +160,8 @@ class BaseObject extends ModelBase
     /**
      * Kennzeichen, ob Objekt ein Alias ist
      * @type Boolean
-     */
-    var $isMacro = false;
+	 */
+    var $isScript = false;
 
     /**
      * Kennzeichnet den Typ dieses Objektes.
@@ -328,7 +328,7 @@ SQL
 			self::TYPEID_IMAGE  => 'image' ,
 			self::TYPEID_TEXT   => 'text'  ,
 			self::TYPEID_ALIAS  => 'alias' ,
-			self::TYPEID_MACRO  => 'macro' ,
+			self::TYPEID_SCRIPT  => 'script',
 		];
 
 		return @$mapTypeIdToName[ $this->getTypeid() ] ?: 'unknown';
@@ -356,6 +356,7 @@ SQL
             'isFile'           =>$this->isFile,
             'isImage'          =>$this->isImage,
             'isText'           =>$this->isText,
+            'isScript'         =>$this->isScript,
             'isLink'           =>$this->isLink,
             'isUrl'            =>$this->isUrl,
             'isPage'           =>$this->isPage,
@@ -642,7 +643,7 @@ SQL
         $this->isLink   = ( $row['typeid'] == self::TYPEID_LINK   );
         $this->isUrl    = ( $row['typeid'] == self::TYPEID_URL    );
         $this->isAlias  = ( $row['typeid'] == self::TYPEID_ALIAS  );
-        $this->isMacro  = ( $row['typeid'] == self::TYPEID_MACRO  );
+        $this->isScript  = ( $row['typeid'] == self::TYPEID_SCRIPT  );
 
     }
 
@@ -718,7 +719,7 @@ SQL
         $this->isLink   = ( $row['typeid'] == self::TYPEID_LINK   );
         $this->isUrl    = ( $row['typeid'] == self::TYPEID_URL    );
         $this->isAlias  = ( $row['typeid'] == self::TYPEID_ALIAS  );
-        $this->isMacro  = ( $row['typeid'] == self::TYPEID_MACRO  );
+        $this->isScript  = ( $row['typeid'] == self::TYPEID_SCRIPT  );
 
         $this->settings = $row['settings'];
     }
@@ -1245,7 +1246,7 @@ SQL
         if ($this->isLink  ) return self::TYPEID_LINK;
         if ($this->isUrl   ) return self::TYPEID_URL;
         if ($this->isAlias ) return self::TYPEID_ALIAS;
-        if ($this->isMacro ) return self::TYPEID_MACRO;
+        if ($this->isScript ) return self::TYPEID_SCRIPT;
     }
 
 

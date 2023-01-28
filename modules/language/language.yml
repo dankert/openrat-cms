@@ -3276,6 +3276,12 @@ MENU_CREATETEXT:
 MENU_CREATETEXT_DESC:
   de: Neue Textdatei anlegen
   en: Create a new text file
+MENU_CREATESCRIPT:
+  de: Neues Skript
+  en: New script
+MENU_CREATESCRIPT_DESC:
+  de: Neues Skript anlegen
+  en: Create a new script
 MENU_CREATEURL:
   de: Neue URL
   en: New URL
@@ -6554,3 +6560,6 @@ FORMAT_RATSCRIPT:
 FORMAT_RATSCRIPT_TEMPLATE:
   de: Script template
   en: Script template
+SCRIPT:
+  de: Skript
+  en: Script

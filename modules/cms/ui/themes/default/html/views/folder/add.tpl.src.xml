@@ -35,6 +35,13 @@
         </link>
       </part>
     </if>
+    <if true="${mayCreateScript}">
+      <part class="act-clickable,linklist-line,round-corners,hover-effect">
+        <link type="dialog" subaction="createscript">
+          <text value="${message:menu_createscript}"/>
+        </link>
+      </part>
+    </if>
     <if true="${mayCreateUrl}">
       <part class="act-clickable,linklist-line,round-corners,hover-effect">
         <link type="dialog" subaction="createurl">

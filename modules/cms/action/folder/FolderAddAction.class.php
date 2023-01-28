@@ -12,6 +12,7 @@ class FolderAddAction extends FolderAction implements Method {
 		$this->setTemplateVar('mayCreateFolder',$this->folder->hasRight( Permission::ACL_CREATE_FOLDER ) );
 		$this->setTemplateVar('mayCreateFile'  ,$this->folder->hasRight( Permission::ACL_CREATE_FILE   ) );
 		$this->setTemplateVar('mayCreateText'  ,$this->folder->hasRight( Permission::ACL_CREATE_FILE   ) );
+		$this->setTemplateVar('mayCreateScript',$this->folder->hasRight( Permission::ACL_CREATE_FILE   ) );
 		$this->setTemplateVar('mayCreateImage' ,$this->folder->hasRight( Permission::ACL_CREATE_FILE   ) );
 		$this->setTemplateVar('mayCreatePage'  ,$this->folder->hasRight( Permission::ACL_CREATE_PAGE   ) );
 		$this->setTemplateVar('mayCreateUrl'   ,$this->folder->hasRight( Permission::ACL_CREATE_LINK   ) );

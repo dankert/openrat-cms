@@ -160,9 +160,10 @@ SQL
 			$this->number         = intval($row['number'      ]);
 			$this->date           = intval($row['date'        ]);
 
-			$storeValueAsBase64 = DB::get()->conf['base64'];
+			// If the value is stored in BASE64 we must decode it now.
+			$valueIsStoredAsBase64 = DB::get()->conf['base64'];
 
-			if	( $storeValueAsBase64 )
+			if	( $valueIsStoredAsBase64 )
 				$this->file = base64_decode( $this->file );
 
 			$this->active         = ( $row['active' ]=='1' );
@@ -284,14 +285,19 @@ SQL
 			$stmt->setNull  ( 'date' );
 		else	$stmt->setInt   ( 'date',$this->date );
 
-		$storeValueAsBase64 = DB::get()->conf['base64'];
 
 		if	( $this->file === null )
 			$stmt->setNull  ( 'file' );
-		elseif( $storeValueAsBase64 )
-			$stmt->setString( 'file',base64_encode($this->file) );
-		else
-			$stmt->setString( 'file',$this->file );
+		else {
+			$storeValueAsBase64 = DB::get()->conf['base64'];
+
+			if( $storeValueAsBase64 ) {
+				$stmt->setString( 'file'  ,base64_encode($this->file) );
+			}
+			else {
+				$stmt->setString( 'file'  ,$this->file );
+			}
+		}
 
 		$stmt->setBoolean( 'publish'          ,$this->publish );
 		$stmt->setInt    ( 'lastchange_date'  ,Startup::now()         );

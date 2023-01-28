@@ -1,0 +1,23 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form>
+		<group title="${message:description}">
+			<fieldset label="${message:FILENAME}">
+				<input name="filename" size="50"/>
+			</fieldset>
+			<fieldset label="${message:FILE_EXTENSION}">
+				<input name="extension" size="50"/>
+			</fieldset>
+			<fieldset label="${message:NAME}">
+				<input name="name" size="50"/>
+			</fieldset>
+			<fieldset label="${message:DESCRIPTION}">
+				<inputarea rows="5" cols="50" name="description" default=""/>
+			</fieldset>
+		</group>
+
+		<group title="${message:content}">
+			<inputarea name="text"/>
+		</group>
+	</form>
+</output>

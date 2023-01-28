@@ -33,6 +33,10 @@ class File extends BaseObject
 {
 	const DEFAULT_MIMETYPE = 'application/octet-stream';
 
+	const FORMAT_BLOB_RAW = 1;
+	const FORMAT_BLOB_BASE64 = 2;
+	const FILE_FORMAT_TEXT = 3;
+
 	public $fileid;
 
 	public $contentid     = null;
@@ -303,15 +307,14 @@ class File extends BaseObject
 		'vrm' => 'x-world/x-vrml',
 	];
 
-	/**
-	 * Um Probleme mit BLOB-Feldern und Datenbank-Besonderheiten zu vermeiden,
-	 * kann der Binaerinhalt BASE64-kodiert gespeichert werden.
-	 * @type Boolean
-	 */
-	var $storeValueAsBase64 = false;
-
     public $filterid;
+
 	public $public;
+
+	/**
+	 * @var mixed
+	 */
+	public $format;
 
 	/**
 	 * Konstruktor
@@ -553,7 +556,7 @@ EOF
 	private function loadValueFromDatabase()
 	{
 		$sql = Db::sql( <<<SQL
-                   SELECT {{file}}.size,{{value}}.file
+                   SELECT {{file}}.size,{{value}}.file,{{value}}.format
 		             FROM {{file}}
                 LEFT JOIN {{content}}
                        ON {{file}}.contentid = {{content}}.id 
@@ -567,14 +570,15 @@ SQL
 
 		if	( count($row) != 0 )
 		{
-			$this->value = $row['file'];
-			$this->size  = $row['size'];
+			$this->value  = $row['file'];
+			$this->size   = $row['size'];
+			$this->format = $row['format'];
 		}
 
-		// Because we are reading directly from the value table we must do base64-encoding here.
-		$storeValueAsBase64 = DB::get()->conf['base64'];
+		// If the value is stored in BASE64 we must decode it now.
+		$valueIsStoredAsBase64 = DB::get()->conf['base64'];
 
-		if	( $storeValueAsBase64 )
+		if	( $valueIsStoredAsBase64 )
 			$this->value = base64_decode( $this->value );
 
 		return $this->value;

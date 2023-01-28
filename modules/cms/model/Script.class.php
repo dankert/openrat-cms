@@ -1,11 +1,5 @@
 <?php
-
-
-namespace cms\action;
-
-use cms\model\Text;
-use language\Messages;
-
+namespace cms\model;
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -25,40 +19,23 @@ use language\Messages;
 
 
 /**
- * Action-Klasse zum Bearbeiten einer Datei
+ * Script.
+ *
  * @author Jan Dankert
  */
-class TextAction extends FileAction
+class Script extends File
 {
-	/**
-	 * @var Text
-	 */
-	protected $text;
-
-	/**
-	 * Konstruktor
-	 */
-	function __construct()
+    /**
+     * Konstruktor
+     *
+     * @param string $objectid
+     */
+	public function __construct( $objectid='' )
 	{
-		parent::__construct();
-	}
+        parent::__construct( $objectid );
 
-
-	public function init()
-	{
-
-		$text = new Text($this->request->getId());
-		$text->load();
-
-		$this->setBaseObject( $text );
-	}
-
-
-
-	protected function setBaseObject($script ) {
-
-		$this->text = $script;
-
-		parent::setBaseObject( $script );
+        $this->isScript = true;
+		$this->isFile   = false; // must overwrite from base class constructor.
+		$this->typeid = BaseObject::TYPEID_SCRIPT;
 	}
 }

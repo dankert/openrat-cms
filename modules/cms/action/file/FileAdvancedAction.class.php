@@ -21,9 +21,10 @@ class FileAdvancedAction extends FileAction implements Method {
 
 		$this->setTemplateVar( 'type'     ,$this->file->type      );
 		$this->setTemplateVar( 'types'    ,[
-			BaseObject::TYPEID_FILE  => \cms\base\Language::lang('file' ),
-			BaseObject::TYPEID_IMAGE => \cms\base\Language::lang('image'),
-			BaseObject::TYPEID_TEXT  => \cms\base\Language::lang('text' )
+			BaseObject::TYPEID_FILE  => \cms\base\Language::lang('file'  ),
+			BaseObject::TYPEID_IMAGE => \cms\base\Language::lang('image' ),
+			BaseObject::TYPEID_TEXT  => \cms\base\Language::lang('text'  ),
+			BaseObject::TYPEID_SCRIPT=> \cms\base\Language::lang('script')
 		] );
     }
 

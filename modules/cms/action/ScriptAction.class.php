@@ -3,6 +3,7 @@
 
 namespace cms\action;
 
+use cms\model\Script;
 use cms\model\Text;
 use language\Messages;
 
@@ -28,12 +29,12 @@ use language\Messages;
  * Action-Klasse zum Bearbeiten einer Datei
  * @author Jan Dankert
  */
-class TextAction extends FileAction
+class ScriptAction extends FileAction
 {
 	/**
 	 * @var Text
 	 */
-	protected $text;
+	protected $script;
 
 	/**
 	 * Konstruktor
@@ -47,17 +48,17 @@ class TextAction extends FileAction
 	public function init()
 	{
 
-		$text = new Text($this->request->getId());
-		$text->load();
+		$script = new Script($this->request->getId());
+		$script->load();
 
-		$this->setBaseObject( $text );
+		$this->setBaseObject( $script );
 	}
 
 
 
 	protected function setBaseObject($script ) {
 
-		$this->text = $script;
+		$this->script = $script;
 
 		parent::setBaseObject( $script );
 	}
