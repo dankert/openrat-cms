@@ -90,9 +90,18 @@ export default class View {
 					throw "Permission denied";
 				}
 				else if   ( response.status == 503 )
-					throw "server error";
+					throw "Service unavailable";
+				else if   ( response.status == 500 ) {
+
+					let data = await response.text();
+					if   ( ! data )
+						data = '';
+					const errorDoc = new DOMParser().parseFromString(data,"text/html");
+					const error    = errorDoc.getElementById("cms-error-log");
+					throw "CMS Server Error\n" + error.innerText;
+				}
 				else
-					throw "failed to load the view";
+					throw "Failed to load the view: " + response.status + " " + response.statusText;
 
 			}
 

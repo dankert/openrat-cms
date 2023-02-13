@@ -188,13 +188,13 @@ class UIOutput extends BaseOutput
 <body>
 
 <header>
-    <h1><?php echo $text ?></h1>
+    <h1 id="cms-error-message"><?php echo $text ?></h1>
 </header>
 
 <main>
     <p>Something went terribly wrong &#x1F61E;</p>
 
-    <pre><?php // Display exceptions only in development mode, because they may contain sensitive internal information like passwords.
+    <pre id="cms-error-log"><?php // Display exceptions only in development mode, because they may contain sensitive internal information like passwords.
       if ($cause) {
 		if (defined('DEVELOPMENT') && DEVELOPMENT  ) {
 		  echo $cause->__toString();
