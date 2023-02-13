@@ -112,6 +112,6 @@ class Upload
 	{
 		$name = $this->parameterName;
 
-		return isset($_FILES[$name]) && is_array($_FILES[$name]);
+		return isset($_FILES[$name]) && is_array($_FILES[$name]) && $_FILES[$name]['tmp_name'];
 	}
 }
