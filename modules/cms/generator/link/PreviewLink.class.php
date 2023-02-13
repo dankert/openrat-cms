@@ -69,21 +69,7 @@ class PreviewLink implements LinkFormat
                 $linkedObject = new BaseObject( $link->linkedObjectId );
                 $linkedObject->objectLoad();
 
-                switch( $linkedObject->typeid )
-                {
-                    case BaseObject::TYPEID_FILE:
-                        $inhalt = \util\Html::url('file','show',$link->linkedObjectId,$param);
-                        break;
-
-                    case BaseObject::TYPEID_PAGE:
-                        $inhalt = \util\Html::url('page','show',$link->linkedObjectId,$param);
-                        break;
-                    case BaseObject::TYPEID_URL:
-                        $inhalt = \util\Html::url('url','show',$link->linkedObjectId,$param);
-                        break;
-					default:
-						$inhalt = 'Unknown link type: '.$linkedObject->typeid;
-                }
+				$inhalt = \util\Html::url($linkedObject->getType(),'show',$alias->linkedObjectId,$param);
                 break;
 
             case BaseObject::TYPEID_ALIAS:
@@ -94,18 +80,7 @@ class PreviewLink implements LinkFormat
                 $linkedObject = new BaseObject( $alias->linkedObjectId );
                 $linkedObject->objectLoad();
 
-                switch( $linkedObject->typeid )
-                {
-                    case BaseObject::TYPEID_FILE:
-                        $inhalt = \util\Html::url('file','show',$alias->linkedObjectId,$param);
-                        break;
-
-                    case BaseObject::TYPEID_PAGE:
-                        $inhalt = \util\Html::url('page','show',$alias->linkedObjectId,$param);
-                        break;
-					default:
-						$inhalt = 'Unknown link type: '.$linkedObject->typeid;
-                }
+				$inhalt = \util\Html::url($linkedObject->getType(),'show',$alias->linkedObjectId,$param);
                 break;
 
             case BaseObject::TYPEID_URL:

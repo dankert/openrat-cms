@@ -38,6 +38,9 @@ class FolderCreatetextAction extends FolderAction implements Method {
 		// Die neue Datei wird über eine URL geladen und dann im CMS gespeichert.
 		$this->request->handleText('url', function($url) use ($text)
 		{
+			if   ( !$url )
+				return; // URl was empty.
+
 			$http = new Http();
 			$http->setUrl( $url );
 

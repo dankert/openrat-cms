@@ -93,6 +93,7 @@ class PublicLink implements LinkFormat
 			case BaseObject::TYPEID_FILE:
 			case BaseObject::TYPEID_IMAGE:
 			case BaseObject::TYPEID_TEXT:
+			case BaseObject::TYPEID_SCRIPT:
 
 				$f = new File($to->objectid);
 

@@ -331,7 +331,7 @@ SQL
 			self::TYPEID_SCRIPT  => 'script',
 		];
 
-		return @$mapTypeIdToName[ $this->getTypeid() ] ?: 'unknown';
+		return @$mapTypeIdToName[ $this->getTypeid() ] ?: 'unknown typeid '.$this->getTypeid();
     }
 
 

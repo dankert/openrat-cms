@@ -158,6 +158,24 @@ class Project extends ModelBase
 	}
 
 
+    /**
+     * Liefert die Sprachen des Projektes.
+     *
+     * @return array Id->Name
+     */
+    public function getLanguageISOCodes()
+	{
+		$db = \cms\base\DB::get();
+
+		$sql = $db->sql( 'SELECT id,isocode FROM {{language}}'.
+		                '  WHERE projectid={projectid} '.
+		                '  ORDER BY isocode' );
+		$sql->setInt   ('projectid',$this->projectid);
+
+		return $sql->getAssoc();
+	}
+
+
 	/**
 	 * @return int[]
 	 */

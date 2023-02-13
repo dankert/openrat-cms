@@ -132,6 +132,8 @@ class FileGenerator extends BaseGenerator
 			foreach( $parameter as $parameterName=>$parameterValue) {
 				if   ( property_exists($filter,$parameterName))
 					$filter->$parameterName = $parameterValue;
+				else
+					throw new \LogicException("Filter '".$filterName."' has no property '".$parameterName );
 			}
 
 
