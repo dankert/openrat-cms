@@ -175,7 +175,7 @@ class Startup {
 
 				header('HTTP/1.0 503 Internal CMS fatal error');
 				header('Content-Type: text/html; charset=utf-8');
-				echo "<h1>Fatal error</h1><pre>$errstr</pre><hr />".Startup::TITLE;
+				echo "<h1>Fatal error</h1><pre id=\"cms-error-log\">$errstr\non line $errline\nin file $errfile</pre><hr />".Startup::TITLE;
 			}
 
 		};

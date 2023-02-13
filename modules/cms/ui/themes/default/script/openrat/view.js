@@ -89,8 +89,15 @@ export default class View {
 				if   ( response.status == 403 ) {
 					throw "Permission denied";
 				}
-				else if   ( response.status == 503 )
-					throw "Service unavailable";
+				else if   ( response.status == 503 ) {
+
+					let data = await response.text();
+					if   ( ! data )
+						data = '';
+					const errorDoc = new DOMParser().parseFromString(data,"text/html");
+					const error    = errorDoc.getElementById("cms-error-log");
+					throw "CMS Service unavailable\n" + error.innerText;
+				}
 				else if   ( response.status == 500 ) {
 
 					let data = await response.text();
