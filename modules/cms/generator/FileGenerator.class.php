@@ -34,7 +34,14 @@ class FileGenerator extends BaseGenerator
 	{
 		$file = new File( $this->context->sourceObjectId );
 		$file->load();
-		return $this->filterValue( $file );
+
+		try {
+
+			return $this->filterValue( $file );
+		}
+		catch ( \Exception $e) {
+			throw new GeneratorException('Could not generate value of file '.$file->__toString().'.', $e );
+		}
 	}
 
 	public function getPublicFilename()
@@ -146,7 +153,7 @@ class FileGenerator extends BaseGenerator
 			} catch( \Exception $e ) {
 				// Filter has some undefined error.
 				Logger::warn( $e->getTraceAsString() );
-				throw new GeneratorException('Could not generate file '.$file->objectid.'. Filter '.$filterName.' has an error.', $e );
+				throw new GeneratorException('Filter \''.$filterName.'\' has an error.', $e );
 			}
 		}
 
