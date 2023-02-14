@@ -93,26 +93,27 @@ class OutputFactory {
 	 */
 	private static function discoverOutputType()
 	{
-		$reqOutput = strtolower(@$_REQUEST[ RequestParams::PARAM_OUTPUT ]);
+		$reqOutput = strtolower(@$_REQUEST[RequestParams::PARAM_OUTPUT]);
 
 		// Try 1: Checking the 'output' request parameter.
-		if   ( $reqOutput ) {
-			if   ( ! array_key_exists( $reqOutput, self::MAP_OUTPUT ) )
-			{
+		if ($reqOutput) {
+			if (!array_key_exists($reqOutput, self::MAP_OUTPUT)) {
 				Http::notAcceptable();
 				header('Content-Type: text/plain');
-				echo "Accepted output types are: ".implode(",",array_keys(self::MAP_OUTPUT));
+				echo "Accepted output types are: " . implode(",", array_keys(self::MAP_OUTPUT));
 				exit;
 			}
 
-			return self::MAP_OUTPUT[ $reqOutput ];
+			return self::MAP_OUTPUT[$reqOutput];
 		}
 
 		// Try 2: Lets check the HTTP request "Accept" header.
 		//print_r(Http::getAccept());
-		foreach( Http::getAccept() as $acceptType )
-			if   ( array_key_exists( $acceptType, self::MAP_ACCEPT ) )
-				return self::MAP_ACCEPT[ $acceptType ];
+		foreach (Http::getAccept() as $acceptType)
+			if (array_key_exists($acceptType, self::MAP_ACCEPT)) {
+				header('Vary: Accept');
+				return self::MAP_ACCEPT[$acceptType];
+			}
 
 		// Fallback
 		Http::notAcceptable();
