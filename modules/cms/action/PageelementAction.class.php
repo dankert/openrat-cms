@@ -449,8 +449,8 @@ class PageelementAction extends BaseAction
         $value->contentid = $this->pageContent->contentId;
         $value->load();
 
-        if   ( $this->request->isTrue('format') )
-            $value->format     = $this->request->getNumber('format');
+        if   ( is_numeric($format = $this->request->getNumber('format')) )
+            $value->format     = $format;
         else
             // Fallback: Format of the element.
             $value->format     = $this->element->format;
