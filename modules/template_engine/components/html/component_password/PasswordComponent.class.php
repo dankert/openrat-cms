@@ -29,7 +29,9 @@ class PasswordComponent extends FieldComponent
 
 		$input->addAttribute('size',$this->size);
 		$input->addAttribute('maxlength',$this->maxlength);
-		$input->addStyleClass($this->class);
+
+		if   ( $this->class )
+			$input->addStyleClass($this->class);
 
 		if   ( $this->required )
 			$input->addAttribute( 'required','required');

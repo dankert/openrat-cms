@@ -14,7 +14,7 @@ class PageelementAdvancedAction extends PageelementAction implements Method {
 		$this->setTemplateVar('description',$this->element->desc          );
 		$this->setTemplateVar('elementid'  ,$this->element->elementid     );
 		$this->setTemplateVar('type'       ,$this->element->getTypeName() );
-
+		$this->setTemplateVar('pageelementid',$this->page->objectid.'_'.$this->element->elementid );
 		$languages = array();
 
 		foreach ( $this->page->getProject()->getLanguages() as $languageId=>$languageName )

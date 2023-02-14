@@ -30,7 +30,7 @@
             <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('USER_PASSWORD').'') ?></h3>
             <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
               <span><?php echo O::escapeHtml('') ?>
-                <input type="<?php echo O::escapeHtml('password') ?>" name="<?php echo O::escapeHtml('password') ?>" size="<?php echo O::escapeHtml('25') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$password.'') ?>" class="<?php echo O::escapeHtml('or- or-input or-input--password') ?>" /><?php echo O::escapeHtml('') ?>
+                <input type="<?php echo O::escapeHtml('password') ?>" name="<?php echo O::escapeHtml('password') ?>" size="<?php echo O::escapeHtml('25') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$password.'') ?>" class="<?php echo O::escapeHtml('or-input or-input--password') ?>" /><?php echo O::escapeHtml('') ?>
                 <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--visible or-act-make-visible or-btn') ?>"><?php echo O::escapeHtml('') ?></i>
               </span>
             </div>

@@ -233,7 +233,8 @@ class PageAllAction extends PageAction implements Method {
 					$value->text = $this->request->getText($element->name);
 					break;
 				case Element::ELEMENT_TYPE_LONGTEXT:
-					$value->text = $this->compactOIDs($this->request->getText($element->name));
+					$value->text   = $this->compactOIDs($this->request->getText($element->name));
+					$value->format = $oldValue->format;
 					break;
 
 				case Element::ELEMENT_TYPE_DATE:
@@ -252,9 +253,6 @@ class PageAllAction extends PageAction implements Method {
 					break;
 
 				case Element::ELEMENT_TYPE_NUMBER:
-					$value->number = $this->request->getText($element->name) * pow(10, $element->decimals);
-					break;
-				case Element::ELEMENT_TYPE_CHECKBOX:
 					$value->number = $this->request->getText($element->name) * pow(10, $element->decimals);
 					break;
 				default:

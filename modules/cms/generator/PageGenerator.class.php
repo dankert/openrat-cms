@@ -62,7 +62,7 @@ class PageGenerator extends BaseGenerator
 				$values[$elementid] = $valueGenerator->getCache()->get();
 			} catch( \Exception $e ) {
 				// Unrecoverable Error while generating the content.
-				Logger::info('Could not generate Value',$e );
+				Logger::info( $e );
 
 				throw new GeneratorException("Element '".$element->name."' could not be generated.",$e);
 			}

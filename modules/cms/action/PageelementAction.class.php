@@ -304,7 +304,7 @@ class PageelementAction extends BaseAction
      */
     protected function editLongtext()
     {
-        if   ( $f = $this->request->getNumber('format') )
+        if   ( ($f = $this->request->getNumber('format')) !== null ) // beware: format may be 0, which is false
             // Individual format from request.
             $format = $f;
         elseif   ( $this->value->format != null )

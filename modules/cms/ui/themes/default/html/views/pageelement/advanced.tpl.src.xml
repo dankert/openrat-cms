@@ -18,7 +18,7 @@
           <text value="${languagename}"/>
         </column>
         <column class="act-clickable" title="${text}">
-          <link subaction="value" var1="languageid" value1="${languageid}" type="edit" action="pageelement">
+          <link id="${pageelementid}" subaction="value" var1="languageid" value1="${languageid}" type="edit" action="pageelement">
             <if true="${date}">
               <date date="${date}"/>
             </if>
@@ -30,7 +30,7 @@
         <column>
           <list list="${editors}" key="id" value="name">
             <part class="act-clickable">
-              <link type="edit" action="pageelement" subaction="value" var1="languageid" value1="${languageid}" var2="format" value2="${id}">
+              <link id="${pageelementid}" type="edit" action="pageelement" subaction="value" var1="languageid" value1="${languageid}" var2="format" value2="${id}">
                 <text value="${message:format_${name}}"/>
               </link>
             </part>

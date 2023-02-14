@@ -227,6 +227,9 @@ class PageelementAllAction extends PageelementAction implements Method {
 			$value = new Value();
 			$value->contentid = $pageContent->contentId;
 
+			$oldValue = clone $value;
+			$oldValue->load();
+
 			switch ($element->typeid) {
 
 				case Element::ELEMENT_TYPE_TEXT:
@@ -236,6 +239,7 @@ class PageelementAllAction extends PageelementAction implements Method {
 					break;
 				case Element::ELEMENT_TYPE_LONGTEXT:
 					$value->text = $this->compactOIDs($this->request->getText($language->isoCode));
+					$value->format = $oldValue->format; // keep the format
 					break;
 
 				case Element::ELEMENT_TYPE_DATE:
@@ -271,6 +275,16 @@ class PageelementAllAction extends PageelementAction implements Method {
 			$lastChangeTime = $content->getLastChangeSinceByAnotherUser($this->request->getNumber('value_time'), $this->getCurrentUserId());
 			if ($lastChangeTime)
 				$this->addWarningFor($value, Messages::CONCURRENT_VALUE_CHANGE, array('last_change_time' => date(L::lang('DATE_FORMAT'), $lastChangeTime)));
+
+			// Check if anything has changed
+			if   ( $oldValue->text           == $value->text     &&
+				$oldValue->linkToObjectId == $value->linkToObjectId  &&
+				$oldValue->format         == $value->format    &&
+				$oldValue->number         == $value->number    &&
+				$oldValue->date           == $value->date      &&
+				!(!$oldValue->publish && $value->publish)
+			)
+				continue; // nothing has changed.
 
 			// Inhalt speichern
 			$value->persist();
