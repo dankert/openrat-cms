@@ -11,16 +11,18 @@ class ModellistAddAction extends ModellistAction implements Method {
 
     public function post() {
 		$model = new Model();
-		$model->projectid = $this->request->getText('projectid');
+		$model->projectid = $this->request->getId();
 		$model->name      = $this->request->getText('name');
+
 		$model->persist();
-		
-		// Wenn kein Namen eingegeben, dann einen setzen.
-		if	( empty($model->name) )
+
+		// if no name is given
+		if	( ! $model->name )
 		{
-			// Name ist "Variante <id>"
+			// name is "model <id>"
 			$model->name = \cms\base\Language::lang('MODEL').' '.$model->modelid;
-			$model->save();
+			$model->persist();
 		}
-    }
+
+	}
 }
