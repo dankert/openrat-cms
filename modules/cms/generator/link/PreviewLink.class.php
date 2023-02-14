@@ -69,7 +69,7 @@ class PreviewLink implements LinkFormat
                 $linkedObject = new BaseObject( $link->linkedObjectId );
                 $linkedObject->objectLoad();
 
-				$inhalt = \util\Html::url($linkedObject->getType(),'show',$alias->linkedObjectId,$param);
+				$inhalt = \util\Html::url($linkedObject->getType(),'show',$link->linkedObjectId,$param);
                 break;
 
             case BaseObject::TYPEID_ALIAS:
