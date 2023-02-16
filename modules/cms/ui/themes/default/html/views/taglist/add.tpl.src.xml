@@ -1,0 +1,10 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form>
+		<group title="${message:ADD}">
+			<fieldset label="${message:name}">
+				<input name="name" class="focus" maxlength="128"/>
+			</fieldset>
+		</group>
+	</form>
+</output>

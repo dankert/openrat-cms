@@ -22,6 +22,15 @@
 				</column>
 			</row>
 
+			<row class="data">
+				<column class="act-clickable">
+					<link type="open" id="${projectid}" name="" action="taglist">
+						<image action="taglist"/>
+						<text value="${message:taglist}"/>
+					</link>
+				</column>
+			</row>
+
 			<if true="${is_project_admin}">
 				<row class="data">
 					<column class="act-clickable">

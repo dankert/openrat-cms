@@ -2,11 +2,9 @@
 
 namespace cms\action;
 
-use cms\base\Configuration;
 use cms\model\Permission;
 use cms\model\Folder;
 use cms\model\Project;
-use language\Messages;
 use util\exception\SecurityException;
 
 // OpenRat Content Management System

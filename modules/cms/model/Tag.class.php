@@ -72,8 +72,11 @@ SQL
      */
     public function load()
 	{
-		$sql = Db::sql( 'SELECT * FROM {{tag}} '.
-		                '   WHERE id={tagid}' );
+		$sql = Db::sql( <<<SQL
+		    SELECT * FROM {{tag}}
+			 WHERE id={tagid}
+SQL
+		);
 		$sql->setInt( 'tagid',$this->tagid );
 
 		$row = $sql->getRow();
@@ -81,7 +84,8 @@ SQL
 		if	( empty($row) )
 			throw new ObjectNotFoundException('tag '.$this->tagid.' not found');
 			
-		$this->name = $row['name'];
+		$this->name      = $row['name'     ];
+		$this->projectid = $row['projectid'];
 
         return $this;
 	}
@@ -134,7 +138,13 @@ SQL
 	 */
 	public function delete()
 	{
-		// Deleting the tag
+		// Deleting the tag objects
+		$sql = DB::sql( 'DELETE FROM {{tag_object}}'.
+		                '  WHERE tagid= {tagid} ' );
+		$sql->setInt( 'tagid',$this->tagid );
+		$sql->execute();
+
+		// Deleting the tag itself
 		$sql = DB::sql( 'DELETE FROM {{tag}}'.
 		                '  WHERE id= {tagid} ' );
 		$sql->setInt( 'tagid',$this->tagid );

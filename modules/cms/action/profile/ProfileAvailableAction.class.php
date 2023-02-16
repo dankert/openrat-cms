@@ -4,6 +4,7 @@ use cms\action\Action;
 use cms\action\BaseAction;
 use cms\action\Method;
 use cms\action\ProfileAction;
+use logger\Logger;
 use util\ClassName;
 use util\exception\SecurityException;
 
@@ -41,6 +42,7 @@ class ProfileAvailableAction extends ProfileAction implements Method {
 					$actionClassName = new ClassName( ucfirst($action) . ucfirst($methodName) . 'Action');
 					$actionClassName->addNamespace( ['cms','action',$action] );
 
+					Logger::trace("Trying ".$actionClassName->getName() );
 					if ( $actionClassName->exists() ) {
 						$n = $actionClassName->getName();
 						/**
@@ -52,7 +54,8 @@ class ProfileAvailableAction extends ProfileAction implements Method {
 							$actionMethod->init();
 							$actionMethod->checkAccess();
 						} catch( SecurityException $e ) {
-							return false;
+							Logger::trace("Not allowed to call ".$n);
+							return false; // do not throw anything here.
 						}
 						return true;
 					}

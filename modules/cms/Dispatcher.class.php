@@ -284,7 +284,7 @@ class Dispatcher
         if   ( $logConfig->is('stderr')) // write to standard error
 			Logger::$logto    = Logger::$logto |= Logger::LOG_TO_STDERR;
 
-        Logger::$dateFormat = $logConfig->get('date_format','r');
+        Logger::$dateFormat = $logConfig->get('date_format','r'); // 'M j H:i:s'
         Logger::$nsLookup   = $logConfig->is('ns_lookup',false);
 
 		Logger::$outputType = (int) @constant('\\logger\\Logger::OUTPUT_' . strtoupper($logConfig->get('output','PLAIN')));

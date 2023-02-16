@@ -9,6 +9,7 @@ use cms\model\Model;
 use cms\model\ModelFactory;
 use cms\model\Page;
 use cms\model\Project;
+use cms\model\Tag;
 use cms\model\Template;
 use cms\ui\action\TreeAction;
 use cms\action\Method;
@@ -64,7 +65,9 @@ class TreePathAction extends TreeAction implements Method {
 				);
 
 			case 'tag':
-				$project = new Project( $id );
+				$tag     = new Tag( $id );
+				$tag->load();
+				$project = new Project( $tag->projectid );
 				return array(
 					$this->pathItem('index'      ,0),
 					$this->pathItem('projectlist',0),

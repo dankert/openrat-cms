@@ -1,0 +1,96 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<table>
+		<row header="true">
+			<column header="true" class="table-column-action">
+				<text value="${message:TYPE}"/>
+			</column>
+			<column header="true" class="table-column-auto">
+				<text value="${message:NAME}"/>
+			</column>
+			<column header="true" class="-visible-on-desktop,table-column-date">
+				<text value="${message:LASTCHANGE}"/>
+			</column>
+			<column header="true" class="table-column-action">
+			</column>
+		</row>
+		<list list="${objects}" extract="true">
+			<row class="data">
+				<column class="">
+					<image action="${type}"/>
+				</column>
+				<column class="act-clickable">
+					<link type="open" id="${id}" name="${name}" action="${type}" title="${desc}">
+						<text value="${name}"/>
+					</link>
+				</column>
+				<column class="-visible-on-desktop">
+					<date date="${lastchange_date}"/>
+				</column>
+				<column>
+					<part class="button,button--active-on-hover,toolbar-icon,row--on-hover">
+						<image class="menu-icon" menu="more"/>
+						<part class="dropdown,button-value">
+							<part
+								class="dropdown-entry,act-clickable">
+								<link type="open" id="${id}" title="${message:menu_open}" action="${type}">
+									<image method="switch"/>
+									<text class="dropdown-text" value="${message:menu_open}"/>
+								</link>
+							</part>
+							<part
+								class="dropdown-entry,act-clickable">
+								<link type="dialog" id="${id}" title="${message:menu_info_desc}" action="${type}"
+									  subaction="info">
+									<image method="info"/>
+									<text class="dropdown-text" value="${message:menu_info}"/>
+								</link>
+							</part>
+							<part
+								class="dropdown-entry,act-clickable">
+								<link type="dialog" id="${id}" title="${message:menu_prop_desc}" action="${type}"
+									  subaction="prop">
+									<image method="prop"/>
+									<text class="dropdown-text" value="${message:menu_prop}"/>
+								</link>
+							</part>
+							<part
+								class="dropdown-entry,act-clickable">
+								<link type="dialog" id="${id}" title="${message:menu_preview_desc}" action="${type}"
+									  subaction="preview">
+									<image method="preview"/>
+									<text class="dropdown-text" value="${message:menu_preview}"/>
+								</link>
+							</part>
+							<part
+								class="dropdown-entry,act-clickable">
+								<link type="dialog" id="${id}" title="${message:menu_pub_desc}" action="${type}"
+									  subaction="pub">
+									<image method="pub"/>
+									<text class="dropdown-text" value="${message:menu_pub}"/>
+								</link>
+							</part>
+						</part>
+					</part>
+
+				</column>
+			</row>
+		</list>
+		<if empty="${objects}">
+			<row>
+				<column colspan="3">
+					<text value="${message:NOT_FOUND}"/>
+				</column>
+			</row>
+		</if>
+	</table>
+
+	<if value="${add}">
+		<part class="act-clickable,button-knob">
+			<link type="dialog" action="folder" subaction="add">
+				<image method="new"/>
+				<text value="${message:add}"/>
+			</link>
+		</part>
+	</if>
+</output>

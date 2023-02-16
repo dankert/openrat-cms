@@ -911,10 +911,16 @@ SQL
         $this->objectid = null;
     }
 
+	/**
+	 * Get all Tags for this object.
+	 *
+	 * @return String[]
+	 */
 	public function getTags()
 	{
 		$sql = DB::sql( <<<SQL
-		    SELECT {{tag}}.id,{{tag.name}} FROM {{tag_object}}
+		    SELECT {{tag}}.id,{{tag}}.name
+		                   FROM {{tag_object}}
 		                   LEFT JOIN {{tag}}
 		                          ON {{tag_object}}.tagid = {{tag}}.id
 		                   WHERE objectid={objectid}

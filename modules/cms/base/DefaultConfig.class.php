@@ -242,23 +242,7 @@ class DefaultConfig {
 							'start_single_project' => true,
 						],
 				],
-			'log' =>
-				[ 
-					'file' => NULL,
-					'level' => 'warn',
-					'output' => 'plain',
-					'date_format' => 'M j H:i:s',
-					'ns_lookup' => false,
-					'format' =>
-						[ 
-							'time',
-							'level',
-							'host',
-							'user',
-							'action',
-							'text',
-						],
-				],
+
 			'mail' =>
 				[ 
 					'enabled' => true,

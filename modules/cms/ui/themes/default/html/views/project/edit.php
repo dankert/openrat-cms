@@ -15,6 +15,14 @@
                 </a>
               </td>
             </tr>
+            <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
+              <td class="<?php echo O::escapeHtml('or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
+                <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('open') ?>" data-action="<?php echo O::escapeHtml('taglist') ?>" data-method="<?php echo O::escapeHtml('') ?>" data-id="<?php echo O::escapeHtml(''.@$projectid.'') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/taglist/'.@$projectid.'') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
+                  <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-taglist') ?>"><?php echo O::escapeHtml('') ?></i>
+                  <span><?php echo O::escapeHtml(''.@O::lang('taglist').'') ?></span>
+                </a>
+              </td>
+            </tr>
             <?php $if4=($is_project_admin); if($if4) {  ?>
               <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
                 <td class="<?php echo O::escapeHtml('or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>

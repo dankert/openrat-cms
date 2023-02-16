@@ -1,0 +1,14 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form>
+		<fieldset label="${message:NAME}">
+			<text value="${name}" class="name"/>
+		</fieldset>
+
+		<group title="${message:options}" collapsible="false">
+			<fieldset label="">
+				<checkbox name="delete" required="true" label="${message:CONFIRM_DELETE}"/>
+			</fieldset>
+		</group>
+	</form>
+</output>
