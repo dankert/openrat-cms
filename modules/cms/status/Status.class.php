@@ -82,8 +82,8 @@ class Status
 						} catch (\Exception $e) {
 							$dbState = [
 								'state'   => 'DOWN',
-								'message' => $e->getMessage() .' '. $e->getFile() . ':'.$e->getLine(),
-								'cause'   => $e->getTraceAsString(),
+								'message' => 'The database is not available',
+								'cause'   => Status::getCause($e),
 							];
 						}
 
@@ -152,8 +152,8 @@ class Status
 						} catch (\Exception $e) {
 							$dbState = [
 								'state'   => 'DOWN',
-								'message' => $e->getMessage() .' '. $e->getFile() . ':'.$e->getLine(),
-								'cause'   => $e->getTraceAsString(),
+								'message' => 'Database is not available',
+								'cause'   => Status::getCause($e),
 							];
 						}
 
@@ -254,5 +254,17 @@ class Status
 
 		$configLoader = new ConfigurationLoader( $configFile );
 		return  $configLoader->load();
+	}
+
+	private static function getCause(Exception $e)
+	{
+		return
+			[
+				'class'   => get_class($e),
+				'message' => $e->getMessage(),
+				'line'    => $e->getLine(),
+				'file'    => $e->getFile(),
+				'code'    => $e->getCode(),
+			] + (($e->getPrevious())?['cause'=>Status::getCause($e->getPrevious())]:[]);
 	}
 }

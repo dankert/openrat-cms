@@ -1407,5 +1407,7 @@ MENU_INDEX_ADMINISTRATION_DESC =',
 'FORMAT_RATSCRIPT'=>'Script',
 'FORMAT_RATSCRIPT_TEMPLATE'=>'Script template',
 'SCRIPT'=>'Script',
+'TAG'=>'Tag',
+'TAGLIST'=>'Tags',
 ];}
 }

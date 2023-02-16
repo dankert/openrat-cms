@@ -8,6 +8,7 @@ use cms\model\Language;
 use cms\model\Model;
 use cms\model\ModelFactory;
 use cms\model\Page;
+use cms\model\Project;
 use cms\model\Template;
 use cms\ui\action\TreeAction;
 use cms\action\Method;
@@ -52,6 +53,23 @@ class TreePathAction extends TreeAction implements Method {
 			case 'projectlist':
 				return array(
 					$this->pathItem('index',0)
+				);
+
+			case 'taglist':
+				$project = new Project( $id );
+				return array(
+					$this->pathItem('index'      ,0),
+					$this->pathItem('projectlist',0),
+					$this->pathItem('project'    , $project->projectid),
+				);
+
+			case 'tag':
+				$project = new Project( $id );
+				return array(
+					$this->pathItem('index'      ,0),
+					$this->pathItem('projectlist',0),
+					$this->pathItem('project'    , $project->projectid),
+					$this->pathItem('taglist'    , $project->projectid),
 				);
 
 			case 'configuration':

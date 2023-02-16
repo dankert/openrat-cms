@@ -4,18 +4,19 @@ namespace util;
 
 use cms\action\RequestParams;
 use cms\base\Language as L;
+use cms\model\Alias;
+use cms\model\BaseObject;
+use cms\model\Element;
+use cms\model\Folder;
+use cms\model\Group;
+use cms\model\Link;
+use cms\model\Page;
 use cms\model\PageContent;
 use cms\model\Permission;
-use cms\model\Alias;
-use cms\model\Element;
-use cms\model\Link;
-use cms\model\BaseObject;
-use cms\model\Page;
+use cms\model\Project;
+use cms\model\Tag;
 use cms\model\Template;
 use cms\model\User;
-use cms\model\Project;
-use cms\model\Group;
-use cms\model\Folder;
 use cms\model\Value;
 use language\Messages;
 use util\exception\SecurityException;
@@ -171,6 +172,23 @@ class Tree
 		}
 
 
+
+		// Tags
+		$treeElement = new TreeElement();
+		$treeElement->description = '';
+		$treeElement->id          = $projectid;
+		$treeElement->extraId[RequestParams::PARAM_PROJECT_ID] = $projectid;
+		$treeElement->internalId  = $projectid;
+		$treeElement->action      = 'taglist';
+		$treeElement->text        = L::lang('TAGLIST');
+		$treeElement->icon        = 'taglist';
+		$treeElement->description = L::lang('TAGLIST_DESC');
+		$treeElement->type        = 'taglist';
+		$this->addTreeElement($treeElement);
+
+
+
+
 		// Templates
 		if ($userIsProjectAdmin) {
 			$treeElement = new TreeElement();
@@ -209,6 +227,8 @@ class Tree
 			$this->addTreeElement($treeElement);
 		}
 
+
+
 		if ($userIsProjectAdmin) {
 
 			// Projektmodelle
@@ -231,6 +251,66 @@ class Tree
 		}
 
 	}
+
+
+	public function taglist( $projectid )
+	{
+		$project = new Project( $projectid );
+
+		foreach ( $project->getTags() as $id=>$name ) {
+			$treeElement = new TreeElement();
+			$treeElement->id = $id;
+			$treeElement->internalId = $id;
+			$treeElement->text = $name;
+			$treeElement->action = 'tag';
+			$treeElement->icon = 'tag';
+			$treeElement->type = 'tag';
+
+			$treeElement->description = '';
+
+			$this->addTreeElement($treeElement);
+		}
+	}
+
+
+	/**
+	 * Tag.
+	 *
+	 * @param $tagid
+	 */
+	public function tag($tagid )
+	{
+		$tag = new Tag( $tagid );
+
+		foreach ($tag->getObjects() as $o ) {
+
+			// Wenn keine Leseberechtigung
+			if (!$o->hasRight(Permission::ACL_READ))
+				continue;
+
+			$defaultName = $o->getDefaultName();
+
+			$treeElement = new TreeElement();
+			$treeElement->id = $o->objectid;
+			$treeElement->internalId = $o->objectid;
+			$treeElement->text = $defaultName->name;
+			$treeElement->description = L::lang('' . $o->getType()) . ' ' . $o->objectid;
+
+			if ( $defaultName->description )
+				$treeElement->description .= ': ' . $defaultName->description;
+			else
+				$treeElement->description .= ' - ' . L::lang('NO_DESCRIPTION_AVAILABLE');
+
+			$treeElement->action = $o->getType();
+			$treeElement->icon = $o->getType();
+
+			if   ( in_array($o->getType(),['folder','link','page','alias'])) // openable?
+				$treeElement->type = $o->getType();
+
+			$this->addTreeElement($treeElement);
+		}
+	}
+
 
 
 	public function users()
@@ -685,5 +765,3 @@ class Tree
 		$this->treeElements[] = $treeElement;
 	}
 }
-
-?>

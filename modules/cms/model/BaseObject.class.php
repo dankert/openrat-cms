@@ -4,11 +4,10 @@
 namespace cms\model;
 
 use cms\base\Configuration;
-use cms\base\DB as Db;
+use cms\base\DB;
 use cms\base\Startup;
 use cms\generator\Publisher;
 use util\ArrayUtils;
-use phpseclib\Math\BigInteger;
 use util\Request;
 use util\text\variables\VariableResolver;
 use util\YAML;
@@ -912,8 +911,22 @@ SQL
         $this->objectid = null;
     }
 
+	public function getTags()
+	{
+		$sql = DB::sql( <<<SQL
+		    SELECT {{tag}}.id,{{tag.name}} FROM {{tag_object}}
+		                   LEFT JOIN {{tag}}
+		                          ON {{tag_object}}.tagid = {{tag}}.id
+		                   WHERE objectid={objectid}
+SQL
+		);
+		$sql->setInt('objectid',$this->objectid );
 
-    /**
+		return $sql->getAssoc();
+	}
+
+
+	/**
      * Objekt hinzufuegen.
      *
      * Standardrechte und vom Elternobjekt vererbbare Berechtigungen werden gesetzt.

@@ -7,6 +7,7 @@ use cms\model\Permission;
 use util\ArrayUtils;
 
 class ObjectInfoAction extends ObjectAction implements Method {
+
     public function view() {
 		$this->setTemplateVars( $this->baseObject->getProperties() );
 
@@ -17,6 +18,10 @@ class ObjectInfoAction extends ObjectAction implements Method {
 
 		$this->setTemplateVar( 'name'         , $this->baseObject->getDefaultName()->name        );
 		$this->setTemplateVar( 'description'  , $this->baseObject->getDefaultName()->description );
+
+		$this->setTemplateVar( 'description'  , $this->baseObject->getDefaultName()->description );
+
+		$this->setTemplateVar( 'tags'  , $this->baseObject->getTags() );
 
 		$languages = $this->baseObject->getProject()->getLanguages();
 		$languagesVars = array();

@@ -63,6 +63,10 @@ abstract class DbVersion
 	abstract function update();
 
 
+	/**
+	 * @param $tableName String table name
+	 * @return Table
+	 */
 	public function table( $tableName ) {
 		return new Table( $this->getDb(),$this->dbmsType, $tableName );
 	}

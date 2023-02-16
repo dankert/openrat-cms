@@ -158,7 +158,29 @@ class Project extends ModelBase
 	}
 
 
-    /**
+
+	/**
+	 * Get all tags
+	 * @return array
+	 */
+	public function getTags()
+	{
+		$sql = Db::sql( <<<SQL
+		    SELECT id,name
+			  FROM {{tag}}
+			 WHERE projectid = {projectid}
+		  ORDER BY name
+SQL
+		);
+		$sql->setInt('projectid',$this->projectid);
+
+		return $sql->getAssoc();
+	}
+
+
+
+
+	/**
      * Liefert die Sprachen des Projektes.
      *
      * @return array Id->Name

@@ -1383,5 +1383,7 @@ Gracias.',
 'FORMAT_RATSCRIPT'=>'Script',
 'FORMAT_RATSCRIPT_TEMPLATE'=>'Script template',
 'SCRIPT'=>'Script',
+'TAG'=>'Tag',
+'TAGLIST'=>'Tags',
 ];}
 }

@@ -1,0 +1,23 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form>
+		<table>
+			<row header="true">
+				<column header="true">
+					<image action="tag"/>
+					<text value="${message:name}"/>
+				</column>
+			</row>
+			<list list="${tags}" key="id" value="name">
+				<row class="data">
+					<column>
+						<checkbox name="${id}" label="${name}" />
+					</column>
+				</row>
+			</list>
+		</table>
+
+		<fieldset label="${message:add}">
+			<input name="new" />
+		</fieldset>
+	</form>
+</output>

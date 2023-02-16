@@ -56,7 +56,11 @@ class Table
 
 	}
 
-	public function column( $columnName ) {
+    /**
+     * @param $columnName String
+     * @return Column Column
+     */
+    public function column( $columnName ) {
 		return new Column( $this->db,$this->dbmsType, $this, $columnName );
 	}
 
@@ -64,6 +68,7 @@ class Table
 	/**
 	 * Erzeugt eine neue Tabelle.
 	 * Die neue Tabelle enthält bereits eine Spalte "id" (da eine leere Tabelle i.d.R. nicht zulässig ist).
+     * @return Table
 	 */
 	public function add()
 	{

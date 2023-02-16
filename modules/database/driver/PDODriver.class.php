@@ -166,13 +166,20 @@ class PDODriver
      * @param $stmt PDOStatement
      * @param $query Sql
      * @return PDOStatement
+     * @throws DatabaseException
      */
     public function execute($stmt, $query)
 	{
-		$erg = $stmt->execute();
+        try {
+            $erg = $stmt->execute();
 
-		if	( $erg === false )
-			throw new DatabaseException( 'Could not execute prepared statement "'.$query->query.'": '.implode('/',$stmt->errorInfo()) );
+            if	( $erg === false )
+                throw new DatabaseException( 'Could not execute statement: '.implode('/',$stmt->errorInfo()) );
+        }
+        catch( \PDOException $e ) {
+            throw new DatabaseException( 'database query failed: '.implode('/',$e->errorInfo ));
+        }
+
 
 		return $stmt;
 	}

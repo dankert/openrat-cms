@@ -6563,3 +6563,9 @@ FORMAT_RATSCRIPT_TEMPLATE:
 SCRIPT:
   de: Skript
   en: Script
+TAG:
+  de: Schlagwort
+  en: Tag
+TAGLIST:
+  de: Schlagwörter
+  en: Tags

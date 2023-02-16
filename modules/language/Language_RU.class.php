@@ -1383,5 +1383,7 @@ if you do not know where this mail comes from, please ignore it.',
 'FORMAT_RATSCRIPT'=>'Script',
 'FORMAT_RATSCRIPT_TEMPLATE'=>'Script template',
 'SCRIPT'=>'Script',
+'TAG'=>'Tag',
+'TAGLIST'=>'Tags',
 ];}
 }

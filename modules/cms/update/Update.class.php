@@ -12,7 +12,7 @@ use logger\Logger;
 class Update
 {
 	// This is the required DB version:
-	const SUPPORTED_VERSION = 31;
+	const SUPPORTED_VERSION = 32;
 	// -----------------------^^-----------------------------
 
 	const STATUS_UPDATE_PROGRESS = 0;

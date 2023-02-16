@@ -87,7 +87,11 @@ class Statement
 	public function execute()
 	{
 		// Ausfuehren...
-		return $this->client->execute($this->stmt, $this->sql);
+		try {
+			return $this->client->execute($this->stmt, $this->sql);
+		} catch( \Exception $e ) {
+			throw new DatabaseException('Database statement failed'."\n".$this->sql->query,$e);
+		}
 	}
 
 
