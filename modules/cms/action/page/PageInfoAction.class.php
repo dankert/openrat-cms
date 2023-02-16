@@ -102,8 +102,10 @@ class PageInfoAction extends PageAction implements Method {
 				$references[$id]['user'] = $o->lastchangeUser;
 			}
 		}
+
 		$this->setTemplateVar( 'references',$references );
 
+		$this->setTemplateVar( 'tags'  , $this->baseObject->getTags() );
 	}
     public function post() {
     }

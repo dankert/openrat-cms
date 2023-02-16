@@ -21,18 +21,7 @@
 		</fieldset>
 	</group>
 
-	<group title="${message:taglist}">
-		<list list="${tags}" value="name">
-			<text value="${name} " class="name"/>
-		</list>
-
-		<part class="act-clickable">
-			<link class="btn" type="edit" action="object" subaction="tag">
-				<text value="${message:edit}"/>
-			</link>
-		</part>
-
-	</group>
+	<include file="../include/tags" />
 
 	<list list="${languages}" extract="true">
 		<group title="${languagename}">

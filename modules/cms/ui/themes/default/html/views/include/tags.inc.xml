@@ -1,0 +1,15 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<group title="${message:taglist}">
+		<list list="${tags}" value="name">
+			<text value="${name} " class="name"/>
+		</list>
+
+		<part class="act-clickable">
+			<link class="btn" type="edit" action="object" subaction="tag">
+				<text value="${message:edit}"/>
+			</link>
+		</part>
+
+	</group>
+</output>
