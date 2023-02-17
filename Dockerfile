@@ -128,5 +128,5 @@ WORKDIR $DOCROOT
 
 USER apache
 
-HEALTHCHECK --interval=10s --timeout=5m --retries=1 CMD curl -f http://localhost:8080/status/?health || exit 1
+HEALTHCHECK --interval=10s --timeout=5m --retries=1 CMD curl -f http://localhost:8080/status/?upgrade || exit 1
 CMD /usr/sbin/httpd -D FOREGROUND
