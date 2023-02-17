@@ -8,12 +8,12 @@ use cms\base\Configuration;
 use cms\base\Configuration as C;
 use cms\base\DB;
 use cms\base\Startup;
+use cms\generator\dsl\CMSDslInterpreter;
 use cms\generator\dsl\DslCms;
 use cms\generator\dsl\DslConsole;
 use cms\generator\dsl\DslDocument;
 use cms\generator\dsl\DslHttp;
 use cms\generator\dsl\DslJson;
-use cms\generator\dsl\DslMqtt;
 use cms\generator\dsl\DslObject;
 use cms\generator\dsl\DslPage;
 use cms\generator\dsl\DslPageContext;
@@ -32,19 +32,15 @@ use cms\model\PageContent;
 use cms\model\Project;
 use cms\model\Template;
 use cms\model\Value;
-use dsl\context\BaseScriptableObject;
 use dsl\DslException;
-use dsl\executor\DslInterpreter;
 use dsl\standard\Data;
 use logger\Logger;
-use LogicException;
 use util\Code;
 use util\exception\GeneratorException;
 use util\exception\ObjectNotFoundException;
 use util\exception\PublisherException;
 use util\Html;
 use util\Http;
-use util\Mqtt;
 use util\Request;
 use util\Text;
 use util\Transformer;
@@ -801,22 +797,8 @@ class ValueGenerator extends BaseGenerator
 						break;
 
 					case self::CODE_SCRIPT:
-						$executor = new DslInterpreter(DslInterpreter::FLAG_THROW_ERROR + DslInterpreter::FLAG_SECURE );
-						$executor->addContext( [
-							'console'  => new DslConsole(),
-							'cms'      => new DslCms(),
-							'http'     => new DslHttp(),
-							'json'     => new DslJson(),
-							'page'     => new DslObject( $page ),
-							'context'  => new DslPageContext( $pageContext ),
-							'project'  => new DslProject( $page->getProject() ),
-							'Mqtt'     => new class extends BaseScriptableObject {
-								public static function open( $url,$user,$password ) {
-									return new DslMqtt( $url,$user,$password );
-								}
-							}
-							,
-						]);
+						$executor = new CMSDslInterpreter();
+						$executor->setPageContext( $pageContext );
 
 						try {
 							$executor->runCode( $element->code );
@@ -1188,18 +1170,10 @@ class ValueGenerator extends BaseGenerator
 	 */
 	protected function filterValue( $inhalt, $code)
 	{
-		$executor = new DslInterpreter(DslInterpreter::FLAG_THROW_ERROR + DslInterpreter::FLAG_SECURE );
+		$executor = new CMSDslInterpreter();
 
-		$executor->addContext( [
-			'page'     => new DslObject( (new BaseObject($this->context->pageContext->objectId))->load() ),
-			'context'  => new DslPageContext( $this->context->pageContext ),
-			'project'  => new DslProject( (new BaseObject($this->context->pageContext->objectId))->load()->getProject() ),
-			'console'  => new DslConsole(),
-			'cms'      => new DslCms(),
-			'value'    => $inhalt,
-			'http'     => new DslHttp(),
-			'json'     => new DslJson(),
-		]);
+		$executor->setPageContext( $this->context->pageContext );
+		$executor->setValue( $inhalt );
 
 		try {
 			$executor->runCode( $code );

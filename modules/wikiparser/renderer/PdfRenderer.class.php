@@ -32,6 +32,9 @@ class PdfRenderer
 	 */
 	var $footnotes = array();
 
+	/**
+	 * @var Pdf
+	 */
 	var $pdf;
 
 	var $url;
@@ -210,7 +213,7 @@ class PdfRenderer
 		#foreach( $this->footnotes as $child )
 		#	$this->renderElement( $child );
 
-		return $this->pdf->Output('', 'S');
+		return $this->pdf->Output();
 	}
 }
 

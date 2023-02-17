@@ -1,38 +1,38 @@
 <?php
 
-/*
- * 
+namespace wikiparser\renderer\fpdf;
+
+
+use FPDF;
+
+require(__DIR__.'/fpdf.php');
+
+/**
+ *
  */
-
-use logger\Logger;
-
 class Pdf extends FPDF
 {
-	/*
-	 * Ueberschreibt die FPDF-Methode, damit im Fehlerfall kein die() aufgerufen wird.
-	 */
-	function Error( $errorText )
+	public function __construct($orientation = 'P', $unit = 'mm', $size = 'A4')
 	{
-		Logger::warn('PDF-Error:'.$errorText);
+		parent::__construct($orientation, $unit, $size);
+
+		// defaults
+		$this->fontpath = __DIR__.'/../font/';
+		$this->SetFont('Arial', '', 12);
+		$this->SetTextColor(0, 0, 0);
+		$this->SetCreator( \cms\base\Startup::TITLE,true );
 	}
 
-	/*
-	 * Ueberschreibt die FPDF-Methode, damit im Fehlerfall kein die() aufgerufen wird.
+	/**
+	 * Get Output as string.
+	 * @param $dest
+	 * @param $name
+	 * @param $isUTF8
+	 * @return string
 	 */
-	function Image( $file,$x=null,$y=null,$a=0,$b=0,$type='',$link='' )
+	public function Output($dest = '', $name = '', $isUTF8 = false)
 	{
-		switch( $type )
-		{
-			case 'png':
-			case 'jpeg':
-			case 'jpg':
-				parent::Image($file,$x,$y,$a,$b,$type,$link);
-				break;
-			default:
-				Logger::warn( 'Imagetype '.$type.' not available in PDF renderer');
-				
-		}
+		return parent::Output('S','',true);
 	}
 }
 
-?>

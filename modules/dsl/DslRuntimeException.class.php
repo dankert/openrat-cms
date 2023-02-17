@@ -10,8 +10,8 @@ class DslRuntimeException extends DslException
 	 * @param $message
 	 * @param $lineNumber
 	 */
-	public function __construct($message, $lineNumber=null)
+	public function __construct($message, $lineNumber=null, $previous = null)
 	{
-		parent::__construct( $message . ($lineNumber?' on line ' . $lineNumber:'') );
+		parent::__construct( $message . ($lineNumber?' on line ' . $lineNumber:''),0,$previous );
 	}
 }

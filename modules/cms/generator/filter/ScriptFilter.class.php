@@ -4,17 +4,8 @@
 namespace cms\generator\filter;
 
 
-use cms\generator\dsl\DslCms;
-use cms\generator\dsl\DslConsole;
-use cms\generator\dsl\DslHttp;
-use cms\generator\dsl\DslJson;
-use cms\generator\dsl\DslObject;
-use cms\generator\dsl\DslPageContext;
-use cms\generator\dsl\DslProject;
-use cms\model\BaseObject;
+use cms\generator\dsl\CMSDslInterpreter;
 use dsl\DslException;
-use dsl\executor\DslInterpreter;
-use logger\Logger;
 use util\exception\GeneratorException;
 use util\Text;
 
@@ -24,19 +15,11 @@ class ScriptFilter extends AbstractFilter
 
 	public function filter( $value )
 	{
-		$interpreter = new DslInterpreter(DslInterpreter::FLAG_THROW_ERROR + DslInterpreter::FLAG_SECURE );
-
-		$interpreter->addContext( [
-			'project'  => new DslProject( (new BaseObject($this->context->getObjectId()))->load()->getProject() ),
-			'console'  => new DslConsole(),
-			'cms'      => new DslCms(),
-			'value'    => $value,
-			'http'     => new DslHttp(),
-			'json'     => new DslJson(),
-		]);
+		$interpreter = new CMSDslInterpreter();
+		$interpreter->setContext( $this->context );
+		$interpreter->setValue( $value );
 
 		try {
-			$interpreter = new DslInterpreter(DslInterpreter::FLAG_THROW_ERROR + DslInterpreter::FLAG_SECURE);
 			$interpreter->runCode( $this->script );
 			return $interpreter->getOutput();
 		}

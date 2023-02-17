@@ -5,23 +5,15 @@ namespace cms\generator;
 
 
 use cms\base\Configuration;
-use cms\generator\dsl\DslCms;
-use cms\generator\dsl\DslConsole;
-use cms\generator\dsl\DslHttp;
-use cms\generator\dsl\DslJson;
+use cms\generator\dsl\CMSDslInterpreter;
 use cms\generator\dsl\DslPage;
-use cms\generator\PageContext;
 use cms\model\File;
-use cms\model\Folder;
-use cms\model\Language;
-use cms\model\Page;
 use cms\model\Project;
 use cms\model\Template;
 use cms\model\TemplateModel;
-use cms\model\Value;
 use dsl\DslException;
 use dsl\DslTemplate;
-use dsl\executor\DslInterpreter;
+use dsl\standard\Data;
 use http\Exception\InvalidArgumentException;
 use logger\Logger;
 use util\exception\GeneratorException;
@@ -149,14 +141,9 @@ class TemplateGenerator
 			case TemplateModel::FORMAT_RATSCRIPT:
 				try {
 
-					$executor = new DslInterpreter( DslInterpreter::FLAG_THROW_ERROR + DslInterpreter::FLAG_SECURE );
-					$executor->addContext([
-						'console' => new DslConsole(),
-						'cms'     => new DslCms(),
-						'http'    => new DslHttp(),
-						'json'    => new DslJson(),
-					]);
+					$executor = new CMSDslInterpreter();
 					$executor->addContext( $data );
+					$executor->addContext( [ 'data' => new Data($data)] );
 
 					$executor->runCode($src);
 

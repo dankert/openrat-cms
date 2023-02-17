@@ -5,6 +5,7 @@ namespace dsl\executor;
 use dsl\DslAstParser;
 use dsl\DslException;
 use dsl\DslLexer;
+use dsl\DslRuntimeException;
 use dsl\standard\ArrayWrapper;
 use dsl\standard\NumberInstance;
 use dsl\standard\NumberWrapper;
@@ -48,23 +49,7 @@ class DslInterpreter
 
 		self::$secure = boolval($this->flags & self::FLAG_SECURE );
 
-		// Standard-Globals
-		$this->addContext( [
-
-			// Standard JS objects
-			'Math'   => new MathWrapper(),
-			'Array'  => new ArrayWrapper(),
-			'String' => new StringWrapper(),
-			'Number' => new NumberWrapper(),
-			'Date'   => new DateWrapper(),
-
-			// Custom Scriptbox objects
-			'System'  => new System(),
-			'write'   => $this->writer = new Writer(),
-			'writeln' => new WriteWrapper( $this->writer,"\n" ),
-			'print'   => new WriteWrapper( $this->writer,'' ),
-			'println' => new WriteWrapper( $this->writer,"\n" ),
-		] );
+		$this->addStandardContext();
 	}
 
 	/**
@@ -112,7 +97,7 @@ class DslInterpreter
 					$this->writer->buffer .= $e->getMessage();
 			}
 			if   ( $this->flags & self::FLAG_THROW_ERROR )
-				throw $e;
+				throw new DslRuntimeException('Script runtime error',0,$e);
 		}
 	}
 
@@ -132,5 +117,31 @@ class DslInterpreter
 	 */
 	public static function isSecure() {
 		return self::$secure;
+	}
+
+	/**
+	 * Adding the standard context.
+	 *
+	 * @return void
+	 */
+	private function addStandardContext()
+	{
+		// Standard-Globals
+		$this->addContext( [
+
+			// Standard JS objects
+			'Math'   => new MathWrapper(),
+			'Array'  => new ArrayWrapper(),
+			'String' => new StringWrapper(),
+			'Number' => new NumberWrapper(),
+			'Date'   => new DateWrapper(),
+
+			// Custom Scriptbox objects
+			'System'  => new System(),
+			'write'   => $this->writer = new Writer(),
+			'writeln' => new WriteWrapper( $this->writer,"\n" ),
+			'print'   => new WriteWrapper( $this->writer,'' ),
+			'println' => new WriteWrapper( $this->writer,"\n" ),
+		] );
 	}
 }
