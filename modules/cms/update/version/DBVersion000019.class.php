@@ -20,7 +20,7 @@ class DBVersion000019 extends DbVersion
     public function update()
     {
     	$table = $this->table('value');
-        $table->column('format'  )->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
+        $table->column('format'  )->type(Column::TYPE_INT)->defaultValue(0)->add();
 
         // Initial Value: Copy from element.
         $tableValue   = $this->table('value')->getSqlName();

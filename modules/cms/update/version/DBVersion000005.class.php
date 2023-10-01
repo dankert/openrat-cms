@@ -18,7 +18,7 @@ class DBVersion000005 extends DbVersion
 		$table = $this->table('user');
 
 		// longer Passwords! 50 is not enough.
-		$table->column('password_hash')->type(Column::TYPE_VARCHAR)->size(255)->add();
+		$table->column('password_hash')->type(Column::TYPE_VARCHAR)->add();
 		
 		$db    = $this->getDb();
 		$updateStmt = $db->sql('UPDATE '.$table->getSqlName().
@@ -28,6 +28,6 @@ class DBVersion000005 extends DbVersion
 
 		$table->column('password')->drop();
 		
-		$table->column('password_salt')->type(Column::TYPE_VARCHAR)->size(255)->add();
+		$table->column('password_salt')->type(Column::TYPE_VARCHAR)->add();
 	}
 }

@@ -21,7 +21,7 @@ class DBVersion000016 extends DbVersion
     	$table = $this->table('element');
 
         // Type 3 = Text is the default.
-        $table->column('typeid')->type(Column::TYPE_INT)->size(0)->defaultValue(3)->add();
+        $table->column('typeid')->type(Column::TYPE_INT)->defaultValue(3)->add();
 
         $db = $this->getDb();
         $tableProject = $table->getSqlName();
@@ -58,7 +58,7 @@ SQL
 
 
 
-        $table->column('flags')->type(Column::TYPE_INT)->size(0)->defaultValue(0)->add();
+        $table->column('flags')->type(Column::TYPE_INT)->defaultValue(0)->add();
 
         $updateStmt = $db->sql(<<<SQL
 UPDATE $tableProject
@@ -90,7 +90,7 @@ SQL
 
 
 
-        $table->column('format')->type(Column::TYPE_INT)->size(0)->defaultValue(0)->add();
+        $table->column('format')->type(Column::TYPE_INT)->defaultValue(0)->add();
 
         // Format = HTML
         $updateStmt = $db->sql(<<<SQL

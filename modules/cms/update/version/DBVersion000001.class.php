@@ -20,12 +20,12 @@ class DBVersion000001 extends DbVersion
 		$table = $this->table('project')->add();
 
 		$table->column('name'               )->type(Column::TYPE_VARCHAR)->size( 128)->add();
-		$table->column('target_dir'         )->type(Column::TYPE_VARCHAR)->size( 255)->add();
-		$table->column('ftp_url'            )->type(Column::TYPE_VARCHAR)->size( 255)->add();
-		$table->column('ftp_passive'        )->type(Column::TYPE_INT    )->add();
-		$table->column('cmd_after_publish'  )->type(Column::TYPE_VARCHAR)->size( 255)->add();
-		$table->column('content_negotiation')->type(Column::TYPE_INT    )->size(   1)->defaultValue(   0)->add();
-		$table->column('cut_index'          )->type(Column::TYPE_INT    )->size(   1)->defaultValue(   0)->add();
+		$table->column('target_dir'         )->type(Column::TYPE_VARCHAR)->add();
+		$table->column('ftp_url'            )->type(Column::TYPE_VARCHAR)->add();
+		$table->column('ftp_passive'        )->type(Column::TYPE_INT    )->size(Column::SIZE_INT_BOOL )->add();
+		$table->column('cmd_after_publish'  )->type(Column::TYPE_VARCHAR)->add();
+		$table->column('content_negotiation')->type(Column::TYPE_INT    )->size( Column::SIZE_INT_BOOL )->defaultValue(   0)->add();
+		$table->column('cut_index'          )->type(Column::TYPE_INT    )->size( Column::SIZE_INT_BOOL )->defaultValue(   0)->add();
 		
 		$table->addPrimaryKey();
 		$table->addIndex('name');
@@ -34,13 +34,13 @@ class DBVersion000001 extends DbVersion
 		$table = $this->table('user')->add();
 		$table->column('name')->type(Column::TYPE_VARCHAR)->size(128)->add();
 		$table->column('password')->type(Column::TYPE_VARCHAR)->size(50)->add();
-		$table->column('ldap_dn')->type(Column::TYPE_VARCHAR)->size(255)->add();
+		$table->column('ldap_dn')->type(Column::TYPE_VARCHAR)->add();
 		$table->column('fullname')->type(Column::TYPE_VARCHAR)->size(128)->add();
 		$table->column('tel')->type(Column::TYPE_VARCHAR)->size(128)->add();
-		$table->column('mail')->type(Column::TYPE_VARCHAR)->size(255)->add();
-		$table->column('descr')->type(Column::TYPE_VARCHAR)->size(255)->add();
+		$table->column('mail')->type(Column::TYPE_VARCHAR)->add();
+		$table->column('descr')->type(Column::TYPE_VARCHAR)->add();
 		$table->column('style')->type(Column::TYPE_VARCHAR)->size(64)->add();
-		$table->column('is_admin')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
+		$table->column('is_admin')->type(Column::TYPE_INT)->size( Column::SIZE_INT_BOOL )->defaultValue(0)->add();
 		$table->addPrimaryKey();
 		$table->addUniqueIndex('name');
 		
@@ -51,17 +51,17 @@ class DBVersion000001 extends DbVersion
 		
 		$table = $this->table('object')->add();
 		$table->column('parentid')->type(Column::TYPE_INT)->nullable()->add();
-		$table->column('projectid')->type(Column::TYPE_INT)->size(0)->defaultValue(0)->add();
+		$table->column('projectid')->type(Column::TYPE_INT)->defaultValue(0)->add();
 		$table->column('filename')->type(Column::TYPE_VARCHAR)->size(150)->add();
-		$table->column('orderid')->type(Column::TYPE_INT)->size(0)->add();
-		$table->column('create_date')->type(Column::TYPE_INT)->size(0)->add();
-		$table->column('create_userid')->type(Column::TYPE_INT)->size(0)->nullable()->add();
-		$table->column('lastchange_date')->type(Column::TYPE_INT)->size(0)->add();
-		$table->column('lastchange_userid')->type(Column::TYPE_INT)->size(0)->nullable()->add();
-		$table->column('is_folder')->type(Column::TYPE_INT)->size(1)->add();
-		$table->column('is_file')->type(Column::TYPE_INT)->size(1)->add();
-		$table->column('is_page')->type(Column::TYPE_INT)->size(1)->add();
-		$table->column('is_link')->type(Column::TYPE_INT)->size(1)->add();
+		$table->column('orderid')->type(Column::TYPE_INT)->add();
+		$table->column('create_date')->type(Column::TYPE_INT)->add();
+		$table->column('create_userid')->type(Column::TYPE_INT)->nullable()->add();
+		$table->column('lastchange_date')->type(Column::TYPE_INT)->add();
+		$table->column('lastchange_userid')->type(Column::TYPE_INT)->nullable()->add();
+		$table->column('is_folder')->type(Column::TYPE_INT)->size(Column::SIZE_INT_BOOL)->add();
+		$table->column('is_file')->type(Column::TYPE_INT)->size(Column::SIZE_INT_BOOL)->add();
+		$table->column('is_page')->type(Column::TYPE_INT)->size(Column::SIZE_INT_BOOL)->add();
+		$table->column('is_link')->type(Column::TYPE_INT)->size(Column::SIZE_INT_BOOL)->add();
 		$table->addPrimaryKey();
 		$table->addConstraint('projectid', 'project');
 		$table->addConstraint('lastchange_userid', 'user');
@@ -94,10 +94,10 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$table = $this->table('language')->add();
-		$table->column('projectid')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('projectid')->type(Column::TYPE_INT)->add();
 		$table->column('isocode')->type(Column::TYPE_VARCHAR)->size(10)->add();
 		$table->column('name')->type(Column::TYPE_VARCHAR)->size(50)->add();
-		$table->column('is_default')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
+		$table->column('is_default')->type(Column::TYPE_INT)->size(Column::SIZE_INT_BOOL)->defaultValue(0)->add();
 		$table->addPrimaryKey();
 		$table->addConstraint('projectid', 'project');
 		$table->addUniqueIndex(['projectid','isocode']);
@@ -106,8 +106,8 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$table = $this->table('page')->add();
-		$table->column('objectid')->type(Column::TYPE_INT)->size(0)->add();
-		$table->column('templateid')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('objectid')->type(Column::TYPE_INT)->add();
+		$table->column('templateid')->type(Column::TYPE_INT)->add();
 		$table->addPrimaryKey();
 		$table->addConstraint('templateid', 'template');
 		$table->addConstraint('objectid', 'object');
@@ -119,10 +119,10 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$table = $this->table('projectmodel')->add();
-		$table->column('projectid')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('projectid')->type(Column::TYPE_INT)->add();
 		$table->column('name')->type(Column::TYPE_VARCHAR)->size(50)->add();
 		$table->column('extension')->type(Column::TYPE_VARCHAR)->size(10)->nullable()->add();
-		$table->column('is_default')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
+		$table->column('is_default')->type(Column::TYPE_INT)->size(Column::SIZE_INT_BOOL)->defaultValue(0)->add();
 		$table->addPrimaryKey();
 		$table->addConstraint('projectid', 'project');
 		
@@ -131,18 +131,18 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$table = $this->table('element')->add();
-		$table->column('templateid')->type(Column::TYPE_INT)->size(0)->defaultValue(0)->add();
+		$table->column('templateid')->type(Column::TYPE_INT)->defaultValue(0)->add();
 		$table->column('name')->type(Column::TYPE_VARCHAR)->size(50)->add();
-		$table->column('descr')->type(Column::TYPE_VARCHAR)->size(255)->add();
+		$table->column('descr')->type(Column::TYPE_VARCHAR)->add();
 		$table->column('type')->type(Column::TYPE_VARCHAR)->size(20)->add();
 		$table->column('subtype')->type(Column::TYPE_VARCHAR)->size(20)->nullable()->add();
-		$table->column('with_icon')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
+		$table->column('with_icon')->type(Column::TYPE_INT)->size(Column::SIZE_INT_BOOL)->defaultValue(0)->add();
 		$table->column('dateformat')->type(Column::TYPE_VARCHAR)->size(100)->nullable()->add();
-		$table->column('wiki')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->nullable()->add();
-		$table->column('html')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->nullable()->add();
-		$table->column('all_languages')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
-		$table->column('writable')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
-		$table->column('decimals')->type(Column::TYPE_INT)->size(0)->nullable()->add();
+		$table->column('wiki')->type(Column::TYPE_INT)->size(Column::SIZE_INT_BOOL)->defaultValue(0)->nullable()->add();
+		$table->column('html')->type(Column::TYPE_INT)->size(Column::SIZE_INT_BOOL)->defaultValue(0)->nullable()->add();
+		$table->column('all_languages')->type(Column::TYPE_INT)->size(Column::SIZE_INT_BOOL)->defaultValue(0)->add();
+		$table->column('writable')->type(Column::TYPE_INT)->size(Column::SIZE_INT_BOOL)->defaultValue(0)->add();
+		$table->column('decimals')->type(Column::TYPE_INT)->nullable()->add();
 		$table->column('dec_point')->type(Column::TYPE_VARCHAR)->size(5)->nullable()->add();
 		$table->column('thousand_sep')->type(Column::TYPE_VARCHAR)->size(1)->nullable()->add();
 		$table->column('code')->type(Column::TYPE_TEXT)->nullable()->add();
@@ -162,9 +162,9 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$table = $this->table('file')->add();
-		$table->column('objectid')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('objectid')->type(Column::TYPE_INT)->add();
 		$table->column('extension')->type(Column::TYPE_VARCHAR)->size(10)->add();
-		$table->column('size')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('size')->type(Column::TYPE_INT)->add();
 		$table->column('value')->type(Column::TYPE_BLOB)->add();
 		$table->addPrimaryKey();
 		$table->addConstraint('objectid', 'object');
@@ -174,7 +174,7 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$table = $this->table('folder')->add();
-		$table->column('objectid')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('objectid')->type(Column::TYPE_INT)->add();
 		$table->addPrimaryKey();
 		$table->addConstraint('objectid', 'object');
 		
@@ -185,9 +185,9 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$table = $this->table('link')->add();
-		$table->column('objectid')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('objectid')->type(Column::TYPE_INT)->add();
 		$table->column('link_objectid')->type(Column::TYPE_INT)->nullable()->add();
-		$table->column('url')->type(Column::TYPE_VARCHAR)->size(255)->nullable()->add();
+		$table->column('url')->type(Column::TYPE_VARCHAR)->nullable()->add();
 		$table->addPrimaryKey();
 		$table->addConstraint('objectid', 'object');
 		$table->addConstraint('link_objectid', 'object');
@@ -200,10 +200,10 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$table = $this->table('name')->add();
-		$table->column('objectid')->type(Column::TYPE_INT)->size(0)->add();
-		$table->column('name')->type(Column::TYPE_VARCHAR)->size(255)->add();
-		$table->column('descr')->type(Column::TYPE_VARCHAR)->size(255)->add();
-		$table->column('languageid')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('objectid')->type(Column::TYPE_INT)->add();
+		$table->column('name')->type(Column::TYPE_VARCHAR)->add();
+		$table->column('descr')->type(Column::TYPE_VARCHAR)->add();
+		$table->column('languageid')->type(Column::TYPE_INT)->add();
 		$table->addPrimaryKey();
 		$table->addConstraint('objectid', 'object');
 		$table->addConstraint('languageid', 'language');
@@ -217,8 +217,8 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$table = $this->table('templatemodel')->add();
-		$table->column('templateid')->type(Column::TYPE_INT)->size(0)->add();
-		$table->column('projectmodelid')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('templateid')->type(Column::TYPE_INT)->add();
+		$table->column('projectmodelid')->type(Column::TYPE_INT)->add();
 		$table->column('extension')->type(Column::TYPE_VARCHAR)->size(10)->nullable()->add();
 		$table->column('text')->type(Column::TYPE_TEXT)->add();
 		$table->addPrimaryKey();
@@ -248,15 +248,15 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$table = $this->table('value')->add();
-		$table->column('pageid')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('pageid')->type(Column::TYPE_INT)->add();
 		$table->column('languageid')->type(Column::TYPE_INT)->add();
-		$table->column('elementid')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('elementid')->type(Column::TYPE_INT)->add();
 		$table->column('linkobjectid')->type(Column::TYPE_INT)->nullable()->add();
 		$table->column('text')->type(Column::TYPE_TEXT)->nullable()->add();
 		$table->column('number')->type(Column::TYPE_INT)->nullable()->add();
 		$table->column('date')->type(Column::TYPE_INT)->nullable()->add();
-		$table->column('active')->type(Column::TYPE_INT)->size(0)->add();
-		$table->column('lastchange_date')->type(Column::TYPE_INT)->size(0)->add();
+		$table->column('active')->type(Column::TYPE_INT)->add();
+		$table->column('lastchange_date')->type(Column::TYPE_INT)->add();
 		$table->column('lastchange_userid')->type(Column::TYPE_INT)->nullable()->add();
 		$table->column('publish')->type(Column::TYPE_INT)->add();
 		$table->addPrimaryKey();
@@ -281,18 +281,18 @@ class DBVersion000001 extends DbVersion
 		$table->column('userid')->type(Column::TYPE_INT)->nullable()->add();
 		$table->column('groupid')->type(Column::TYPE_INT)->nullable()->add();
 		$table->column('objectid')->type(Column::TYPE_INT)->add();
-		$table->column('languageid')->type(Column::TYPE_INT)->size(0)->nullable()->add();
-		$table->column('is_write')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
-		$table->column('is_prop')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
-		$table->column('is_create_folder')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
-		$table->column('is_create_file')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
-		$table->column('is_create_link')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
-		$table->column('is_create_page')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
-		$table->column('is_delete')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
-		$table->column('is_release')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
-		$table->column('is_publish')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
-		$table->column('is_grant')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
-		$table->column('is_transmit')->type(Column::TYPE_INT)->size(1)->defaultValue(0)->add();
+		$table->column('languageid')->type(Column::TYPE_INT)->nullable()->add();
+		$table->column('is_write')->type(Column::TYPE_INT)->size(Column::SIZE_INT_BOOL)->defaultValue(0)->add();
+		$table->column('is_prop')->type(Column::TYPE_INT)->size(Column::SIZE_INT_BOOL)->defaultValue(0)->add();
+		$table->column('is_create_folder')->type(Column::TYPE_INT)->size(Column::SIZE_INT_BOOL)->defaultValue(0)->add();
+		$table->column('is_create_file')->type(Column::TYPE_INT)->size(Column::SIZE_INT_BOOL)->defaultValue(0)->add();
+		$table->column('is_create_link')->type(Column::TYPE_INT)->size(Column::SIZE_INT_BOOL)->defaultValue(0)->add();
+		$table->column('is_create_page')->type(Column::TYPE_INT)->size(Column::SIZE_INT_BOOL)->defaultValue(0)->add();
+		$table->column('is_delete')->type(Column::TYPE_INT)->size(Column::SIZE_INT_BOOL)->defaultValue(0)->add();
+		$table->column('is_release')->type(Column::TYPE_INT)->size(Column::SIZE_INT_BOOL)->defaultValue(0)->add();
+		$table->column('is_publish')->type(Column::TYPE_INT)->size(Column::SIZE_INT_BOOL)->defaultValue(0)->add();
+		$table->column('is_grant')->type(Column::TYPE_INT)->size(Column::SIZE_INT_BOOL)->defaultValue(0)->add();
+		$table->column('is_transmit')->type(Column::TYPE_INT)->size(Column::SIZE_INT_BOOL)->defaultValue(0)->add();
 		$table->addPrimaryKey();
 		$table->addConstraint('groupid', 'group');
 		$table->addConstraint('userid', 'user');

@@ -65,6 +65,8 @@ class ConfigurationAction extends BaseAction
             'loaded_ini_file' => php_ini_loaded_file(),
 		];
 
+        $conf['interpreter']['server'] = $_SERVER;
+        $conf['interpreter']['64bit'] = PHP_INT_SIZE >= 8;
         $conf['interpreter']['server'     ] = $_SERVER;
         $conf['interpreter']['environment'] = $_ENV;
         $conf['interpreter']['temp_dir'   ] = sys_get_temp_dir();

@@ -20,7 +20,7 @@ class DBVersion000027 extends DbVersion
     public function update()
     {
     	$table = $this->table('acl');
-        $table->column('type'  )->type(Column::TYPE_INT)->size(1)->defaultValue(3)->add();
+        $table->column('type'  )->type(Column::TYPE_INT)->size(Column::SIZE_INT_MED)->defaultValue(3)->add();
 
         // Initial Value: Copy from element.
         $tableSqlName = $table->getSqlName();

@@ -21,7 +21,7 @@ class DBVersion000008 extends DbVersion
 	{
 		$table = $this->table('object');
 
-		$table->column('typeid')->type(Column::TYPE_INT)->size(2)->defaultValue(0)->add();
+		$table->column('typeid')->type(Column::TYPE_INT)->size(Column::SIZE_INT_MED)->defaultValue(0)->add();
         $table->addIndex('typeid');
 
         // Converting old values...

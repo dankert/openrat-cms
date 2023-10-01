@@ -21,8 +21,8 @@ class DBVersion000011 extends DbVersion
     {
         $table = $this->table('project');
 
-        $table->column( 'url')->type( Column::TYPE_VARCHAR)->size( 255)->defaultValue( '')->add();
-        $table->column( 'flags')->type( Column::TYPE_INT)->size( 11)->defaultValue( 0)->add();
+        $table->column( 'url')->type( Column::TYPE_VARCHAR)->defaultValue( '')->add();
+        $table->column( 'flags')->type( Column::TYPE_INT)->defaultValue( 0)->add();
 
         $db = $this->getDb();
         $tableProject = $table->getSqlName();

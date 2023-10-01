@@ -10,6 +10,22 @@ class Column
 	const TYPE_VARCHAR = 2;
 	const TYPE_TEXT    = 3;
 	const TYPE_BLOB    = 4;
+	const TYPE_BIGINT  = 5;
+
+	/**
+	 * medium INT with 1 byte.
+	 */
+	const SIZE_INT_BOOL = 1;
+	/**
+	 * medium INT with 4 bytes.
+	 */
+	const SIZE_INT_MED = 2;
+	/**
+	 * medium INT with 8 bytes.
+	 */
+	const SIZE_INT_BIG = 3;
+
+	const SIZE_VARCHAR_MAX = 255;
 
 	private $db;
 	private $dbmsType;
@@ -45,18 +61,23 @@ class Column
 	}
 
 
+	/**
+	 * Column is nullable.
+	 * Marks the column as nullable, default is not nullable.
+	 * @return $this
+	 */
 	public function nullable() {
 		$this->nullable = true;;
 		return $this;
 	}
 
 	/**
-	 * Column constructor.
+	 * Creates a column.
 	 *
-	 * @param $db Database
-	 * @param $type
-	 * @param $table Table
-	 * @param $name
+	 * @param $db Database database
+	 * @param $type int Type of column
+	 * @param $table string table name
+	 * @param $name string column name
 	 */
 	public function __construct($db, $type, $table, $name)
 	{
@@ -73,24 +94,47 @@ class Column
 	protected function getColumnDefinition()
 	{
 		$table = $this->table->getSqlName();
+		$size = null;
 
 		switch ($this->type) {
 			case self::TYPE_INT:
 				switch ($this->dbmsType) {
 					case DbVersion::TYPE_MYSQL:
-						if ($this->size == 1)
-							$dbmsInternalType = 'TINYINT';
-						else
-							$dbmsInternalType = 'INT';
+
+						switch ($this->size ) {
+							case self::SIZE_INT_BOOL: // small 1 or 2 byte integer
+								$dbmsInternalType = 'TINYINT';
+								break;
+							case self::SIZE_INT_MED:
+							case null: // default size is the 4-byte integer
+								$dbmsInternalType = 'INT';
+								break;
+							case self::SIZE_INT_BIG: // 8 byte integer
+								$dbmsInternalType = 'BIGINT';
+								break;
+						}
+
 						break;
 
-					case DbVersion::TYPE_ORACLE:
-						$dbmsInternalType = 'NUMBER';
+					case DbVersion::TYPE_POSTGRES:
+						switch ( $this->size ) {
+
+							case self::SIZE_INT_BOOL: // small 1 or 2 byte integer
+								$dbmsInternalType = 'SMALLINT';
+								break;
+							case self::SIZE_INT_MED:
+							case null: // default size is the 4-byte integer
+								$dbmsInternalType = 'INTEGER';
+								break;
+							case self::SIZE_INT_BIG: // 8 byte integer
+								$dbmsInternalType = 'BIGINT';
+								break;
+						}
 						break;
 
+					case DbVersion::TYPE_SQLITE:
 					default:
 						$dbmsInternalType = 'INTEGER';
-
 				}
 				break;
 
@@ -100,6 +144,11 @@ class Column
 						$dbmsInternalType = 'VARCHAR';
 
 				}
+				$size = $this->size; // char count
+
+				if   ( ! $size )
+					$size = self::SIZE_VARCHAR_MAX;
+
 				break;
 
 			case self::TYPE_TEXT:
@@ -129,9 +178,6 @@ class Column
 						break;
 
 					case DbVersion::TYPE_POSTGRES:
-						$dbmsInternalType = 'TEXT';
-						break;
-
 					case DbVersion::TYPE_SQLITE:
 						$dbmsInternalType = 'TEXT';
 						break;
@@ -153,7 +199,7 @@ class Column
 		}
 
 		return $dbmsInternalType .
-			($this->size    !== null ? '(' . $this->size . ')' : '') .
+			($size ? '(' . $size . ')' : '') .
 			($this->charset !== null ? ' CHARACTER SET ' . $this->charset : '') .
 			($this->default !== null ? ' DEFAULT ' . (is_string($this->default) ? "'" : '') . $this->default . (is_string($this->default) ? "'" : '') : '') .
 			' ' . ($this->nullable ? 'NULL' : 'NOT NULL');

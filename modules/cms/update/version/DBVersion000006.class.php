@@ -17,11 +17,11 @@ class DBVersion000006 extends DbVersion
 	{
 		$table = $this->table('user');
 
-		$table->column('password_expires')->type(Column::TYPE_INT)->size(0)->nullable()->add();
+		$table->column('password_expires')->type(Column::TYPE_INT)->nullable()->add();
 		
-		$table->column('last_login'      )->type(Column::TYPE_INT)->size(0)->nullable()->add();
+		$table->column('last_login'      )->type(Column::TYPE_INT)->nullable()->add();
 		
-		$table->column('password_algo'   )->type(Column::TYPE_INT)->size(0)->defaultValue(2)->add();
+		$table->column('password_algo'   )->type(Column::TYPE_INT)->defaultValue(2)->add();
 		
 		// Setting Password algo. Passwords beginning with '$' are (old) MD5-hashes. 
 		

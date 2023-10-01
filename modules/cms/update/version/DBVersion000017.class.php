@@ -20,8 +20,8 @@ class DBVersion000017 extends DbVersion
     {
 
     	$table = $this->table('object');
-        $table->column('valid_from')->type(Column::TYPE_INT)->size(0)->nullable()->add();
-        $table->column('valid_to'  )->type(Column::TYPE_INT)->size(0)->nullable()->add();
+        $table->column('valid_from')->type(Column::TYPE_INT)->nullable()->add();
+        $table->column('valid_to'  )->type(Column::TYPE_INT)->nullable()->add();
     }
 }
 

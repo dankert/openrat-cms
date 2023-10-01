@@ -17,7 +17,7 @@ class DBVersion000007 extends DbVersion
 	public function update()
 	{
 		$table = $this->table('user');
-		$table->column('otp_secret'  )->type(Column::TYPE_VARCHAR)->size(255)->nullable()->add();
+		$table->column('otp_secret'  )->type(Column::TYPE_VARCHAR)->nullable()->add();
 
 		$tableName = $table->getSqlName();
 		$db    = $this->getDb();
@@ -31,9 +31,9 @@ class DBVersion000007 extends DbVersion
 			$stmt->execute();
 		}
 		
-		$table->column('totp'        )->type(Column::TYPE_INT    )->size(  1)->defaultValue(   0)->add();
-		$table->column('hotp_counter')->type(Column::TYPE_INT    )->size(  0)->defaultValue(   0)->add();
-		$table->column('hotp'        )->type(Column::TYPE_INT    )->size(  1)->defaultValue(   0)->add();
+		$table->column('totp'        )->type(Column::TYPE_INT    )->size(  Column::SIZE_INT_BOOL)->defaultValue(   0)->add();
+		$table->column('hotp_counter')->type(Column::TYPE_INT    )->size(  Column::SIZE_INT_MED)->defaultValue(   0)->add();
+		$table->column('hotp'        )->type(Column::TYPE_INT    )->size(  Column::SIZE_INT_BOOL)->defaultValue(   0)->add();
 		
 	}
 }

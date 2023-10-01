@@ -26,8 +26,8 @@ class DBVersion000009 extends DbVersion
 	{
 		// Creating new table 'url'
         $table = $this->table('url')->add();
-        $table->column('objectid')->type(Column::TYPE_INT)->size(0)->add();
-        $table->column('url')->type(Column::TYPE_VARCHAR)->size(255)->add();
+        $table->column('objectid')->type(Column::TYPE_INT)->add();
+        $table->column('url')->type(Column::TYPE_VARCHAR)->add();
 
         $table->addPrimaryKey();
         $table->addConstraint('objectid', 'object');
