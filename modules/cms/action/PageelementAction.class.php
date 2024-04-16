@@ -25,6 +25,7 @@ use cms\model\Value;
 use language\Messages;
 use LogicException;
 use util\ArrayUtils;
+use util\Coordinates;
 use util\exception\ObjectNotFoundException;
 use util\exception\PublisherException;
 use util\exception\SecurityException;
@@ -704,6 +705,12 @@ class PageelementAction extends BaseAction
 
 			case Element::ELEMENT_TYPE_CHECKBOX:
 				return $value->number?'ON':'OFF';
+
+			case Element::ELEMENT_TYPE_COORD:
+				$lat = $value->number >>32;
+				$long = $value->number <<32 >>32;
+				$coordinates = new Coordinates( $lat,$long );
+				return $coordinates->format( Coordinates::FORMAT_WGS84_DEGREES);
 
 			default:
 				return '';

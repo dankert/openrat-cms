@@ -178,10 +178,18 @@ class PageAllAction extends PageAction implements Method {
 
 				case Element::ELEMENT_TYPE_TEXT:
 				case Element::ELEMENT_TYPE_DATA:
-				case Element::ELEMENT_TYPE_COORD:
 
 					$content = $value->text;
 					break;
+
+				case Element::ELEMENT_TYPE_COORD:
+					$output['lat' ] = $value->number >> 32;
+					$output['long'] = $value->number << 32 >> 32;
+					break;
+
+				default:
+					throw new \InvalidArgumentException("Unsupported element type: ".$element->typeid);
+
 			}
 
 			$output[ 'name'   ] = $element->name;
@@ -229,9 +237,12 @@ class PageAllAction extends PageAction implements Method {
 
 				case Element::ELEMENT_TYPE_TEXT:
 				case Element::ELEMENT_TYPE_DATA:
-				case Element::ELEMENT_TYPE_COORD:
 					$value->text = $this->request->getText($element->name);
 					break;
+				case Element::ELEMENT_TYPE_COORD:
+					$value->number = $this->request->getNumber($element->name.'_lat') << 32 | $this->request->getNumber($element->name.'_long');
+					break;
+
 				case Element::ELEMENT_TYPE_LONGTEXT:
 					$value->text   = $this->compactOIDs($this->request->getText($element->name));
 					$value->format = $oldValue->format;

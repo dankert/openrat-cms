@@ -135,6 +135,12 @@
 							<selectbox list="items" name="${name}" default="${value}" />
 						</fieldset>
 				</if>
+				<if value="${type}" equals="coord">
+					<fieldset label="">
+						<input type="number" name="${name}_lat" label="${message:latitude}" default="${lat}" />
+						<input type="number" name="${name}_long" label="${message:longitude}" default="${long}" />
+					</fieldset>
+				</if>
 			</group>
 		</list>
 

@@ -323,7 +323,7 @@
                   </td>
                   <td class="<?php echo O::escapeHtml('or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
                     <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('settings') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
-                      <pre><?php echo O::escapeHtml(''.@$entry['value'].'') ?></pre>
+                      <span><?php echo O::escapeHtml(''.@$entry['value'].'') ?></span>
                     </a>
                   </td>
                 </tr>

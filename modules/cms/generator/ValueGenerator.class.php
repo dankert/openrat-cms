@@ -1115,9 +1115,9 @@ class ValueGenerator extends BaseGenerator
 				Element::ELEMENT_TYPE_LONGTEXT,
 				Element::ELEMENT_TYPE_SELECT,
 				Element::ELEMENT_TYPE_DATA,
-				Element::ELEMENT_TYPE_COORD,
 			]) && $value->text != '' && $value->text != null ||
 			in_array($element->typeid,[
+				Element::ELEMENT_TYPE_COORD,
 				Element::ELEMENT_TYPE_NUMBER
 			]) && $value->number != null ||
 			in_array($element->typeid,[

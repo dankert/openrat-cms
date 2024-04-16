@@ -10,16 +10,16 @@ use util\ArrayUtils;
 use logger\Logger;
 
 /**
- * Diese Objektklasse stellt ein Element das.
+ * Element.
  *
- * Ein Element ist ein Platzhalter in einem Template und kann verschiedenen
- * Typs sein, z.B. Text oder ein Bild.
+ * An element is a placeholder in a template.
+ * It is of a specific type, e.g. text, image, ...
  *
  * @author Jan Dankert
- * @package openrat.objects
  */
 class Element extends ModelBase
 {
+	// the list of all available element types:
     const ELEMENT_TYPE_DATE     =  1;
     const ELEMENT_TYPE_NUMBER   =  2;
     const ELEMENT_TYPE_TEXT     =  3;

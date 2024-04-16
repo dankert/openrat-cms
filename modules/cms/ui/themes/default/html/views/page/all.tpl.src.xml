@@ -11,6 +11,37 @@
 			<hidden name="elementid" />
 
 			<group title="${label}" collapsible="false" description="${desc}">
+				<if value="${type}" equals="insert">
+					<fieldset>
+						<selectbox list="objects" name="${name}" default="${value}" />
+					</fieldset>
+				</if>
+				<if value="${type}" equals="number">
+					<fieldset>
+						<part>
+							<hidden name="decimals" default="decimals"/>
+							<if value="${decimals}" equals="0">
+								<set var="type" value="'number'" />
+							</if>
+							<else>
+								<set var="type" value="text" />
+							</else>
+							<input type="${type}" size="15" maxlength="20" name="${name}" default="${value}"/>
+						</part>
+					</fieldset>
+				</if>
+				<if value="${type}" equals="checkbox">
+					<fieldset>
+						<part>
+							<checkbox name="${name}" default="${value}" label="${label}" />
+						</part>
+					</fieldset>
+				</if>
+				<if value="${type}" equals="select">
+					<fieldset>
+						<selectbox list="items" name="${name}" default="${value}" />
+					</fieldset>
+				</if>
 				<if value="${type}" equals="date">
 					<fieldset label="">
 						<input type="date" name="${name}_date" label="${message:date}" default="${date}" />
@@ -31,66 +62,66 @@
 					<hidden name="format"/>
 					<if value="${editor}" equals="markdown">
 						<fieldset>
-						<editor type="markdown" name="${name}" default="${value}" />
+							<editor type="markdown" name="${name}" default="${value}" />
 						</fieldset>
 					</if>
 					<if value="${editor}" equals="html">
 						<fieldset>
-						<editor type="html" name="${name}"  default="${value}" />
+							<editor type="html" name="${name}"  default="${value}" />
 						</fieldset>
 					</if>
 					<if value="${editor}" equals="wiki">
 						<fieldset>
-						<editor type="wiki" name="${name}"  default="${value}"/>
+							<editor type="wiki" name="${name}"  default="${value}"/>
 
-						<!--
-						<group title="${message:help}" open="false">
-							<table filter="false">
-								<column>
-									<text value="${config:editor/text-markup/strong-begin}"/>
-									<text value="${message:text_markup_strong}"/>
-									<text value="${config:editor/text-markup/strong-end}"/>
-									<newline/>
-									<text value="${config:editor/text-markup/emphatic-begin}"/>
-									<text value="${message:text_markup_emphatic}"/>
-									<text value="${config:editor/text-markup/emphatic-end}"/>
-								</column>
-								<column>
-									<text value="${config:editor/text-markup/list-numbered}"/>
-									<text value="${message:text_markup_numbered_list}"/>
-									<newline/>
-									<text value="${config:editor/text-markup/list-numbered}"/>
-									<text value="..."/>
-									<newline/>
-								</column>
-								<column>
-									<text value="${config:editor/text-markup/list-unnumbered}"/>
-									<text value="${message:text_markup_unnumbered_list}"/>
-									<newline/>
-									<text value="${config:editor/text-markup/list-unnumbered}"/>
-									<text value="..."/>
-									<newline/>
-								</column>
-								<column>
-									<text value="${config:editor/text-markup/table-cell-sep}"/>
-									<text value="${message:text_markup_table}"/>
-									<text value="${config:editor/text-markup/table-cell-sep}"/>
-									<text value="..."/>
-									<text value="${config:editor/text-markup/table-cell-sep}"/>
-									<text value="..."/>
-									<text value="${config:editor/text-markup/table-cell-sep}"/>
-									<newline/>
-									<text value="${config:editor/text-markup/table-cell-sep}"/>
-									<text value="..."/>
-									<text value="${config:editor/text-markup/table-cell-sep}"/>
-									<text value="..."/>
-									<text value="${config:editor/text-markup/table-cell-sep}"/>
-									<text value="..."/>
-									<text value="${config:editor/text-markup/table-cell-sep}"/>
-									<newline/>
-								</column>
-							</table>
-						</group>-->
+							<!--
+							<group title="${message:help}" open="false">
+								<table filter="false">
+									<column>
+										<text value="${config:editor/text-markup/strong-begin}"/>
+										<text value="${message:text_markup_strong}"/>
+										<text value="${config:editor/text-markup/strong-end}"/>
+										<newline/>
+										<text value="${config:editor/text-markup/emphatic-begin}"/>
+										<text value="${message:text_markup_emphatic}"/>
+										<text value="${config:editor/text-markup/emphatic-end}"/>
+									</column>
+									<column>
+										<text value="${config:editor/text-markup/list-numbered}"/>
+										<text value="${message:text_markup_numbered_list}"/>
+										<newline/>
+										<text value="${config:editor/text-markup/list-numbered}"/>
+										<text value="..."/>
+										<newline/>
+									</column>
+									<column>
+										<text value="${config:editor/text-markup/list-unnumbered}"/>
+										<text value="${message:text_markup_unnumbered_list}"/>
+										<newline/>
+										<text value="${config:editor/text-markup/list-unnumbered}"/>
+										<text value="..."/>
+										<newline/>
+									</column>
+									<column>
+										<text value="${config:editor/text-markup/table-cell-sep}"/>
+										<text value="${message:text_markup_table}"/>
+										<text value="${config:editor/text-markup/table-cell-sep}"/>
+										<text value="..."/>
+										<text value="${config:editor/text-markup/table-cell-sep}"/>
+										<text value="..."/>
+										<text value="${config:editor/text-markup/table-cell-sep}"/>
+										<newline/>
+										<text value="${config:editor/text-markup/table-cell-sep}"/>
+										<text value="..."/>
+										<text value="${config:editor/text-markup/table-cell-sep}"/>
+										<text value="..."/>
+										<text value="${config:editor/text-markup/table-cell-sep}"/>
+										<text value="..."/>
+										<text value="${config:editor/text-markup/table-cell-sep}"/>
+										<newline/>
+									</column>
+								</table>
+							</group>-->
 						</fieldset>
 					</if>
 					<if value="${editor}" equals="text">
@@ -100,46 +131,21 @@
 					</if>
 				</if>
 				<if value="${type}" equals="link">
-						<fieldset label="${message:link_target}">
-							<selector param="${name}" default="${value}" types="${types}" name="${linkname}" id="${linkobjectid}"
-									  folderid="${rootfolderid}"/>
-						</fieldset>
-						<fieldset label="${message:link_url}">
-							<input name="linkurl"/>
-						</fieldset>
+					<fieldset label="${message:link_target}">
+						<selector param="${name}" default="${value}" types="${types}" name="${linkname}" id="${linkobjectid}"
+								  folderid="${rootfolderid}"/>
+					</fieldset>
+					<fieldset label="${message:link_url}">
+						<input name="linkurl"/>
+					</fieldset>
+				</if>
+				<if value="${type}" equals="coord">
+					<fieldset label="">
+						<input type="number" name="${name}_lat" label="${message:latitude}" default="${lat}" />
+						<input type="number" name="${name}_long" label="${message:longitude}" default="${long}" />
+					</fieldset>
 				</if>
 			</group>
-			<if value="${type}" equals="insert">
-					<fieldset>
-						<selectbox list="objects" name="${name}" default="${value}" />
-					</fieldset>
-			</if>
-			<if value="${type}" equals="number">
-				<fieldset>
-					<part>
-						<hidden name="decimals" default="decimals"/>
-						<if value="${decimals}" equals="0">
-							<set var="type" value="'number'" />
-						</if>
-						<else>
-							<set var="type" value="text" />
-						</else>
-						<input type="${type}" size="15" maxlength="20" name="${name}" default="${value}"/>
-					</part>
-				</fieldset>
-			</if>
-			<if value="${type}" equals="checkbox">
-				<fieldset>
-					<part>
-						<checkbox name="${name}" default="${value}" label="${label}" />
-					</part>
-				</fieldset>
-			</if>
-			<if value="${type}" equals="select">
-					<fieldset>
-						<selectbox list="items" name="${name}" default="${value}" />
-					</fieldset>
-			</if>
 		</list>
 
 

@@ -6569,3 +6569,9 @@ TAG:
 TAGLIST:
   de: Schlagwörter
   en: Tags
+LATITUDE:
+  de: "Breitengrad"
+  en: "Latitude"
+LONGITUDE:
+  de: "Längengrad"
+  en: "Longitude"

@@ -19,6 +19,7 @@ use cms\model\Permission;
 use cms\model\Project;
 use cms\model\Value;
 use language\Messages;
+use logger\Logger;
 use util\exception\SecurityException;
 use util\Session;
 use util\Text;
@@ -178,9 +179,13 @@ class PageelementAllAction extends PageelementAction implements Method {
 
 				case Element::ELEMENT_TYPE_TEXT:
 				case Element::ELEMENT_TYPE_DATA:
-				case Element::ELEMENT_TYPE_COORD:
 
 					$content = $value->text;
+					break;
+
+				case Element::ELEMENT_TYPE_COORD:
+					$output['lat' ] = $value->number >> 32;
+					$output['long'] = $value->number << 32 >> 32;
 					break;
 			}
 
@@ -234,8 +239,10 @@ class PageelementAllAction extends PageelementAction implements Method {
 
 				case Element::ELEMENT_TYPE_TEXT:
 				case Element::ELEMENT_TYPE_DATA:
-				case Element::ELEMENT_TYPE_COORD:
 					$value->text = $this->request->getText($language->isoCode);
+					break;
+				case Element::ELEMENT_TYPE_COORD:
+					$value->number = $this->request->getNumber($language->isoCode.'_lat') << 32 | $this->request->getNumber($language->isoCode.'_long');
 					break;
 				case Element::ELEMENT_TYPE_LONGTEXT:
 					$value->text = $this->compactOIDs($this->request->getText($language->isoCode));
