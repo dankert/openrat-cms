@@ -323,11 +323,12 @@ class PageelementAction extends BaseAction
 
 
     protected function editData() {
-    	$this->editText();
+		$this->editText();
 	}
 
     protected function editCoord() {
-    	$this->editText();
+		$this->setTemplateVar('lat' ,$this->value->number >> 32      );
+		$this->setTemplateVar('long',$this->value->number << 32 >> 32);
 	}
 
 
@@ -353,7 +354,16 @@ class PageelementAction extends BaseAction
 
 	protected function saveCoord()
 	{
-		$this->saveText();
+		$value = new Value();
+		$value->contentid = $this->pageContent->contentId;
+
+		if   ( $linkTo = $this->request->getNumber('linkobjectid') )
+			$value->linkToObjectId = $linkTo;
+		else {
+			$value->number = $this->request->getFloat('lat') << 32 | $this->request->getFloat('long');
+		}
+
+		$this->afterSave($value);
 	}
 
 		/**

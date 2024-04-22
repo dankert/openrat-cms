@@ -13,6 +13,14 @@
 					</fieldset>
 				</group>
 			</if>
+			<if value="${type}" equals="coord">
+				<group title="${message:coordinates}">
+					<fieldset label="">
+						<input type="number" name="lat" label="${message:latitude}"/>
+						<input type="number" name="long" label="${message:longitude}"/>
+					</fieldset>
+				</group>
+			</if>
 			<if value="${type}" equals="text">
 				<fieldset>
 					<input size="50" maxlength="255" class="text" name="text"/>
@@ -99,60 +107,60 @@
 					</fieldset>
 				</group>
 			</if>
-		</group>
-		<if value="${type}" equals="list">
-			<group>
-				<part>
-					<selectbox list="objects" name="linkobjectid"/>
-				</part>
-			</group>
-		</if>
-		<if value="${type}" equals="insert">
-			<group>
-				<part>
-					<selectbox list="objects" name="linkobjectid"/>
-				</part>
-			</group>
-		</if>
-		<if value="${type}" equals="checkbox">
-			<fieldset>
-				<part>
-					<checkbox name="number" />
-				</part>
-			</fieldset>
-		</if>
-		<if value="${type}" equals="number">
-			<group>
-				<part>
-					<hidden name="decimals" default="decimals"/>
-					<input type="number" size="15" maxlength="20" name="number"/>
-				</part>
-			</group>
-		</if>
-		<if value="${type}" equals="select">
-			<group>
-				<part>
-					<selectbox list="items" name="text"/>
-				</part>
-			</group>
-		</if>
-		<if value="${type}" equals="longtext">
-			<if value="${editor}" equals="wiki">
-				<if present="languages">
-					<group title="${message:editor_show_language}">
-						<part>
-							<list list="${languages}" key="languageid" value="languagename">
-								<radio name="otherlanguageid" value="${languageid}"/>
-								<label for="otherlanguageid_${languageid}">
-									<text value="${languagename}"/>
-								</label>
-								<newline/>
-							</list>
-						</part>
-					</group>
+			<if value="${type}" equals="list">
+				<group>
+					<part>
+						<selectbox list="objects" name="linkobjectid"/>
+					</part>
+				</group>
+			</if>
+			<if value="${type}" equals="insert">
+				<group>
+					<part>
+						<selectbox list="objects" name="linkobjectid"/>
+					</part>
+				</group>
+			</if>
+			<if value="${type}" equals="checkbox">
+				<fieldset>
+					<part>
+						<checkbox name="number" />
+					</part>
+				</fieldset>
+			</if>
+			<if value="${type}" equals="number">
+				<group>
+					<part>
+						<hidden name="decimals" default="decimals"/>
+						<input type="number" size="15" maxlength="20" name="number"/>
+					</part>
+				</group>
+			</if>
+			<if value="${type}" equals="select">
+				<group>
+					<part>
+						<selectbox list="items" name="text"/>
+					</part>
+				</group>
+			</if>
+			<if value="${type}" equals="longtext">
+				<if value="${editor}" equals="wiki">
+					<if present="languages">
+						<group title="${message:editor_show_language}">
+							<part>
+								<list list="${languages}" key="languageid" value="languagename">
+									<radio name="otherlanguageid" value="${languageid}"/>
+									<label for="otherlanguageid_${languageid}">
+										<text value="${languagename}"/>
+									</label>
+									<newline/>
+								</list>
+							</part>
+						</group>
+					</if>
 				</if>
 			</if>
-		</if>
+		</group>
 
 		<group title="${message:options}">
 			<fieldset>

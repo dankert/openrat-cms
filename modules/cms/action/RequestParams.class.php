@@ -311,6 +311,21 @@ class RequestParams
 	}
 
 
+
+
+	/**
+	 * Ermittelt einen Float-Wert aus dem Request.<br>
+	 *
+	 * @param string $varName name of parameter
+	 * @return Float
+	 */
+	public function getFloat( $varName )
+	{
+		if    ( ! $this->hasKey($varName ))
+			return null;
+
+		return floatval($this->getValue( $varName ));
+	}
 	/**
 	 * Checks if the parameter value is true.
 	 *
