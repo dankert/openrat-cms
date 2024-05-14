@@ -20,25 +20,29 @@ class ConfigurationEditAction extends ConfigurationAction {
 		// Language are to much entries
 		unset($currentConfig['language']);
 
-		$pad = str_repeat("\xC2\xA0",10); // Hard spaces
+		//$flatDefaultConfig = ArrayUtils::flatArray( $defaultConfig       );
+		//$flatCMSConfig     = ArrayUtils::flatArray( Request::getConfig() );
+		//$flatConfig        = ArrayUtils::flatArray( $currentConfig       );
+		$flatConfig        = $currentConfig;
 
-		$flatDefaultConfig = ArrayUtils::flatArray( $defaultConfig       );
-		$flatCMSConfig     = ArrayUtils::flatArray( Request::getConfig() );
-		$flatConfig        = ArrayUtils::flatArray( $currentConfig       );
+		array_walk_recursive($flatConfig,function(&$item,$key)
+		{
+			if  ( strpos($key,'password') !== false) {
+				$item='*************';
+			}
+		});
 
+		/*
+		$config = array_map( function($key,$value) use ($flatConfig,$flatCMSConfig,$flatDefaultConfig) {
 
-		$config = array_map( function($key,$value) use ($flatConfig,$flatCMSConfig,$flatDefaultConfig,$pad) {
-
-			//$keyText = implode('.',$value['path']);
-			$label = str_repeat( $pad ,sizeof($value['path'])).end($value['path']);
-
-			if   ( strpos($key,'password') !== false )
+			if   (  )
 				$value['value'] = '**********';
 
 			return ['label'=>$label,'key'=>$key,'value'=>$value['value'],'class'=>(empty($flatCMSConfig[$key])?'readonly':(isset($flatDefaultConfig[$key]) && $flatDefaultConfig[$key]==$flatConfig[$key]?'default':'changed'))];
 
 		},array_keys($flatConfig),$flatConfig);
+		*/
 
-		$this->setTemplateVar('config',$config );
+		$this->setTemplateVar('config',$flatConfig );
 	}
 }

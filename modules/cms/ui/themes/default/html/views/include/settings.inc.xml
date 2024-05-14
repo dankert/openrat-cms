@@ -4,6 +4,7 @@
 	<group title="${message:settings}">
 
 		<table filter="false">
+			<set var="settings" value="${total_settings}" mapper="flat" />
 			<list list="${settings}" value="entry">
 				<row class="data">
 					<column title="${entry.key}">

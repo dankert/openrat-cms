@@ -8,7 +8,8 @@
         <text value="${message:VALUE}"/>
       </column>
     </row>
-    <list list="${config}" value="entry">
+	<set var="flatconfig" value="${config}" mapper="flat" />
+    <list list="${flatconfig}" value="entry">
       <row class="data">
         <column title="${entry.key}">
 			<text value="${entry.label}"/>

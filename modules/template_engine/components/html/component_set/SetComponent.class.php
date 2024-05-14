@@ -11,6 +11,7 @@ class SetComponent extends Component
 	public $var;
 	public $value;
 	public $key;
+	public $mapper;
 
 
 	public function createElement()
@@ -20,9 +21,9 @@ class SetComponent extends Component
 		if ($this->value)
 		{
 			if ($this->key)
-				$set->inBlock = '$'.$set->varname($this->var).'= '.$set->value($this->value).'['.((new Value($this->key))->render(Value::CONTEXT_PHP)).'];';
+				$set->inBlock = '$'.$set->varname($this->var).'= '.$this->addMapper($set->value($this->value).'['.((new Value($this->key))->render(Value::CONTEXT_PHP)).']').';';
 			else 
-				$set->inBlock = '$'.$set->varname($this->var).'= '.$set->value($this->value).';';
+				$set->inBlock = '$' . $set->varname($this->var) . '= ' . $this->addMapper($set->value($this->value) ). ';';
 		}
 		else {
 			// Unset
@@ -30,5 +31,12 @@ class SetComponent extends Component
 		}
 
 		return $set;
+	}
+
+	private function addMapper($code)
+	{
+		if   ( $this->mapper )
+			return "O::map('".strtolower($this->mapper)."',".$code.")";
+		else return $code;
 	}
 }

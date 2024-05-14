@@ -316,6 +316,8 @@
         <div class="<?php echo O::escapeHtml('or-table-wrapper') ?>"><?php echo O::escapeHtml('') ?>
           <div class="<?php echo O::escapeHtml('or-table-area') ?>"><?php echo O::escapeHtml('') ?>
             <table class="<?php echo O::escapeHtml('or-table') ?>"><?php echo O::escapeHtml('') ?>
+              <?php  { $settings= O::map('flat',$total_settings); ?>
+               <?php } ?>
               <?php foreach((array)@$settings as $list_key=>$entry) {  ?>
                 <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
                   <td title="<?php echo O::escapeHtml(''.@$entry['key'].'') ?>"><?php echo O::escapeHtml('') ?>

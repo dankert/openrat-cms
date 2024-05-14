@@ -1440,6 +1440,7 @@
         <xsd:attribute name="var" type="xsd:string"/>
         <xsd:attribute name="value" type="xsd:string"/>
         <xsd:attribute name="key" type="xsd:string"/>
+        <xsd:attribute name="mapper" type="xsd:string"/>
         <xsd:attribute name="context" type="xsd:string"/>
     </xsd:complexType>
     <xsd:element name="table" type="tableType"/>

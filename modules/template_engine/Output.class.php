@@ -6,6 +6,7 @@ namespace template_engine;
 
 use cms\base\Configuration;
 use cms\base\Language;
+use template_engine\mapper\Mapper;
 use util\Text;
 
 /**
@@ -48,5 +49,14 @@ class Output
 	 */
 	public static function config( $keys ) {
 		return Configuration::get( $keys );
+	}
+
+	public static function map( $mapper,$value ) {
+
+		$mapperClassName = ucfirst($mapper).'Mapper';
+		$class = "template_engine\\mapper\\$mapperClassName";
+		/* @type $do Mapper */
+		$mapper = new $class;
+		return $mapper->map( $value );
 	}
 }
