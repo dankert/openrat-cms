@@ -15,11 +15,12 @@
         </tr>
         <?php foreach((array)@$config as $list_key=>$entry) {  ?>
           <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
-            <td><?php echo O::escapeHtml('') ?>
-              <span><?php echo O::escapeHtml(''.@$entry['value']['key'].'') ?></span>
+            <td title="<?php echo O::escapeHtml(''.@$entry['key'].'') ?>"><?php echo O::escapeHtml('') ?>
+              <span><?php echo O::escapeHtml(''.@$entry['label'].'') ?></span>
+              <span class="<?php echo O::escapeHtml('or-table-sort-value') ?>"><?php echo O::escapeHtml(''.@$entry['key'].'') ?></span>
             </td>
             <td class="<?php echo O::escapeHtml('or-'.@$class.'') ?>"><?php echo O::escapeHtml('') ?>
-              <span class="<?php echo O::escapeHtml('or-'.@$class.'') ?>"><?php echo O::escapeHtml(''.@$entry['value']['value'].'') ?></span>
+              <span class="<?php echo O::escapeHtml('or-'.@$class.'') ?>"><?php echo O::escapeHtml(''.@$entry['value'].'') ?></span>
             </td>
           </tr>
          <?php } ?>

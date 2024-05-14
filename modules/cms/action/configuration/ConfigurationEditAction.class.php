@@ -22,16 +22,20 @@ class ConfigurationEditAction extends ConfigurationAction {
 
 		$pad = str_repeat("\xC2\xA0",10); // Hard spaces
 
-		$flatDefaultConfig = ArrayUtils::dryFlattenArray( $defaultConfig      , $pad );
-		$flatCMSConfig     = ArrayUtils::dryFlattenArray( Request::getConfig(), $pad );
-		$flatConfig        = ArrayUtils::dryFlattenArray( $currentConfig      , $pad );
+		$flatDefaultConfig = ArrayUtils::flatArray( $defaultConfig       );
+		$flatCMSConfig     = ArrayUtils::flatArray( Request::getConfig() );
+		$flatConfig        = ArrayUtils::flatArray( $currentConfig       );
 
-		$config = array_map( function($key,$value) use ($flatConfig,$flatCMSConfig,$flatDefaultConfig) {
 
-			if   ( strpos($value['key'],'password') !== false )
+		$config = array_map( function($key,$value) use ($flatConfig,$flatCMSConfig,$flatDefaultConfig,$pad) {
+
+			//$keyText = implode('.',$value['path']);
+			$label = str_repeat( $pad ,sizeof($value['path'])).end($value['path']);
+
+			if   ( strpos($key,'password') !== false )
 				$value['value'] = '**********';
 
-			return ['key'=>$key,'value'=>$value,'class'=>(empty($flatCMSConfig[$key])?'readonly':(isset($flatDefaultConfig[$key]) && $flatDefaultConfig[$key]==$flatConfig[$key]?'default':'changed'))];
+			return ['label'=>$label,'key'=>$key,'value'=>$value['value'],'class'=>(empty($flatCMSConfig[$key])?'readonly':(isset($flatDefaultConfig[$key]) && $flatDefaultConfig[$key]==$flatConfig[$key]?'default':'changed'))];
 
 		},array_keys($flatConfig),$flatConfig);
 

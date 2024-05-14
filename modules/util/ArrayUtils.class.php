@@ -66,27 +66,28 @@ class ArrayUtils
 
 
 	/**
-	 * Make a dry flat array.
+	 * Make a flat array.
 	 *
 	 * @param $arr
 	 * @param $padChar
 	 * @param int $depth
 	 * @return array
 	 */
-	public static function dryFlattenArray($arr, $padChar = '  ', $depth = 0)
+	public static function flatArray($arr, $path = [])
 	{
 		$new = array();
 
 		foreach ($arr as $key => $val) {
+			$newPath = array_merge($path,[$key]);
 			if (is_array($val)) {
-				$new[] = [
-					'key'  => str_repeat($padChar, $depth).$key,
+				$new[implode('.',$newPath)] = [
+					'path'  => $newPath,
 					'value'=> ''
 				];
-				$new = array_merge($new,self::dryFlattenArray($val, $padChar, $depth + 1));
+				$new += self::flatArray($val, $newPath);
 			} else
-				$new[] = [
-					'key'  => str_repeat($padChar, $depth).$key,
+				$new[implode('.',$newPath)] = [
+					'path'  => $newPath,
 					'value'=> $val
 				];
 		}

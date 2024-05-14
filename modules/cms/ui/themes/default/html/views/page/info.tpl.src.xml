@@ -18,17 +18,17 @@
 
 	<include file="../include/tags" />
 
-	<list list="${languages}" extract="true">
-		<group title="${languagename}">
+	<list list="${languages}" value="language">
+		<group title="${language.languagename}">
 			<fieldset label="${message:name}">
-				<text value="${name}"/>
+				<text value="${language.name}"/>
 				<text type="small" value="${description}"/>
 			</fieldset>
 			<fieldset label="${message:alias}">
-				<text value="${alias}"/>
+				<text value="${language.alias}"/>
 				<part class="act-clickable">
 					<link class="btn" type="edit" action="page" subaction="name" var1="languageid"
-						  value1="${languageid}">
+						  value1="${language.languageid}">
 						<text value="${message:edit}"/>
 					</link>
 				</part>

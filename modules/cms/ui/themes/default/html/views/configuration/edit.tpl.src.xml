@@ -10,11 +10,12 @@
     </row>
     <list list="${config}" value="entry">
       <row class="data">
-        <column>
-          <text value="${entry.value.key}"/>
-        </column>
+        <column title="${entry.key}">
+			<text value="${entry.label}"/>
+			<text class="table-sort-value" value="${entry.key}"/>
+		</column>
         <column class="${class}">
-          <text class="${class}" value="${entry.value.value}"/>
+          <text class="${class}" value="${entry.value}"/>
         </column>
       </row>
     </list>

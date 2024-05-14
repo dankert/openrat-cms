@@ -66,7 +66,17 @@ class ObjectInfoAction extends ObjectAction implements Method {
 		$pad = str_repeat("\xC2\xA0",5); // Hard spaces
 		$totalSettings = $this->baseObject->getTotalSettings();
 		$this->setTemplateVar('total_settings', $totalSettings,$pad );
-		$this->setTemplateVar('settings', ArrayUtils::dryFlattenArray( $totalSettings,$pad ) );
+
+		$pad = str_repeat("\xC2\xA0",10); // Hard spaces
+		$this->setTemplateVar('settings', array_map( function($value) use($pad) {
+			return [
+				'key'   => implode('.',($value['path'])),
+				'label' => str_repeat( $pad ,sizeof($value['path'])).end($value['path']),
+				'value' => $value['value']
+			];
+		}, ArrayUtils::flatArray( $totalSettings ) ));
+
+
 	}
 
 

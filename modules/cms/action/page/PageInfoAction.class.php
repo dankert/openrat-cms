@@ -19,6 +19,7 @@ class PageInfoAction extends PageAction implements Method {
 
 		$parentAction = new ObjectInfoAction();
 		$parentAction->request = $this->request;
+		$parentAction->response = $this->response;
 		$parentAction->init();
 		$parentAction->view();
 

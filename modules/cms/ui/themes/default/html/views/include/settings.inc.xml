@@ -6,8 +6,8 @@
 		<table filter="false">
 			<list list="${settings}" value="entry">
 				<row class="data">
-					<column>
-						<text value="${entry.key}"/>
+					<column title="${entry.key}">
+						<text value="${entry.label}"/>
 					</column>
 					<column class="act-clickable">
 						<link subaction="settings" type="dialog">

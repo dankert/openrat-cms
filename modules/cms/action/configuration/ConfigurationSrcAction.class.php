@@ -3,7 +3,7 @@ namespace cms\action\configuration;
 use cms\action\ConfigurationAction;
 use cms\action\Method;
 use util\Request;
-use util\Session;
+use util\YAML;
 
 
 class ConfigurationSrcAction extends ConfigurationAction implements Method {
@@ -19,7 +19,7 @@ class ConfigurationSrcAction extends ConfigurationAction implements Method {
             }
         });
 
-        $this->setTemplateVar('source', \util\YAML::dump($conf,4,0,true));
+        $this->setTemplateVar('source', YAML::dump($conf,4,0,true));
     }
     public function post() {
     }
