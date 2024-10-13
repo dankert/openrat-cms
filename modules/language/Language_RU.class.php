@@ -1385,5 +1385,7 @@ if you do not know where this mail comes from, please ignore it.',
 'SCRIPT'=>'Script',
 'TAG'=>'Tag',
 'TAGLIST'=>'Tags',
+'LATITUDE'=>'Latitude',
+'LONGITUDE'=>'Longitude',
 ];}
 }

@@ -1385,5 +1385,7 @@ Gracias.',
 'SCRIPT'=>'Script',
 'TAG'=>'Tag',
 'TAGLIST'=>'Tags',
+'LATITUDE'=>'Latitude',
+'LONGITUDE'=>'Longitude',
 ];}
 }

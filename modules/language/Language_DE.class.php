@@ -1389,5 +1389,7 @@ Vielen Dank.',
 'SCRIPT'=>'Skript',
 'TAG'=>'Schlagwort',
 'TAGLIST'=>'Schlagwörter',
+'LATITUDE'=>'Breitengrad',
+'LONGITUDE'=>'Längengrad',
 ];}
 }

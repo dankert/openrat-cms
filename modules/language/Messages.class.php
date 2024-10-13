@@ -1338,4 +1338,6 @@ class Messages {
   const SCRIPT = 'SCRIPT';
   const TAG = 'TAG';
   const TAGLIST = 'TAGLIST';
+  const LATITUDE = 'LATITUDE';
+  const LONGITUDE = 'LONGITUDE';
 }

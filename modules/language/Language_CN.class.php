@@ -1384,5 +1384,7 @@ Thank you.',
 'SCRIPT'=>'Script',
 'TAG'=>'Tag',
 'TAGLIST'=>'Tags',
+'LATITUDE'=>'Latitude',
+'LONGITUDE'=>'Longitude',
 ];}
 }

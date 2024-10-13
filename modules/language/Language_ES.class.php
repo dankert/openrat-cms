@@ -1409,5 +1409,7 @@ MENU_INDEX_ADMINISTRATION_DESC =',
 'SCRIPT'=>'Script',
 'TAG'=>'Tag',
 'TAGLIST'=>'Tags',
+'LATITUDE'=>'Latitude',
+'LONGITUDE'=>'Longitude',
 ];}
 }
