@@ -93,4 +93,21 @@ class ArrayUtils
 		}
 		return $new;
 	}
+
+
+	/**
+	 * Map keys.
+	 *
+	 * @param $callback
+	 * @param $array
+	 * @return mixed
+	 */
+	public static function mapKeys($callback, $array)
+	{
+		$newArray = [];
+		foreach( $array as $key=>$value ) {
+			$newArray[ call_user_func( $callback,$key)] = $value;
+		}
+		return $newArray;
+	}
 }

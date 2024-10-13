@@ -48,7 +48,7 @@
 		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-ui${cssExt}"/>
 		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-view${cssExt}"/>
 		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-workbench${cssExt}"/>
-		<link id="user-style" rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/theme/openrat-theme${cssExt}"/>
+		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-theme${cssExt}"/>
 		<meta id="theme-color" name="theme-color" content="${themeColor}"/>
 		<link rel="manifest" href="${manifestLink}"/>
 		<link rel="shortcut icon" type="image/x-icon" href="${favicon_url}"/>

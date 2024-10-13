@@ -1,0 +1,307 @@
+/* OpenRat Theme */
+/*
+ * The following variables beginning with 'var(--cms-)...' are overwritten by the CMS style configuration values
+ */
+:root {
+  --cms-main-title-background-color: white;
+  --cms-main-title-text-color: black;
+  --cms-main-text-color: black;
+  --cms-main-background-color: silver;
+  --cms-inactive-background-color: gray;
+  --cms-nav-title-text-color: gray;
+  --cms-nav-title-background-color: gray;
+  --cms-nav-text-color: gray;
+  --cms-nav-background-color: gray;
+  --cms-dialog-title-text-color: gray;
+  --cms-dialog-title-background-color: gray;
+  --cms-dialog-text-color: gray;
+  --cms-dialog-background-color: gray;
+  --cms-image-color: gray;
+  --cms-notice-ok-color: green;
+  --cms-notice-info-color: blue;
+  --cms-notice-warning-color: yellow;
+  --cms-notice-error-color: red;
+  --cms-fill-color: black;
+  --cms-transition-duration: 0.1s;
+  --cms-nav-scrollbar-color: gray;
+  --cms-main-scrollbar-color: gray;
+  --cms-theme-id: 'theme-name';
+  /* technical name of theme */
+  --cms-image-path: '/';
+  /* Image-path */
+  --cms-name: name;
+  /* Logic name of theme */
+}
+html * {
+  transition: opacity var(--cms-transition-duration) ease-in-out, width var(--cms-transition-duration) ease-in-out, height var(--cms-transition-duration) ease-in-out, flex var(--cms-transition-duration) ease-in-out, transform var(--cms-transition-duration) ease-in-out;
+}
+@media screen and (prefers-reduced-motion: reduce) {
+  html * {
+    transition: none;
+  }
+}
+html .or-qrcode-value {
+  background-color: var(--cms-dialog-background-color);
+  fill: var(--cms-image-color);
+  box-shadow: 3px 3px 10px var(--cms-dialog-title-background-color);
+}
+html .or-loader {
+  border-color: var(--cms-inactive-background-color);
+  border-top-color: var(--cms-image-color);
+}
+html .or-workbench-navigation {
+  scrollbar-face-color: var(--cms-nav-scrollbar-color);
+  scrollbar-arrow-color: var(--cms-image-color);
+  scrollbar-base-color: var(--cms-nav-background-color);
+  scrollbar-color: var(--cms-nav-scrollbar-color) var(--cms-nav-background-color);
+  scrollbar-width: thin;
+}
+html .or-workbench-main {
+  scrollbar-face-color: var(--cms-main-scrollbar-color);
+  scrollbar-arrow-color: var(--cms-image-color);
+  scrollbar-base-color: var(--cms-main-text-color);
+  scrollbar-color: var(--cms-main-scrollbar-color) var(--cms-main-background-color);
+  scrollbar-width: thin;
+}
+html .or-workbench {
+  visibility: visible;
+}
+html .or-workbench-navigation {
+  box-shadow: 1em 0 2em var(--cms-nav-background-color);
+}
+html .or-dialog-content {
+  box-shadow: -1em 0 2em var(--cms-dialog-background-color);
+}
+html .or-image-icon {
+  color: var(--cms-image-color);
+}
+html .or-view-header {
+  color: var(--cms-main-title-background-color);
+}
+html .or-notice {
+  border-color: var(--cms-main-title-text-color);
+  color: var(--cms-main-title-text-color);
+  background-color: var(--cms-main-title-background-color);
+  line-height: 1.5em;
+  box-shadow: 3px 3px 10px var(--cms-main-title-text-color);
+}
+html .or-notice--ok {
+  border-left-color: var(--cms-notice-ok-color);
+}
+html .or-notice--warning {
+  border-left-color: var(--cms-notice-warning-color);
+}
+html .or-notice--info {
+  border-left-color: var(--cms-notice-info-color);
+}
+html .or-notice--error {
+  border-left-color: var(--cms-notice-error-color);
+}
+html .or-preview {
+  color: var(--cms-main-background-color);
+}
+html .or-table tr.headline > td,
+html .or-table tr.headline > th {
+  border-bottom: 1px solid var(--cms-main-title-background-color);
+}
+html .or-table tr > td {
+  border-bottom: 1px solid var(--cms-main-title-background-color);
+}
+html .or-table tr.or-data:hover,
+html .or-table tr.or-table-data:hover {
+  background-color: var(--cms-main-title-background-color);
+  color: var(--cms-main-title-text-color);
+}
+html .or-workbench {
+  /*            &-navigation-container {
+                //background-color: var(--cms-main-title-background-color);
+                //color: var(--cms-main-title-text-color);
+                background-color: var(--cms-main-background-color);
+                .box-shadow(10px, 0px, 25px, var(--cms-main-background-color));
+                background-image: linear-gradient(to right, lighten(var(--cms-main-background-color), 10%), var(--cms-main-background-color));
+            }*/
+}
+html .or-workbench-title {
+  text-color: var(--cms-main-text-color);
+  background-color: var(--cms-main-title-background-color);
+  color: var(--cms-main-title-text-color);
+}
+html .or-workbench-title .or-toolbar-icon > a {
+  color: var(--cms-main-title-text-color);
+}
+html .or-workbench-workplace {
+  text-color: var(--cms-main-text-color);
+  background-color: var(--cms-main-background-color);
+}
+html .or-workbench-search {
+  text-color: var(--cms-nav-title-text-color);
+  background-color: var(--cms-nav-title-background-color);
+}
+html .or-workbench-navigation-container {
+  text-color: var(--cms-nav-text-color);
+  background-color: var(--cms-nav-background-color);
+}
+html .or-workbench-navigation-filler {
+  background-color: var(--cms-fill-color);
+}
+html .or-workbench-section {
+  border-color: var(--cms-main-text-color);
+}
+html .or-workbench-section.or-open {
+  background-color: var(--cms-main-background-color);
+}
+html .or-workbench-navigation,
+html .or-workbench-navigation .or-link {
+  color: var(--cms-nav-text-color);
+}
+html .or-search-input {
+  border-color: var(--cms-nav-title-background-color);
+}
+html .or-search-input .or-input {
+  background-color: var(--cms-nav-title-background-color);
+  color: var(--cms-nav-title-text-color);
+}
+html .or-dialog-title {
+  background-color: var(--cms-dialog-title-background-color);
+  color: var(--cms-dialog-title-text-color);
+}
+html .or-dialog-content {
+  background-color: var(--cms-dialog-background-color);
+  color: var(--cms-dialog-text-color);
+}
+html .or-dialog-filler {
+  background-color: var(--cms-fill-color);
+}
+html .or-input {
+  background-color: var(--cms-main-title-background-color);
+  color: var(--cms-main-title-text-color);
+  border-color: var(--cms-main-text-color);
+}
+html .or-input:focus {
+  border-color: var(--cms-image-color);
+}
+html .or-input--error {
+  border-color: var(--cms-notice-error-color) !important;
+}
+html .or-input.or-hint {
+  color: var(--cms-main-title-background-color);
+}
+html .or-group {
+  border-color: var(--cms-main-scrollbar-color);
+}
+html .or-group-description {
+  color: var(--cms-main-scrollbar-color);
+  font-size: 0.9em;
+}
+html .or-act-clickable {
+  /*
+            &.or-filtered > a {
+                color: var(--cms-text-color);
+
+                &.or-dropdown-entry--active:hover {
+                    color: var(--cms-background-color);
+                }
+            }
+
+            &.or-filtered.or-dropdown-entry--active > a {
+                color: var(--cms-text-color);
+
+                &:hover {
+                    color: var(--cms-background-color);
+                }
+            }*/
+}
+html .or-dropdown {
+  box-shadow: 3px 2px 5px var(--cms-nav-background-color);
+  border: 1px solid var(--cms-nav-scrollbar-color);
+  background-color: var(--cms-nav-background-color);
+  color: var(--cms-nav-text-color);
+}
+html .or-dropdown .or-link {
+  color: inherit;
+}
+html .or-dropdown-entry {
+  background-color: var(--cms-nav-background-color);
+  color: var(--cms-nav-text-color);
+}
+html .or-dropdown-entry--inactive {
+  color: var(--cms-nav-scrollbar-color);
+}
+html .or-dropdown-entry--active:hover {
+  background-color: var(--cms-nav-text-color);
+  color: var(--cms-nav-background-color);
+}
+html .or-dropdown-divide {
+  background-color: var(--cms-nav-background-color);
+}
+html .or-dropzone-upload {
+  background-color: var(--cms-main-title-text-color);
+  border: 1px dotted var(--cms-main-text-color);
+}
+html .or-hover-effect:hover {
+  background-color: var(--cms-main-background-color);
+}
+html .or-info-popup {
+  background-color: var(--cms-main-title-background-color);
+  color: var(--cms-main-title-text-color);
+}
+html .or-collapsible-title {
+  border-color: var(--cms-main-background-color);
+}
+html .or-collapsible--is-open .or-collapsible-title {
+  border-color: var(--cms-main-scrollbar-color);
+}
+html .or-btn,
+html .or-link-btn {
+  border-color: var(--cms-main-background-color);
+  color: var(--cms-main-title-text-color);
+  box-shadow: 0 0 0.5em var(--cms-main-background-color);
+}
+html .or-btn--is-active,
+html .or-link-btn--is-active {
+  background-color: var(--cms-inactive-background-color);
+  border-color: var(--cms-main-background-color);
+}
+html .or-btn:hover,
+html .or-link-btn:hover {
+  border-color: var(--cms-main-title-text-color);
+}
+html .or-btn--primary,
+html .or-link-btn--primary {
+  background-color: var(--cms-main-title-background-color);
+}
+html .or-form-checkbox,
+html .or-form-radio {
+  border-color: var(--cms-main-text-color);
+}
+html .or-form-checkbox:checked,
+html .or-form-radio:checked {
+  background-color: var(--cms-image-color);
+}
+html .or-form-content {
+  padding-bottom: 5em;
+}
+html .or-form-actionbar {
+  background-color: var(--cms-dialog-background-color);
+  box-shadow: 0 -2em 2em var(--cms-dialog-background-color);
+}
+html .or-fieldset-label {
+  color: var(--cms-main-scrollbar-color);
+}
+html small {
+  color: var(--cms-main-title-background-color);
+}
+html textarea.longtext {
+  border-color: var(--cms-main-text-color);
+}
+html body {
+  color: var(--cms-main-text-color);
+}
+html a {
+  color: inherit;
+}
+html body {
+  background-color: var(--cms-main-background-color);
+}
+/* Theme Ende */
+

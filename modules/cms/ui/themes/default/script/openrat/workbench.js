@@ -422,13 +422,38 @@ export default class Workbench {
      * Sets a new theme.
      * @param styleName
      */
-    setUserStyle( styleName )
+    async setUserStyle( styleName )
     {
 		if   ( window.localStorage )
 			window.localStorage.setItem('ui.style',styleName);
 
-    	let styleUrl = View.createUrl('index', 'themestyle', 0, {'style': styleName});
-		document.getElementById('user-style').setAttribute('href',styleUrl);
+		let styleUrl = View.createUrl('index', 'themestyle', 0, {'style': styleName});
+
+		try {
+			let response = await fetch( styleUrl,{
+				method: 'GET',
+				headers: {
+					'Accept': 'application/json',
+				}
+			}  );
+
+			if   ( !response.ok )
+				throw "loading theme info failed";
+
+			let data = await response.json();
+			let style = data.output.style;
+			console.debug("New Theme '"+styleName+"'",style);
+
+			let rootSelector = document.querySelector(':root');
+			for( let d in style ) {
+				console.debug("Setting CSS property '--cms-"+d+"' to value '"+style[d]+"'");
+				rootSelector.style.setProperty("--cms-"+d,style[d]);
+			}
+
+
+		} catch( cause ) {
+			console.warn( {message: 'Loading theme info has failed.',cause:cause });
+		}
     }
 
 
