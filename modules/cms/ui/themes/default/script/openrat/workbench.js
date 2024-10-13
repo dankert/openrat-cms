@@ -94,7 +94,7 @@ export default class Workbench {
 		if (window.localStorage) {
 			let style = window.localStorage.getItem('ui.style');
 			if (style)
-				this.setUserStyle(style);
+				this.loadUserTheme(style);
 		}
 	}
 
@@ -323,7 +323,7 @@ export default class Workbench {
 		let json = await response.json();
 
 		let style = json.output['style'];
-		this.setUserStyle(style);
+		this.loadUserTheme(style);
 
 		let color = json.output['theme-color'];
 		this.setThemeColor(color);
@@ -420,15 +420,18 @@ export default class Workbench {
 
     /**
      * Sets a new theme.
-     * @param styleName
+	 * 
+     * @param themeName
      */
-    async setUserStyle( styleName )
+    async loadUserTheme(themeName )
     {
 		if   ( window.localStorage )
-			window.localStorage.setItem('ui.style',styleName);
+			// store the theme name into local storage
+			window.localStorage.setItem('ui.style',themeName);
 
-		let styleUrl = View.createUrl('index', 'themestyle', 0, {'style': styleName});
+		let styleUrl = View.createUrl('index', 'themestyle', 0, {'style': themeName});
 
+		// Load the theme properties via AJAX
 		try {
 			let response = await fetch( styleUrl,{
 				method: 'GET',
@@ -441,18 +444,22 @@ export default class Workbench {
 				throw "loading theme info failed";
 
 			let data = await response.json();
-			let style = data.output.style;
-			console.debug("New Theme '"+styleName+"'",style);
+			let styleProperties = data.output.style;
+			console.debug("New Theme '"+themeName+"'",styleProperties);
 
+			// Gets the CSS :root selector
 			let rootSelector = document.querySelector(':root');
-			for( let d in style ) {
-				console.debug("Setting CSS property '--cms-"+d+"' to value '"+style[d]+"'");
-				rootSelector.style.setProperty("--cms-"+d,style[d]);
+
+			// Sets every single native CSS property
+			for( let name in styleProperties ) {
+				let propertyName = "--cms-" + name;
+				console.debug("Setting CSS property '"+propertyName+"' to value '"+styleProperties[name]+"'");
+				rootSelector.style.setProperty(propertyName,styleProperties[name]);
 			}
 
 
 		} catch( cause ) {
-			console.warn( {message: 'Loading theme info has failed.',cause:cause });
+			console.warn( {message: 'Loading theme has failed.',cause:cause });
 		}
     }
 
@@ -996,7 +1003,7 @@ export default class Workbench {
 
 			// Theme-Auswahl mit Preview
 			$(viewEl).find('.or-theme-chooser').change( function() {
-				Workbench.getInstance().setUserStyle( this.value );
+				Workbench.getInstance().loadUserTheme( this.value );
 			});
 
 
