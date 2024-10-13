@@ -5,20 +5,23 @@ import qrcode from '../../../../../../template_engine/components/html/component_
 import table  from '../../../../../../template_engine/components/html/component_table/table.js';
 import upload from '../../../../../../template_engine/components/html/component_upload/upload.js';
 import form   from '../../../../../../template_engine/components/html/component_checkbox/checkbox.js';
-import Callback from "./callback.js";
 
 export default class Components {
 
 	registerComponents() {
 		console.debug('registering component scripts');
 
-		Callback.afterViewLoadedHandler.add(editor);
-		Callback.afterViewLoadedHandler.add(group );
-		Callback.afterViewLoadedHandler.add(link  );
-		Callback.afterViewLoadedHandler.add(qrcode);
-		Callback.afterViewLoadedHandler.add(table );
-		Callback.afterViewLoadedHandler.add(upload);
-		Callback.afterViewLoadedHandler.add(form  );
+		document.addEventListener('or-view-ready', function(ev) {
+			let element = ev.detail.element;
+
+			editor(element);
+			group(element);
+			link(element);
+			qrcode(element);
+			table(element);
+			upload(element);
+			form(element);
+		} );
 	}
 }
 

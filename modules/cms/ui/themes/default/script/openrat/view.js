@@ -55,7 +55,11 @@ export default class View {
 
     fireViewLoadedEvents(element) {
 
-		Callback.afterViewLoadedHandler.fire( element );
+		document.dispatchEvent( new CustomEvent('or-view-ready',{
+			detail:{
+				element:element
+			}
+		}));
     }
 
 

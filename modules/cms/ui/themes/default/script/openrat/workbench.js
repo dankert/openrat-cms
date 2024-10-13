@@ -1,7 +1,6 @@
 import $ from '../jquery-global.js';
 import Dialog from './dialog.js';
 import View from './view.js';
-import Callback from './callback.js';
 import WorkbenchNavigator from "./navigator.js";
 import Notice from "./notice.js";
 import Components from "./components.js";
@@ -24,7 +23,8 @@ export default class Workbench {
 
 		this.popupWindow = null;
 
-		Callback.dataChangedHandler.add( () => {
+		window.document.addEventListener( 'or-data-changed', () => {
+			// Data has changed, so a popup window must be reloaded.
 			if   ( Workbench.popupWindow )
 				Workbench.popupWindow.location.reload();
 		} );
@@ -75,7 +75,11 @@ export default class Workbench {
 
 		// Load all views
 		this.reloadAll().then( () => {
-				Callback.afterNewActionHandler.fire();
+			window.document.dispatchEvent( new CustomEvent('or-new-action', {
+				detail:{
+					state:Workbench.state
+				}
+			}) );
 			}
 		);
 
@@ -243,7 +247,7 @@ export default class Workbench {
         this.reloadViews();
 		this.filterMenus();
 
-		Callback.afterNewActionHandler.fire();
+		window.document.dispatchEvent( new CustomEvent('or-new-action', {detail:{state:state}}) );
 	}
 
 
@@ -420,7 +424,7 @@ export default class Workbench {
 
     /**
      * Sets a new theme.
-	 * 
+	 *
      * @param themeName
      */
     async loadUserTheme(themeName )
@@ -772,13 +776,13 @@ export default class Workbench {
 		} );
 
 
-		Callback.afterNewActionHandler.add( function() {
+		document.addEventListener('or-new-action',function() {
 
 				$('.or-sidebar').find('.or-sidebar-button').orLinkify();
 			}
 		);
 
-		Callback.afterNewActionHandler.add( function() {
+		document.addEventListener('or-new-action', function() {
 
 			let url = View.createUrl('tree', 'path', Workbench.state.id, {'type': Workbench.state.action});
 
@@ -838,11 +842,13 @@ export default class Workbench {
 		} );
 
 
-		Callback.afterViewLoadedHandler.add( function(element) {
+		document.addEventListener('or-view-ready', function(ev) {
+			let element = ev.detail.element;
 			$(element).find('.or-button').orButton();
 		} );
 
-		Callback.afterViewLoadedHandler.add( function(element) {
+		document.addEventListener('or-view-ready', function(ev) {
+			let element = ev.detail.element;
 
 			// Refresh already opened popup windows.
 			if   ( Workbench.popupWindow )
@@ -853,7 +859,8 @@ export default class Workbench {
 		});
 
 
-		Callback.afterViewLoadedHandler.add( function(element) {
+		document.addEventListener('or-view-ready', function(ev) {
+			let element = ev.detail.element;
 
 			$(element).find(".or-input--password").dblclick( function() {
 				$(this).toggleAttr('type','text','password');
@@ -867,9 +874,10 @@ export default class Workbench {
 
 
 
-		Callback.afterViewLoadedHandler.add( function($element) {
+		document.addEventListener('or-view-ready', function(ev) {
+			let element = ev.detail.element;
 
-			$element.find('.or-act-load-nav-tree').each( async function() {
+			$(element).find('.or-act-load-nav-tree').each( async function() {
 
 				let type = $(this).data('type') || 'root';
 				let loadBranchUrl = View.createUrl('tree', 'branch', 0, {type: type});
@@ -912,7 +920,8 @@ export default class Workbench {
 		 *
 		 * @param viewEl DOM-Element der View
 		 */
-		Callback.afterViewLoadedHandler.add( function(viewEl ) {
+		document.addEventListener('or-view-ready', function(ev) {
+			let viewEl = ev.detail.element;
 
 			// Handler for mobile navigation
 			$(viewEl).find('.or-act-nav-open-close').click( function() {

@@ -216,7 +216,7 @@ export default class Form {
 					Workbench.getInstance().reloadViews();
 			}
 			//this.onSuccess();
-			Callback.dataChangedHandler.fire();
+			window.document.dispatchEvent( new Event("or-data-changed"));
 		} finally {
 			this.isLoadStatus = false;
 		}

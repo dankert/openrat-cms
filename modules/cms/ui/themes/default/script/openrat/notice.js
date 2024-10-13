@@ -1,6 +1,5 @@
 import $ from  '../jquery-global.js';
 import Workbench          from './workbench.js';
-import Callback           from "./callback.js";
 import WorkbenchNavigator from "./navigator.js";
 
 /**
@@ -35,7 +34,7 @@ export default class Notice  {
 			.addClass('collapsible'           )
 			.addClass('collapsible--is-closed');
 
-		this.onClick = new Callback();
+		this.onClickListener = [];
 
 	}
 
@@ -66,6 +65,10 @@ export default class Notice  {
 		//this.element.removeClass('loader');
 	}
 
+	onClick( f ) {
+		this.onClickListener.push( f );
+	}
+
 	show() {
 
 		console.debug('user notice: ' + this.msg);
@@ -94,7 +97,9 @@ export default class Notice  {
 
 		// Fire onclick-handler
 		this.element.find('.or-notice-text').click( function () {
-			notice.onClick.fire();
+
+			for( let c of notice.onClickListener)
+				c.call(null);
 		} );
 
 		Workbench.registerOpenClose( this.element );

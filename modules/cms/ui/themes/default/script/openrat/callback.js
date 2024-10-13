@@ -28,7 +28,3 @@ export default class Callback {
 
 }
 
-Callback.afterViewLoadedHandler = new Callback();
-Callback.dataChangedHandler     = new Callback();
-Callback.afterNewActionHandler  = new Callback();
-Callback.afterAllViewsLoaded    = new Callback();
