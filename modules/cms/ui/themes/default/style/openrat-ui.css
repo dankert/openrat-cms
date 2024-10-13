@@ -1,0 +1,114 @@
+/* Usage to this variable is safe to be removed */
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+@media only screen and (min-width: 56rem) {
+  body:before {
+    content: "";
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    display: block;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+.or-editor-toolbar {
+  font-size: 1.5em;
+}
+iframe {
+  width: 100%;
+  height: 500px;
+  display: block;
+}
+/* Verweise */
+a:link,
+a:visited {
+  font-weight: normal;
+  text-decoration: none;
+}
+a:active,
+a:hover {
+  font-weight: normal;
+  text-decoration: none;
+}
+.or-act-clickable {
+  cursor: pointer;
+}
+/* Make Codemirror Auto-Resizable */
+.CodeMirror {
+  height: auto;
+}
+.or {
+  /* After page loading, all elements are hidden. This class will be removed by javascript. */
+}
+.or-search > .or-input {
+  box-shadow: none !important;
+  background-color: transparent !important;
+}
+.or--initial-hidden {
+  opacity: 0;
+}
+.or-view-flying-button {
+  display: block;
+  bottom: 1em;
+  right: 1em;
+  position: absolute;
+}
+.or-linklist {
+  display: flex;
+  flex-direction: column;
+  padding: 10% 20%;
+}
+.or-linklist > .or-linklist-line {
+  border: 1px solid;
+  margin-top: 1em;
+  padding: 1em;
+  border-radius: 0.5em;
+  -moz-border-radius: 0.5em;
+  -webkit-border-radius: 0.5em;
+  -khtml-border-radius: 0.5em;
+}
+.or-dirty {
+  font-weight: bold;
+}
+.or-draggable {
+  cursor: move;
+}
+.or-droppable--active {
+  background-color: #3c8b2e !important;
+  cursor: move;
+  z-index: 3;
+}
+.or-droppable--hover {
+  background-color: #08f169 !important;
+  cursor: move;
+  z-index: 3;
+}
+.or--invisible {
+  visibility: hidden;
+}
+.or--visible {
+  visibility: visible;
+}
+.or--off {
+  display: none;
+}
+.or-link {
+  color: inherit;
+}
+.or-link--is-active {
+  font-weight: bold;
+}
+legend {
+  font-size: 1.1em;
+  font-weight: bold;
+  padding: 0 0.5em;
+}
+

@@ -25,8 +25,30 @@
 		<link rel="preload" href="./modules/cms/ui/themes/default/font/oxygen-v7-latin-regular.woff2"          as="font" type="font/woff2" crossorigin="anonymous"/>
 		<link rel="preload" href="./modules/cms/ui/themes/default/font/MaterialIcons-Regular.woff2"            as="font" type="font/woff2" crossorigin="anonymous"/>
 		<link rel="preload" href="./modules/cms/ui/themes/default/font/source-code-pro-v8-latin-regular.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
-		<link rel="stylesheet" type="text/css" href="${styleLink}"/>
-		<link id="user-style" rel="stylesheet" type="text/css" href="${themeStyleLink}"/>
+		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-breadcrumb${cssExt}"/>
+		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-button${cssExt}"/>
+		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-collapsible${cssExt}"/>
+		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-components${cssExt}"/>
+		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-dialog${cssExt}"/>
+		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-diff${cssExt}"/>
+		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-dropdown${cssExt}"/>
+		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-fieldset${cssExt}"/>
+		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-font${cssExt}"/>
+		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-form${cssExt}"/>
+		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-image${cssExt}"/>
+		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-info${cssExt}"/>
+		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-menu${cssExt}"/>
+		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-navigation${cssExt}"/>
+		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-nojs${cssExt}"/>
+		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-normalize${cssExt}"/>
+		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-notices${cssExt}"/>
+		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-search${cssExt}"/>
+		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-selector${cssExt}"/>
+		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-sidebar${cssExt}"/>
+		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-ui${cssExt}"/>
+		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-view${cssExt}"/>
+		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-workbench${cssExt}"/>
+		<link id="user-style" rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/theme/openrat-theme${cssExt}"/>
 		<meta id="theme-color" name="theme-color" content="${themeColor}"/>
 		<link rel="manifest" href="${manifestLink}"/>
 		<link rel="shortcut icon" type="image/x-icon" href="${favicon_url}"/>

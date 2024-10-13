@@ -54,7 +54,8 @@ class IndexShowAction extends IndexAction implements Method {
 
 		$this->setTemplateVar('scriptLink', $this->getScriptLink() );
 		$this->setTemplateVar('scriptModuleLink',$this->getScriptModuleLink() );
-		$this->setTemplateVar('jsExt'           ,(PRODUCTION?'.min.js':'.js') );
+		$this->setTemplateVar('jsExt'           ,(PRODUCTION?'.min.js' :'.js' ) );
+		$this->setTemplateVar('cssExt'          ,(PRODUCTION?'.min.css':'.css') );
         $this->setTemplateVar('styleLink'       , $this->getStyleLink()  );
 
         $this->setTemplateVar('themeStyleLink', Html::url('index','themestyle',0,['style'=>$style]) );

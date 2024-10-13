@@ -1,0 +1,10 @@
+.or-group {
+  margin: 1em 0 4em;
+}
+.or-group-title {
+  margin: 0.5em 0;
+  font-size: 1.1em;
+  font-weight: normal;
+  border-bottom: 1px solid;
+}
+

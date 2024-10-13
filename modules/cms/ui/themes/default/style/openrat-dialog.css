@@ -1,0 +1,72 @@
+/*
+OpenRat Content Management System
+Copyright (C) 2002-2010 Jan Dankert
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+*/
+/*
+Basis-Style for Openrat.
+*/
+/* Usage to this variable is safe to be removed */
+.or-dialog {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 0;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+  display: flex;
+  height: 100%;
+  flex-direction: row;
+}
+.or-dialog--is-open {
+  visibility: visible;
+  overflow-y: auto;
+  opacity: 1;
+  width: 100%;
+}
+.or-dialog--is-open .or-dialog-filler {
+  width: 15%;
+}
+@media only screen and (max-width: 55rem) {
+  .or-dialog--is-open .or-dialog-filler {
+    width: 0;
+  }
+}
+.or-dialog-filler {
+  height: 100%;
+  width: 100%;
+  opacity: 0.6;
+  filter: blur(10em);
+}
+.or-dialog-filler-icon {
+  opacity: 1;
+  font-size: 3em;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+.or-dialog-content {
+  flex: 1;
+  overflow: auto;
+  height: 100%;
+  z-index: 3;
+}
+.or-dialog-content .or-view {
+  height: 100%;
+}
+

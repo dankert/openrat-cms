@@ -1,4 +1,4 @@
-import query, {OQuery} from './Oquery.js';
+import query,{OQuery} from './Oquery.js';
 
 import autoheight from './plugin/jquery-plugin-orAutoheight.js';
 import button     from './plugin/jquery-plugin-orButton.js';

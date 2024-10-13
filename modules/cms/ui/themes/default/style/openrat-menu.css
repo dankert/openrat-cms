@@ -1,0 +1,62 @@
+/*
+OpenRat Content Management System
+Copyright (C) 2002-2010 Jan Dankert
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+*/
+/*
+Basis-Style for Openrat.
+*/
+/* Usage to this variable is safe to be removed */
+.or-menu {
+  display: flex;
+  justify-content: space-between;
+  /* Dropdown anzeigen, wenn Titel geöffnet und wenn mit Maus überstrichen */
+}
+@media only screen and (max-width: 70rem) {
+  .or-menu-shortcut {
+    display: none;
+  }
+}
+@media only screen and (max-width: 85rem) {
+  .or-menu-label,
+  .or-menu-dropdown-icon {
+    display: none;
+  }
+}
+.or-menu-group {
+  display: flex;
+}
+.or-menu-group:nth-last-child(1) div.or-dropdown {
+  right: 10px;
+}
+.or-menu-group .or-image-icon {
+  width: 1.1em;
+}
+.or-menu-group .or-toolbar-icon {
+  padding: 2px;
+  margin-left: 10px;
+}
+.or-menu-group .or-toolbar-icon.or-menu-category {
+  cursor: default;
+}
+.or-menu-group .or-toolbar-icon.or-search input {
+  border: 0;
+  width: 10em;
+}
+.or-menu--is-open .or-menu-category--is-open > .or-dropdown {
+  display: block;
+}
+

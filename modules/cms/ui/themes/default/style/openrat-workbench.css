@@ -1,0 +1,273 @@
+/*
+OpenRat Content Management System
+Copyright (C) 2002-2010 Jan Dankert
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+*/
+/* Usage to this variable is safe to be removed */
+.or {
+  /* Fortschrittsbalken, fuer alle Elemente verfuegbar. */
+}
+.or-workbench {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  visibility: hidden;
+  /*        &-section {
+            margin: 1.5em;
+            @media @smartphones {
+                margin: 0.5em;
+            }
+
+            //border: 1px solid;
+            //.border-radius(5px);
+
+
+            .or-view-toolbar {
+                display: inline;
+            }
+
+            // Wenn Sektion geschlossen, keine Toolbar anzeigen.
+            &.or--is-closed {
+                .or-view-toolbar {
+                    display: none;
+                }
+
+            }
+
+            // Diabled Sections are not displayed.
+            &.or--disabled {
+                //display: none;
+            }
+
+            &.or--is-empty {
+                //display: none;
+            }
+        }*/
+  /* */
+}
+.or-workbench--visible-on-dialog-open {
+  z-index: 3;
+}
+.or-workbench-screen {
+  /* vertical flexbox */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  /*
+          https://stackoverflow.com/questions/28636832/firefox-overflow-y-not-working-with-nested-flexbox
+          Whenever you've got an element with overflow: [hidden|scroll|auto] inside of a flex item, you need to give its ancestor flex item min-width:0 (in a horizontal flex container) or min-height:0 (in a vertical flex container), to disable this min-sizing behavior, or else the flex item will refuse to shrink smaller than the child's min-content size.
+           */
+}
+.or-workbench-screen > * {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.or-workbench-main {
+  flex: 1;
+  min-width: 0;
+}
+.or-workbench-title {
+  height: 3.0rem;
+  max-height: 3.0rem;
+  min-height: 3.0rem;
+  overflow: hidden;
+  padding: 0.5em;
+  font-size: 1.2em;
+}
+.or-workbench-title .toolbar-icon .arrow-down {
+  display: inline;
+}
+@media only screen and (max-width: 55rem) {
+  .or-workbench-title .toolbar-icon span.label,
+  .or-workbench-title .toolbar-icon .arrow-down {
+    display: none;
+  }
+}
+.or-workbench-content {
+  flex: 1;
+  /*
+            &.is-closed {
+                flex: 0.5;
+                cursor: not-allowed;
+                pointer-events: none;
+
+                @media @smartphones {
+                    // do not display the views in mobile mode.
+                    flex: 0;
+                }
+
+                //overflow: hidden;
+            }*/
+}
+.or-workbench--visible-on-small {
+  display: none;
+}
+.or-workbench--visible-on-wide {
+  display: block;
+}
+.or-workbench--navigation-is-small .or-workbench--visible-on-wide {
+  display: none;
+}
+.or-workbench--navigation-is-small .or-workbench--visible-on-small {
+  display: block;
+}
+.or-workbench-navigation {
+  display: flex;
+  flex-direction: row;
+  width: 30em;
+}
+.or-workbench-navigation-content {
+  flex: 1;
+}
+@media only screen and (max-width: 55rem) {
+  .or-workbench-navigation-content {
+    flex: none;
+  }
+}
+.or-workbench-navigation-filler {
+  flex: 0;
+  opacity: 0.6;
+}
+.or-workbench-navigation-container {
+  width: 100%;
+  position: relative;
+  padding: 0.7em;
+  overflow-x: hidden;
+}
+.or-workbench-navigation--is-small {
+  width: 0;
+}
+.or-workbench-navigation--is-small .or-workbench-navigation-container {
+  width: 0;
+  overflow-y: hidden;
+  /*
+                    &:hover {
+                        overflow-y: auto;
+                        width: 33%;
+                        opacity: 0.9;
+
+                        .or-navtree {
+                            opacity: 1;
+                        }
+                    }
+                    */
+}
+.or-workbench-navigation--is-small .or-workbench-navigation-container .or-navtree {
+  opacity: 0.2;
+}
+.or-workbench-navigation--is-small .or-navtree {
+  opacity: 0;
+}
+@media only screen and (max-width: 55rem) {
+  .or-workbench-navigation {
+    width: 0;
+  }
+  .or-workbench-navigation .or-workbench-navigation-container {
+    /*
+                    width: 0;
+                    padding: 0;
+                    */
+  }
+  .or-workbench-navigation--is-open {
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    opacity: 1;
+    height: 100%;
+  }
+  .or-workbench-navigation--is-open .or-workbench-navigation-content {
+    width: 90%;
+  }
+  .or-workbench-navigation--is-open .or-workbench-navigation-filler {
+    flex: 1;
+  }
+}
+@media only screen and (min-width: 75rem) {
+  .or-workbench-navigation {
+    overflow-y: auto;
+  }
+}
+.or-workbench-navigation .or-view {
+  height: 100%;
+}
+.or--visible-on-mobile {
+  display: none;
+}
+@media only screen and (max-width: 55rem) {
+  .or--visible-on-mobile {
+    display: inline;
+  }
+}
+@media only screen and (max-width: 55rem) {
+  .or--visible-on-desktop {
+    display: none;
+  }
+}
+.or-toggle-nav-small {
+  display: inline;
+}
+@media only screen and (max-width: 55rem) {
+  .or-toggle-nav-small {
+    display: none;
+  }
+}
+.or-toggle-nav-open-close {
+  display: none;
+}
+@media only screen and (max-width: 55rem) {
+  .or-toggle-nav-open-close {
+    display: inline;
+  }
+}
+.or-loader {
+  position: absolute;
+  top: 30%;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  border-width: 0.5em;
+  border-style: solid;
+  border-radius: 50%;
+  visibility: hidden;
+  z-index: 6;
+}
+.or-loader--is-active {
+  visibility: visible;
+  width: 5em;
+  height: 5em;
+  animation: spin 2s linear infinite;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@media screen and (prefers-reduced-motion: reduce) {
+  .or-loader--is-active {
+    display: none;
+  }
+}
+@media only screen and (max-width: 55rem) {
+  html {
+    font-size: 1.1em;
+  }
+}
+

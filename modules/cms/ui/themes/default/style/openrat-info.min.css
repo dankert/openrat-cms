@@ -1,0 +1,1 @@
+.or-info{position: relative}.or-info--open-on-hover:hover .or-info-popup,.or-info--open .or-info-popup{display: block}.or-info-popup{display: none;position: absolute;top: 1.2em;left: -2em;overflow: visible;border: 0.5em;font-size: 2em;border-radius: 0.3em;padding: 1.0em;z-index: 6}.or-info-popup > div{display: inline-block}

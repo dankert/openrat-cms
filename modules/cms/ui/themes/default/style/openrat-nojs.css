@@ -1,0 +1,7 @@
+.or-nojs-text {
+  display: block;
+}
+.or-visible-for-nojs {
+  display: none;
+}
+

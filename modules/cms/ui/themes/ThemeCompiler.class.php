@@ -3,11 +3,10 @@
 namespace cms\ui\themes;
 
 use util\FileUtils;
-use util\JSMinifier;
-use util\JSqueeze;
-use logger\Logger;
-use template_engine\TemplateEngineInfo;
 use util\Less;
+use util\ui\minifier\JSMinifier;
+use util\ui\minifier\CSSMinifier;
+use template_engine\TemplateEngineInfo;
 
 /**
  * Theme-Compiler.
@@ -24,12 +23,6 @@ class ThemeCompiler
 
 	public function compileStyles()
 	{
-		$combinedCssFile    = __DIR__.'/default/'.Theme::STYLE_FILENAME;
-		$combinedCssFileMin = __DIR__.'/default/'.Theme::STYLE_MINIFIED_FILENAME;
-
-		file_put_contents($combinedCssFile   ,'');
-		file_put_contents($combinedCssFileMin,'');
-
 		$css = [];
 
         $styleFiles = FileUtils::readDir( __DIR__.'/default/style','less');
@@ -43,34 +36,26 @@ class ThemeCompiler
             $componentCssFile = 'template_engine/components/html/component_' . $c . '/' . $c;
             if (is_file( __DIR__.'/../../../'. $componentCssFile . '.less'))
                 $css[] = __DIR__.'/../../../'.$componentCssFile;
+            if (is_file( __DIR__.'/../../../'. $componentCssFile . '.css'))
+                $css[] = __DIR__.'/../../../'.$componentCssFile;
         }
-
-        //$css[] = __DIR__.'/../../../editor/simplemde/simplemde';
-        //$css[] = __DIR__.'/../../../editor/trumbowyg/ui/trumbowyg';
-        //$css[] = __DIR__.'/../../../editor/codemirror/lib/codemirror';
 
 		foreach ($css as $cssF)
 		{
 			$lessFile = $cssF . '.less';
-
-			file_put_contents($combinedCssFile, '/* Include style: '.substr($cssF,strlen(__DIR__)).' */'."\n",FILE_APPEND);
-
-			// Den absoluten Pfad zur LESS-Datei ermitteln. Dieser wird vom LESS-Parser für den korrekten Link
-			// auf die LESS-Datei in der Sourcemap benötigt.
-			$pfx = substr(realpath($lessFile),0,0-strlen(basename($lessFile)));
+			//$cssFile  = $cssF . '.css';
 
 			$parser = new Less(array(
-				'sourceMap' => true,
-				'indentation' => '	',
-				'outputSourceFiles' => false,
-				'sourceMapBasepath' => $pfx
+				'compress' => false,
+				'sourceMap' => false,
+				'indentation' => '  '
 			));
-
-
-			$parser->parseFile( $lessFile );
+			$parser->parseFile($lessFile);
 			$source = $parser->getCss();
+			$outFilename = $cssF.'.css';
+			file_put_contents( $outFilename, $source."\n");
+			echo 'Created file '.$outFilename ."\n";
 
-			file_put_contents($combinedCssFile, $source."\n",FILE_APPEND);
 
 			$parser = new Less(array(
 				'compress' => true,
@@ -80,13 +65,15 @@ class ThemeCompiler
 			$parser->parseFile($lessFile);
 			$source = $parser->getCss();
 
-			file_put_contents($combinedCssFileMin, $source."\n",FILE_APPEND);
+			//$minifier = new CSSMinifier();
 
-			echo 'Copied source from less source file '.$lessFile."\n";
+			//$minifier->addSourceFile( $lessFile );
+			//$source = $minifier->getCompressedContent();
+
+			$outFilename = $cssF.'.min.css';
+			file_put_contents( $outFilename, $source."\n");
+			echo 'Created file '.$outFilename ."\n";
 		}
-
-		echo 'Created file '.$combinedCssFileMin."\n";
-		echo 'Created file '.$combinedCssFile   ."\n";
 
 	}
 
@@ -135,13 +122,14 @@ class ThemeCompiler
 			if( is_file($jsFileNormal) )
 			{
 				// Minify....
-				$jz = new JSMinifier(
+				$minifier = new JSMinifier(
 					JSMinifier::FLAG_IMPORT_MIN_JS +
 					JSMinifier::FLAG_REMOVE_MULTILINE_COMMENT +
-					JSMinifier::FLAG_REMOVE_BLANK_LINES +
 					JSMinifier::FLAG_REMOVE_LINE_COMMENTS +
-					JSMinifier::FLAG_REMOVE_WHITESPACE );
-				file_put_contents($jsFileMin, $jz->minify(file_get_contents($jsFileNormal)));
+					JSMinifier::FLAG_REMOVE_TABS +
+					JSMinifier::FLAG_REMOVE_INDENTING_SPACES );
+				$minifier->addSourceFile( $jsFileNormal );
+				file_put_contents($jsFileMin, $minifier->getCompressedContent());
 
 				echo 'Minified to '.$jsFileMin."\n";
 			} else {

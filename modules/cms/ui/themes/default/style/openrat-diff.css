@@ -1,0 +1,22 @@
+.or-diff-line {
+  text-align: right;
+}
+.or-diff-text {
+  /* unchanged */
+  /* removed */
+  /* new */
+  /* changed */
+}
+.or-diff-text--old {
+  background-color: #f88989;
+  color: black;
+}
+.or-diff-text--new {
+  background-color: #7bad7b;
+  color: black;
+}
+.or-diff-text--notequal {
+  background-color: #cbcb16;
+  color: black;
+}
+
