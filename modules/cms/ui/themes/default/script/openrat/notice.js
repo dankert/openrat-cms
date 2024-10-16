@@ -65,6 +65,11 @@ export default class Notice  {
 		//this.element.removeClass('loader');
 	}
 
+	/**
+	 * Adds an onclick-listener to the notice.
+	 *
+	 * @param f Function which is called after the user clicked on the notice.
+	 */
 	onClick( f ) {
 		this.onClickListener.push( f );
 	}

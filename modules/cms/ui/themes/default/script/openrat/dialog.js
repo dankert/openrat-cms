@@ -144,7 +144,7 @@ export default class Dialog {
 			notice.msg = Workbench.language.REOPEN_CLOSED_DIALOG;
 			notice.setStatus( 'warning' );
 			notice.timeout = 120;
-			notice.onClick.add( function() {
+			notice.onClick( function() {
 				Workbench.dialog = dialog;
 				dialog.show();
 				notice.close();
