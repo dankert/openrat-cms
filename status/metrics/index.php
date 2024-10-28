@@ -1,15 +1,15 @@
 <?php
-// CMS status
+// CMS metrics for openmetrics/prometheus
 
-require('../modules/autoload.php');
+require('../../modules/autoload.php');
 
-use cms\status\Status;
 use cms\base\Startup;
+use cms\status\Metrics;
 
 Startup::initialize();
 
 try {
-	Status::execute();
+	Metrics::execute();
 
 } catch (Exception $e) {
 
