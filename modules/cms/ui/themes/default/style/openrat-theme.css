@@ -1,6 +1,6 @@
 /* OpenRat Theme */
 /*
- * The following variables beginning with 'var(--cms-)...' are overwritten by the CMS style configuration values
+ * The following CSS variables beginning with '--cms-...' are overwritten by the CMS style configuration values
  */
 :root {
   --cms-main-title-background-color: white;
@@ -39,6 +39,24 @@ html * {
   html * {
     transition: none;
   }
+}
+html .or {
+  /*
+      &-search {
+        &-input {
+
+          border-color: var(--cms-nav-title-background-color);
+
+          .or-input {
+            background-color: var(--cms-nav-title-background-color);
+            color: var(--cms-nav-title-text-color);
+          }
+        }
+
+        &-result {
+          //background-color: var(--cms-nav-background-color);
+        }
+      }*/
 }
 html .or-qrcode-value {
   background-color: var(--cms-dialog-background-color);
@@ -102,15 +120,14 @@ html .or-preview {
 }
 html .or-table tr.headline > td,
 html .or-table tr.headline > th {
-  border-bottom: 1px solid var(--cms-main-title-background-color);
+  border-bottom: 1px solid var(--cms-image-color);
 }
 html .or-table tr > td {
-  border-bottom: 1px solid var(--cms-main-title-background-color);
+  border-bottom: 1px solid var(--cms-image-color);
 }
 html .or-table tr.or-data:hover,
 html .or-table tr.or-table-data:hover {
-  background-color: var(--cms-main-title-background-color);
-  color: var(--cms-main-title-text-color);
+  mix-blend-mode: difference;
 }
 html .or-workbench {
   /*            &-navigation-container {
@@ -121,25 +138,80 @@ html .or-workbench {
                 background-image: linear-gradient(to right, lighten(var(--cms-main-background-color), 10%), var(--cms-main-background-color));
             }*/
 }
-html .or-workbench-title {
-  text-color: var(--cms-main-text-color);
+html .or-workbench-main .or-workbench-title {
+  color: var(--cms-main-title-text-color);
+  background-color: var(--cms-main-title-background-color);
+}
+html .or-workbench-main .or-workbench-content {
+  color: var(--cms-main-text-color);
+  background-color: var(--cms-main-background-color);
+}
+html .or-workbench-main .or-dialog .or-workbench-title {
+  color: var(--cms-main-title-text-color);
+  background-color: var(--cms-main-title-background-color);
+}
+html .or-workbench-main .or-dialog .or-workbench-content {
+  color: var(--cms-main-text-color);
+  background-color: var(--cms-main-background-color);
+}
+html .or-workbench-main .or-dialog .or-workbench-content .or-form-actionbar {
+  background-color: var(--cms-main-background-color);
+  box-shadow: 0 -2em 2em var(--cms-main-background-color);
+}
+html .or-workbench-main .or-dialog .or-workbench-content .or-input {
   background-color: var(--cms-main-title-background-color);
   color: var(--cms-main-title-text-color);
+  border-color: var(--cms-main-text-color);
+}
+html .or-workbench-main .or-dialog .or-workbench-content .or-input:focus {
+  border-color: var(--cms-image-color);
+}
+html .or-workbench-main .or-dialog .or-workbench-content .or-input--error {
+  border-color: var(--cms-notice-error-color) !important;
+}
+html .or-workbench-main .or-dialog .or-workbench-content .or-input.or-hint {
+  color: var(--cms-main-title-background-color);
+}
+html .or-workbench-main-filler {
+  background-color: var(--cms-fill-color);
 }
 html .or-workbench-title .or-toolbar-icon > a {
   color: var(--cms-main-title-text-color);
 }
+html .or-workbench-title .or-search-input {
+  border-color: var(--cms-image-color);
+}
 html .or-workbench-workplace {
-  text-color: var(--cms-main-text-color);
+  color: var(--cms-main-text-color);
   background-color: var(--cms-main-background-color);
 }
-html .or-workbench-search {
-  text-color: var(--cms-nav-title-text-color);
+html .or-workbench-title {
+  border-color: var(--cms-main-title-background-color);
+  /*
+            .or-input {
+              background-color: var(--cms-main-title-background-color);
+              color: var(--cms-main-title-text-color);
+            }*/
+}
+html .or-workbench-navigation .or-workbench-title {
+  color: var(--cms-nav-title-text-color);
   background-color: var(--cms-nav-title-background-color);
 }
-html .or-workbench-navigation-container {
-  text-color: var(--cms-nav-text-color);
+html .or-workbench-navigation .or-workbench-content {
+  color: var(--cms-nav-text-color);
   background-color: var(--cms-nav-background-color);
+}
+html .or-workbench-navigation .or-dialog .or-workbench-title {
+  color: var(--cms-nav-title-text-color);
+  background-color: var(--cms-nav-title-background-color);
+}
+html .or-workbench-navigation .or-dialog .or-workbench-content {
+  color: var(--cms-nav-text-color);
+  background-color: var(--cms-nav-background-color);
+}
+html .or-workbench-navigation .or-dialog .or-workbench-content .or-form-actionbar {
+  background-color: var(--cms-nav-background-color);
+  box-shadow: 0 -2em 2em var(--cms-nav-background-color);
 }
 html .or-workbench-navigation-filler {
   background-color: var(--cms-fill-color);
@@ -154,37 +226,8 @@ html .or-workbench-navigation,
 html .or-workbench-navigation .or-link {
   color: var(--cms-nav-text-color);
 }
-html .or-search-input {
-  border-color: var(--cms-nav-title-background-color);
-}
-html .or-search-input .or-input {
-  background-color: var(--cms-nav-title-background-color);
-  color: var(--cms-nav-title-text-color);
-}
-html .or-dialog-title {
-  background-color: var(--cms-dialog-title-background-color);
-  color: var(--cms-dialog-title-text-color);
-}
-html .or-dialog-content {
-  background-color: var(--cms-dialog-background-color);
-  color: var(--cms-dialog-text-color);
-}
 html .or-dialog-filler {
   background-color: var(--cms-fill-color);
-}
-html .or-input {
-  background-color: var(--cms-main-title-background-color);
-  color: var(--cms-main-title-text-color);
-  border-color: var(--cms-main-text-color);
-}
-html .or-input:focus {
-  border-color: var(--cms-image-color);
-}
-html .or-input--error {
-  border-color: var(--cms-notice-error-color) !important;
-}
-html .or-input.or-hint {
-  color: var(--cms-main-title-background-color);
 }
 html .or-group {
   border-color: var(--cms-main-scrollbar-color);
@@ -280,10 +323,6 @@ html .or-form-radio:checked {
 }
 html .or-form-content {
   padding-bottom: 5em;
-}
-html .or-form-actionbar {
-  background-color: var(--cms-dialog-background-color);
-  box-shadow: 0 -2em 2em var(--cms-dialog-background-color);
 }
 html .or-fieldset-label {
   color: var(--cms-main-scrollbar-color);

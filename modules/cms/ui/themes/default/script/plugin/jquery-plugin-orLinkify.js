@@ -80,7 +80,18 @@ export default function( options )
 
 			case 'edit':
 			case 'dialog':
-				let dialog = Workbench.getInstance().createDialog();
+			case 'dialog-nav':
+			case 'dialog-main':
+				// Create a dialog in the same Screen (navigation or main)
+				let $targetElement;
+				if   ( type == 'dialog-nav' )
+					$targetElement = $('.or-workbench-navigation .or-dialog');
+				else if   ( type == 'dialog-main' )
+					$targetElement = $('.or-workbench-main       .or-dialog');
+				else
+					$targetElement = $el.parents('.or-workbench-screen').find('.or-dialog');
+
+				let dialog = Workbench.getInstance().createDialog( $targetElement );
 				let name   = $link.attr('data-name');
 				if   ( !name )
 					name = $link.text(); // get the name from the combined text of all children.

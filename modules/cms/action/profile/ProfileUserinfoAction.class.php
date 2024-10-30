@@ -20,6 +20,10 @@ class ProfileUserinfoAction extends ProfileAction implements Method {
 
 		$user = $this->currentUser;
 
+		$this->setTemplateVar('authenticated',$user != null                                          );
+		$this->setTemplateVar('name'         ,$user != null ? $user->getName()                  : '' );
+		$this->setTemplateVar('letter'       ,$user != null ? strtoupper( @$user->getName()[0]) : '' );
+
 		$currentStyle = $this->getUserStyle($user);
 		$this->setTemplateVar('style',$currentStyle);
 

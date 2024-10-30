@@ -10,10 +10,10 @@
 .or-form-checkbox,
 .or-form-radio {
   margin-right: 1em;
-  appearance: none;
   width: 1.5em;
   height: 1.5em;
   border: 1px solid;
+  accent-color: var(--cms-image-color);
 }
 .or-form-checkbox {
   border-radius: 2px;
@@ -54,7 +54,7 @@
   left: 0;
   right: 0;
   display: flex;
-  justify-content: end;
+  justify-content: center;
   padding: 1em;
   height: auto;
 }
@@ -112,5 +112,8 @@
   .or-btn--secondary {
     min-width: 0;
   }
+}
+.or-act-form-cancel {
+  display: none;
 }
 

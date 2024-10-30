@@ -13,7 +13,7 @@ export default class Dialog {
 	 * A dialog is a special area in the workbench for displaying and inputting data.
 	 * A dialog contains a view.
 	 */
-	constructor() {
+	constructor( dialogElement ) {
 
 		this.view;
 
@@ -21,7 +21,8 @@ export default class Dialog {
 		 * the DOM element which contains the dialog.
 		 * @type {*|jQuery|HTMLElement}
 		 */
-		this.element = $('.or-dialog-content .or-view');
+		this.dialogElement = $(dialogElement);
+		this.viewElement = this.dialogElement.find('.or-dialog-content .or-view');
 	}
 
 	/**
@@ -30,9 +31,9 @@ export default class Dialog {
 	 */
 	set isDirty( dirty ) {
 		if   ( dirty )
-			this.element.addClass('view--is-dirty');
+			this.viewElement.addClass('view--is-dirty');
 		else
-			this.element.removeClass('view--is-dirty');
+			this.viewElement.removeClass('view--is-dirty');
 	}
 
 	/**
@@ -40,7 +41,7 @@ export default class Dialog {
 	 * @return true, if unsaved changes exist
 	 */
 	get isDirty() {
-		return this.element.hasClass('view--is-dirty');
+		return this.viewElement.hasClass('view--is-dirty');
 	}
 
 	/**
@@ -69,9 +70,9 @@ export default class Dialog {
 
 		Notice.removeAllNotices();
 
-		$('.or-dialog-content .or-view').html(''); // Clear old content
+		this.dialogElement.find('.or-dialog-content .or-view').html(''); // Clear old content
 
-		$('.or-dialog-content .or-act-dialog-name').html( name );
+		this.dialogElement.find('.or-dialog-content .or-act-dialog-name').html( name );
 		this.show();
 
 		view.onCloseHandler.add( function() {
@@ -93,7 +94,7 @@ export default class Dialog {
 
 		Workbench.getInstance().startSpinner();
 
-		let viewPromise = this.view.start( this.element );
+		let viewPromise = this.view.start( this.viewElement );
 
 		viewPromise.then(
 			() => Workbench.getInstance().stopSpinner()
@@ -109,10 +110,10 @@ export default class Dialog {
 		//WorkbenchNavigator.navigateToNew( {'action':Workbench.state.action+'','id':Workbench.state.id } );
 		WorkbenchNavigator.navigateToNew( Workbench.state );
 
-		$('.or-dialog').removeClass('dialog--is-closed').addClass('dialog--is-open');
+		this.dialogElement.removeClass('dialog--is-closed').addClass('dialog--is-open');
 
 		if   ( this.isDirty ) {
-			this.element.addClass('view--is-dirty');
+			this.viewElement.addClass('view--is-dirty');
 		}
 	}
 
@@ -122,7 +123,7 @@ export default class Dialog {
 	}
 
 	hide() {
-		$('.or-dialog').removeClass('dialog--is-open').addClass('dialog--is-closed'); // Dialog schließen
+		this.dialogElement.removeClass('dialog--is-open').addClass('dialog--is-closed'); // Dialog schließen
 	}
 
 
@@ -153,7 +154,7 @@ export default class Dialog {
 		}
 
 		// Remove dirty-flag from view
-		$('.or-dialog-content .or-view.or-view--is-dirty').removeClass('view--is-dirty');
+		this.dialogElement.find('.or-dialog-content .or-view.or-view--is-dirty').removeClass('view--is-dirty');
 		this.hide();
 		//$(document).unbind('keyup',this.escapeKeyClosingHandler); // Cleanup ESC-Key-Listener
 	}

@@ -259,11 +259,11 @@ export default class Workbench {
 	}
 
 
-	createDialog() {
+	createDialog( dialogElement ) {
 
 		this.closeDialog();
 
-		Workbench.dialog = new Dialog();
+		Workbench.dialog = new Dialog( dialogElement );
 		return Workbench.dialog;
 	}
 
@@ -296,6 +296,7 @@ export default class Workbench {
 	reloadAll() {
 
 		this.startSpinner();
+		sessionStorage.clear();
 
 		let promise = this.loadViews( $('.or-act-view-loader,.or-act-view-static') );
         console.debug('reloading all views');
@@ -331,12 +332,21 @@ export default class Workbench {
 
 		let color = json.output['theme-color'];
 		this.setThemeColor(color);
+
+		// is the user logged in?
+		if   ( json.output['name'  ] )
+			$('.or-workbench').addClass('user--logged-in').removeClass('user--anonymous');
+		else
+			$('.or-workbench').removeClass('user--logged-in').addClass('user--anonymous');
+
+		document.querySelector('.or-userinfo').title = json.output['name'  ];
+		document.querySelector('.or-userinfo').innerHTML = json.output['letter'];
 	}
 
 
 
 	static settings = {};
-    static language = {};
+	static language = {};
 
     async loadLanguage() {
 
@@ -687,9 +697,9 @@ export default class Workbench {
 		let keyPressedHandler = (event) => {
 
 			if (event.key === 'F4') {
-				// Open "properties" dialog.
+				// Open "properties" in main dialog.
 
-				let dialog = this.createDialog();
+				let dialog = this.createDialog( $('.or-workbench-main .or-dialog') );
 				dialog.start('', '', 'prop', 0, {});
 			}
 
@@ -752,28 +762,29 @@ export default class Workbench {
 			$('.or-workbench-navigation').addClass('workbench-navigation--is-small');
 		});
 
+		// Navigation title with links
+		$('.or-workbench-navigation .or-workbench-title').find('.or-act-clickable').orLinkify();
 
-		$('.or-search-input .or-input').orSearch( {
-			onSearchActive: function() {
-				$('.or-search').addClass('search--is-active');
-			},
-			onSearchInactive: function() {
-				$('.or-search').removeClass('search--is-active');
-			},
-			dropdown    : '.or-act-search-result',
-			resultEntryClass: 'search-result-entry',
-			//openDropdown: true, // the dropdown is automatically opened by the menu.
-			select      : function(obj) {
-				// open the search result
-				Workbench.getInstance().openNewAction( obj.name, obj.action, obj.id );
-			},
-			afterSelect: function() {
-				//$('.or-dropdown.or-act-selector-search-results').empty();
-			}
-		} );
-		$('.or-search .or-act-search-delete').click( () => {
-			$('.or-search .or-title-input').val('').input();
-		} );
+		// Navigation with dropdown-menu
+		(function registerMenuEvents($element )
+		{
+			// Mit der Maus geklicktes Menü aktivieren.
+			$($element).find('.or-menu-category').click( function(event) {
+				event.stopPropagation();
+				$(this).closest('.or-menu').toggleClass('menu--is-open');
+			});
+
+			// Mit der Maus überstrichenes Menü aktivieren.
+			$($element).find('.or-menu-category').mouseover( function() {
+
+				// close other menus.
+				$(this).closest('.or-menu').find('.or-menu-category').removeClass('menu-category--is-open');
+				// open the mouse-overed menu.
+				$(this).addClass('menu-category--is-open');
+			});
+
+		})($('.or-workbench-navigation .or-workbench-title'));
+
 
 
 		document.addEventListener('or-new-action',function() {
@@ -923,6 +934,9 @@ export default class Workbench {
 		document.addEventListener('or-view-ready', function(ev) {
 			let viewEl = ev.detail.element;
 
+			// Moves a title to the dialog title
+			$(viewEl).find('.or-dialog-title').appendTo( $(viewEl).parents('.or-workbench-screen').find('.or-dialog-content .or-act-dialog-name') );
+
 			// Handler for mobile navigation
 			$(viewEl).find('.or-act-nav-open-close').click( function() {
 				$('.or-workbench').toggleClass('workbench--navigation-is-open');
@@ -1052,6 +1066,7 @@ export default class Workbench {
 					resultEntryClass: 'search-result-entry',
 
 					select: function(obj) {
+						// Object is selected from the search results.
 						$($element).find('.or-selector-link-value').val(obj.id  );
 						$($element).find('.or-selector-link-name' ).val(obj.name).attr('placeholder',obj.name);
 					},
@@ -1061,6 +1076,32 @@ export default class Workbench {
 					}
 				} );
 			}
+
+			function registerViewSearch( $element ) {
+				//
+				$( $element).parents('.or-workbench-screen').find('.or-search-input .or-input').orSearch({
+					onSearchActive: function () {
+						$('.or-search').addClass('search--is-active');
+					},
+					onSearchInactive: function () {
+						$('.or-search').removeClass('search--is-active');
+					},
+					dropdown: '.or-search-results',
+					resultEntryClass: 'search-result-entry',
+					//openDropdown: true, // the dropdown is automatically opened by the menu.
+					select: function (obj) {
+						// open the search result
+						Workbench.getInstance().openNewAction(obj.name, obj.action, obj.id);
+					},
+					afterSelect: function () {
+						//$('.or-dropdown.or-act-selector-search-results').empty();
+					}
+				});
+			}
+			/*
+			$('.or-search .or-act-search-delete').click( () => {
+				$('.or-search .or-title-input').val('').input();
+			} );*/
 
 
 
@@ -1073,7 +1114,7 @@ export default class Workbench {
 
 
 			registerMenuEvents    ( viewEl );
-			//registerGlobalSearch  ( viewEl );
+			registerViewSearch    ( viewEl );
 			registerSelectorSearch( viewEl );
 			registerTree          ( viewEl );
 

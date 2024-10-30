@@ -1,0 +1,14 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+
+	<part class="dialog-title">
+		<part class="toolbar-icon,search-input">
+			<image method="search"/>
+			<input class="title-input" name="text" hint="${message:search}"/>
+			<image method="delete" class="act-search-delete,search--on-active" />
+			<image class="menu-dropdown-icon,search--on-active" symbol="dropdown"/>
+		</part>
+	</part>
+
+	<part class="search-results"></part>
+</output>

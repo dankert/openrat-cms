@@ -31,18 +31,8 @@ export default function( options )
 		dropdownEl.removeClass('search-result--is-active');
 	};
 
-	$(this).on('keydown',async function(e) {
-		if   ( e.keyCode == 13 ) { // Listen to ENTER
-			let dialog = Workbench.getInstance().createDialog();
-			closeSearch();
-			dialog.start('','search','edit',0,{'text':searchInput.val()});
-			searchInput.val('');
-		}
-	} );
-
-	return $(this).input(async function()
-	{
-		let searchArgument = searchInput.val();
+	let search = async function( searchArgument ) {
+		sessionStorage.setItem('search_query',searchArgument); // remember the query
 
 		if	( searchArgument.length )
 		{
@@ -102,13 +92,38 @@ export default function( options )
 			$(dropdownEl).find('.or-search-result-entry').click(function (e) {
 				settings.select( $(this).data() );
 				settings.afterSelect();
-				searchInput.val('');
-				closeSearch();
+				//searchInput.val('');
+				//closeSearch();
 			});
 		}
 		else
 		{
 			closeSearch();
 		}
+	}
+
+	if   ( ! searchInput.val() )
+	{
+		let oldQuery = sessionStorage.getItem('search_query');
+		if   ( oldQuery ) {
+			searchInput.val( oldQuery );
+			search( oldQuery );
+		}
+	}
+
+	$(this).on('keydown',async function(e) {
+		if   ( e.keyCode == 13 ) { // Listen to ENTER
+			// Open search dialog in main area.
+			let dialog = Workbench.getInstance().createDialog( $('.or-workbench-main .or-dialog') );
+			closeSearch();
+			dialog.start('','search','edit',0,{'text':searchInput.val()});
+			searchInput.val('');
+		}
+	} );
+
+	return $(this).input(async function()
+	{
+		let searchArgument = searchInput.val();
+		await search(searchArgument);
 	});
 };

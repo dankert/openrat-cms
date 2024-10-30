@@ -21,22 +21,11 @@
         &-radio {
           //transform: scale(1.5); // Increase size of checkboxes
           margin-right: 1em;
-          appearance: none;
+          //appearance: none;
           width:1.5em;
           height: 1.5em;
           border: 1px solid;
-          &::after {
-            //content: "\2610";
-            //font-size: 2em;
-          }
-          &:checked {
-            &::after {
-              //content: '\2714';
-              //content: "\2705";
-              //content: "\1F5F9";
-              //font-size: 2em;
-            }
-          }
+          accent-color: var(--cms-image-color);
         }
         &-checkbox {
           border-radius: 2px;
@@ -89,7 +78,7 @@
             right: 0;
 
             display: flex;
-            justify-content: end;
+            justify-content: center;
             padding: 1em;
             height: auto;
 
@@ -160,4 +149,8 @@
             }
         }
     }
+}
+
+.or-act-form-cancel {
+  display: none; // no cancel buttons - more UX... maybe.
 }
