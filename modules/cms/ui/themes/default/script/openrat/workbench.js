@@ -100,6 +100,12 @@ export default class Workbench {
 			if (style)
 				this.loadUserTheme(style);
 		}
+
+		// Reload the theme if color-scheme is changed.
+		window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+			console && console.debug("Detecting new color-scheme",event)
+			this.loadUserStyle();
+		});
 	}
 
 
@@ -458,7 +464,12 @@ export default class Workbench {
 				throw "loading theme info failed";
 
 			let data = await response.json();
-			let styleProperties = data.output.style;
+			let schemes = data.output.style;
+			let scheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+			console && console.debug("Detecting color-scheme '"+scheme+"'.")
+
+			let styleProperties = schemes[scheme];
 			console.debug("New Theme '"+themeName+"'",styleProperties);
 
 			// Gets the CSS :root selector

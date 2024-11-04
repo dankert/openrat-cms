@@ -32,16 +32,20 @@ class IndexThemestyleAction extends IndexAction implements Method {
 	protected function getThemeProperties($styleId )
 	{
 		$styleConfig = C::subset( ['style',$styleId] );
-		$scheme = 'light';
 
-		$schemeConfig = $styleConfig->subset('defaults')->merge( $styleConfig->subset('schemes')->subset($scheme) );
+		$schemesConfig = [];
+		foreach ( $styleConfig->subset('schemes')->subsets() as $scheme=>$config ) {
 
-		$themeStyle = new ThemeStyle( $schemeConfig->getConfig() );
+			$schemeConfig = $config->merge( $styleConfig->subset('defaults') );
+			$themeStyle = new ThemeStyle( $schemeConfig->getConfig() );
 
-		return ArrayUtils::mapKeys( function($prop) {
-			return Converter::camelToUnderscore($prop, '-');
-		},$themeStyle->getProperties());
+			$schemesConfig[ $scheme ] = ArrayUtils::mapKeys( function($prop) {
+					return Converter::camelToUnderscore($prop, '-');
+				},$themeStyle->getProperties());
 
+		}
+
+		return $schemesConfig;
 	}
 
 }
