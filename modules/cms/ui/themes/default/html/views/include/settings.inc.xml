@@ -12,7 +12,7 @@
 					</column>
 					<column class="act-clickable">
 						<link subaction="settings" type="dialog">
-							<text value="${entry.value}"/>
+							<text type="preformatted" value="${entry.value}"/>
 						</link>
 					</column>
 				</row>
