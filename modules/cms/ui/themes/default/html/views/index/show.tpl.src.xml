@@ -184,6 +184,18 @@
 										<or:part class="dropdown-divide"/>
 										<!-- License info -->
 										<or:part class="dropdown-entry,act-clickable">
+											<or:link type="dialog" title="${message:menu_user_DESC}" action="tree" subaction="user" name="${message:users}">
+												<or:image action="userlist"/>
+												<or:text class="dropdown-text" value="${message:users}"/>
+											</or:link>
+										</or:part>
+										<or:part class="dropdown-entry,act-clickable">
+											<or:link type="dialog" title="${message:menu_settings_DESC}" action="tree" subaction="settings" name="${message:settings}">
+												<or:image action="configuration"/>
+												<or:text class="dropdown-text" value="${message:settings}"/>
+											</or:link>
+										</or:part>
+										<or:part class="dropdown-entry,act-clickable">
 											<or:link type="dialog" title="${message:menu_license_DESC}" action="login" subaction="license">
 												<or:image method="info"/>
 												<or:text class="dropdown-text" value="${message:menu_info}"/>

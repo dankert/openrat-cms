@@ -1,0 +1,2 @@
+<?php /* THIS FILE IS GENERATED from user.tpl.src.xml - DO NOT CHANGE */ defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
+  <div class="<?php echo O::escapeHtml('or-navtree or-act-load-nav-tree or-navtree-type-userandgroups') ?>"><?php echo O::escapeHtml('') ?></div>

@@ -901,8 +901,9 @@ export default class Workbench {
 
 			$(element).find('.or-act-load-nav-tree').each( async function() {
 
-				let type = $(this).data('type') || 'root';
-				let loadBranchUrl = View.createUrl('tree', 'branch', 0, {type: type});
+				// Read the type from the CSS class: "or-navtree-type-<type>-<id>".
+				const [ type,id] = Array.from($(this).get(0).classList).filter( (cl)=>cl.startsWith('or-navtree-type-'))[0].split('-').slice(3);
+				let loadBranchUrl = View.createUrl('tree', 'branch', id, {type: type});
 				let $targetElement = $(this);
 
 				let response = await fetch( loadBranchUrl,{
@@ -946,7 +947,9 @@ export default class Workbench {
 			let viewEl = ev.detail.element;
 
 			// Moves a title to the dialog title
-			$(viewEl).find('.or-dialog-title').appendTo( $(viewEl).parents('.or-workbench-screen').find('.or-dialog-content .or-act-dialog-name').html('') );
+			let $title = $(viewEl).find('.or-dialog-title');
+			if   ( $title.length )
+				$title.appendTo( $(viewEl).parents('.or-workbench-screen').find('.or-dialog-content .or-act-dialog-name').html('') );
 
 			// Handler for mobile navigation
 			$(viewEl).find('.or-act-nav-open-close').click( function() {

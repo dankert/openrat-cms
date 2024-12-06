@@ -88,6 +88,7 @@ class Tree
 	}
 
 
+
 	public function userandgroups()
 	{
 		if (!$this->userIsAdmin)
@@ -755,6 +756,20 @@ class Tree
 		}
 	}
 
+
+	public function settings() {
+
+		if ($this->userIsAdmin) {
+			$treeElement = new TreeElement();
+			$treeElement->text = L::lang('PREFERENCES');
+			$treeElement->description = L::lang('PREFERENCES');
+			$treeElement->icon = 'configuration';
+			//$treeElement->type = 'configuration';
+			$treeElement->action = 'configuration';
+
+			$this->addTreeElement($treeElement);
+		}
+	}
 
 	/**
 	 * Hinzufuegen eines Baum-Elementes

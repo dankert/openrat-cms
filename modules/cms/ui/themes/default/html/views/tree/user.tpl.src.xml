@@ -2,5 +2,5 @@
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<!-- The tree is displayed by javascript calls -->
 
-	<part class="navtree,act-load-nav-tree,navtree-type-projects"/>
+	<part class="navtree,act-load-nav-tree,navtree-type-userandgroups"/>
 </output>
