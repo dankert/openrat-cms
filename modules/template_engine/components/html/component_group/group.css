@@ -5,6 +5,10 @@
   margin: 0.5em 0;
   font-size: 1.1em;
   font-weight: normal;
-  border-bottom: 1px solid;
+}
+.or-group-value {
+  border: 1px solid;
+  border-radius: 0.4em;
+  padding: 1em;
 }
 

@@ -93,7 +93,7 @@
 
 								<or:part
 									class="toolbar-icon,act-clickable,-on-user-logged-in">
-									<or:link type="dialog" action="profile" subaction="edit" title="${message:profile}">
+									<or:link type="dialog" action="profile" subaction="show" title="${message:profile}" name="${message:profile}">
 										<or:text class="userinfo" />
 									</or:link>
 								</or:part>
@@ -111,35 +111,51 @@
 									<or:text class="menu-label" value="${message:edit}"/>
 									<or:image class="menu-dropdown-icon" symbol="dropdown"/>
 									<or:part class="dropdown">
+										<or:part
+											class="dropdown-entry,act-clickable">
+											<or:link type="dialog" action="tree" subaction="search" title="${message:search}" name="">
+												<or:image method="search"/>
+												<or:text class="dropdown-text" value="${message:search}"/>
+											</or:link>
+										</or:part>
 										<or:part class="dropdown-entry,act-clickable">
-											<or:link type="dialog" title="${message:menu_PROFILE_DESC}" action="profile" subaction="edit">
+											<or:link type="dialog" title="${message:menu_history_desc}" action="profile"
+													 subaction="history">
+												<or:image method="history"/>
+												<or:text class="dropdown-text" value="${message:menu_history}"/>
+											</or:link>
+										</or:part>
+										<or:part class="dropdown-divide"/>
+										<or:part class="dropdown-entry,act-clickable,-on-user-logged-in">
+											<or:link type="dialog" title="${message:menu_PROFILE_DESC}" action="profile" subaction="show">
 												<or:image action="user"/>
 												<or:text class="dropdown-text" value="${message:menu_profile}"/>
 											</or:link>
 										</or:part>
-										<or:part class="dropdown-entry,act-clickable">
+										<or:part class="dropdown-entry,act-clickable,-on-user-logged-in">
 											<or:link type="dialog" title="${message:menu_password_DESC}" action="profile" subaction="pw">
 												<or:image method="password"/>
 												<or:text class="dropdown-text" value="${message:menu_password}"/>
 											</or:link>
 										</or:part>
-										<or:part class="dropdown-entry,act-clickable">
+
+										<!--
+										<or:part class="dropdown-entry,act-clickable,-on-user-logged-in">
 											<or:link type="dialog" title="${message:menu_mail_DESC}" action="profile" subaction="mail">
 												<or:image method="mail"/>
 												<or:text class="dropdown-text" value="${message:menu_mail}"/>
 											</or:link>
 										</or:part>
+										-->
 
-										<or:part class="dropdown-divide"/>
-
-										<or:part class="dropdown-entry,act-clickable">
+										<or:part class="dropdown-entry,act-clickable,-on-no-user">
 											<or:link type="dialog-main" title="${message:USER_LOGIN_DESC}" action="login" subaction="login">
 												<or:image method="user"/>
 												<or:text class="dropdown-text" value="${message:USER_LOGIN}"/>
 											</or:link>
 										</or:part>
 										<or:if value="${config:login/register}">
-											<or:part class="dropdown-entry,act-clickable">
+											<or:part class="dropdown-entry,act-clickable,-on-no-user">
 												<or:link type="dialog-main" title="${message:REGISTER_DESC}" action="login"
 														 subaction="register">
 													<or:image method="register"/>
@@ -149,7 +165,7 @@
 
 										</or:if>
 										<or:if value="${config:login/send_password}">
-											<or:part class="dropdown-entry,act-clickable">
+											<or:part class="dropdown-entry,act-clickable,-on-no-user">
 												<or:link type="dialog-main" title="${message:SEND_PASSWORD_DESC}" action="login"
 														 subaction="password">
 													<or:image method="password"/>
@@ -157,25 +173,7 @@
 												</or:link>
 											</or:part>
 										</or:if>
-										<or:part class="dropdown-divide"/>
-
-										<!-- Lizenzhinweise -->
-										<or:part class="dropdown-entry,act-clickable">
-											<or:link type="dialog" title="${message:menu_license_DESC}" action="login" subaction="license">
-												<or:image method="info"/>
-												<or:text class="dropdown-text" value="${message:menu_info}"/>
-											</or:link>
-										</or:part>
-										<or:part class="dropdown-divide"/>
-										<or:part class="dropdown-entry,act-clickable">
-											<or:link type="dialog" title="${message:menu_history_desc}" action="profile"
-													 subaction="history">
-												<or:image method="history"/>
-												<or:text class="dropdown-text" value="${message:menu_history}"/>
-											</or:link>
-										</or:part>
-										<or:part class="dropdown-divide"/>
-										<or:part class="dropdown-entry,act-clickable">
+										<or:part class="dropdown-entry,act-clickable,-on-user-logged-in">
 											<or:link type="post" title="${message:USER_LOGOUT_DESC}" action="login"
 													 subaction="logout" afterSuccess="reloadAll">
 												<or:image method="logout"/>
@@ -183,6 +181,7 @@
 											</or:link>
 										</or:part>
 
+										<or:part class="dropdown-divide"/>
 										<!-- License info -->
 										<or:part class="dropdown-entry,act-clickable">
 											<or:link type="dialog" title="${message:menu_license_DESC}" action="login" subaction="license">

@@ -946,7 +946,7 @@ export default class Workbench {
 			let viewEl = ev.detail.element;
 
 			// Moves a title to the dialog title
-			$(viewEl).find('.or-dialog-title').appendTo( $(viewEl).parents('.or-workbench-screen').find('.or-dialog-content .or-act-dialog-name') );
+			$(viewEl).find('.or-dialog-title').appendTo( $(viewEl).parents('.or-workbench-screen').find('.or-dialog-content .or-act-dialog-name').html('') );
 
 			// Handler for mobile navigation
 			$(viewEl).find('.or-act-nav-open-close').click( function() {

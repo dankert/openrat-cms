@@ -1,21 +1,9 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form label="${message:save}">
-		<group title="${message:name}">
-			<fieldset class="line" label="${message:user_username}">
-				<text value="${name}" class="name"/>
-			</fieldset>
-		</group>
-		<group title="${message:MENU_PROFILE_MAIL}">
-			<fieldset class="line" label="${message:user_mail}">
-				<text value="${mail}"/>
-				<part class="act-clickable">
-					<link type="dialog" class="btn" action="profile" subaction="mail" name="${message:mail}">
-						<text value="${message:edit}"/>
-					</link>
-				</part>
-			</fieldset>
-		</group>
+		<text value="${name}" class="name"/>
+		<text value="${fullname}" class="addition"/>
+
 		<group title="${message:PROP}">
 			<fieldset class="line" label="${message:user_fullname}">
 				<input name="fullname" maxlength="128"/>

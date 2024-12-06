@@ -1,0 +1,67 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+
+	<text class="name" value="${fullname}"/>
+	<text class="addition" value="${desc}"/>
+	<!-- user will not call himself ;)
+	<link url="tel:${tel}"><text class="addition" value="${tel}" /></link>
+	-->
+
+	<part class="act-clickable">
+		<link type="post" title="${message:USER_LOGOUT_DESC}" action="login"
+				 subaction="logout" afterSuccess="reloadAll">
+			<image method="logout"/>
+			<text class="dropdown-text" value="${message:USER_LOGOUT}"/>
+		</link>
+	</part>
+
+	<group title="${message:MENU_PROFILE_MAIL}">
+		<fieldset label="${message:user_mail}">
+			<text value="${mail}"/>
+			<part class="act-clickable">
+				<link type="dialog" class="btn" action="profile" subaction="mail" name="${message:user_mail}">
+					<text value="${message:edit}"/>
+				</link>
+			</part>
+		</fieldset>
+	</group>
+
+	<group title="${message:USER_STYLE}">
+		<fieldset label="${message:USER_STYLE}">
+			<text value="${style}" />
+			<part class="act-clickable">
+				<link type="dialog" class="btn" action="profile" subaction="theme" name="${message:user_style}">
+					<text value="${message:edit}"/>
+				</link>
+			</part>
+		</fieldset>
+	</group>
+
+	<group title="${message:PROP}" open="true" show="false">
+		<fieldset label="${message:user_name}">
+			<text value="${name}" />
+		</fieldset>
+		<fieldset label="${message:user_tel}">
+			<text value="${tel}" />
+		</fieldset>
+		<fieldset label="${message:user_desc}">
+			<text value="${desc}" />
+		</fieldset>
+		<fieldset label="${message:timezone}">
+			<text value="${timezone}" />
+		</fieldset>
+		<fieldset label="${message:language}">
+			<text value="${language}" />
+		</fieldset>
+		<fieldset label="${message:USER_LOGIN_DATE}">
+			<date date="${loginDate}"/>
+		</fieldset>
+
+		<part class="act-clickable">
+			<link type="dialog" class="btn" action="profile" subaction="edit" name="${message:profile}">
+				<text value="${message:edit}"/>
+			</link>
+		</part>
+
+	</group>
+</output>

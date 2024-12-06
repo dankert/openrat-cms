@@ -229,8 +229,9 @@ html .or-workbench-navigation .or-link {
 html .or-dialog-filler {
   background-color: var(--cms-fill-color);
 }
-html .or-group {
+html .or-group-value {
   border-color: var(--cms-main-scrollbar-color);
+  box-shadow: 0.3em 0.3em 0.3em var(--cms-main-scrollbar-color);
 }
 html .or-group-description {
   color: var(--cms-main-scrollbar-color);

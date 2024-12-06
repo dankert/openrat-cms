@@ -1,30 +1,10 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<part class="form">
-		<if true="${user_name}">
-			<group title="${message:USER}" open="true" show="true">
-				<fieldset label="${message:USER_USERNAME}">
-					<text value="${user_name}"/>
-				</fieldset>
-				<fieldset label="${message:USER_FULLNAME}">
-					<text value="${user_fullname}"/>
-				</fieldset>
-				<fieldset label="${message:USER_LOGIN_DATE}">
-					<date date="${user_login}"/>
-				</fieldset>
-			</group>
-		</if>
-		<group title="${message:CMS}">
-			<fieldset label="${message:NAME}">
-				<part>
-					<text value="${cms_name}"/>
-					<text value="${cms_version}"/>
-				</part>
-			</fieldset>
-			<fieldset label="${message:OPERATOR}">
-				<text value="${cms_operator}"/>
-			</fieldset>
-		</group>
+		<text class="name" value="${cms_name}"/>
+		<text class="addition" value="${cms_version}"/>
+		<text class="addition" value="${cms_operator}"/>
+
 		<group title="${message:SYSTEM}">
 			<fieldset label="${message:DATE_TIME}">
 				<text value="${time}"/>
@@ -40,8 +20,10 @@
 				<text value="${version}"/>
 			</fieldset>
 		</group>
+
 		<group title="${message:LICENSE}">
 			<table filter="false">
+				<!-- looks cleaner without
 				<row header="true" class="table-column-auto">
 					<column>
 						<text value="${message:name}"/>
@@ -49,7 +31,7 @@
 					<column class="table-column-date">
 						<text value="${message:license}"/>
 					</column>
-				</row>
+				</row>-->
 				<list list="${software}" extract="true">
 					<row class="data">
 						<column class="act-clickable">

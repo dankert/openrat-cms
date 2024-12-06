@@ -30,11 +30,12 @@ Basis-Style for Openrat.
     display: none;
   }
 }
-@media only screen and (max-width: 85rem) {
-  .or-menu-label,
-  .or-menu-dropdown-icon {
-    display: none;
-  }
+.or-menu-label,
+.or-menu-dropdown-icon {
+  /* do not need */
+  /*@media @not-wide {*/
+  display: none;
+  /*}*/
 }
 .or-menu-group {
   display: flex;
