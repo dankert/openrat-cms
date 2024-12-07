@@ -16,29 +16,34 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
-.or-breadcrumb {
+.or-workbench-title .or-breadcrumb {
   margin-left: 0;
   margin-right: 0.5em;
 }
-.or-breadcrumb > * {
+.or-workbench-title .or-breadcrumb > * {
   vertical-align: middle;
   display: inline;
   margin-right: 0.3em;
 }
 @media only screen and (min-width: 100rem) {
-  .or-breadcrumb-parent {
+  .or-workbench-title .or-breadcrumb-actual-parent {
     display: none;
   }
 }
-.or-breadcrumb-path {
+@media only screen and (max-width: 55rem) {
+  .or-workbench-title .or-breadcrumb-actual-parent {
+    display: none;
+  }
+}
+.or-workbench-title .or-breadcrumb-path {
   display: none;
 }
 @media only screen and (min-width: 100rem) {
-  .or-breadcrumb-path {
+  .or-workbench-title .or-breadcrumb-path {
     display: inline;
   }
 }
-.or-breadcrumb-item {
+.or-workbench-title .or-breadcrumb-item {
   /*            .or-image-icon {
                 margin-right: 0.2em;
                 @media @smartphones {
@@ -46,17 +51,66 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 }
             }*/
 }
-.or-breadcrumb-text {
+.or-workbench-title .or-breadcrumb-text {
   font-weight: bold;
-  width: 12em;
+  max-width: 12em;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
   display: inline-block;
 }
 @media only screen and (max-width: 55rem) {
-  .or-breadcrumb-text {
-    width: 5.5em;
+  .or-workbench-title .or-breadcrumb-text {
+    max-width: none;
+  }
+}
+@media only screen and (max-width: 55rem) {
+  .or-workbench-title .or-breadcrumb .or-breadcrumb-actual-icon {
+    display: none;
+  }
+}
+.or-workbench-content .or-breadcrumb {
+  padding: 0.3em;
+  font-size: 0.9em;
+  overflow-x: auto;
+  margin-left: 0;
+  margin-right: 0.5em;
+}
+.or-workbench-content .or-breadcrumb .or-breadcrumb-path .or-breadcrumb-text {
+  opacity: 0.8;
+}
+.or-workbench-content .or-breadcrumb .or-breadcrumb-actual-parent {
+  display: none;
+}
+.or-workbench-content .or-breadcrumb > * {
+  vertical-align: middle;
+  display: inline;
+  margin-right: 0.3em;
+}
+.or-workbench-content .or-breadcrumb .or-breadcrumb-actual-parent {
+  display: none;
+}
+.or-workbench-content .or-breadcrumb-path {
+  display: inline;
+}
+.or-workbench-content .or-breadcrumb-item {
+  /*            .or-image-icon {
+                        margin-right: 0.2em;
+                        @media @smartphones {
+                          display: none;
+                        }
+                    }*/
+}
+.or-workbench-content .or-breadcrumb-text {
+  max-width: 10em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: inline-block;
+}
+@media only screen and (max-width: 55rem) {
+  .or-workbench-content .or-breadcrumb-text {
+    max-width: 6em;
   }
 }
 

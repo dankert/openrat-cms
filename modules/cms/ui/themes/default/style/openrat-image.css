@@ -137,6 +137,9 @@
 .or-image-icon--action-configuration:after {
   content: "settings";
 }
+.or-image-icon--action-index:after {
+  content: "home";
+}
 .or-image-icon--action-projectlist:after {
   content: "account_balance";
 }

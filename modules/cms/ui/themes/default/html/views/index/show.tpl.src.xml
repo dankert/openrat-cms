@@ -275,9 +275,9 @@
 				<!-- The workplace with some views -->
 				<main class="or-workbench-workplace or-workbench-content">
 
-<!--					<header>
+					<header>
 						<div class="or-breadcrumb"/>
-					</header>-->
+					</header>
 
 					<or:set var="mainMethodName" value="'edit'" />
 
