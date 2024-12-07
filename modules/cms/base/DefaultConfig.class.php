@@ -483,18 +483,31 @@ class DefaultConfig {
 				],
 			'style' => // style key names max length is 64 chars
 				[
-					/*
 					'earlgrey' =>
 						[ 
 							'name' => 'Earl grey',
+							'schemes' => [
+								'dark'=> [
+									'main_background_color' => '#232525',
+									'main_text_color' => '#a8b7c6',
+									'text_color' => '#afb1b3',
+									'background_color' => '#3c3f41',
+									'nav_text_color' => '#afb1b3',
+									'nav_background_color' => '#3c3f41',
+									'inactive_background_color' => '#313335',
+									'image_color' => '#3e86a0',
+								],
+								'light'=> [
+									'main_title_background_color' => 'grey',
+									'main_title_text_color' => 'white',
+									'text_color' => 'black',
+									'background_color' => '#e9e9e9',
+									'inactive_background_color' => 'silver',
+								],
+							],
 							'defaults' => [
-								'main_title_background_color' => 'grey',
-								'main_title_text_color' => 'white',
-								'text_color' => 'black',
-								'background_color' => '#e9e9e9',
-								'inactive_background_color' => 'silver',
 							]
-						],*/
+						],
 					'elastique' =>
 						[
 							'name' => 'Elastique', // Taken from roundcube's elastic theme
@@ -524,37 +537,34 @@ class DefaultConfig {
 								'image_color' => '#3687AD',
 							]
 						],
-					'elastiquedark' =>
-						[
-							'name' => 'Elastique dark',
-							'schemes' => [
-								],
-							'defaults'=> [
-								'main_title_background_color' => '#21292C',
-								'main_title_text_color' => '#C5D1D3',
-								'nav_title_background_color' => '#21292C',
-								'nav_title_text_color' => '#C5D1D3',
-								'text_color' => '#C5D1D3',
-								'background_color' => '#21292C',
-								'inactive_background_color' => '#21292C',
-								'image_color' => '#3687AD',
-							]
-						],
-					/*
 					'moorweide' =>
 						[
-							'name' => 'Moorweide daylight', // Moorweide is a green place in hamburg city
+							'name' => 'Moorweide', // Moorweide is a green place in hamburg city
+							'schemes' => [
+								'dark' => [
+									'main_title_background_color' => '#44475a',
+									'main_title_text_color' => '#f8f8f2',
+									'nav_title_background_color' => '#44475a',
+									'nav_title_text_color' => '#f8f8f2',
+									'text_color' => '#f8f8f2',
+									'background_color' => '#282a36',
+									'inactive_background_color' => '#44475a',
+								],
+								'light'=> [
+									'main_title_background_color' => '#EDF6F2',
+									'main_title_text_color' => '#4D4C4C',
+									'text_color' => 'black',
+									'background_color' => 'white',
+									'inactive_background_color' => 'white',
+									'nav_background_color' => '#EDF6F2',
+									'nav_text_color' => '#4D4C4C',
+								],
+							],
+
 							'defaults' => [
-								'main_title_background_color' => '#EDF6F2',
-								'main_title_text_color' => '#4D4C4C',
-								'text_color' => 'black',
-								'background_color' => 'white',
-								'inactive_background_color' => 'white',
-								'nav_background_color' => '#EDF6F2',
-								'nav_text_color' => '#4D4C4C',
 								'image_color' => '#00A075',
 							]
-						],*/
+						],
 					'jawed' =>
 						[
 							'name' => 'Jawed', // Jawed Karim is one of the YT founders
@@ -579,47 +589,58 @@ class DefaultConfig {
 					'dracula' =>
 						[
 							'name' => 'Dracula',
+							'schemes' => [
+								'dark' => [
+									'main_title_background_color' => '#44475a',
+									'main_title_text_color' => '#f8f8f2',
+									'nav_title_background_color' => '#44475a',
+									'nav_title_text_color' => '#f8f8f2',
+									'text_color' => '#f8f8f2',
+									'background_color' => '#282a36',
+									'inactive_background_color' => '#44475a',
+								],
+								'light'=> [
+									'main_title_background_color' => '#FFFFFF',
+									'main_title_text_color' => '#2C363A',
+									'main_background_color' => '#E4E4E4',
+									'main_text_color' => '#2C363A',
+									'nav_title_background_color' => '#44475a',
+									'nav_title_text_color' => '#f8f8f2',
+									'background_color' => '#E4E4E4',
+									'text_color' => '#2C363A',
+									'inactive_background_color' => '#44475a',
+								],
+							],
 							'defaults' => [
-								'main_title_background_color' => '#44475a',
-								'main_title_text_color' => '#f8f8f2',
-								'nav_title_background_color' => '#44475a',
-								'nav_title_text_color' => '#f8f8f2',
-								'text_color' => '#f8f8f2',
-								'background_color' => '#282a36',
-								'inactive_background_color' => '#44475a',
 								'image_color' => 'orange',
 							]
 						],
-					/*
 					'modern' =>
 						[ 
 							'name' => 'Blue sky',
-							'defaults' => [
-								'main_title_background_color' => '#3F6194',
-								'main_title_text_color' => 'white',
-								'nav_title_background_color' => '#79afd9',
-								'nav_background_color' => '#e1effa',
-								'text_color' => 'black',
-								'background_color' => '#F3F3F3',
-								'inactive_background_color' => '#CCCCCC',
-							]
-						],*/
-					/*
-					'dark' =>
-						[ 
-							'name' => 'Dark night',
-							'defaults' => [
-								'main_background_color' => '#232525',
-								'main_text_color' => '#a8b7c6',
-								'text_color' => '#afb1b3',
-								'background_color' => '#3c3f41',
-								'nav_text_color' => '#afb1b3',
-								'nav_background_color' => '#3c3f41',
-								'inactive_background_color' => '#313335',
-								'image_color' => '#3e86a0',
-							]
-						],*/
-					/*'mono' =>
+							'schemes' => [
+								'light' => [
+									'main_title_background_color' => '#3F6194',
+									'main_title_text_color' => 'white',
+									'nav_title_background_color' => '#79afd9',
+									'nav_background_color' => '#e1effa',
+									'text_color' => 'black',
+									'background_color' => '#F3F3F3',
+									'inactive_background_color' => '#CCCCCC',
+								],
+								'dark' => [
+									'main_background_color' => '#232525',
+									'main_text_color' => '#a8b7c6',
+									'text_color' => '#afb1b3',
+									'background_color' => '#3c3f41',
+									'nav_text_color' => '#afb1b3',
+									'nav_background_color' => '#3c3f41',
+									'inactive_background_color' => '#313335',
+									'image_color' => '#3e86a0',
+								],
+							],
+						],
+					'mono' =>
 						[
 							'name' => 'Monochrome',
 							'schemes' => [
@@ -636,7 +657,7 @@ class DefaultConfig {
 							'defaults' => [
 								'transition_duration' => '0'
 							],
-						],*/
+						],
 				],
 			'theme' =>
 				[ 

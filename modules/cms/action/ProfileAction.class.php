@@ -88,8 +88,9 @@ class ProfileAction extends BaseAction
 	 */
 	protected function getUserStyle($user )
 	{
-		// Gets theme for current user.
+		// User present and has a valid style name?
 		if  ( $user && Configuration::subset('style')->has($user->style))
+			// Gets theme for current user.
 			$style = $user->style;
 		else
 			// Fallback: Default theme.

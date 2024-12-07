@@ -61,6 +61,9 @@ export default class Form {
             $(this.element).find('input[type="checkbox"]').click( () => {
                 this.submit(Form.modes.keepOpen);
             });
+            $(this.element).find('input[type="radio"]').click( () => {
+                this.submit(Form.modes.keepOpen);
+            });
             $(this.element).find('select').change( () => {
                 this.submit(Form.modes.keepOpen);
             });

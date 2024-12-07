@@ -15,7 +15,7 @@
 				<input name="desc" size="40" maxlength="128"/>
 			</fieldset>
 			<fieldset class="line" label="${message:user_style}">
-				<selectbox name="style" list="allstyles" class="theme-chooser"/>
+				<selectbox name="style" list="allstyles" />
 			</fieldset>
 			<fieldset class="line" label="${message:timezone}">
 				<selectbox name="timezone" list="timezone_list" addempty="true"/>

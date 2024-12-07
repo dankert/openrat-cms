@@ -333,8 +333,9 @@ export default class Workbench {
 		});
 		let json = await response.json();
 
-		let style = json.output['style'];
-		this.loadUserTheme(style);
+		let style       = json.output['style'];
+		let styleScheme = json.output['styleScheme'];
+		this.loadUserTheme(style,styleScheme);
 
 		let color = json.output['theme-color'];
 		this.setThemeColor(color);
@@ -443,7 +444,7 @@ export default class Workbench {
 	 *
      * @param themeName
      */
-    async loadUserTheme(themeName )
+    async loadUserTheme(themeName,themeScheme=1 )
     {
 		if   ( window.localStorage )
 			// store the theme name into local storage
@@ -465,9 +466,16 @@ export default class Workbench {
 
 			let data = await response.json();
 			let schemes = data.output.style;
-			let scheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 
-			console && console.debug("Detecting color-scheme '"+scheme+"'.")
+			let scheme;
+			if   ( themeScheme == 1 ) {
+				scheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+				console && console.debug("Auto-Detecting color-scheme '"+scheme+"'.");
+			}
+			else {
+				scheme = ( themeScheme == 2 ) ? 'light' : 'dark';
+				console && console.debug("Wanted color-scheme is '"+scheme+"'.");
+			}
 
 			let styleProperties = schemes[scheme];
 			console.debug("New Theme '"+themeName+"'",styleProperties);
@@ -1036,15 +1044,6 @@ export default class Workbench {
 
 
 			registerDragAndDrop(viewEl);
-
-
-			// Theme-Auswahl mit Preview
-			$(viewEl).find('.or-theme-chooser').change( function() {
-				Workbench.getInstance().loadUserTheme( this.value );
-			});
-
-
-
 
 			function registerMenuEvents($element )
 			{

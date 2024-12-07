@@ -1,9 +1,15 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<form label="${message:save}" autosave="true">
+	<form label="${message:save}" autosave="true" afterSuccess="reloadAll">
 		<group title="${message:USER_STYLE}">
 			<fieldset label="${message:user_style}">
-				<selectbox name="style" list="allstyles" class="theme-chooser"/>
+				<selectbox name="style" list="allstyles" />
+			</fieldset>
+
+			<fieldset label="${message:user_style_scheme}">
+				<radio name="styleScheme" value="1" label="${message:user_style_scheme_auto}" />
+				<radio name="styleScheme" value="2" label="${message:user_style_scheme_light}" />
+				<radio name="styleScheme" value="3" label="${message:user_style_scheme_dark}" />
 			</fieldset>
 		</group>
 	</form>

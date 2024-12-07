@@ -6030,6 +6030,18 @@ USER_STYLE:
   de: Stil
   en: Style
   fr: Modèle
+USER_STYLE_SCHEME:
+  de: Farbschema
+  en: Color scheme
+USER_STYLE_SCHEME_AUTO:
+  de: Automatisch
+  en: Automatic
+USER_STYLE_SCHEME_LIGHT:
+  de: Hell
+  en: Light
+USER_STYLE_SCHEME_DARK:
+  de: Dunkel
+  en: Dark
 USER_TEL:
   de: Telefon
   en: Telephone

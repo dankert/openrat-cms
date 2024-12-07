@@ -24,6 +24,9 @@ class ProfileUserinfoAction extends ProfileAction implements Method {
 		$this->setTemplateVar('name'         ,$user != null ? $user->getName()                  : '' );
 		$this->setTemplateVar('letter'       ,$user != null ? strtoupper( @$user->getName()[0]) : '' );
 
+		// Style scheme from user or 1 (=automatic)
+		$this->setTemplateVar('styleScheme'  ,$user != null ? $user->styleScheme                : 1  );
+
 		$currentStyle = $this->getUserStyle($user);
 		$this->setTemplateVar('style',$currentStyle);
 

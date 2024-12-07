@@ -45,6 +45,10 @@ class User extends ModelBase
 	 */
 	const AUTH_TYPE_OIDC = 2;
 
+	const STYLE_SCHEME_AUTO  = 1;
+	const STYLE_SCHEME_LIGHT = 2;
+	const STYLE_SCHEME_DARK  = 3;
+
 	public $userid   = 0;
 
 	/**
@@ -65,6 +69,7 @@ class User extends ModelBase
 	public $mail;
 	public $desc;
 	public $style;
+	public $styleScheme;
 	public $isAdmin;
 	public $loginDate = 0;
 
@@ -436,21 +441,22 @@ SQL
 	 */
 	protected function setDatabaseRow( $row )
 	{
-		$this->userid    = $row['id'      ];
-		$this->name      = $row['name'    ];
-		$this->style     = $row['style'   ];
-		$this->isAdmin   = ( $row['is_admin'] == '1');
-		$this->fullname  = $row['fullname'];
-		$this->tel       = $row['tel'     ];
-		$this->mail      = $row['mail'    ];
-		$this->desc      = $row['descr'   ];
-		$this->language  = $row['language'];
-		$this->timezone  = $row['timezone'];
-		$this->lastLogin = $row['last_login'];
-		$this->otpSecret = $row['otp_secret'];
-		$this->hotp      = ($row['hotp']==1);
-		$this->hotpCount = $row['hotp_counter'];
-		$this->totp      = ($row['totp']==1);
+		$this->userid      = $row['id'      ];
+		$this->name        = $row['name'    ];
+		$this->style       = $row['style'   ];
+		$this->styleScheme = $row['style_scheme' ];
+		$this->isAdmin     = ( $row['is_admin'] == '1');
+		$this->fullname    = $row['fullname'];
+		$this->tel         = $row['tel'     ];
+		$this->mail        = $row['mail'    ];
+		$this->desc        = $row['descr'   ];
+		$this->language    = $row['language'];
+		$this->timezone    = $row['timezone'];
+		$this->lastLogin   = $row['last_login'];
+		$this->otpSecret   = $row['otp_secret'];
+		$this->hotp        = ($row['hotp']==1);
+		$this->hotpCount   = $row['hotp_counter'];
+		$this->totp        = ($row['totp']==1);
 		$this->passwordExpires = $row['password_expires'];
 		$this->passwordAlgo    = $row['password_algo'];
 		$this->passwordLockedUntil = $row['password_locked_until'];
@@ -516,6 +522,7 @@ SQL
 		                     descr   ={desc}    ,
 		                     mail    ={mail}    ,
 		                     style   ={style}   ,
+		                     style_scheme = {style_scheme},
 		                     language = {language},
 		                     timezone = {timezone},
 		                     is_admin = {isAdmin},
@@ -532,6 +539,7 @@ SQL
 		$sql->setString ( 'desc'    ,$this->desc    );
 		$sql->setString ( 'mail'    ,$this->mail    );
 		$sql->setString ( 'style'   ,$this->style   );
+		$sql->setInt    ( 'style_scheme',$this->styleScheme );
 		$sql->setStringOrNull( 'language',$this->language);
 		$sql->setStringOrNull( 'timezone',$this->timezone);
 		$sql->setBoolean( 'isAdmin' ,$this->isAdmin );

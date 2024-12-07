@@ -31,6 +31,10 @@ class ProfileThemeAction extends ProfileAction implements Method {
 			$this->user->style = $value;
 		});
 
+		$this->request->handleNumber('styleScheme',function($value) {
+			$this->user->styleScheme = $value;
+		});
+
 		// Overwrite user in session with new settings.
 		Request::setUser( $this->user );
 
