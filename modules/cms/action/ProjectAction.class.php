@@ -73,7 +73,7 @@ class ProjectAction extends BaseAction
 
 	/**
 	 * Stellt fest, ob der angemeldete Benutzer Projekt-Admin ist.
-	 * Dies ist der Fall, wenn der Benutzer PROP-Rechte im Root-Folder hat.
+	 * Dies ist der Fall, wenn der Benutzer READ-Rechte im Root-Folder hat.
 	 * @return bool|int
 	 */
 	protected function userMayReadProject() {

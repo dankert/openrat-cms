@@ -116,6 +116,18 @@ class Tree
 
 	public function projects()
 	{
+		$startElement = new TreeElement();
+
+		$startElement->internalId = 0;
+		$startElement->id         = 0;
+		$startElement->text   = L::lang('START');
+		$startElement->icon   = 'index';
+		$startElement->action = 'index';
+		$startElement->type = '';
+		$startElement->description = '';
+		$this->addTreeElement($startElement);
+
+
 		// Schleife ueber alle Projekte
 		foreach (Project::getAllProjects() as $id => $name) {
 
