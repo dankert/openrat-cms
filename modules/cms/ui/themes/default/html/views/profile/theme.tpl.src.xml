@@ -1,7 +1,7 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form label="${message:save}" autosave="true" afterSuccess="reloadAll">
-		<group title="${message:USER_STYLE}">
+		<group description="${message:USER_STYLE_DESC}" collapsible="false">
 			<fieldset label="${message:user_style}">
 				<selectbox name="style" list="allstyles" />
 			</fieldset>

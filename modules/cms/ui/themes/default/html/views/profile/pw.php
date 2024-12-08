@@ -9,9 +9,10 @@
       <?php $if3=($pwchange_enabled); if($if3) {  ?>
         <section class="<?php echo O::escapeHtml('or-group or-collapsible--is-open or-collapsible--is-visible or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>
           <h2 class="<?php echo O::escapeHtml('or-collapsible-title or-group-title or-collapsible-act-switch') ?>"><?php echo O::escapeHtml('') ?>
+            <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--empty') ?>"><?php echo O::escapeHtml('') ?></i>
             <span><?php echo O::escapeHtml(''.@O::lang('user_act_password').'') ?></span>
           </h2>
-          <p class="<?php echo O::escapeHtml('or-group-description') ?>"><?php echo O::escapeHtml(''.@O::lang('logo_changepassword_text').'') ?></p>
+          <p class="<?php echo O::escapeHtml('or-group-description or-collapsible-value') ?>"><?php echo O::escapeHtml(''.@O::lang('logo_changepassword_text').'') ?></p>
           <div class="<?php echo O::escapeHtml('or-collapsible-value or-group-value') ?>"><?php echo O::escapeHtml('') ?>
             <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
               <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('user_password').'') ?></h3>
@@ -26,6 +27,7 @@
         </section>
         <section class="<?php echo O::escapeHtml('or-group or-collapsible--is-open or-collapsible--is-visible or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>
           <h2 class="<?php echo O::escapeHtml('or-collapsible-title or-group-title or-collapsible-act-switch') ?>"><?php echo O::escapeHtml('') ?>
+            <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--empty') ?>"><?php echo O::escapeHtml('') ?></i>
             <span><?php echo O::escapeHtml(''.@O::lang('user_new_password').'') ?></span>
           </h2>
           <div class="<?php echo O::escapeHtml('or-collapsible-value or-group-value') ?>"><?php echo O::escapeHtml('') ?>

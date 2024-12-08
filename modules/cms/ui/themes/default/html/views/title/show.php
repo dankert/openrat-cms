@@ -45,6 +45,11 @@
           <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-rights') ?>"><?php echo O::escapeHtml('') ?></i>
         </a>
       </div>
+      <div class="<?php echo O::escapeHtml('or-toolbar-icon or-act-clickable or-filtered or-menu-shortcut') ?>"><?php echo O::escapeHtml('') ?>
+        <a title="<?php echo O::escapeHtml(''.@O::lang('menu_bookmark').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('bookmark') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
+          <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-bookmark') ?>"><?php echo O::escapeHtml('') ?></i>
+        </a>
+      </div>
       <div class="<?php echo O::escapeHtml('or-toolbar-icon or-user or-menu-category') ?>"><?php echo O::escapeHtml('') ?>
         <img /><?php echo O::escapeHtml('') ?>
       </div>

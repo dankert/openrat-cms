@@ -58,14 +58,12 @@ export default class Form {
 
         	this.autosave = true;
 
-            $(this.element).find('input[type="checkbox"]').click( () => {
-                this.submit(Form.modes.keepOpen);
-            });
-            $(this.element).find('input[type="radio"]').click( () => {
-                this.submit(Form.modes.keepOpen);
-            });
-            $(this.element).find('select').change( () => {
-                this.submit(Form.modes.keepOpen);
+            $(this.element).find('input[type="checkbox"],input[type="radio"],select').change( () => {
+				// Asynchronious, because all other Change-Handler should be executed before the form is submitted.
+				// Otherwise the checkboxes will be submitted with an old value.
+				setTimeout(() => {
+					this.submit(Form.modes.keepOpen);
+				},0);
             });
         }
 

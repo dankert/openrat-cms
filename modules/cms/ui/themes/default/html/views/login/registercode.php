@@ -10,9 +10,10 @@
         <h2 class="<?php echo O::escapeHtml('or-collapsible-title or-group-title or-collapsible-act-switch') ?>"><?php echo O::escapeHtml('') ?>
           <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-closed or-collapsible--on-closed') ?>"><?php echo O::escapeHtml('') ?></i>
           <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--node-open or-collapsible--on-open') ?>"><?php echo O::escapeHtml('') ?></i>
+          <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--empty') ?>"><?php echo O::escapeHtml('') ?></i>
           <span><?php echo O::escapeHtml(''.@O::lang('logo_register').'') ?></span>
         </h2>
-        <p class="<?php echo O::escapeHtml('or-group-description') ?>"><?php echo O::escapeHtml(''.@O::lang('logo_register_text').'') ?></p>
+        <p class="<?php echo O::escapeHtml('or-group-description or-collapsible-value') ?>"><?php echo O::escapeHtml(''.@O::lang('logo_register_text').'') ?></p>
         <div class="<?php echo O::escapeHtml('or-collapsible-value or-group-value') ?>"><?php echo O::escapeHtml('') ?>
           <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
             <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('USER_REGISTER_CODE').'') ?></h3>

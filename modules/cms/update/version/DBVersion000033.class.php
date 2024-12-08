@@ -8,7 +8,7 @@ use database\Column;
 use security\Password;
 
 /**
- * Migrate file values to content.
+ * Modify date columns to bigint to fix the year 2038 problem.
  *
  * @author dankert
  *

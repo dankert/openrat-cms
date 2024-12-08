@@ -58,13 +58,19 @@ class GroupComponent extends Component
 				$image->addStyleClass(['image-icon','image-icon--'.$this->icon]);
 				$headline->addChild( $image );
 			}
+			else {
+
+				$image = new CMSElement('i');
+				$image->addStyleClass(['image-icon','image-icon--empty']);
+				$headline->addChild( $image );
+			}
 
 			(new HtmlElement('span'))->content( $this->title )->asChildOf($headline);
 		}
 
 		if   ( $this->description )
 			(new HtmlElement('p'))
-				->addStyleClass(['group-description'])
+				->addStyleClass(['group-description','collapsible-value'])
 				->content( $this->description )
 				->asChildOf($group);
 

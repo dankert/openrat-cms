@@ -692,6 +692,12 @@ SQL
 		$sql->setInt   ('userid',$this->userid );
 		$sql->execute();
 
+		// Delete all bookmarks
+		$sql = $db->sql( 'DELETE FROM {{bookmark}} '.
+		                'WHERE userid={userid}' );
+		$sql->setInt   ('userid',$this->userid );
+		$sql->execute();
+
 		$this->deleteAllLoginTokens();
         // Benutzer loeschen
 		$sql = $db->sql( 'DELETE FROM {{user}} '.

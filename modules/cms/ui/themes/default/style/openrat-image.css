@@ -158,6 +158,9 @@
 .or-image-icon--action-membership {
   content: "card_membership";
 }
+.or-image-icon--method-bookmark:after {
+  content: "star";
+}
 .or-image-icon--method-delete:after {
   content: "delete";
 }

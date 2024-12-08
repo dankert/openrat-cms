@@ -9,6 +9,30 @@
 
 @small: ~"only screen and (max-width: 65rem)";
 
+@media only screen and (min-width: 65rem) {
+
+  .or-workbench-main {
+
+    &-form {
+
+      &-row {
+
+        flex-direction: row;
+
+        .or-form-label {
+          width: 25%;
+        }
+
+        .or-form-input {
+          width: 75%;
+        }
+      }
+
+    }
+  }
+}
+
+
 .or {
 
     &-form {
@@ -49,23 +73,13 @@
             display: flex;
             align-items: center;
 
-            .or-form-label {
-                width: 25%;
-            }
+            flex-direction: column;
 
-            .or-form-input {
-                width: 75%;
-            }
+              .or-form-label,
+              .or-form-input {
+                  width: 100%;
+              }
 
-
-            @media @small {
-                flex-direction: column;
-
-                .or-form-label,
-                .or-form-input {
-                    width: 100%;
-                }
-            }
         }
 
 

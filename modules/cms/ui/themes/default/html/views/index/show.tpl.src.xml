@@ -125,6 +125,13 @@
 												<or:text class="dropdown-text" value="${message:menu_history}"/>
 											</or:link>
 										</or:part>
+										<or:part class="dropdown-entry,act-clickable">
+											<or:link type="dialog" title="${message:menu_bookmark}" action="profile"
+													 subaction="bookmark">
+												<or:image method="bookmark"/>
+												<or:text class="dropdown-text" value="${message:menu_bookmark}"/>
+											</or:link>
+										</or:part>
 										<or:part class="dropdown-divide"/>
 										<or:part class="dropdown-entry,act-clickable,-on-user-logged-in">
 											<or:link type="dialog" title="${message:menu_PROFILE_DESC}" action="profile" subaction="show">

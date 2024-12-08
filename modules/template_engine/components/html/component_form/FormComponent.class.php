@@ -94,39 +94,41 @@ class FormComponent extends Component
 		// Creating the action bar
 		$actionBar = (new HtmlElement('div'))->addStyleClass('form-actionbar');
 
-		if ($this->cancel) {
-			// Adding a cancel-button.
-			$actionBar->addChild(
-				(new CMSElement('div'))
-					->addStyleClass('btn')
-					->addStyleClass('btn--control')
-					->addStyleClass('btn--secondary')
-					->addStyleClass('act-form-cancel')
-					->addChild(
-						(new HtmlElement('i'))->addStyleClass(['image-icon','image-icon--form-cancel'])
-					)->addChild(
-						(new HtmlElement('span'))->addStyleClass('form-btn-label')->content(Value::createExpression(ValueExpression::TYPE_MESSAGE, Messages::CANCEL))
-					)
-			);
-		}
+		if   ( !$this->readonly && !$this->autosave ) {
+			// Show action buttons
 
-		if ($this->apply && !$this->readonly) {
-			// Adding an apply-button
-			$actionBar->addChild(
-				(new CMSElement('div'))
-					->addStyleClass('btn')
-					->addStyleClass('btn--control')
-					->addStyleClass('btn--primary')
-					->addStyleClass('act-form-apply')
-					->addChild(
-						(new HtmlElement('i'))->addStyleClass(['image-icon','image-icon--form-apply'])
-					)->addChild(
-						(new HtmlElement('span'))->addStyleClass('form-btn-label')->content(Value::createExpression(ValueExpression::TYPE_MESSAGE, Messages::APPLY))
-					)
-			);
-		}
+			if ($this->cancel) {
+				// Adding a cancel-button.
+				$actionBar->addChild(
+					(new CMSElement('div'))
+						->addStyleClass('btn')
+						->addStyleClass('btn--control')
+						->addStyleClass('btn--secondary')
+						->addStyleClass('act-form-cancel')
+						->addChild(
+							(new HtmlElement('i'))->addStyleClass(['image-icon','image-icon--form-cancel'])
+						)->addChild(
+							(new HtmlElement('span'))->addStyleClass('form-btn-label')->content(Value::createExpression(ValueExpression::TYPE_MESSAGE, Messages::CANCEL))
+						)
+				);
+			}
 
-		if (!$this->readonly) {
+			if ($this->apply) {
+				// Adding an apply-button
+				$actionBar->addChild(
+					(new CMSElement('div'))
+						->addStyleClass('btn')
+						->addStyleClass('btn--control')
+						->addStyleClass('btn--primary')
+						->addStyleClass('act-form-apply')
+						->addChild(
+							(new HtmlElement('i'))->addStyleClass(['image-icon','image-icon--form-apply'])
+						)->addChild(
+							(new HtmlElement('span'))->addStyleClass('form-btn-label')->content(Value::createExpression(ValueExpression::TYPE_MESSAGE, Messages::APPLY))
+						)
+				);
+			}
+
 			// Adding the save-button
 			$actionBar->addChild(
 				(new CMSElement('div'))

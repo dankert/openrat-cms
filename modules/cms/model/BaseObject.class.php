@@ -899,7 +899,27 @@ SQL
         // ACLs loeschen
         $this->deleteAllACLs();
 
-        // Objekt l?schen
+
+		// Delete Tags from objects
+		$sql = Db::sql(<<<'SQL'
+			DELETE FROM {{tag_object}}
+			 WHERE objectid={objectid}
+SQL
+		);
+		$sql->setInt('objectid', $this->objectid);
+		$sql->execute();
+
+		// Delete bookmarks.
+		$sql = Db::sql(<<<'SQL'
+			DELETE FROM {{bookmark}}
+			 WHERE objectid={objectid}
+SQL
+		);
+		$sql->setInt('objectid', $this->objectid);
+		$sql->execute();
+
+
+		// Objekt l?schen
         $sql = $db->sql(<<<'SQL'
 			DELETE FROM {{object}}
 			 WHERE id={objectid}

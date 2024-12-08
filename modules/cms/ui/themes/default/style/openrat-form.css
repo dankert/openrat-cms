@@ -1,3 +1,14 @@
+@media only screen and (min-width: 65rem) {
+  .or-workbench-main-form-row {
+    flex-direction: row;
+  }
+  .or-workbench-main-form-row .or-form-label {
+    width: 25%;
+  }
+  .or-workbench-main-form-row .or-form-input {
+    width: 75%;
+  }
+}
 .or {
   /* Buttons  */
 }
@@ -31,21 +42,11 @@
 .or-form-row {
   display: flex;
   align-items: center;
+  flex-direction: column;
 }
-.or-form-row .or-form-label {
-  width: 25%;
-}
+.or-form-row .or-form-label,
 .or-form-row .or-form-input {
-  width: 75%;
-}
-@media only screen and (max-width: 65rem) {
-  .or-form-row {
-    flex-direction: column;
-  }
-  .or-form-row .or-form-label,
-  .or-form-row .or-form-input {
-    width: 100%;
-  }
+  width: 100%;
 }
 .or-form-actionbar {
   height: 3em;

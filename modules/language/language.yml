@@ -6072,6 +6072,9 @@ WEEK:
 WINDOW_FULLSCREEN:
   de: Vollbild
   en: Fullscreen
+MENU_BOOKMARK:
+  de: Lesezeichen
+  en: Bookmarks
 MENU_STRUCTURE_DESC:
   en: Show structure
   de: Struktur anzeigen

@@ -33,7 +33,8 @@ class ProfileAvailableAction extends ProfileAction implements Method {
 			'rights',
 			'remove',
 			'preview',
-			'order'
+			'order',
+			'bookmark',
 			],
 			function ($methodName) use ($action) {
 

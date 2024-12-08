@@ -1,0 +1,32 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<table>
+		<row header="true">
+			<column>
+				<text value="${message:project}"/>
+			</column>
+			<column>
+				<text value="${message:filename}"/>
+			</column>
+			<column>
+				<text value="${message:lastchange}"/>
+			</column>
+		</row>
+		<list list="${bookmarks}" extract="true">
+			<row class="data">
+				<column class="act-clickable">
+					<link type="open" action="project" id="${projectid}">
+						<text value="${projectname}"/>
+					</link>
+				</column>
+				<column title="${filename}" class="act-clickable">
+					<link type="open" action="${type}" id="${objectid}">
+						<text value="${filename}" maxlength="30"/>
+					</link>
+				</column>
+				<column>
+					<date date="${lastchange_date}"/>
+				</column>
+			</row>
+		</list>
+	</table>
+</output>

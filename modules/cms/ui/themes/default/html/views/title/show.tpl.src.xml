@@ -64,6 +64,12 @@
 					<image method="rights"/>
 				</link>
 			</part>
+			<part
+				class="toolbar-icon,act-clickable,filtered,menu-shortcut">
+				<link type="dialog" subaction="bookmark" title="${message:menu_bookmark}">
+					<image method="bookmark"/>
+				</link>
+			</part>
 
 			<part class="toolbar-icon,user,menu-category">
 				<image/><!-- empty image as a divider -->
