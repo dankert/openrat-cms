@@ -1074,13 +1074,15 @@ SQL
 		  FROM {{object}}
 		LEFT JOIN {{project}}
 		       ON {{object}}.projectid = {{project}}.id
-		   WHERE {{object}}.lastchange_userid = {userid}
+		   WHERE {{object}}.lastchange_userid = {userid} AND
+		         {{object}}.lastchange_date > {fromdate}
 		ORDER BY {{object}}.lastchange_date DESC
 SQL
 		);
 	
-		$sql->setInt( 'userid', $this->userid );
-	
+		$sql->setInt( 'userid'  , $this->userid );
+		$sql->setInt( 'fromdate', time()-(60*60*24*365*1) ); // last year.
+
 		return $sql->getAll();
 	
 	}
