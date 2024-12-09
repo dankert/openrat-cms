@@ -29,9 +29,12 @@ class Bookmark extends ModelBase
 	public static function getBookmarkedObjectIdsForUser( $userId )
 	{
 		$sql = DB::sql( <<<SQL
-				SELECT objectid
+				SELECT {{bookmark}}.objectid
 				  from {{bookmark}}
+				  LEFT JOIN {{object}}
+				         ON {{bookmark}}.objectid={{object}}.id
 			     WHERE userid={userid}
+				 ORDER BY {{object}}.lastchange_date DESC
 SQL
 		);
 		$sql->setInt('userid',$userId );
