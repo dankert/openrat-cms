@@ -18,27 +18,28 @@
 	<group title="${message:MENU_PROFILE_MAIL}">
 		<fieldset label="${message:user_mail}">
 			<text value="${mail}"/>
-			<part class="act-clickable">
-				<link type="dialog" class="btn" action="profile" subaction="mail" name="${message:user_mail}">
-					<text value="${message:edit}"/>
-				</link>
-			</part>
 		</fieldset>
+
+		<part class="act-clickable">
+			<link type="dialog" class="btn" action="profile" subaction="mail" name="${message:user_mail}">
+				<text value="${message:edit}"/>
+			</link>
+		</part>
 	</group>
 
 	<group title="${message:USER_STYLE}">
 		<fieldset label="${message:USER_STYLE}">
 			<text value="${style}" />
-			<part class="act-clickable">
-				<link type="dialog" class="btn" action="profile" subaction="theme" name="${message:user_style}">
-					<text value="${message:edit}"/>
-				</link>
-			</part>
 		</fieldset>
+		<part class="act-clickable">
+			<link type="dialog" class="btn" action="profile" subaction="theme" name="${message:user_style}">
+				<text value="${message:edit}"/>
+			</link>
+		</part>
 	</group>
 
 	<group title="${message:PROP}" open="true" show="false">
-		<fieldset label="${message:user_name}">
+		<fieldset label="${message:user_username}">
 			<text value="${name}" />
 		</fieldset>
 		<fieldset label="${message:user_tel}">

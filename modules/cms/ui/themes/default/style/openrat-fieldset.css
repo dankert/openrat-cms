@@ -3,6 +3,7 @@
     flex-direction: row;
   }
   .or-workbench-main .or-fieldset-label {
+    font-size: 1em;
     flex: 1;
     width: auto;
     text-align: left;
@@ -20,14 +21,15 @@
   flex-direction: column;
 }
 .or-fieldset-label {
-  font-size: 1em;
+  font-size: 0.8em;
   text-align: right;
   padding-right: 1em;
   font-weight: normal;
+  margin: 0;
 }
 .or-fieldset-value > * {
   display: block;
-  padding: 0.8em;
+  padding: 0;
 }
 .or-fieldset-label {
   flex: 1;
