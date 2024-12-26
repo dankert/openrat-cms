@@ -1,5 +1,6 @@
 project:
   name: OpenRat CMS
+  title: OpenRat CMS
   author: Jan Dankert
   description: "OpenRat CMS is a statifying content management system"
   email: "jan.2024+openrat-cms-repo@jandankert.de"
