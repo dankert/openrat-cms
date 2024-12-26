@@ -1,24 +1,5 @@
 <?php
-// OpenRat Content Management System
-// Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
-
-namespace util;
-use logger\Logger;
+namespace mqtt;
 
 /**
  * MQTT client.
@@ -47,8 +28,20 @@ class Mqtt {
 
 	protected $connection;
 
+    /**
+     * @var Callable
+     */
+    protected $log;
 
-	public function __construct( $url ) {
+    protected $clientId = "MQTTWEBCLIENT";
+
+    public function setLog( $log )
+    {
+        $this->log = $log;
+        return $this;
+    }
+
+	public function open( $url='mqtt://localhost' ) {
 
 		$urlParts = parse_url( $url );
 
@@ -67,15 +60,42 @@ class Mqtt {
 		if (!$this->connection || !is_resource($this->connection))
 			// Keine Verbindung zum Host moeglich.
 			throw new \Exception("Connection refused: '" . $proto . $urlParts['host'] . ':' . $port . " - $errstr ($errno)" );
+
+        return $this;
 	}
 
 
-	public function connect( $username,$password ) {
+    public function setClientId( $clientId )
+    {
+        $this->clientId = $clientId;
+        return $this;
+    }
 
-		$clientID     = 'CMS';
+
+    /**
+     * Connect to the server.
+     * @param $username
+     * @param $password
+     * @return $this
+     * @throws \Exception
+     */
+	public function connect( $username='',$password='' ) {
+
 		$proto        = 'MQTT';
 		$protoVersion = 4; // MQTT 3.x
-		$connectFlag  = 0b11000010; // Username,Password,new session
+
+		$connectFlag  = 0b00000010; // with new session
+        $payload = $this->wrapWithLength($this->clientId);
+
+        if   ( $username ) {
+            $connectFlag  |= 0b10000000;
+            $payload .= $this->wrapWithLength($username);
+
+            if   ( $password ) {
+                $connectFlag  |= 0b01000000;
+                $payload   .= $this->wrapWithLength($password);
+            }
+        }
 		$timeout      = 10;
 
 		$variableHeader =
@@ -84,10 +104,6 @@ class Mqtt {
 			pack(self::FORMAT_1_BYTE,$protoVersion).
 			pack(self::FORMAT_1_BYTE,$connectFlag ).
 			pack(self::FORMAT_2_BYTE,$timeout     );
-
-		$payload = array_reduce( [ $clientID,$username,$password ],function($carry,$item) {
-			return $carry.$this->wrapWithLength($item);
-		},'');
 
 		$this->sendCommand( self::TYPE_CONNECT,0,$variableHeader,$payload);
 		$r = $this->readPacketFromServer();
@@ -103,7 +119,7 @@ class Mqtt {
 		switch( $connectReturnCode ) {
 
 			case self::CONNECT_ACCEPTED:
-				return;
+				return $this;
 			case self::CONNECT_BAD_USERNAME_OR_PASSWORD:
 				throw new \Exception('Bad username or password');
 			case self::CONNECT_IDENTIFIER_REJECTED:
@@ -164,36 +180,60 @@ class Mqtt {
 		$lengthTopic = hexdec(bin2hex(substr($response,0,2)));
 		$response = substr($response,2);
 
-		Logger::debug("Length of topic is ".$lengthTopic);
+        if   ( $this->log ) $this->log("Length of topic is ".$lengthTopic);
 
-		$topic = substr($response,0,$lengthTopic);
+		$topicFromResponse = substr($response,0,$lengthTopic);
+
+        if   ( $topic != $topicFromResponse )
+            throw new \Exception('Topic from Server does not match');
+
 		$response = substr($response,$lengthTopic);
 
-		$packetId = hexdec(bin2hex(substr($response,0,2)));
-		$response = substr($response,2);
-		Logger::debug("packet id ".$packetId);
+        // if QOS 1 there is a package identifier
+        if   ( $flags & 0b10 ) {
+            $packetId = hexdec(bin2hex(substr($response,0,2)));
+            if   ( $this->log ) $this->log("packet id ".$packetId);
 
-		return $response;
+            $response = substr($response,2); // Truncate package identifier from response
+        }
 
-		$lengthPayload = hexdec(bin2hex(substr($response,0,2)));
-		Logger::debug("Length of payload is ".$lengthPayload);
-		$response = substr($response,2);
+        // if QOS 1 there is a payload length header
+        /*
+        if   ( $flags & 0b10 ) {
 
-		$value = substr($response,0,$lengthPayload);
-		$response = substr($response,$lengthPayload);
+            $lengthPayload = hexdec(bin2hex(substr($response, 0, 2)));
+            if ($this->log) $this->log("Length of payload is " . $lengthPayload);
+            $response = substr($response, 2);
+            $value = substr($response,0,$lengthPayload);
+            $response = substr($response,$lengthPayload);
 
-		if   ( strlen($response ) )
-			throw new \Exception("response has more bytes than expected");
+            if   ( strlen($response ) )
+                throw new \Exception("response has more bytes than expected");
+            return $value;
+        } else {*/
+            return $response;
+        /*}*/
 
-		return $value;
+
 	}
 
 
+    /**
+     * Publishing a value to a MQTT topic.
+     *
+     * @param $topic
+     * @param $value
+     * @return void
+     * @throws \Exception
+     */
 	public function publish( $topic,$value ) {
 
 		$packetId = 1;
 		$variableHeader = $this->wrapWithLength($topic).pack(self::FORMAT_2_BYTE,$packetId);
-		$payload        = $this->wrapWithLength($value);
+        // The length of the payload can be calculated by subtracting the length of the variable header
+        // from the Remaining Length field that is in the Fixed Header.
+        // It is valid for a PUBLISH Packet to contain a zero length payload.
+		$payload        = $value; // do not prepend
 		$controlFlags   = 0b0011; // at least once, retain
 		$this->sendCommand( self::TYPE_PUBLISH,$controlFlags,$variableHeader,$payload );
 		$r = $this->readPacketFromServer();
@@ -214,19 +254,30 @@ class Mqtt {
 	 */
 	protected function sendCommand($commandType, $controlFlag, $variableHeader, $payloadValue ) {
 
-		$controlHeader = ($commandType << 4) + $controlFlag;
+        // Control Header is the 1-byte header which contains
+        // - Command type (4 bit)
+        // - Control flag (4 bit)
+		$controlHeader = pack(self::FORMAT_1_BYTE,($commandType << 4) + $controlFlag);
 
 		//$payload  = pack(self::FORMAT_2_BYTE,strlen($payloadValue)) . $payloadValue;
 		$payload  = $payloadValue;
 
 		$remainingLength = $this->encodeMessageLength(strlen( $variableHeader ) + strlen( $payload ));
 
-		$packet = pack(self::FORMAT_1_BYTE,$controlHeader) . $remainingLength . $variableHeader . $payload;
-		Logger::debug( "MQTT Sending packet\n"         . Text::hexDump($packet) );
+        // Control Header : 1 byte
+        // Packet Length  : 1 to 4 bytes (using 7 bits, 8th bit is continuation bit)
+        // Variable Header: 0..n bytes
+        // Payload        : 0..n bytes
+		$packet = $controlHeader . $remainingLength . $variableHeader . $payload;
+        if   ( $this->log ) $this->log( "MQTT Sending packet\n"         . self::hexDump($packet) );
+
+        if   ( ! $this->connection )
+            throw new \Exception("There is no open connection");
+
 		$writtenBytes = fwrite($this->connection, $packet );
 		if   ( $writtenBytes === false )
 			throw new \Exception('Could not write to MQTT tcp socket' );
-		Logger::debug( "MQTT Sent bytes: "         . $writtenBytes );
+        if   ( $this->log ) $this->log( "MQTT Sent bytes: "         . $writtenBytes );
 	}
 
 
@@ -244,27 +295,27 @@ class Mqtt {
 		if ($responseControlHeader === false || $responseControlHeader === '')
 			throw new \Exception('Could not read control header from response');
 
-		Logger::debug( "MQTT got response control header: ".$responseControlHeader.' ('.gettype($responseControlHeader).')'."\n".Text::hexDump($responseControlHeader) );
+		if   ( $this->log ) $this->log( "MQTT got response control header: ".$responseControlHeader.' ('.gettype($responseControlHeader).')'."\n".self::hexDump($responseControlHeader) );
 
 		$responseCommandType     = ( ord($responseControlHeader) >> 4 );
 		$responseControlFlags    = ( ord($responseControlHeader) & 0b00001111 ); // get 4 bits from right
-		Logger::debug( "MQTT Getting response control Header : " . bin2hex($responseControlHeader).' => command type: '.$responseCommandType.', control flags: '.decbin($responseControlFlags) );
+		if   ( $this->log ) $this->log( "MQTT Getting response control Header : " . bin2hex($responseControlHeader).' => command type: '.$responseCommandType.', control flags: '.str_pad(decbin($responseControlFlags),4,'0',STR_PAD_LEFT) );
 
 		$responseRemainingLength  = $this->readRemainingLengthFromSocket();
-		Logger::debug( "MQTT Response length                 : " . $responseRemainingLength );
+		if   ( $this->log ) $this->log( "MQTT Response length                 : " . $responseRemainingLength );
 
 		$response = fread( $this->connection, $responseRemainingLength );
 
 		if ($response === false || $response === '')
 			throw new \Exception('Could not read response data from socket');
 
-		Logger::debug( "MQTT Getting response packet\n" . Text::hexDump($response) );
+		if   ( $this->log ) $this->log( "MQTT Getting response packet\n" . self::hexDump($response) );
 
 		return( [ $responseCommandType, $responseControlFlags,$response ] );
 	}
 
 	public function disconnect() {
-		$r = $this->sendCommand( self::TYPE_DISCONNECT,0,null,null );
+		$r = $this->sendCommand( self::TYPE_DISCONNECT,0,'','' );
 		fclose( $this->connection );
 	}
 
@@ -282,8 +333,7 @@ class Mqtt {
 
 
 	/**
-	 * Encodes the length of a message as string, so it can be transmitted
-	 * over the wire.
+	 * Encodes the length of a message.
 	 *
 	 * @param int $length
 	 * @return string
@@ -294,11 +344,11 @@ class Mqtt {
 
 		do {
 			$digit  = $length % 128;
-			$length = $length >> 7;
+			$length = $length >> 7; // 7 bits are used with the 8th bit being a continuation bit.
 
 			// if there are more digits to encode, set the top bit of this digit
 			if ($length > 0) {
-				$digit = ($digit | 0x80);
+				$digit |= 0x80;
 			}
 
 			$result .= chr($digit);
@@ -329,4 +379,38 @@ class Mqtt {
 
 		return $remainingLength;
 	}
+
+
+    protected static function hexDump( $data, $newline="\n")
+    {
+        $width =  16; # number of bytes per line
+        $pad   = '.'; # padding for non-visible characters
+
+        $from   = '';
+        $to     = '';
+        $output = '';
+
+        for ($i=0; $i<=0xFF; $i++)
+        {
+            $from .= chr($i);
+            $to   .= ($i >= 0x20 && $i <= 0x7E) ? chr($i) : $pad;
+        }
+
+        $hex   = str_split(bin2hex($data), $width*2);
+        $chars = str_split(strtr($data, $from, $to), $width);
+
+        foreach ($hex as $i=>$line)
+            $output .=
+                implode('  ',array_pad(str_split($chars[$i]),16,' ')     ) . '   ['.str_pad($chars[$i],16).']' . $newline .
+                implode(' ' ,array_pad(str_split($line ,2),16,'  ') ) . $newline;
+        return $output;
+    }
+
+
+    protected function log( $log )
+    {
+        if   ( $this->log )
+            call_user_func($this->log,$log );
+    }
+
 }

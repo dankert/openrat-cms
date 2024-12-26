@@ -3,10 +3,7 @@
 namespace cms\generator\dsl;
 
 use dsl\context\BaseScriptableObject;
-use dsl\context\Scriptable;
-use util\Http;
-use util\json\JSON;
-use util\Mqtt;
+use mqtt\Mqtt;
 
 /**
  * A Proxy for MqTT methods.

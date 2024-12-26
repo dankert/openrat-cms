@@ -1,0 +1,3 @@
+# url
+url=http://dl.weiherhei.de/mqttclient/mqttclient-latest.tar.gz
+files=mqtt/*.php
