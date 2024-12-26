@@ -1,0 +1,3 @@
+# url
+url=http://dl.weiherhei.de/phariable/phariable-latest.tar.gz
+files=phariable/*.php

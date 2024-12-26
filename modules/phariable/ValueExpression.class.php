@@ -1,6 +1,6 @@
 <?php
 
-namespace util\text\variables;
+namespace phariable;;
 
 class ValueExpression
 {
