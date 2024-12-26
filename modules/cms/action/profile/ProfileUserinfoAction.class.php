@@ -31,13 +31,13 @@ class ProfileUserinfoAction extends ProfileAction implements Method {
 		$this->setTemplateVar('style',$currentStyle);
 
 
-		$themeStyle = new ThemeStyle( Configuration::subset('style')->get($currentStyle,[]) ); // user style config
+		//$themeStyle = new ThemeStyle( Configuration::subset('style')->get($currentStyle,[]) ); // user style config
 
 		// Theme base color for smartphones colorizing their status bar.
-		$this->setTemplateVar('theme-color', UIUtils::getColorHexCode($themeStyle->getThemeColor()));
+		//$this->setTemplateVar('theme-color', $themeStyle->getThemeColor());
 
 		// Output all theme colors
-		$this->setTemplateVar('theme'     , $themeStyle->getProperties() );
+		//$this->setTemplateVar('theme'     , $themeStyle->getProperties() );
     }
 
 
