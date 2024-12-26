@@ -46,7 +46,7 @@ class IndexManifestAction extends IndexAction implements Method {
 
 
 		// Theme base color for smartphones colorizing their status bar.
-        $themeColor = UIUtils::getColorHexCode($themeStyle->getThemeColor());
+        $themeColor = $themeStyle->getThemeColor();
 
         $appName = C::subset(['application'])->get('name',Startup::TITLE);
 

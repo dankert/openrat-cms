@@ -7,15 +7,18 @@
   --cms-main-title-text-color: black;
   --cms-main-text-color: black;
   --cms-main-background-color: silver;
+  --cms-main-group-background-color: silver;
   --cms-inactive-background-color: gray;
   --cms-nav-title-text-color: gray;
   --cms-nav-title-background-color: gray;
   --cms-nav-text-color: gray;
   --cms-nav-background-color: gray;
+  --cms-nav-group-background-color: gray;
   --cms-dialog-title-text-color: gray;
   --cms-dialog-title-background-color: gray;
   --cms-dialog-text-color: gray;
   --cms-dialog-background-color: gray;
+  --cms-dialog-group-background-color: gray;
   --cms-image-color: gray;
   --cms-notice-ok-color: green;
   --cms-notice-info-color: blue;
@@ -146,6 +149,9 @@ html .or-workbench-main .or-workbench-content {
   color: var(--cms-main-text-color);
   background-color: var(--cms-main-background-color);
 }
+html .or-workbench-main .or-workbench-content .or-group-value {
+  background-color: var(--cms-main-group-background-color);
+}
 html .or-workbench-main .or-dialog .or-workbench-title {
   color: var(--cms-main-title-text-color);
   background-color: var(--cms-main-title-background-color);
@@ -201,6 +207,9 @@ html .or-workbench-navigation .or-workbench-content {
   color: var(--cms-nav-text-color);
   background-color: var(--cms-nav-background-color);
 }
+html .or-workbench-navigation .or-workbench-content .or-group-value {
+  background-color: var(--cms-nav-group-background-color);
+}
 html .or-workbench-navigation .or-dialog .or-workbench-title {
   color: var(--cms-nav-title-text-color);
   background-color: var(--cms-nav-title-background-color);
@@ -208,6 +217,9 @@ html .or-workbench-navigation .or-dialog .or-workbench-title {
 html .or-workbench-navigation .or-dialog .or-workbench-content {
   color: var(--cms-nav-text-color);
   background-color: var(--cms-nav-background-color);
+}
+html .or-workbench-navigation .or-dialog .or-workbench-content .or-group-value {
+  background-color: var(--cms-nav-group-background-color);
 }
 html .or-workbench-navigation .or-dialog .or-workbench-content .or-form-actionbar {
   background-color: var(--cms-nav-background-color);
@@ -228,10 +240,6 @@ html .or-workbench-navigation .or-link {
 }
 html .or-dialog-filler {
   background-color: var(--cms-fill-color);
-}
-html .or-group-value {
-  border-color: var(--cms-main-scrollbar-color);
-  box-shadow: 0.3em 0.3em 0.3em var(--cms-main-scrollbar-color);
 }
 html .or-group-description {
   color: var(--cms-main-scrollbar-color);

@@ -337,9 +337,6 @@ export default class Workbench {
 		let styleScheme = json.output['styleScheme'];
 		this.loadUserTheme(style,styleScheme);
 
-		let color = json.output['theme-color'];
-		this.setThemeColor(color);
-
 		// is the user logged in?
 		if   ( json.output['name'  ] )
 			$('.or-workbench').addClass('user--logged-in').removeClass('user--anonymous');
@@ -490,6 +487,8 @@ export default class Workbench {
 				rootSelector.style.setProperty(propertyName,styleProperties[name]);
 			}
 
+			let color = styleProperties['theme-color'];
+			this.setThemeColor(color);
 
 		} catch( cause ) {
 			console.warn( {message: 'Loading theme has failed.',cause:cause });

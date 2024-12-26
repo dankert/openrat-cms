@@ -3,3 +3,4 @@ config/config-*.yml
 config/.ht*.yml
 log/cms-*.log
 /audit-log/
+/openrat-cms.iml

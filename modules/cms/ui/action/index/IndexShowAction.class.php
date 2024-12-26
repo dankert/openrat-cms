@@ -64,7 +64,7 @@ class IndexShowAction extends IndexAction implements Method {
 		$themeStyle = new ThemeStyle( Configuration::subset('style')->get($style,[]) ); // user style config
 
         // Theme base color for smartphones colorizing their status bar.
-        $this->setTemplateVar('themeColor', UIUtils::getColorHexCode($themeStyle->getThemeColor()));
+        $this->setTemplateVar('themeColor', $themeStyle->getThemeColor());
 
         $messageOfTheDay = C::subset('login')->get('motd','');
 
