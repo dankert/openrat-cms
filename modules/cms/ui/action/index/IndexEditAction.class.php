@@ -33,7 +33,54 @@ class IndexEditAction extends IndexAction implements Method {
 
     public function view() {
 
-    	$this->setTemplateVar('isAdmin',$this->userIsAdmin() );
+		if   ( $this->currentUser )
+		{
+			$changes = $this->currentUser->getValueChanges( time()-(60*60*24*30));
+
+			$days = [];
+			for( $ts = time()-(60*60*24*30); $ts <= time(); $ts+=60*60*24 ) {
+				$days[ date('Ymd',$ts) ] = 0;
+			}
+
+			$max  = 0;
+			foreach( $changes as $change ) {
+				$idx = date('Ymd',$change['lastchange_date']);
+				$days[ $idx ] = intval(@$days[$idx]) + 1;
+			}
+
+			// maximum of all days
+			foreach( $days as $dayCount ) {
+				$max = max($max,$dayCount);
+			}
+			$days = array_map( function ($dayCount) use ($max) {
+				$maxHeight = 25;
+				$height = floor($maxHeight*$dayCount/$max);
+				return str_repeat("\xe2\x80\x8a",$height);
+			},$days);
+
+			$timeline = array_map( function( $change ) {
+				// already loaded per SQL
+				//$change['username'] = ((new User($change['userid']))->load()->getName());
+				if    ( $change['pageid'] ) {
+					$change['action'] = 'page';
+					$change['id'    ] = $change['pageid'];
+				}
+				if    ( $change['fileid'] ) {
+					$change['action'] = 'file';
+					$change['id'    ] = $change['fileid'];
+				}
+				if    ( $change['templateid'] ) {
+					$change['action'] = 'template';
+					$change['id'    ] = $change['templateid'];
+				}
+				return $change;
+			},$changes );
+
+			$this->setTemplateVar('timeline',$timeline );
+			$this->setTemplateVar('days'    ,$days );
+		}
+
+    	$this->setTemplateVar('isAdmin' ,$this->userIsAdmin() );
     }
 
 

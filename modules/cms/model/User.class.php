@@ -371,6 +371,8 @@ SQL
 
     /**
 	 * Lesen Benutzer aus der Datenbank.
+	 *
+	 * @return User
 	 */ 
 	public function load()
 	{
@@ -382,7 +384,8 @@ SQL
 		if	( count($row) == 0 )
 			throw new \util\exception\ObjectNotFoundException();
 		
-		$this->setDatabaseRow( $row );		
+		$this->setDatabaseRow( $row );
+		return $this;
 	}
 
 
@@ -1060,11 +1063,9 @@ SQL
 	 *
 	 * @return array <string, unknown>
 	 */
-	public function getLastChanges()
+	public function getLastChanges( $fromDate )
 	{
-		$db = Db::get();
-	
-		$sql = $db->sql( <<<SQL
+		$sql = Db::sql( <<<SQL
 		SELECT {{object}}.id       as objectid,
 		       {{object}}.filename as filename,
 		       {{object}}.typeid   as typeid,
@@ -1075,13 +1076,13 @@ SQL
 		LEFT JOIN {{project}}
 		       ON {{object}}.projectid = {{project}}.id
 		   WHERE {{object}}.lastchange_userid = {userid} AND
-		         {{object}}.lastchange_date > {fromdate}
+		         {{object}}.lastchange_date >= {fromdate}
 		ORDER BY {{object}}.lastchange_date DESC
 SQL
 		);
 	
 		$sql->setInt( 'userid'  , $this->userid );
-		$sql->setInt( 'fromdate', time()-(60*60*24*365*1) ); // last year.
+		$sql->setInt( 'fromdate', $fromDate     );
 
 		return $sql->getAll();
 	
@@ -1090,6 +1091,55 @@ SQL
 	
 
 	
+	/**
+	 * Timeline
+	 *
+	 * @return array <string, unknown>
+	 */
+	public function getValueChanges( $fromDate )
+	{
+		$sql = Db::sql( <<<SQL
+		SELECT {{value}}.lastchange_date as lastchange_date,
+		       {{value}}.lastchange_userid as userid,
+		       {{user}}.fullname as username,
+		       {{value}}.linkobjectid as linkobjectid,
+		       {{value}}.text   as linkobjectid,
+		       {{value}}.number as linkobjectid,
+		       {{value}}.date   as date,
+		       {{value}}.format as format,
+		       {{value}}.id     as valueid,
+			   {{templatemodel}}.templateid as templateid,
+			   {{file}}.objectid as fileid,
+			   {{pagecontent}}.elementid as elementid,
+			   {{pagecontent}}.languageid as languageid,
+			   {{page}}.objectid as pageid
+		  FROM {{value}}
+		LEFT JOIN {{templatemodel}}
+		       ON {{templatemodel}}.contentid = {{value}}.contentid
+		LEFT JOIN {{file}}
+		       ON {{value}}.contentid = {{file}}.contentid
+		LEFT JOIN {{pagecontent}}
+		       ON {{value}}.contentid = {{pagecontent}}.contentid
+		LEFT JOIN {{page}}
+		       ON {{pagecontent}}.pageid = {{page}}.id
+		LEFT JOIN {{user}}
+		       ON {{value}}.lastchange_userid = {{user}}.id
+		   WHERE {{value}}.lastchange_userid = {userid} AND
+		         {{value}}.lastchange_date >= {fromdate}
+		ORDER BY {{value}}.lastchange_date DESC
+SQL
+		);
+
+		$sql->setInt( 'userid'  , $this->userid );
+		$sql->setInt( 'fromdate', $fromDate     );
+
+		return $sql->getAll();
+
+	}
+
+
+
+
 	/**
 	 * Erzeugt ein neues OTP-Secret.
 	 */

@@ -19,6 +19,16 @@
         width: 100%;
         table-layout: fixed;
 
+      &.or-timeline-chart {
+        td {
+          writing-mode: vertical-lr;
+          direction: rtl;
+          font-size: 0.5em;
+          vertical-align: bottom;
+          * {background-color: var(--cms-image-color)};
+        }
+      }
+
       &-column-date {
         width: 12em;
       }

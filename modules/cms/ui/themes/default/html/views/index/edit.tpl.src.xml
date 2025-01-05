@@ -1,4 +1,42 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+
+	<group>
+
+	<if present="days">
+		<table class="timeline-chart" filter="false">
+			<row>
+				<list list="${days}" value="bar">
+					<column>
+						<text escape="false" type="preformatted" value="${bar}" />
+					</column>
+				</list>
+			</row>
+		</table>
+	</if>
+
+	<if present="timeline">
+		<table filter="false">
+			<list list="${timeline}" extract="true">
+				<row>
+					<column>
+						<date date="${lastchange_date}" />
+					</column>
+					<column>
+						<text value="${username}" />
+					</column>
+					<column class="act-clickable">
+						<link type="open" action="${action}" id="${id}">
+							<text value="${message:${action}}" />
+						</link>
+					</column>
+				</row>
+			</list>
+		</table>
+
+	</if>
+
+	</group>
+
   <part class="linklist">
       <part class="act-clickable,linklist-line,round-corners,hover-effect">
         <link type="open" action="projectlist">

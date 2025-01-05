@@ -6,7 +6,7 @@ use cms\model\BaseObject;
 
 class UserHistoryAction extends UserAction implements Method {
     public function view() {
-        $lastChanges = $this->user->getLastChanges();
+        $lastChanges = $this->user->getLastChanges( time()-(60*60*24*365*1) );  // last year.
 
         $timeline = array();
 

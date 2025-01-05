@@ -37,6 +37,15 @@ a.editorlink:visited {
   table-layout: fixed;
   /* Hilfe-Texte */
 }
+.or-table.or-timeline-chart td {
+  writing-mode: vertical-lr;
+  direction: rtl;
+  font-size: 0.5em;
+  vertical-align: bottom;
+}
+.or-table.or-timeline-chart td * {
+  background-color: var(--cms-image-color);
+}
 .or-table-column-date {
   width: 12em;
 }

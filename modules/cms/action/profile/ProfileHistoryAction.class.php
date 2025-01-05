@@ -6,7 +6,7 @@ use cms\model\BaseObject;
 
 class ProfileHistoryAction extends ProfileAction implements Method {
     public function view() {
-        $lastChanges = $this->user->getLastChanges();
+        $lastChanges = $this->user->getLastChanges( time()-(60*60*24*365*1) );
 
         $timeline = array();
 
