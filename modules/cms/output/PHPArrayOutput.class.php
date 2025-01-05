@@ -11,12 +11,11 @@ use util\json\JSON;
 class PHPArrayOutput extends APIOutput
 {
 	/**
-     * Renders the output in JSON Format.
+     * Renders the output as machine-readable PHP array format.
      */
     protected function renderOutput( $data )
 	{
-		header('Content-Type: application/json; charset=UTF-8');
-		return JSON::encode($data);
+		return var_export($data, true);
 	}
 
 	public function getContentType()
