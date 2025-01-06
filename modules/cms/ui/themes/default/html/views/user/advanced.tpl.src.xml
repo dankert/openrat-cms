@@ -15,6 +15,8 @@
 				<column header="true">
 					<text value="${message:OPERATING_SYSTEM}"/>
 				</column>
+				<column header="true">
+				</column>
 			</row>
 			<list list="${token}" extract="true">
 				<row>
@@ -30,8 +32,20 @@
 					<column>
 						<text value="${platform}"/>
 					</column>
+					<column class="act-clickable">
+						<link type="post" subaction="deltoken" var1="tokenid" value1="${id}">
+							<text value="${message:delete}"/>
+						</link>
+					</column>
 				</row>
 			</list>
+			<row>
+				<column class="act-clickable" rowspan="5">
+					<link type="dialog" subaction="addtoken">
+						<text value="${message:add}"/>
+					</link>
+				</column>
+			</row>
 		</table>
 	</group>
 

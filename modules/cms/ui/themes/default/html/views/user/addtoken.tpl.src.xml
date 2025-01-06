@@ -1,0 +1,21 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+	<form>
+		<group title="${message:TOKEN}">
+			<fieldset label="${message:user_token}">
+				<input readonly="true" name="apitoken" />
+				<text type="preformatted" value="${apitokenHeader}" />
+				<hidden name="apitoken" />
+			</fieldset>
+			<fieldset label="${message:OPERATING_SYSTEM}">
+				<input name="platform" />
+			</fieldset>
+			<fieldset label="${message:name}">
+				<input name="name" />
+			</fieldset>
+			<fieldset label="${message:until}">
+				<input type="date" name="expires" />
+			</fieldset>
+		</group>
+	</form>
+</output>

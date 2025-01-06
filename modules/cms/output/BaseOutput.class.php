@@ -60,7 +60,7 @@ abstract class BaseOutput implements Output
 		} catch (BadMethodCallException $e) {
 			// Action-Method does not exist.
 			Logger::debug( $e );
-			Http::noContent();
+			Http::notAcceptable();
 			$this->setError("Method not found",$e);
 		} catch (ObjectNotFoundException $e) {
 			Logger::debug( $e ); // only debug, because this may happen on links to deleted objects.

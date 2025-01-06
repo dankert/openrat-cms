@@ -267,7 +267,7 @@ SQL
 	public function getLoginTokens() {
 
 		$stmt = Db::sql( <<<SQL
-              SELECT selector,expires,create_date,platform,name
+              SELECT id,selector,expires,create_date,platform,name
                 FROM {{auth}} 
                WHERE userid={userid}
 SQL
@@ -509,6 +509,48 @@ SQL
 		if	( $name == '' )
 			return Language::lang(Messages::UNKNOWN);
 		else return $name;
+	}
+
+	public function deleteToken( $tokenId )
+	{
+		$stmt = Db::sql( <<<SQL
+              DELETE FROM {{auth}}
+               WHERE userid={userid}
+                 AND id={tokenid}
+SQL
+		);
+		$stmt->setInt   ('userid' ,$this->userid );
+		$stmt->setInt   ('tokenid',$tokenId      );
+		$stmt->execute();
+	}
+
+	public function addApiToken($selector, $token, $platform, $name, $expireDate)
+	{
+		$tokenHash = Password::hash($token,Password::ALGO_SHA1);
+
+		$stmt = Db::sql( 'SELECT max(id) FROM {{auth}}');
+		$count = $stmt->getOne();
+
+		$stmt = Db::sql( <<<SQL
+              INSERT INTO {{auth}}
+                       (id,userid,selector,token,token_algo,expires,create_date,platform,name)
+                 VALUES( {id},{userid},{selector},{token},{token_algo},{expires},{create_date},{platform},{name} )
+SQL
+		);
+
+		$stmt->setInt( 'id'         ,++$count      );
+		$stmt->setInt( 'userid'     ,$this->userid );
+
+		$stmt->setString( 'selector'   ,$selector     );
+		$stmt->setString( 'token'      ,$tokenHash    );
+		$stmt->setInt   ( 'token_algo' ,Password::ALGO_SHA1        );
+
+		$stmt->setInt( 'expires'    , $expireDate );
+		$stmt->setInt( 'create_date',time()       );
+
+		$stmt->setString( 'platform',$platform );
+		$stmt->setString( 'name'    ,$name     );
+		$stmt->execute();
 	}
 
 

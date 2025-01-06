@@ -885,7 +885,7 @@ SQL
 	 */
 	public function  getLastChanges()
 	{
-		
+
 		$db = \cms\base\DB::get();
 		
 		$sql = $db->sql( <<<SQL
@@ -908,7 +908,7 @@ SQL
 		   ORDER BY {{object}}.lastchange_date DESC
 SQL
 		);
-		
+
 		// Variablen setzen.
 		$sql->setInt( 'projectid', $this->projectid );
 		
@@ -918,7 +918,115 @@ SQL
 		return $sql->getAll();
 	}
 
-    /**
+	/**
+	 * Timeline
+	 *
+	 * @return array <string, unknown>
+	 */
+	public function getValueChanges( $fromDate )
+	{
+		$sql = Db::sql( <<<SQL
+		SELECT {{value}}.lastchange_date as lastchange_date,
+		       {{value}}.lastchange_userid as userid,
+		       {{value}}.linkobjectid as linkobjectid,
+		       {{value}}.text   as linkobjectid,
+		       {{value}}.number as linkobjectid,
+		       {{value}}.date   as date,
+		       {{value}}.format as format,
+		       {{value}}.id     as valueid
+		  FROM {{value}}
+		LEFT JOIN {{templatemodel}}
+		       ON {{value}}.contentid = {{templatemodel}}.contentid
+		LEFT JOIN {{pagecontent}}
+		       ON {{pagecontent}}.contentid = {{templatemodel}}.contentid
+		LEFT JOIN {{file}}
+		       ON {{file}}.contentid = {{templatemodel}}.contentid
+		   WHERE {{value}}.lastchange_userid = {userid} AND
+		         {{value}}.lastchange_date >= {fromdate}
+		ORDER BY {{value}}.lastchange_date DESC
+SQL
+		);
+
+		$sql->setInt( 'projectid', $this->projectid );
+		$sql->setInt( 'fromdate' , $fromDate     );
+
+		return $sql->getAll();
+
+	}
+	/**
+	 * Timeline
+	 *
+	 * @return array <string, unknown>
+	 */
+	public static function getAllValueChanges( $fromDate )
+	{
+		$sql = Db::sql( <<<SQL
+		SELECT {{value}}.lastchange_date as lastchange_date,
+		       {{value}}.lastchange_userid as userid,
+		       {{value}}.linkobjectid as linkobjectid,
+		       {{value}}.text   as linkobjectid,
+		       {{value}}.number as linkobjectid,
+		       {{value}}.date   as date,
+		       {{value}}.format as format,
+		       {{value}}.id     as valueid
+		  FROM {{value}}
+		LEFT JOIN {{templatemodel}}
+		       ON {{value}}.contentid = {{templatemodel}}.contentid
+		LEFT JOIN {{pagecontent}}
+		       ON {{pagecontent}}.contentid = {{templatemodel}}.contentid
+		LEFT JOIN {{file}}
+		       ON {{file}}.contentid = {{templatemodel}}.contentid
+		   WHERE {{value}}.lastchange_date >= {fromdate}
+		ORDER BY {{value}}.lastchange_date DESC
+SQL
+		);
+
+		$sql->setInt( 'fromdate', $fromDate     );
+
+		return $sql->getAll();
+
+	}
+
+
+
+	/**
+	 * Timeline
+	 *
+	 * @return array <string, unknown>
+	 */
+	public function getMyValueChanges( $fromDate )
+	{
+		$sql = Db::sql( <<<SQL
+		SELECT {{value}}.lastchange_date as lastchange_date,
+		       {{value}}.lastchange_userid as userid,
+		       {{value}}.linkobjectid as linkobjectid,
+		       {{value}}.text   as linkobjectid,
+		       {{value}}.number as linkobjectid,
+		       {{value}}.date   as date,
+		       {{value}}.format as format,
+		       {{value}}.id     as valueid
+		  FROM {{value}}
+		LEFT JOIN {{templatemodel}}
+		       ON {{value}}.contentid = {{templatemodel}}.contentid
+		LEFT JOIN {{pagecontent}}
+		       ON {{pagecontent}}.contentid = {{templatemodel}}.contentid
+		LEFT JOIN {{file}}
+		       ON {{file}}.contentid = {{templatemodel}}.contentid
+		   WHERE {{value}}.lastchange_userid = {userid} AND
+		         {{value}}.lastchange_date >= {fromdate}
+		ORDER BY {{value}}.lastchange_date DESC
+SQL
+		);
+
+		$user = Request::getUser();
+		$sql->setInt( 'userid'  , $user->userid );
+		$sql->setInt( 'fromdate', $fromDate     );
+
+		return $sql->getAll();
+
+	}
+
+	/**
      * Ermittelt alle Objekte vom gew�nschten Typ, die sic in
      * diesem Projekt befinden.
      *

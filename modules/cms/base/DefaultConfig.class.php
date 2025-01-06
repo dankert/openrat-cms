@@ -337,6 +337,7 @@ class DefaultConfig {
 					'authorization' => [
 						'basic'  => true,
 						'bearer' => false,
+						'api'    => true,
 					],
 					'cookie' =>
 						[ 

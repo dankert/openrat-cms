@@ -36,6 +36,7 @@ class RequestParams
 	public $authUser;
 	public $authPassword;
 	public $authToken;
+	public $apiToken;
 
 	private $parameter;
 
@@ -418,12 +419,16 @@ class RequestParams
 				case 'Basic':
 					list($this->authUser,$this->authPassword) = array_pad(explode(':',base64_decode( $value )),2,'' );
 					break;
+				case 'API':
+				case 'CMS-API':
+					$this->apiToken = $value;
 				case 'Bearer':
+				case 'JWT':
 					$this->authToken = $value;
 					break;
 				default:
 					// Only supporting Basic Auth and Bearer Auth
-					error_log('Only supporting Basic and Bearer authorization. Authorization header will be ignored.');
+					error_log('Only supporting the authorization schemes Basic, Bearer and API. Authorization header will be ignored.');
 			}
 
 		}

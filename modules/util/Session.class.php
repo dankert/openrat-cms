@@ -14,10 +14,6 @@ use security\Password;
  * - Datenbankobjekt
  * - Konfiguration
  * Die Methoden dieser Klassen koennen statisch aufgerufen werden.
- *
- * @author $Author$
- * @version $Revision$
- * @package openrat.service
  */
 class Session
 {
@@ -33,6 +29,7 @@ class Session
 	const KEY_MAIL_CHANGE_CODE = 'mail_change_code';
 	const KEY_MAIL_CHANGE_MAIL = 'mail_change_mail';
 	const KEY_TOKEN            = 'token';
+	const KEY_GENERATED_TOKEN  = 'newtoken';
 
 	const PRAEFIX = 'ors_';
 
@@ -50,6 +47,10 @@ class Session
 
 	public static function set($var, $value)
 	{
+		// Should so, but no not possible :(
+		//if   ( !self::$sessionStarted )
+		//	throw new \LogicException('the session is closed for writing');
+
 		$SESS = &$_SESSION;
 		$SESS[self::PRAEFIX . $var] = $value;
 	}
@@ -81,10 +82,11 @@ class Session
 		session_name(getenv('CMS_SESSION_NAME') ?: 'or_sid');
 		session_start();
 
+		self::$sessionStarted = true;
+
 		if   ( ! self::token() )
 			self::set( self::KEY_TOKEN,Password::randomHexString(15 ) );
 
-		self::$sessionStarted = true;
 	}
 }
 

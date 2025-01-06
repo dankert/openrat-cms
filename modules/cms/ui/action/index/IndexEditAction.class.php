@@ -42,16 +42,17 @@ class IndexEditAction extends IndexAction implements Method {
 				$days[ date('Ymd',$ts) ] = 0;
 			}
 
-			$max  = 0;
 			foreach( $changes as $change ) {
 				$idx = date('Ymd',$change['lastchange_date']);
 				$days[ $idx ] = intval(@$days[$idx]) + 1;
 			}
 
 			// maximum of all days
+			$max  = 1; // not 0, to prevent Division by zero.
 			foreach( $days as $dayCount ) {
 				$max = max($max,$dayCount);
 			}
+
 			$days = array_map( function ($dayCount) use ($max) {
 				$maxHeight = 25;
 				$height = floor($maxHeight*$dayCount/$max);

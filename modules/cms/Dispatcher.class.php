@@ -9,8 +9,10 @@ use BadMethodCallException;
 use cms\action\Action;
 use cms\action\RequestParams;
 use cms\action\Response;
+use cms\auth\ApiAuth;
 use cms\auth\Auth;
 use cms\auth\InternalAuth;
+use cms\auth\RememberAuth;
 use cms\base\Configuration;
 use cms\base\DB;
 use cms\base\DefaultConfig;
@@ -186,6 +188,22 @@ class Dispatcher
 					throw new SecurityException('user cannot be authenticated');
 
 				$user = User::loadWithName( $this->request->authUser,User::AUTH_TYPE_INTERNAL );
+				Request::setUser( $user );
+			}
+			elseif   ( $this->request->apiToken ) {
+				if   ( ! $authConfig->is('api'))
+					throw new SecurityException('API Authorization is disabled');
+
+				$apiAuth = new ApiAuth();
+
+				list( $apiTokenSerial,$apiTokenValue ) = array_pad(explode('.',$this->request->apiToken),2,'');
+
+				$user = $apiAuth->getUserIdFromToken( $apiTokenSerial,$apiTokenValue);
+
+				if   ( ! $user )
+					throw new SecurityException('api user cannot be authenticated');
+
+				$user->load();
 				Request::setUser( $user );
 			}
 			elseif   ( $authToken = $this->request->authToken ) {
