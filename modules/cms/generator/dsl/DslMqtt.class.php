@@ -18,7 +18,8 @@ class DslMqtt extends BaseScriptableObject
 
 	public function __construct($url,$user,$password )
 	{
-		$this->mqtt = new Mqtt( $url );
+		$this->mqtt = new Mqtt();
+		$this->mqtt->open( $url );
 		$this->mqtt->connect( $user, $password );
 	}
 
