@@ -8,6 +8,7 @@ use cms\generator\link\PreviewLink;
 use cms\generator\Producer;
 use util\ArrayUtils;
 use logger\Logger;
+use util\YAML;
 
 /**
  * Element.
@@ -556,27 +557,31 @@ SQL
 	}
 
 
-	function getSelectItems()
+	/**
+	 * Gets all available items from the code.
+	 * The Code must be valid YAML.
+	 * @return string[]
+	 */
+	public function getSelectItems()
 	{
-		$parameters = explode( "\n",$this->code );
-		$items      = array();
+		$items = YAML::parse($this->code);
 
-		foreach( $parameters as $it )
-		{
-			$paar        = explode( ":",$it,2 );
-			$param_name  = trim($paar[0]);
+		if   ( is_scalar( $items ) )
+			return [ strval( $items ) ];
 
-			if	( count($paar) > 1 )
-				$param_value = trim($paar[1]);
-			else
-				$param_value = trim($paar[0]);
+		if   ( ! is_array( $items) )
+			return [];
 
-			// Wenn Inhalt mit "'" beginnt und mit "'" aufhoert, dann diese Zeichen abschneiden
-			if	( substr($param_value,0,1) == "'" && substr($param_value,strlen($param_value)-1,1) == "'" )
-				$param_value = substr($param_value,1,strlen($param_value)-2);
+		// Kick out unpleasant values like arrays or empty values.
+		$items = array_filter( $items,function($value) {
+			return $value!=null && $value !=='' && !is_array($value);
+		});
 
-			$items[$param_name] = $param_value;
-		}
+		// Make all values to string.
+		$items = array_map( function($value) {
+			return strval($value);
+		},$items);
+
 		return $items;
 	}
 
