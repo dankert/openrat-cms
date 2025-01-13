@@ -564,7 +564,7 @@ SQL
 	 */
 	public function getSelectItems()
 	{
-		$items = YAML::parse($this->code);
+		$items = $this->getDynamicParameters();
 
 		if   ( is_scalar( $items ) )
 			return [ strval( $items ) ];
@@ -586,16 +586,19 @@ SQL
 	}
 
 
-	function getDynamicParameters()
+	/**
+	 * Get the data from the code.
+	 *
+	 * The code is parsed as YAML and returned as an array.
+	 *
+	 * @return array
+	 */
+	public function getDynamicParameters()
 	{
 	    // Fixing old syntax ("key:value") to valid YAML syntax.
 	    $this->code = preg_replace( '/^(\w+)\:(.+)$/m','${1}: ${2}', $this->code );
 
-	    $items = \util\YAML::parse( $this->code );
-
-        Logger::trace('dynamic-parameters: '.print_r($items,true));
-
-		return (array) $items;
+		return YAML::parse( $this->code );
 	}
 
 
