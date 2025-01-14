@@ -767,6 +767,15 @@ export default class Workbench {
 			}
 		);
 
+		// close dialog on click onto the blurred area.
+		$('.or-popup-filler,.or-act-popup-close').click( (e) =>
+			{
+				e.preventDefault();
+				$('#popup .or-view').empty();
+				$('#popup').removeClass('popup--is-open');
+			}
+		);
+
 
 		// Mobile navigation must close on a click on the workbench
 		$('.or-act-navigation-close').click( () => {

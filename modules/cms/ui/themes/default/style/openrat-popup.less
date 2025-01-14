@@ -1,0 +1,107 @@
+/*
+OpenRat Content Management System
+Copyright (C) 2002-2010 Jan Dankert
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+*/
+
+/*
+Basis-Style for Openrat.
+*/
+
+
+/* Usage to this variable is safe to be removed */
+@color-overridden-by-theme: black;
+
+@smartphones: ~"only screen and (max-width: 55rem)";
+
+
+
+.or {
+  &-popup {
+
+
+    width:0;
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+    display: flex;
+
+    //display: none;
+    height: 0;
+    flex-direction: row;
+
+    &--is-open {
+      visibility: visible;
+      overflow-y: auto;
+      opacity: 1;
+      width: 100%;
+      height: 100%;
+    }
+
+    &-filler {
+      position: fixed;
+      z-index: 4;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      opacity: 0.6;
+      backdrop-filter: blur(10em);
+
+      &-icon {
+        opacity: 1;
+        font-size: 3em;
+        position: absolute;
+        right: 20px;
+        top: 20px;
+      }
+    }
+
+    //&-title {
+    //  background-color: var(--cms-main-title-background-color);
+    //}
+
+    &-content {
+
+      //.or-workbench-content {
+      //  background-color: var(--cms-main-background-color);
+      //}
+      position: absolute;
+      top: 0;
+      left: 0;
+      flex: 1;
+      overflow: auto;
+
+      width: 100%;
+      height: 100%;
+      padding: 10%;
+
+      //margin-left:10em;
+
+      z-index: 5;
+
+      @media @smartphones {
+        padding: 20% 0 0 0;
+      }
+
+      .or-view {
+        height: 100%;
+      }
+
+    }
+
+  }
+}

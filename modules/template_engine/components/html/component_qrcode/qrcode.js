@@ -35,22 +35,17 @@ export default function(element ) {
 
 	$(element).find('.or-qrcode').click( async function() {
 
+		let $popup = $('#popup');
+		$popup.addClass('popup--is-open');
+		let $view = $popup.find('.or-view');
+
 		let $qrCodeElement = $(this);
 
-		// Create QRCode on first click.
-		if   ( ! $qrCodeElement.children('.or-info-popup').length ) {
+		// Create QRCode in Popup.
+		let qrcodeValue = $qrCodeElement.data('qrcode');
+		let qrcodeText  = $qrCodeElement.data('qrcode-text');
 
-			let qrcodeValue = $qrCodeElement.data('qrcode');
-			let qrcodeText  = $qrCodeElement.data('qrcode-text');
-
-			if   ( $qrCodeElement.children().length > 0 )
-				return;
-
-			$qrCodeElement.append( await createQRCode(qrcodeValue,qrcodeText) );
-		}
-
-		$qrCodeElement.toggleClass('info--open');
-    	$qrCodeElement.toggleClass('btn--is-active');
+		$view.append( await createQRCode(qrcodeValue,qrcodeText) );
 	});
 
 };

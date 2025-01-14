@@ -36,12 +36,12 @@
 		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-font${cssExt}"/>
 		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-form${cssExt}"/>
 		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-image${cssExt}"/>
-		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-info${cssExt}"/>
 		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-menu${cssExt}"/>
 		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-navigation${cssExt}"/>
 		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-nojs${cssExt}"/>
 		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-normalize${cssExt}"/>
 		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-notices${cssExt}"/>
+		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-popup${cssExt}"/>
 		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-search${cssExt}"/>
 		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-selector${cssExt}"/>
 		<link rel="stylesheet" type="text/css" href="./modules/cms/ui/themes/default/style/openrat-sidebar${cssExt}"/>
@@ -308,7 +308,7 @@
 				<div id="dialog" class="or-dialog or-dialog--is-closed" data-action="" data-method="">
 					<!-- Header menu -->
 					<div class="or-dialog-filler"><!-- empty element, this is only for styling the background -->
-						<span class="or-dialog-filler-icon or-btn or-image-icon or-image-icon--menu-close"></span>
+						<!-- -->
 					</div>
 
 					<div class="or-dialog-content or-workbench-screen">
@@ -343,10 +343,48 @@
 				</div>
 
 
+				<!-- Popup -->
+				<div id="popup" class="or-popup or-popup--is-closed" data-action="" data-method="">
+					<!-- Header menu -->
+					<div class="or-popup-filler"><!-- empty element, this is only for styling the background -->
+					</div>
+
+					<div class="or-popup-content">
+						<header class="or-workbench-title or-popup-title">
+
+							<or:part class="menu">
+								<or:part class="menu-group">
+									<or:part class="toolbar-icon,act-dialog-close">
+										<or:image class="" menu="back"/>
+									</or:part>
+
+									<or:part class="act-dialog-name" />
+
+								</or:part>
+								<or:part class="menu-group">
+									<or:part
+										class="toolbar-icon,-visible-on-desktop,act-clickable,act-popup-close">
+										<or:link type="dialog" subaction="pub" title="${message:menu_close}">
+											<or:image menu="close"/>
+										</or:link>
+									</or:part>
+								</or:part>
+							</or:part>
+
+						</header>
+						<div class="or-workbench-content">
+							<div class="or-view">
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+
 			</div>
 
 		</div>
- 
+
 
 
 		<!-- Notices -->

@@ -27,12 +27,12 @@
     <link rel="<?php echo O::escapeHtml('stylesheet') ?>" type="<?php echo O::escapeHtml('text/css') ?>" href="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/style/openrat-font'.@$cssExt.'') ?>" /><?php echo O::escapeHtml('') ?>
     <link rel="<?php echo O::escapeHtml('stylesheet') ?>" type="<?php echo O::escapeHtml('text/css') ?>" href="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/style/openrat-form'.@$cssExt.'') ?>" /><?php echo O::escapeHtml('') ?>
     <link rel="<?php echo O::escapeHtml('stylesheet') ?>" type="<?php echo O::escapeHtml('text/css') ?>" href="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/style/openrat-image'.@$cssExt.'') ?>" /><?php echo O::escapeHtml('') ?>
-    <link rel="<?php echo O::escapeHtml('stylesheet') ?>" type="<?php echo O::escapeHtml('text/css') ?>" href="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/style/openrat-info'.@$cssExt.'') ?>" /><?php echo O::escapeHtml('') ?>
     <link rel="<?php echo O::escapeHtml('stylesheet') ?>" type="<?php echo O::escapeHtml('text/css') ?>" href="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/style/openrat-menu'.@$cssExt.'') ?>" /><?php echo O::escapeHtml('') ?>
     <link rel="<?php echo O::escapeHtml('stylesheet') ?>" type="<?php echo O::escapeHtml('text/css') ?>" href="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/style/openrat-navigation'.@$cssExt.'') ?>" /><?php echo O::escapeHtml('') ?>
     <link rel="<?php echo O::escapeHtml('stylesheet') ?>" type="<?php echo O::escapeHtml('text/css') ?>" href="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/style/openrat-nojs'.@$cssExt.'') ?>" /><?php echo O::escapeHtml('') ?>
     <link rel="<?php echo O::escapeHtml('stylesheet') ?>" type="<?php echo O::escapeHtml('text/css') ?>" href="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/style/openrat-normalize'.@$cssExt.'') ?>" /><?php echo O::escapeHtml('') ?>
     <link rel="<?php echo O::escapeHtml('stylesheet') ?>" type="<?php echo O::escapeHtml('text/css') ?>" href="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/style/openrat-notices'.@$cssExt.'') ?>" /><?php echo O::escapeHtml('') ?>
+    <link rel="<?php echo O::escapeHtml('stylesheet') ?>" type="<?php echo O::escapeHtml('text/css') ?>" href="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/style/openrat-popup'.@$cssExt.'') ?>" /><?php echo O::escapeHtml('') ?>
     <link rel="<?php echo O::escapeHtml('stylesheet') ?>" type="<?php echo O::escapeHtml('text/css') ?>" href="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/style/openrat-search'.@$cssExt.'') ?>" /><?php echo O::escapeHtml('') ?>
     <link rel="<?php echo O::escapeHtml('stylesheet') ?>" type="<?php echo O::escapeHtml('text/css') ?>" href="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/style/openrat-selector'.@$cssExt.'') ?>" /><?php echo O::escapeHtml('') ?>
     <link rel="<?php echo O::escapeHtml('stylesheet') ?>" type="<?php echo O::escapeHtml('text/css') ?>" href="<?php echo O::escapeHtml('./modules/cms/ui/themes/default/style/openrat-sidebar'.@$cssExt.'') ?>" /><?php echo O::escapeHtml('') ?>
@@ -193,9 +193,7 @@
           </section>
         </main>
         <div id="<?php echo O::escapeHtml('dialog') ?>" class="<?php echo O::escapeHtml('or-dialog or-dialog--is-closed') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('') ?>"><?php echo O::escapeHtml('') ?>
-          <div class="<?php echo O::escapeHtml('or-dialog-filler') ?>"><?php echo O::escapeHtml('') ?>
-            <span class="<?php echo O::escapeHtml('or-dialog-filler-icon or-btn or-image-icon or-image-icon--menu-close') ?>"><?php echo O::escapeHtml('') ?></span>
-          </div>
+          <div class="<?php echo O::escapeHtml('or-dialog-filler') ?>"><?php echo O::escapeHtml('') ?></div>
           <div class="<?php echo O::escapeHtml('or-dialog-content or-workbench-screen') ?>"><?php echo O::escapeHtml('') ?>
             <header class="<?php echo O::escapeHtml('or-workbench-title or-dialog-title') ?>"><?php echo O::escapeHtml('') ?>
               <div class="<?php echo O::escapeHtml('or-menu') ?>"><?php echo O::escapeHtml('') ?>
@@ -208,6 +206,31 @@
                 <div class="<?php echo O::escapeHtml('or-menu-group') ?>"><?php echo O::escapeHtml('') ?>
                   <div class="<?php echo O::escapeHtml('or-toolbar-icon or--visible-on-desktop or-act-clickable or-act-dialog-close') ?>"><?php echo O::escapeHtml('') ?>
                     <a title="<?php echo O::escapeHtml(''.@O::lang('menu_pub_desc').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('pub') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
+                      <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-close') ?>"><?php echo O::escapeHtml('') ?></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </header>
+            <div class="<?php echo O::escapeHtml('or-workbench-content') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('or-view') ?>"><?php echo O::escapeHtml('') ?></div>
+            </div>
+          </div>
+        </div>
+        <div id="<?php echo O::escapeHtml('popup') ?>" class="<?php echo O::escapeHtml('or-popup or-popup--is-closed') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('') ?>"><?php echo O::escapeHtml('') ?>
+          <div class="<?php echo O::escapeHtml('or-popup-filler') ?>"><?php echo O::escapeHtml('') ?></div>
+          <div class="<?php echo O::escapeHtml('or-popup-content') ?>"><?php echo O::escapeHtml('') ?>
+            <header class="<?php echo O::escapeHtml('or-workbench-title or-popup-title') ?>"><?php echo O::escapeHtml('') ?>
+              <div class="<?php echo O::escapeHtml('or-menu') ?>"><?php echo O::escapeHtml('') ?>
+                <div class="<?php echo O::escapeHtml('or-menu-group') ?>"><?php echo O::escapeHtml('') ?>
+                  <div class="<?php echo O::escapeHtml('or-toolbar-icon or-act-dialog-close') ?>"><?php echo O::escapeHtml('') ?>
+                    <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-back') ?>"><?php echo O::escapeHtml('') ?></i>
+                  </div>
+                  <div class="<?php echo O::escapeHtml('or-act-dialog-name') ?>"><?php echo O::escapeHtml('') ?></div>
+                </div>
+                <div class="<?php echo O::escapeHtml('or-menu-group') ?>"><?php echo O::escapeHtml('') ?>
+                  <div class="<?php echo O::escapeHtml('or-toolbar-icon or--visible-on-desktop or-act-clickable or-act-popup-close') ?>"><?php echo O::escapeHtml('') ?>
+                    <a title="<?php echo O::escapeHtml(''.@O::lang('menu_close').'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('pub') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
                       <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-close') ?>"><?php echo O::escapeHtml('') ?></i>
                     </a>
                   </div>
