@@ -3,6 +3,7 @@ namespace cms\action\pageelement;
 
 use cms\action\Method;
 use cms\action\PageelementAction;
+use cms\action\ValueMapping;
 use cms\base\Language as L;
 use cms\generator\PageContext;
 use cms\generator\PageGenerator;
@@ -29,6 +30,8 @@ use util\Text;
  * Edit values for all languages.
  */
 class PageelementAllAction extends PageelementAction implements Method {
+
+	use ValueMapping;
 
 	public function getRequiredPermission() {
 		return Permission::ACL_WRITE;
@@ -71,126 +74,11 @@ class PageelementAllAction extends PageelementAction implements Method {
 			$output += $value->getProperties();
 			$output['label'] = $language->getName();
 
-			$content = '';
+			$output['items'] = $element->getSelectItems();
 
-			switch( $element->typeid) {
-
-				case Element::ELEMENT_TYPE_DATE:
-					$output['date']=date('Y-m-d',$value->date );
-					$output['time']=date('H:i'  ,$value->date );
-					break;
-
-				case Element::ELEMENT_TYPE_LINK:
-					$project = new Project($this->page->projectid);
-					$output['rootfolderid'] = $project->getRootObjectId();
-
-					// Ermitteln, welche Objekttypen verlinkt werden d�rfen.
-					$type = $element->subtype;
-
-					if (substr($type, 0, 5) == 'image')
-						$type = 'file';
-
-					if (!in_array($type, array('file', 'page', 'link', 'folder')))
-						$types = array('file', 'page', 'link'); // Fallback: Der Link kann auf Seiten,Dateien und Verknüpfungen zeigen
-					else
-						$types = array($type); // gewünschten Typ verwenden
-
-					$oid = $value->linkToObjectId;
-					$name = '';
-
-					if ($oid) {
-						$o = new BaseObject($oid);
-						$o->load();
-						$name = $o->filename;
-					}
-
-					$output['objects'] = array();
-					$output['linkobjectid']= $oid;
-					$content = $oid;
-					$output['linkname']= $name;
-
-					$output['types'] = implode(',', $types);
-
-					break;
-
-				case Element::ELEMENT_TYPE_SELECT:
-					$output['items'] = $element->getSelectItems();
-					$content = $value->text;
-					break;
-
-				case Element::ELEMENT_TYPE_INSERT:
-					// Auswahl ueber alle Elementtypen
-					$objects = array();
-					//Änderung der möglichen Types
-					$types = array('file', 'page', 'link');
-					$objects[0] = \cms\base\Language::lang('LIST_ENTRY_EMPTY'); // Wert "nicht ausgewählt"
-
-					$project = new Project($this->page->projectid);
-					$folder = new Folder($project->getRootObjectId());
-					$folder->load();
-
-					//Auch Dateien dazu
-					foreach ($project->getAllObjectIds($types) as $id) {
-						$f = new Folder($id);
-						$f->load();
-
-						$objects[$id] = \cms\base\Language::lang($f->getType()) . ': ';
-						$objects[$id] .= implode(' &raquo; ', $f->parentObjectNames(false, true));
-					}
-
-					foreach ($project->getAllFolders() as $id) {
-						$f = new Folder($id);
-						$f->load();
-
-						$objects[$id] = \cms\base\Language::lang($f->getType()) . ': ';
-						$objects[$id] .= implode(' &raquo; ', $f->parentObjectNames(false, true));
-					}
-
-					asort($objects); // Sortieren
-
-					$output['objects'] = $objects;
-					$content = $value->linkToObjectId;
-
-					break;
-
-				case Element::ELEMENT_TYPE_NUMBER:
-					$content = $value->number / pow(10, $element->decimals);
-					break;
-
-				case Element::ELEMENT_TYPE_CHECKBOX:
-					$content = $value->number;
-					break;
-
-				case Element::ELEMENT_TYPE_LONGTEXT:
-					if ($requestedFormat = $this->request->getText('format'))
-						// Individual format from request.
-						$format = $requestedFormat;
-					elseif ($value->format != null)
-						$format = $value->format;
-					else
-						// There is no saved value. Get the format from the template element.
-						$format = $element->format;
-
-					$output['format'] = $format;
-					$output['editor'] = Element::getAvailableFormats()[$format];
-
-					$content = $this->linkifyOIDs($value->text);
-					break;
-
-				case Element::ELEMENT_TYPE_TEXT:
-				case Element::ELEMENT_TYPE_DATA:
-
-					$content = $value->text;
-					break;
-
-				case Element::ELEMENT_TYPE_COORD:
-					$output['lat' ] = $value->number >> 32;
-					$output['long'] = $value->number << 32 >> 32;
-					break;
-			}
+			$output += $this->outputValue($element,$value);
 
 			$output[ 'name'   ] = $language->isoCode;
-			$output[ 'value'  ] = $content;
 			//$this->setTemplateVar( $language->getId(), $content );
 
 			$elements[ $language->getId() ] = $output;
@@ -213,6 +101,7 @@ class PageelementAllAction extends PageelementAction implements Method {
 
 		$element = $this->element;
 		$element->load();
+		$log = [];
 
 		foreach( $this->getLanguageIds() as $languageid ) {
 
@@ -234,43 +123,9 @@ class PageelementAllAction extends PageelementAction implements Method {
 
 			$oldValue = clone $value;
 			$oldValue->load();
+			$value->format = $oldValue->format;
 
-			switch ($element->typeid) {
-
-				case Element::ELEMENT_TYPE_TEXT:
-				case Element::ELEMENT_TYPE_DATA:
-					$value->text = $this->request->getText($language->isoCode);
-					break;
-				case Element::ELEMENT_TYPE_COORD:
-					$value->number = $this->request->getNumber($language->isoCode.'_lat') << 32 | $this->request->getNumber($language->isoCode.'_long');
-					break;
-				case Element::ELEMENT_TYPE_LONGTEXT:
-					$value->text = $this->compactOIDs($this->request->getText($language->isoCode));
-					$value->format = $oldValue->format; // keep the format
-					break;
-
-				case Element::ELEMENT_TYPE_DATE:
-					$value->date = strtotime($this->request->getText($language->isoCode . '_date') . $this->request->getText($language->isoCode . '_time'));
-					break;
-
-				case Element::ELEMENT_TYPE_SELECT:
-					$value->text = $this->request->getText($language->isoCode);
-					break;
-				case Element::ELEMENT_TYPE_LINK:
-				case Element::ELEMENT_TYPE_INSERT:
-					$value->linkToObjectId = $this->request->getNumber($language->isoCode);
-					break;
-
-				case Element::ELEMENT_TYPE_NUMBER:
-					$value->number = $this->request->getText($language->isoCode) * pow(10, $element->decimals);
-					break;
-				case Element::ELEMENT_TYPE_CHECKBOX:
-					$value->number = $this->request->getText($language->isoCode)?1:0;
-					break;
-				default:
-					throw new \LogicException('Unknown element type: ' . $element->getTypeName());
-			}
-
+			$this->parseToValue( $element, $value, $language->isoCode );
 
 			// Inhalt sofort freigegeben, wenn
 			// - Recht vorhanden
@@ -290,11 +145,14 @@ class PageelementAllAction extends PageelementAction implements Method {
 				$oldValue->number         == $value->number    &&
 				$oldValue->date           == $value->date      &&
 				!(!$oldValue->publish && $value->publish)
-			)
+			) {
+				$log[] = str_pad($language->name,20).': Not changed';
 				continue; // nothing has changed.
+			}
 
 			// Inhalt speichern
 			$value->persist();
+			$log[] = str_pad($language->name,20).': Saved';
 
 			// Wenn Inhalt in allen Sprachen gleich ist, dann wird der Inhalt
 			// fuer jede Sprache einzeln gespeichert.
@@ -320,11 +178,12 @@ class PageelementAllAction extends PageelementAction implements Method {
 		// Falls ausgewaehlt die Seite sofort veroeffentlichen
 		if ($this->page->hasRight(Permission::ACL_PUBLISH) && $this->request->isTrue('publish')) {
 			$this->publishPage( $languageid );
+			$log[] = 'published page: '.$this->page->getName();
 		}
 
 		$this->page->setTimestamp(); // "Letzte Aenderung" setzen
 
-		$this->addNoticeFor($this->page, Messages::SAVED);
+		$this->addNoticeFor($this->page, Messages::SAVED,[],$log);
 	}
 
 	/**

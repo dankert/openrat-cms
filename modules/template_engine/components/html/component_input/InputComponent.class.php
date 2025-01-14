@@ -5,12 +5,19 @@ namespace template_engine\components\html\component_input;
 use template_engine\components\html\FieldComponent;
 use template_engine\element\CMSElement;
 use template_engine\element\HtmlElement;
+use template_engine\element\PHPBlockElement;
 use template_engine\element\Value;
 use template_engine\element\ValueExpression;
 
 class InputComponent extends FieldComponent
 {
 	public $default;
+
+	/**
+	 * a list with purpose values.
+	 * @var string
+	 */
+	public $list;
 
 	public $type = 'text';
 
@@ -75,11 +82,32 @@ class InputComponent extends FieldComponent
 
 		$input->addStyleClass('input');
 
+		$datalist = null;
+		if   ( $this->list ) {
+
+			$datalist   = (new HtmlElement('datalist'))->addAttribute('id',$this->name.'_list');
+			$optionLoop = (new PHPBlockElement())->asChildOf($datalist);
+
+			// Create the option list.
+			$optionLoop->beforeBlock = 'foreach($'.$this->list.' as $_value)';
+			$option = (new CMSElement('option'))
+				->addAttribute('value',Value::createExpression( ValueExpression::TYPE_DATA_VAR,'_value'));
+
+			$optionLoop->addChild($option);
+		}
+
+
 		if   ( $this->label ) {
 			$label = new CMSElement('label');
 			$label->addStyleClass('form-row')->addStyleClass('form-input');
 			$label->addChild( (new CMSElement('span'))->addStyleClass('form-label')->content($this->label));
 			$input->asChildOf($label);
+
+			if   ( $datalist ) {
+				$label->addChild($datalist);
+				$input->addAttribute('list',$this->name.'_list');
+			}
+
 			return $label;
 		}
 

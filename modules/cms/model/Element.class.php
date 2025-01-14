@@ -21,7 +21,7 @@ use util\YAML;
 class Element extends ModelBase
 {
 	// the list of all available element types:
-    const ELEMENT_TYPE_DATE     =  1;
+    const ELEMENT_TYPE_DATETIME =  1;
     const ELEMENT_TYPE_NUMBER   =  2;
     const ELEMENT_TYPE_TEXT     =  3;
     const ELEMENT_TYPE_INFO     =  4;
@@ -45,7 +45,19 @@ class Element extends ModelBase
 	 * Coordinates.
 	 */
     const ELEMENT_TYPE_COORD    = 16;
+
 	const ELEMENT_TYPE_CHECKBOX = 17;
+	const ELEMENT_TYPE_URL      = 18;
+	const ELEMENT_TYPE_DATE     = 19;
+	const ELEMENT_TYPE_TIME     = 20;
+	const ELEMENT_TYPE_COLOR    = 21;
+	const ELEMENT_TYPE_EMAIL    = 22;
+	const ELEMENT_TYPE_WEEK     = 23;
+	const ELEMENT_TYPE_MONTH    = 24;
+	const ELEMENT_TYPE_TEL      = 25;
+	const ELEMENT_TYPE_RANGE    = 26;
+	const ELEMENT_TYPE_PASSWORD = 27;
+	const ELEMENT_TYPE_SELECTS  = 28;
 
     const ELEMENT_FORMAT_TEXT     = 0;
     const ELEMENT_FORMAT_HTML     = 1;
@@ -448,7 +460,11 @@ SQL
 				return '(i)';
 			case self::ELEMENT_TYPE_LINKDATE:
 			case self::ELEMENT_TYPE_INFODATE:
+			case self::ELEMENT_TYPE_DATETIME:
 			case self::ELEMENT_TYPE_DATE:
+			case self::ELEMENT_TYPE_TIME:
+			case self::ELEMENT_TYPE_WEEK:
+			case self::ELEMENT_TYPE_MONTH:
 				return date($this->dateformat);
 			case self::ELEMENT_TYPE_LINK:
 				if   ( $this->defaultObjectId ) {
@@ -485,12 +501,21 @@ SQL
     {
         return [
             self::ELEMENT_TYPE_TEXT     => 'text',
+            self::ELEMENT_TYPE_URL      => 'url',
+            self::ELEMENT_TYPE_TEL      => 'tel',
+            self::ELEMENT_TYPE_EMAIL    => 'mail',
             self::ELEMENT_TYPE_LONGTEXT => 'longtext',
             self::ELEMENT_TYPE_SELECT   => 'select',
+            self::ELEMENT_TYPE_SELECTS  => 'selects',
             self::ELEMENT_TYPE_NUMBER   => 'number',
+            self::ELEMENT_TYPE_RANGE    => 'range',
             self::ELEMENT_TYPE_CHECKBOX => 'checkbox',
             self::ELEMENT_TYPE_LINK     => 'link',
+            self::ELEMENT_TYPE_DATETIME => 'datetime',
             self::ELEMENT_TYPE_DATE     => 'date',
+            self::ELEMENT_TYPE_TIME     => 'time',
+            self::ELEMENT_TYPE_WEEK     => 'week',
+            self::ELEMENT_TYPE_MONTH    => 'month',
             self::ELEMENT_TYPE_INSERT   => 'insert',
             self::ELEMENT_TYPE_COPY     => 'copy',
             self::ELEMENT_TYPE_LINKINFO => 'linkinfo',
@@ -500,7 +525,9 @@ SQL
             self::ELEMENT_TYPE_INFO     => 'info',
             self::ELEMENT_TYPE_INFODATE => 'infodate',
             self::ELEMENT_TYPE_DATA     => 'data',
-            self::ELEMENT_TYPE_COORD    => 'coord'
+            self::ELEMENT_TYPE_COORD    => 'coord',
+            self::ELEMENT_TYPE_COLOR    => 'color',
+            self::ELEMENT_TYPE_PASSWORD => 'password'
         ];
     }
 

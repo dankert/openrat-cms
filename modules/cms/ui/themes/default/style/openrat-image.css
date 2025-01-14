@@ -26,19 +26,52 @@
 .or-image-icon--action-el_text:after {
   content: "spellcheck";
 }
+.or-image-icon--action-el_url:after {
+  content: "spellcheck";
+}
+.or-image-icon--action-el_tel:after {
+  content: "spellcheck";
+}
+.or-image-icon--action-el_password:after {
+  content: "spellcheck";
+}
+.or-image-icon--action-el_mail:after {
+  content: "spellcheck";
+}
+.or-image-icon--action-el_password:after {
+  content: "spellcheck";
+}
 .or-image-icon--action-el_longtext:after {
   content: "view_headline";
 }
 .or-image-icon--action-el_select:after {
   content: "list";
 }
+.or-image-icon--action-el_selects:after {
+  content: "list";
+}
 .or-image-icon--action-el_number:after {
+  content: "looks_one";
+}
+.or-image-icon--action-el_range:after {
   content: "looks_one";
 }
 .or-image-icon--action-el_link:after {
   content: "call_made";
 }
+.or-image-icon--action-el_datetime:after {
+  content: "date_range";
+}
 .or-image-icon--action-el_date:after {
+  content: "date_range";
+}
+.or-image-icon--action-el_time:after {
+  content: "date_range";
+}
+.or-image-icon--action-el_month:after {
+  content: "date_range";
+}
+.or-image-icon--action-el_week:after {
   content: "date_range";
 }
 .or-image-icon--action-el_insert:after {
@@ -69,6 +102,9 @@
   content: "check_box";
 }
 .or-image-icon--action-el_data:after {
+  content: "receipt";
+}
+.or-image-icon--action-el_color:after {
   content: "receipt";
 }
 .or-image-icon--action-el_coord:after {

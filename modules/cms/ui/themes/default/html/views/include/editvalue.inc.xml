@@ -1,0 +1,191 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
+
+	<if value="${type}" equals="insert">
+		<fieldset>
+			<selectbox list="objects" name="${name}" default="${value}" />
+		</fieldset>
+	</if>
+	<if value="${type}" equals="number">
+		<fieldset>
+			<part>
+				<hidden name="decimals" default="decimals"/>
+				<if value="${decimals}" equals="0">
+					<set var="type" value="'number'" />
+				</if>
+				<else>
+					<set var="type" value="text" />
+				</else>
+				<input list="items" type="${type}" size="15" maxlength="20" name="${name}" default="${value}"/>
+			</part>
+		</fieldset>
+	</if>
+	<if value="${type}" equals="range">
+		<fieldset>
+			<input type="range" name="${name}" default="${value}"/>
+		</fieldset>
+	</if>
+	<if value="${type}" equals="checkbox">
+		<fieldset>
+			<part>
+				<checkbox name="${name}" default="${value}" label="${label}" />
+			</part>
+		</fieldset>
+	</if>
+	<if value="${type}" equals="select">
+		<fieldset>
+			<selectbox list="items" name="${name}" default="${value}" />
+		</fieldset>
+	</if>
+	<if value="${type}" equals="selects">
+		<fieldset>
+			<selectbox list="items" size="5" multiple="true" name="${name}" default="${value}" />
+		</fieldset>
+	</if>
+	<if value="${type}" equals="datetime">
+		<fieldset label="">
+			<input list="items" type="datetime-local" name="${name}" label="${message:datetime}" default="${date}" />
+		</fieldset>
+	</if>
+	<if value="${type}" equals="date">
+		<fieldset label="">
+			<input list="items" type="date" name="${name}" label="${message:date}" default="${date}" />
+		</fieldset>
+	</if>
+	<if value="${type}" equals="time">
+		<fieldset label="">
+			<input list="items" type="time" name="${name}" label="${message:time}" default="${date}" />
+		</fieldset>
+	</if>
+	<if value="${type}" equals="week">
+		<fieldset label="">
+			<input list="items" type="week" name="${name}" label="${message:week}" default="${date}" />
+		</fieldset>
+	</if>
+	<if value="${type}" equals="month">
+		<fieldset label="">
+			<input list="items" type="month" name="${name}" label="${message:month}" default="${date}" />
+		</fieldset>
+	</if>
+	<if value="${type}" equals="color">
+		<fieldset label="">
+			<input type="color" name="${name}" label="${message:color}" default="${value}" />
+		</fieldset>
+	</if>
+	<if value="${type}" equals="text">
+		<fieldset>
+			<input label="${message:text}" list="items" size="50" maxlength="255" class="text" name="${name}" default="${value}" />
+		</fieldset>
+	</if>
+	<if value="${type}" equals="url">
+		<fieldset>
+			<input label="${message:text}" list="items" size="50" maxlength="255" class="text" name="${name}" default="${value}" />
+		</fieldset>
+	</if>
+	<if value="${type}" equals="tel">
+		<fieldset>
+			<input label="${message:text}" list="items" type="tel" size="50" maxlength="255" class="text" name="${name}" default="${value}" />
+		</fieldset>
+	</if>
+	<if value="${type}" equals="mail">
+		<fieldset>
+			<input label="${message:text}" list="items" type="email" size="50" maxlength="255" class="text" name="${name}" default="${value}" />
+		</fieldset>
+	</if>
+	<if value="${type}" equals="password">
+		<fieldset>
+			<input label="${message:text}" list="items" type="password" size="50" maxlength="255" class="text" name="${name}" default="${value}" />
+		</fieldset>
+	</if>
+	<if value="${type}" equals="data">
+		<fieldset>
+			<editor type="code" mode="yaml" name="${name}" default="${value}" />
+		</fieldset>
+	</if>
+	<if value="${type}" equals="longtext">
+		<hidden name="format"/>
+		<if value="${editor}" equals="markdown">
+			<fieldset>
+				<editor type="markdown" name="${name}" default="${value}" />
+			</fieldset>
+		</if>
+		<if value="${editor}" equals="html">
+			<fieldset>
+				<editor type="html" name="${name}"  default="${value}" />
+			</fieldset>
+		</if>
+		<if value="${editor}" equals="wiki">
+			<fieldset>
+				<editor type="wiki" name="${name}"  default="${value}"/>
+
+				<group title="${message:help}" open="false">
+					<table filter="false">
+						<column>
+							<text value="${config:editor/text-markup/strong-begin}"/>
+							<text value="${message:text_markup_strong}"/>
+							<text value="${config:editor/text-markup/strong-end}"/>
+							<newline/>
+							<text value="${config:editor/text-markup/emphatic-begin}"/>
+							<text value="${message:text_markup_emphatic}"/>
+							<text value="${config:editor/text-markup/emphatic-end}"/>
+						</column>
+						<column>
+							<text value="${config:editor/text-markup/list-numbered}"/>
+							<text value="${message:text_markup_numbered_list}"/>
+							<newline/>
+							<text value="${config:editor/text-markup/list-numbered}"/>
+							<text value="..."/>
+							<newline/>
+						</column>
+						<column>
+							<text value="${config:editor/text-markup/list-unnumbered}"/>
+							<text value="${message:text_markup_unnumbered_list}"/>
+							<newline/>
+							<text value="${config:editor/text-markup/list-unnumbered}"/>
+							<text value="..."/>
+							<newline/>
+						</column>
+						<column>
+							<text value="${config:editor/text-markup/table-cell-sep}"/>
+							<text value="${message:text_markup_table}"/>
+							<text value="${config:editor/text-markup/table-cell-sep}"/>
+							<text value="..."/>
+							<text value="${config:editor/text-markup/table-cell-sep}"/>
+							<text value="..."/>
+							<text value="${config:editor/text-markup/table-cell-sep}"/>
+							<newline/>
+							<text value="${config:editor/text-markup/table-cell-sep}"/>
+							<text value="..."/>
+							<text value="${config:editor/text-markup/table-cell-sep}"/>
+							<text value="..."/>
+							<text value="${config:editor/text-markup/table-cell-sep}"/>
+							<text value="..."/>
+							<text value="${config:editor/text-markup/table-cell-sep}"/>
+							<newline/>
+						</column>
+					</table>
+				</group>
+			</fieldset>
+		</if>
+		<if value="${editor}" equals="text">
+			<fieldset>
+				<inputarea class="editor raw-editor" name="${name}" default="${value}" rows="25" cols="70" />
+			</fieldset>
+		</if>
+	</if>
+	<if value="${type}" equals="link">
+		<fieldset label="${message:link_target}">
+			<selector param="${name}" default="${value}" types="${types}" name="${linkname}" id="${linkobjectid}"
+					  folderid="${rootfolderid}"/>
+		</fieldset>
+		<fieldset label="${message:link_url}">
+			<input name="linkurl"/>
+		</fieldset>
+	</if>
+	<if value="${type}" equals="coord">
+		<fieldset label="">
+			<input type="text" name="${name}" label="${message:latitude} ${message:longitude}" default="${value}" />
+		</fieldset>
+	</if>
+
+</output>

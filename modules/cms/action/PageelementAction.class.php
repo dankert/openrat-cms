@@ -688,7 +688,10 @@ class PageelementAction extends BaseAction
 	protected function calculateValue(Value $value, $elementTypeId = 0)
 	{
 		switch( $elementTypeId ) {
+			case Element::ELEMENT_TYPE_DATETIME:
 			case Element::ELEMENT_TYPE_DATE:
+			case Element::ELEMENT_TYPE_WEEK:
+			case Element::ELEMENT_TYPE_MONTH:
 				if   ( ! $value->date )
 					return '';
 
@@ -697,7 +700,13 @@ class PageelementAction extends BaseAction
 			case Element::ELEMENT_TYPE_TEXT:
 			case Element::ELEMENT_TYPE_LONGTEXT:
 			case Element::ELEMENT_TYPE_SELECT:
-				return $value->text;
+			case Element::ELEMENT_TYPE_SELECTS:
+			case Element::ELEMENT_TYPE_URL:
+			case Element::ELEMENT_TYPE_TEL:
+			case Element::ELEMENT_TYPE_COLOR:
+			case Element::ELEMENT_TYPE_TIME:
+
+			return $value->text;
 
 			case Element::ELEMENT_TYPE_LINK:
 
@@ -717,7 +726,7 @@ class PageelementAction extends BaseAction
 				return $value->number?'ON':'OFF';
 
 			case Element::ELEMENT_TYPE_COORD:
-				$lat = $value->number >>32;
+				$lat  = $value->number >>32;
 				$long = $value->number <<32 >>32;
 				$coordinates = new Coordinates( $lat,$long );
 				return $coordinates->format( Coordinates::FORMAT_WGS84_DEGREES);

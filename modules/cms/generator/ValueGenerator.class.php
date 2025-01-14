@@ -587,7 +587,12 @@ class ValueGenerator extends BaseGenerator
 
 			case Element::ELEMENT_TYPE_LONGTEXT:
 			case Element::ELEMENT_TYPE_TEXT:
+			case Element::ELEMENT_TYPE_PASSWORD:
+			case Element::ELEMENT_TYPE_URL:
+			case Element::ELEMENT_TYPE_TEL:
+			case Element::ELEMENT_TYPE_EMAIL:
 			case Element::ELEMENT_TYPE_SELECT:
+			case Element::ELEMENT_TYPE_SELECTS:
 
 				$inhalt = $value->text;
 				$format = $value->format;
@@ -693,18 +698,19 @@ class ValueGenerator extends BaseGenerator
 						$inhalt = str_replace($match,$url,$inhalt);
 				}
 
-			switch ($element->typeid) {
+				switch ($element->typeid) {
 
-				case Element::ELEMENT_TYPE_TEXT:
-				case Element::ELEMENT_TYPE_LONGTEXT:
+					case Element::ELEMENT_TYPE_TEXT:
+					case Element::ELEMENT_TYPE_LONGTEXT:
 
-					$inhalt = $this->filterValue($inhalt, $element->code);
-					break;
+						$inhalt = $this->filterValue($inhalt, $element->code);
+						break;
 
-				case Element::ELEMENT_TYPE_SELECT:
-					// not for selects, because the code contains the select items.
-				default:
-			}
+					case Element::ELEMENT_TYPE_SELECT:
+					case Element::ELEMENT_TYPE_SELECTS:
+						// not for selects, because the code contains the select items.
+					default:
+				}
 
 			break;
 
@@ -721,6 +727,7 @@ class ValueGenerator extends BaseGenerator
 				break;
 
 			case Element::ELEMENT_TYPE_NUMBER:
+			case Element::ELEMENT_TYPE_RANGE:
 
 
 				if   ( $value->number == 0 )
@@ -738,9 +745,27 @@ class ValueGenerator extends BaseGenerator
 
 				break;
 
+			case Element::ELEMENT_TYPE_COLOR:
+
+
+				if   ( $value->number == 0 )
+				{
+					// Zahl ist gleich 0, dann Default-Text
+					$inhalt = $element->defaultText;
+					break;
+				}
+
+				$inhalt = strtoupper( dechex( $value->number ) );
+
+				break;
+
 
 			// Datum
+			case Element::ELEMENT_TYPE_DATETIME:
 			case Element::ELEMENT_TYPE_DATE:
+			case Element::ELEMENT_TYPE_TIME:
+			case Element::ELEMENT_TYPE_WEEK:
+			case Element::ELEMENT_TYPE_MONTH:
 
 				$date = $value->date;
 
@@ -1079,7 +1104,11 @@ class ValueGenerator extends BaseGenerator
 		{
 			case Element::ELEMENT_TYPE_LONGTEXT:
 			case Element::ELEMENT_TYPE_TEXT:
+			case Element::ELEMENT_TYPE_EMAIL:
+			case Element::ELEMENT_TYPE_TEL:
+			case Element::ELEMENT_TYPE_URL:
 			case Element::ELEMENT_TYPE_SELECT:
+			case Element::ELEMENT_TYPE_SELECTS:
 
 				if	( Configuration::subset('publish')->is('encode_utf8_in_html') )
 					// Wenn HTML-Ausgabe, dann UTF-8-Zeichen als HTML-Code uebersetzen
@@ -1112,20 +1141,28 @@ class ValueGenerator extends BaseGenerator
 
 		return in_array($element->typeid,[
 				Element::ELEMENT_TYPE_TEXT,
+				Element::ELEMENT_TYPE_URL,
+				Element::ELEMENT_TYPE_TEL,
+				Element::ELEMENT_TYPE_EMAIL,
 				Element::ELEMENT_TYPE_LONGTEXT,
 				Element::ELEMENT_TYPE_SELECT,
 				Element::ELEMENT_TYPE_DATA,
 			]) && $value->text != '' && $value->text != null ||
 			in_array($element->typeid,[
 				Element::ELEMENT_TYPE_COORD,
-				Element::ELEMENT_TYPE_NUMBER
+				Element::ELEMENT_TYPE_NUMBER,
+				Element::ELEMENT_TYPE_COLOR
 			]) && $value->number != null ||
 			in_array($element->typeid,[
 				Element::ELEMENT_TYPE_LINK,
 				Element::ELEMENT_TYPE_INSERT,
 			]) && $value->linkToObjectId != null && $value->linkToObjectId != 0 ||
 			in_array($element->typeid,[
+				Element::ELEMENT_TYPE_DATETIME,
 				Element::ELEMENT_TYPE_DATE,
+				Element::ELEMENT_TYPE_TIME,
+				Element::ELEMENT_TYPE_WEEK,
+				Element::ELEMENT_TYPE_MONTH,
 			]) && $value->date != null && $value->date != 0 ||
 			in_array($element->typeid,[
 				Element::ELEMENT_TYPE_CODE,

@@ -715,6 +715,15 @@ EL_CHECKBOX:
 EL_DATA:
   en: Data
   de: Daten
+EL_MAIL:
+  en: E-mail
+  de: E-Mail
+EL_URL:
+  en: URL
+  de: Web-Adresse
+EL_TEL:
+  en: Telephone
+  de: Telefon
 EL_COORD_OLC:
   en: Open location code
 EL_COORD_COORDINATES:
@@ -739,6 +748,29 @@ EL_DATE_DESC:
   fr: Cet élément contient une date
   it: che questo elemento contiene una data
   ru: Этот элемент содержит дату
+EL_DATETIME:
+  de: Datum,Zeit
+  en: Date,time
+  es: Fecha
+  ru: Дата
+EL_TIME:
+  de: Zeit
+  en: Time
+EL_WEEK:
+  de: Woche
+  en: Week
+EL_MONTH:
+  de: Monat
+  en: Month
+EL_COLOR:
+  de: Farbe
+  en: Color
+EL_RANGE:
+  de: Bereich
+  en: Range
+EL_PASSWORD:
+  de: Passwort
+  en: Password
 EL_DYNAMIC_DESC:
   de: Ein Makro bietet fertige Skriptelemente, die während der Seitenerzeugung ausgeführt werden und z.B. komplexe Menüstrukturen erzeugen können. Die erzeugte Seite bleibt weiterhin statisch.
   en: The powerful dynamic element contains dynamic scripting-elements, f.e. complex navigation menus.
@@ -1482,6 +1514,9 @@ EL_SELECT_DESC:
   fr: "La valeur est indiquée par l'auteur hors d'une liste"
   it: "il valore è dato dall'autore da un giacimento del testo della lista"
   ru: Selectbox Стоимость определяется автором из списка
+EL_SELECTS:
+  de: Mehrfachauswahl
+  en: Multiple select
 EL_TEXT_DESC:
   de: Das einfache Textfeld dient für einzeilige Texte bis max. 255 Zeichen
   en: The textfield is used for one line texts up to 255 letters

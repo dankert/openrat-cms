@@ -380,7 +380,11 @@ SQL
 			case Element::ELEMENT_TYPE_LINK:
 				return $this->linkToObjectId;
 				
+			case Element::ELEMENT_TYPE_DATETIME;
 			case Element::ELEMENT_TYPE_DATE;
+			case Element::ELEMENT_TYPE_TIME;
+			case Element::ELEMENT_TYPE_WEEK;
+			case Element::ELEMENT_TYPE_MONTH;
 				return $this->date;
 				
 			default:
