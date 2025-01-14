@@ -2,7 +2,6 @@
 
 namespace cms\output;
 
-use cms\output\APIOutput;
 use util\json\JSON;
 
 /**
