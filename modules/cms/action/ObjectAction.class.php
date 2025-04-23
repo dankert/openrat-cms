@@ -25,7 +25,7 @@ use util\Session;
  * @author Jan Dankert
  */
 
-class ObjectAction extends BaseAction
+abstract class ObjectAction extends BaseAction
 {
 	private $objectid;
 

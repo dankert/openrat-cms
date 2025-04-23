@@ -9,6 +9,12 @@ use cms\model\Permission;
 use cms\model\Template;
 
 class PageAdvancedAction extends PageAction implements Method {
+
+	/**
+	 * @return void
+	 * @throws \util\exception\ClientException
+	 * @throws \util\exception\ObjectNotFoundException
+	 */
     public function view() {
 
 		$parentAction = new ObjectInfoAction();

@@ -115,6 +115,10 @@ class OutputFactory {
 				return self::MAP_ACCEPT[$acceptType];
 			}
 
+		// Try 3: If call from API, lets assume JSON
+		if   ( defined("API_CALL"))
+			return self::OUTPUT_JSON;
+
 		// Fallback
 		Http::notAcceptable();
 		header('Content-Type: text/plain');

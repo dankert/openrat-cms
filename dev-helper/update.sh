@@ -49,13 +49,13 @@ shift $((OPTIND-1))
 
 if [ -z "${type}" ]; then
   echo "Select a type"
-  select type in "tpl" "xsd" "css" "js" "lang" "all"; do
+  select type in "tpl" "xsd" "css" "js" "lang" "api" "all"; do
     break;
   done
 fi
 
 if [ "${type}" == "all" ]; then
-  types=(tpl xsd css js lang)
+  types=(tpl xsd css js lang api)
 else
   types=($type)
 fi
@@ -84,6 +84,7 @@ function make_writable {
         css  ) find ../modules/cms/ui/themes/$theme/style/ -type f -name "*.css" -exec chmod -v a+w {} \; ; find ../modules/template_engine/components/html/ -type f -name "*.css" -exec chmod -v a+w {} \; ;;
         js   ) find ../modules/cms/ui/themes/$theme/script/ -type f -name "*.min.js" -exec chmod -v a+w {} \; ; find ../modules/template_engine/components/html/ -type f -name "*.min.js" -exec chmod -v a+w {} \; ;;
         tpl  ) find ../modules/cms/ui/themes/$theme/html/views/ -type f -name "*.php" -exec chmod -v a+w {} \; ;;
+        api  ) chmod -v a+w ../openapi.*;;
         * ) echo "unknown type";exit;;
   esac
 }
@@ -103,6 +104,8 @@ function get_file_to_watch {
           watchfiles+=" ../modules/cms/ui/themes/$theme/script";;
         tpl  )
           watchfiles+=" ../modules/template_engine/components/html ../modules/cms/ui/themes/$theme/html/views";;
+        api  )
+          watchfiles+=" ../modules/cms/action";;
 
         * ) echo "unknown type";exit;;
   esac

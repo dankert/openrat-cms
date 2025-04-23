@@ -29,6 +29,9 @@ class GroupPropAction extends GroupAction implements Method {
 
 	/**
 	 * Store the group properties.
+	 * Stores the name and the parentid of this group.
+	 * @api name*|string|name of group
+	 * @api parentid|integer|ID of parent group
 	 *
 	 * @throws ValidationException
 	 */

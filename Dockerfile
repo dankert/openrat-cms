@@ -36,36 +36,34 @@ RUN sed -i '/CustomLog/s/^/#/g'                     /etc/apache2/httpd.conf && \
     mkdir -p /var/www/localhost/public     && \
     chown apache /var/www/localhost/public && \
     # Virtual host for CMS
-    echo "<VirtualHost *:8080>"         >> /etc/apache2/httpd.conf && \
-    echo "  DocumentRoot $DOCROOT"      >> /etc/apache2/httpd.conf && \
-    echo "</VirtualHost>"               >> /etc/apache2/httpd.conf && \
+    echo "<VirtualHost *:8080>"         >> /etc/apache2/conf.d/openrat.conf && \
+    echo "  DocumentRoot $DOCROOT"      >> /etc/apache2/conf.d/openrat.conf && \
+    echo "  Alias \"/rest\" \"$DOCROOT/api/api.php\"" >> /etc/apache2/conf.d/openrat.conf && \
+    echo "</VirtualHost>"               >> /etc/apache2/conf.d/openrat.conf && \
     # Virtual host for generated pages
-    echo "<VirtualHost *:8081>"         >> /etc/apache2/httpd.conf && \
-    echo "  DocumentRoot /var/www/localhost/public"   >> /etc/apache2/httpd.conf && \
-    echo "  ServerSignature Off"        >> /etc/apache2/httpd.conf && \
-    echo "  php_value engine off"       >> /etc/apache2/httpd.conf && \
-    echo "</VirtualHost>"               >> /etc/apache2/httpd.conf && \
+    echo "<VirtualHost *:8081>"         >> /etc/apache2/conf.d/openrat.conf && \
+    echo "  DocumentRoot /var/www/localhost/public"   >> /etc/apache2/conf.d/openrat.conf && \
+    echo "  ServerSignature Off"        >> /etc/apache2/conf.d/openrat.conf && \
+    echo "  php_value engine off"       >> /etc/apache2/conf.d/openrat.conf && \
+    echo "</VirtualHost>"               >> /etc/apache2/conf.d/openrat.conf && \
     # Virtual host for multiple domains
-    echo "<VirtualHost *:8082>"         >> /etc/apache2/httpd.conf && \
-    echo "  UseCanonicalName    Off"    >> /etc/apache2/httpd.conf && \
-    echo "  VirtualDocumentRoot /var/www/localhost/public/%0"  >> /etc/apache2/httpd.conf && \
-    echo "  ServerSignature Off"        >> /etc/apache2/httpd.conf && \
-    echo "  php_value engine off"       >> /etc/apache2/httpd.conf && \
-    echo "</VirtualHost>"               >> /etc/apache2/httpd.conf && \
+    echo "<VirtualHost *:8082>"         >> /etc/apache2/conf.d/openrat.conf && \
+    echo "  UseCanonicalName    Off"    >> /etc/apache2/conf.d/openrat.conf && \
+    echo "  VirtualDocumentRoot /var/www/localhost/public/%0"  >> /etc/apache2/conf.d/openrat.conf && \
+    echo "  ServerSignature Off"        >> /etc/apache2/conf.d/openrat.conf && \
+    echo "  php_value engine off"       >> /etc/apache2/conf.d/openrat.conf && \
+    echo "</VirtualHost>"               >> /etc/apache2/conf.d/openrat.conf && \
     # Directory configuration
-    echo "<Directory \"/var/www/localhost/cms\"> " >> /etc/apache2/httpd.conf && \
-    echo "  AllowOverride None"         >> /etc/apache2/httpd.conf && \
-    echo "  Options None"               >> /etc/apache2/httpd.conf && \
-    echo "  Require all granted"        >> /etc/apache2/httpd.conf && \
-    echo "</Directory>"                 >> /etc/apache2/httpd.conf && \
-    echo "<Directory \"/var/www/localhost/public\"> " >> /etc/apache2/httpd.conf && \
-    echo "  Options Indexes"            >> /etc/apache2/httpd.conf && \
-    echo "  AllowOverride None"         >> /etc/apache2/httpd.conf && \
-    echo "  Require all granted"        >> /etc/apache2/httpd.conf && \
-    echo "</Directory>"                 >> /etc/apache2/httpd.conf && \
-    # Enable HTTP/2
-    echo "Protocols h2 h2c http/1.1"    >> /etc/apache2/httpd.conf && \
-    echo "H2ModernTLSOnly off"          >> /etc/apache2/httpd.conf
+    echo "<Directory \"/var/www/localhost/cms\"> " >> /etc/apache2/conf.d/openrat.conf && \
+    echo "  AllowOverride None"         >> /etc/apache2/conf.d/openrat.conf && \
+    echo "  Options None"               >> /etc/apache2/conf.d/openrat.conf && \
+    echo "  Require all granted"        >> /etc/apache2/conf.d/openrat.conf && \
+    echo "</Directory>"                 >> /etc/apache2/conf.d/openrat.conf && \
+    echo "<Directory \"/var/www/localhost/public\"> " >> /etc/apache2/conf.d/openrat.conf && \
+    echo "  Options Indexes"            >> /etc/apache2/conf.d/openrat.conf && \
+    echo "  AllowOverride None"         >> /etc/apache2/conf.d/openrat.conf && \
+    echo "  Require all granted"        >> /etc/apache2/conf.d/openrat.conf && \
+    echo "</Directory>"                 >> /etc/apache2/conf.d/openrat.conf && \
 
 # Copy the application to document root
 COPY . $DOCROOT

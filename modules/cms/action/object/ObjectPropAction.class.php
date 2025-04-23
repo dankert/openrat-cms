@@ -28,6 +28,12 @@ class ObjectPropAction extends ObjectAction implements Method {
     }
 
 
+	/**
+	 * Saves object properties.
+	 * @api filename*|string|name of file
+	 * @api alias_filename|string|name of file
+	 * @api alias_folderid|number|name of file
+	 */
     public function post() {
 
         $this->baseObject->filename = BaseObject::urlify( $this->request->getRequiredText('filename') );
