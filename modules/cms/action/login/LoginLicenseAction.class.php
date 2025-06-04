@@ -17,8 +17,8 @@ class LoginLicenseAction extends LoginAction  {
 				'license' => $lib[2]
 			];
 		},[
-			['OpenRat Content Management System' ,'http://www.openrat.de/'      ,'GPL v2'     ],
-			['jQuery Core Javascript Framework'  ,'http://jquery.com/'          ,'MPL, GPL v2'],
+			['OpenRat Content Management System' ,'http://www.openrat.de/'      ,'GPL v3'     ],
+			['jQuery Core Javascript Framework'  ,'http://jquery.com/'          ,'MIT'],
 			['GeSHi - Generic Syntax Highlighter','http://qbnz.com/highlighter/','GPL v2'     ],
 			['CodeMirror'                        ,'https://codemirror.net/'     ,'MIT'        ],
 			['SimpleMDE'                         ,'https://simplemde.com/'      ,'MIT'        ],
