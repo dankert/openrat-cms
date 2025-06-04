@@ -44,6 +44,14 @@ class Metrics
 		self::addGauge('memory_peak','peak of memory, thats been allocated', memory_get_peak_usage(true),['usage'=>'allocated'] );
 		self::addGauge('memory_peak','peak of memory, thats been allocated', memory_get_peak_usage()              ,['usage'=>'used'     ] );
 
+		# get load
+		if   (function_exists('sys_getloadavg')) {
+			if   ( $load = sys_getloadavg() ) {
+				self::addGauge('load','load average',$load[0] ,['minutes'=>'1']);
+				self::addGauge('load','load average',$load[1] ,['minutes'=>'5']);
+				self::addGauge('load','load average',$load[2] ,['minutes'=>'15']);
+			}
+		}
 		// get metrics from databases
 		$config = new Config( self::getConfiguration() );
 		foreach( $config->subset('database')->subsets() as $dbName => $dbConfig ) {
