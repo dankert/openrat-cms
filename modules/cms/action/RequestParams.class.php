@@ -69,7 +69,7 @@ class RequestParams
 			$this->action = API_ACTION;
 			$this->method = API_SUBACTION;
 		} else {
-			$this->id     = $this->getId();
+			$this->id     = $this->getAlphanum(self::PARAM_ID       );
 			$this->action = $this->getAlphanum(self::PARAM_ACTION   );
 			$this->method = $this->getAlphanum(self::PARAM_SUBACTION);
 		}
