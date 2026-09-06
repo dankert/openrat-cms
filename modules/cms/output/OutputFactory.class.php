@@ -111,7 +111,13 @@ class OutputFactory {
 		//print_r(Http::getAccept());
 		foreach (Http::getAccept() as $acceptType)
 			if (array_key_exists($acceptType, self::MAP_ACCEPT)) {
+
+				// Try 3: If call from API, ignore
 				header('Vary: Accept');
+
+				if   ( defined("API_CALL") && $acceptType=='text/html')
+					return self::OUTPUT_JSON;
+
 				return self::MAP_ACCEPT[$acceptType];
 			}
 
