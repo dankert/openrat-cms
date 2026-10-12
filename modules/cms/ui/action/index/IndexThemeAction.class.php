@@ -18,29 +18,22 @@ class IndexThemeAction extends IndexAction implements Method {
         //$this->lastModified( Config::filemtime($themeLessFile));
 
 		$styleId = $this->getUserStyle($this->currentUser);
-		$schemaId  = $this->getUserScheme($this->currentUser);
-		switch ( $schemaId ) {
-			case User::STYLE_SCHEME_AUTO:
-				$css = [
-					':root' => $this->getThemeCSSVariables( $styleId,'light' ),
-					'@media (prefers-color-scheme: dark)' => [
-						':root' => $this->getThemeCSSVariables( $styleId,'dark' )
-					]
-				];
-				break;
-			case User::STYLE_SCHEME_LIGHT:
-				$css = [
-					':root' => $this->getThemeCSSVariables( $styleId,'light')
-				];
-				break;
-			case User::STYLE_SCHEME_DARK:
-				$css = [
-					':root' => $this->getThemeCSSVariables( $styleId,'dark')
-				];
-				break;
-			default:
-				throw new \LogicException("invalid schema id: ".$schemaId);
-		}
+		$schemaId  = $this->currentUser ? $this->getUserScheme($this->currentUser) : User::STYLE_SCHEME_AUTO;
+		$css = match ($schemaId) {
+			User::STYLE_SCHEME_AUTO => [
+				':root' => $this->getThemeCSSVariables($styleId, 'light'),
+				'@media (prefers-color-scheme: dark)' => [
+					':root' => $this->getThemeCSSVariables($styleId, 'dark')
+				]
+			],
+			User::STYLE_SCHEME_LIGHT => [
+				':root' => $this->getThemeCSSVariables($styleId, 'light')
+			],
+			User::STYLE_SCHEME_DARK => [
+				':root' => $this->getThemeCSSVariables($styleId, 'dark')
+			],
+			default => throw new \LogicException("invalid schema id: " . $schemaId),
+		};
 
         $this->setTemplateVars($css);
         $this->setTemplateVar('name','"'.$styleId.'"');
