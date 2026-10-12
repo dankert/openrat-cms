@@ -56,6 +56,7 @@ class BaseObject extends ModelBase
      * @type String
      */
     public $filename = '';
+	public $orderid = 0;
 
 
     /** Zeitpunkt der Erstellung. Die Variable beinhaltet den Unix-Timestamp.

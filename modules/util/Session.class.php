@@ -42,7 +42,7 @@ class Session
 		if (isset($SESS[self::PRAEFIX . $var]))
 			return $SESS[self::PRAEFIX . $var];
 		else
-			return '';
+			return null;
 	}
 
 	public static function set($var, $value)
