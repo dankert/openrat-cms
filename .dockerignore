@@ -3,4 +3,5 @@
 config/config-*.yml
 log/cms-*.log
 doc/*
+dev-helper/*
 modules/cms-ui/themes/default/html/views/*/*.src.xml

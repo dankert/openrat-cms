@@ -12,14 +12,15 @@ services:
        MYSQL_DATABASE: cms
        MYSQL_USER: cms
        MYSQL_PASSWORD: dsfg77er35fsd084351
+     container_name: cms-db
 
    cms:
-     #network_mode: "host"
      depends_on:
        - db
      build: ../../../
      ports:
        - "8000:8080" # CMS
+       - "8090:8090" # CMS-API
        - "8001:8081" # public
        - "8002:8082" # public with host routing
      restart: always

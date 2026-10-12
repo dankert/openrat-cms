@@ -1,11 +1,16 @@
-FROM alpine:3.13
+FROM alpine:3.24
 
-LABEL maintainer="Jan Dankert"
+LABEL org.opencontainers.image.title="OpenRat CMS"
+LABEL org.opencontainers.image.description="OpenRat Content Management System"
+LABEL org.opencontainers.image.url="http://www.openrat.de"
+LABEL org.opencontainers.image.source="http://code.weiherhei.de/openrat-cms/"
+LABEL org.opencontainers.image.licenses="GPL-3.0-or-later"
+LABEL org.opencontainers.image.authors="Jan Dankert"
 
 # Install packages
 RUN apk --update --no-cache add \
-    apache2 apache2-http2 curl \
-    php7 php7-apache2 php7-session php7-pdo php7-pdo_mysql php7-pdo_pgsql php7-json php7-ftp php7-iconv php7-openssl php7-mbstring php7-dom php7-xml
+    apache2 curl \
+    php85 php85-apache2 php85-session php85-pdo php85-pdo_mysql php85-pdo_pgsql php85-json php85-ftp php85-iconv php85-openssl php85-mbstring php85-dom php85-xml
 
 ENV DB_TYPE="mysql"     \
     DB_HOST="localhost" \
@@ -23,47 +28,20 @@ ENV DB_TYPE="mysql"     \
 
 # Configuring apache webserver
 # - disable access log
-# - enable HTTP/2
 RUN sed -i '/CustomLog/s/^/#/g'                     /etc/apache2/httpd.conf && \
-    # Enable apache modules
-    sed -i '/LoadModule http2_module/s/^#//g'       /etc/apache2/httpd.conf && \
     sed -i '/LoadModule vhost_alias_module/s/^#//g' /etc/apache2/httpd.conf && \
-    # Listening on ports
-    sed -i 's/^Listen 80/Listen 8080\nListen 8081\nListen 8082/g'       /etc/apache2/httpd.conf && \
+    sed -i '/LoadModule rewrite_module/s/^#//g' /etc/apache2/httpd.conf && \
+    sed -i 's/^Listen 80/Listen 8080\nListen 8090\nListen 8081\nListen 8082/g'       /etc/apache2/httpd.conf && \
+    sed -i -e 's/ServerSignature On/ServerSignature Off/' /etc/apache2/httpd.conf && \
+    sed -i -e 's/expose_php = On/expose_php = Off/' /etc/php85/php.ini && \
+    echo "Header set Server \"OpenRat CMS\"" >> /etc/apache2/httpd.conf && \
     chown apache /var/log/apache2 && \
     chown apache /run/apache2     && \
     mkdir $DOCROOT                && \
     mkdir -p /var/www/localhost/public     && \
-    chown apache /var/www/localhost/public && \
-    # Virtual host for CMS
-    echo "<VirtualHost *:8080>"         >> /etc/apache2/conf.d/openrat.conf && \
-    echo "  DocumentRoot $DOCROOT"      >> /etc/apache2/conf.d/openrat.conf && \
-    echo "  Alias \"/rest\" \"$DOCROOT/api/api.php\"" >> /etc/apache2/conf.d/openrat.conf && \
-    echo "</VirtualHost>"               >> /etc/apache2/conf.d/openrat.conf && \
-    # Virtual host for generated pages
-    echo "<VirtualHost *:8081>"         >> /etc/apache2/conf.d/openrat.conf && \
-    echo "  DocumentRoot /var/www/localhost/public"   >> /etc/apache2/conf.d/openrat.conf && \
-    echo "  ServerSignature Off"        >> /etc/apache2/conf.d/openrat.conf && \
-    echo "  php_value engine off"       >> /etc/apache2/conf.d/openrat.conf && \
-    echo "</VirtualHost>"               >> /etc/apache2/conf.d/openrat.conf && \
-    # Virtual host for multiple domains
-    echo "<VirtualHost *:8082>"         >> /etc/apache2/conf.d/openrat.conf && \
-    echo "  UseCanonicalName    Off"    >> /etc/apache2/conf.d/openrat.conf && \
-    echo "  VirtualDocumentRoot /var/www/localhost/public/%0"  >> /etc/apache2/conf.d/openrat.conf && \
-    echo "  ServerSignature Off"        >> /etc/apache2/conf.d/openrat.conf && \
-    echo "  php_value engine off"       >> /etc/apache2/conf.d/openrat.conf && \
-    echo "</VirtualHost>"               >> /etc/apache2/conf.d/openrat.conf && \
-    # Directory configuration
-    echo "<Directory \"/var/www/localhost/cms\"> " >> /etc/apache2/conf.d/openrat.conf && \
-    echo "  AllowOverride None"         >> /etc/apache2/conf.d/openrat.conf && \
-    echo "  Options None"               >> /etc/apache2/conf.d/openrat.conf && \
-    echo "  Require all granted"        >> /etc/apache2/conf.d/openrat.conf && \
-    echo "</Directory>"                 >> /etc/apache2/conf.d/openrat.conf && \
-    echo "<Directory \"/var/www/localhost/public\"> " >> /etc/apache2/conf.d/openrat.conf && \
-    echo "  Options Indexes"            >> /etc/apache2/conf.d/openrat.conf && \
-    echo "  AllowOverride None"         >> /etc/apache2/conf.d/openrat.conf && \
-    echo "  Require all granted"        >> /etc/apache2/conf.d/openrat.conf && \
-    echo "</Directory>"                 >> /etc/apache2/conf.d/openrat.conf && \
+    chown apache /var/www/localhost/public
+
+COPY docker/apache.conf /etc/apache2/conf.d/openrat.conf
 
 # Copy the application to document root
 COPY . $DOCROOT
@@ -71,48 +49,9 @@ COPY . $DOCROOT
 # Place configuration in /etc, outside the docroot.
 RUN echo "include: /etc/openrat.yml" >  $DOCROOT/config/config.yml
 
-# Create configuration
-RUN echo -e '\
-# OpenRat CMS configuration for Docker\n\
-login:\n\
-  motd: "${env:CMS_MOTD}"\n\
-\n\
-database-default:\n\
-  default-id:  db\n\
-\n\
-\n\
-database:\n\
-  db:\n\
-    enabled    :  true\n\
-    dsn        :  "${env:DB_TYPE}:host=${env:DB_HOST}; dbname=${env:DB_NAME}"\n\
-    description:  "PDO"\n\
-    name       :  "PRO"\n\
-    user       :  ${env:DB_USER}\n\
-    password   :  ${env:DB_PASS}\n\
-    base64     :  true                 #  store binary as BASE64 (should be true for postgresql)\n\
-    prefix     :  cms_\n\
-    suffix     :  _or\n\
-\n\
-log:\n\
-  file :  ""\n\
-  level:  "${env:CMS_LOG_LEVEL}"\n\
-  stdout: true\n\
-\n\
-production: ${env:CMS_PRODUCTION}\n\
-\n\
-publish:\n\
-  filesystem:\n\
-    directory: /var/www/localhost/public\n\
-\n\
-application:\n\
-	name: "${env:CMS_NAME}"\n\
-	operator: "${env:CMS_OPERATOR}"\n\
-ui:\n\
-	timezone: "${env:CMS_TIMEZONE}"\n\
-i18n:\n\
-	default: "${env:CMS_LANGUAGE}"\n\
-\n\
-' >> /etc/openrat.yml
+COPY docker/config.yml /etc/openrat.yml
+
+RUN rm -rv $DOCROOT/docker
 
 # Logfiles are redirected to standard out
 RUN ln -sf /dev/stdout $DOCROOT/log/cms.log       && \
@@ -121,6 +60,7 @@ RUN ln -sf /dev/stdout $DOCROOT/log/cms.log       && \
 EXPOSE 8080
 EXPOSE 8081
 EXPOSE 8082
+EXPOSE 8090
 
 WORKDIR $DOCROOT
 
