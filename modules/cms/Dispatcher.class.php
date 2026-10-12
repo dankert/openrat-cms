@@ -24,6 +24,7 @@ use configuration\ConfigurationLoader;
 use database\Database;
 use cms\update\Update;
 use Exception;
+use util\Hydrator;
 use language\Language;
 use language\Messages;
 use util\Cookie;
@@ -454,11 +455,19 @@ class Dispatcher
         try {
 			$method = new \ReflectionMethod($do,$subactionMethodName);
 			$params = [];
-			foreach( $method->getParameters() as $parameter ) {
-				$params[ $parameter->getName() ] = $this->request->getRequiredRaw($parameter->getName());
-			}
+			$parameters = $method->getParameters();
+			if   ( sizeof($parameters)==1 && ! $parameters[0]->getType()->isBuiltin() )
+				// Parameter is an object.
+				// TODO
+				;
+			else
+				foreach( $method->getParameters() as $parameter ) {
+					$params[ $parameter->getName() ] = $this->request->getRequiredRaw($parameter->getName());
+				}
 
-            $method->invokeArgs($do,$params); // <== Executing the Action
+            $returnValue = $method->invokeArgs($do,$params); // <== Executing the Action
+			if   ( $returnValue != null )
+				$this->response->addOutputList( Hydrator::toArray( $returnValue ) );
         }
         catch (ValidationException $ve)
         {
