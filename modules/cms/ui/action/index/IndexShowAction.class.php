@@ -58,7 +58,7 @@ class IndexShowAction extends IndexAction implements Method {
 		$this->setTemplateVar('cssExt'          ,(PRODUCTION?'.min.css':'.css') );
         $this->setTemplateVar('styleLink'       , $this->getStyleLink()  );
 
-        $this->setTemplateVar('themeStyleLink', Html::url('index','themestyle',0,['style'=>$style]) );
+        $this->setTemplateVar('themeLink'     , Html::url('index','theme',0,['output'=>'css']  ) );
         $this->setTemplateVar('manifestLink'  , Html::url('index','manifest',0,['output'=>'json']  ) );
 
 		$themeStyle = new ThemeStyle( Configuration::subset('style')->get($style,[]) ); // user style config

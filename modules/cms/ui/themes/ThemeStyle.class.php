@@ -9,7 +9,7 @@ use util\text\Converter;
 
 class ThemeStyle
 {
-	private $name;
+	private $name = 'Unknown';
 
 	private $textColor       = [0,0,0];       // 'black', default text color
 	private $backgroundColor = [217,217,217]; // '#d9d9d9', default background color

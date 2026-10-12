@@ -47,7 +47,7 @@ export default class Workbench {
     /**
 	 * Initializes the Workbench.
      */
-	initialize() {
+	async initialize() {
 
 		this.checkBrowserRequirements();
 		this.initializeState();
@@ -68,20 +68,18 @@ export default class Workbench {
 		};
 
 		this.registerWorkbench();
-		this.initializeTheme();
 		this.initializeStartupNotices();
 		this.initializeEvents();
 		this.initializeKeystrokes();
 
 		// Load all views
-		this.reloadAll().then( () => {
-			window.document.dispatchEvent( new CustomEvent('or-new-action', {
-				detail:{
-					state:Workbench.state
-				}
-			}) );
+		await this.reloadAll();
+
+		window.document.dispatchEvent( new CustomEvent('or-new-action', {
+			detail:{
+				state:Workbench.state
 			}
-		);
+		}) );
 
 
 		// Initialze Ping timer.
@@ -92,21 +90,6 @@ export default class Workbench {
 		console.info('Application started');
     }
 
-
-
-	initializeTheme() {
-		if (window.localStorage) {
-			let style = window.localStorage.getItem('ui.style');
-			if (style)
-				this.loadUserTheme(style);
-		}
-
-		// Reload the theme if color-scheme is changed.
-		window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-			console && console.debug("Detecting new color-scheme",event)
-			this.loadUserStyle();
-		});
-	}
 
 
     initializeDirtyWarning() {
@@ -436,6 +419,16 @@ export default class Workbench {
 
 
 
+	reloadUsertheme() {
+		let themeCSS = $('#theme-css');
+
+		const urlObj = new URL(themeCSS.attr('href'),window.location.origin);
+
+		urlObj.searchParams.set('ts',new Date().getTime());
+
+		themeCSS.attr('href',urlObj.toString());
+	}
+
     /**
      * Sets a new theme.
 	 *
@@ -443,10 +436,6 @@ export default class Workbench {
      */
     async loadUserTheme(themeName,themeScheme=1 )
     {
-		if   ( window.localStorage )
-			// store the theme name into local storage
-			window.localStorage.setItem('ui.style',themeName);
-
 		let styleUrl = View.createUrl('index', 'themestyle', 0, {'style': themeName});
 
 		// Load the theme properties via AJAX
@@ -476,16 +465,6 @@ export default class Workbench {
 
 			let styleProperties = schemes[scheme];
 			console.debug("New Theme '"+themeName+"'",styleProperties);
-
-			// Gets the CSS :root selector
-			let rootSelector = document.querySelector(':root');
-
-			// Sets every single native CSS property
-			for( let name in styleProperties ) {
-				let propertyName = "--cms-" + name;
-				console.debug("Setting CSS property '"+propertyName+"' to value '"+styleProperties[name]+"'");
-				rootSelector.style.setProperty(propertyName,styleProperties[name]);
-			}
 
 			let color = styleProperties['theme-color'];
 			this.setThemeColor(color);

@@ -3,6 +3,7 @@ namespace cms\action\profile;
 use cms\action\Method;
 use cms\action\ProfileAction;
 use cms\base\Configuration;
+use cms\model\User;
 use cms\ui\themes\ThemeStyle;
 use util\Session;
 use util\UIUtils;
@@ -25,7 +26,7 @@ class ProfileUserinfoAction extends ProfileAction implements Method {
 		$this->setTemplateVar('letter'       ,$user != null ? strtoupper( @$user->getName()[0]) : '' );
 
 		// Style scheme from user or 1 (=automatic)
-		$this->setTemplateVar('styleScheme'  ,$user != null ? $user->styleScheme                : 1  );
+		$this->setTemplateVar('styleScheme'  ,$user != null ? $user->styleScheme                : User::STYLE_SCHEME_AUTO );
 
 		$currentStyle = $this->getUserStyle($user);
 		$this->setTemplateVar('style',$currentStyle);

@@ -205,6 +205,7 @@ export default class Form {
 			if (this.afterSuccess) {
 				if (this.afterSuccess == 'reloadAll') {
 					Workbench.getInstance().reloadAll();
+					Workbench.getInstance().reloadUsertheme();
 				} else if (this.afterSuccess == 'forward') {
 					// Forwarding to next subaction.
 					if (this.forwardToMethod)

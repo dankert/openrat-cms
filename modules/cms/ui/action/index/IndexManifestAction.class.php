@@ -36,7 +36,7 @@ class IndexManifestAction extends IndexAction implements Method {
         $user = $this->currentUser;
 
         if   ( $user )
-            $this->lastModified( C::subset('config')->get('last_modification_time',time() ) );
+            $this->lastModified( $user->loginDate ); // Theme-Color depends on logged in User
         else
             $this->lastModified( time() );
 
@@ -62,7 +62,7 @@ class IndexManifestAction extends IndexAction implements Method {
         );
 
         header("Content-Type: application/manifest+json");
-		$this->setTemplateVar( 'manifest',JSON::encode($value) );
+		$this->setTemplateVars( $value );
     }
 
 

@@ -55,6 +55,15 @@ class IndexAction extends Action
             $style = C::subset( ['interface', 'style'])->get('default','default');
         return $style;
     }
+    /**
+     * @param User $user
+     * @return \configuration\Config|string
+     */
+    protected function getUserScheme($user )
+    {
+        // Theme-Schema für den angemeldeten Benutzer ermitteln.
+        return $user->styleScheme;
+    }
 
 
 
