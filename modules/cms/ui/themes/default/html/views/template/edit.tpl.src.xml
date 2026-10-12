@@ -2,6 +2,7 @@
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<group title="${message:page_pageelements}">
 		<table>
+			<!-- Headline -->
 			<row header="true">
 				<column header="true">
 					<image />
@@ -74,12 +75,12 @@
 		</table>
 	</group>
 
-	<list list="${models}" extract="true">
+	<list list="${templateModels}" extract="true">
 		<group title="${message:model} ${name}">
 			<part class="act-clickable">
 				<text value="${source}" escape="true" type="code" maxlength="200"/>
 				<newline/>
-				<link type="edit" subaction="src" var1="modelid" value1="${modelid}" class="form-button">
+				<link type="edit" id="${templateid}" subaction="src" var1="modelid" value1="${id}" class="form-button">
 					<image action="template"/>
 					<text value="${message:edit}"/>
 				</link>
