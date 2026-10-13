@@ -22,7 +22,7 @@
           </link>
         </column>
         <column>
-          <text value="${filename}" maxlength="30"/>
+          <text value="${filename}" />
         </column>
         <column>
           <text value="${username}"/>

@@ -1,7 +1,7 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-  <form enctype="multipart/form-data" target="upload" type="upload" visible="true">
+  <form enctype="multipart/form-data" target="upload" type="upload" >
     <hidden name="type" default="file"/>
-    <fieldset class="line" label="">
+    <fieldset label="">
       <part class="label">
         <label for="name">
           <text value="${message:FILE}"/>
@@ -17,7 +17,7 @@
       <part class="value">
 			</part>
     </part>
-    <fieldset class="line" label="">
+    <fieldset label="">
       <part class="label">
         <text class="help" value="${message:file_max_size}"/>
       </part>
@@ -25,7 +25,7 @@
         <text value="${max_size}"/>
       </part>
     </fieldset>
-    <fieldset class="line" label="">
+    <fieldset label="">
       <part class="label">
         <text value="${message:HTTP_URL}"/>
       </part>
@@ -34,7 +34,7 @@
       </part>
     </fieldset>
     <group title="${message:description}"/>
-    <fieldset class="line" label="">
+    <fieldset label="">
       <part class="label">
         <text value="${message:NAME}"/>
       </part>
@@ -42,7 +42,7 @@
         <input name="name" size="50"/>
       </part>
     </fieldset>
-    <fieldset class="line" label="">
+    <fieldset label="">
       <part class="label">
         <text value="${message:DESCRIPTION}"/>
       </part>

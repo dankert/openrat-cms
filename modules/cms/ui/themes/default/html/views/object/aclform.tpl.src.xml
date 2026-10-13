@@ -27,7 +27,7 @@
 			</fieldset>
 		</group>
 		<group title="${message:acl}">
-			<fieldset class="line" label="">
+			<fieldset label="">
 				<list list="${show}" value="t" key="k">
 					<part>
 						<if value="${t}" equals="read">

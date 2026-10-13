@@ -15,7 +15,7 @@
 		<!--
 		Project copy/export is not available
 		<group title="${message:options}">
-			<fieldset class="line" label="">
+			<fieldset label="">
 				<selectbox name="projectid" list="projects" default="" addempty="true"/>
 			</fieldset>
 		</group>

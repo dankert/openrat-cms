@@ -19,9 +19,9 @@ use template_engine\components\html\NativeHtmlComponent;
  */
 class TemplateContext
 {
-	public $action;
+	public string $action;
 
-	public $subaction;
+	public string $subaction;
 
-	public $id;
+	public int $id;
 }

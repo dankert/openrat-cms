@@ -9,7 +9,7 @@
   </if>
   <form async="true">
     <group title="${message:options}">
-      <fieldset class="line" label="">
+      <fieldset label="">
         <part class="label">
 				</part>
         <part class="value">

@@ -30,11 +30,11 @@
               <column>
                 <if present="username">
                   <image action="user"/>
-                  <text value="${username}" maxlength="20"/>
+                  <text value="${username}" />
                 </if>
                 <if present="groupname">
                   <image action="group"/>
-                  <text value="${groupname}" maxlength="20"/>
+                  <text value="${groupname}" />
                 </if>
                 <if not="true" present="username">
                   <if not="true" present="groupname">
@@ -53,7 +53,7 @@
               </column>
               <column>
                 <image action="language"/>
-                <text value="${languagename}" maxlength="20"/>
+                <text value="${languagename}" />
               </column>
               <list list="${show}">
                 <column title="">

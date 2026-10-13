@@ -12,7 +12,7 @@
 	</group>
 	<!--
 	<form languageid="${languageid}">
-		<fieldset class="line" label="">
+		<fieldset label="">
 			<newline/>
 			<upload name="file"/>
 			<newline/>

@@ -168,6 +168,8 @@ class TemplateEngine
 			if ($attributeValue == 'false') $attributeValue = false;
 			if ($attributeValue == 'true') $attributeValue = true;
 
+			if   ( ! property_exists($component,$attributeName) )
+				throw new LogicException("Component attribute '$attributeName' does not exist in component '$tag' in template $this->srcFilename");
 			$component->$attributeName = $attributeValue;
 		}
 

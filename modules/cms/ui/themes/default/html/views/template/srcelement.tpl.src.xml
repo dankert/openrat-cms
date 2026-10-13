@@ -1,7 +1,7 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
   <form>
     <if present="elements">
-      <fieldset class="line" label="">
+      <fieldset label="">
         <part class="label">
           <radio name="type" value="addelement"/>
           <label for="type_addelement">
@@ -15,7 +15,7 @@
     </if>
     <if present="writable_elements">
       <group/>
-      <fieldset class="line" label="">
+      <fieldset label="">
         <part class="label">
           <radio name="type" value="addicon"/>
           <label for="type_addicon">
@@ -26,7 +26,7 @@
           <selectbox name="writable_elementid" list="writable_elements"/>
         </part>
       </fieldset>
-      <fieldset class="line" label="">
+      <fieldset label="">
         <part class="label">
           <radio name="type" value="addifempty"/>
           <label for="type_addifempty">
@@ -36,7 +36,7 @@
         <part class="value">
 				</part>
       </fieldset>
-      <fieldset class="line" label="">
+      <fieldset label="">
         <part class="label">
           <radio name="type" value="addifnotempty"/>
           <label for="type_addifnotempty">

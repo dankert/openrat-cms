@@ -18,12 +18,12 @@
                 <span><?php echo O::escapeHtml(''.@O::lang('LANGUAGE').'') ?></span>
               </th>
             </tr>
-            <?php foreach((array)@$languages as $id=>$name) {  ?>
+            <?php foreach((array)@$languages as $list_key=>$list_value) { extract($list_value); ?>
               <tr class="<?php echo O::escapeHtml('or-data or-act-clickable or-table-column-auto') ?>"><?php echo O::escapeHtml('') ?>
                 <td><?php echo O::escapeHtml('') ?>
-                  <a title="<?php echo O::escapeHtml(''.@$desc.'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-name="<?php echo O::escapeHtml(''.@$name.'') ?>" name="<?php echo O::escapeHtml(''.@$name.'') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('all') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-languageid="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('{&quot;languageid&quot;:&quot;'.@$id.'&quot;}') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
+                  <a title="<?php echo O::escapeHtml(''.@$label.'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-name="<?php echo O::escapeHtml(''.@$name.'') ?>" name="<?php echo O::escapeHtml(''.@$name.'') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('all') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-languageid="<?php echo O::escapeHtml(''.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('{    &quot;languageid&quot;: &quot;'.@$id.'&quot;}') ?>" href="<?php echo O::escapeHtml('') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
                     <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-pageelement') ?>"><?php echo O::escapeHtml('') ?></i>
-                    <span><?php echo O::escapeHtml(''.@$name.'') ?></span>
+                    <span><?php echo O::escapeHtml(''.@$label.'') ?></span>
                   </a>
                 </td>
               </tr>
@@ -69,17 +69,17 @@
             <?php foreach((array)@$elements as $list_key=>$list_value) { extract($list_value); ?>
               <tr class="<?php echo O::escapeHtml('or-data') ?>"><?php echo O::escapeHtml('') ?>
                 <td class="<?php echo O::escapeHtml('or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
-                  <a title="<?php echo O::escapeHtml(''.@$desc.'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-name="<?php echo O::escapeHtml(''.@$name.'') ?>" name="<?php echo O::escapeHtml(''.@$name.'') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('pageelement') ?>" data-method="<?php echo O::escapeHtml('all') ?>" data-id="<?php echo O::escapeHtml(''.@$pageelementid.'') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/pageelement/'.@$pageelementid.'') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
+                  <a title="<?php echo O::escapeHtml(''.@$description.'') ?>" target="<?php echo O::escapeHtml('_self') ?>" data-name="<?php echo O::escapeHtml(''.@$name.'') ?>" name="<?php echo O::escapeHtml(''.@$name.'') ?>" data-type="<?php echo O::escapeHtml('dialog') ?>" data-action="<?php echo O::escapeHtml('pageelement') ?>" data-method="<?php echo O::escapeHtml('all') ?>" data-id="<?php echo O::escapeHtml(''.@$objectId.'_'.@$id.'') ?>" data-extra="<?php echo O::escapeHtml('[]') ?>" href="<?php echo O::escapeHtml('#/pageelement/'.@$objectId.'_'.@$id.'') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
                     <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-pageelement') ?>"><?php echo O::escapeHtml('') ?></i>
                     <span><?php echo O::escapeHtml(''.@$label.'') ?></span>
                   </a>
                 </td>
                 <td title="<?php echo O::escapeHtml(''.@$desc.'') ?>" class="<?php echo O::escapeHtml('or--visible-on-desktop') ?>"><?php echo O::escapeHtml('') ?>
-                  <span><?php echo O::escapeHtml(''.@$desc.'') ?></span>
+                  <span><?php echo O::escapeHtml(''.@$description.'') ?></span>
                 </td>
                 <td><?php echo O::escapeHtml('') ?>
-                  <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-el_'.@$typename.'') ?>"><?php echo O::escapeHtml('') ?></i>
-                  <span><?php echo O::escapeHtml(''.@O::lang('el_'.@$typename.'').'') ?></span>
+                  <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--action-el_'.@$typeName.'') ?>"><?php echo O::escapeHtml('') ?></i>
+                  <span><?php echo O::escapeHtml(''.@O::lang('el_'.@$type.'').'') ?></span>
                 </td>
                 <td><?php echo O::escapeHtml('') ?>
                   <div class="<?php echo O::escapeHtml('or-button or-button--active-on-hover or-toolbar-icon or-row--on-hover') ?>"><?php echo O::escapeHtml('') ?>

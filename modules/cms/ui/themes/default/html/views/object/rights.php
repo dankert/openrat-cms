@@ -61,7 +61,7 @@
                <?php } ?>
             </td>
             <td class="<?php echo O::escapeHtml('or-act-clickable') ?>"><?php echo O::escapeHtml('') ?>
-              <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('post') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('delacl') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-aclid="<?php echo O::escapeHtml(''.@$aclid.'') ?>" data-extra="<?php echo O::escapeHtml('{&quot;aclid&quot;:&quot;'.@$aclid.'&quot;}') ?>" data-data="<?php echo O::escapeHtml('{"action":"object","subaction":"delacl","id":"","token":"'.@$_token.'","aclid":"'.@$aclid.'","none":0}') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
+              <a target="<?php echo O::escapeHtml('_self') ?>" data-type="<?php echo O::escapeHtml('post') ?>" data-action="<?php echo O::escapeHtml('') ?>" data-method="<?php echo O::escapeHtml('delacl') ?>" data-id="<?php echo O::escapeHtml('') ?>" data-extra-aclid="<?php echo O::escapeHtml(''.@$aclid.'') ?>" data-extra="<?php echo O::escapeHtml('{    &quot;aclid&quot;: &quot;'.@$aclid.'&quot;}') ?>" data-data="<?php echo O::escapeHtml('{    "action": "object",    "subaction": "delacl",    "id": "",    "token": "'.@$_token.'",    "aclid": "'.@$aclid.'",    "none": 0}') ?>" class="<?php echo O::escapeHtml('or-link') ?>"><?php echo O::escapeHtml('') ?>
                 <i title="<?php echo O::escapeHtml(''.@O::lang('DELETE').'') ?>" class="<?php echo O::escapeHtml('or-image-icon or-image-icon--method-delete') ?>"><?php echo O::escapeHtml('') ?></i>
               </a>
             </td>

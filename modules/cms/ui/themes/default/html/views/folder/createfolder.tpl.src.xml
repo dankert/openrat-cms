@@ -1,7 +1,7 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-  <form visible="true" label="${message:add}">
+  <form label="${message:add}">
     <hidden name="languageid"/>
-    <fieldset class="line" label="">
+    <fieldset label="">
       <part class="label">
         <text value="${message:FOLDER}"/>
       </part>
@@ -9,7 +9,7 @@
         <input name="name" size="20" default=""/>
       </part>
     </fieldset>
-    <fieldset class="line" label="">
+    <fieldset label="">
       <part class="label">
         <text value="${message:DESCRIPTION}"/>
       </part>

@@ -1,7 +1,7 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form>
-		<fieldset class="line" label="">
+		<fieldset label="">
 			<part class="label">
 				<hidden name="sourceid" default="${sourceId}"/>
 			</part>
@@ -9,14 +9,14 @@
 				<text value="${source.name}"/>
 			</part>
 		</fieldset>
-		<fieldset class="line" label="">
+		<fieldset label="">
 			<part class="label">
 			</part>
 			<part class="value">
 				<selectbox name="type" list="types"/>
 			</part>
 		</fieldset>
-		<fieldset class="line" label="">
+		<fieldset label="">
 			<part class="label">
 				<hidden name="targetid" default="${targetId}"/>
 			</part>

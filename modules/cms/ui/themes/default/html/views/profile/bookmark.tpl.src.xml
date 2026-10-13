@@ -20,7 +20,7 @@
 				</column>
 				<column title="${filename}" class="act-clickable">
 					<link type="open" action="${type}" id="${objectid}">
-						<text value="${filename}" maxlength="30"/>
+						<text value="${filename}" />
 					</link>
 				</column>
 				<column>

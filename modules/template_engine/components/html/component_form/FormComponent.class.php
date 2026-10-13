@@ -72,15 +72,15 @@ class FormComponent extends Component
 			$this->action = $this->context->action;
 
 		if   ( ! $this->subaction )
-			$this->subaction = $this->context->method;
+			$this->subaction = $this->context->subaction;
 
 		if   ( ! $this->id )
 			$this->id = $this->context->id;
 
 		$form = new CMSElement('form');
 
-		if ($this->type == 'upload')
-			$this->submitFunction = '';
+		#if ($this->type == 'upload')
+		#	$this->submitFunction = '';
 
 		$form->addAttribute('name', $this->name);
 		$form->addAttribute('target', '_self');

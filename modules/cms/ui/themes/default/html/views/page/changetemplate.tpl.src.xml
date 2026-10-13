@@ -1,17 +1,17 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
-	<form method="get" subaction="changetemplateselectelements" visible="true" cancel="true"
+	<form method="get" subaction="changetemplateselectelements" cancel="true"
 		  label="${message:BUTTON_NEXT}">
 		<hidden name="templateid"/>
 		<hidden name="modelid"/>
-		<fieldset class="line" label="${message:page_template_old}">
+		<fieldset label="${message:page_template_old}">
 			<part class="act-clickable">
 				<link url="${template_url}" action="template" id="${templateid}">
 					<text value="${template_name}"/>
 				</link>
 			</part>
 		</fieldset>
-		<fieldset class="line" label="${message:page_template_new}">
+		<fieldset label="${message:page_template_new}">
 			<selectbox name="newtemplateid" list="templates" default=""/>
 		</fieldset>
 	</form>

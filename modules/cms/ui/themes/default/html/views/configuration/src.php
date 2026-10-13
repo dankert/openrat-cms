@@ -1,4 +1,5 @@
-<?php /* THIS FILE IS GENERATED from src.tpl.src.xml - DO NOT CHANGE */ defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?><div><?php echo O::escapeHtml('') ?>
-  <textarea name="<?php echo O::escapeHtml('source') ?>" data-extension="<?php echo O::escapeHtml('') ?>" data-mimetype="<?php echo O::escapeHtml('') ?>" data-mode="<?php echo O::escapeHtml('yaml') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-code-editor') ?>"><?php echo O::escapeHtml(''.@$source.'') ?></textarea>
-  <trix-editor input="<?php echo O::escapeHtml('source') ?>"><?php echo O::escapeHtml('') ?></trix-editor>
-</div>
+<?php /* THIS FILE IS GENERATED from src.tpl.src.xml - DO NOT CHANGE */ defined('APP_STARTED') || die('Forbidden'); use \template_engine\Output as O; ?>
+  <div><?php echo O::escapeHtml('') ?>
+    <textarea name="<?php echo O::escapeHtml('source') ?>" data-extension="<?php echo O::escapeHtml('') ?>" data-mimetype="<?php echo O::escapeHtml('') ?>" data-mode="<?php echo O::escapeHtml('yaml') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-code-editor') ?>"><?php echo O::escapeHtml(''.@$source.'') ?></textarea>
+    <trix-editor input="<?php echo O::escapeHtml('source') ?>"><?php echo O::escapeHtml('') ?></trix-editor>
+  </div>

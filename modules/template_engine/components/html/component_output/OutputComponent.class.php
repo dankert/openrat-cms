@@ -8,6 +8,8 @@ use template_engine\element\PHPBlockElement;
 
 class OutputComponent extends Component
 {
+	public string $schemaLocation;
+
 	public function createElement()
 	{
 		// No content.

@@ -2,18 +2,18 @@
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form cancel="true">
 		<group open="true">
-			<fieldset class="line" label="${message:LABEL}">
+			<fieldset label="${message:LABEL}">
 				<input name="label" focus="true" required="true" maxlength="100"/>
 			</fieldset>
-			<fieldset class="line" label="${message:NAME}">
+			<fieldset label="${message:NAME}">
 				<input name="name" required="true" maxlength="50"/>
 			</fieldset>
-			<fieldset class="line" label="${message:DESCRIPTION}">
+			<fieldset label="${message:DESCRIPTION}">
 				<inputarea name="description" rows="5" maxlength="255"/>
 			</fieldset>
 		</group>
 		<group open="true">
-			<fieldset class="line" label="${message:ELEMENT_TYPE}">
+			<fieldset label="${message:ELEMENT_TYPE}">
 				<selectbox name="typeid" list="types" lang="true"/>
 			</fieldset>
 		</group>

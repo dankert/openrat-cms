@@ -78,7 +78,7 @@
 	<list list="${templateModels}" extract="true">
 		<group title="${message:model} ${name}">
 			<part class="act-clickable">
-				<text value="${source}" escape="true" type="code" maxlength="200"/>
+				<text value="${source}" escape="true" type="code" />
 				<newline/>
 				<link type="edit" id="${templateid}" subaction="src" var1="modelid" value1="${id}" class="form-button">
 					<image action="template"/>

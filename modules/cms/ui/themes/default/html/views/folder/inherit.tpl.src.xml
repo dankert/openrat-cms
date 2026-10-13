@@ -2,7 +2,7 @@
   <form>
     <if value="${type}" equals="folder">
       <group title="${message:options}">
-        <fieldset class="line" label="">
+        <fieldset label="">
           <part class="label">
 					</part>
           <part class="value">

@@ -2,7 +2,7 @@
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form>
 		<group>
-			<fieldset class="line" label="${message:link_target}">
+			<fieldset label="${message:link_target}">
 				<selector id="${targetobjectid}" name="${targetobjectname}" types="page,file" param="targetobjectid"
 						  folderid="parentid"/>
 			</fieldset>

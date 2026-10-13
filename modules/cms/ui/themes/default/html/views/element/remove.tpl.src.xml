@@ -2,12 +2,12 @@
 		xsi:schemaLocation="http://www.openrat.de/template ../../../../../../../template_engine/components/template.xsd">
 	<form>
 		<group>
-			<fieldset class="line" label="${message:ELEMENT_NAME}">
+			<fieldset label="${message:ELEMENT_NAME}">
 				<text value="${name}" class="name"/>
 			</fieldset>
 		</group>
 		<group title="${message:options}">
-			<fieldset class="line" label="">
+			<fieldset label="">
 				<checkbox name="confirm" required="true" label="${message:CONFIRM_DELETE}"/>
 
 				<radio name="type" value="value" label="${message:ELEMENT_DELETE_VALUES}"/>

@@ -51,7 +51,7 @@ foreach(FileUtils::readDir( $searchDir ) as $action )
 			// the action and subaction in which it will be executed.
             $context = new TemplateContext();
             $context->action = $action;
-            $context->method = $method;
+            $context->subaction = $method;
             $engine->context = $context;
 
             echo "\t\tcompiling $templateFile\n\t\t       to $outFile\n";

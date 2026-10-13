@@ -29,7 +29,7 @@
 					</column>
 				</if>
 				<else>
-					<column colspan="2" class="help" width="50%">
+					<column colspan="2" class="help" >
 						<text value=" "/>
 					</column>
 				</else>
@@ -42,7 +42,7 @@
 					</column>
 				</if>
 				<else>
-					<column colspan="2" class="help" width="50%">
+					<column colspan="2" class="help" >
 						<text value=" "/>
 					</column>
 				</else>

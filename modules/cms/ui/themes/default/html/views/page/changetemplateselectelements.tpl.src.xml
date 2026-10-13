@@ -3,7 +3,7 @@
 	<form cancel="true" label="${message:MENU_CHANGETEMPLATE}">
 		<hidden name="newtemplateid"/>
 		<list list="${elements}" extract="true">
-			<fieldset class="line" label="${name}">
+			<fieldset label="${name}">
 				<selectbox name="${newElementsName}" default="" list="newElementsList"/>
 			</fieldset>
 		</list>

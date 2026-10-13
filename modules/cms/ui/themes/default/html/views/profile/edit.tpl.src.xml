@@ -5,34 +5,34 @@
 		<text value="${fullname}" class="addition"/>
 
 		<group title="${message:PROP}">
-			<fieldset class="line" label="${message:user_fullname}">
+			<fieldset label="${message:user_fullname}">
 				<input name="fullname" maxlength="128"/>
 			</fieldset>
-			<fieldset class="line" label="${message:user_tel}">
+			<fieldset label="${message:user_tel}">
 				<input name="tel" size="40" maxlength="128"/>
 			</fieldset>
-			<fieldset class="line" label="${message:user_desc}">
+			<fieldset label="${message:user_desc}">
 				<input name="desc" size="40" maxlength="128"/>
 			</fieldset>
-			<fieldset class="line" label="${message:user_style}">
+			<fieldset label="${message:user_style}">
 				<selectbox name="style" list="allstyles" />
 			</fieldset>
-			<fieldset class="line" label="${message:timezone}">
+			<fieldset label="${message:timezone}">
 				<selectbox name="timezone" list="timezone_list" addempty="true"/>
 			</fieldset>
-			<fieldset class="line" label="${message:language}">
+			<fieldset label="${message:language}">
 				<selectbox name="language" list="language_list" addempty="true"/>
 			</fieldset>
 		</group>
 		<group title="${message:security}">
-			<fieldset class="line" label="${message:user_password_expires}">
+			<fieldset label="${message:user_password_expires}">
 				<date date="${passwordExpires}"/>
 			</fieldset>
-			<fieldset class="line" label="">
+			<fieldset label="">
 				<checkbox name="totp" label="${message:user_totp}"/>
 				<qrcode value="${totpSecretUrl}"/>
 			</fieldset>
-			<fieldset class="line" label="">
+			<fieldset label="">
 				<checkbox name="hotp" label="${message:user_hotp}"/>
 				<qrcode value="${hotpSecretUrl}"/>
 			</fieldset>

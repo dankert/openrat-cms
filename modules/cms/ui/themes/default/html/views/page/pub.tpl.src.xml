@@ -11,7 +11,7 @@
 
 	<form async="true">
 		<group title="${message:options}">
-			<fieldset class="line" label="">
+			<fieldset label="">
 				<checkbox name="files" label="${message:files}" remember="true"/>
 			</fieldset>
 		</group>
