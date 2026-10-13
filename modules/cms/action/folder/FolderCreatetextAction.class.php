@@ -12,7 +12,7 @@ use util\Upload;
 
 
 class FolderCreatetextAction extends FolderAction implements Method {
-	public function getRequiredPermission() {
+	public function getRequiredPermission(): int {
 		return Permission::ACL_CREATE_FILE;
 	}
 

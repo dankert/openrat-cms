@@ -9,7 +9,7 @@ use util\exception\ValidationException;
 
 class FolderRemoveAction extends FolderAction implements Method {
 
-	public function getRequiredPermission() {
+	public function getRequiredPermission(): int {
 		return Permission::ACL_DELETE;
 	}
 

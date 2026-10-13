@@ -8,7 +8,7 @@ use language\Messages;
 
 class UrlValueAction extends UrlAction implements Method {
 
-	public function getRequiredPermission() {
+	public function getRequiredPermission(): int {
 		return Permission::ACL_WRITE;
 	}
 

@@ -10,7 +10,8 @@ use language\Messages;
 
 class LinkValueAction extends LinkAction implements Method {
 
-	public function getRequiredPermission() {
+	public function getRequiredPermission(): int
+	{
 		return Permission::ACL_WRITE;
 	}
 

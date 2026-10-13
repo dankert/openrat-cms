@@ -9,7 +9,7 @@ use language\Messages;
 
 class FolderOrderAction extends FolderAction implements Method {
 
-	public function getRequiredPermission() {
+	public function getRequiredPermission(): int {
 		return Permission::ACL_WRITE;
 	}
 

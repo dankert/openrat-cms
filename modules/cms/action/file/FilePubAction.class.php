@@ -12,7 +12,8 @@ use language\Messages;
 use util\exception\PublisherException;
 
 class FilePubAction extends FileAction implements Method {
-	public function getRequiredPermission() {
+	public function getRequiredPermission(): int
+	{
 		return Permission::ACL_PUBLISH;
 	}
 

@@ -12,7 +12,8 @@ use util\Upload;
 
 class FileUploadAction extends FileAction implements Method {
 
-	public function getRequiredPermission() {
+	public function getRequiredPermission(): int
+	{
 		return Permission::ACL_WRITE;
 	}
 

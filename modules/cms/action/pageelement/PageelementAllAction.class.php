@@ -36,7 +36,7 @@ class PageelementAllAction extends PageelementAction implements Method {
 
 	use ValueMapping;
 
-	public function getRequiredPermission() {
+	public function getRequiredPermission(): int {
 		return Permission::ACL_WRITE;
 	}
 

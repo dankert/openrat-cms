@@ -8,7 +8,7 @@ use cms\model\Template;
 use util\Html;
 
 class PageChangetemplateAction extends PageAction implements Method {
-	public function getRequiredPermission() {
+	public function getRequiredPermission(): int {
 		return Permission::ACL_PROP;
 	}
 

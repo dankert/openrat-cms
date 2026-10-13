@@ -10,7 +10,7 @@ use language\Messages;
 
 class FolderCreatelinkAction extends FolderAction implements Method {
 
-	public function getRequiredPermission() {
+	public function getRequiredPermission(): int {
 		return Permission::ACL_CREATE_LINK;
 	}
 

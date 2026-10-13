@@ -22,7 +22,7 @@ use util\Session;
 
 class FolderPubAction extends FolderAction implements Method {
 
-	public function getRequiredPermission() {
+	public function getRequiredPermission(): int {
 		return Permission::ACL_PUBLISH;
 	}
 

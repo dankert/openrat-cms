@@ -46,7 +46,7 @@ class FileAdvancedAction extends FileAction implements Method {
     }
 
 
-	public function getRequiredPermission()
+	public function getRequiredPermission(): int
 	{
 		return Permission::ACL_PROP;
 	}

@@ -10,7 +10,7 @@ use language\Messages;
 use util\exception\ValidationException;
 
 class ImageSizeAction extends ImageAction implements Method {
-	public function getRequiredPermission() {
+	public function getRequiredPermission(): int {
 		return Permission::ACL_WRITE;
 	}
 

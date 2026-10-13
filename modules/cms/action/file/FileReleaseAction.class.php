@@ -13,7 +13,7 @@ use util\exception\SecurityException;
 
 class FileReleaseAction extends FileAction implements Method {
 
-	public function getRequiredPermission()
+	public function getRequiredPermission(): int
 	{
 		return Permission::ACL_RELEASE;
 	}

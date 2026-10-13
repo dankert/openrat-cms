@@ -9,7 +9,7 @@ use language\Messages;
 
 class LinkRemoveAction extends LinkAction implements Method {
 
-	public function getRequiredPermission() {
+	public function getRequiredPermission(): int {
 		return Permission::ACL_DELETE;
 	}
 

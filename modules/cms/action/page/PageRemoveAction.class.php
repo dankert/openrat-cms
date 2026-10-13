@@ -7,7 +7,7 @@ use language\Messages;
 
 class PageRemoveAction extends PageAction implements Method {
 
-	public function getRequiredPermission() {
+	public function getRequiredPermission(): int {
 		return Permission::ACL_DELETE;
 	}
 
