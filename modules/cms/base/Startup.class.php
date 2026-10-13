@@ -27,7 +27,7 @@ class Startup {
 
     private static $START_TIME;
 
-	const MIN_VERSION = '8.0'; // minimum required PHP version.
+	const MIN_VERSION = '8.4'; // minimum required PHP version.
 	const API_LEVEL   = '2';   // public API version.
 	const CHARSET     = 'UTF-8'; // Everything is UTF-8.
 

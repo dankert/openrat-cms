@@ -35,7 +35,7 @@ interface Method
 	 *
 	 * Normally this is called after a HTTP POST.
 	 *
- 	 * @return void
+	 * @return object|null
 	 */
 	public function post();
 }

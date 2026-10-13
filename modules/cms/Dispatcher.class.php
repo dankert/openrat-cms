@@ -458,9 +458,12 @@ class Dispatcher
 			$parameters = $method->getParameters();
 			if   ( sizeof($parameters)==1 && ! $parameters[0]->getType()->isBuiltin() )
 				// Parameter is an object.
-				// TODO
 				;
+				#$params[0] = Hydrator::map( $parameters[0]->getDeclaringClass(),$this->request->getRawParameters() );
+				# This is not possible with PHP8 any more! PHP 8 requires to implement the interface method exactly. Which is good ;)
+				# please use RequestParams::toObject() for this.
 			else
+				# This is not possible with PHP8 any more! PHP 8 requires the method to exactly implement the interface.
 				foreach( $method->getParameters() as $parameter ) {
 					$params[ $parameter->getName() ] = $this->request->getRequiredRaw($parameter->getName());
 				}

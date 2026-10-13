@@ -21,9 +21,7 @@ class PageEditAction extends PageAction implements Method {
         $template = new Template( $this->page->templateid );
         $template->load();
 
-		$pageAll = new PageAll();
-		$pageAll->objectId = $this->page->objectid;
-		$pageAll->pageId   = $this->page->pageid;
+		$pageAll = new PageAll($this->page->objectid,$this->page->pageid,array(),array());
 
 		/** @var Element[] $elements */
 		$elements = $template->getElements();
@@ -37,21 +35,14 @@ class PageEditAction extends PageAction implements Method {
         } );
 
 		foreach ( $elements as $element ) {
-			$uiElement = new \cms\api\Element();
-			$uiElement->id = $element->getId();
-			$uiElement->label = $element->label;
-			$uiElement->name = $element->name;
-			$uiElement->description = $element->desc;
-			$uiElement->type = $element->getTypeName();
-			$uiElement->typeId = $element->typeid;
-
-			$pageAll->elements[] = $uiElement;
+			$pageAll->elements[] = new \cms\api\Element(
+				$element->getId(),
+				$element->name,
+				$element->label,
+				$element->desc,
+				$element->getTypeName(),
+				$element->typeid );
 		}
-        $elements = array_map( function( $element ) {
-            return get_object_vars( $element ) + array('pageelementid'=>$this->page->objectid.'_'.$element->elementid,'typename'=>$element->getTypeName() );
-        }, $elements);
-
-		#$this->setTemplateVar('elements',$elements);
 
 		$project   = $this->page->getProject();
 
@@ -59,15 +50,14 @@ class PageEditAction extends PageAction implements Method {
 
 		foreach( $languages as $language ) {
 			$language->load();
-			$uiLanguage = new Language();
-			$uiLanguage->id = $language->getId();
-			$uiLanguage->isoCode = $language->isoCode;
-			$uiLanguage->label = $language->getName();
+			$pageAll->languages[] = new Language(
+				$language->getId(),
+				$language->isoCode,
+				$language->getName()
+			);
 
-			$pageAll->languages[] = $uiLanguage;
 		}
 
-		#$this->setTemplateVar('languages',$languages);
 		return $pageAll;
     }
 

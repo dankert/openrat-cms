@@ -15,7 +15,6 @@ use util\exception\ValidationException;
  */
 trait ValueMapping
 {
-
 	protected function outputValue( $element, $value )
 	{
 		$output  = [];
@@ -181,10 +180,8 @@ trait ValueMapping
 	}
 
 
-	protected function parseToValue( $element, $value, $name)
+	protected function parseToValue( $element, $value, $input)
 	{
-		$input = $this->request->getText( $name );
-
 		switch ($element->typeid) {
 
 			case Element::ELEMENT_TYPE_TEXT:
@@ -193,14 +190,12 @@ trait ValueMapping
 			case Element::ELEMENT_TYPE_TEL:
 			case Element::ELEMENT_TYPE_DATA:
 			case Element::ELEMENT_TYPE_PASSWORD:
-				Logger::debug('new text input for "'.$name.'": '.$input);
 
 				$value->text = $input;
 				break;
 
 			case Element::ELEMENT_TYPE_COLOR:
 				$value->number = $this->colorHex2Num( $input );
-				Logger::debug( 'Farbe aus Request: '.dechex($value->number));
 				break;
 
 			case Element::ELEMENT_TYPE_COORD:
@@ -208,7 +203,7 @@ trait ValueMapping
 				$inputLatLongList = explode(' ',$input);
 
 				if   ( sizeof($inputLatLongList) != 2 )
-					throw new ValidationException( $name );
+					throw new \InvalidArgumentException();
 
 				$inputLatLongList = array_map( function ($value) {
 					if   (in_array(substr($value,-1,1),['W','S']))
@@ -247,7 +242,7 @@ trait ValueMapping
 				break;
 
 			case Element::ELEMENT_TYPE_TIME:
-				$dateTime = DateTime::createFromFormat("!H:i", $this->request->getText($element->name ));
+				$dateTime = DateTime::createFromFormat("!H:i", $input);
 				if   ( $dateTime !== false )
 					$value->date = $dateTime->getTimestamp();
 				else

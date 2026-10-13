@@ -4,12 +4,18 @@ namespace cms\api;
 
 class Element {
 
-	public int $id;
+	public function __construct(
 
-	public string $name;
-	public string $label;
-	public string $description;
+		public int $id,
 
-	public string $type;
-	public int $typeId;
+		public string $name,
+		public string $label,
+		public string $description,
+
+		public string $type,
+		public int $typeId,
+)
+	{
+	}
+
 }

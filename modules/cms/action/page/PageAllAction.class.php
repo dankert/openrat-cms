@@ -4,6 +4,7 @@ namespace cms\action\page;
 use cms\action\Method;
 use cms\action\PageAction;
 use cms\action\ValueMapping;
+use cms\api\Values;
 use cms\base\Language as L;
 use cms\generator\PageContext;
 use cms\generator\PageGenerator;
@@ -20,8 +21,11 @@ use cms\model\Project;
 use cms\model\Value;
 use language\Messages;
 use logger\Logger;
+use util\exception\ClientException;
 use util\exception\PublisherException;
 use util\exception\SecurityException;
+use util\exception\ValidationException;
+use util\Hydrator;
 use util\Session;
 use util\Text;
 use function logger\Logger;
@@ -29,12 +33,6 @@ use function logger\Logger;
 class PageAllAction extends PageAction implements Method {
 
 	use ValueMapping;
-
-	public function getRequiredPermission(): int
-	{
-		return Permission::ACL_READ;
-	}
-
 
 	public function view()
 	{
@@ -71,6 +69,7 @@ class PageAllAction extends PageAction implements Method {
 
 			$output = [];
 			$output['element' ] = $element->getProperties();
+			$output['elementid'] = $element->getId();
 			$output['type'    ] = $element->getTypeName();
 			$output['decimals'] = $element->decimals;
 			$output['name'    ] = $element->name;
@@ -95,23 +94,36 @@ class PageAllAction extends PageAction implements Method {
 
 
 
-    public function post()
+    public function post( )
 	{
-		if   ( !$this->page->hasRight( Permission::ACL_WRITE ))
-			throw new SecurityException();
+		/** @var Values $values */
+		$values = $this->request->toObject( Values::class );
 
-		$languageid = $this->request->getRequiredNumber('languageid');
-		$language = new Language($languageid);
-		$language->load();
+		$project = $this->page->getProject();
+		$languageIds = $project->getLanguageIds();
+
 		$log = [];
 
 		/** @var Element $element */
 		foreach ($this->getElements() as $element) {
 
+			/** @var \cms\api\Value $uiValue */
+			$uiValue = array_find( $values->values, function ($uiValue) use ($element) {
+				return ($uiValue->elementId == $element->elementid );
+			} );
+			if   ( !$uiValue )
+				continue; // Element not found in Request.
+
 			$pageContent = new PageContent();
 			$pageContent->elementId  = $element->elementid;
 			$pageContent->pageId     = $this->page->pageid;
-			$pageContent->languageid = $languageid;
+
+			if   ( !array_any($languageIds, function($languageId) use ($uiValue) {
+				return $uiValue->languageId == $languageId;
+			}))
+				throw new ClientException("Invalid language id ".$uiValue->languageId." not found for this project.");
+
+			$pageContent->languageid = $uiValue->languageId;
 			$pageContent->load();
 			$pageContent->persist(); // Create if it does not exist yet.
 
@@ -121,7 +133,11 @@ class PageAllAction extends PageAction implements Method {
 			$oldValue->load();
 			$value->format = $oldValue->format;
 
-			$this->parseToValue( $element, $value, $element->name );
+			try {
+				$this->parseToValue($element, $value, $uiValue->value);
+			} catch(\InvalidArgumentException ) {
+				throw new ValidationException( $element->getName() );
+			}
 
 			// Inhalt sofort freigegeben, wenn
 			// - Recht vorhanden

@@ -2,7 +2,9 @@
 
 namespace cms\action;
 
+use cms\api\Values;
 use util\exception\ValidationException;
+use util\Hydrator;
 use util\json\JSON;
 use util\mail\Mail;
 use util\Text;
@@ -38,7 +40,7 @@ class RequestParams
 	public $authToken;
 	public $apiToken;
 
-	private $parameter;
+	private array $parameter;
 
 	/**
 	 * @var bool
@@ -438,5 +440,16 @@ class RequestParams
 			}
 
 		}
+	}
+
+
+	public function getRawParameters(): array
+	{
+		return $this->parameter;
+	}
+
+	public function toObject(string $class): object
+	{
+		return Hydrator::map( $class,$this->getRawParameters() );
 	}
 }

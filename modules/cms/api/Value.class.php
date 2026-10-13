@@ -4,12 +4,16 @@ namespace cms\api;
 
 class Value
 {
-	public int $elementId;
-	public string $elementName;
+	public function __construct(
 
-	public int $languageId;
-	public string $languageName;
+		public int $elementId,
+		public string|null $elementName,
 
-	public string $value;
-	public int $date;
+		public int $languageId,
+		public string|null $languageName,
+
+		public string|null $value,
+		public int|null $date,
+	){
+	}
 }

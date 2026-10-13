@@ -4,8 +4,11 @@ namespace cms\api;
 
 class TemplateModel {
 
-	public int $id;
-	public string $name;
-	public string $source;
-	public string $format;
+	public function __construct(
+
+	public int $id,
+	public string $name,
+	public string $source,
+	public string $format,
+	){}
 }

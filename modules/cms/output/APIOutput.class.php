@@ -2,7 +2,6 @@
 
 namespace cms\output;
 
-use BadMethodCallException;
 use cms\action\RequestParams;
 use cms\base\Startup;
 use Exception;

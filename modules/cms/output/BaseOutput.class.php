@@ -9,6 +9,7 @@ use cms\base\Language as L;
 use cms\base\Startup;
 use cms\Dispatcher;
 use Exception;
+use util\exception\ClientException;
 use util\Http;
 use logger\Logger;
 use \util\exception\ObjectNotFoundException;
@@ -73,6 +74,10 @@ abstract class BaseOutput implements Output
 			Logger::info($e);
 			Http::forbidden();
 			$this->setError("You are not allowed to execute this action.",$e);
+		} catch (ClientException $e) {
+			Logger::info($e);
+			Http::badRequest();
+			$this->setError("Invalid data in request.",$e);
 		} catch (Exception $e) {
 			Logger::warn( $e );
 			// Sorry, our service is currently unavailable
