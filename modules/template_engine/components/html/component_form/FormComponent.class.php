@@ -10,28 +10,41 @@ use template_engine\element\HtmlElement;
 use template_engine\element\Value;
 use template_engine\element\ValueExpression;
 
+/**
+ * Displays a HTML form.
+ */
 class FormComponent extends Component
 {
+	/**
+	 * HTTP method, must be POST or GET.
+	 */
+	public string $method = 'POST';
 
-	public $method = 'POST';
-
-	public $name = '';
-
-	public $action = null;
-
-	public $subaction = null;
+	/**
+	 * The name attribute of the form
+	 */
+	public string $name = '';
+	public string|null $action = null;
+	public string|null $subaction = null;
 	public $forwardTo = null;
 
 	public $id = '${_id}';
 
-	public $languageid = null;
-	public $modelid = null;
+	public int|null $languageid = null;
+	public int|null $modelid = null;
 
-	public $label = '${message:button_ok}';
+	public string $label = '${message:button_ok}';
 
-	public $apply = false;
-	public $cancel = true;
-	public $readonly = false;
+	/**
+	 * Adding an apply-button
+	 */
+	public bool $apply = false;
+	/**
+	 * Adding a cancel button.
+	 */
+	public bool $cancel = true;
+
+	public bool $readonly = false;
 
 	/**
 	 * 'view' = Loads Action in the same view

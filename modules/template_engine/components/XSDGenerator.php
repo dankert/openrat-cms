@@ -41,12 +41,18 @@ asort($folder);
 foreach ($folder as $componentName) {
 
     echo 'Working on component: ' . $componentName . "\n";
+	$className = 'template_engine\\components\\html\\component_'.$componentName.'\\' . ucfirst($componentName) . 'Component';
+	$componentClass = new ReflectionClass($className);
     fwrite($componentsFile, $componentName . " = \n");
 
-    fwrite($xsdFile, '<xsd:element name="' . $componentName . '" type="' . $componentName . 'Type" />'
-		.'<xsd:complexType name="' . $componentName . 'Type">');
+	$comment = clearDocComment($componentClass->getDocComment());
+    fwrite($xsdFile, '<xsd:element name="' . $componentName . '" type="' . $componentName . 'Type">'
+		.'<xsd:annotation><xsd:documentation xml:lang="en">'.$comment.'</xsd:documentation></xsd:annotation>'
+		.'</xsd:element>'
+		.'<xsd:complexType name="' . $componentName . 'Type">'."\n");
 
-    // Allow HTML children
+
+// Allow HTML children
 	//fwrite($xsdFile, '<xsd:openContent mode="interleave">'.
     //	'<xsd:any namespace="http://www.w3.org/1999/xhtml" />'.
 	//	'</xsd:openContent>');
@@ -59,25 +65,60 @@ foreach ($folder as $componentName) {
 
 	fwrite($xsdFile,'<xsd:any namespace="http://www.w3.org/1999/xhtml" />' );
 
-    fwrite($xsdFile, '</xsd:choice>');
+    fwrite($xsdFile, '</xsd:choice>'."\n");
 
 
-    $className = 'template_engine\\components\\html\\component_'.$componentName.'\\' . ucfirst($componentName) . 'Component';
-    $vars = get_class_vars($className);
-    foreach ($vars as $name => $value) {
-        if (is_bool($value))
-            $xsdtype = 'xsd:boolean';
-        elseif (is_numeric($value))
-            $xsdtype = 'xsd:int';
-        else
-            $xsdtype = 'xsd:string';
+    foreach ($componentClass->getProperties() as $reflectionProperty) {
+		if   ( ! $reflectionProperty->isPublic() )
+			continue;
 
+		$name = $reflectionProperty->getName();
+		$type = $reflectionProperty->getType();
+		// 1. Prüfen, ob überhaupt ein Typ deklariert wurde
+		if ($type !== null) {
+			// 2. Handelt es sich um einen einfachen, benannten Typ?
+			if ($type instanceof ReflectionNamedType) {
+				$typeName = $type->getName(); // Liefert "int", "string" oder "bool"
 
-        fwrite($xsdFile, '<xsd:attribute name="' . $name . '" type="' . $xsdtype . '" />');
+				switch ($typeName) {
+					case 'int':
+						$xsdtype = 'xsd:int';
+						break;
+					case 'string':
+						$xsdtype = 'xsd:string';
+						break;
+					case 'bool':
+						$xsdtype = 'xsd:boolean';
+						break;
+					default:
+						// "Anderer Typ oder Klasse: " . $typeName;
+						$xsdtype = 'xsd:string';
+				}
+			}
+			else
+				$xsdtype = 'xsd:string';
+		}
+		else
+			$xsdtype = 'xsd:string';
+
+		$commentAttr = $reflectionProperty->getAttributes(\template_engine\components\XsdComment::class);
+
+		if (!empty($commentAttr) ) {
+			// Wenn ja, mappen wir jedes Element im Array rekursiv
+			$comment = $commentAttr[0]->newInstance()->comment;
+		} else {
+			$comment = clearDocComment($reflectionProperty->getDocComment());
+			if   ( !$comment )
+				$comment = 'Attribute '.$reflectionProperty->getName();
+		}
+		$comment .= ' (Default: '.$reflectionProperty->getDefaultValue().')';
+        fwrite($xsdFile, '<xsd:attribute name="' . $name . '" type="' . $xsdtype . '">');
+		fwrite($xsdFile,'<xsd:annotation><xsd:documentation xml:lang="en">'.$comment.'</xsd:documentation></xsd:annotation>');
+        fwrite($xsdFile, '</xsd:attribute>');
     }
 
 
-    fwrite($xsdFile, '</xsd:complexType>');
+    fwrite($xsdFile, '</xsd:complexType>'."\n");
 
 }
 
@@ -87,3 +128,19 @@ fclose($xsdFile);
 fclose($componentsFile);
 
 echo "Finished.\n";
+
+function clearDocComment(string|null $comment):string {
+
+	if   ( !$comment ) return '';
+
+	$comment = str_replace('/*','',$comment);
+	$comment = str_replace('*/','',$comment);
+	$comment = str_replace('*','',$comment);
+	$comment = str_replace("\n",' ',$comment);
+
+	$idx = strpos($comment,'@');
+	if   ( $idx !== false )
+		$comment = substr( $comment,0,$idx-1);
+
+	return trim($comment);
+}
