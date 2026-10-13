@@ -12,7 +12,7 @@ class Value
 		public int $languageId,
 		public string|null $languageName,
 
-		public string|null $value,
+		public string $value,
 		public int|null $date,
 	){
 	}
