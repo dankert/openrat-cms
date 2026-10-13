@@ -87,7 +87,7 @@ class PageelementAction extends BaseAction
 	 * @var Value
 	 */
 	var $value;
-
+	protected int|null $elementid;
 
 
 	/**

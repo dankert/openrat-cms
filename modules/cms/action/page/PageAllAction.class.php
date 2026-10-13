@@ -30,7 +30,8 @@ class PageAllAction extends PageAction implements Method {
 
 	use ValueMapping;
 
-	public function getRequiredPermission() {
+	public function getRequiredPermission(): int
+	{
 		return Permission::ACL_READ;
 	}
 

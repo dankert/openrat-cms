@@ -150,19 +150,19 @@ class Element extends ModelBase
 	 * Schalter ob dieses Element von Redakteuren bearbeiten werden kann
 	 * @type bool
 	 */
-	public $writable;
+	public bool $writable;
 
     /**
      * values are inherited from parent nodes.
      * @var bool
      */
-	public $inherit;
+	public bool $inherit;
 
 	/**
 	 * Schalter, ob dieses Element in allen Sprachen den gleichen Inhalt haben soll
 	 * @type bool
 	 */
-	public $allLanguages;
+	public bool $allLanguages;
 
 	public static $readonlyElementTypeIds = array(
 	    self::ELEMENT_TYPE_COPY,self::ELEMENT_TYPE_LINKINFO,self::ELEMENT_TYPE_LINKDATE,self::ELEMENT_TYPE_INFO,self::ELEMENT_TYPE_INFODATE,self::ELEMENT_TYPE_CODE,self::ELEMENT_TYPE_DYNAMIC
@@ -179,7 +179,7 @@ class Element extends ModelBase
     /**
      * @var bool
      */
-	var $withIcon = false;
+	var bool $withIcon = false;
 	var $dateformat = 'r';
 
 	/*
@@ -192,7 +192,7 @@ class Element extends ModelBase
     /**
      * @var bool
      */
-	public $html = false;
+	public bool $html = false;
 
 	var $decimals = 0;
 	var $decPoint = '.';
@@ -282,11 +282,11 @@ SQL
 		$this->dateformat     = $prop['dateformat'];
 		$this->wiki           = $prop['format'] == self::ELEMENT_FORMAT_WIKI;
 		$this->format         = $prop['format'];
-		$this->withIcon       = (boolean) ($prop['flags'] & self::ELEMENT_FLAG_WITH_ICON    );
-		$this->html           = (boolean) ($prop['flags'] & self::ELEMENT_FLAG_HTML_ALLOWED );
-		$this->allLanguages   = (boolean) ($prop['flags'] & self::ELEMENT_FLAG_ALL_LANGUAGES);
-		$this->writable       = (boolean) ($prop['flags'] & self::ELEMENT_FLAG_WRITABLE     );
-		$this->inherit        = (boolean) ($prop['flags'] & self::ELEMENT_FLAG_INHERIT      );
+		$this->withIcon       = (bool) ($prop['flags'] & self::ELEMENT_FLAG_WITH_ICON    );
+		$this->html           = (bool) ($prop['flags'] & self::ELEMENT_FLAG_HTML_ALLOWED );
+		$this->allLanguages   = (bool) ($prop['flags'] & self::ELEMENT_FLAG_ALL_LANGUAGES);
+		$this->writable       = (bool) ($prop['flags'] & self::ELEMENT_FLAG_WRITABLE     );
+		$this->inherit        = (bool) ($prop['flags'] & self::ELEMENT_FLAG_INHERIT      );
 
 		if	( !$this->writable)
 			$this->withIcon = false;
@@ -620,7 +620,7 @@ SQL
 	 *
 	 * @return array
 	 */
-	public function getDynamicParameters()
+	public function getDynamicParameters(): array
 	{
 	    // Fixing old syntax ("key:value") to valid YAML syntax.
 	    $this->code = preg_replace( '/^(\w+)\:(.+)$/m','${1}: ${2}', $this->code );
@@ -634,7 +634,7 @@ SQL
 	 * Bestimmte Typen (z.B. Info-Felder) sind nie beschreibbar, dann wird immer false zur?ckgegeben.
 	 * Ansonsten wird ermittelt, ob dieses Element als beschreibbar markiert ist.
 	 */
-	function isWritable()
+	function isWritable(): bool
 	{
 		// Bei bestimmten Feldern immer false zurueckgeben
 		if	( in_array($this->typeid,Element::$readonlyElementTypeIds) )
@@ -649,18 +649,19 @@ SQL
      *
      * @return String
      */
-	public function getTypeName() {
+	public function getTypeName(): string
+	{
         return Element::getAvailableTypes()[ $this->typeid ]; // name of type
 
     }
 
-    public function getName()
-    {
+    public function getName(): string
+	{
         return $this->label;
     }
 
 
-	public function getId()
+	public function getId(): int
 	{
 		return $this->elementid;
 	}

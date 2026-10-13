@@ -158,6 +158,28 @@ class Project extends ModelBase
 	}
 
 
+    /**
+     * Liefert die Sprachen des Projektes.
+     *
+     * @return Language[]
+     */
+    public function getLanguageList() : array
+	{
+		$db = DB::get();
+
+		$sql = $db->sql( <<<SQL
+			SELECT id FROM {{language}}
+		                  WHERE projectid={projectid} 
+		                  ORDER BY name
+SQL );
+		$sql->setInt   ('projectid',$this->projectid);
+
+		return array_map( function ($languageId) {
+			return new Language($languageId);
+		}, $sql->getCol());
+	}
+
+
 
 	/**
 	 * Get all tags

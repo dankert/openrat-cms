@@ -23,9 +23,10 @@ class TemplateEditAction extends TemplateAction implements Method {
 			$apiElement = new \cms\api\Element();
 			$apiElement->id = $elid;
 			$apiElement->name = $element->getName();
+			$apiElement->label = $element->label;
 			$apiElement->description = $element->desc;
 			$apiElement->type = $element->getTypeName();
-			$apiElement->typeid = $element->typeid;
+			$apiElement->typeId = $element->typeid;
 			$apiTemplate->elements[] = $apiElement;
 
 			$list[$elid] = array();
