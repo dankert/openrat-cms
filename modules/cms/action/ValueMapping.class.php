@@ -6,6 +6,7 @@ use cms\model\BaseObject;
 use cms\model\Element;
 use cms\model\Folder;
 use cms\model\Project;
+use cms\model\Value;
 use DateTime;
 use logger\Logger;
 use util\exception\ValidationException;
@@ -180,7 +181,7 @@ trait ValueMapping
 	}
 
 
-	protected function parseToValue( $element, $value, $input)
+	protected function parseToValue( Element $element, Value $value, string $input) : void
 	{
 		switch ($element->typeid) {
 

@@ -26,6 +26,7 @@ use language\Messages;
 use LogicException;
 use util\ArrayUtils;
 use util\Coordinates;
+use util\exception\ClientException;
 use util\exception\ObjectNotFoundException;
 use util\exception\PublisherException;
 use util\exception\SecurityException;
@@ -137,15 +138,12 @@ class PageelementAction extends BaseAction
 			$this->pageContent->load();
 		}
 
-		if   ( ! $this->page->hasRight( $this->getRequiredPagePermission() ) ) {
-			throw new SecurityException('Insufficient permissions for this page' );
-		}
+		$this->element->load();
+
+		if   ( $this->element->templateid != $this->page->templateid )
+			throw new ClientException("Invalid combination of element ".$this->element->__toString()." and page ".$this->page->__toString());
 	}
 
-
-	protected function getRequiredPagePermission() {
-		return Permission::ACL_READ;
-	}
 
 
 	protected function createValueContext( $scheme ) {

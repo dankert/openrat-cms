@@ -3,6 +3,7 @@ namespace cms\action\pageelement;
 use cms\action\Method;
 use cms\action\PageelementAction;
 use cms\action\ValueMapping;
+use cms\api\Values;
 use cms\base\Language as L;
 use cms\base\Startup;
 use cms\model\Content;
@@ -12,6 +13,8 @@ use cms\model\Page;
 use cms\model\Project;
 use cms\model\Value;
 use language\Messages;
+use logger\Logger;
+use util\exception\ClientException;
 
 class PageelementValueAction extends PageelementAction implements Method {
 
@@ -67,7 +70,27 @@ class PageelementValueAction extends PageelementAction implements Method {
 
     public function post() {
 
+		Logger::debug( print_r($this->request->getRawParameters(),true) );
         $this->element->load();
+
+		/** @var Values $values */
+		$values = $this->request->toObject( Values::class );
+
+		if   ( sizeof($values->values) != 1 )
+			throw new ClientException("there must be exactly one value");
+
+		/** @var \cms\api\Value $value */
+		$uiValue = $values->values[0];
+
+		if   ( $uiValue->elementId != $this->elementid )
+			throw new ClientException("Invalid element id");
+
+		$project = $this->page->getProject();
+
+		if   ( ! array_any( $project->getLanguageIds(), function($id) use ($uiValue) {
+			return ( $id == $uiValue->languageId );
+		}))
+			throw new ClientException("Invalid language id ".$uiValue->languageId.", not found in project " . $project->__toString());
 
 		$log  = [];
         $type = $this->element->getTypeName();
@@ -78,7 +101,7 @@ class PageelementValueAction extends PageelementAction implements Method {
 
 		$oldValue = clone $value;
 
-		$this->parseToValue( $this->element,$value,$this->element->name );
+		$this->parseToValue( $this->element,$value,$uiValue->value );
 
 		// Inhalt sofort freigegeben, wenn
 		// - Recht vorhanden
@@ -93,7 +116,7 @@ class PageelementValueAction extends PageelementAction implements Method {
 			$this->addWarningFor($value, Messages::CONCURRENT_VALUE_CHANGE, array('last_change_time' => date(L::lang('DATE_FORMAT'), $lastChangeTime)));
 
 		// Check if anything has changed
-		if   ( $oldValue->text           == $value->text     &&
+		if   ( $oldValue->text        == $value->text      &&
 			$oldValue->linkToObjectId == $value->linkToObjectId  &&
 			$oldValue->format         == $value->format    &&
 			$oldValue->number         == $value->number    &&

@@ -73,8 +73,10 @@ class Hydrator {
 			} elseif ($parameter->isDefaultValueAvailable()) {
 				$arguments[] = $parameter->getDefaultValue();
 			} else {
-				$arguments[] = null;
-				//throw new InvalidArgumentException("Missing value for Parameter '$name' in class '$targetClass'");
+				if   ( $parameter->allowsNull() )
+					$arguments[] = null;
+				else
+					throw new InvalidArgumentException("Missing value '$name' in type '$targetClass'");
 			}
 		}
 

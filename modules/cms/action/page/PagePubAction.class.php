@@ -15,7 +15,9 @@ use util\exception\PublisherException;
 use util\Session;
 
 class PagePubAction extends PageAction implements Method {
-	public function getRequiredPermission() {
+
+	public function getRequiredPermission(): int
+	{
 		return Permission::ACL_PUBLISH;
 	}
 
@@ -23,9 +25,6 @@ class PagePubAction extends PageAction implements Method {
 
 	}
     public function post() {
-
-		if	( !$this->page->hasRight( Permission::ACL_PUBLISH ) )
-            throw new \util\exception\SecurityException( 'no right for publish' );
 
 		$project = $this->page->getProject();
 

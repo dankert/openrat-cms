@@ -6,6 +6,7 @@
 		<hidden name="value_time"/>
 		<group title="${desc}" collapsible="false">
 
+			<set var="list_key" value="0" />
 			<include file="../include/editvalue"/>
 		</group>
 

@@ -17,11 +17,13 @@
           <p class="<?php echo O::escapeHtml('or-group-description or-collapsible-value') ?>"><?php echo O::escapeHtml(''.@$desc.'') ?></p>
           <div class="<?php echo O::escapeHtml('or-collapsible-value or-group-value') ?>"><?php echo O::escapeHtml('') ?>
             
+              <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('values['.@$list_key.'][elementId]') ?>" value="<?php echo O::escapeHtml(''.@$elementid.'') ?>" /><?php echo O::escapeHtml('') ?>
+              <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('values['.@$list_key.'][languageId]') ?>" value="<?php echo O::escapeHtml(''.@$languageid.'') ?>" /><?php echo O::escapeHtml('') ?>
               <?php $if6=($type=='insert'); if($if6) {  ?>
                 <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
                   <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?></h3>
                   <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
-                    <select name="<?php echo O::escapeHtml(''.@$name.'') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
+                    <select name="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
                       <?php foreach($objects as $_key=>$_value) {  ?>
                         <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$value){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?></option>
                        <?php } ?>
@@ -43,7 +45,7 @@
                         <?php  { $type= text; ?>
                          <?php } ?>
                        <?php } ?>
-                      <input name="<?php echo O::escapeHtml(''.@$name.'') ?>" type="<?php echo O::escapeHtml(''.@$type.'') ?>" maxlength="<?php echo O::escapeHtml('20') ?>" value="<?php echo O::escapeHtml(''.@$value.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
+                      <input name="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>" type="<?php echo O::escapeHtml(''.@$type.'') ?>" maxlength="<?php echo O::escapeHtml('20') ?>" value="<?php echo O::escapeHtml(''.@$value.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
                     </div>
                   </div>
                 </section>
@@ -52,7 +54,7 @@
                 <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
                   <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?></h3>
                   <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
-                    <input name="<?php echo O::escapeHtml(''.@$name.'') ?>" type="<?php echo O::escapeHtml('range') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$value.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
+                    <input name="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>" type="<?php echo O::escapeHtml('range') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$value.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
                   </div>
                 </section>
                <?php } ?>
@@ -62,8 +64,8 @@
                   <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
                     <div class="<?php echo O::escapeHtml('or-') ?>"><?php echo O::escapeHtml('') ?>
                       <label><?php echo O::escapeHtml('') ?>
-                        <input type="<?php echo O::escapeHtml('checkbox') ?>" data-name="<?php echo O::escapeHtml(''.@$name.'') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if($value){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
-                        <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml(''.@$name.'') ?>" <?php if($value){ ?>value="<?php echo O::escapeHtml('1') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
+                        <input type="<?php echo O::escapeHtml('checkbox') ?>" data-name="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>" value="<?php echo O::escapeHtml('1') ?>" <?php if($value){ ?>checked="<?php echo O::escapeHtml('checked') ?>"<?php } ?> class="<?php echo O::escapeHtml('or-form-checkbox') ?>" /><?php echo O::escapeHtml('') ?>
+                        <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>" <?php if($value){ ?>value="<?php echo O::escapeHtml('1') ?>"<?php } ?> /><?php echo O::escapeHtml('') ?>
                         <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@$label.'') ?></span>
                       </label>
                     </div>
@@ -74,7 +76,7 @@
                 <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
                   <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?></h3>
                   <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
-                    <select name="<?php echo O::escapeHtml(''.@$name.'') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
+                    <select name="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>" size="<?php echo O::escapeHtml('1') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
                       <?php foreach($items as $_key=>$_value) {  ?>
                         <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$value){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?></option>
                        <?php } ?>
@@ -86,7 +88,7 @@
                 <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
                   <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?></h3>
                   <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
-                    <select name="<?php echo O::escapeHtml(''.@$name.'') ?>" multiple="<?php echo O::escapeHtml('multiple') ?>" size="<?php echo O::escapeHtml('5') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
+                    <select name="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>" multiple="<?php echo O::escapeHtml('multiple') ?>" size="<?php echo O::escapeHtml('5') ?>" class="<?php echo O::escapeHtml('or-input') ?>"><?php echo O::escapeHtml('') ?>
                       <?php foreach($items as $_key=>$_value) {  ?>
                         <option value="<?php echo O::escapeHtml(''.@$_key.'') ?>" <?php if($_key==$value){ ?>selected="<?php echo O::escapeHtml('selected') ?>"<?php } ?>><?php echo O::escapeHtml(''.@$_value.'') ?></option>
                        <?php } ?>
@@ -100,8 +102,8 @@
                   <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
                     <label class="<?php echo O::escapeHtml('or-form-row or-form-input') ?>"><?php echo O::escapeHtml('') ?>
                       <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('datetime').'') ?></span>
-                      <input name="<?php echo O::escapeHtml(''.@$name.'') ?>" type="<?php echo O::escapeHtml('datetime-local') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$date.'') ?>" list="<?php echo O::escapeHtml(''.@$name.'_list') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
-                      <datalist id="<?php echo O::escapeHtml(''.@$name.'_list') ?>"><?php echo O::escapeHtml('') ?>
+                      <input name="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>" type="<?php echo O::escapeHtml('datetime-local') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$date.'') ?>" list="<?php echo O::escapeHtml('values['.@$list_key.'][value]_list') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
+                      <datalist id="<?php echo O::escapeHtml('values['.@$list_key.'][value]_list') ?>"><?php echo O::escapeHtml('') ?>
                         <?php foreach($items as $_value) {  ?>
                           <option value="<?php echo O::escapeHtml(''.@$_value.'') ?>"><?php echo O::escapeHtml('') ?></option>
                          <?php } ?>
@@ -116,8 +118,8 @@
                   <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
                     <label class="<?php echo O::escapeHtml('or-form-row or-form-input') ?>"><?php echo O::escapeHtml('') ?>
                       <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('date').'') ?></span>
-                      <input name="<?php echo O::escapeHtml(''.@$name.'') ?>" type="<?php echo O::escapeHtml('date') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$date.'') ?>" list="<?php echo O::escapeHtml(''.@$name.'_list') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
-                      <datalist id="<?php echo O::escapeHtml(''.@$name.'_list') ?>"><?php echo O::escapeHtml('') ?>
+                      <input name="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>" type="<?php echo O::escapeHtml('date') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$date.'') ?>" list="<?php echo O::escapeHtml('values['.@$list_key.'][value]_list') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
+                      <datalist id="<?php echo O::escapeHtml('values['.@$list_key.'][value]_list') ?>"><?php echo O::escapeHtml('') ?>
                         <?php foreach($items as $_value) {  ?>
                           <option value="<?php echo O::escapeHtml(''.@$_value.'') ?>"><?php echo O::escapeHtml('') ?></option>
                          <?php } ?>
@@ -132,8 +134,8 @@
                   <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
                     <label class="<?php echo O::escapeHtml('or-form-row or-form-input') ?>"><?php echo O::escapeHtml('') ?>
                       <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('time').'') ?></span>
-                      <input name="<?php echo O::escapeHtml(''.@$name.'') ?>" type="<?php echo O::escapeHtml('time') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$date.'') ?>" list="<?php echo O::escapeHtml(''.@$name.'_list') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
-                      <datalist id="<?php echo O::escapeHtml(''.@$name.'_list') ?>"><?php echo O::escapeHtml('') ?>
+                      <input name="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>" type="<?php echo O::escapeHtml('time') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$date.'') ?>" list="<?php echo O::escapeHtml('values['.@$list_key.'][value]_list') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
+                      <datalist id="<?php echo O::escapeHtml('values['.@$list_key.'][value]_list') ?>"><?php echo O::escapeHtml('') ?>
                         <?php foreach($items as $_value) {  ?>
                           <option value="<?php echo O::escapeHtml(''.@$_value.'') ?>"><?php echo O::escapeHtml('') ?></option>
                          <?php } ?>
@@ -148,8 +150,8 @@
                   <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
                     <label class="<?php echo O::escapeHtml('or-form-row or-form-input') ?>"><?php echo O::escapeHtml('') ?>
                       <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('week').'') ?></span>
-                      <input name="<?php echo O::escapeHtml(''.@$name.'') ?>" type="<?php echo O::escapeHtml('week') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$date.'') ?>" list="<?php echo O::escapeHtml(''.@$name.'_list') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
-                      <datalist id="<?php echo O::escapeHtml(''.@$name.'_list') ?>"><?php echo O::escapeHtml('') ?>
+                      <input name="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>" type="<?php echo O::escapeHtml('week') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$date.'') ?>" list="<?php echo O::escapeHtml('values['.@$list_key.'][value]_list') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
+                      <datalist id="<?php echo O::escapeHtml('values['.@$list_key.'][value]_list') ?>"><?php echo O::escapeHtml('') ?>
                         <?php foreach($items as $_value) {  ?>
                           <option value="<?php echo O::escapeHtml(''.@$_value.'') ?>"><?php echo O::escapeHtml('') ?></option>
                          <?php } ?>
@@ -164,8 +166,8 @@
                   <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
                     <label class="<?php echo O::escapeHtml('or-form-row or-form-input') ?>"><?php echo O::escapeHtml('') ?>
                       <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('month').'') ?></span>
-                      <input name="<?php echo O::escapeHtml(''.@$name.'') ?>" type="<?php echo O::escapeHtml('month') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$date.'') ?>" list="<?php echo O::escapeHtml(''.@$name.'_list') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
-                      <datalist id="<?php echo O::escapeHtml(''.@$name.'_list') ?>"><?php echo O::escapeHtml('') ?>
+                      <input name="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>" type="<?php echo O::escapeHtml('month') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$date.'') ?>" list="<?php echo O::escapeHtml('values['.@$list_key.'][value]_list') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
+                      <datalist id="<?php echo O::escapeHtml('values['.@$list_key.'][value]_list') ?>"><?php echo O::escapeHtml('') ?>
                         <?php foreach($items as $_value) {  ?>
                           <option value="<?php echo O::escapeHtml(''.@$_value.'') ?>"><?php echo O::escapeHtml('') ?></option>
                          <?php } ?>
@@ -180,7 +182,7 @@
                   <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
                     <label class="<?php echo O::escapeHtml('or-form-row or-form-input') ?>"><?php echo O::escapeHtml('') ?>
                       <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('color').'') ?></span>
-                      <input name="<?php echo O::escapeHtml(''.@$name.'') ?>" type="<?php echo O::escapeHtml('color') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$value.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
+                      <input name="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>" type="<?php echo O::escapeHtml('color') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$value.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
                     </label>
                   </div>
                 </section>
@@ -191,8 +193,8 @@
                   <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
                     <label class="<?php echo O::escapeHtml('or-form-row or-form-input') ?>"><?php echo O::escapeHtml('') ?>
                       <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('text').'') ?></span>
-                      <input name="<?php echo O::escapeHtml(''.@$name.'') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" value="<?php echo O::escapeHtml(''.@$value.'') ?>" list="<?php echo O::escapeHtml(''.@$name.'_list') ?>" class="<?php echo O::escapeHtml('or-text or-input') ?>" /><?php echo O::escapeHtml('') ?>
-                      <datalist id="<?php echo O::escapeHtml(''.@$name.'_list') ?>"><?php echo O::escapeHtml('') ?>
+                      <input name="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" value="<?php echo O::escapeHtml(''.@$value.'') ?>" list="<?php echo O::escapeHtml('values['.@$list_key.'][value]_list') ?>" class="<?php echo O::escapeHtml('or-text or-input') ?>" /><?php echo O::escapeHtml('') ?>
+                      <datalist id="<?php echo O::escapeHtml('values['.@$list_key.'][value]_list') ?>"><?php echo O::escapeHtml('') ?>
                         <?php foreach($items as $_value) {  ?>
                           <option value="<?php echo O::escapeHtml(''.@$_value.'') ?>"><?php echo O::escapeHtml('') ?></option>
                          <?php } ?>
@@ -207,8 +209,8 @@
                   <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
                     <label class="<?php echo O::escapeHtml('or-form-row or-form-input') ?>"><?php echo O::escapeHtml('') ?>
                       <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('text').'') ?></span>
-                      <input name="<?php echo O::escapeHtml(''.@$name.'') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" value="<?php echo O::escapeHtml(''.@$value.'') ?>" list="<?php echo O::escapeHtml(''.@$name.'_list') ?>" class="<?php echo O::escapeHtml('or-text or-input') ?>" /><?php echo O::escapeHtml('') ?>
-                      <datalist id="<?php echo O::escapeHtml(''.@$name.'_list') ?>"><?php echo O::escapeHtml('') ?>
+                      <input name="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" value="<?php echo O::escapeHtml(''.@$value.'') ?>" list="<?php echo O::escapeHtml('values['.@$list_key.'][value]_list') ?>" class="<?php echo O::escapeHtml('or-text or-input') ?>" /><?php echo O::escapeHtml('') ?>
+                      <datalist id="<?php echo O::escapeHtml('values['.@$list_key.'][value]_list') ?>"><?php echo O::escapeHtml('') ?>
                         <?php foreach($items as $_value) {  ?>
                           <option value="<?php echo O::escapeHtml(''.@$_value.'') ?>"><?php echo O::escapeHtml('') ?></option>
                          <?php } ?>
@@ -223,8 +225,8 @@
                   <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
                     <label class="<?php echo O::escapeHtml('or-form-row or-form-input') ?>"><?php echo O::escapeHtml('') ?>
                       <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('text').'') ?></span>
-                      <input name="<?php echo O::escapeHtml(''.@$name.'') ?>" type="<?php echo O::escapeHtml('tel') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" value="<?php echo O::escapeHtml(''.@$value.'') ?>" list="<?php echo O::escapeHtml(''.@$name.'_list') ?>" class="<?php echo O::escapeHtml('or-text or-input') ?>" /><?php echo O::escapeHtml('') ?>
-                      <datalist id="<?php echo O::escapeHtml(''.@$name.'_list') ?>"><?php echo O::escapeHtml('') ?>
+                      <input name="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>" type="<?php echo O::escapeHtml('tel') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" value="<?php echo O::escapeHtml(''.@$value.'') ?>" list="<?php echo O::escapeHtml('values['.@$list_key.'][value]_list') ?>" class="<?php echo O::escapeHtml('or-text or-input') ?>" /><?php echo O::escapeHtml('') ?>
+                      <datalist id="<?php echo O::escapeHtml('values['.@$list_key.'][value]_list') ?>"><?php echo O::escapeHtml('') ?>
                         <?php foreach($items as $_value) {  ?>
                           <option value="<?php echo O::escapeHtml(''.@$_value.'') ?>"><?php echo O::escapeHtml('') ?></option>
                          <?php } ?>
@@ -239,8 +241,8 @@
                   <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
                     <label class="<?php echo O::escapeHtml('or-form-row or-form-input') ?>"><?php echo O::escapeHtml('') ?>
                       <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('text').'') ?></span>
-                      <input name="<?php echo O::escapeHtml(''.@$name.'') ?>" type="<?php echo O::escapeHtml('email') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" value="<?php echo O::escapeHtml(''.@$value.'') ?>" list="<?php echo O::escapeHtml(''.@$name.'_list') ?>" class="<?php echo O::escapeHtml('or-text or-input') ?>" /><?php echo O::escapeHtml('') ?>
-                      <datalist id="<?php echo O::escapeHtml(''.@$name.'_list') ?>"><?php echo O::escapeHtml('') ?>
+                      <input name="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>" type="<?php echo O::escapeHtml('email') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" value="<?php echo O::escapeHtml(''.@$value.'') ?>" list="<?php echo O::escapeHtml('values['.@$list_key.'][value]_list') ?>" class="<?php echo O::escapeHtml('or-text or-input') ?>" /><?php echo O::escapeHtml('') ?>
+                      <datalist id="<?php echo O::escapeHtml('values['.@$list_key.'][value]_list') ?>"><?php echo O::escapeHtml('') ?>
                         <?php foreach($items as $_value) {  ?>
                           <option value="<?php echo O::escapeHtml(''.@$_value.'') ?>"><?php echo O::escapeHtml('') ?></option>
                          <?php } ?>
@@ -255,8 +257,8 @@
                   <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
                     <label class="<?php echo O::escapeHtml('or-form-row or-form-input') ?>"><?php echo O::escapeHtml('') ?>
                       <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('text').'') ?></span>
-                      <input name="<?php echo O::escapeHtml(''.@$name.'') ?>" type="<?php echo O::escapeHtml('password') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" value="<?php echo O::escapeHtml(''.@$value.'') ?>" list="<?php echo O::escapeHtml(''.@$name.'_list') ?>" class="<?php echo O::escapeHtml('or-text or-input') ?>" /><?php echo O::escapeHtml('') ?>
-                      <datalist id="<?php echo O::escapeHtml(''.@$name.'_list') ?>"><?php echo O::escapeHtml('') ?>
+                      <input name="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>" type="<?php echo O::escapeHtml('password') ?>" maxlength="<?php echo O::escapeHtml('255') ?>" value="<?php echo O::escapeHtml(''.@$value.'') ?>" list="<?php echo O::escapeHtml('values['.@$list_key.'][value]_list') ?>" class="<?php echo O::escapeHtml('or-text or-input') ?>" /><?php echo O::escapeHtml('') ?>
+                      <datalist id="<?php echo O::escapeHtml('values['.@$list_key.'][value]_list') ?>"><?php echo O::escapeHtml('') ?>
                         <?php foreach($items as $_value) {  ?>
                           <option value="<?php echo O::escapeHtml(''.@$_value.'') ?>"><?php echo O::escapeHtml('') ?></option>
                          <?php } ?>
@@ -270,8 +272,8 @@
                   <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?></h3>
                   <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
                     <div><?php echo O::escapeHtml('') ?>
-                      <textarea name="<?php echo O::escapeHtml(''.@$name.'') ?>" data-extension="<?php echo O::escapeHtml('') ?>" data-mimetype="<?php echo O::escapeHtml('') ?>" data-mode="<?php echo O::escapeHtml('yaml') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-code-editor') ?>"><?php echo O::escapeHtml(''.@$value.'') ?></textarea>
-                      <trix-editor input="<?php echo O::escapeHtml(''.@$name.'') ?>"><?php echo O::escapeHtml('') ?></trix-editor>
+                      <textarea name="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>" data-extension="<?php echo O::escapeHtml('') ?>" data-mimetype="<?php echo O::escapeHtml('') ?>" data-mode="<?php echo O::escapeHtml('yaml') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-code-editor') ?>"><?php echo O::escapeHtml(''.@$value.'') ?></textarea>
+                      <trix-editor input="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>"><?php echo O::escapeHtml('') ?></trix-editor>
                     </div>
                   </div>
                 </section>
@@ -283,8 +285,8 @@
                     <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?></h3>
                     <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
                       <div><?php echo O::escapeHtml('') ?>
-                        <textarea name="<?php echo O::escapeHtml(''.@$name.'') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-markdown-editor') ?>"><?php echo O::escapeHtml(''.@$value.'') ?></textarea>
-                        <trix-editor input="<?php echo O::escapeHtml(''.@$name.'') ?>"><?php echo O::escapeHtml('') ?></trix-editor>
+                        <textarea name="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-markdown-editor') ?>"><?php echo O::escapeHtml(''.@$value.'') ?></textarea>
+                        <trix-editor input="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>"><?php echo O::escapeHtml('') ?></trix-editor>
                       </div>
                     </div>
                   </section>
@@ -294,8 +296,8 @@
                     <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?></h3>
                     <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
                       <div><?php echo O::escapeHtml('') ?>
-                        <textarea name="<?php echo O::escapeHtml(''.@$name.'') ?>" id="<?php echo O::escapeHtml('pageelement_edit_editor') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-html-editor') ?>"><?php echo ''.@$value.'' ?></textarea>
-                        <trix-editor input="<?php echo O::escapeHtml(''.@$name.'') ?>"><?php echo O::escapeHtml('') ?></trix-editor>
+                        <textarea name="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>" id="<?php echo O::escapeHtml('pageelement_edit_editor') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-html-editor') ?>"><?php echo ''.@$value.'' ?></textarea>
+                        <trix-editor input="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>"><?php echo O::escapeHtml('') ?></trix-editor>
                       </div>
                     </div>
                   </section>
@@ -305,8 +307,8 @@
                     <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?></h3>
                     <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
                       <div><?php echo O::escapeHtml('') ?>
-                        <textarea name="<?php echo O::escapeHtml(''.@$name.'') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-wiki-editor') ?>"><?php echo ''.@$value.'' ?></textarea>
-                        <trix-editor input="<?php echo O::escapeHtml(''.@$name.'') ?>"><?php echo O::escapeHtml('') ?></trix-editor>
+                        <textarea name="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>" class="<?php echo O::escapeHtml('or-input or-editor or-wiki-editor') ?>"><?php echo ''.@$value.'' ?></textarea>
+                        <trix-editor input="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>"><?php echo O::escapeHtml('') ?></trix-editor>
                       </div>
                       <section class="<?php echo O::escapeHtml('or-group or-collapsible or-collapsible--show') ?>"><?php echo O::escapeHtml('') ?>
                         <h2 class="<?php echo O::escapeHtml('or-collapsible-title or-group-title or-collapsible-act-switch') ?>"><?php echo O::escapeHtml('') ?>
@@ -374,7 +376,7 @@
                   <section class="<?php echo O::escapeHtml('or-fieldset') ?>"><?php echo O::escapeHtml('') ?>
                     <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml('') ?></h3>
                     <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
-                      <textarea name="<?php echo O::escapeHtml(''.@$name.'') ?>" class="<?php echo O::escapeHtml('or-input or-editor raw-editor') ?>"><?php echo O::escapeHtml(''.@$value.'') ?></textarea>
+                      <textarea name="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>" class="<?php echo O::escapeHtml('or-input or-editor raw-editor') ?>"><?php echo O::escapeHtml(''.@$value.'') ?></textarea>
                     </div>
                   </section>
                  <?php } ?>
@@ -384,8 +386,8 @@
                   <h3 class="<?php echo O::escapeHtml('or-fieldset-label') ?>"><?php echo O::escapeHtml(''.@O::lang('link_target').'') ?></h3>
                   <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
                     <div class="<?php echo O::escapeHtml('or-selector or-droppable-selector') ?>"><?php echo O::escapeHtml('') ?>
-                      <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml(''.@$name.'') ?>" value="<?php echo O::escapeHtml(''.@$value.'') ?>" class="<?php echo O::escapeHtml('or-selector-link-value') ?>" /><?php echo O::escapeHtml('') ?>
-                      <input type="<?php echo O::escapeHtml('text') ?>" name="<?php echo O::escapeHtml(''.@$name.'_text') ?>" placeholder="<?php echo O::escapeHtml(''.@$linkname.'') ?>" value="<?php echo O::escapeHtml(''.@$linkname.'') ?>" class="<?php echo O::escapeHtml('or-input or-selector-link-name or-act-selector-search') ?>" /><?php echo O::escapeHtml('') ?>
+                      <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>" value="<?php echo O::escapeHtml(''.@$value.'') ?>" class="<?php echo O::escapeHtml('or-selector-link-value') ?>" /><?php echo O::escapeHtml('') ?>
+                      <input type="<?php echo O::escapeHtml('text') ?>" name="<?php echo O::escapeHtml('values['.@$list_key.'][value]_text') ?>" placeholder="<?php echo O::escapeHtml(''.@$linkname.'') ?>" value="<?php echo O::escapeHtml(''.@$linkname.'') ?>" class="<?php echo O::escapeHtml('or-input or-selector-link-name or-act-selector-search') ?>" /><?php echo O::escapeHtml('') ?>
                       <i class="<?php echo O::escapeHtml('or-image-icon or-image-icon--menu-tree or-act-selector-tree-button') ?>"><?php echo O::escapeHtml('') ?></i>
                       <div class="<?php echo O::escapeHtml('or-dropdown or-act-selector-search-results') ?>"><?php echo O::escapeHtml('') ?></div>
                       <div type="<?php echo O::escapeHtml('hidden') ?>" data-types="<?php echo O::escapeHtml(''.@$types.'') ?>" data-init-id="<?php echo O::escapeHtml(''.@$linkobjectid.'') ?>" data-init-folderid="<?php echo O::escapeHtml(''.@$rootfolderid.'') ?>" class="<?php echo O::escapeHtml('or-navtree or-selector-tree or-act-load-selector-tree') ?>"><?php echo O::escapeHtml('') ?></div>
@@ -405,7 +407,7 @@
                   <div class="<?php echo O::escapeHtml('or-fieldset-value') ?>"><?php echo O::escapeHtml('') ?>
                     <label class="<?php echo O::escapeHtml('or-form-row or-form-input') ?>"><?php echo O::escapeHtml('') ?>
                       <span class="<?php echo O::escapeHtml('or-form-label') ?>"><?php echo O::escapeHtml(''.@O::lang('latitude').' '.@O::lang('longitude').'') ?></span>
-                      <input name="<?php echo O::escapeHtml(''.@$name.'') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$value.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
+                      <input name="<?php echo O::escapeHtml('values['.@$list_key.'][value]') ?>" type="<?php echo O::escapeHtml('text') ?>" maxlength="<?php echo O::escapeHtml('256') ?>" value="<?php echo O::escapeHtml(''.@$value.'') ?>" class="<?php echo O::escapeHtml('or-input') ?>" /><?php echo O::escapeHtml('') ?>
                     </label>
                   </div>
                 </section>

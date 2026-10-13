@@ -15,6 +15,8 @@
           <span><?php echo O::escapeHtml(''.@$desc.'') ?></span>
         </h2>
         <div class="<?php echo O::escapeHtml('or-collapsible-value or-group-value') ?>"><?php echo O::escapeHtml('') ?>
+          <?php  { $list_key= 0; ?>
+           <?php } ?>
           
             <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('values['.@$list_key.'][elementId]') ?>" value="<?php echo O::escapeHtml(''.@$elementid.'') ?>" /><?php echo O::escapeHtml('') ?>
             <input type="<?php echo O::escapeHtml('hidden') ?>" name="<?php echo O::escapeHtml('values['.@$list_key.'][languageId]') ?>" value="<?php echo O::escapeHtml(''.@$languageid.'') ?>" /><?php echo O::escapeHtml('') ?>

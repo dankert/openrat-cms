@@ -4,6 +4,7 @@ namespace cms\action\pageelement;
 use cms\action\Method;
 use cms\action\PageelementAction;
 use cms\action\ValueMapping;
+use cms\api\Values;
 use cms\base\Language as L;
 use cms\generator\PageContext;
 use cms\generator\PageGenerator;
@@ -19,8 +20,10 @@ use cms\model\PageContent;
 use cms\model\Permission;
 use cms\model\Project;
 use cms\model\Value;
+use http\Exception\InvalidArgumentException;
 use language\Messages;
 use logger\Logger;
+use util\exception\ClientException;
 use util\exception\SecurityException;
 use util\Session;
 use util\Text;
@@ -73,6 +76,7 @@ class PageelementAllAction extends PageelementAction implements Method {
 			$output += $element->getProperties();
 			$output += $value->getProperties();
 			$output['label'] = $language->getName();
+			$output['languageid'] = $language->languageid;
 
 			$output['items'] = $element->getSelectItems();
 
@@ -96,8 +100,8 @@ class PageelementAllAction extends PageelementAction implements Method {
 
     public function post()
 	{
-		if   ( !$this->page->hasRight( Permission::ACL_WRITE ))
-			throw new SecurityException();
+		/** @var Values $values */
+		$values = $this->request->toObject( Values::class );
 
 		$element = $this->element;
 		$element->load();
@@ -105,11 +109,19 @@ class PageelementAllAction extends PageelementAction implements Method {
 
 		foreach( $this->getLanguageIds() as $languageid ) {
 
-			$language = new Language($languageid);
-			$language->load();
+			/** @var \cms\api\Value $uiValue */
+			$uiValue = array_find( $values->values, function ($uiValue) use ($languageid) {
+				return ($uiValue->languageId == $languageid );
+			} );
+
+			if   ( !$uiValue )
+				continue; // Element not found in Request.
 
 			$language = new Language($languageid);
 			$language->load();
+
+			if   ( $uiValue->elementId != $element->elementid )
+				throw new \InvalidArgumentException("elementid ".$uiValue->elementId." not valid for this page.");
 
 			$pageContent = new PageContent();
 			$pageContent->elementId = $element->elementid;
@@ -125,7 +137,7 @@ class PageelementAllAction extends PageelementAction implements Method {
 			$oldValue->load();
 			$value->format = $oldValue->format;
 
-			$this->parseToValue( $element, $value, $language->isoCode );
+			$this->parseToValue( $element, $value, $uiValue->value );
 
 			// Inhalt sofort freigegeben, wenn
 			// - Recht vorhanden
