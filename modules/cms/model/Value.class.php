@@ -163,7 +163,7 @@ SQL
 			// If the value is stored in BASE64 we must decode it now.
 			$valueIsStoredAsBase64 = DB::get()->conf['base64'];
 
-			if	( $valueIsStoredAsBase64 )
+			if	( $valueIsStoredAsBase64 && $this->file )
 				$this->file = base64_decode( $this->file );
 
 			$this->active         = ( $row['active' ]=='1' );
@@ -380,11 +380,11 @@ SQL
 			case Element::ELEMENT_TYPE_LINK:
 				return $this->linkToObjectId;
 				
-			case Element::ELEMENT_TYPE_DATETIME;
-			case Element::ELEMENT_TYPE_DATE;
-			case Element::ELEMENT_TYPE_TIME;
-			case Element::ELEMENT_TYPE_WEEK;
-			case Element::ELEMENT_TYPE_MONTH;
+			case Element::ELEMENT_TYPE_DATETIME:
+			case Element::ELEMENT_TYPE_DATE:
+			case Element::ELEMENT_TYPE_TIME:
+			case Element::ELEMENT_TYPE_WEEK:
+			case Element::ELEMENT_TYPE_MONTH:
 				return $this->date;
 				
 			default:

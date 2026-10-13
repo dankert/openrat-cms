@@ -324,12 +324,14 @@ class Text
 	 *  Es werden ungueltige Zeichen aus einer Zeichenkette entfernt. Es wird mit einer Whitelist
 	 *  gearbeitet, d.h. die erlaubten Zeichen werden angegeben.
 	 *
-	 * @param $eingabe Die Eingabe-Zeichenkette, aus der ungueltige Zeichen entfernt werden sollen.
-	 * @param $erlaubt Die erlaubten Zeichen (eine "White-List")
+	 * @param $eingabe string Die Eingabe-Zeichenkette, aus der ungueltige Zeichen entfernt werden sollen.
+	 * @param $erlaubt string Die erlaubten Zeichen (eine "White-List")
 	 * @return String die aufgeräumte Zeichenkette
 	 */
 	public static function clean($eingabe, $erlaubt)
 	{
+		if  ( !$eingabe )
+			return $eingabe;
 		$first = strtr($eingabe, $erlaubt, str_repeat("\x01", strlen($erlaubt)));
 		$second = strtr($eingabe, $first, str_repeat("\x00", strlen($first)));
 		return str_replace("\x00", '', $second);
@@ -342,8 +344,11 @@ class Text
 	 * @param $text
 	 * @return array
 	 */
-	public static function parseOID($text)
+	public static function parseOID(string|null $text): array
 	{
+		if   ( !$text)
+			return [];
+
 		$oids = array();
 		$treffer = array();
 

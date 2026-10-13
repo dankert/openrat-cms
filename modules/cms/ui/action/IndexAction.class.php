@@ -59,8 +59,8 @@ class IndexAction extends Action
      * @param User $user
      * @return \configuration\Config|string
      */
-    protected function getUserScheme($user )
-    {
+    protected function getUserScheme(User $user ): int
+	{
         // Theme-Schema für den angemeldeten Benutzer ermitteln.
         return $user->styleScheme;
     }

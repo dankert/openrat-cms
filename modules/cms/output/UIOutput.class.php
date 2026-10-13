@@ -114,7 +114,11 @@ class UIOutput extends BaseOutput
 			header('X-OR-Template: '.$templateFile               );
 
 			$outputDataClone = $outputData;
-			array_walk_recursive($outputDataClone, function(&$v) { $v = htmlspecialchars($v); });
+			array_walk_recursive($outputDataClone, function(&$v) {
+				if   ( ! $v )
+					return $v;
+				$v = htmlspecialchars($v);
+			});
 			//array_walk_recursive($outputDataClone, function(&$v) { if(is_string($v)) $v = htmlspecialchars($v); });
 			echo "<!-- Output:\n\n".print_r($outputDataClone,true)."\n\n-->";
 		}
