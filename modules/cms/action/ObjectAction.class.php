@@ -4,20 +4,9 @@ namespace cms\action;
 
 use cms\model\Permission;
 use cms\model\BaseObject;
-use cms\model\File;
 use cms\model\Folder;
-use cms\model\Group;
-use cms\model\Language;
-use cms\model\Link;
-use cms\model\Page;
 use cms\model\Project;
-use cms\model\User;
-use language\Messages;
-use util\ArrayUtils;
 use util\exception\SecurityException;
-use util\exception\ValidationException;
-use util\Http;
-use util\Session;
 
 
 /**
@@ -46,8 +35,19 @@ abstract class ObjectAction extends BaseAction
 	 *
 	 * @return int Permission-flag.
 	 */
-    public function getRequiredPermission() {
+    public function getRequiredPermission(): int
+    {
 		return Permission::ACL_READ;
+	}
+
+	/**
+	 * Should be overwritten by subclasses.
+	 *
+	 * @return int Permission-flag.
+	 */
+    public function getRequiredPermissionForPost(): int
+    {
+		return Permission::ACL_WRITE;
 	}
 
 
@@ -91,9 +91,12 @@ abstract class ObjectAction extends BaseAction
      */
     public function checkAccess() {
 
-		$requiredPermission = $this->getRequiredPermission();
+		if  ( $this->request->isAction )
+			$requiredPermission = $this->getRequiredPermissionForPost();
+		else
+			$requiredPermission = $this->getRequiredPermission();
 
 		if   ( ! $this->baseObject->hasRight($requiredPermission) )
-	    	throw new SecurityException('User has insufficient permissions ('.$requiredPermission.')' );
+	    	throw new SecurityException('User has insufficient permissions (Required: '.$requiredPermission.')' );
     }
 }
