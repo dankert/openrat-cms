@@ -18,7 +18,7 @@ class SetComponent extends Component
 	{
 		$set = new PHPBlockElement();
 
-		if ($this->value)
+		if ($this->value != null)
 		{
 			if ($this->key)
 				$set->inBlock = '$'.$set->varname($this->var).'= '.$this->addMapper($set->value($this->value).'['.((new Value($this->key))->render(Value::CONTEXT_PHP)).']').';';
