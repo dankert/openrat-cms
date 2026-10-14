@@ -14,7 +14,7 @@ class UserPwAction extends UserAction implements Method {
 
     public function view() {
 		$this->setTemplateVar('enabled',$this->user->type == User::AUTH_TYPE_INTERNAL );
-		$this->setTemplateVar('mail'   ,(boolean) $this->user->mail );
+		$this->setTemplateVar('mail'   ,(bool) $this->user->mail );
 
 		$this->setTemplateVar('password_proposal', Password::createPassword() );
     }

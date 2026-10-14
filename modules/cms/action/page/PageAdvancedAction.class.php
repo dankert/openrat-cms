@@ -38,9 +38,4 @@ class PageAdvancedAction extends PageAction implements Method {
     public function post() {
     }
 
-	public function getRequiredPermission()
-	{
-		return Permission::ACL_READ;
-	}
-
 }

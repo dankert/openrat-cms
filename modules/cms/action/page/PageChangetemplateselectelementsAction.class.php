@@ -3,6 +3,7 @@ namespace cms\action\page;
 use cms\action\Action;
 use cms\action\Method;
 use cms\action\PageAction;
+use cms\action\UiInParameter;
 use cms\model\Element;
 use cms\model\Permission;
 use cms\model\Template;
@@ -15,6 +16,7 @@ class PageChangetemplateselectelementsAction extends PageAction implements Metho
 	}
 
 
+	#[UiInParameter('newtemplateid')]
 	public function view() {
 		$newTemplateId = $this->request->getText( 'newtemplateid' );
 

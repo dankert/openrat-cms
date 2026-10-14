@@ -44,7 +44,7 @@ class LoginLoginAction extends LoginAction implements Method {
 		}
 
         $this->setTemplateVar('enableUserPasswordLogin',$authenticateEnabled);
-        $this->setTemplateVar('enableOpenIdConnect'    ,(boolean)$oidcList  );
+        $this->setTemplateVar('enableOpenIdConnect'    ,(bool)$oidcList  );
         $this->setTemplateVar('provider'               ,$oidcList           );
 
 		$dbids = $this->getSelectableDatabases();

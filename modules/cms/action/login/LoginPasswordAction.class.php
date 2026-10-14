@@ -42,7 +42,7 @@ class LoginPasswordAction extends LoginAction implements Method {
 
 		if	( $user )
 		{
-			srand ((double)microtime()*1000003);
+			srand ((float)microtime()*1000003);
 			$code = rand();
 			Session::set(Session::KEY_PASSWORD_COMMIT_CODE,$code);
 			

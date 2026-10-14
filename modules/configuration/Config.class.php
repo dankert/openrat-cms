@@ -176,7 +176,7 @@ class Config
 
 	public function isEmpty()
 	{
-		return (boolean) $this->config;
+		return (bool) $this->config;
 	}
 
 	public function hasContent()

@@ -11,12 +11,35 @@ info:
   contact:
     email: kontakt-website@openrat.de
     name: OpenRat CMS API support
+webhooks:
+  userCreated:
+    post:
+      summary: >
+        Wird ausgelöst, wenn ein neuer Benutzer
+        registriert wird
+      description: >
+        Dein Server sendet dieses Event an die
+        konfigurierte Webhook-URL des Clients.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        200:
+          description: >
+            Client hat das Event erfolgreich
+            verarbeitet und bestätigt.
 servers:
   - 
     url: //demo.openrat.de
     description: OpenRat Demo
   - 
     url: //localhost:8000/rest
+    description: OpenRat local development
+  - 
+    url: //localhost:8090
     description: OpenRat local development
 paths:
   /configuration/{id}/edit:
@@ -28,9 +51,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getConfigurationEdit
-      summary: ""
       description: ""
       parameters:
         - 
@@ -43,6 +72,14 @@ paths:
       tags:
         - Configuration
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -72,9 +109,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getConfigurationSrc
-      summary: ""
       description: ""
       parameters:
         - 
@@ -87,6 +130,14 @@ paths:
       tags:
         - Configuration
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -116,9 +167,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getElementAdvanced
-      summary: ""
       description: ""
       parameters:
         - 
@@ -131,6 +188,14 @@ paths:
       tags:
         - Element
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -160,9 +225,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getElementEdit
-      summary: ""
       description: ""
       parameters:
         - 
@@ -175,6 +246,14 @@ paths:
       tags:
         - Element
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -204,9 +283,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getElementProp
-      summary: ""
       description: ""
       parameters:
         - 
@@ -219,6 +304,14 @@ paths:
       tags:
         - Element
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -248,9 +341,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getElementRemove
-      summary: ""
       description: ""
       parameters:
         - 
@@ -263,6 +362,14 @@ paths:
       tags:
         - Element
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -292,9 +399,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFileAdvanced
-      summary: ""
       description: ""
       parameters:
         - 
@@ -307,6 +420,14 @@ paths:
       tags:
         - File
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -336,9 +457,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFileEdit
-      summary: ""
       description: ""
       parameters:
         - 
@@ -351,6 +478,14 @@ paths:
       tags:
         - File
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -380,9 +515,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFileHistory
-      summary: ""
       description: ""
       parameters:
         - 
@@ -395,6 +536,14 @@ paths:
       tags:
         - File
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -424,9 +573,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFilePreview
-      summary: ""
       description: ""
       parameters:
         - 
@@ -439,6 +594,14 @@ paths:
       tags:
         - File
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -468,9 +631,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFilePub
-      summary: ""
       description: ""
       parameters:
         - 
@@ -483,6 +652,14 @@ paths:
       tags:
         - File
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -512,9 +689,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFileRelease
-      summary: ""
       description: ""
       parameters:
         - 
@@ -527,6 +710,14 @@ paths:
       tags:
         - File
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -556,9 +747,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFileRemove
-      summary: ""
       description: ""
       parameters:
         - 
@@ -571,6 +768,14 @@ paths:
       tags:
         - File
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -600,9 +805,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFileRestore
-      summary: ""
       description: ""
       parameters:
         - 
@@ -615,6 +826,14 @@ paths:
       tags:
         - File
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -644,9 +863,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFileShow
-      summary: ""
       description: ""
       parameters:
         - 
@@ -659,6 +884,14 @@ paths:
       tags:
         - File
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -688,9 +921,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFileUpload
-      summary: ""
       description: ""
       parameters:
         - 
@@ -703,6 +942,14 @@ paths:
       tags:
         - File
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -732,9 +979,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFolderAdd
-      summary: ""
       description: ""
       parameters:
         - 
@@ -747,6 +1000,14 @@ paths:
       tags:
         - Folder
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -776,9 +1037,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFolderAdvanced
-      summary: ""
       description: ""
       parameters:
         - 
@@ -791,6 +1058,14 @@ paths:
       tags:
         - Folder
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -820,9 +1095,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFolderCreatefile
-      summary: ""
       description: ""
       parameters:
         - 
@@ -835,6 +1116,14 @@ paths:
       tags:
         - Folder
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -864,9 +1153,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFolderCreatefolder
-      summary: ""
       description: ""
       parameters:
         - 
@@ -879,6 +1174,14 @@ paths:
       tags:
         - Folder
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -908,9 +1211,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFolderCreateimage
-      summary: ""
       description: ""
       parameters:
         - 
@@ -923,6 +1232,14 @@ paths:
       tags:
         - Folder
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -952,9 +1269,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFolderCreatelink
-      summary: ""
       description: ""
       parameters:
         - 
@@ -967,6 +1290,14 @@ paths:
       tags:
         - Folder
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -996,9 +1327,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFolderCreatepage
-      summary: ""
       description: ""
       parameters:
         - 
@@ -1011,6 +1348,14 @@ paths:
       tags:
         - Folder
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -1040,9 +1385,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFolderCreatescript
-      summary: ""
       description: ""
       parameters:
         - 
@@ -1055,6 +1406,14 @@ paths:
       tags:
         - Folder
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -1084,9 +1443,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFolderCreatetext
-      summary: ""
       description: ""
       parameters:
         - 
@@ -1099,6 +1464,14 @@ paths:
       tags:
         - Folder
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -1128,9 +1501,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFolderCreateurl
-      summary: ""
       description: ""
       parameters:
         - 
@@ -1143,6 +1522,14 @@ paths:
       tags:
         - Folder
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -1172,9 +1559,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFolderEdit
-      summary: ""
       description: ""
       parameters:
         - 
@@ -1187,6 +1580,14 @@ paths:
       tags:
         - Folder
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -1216,9 +1617,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFolderOrder
-      summary: ""
       description: ""
       parameters:
         - 
@@ -1231,6 +1638,14 @@ paths:
       tags:
         - Folder
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -1260,9 +1675,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFolderPreview
-      summary: ""
       description: ""
       parameters:
         - 
@@ -1275,6 +1696,14 @@ paths:
       tags:
         - Folder
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -1304,9 +1733,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFolderPub
-      summary: ""
       description: ""
       parameters:
         - 
@@ -1319,6 +1754,14 @@ paths:
       tags:
         - Folder
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -1348,9 +1791,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFolderRemove
-      summary: ""
       description: ""
       parameters:
         - 
@@ -1363,6 +1812,14 @@ paths:
       tags:
         - Folder
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -1392,9 +1849,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFolderRoot
-      summary: ""
       description: ""
       parameters:
         - 
@@ -1407,6 +1870,14 @@ paths:
       tags:
         - Folder
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -1436,9 +1907,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getFolderShow
-      summary: ""
       description: ""
       parameters:
         - 
@@ -1451,6 +1928,14 @@ paths:
       tags:
         - Folder
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -1480,9 +1965,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getGroupEdit
-      summary: ""
       description: ""
       parameters:
         - 
@@ -1495,6 +1986,14 @@ paths:
       tags:
         - Group
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -1524,9 +2023,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getGroupInfo
-      summary: ""
       description: ""
       parameters:
         - 
@@ -1539,6 +2044,14 @@ paths:
       tags:
         - Group
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -1568,9 +2081,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getGroupListing
-      summary: ""
       description: ""
       parameters:
         - 
@@ -1583,6 +2102,14 @@ paths:
       tags:
         - Group
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -1612,9 +2139,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getGroupMemberships
-      summary: ""
       description: ""
       parameters:
         - 
@@ -1627,6 +2160,14 @@ paths:
       tags:
         - Group
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -1656,10 +2197,16 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getGroupProp
-      summary: Reads the properties of this group
-      description: Reads the properties of this group.	 /
+      description: Reads the properties of this group.
       parameters:
         - 
           in: path
@@ -1671,6 +2218,14 @@ paths:
       tags:
         - Group
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -1719,9 +2274,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getGroupRemove
-      summary: ""
       description: ""
       parameters:
         - 
@@ -1734,6 +2295,14 @@ paths:
       tags:
         - Group
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -1763,9 +2332,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getGroupRights
-      summary: ""
       description: ""
       parameters:
         - 
@@ -1778,6 +2353,14 @@ paths:
       tags:
         - Group
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -1807,9 +2390,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getGrouplistAdd
-      summary: ""
       description: ""
       parameters:
         - 
@@ -1822,6 +2411,14 @@ paths:
       tags:
         - Grouplist
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -1851,9 +2448,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getGrouplistEdit
-      summary: ""
       description: ""
       parameters:
         - 
@@ -1866,6 +2469,14 @@ paths:
       tags:
         - Grouplist
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -1895,9 +2506,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getImageEdit
-      summary: ""
       description: ""
       parameters:
         - 
@@ -1910,6 +2527,14 @@ paths:
       tags:
         - Image
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -1939,9 +2564,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getImageHistory
-      summary: ""
       description: ""
       parameters:
         - 
@@ -1954,6 +2585,14 @@ paths:
       tags:
         - Image
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -1983,9 +2622,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getImagePreview
-      summary: ""
       description: ""
       parameters:
         - 
@@ -1998,6 +2643,14 @@ paths:
       tags:
         - Image
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -2027,9 +2680,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getImageSize
-      summary: ""
       description: ""
       parameters:
         - 
@@ -2042,6 +2701,14 @@ paths:
       tags:
         - Image
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -2071,9 +2738,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getLanguageEdit
-      summary: ""
       description: ""
       parameters:
         - 
@@ -2086,6 +2759,14 @@ paths:
       tags:
         - Language
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -2115,9 +2796,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getLanguageProp
-      summary: ""
       description: ""
       parameters:
         - 
@@ -2130,6 +2817,14 @@ paths:
       tags:
         - Language
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -2159,9 +2854,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getLanguageRemove
-      summary: ""
       description: ""
       parameters:
         - 
@@ -2174,6 +2875,14 @@ paths:
       tags:
         - Language
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -2203,9 +2912,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getLanguageSetdefault
-      summary: ""
       description: ""
       parameters:
         - 
@@ -2218,6 +2933,14 @@ paths:
       tags:
         - Language
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -2247,9 +2970,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getLanguagelistAdd
-      summary: ""
       description: ""
       parameters:
         - 
@@ -2262,6 +2991,14 @@ paths:
       tags:
         - Languagelist
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -2291,9 +3028,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getLanguagelistEdit
-      summary: ""
       description: ""
       parameters:
         - 
@@ -2306,6 +3049,14 @@ paths:
       tags:
         - Languagelist
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -2335,9 +3086,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getLinkEdit
-      summary: ""
       description: ""
       parameters:
         - 
@@ -2350,6 +3107,14 @@ paths:
       tags:
         - Link
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -2379,9 +3144,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getLinkRemove
-      summary: ""
       description: ""
       parameters:
         - 
@@ -2394,6 +3165,14 @@ paths:
       tags:
         - Link
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -2423,9 +3202,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getLinkShow
-      summary: ""
       description: ""
       parameters:
         - 
@@ -2438,6 +3223,14 @@ paths:
       tags:
         - Link
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -2467,9 +3260,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getLinkValue
-      summary: ""
       description: ""
       parameters:
         - 
@@ -2482,6 +3281,14 @@ paths:
       tags:
         - Link
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -2511,9 +3318,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getLoginLicense
-      summary: ""
       description: ""
       parameters:
         - 
@@ -2526,6 +3339,14 @@ paths:
       tags:
         - Login
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -2555,9 +3376,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getLoginLogin
-      summary: ""
       description: ""
       parameters:
         - 
@@ -2570,6 +3397,14 @@ paths:
       tags:
         - Login
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -2599,9 +3434,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getLoginLogout
-      summary: ""
       description: ""
       parameters:
         - 
@@ -2614,6 +3455,14 @@ paths:
       tags:
         - Login
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -2643,9 +3492,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getLoginOidc
-      summary: ""
       description: ""
       parameters:
         - 
@@ -2658,6 +3513,14 @@ paths:
       tags:
         - Login
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -2687,9 +3550,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getLoginPassword
-      summary: ""
       description: ""
       parameters:
         - 
@@ -2702,6 +3571,14 @@ paths:
       tags:
         - Login
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -2731,9 +3608,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getLoginPasswordcode
-      summary: ""
       description: ""
       parameters:
         - 
@@ -2746,6 +3629,14 @@ paths:
       tags:
         - Login
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -2775,9 +3666,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getLoginRegister
-      summary: ""
       description: ""
       parameters:
         - 
@@ -2790,6 +3687,14 @@ paths:
       tags:
         - Login
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -2819,9 +3724,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getLoginRegistercode
-      summary: ""
       description: ""
       parameters:
         - 
@@ -2834,6 +3745,14 @@ paths:
       tags:
         - Login
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -2863,9 +3782,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getLoginUserinfo
-      summary: ""
       description: ""
       parameters:
         - 
@@ -2878,6 +3803,14 @@ paths:
       tags:
         - Login
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -2907,9 +3840,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getModelEdit
-      summary: ""
       description: ""
       parameters:
         - 
@@ -2922,6 +3861,14 @@ paths:
       tags:
         - Model
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -2951,9 +3898,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getModelProp
-      summary: ""
       description: ""
       parameters:
         - 
@@ -2966,6 +3919,14 @@ paths:
       tags:
         - Model
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -2995,9 +3956,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getModelRemove
-      summary: ""
       description: ""
       parameters:
         - 
@@ -3010,6 +3977,14 @@ paths:
       tags:
         - Model
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -3039,9 +4014,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getModelSetdefault
-      summary: ""
       description: ""
       parameters:
         - 
@@ -3054,6 +4035,14 @@ paths:
       tags:
         - Model
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -3083,9 +4072,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getModellistAdd
-      summary: ""
       description: ""
       parameters:
         - 
@@ -3098,6 +4093,14 @@ paths:
       tags:
         - Modellist
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -3127,9 +4130,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getModellistEdit
-      summary: ""
       description: ""
       parameters:
         - 
@@ -3142,6 +4151,14 @@ paths:
       tags:
         - Modellist
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -3171,9 +4188,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getPageAdvanced
-      summary: ""
       description: ""
       parameters:
         - 
@@ -3186,6 +4209,14 @@ paths:
       tags:
         - Page
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -3215,9 +4246,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getPageAll
-      summary: ""
       description: ""
       parameters:
         - 
@@ -3230,6 +4267,13 @@ paths:
       tags:
         - Page
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Values'
       responses:
         200:
           description: API response
@@ -3259,9 +4303,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getPageChangetemplate
-      summary: ""
       description: ""
       parameters:
         - 
@@ -3274,6 +4324,14 @@ paths:
       tags:
         - Page
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -3303,9 +4361,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getPageChangetemplateselectelements
-      summary: ""
       description: ""
       parameters:
         - 
@@ -3315,9 +4379,23 @@ paths:
             type: integer
           required: true
           description: ID
+        - 
+          in: query
+          name: newtemplateid
+          schema:
+            type: string
+          required: true
       tags:
         - Page
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -3347,9 +4425,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getPageEdit
-      summary: ""
       description: ""
       parameters:
         - 
@@ -3362,6 +4446,14 @@ paths:
       tags:
         - Page
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -3391,9 +4483,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getPageInfo
-      summary: ""
       description: ""
       parameters:
         - 
@@ -3406,6 +4504,14 @@ paths:
       tags:
         - Page
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -3435,9 +4541,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getPageName
-      summary: ""
       description: ""
       parameters:
         - 
@@ -3450,6 +4562,14 @@ paths:
       tags:
         - Page
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -3479,14 +4599,16 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getPagePreview
-      summary: >
-        Calculates the URL for the page preview	
-        /
-      description: >
-        Calculates the URL for the page preview	
-        /
+      description: Calculates the URL for the page preview
       parameters:
         - 
           in: path
@@ -3498,6 +4620,14 @@ paths:
       tags:
         - Page
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -3527,9 +4657,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getPagePub
-      summary: ""
       description: ""
       parameters:
         - 
@@ -3542,6 +4678,14 @@ paths:
       tags:
         - Page
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -3571,9 +4715,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getPageRemove
-      summary: ""
       description: ""
       parameters:
         - 
@@ -3586,6 +4736,14 @@ paths:
       tags:
         - Page
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -3615,9 +4773,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getPageShow
-      summary: ""
       description: ""
       parameters:
         - 
@@ -3630,6 +4794,14 @@ paths:
       tags:
         - Page
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -3659,9 +4831,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getPageSrc
-      summary: ""
       description: ""
       parameters:
         - 
@@ -3674,6 +4852,14 @@ paths:
       tags:
         - Page
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -3703,9 +4889,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getPageelementAdvanced
-      summary: ""
       description: ""
       parameters:
         - 
@@ -3718,6 +4910,14 @@ paths:
       tags:
         - Pageelement
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -3747,9 +4947,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getPageelementAll
-      summary: ""
       description: ""
       parameters:
         - 
@@ -3762,6 +4968,14 @@ paths:
       tags:
         - Pageelement
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -3791,9 +5005,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getPageelementDiff
-      summary: ""
       description: ""
       parameters:
         - 
@@ -3806,6 +5026,14 @@ paths:
       tags:
         - Pageelement
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -3835,9 +5063,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getPageelementEdit
-      summary: ""
       description: ""
       parameters:
         - 
@@ -3850,6 +5084,14 @@ paths:
       tags:
         - Pageelement
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -3879,9 +5121,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getPageelementHistory
-      summary: ""
       description: ""
       parameters:
         - 
@@ -3894,6 +5142,14 @@ paths:
       tags:
         - Pageelement
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -3923,9 +5179,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getPageelementInfo
-      summary: ""
       description: ""
       parameters:
         - 
@@ -3938,6 +5200,14 @@ paths:
       tags:
         - Pageelement
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -3967,9 +5237,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getPageelementLink
-      summary: ""
       description: ""
       parameters:
         - 
@@ -3982,6 +5258,14 @@ paths:
       tags:
         - Pageelement
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -4011,9 +5295,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getPageelementPreview
-      summary: ""
       description: ""
       parameters:
         - 
@@ -4026,6 +5316,14 @@ paths:
       tags:
         - Pageelement
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -4055,9 +5353,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getPageelementPub
-      summary: ""
       description: ""
       parameters:
         - 
@@ -4070,6 +5374,14 @@ paths:
       tags:
         - Pageelement
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -4099,9 +5411,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getPageelementRelease
-      summary: ""
       description: ""
       parameters:
         - 
@@ -4114,6 +5432,14 @@ paths:
       tags:
         - Pageelement
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -4143,9 +5469,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getPageelementRestore
-      summary: ""
       description: ""
       parameters:
         - 
@@ -4158,6 +5490,14 @@ paths:
       tags:
         - Pageelement
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -4187,9 +5527,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getPageelementValue
-      summary: ""
       description: ""
       parameters:
         - 
@@ -4202,6 +5548,14 @@ paths:
       tags:
         - Pageelement
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -4231,9 +5585,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getProfileAvailable
-      summary: ""
       description: ""
       parameters:
         - 
@@ -4246,6 +5606,14 @@ paths:
       tags:
         - Profile
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -4275,9 +5643,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getProfileBookmark
-      summary: ""
       description: ""
       parameters:
         - 
@@ -4290,6 +5664,14 @@ paths:
       tags:
         - Profile
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -4319,9 +5701,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getProfileConfirmmail
-      summary: ""
       description: ""
       parameters:
         - 
@@ -4334,6 +5722,14 @@ paths:
       tags:
         - Profile
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -4363,9 +5759,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getProfileEdit
-      summary: ""
       description: ""
       parameters:
         - 
@@ -4378,6 +5780,14 @@ paths:
       tags:
         - Profile
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -4407,9 +5817,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getProfileHistory
-      summary: ""
       description: ""
       parameters:
         - 
@@ -4422,6 +5838,14 @@ paths:
       tags:
         - Profile
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -4451,9 +5875,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getProfileLanguage
-      summary: ""
       description: ""
       parameters:
         - 
@@ -4466,6 +5896,14 @@ paths:
       tags:
         - Profile
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -4495,9 +5933,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getProfileMail
-      summary: ""
       description: ""
       parameters:
         - 
@@ -4510,6 +5954,14 @@ paths:
       tags:
         - Profile
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -4539,9 +5991,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getProfileMemberships
-      summary: ""
       description: ""
       parameters:
         - 
@@ -4554,6 +6012,14 @@ paths:
       tags:
         - Profile
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -4583,9 +6049,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getProfilePing
-      summary: ""
       description: ""
       parameters:
         - 
@@ -4598,6 +6070,14 @@ paths:
       tags:
         - Profile
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -4627,9 +6107,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getProfilePw
-      summary: ""
       description: ""
       parameters:
         - 
@@ -4642,6 +6128,14 @@ paths:
       tags:
         - Profile
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -4671,9 +6165,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getProfileShow
-      summary: ""
       description: ""
       parameters:
         - 
@@ -4686,6 +6186,14 @@ paths:
       tags:
         - Profile
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -4715,9 +6223,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getProfileTheme
-      summary: ""
       description: ""
       parameters:
         - 
@@ -4730,6 +6244,14 @@ paths:
       tags:
         - Profile
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -4759,9 +6281,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getProfileUisettings
-      summary: ""
       description: ""
       parameters:
         - 
@@ -4774,6 +6302,14 @@ paths:
       tags:
         - Profile
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -4803,10 +6339,16 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getProfileUserinfo
-      summary: Gets user information
-      description: 'Gets user information.	  If no user is logged in, default information will be returned.'
+      description: 'Gets user information. 	  If no user is logged in, default information will be returned.'
       parameters:
         - 
           in: path
@@ -4818,6 +6360,14 @@ paths:
       tags:
         - Profile
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -4847,9 +6397,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getProjectAdvanced
-      summary: ""
       description: ""
       parameters:
         - 
@@ -4862,6 +6418,14 @@ paths:
       tags:
         - Project
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -4891,9 +6455,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getProjectCopy
-      summary: ""
       description: ""
       parameters:
         - 
@@ -4906,6 +6476,14 @@ paths:
       tags:
         - Project
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -4935,9 +6513,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getProjectEdit
-      summary: ""
       description: ""
       parameters:
         - 
@@ -4950,6 +6534,14 @@ paths:
       tags:
         - Project
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -4979,9 +6571,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getProjectHistory
-      summary: ""
       description: ""
       parameters:
         - 
@@ -4994,6 +6592,14 @@ paths:
       tags:
         - Project
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -5023,9 +6629,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getProjectInfo
-      summary: ""
       description: ""
       parameters:
         - 
@@ -5038,6 +6650,14 @@ paths:
       tags:
         - Project
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -5067,9 +6687,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getProjectListing
-      summary: ""
       description: ""
       parameters:
         - 
@@ -5082,6 +6708,14 @@ paths:
       tags:
         - Project
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -5111,9 +6745,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getProjectProp
-      summary: ""
       description: ""
       parameters:
         - 
@@ -5126,6 +6766,14 @@ paths:
       tags:
         - Project
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -5155,9 +6803,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getProjectRemove
-      summary: ""
       description: ""
       parameters:
         - 
@@ -5170,6 +6824,14 @@ paths:
       tags:
         - Project
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -5199,9 +6861,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getScriptDiff
-      summary: ""
       description: ""
       parameters:
         - 
@@ -5214,6 +6882,14 @@ paths:
       tags:
         - Script
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -5243,9 +6919,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getScriptEdit
-      summary: ""
       description: ""
       parameters:
         - 
@@ -5258,6 +6940,14 @@ paths:
       tags:
         - Script
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -5287,9 +6977,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getScriptHistory
-      summary: ""
       description: ""
       parameters:
         - 
@@ -5302,6 +6998,14 @@ paths:
       tags:
         - Script
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -5331,9 +7035,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getScriptPreview
-      summary: ""
       description: ""
       parameters:
         - 
@@ -5346,6 +7056,14 @@ paths:
       tags:
         - Script
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -5375,9 +7093,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getScriptShow
-      summary: ""
       description: ""
       parameters:
         - 
@@ -5390,6 +7114,14 @@ paths:
       tags:
         - Script
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -5419,9 +7151,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getScriptValue
-      summary: ""
       description: ""
       parameters:
         - 
@@ -5434,6 +7172,14 @@ paths:
       tags:
         - Script
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -5463,9 +7209,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getSearchEdit
-      summary: ""
       description: ""
       parameters:
         - 
@@ -5478,6 +7230,14 @@ paths:
       tags:
         - Search
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -5507,9 +7267,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getSearchQuicksearch
-      summary: ""
       description: ""
       parameters:
         - 
@@ -5522,6 +7288,14 @@ paths:
       tags:
         - Search
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -5551,9 +7325,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTagEdit
-      summary: ""
       description: ""
       parameters:
         - 
@@ -5566,6 +7346,14 @@ paths:
       tags:
         - Tag
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -5595,9 +7383,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTagProp
-      summary: ""
       description: ""
       parameters:
         - 
@@ -5610,6 +7404,14 @@ paths:
       tags:
         - Tag
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -5639,9 +7441,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTagRemove
-      summary: ""
       description: ""
       parameters:
         - 
@@ -5654,6 +7462,14 @@ paths:
       tags:
         - Tag
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -5683,9 +7499,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTaglistAdd
-      summary: ""
       description: ""
       parameters:
         - 
@@ -5698,6 +7520,14 @@ paths:
       tags:
         - Taglist
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -5727,9 +7557,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTaglistEdit
-      summary: Get a listing of all tags in the project
       description: Get a listing of all tags in the project
       parameters:
         - 
@@ -5742,6 +7578,14 @@ paths:
       tags:
         - Taglist
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -5771,9 +7615,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTemplateAdd
-      summary: ""
       description: ""
       parameters:
         - 
@@ -5786,6 +7636,14 @@ paths:
       tags:
         - Template
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -5815,9 +7673,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTemplateAddel
-      summary: ""
       description: ""
       parameters:
         - 
@@ -5830,6 +7694,14 @@ paths:
       tags:
         - Template
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -5859,9 +7731,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTemplateDiff
-      summary: ""
       description: ""
       parameters:
         - 
@@ -5874,6 +7752,14 @@ paths:
       tags:
         - Template
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -5903,9 +7789,14 @@ paths:
           content:
             application/json:
               schema:
+                $ref: '#/components/schemas/Template'
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTemplateEdit
-      summary: ""
       description: ""
       parameters:
         - 
@@ -5918,6 +7809,14 @@ paths:
       tags:
         - Template
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -5947,9 +7846,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTemplateHistory
-      summary: ""
       description: ""
       parameters:
         - 
@@ -5962,6 +7867,14 @@ paths:
       tags:
         - Template
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -5991,9 +7904,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTemplateInfo
-      summary: ""
       description: ""
       parameters:
         - 
@@ -6006,6 +7925,14 @@ paths:
       tags:
         - Template
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -6035,9 +7962,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTemplatePreview
-      summary: ""
       description: ""
       parameters:
         - 
@@ -6050,6 +7983,14 @@ paths:
       tags:
         - Template
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -6079,9 +8020,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTemplateProp
-      summary: ""
       description: ""
       parameters:
         - 
@@ -6094,6 +8041,14 @@ paths:
       tags:
         - Template
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -6123,9 +8078,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTemplatePub
-      summary: ""
       description: ""
       parameters:
         - 
@@ -6138,6 +8099,14 @@ paths:
       tags:
         - Template
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -6167,9 +8136,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTemplateRelease
-      summary: ""
       description: ""
       parameters:
         - 
@@ -6182,6 +8157,14 @@ paths:
       tags:
         - Template
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -6211,9 +8194,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTemplateRemove
-      summary: ""
       description: ""
       parameters:
         - 
@@ -6226,6 +8215,14 @@ paths:
       tags:
         - Template
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -6255,9 +8252,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTemplateRestore
-      summary: ""
       description: ""
       parameters:
         - 
@@ -6270,6 +8273,14 @@ paths:
       tags:
         - Template
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -6299,9 +8310,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTemplateShow
-      summary: ""
       description: ""
       parameters:
         - 
@@ -6314,6 +8331,14 @@ paths:
       tags:
         - Template
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -6343,9 +8368,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTemplateSrc
-      summary: ""
       description: ""
       parameters:
         - 
@@ -6358,6 +8389,14 @@ paths:
       tags:
         - Template
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -6387,9 +8426,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTemplateSrcelement
-      summary: ""
       description: ""
       parameters:
         - 
@@ -6402,6 +8447,14 @@ paths:
       tags:
         - Template
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -6431,9 +8484,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTemplatelistAdd
-      summary: ""
       description: ""
       parameters:
         - 
@@ -6446,6 +8505,14 @@ paths:
       tags:
         - Templatelist
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -6475,9 +8542,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTemplatelistEdit
-      summary: ""
       description: ""
       parameters:
         - 
@@ -6490,6 +8563,14 @@ paths:
       tags:
         - Templatelist
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -6519,9 +8600,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTextDiff
-      summary: ""
       description: ""
       parameters:
         - 
@@ -6534,6 +8621,14 @@ paths:
       tags:
         - Text
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -6563,9 +8658,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTextEdit
-      summary: ""
       description: ""
       parameters:
         - 
@@ -6578,6 +8679,14 @@ paths:
       tags:
         - Text
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -6607,9 +8716,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTextHistory
-      summary: ""
       description: ""
       parameters:
         - 
@@ -6622,6 +8737,14 @@ paths:
       tags:
         - Text
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -6651,9 +8774,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTextPreview
-      summary: ""
       description: ""
       parameters:
         - 
@@ -6666,6 +8795,14 @@ paths:
       tags:
         - Text
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -6695,9 +8832,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTextShow
-      summary: ""
       description: ""
       parameters:
         - 
@@ -6710,6 +8853,14 @@ paths:
       tags:
         - Text
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -6739,9 +8890,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTextValue
-      summary: ""
       description: ""
       parameters:
         - 
@@ -6754,6 +8911,14 @@ paths:
       tags:
         - Text
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -6783,9 +8948,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getUrlEdit
-      summary: ""
       description: ""
       parameters:
         - 
@@ -6798,6 +8969,14 @@ paths:
       tags:
         - Url
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -6827,9 +9006,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getUrlPreview
-      summary: ""
       description: ""
       parameters:
         - 
@@ -6842,6 +9027,14 @@ paths:
       tags:
         - Url
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -6871,9 +9064,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getUrlRemove
-      summary: ""
       description: ""
       parameters:
         - 
@@ -6886,6 +9085,14 @@ paths:
       tags:
         - Url
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -6915,9 +9122,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getUrlShow
-      summary: ""
       description: ""
       parameters:
         - 
@@ -6930,6 +9143,14 @@ paths:
       tags:
         - Url
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -6959,9 +9180,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getUrlValue
-      summary: ""
       description: ""
       parameters:
         - 
@@ -6974,6 +9201,14 @@ paths:
       tags:
         - Url
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -7003,9 +9238,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getUserAddgrouptouser
-      summary: ""
       description: ""
       parameters:
         - 
@@ -7018,6 +9259,14 @@ paths:
       tags:
         - User
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -7047,9 +9296,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getUserAddtoken
-      summary: ""
       description: ""
       parameters:
         - 
@@ -7062,6 +9317,14 @@ paths:
       tags:
         - User
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -7091,9 +9354,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getUserAdvanced
-      summary: ""
       description: ""
       parameters:
         - 
@@ -7106,6 +9375,14 @@ paths:
       tags:
         - User
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -7135,9 +9412,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getUserDeltoken
-      summary: ""
       description: ""
       parameters:
         - 
@@ -7150,6 +9433,14 @@ paths:
       tags:
         - User
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -7179,9 +9470,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getUserEdit
-      summary: ""
       description: ""
       parameters:
         - 
@@ -7194,6 +9491,14 @@ paths:
       tags:
         - User
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -7223,9 +9528,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getUserHistory
-      summary: ""
       description: ""
       parameters:
         - 
@@ -7238,6 +9549,14 @@ paths:
       tags:
         - User
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -7267,9 +9586,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getUserInfo
-      summary: ""
       description: ""
       parameters:
         - 
@@ -7282,6 +9607,14 @@ paths:
       tags:
         - User
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -7311,9 +9644,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getUserListing
-      summary: ""
       description: ""
       parameters:
         - 
@@ -7326,6 +9665,14 @@ paths:
       tags:
         - User
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -7355,9 +9702,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getUserMemberships
-      summary: ""
       description: ""
       parameters:
         - 
@@ -7370,6 +9723,14 @@ paths:
       tags:
         - User
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -7399,9 +9760,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getUserProp
-      summary: ""
       description: ""
       parameters:
         - 
@@ -7414,6 +9781,14 @@ paths:
       tags:
         - User
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -7443,9 +9818,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getUserPw
-      summary: ""
       description: ""
       parameters:
         - 
@@ -7458,6 +9839,14 @@ paths:
       tags:
         - User
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -7487,9 +9876,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getUserRemove
-      summary: ""
       description: ""
       parameters:
         - 
@@ -7502,6 +9897,14 @@ paths:
       tags:
         - User
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -7531,9 +9934,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getUserRights
-      summary: ""
       description: ""
       parameters:
         - 
@@ -7546,6 +9955,14 @@ paths:
       tags:
         - User
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -7575,9 +9992,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getUserSwitch
-      summary: ""
       description: ""
       parameters:
         - 
@@ -7590,6 +10013,14 @@ paths:
       tags:
         - User
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -7619,9 +10050,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getUserlistAdd
-      summary: ""
       description: ""
       parameters:
         - 
@@ -7634,6 +10071,14 @@ paths:
       tags:
         - Userlist
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -7663,9 +10108,15 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: API response
+          content:
+            application/json:
+              schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getUserlistEdit
-      summary: ""
       description: ""
       parameters:
         - 
@@ -7678,6 +10129,14 @@ paths:
       tags:
         - Userlist
     post:
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
       responses:
         200:
           description: API response
@@ -7710,32 +10169,190 @@ components:
       type: apiKey
       in: header
       name: X-API-Key
+    TokenAuth:
+      type: http
+      scheme: token
   schemas:
     APIResponse:
       type: object
+      description: ""
       properties:
-        output:
-          type: object
         notices:
           type: array
+          items:
+            type: string
+          description: ""
         errors:
           type: array
+          items:
+            type: string
+          description: ""
         status:
           type: string
+          description: ""
         notice_status:
           type: string
+          description: ""
         success:
           type: boolean
+          description: ""
         session:
-          type: object
+          type: string
+          description: ""
         version:
           type: string
+          description: ""
         api:
+          type: string
+          description: ""
+    ArrayOf:
+      type: object
+      description: ""
+      properties:
+        className:
+          type: string
+          description: ""
+    Element:
+      type: object
+      description: ""
+      properties:
+        id:
           type: integer
+          description: ""
+        name:
+          type: string
+          description: ""
+        label:
+          type: string
+          description: ""
+        description:
+          type: string
+          description: ""
+        type:
+          type: string
+          description: ""
+        typeId:
+          type: integer
+          description: ""
+    Event:
+      type: object
+      description: Event which happens in the CMS.
+      properties:
+        type:
+          type: string
+          description: What type of object
+        id:
+          type: integer
+          description: The Id of the object
+        event:
+          type: string
+          description: What happens
+        description:
+          type: string
+          description: A description
+    Language:
+      type: object
+      description: ""
+      properties:
+        id:
+          type: integer
+          description: ""
+        isoCode:
+          type: string
+          description: ""
+        label:
+          type: string
+          description: ""
+    PageAll:
+      type: object
+      description: ""
+      properties:
+        objectId:
+          type: integer
+          description: ""
+        pageId:
+          type: integer
+          description: ""
+        languages:
+          type: array
+          items:
+            type: string
+          description: ""
+        elements:
+          type: array
+          items:
+            type: string
+          description: ""
+    Template:
+      type: object
+      description: Template.
+      properties:
+        id:
+          type: integer
+          description: The ID of the template.
+        elements:
+          type: array
+          items:
+            type: string
+          description: ""
+        templateModels:
+          type: array
+          items:
+            type: string
+          description: ""
+    TemplateModel:
+      type: object
+      description: ""
+      properties:
+        id:
+          type: integer
+          description: ""
+        name:
+          type: string
+          description: ""
+        source:
+          type: string
+          description: ""
+        format:
+          type: string
+          description: ""
+    Value:
+      type: object
+      description: ""
+      properties:
+        elementId:
+          type: integer
+          description: ""
+        elementName:
+          type: string
+          nullable: true
+          description: ""
+        languageId:
+          type: integer
+          description: ""
+        languageName:
+          type: string
+          nullable: true
+          description: ""
+        value:
+          type: string
+          description: ""
+        date:
+          type: integer
+          nullable: true
+          description: ""
+    Values:
+      type: object
+      description: ""
+      properties:
+        values:
+          type: array
+          items:
+            type: string
+          description: ""
 security:
   - 
     BasicAuth: [ ]
-  - 
     BearerAuth: [ ]
-  - 
     ApiKeyAuth: [ ]
+    TokenAuth: [ ]

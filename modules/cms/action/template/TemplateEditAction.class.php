@@ -2,6 +2,7 @@
 namespace cms\action\template;
 use cms\action\Method;
 use cms\action\TemplateAction;
+use cms\action\UiOutClass;
 use cms\api\Model;
 use cms\api\Template;
 use cms\model\Element;
@@ -10,6 +11,8 @@ use cms\model\TemplateModel;
 
 
 class TemplateEditAction extends TemplateAction implements Method {
+
+	#[UiOutClass(Template::class)]
     public function view() {
 		$apiTemplate = new Template(
 			$this->template->getId(),

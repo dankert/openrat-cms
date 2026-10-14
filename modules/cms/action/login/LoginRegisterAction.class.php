@@ -23,7 +23,7 @@ class LoginRegisterAction extends LoginAction implements Method {
 
 		Session::set( Session::KEY_REGISTER_MAIL,$email_address );
 		
-		srand ((double)microtime()*1000003);
+		srand ((float)microtime()*1000003);
 		$registerCode = rand();
 		
 		Session::set( Session::KEY_REGISTER_CODE,$registerCode  );

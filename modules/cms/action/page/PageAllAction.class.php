@@ -3,6 +3,7 @@ namespace cms\action\page;
 
 use cms\action\Method;
 use cms\action\PageAction;
+use cms\action\UiInClass;
 use cms\action\ValueMapping;
 use cms\api\Values;
 use cms\base\Language as L;
@@ -94,6 +95,7 @@ class PageAllAction extends PageAction implements Method {
 
 
 
+	#[UiInClass(Values::class)]
     public function post( )
 	{
 		/** @var Values $values */

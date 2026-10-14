@@ -15,7 +15,7 @@ class ProfileMailAction extends ProfileAction implements Method {
     }
 
     public function post() {
-		srand ((double)microtime()*1000003);
+		srand ((float)microtime()*1000003);
 		$code = rand(); // Zufalls-Freischaltcode erzeugen
 		$newMail = $this->request->getText('mail');
 
