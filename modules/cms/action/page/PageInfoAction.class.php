@@ -42,7 +42,10 @@ class PageInfoAction extends PageAction implements Method {
             $languagesVar['languagename'] = $name;
             $languagesVar['languageid'  ] = $id;
             $alias = $this->page->getAliasForLanguage( $id );
-            $languagesVar['alias'       ] = $alias->full_filename();
+			if   ( $alias->isPersistent() )
+            	$languagesVar['alias'       ] = $alias->full_filename();
+			else
+				$languagesVar['alias'       ] = '';
 
             $languagesVars[] = $languagesVar;
         }

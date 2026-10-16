@@ -32,7 +32,7 @@ interface Output
 	/**
 	 * Gets the content type.
 	 *
-	 * @return string
+	 * @return string|null
 	 */
-	public function getContentType();
+	public function getContentType(): string|null;
 }

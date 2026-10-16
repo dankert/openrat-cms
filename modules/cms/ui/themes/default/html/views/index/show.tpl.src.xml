@@ -396,7 +396,7 @@
 			     These will be read by notice.js and are converted to a real notice after DOM is loaded -->
 			<or:list list="${notices}" value="notice">
 				<div class="or--invisible or-act-initial-notice">
-					<or:text value="${notice.text}"/>
+					<or:text value="${notice}"/>
 				</div>
 			</or:list>
 		</div>

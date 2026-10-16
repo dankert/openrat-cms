@@ -54,6 +54,10 @@ class TemplateModel extends ModelBase
 	 * @var int
 	 */
 	public $format;
+	/**
+	 * @var mixed|string
+	 */
+	private string|null $mime_type = null;
 
 	/**
      * TemplateModel constructor.
@@ -212,6 +216,9 @@ SQL
 	 */
 	public function mimeType()
 	{
+		if   ( $this->mime_type )
+			return $this->mime_type;
+
 		// Nur den letzten Teil der Extension auswerten:
 		// Aus 'mobile.html' wird nur 'html' verwendet.
 		$parts = explode('.',$this->extension);

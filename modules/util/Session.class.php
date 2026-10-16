@@ -45,7 +45,7 @@ class Session
 			return null;
 	}
 
-	public static function set($var, $value)
+	public static function set($var, $value): void
 	{
 		// Should so, but no not possible :(
 		//if   ( !self::$sessionStarted )

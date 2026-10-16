@@ -23,6 +23,9 @@ use util\json\JSON;
 use logger\Logger;
 use util\Less;
 use \util\exception\ObjectNotFoundException;
+use cms\base\Language as L;
+
+
 class IndexShowAction extends IndexAction implements Method {
 
     public function view() {
@@ -68,11 +71,14 @@ class IndexShowAction extends IndexAction implements Method {
 
         $messageOfTheDay = C::subset('login')->get('motd','');
 
+		$notices = [];
         if ( $messageOfTheDay )
-            $this->addInfoFor( new User(),Messages::MOTD,array('motd' => $messageOfTheDay) );
+            $notices[] = L::lang(Messages::MOTD,array('motd' => $messageOfTheDay) );
 
         if ( DEVELOPMENT )
-            $this->addInfoFor( new User(),Messages::DEVELOPMENT_MODE );
+            $notices[] = L::lang(Messages::DEVELOPMENT_MODE );
+
+		$this->setTemplateVar('notices', $notices );
 
 		$this->setTemplateVar('favicon_url', C::subset('theme')->get('favicon','modules/cms/ui/themes/default/images/openrat-logo.ico') );
 

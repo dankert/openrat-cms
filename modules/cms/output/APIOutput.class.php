@@ -3,9 +3,13 @@
 namespace cms\output;
 
 use cms\action\RequestParams;
+use cms\api\APIResponse;
+use cms\api\TraceElement;
 use cms\base\Startup;
 use Exception;
+use Throwable;
 use util\exception\ClientException;
+use util\Hydrator;
 use util\Session;
 
 /**
@@ -20,26 +24,29 @@ abstract class APIOutput extends BaseOutput
      *
      * @param $e Exception
      */
-    private static function exceptionToArray($e)
+    private static function exceptionToArray( Throwable $e): \cms\api\Exception
     {
-        $data = array(
-            'error'      => get_class($e),
-            'description'=> $e->getMessage(),
-            'code'       => $e->getCode(),
+		$previous = $e->getPrevious();
+		if   ( $previous != null )
+			$cause = self::exceptionToArray($previous );
+		else
+			$cause = null;
 
-            'trace'=>array_merge( array( array(
-                'file'     => $e->getFile(),
-                'line'     => $e->getLine(),
-                'function' => '',
-                'class'    => '',
-                )), self::removeArgsFromTrace($e->getTrace()))
-        );
-
-        // the cause of the exception is another exception.
-        if   ( $e->getPrevious() )
-            $data['cause'] = self::exceptionToArray($e->getPrevious() );
-
-        return $data;
+		return new \cms\api\Exception(
+			get_class($e),
+			$e->getMessage(),
+            $e->getCode(),
+			array_map(
+				function( $trace ) {
+					return new TraceElement(
+						$trace['file'],
+						$trace['line'],
+						@$trace['function'],
+						@$trace['class'],
+						// no 'args' for security reasons
+					);}
+					,$e->getTrace()),
+		$cause );
     }
 
 	/**
@@ -57,36 +64,10 @@ abstract class APIOutput extends BaseOutput
 	}
 
 
-    /**
-     * Removing the call argument from the trace.
-     *
-     * This is because of security reasons. The arguments could be an information leak.
-     *
-     * @param $trace array
-     * @return array
-     */
-    private static function removeArgsFromTrace($trace)
-    {
-        foreach( $trace as &$t )
-        {
-            unset($t['args']);
-        }
 
-        return $trace;
-    }
 
-	protected function outputData($request, $data)
+	protected function outputData(RequestParams|null $request, $data): void
 	{
-		$data += [
-			'session' => [
-				'name'  => session_name(),
-				'id'    => session_id(),
-				'token' => Session::token()
-			],
-			'version' => Startup::VERSION,
-			'api'     => Startup::API_LEVEL,
-		];
-
 		$output = $this->renderOutput( $data );
 
 		// HTTP Spec:
@@ -98,32 +79,40 @@ abstract class APIOutput extends BaseOutput
 		echo $output;
 	}
 
-	abstract protected function renderOutput( $data );
+	abstract protected function renderOutput(array $data ): string;
 
 	/**
 	 * @param string $text
 	 * @param Exception $cause
 	 */
-	protected function setError($text, $cause)
+	protected function setError(string $text, Exception $cause): void
 	{
-		$data = [
-			'message' => $text,
-			'notices' => [
-				[
+		// Traces only in DEVELOPMENT mode
+		// for security reasons, because traces may contain sensitive information.
+		if (!defined('DEVELOPMENT') || DEVELOPMENT)
+			$apiException = $this->exceptionToArray($cause);
+		else
+			$apiException = null;
+
+		$apiResponse = new APIResponse(
+			$text,
+			[ [
 					'status'=> 'error',
 					'text'  => $text,
 					'log'   => (!defined('DEVELOPMENT') || DEVELOPMENT) ? $cause->getMessage() : '',
 				]
 			],
-			'errors'  => [],
-		];
+			[],
+			'',
+			'',
+			false,
+			'',
+			Startup::VERSION,
+			Startup::API_LEVEL,
+			$apiException
+		);
 
-		// Traces only in DEVELOPMENT mode
-		// for security reasons, because traces may contain sensitive information.
-		if (!defined('DEVELOPMENT') || DEVELOPMENT)
-			$data['cause'] = $this->exceptionToArray($cause);
-
-		$this->outputData(null,$data);
+		$this->outputData(null,Hydrator::toArray($apiResponse) );
 	}
 
 }

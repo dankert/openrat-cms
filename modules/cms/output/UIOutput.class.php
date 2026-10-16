@@ -46,14 +46,14 @@ class UIOutput extends BaseOutput
 
 
 
-    protected function outputData($request, $data)
+    protected function outputData($request, $data): void
     {
         // The action is able to change its method and action name.
         $subaction = $request->method;
         $action    = $request->action;
 
 
-        $this::outputTemplate($request,$action, $subaction, $data['output'] );
+        $this::outputTemplate($request,$action, $subaction, $data );
     }
 
 
@@ -142,11 +142,11 @@ class UIOutput extends BaseOutput
 
 
 	/**
-	 * @param $text
+	 * @param string $text
 	 * @param $cause Exception the cause, or <code>null</code> if not available.
 	 */
-	protected function setError($text, $cause)
-	{
+	protected function setError(string $text, Exception $cause):void
+{
 		if ( !headers_sent() )
 			// The following HTML contains inline CSS code, so we have to allow inline CSS.
 			header('Content-Security-Policy: style-src: inline; default: self');
@@ -223,7 +223,7 @@ class UIOutput extends BaseOutput
 
 	}
 
-	public function getContentType()
+	public function getContentType(): string|null
 	{
 		return 'text/html';
 	}

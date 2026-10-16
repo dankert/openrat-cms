@@ -11,19 +11,19 @@ use util\YAML;
  */
 class PreviewOutput extends UIOutput
 {
-	protected function outputData($request, $data)
+	protected function outputData($request, $data): void
 	{
 		// HTTP Spec:
 		// "Applications SHOULD use this field to indicate the transfer-length of the
 		//  message-body, unless this is prohibited by the rules in section 4.4."
 		//
 		// And the overhead of 'Transfer-Encoding: chunked' is eliminated...
-		header('Content-Length: ' . strlen($data['output']['value']));
+		header('Content-Length: ' . strlen($data['value']));
 
-		echo $data['output']['value'];
+		echo $data['value'];
 	}
 
-	public function getContentType()
+	public function getContentType(): string|null
 	{
 		return null; // the content type is set by the action itself.
 	}

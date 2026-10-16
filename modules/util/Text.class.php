@@ -64,9 +64,9 @@ class Text
 	{
 		if (strlen($text) > $laenge) {
 			if ($where == STR_PAD_RIGHT)
-				$text = substr($text, 0, $laenge) . $append;
+				$text = substr($text, 0, $laenge-strlen($append)) . $append;
 			elseif ($where == STR_PAD_BOTH)
-				$text = substr($text, 0, $laenge / 2) . $append . substr($text, strlen($text) - ($laenge / 2));
+				$text = substr($text, 0, floor($laenge-strlen($append) / 2)) . $append . substr($text, strlen($text) - ceil($laenge-strlen($append) / 2));
 		}
 
 		return $text;

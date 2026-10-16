@@ -14,14 +14,14 @@ class PlainOutput extends APIOutput
 	/**
      * Renders the output as plain text.
      */
-    protected function renderOutput( $data )
+    protected function renderOutput(array $data ): string
 	{
 		//return YAML::dump($data);
 		return print_r($data);
 	}
 
-	public function getContentType()
-	{
+	public function getContentType(): string
+    {
 		return 'text/plain';
 	}
 }

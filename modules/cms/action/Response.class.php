@@ -2,8 +2,10 @@
 
 namespace cms\action;
 
+use cms\api\Notice;
 use cms\base\Language as L;
 use cms\base\Startup;
+use logger\Logger;
 use util\Session;
 
 /**
@@ -11,13 +13,13 @@ use util\Session;
  */
 class Response
 {
-	protected $header  = [];
+	protected array $header  = [];
 
-	protected $errors  = [];
-	protected $notices = [];
-	protected $output  = [];
-	protected $status  = Action::NOTICE_OK;
-	public    $success = true;
+	protected array $errors  = [];
+	protected array $notices = [];
+	protected array $output  = [];
+	protected string $status  = Action::NOTICE_OK;
+	public bool $success = true;
 
 	public function addHeader( $name, $value ) {
 		$this->header[$name] = $value;
@@ -55,23 +57,9 @@ class Response
 	 *
 	 * @return array
 	 */
-	public function getOutputData()
+	public function getOutputData(): array
 	{
-		return [
-			'output'        => $this->output,
-			'notices'       => $this->notices, // notices
-			'errors'        => $this->errors,  // fieldnames with validation errors
-			'status'        => $this->status,  // notice status
-			'notice_status' => $this->status,  // same as above, historical reasons
-			'success'       => $this->success, // success, true if there are no errors and no notices with status error.
-			'session'       => [
-				'name'  => session_name(),
-				'id'    => session_id(),
-				'token' => Session::token()
-			],
-			'version'       => Startup::VERSION,
-			'api'           => Startup::API_LEVEL,
-		];
+		return $this->output;
 	}
 
 
@@ -103,7 +91,7 @@ class Response
 	 * @param array $vars Variablen f�r den Textschl�ssel
 	 * @param string|array $log Weitere Hinweistexte f�r diese Meldung.
 	 */
-	public function addNotice($type, $id, $name, $text, $status = Action::NOTICE_OK, $vars = array(), $log = array())
+	public function addNotice($type, $id, $name, $text, $status = Action::NOTICE_OK, $vars = array(), $log = array()): void
 	{
 		$this->status  = ($status == Action::NOTICE_ERROR) ? Action::NOTICE_ERROR : $status;
 		$this->success = $this->success && $status != Action::NOTICE_ERROR;
@@ -113,15 +101,17 @@ class Response
 
 		$vars = (array) $vars;
 
-		$this->notices[] = [
-			'type'   => $type,
-			'id'     => $id  ,
-			'name'   => $name,
-			'key'    => $text,
-			'vars'   => $vars,
-			'text'   => L::lang($text, $vars),
-			'log'    => $log ,
-			'status' => $status];
+		$this->notices[] = new Notice(
+			$type,
+			intval($id),
+			$name,
+			$text,
+			$vars,
+			L::lang($text, $vars),
+			(array) $log,
+			$status,
+		);
+
 	}
 
 
@@ -136,4 +126,27 @@ class Response
 		return array_key_exists($string , $this->header );
 	}
 
+	/**
+	 * @return string
+	 */
+	public function getStatus(): string
+	{
+		return $this->status;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getNotices(): array
+	{
+		return $this->notices;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getErrors(): array
+	{
+		return $this->errors;
+	}
 }

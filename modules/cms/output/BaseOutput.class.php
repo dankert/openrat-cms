@@ -5,6 +5,7 @@ namespace cms\output;
 use BadMethodCallException;
 use cms\action\RequestParams;
 use cms\action\Response;
+use cms\api\APIResponse;
 use cms\base\Language as L;
 use cms\base\Startup;
 use cms\Dispatcher;
@@ -15,6 +16,8 @@ use logger\Logger;
 use \util\exception\ObjectNotFoundException;
 use util\exception\UIException;
 use util\exception\SecurityException;
+use util\Hydrator;
+use util\Session;
 
 
 /**
@@ -29,7 +32,7 @@ abstract class BaseOutput implements Output
 	 * @param $data array data array
 	 * @return void
 	 */
-	abstract protected function outputData($request, $data);
+	abstract protected function outputData(RequestParams|null $request, array $data): void;
 
 	/**
 	 * Calling the dispatcher.
@@ -56,7 +59,30 @@ abstract class BaseOutput implements Output
 
 			$response->setHTTPHeader();
 
-			$this->outputData( $request,$response->getOutputData() );  // ... and output the data
+			if   ( $request->isAction ) {
+
+				$apiResponse = new APIResponse(
+					'',
+					$response->getNotices(), // notices
+					$response->getErrors(),  // fieldnames with validation errors
+					$response->getStatus(),  // notice status
+					$response->getStatus(),  // same as above, historical reasons
+					$response->success, // success, true if there are no errors and no notices with status error.
+					new \cms\api\Session(
+						session_name(),
+						session_id(),
+						Session::token(),
+					),
+				Startup::VERSION,
+					intval(Startup::API_LEVEL),
+					null,
+				);
+
+				$this->outputData( $request,Hydrator::toArray($apiResponse ) );  // ... and output the data
+			}
+			else {
+				$this->outputData( $request,$response->getOutputData() );  // ... and output the data
+			}
 
 		} catch (BadMethodCallException $e) {
 			// Action-Method does not exist.
@@ -104,5 +130,5 @@ abstract class BaseOutput implements Output
 	 * @param $text string a message
 	 * @param $cause Exception
 	 */
-	abstract protected function setError($text, $cause);
+	abstract protected function setError(string $text, Exception $cause): void;
 }

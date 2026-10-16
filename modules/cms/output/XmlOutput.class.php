@@ -14,7 +14,7 @@ class XmlOutput extends APIOutput
 	/**
      * Renders the output in JSON Format.
      */
-    protected function renderOutput( $data )
+    protected function renderOutput(array $data ): string
 	{
 		$xml = new XML();
 		$xml->root = 'server'; // Name des XML-root-Elementes
@@ -22,7 +22,7 @@ class XmlOutput extends APIOutput
 
 	}
 
-	public function getContentType()
+	public function getContentType(): string
 	{
 		return 'application/xml';
 	}

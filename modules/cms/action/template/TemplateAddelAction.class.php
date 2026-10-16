@@ -55,6 +55,6 @@ class TemplateAddelAction extends TemplateAction implements Method {
 
 		}
 
-		$this->addNoticeFor($this->template,Messages::SAVED);
+		$this->addNoticeFor($newElement,Messages::ADDED);
     }
 }

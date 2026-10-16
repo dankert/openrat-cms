@@ -14,14 +14,14 @@ class PHPSerializeOutput extends APIOutput
 	/**
      * Renders the output in JSON Format.
      */
-    protected function renderOutput( $data )
+    protected function renderOutput(array $data ): string
 	{
 		header('Content-Type: application/json; charset=UTF-8');
 		return serialize($data);
 	}
 
-	public function getContentType()
-	{
+	public function getContentType(): string
+    {
 		return 'application/php-serialized';
 	}
 }

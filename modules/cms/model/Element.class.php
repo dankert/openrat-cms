@@ -485,7 +485,7 @@ SQL
 					}
 				}
 				return $this->getName();
-			case 'number';
+			case 'number':
 				return '0';
 			default:
 				return $this->getName();

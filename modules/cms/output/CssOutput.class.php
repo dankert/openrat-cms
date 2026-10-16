@@ -13,16 +13,16 @@ use util\YAML;
  */
 class CssOutput extends BaseOutput
 {
-	public function getContentType()
-	{
+	public function getContentType(): string
+    {
 		return 'text/css';
 	}
 
-	protected function outputData($request, $data)
+	protected function outputData($request, $data): void
 	{
 		if   ( DEVELOPMENT )
-			echo "/* CSS Output\n\n".json_encode($data['output'],JSON_PRETTY_PRINT)."\n*/\n";
-		echo $this->renderCSSToString($data['output']);
+			echo "/* CSS Output\n\n".json_encode($data,JSON_PRETTY_PRINT)."\n*/\n";
+		echo $this->renderCSSToString($data);
 	}
 
 
@@ -30,7 +30,7 @@ class CssOutput extends BaseOutput
 	 * @param $text string Error Message
 	 * @param $cause Exception
 	 */
-	protected function setError($text, $cause)
+	protected function setError(string $text, Exception $cause): void
 	{
 		echo '/* CSS Output error: '.$cause->getMessage().' */';
 	}

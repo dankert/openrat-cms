@@ -13,13 +13,13 @@ class PHPArrayOutput extends APIOutput
 	/**
      * Renders the output as machine-readable PHP array format.
      */
-    protected function renderOutput( $data )
+    protected function renderOutput(array $data ): string
 	{
 		return var_export($data, true);
 	}
 
-	public function getContentType()
-	{
+	public function getContentType(): string
+    {
 		return 'application/php-array';
 	}
 }

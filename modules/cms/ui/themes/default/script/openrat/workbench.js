@@ -316,18 +316,18 @@ export default class Workbench {
 		});
 		let json = await response.json();
 
-		let style       = json.output['style'];
-		let styleScheme = json.output['styleScheme'];
+		let style       = json['style'];
+		let styleScheme = json['styleScheme'];
 		this.loadUserTheme(style,styleScheme);
 
 		// is the user logged in?
-		if   ( json.output['name'  ] )
+		if   ( json['name'  ] )
 			$('.or-workbench').addClass('user--logged-in').removeClass('user--anonymous');
 		else
 			$('.or-workbench').removeClass('user--logged-in').addClass('user--anonymous');
 
-		document.querySelector('.or-userinfo').title = json.output['name'  ];
-		document.querySelector('.or-userinfo').innerHTML = json.output['letter'];
+		document.querySelector('.or-userinfo').title = json['name'  ];
+		document.querySelector('.or-userinfo').innerHTML = json['letter'];
 	}
 
 
@@ -348,7 +348,7 @@ export default class Workbench {
 		);
 		let data     = await response.json();
 
-		Workbench.language = data.output.language;
+		Workbench.language = data.language;
 	}
 
 	/**
@@ -366,7 +366,7 @@ export default class Workbench {
 		});
 		let data = await response.json();
 
-		Workbench.settings = data.output.settings.settings;
+		Workbench.settings = data.settings.settings;
 	}
 
 
@@ -451,7 +451,7 @@ export default class Workbench {
 				throw "loading theme info failed";
 
 			let data = await response.json();
-			let schemes = data.output.style;
+			let schemes = data.style;
 
 			let scheme;
 			if   ( themeScheme == 1 ) {
@@ -664,7 +664,7 @@ export default class Workbench {
 		});
 		let data     = await response.json();
 
-		for (let method of Object.values(data.output.views))
+		for (let method of Object.values(data.views))
 			$('.or-workbench-title .or-filtered > .or-link[data-method=\'' + method + '\']')
 				.parent()
 				.addClass('dropdown-entry--active')
