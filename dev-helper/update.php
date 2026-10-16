@@ -1,8 +1,10 @@
 <?php
 
-use cms\action\ActionsAnalyzer;
+use cms\action\OpenApiGenerator;
 use cms\ui\themes\ThemeCompiler;
 use language\LanguageCompiler;
+use template_engine\components\XSDGenerator;
+use template_engine\TemplateCompiler;
 
 define('XSD' ,'xsd' );
 define('TPL' ,'tpl' );
@@ -26,11 +28,13 @@ if   ( @$type )
 	header('Content-Type: text/plain');
 	switch ($type) {
 		case XSD:
-			require (__DIR__.'/../modules/template_engine/components/XSDGenerator.php');
+			$generator = new XSDGenerator();
+			$generator->generate();
 			break;
 
 		case TPL:
-            require (__DIR__.'/../modules/template_engine/TemplateCompiler.php');
+			$generator = new TemplateCompiler();
+			$generator->generate();
 			break;
 
 		case LANG:
@@ -49,7 +53,7 @@ if   ( @$type )
 			break;
 
 		case API:
-			$compiler = new ActionsAnalyzer();
+			$compiler = new OpenApiGenerator();
 			break;
 		default:
 			echo "Unknown type";

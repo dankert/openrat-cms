@@ -5,7 +5,7 @@ namespace cms\action;
 header('Content-Type: text/plain');
 
 /**
- * Using the Component classes and generating a XSD-File.
+ * Using the Component classes and generating a OpenAPI-File.
  */
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -13,7 +13,7 @@ ini_set('display_startup_errors', 1);
 
 use cms\base\Startup;
 
-Startup::initialize();
+#Startup::initialize();
 
 use ReflectionNamedType;
 use ReflectionUnionType;
@@ -23,7 +23,7 @@ use util\Session;
 use util\YAML;
 use cms\action\UiInClass;
 
-class ActionsAnalyzer
+class OpenApiGenerator
 {
 	private $paths = [];
 
