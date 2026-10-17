@@ -64,7 +64,7 @@ class PageGenerator extends BaseGenerator
 				// Unrecoverable Error while generating the content.
 				Logger::info( $e );
 
-				throw new GeneratorException("Element '".$element->name."' could not be generated.",$e);
+				throw new GeneratorException("Element '".$element->__toString()."' in page '".$page->__toString()."' could not be generated.",$e);
 			}
 
 		}
@@ -98,7 +98,7 @@ class PageGenerator extends BaseGenerator
 			$pageValues = $this->generatePageElements($page); // generating the value of all page elements.
 		}
 		catch( \Exception $e ) {
-			throw new GeneratorException("Page '".$page->getName()."' could not be generated.",$e);
+			throw new GeneratorException("Page '".$page->__toString()."' could not be generated.",$e);
 		}
 
 		// Template should have access to the page properties.
