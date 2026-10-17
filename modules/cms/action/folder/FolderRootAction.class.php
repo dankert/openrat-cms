@@ -18,6 +18,5 @@ class FolderRootAction extends FolderAction implements Method {
     }
 
 
-    public function post() {
-    }
+
 }

@@ -37,6 +37,5 @@ class PageChangetemplateAction extends PageAction implements Method {
 		$this->setTemplateVar('templates',$templates);
     }
 
-    public function post() {
-    }
+
 }

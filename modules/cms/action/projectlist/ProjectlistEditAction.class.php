@@ -37,8 +37,7 @@ class ProjectlistEditAction extends ProjectlistAction implements Method {
     }
 
 
-    public function post() {
-    }
+
 
 
 	/**

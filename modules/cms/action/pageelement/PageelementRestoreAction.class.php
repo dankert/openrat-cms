@@ -16,8 +16,7 @@ class PageelementRestoreAction extends PageelementAction implements Method {
 	}
 
 
-    public function view() {
-    }
+
 
     public function post() {
 		$valueId = $this->request->getRequiredNumber('valueid');

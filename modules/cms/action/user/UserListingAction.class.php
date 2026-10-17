@@ -16,6 +16,5 @@ class UserListingAction extends UserAction implements Method {
 		$this->setTemplateVar('el',$list);
 	}	
 		
-    public function post() {
-    }
+
 }

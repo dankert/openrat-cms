@@ -18,6 +18,5 @@ class GroupListingAction extends GroupAction implements Method {
     }
 
 
-    public function post() {
-    }
+
 }

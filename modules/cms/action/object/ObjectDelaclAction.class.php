@@ -16,8 +16,7 @@ class ObjectDelaclAction extends ObjectAction implements Method {
 		return Permission::ACL_GRANT;
 	}
 
-    public function view() {
-    }
+
     public function post() {
 		$permission = new Permission($this->request->getText('aclid'));
 		$permission->load();

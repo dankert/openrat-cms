@@ -21,6 +21,5 @@ class UserlistEditAction extends UserlistAction implements Method {
     }
 
 
-    public function post() {
-    }
+
 }

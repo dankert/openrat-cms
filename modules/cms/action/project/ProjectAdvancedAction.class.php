@@ -6,8 +6,7 @@ use language\Messages;
 use util\exception\ValidationException;
 
 class ProjectAdvancedAction extends ProjectAction implements Method {
-    public function view() {
-    }
+
     public function post() {
 		switch( $this->request->getText('type') )
 		{

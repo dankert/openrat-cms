@@ -75,6 +75,5 @@ class FolderShowAction extends FolderAction implements Method {
 
         exit;
     }
-    public function post() {
-    }
+
 }

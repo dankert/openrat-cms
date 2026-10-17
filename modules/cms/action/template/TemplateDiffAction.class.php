@@ -57,6 +57,5 @@ class TemplateDiffAction extends TemplateAction implements Method {
     }
 
 
-    public function post() {
-    }
+
 }

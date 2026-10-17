@@ -24,6 +24,5 @@ class LoginUserinfoAction extends LoginAction implements Method {
     }
 
 
-    public function post() {
-    }
+
 }

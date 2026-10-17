@@ -57,8 +57,7 @@ class ObjectRightsAction extends ObjectAction implements Method {
 
 		$this->setTemplateVars( $o->getAssocRelatedAclTypes() );
     }
-    public function post() {
-    }
+
 
 
 	/**

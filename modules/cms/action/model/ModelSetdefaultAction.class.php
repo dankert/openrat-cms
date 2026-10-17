@@ -6,8 +6,7 @@ use language\Messages;
 
 
 class ModelSetdefaultAction extends ModelAction implements Method {
-    public function view() {
-    }
+
     public function post() {
 		if	( !$this->userIsAdmin() ) exit();
 

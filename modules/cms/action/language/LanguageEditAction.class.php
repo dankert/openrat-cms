@@ -9,6 +9,5 @@ class LanguageEditAction extends LanguageAction implements Method {
 		$this->setTemplateVars( $this->language->getProperties() );
     }
 
-    public function post() {
-    }
+
 }

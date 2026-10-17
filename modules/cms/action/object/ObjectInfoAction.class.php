@@ -69,6 +69,5 @@ class ObjectInfoAction extends ObjectAction implements Method {
 	}
 
 
-    public function post() {
-    }
+
 }

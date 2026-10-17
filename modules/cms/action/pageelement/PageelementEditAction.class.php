@@ -42,6 +42,5 @@ class PageelementEditAction extends PageelementAction implements Method {
     }
 
 
-    public function post() {
-    }
+
 }

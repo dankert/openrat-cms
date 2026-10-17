@@ -5,8 +5,7 @@ use cms\action\ModellistAction;
 use cms\model\Model;
 
 class ModellistAddAction extends ModellistAction implements Method {
-    public function view() {
-    }
+
 
 
     public function post() {

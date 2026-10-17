@@ -22,6 +22,5 @@ class TemplateInfoAction extends TemplateAction implements Method {
 		$this->setTemplateVar('id'   ,$this->template->getId()   );
 		$this->setTemplateVar('name' ,$this->template->getName() );
     }
-    public function post() {
-    }
+
 }

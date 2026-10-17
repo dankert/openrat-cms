@@ -11,6 +11,5 @@ class ModelEditAction extends ModelAction implements Method {
 	
 		$this->setTemplateVars( $this->model->getProperties() );
     }
-    public function post() {
-    }
+
 }

@@ -72,6 +72,5 @@ class PageelementLinkAction extends PageelementAction implements Method {
     }
 
 
-    public function post() {
-    }
+
 }

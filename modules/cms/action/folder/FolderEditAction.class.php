@@ -56,6 +56,5 @@ class FolderEditAction extends FolderAction implements Method {
 	}
 
 
-    public function post() {
-    }
+
 }

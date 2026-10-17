@@ -38,6 +38,5 @@ class LanguagelistEditAction extends LanguagelistAction implements Method {
 		$this->setTemplateVar('el',$list);
 	}
 
-    public function post() {
-    }
+
 }

@@ -11,6 +11,5 @@ class ProjectInfoAction extends ProjectAction implements Method {
 		$this->setTemplateVar( 'url' , $this->makeAbsoluteHostnameLink($this->project->url)  );
     }
 
-    public function post() {
-    }
+
 }

@@ -111,6 +111,5 @@ class PageInfoAction extends PageAction implements Method {
 
 		$this->setTemplateVar( 'tags'  , $this->baseObject->getTags() );
 	}
-    public function post() {
-    }
+
 }

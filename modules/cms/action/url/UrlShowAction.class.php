@@ -22,6 +22,5 @@ class UrlShowAction extends UrlAction implements Method {
     }
 
 
-    public function post() {
-    }
+
 }

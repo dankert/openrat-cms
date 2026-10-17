@@ -19,8 +19,7 @@ class FileRestoreAction extends FileAction implements Method {
 	}
 
 
-    public function view() {
-    }
+
 
     public function post() {
 

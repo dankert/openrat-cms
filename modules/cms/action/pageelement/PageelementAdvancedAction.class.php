@@ -42,6 +42,5 @@ class PageelementAdvancedAction extends PageelementAction implements Method {
 
         $this->setTemplateVar('languages',$languages);
     }
-    public function post() {
-    }
+
 }

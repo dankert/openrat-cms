@@ -30,6 +30,5 @@ class LinkShowAction extends LinkAction implements Method {
         exit;
     }
 
-    public function post() {
-    }
+
 }

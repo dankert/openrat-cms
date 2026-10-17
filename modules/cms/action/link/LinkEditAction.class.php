@@ -27,6 +27,5 @@ class LinkEditAction extends LinkAction implements Method {
 		}
     }
 
-    public function post() {
-    }
+
 }

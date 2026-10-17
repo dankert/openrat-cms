@@ -10,6 +10,5 @@ class GroupInfoAction extends GroupAction implements Method {
     }
 
 
-    public function post() {
-    }
+
 }

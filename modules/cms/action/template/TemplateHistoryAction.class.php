@@ -56,6 +56,4 @@ class TemplateHistoryAction extends TemplateAction implements Method {
 		$this->setTemplateVar('models',$models );
 	}
 
-	public function post() {
-    }
 }

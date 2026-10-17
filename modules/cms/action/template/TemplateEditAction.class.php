@@ -10,10 +10,19 @@ use cms\model\Project;
 use cms\model\TemplateModel;
 
 
+/**
+ * Overall template information.
+ */
 class TemplateEditAction extends TemplateAction implements Method {
 
+	/**
+	 * Get all template information.
+	 * @return Template
+	 * @throws \util\exception\ObjectNotFoundException
+	 */
 	#[UiOutClass(Template::class)]
-    public function view() {
+    public function view(): object
+	{
 		$apiTemplate = new Template(
 			$this->template->getId(),
 			array(),
@@ -57,6 +66,5 @@ class TemplateEditAction extends TemplateAction implements Method {
 
 
     }
-    public function post() {
-    }
+
 }

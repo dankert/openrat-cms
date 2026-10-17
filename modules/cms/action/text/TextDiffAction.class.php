@@ -49,6 +49,5 @@ class TextDiffAction extends TextAction implements Method {
     }
 
 
-    public function post() {
-    }
+
 }

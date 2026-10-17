@@ -16,8 +16,7 @@ class ProjectEditAction extends ProjectAction implements Method {
         $this->setTemplateVar('rootobjectid'    ,$this->project->getRootObjectId());
         $this->setTemplateVar('is_project_admin',$this->userIsProjectAdmin());
     }
-    public function post() {
-    }
+
 
 
 

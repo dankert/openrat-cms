@@ -35,7 +35,6 @@ class PageAdvancedAction extends PageAction implements Method {
 		$template->load();
 		$this->setTemplateVar('template_name',$template->name );
     }
-    public function post() {
-    }
+
 
 }

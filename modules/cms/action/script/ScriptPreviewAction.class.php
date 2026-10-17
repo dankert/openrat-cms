@@ -51,6 +51,5 @@ class ScriptPreviewAction extends ScriptAction implements Method {
 			$this->setTemplateVar('text',$encodingFunction( $generator->getCache()->get() ) );
 	}
 
-    public function post() {
-    }
+
 }

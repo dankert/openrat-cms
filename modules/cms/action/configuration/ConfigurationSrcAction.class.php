@@ -21,6 +21,5 @@ class ConfigurationSrcAction extends ConfigurationAction implements Method {
 
         $this->setTemplateVar('source', YAML::dump($conf,4,0,true));
     }
-    public function post() {
-    }
+
 }

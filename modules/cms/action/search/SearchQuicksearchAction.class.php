@@ -29,6 +29,5 @@ class SearchQuicksearchAction extends SearchAction implements Method {
     }
 
 
-    public function post() {
-    }
+
 }

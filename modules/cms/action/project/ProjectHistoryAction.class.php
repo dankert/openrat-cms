@@ -20,8 +20,7 @@ class ProjectHistoryAction extends ProjectAction implements Method {
 		$this->setTemplateVar('timeline', $result);
     }
 
-    public function post() {
-    }
+
 
 	public function checkAccess() {
 		return true; // rights for every search result are respected in view()

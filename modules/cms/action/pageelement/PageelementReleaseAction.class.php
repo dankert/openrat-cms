@@ -16,8 +16,7 @@ class PageelementReleaseAction extends PageelementAction implements Method {
 		return Permission::ACL_RELEASE;
 	}
 
-    public function view() {
-    }
+
     public function post() {
 
 		$valueId = $this->request->getRequiredNumber('valueid');

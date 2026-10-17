@@ -57,6 +57,5 @@ class PageelementDiffAction extends PageelementAction implements Method {
     }
 
 
-    public function post() {
-    }
+
 }

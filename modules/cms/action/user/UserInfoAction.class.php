@@ -53,6 +53,5 @@ class UserInfoAction extends UserAction implements Method {
     }
 
 
-    public function post() {
-    }
+
 }

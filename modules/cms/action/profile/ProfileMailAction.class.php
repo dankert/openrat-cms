@@ -11,8 +11,7 @@ use util\text\TextMessage;
 
 class ProfileMailAction extends ProfileAction implements Method {
 
-    public function view() {
-    }
+
 
     public function post() {
 		srand ((float)microtime()*1000003);

@@ -62,6 +62,5 @@ class PageShowAction extends PageAction implements Method {
 		}
     }
 
-    public function post() {
-    }
+
 }

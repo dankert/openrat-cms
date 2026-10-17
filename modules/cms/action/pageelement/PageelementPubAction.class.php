@@ -12,8 +12,7 @@ class PageelementPubAction extends PageelementAction implements Method {
 		return Permission::ACL_PUBLISH;
 	}
 
-    public function view() {
-    }
+
     public function post() {
 		if	( !$this->page->hasRight( Permission::ACL_PUBLISH ) )
             throw new SecurityException( 'no right for publish' );

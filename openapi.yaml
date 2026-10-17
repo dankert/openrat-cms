@@ -44,17 +44,18 @@ servers:
 paths:
   /configuration/{id}/edit:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -71,48 +72,20 @@ paths:
           description: ID
       tags:
         - Configuration
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveConfigurationEdit
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Configuration
   /configuration/{id}/src:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -129,48 +102,20 @@ paths:
           description: ID
       tags:
         - Configuration
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveConfigurationSrc
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Configuration
   /element/{id}/advanced:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -197,7 +142,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -218,17 +163,18 @@ paths:
         - Element
   /element/{id}/edit:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -245,48 +191,20 @@ paths:
           description: ID
       tags:
         - Element
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveElementEdit
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Element
   /element/{id}/prop:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -313,7 +231,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -334,17 +252,18 @@ paths:
         - Element
   /element/{id}/remove:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -371,7 +290,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -392,17 +311,18 @@ paths:
         - Element
   /file/{id}/advanced:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -429,7 +349,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -450,17 +370,18 @@ paths:
         - File
   /file/{id}/edit:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -487,7 +408,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -508,17 +429,18 @@ paths:
         - File
   /file/{id}/history:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -545,7 +467,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -566,17 +488,18 @@ paths:
         - File
   /file/{id}/preview:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -593,48 +516,20 @@ paths:
           description: ID
       tags:
         - File
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveFilePreview
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - File
   /file/{id}/pub:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -661,7 +556,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -682,17 +577,18 @@ paths:
         - File
   /file/{id}/release:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -719,7 +615,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -740,17 +636,18 @@ paths:
         - File
   /file/{id}/remove:
     summary: Removing a file
+    description: Removing a file. /
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -777,7 +674,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -798,33 +695,7 @@ paths:
         - File
   /file/{id}/restore:
     summary: ""
-    get:
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: true
-        400:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: getFileRestore
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - File
+    description: ""
     post:
       requestBody:
         description: ""
@@ -835,7 +706,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -856,17 +727,18 @@ paths:
         - File
   /file/{id}/show:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -883,48 +755,20 @@ paths:
           description: ID
       tags:
         - File
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveFileShow
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - File
   /file/{id}/upload:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -951,7 +795,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -972,17 +816,18 @@ paths:
         - File
   /folder/{id}/add:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -999,48 +844,20 @@ paths:
           description: ID
       tags:
         - Folder
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveFolderAdd
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Folder
   /folder/{id}/advanced:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -1067,7 +884,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -1088,17 +905,18 @@ paths:
         - Folder
   /folder/{id}/createfile:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -1125,7 +943,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -1146,17 +964,18 @@ paths:
         - Folder
   /folder/{id}/createfolder:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -1183,7 +1002,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -1204,17 +1023,18 @@ paths:
         - Folder
   /folder/{id}/createimage:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -1241,7 +1061,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -1262,17 +1082,18 @@ paths:
         - Folder
   /folder/{id}/createlink:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -1299,7 +1120,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -1320,17 +1141,18 @@ paths:
         - Folder
   /folder/{id}/createpage:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -1357,7 +1179,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -1378,17 +1200,18 @@ paths:
         - Folder
   /folder/{id}/createscript:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -1415,7 +1238,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -1436,17 +1259,18 @@ paths:
         - Folder
   /folder/{id}/createtext:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -1473,7 +1297,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -1494,17 +1318,18 @@ paths:
         - Folder
   /folder/{id}/createurl:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -1531,7 +1356,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -1552,17 +1377,18 @@ paths:
         - Folder
   /folder/{id}/edit:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -1579,48 +1405,20 @@ paths:
           description: ID
       tags:
         - Folder
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveFolderEdit
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Folder
   /folder/{id}/order:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -1647,7 +1445,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -1668,17 +1466,18 @@ paths:
         - Folder
   /folder/{id}/preview:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -1695,48 +1494,20 @@ paths:
           description: ID
       tags:
         - Folder
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveFolderPreview
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Folder
   /folder/{id}/pub:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -1763,7 +1534,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -1784,17 +1555,18 @@ paths:
         - Folder
   /folder/{id}/remove:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -1821,7 +1593,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -1842,17 +1614,18 @@ paths:
         - Folder
   /folder/{id}/root:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -1869,48 +1642,20 @@ paths:
           description: ID
       tags:
         - Folder
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveFolderRoot
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Folder
   /folder/{id}/show:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -1927,48 +1672,20 @@ paths:
           description: ID
       tags:
         - Folder
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveFolderShow
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Folder
   /group/{id}/edit:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -1985,48 +1702,20 @@ paths:
           description: ID
       tags:
         - Group
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveGroupEdit
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Group
   /group/{id}/info:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -2043,48 +1732,20 @@ paths:
           description: ID
       tags:
         - Group
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveGroupInfo
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Group
   /group/{id}/listing:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -2101,48 +1762,20 @@ paths:
           description: ID
       tags:
         - Group
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveGroupListing
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Group
   /group/{id}/memberships:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -2169,7 +1802,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -2190,17 +1823,18 @@ paths:
         - Group
   /group/{id}/prop:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: Reads the properties of this group.
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -2227,7 +1861,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -2267,17 +1901,18 @@ paths:
         - Group
   /group/{id}/remove:
     summary: Removing this group
+    description: Removing this group. /
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -2304,7 +1939,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -2325,17 +1960,18 @@ paths:
         - Group
   /group/{id}/rights:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -2352,48 +1988,20 @@ paths:
           description: ID
       tags:
         - Group
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveGroupRights
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Group
   /grouplist/{id}/add:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -2420,7 +2028,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -2441,17 +2049,18 @@ paths:
         - Grouplist
   /grouplist/{id}/edit:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -2468,48 +2077,20 @@ paths:
           description: ID
       tags:
         - Grouplist
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveGrouplistEdit
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Grouplist
   /image/{id}/edit:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -2536,7 +2117,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -2557,17 +2138,18 @@ paths:
         - Image
   /image/{id}/history:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -2594,7 +2176,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -2615,17 +2197,18 @@ paths:
         - Image
   /image/{id}/preview:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -2642,48 +2225,20 @@ paths:
           description: ID
       tags:
         - Image
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveImagePreview
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Image
   /image/{id}/size:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -2710,7 +2265,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -2731,17 +2286,18 @@ paths:
         - Image
   /language/{id}/edit:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -2758,48 +2314,20 @@ paths:
           description: ID
       tags:
         - Language
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveLanguageEdit
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Language
   /language/{id}/prop:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -2826,7 +2354,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -2847,17 +2375,18 @@ paths:
         - Language
   /language/{id}/remove:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -2884,7 +2413,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -2905,33 +2434,7 @@ paths:
         - Language
   /language/{id}/setdefault:
     summary: ""
-    get:
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: true
-        400:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: getLanguageSetdefault
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Language
+    description: ""
     post:
       requestBody:
         description: ""
@@ -2942,7 +2445,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -2963,17 +2466,18 @@ paths:
         - Language
   /languagelist/{id}/add:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -3000,7 +2504,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -3021,17 +2525,18 @@ paths:
         - Languagelist
   /languagelist/{id}/edit:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -3048,48 +2553,20 @@ paths:
           description: ID
       tags:
         - Languagelist
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveLanguagelistEdit
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Languagelist
   /link/{id}/edit:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -3106,48 +2583,20 @@ paths:
           description: ID
       tags:
         - Link
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveLinkEdit
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Link
   /link/{id}/remove:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -3174,7 +2623,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -3195,17 +2644,18 @@ paths:
         - Link
   /link/{id}/show:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -3222,48 +2672,20 @@ paths:
           description: ID
       tags:
         - Link
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveLinkShow
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Link
   /link/{id}/value:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -3290,7 +2712,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -3311,17 +2733,18 @@ paths:
         - Link
   /login/{id}/license:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -3338,48 +2761,20 @@ paths:
           description: ID
       tags:
         - Login
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveLoginLicense
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Login
   /login/{id}/login:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -3406,7 +2801,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -3427,17 +2822,18 @@ paths:
         - Login
   /login/{id}/logout:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -3464,7 +2860,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -3485,17 +2881,18 @@ paths:
         - Login
   /login/{id}/oidc:
     summary: Authentication via OpenID-Connect
+    description: Authentication via OpenID-Connect. /
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -3512,48 +2909,20 @@ paths:
           description: ID
       tags:
         - Login
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveLoginOidc
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Login
   /login/{id}/password:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -3580,7 +2949,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -3601,17 +2970,18 @@ paths:
         - Login
   /login/{id}/passwordcode:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -3638,7 +3008,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -3659,17 +3029,18 @@ paths:
         - Login
   /login/{id}/register:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -3696,7 +3067,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -3717,17 +3088,18 @@ paths:
         - Login
   /login/{id}/registercode:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -3754,7 +3126,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -3775,17 +3147,18 @@ paths:
         - Login
   /login/{id}/userinfo:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -3802,48 +3175,20 @@ paths:
           description: ID
       tags:
         - Login
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveLoginUserinfo
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Login
   /model/{id}/edit:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -3860,48 +3205,20 @@ paths:
           description: ID
       tags:
         - Model
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveModelEdit
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Model
   /model/{id}/prop:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -3928,7 +3245,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -3949,17 +3266,18 @@ paths:
         - Model
   /model/{id}/remove:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -3986,7 +3304,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -4007,33 +3325,7 @@ paths:
         - Model
   /model/{id}/setdefault:
     summary: ""
-    get:
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: true
-        400:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: getModelSetdefault
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Model
+    description: ""
     post:
       requestBody:
         description: ""
@@ -4044,7 +3336,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -4065,33 +3357,7 @@ paths:
         - Model
   /modellist/{id}/add:
     summary: ""
-    get:
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: true
-        400:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: getModellistAdd
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Modellist
+    description: ""
     post:
       requestBody:
         description: ""
@@ -4102,7 +3368,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -4123,17 +3389,18 @@ paths:
         - Modellist
   /modellist/{id}/edit:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -4150,48 +3417,20 @@ paths:
           description: ID
       tags:
         - Modellist
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveModellistEdit
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Modellist
   /page/{id}/advanced:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -4208,48 +3447,20 @@ paths:
           description: ID
       tags:
         - Page
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: savePageAdvanced
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Page
   /page/{id}/all:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -4275,7 +3486,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Values'
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -4296,17 +3507,18 @@ paths:
         - Page
   /page/{id}/changetemplate:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -4323,48 +3535,20 @@ paths:
           description: ID
       tags:
         - Page
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: savePageChangetemplate
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Page
   /page/{id}/changetemplateselectelements:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -4397,7 +3581,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -4418,17 +3602,18 @@ paths:
         - Page
   /page/{id}/edit:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -4455,7 +3640,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -4476,17 +3661,18 @@ paths:
         - Page
   /page/{id}/info:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -4503,48 +3689,20 @@ paths:
           description: ID
       tags:
         - Page
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: savePageInfo
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Page
   /page/{id}/name:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -4571,7 +3729,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -4592,17 +3750,18 @@ paths:
         - Page
   /page/{id}/preview:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: Calculates the URL for the page preview
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -4619,48 +3778,20 @@ paths:
           description: ID
       tags:
         - Page
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: savePagePreview
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Page
   /page/{id}/pub:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -4687,7 +3818,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -4708,17 +3839,18 @@ paths:
         - Page
   /page/{id}/remove:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -4745,7 +3877,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -4766,17 +3898,18 @@ paths:
         - Page
   /page/{id}/show:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -4793,48 +3926,20 @@ paths:
           description: ID
       tags:
         - Page
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: savePageShow
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Page
   /page/{id}/src:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -4851,48 +3956,20 @@ paths:
           description: ID
       tags:
         - Page
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: savePageSrc
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Page
   /pageelement/{id}/advanced:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -4909,48 +3986,20 @@ paths:
           description: ID
       tags:
         - Pageelement
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: savePageelementAdvanced
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Pageelement
   /pageelement/{id}/all:
     summary: Edit values for all languages
+    description: Edit values for all languages. /
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -4977,7 +4026,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -4998,17 +4047,18 @@ paths:
         - Pageelement
   /pageelement/{id}/diff:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -5025,48 +4075,20 @@ paths:
           description: ID
       tags:
         - Pageelement
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: savePageelementDiff
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Pageelement
   /pageelement/{id}/edit:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -5083,48 +4105,20 @@ paths:
           description: ID
       tags:
         - Pageelement
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: savePageelementEdit
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Pageelement
   /pageelement/{id}/history:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -5141,48 +4135,20 @@ paths:
           description: ID
       tags:
         - Pageelement
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: savePageelementHistory
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Pageelement
   /pageelement/{id}/info:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -5199,48 +4165,20 @@ paths:
           description: ID
       tags:
         - Pageelement
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: savePageelementInfo
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Pageelement
   /pageelement/{id}/link:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -5257,48 +4195,20 @@ paths:
           description: ID
       tags:
         - Pageelement
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: savePageelementLink
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Pageelement
   /pageelement/{id}/preview:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -5315,64 +4225,9 @@ paths:
           description: ID
       tags:
         - Pageelement
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: savePageelementPreview
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Pageelement
   /pageelement/{id}/pub:
     summary: ""
-    get:
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: true
-        400:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: getPageelementPub
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Pageelement
+    description: ""
     post:
       requestBody:
         description: ""
@@ -5383,7 +4238,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -5404,33 +4259,7 @@ paths:
         - Pageelement
   /pageelement/{id}/release:
     summary: ""
-    get:
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: true
-        400:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: getPageelementRelease
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Pageelement
+    description: ""
     post:
       requestBody:
         description: ""
@@ -5441,7 +4270,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -5462,33 +4291,7 @@ paths:
         - Pageelement
   /pageelement/{id}/restore:
     summary: ""
-    get:
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: true
-        400:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: getPageelementRestore
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Pageelement
+    description: ""
     post:
       requestBody:
         description: ""
@@ -5499,7 +4302,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -5520,17 +4323,18 @@ paths:
         - Pageelement
   /pageelement/{id}/value:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -5557,7 +4361,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -5578,17 +4382,18 @@ paths:
         - Pageelement
   /profile/{id}/available:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -5605,48 +4410,20 @@ paths:
           description: ID
       tags:
         - Profile
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveProfileAvailable
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Profile
   /profile/{id}/bookmark:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -5673,7 +4450,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -5694,33 +4471,7 @@ paths:
         - Profile
   /profile/{id}/confirmmail:
     summary: ""
-    get:
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: true
-        400:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: getProfileConfirmmail
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Profile
+    description: ""
     post:
       requestBody:
         description: ""
@@ -5731,7 +4482,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -5752,17 +4503,18 @@ paths:
         - Profile
   /profile/{id}/edit:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -5789,7 +4541,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -5810,17 +4562,18 @@ paths:
         - Profile
   /profile/{id}/history:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -5837,48 +4590,20 @@ paths:
           description: ID
       tags:
         - Profile
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveProfileHistory
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Profile
   /profile/{id}/language:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -5895,64 +4620,9 @@ paths:
           description: ID
       tags:
         - Profile
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveProfileLanguage
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Profile
   /profile/{id}/mail:
     summary: ""
-    get:
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: true
-        400:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: getProfileMail
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Profile
+    description: ""
     post:
       requestBody:
         description: ""
@@ -5963,7 +4633,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -5984,17 +4654,18 @@ paths:
         - Profile
   /profile/{id}/memberships:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -6011,48 +4682,20 @@ paths:
           description: ID
       tags:
         - Profile
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveProfileMemberships
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Profile
   /profile/{id}/ping:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -6069,48 +4712,20 @@ paths:
           description: ID
       tags:
         - Profile
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveProfilePing
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Profile
   /profile/{id}/pw:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -6137,7 +4752,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -6158,17 +4773,18 @@ paths:
         - Profile
   /profile/{id}/show:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -6195,7 +4811,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -6216,17 +4832,18 @@ paths:
         - Profile
   /profile/{id}/theme:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -6253,7 +4870,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -6274,17 +4891,18 @@ paths:
         - Profile
   /profile/{id}/uisettings:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -6301,48 +4919,20 @@ paths:
           description: ID
       tags:
         - Profile
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveProfileUisettings
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Profile
   /profile/{id}/userinfo:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: 'Gets user information. 	  If no user is logged in, default information will be returned.'
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -6359,64 +4949,9 @@ paths:
           description: ID
       tags:
         - Profile
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveProfileUserinfo
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Profile
   /project/{id}/advanced:
     summary: ""
-    get:
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: true
-        400:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: getProjectAdvanced
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Project
+    description: ""
     post:
       requestBody:
         description: ""
@@ -6427,7 +4962,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -6448,33 +4983,7 @@ paths:
         - Project
   /project/{id}/copy:
     summary: ""
-    get:
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: true
-        400:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: getProjectCopy
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Project
+    description: ""
     post:
       requestBody:
         description: ""
@@ -6485,7 +4994,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -6506,17 +5015,18 @@ paths:
         - Project
   /project/{id}/edit:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -6533,48 +5043,20 @@ paths:
           description: ID
       tags:
         - Project
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveProjectEdit
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Project
   /project/{id}/history:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -6591,48 +5073,20 @@ paths:
           description: ID
       tags:
         - Project
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveProjectHistory
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Project
   /project/{id}/info:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -6649,48 +5103,20 @@ paths:
           description: ID
       tags:
         - Project
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveProjectInfo
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Project
   /project/{id}/listing:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -6707,48 +5133,20 @@ paths:
           description: ID
       tags:
         - Project
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveProjectListing
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Project
   /project/{id}/prop:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -6775,7 +5173,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -6796,17 +5194,18 @@ paths:
         - Project
   /project/{id}/remove:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -6833,7 +5232,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -6854,17 +5253,18 @@ paths:
         - Project
   /script/{id}/diff:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -6881,48 +5281,20 @@ paths:
           description: ID
       tags:
         - Script
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveScriptDiff
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Script
   /script/{id}/edit:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -6949,7 +5321,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -6970,17 +5342,18 @@ paths:
         - Script
   /script/{id}/history:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -7007,7 +5380,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -7028,17 +5401,18 @@ paths:
         - Script
   /script/{id}/preview:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -7055,48 +5429,20 @@ paths:
           description: ID
       tags:
         - Script
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveScriptPreview
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Script
   /script/{id}/show:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -7113,48 +5459,20 @@ paths:
           description: ID
       tags:
         - Script
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveScriptShow
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Script
   /script/{id}/value:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -7181,7 +5499,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -7202,17 +5520,18 @@ paths:
         - Script
   /search/{id}/edit:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -7229,48 +5548,20 @@ paths:
           description: ID
       tags:
         - Search
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveSearchEdit
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Search
   /search/{id}/quicksearch:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -7287,48 +5578,20 @@ paths:
           description: ID
       tags:
         - Search
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveSearchQuicksearch
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Search
   /tag/{id}/edit:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -7345,48 +5608,20 @@ paths:
           description: ID
       tags:
         - Tag
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveTagEdit
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Tag
   /tag/{id}/prop:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -7413,7 +5648,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -7434,17 +5669,18 @@ paths:
         - Tag
   /tag/{id}/remove:
     summary: Deleting the tag
+    description: Deleting the tag. /
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -7471,7 +5707,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -7492,17 +5728,18 @@ paths:
         - Tag
   /taglist/{id}/add:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -7529,7 +5766,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -7550,17 +5787,18 @@ paths:
         - Taglist
   /taglist/{id}/edit:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: Get a listing of all tags in the project
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -7577,48 +5815,20 @@ paths:
           description: ID
       tags:
         - Taglist
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveTaglistEdit
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Taglist
   /template/{id}/add:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -7645,7 +5855,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -7666,17 +5876,18 @@ paths:
         - Template
   /template/{id}/addel:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -7703,7 +5914,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -7724,17 +5935,18 @@ paths:
         - Template
   /template/{id}/diff:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -7751,82 +5963,25 @@ paths:
           description: ID
       tags:
         - Template
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveTemplateDiff
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Template
   /template/{id}/edit:
-    summary: ""
+    summary: Overall template information
+    description: Overall template information. /
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: Get all template information.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Template'
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getTemplateEdit
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Template
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveTemplateEdit
-      summary: ""
-      description: ""
+      description: Get all template information.
       parameters:
         - 
           in: path
@@ -7839,17 +5994,18 @@ paths:
         - Template
   /template/{id}/history:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -7866,48 +6022,20 @@ paths:
           description: ID
       tags:
         - Template
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveTemplateHistory
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Template
   /template/{id}/info:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -7924,48 +6052,20 @@ paths:
           description: ID
       tags:
         - Template
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveTemplateInfo
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Template
   /template/{id}/preview:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -7982,48 +6082,20 @@ paths:
           description: ID
       tags:
         - Template
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveTemplatePreview
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Template
   /template/{id}/prop:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -8050,7 +6122,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -8071,17 +6143,18 @@ paths:
         - Template
   /template/{id}/pub:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -8108,7 +6181,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -8129,33 +6202,7 @@ paths:
         - Template
   /template/{id}/release:
     summary: ""
-    get:
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: true
-        400:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: getTemplateRelease
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Template
+    description: ""
     post:
       requestBody:
         description: ""
@@ -8166,7 +6213,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -8187,17 +6234,18 @@ paths:
         - Template
   /template/{id}/remove:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -8224,7 +6272,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -8245,17 +6293,18 @@ paths:
         - Template
   /template/{id}/restore:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -8282,7 +6331,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -8303,17 +6352,18 @@ paths:
         - Template
   /template/{id}/show:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -8330,48 +6380,20 @@ paths:
           description: ID
       tags:
         - Template
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveTemplateShow
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Template
   /template/{id}/src:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -8398,7 +6420,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -8419,17 +6441,18 @@ paths:
         - Template
   /template/{id}/srcelement:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -8456,7 +6479,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -8477,17 +6500,18 @@ paths:
         - Template
   /templatelist/{id}/add:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -8514,7 +6538,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -8535,17 +6559,18 @@ paths:
         - Templatelist
   /templatelist/{id}/edit:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -8562,48 +6587,20 @@ paths:
           description: ID
       tags:
         - Templatelist
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveTemplatelistEdit
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Templatelist
   /text/{id}/diff:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -8620,48 +6617,20 @@ paths:
           description: ID
       tags:
         - Text
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveTextDiff
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Text
   /text/{id}/edit:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -8688,7 +6657,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -8709,17 +6678,18 @@ paths:
         - Text
   /text/{id}/history:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -8746,7 +6716,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -8767,17 +6737,18 @@ paths:
         - Text
   /text/{id}/preview:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -8794,48 +6765,20 @@ paths:
           description: ID
       tags:
         - Text
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveTextPreview
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Text
   /text/{id}/show:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -8852,48 +6795,20 @@ paths:
           description: ID
       tags:
         - Text
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveTextShow
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Text
   /text/{id}/value:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -8920,7 +6835,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -8941,17 +6856,18 @@ paths:
         - Text
   /url/{id}/edit:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -8968,48 +6884,20 @@ paths:
           description: ID
       tags:
         - Url
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveUrlEdit
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Url
   /url/{id}/preview:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -9026,48 +6914,20 @@ paths:
           description: ID
       tags:
         - Url
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveUrlPreview
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Url
   /url/{id}/remove:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -9094,7 +6954,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -9115,17 +6975,18 @@ paths:
         - Url
   /url/{id}/show:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -9142,48 +7003,20 @@ paths:
           description: ID
       tags:
         - Url
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveUrlShow
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Url
   /url/{id}/value:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -9210,7 +7043,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -9231,17 +7064,18 @@ paths:
         - Url
   /user/{id}/addgrouptouser:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -9268,7 +7102,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -9289,17 +7123,18 @@ paths:
         - User
   /user/{id}/addtoken:
     summary: Shows the login tokens of this user
+    description: Shows the login tokens of this user.
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -9326,7 +7161,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -9347,17 +7182,18 @@ paths:
         - User
   /user/{id}/advanced:
     summary: Shows the login tokens of this user
+    description: Shows the login tokens of this user.
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -9374,64 +7210,9 @@ paths:
           description: ID
       tags:
         - User
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveUserAdvanced
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - User
   /user/{id}/deltoken:
     summary: Shows the login tokens of this user
-    get:
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: true
-        400:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: getUserDeltoken
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - User
+    description: Shows the login tokens of this user.
     post:
       requestBody:
         description: ""
@@ -9442,7 +7223,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -9463,17 +7244,18 @@ paths:
         - User
   /user/{id}/edit:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -9490,48 +7272,20 @@ paths:
           description: ID
       tags:
         - User
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveUserEdit
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - User
   /user/{id}/history:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -9548,48 +7302,20 @@ paths:
           description: ID
       tags:
         - User
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveUserHistory
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - User
   /user/{id}/info:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -9606,48 +7332,20 @@ paths:
           description: ID
       tags:
         - User
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveUserInfo
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - User
   /user/{id}/listing:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -9664,48 +7362,20 @@ paths:
           description: ID
       tags:
         - User
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveUserListing
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - User
   /user/{id}/memberships:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -9732,7 +7402,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -9753,17 +7423,18 @@ paths:
         - User
   /user/{id}/prop:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -9790,7 +7461,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -9811,17 +7482,18 @@ paths:
         - User
   /user/{id}/pw:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -9848,7 +7520,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -9869,17 +7541,18 @@ paths:
         - User
   /user/{id}/remove:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -9906,7 +7579,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -9927,17 +7600,18 @@ paths:
         - User
   /user/{id}/rights:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -9954,48 +7628,20 @@ paths:
           description: ID
       tags:
         - User
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveUserRights
-      summary: ""
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - User
   /user/{id}/switch:
     summary: ""
+    description: ""
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
@@ -10022,7 +7668,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -10043,33 +7689,7 @@ paths:
         - User
   /userlist/{id}/add:
     summary: Adding a new user
-    get:
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: true
-        400:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: getUserlistAdd
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Userlist
+    description: Adding a new user.
     post:
       requestBody:
         description: ""
@@ -10080,7 +7700,7 @@ paths:
               type: object
               additionalProperties: true
       responses:
-        200:
+        default:
           description: API response
           content:
             application/json:
@@ -10101,51 +7721,23 @@ paths:
         - Userlist
   /userlist/{id}/edit:
     summary: Shows all users
+    description: Shows all users. /
     get:
       responses:
-        200:
-          description: API response
+        2XX:
+          description: ""
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        400:
-          description: API response
+        default:
+          description: Client error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/APIResponse'
       operationId: getUserlistEdit
-      description: ""
-      parameters:
-        - 
-          in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: ID
-      tags:
-        - Userlist
-    post:
-      requestBody:
-        description: ""
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: true
-      responses:
-        200:
-          description: API response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIResponse'
-      operationId: saveUserlistEdit
-      summary: ""
       description: ""
       parameters:
         - 
@@ -10177,6 +7769,9 @@ components:
       type: object
       description: ""
       properties:
+        message:
+          type: string
+          description: ""
         notices:
           type: array
           items:
@@ -10197,13 +7792,19 @@ components:
           type: boolean
           description: ""
         session:
-          type: string
+          $ref: '#/components/schemas/cms.api.Session'
           description: ""
         version:
           type: string
           description: ""
         api:
-          type: string
+          type: integer
+          description: ""
+        cause:
+          nullable: true
+          allOf:
+            - 
+              $ref: '#/components/schemas/cms.api.Exception'
           description: ""
     ArrayOf:
       type: object
@@ -10250,6 +7851,30 @@ components:
         description:
           type: string
           description: A description
+    Exception:
+      type: object
+      description: ""
+      properties:
+        error:
+          type: string
+          description: ""
+        description:
+          type: string
+          description: ""
+        code:
+          type: integer
+          description: ""
+        trace:
+          type: array
+          items:
+            type: string
+          description: ""
+        cause:
+          nullable: true
+          allOf:
+            - 
+              $ref: '#/components/schemas/cms.api.Exception'
+          description: ""
     Language:
       type: object
       description: ""
@@ -10261,6 +7886,38 @@ components:
           type: string
           description: ""
         label:
+          type: string
+          description: ""
+    Notice:
+      type: object
+      description: Notice to tell about something.
+      properties:
+        type:
+          type: string
+          description: Object type
+        id:
+          type: integer
+          description: ID of the object
+        name:
+          type: string
+          description: Name of the object
+        key:
+          type: string
+          description: ""
+        vars:
+          type: array
+          items:
+            type: string
+          description: ""
+        text:
+          type: string
+          description: ""
+        log:
+          type: array
+          items:
+            type: string
+          description: ""
+        status:
           type: string
           description: ""
     PageAll:
@@ -10283,6 +7940,19 @@ components:
           items:
             type: string
           description: ""
+    Session:
+      type: object
+      description: ""
+      properties:
+        name:
+          type: string
+          description: ""
+        id:
+          type: string
+          description: ""
+        token:
+          type: string
+          description: ""
     Template:
       type: object
       description: Template.
@@ -10294,12 +7964,12 @@ components:
           type: array
           items:
             type: string
-          description: ""
+          description: elements of the template.
         templateModels:
           type: array
           items:
             type: string
-          description: ""
+          description: templatemodels of the template.
     TemplateModel:
       type: object
       description: ""
@@ -10314,6 +7984,22 @@ components:
           type: string
           description: ""
         format:
+          type: string
+          description: ""
+    TraceElement:
+      type: object
+      description: ""
+      properties:
+        file:
+          type: string
+          description: ""
+        line:
+          type: integer
+          description: ""
+        function:
+          type: string
+          description: ""
+        class:
           type: string
           description: ""
     Value:

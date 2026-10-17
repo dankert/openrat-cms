@@ -12,6 +12,5 @@ class FilePreviewAction extends FileAction implements Method {
 		$this->setTemplateVar('preview_url',$url );
     }
 
-    public function post() {
-    }
+
 }

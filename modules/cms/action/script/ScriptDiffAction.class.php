@@ -50,6 +50,5 @@ class ScriptDiffAction extends ScriptAction implements Method {
     }
 
 
-    public function post() {
-    }
+
 }

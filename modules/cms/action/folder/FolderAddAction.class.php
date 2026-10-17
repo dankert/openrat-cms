@@ -20,8 +20,7 @@ class FolderAddAction extends FolderAction implements Method {
 
 	}
 
-    public function post() {
-    }
+
 
 
 	public function checkAccess()

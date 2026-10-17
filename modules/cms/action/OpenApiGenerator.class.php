@@ -11,12 +11,14 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
+use cms\api\APIResponse;
 use cms\base\Startup;
 
 #Startup::initialize();
 
 use ReflectionNamedType;
 use ReflectionUnionType;
+use util\ClassUtils;
 use util\FileUtils;
 use util\json\JSON;
 use util\Session;
@@ -55,6 +57,7 @@ class OpenApiGenerator
 
 	private function analyzeMethod($action)
 	{
+		$responseName = ClassUtils::getSimple( APIResponse::class );
 
 		if   ( ! is_dir(__DIR__.'/'.$action.'/'))
 			return;
@@ -67,6 +70,10 @@ class OpenApiGenerator
 				$actionClass = new \ReflectionClass('cms\action\\'.$action.'\\'.$actionClassName);
 
 				$viewMethod = $actionClass->getMethod('view');
+
+				if   ( $viewMethod->getDeclaringClass()->getName() == $actionClass->getName() ) {
+
+				}
 				$attrs = $viewMethod->getAttributes(UiOutClass::class);
 				if   ( sizeof($attrs)>0) {
 
@@ -97,9 +104,13 @@ class OpenApiGenerator
 				}
 				//if   ( !$actionClass->hasMethod('view') )
 				//	throw new ClientException("no method view in $action => $file ...");
-				$this->paths['/'.$action.'/{id}/'.$actionName] = [
+				$path = [
 					'summary' => $this->getSummary($actionClass->getDocComment()),
-					'get'  => [
+					'description' => $this->getDescription($actionClass->getDocComment())
+					];
+
+				if   ( $viewMethod->getDeclaringClass()->getName() == $actionClass->getName() )
+					$path['get'] = [
 						'responses'=>[
 							'2XX'=>[
 								'description'=> $this->clearDocComment($viewMethod->getDocComment()),
@@ -111,7 +122,7 @@ class OpenApiGenerator
 							'default'=>[
 								'description'=> 'Client error',
 								'content'=>['application/json'=>[
-									'schema'=>['$ref'=>"#/components/schemas/APIResponse"],
+									'schema'=>['$ref'=>"#/components/schemas/".$responseName],
 								]],
 							],
 						],
@@ -121,8 +132,11 @@ class OpenApiGenerator
 						'parameters' =>$this->getParameters ($viewMethod),
 						'tags'       =>[ucfirst($action)],
 
-					],
-					'post' => [
+					];
+
+				if   ( $postMethod->getDeclaringClass()->getName() == $actionClass->getName() )
+
+					$path['post'] = [
 						'requestBody' => [
 							'description' => '',
 							'required'    => true, // Gibt an, ob der Body zwingend mitgeschickt werden muss
@@ -136,7 +150,7 @@ class OpenApiGenerator
 							'default'=>[
 								'description'=> 'API response',
 								'content'=>['application/json'=>[
-									'schema'=>['$ref'=>"#/components/schemas/APIResponse"]
+									'schema'=>['$ref'=>"#/components/schemas/".$responseName]
 								]
 								]
 							],
@@ -146,8 +160,9 @@ class OpenApiGenerator
 						'description'=>$this->getDescription($postMethod->getDocComment()),
 						'parameters' =>$this->getParameters ($postMethod),
 						'tags'       =>[ucfirst($action)],
-					]
-				];
+					];
+
+				$this->paths['/'.$action.'/{id}/'.$actionName] = $path;
 			}
 		}
 

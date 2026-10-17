@@ -13,8 +13,7 @@ use util\exception\ValidationException;
  * @package cms\action\userlist
  */
 class UserlistAddAction extends UserlistAction implements Method {
-    public function view() {
-    }
+
     public function post( ) {
 		$name = $this->request->getAlphanum('name');
 

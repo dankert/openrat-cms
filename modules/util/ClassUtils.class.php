@@ -8,13 +8,19 @@ namespace util;
 class ClassUtils
 {
 
-	public static function getSimpleClassName($object)
+	public static function getSimpleClassName($object): string
 	{
 		if (!is_object($object))
 			return 'NotAnObject';
 
-		$classname = get_class($object);
-		if ($pos = strrpos($classname, '\\')) return substr($classname, $pos + 1);
-		return $pos;
+		return self::getSimple( get_class($object) );
+	}
+
+	public static function getSimple(string $classname): string
+	{
+		if ($pos = strrpos($classname, '\\'))
+			return substr($classname, $pos + 1);
+		else
+			return $classname;
 	}
 }

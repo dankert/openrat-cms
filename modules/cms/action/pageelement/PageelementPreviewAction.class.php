@@ -10,6 +10,5 @@ class PageelementPreviewAction extends PageelementAction implements Method {
 		$valueGenerator = new ValueGenerator( $this->createValueContext( Producer::SCHEME_PREVIEW) );
 		$this->setTemplateVar('preview' ,$valueGenerator->getCache()->get() );
     }
-    public function post() {
-    }
+
 }

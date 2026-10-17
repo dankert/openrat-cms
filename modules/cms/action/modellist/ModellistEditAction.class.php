@@ -27,6 +27,5 @@ class ModellistEditAction extends ModellistAction implements Method {
 		$this->setTemplateVar( 'add',$this->userIsAdmin() );
 	}
 
-    public function post() {
-    }
+
 }

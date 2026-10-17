@@ -30,6 +30,5 @@ class PageelementInfoAction extends PageelementAction implements Method {
     }
 
 
-    public function post() {
-    }
+
 }

@@ -85,6 +85,5 @@ class UserRightsAction extends UserAction implements Method {
 		if	( $this->user->isAdmin )
 			$this->addWarningFor($this->user,Messages::ADMIN_NEEDS_NO_RIGHTS);
     }
-    public function post() {
-    }
+
 }

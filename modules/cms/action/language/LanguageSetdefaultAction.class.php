@@ -7,8 +7,7 @@ use language\Messages;
 
 
 class LanguageSetdefaultAction extends LanguageAction implements Method {
-    public function view() {
-    }
+
     public function post() {
 		$this->language->setDefault();
 

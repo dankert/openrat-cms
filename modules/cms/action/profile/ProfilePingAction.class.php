@@ -10,8 +10,7 @@ class ProfilePingAction extends ProfileAction implements Method {
     	// Only visible in API requests.
 		$this->setTemplateVar('pong',1);
     }
-    public function post() {
-    }
+
 
     public function checkAccess() {
 		return true;

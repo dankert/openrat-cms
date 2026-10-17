@@ -42,8 +42,7 @@ class ProfileUserinfoAction extends ProfileAction implements Method {
     }
 
 
-    public function post() {
-    }
+
 
 
 	public function checkAccess() {

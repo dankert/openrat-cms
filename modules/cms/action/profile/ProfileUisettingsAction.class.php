@@ -10,8 +10,7 @@ class ProfileUisettingsAction extends ProfileAction implements Method {
 
 		$this->setTemplateVar('settings',Configuration::Conf()->get('ui') );
     }
-    public function post() {
-    }
+
 
 	public function checkAccess() {
 		return true;

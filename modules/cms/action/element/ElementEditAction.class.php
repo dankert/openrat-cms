@@ -12,6 +12,5 @@ class ElementEditAction extends ElementAction implements Method {
     }
 
 
-    public function post() {
-    }
+
 }

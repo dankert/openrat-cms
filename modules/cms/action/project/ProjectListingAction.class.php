@@ -19,6 +19,5 @@ class ProjectListingAction extends ProjectAction implements Method {
 		}
 		$this->setTemplateVar('el',$list);
     }
-    public function post() {
-    }
+
 }

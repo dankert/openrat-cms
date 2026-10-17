@@ -19,6 +19,5 @@ class UserHistoryAction extends UserAction implements Method {
         }
         $this->setTemplateVar('timeline', $timeline);
     }
-    public function post() {
-    }
+
 }

@@ -12,6 +12,5 @@ class UrlEditAction extends UrlAction implements Method {
 		$this->setTemplateVar('type'            ,$this->url->getType()     );
 		$this->setTemplateVar('url'             ,$this->url->url           );
     }
-    public function post() {
-    }
+
 }

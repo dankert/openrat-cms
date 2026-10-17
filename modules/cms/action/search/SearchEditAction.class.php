@@ -54,6 +54,5 @@ class SearchEditAction extends SearchAction implements Method {
 	}
 
 
-    public function post() {
-    }
+
 }

@@ -69,6 +69,5 @@ class GroupRightsAction extends GroupAction implements Method {
     }
 
 
-    public function post() {
-    }
+
 }

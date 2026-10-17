@@ -10,8 +10,7 @@ class ProfileLanguageAction extends ProfileAction implements Method {
 
     	$this->setTemplateVar('language',Configuration::Conf()->get('language') );
     }
-    public function post() {
-    }
+
 
 	public function checkAccess() {
 		return true;

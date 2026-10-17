@@ -21,6 +21,5 @@ class ProfileHistoryAction extends ProfileAction implements Method {
     }
 
 
-    public function post() {
-    }
+
 }

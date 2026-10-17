@@ -13,8 +13,7 @@ use util\exception\SecurityException;
 class TemplateReleaseAction extends TemplateAction implements Method {
 
 
-    public function view() {
-    }
+
 
 
     public function post() {

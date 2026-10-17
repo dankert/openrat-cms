@@ -102,6 +102,5 @@ class FileShowAction extends FileAction implements Method {
     }
 
 
-    public function post() {
-    }
+
 }

@@ -21,6 +21,5 @@ class UserAdvancedAction extends UserAction implements Method {
 		$this->setTemplateVar( 'token', $token );
     }
 
-    public function post() {
-    }
+
 }

@@ -32,6 +32,5 @@ class ImagePreviewAction extends ImageAction implements Method {
     }
 
 
-    public function post() {
-    }
+
 }

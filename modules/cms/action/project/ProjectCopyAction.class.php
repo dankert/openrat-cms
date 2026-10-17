@@ -7,8 +7,7 @@ use cms\base\DB;
 use language\Messages;
 
 class ProjectCopyAction extends ProjectAction implements Method {
-    public function view() {
-    }
+
 
     public function post() {
 		$db = DB::get();

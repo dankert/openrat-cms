@@ -7,8 +7,7 @@ use util\exception\ValidationException;
 use util\Session;
 
 class ProfileConfirmmailAction extends ProfileAction implements Method {
-    public function view() {
-    }
+
     public function post() {
 		$sessionCode       = Session::get( Session::KEY_MAIL_CHANGE_CODE );
 		$newMail           = Session::get( Session::KEY_MAIL_CHANGE_MAIL );

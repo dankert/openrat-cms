@@ -53,6 +53,5 @@ class UserEditAction extends UserAction implements Method {
     }
 
 
-    public function post() {
-    }
+
 }

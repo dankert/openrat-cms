@@ -57,6 +57,5 @@ class PageelementHistoryAction extends PageelementAction implements Method {
     }
 
 
-    public function post() {
-    }
+
 }

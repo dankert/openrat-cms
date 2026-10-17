@@ -8,6 +8,5 @@ class ProfileMembershipsAction extends ProfileAction implements Method {
     public function view() {
 		$this->setTemplateVar( 'groups',$this->user->getGroups() );
     }
-    public function post() {
-    }
+
 }

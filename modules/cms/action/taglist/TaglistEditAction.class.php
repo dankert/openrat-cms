@@ -22,7 +22,6 @@ class TaglistEditAction extends TaglistAction implements Method {
     }
 
 
-    public function post() {
-    }
+
 
 }

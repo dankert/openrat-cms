@@ -20,6 +20,5 @@ class TemplatelistEditAction extends TemplatelistAction implements Method {
 	}
 
 
-    public function post() {
-    }
+
 }
