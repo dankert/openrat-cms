@@ -201,7 +201,7 @@ class UIOutput extends BaseOutput
     <pre id="cms-error-log"><?php // Display exceptions only in development mode, because they may contain sensitive internal information like passwords.
       if ($cause) {
 		if (defined('DEVELOPMENT') && DEVELOPMENT  ) {
-		  echo $cause->__toString();
+		  echo htmlentities($cause->__toString());
 		}
 		else {
 			while (true) {
