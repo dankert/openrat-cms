@@ -21,6 +21,9 @@ jobs:
           REPO_URL: "code.openrat.de/${{ github.repository }}.git"
           AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # 1. Git im Buildah-Container nachinstallieren (dnf ist im RedHat-Image vorhanden)
+          dnf install -y git
+          
           # Wir setzen die Umgebungsvariablen nun korrekt im Befehl ein
           git clone --depth 1 "https://x-access-token:$AUTH_TOKEN@$REPO_URL" .
           
