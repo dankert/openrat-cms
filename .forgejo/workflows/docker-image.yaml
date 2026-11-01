@@ -1,0 +1,62 @@
+name: Build and Push Docker Image via Buildah
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+' # Reagiert exakt auf x.y.z Tags
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    container:
+      image: quay.io/buildah/stable:v1.38
+      #options: --privileged # Erlaubt Buildah das Erstellen von Namespaces im Container
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install Git
+        run: dnf install -y git
+
+      # Generiert die korrekten Tags für Branches (inkl. latest für master/main) und Git-Tags
+      - name: Determine Docker Tags
+        id: tags
+        run: |
+          FORGEJO_REPO="code.openrat.de/dankert/test"
+          DOCKERHUB_REPO="${{ secrets.DOCKERHUB_USERNAME }}/test"
+          
+          TAGS=""
+          
+          if [ "${{ github.ref_type }}" = "tag" ]; then
+            # Wenn es ein Git-Tag (x.y.z) ist:
+            VERSION="${{ github.ref_name }}"
+            SHORT_VERSION=$(echo "$VERSION" | cut -d. -f1,2)
+            
+            TAGS="$TAGS -t $FORGEJO_REPO:$VERSION -t $DOCKERHUB_REPO:$VERSION"
+            TAGS="$TAGS -t $FORGEJO_REPO:$SHORT_VERSION -t $DOCKERHUB_REPO:$SHORT_VERSION"
+            TAGS="$TAGS -t $FORGEJO_REPO:latest -t $DOCKERHUB_REPO:latest"
+          else
+            # Wenn es ein Branch-Push (main oder master) ist:
+            BRANCH="${{ github.ref_name }}"
+            
+            TAGS="$TAGS -t $FORGEJO_REPO:$BRANCH -t $DOCKERHUB_REPO:$BRANCH"
+            # Zusätzlich das 'latest'-Tag vergeben
+            TAGS="$TAGS -t $FORGEJO_REPO:latest -t $DOCKERHUB_REPO:latest"
+          fi
+          
+          echo "docker_tags=$TAGS" >> $GITHUB_OUTPUT
+
+      - name: Log in to Forgejo Registry
+        run: buildah login -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }} code.openrat.de
+
+      - name: Log in to Docker Hub
+        run: buildah login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }} docker.io
+
+      - name: Build Image with Buildah
+        run: buildah bud ${{ steps.tags.outputs.docker_tags }} .
+
+      - name: Push Image to Registries
+        run: buildah push --all
