@@ -10,6 +10,8 @@ on:
 jobs:
   build-and-push:
     runs-on: docker
+    env:
+      BUILDAH_ISOLATION: chroot
     container:
       image: quay.io/buildah/stable:v1.38
       options: |
