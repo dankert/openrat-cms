@@ -15,14 +15,19 @@ jobs:
       #options: --privileged # Erlaubt Buildah das Erstellen von Namespaces im Container
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ github.repository }}
-
-      - name: Install Git
-        run: dnf install -y git
-
+      # SCHRITT 1: Code direkt als Tarball von deiner eigenen Instanz laden
+      # Das umgeht den Git-Checkout und benötigt kein data.forgejo.org
+      - name: Download Code from Local Forgejo
+        run: |
+          # Forgejo stellt uns die interne API-URL und ein temporäres Token bereit
+          # Wir laden das Repo direkt als komprimiertes Archiv und entpacken es im Arbeitsverzeichnis
+          curl -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "https://code.openrat.de{{ github.repository }}/archive/${{ github.sha }}.tar.gz" \
+            -o repo.tar.gz
+          
+          tar -xzf repo.tar.gz --strip-components=1
+          rm repo.tar.gz
+          
       # Generiert die korrekten Tags für Branches (inkl. latest für master/main) und Git-Tags
       - name: Determine Docker Tags
         id: tags
