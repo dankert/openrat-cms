@@ -12,7 +12,7 @@ jobs:
     runs-on: docker
     container:
       image: quay.io/buildah/stable:v1.38
-      #options: --privileged # Erlaubt Buildah das Erstellen von Namespaces im Container
+      options: --privileged # Erlaubt Buildah das Erstellen von Namespaces im Container
 
     steps:
       # SCHRITT 1: Code direkt über die lokale Forgejo-Instanz klonen
