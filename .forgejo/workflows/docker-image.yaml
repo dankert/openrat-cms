@@ -66,7 +66,7 @@ jobs:
           echo "docker_tags=$TAGS" >> $GITHUB_OUTPUT
 
       - name: Log in to Forgejo Registry
-        run: buildah login -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }} code.openrat.de
+        run: buildah login -u forgejo -p ${{ secrets.GITHUB_TOKEN }} code.openrat.de
 
       - name: Log in to Docker Hub
         run: buildah login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }} docker.io
