@@ -41,8 +41,8 @@ jobs:
       - name: Determine Docker Tags
         id: tags
         run: |
-          FORGEJO_REPO="code.openrat.de/dankert/test"
-          DOCKERHUB_REPO="${{ secrets.DOCKERHUB_USERNAME }}/test"
+          FORGEJO_REPO="code.openrat.de/dankert/openrat-cms"
+          DOCKERHUB_REPO="${{ secrets.DOCKERHUB_USERNAME }}/openrat-cms"
           
           TAGS=""
           
