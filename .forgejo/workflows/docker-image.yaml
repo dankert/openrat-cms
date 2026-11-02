@@ -75,4 +75,12 @@ jobs:
         run: buildah bud ${{ steps.tags.outputs.docker_tags }} .
 
       - name: Push Image to Registries
-        run: buildah push --all
+        run: |
+          # Extrahiert alle Tags aus dem String (entfernt die '-t' Flags)
+          for tag in ${{ steps.tags.outputs.docker_tags }}; do
+            if [ "$tag" != "-t" ]; then
+              echo "Pushing $tag..."
+              buildah push "$tag" "docker://$tag"
+            fi
+          done
+
